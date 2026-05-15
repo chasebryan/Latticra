@@ -31,6 +31,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 ## Initial implementation documents
 
 - [`STATE_LATTICE.md`](STATE_LATTICE.md) — first C state lattice fixture, invariant tests, report surface, and no-effect boundary.
+- [`TRI_PLANE_TRANSITION.md`](TRI_PLANE_TRANSITION.md) — pure preview transition model, denial reasons, and no-effect invariants.
 
 ## Implementation rule
 
@@ -45,16 +46,17 @@ No implementation code should be added until the relevant contract document exis
 
 ## Current priority
 
-The first implementation target is now:
+Implemented foundation units:
 
 ```text
 state lattice fixture + invariant tests
+tri-plane transition model + invariant tests
 ```
 
-The next implementation target after the state lattice fixture should be:
+The next implementation target should be:
 
 ```text
-tri-plane transition model
+Nucleus preview request classification
 ```
 
-That target should not include live movement, hardware access, host mutation, server mutation, recovery execution, or update execution.
+That target should classify requests and effects but should not include live movement, hardware access, host mutation, server mutation, recovery execution, or update execution.
