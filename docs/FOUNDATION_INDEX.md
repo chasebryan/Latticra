@@ -34,6 +34,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`TRI_PLANE_TRANSITION.md`](TRI_PLANE_TRANSITION.md) — pure preview transition model, denial reasons, and no-effect invariants.
 - [`NUCLEUS_PREVIEW.md`](NUCLEUS_PREVIEW.md) — Nucleus request/effect classification, report surface, and no-execution invariants.
 - [`L_UI_STATIC_REPORT.md`](L_UI_STATIC_REPORT.md) — terminal-facing L-UI static report fixture for Nucleus/state rails.
+- [`L_UI_SOURCE_GRAMMAR.md`](L_UI_SOURCE_GRAMMAR.md) — L-UI source grammar draft and `.lui` fixture guardrails.
 
 ## Implementation rule
 
@@ -55,12 +56,13 @@ state lattice fixture + invariant tests
 tri-plane transition model + invariant tests
 Nucleus preview request classification + report invariants
 L-UI static report fixture + rail invariants
+L-UI source grammar draft + fixture guardrails
 ```
 
 The next implementation target should be:
 
 ```text
-L-UI source grammar draft
+L-UI parser design contract
 ```
 
-That target should define syntax and fixtures before adding a parser, and should not include live movement, hardware access, host mutation, server mutation, recovery execution, or update execution.
+That target should define parser behavior, error categories, no-effect constraints, and fixture expectations before adding parser code.
