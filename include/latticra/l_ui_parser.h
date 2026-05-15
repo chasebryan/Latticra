@@ -10,11 +10,11 @@ extern "C" {
 #define LATTICRA_L_UI_SOURCE_MAX 65536u
 #define LATTICRA_L_UI_CARD_NAME_MAX 64u
 #define LATTICRA_L_UI_LABEL_MAX 32u
-#define LATTICRA_L_UI_PARSE_REPORT_MAX 768u
+#define LATTICRA_L_UI_PARSE_REPORT_MAX 1024u
 #define LATTICRA_L_UI_DIAGNOSTIC_CODE_MAX 16u
 #define LATTICRA_L_UI_DIAGNOSTIC_MESSAGE_MAX 128u
 #define LATTICRA_L_UI_DIAGNOSTIC_HINT_MAX 128u
-#define LATTICRA_L_UI_DIAGNOSTIC_REPORT_MAX 1024u
+#define LATTICRA_L_UI_DIAGNOSTIC_REPORT_MAX 1280u
 
 typedef enum {
     LATTICRA_L_UI_PARSE_OK = 0,
@@ -45,10 +45,20 @@ typedef enum {
 } latticra_l_ui_diagnostic_severity_t;
 
 typedef struct {
+    size_t start_offset;
+    size_t end_offset;
+    size_t start_line;
+    size_t start_column;
+    size_t end_line;
+    size_t end_column;
+} latticra_l_ui_source_span_t;
+
+typedef struct {
     latticra_status_t status;
     latticra_l_ui_parse_error_t error;
     size_t line;
     size_t column;
+    latticra_l_ui_source_span_t span;
     char card_name[LATTICRA_L_UI_CARD_NAME_MAX];
     size_t rail_count;
     size_t field_count;
@@ -69,6 +79,7 @@ typedef struct {
     char hint[LATTICRA_L_UI_DIAGNOSTIC_HINT_MAX];
     size_t line;
     size_t column;
+    latticra_l_ui_source_span_t span;
     int no_effect;
     int execution_allowed;
     int mutation_allowed;
