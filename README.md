@@ -69,6 +69,7 @@ Core seed documents:
 - [`docs/L_UI_PARSER.md`](docs/L_UI_PARSER.md) — initial no-effect C parser, summary result, error labels, and parser invariants.
 - [`docs/L_UI_PARSER_FIXTURE_INTEGRATION.md`](docs/L_UI_PARSER_FIXTURE_INTEGRATION.md) — repository `.lui` fixture validation through controlled parser test input.
 - [`docs/L_UI_PARSER_RESULT_REPORT.md`](docs/L_UI_PARSER_RESULT_REPORT.md) — deterministic parser result summaries for valid and error parse states.
+- [`docs/L_UI_PARSER_DIAGNOSTICS.md`](docs/L_UI_PARSER_DIAGNOSTICS.md) — parser diagnostic codes, stable messages, line/column rules, and future diagnostics gate.
 
 Run the current implementation checks with:
 
@@ -83,13 +84,14 @@ sh scripts/test-l-ui-parser-implementation-plan.sh
 sh scripts/test-l-ui-parser.sh
 sh scripts/test-l-ui-parser-fixture-integration.sh
 sh scripts/test-l-ui-parser-result-report.sh
+sh scripts/test-l-ui-parser-diagnostics-contract.sh
 ```
 
 ## Current boundary
 
-Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, repository fixture parser integration, and parser result reporting.
+Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, repository fixture parser integration, parser result reporting, and a parser diagnostics contract.
 
-It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, L-UI rendering, live movement, or operating system replacement.
+It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, L-UI rendering, richer parser diagnostics, live movement, or operating system replacement.
 
 ## License
 
