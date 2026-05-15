@@ -18,7 +18,8 @@ if [ ! -f "$doc" ]; then
 fi
 
 require_contains 'Status: source-backed text contract' "$doc"
-require_contains 'The implementation is documented separately' "$doc"
+require_contains 'The source-backed extraction implementation is documented separately' "$doc"
+require_contains 'The later string-literal escape decoder is documented separately' "$doc"
 require_contains 'Extraction purpose' "$doc"
 require_contains 'Extraction targets' "$doc"
 require_contains 'No grammar broadening rule' "$doc"
@@ -26,7 +27,7 @@ require_contains 'Ownership rule' "$doc"
 require_contains 'Capacity rule' "$doc"
 require_contains 'Span rule' "$doc"
 require_contains 'Quote handling rule' "$doc"
-require_contains 'Escape handling boundary' "$doc"
+require_contains 'Escape handling relationship' "$doc"
 require_contains 'Detailed report relationship' "$doc"
 require_contains 'Failed parse behavior' "$doc"
 require_contains 'No-effect rule' "$doc"
@@ -50,19 +51,34 @@ do
   require_contains "$target" "$doc"
 done
 
+for escape_relation in \
+  'string-literal escape decoding for accepted source escapes' \
+  'The initial source-backed extraction phase copied raw bytes between quotes without decoding escapes.' \
+  'Current source-backed AST values now decode accepted string-literal escapes' \
+  'L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md' \
+  'L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md' \
+  'L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md' \
+  'Accepted escapes such as' \
+  'Rejected escapes are classified through' \
+  LATTICRA_L_UI_PARSE_INTERNAL_ERROR
+do
+  require_contains "$escape_relation" "$doc"
+done
+
 for report_field in \
   'purpose=<literal-purpose>' \
   'purpose_escaped=<escaped-purpose>' \
   'value=<literal-text>' \
-  'value_escaped=<escaped-text>'
+  'value_escaped=<escaped-text>' \
+  'escaped report fields remain the stable assertion target'
 do
   require_contains "$report_field" "$doc"
 done
 
 for behavior in \
   'The surrounding quotes are not copied into AST values.' \
-  'copy raw bytes between quotes without decoding escapes' \
-  'Escaped quotes may be respected to find the closing quote' \
+  'Escaped quotes are respected when finding the closing quote.' \
+  'Source spans refer to source byte ranges, not decoded output byte ranges.' \
   'It does not truncate silently.' \
   'The AST does not retain borrowed pointers into the source buffer.'
 do
@@ -114,7 +130,7 @@ for test_name in \
   source_backed_text_rejects_or_classifies_oversized_text \
   source_backed_text_does_not_change_failed_parse_report \
   source_backed_text_is_deterministic \
-  source_backed_text_does_not_decode_escapes
+  source_backed_text_decodes_accepted_string_escapes
 do
   require_contains "$test_name" "$doc"
 done
