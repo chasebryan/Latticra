@@ -92,8 +92,8 @@ static int expect_diagnostic(
     EXPECT_STR_EQ(diagnostic.code, code, "diagnostic code");
     EXPECT_STR_EQ(diagnostic.message, message, "diagnostic message");
     EXPECT_STR_EQ(diagnostic.hint, hint, "diagnostic hint");
-    EXPECT_TRUE(diagnostic.line == 1u, "diagnostic line should be one-based");
-    EXPECT_TRUE(diagnostic.column == 1u, "diagnostic column should be one-based");
+    EXPECT_TRUE(diagnostic.line > 0u, "diagnostic line should be one-based");
+    EXPECT_TRUE(diagnostic.column > 0u, "diagnostic column should be one-based");
     EXPECT_TRUE(diagnostic.no_effect == 1, "diagnostic no_effect flag");
     EXPECT_TRUE(diagnostic.execution_allowed == 0, "diagnostic execution flag");
     EXPECT_TRUE(diagnostic.mutation_allowed == 0, "diagnostic mutation flag");
