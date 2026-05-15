@@ -85,6 +85,7 @@ Core seed documents:
 - [`docs/L_UI_AST_DETAILED_REPORT_IMPLEMENTATION_PLAN.md`](docs/L_UI_AST_DETAILED_REPORT_IMPLEMENTATION_PLAN.md) — detailed AST report public API addition, capacity, section order, failed-parse behavior, escaping policy, exact tests, and compatibility expectations.
 - [`docs/L_UI_AST_DETAILED_REPORT_IMPLEMENTATION.md`](docs/L_UI_AST_DETAILED_REPORT_IMPLEMENTATION.md) — bounded detailed AST report for card, rail, field, text, source-span, and no-effect metadata.
 - [`docs/L_UI_AST_ESCAPED_STRING_REPORT_CONTRACT.md`](docs/L_UI_AST_ESCAPED_STRING_REPORT_CONTRACT.md) — stable escaped string report rules for broader L-UI text values before implementation.
+- [`docs/L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION_PLAN.md`](docs/L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION_PLAN.md) — escaped string report helper shape, escaped fields, destination sizes, too-small behavior, exact tests, and compatibility expectations.
 
 Run the current implementation checks with:
 
@@ -115,11 +116,12 @@ sh scripts/test-l-ui-ast-detailed-report-contract.sh
 sh scripts/test-l-ui-ast-detailed-report-implementation-plan.sh
 sh scripts/test-l-ui-ast-detailed-report.sh
 sh scripts/test-l-ui-ast-escaped-string-report-contract.sh
+sh scripts/test-l-ui-ast-escaped-string-report-implementation-plan.sh
 ```
 
 ## Current boundary
 
-Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, repository fixture parser integration, parser result reporting, a parser diagnostics contract, a parser diagnostics implementation plan, parser diagnostics implementation, a line/column precision plan, a line/column precision implementation plan, line/column precision implementation, a source-span contract, a source-span implementation plan, source-span implementation, an AST contract, an AST implementation plan, an AST implementation, an AST detailed report contract, an AST detailed report implementation plan, an AST detailed report implementation, and an AST escaped string report contract.
+Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, repository fixture parser integration, parser result reporting, a parser diagnostics contract, a parser diagnostics implementation plan, parser diagnostics implementation, a line/column precision plan, a line/column precision implementation plan, line/column precision implementation, a source-span contract, a source-span implementation plan, source-span implementation, an AST contract, an AST implementation plan, an AST implementation, an AST detailed report contract, an AST detailed report implementation plan, an AST detailed report implementation, an AST escaped string report contract, and an AST escaped string report implementation plan.
 
 It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, L-UI rendering, escaped-string report implementation, live movement, or operating system replacement.
 
