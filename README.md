@@ -67,6 +67,7 @@ Core seed documents:
 - [`docs/L_UI_PARSER_DESIGN.md`](docs/L_UI_PARSER_DESIGN.md) — parser design contract, error categories, no-effect constraints, and implementation gate.
 - [`docs/L_UI_PARSER_IMPLEMENTATION_PLAN.md`](docs/L_UI_PARSER_IMPLEMENTATION_PLAN.md) — parser implementation language, module shape, API, source-size limit, and exact test list before parser code.
 - [`docs/L_UI_PARSER.md`](docs/L_UI_PARSER.md) — initial no-effect C parser, summary result, error labels, and parser invariants.
+- [`docs/L_UI_PARSER_FIXTURE_INTEGRATION.md`](docs/L_UI_PARSER_FIXTURE_INTEGRATION.md) — repository `.lui` fixture validation through controlled parser test input.
 
 Run the current implementation checks with:
 
@@ -79,11 +80,12 @@ sh scripts/test-l-ui-grammar-fixtures.sh
 sh scripts/test-l-ui-parser-design.sh
 sh scripts/test-l-ui-parser-implementation-plan.sh
 sh scripts/test-l-ui-parser.sh
+sh scripts/test-l-ui-parser-fixture-integration.sh
 ```
 
 ## Current boundary
 
-Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, and an initial no-effect L-UI parser.
+Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, and repository fixture parser integration.
 
 It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, L-UI rendering, live movement, or operating system replacement.
 
