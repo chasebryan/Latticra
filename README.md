@@ -78,6 +78,7 @@ Core seed documents:
 - [`docs/L_UI_PARSER_SOURCE_SPAN_CONTRACT.md`](docs/L_UI_PARSER_SOURCE_SPAN_CONTRACT.md) — future source ranges, span rules, byte offsets, line/column ranges, and no-effect boundaries.
 - [`docs/L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION_PLAN.md`](docs/L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION_PLAN.md) — source-span public API changes, report extensions, exact tests, and compatibility expectations before span code.
 - [`docs/L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION.md`](docs/L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION.md) — public source-span metadata, parse-result spans, diagnostic spans, report extensions, and invariants.
+- [`docs/L_UI_PARSER_AST_CONTRACT.md`](docs/L_UI_PARSER_AST_CONTRACT.md) — future AST shape, node ownership, source-span usage, capacity rules, diagnostics relationship, and no-effect boundaries.
 
 Run the current implementation checks with:
 
@@ -101,13 +102,14 @@ sh scripts/test-l-ui-parser-location.sh
 sh scripts/test-l-ui-parser-source-span-contract.sh
 sh scripts/test-l-ui-parser-source-span-implementation-plan.sh
 sh scripts/test-l-ui-parser-source-span.sh
+sh scripts/test-l-ui-parser-ast-contract.sh
 ```
 
 ## Current boundary
 
-Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, repository fixture parser integration, parser result reporting, a parser diagnostics contract, a parser diagnostics implementation plan, parser diagnostics implementation, a line/column precision plan, a line/column precision implementation plan, line/column precision implementation, a source-span contract, a source-span implementation plan, and source-span implementation.
+Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, repository fixture parser integration, parser result reporting, a parser diagnostics contract, a parser diagnostics implementation plan, parser diagnostics implementation, a line/column precision plan, a line/column precision implementation plan, line/column precision implementation, a source-span contract, a source-span implementation plan, source-span implementation, and an AST contract.
 
-It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, L-UI rendering, AST construction, live movement, or operating system replacement.
+It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, L-UI rendering, AST implementation, live movement, or operating system replacement.
 
 ## License
 
