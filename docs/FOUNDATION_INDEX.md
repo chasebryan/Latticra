@@ -58,6 +58,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_AST_ESCAPED_STRING_REPORT_CONTRACT.md`](L_UI_AST_ESCAPED_STRING_REPORT_CONTRACT.md) — stable escaped string report rules for broader L-UI text values before implementation.
 - [`L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION_PLAN.md`](L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION_PLAN.md) — escaped string report helper shape, escaped fields, destination sizes, too-small behavior, exact tests, and compatibility expectations.
 - [`L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION.md`](L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION.md) — byte-oriented escaped string fields for detailed AST report metadata.
+- [`L_UI_AST_SOURCE_BACKED_TEXT_CONTRACT.md`](L_UI_AST_SOURCE_BACKED_TEXT_CONTRACT.md) — source-backed extraction rules for AST purpose and text values before implementation.
 
 ## Implementation rule
 
@@ -103,12 +104,13 @@ L-UI AST detailed report implementation + invariants
 L-UI AST escaped string report contract + guardrails
 L-UI AST escaped string report implementation plan + guardrails
 L-UI AST escaped string report implementation + invariants
+L-UI AST source-backed text contract + guardrails
 ```
 
 The next implementation target should be:
 
 ```text
-L-UI AST source-backed text extraction contract
+L-UI AST source-backed text extraction implementation plan
 ```
 
-That target should define how AST purpose and text values are extracted from source instead of fixed fixture metadata.
+That target should define extraction helpers, quote handling, capacity behavior, span decisions, exact tests, and compatibility expectations before implementation.
