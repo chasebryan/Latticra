@@ -50,6 +50,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION_PLAN.md) — source-span public API changes, report extensions, exact tests, and compatibility expectations before span code.
 - [`L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION.md`](L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION.md) — public source-span metadata, parse-result spans, diagnostic spans, report extensions, and invariants.
 - [`L_UI_PARSER_AST_CONTRACT.md`](L_UI_PARSER_AST_CONTRACT.md) — future AST shape, node ownership, source-span usage, capacity rules, diagnostics relationship, and no-effect boundaries.
+- [`L_UI_PARSER_AST_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_AST_IMPLEMENTATION_PLAN.md) — AST public API changes, struct placement, capacity constants, ownership/lifetime rules, source-span integration, exact tests, and compatibility expectations.
 
 ## Implementation rule
 
@@ -87,12 +88,13 @@ L-UI parser source-span contract + guardrails
 L-UI parser source-span implementation plan + guardrails
 L-UI parser source-span implementation + invariants
 L-UI parser AST contract + guardrails
+L-UI parser AST implementation plan + guardrails
 ```
 
 The next implementation target should be:
 
 ```text
-L-UI parser AST implementation plan
+L-UI parser AST implementation
 ```
 
-That target should define public API changes, struct placement, capacity constants, ownership/lifetime rules, source-span integration, exact tests, and compatibility expectations before implementing AST construction.
+That target should add the planned AST structs, parser-to-AST builder, AST report, and invariant tests without adding rendering or live behavior.
