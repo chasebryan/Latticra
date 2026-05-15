@@ -55,6 +55,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_AST_DETAILED_REPORT_CONTRACT.md`](L_UI_AST_DETAILED_REPORT_CONTRACT.md) — deterministic rail, field, text, and source-span reporting rules before detailed AST report implementation.
 - [`L_UI_AST_DETAILED_REPORT_IMPLEMENTATION_PLAN.md`](L_UI_AST_DETAILED_REPORT_IMPLEMENTATION_PLAN.md) — detailed AST report public API addition, capacity, section order, failed-parse behavior, escaping policy, exact tests, and compatibility expectations.
 - [`L_UI_AST_DETAILED_REPORT_IMPLEMENTATION.md`](L_UI_AST_DETAILED_REPORT_IMPLEMENTATION.md) — bounded detailed AST report for card, rail, field, text, source-span, and no-effect metadata.
+- [`L_UI_AST_ESCAPED_STRING_REPORT_CONTRACT.md`](L_UI_AST_ESCAPED_STRING_REPORT_CONTRACT.md) — stable escaped string report rules for broader L-UI text values before implementation.
 
 ## Implementation rule
 
@@ -97,12 +98,13 @@ L-UI parser AST implementation + invariants
 L-UI AST detailed report contract + guardrails
 L-UI AST detailed report implementation plan + guardrails
 L-UI AST detailed report implementation + invariants
+L-UI AST escaped string report contract + guardrails
 ```
 
 The next implementation target should be:
 
 ```text
-L-UI AST escaped string report contract
+L-UI AST escaped string report implementation plan
 ```
 
-That target should define stable escaping for newlines, tabs, quotes, and non-printable bytes before broader text values are accepted.
+That target should define the private helper shape, exact escaped fields, destination sizes, too-small behavior, tests, and compatibility expectations before implementation.
