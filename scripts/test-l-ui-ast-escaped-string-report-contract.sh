@@ -46,19 +46,18 @@ do
   require_contains "$field" "$doc"
 done
 
-for escape in \
-  '\\n' \
-  '\\r' \
-  '\\t' \
-  '\\"' \
-  '\\\\' \
-  '\\x00' \
-  '\\x1F' \
-  '\\x7F' \
-  '\\x80' \
-  '\\xFF'
+for escape_rule in \
+  'newline LF `0x0A`' \
+  'carriage return CR `0x0D`' \
+  'horizontal tab `0x09`' \
+  'double quote `0x22`' \
+  'backslash `0x5C`' \
+  'NUL `0x00`' \
+  'other control bytes `0x01`-`0x1F`' \
+  'DEL `0x7F`' \
+  'non-ASCII bytes `0x80`-`0xFF`'
 do
-  require_contains "$escape" "$doc"
+  require_contains "$escape_rule" "$doc"
 done
 
 for byte_rule in \
