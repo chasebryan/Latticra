@@ -61,17 +61,19 @@ Core seed documents:
 
 - [`docs/STATE_LATTICE.md`](docs/STATE_LATTICE.md) — first C state lattice fixture, invariant tests, and no-effect boundary.
 - [`docs/TRI_PLANE_TRANSITION.md`](docs/TRI_PLANE_TRANSITION.md) — pure preview transition model, denial reasons, and no-effect invariants.
+- [`docs/NUCLEUS_PREVIEW.md`](docs/NUCLEUS_PREVIEW.md) — Nucleus request/effect classification with no-execution invariants.
 
 Run the current implementation checks with:
 
 ```sh
 sh scripts/test-state-lattice.sh
 sh scripts/test-tri-plane-transition.sh
+sh scripts/test-nucleus-preview.sh
 ```
 
 ## Current boundary
 
-Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, and a pure preview tri-plane transition model.
+Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, and Nucleus preview request classification.
 
 It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, live movement, or operating system replacement.
 
