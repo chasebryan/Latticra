@@ -5,6 +5,7 @@ set -eu
 
 cc $CFLAGS \
   -Iinclude \
+  src/state_lattice.c \
   src/nucleus_preview.c \
   tests/nucleus_preview_invariants.c \
   -o /tmp/latticra-nucleus-preview-invariants

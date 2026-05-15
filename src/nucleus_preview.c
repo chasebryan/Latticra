@@ -1,5 +1,7 @@
 #include "latticra/nucleus_preview.h"
 
+#include <stdio.h>
+
 static int effect_is_preview_allowed(latticra_effect_t effect) {
     return effect == LATTICRA_EFFECT_NONE || effect == LATTICRA_EFFECT_READ;
 }
@@ -92,6 +94,49 @@ latticra_status_t latticra_nucleus_classify_preview(
 
     preview->policy_result = LATTICRA_POLICY_ALLOW_PREVIEW;
     preview->policy_reason = LATTICRA_POLICY_REASON_OK;
+
+    return LATTICRA_STATUS_OK;
+}
+
+latticra_status_t latticra_nucleus_preview_report(
+    const latticra_nucleus_preview_t *preview,
+    char *buffer,
+    size_t buffer_len) {
+    int written;
+
+    if (preview == 0 || buffer == 0) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+
+    written = snprintf(
+        buffer,
+        buffer_len,
+        "LATTICRA NUCLEUS PREVIEW\n"
+        "request=%s\n"
+        "requested_effect=%s\n"
+        "policy=%s\n"
+        "reason=%s\n"
+        "executed=%d\n"
+        "mutation_allowed=%d\n"
+        "server_interaction_allowed=%d\n"
+        "recovery_allowed=%d\n"
+        "hardware_allowed=%d\n",
+        latticra_request_kind_label(preview->request_kind),
+        latticra_effect_label(preview->requested_effect),
+        latticra_policy_result_label(preview->policy_result),
+        latticra_policy_reason_label(preview->policy_reason),
+        preview->executed,
+        preview->mutation_allowed,
+        preview->server_interaction_allowed,
+        preview->recovery_allowed,
+        preview->hardware_allowed);
+
+    if (written < 0 || (size_t)written >= buffer_len) {
+        if (buffer_len > 0u) {
+            buffer[0] = '\0';
+        }
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
 
     return LATTICRA_STATUS_OK;
 }
