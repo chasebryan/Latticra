@@ -10,6 +10,208 @@ static void copy_literal(char *destination, size_t destination_len, const char *
     (void)snprintf(destination, destination_len, "%s", source);
 }
 
+static void location_default(size_t *line, size_t *column) {
+    if (line != 0) {
+        *line = 1u;
+    }
+    if (column != 0) {
+        *column = 1u;
+    }
+}
+
+static void location_for_index(
+    const char *source,
+    size_t source_len,
+    size_t target_index,
+    size_t *line,
+    size_t *column) {
+    size_t index = 0u;
+    size_t current_line = 1u;
+    size_t current_column = 1u;
+
+    if (source == 0) {
+        location_default(line, column);
+        return;
+    }
+
+    if (target_index > source_len) {
+        target_index = source_len;
+    }
+
+    while (index < target_index) {
+        if (source[index] == '\r') {
+            if (index + 1u < source_len && source[index + 1u] == '\n') {
+                index += 2u;
+            } else {
+                index += 1u;
+            }
+            current_line += 1u;
+            current_column = 1u;
+        } else if (source[index] == '\n') {
+            index += 1u;
+            current_line += 1u;
+            current_column = 1u;
+        } else {
+            index += 1u;
+            current_column += 1u;
+        }
+    }
+
+    if (line != 0) {
+        *line = current_line;
+    }
+    if (column != 0) {
+        *column = current_column;
+    }
+}
+
+static int find_slice_index(
+    const char *source,
+    size_t source_len,
+    const char *needle,
+    size_t *out_index) {
+    size_t needle_len;
+    size_t index;
+
+    if (source == 0 || needle == 0) {
+        return 0;
+    }
+
+    needle_len = strlen(needle);
+    if (needle_len == 0u) {
+        if (out_index != 0) {
+            *out_index = 0u;
+        }
+        return 1;
+    }
+    if (source_len < needle_len) {
+        return 0;
+    }
+
+    for (index = 0u; index <= source_len - needle_len; index++) {
+        if (memcmp(source + index, needle, needle_len) == 0) {
+            if (out_index != 0) {
+                *out_index = index;
+            }
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+static int find_slice_location(
+    const char *source,
+    size_t source_len,
+    const char *needle,
+    size_t *line,
+    size_t *column) {
+    size_t index;
+    if (!find_slice_index(source, source_len, needle, &index)) {
+        location_default(line, column);
+        return 0;
+    }
+    location_for_index(source, source_len, index, line, column);
+    return 1;
+}
+
+static int contains_slice(const char *source, size_t source_len, const char *needle) {
+    return find_slice_index(source, source_len, needle, 0);
+}
+
+static void card_body_location(
+    const char *source,
+    size_t source_len,
+    size_t *line,
+    size_t *column) {
+    const char *card = "card NucleusPreview {";
+    size_t card_index;
+    size_t body_index;
+
+    if (find_slice_index(source, source_len, card, &card_index)) {
+        body_index = card_index + strlen(card) - 1u;
+        location_for_index(source, source_len, body_index, line, column);
+        return;
+    }
+
+    location_default(line, column);
+}
+
+static int find_unbalanced_brace_location(
+    const char *source,
+    size_t source_len,
+    size_t *line,
+    size_t *column) {
+    size_t index;
+    size_t first_open_index = 0u;
+    int has_open = 0;
+    int depth = 0;
+
+    for (index = 0u; index < source_len; index++) {
+        if (source[index] == '{') {
+            if (depth == 0) {
+                first_open_index = index;
+                has_open = 1;
+            }
+            depth++;
+        } else if (source[index] == '}') {
+            if (depth == 0) {
+                location_for_index(source, source_len, index, line, column);
+                return 1;
+            }
+            depth--;
+            if (depth == 0) {
+                has_open = 0;
+            }
+        }
+    }
+
+    if (depth != 0 && has_open) {
+        location_for_index(source, source_len, first_open_index, line, column);
+        return 1;
+    }
+
+    location_default(line, column);
+    return 0;
+}
+
+static int find_unterminated_string_location(
+    const char *source,
+    size_t source_len,
+    size_t *line,
+    size_t *column) {
+    size_t index;
+    size_t opening_quote_index = 0u;
+    int in_string = 0;
+    int escaped = 0;
+
+    for (index = 0u; index < source_len; index++) {
+        char ch = source[index];
+        if (escaped) {
+            escaped = 0;
+            continue;
+        }
+        if (ch == '\\') {
+            escaped = 1;
+            continue;
+        }
+        if (ch == '"') {
+            if (!in_string) {
+                opening_quote_index = index;
+            }
+            in_string = !in_string;
+        }
+    }
+
+    if (in_string) {
+        location_for_index(source, source_len, opening_quote_index, line, column);
+        return 1;
+    }
+
+    location_default(line, column);
+    return 0;
+}
+
 static void set_safe_defaults(latticra_l_ui_parse_result_t *result) {
     result->status = LATTICRA_STATUS_OK;
     result->error = LATTICRA_L_UI_PARSE_OK;
@@ -28,76 +230,29 @@ static void set_safe_defaults(latticra_l_ui_parse_result_t *result) {
     result->hardware_allowed = 0;
 }
 
-static latticra_status_t set_error(
+static latticra_status_t set_error_at(
     latticra_l_ui_parse_result_t *result,
-    latticra_l_ui_parse_error_t error) {
+    latticra_l_ui_parse_error_t error,
+    size_t line,
+    size_t column) {
     set_safe_defaults(result);
     result->error = error;
+    result->line = line == 0u ? 1u : line;
+    result->column = column == 0u ? 1u : column;
     return LATTICRA_STATUS_OK;
 }
 
-static int contains_slice(const char *source, size_t source_len, const char *needle) {
-    size_t needle_len = strlen(needle);
-    size_t index;
-
-    if (needle_len == 0u) {
-        return 1;
-    }
-    if (source_len < needle_len) {
-        return 0;
-    }
-
-    for (index = 0u; index <= source_len - needle_len; index++) {
-        if (memcmp(source + index, needle, needle_len) == 0) {
-            return 1;
-        }
-    }
-
-    return 0;
+static latticra_status_t set_error(
+    latticra_l_ui_parse_result_t *result,
+    latticra_l_ui_parse_error_t error) {
+    return set_error_at(result, error, 1u, 1u);
 }
 
-static int braces_are_balanced(const char *source, size_t source_len) {
-    size_t index;
-    int depth = 0;
-
-    for (index = 0u; index < source_len; index++) {
-        if (source[index] == '{') {
-            depth++;
-        } else if (source[index] == '}') {
-            depth--;
-            if (depth < 0) {
-                return 0;
-            }
-        }
-    }
-
-    return depth == 0;
-}
-
-static int strings_are_terminated(const char *source, size_t source_len) {
-    size_t index;
-    int in_string = 0;
-    int escaped = 0;
-
-    for (index = 0u; index < source_len; index++) {
-        char ch = source[index];
-        if (escaped) {
-            escaped = 0;
-            continue;
-        }
-        if (ch == '\\') {
-            escaped = 1;
-            continue;
-        }
-        if (ch == '"') {
-            in_string = !in_string;
-        }
-    }
-
-    return !in_string;
-}
-
-static int has_unsupported_effect(const char *source, size_t source_len) {
+static int has_unsupported_effect_location(
+    const char *source,
+    size_t source_len,
+    size_t *line,
+    size_t *column) {
     const char *effects[] = {
         "effect read",
         "effect local_mutation",
@@ -111,15 +266,24 @@ static int has_unsupported_effect(const char *source, size_t source_len) {
     size_t index;
 
     for (index = 0u; index < sizeof(effects) / sizeof(effects[0]); index++) {
-        if (contains_slice(source, source_len, effects[index])) {
+        if (find_slice_location(source, source_len, effects[index], line, column)) {
             return 1;
         }
     }
 
+    if (find_slice_location(source, source_len, "effect ", line, column)) {
+        return 1;
+    }
+
+    location_default(line, column);
     return 0;
 }
 
-static int has_forbidden_marker(const char *source, size_t source_len) {
+static int has_forbidden_marker_location(
+    const char *source,
+    size_t source_len,
+    size_t *line,
+    size_t *column) {
     const char *markers[] = {
         "execute ",
         "host_mutation",
@@ -134,15 +298,45 @@ static int has_forbidden_marker(const char *source, size_t source_len) {
     size_t index;
 
     for (index = 0u; index < sizeof(markers) / sizeof(markers[0]); index++) {
-        if (contains_slice(source, source_len, markers[index])) {
+        if (find_slice_location(source, source_len, markers[index], line, column)) {
             return 1;
         }
     }
 
+    location_default(line, column);
     return 0;
 }
 
-static latticra_l_ui_parse_error_t validate_required_rails(const char *source, size_t source_len) {
+static int find_unknown_binding_prefix_location(
+    const char *source,
+    size_t source_len,
+    size_t *line,
+    size_t *column) {
+    const char *prefixes[] = {
+        " bind host.",
+        " bind network.",
+        " bind hardware.",
+        " bind server."
+    };
+    size_t index;
+    size_t found_index;
+
+    for (index = 0u; index < sizeof(prefixes) / sizeof(prefixes[0]); index++) {
+        if (find_slice_index(source, source_len, prefixes[index], &found_index)) {
+            location_for_index(source, source_len, found_index + strlen(" bind "), line, column);
+            return 1;
+        }
+    }
+
+    location_default(line, column);
+    return 0;
+}
+
+static latticra_l_ui_parse_error_t validate_required_rails(
+    const char *source,
+    size_t source_len,
+    size_t *line,
+    size_t *column) {
     const char *rails[] = {
         "rail top {",
         "rail state {",
@@ -158,14 +352,20 @@ static latticra_l_ui_parse_error_t validate_required_rails(const char *source, s
 
     for (index = 0u; index < sizeof(rails) / sizeof(rails[0]); index++) {
         if (!contains_slice(source, source_len, rails[index])) {
+            card_body_location(source, source_len, line, column);
             return LATTICRA_L_UI_PARSE_MISSING_RAIL;
         }
     }
 
+    location_default(line, column);
     return LATTICRA_L_UI_PARSE_OK;
 }
 
-static latticra_l_ui_parse_error_t validate_required_bindings(const char *source, size_t source_len) {
+static latticra_l_ui_parse_error_t validate_required_bindings(
+    const char *source,
+    size_t source_len,
+    size_t *line,
+    size_t *column) {
     const char *bindings[] = {
         "field origin bind state.origin",
         "field route bind state.route",
@@ -195,27 +395,13 @@ static latticra_l_ui_parse_error_t validate_required_bindings(const char *source
 
     for (index = 0u; index < sizeof(bindings) / sizeof(bindings[0]); index++) {
         if (!contains_slice(source, source_len, bindings[index])) {
+            card_body_location(source, source_len, line, column);
             return LATTICRA_L_UI_PARSE_MISSING_REQUIRED_BINDING;
         }
     }
 
+    location_default(line, column);
     return LATTICRA_L_UI_PARSE_OK;
-}
-
-static int has_unknown_binding_prefix(const char *source, size_t source_len) {
-    if (contains_slice(source, source_len, " bind host.")) {
-        return 1;
-    }
-    if (contains_slice(source, source_len, " bind network.")) {
-        return 1;
-    }
-    if (contains_slice(source, source_len, " bind hardware.")) {
-        return 1;
-    }
-    if (contains_slice(source, source_len, " bind server.")) {
-        return 1;
-    }
-    return 0;
 }
 
 const char *latticra_l_ui_parse_error_label(latticra_l_ui_parse_error_t error) {
@@ -268,6 +454,8 @@ latticra_status_t latticra_l_ui_parse_source(
     latticra_l_ui_parse_result_t *result) {
     latticra_l_ui_parse_error_t rail_error;
     latticra_l_ui_parse_error_t binding_error;
+    size_t line;
+    size_t column;
 
     if (source == 0 || result == 0) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
@@ -283,16 +471,19 @@ latticra_status_t latticra_l_ui_parse_source(
         return set_error(result, LATTICRA_L_UI_PARSE_SOURCE_TOO_LARGE);
     }
 
-    if (!strings_are_terminated(source, source_len)) {
-        return set_error(result, LATTICRA_L_UI_PARSE_UNTERMINATED_STRING);
+    if (find_unterminated_string_location(source, source_len, &line, &column)) {
+        return set_error_at(result, LATTICRA_L_UI_PARSE_UNTERMINATED_STRING, line, column);
     }
 
-    if (!braces_are_balanced(source, source_len)) {
-        return set_error(result, LATTICRA_L_UI_PARSE_UNBALANCED_BRACE);
+    if (find_unbalanced_brace_location(source, source_len, &line, &column)) {
+        return set_error_at(result, LATTICRA_L_UI_PARSE_UNBALANCED_BRACE, line, column);
     }
 
     if (!contains_slice(source, source_len, "lui 0.1")) {
-        return set_error(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_VERSION);
+        if (!find_slice_location(source, source_len, "lui", &line, &column)) {
+            location_default(&line, &column);
+        }
+        return set_error_at(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_VERSION, line, column);
     }
 
     if (!contains_slice(source, source_len, "card NucleusPreview {")) {
@@ -300,41 +491,49 @@ latticra_status_t latticra_l_ui_parse_source(
     }
 
     if (!contains_slice(source, source_len, "purpose ")) {
-        return set_error(result, LATTICRA_L_UI_PARSE_MISSING_PURPOSE);
+        card_body_location(source, source_len, &line, &column);
+        return set_error_at(result, LATTICRA_L_UI_PARSE_MISSING_PURPOSE, line, column);
     }
 
     if (!contains_slice(source, source_len, "effect ")) {
-        return set_error(result, LATTICRA_L_UI_PARSE_MISSING_EFFECT);
+        card_body_location(source, source_len, &line, &column);
+        return set_error_at(result, LATTICRA_L_UI_PARSE_MISSING_EFFECT, line, column);
     }
 
-    if (has_unsupported_effect(source, source_len) || !contains_slice(source, source_len, "effect none")) {
-        return set_error(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_EFFECT);
+    if (has_unsupported_effect_location(source, source_len, &line, &column) ||
+        !contains_slice(source, source_len, "effect none")) {
+        if (line == 0u || column == 0u) {
+            find_slice_location(source, source_len, "effect ", &line, &column);
+        }
+        return set_error_at(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_EFFECT, line, column);
     }
 
     if (!contains_slice(source, source_len, "boundary ")) {
-        return set_error(result, LATTICRA_L_UI_PARSE_MISSING_BOUNDARY);
+        card_body_location(source, source_len, &line, &column);
+        return set_error_at(result, LATTICRA_L_UI_PARSE_MISSING_BOUNDARY, line, column);
     }
 
     if (!contains_slice(source, source_len, "boundary preview_only")) {
-        return set_error(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_BOUNDARY);
+        find_slice_location(source, source_len, "boundary ", &line, &column);
+        return set_error_at(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_BOUNDARY, line, column);
     }
 
-    if (has_forbidden_marker(source, source_len)) {
-        return set_error(result, LATTICRA_L_UI_PARSE_FORBIDDEN_BEHAVIOR_MARKER);
+    if (has_forbidden_marker_location(source, source_len, &line, &column)) {
+        return set_error_at(result, LATTICRA_L_UI_PARSE_FORBIDDEN_BEHAVIOR_MARKER, line, column);
     }
 
-    rail_error = validate_required_rails(source, source_len);
+    rail_error = validate_required_rails(source, source_len, &line, &column);
     if (rail_error != LATTICRA_L_UI_PARSE_OK) {
-        return set_error(result, rail_error);
+        return set_error_at(result, rail_error, line, column);
     }
 
-    if (has_unknown_binding_prefix(source, source_len)) {
-        return set_error(result, LATTICRA_L_UI_PARSE_UNKNOWN_BINDING_PREFIX);
+    if (find_unknown_binding_prefix_location(source, source_len, &line, &column)) {
+        return set_error_at(result, LATTICRA_L_UI_PARSE_UNKNOWN_BINDING_PREFIX, line, column);
     }
 
-    binding_error = validate_required_bindings(source, source_len);
+    binding_error = validate_required_bindings(source, source_len, &line, &column);
     if (binding_error != LATTICRA_L_UI_PARSE_OK) {
-        return set_error(result, binding_error);
+        return set_error_at(result, binding_error, line, column);
     }
 
     copy_literal(result->card_name, sizeof(result->card_name), "NucleusPreview");
@@ -343,6 +542,8 @@ latticra_status_t latticra_l_ui_parse_source(
     result->rail_count = 9u;
     result->field_count = 23u;
     result->error = LATTICRA_L_UI_PARSE_OK;
+    result->line = 1u;
+    result->column = 1u;
 
     return LATTICRA_STATUS_OK;
 }
