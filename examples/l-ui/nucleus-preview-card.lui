@@ -1,0 +1,59 @@
+lui 0.1
+
+card NucleusPreview {
+  purpose "operator-visible Nucleus preview report"
+  effect none
+  boundary preview_only
+
+  rail top {
+    text "Latticra / Nucleus Preview / effect-bound"
+  }
+
+  rail state {
+    field origin bind state.origin
+    field route bind state.route
+    field axis bind state.axis
+    field path bind state.path
+  }
+
+  rail trace {
+    field breadcrumb bind state.breadcrumb
+    field trace bind state.trace
+  }
+
+  rail safety {
+    field health bind state.health
+    field risk bind state.risk
+    field lock bind state.lock
+    field dark_phase bind state.dark_phase
+  }
+
+  rail gates {
+    field safe_portal bind state.safe_portal
+    field rollback bind state.rollback
+  }
+
+  rail effects {
+    field host bind state.host_effect
+    field external bind state.external_effect
+    field requested bind preview.requested_effect
+  }
+
+  rail policy {
+    field request bind preview.request
+    field policy bind preview.policy
+    field reason bind preview.reason
+  }
+
+  rail execution {
+    field executed bind preview.executed
+    field mutation bind preview.mutation_allowed
+    field server bind preview.server_interaction_allowed
+    field recovery bind preview.recovery_allowed
+    field hardware bind preview.hardware_allowed
+  }
+
+  rail bottom {
+    text "preview-only no-live-movement no-host-effect no-external-effect"
+  }
+}
