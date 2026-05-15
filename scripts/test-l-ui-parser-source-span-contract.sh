@@ -46,9 +46,9 @@ do
 done
 
 for rule in \
-  'start_offset is zero-based' \
-  'end_offset is zero-based and exclusive' \
-  'start_offset <= end_offset' \
+  '`start_offset` is zero-based' \
+  '`end_offset` is zero-based and exclusive' \
+  '`start_offset <= end_offset`' \
   'Line and column are one-based.' \
   'Columns are byte-based' \
   'host text mode' \
