@@ -267,7 +267,7 @@ static int location_columns_are_byte_based(void) {
         "lui 0.1\n"
         "card NucleusPreview {\n"
         "  purpose \"x\"\n"
-        "  \xC3\xA9\xC3\xA9effect network\n"
+        "  \303\251\303\251effect network\n"
         "}\n";
     return assert_error_at(source, LATTICRA_L_UI_PARSE_UNSUPPORTED_EFFECT, "effect network", "byte-based column location");
 }
