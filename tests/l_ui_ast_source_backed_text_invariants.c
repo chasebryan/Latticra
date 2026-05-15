@@ -315,14 +315,15 @@ static int source_backed_text_is_deterministic(void) {
     return 0;
 }
 
-static int source_backed_text_does_not_decode_escapes(void) {
+static int source_backed_text_decodes_accepted_string_escapes(void) {
     char source[4096];
     latticra_l_ui_ast_result_t ast;
-    EXPECT_TRUE(make_source(source, sizeof(source), "raw\\ntext", "raw\\ttext", "raw\\\"quote"), "raw escape source builds");
-    EXPECT_TRUE(latticra_l_ui_parse_ast(source, strlen(source), &ast) == LATTICRA_STATUS_OK, "raw escape AST status");
-    EXPECT_STR_EQ(ast.card.purpose, "raw\\ntext", "purpose escape not decoded");
-    EXPECT_STR_EQ(ast.texts[0].value, "raw\\ttext", "top text escape not decoded");
-    EXPECT_STR_EQ(ast.texts[1].value, "raw\\\"quote", "bottom text escaped quote not decoded");
+    EXPECT_TRUE(make_source(source, sizeof(source), "raw\\ntext", "raw\\ttext", "raw\\\"quote"), "accepted escape source builds");
+    EXPECT_TRUE(latticra_l_ui_parse_ast(source, strlen(source), &ast) == LATTICRA_STATUS_OK, "accepted escape AST status");
+    EXPECT_TRUE(ast.parse_result.error == LATTICRA_L_UI_PARSE_OK, "accepted escape AST parse OK");
+    EXPECT_STR_EQ(ast.card.purpose, "raw\ntext", "purpose escape decoded");
+    EXPECT_STR_EQ(ast.texts[0].value, "raw\ttext", "top text escape decoded");
+    EXPECT_STR_EQ(ast.texts[1].value, "raw\"quote", "bottom text escaped quote decoded");
     return 0;
 }
 
@@ -341,7 +342,7 @@ int main(void) {
     if (source_backed_text_rejects_or_classifies_oversized_text() != 0) return 1;
     if (source_backed_text_does_not_change_failed_parse_report() != 0) return 1;
     if (source_backed_text_is_deterministic() != 0) return 1;
-    if (source_backed_text_does_not_decode_escapes() != 0) return 1;
+    if (source_backed_text_decodes_accepted_string_escapes() != 0) return 1;
 
     puts("l_ui_ast_source_backed_text_invariants: ok");
     return 0;

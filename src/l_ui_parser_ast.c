@@ -220,13 +220,45 @@ static void span_for_rail(
     span_for_range(source, source_len, start, end, span);
 }
 
-static latticra_status_t copy_extracted_value(
+static int is_upper_hex_digit(unsigned char byte) {
+    return (byte >= (unsigned char)'0' && byte <= (unsigned char)'9') ||
+           (byte >= (unsigned char)'A' && byte <= (unsigned char)'F');
+}
+
+static unsigned char upper_hex_value(unsigned char byte) {
+    if (byte >= (unsigned char)'0' && byte <= (unsigned char)'9') {
+        return (unsigned char)(byte - (unsigned char)'0');
+    }
+    return (unsigned char)(10u + (byte - (unsigned char)'A'));
+}
+
+static latticra_status_t append_decoded_byte(
+    char *destination,
+    size_t destination_len,
+    size_t *output_index,
+    unsigned char byte) {
+    if (destination == 0 || output_index == 0) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (byte == 0u || *output_index + 1u >= destination_len) {
+        if (destination_len > 0u) {
+            destination[0] = '\0';
+        }
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    destination[*output_index] = (char)byte;
+    *output_index += 1u;
+    return LATTICRA_STATUS_OK;
+}
+
+static latticra_status_t decode_l_ui_string_literal_value(
     const char *source,
     size_t start_offset,
     size_t end_offset,
     char *destination,
     size_t destination_len) {
-    size_t value_len;
+    size_t input_index;
+    size_t output_index = 0u;
 
     if (source == 0 || destination == 0) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
@@ -235,18 +267,75 @@ static latticra_status_t copy_extracted_value(
         return LATTICRA_STATUS_BUFFER_TOO_SMALL;
     }
 
-    value_len = end_offset - start_offset;
-    if (value_len >= destination_len) {
-        destination[0] = '\0';
-        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    destination[0] = '\0';
+    input_index = start_offset;
+
+    while (input_index < end_offset) {
+        unsigned char byte = (unsigned char)source[input_index];
+        unsigned char decoded;
+        latticra_status_t status;
+
+        if (byte == 0u) {
+            return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+        }
+
+        if (byte != (unsigned char)'\\') {
+            status = append_decoded_byte(destination, destination_len, &output_index, byte);
+            if (status != LATTICRA_STATUS_OK) {
+                return status;
+            }
+            input_index += 1u;
+            continue;
+        }
+
+        if (input_index + 1u >= end_offset) {
+            return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+        }
+
+        byte = (unsigned char)source[input_index + 1u];
+        if (byte == (unsigned char)'\\') {
+            decoded = (unsigned char)'\\';
+            input_index += 2u;
+        } else if (byte == (unsigned char)'"') {
+            decoded = (unsigned char)'"';
+            input_index += 2u;
+        } else if (byte == (unsigned char)'n') {
+            decoded = (unsigned char)'\n';
+            input_index += 2u;
+        } else if (byte == (unsigned char)'r') {
+            decoded = (unsigned char)'\r';
+            input_index += 2u;
+        } else if (byte == (unsigned char)'t') {
+            decoded = (unsigned char)'\t';
+            input_index += 2u;
+        } else if (byte == (unsigned char)'x') {
+            unsigned char high;
+            unsigned char low;
+            if (input_index + 3u >= end_offset) {
+                return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+            }
+            high = (unsigned char)source[input_index + 2u];
+            low = (unsigned char)source[input_index + 3u];
+            if (!is_upper_hex_digit(high) || !is_upper_hex_digit(low)) {
+                return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+            }
+            decoded = (unsigned char)((upper_hex_value(high) << 4u) | upper_hex_value(low));
+            input_index += 4u;
+        } else {
+            return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+        }
+
+        status = append_decoded_byte(destination, destination_len, &output_index, decoded);
+        if (status != LATTICRA_STATUS_OK) {
+            return status;
+        }
     }
 
-    (void)memcpy(destination, source + start_offset, value_len);
-    destination[value_len] = '\0';
+    destination[output_index] = '\0';
     return LATTICRA_STATUS_OK;
 }
 
-static latticra_status_t extract_quoted_value_after_token(
+static latticra_status_t extract_decoded_quoted_value_after_token(
     const char *source,
     size_t source_len,
     const char *token,
@@ -308,7 +397,7 @@ static latticra_status_t extract_quoted_value_after_token(
             continue;
         }
         if (ch == '"') {
-            latticra_status_t status = copy_extracted_value(
+            latticra_status_t status = decode_l_ui_string_literal_value(
                 source,
                 value_start,
                 value_end,
@@ -509,7 +598,7 @@ latticra_status_t latticra_l_ui_parse_ast(
         return ast_internal_error(ast, &parse_result);
     }
 
-    status = extract_quoted_value_after_token(
+    status = extract_decoded_quoted_value_after_token(
         source,
         source_len,
         "purpose ",
@@ -521,7 +610,7 @@ latticra_status_t latticra_l_ui_parse_ast(
         return ast_internal_error(ast, &parse_result);
     }
 
-    status = extract_quoted_value_after_token(
+    status = extract_decoded_quoted_value_after_token(
         source,
         source_len,
         "text ",
@@ -533,7 +622,7 @@ latticra_status_t latticra_l_ui_parse_ast(
         return ast_internal_error(ast, &parse_result);
     }
 
-    status = extract_quoted_value_after_token(
+    status = extract_decoded_quoted_value_after_token(
         source,
         source_len,
         "text ",

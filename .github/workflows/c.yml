@@ -81,3 +81,5 @@ jobs:
         run: sh scripts/test-l-ui-string-literal-escape-contract.sh
       - name: Run L-UI string-literal escape implementation plan guard
         run: sh scripts/test-l-ui-string-literal-escape-implementation-plan.sh
+      - name: Run L-UI string-literal escape tests
+        run: sh scripts/test-l-ui-string-literal-escape.sh

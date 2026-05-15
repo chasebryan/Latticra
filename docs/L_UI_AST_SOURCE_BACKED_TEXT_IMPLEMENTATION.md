@@ -9,6 +9,8 @@ The L-UI AST Source-Backed Text implementation extracts AST purpose and text val
 
 It keeps AST storage fixed-size, copies extracted text into AST-owned buffers, preserves no-effect behavior, and leaves parser validation as the gate before extraction.
 
+Accepted string-literal escapes are now decoded during AST value materialization by the later L-UI string-literal escape implementation.
+
 ## Implementation files
 
 ```text
@@ -37,18 +39,20 @@ value=preview-only no-live-movement no-host-effect no-external-effect
 
 ## Private helpers
 
-The implementation adds private helpers in `src/l_ui_parser_ast.c`:
+The original source-backed implementation added private helpers in `src/l_ui_parser_ast.c`:
 
 ```text
 extract_quoted_value_after_token
 copy_extracted_value
 ```
 
+The string-literal escape implementation later replaced raw value copying with private decoding helpers while preserving the same extraction targets.
+
 These helpers remain private.
 
 ## Quote behavior
 
-The implementation copies bytes between the opening and closing quote.
+The implementation copies source-backed contents between the opening and closing quote into AST-owned buffers.
 
 For source:
 
@@ -66,11 +70,19 @@ xyz
 
 The surrounding quotes are not copied into AST values.
 
-## Escape handling boundary
+Escaped quotes are respected when finding the closing quote.
 
-The implementation does not decode string escapes.
+## Escape handling relationship
 
-It copies raw bytes between quotes while respecting escaped quotes for finding the closing quote.
+The initial source-backed extraction phase copied raw bytes between quotes while respecting escaped quotes for finding the closing quote.
+
+Current AST value materialization decodes accepted string-literal escapes according to:
+
+```text
+L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md
+L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md
+L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md
+```
 
 For example, source bytes representing:
 
@@ -78,17 +90,30 @@ For example, source bytes representing:
 raw\ntext
 ```
 
-remain AST bytes representing:
+now become AST bytes representing:
+
+```text
+raw
+text
+```
+
+and detailed report escaped fields render that decoded newline safely as:
 
 ```text
 raw\ntext
 ```
 
-not a decoded newline.
+Rejected string escapes classify AST construction with:
+
+```text
+LATTICRA_L_UI_PARSE_INTERNAL_ERROR
+```
+
+until parser-level string escape diagnostics are designed.
 
 ## Capacity behavior
 
-Extraction respects destination capacities:
+Extraction and decoding respect destination capacities:
 
 ```text
 LATTICRA_L_UI_AST_PURPOSE_MAX
@@ -96,7 +121,7 @@ LATTICRA_L_UI_AST_PURPOSE_MAX for text values
 LATTICRA_L_UI_AST_TEXT_MAX for text node count
 ```
 
-If an extracted value is too large for its destination, AST construction classifies the result as:
+If an extracted or decoded value is too large for its destination, AST construction classifies the result as:
 
 ```text
 LATTICRA_L_UI_PARSE_INTERNAL_ERROR
@@ -104,17 +129,19 @@ LATTICRA_L_UI_PARSE_INTERNAL_ERROR
 
 and leaves counts at zero to avoid a partial AST.
 
-The implementation does not silently truncate extracted values.
+The implementation does not silently truncate extracted or decoded values.
 
 ## Span behavior
 
 The implementation does not add a public purpose span.
 
-`text.span` is set to the extracted text value range for text nodes. `card.span` continues to cover the card block.
+`text.span` is set to the source text value range for text nodes. `card.span` continues to cover the card block.
+
+Text spans refer to source byte ranges, not decoded output byte ranges.
 
 ## Successful parse rule
 
-Extraction runs only after:
+Extraction and decoding run only after:
 
 ```text
 latticra_l_ui_parse_source
@@ -122,7 +149,7 @@ latticra_l_ui_parse_source
 
 returns `LATTICRA_STATUS_OK` and `parse_result.error == LATTICRA_L_UI_PARSE_OK`.
 
-If parsing fails, extraction does not run.
+If parsing fails, extraction and decoding do not run.
 
 ## Detailed report relationship
 
@@ -135,7 +162,9 @@ value=<literal-text>
 value_escaped=<escaped-text>
 ```
 
-After source-backed extraction, these values reflect the validated source values.
+After source-backed extraction and accepted string-literal escape decoding, these values reflect decoded AST values.
+
+The escaped report fields remain the stable assertion target for control bytes, quotes, backslashes, DEL, and non-ASCII bytes.
 
 ## Failed parse behavior
 
@@ -176,7 +205,7 @@ boundary=preview_only
 
 ## No-effect boundary
 
-Source-backed text extraction preserves:
+Source-backed text extraction and string-literal escape decoding preserve:
 
 ```text
 no_effect=1
@@ -216,25 +245,25 @@ source_backed_text_rejects_or_classifies_oversized_purpose
 source_backed_text_rejects_or_classifies_oversized_text
 source_backed_text_does_not_change_failed_parse_report
 source_backed_text_is_deterministic
-source_backed_text_does_not_decode_escapes
+source_backed_text_decodes_accepted_string_escapes
 ```
 
 ## Current evidence level
 
-This implementation is an L2 tested source-backed text extraction model for validated L-UI AST metadata.
+This implementation is an L2 tested source-backed text extraction model for validated L-UI AST metadata, now paired with tested string-literal escape decoding.
 
-It is not a broader text grammar, string escape decoder, Unicode display model, renderer, UI runtime, command surface, Nucleus task runner, server client, update engine, recovery system, hardware system, boot system, or security boundary.
+It is not a broader non-string grammar, Unicode display model, renderer, UI runtime, command surface, Nucleus task runner, server client, update engine, recovery system, hardware system, boot system, or security boundary.
 
 ## Next implementation step
 
-The next implementation candidate after source-backed text extraction is:
+The next implementation candidate after source-backed text extraction and string-literal escape decoding is:
 
 ```text
-L-UI string-literal escape contract
+L-UI parser-level string escape diagnostics contract
 ```
 
-That future work should define whether and how string escapes are decoded before AST extraction decodes escape sequences.
+That future work should decide whether invalid string escapes receive first-class parser diagnostic codes instead of AST-level internal-error classification.
 
 ## Non-claims
 
-This document and implementation do not broaden accepted L-UI text syntax, implement string escape decoding, implement Unicode display behavior, add L-UI rendering, add command behavior, add Nucleus task handling, add live movement, add origin mutation, add recovery behavior, add server interaction, add self-update, add hardware support, add boot readiness, claim security isolation, claim sandboxing, or claim operating-system completeness.
+This document and implementation do not broaden non-string L-UI syntax, implement Unicode display behavior, add L-UI rendering, add command behavior, add Nucleus task handling, add live movement, add origin mutation, add recovery behavior, add server interaction, add self-update, add hardware support, add boot readiness, claim security isolation, claim sandboxing, or claim operating-system completeness.
