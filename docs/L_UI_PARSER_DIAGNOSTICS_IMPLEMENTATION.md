@@ -1,7 +1,7 @@
 # Latticra L-UI Parser Diagnostics Implementation
 
-Status: initial implementation contract
-Scope: diagnostic severity, stable codes, stable messages, hints, no-effect flags, and deterministic diagnostic reports.
+Status: implementation contract
+Scope: diagnostic severity, stable codes, stable messages, hints, source spans, no-effect flags, and deterministic diagnostic reports.
 
 ## Purpose
 
@@ -15,7 +15,9 @@ It turns `latticra_l_ui_parse_result_t` into `latticra_l_ui_diagnostic_t` and re
 include/latticra/l_ui_parser.h
 src/l_ui_parser_diagnostics.c
 tests/l_ui_parser_diagnostics_invariants.c
+tests/l_ui_parser_source_span_invariants.c
 scripts/test-l-ui-parser-diagnostics.sh
+scripts/test-l-ui-parser-source-span.sh
 ```
 
 ## Public API
@@ -43,6 +45,7 @@ message
 hint
 line
 column
+span
 no_effect
 execution_allowed
 mutation_allowed
@@ -50,6 +53,19 @@ server_allowed
 recovery_allowed
 hardware_allowed
 ```
+
+The diagnostic span contains:
+
+```text
+start_offset
+end_offset
+start_line
+start_column
+end_line
+end_column
+```
+
+Diagnostics copy span metadata from parse results.
 
 ## Report shape
 
@@ -69,6 +85,12 @@ mutation_allowed=<0|1>
 server_allowed=<0|1>
 recovery_allowed=<0|1>
 hardware_allowed=<0|1>
+span_start_offset=<n>
+span_end_offset=<n>
+span_start_line=<n>
+span_start_column=<n>
+span_end_line=<n>
+span_end_column=<n>
 ```
 
 ## Stable diagnostic mapping
@@ -108,15 +130,16 @@ recovery_allowed=0
 hardware_allowed=0
 ```
 
-## Test command
+## Test commands
 
 Run:
 
 ```sh
 sh scripts/test-l-ui-parser-diagnostics.sh
+sh scripts/test-l-ui-parser-source-span.sh
 ```
 
-The main C workflow runs this check after the parser diagnostics implementation plan guard.
+The main C workflow runs these checks after the parser diagnostics implementation plan guard and source-span implementation plan guard.
 
 ## Required invariants
 
@@ -149,22 +172,24 @@ diagnostic_report_rejects_bad_arguments_and_small_buffers
 severity_labels_are_stable
 ```
 
+The source-span tests verify diagnostic span copying and diagnostic report span fields.
+
 ## Current evidence level
 
-This implementation is an L2 tested diagnostics model for the L-UI parser.
+This implementation is an L2 tested diagnostics and source-span metadata model for the L-UI parser.
 
-It is not a renderer, UI runtime, command surface, Nucleus task runner, server client, update engine, recovery system, hardware system, boot system, or security boundary.
+It is not a renderer, UI runtime, command surface, Nucleus task runner, server client, update engine, recovery system, hardware system, boot system, AST system, or security boundary.
 
 ## Next implementation step
 
-The next implementation candidate after diagnostics is:
+The next implementation candidate after source spans is:
 
 ```text
-L-UI parser line-column precision plan
+L-UI parser AST contract
 ```
 
-That future work should plan richer location tracking before implementing more precise diagnostics.
+That future work should define AST shape, node ownership, source-span usage, and no-effect boundaries before any AST implementation.
 
 ## Non-claims
 
-This document and implementation do not claim L-UI rendering, command behavior, Nucleus task handling, live movement, origin mutation, recovery behavior, server interaction, self-update, hardware support, boot readiness, security isolation, sandboxing, or operating-system completeness.
+This document and implementation do not claim AST construction, L-UI rendering, command behavior, Nucleus task handling, live movement, origin mutation, recovery behavior, server interaction, self-update, hardware support, boot readiness, security isolation, sandboxing, or operating-system completeness.
