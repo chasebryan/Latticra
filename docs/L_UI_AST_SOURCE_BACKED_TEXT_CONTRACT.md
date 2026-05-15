@@ -9,11 +9,13 @@ This document defines the source-backed text extraction contract for the L-UI AS
 
 The AST implementation extracts purpose and text values from validated `NucleusPreview` source while preserving source spans, escaped reporting, no-effect behavior, and deterministic output.
 
-The implementation is documented separately in [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md).
+The source-backed extraction implementation is documented separately in [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md).
+
+The later string-literal escape decoder is documented separately in [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md).
 
 ## Current boundary
 
-The current AST stack provides:
+The current L-UI AST stack provides:
 
 ```text
 validated L-UI parser
@@ -21,6 +23,7 @@ source spans
 fixed-size AST metadata
 source-backed purpose value
 source-backed text values
+string-literal escape decoding for accepted source escapes
 compact AST report
 detailed AST report
 escaped detailed report fields
@@ -30,7 +33,6 @@ no-effect flags
 This contract does not add:
 
 ```text
-new accepted grammar
 new renderer behavior
 interactive UI behavior
 command behavior
@@ -110,7 +112,7 @@ LATTICRA_L_UI_AST_PURPOSE_MAX
 LATTICRA_L_UI_AST_TEXT_MAX
 ```
 
-The first implementation classifies oversized extracted strings with:
+The implementation classifies oversized extracted or decoded strings with:
 
 ```text
 LATTICRA_L_UI_PARSE_INTERNAL_ERROR
@@ -133,8 +135,10 @@ card.span covers the card block
 For text:
 
 ```text
-text.span covers the extracted text value range
+text.span covers the source text value range
 ```
+
+Source spans refer to source byte ranges, not decoded output byte ranges.
 
 No public `purpose_span` field is added in the first source-backed extraction implementation.
 
@@ -158,19 +162,29 @@ xyz
 
 The surrounding quotes are not copied into AST values.
 
-## Escape handling boundary
+Escaped quotes are respected when finding the closing quote.
 
-Current L-UI string escape semantics are not fully defined.
+## Escape handling relationship
 
-The first source-backed extraction does not introduce broad escape decoding.
+The initial source-backed extraction phase copied raw bytes between quotes without decoding escapes.
 
-Behavior:
+Current source-backed AST values now decode accepted string-literal escapes according to:
 
 ```text
-copy raw bytes between quotes without decoding escapes
+L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md
+L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md
+L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md
 ```
 
-Escaped quotes may be respected to find the closing quote, but the resulting AST value keeps the raw backslash and quote bytes.
+Accepted escapes such as `\n`, `\r`, `\t`, `\"`, `\\`, and uppercase `\xNN` decode before values are stored in AST-owned buffers.
+
+Rejected escapes are classified through:
+
+```text
+LATTICRA_L_UI_PARSE_INTERNAL_ERROR
+```
+
+until parser-level string escape diagnostics are designed.
 
 ## Detailed report relationship
 
@@ -183,7 +197,9 @@ value=<literal-text>
 value_escaped=<escaped-text>
 ```
 
-After source-backed extraction, those report values reflect extracted source values.
+After source-backed extraction and accepted string-literal escape decoding, those report values reflect decoded AST values.
+
+The escaped report fields remain the stable assertion target for control bytes, quotes, backslashes, DEL, and non-ASCII bytes.
 
 ## Failed parse behavior
 
@@ -199,9 +215,9 @@ failed-parse detailed report only
 
 ## No-effect rule
 
-Source-backed text extraction is metadata-only.
+Source-backed text extraction and string-literal escape decoding are metadata-only.
 
-It preserves:
+They preserve:
 
 ```text
 no_effect=1
@@ -214,7 +230,7 @@ hardware_allowed=0
 
 ## Compatibility rule
 
-Source-backed text extraction does not change:
+Source-backed text extraction and string-literal escape decoding do not change:
 
 ```text
 latticra_l_ui_parse_source
@@ -250,6 +266,8 @@ Source-backed text extraction implementation required a separate implementation 
 
 That plan is recorded in [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md).
 
+String-literal escape decoding required a separate implementation plan before decoder code. That plan is recorded in [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md).
+
 ## Test list
 
 Source-backed text implementation tests verify:
@@ -269,7 +287,7 @@ source_backed_text_rejects_or_classifies_oversized_purpose
 source_backed_text_rejects_or_classifies_oversized_text
 source_backed_text_does_not_change_failed_parse_report
 source_backed_text_is_deterministic
-source_backed_text_does_not_decode_escapes
+source_backed_text_decodes_accepted_string_escapes
 ```
 
 ## Forbidden behavior
@@ -305,4 +323,4 @@ The guard is static. It validates the contract text.
 
 ## Non-claims
 
-This document does not broaden accepted L-UI text syntax, implement string escape decoding, implement Unicode display behavior, add L-UI rendering, add command behavior, add Nucleus task handling, add live movement, add origin mutation, add recovery behavior, add server interaction, add self-update, add hardware support, add boot readiness, claim security isolation, claim sandboxing, or claim operating-system completeness.
+This document does not broaden non-string L-UI syntax, implement Unicode display behavior, add L-UI rendering, add command behavior, add Nucleus task handling, add live movement, add origin mutation, add recovery behavior, add server interaction, add self-update, add hardware support, add boot readiness, claim security isolation, claim sandboxing, or claim operating-system completeness.
