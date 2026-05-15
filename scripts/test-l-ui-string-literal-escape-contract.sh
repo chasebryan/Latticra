@@ -18,7 +18,9 @@ if [ ! -f "$doc" ]; then
 fi
 
 require_contains 'Status: string-literal escape contract' "$doc"
-require_contains 'This document does not implement string-literal escape decoding.' "$doc"
+require_contains 'Scope: decoding rules for quoted L-UI source strings used by source-backed AST purpose and text values.' "$doc"
+require_contains 'The implementation is documented separately' "$doc"
+require_contains 'Current boundary' "$doc"
 require_contains 'Escape decoding purpose' "$doc"
 require_contains 'Accepted escape set' "$doc"
 require_contains 'Hex escape rule' "$doc"
@@ -29,11 +31,12 @@ require_contains 'NUL byte rule' "$doc"
 require_contains 'Storage rule' "$doc"
 require_contains 'Source-span rule' "$doc"
 require_contains 'Report relationship' "$doc"
-require_contains 'Failed parse behavior' "$doc"
+require_contains 'Failure behavior' "$doc"
 require_contains 'No-effect rule' "$doc"
 require_contains 'Compatibility rule' "$doc"
-require_contains 'Implementation gate' "$doc"
-require_contains 'Future test list' "$doc"
+require_contains 'Implementation evidence' "$doc"
+require_contains 'Test list' "$doc"
+require_contains 'Current validation commands' "$doc"
 require_contains 'Forbidden behavior' "$doc"
 require_contains 'Non-claims' "$doc"
 
@@ -42,7 +45,9 @@ for target in \
   text.value \
   latticra_l_ui_ast_card_t.purpose \
   latticra_l_ui_ast_text_t.value \
-  LATTICRA_L_UI_PARSE_INTERNAL_ERROR
+  LATTICRA_L_UI_PARSE_INTERNAL_ERROR \
+  L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md \
+  L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md
 do
   require_contains "$target" "$doc"
 done
@@ -54,26 +59,29 @@ for escape_rule in \
   'CR `0x0D`' \
   'horizontal tab `0x09`' \
   'byte value from two uppercase hexadecimal digits' \
-  'No other escape sequences should be accepted'
+  'No other escape sequences are accepted' \
+  'exactly two uppercase hexadecimal digits'
 do
   require_contains "$escape_rule" "$doc"
 done
 
 for reject_rule in \
-  'Lowercase hexadecimal digits should be rejected' \
-  'Unknown escape sequences should be rejected' \
-  'Unterminated escape sequences should be rejected' \
-  'reject decoded NUL bytes' \
-  'must not silently truncate decoded output'
+  'Lowercase hexadecimal digits are rejected' \
+  'Unknown escape sequences are rejected' \
+  'Unterminated escape sequences are rejected' \
+  'this implementation rejects decoded NUL bytes' \
+  'Literal `0x00` source bytes inside AST string values are also rejected.' \
+  'The implementation does not silently truncate decoded output.'
 do
   require_contains "$reject_rule" "$doc"
 done
 
 for report_field in \
-  'purpose=<decoded-or-current-literal-purpose>' \
-  'purpose_escaped=<report-escaped-purpose>' \
-  'value=<decoded-or-current-literal-text>' \
-  'value_escaped=<report-escaped-text>'
+  'purpose=<decoded-purpose-as-current-C-string>' \
+  'purpose_escaped=<report-safe-purpose>' \
+  'value=<decoded-text-as-current-C-string>' \
+  'value_escaped=<report-safe-text>' \
+  'escaped report fields remain the stable assertion target'
 do
   require_contains "$report_field" "$doc"
 done
@@ -83,7 +91,8 @@ for compat in \
   'latticra_l_ui_ast_report existing required fields' \
   'latticra_l_ui_ast_detailed_report existing required fields' \
   'latticra_l_ui_diagnostic_report existing required fields' \
-  'existing escaped report field semantics'
+  'existing escaped report field semantics' \
+  'existing accepted fixture summary counts'
 do
   require_contains "$compat" "$doc"
 done
@@ -106,16 +115,19 @@ for test_name in \
   string_escape_decodes_carriage_return \
   string_escape_decodes_tab \
   string_escape_decodes_uppercase_hex \
+  string_escape_decodes_high_byte_hex \
   string_escape_rejects_lowercase_hex \
   string_escape_rejects_short_hex \
   string_escape_rejects_invalid_hex \
   string_escape_rejects_unknown_escape \
   string_escape_rejects_unterminated_escape \
   string_escape_rejects_decoded_nul_until_length_storage_exists \
+  string_escape_rejects_literal_nul_until_length_storage_exists \
   string_escape_rejects_oversized_decoded_output \
   string_escape_preserves_source_spans \
   string_escape_updates_detailed_report_escaped_fields \
   string_escape_preserves_no_effect_flags \
+  string_escape_does_not_change_parse_source_summary \
   string_escape_does_not_change_failed_parse_report \
   string_escape_is_deterministic
 do
@@ -138,6 +150,7 @@ for forbidden in \
   'treat bindings as executable references' \
   'silently truncate decoded values' \
   'emit raw control bytes in escaped report fields' \
+  'decode bindings, field names, rail names, card names, effect values, or boundary values' \
   'broaden accepted grammar beyond this contract without a grammar update'
 do
   require_contains "$forbidden" "$doc"
