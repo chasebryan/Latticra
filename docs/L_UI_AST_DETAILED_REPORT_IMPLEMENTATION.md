@@ -1,13 +1,13 @@
 # Latticra L-UI AST Detailed Report Implementation
 
 Status: implementation contract
-Scope: bounded detailed AST reporting for card, rail, field, text, source-span, escaped string, and no-effect metadata.
+Scope: bounded detailed AST reporting for card, rail, field, text, source-span, escaped string, source-backed text, and no-effect metadata.
 
 ## Purpose
 
 The L-UI AST Detailed Report implementation renders deterministic text for the fixed-size L-UI AST metadata model.
 
-It makes card, rail, field, text, source-span, binding-span, and escaped string metadata visible without adding rendering, command behavior, Nucleus task handling, live movement, state mutation, server interaction, recovery behavior, self-update behavior, hardware behavior, or boot behavior.
+It makes card, rail, field, source-backed text, source-span, binding-span, and escaped string metadata visible without adding rendering, command behavior, Nucleus task handling, live movement, state mutation, server interaction, recovery behavior, self-update behavior, hardware behavior, or boot behavior.
 
 ## Implementation files
 
@@ -16,8 +16,10 @@ include/latticra/l_ui_parser.h
 src/l_ui_parser_ast.c
 tests/l_ui_parser_ast_detailed_report_invariants.c
 tests/l_ui_ast_escaped_string_report_invariants.c
+tests/l_ui_ast_source_backed_text_invariants.c
 scripts/test-l-ui-ast-detailed-report.sh
 scripts/test-l-ui-ast-escaped-string-report.sh
+scripts/test-l-ui-ast-source-backed-text.sh
 ```
 
 ## Public API
@@ -65,6 +67,17 @@ Then it renders sections in deterministic order:
 ```
 
 Unused capacity slots are not printed.
+
+## Source-backed report values
+
+The detailed report reflects source-backed AST values for:
+
+```text
+purpose=<literal-purpose>
+value=<literal-text>
+```
+
+When validated source purpose/text values change, detailed report literal and escaped fields change with the AST-owned copies.
 
 ## Escaped string fields
 
@@ -128,7 +141,7 @@ recovery_allowed=0
 hardware_allowed=0
 ```
 
-No partial AST nodes or escaped fields are printed for failed parses.
+No partial AST nodes, source-backed text values, or escaped fields are printed for failed parses.
 
 ## Escaping policy
 
@@ -138,7 +151,7 @@ Escaped string fields use the byte-oriented escaping model documented in:
 docs/L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION.md
 ```
 
-The first implementation renders current literal fields for compatibility while adding escaped fields for fixture-safe comparisons and future broader text handling.
+The implementation renders current literal fields for compatibility while adding escaped fields for fixture-safe comparisons and future broader text handling.
 
 ## Compatibility
 
@@ -173,9 +186,10 @@ Run:
 ```sh
 sh scripts/test-l-ui-ast-detailed-report.sh
 sh scripts/test-l-ui-ast-escaped-string-report.sh
+sh scripts/test-l-ui-ast-source-backed-text.sh
 ```
 
-The main C workflow runs these checks after the detailed report implementation-plan guard and escaped string report implementation-plan guard.
+The main C workflow runs these checks after the detailed report implementation-plan guard, escaped string report implementation-plan guard, and source-backed text implementation-plan guard.
 
 ## Required invariants
 
@@ -205,21 +219,23 @@ detailed_report_handles_failed_parse
 
 The escaped string report tests verify additive escaped purpose/text fields and byte-oriented escaping behavior.
 
+The source-backed text tests verify detailed report literal and escaped fields update from validated source values.
+
 ## Current evidence level
 
-This implementation is an L2 tested detailed metadata and escaped string report for the fixed-size L-UI AST.
+This implementation is an L2 tested detailed metadata, escaped string, and source-backed text report for the fixed-size L-UI AST.
 
 It is not a renderer, UI runtime, command surface, Nucleus task runner, server client, update engine, recovery system, hardware system, boot system, or security boundary.
 
 ## Next implementation step
 
-The next implementation candidate after escaped string reporting is:
+The next implementation candidate after source-backed text extraction is:
 
 ```text
-L-UI AST source-backed text extraction contract
+L-UI string-literal escape contract
 ```
 
-That future work should define how AST purpose and text values are extracted from source instead of fixed fixture metadata.
+That future work should define whether and how string escapes are decoded before AST extraction decodes escape sequences.
 
 ## Non-claims
 
