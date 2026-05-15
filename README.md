@@ -44,17 +44,28 @@ The system direction includes:
 
 ## Initial documentation
 
+Start with [`docs/FOUNDATION_INDEX.md`](docs/FOUNDATION_INDEX.md) for the full foundation map.
+
+Core seed documents:
+
 - [`docs/REAL_SYSTEM_CONTRACT.md`](docs/REAL_SYSTEM_CONTRACT.md) — real-system scope, rules, and non-confusion boundary.
 - [`docs/EVIDENCE_LADDER.md`](docs/EVIDENCE_LADDER.md) — promotion path from concept to real-system capability.
 - [`docs/PHASE1_IMPORT_RULE.md`](docs/PHASE1_IMPORT_RULE.md) — how Phase1 concepts may enter Latticra.
 - [`docs/NON_CLAIMS.md`](docs/NON_CLAIMS.md) — claims Latticra does not make yet.
 - [`docs/ARCHITECTURE_SEED.md`](docs/ARCHITECTURE_SEED.md) — initial architecture vocabulary and direction.
+- [`docs/LANGUAGE_STRATEGY.md`](docs/LANGUAGE_STRATEGY.md) — C, Rust, L, L-UI, and LIR roles.
+- [`docs/SUPERVISOR_ARCHITECTURE.md`](docs/SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor and orchestration architecture.
+- [`docs/ROADMAP.md`](docs/ROADMAP.md) — design-first implementation sequence.
 
 ## Current boundary
 
 Latticra currently contains the foundation contract only.
 
 It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, or operating system replacement.
+
+## License
+
+Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`](docs/LICENSE_POLICY.md).
 
 ## North star
 
