@@ -44,6 +44,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION_PLAN.md) — diagnostics API shape, exact tests, and report extension rules before diagnostic code.
 - [`L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md`](L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md) — diagnostic structs, mapping functions, report surface, and invariants.
 - [`L_UI_PARSER_LINE_COLUMN_PRECISION_PLAN.md`](L_UI_PARSER_LINE_COLUMN_PRECISION_PLAN.md) — line/column precision rules, newline policy, byte-column behavior, and future tests.
+- [`L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION_PLAN.md) — helper shapes, parser touch points, implementation tests, and boundaries before precise location code.
 
 ## Implementation rule
 
@@ -75,12 +76,13 @@ L-UI parser diagnostics contract + guardrails
 L-UI parser diagnostics implementation plan + guardrails
 L-UI parser diagnostics implementation + invariants
 L-UI parser line-column precision plan + guardrails
+L-UI parser line-column precision implementation plan + guardrails
 ```
 
 The next implementation target should be:
 
 ```text
-L-UI parser line-column precision implementation plan
+L-UI parser line-column precision implementation
 ```
 
-That target should define helper shapes, parser touch points, and exact implementation boundaries before changing parser location behavior.
+That target should add internal location helpers, parser touch-point updates, and invariant tests without changing the public parser API or adding live behavior.
