@@ -139,9 +139,10 @@ Extraction must respect destination capacities:
 ```text
 LATTICRA_L_UI_AST_PURPOSE_MAX
 LATTICRA_L_UI_AST_PURPOSE_MAX for text values
+LATTICRA_L_UI_AST_TEXT_MAX for text node count
 ```
 
-Because `latticra_l_ui_ast_text_t.value` currently uses `LATTICRA_L_UI_AST_PURPOSE_MAX`, the text extraction destination capacity is that field size.
+Because `latticra_l_ui_ast_text_t.value` currently uses `LATTICRA_L_UI_AST_PURPOSE_MAX`, the text extraction destination capacity is that field size. `LATTICRA_L_UI_AST_TEXT_MAX` remains the bounded capacity for the number of text nodes.
 
 If extracted text length is greater than or equal to the destination buffer length, extraction should return:
 
