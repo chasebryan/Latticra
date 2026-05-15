@@ -27,3 +27,5 @@ jobs:
         run: sh scripts/test-l-ui-grammar-fixtures.sh
       - name: Run L-UI parser design guard
         run: sh scripts/test-l-ui-parser-design.sh
+      - name: Run L-UI parser implementation plan guard
+        run: sh scripts/test-l-ui-parser-implementation-plan.sh
