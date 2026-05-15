@@ -61,8 +61,9 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_AST_SOURCE_BACKED_TEXT_CONTRACT.md`](L_UI_AST_SOURCE_BACKED_TEXT_CONTRACT.md) — source-backed extraction rules for AST purpose and text values before implementation.
 - [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md) — source-backed extraction helpers, quote handling, capacity behavior, span decisions, exact tests, and compatibility expectations.
 - [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md) — source-backed extraction of AST purpose and text values from validated L-UI source.
-- [`L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — future decoding rules for quoted L-UI source string escapes before implementation.
+- [`L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — decoding rules for quoted L-UI source string escapes.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md) — parser-level validation decision, AST decoding helper shape, NUL/capacity/span/report behavior, exact tests, and compatibility expectations before string-literal escape decoding.
+- [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md) — byte-oriented string-literal escape decoding for source-backed L-UI AST purpose and text values.
 
 ## Implementation rule
 
@@ -113,12 +114,13 @@ L-UI AST source-backed text implementation plan + guardrails
 L-UI AST source-backed text extraction implementation + invariants
 L-UI string-literal escape contract + guardrails
 L-UI string-literal escape implementation plan + guardrails
+L-UI string-literal escape decoding implementation + invariants
 ```
 
 The next implementation target should be:
 
 ```text
-L-UI string-literal escape decoding implementation
+L-UI parser-level string escape diagnostics contract
 ```
 
-That target should implement private AST string decoding helpers, accepted/rejected escape behavior, NUL rejection under current storage, capacity failure behavior, source-span preservation, detailed report compatibility, and no-effect invariants according to the implementation plan.
+That target should define parser-level invalid escape errors, diagnostic codes, source spans, messages, hints, compatibility expectations, and exact tests before parser diagnostics are extended.
