@@ -26,6 +26,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`SELF_UPDATE_MODEL.md`](SELF_UPDATE_MODEL.md) — staged signed update and rollback design.
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
+- [`LICENSE_POLICY.md`](LICENSE_POLICY.md) — Apache-2.0 project licensing, contributions, branding, and future notice rules.
 
 ## Implementation rule
 
