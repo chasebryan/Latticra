@@ -28,13 +28,14 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
 - [`LICENSE_POLICY.md`](LICENSE_POLICY.md) — Apache-2.0 project licensing, contributions, branding, and future notice rules.
 
-## Initial implementation documents
+## Initial implementation and design documents
 
 - [`STATE_LATTICE.md`](STATE_LATTICE.md) — first C state lattice fixture, invariant tests, report surface, and no-effect boundary.
 - [`TRI_PLANE_TRANSITION.md`](TRI_PLANE_TRANSITION.md) — pure preview transition model, denial reasons, and no-effect invariants.
 - [`NUCLEUS_PREVIEW.md`](NUCLEUS_PREVIEW.md) — Nucleus request/effect classification, report surface, and no-execution invariants.
 - [`L_UI_STATIC_REPORT.md`](L_UI_STATIC_REPORT.md) — terminal-facing L-UI static report fixture for Nucleus/state rails.
 - [`L_UI_SOURCE_GRAMMAR.md`](L_UI_SOURCE_GRAMMAR.md) — L-UI source grammar draft and `.lui` fixture guardrails.
+- [`L_UI_PARSER_DESIGN.md`](L_UI_PARSER_DESIGN.md) — parser design contract, error categories, no-effect constraints, and implementation gate.
 
 ## Implementation rule
 
@@ -49,7 +50,7 @@ No implementation code should be added until the relevant contract document exis
 
 ## Current priority
 
-Implemented foundation units:
+Implemented/guarded foundation units:
 
 ```text
 state lattice fixture + invariant tests
@@ -57,12 +58,13 @@ tri-plane transition model + invariant tests
 Nucleus preview request classification + report invariants
 L-UI static report fixture + rail invariants
 L-UI source grammar draft + fixture guardrails
+L-UI parser design contract + guardrails
 ```
 
 The next implementation target should be:
 
 ```text
-L-UI parser design contract
+L-UI parser implementation planning
 ```
 
-That target should define parser behavior, error categories, no-effect constraints, and fixture expectations before adding parser code.
+That target should decide parser implementation language, module shape, and exact test list before adding parser code.
