@@ -40,6 +40,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_PARSER.md`](L_UI_PARSER.md) — initial no-effect C parser, summary result, error labels, and parser invariants.
 - [`L_UI_PARSER_FIXTURE_INTEGRATION.md`](L_UI_PARSER_FIXTURE_INTEGRATION.md) — repository `.lui` fixture validation through controlled parser test input.
 - [`L_UI_PARSER_RESULT_REPORT.md`](L_UI_PARSER_RESULT_REPORT.md) — deterministic parser result summaries for valid and error parse states.
+- [`L_UI_PARSER_DIAGNOSTICS.md`](L_UI_PARSER_DIAGNOSTICS.md) — parser diagnostic codes, stable messages, line/column rules, and future diagnostics gate.
 
 ## Implementation rule
 
@@ -67,12 +68,13 @@ L-UI parser implementation plan + guardrails
 L-UI parser implementation + invariants
 L-UI parser fixture integration + repository fixture validation
 L-UI parser result report + invariants
+L-UI parser diagnostics contract + guardrails
 ```
 
 The next implementation target should be:
 
 ```text
-L-UI parser diagnostics contract
+L-UI parser diagnostics implementation plan
 ```
 
-That target should define stable diagnostic language and line/column behavior before richer parser diagnostics are implemented.
+That target should define diagnostic API shape, test list, and report extension rules before adding diagnostic code.
