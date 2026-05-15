@@ -10,6 +10,7 @@ extern "C" {
 #define LATTICRA_L_UI_SOURCE_MAX 65536u
 #define LATTICRA_L_UI_CARD_NAME_MAX 64u
 #define LATTICRA_L_UI_LABEL_MAX 32u
+#define LATTICRA_L_UI_PARSE_REPORT_MAX 768u
 
 typedef enum {
     LATTICRA_L_UI_PARSE_OK = 0,
@@ -57,6 +58,11 @@ latticra_status_t latticra_l_ui_parse_source(
     const char *source,
     size_t source_len,
     latticra_l_ui_parse_result_t *result);
+
+latticra_status_t latticra_l_ui_parse_result_report(
+    const latticra_l_ui_parse_result_t *result,
+    char *buffer,
+    size_t buffer_len);
 
 #ifdef __cplusplus
 }

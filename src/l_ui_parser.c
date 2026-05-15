@@ -346,3 +346,58 @@ latticra_status_t latticra_l_ui_parse_source(
 
     return LATTICRA_STATUS_OK;
 }
+
+latticra_status_t latticra_l_ui_parse_result_report(
+    const latticra_l_ui_parse_result_t *result,
+    char *buffer,
+    size_t buffer_len) {
+    int written;
+
+    if (result == 0 || buffer == 0) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+
+    written = snprintf(
+        buffer,
+        buffer_len,
+        "L-UI PARSE RESULT\n"
+        "status=%d\n"
+        "error=%s\n"
+        "line=%zu\n"
+        "column=%zu\n"
+        "card_name=%s\n"
+        "rail_count=%zu\n"
+        "field_count=%zu\n"
+        "effect=%s\n"
+        "boundary=%s\n"
+        "no_effect=%d\n"
+        "execution_allowed=%d\n"
+        "mutation_allowed=%d\n"
+        "server_allowed=%d\n"
+        "recovery_allowed=%d\n"
+        "hardware_allowed=%d\n",
+        (int)result->status,
+        latticra_l_ui_parse_error_label(result->error),
+        result->line,
+        result->column,
+        result->card_name,
+        result->rail_count,
+        result->field_count,
+        result->effect,
+        result->boundary,
+        result->no_effect,
+        result->execution_allowed,
+        result->mutation_allowed,
+        result->server_allowed,
+        result->recovery_allowed,
+        result->hardware_allowed);
+
+    if (written < 0 || (size_t)written >= buffer_len) {
+        if (buffer_len > 0u) {
+            buffer[0] = '\0';
+        }
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+
+    return LATTICRA_STATUS_OK;
+}

@@ -33,3 +33,5 @@ jobs:
         run: sh scripts/test-l-ui-parser.sh
       - name: Run L-UI parser fixture integration
         run: sh scripts/test-l-ui-parser-fixture-integration.sh
+      - name: Run L-UI parser result report tests
+        run: sh scripts/test-l-ui-parser-result-report.sh
