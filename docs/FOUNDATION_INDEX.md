@@ -47,6 +47,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION_PLAN.md) — helper shapes, parser touch points, implementation tests, and boundaries before precise location code.
 - [`L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION.md`](L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION.md) — private location helpers, parser touch-point updates, and location invariants.
 - [`L_UI_PARSER_SOURCE_SPAN_CONTRACT.md`](L_UI_PARSER_SOURCE_SPAN_CONTRACT.md) — future source ranges, span rules, byte offsets, line/column ranges, and no-effect boundaries.
+- [`L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION_PLAN.md) — source-span public API changes, report extensions, exact tests, and compatibility expectations before span code.
 
 ## Implementation rule
 
@@ -81,12 +82,13 @@ L-UI parser line-column precision plan + guardrails
 L-UI parser line-column precision implementation plan + guardrails
 L-UI parser line-column precision implementation + invariants
 L-UI parser source-span contract + guardrails
+L-UI parser source-span implementation plan + guardrails
 ```
 
 The next implementation target should be:
 
 ```text
-L-UI parser source-span implementation plan
+L-UI parser source-span implementation
 ```
 
-That target should define public API changes, struct placement, parse-result integration, diagnostics integration, report format changes, and exact tests before implementing spans.
+That target should add the planned public span struct, parse-result span field, diagnostic span field, report extensions, and invariant tests without adding AST or renderer behavior.
