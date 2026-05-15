@@ -90,8 +90,9 @@ Core seed documents:
 - [`docs/L_UI_AST_SOURCE_BACKED_TEXT_CONTRACT.md`](docs/L_UI_AST_SOURCE_BACKED_TEXT_CONTRACT.md) — source-backed extraction rules for AST purpose and text values before implementation.
 - [`docs/L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md`](docs/L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md) — source-backed extraction helpers, quote handling, capacity behavior, span decisions, exact tests, and compatibility expectations.
 - [`docs/L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md`](docs/L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md) — source-backed extraction of AST purpose and text values from validated L-UI source.
-- [`docs/L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](docs/L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — future decoding rules for quoted L-UI source string escapes before implementation.
+- [`docs/L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](docs/L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — decoding rules for quoted L-UI source string escapes.
 - [`docs/L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](docs/L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md) — parser-level validation decision, AST decoding helper shape, NUL/capacity/span/report behavior, exact tests, and compatibility expectations before string-literal escape decoding.
+- [`docs/L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](docs/L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md) — byte-oriented string-literal escape decoding for source-backed L-UI AST purpose and text values.
 
 Run the current implementation checks with:
 
@@ -129,13 +130,14 @@ sh scripts/test-l-ui-ast-source-backed-text-implementation-plan.sh
 sh scripts/test-l-ui-ast-source-backed-text.sh
 sh scripts/test-l-ui-string-literal-escape-contract.sh
 sh scripts/test-l-ui-string-literal-escape-implementation-plan.sh
+sh scripts/test-l-ui-string-literal-escape.sh
 ```
 
 ## Current boundary
 
-Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, repository fixture parser integration, parser result reporting, a parser diagnostics contract, a parser diagnostics implementation plan, parser diagnostics implementation, a line/column precision plan, a line/column precision implementation plan, line/column precision implementation, a source-span contract, a source-span implementation plan, source-span implementation, an AST contract, an AST implementation plan, an AST implementation, an AST detailed report contract, an AST detailed report implementation plan, an AST detailed report implementation, an AST escaped string report contract, an AST escaped string report implementation plan, an AST escaped string report implementation, an AST source-backed text contract, an AST source-backed text implementation plan, an AST source-backed text extraction implementation, a string-literal escape contract, and a string-literal escape implementation plan.
+Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, repository fixture parser integration, parser result reporting, a parser diagnostics contract, a parser diagnostics implementation plan, parser diagnostics implementation, a line/column precision plan, a line/column precision implementation plan, line/column precision implementation, a source-span contract, a source-span implementation plan, source-span implementation, an AST contract, an AST implementation plan, an AST implementation, an AST detailed report contract, an AST detailed report implementation plan, an AST detailed report implementation, an AST escaped string report contract, an AST escaped string report implementation plan, an AST escaped string report implementation, an AST source-backed text contract, an AST source-backed text implementation plan, an AST source-backed text extraction implementation, a string-literal escape contract, a string-literal escape implementation plan, and a string-literal escape decoding implementation.
 
-It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, L-UI rendering, string-literal escape decoding implementation, live movement, or operating system replacement.
+It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, L-UI rendering, parser-level string escape diagnostics, live movement, or operating system replacement.
 
 ## License
 
