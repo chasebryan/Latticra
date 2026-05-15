@@ -11,6 +11,10 @@ extern "C" {
 #define LATTICRA_L_UI_CARD_NAME_MAX 64u
 #define LATTICRA_L_UI_LABEL_MAX 32u
 #define LATTICRA_L_UI_PARSE_REPORT_MAX 768u
+#define LATTICRA_L_UI_DIAGNOSTIC_CODE_MAX 16u
+#define LATTICRA_L_UI_DIAGNOSTIC_MESSAGE_MAX 128u
+#define LATTICRA_L_UI_DIAGNOSTIC_HINT_MAX 128u
+#define LATTICRA_L_UI_DIAGNOSTIC_REPORT_MAX 1024u
 
 typedef enum {
     LATTICRA_L_UI_PARSE_OK = 0,
@@ -34,6 +38,12 @@ typedef enum {
     LATTICRA_L_UI_PARSE_INTERNAL_ERROR = 18
 } latticra_l_ui_parse_error_t;
 
+typedef enum {
+    LATTICRA_L_UI_DIAGNOSTIC_OK = 0,
+    LATTICRA_L_UI_DIAGNOSTIC_ERROR = 1,
+    LATTICRA_L_UI_DIAGNOSTIC_INTERNAL = 2
+} latticra_l_ui_diagnostic_severity_t;
+
 typedef struct {
     latticra_status_t status;
     latticra_l_ui_parse_error_t error;
@@ -52,7 +62,24 @@ typedef struct {
     int hardware_allowed;
 } latticra_l_ui_parse_result_t;
 
+typedef struct {
+    latticra_l_ui_diagnostic_severity_t severity;
+    char code[LATTICRA_L_UI_DIAGNOSTIC_CODE_MAX];
+    char message[LATTICRA_L_UI_DIAGNOSTIC_MESSAGE_MAX];
+    char hint[LATTICRA_L_UI_DIAGNOSTIC_HINT_MAX];
+    size_t line;
+    size_t column;
+    int no_effect;
+    int execution_allowed;
+    int mutation_allowed;
+    int server_allowed;
+    int recovery_allowed;
+    int hardware_allowed;
+} latticra_l_ui_diagnostic_t;
+
 const char *latticra_l_ui_parse_error_label(latticra_l_ui_parse_error_t error);
+const char *latticra_l_ui_diagnostic_severity_label(
+    latticra_l_ui_diagnostic_severity_t severity);
 
 latticra_status_t latticra_l_ui_parse_source(
     const char *source,
@@ -61,6 +88,15 @@ latticra_status_t latticra_l_ui_parse_source(
 
 latticra_status_t latticra_l_ui_parse_result_report(
     const latticra_l_ui_parse_result_t *result,
+    char *buffer,
+    size_t buffer_len);
+
+latticra_status_t latticra_l_ui_diagnostic_from_parse_result(
+    const latticra_l_ui_parse_result_t *parse_result,
+    latticra_l_ui_diagnostic_t *diagnostic);
+
+latticra_status_t latticra_l_ui_diagnostic_report(
+    const latticra_l_ui_diagnostic_t *diagnostic,
     char *buffer,
     size_t buffer_len);
 
