@@ -43,6 +43,8 @@ jobs:
         run: sh scripts/test-l-ui-parser-diagnostics.sh
       - name: Run L-UI parser string escape diagnostics contract guard
         run: sh scripts/test-l-ui-parser-string-escape-diagnostics-contract.sh
+      - name: Run L-UI parser string escape diagnostics implementation plan guard
+        run: sh scripts/test-l-ui-parser-string-escape-diagnostics-implementation-plan.sh
       - name: Run L-UI parser line-column precision plan guard
         run: sh scripts/test-l-ui-parser-line-column-precision-plan.sh
       - name: Run L-UI parser line-column implementation plan guard

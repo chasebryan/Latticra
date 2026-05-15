@@ -17,6 +17,8 @@ at the AST layer so the structural parser remains compatible. This contract defi
 
 This document does not implement parser-level string escape diagnostics.
 
+The implementation plan is documented separately in [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md).
+
 ## Relationship to existing diagnostics
 
 This contract extends the existing parser diagnostics track:
@@ -25,6 +27,7 @@ This contract extends the existing parser diagnostics track:
 docs/L_UI_PARSER_DIAGNOSTICS.md
 docs/L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION_PLAN.md
 docs/L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md
+docs/L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md
 docs/L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md
 docs/L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md
 docs/L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md
@@ -284,6 +287,8 @@ Parser-level string escape diagnostics implementation must not begin until a sep
 10. exact test file names;
 11. exact invariant tests.
 
+That plan is recorded in [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md).
+
 ## Future test list
 
 A future implementation plan should include tests for:
@@ -341,4 +346,4 @@ The guard is static. It does not implement parser-level string escape diagnostic
 
 ## Non-claims
 
-This document does not implement parser-level string escape diagnostics, change parser error enums, change diagnostic codes, change AST storage, implement length-carrying AST strings, broaden accepted L-UI syntax, implement Unicode display behavior, add L-UI rendering, add command behavior, add Nucleus task handling, add live movement, add origin mutation, add recovery behavior, add server interaction, add self-update, add hardware support, add boot readiness, claim security isolation, claim sandboxing, or claim operating-system completeness.
+This document does not implement parser-level string escape diagnostics, change parser error enums, change diagnostic codes, change AST storage, implement length-carrying AST strings, broaden accepted L-UI syntax, implement Unicode display behavior, add L-UI rendering, add command behavior, add Nucleus task handling, add live movement, add origin mutation, add recovery behavior, add server interaction, add self-update, add hardware support, add boot readiness, claim security isolation, claim sandboxing, or operating-system completeness.
