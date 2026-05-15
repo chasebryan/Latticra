@@ -134,6 +134,56 @@ static int unknown_request_is_denied(void) {
     return 0;
 }
 
+static int report_contains_operator_visible_fields(void) {
+    latticra_nucleus_preview_t preview;
+    char report[LATTICRA_NUCLEUS_REPORT_MAX];
+
+    EXPECT_TRUE(
+        latticra_nucleus_classify_preview(
+            LATTICRA_REQUEST_TRANSITION_PREVIEW,
+            LATTICRA_EFFECT_READ,
+            &preview) == LATTICRA_STATUS_OK,
+        "transition preview should classify before report");
+    EXPECT_TRUE(
+        latticra_nucleus_preview_report(&preview, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "preview report should fit default buffer");
+    EXPECT_TRUE(strstr(report, "LATTICRA NUCLEUS PREVIEW") != 0, "report title");
+    EXPECT_TRUE(strstr(report, "request=transition-preview") != 0, "report request");
+    EXPECT_TRUE(strstr(report, "requested_effect=read") != 0, "report effect");
+    EXPECT_TRUE(strstr(report, "policy=allow-preview") != 0, "report policy");
+    EXPECT_TRUE(strstr(report, "reason=ok") != 0, "report reason");
+    EXPECT_TRUE(strstr(report, "executed=0") != 0, "report executed flag");
+    EXPECT_TRUE(strstr(report, "mutation_allowed=0") != 0, "report mutation flag");
+    EXPECT_TRUE(strstr(report, "server_interaction_allowed=0") != 0, "report server flag");
+    EXPECT_TRUE(strstr(report, "recovery_allowed=0") != 0, "report recovery flag");
+    EXPECT_TRUE(strstr(report, "hardware_allowed=0") != 0, "report hardware flag");
+
+    return 0;
+}
+
+static int report_handles_denied_requests(void) {
+    latticra_nucleus_preview_t preview;
+    char report[LATTICRA_NUCLEUS_REPORT_MAX];
+
+    EXPECT_TRUE(
+        latticra_nucleus_classify_preview(
+            LATTICRA_REQUEST_SERVER_INTERACTION,
+            LATTICRA_EFFECT_NETWORK,
+            &preview) == LATTICRA_STATUS_OK,
+        "server preview should classify before report");
+    EXPECT_TRUE(
+        latticra_nucleus_preview_report(&preview, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "denied preview report should fit default buffer");
+    EXPECT_TRUE(strstr(report, "request=server-interaction") != 0, "denied report request");
+    EXPECT_TRUE(strstr(report, "requested_effect=network") != 0, "denied report effect");
+    EXPECT_TRUE(strstr(report, "policy=deny") != 0, "denied report policy");
+    EXPECT_TRUE(strstr(report, "reason=effect-requires-future-gate") != 0, "denied report reason");
+    EXPECT_TRUE(strstr(report, "executed=0") != 0, "denied report executed flag");
+    EXPECT_TRUE(strstr(report, "server_interaction_allowed=0") != 0, "denied report server flag");
+
+    return 0;
+}
+
 static int labels_are_stable(void) {
     EXPECT_STR_EQ(latticra_request_kind_label(LATTICRA_REQUEST_STATE_REPORT), "state-report", "request kind label");
     EXPECT_STR_EQ(latticra_policy_result_label(LATTICRA_POLICY_ALLOW_PREVIEW), "allow-preview", "policy result label");
@@ -143,12 +193,38 @@ static int labels_are_stable(void) {
 }
 
 static int null_preview_is_rejected(void) {
+    char report[LATTICRA_NUCLEUS_REPORT_MAX];
+    latticra_nucleus_preview_t preview;
+
     EXPECT_TRUE(
         latticra_nucleus_classify_preview(
             LATTICRA_REQUEST_STATE_REPORT,
             LATTICRA_EFFECT_NONE,
             0) == LATTICRA_STATUS_NULL_ARGUMENT,
         "NULL preview should be rejected");
+    EXPECT_TRUE(
+        latticra_nucleus_preview_report(0, report, sizeof(report)) == LATTICRA_STATUS_NULL_ARGUMENT,
+        "NULL report preview should be rejected");
+    EXPECT_TRUE(
+        latticra_nucleus_preview_report(&preview, 0, 0) == LATTICRA_STATUS_NULL_ARGUMENT,
+        "NULL report buffer should be rejected");
+
+    return 0;
+}
+
+static int report_rejects_small_buffers(void) {
+    latticra_nucleus_preview_t preview;
+    char small[8];
+
+    EXPECT_TRUE(
+        latticra_nucleus_classify_preview(
+            LATTICRA_REQUEST_STATE_REPORT,
+            LATTICRA_EFFECT_NONE,
+            &preview) == LATTICRA_STATUS_OK,
+        "state report should classify before small report check");
+    EXPECT_TRUE(
+        latticra_nucleus_preview_report(&preview, small, sizeof(small)) == LATTICRA_STATUS_BUFFER_TOO_SMALL,
+        "small report buffer should be rejected");
 
     return 0;
 }
@@ -169,10 +245,19 @@ int main(void) {
     if (unknown_request_is_denied() != 0) {
         return 1;
     }
+    if (report_contains_operator_visible_fields() != 0) {
+        return 1;
+    }
+    if (report_handles_denied_requests() != 0) {
+        return 1;
+    }
     if (labels_are_stable() != 0) {
         return 1;
     }
     if (null_preview_is_rejected() != 0) {
+        return 1;
+    }
+    if (report_rejects_small_buffers() != 0) {
         return 1;
     }
 
