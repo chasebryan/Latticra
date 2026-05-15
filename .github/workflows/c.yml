@@ -73,3 +73,5 @@ jobs:
         run: sh scripts/test-l-ui-ast-escaped-string-report.sh
       - name: Run L-UI AST source-backed text contract guard
         run: sh scripts/test-l-ui-ast-source-backed-text-contract.sh
+      - name: Run L-UI AST source-backed text implementation plan guard
+        run: sh scripts/test-l-ui-ast-source-backed-text-implementation-plan.sh
