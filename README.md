@@ -57,11 +57,21 @@ Core seed documents:
 - [`docs/SUPERVISOR_ARCHITECTURE.md`](docs/SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor and orchestration architecture.
 - [`docs/ROADMAP.md`](docs/ROADMAP.md) — design-first implementation sequence.
 
+## Initial implementation
+
+- [`docs/STATE_LATTICE.md`](docs/STATE_LATTICE.md) — first C state lattice fixture, invariant tests, and no-effect boundary.
+
+Run the current implementation check with:
+
+```sh
+sh scripts/test-state-lattice.sh
+```
+
 ## Current boundary
 
-Latticra currently contains the foundation contract only.
+Latticra currently contains foundation contracts and an initial no-effect state lattice fixture.
 
-It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, or operating system replacement.
+It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, or operating system replacement.
 
 ## License
 

@@ -28,6 +28,10 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
 - [`LICENSE_POLICY.md`](LICENSE_POLICY.md) — Apache-2.0 project licensing, contributions, branding, and future notice rules.
 
+## Initial implementation documents
+
+- [`STATE_LATTICE.md`](STATE_LATTICE.md) — first C state lattice fixture, invariant tests, report surface, and no-effect boundary.
+
 ## Implementation rule
 
 No implementation code should be added until the relevant contract document exists and names:
@@ -41,10 +45,16 @@ No implementation code should be added until the relevant contract document exis
 
 ## Current priority
 
-The first implementation target remains:
+The first implementation target is now:
 
 ```text
-lattice-state fixture + invariant tests
+state lattice fixture + invariant tests
 ```
 
-This target should not include live movement, hardware access, host mutation, server mutation, or update execution.
+The next implementation target after the state lattice fixture should be:
+
+```text
+tri-plane transition model
+```
+
+That target should not include live movement, hardware access, host mutation, server mutation, recovery execution, or update execution.
