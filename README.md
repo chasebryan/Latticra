@@ -71,6 +71,7 @@ Core seed documents:
 - [`docs/L_UI_PARSER_RESULT_REPORT.md`](docs/L_UI_PARSER_RESULT_REPORT.md) — deterministic parser result summaries for valid and error parse states.
 - [`docs/L_UI_PARSER_DIAGNOSTICS.md`](docs/L_UI_PARSER_DIAGNOSTICS.md) — parser diagnostic codes, stable messages, line/column rules, and future diagnostics gate.
 - [`docs/L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION_PLAN.md`](docs/L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION_PLAN.md) — diagnostics API shape, exact tests, and report extension rules before diagnostic code.
+- [`docs/L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md`](docs/L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md) — diagnostic structs, mapping functions, report surface, and invariants.
 
 Run the current implementation checks with:
 
@@ -87,13 +88,14 @@ sh scripts/test-l-ui-parser-fixture-integration.sh
 sh scripts/test-l-ui-parser-result-report.sh
 sh scripts/test-l-ui-parser-diagnostics-contract.sh
 sh scripts/test-l-ui-parser-diagnostics-implementation-plan.sh
+sh scripts/test-l-ui-parser-diagnostics.sh
 ```
 
 ## Current boundary
 
-Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, repository fixture parser integration, parser result reporting, a parser diagnostics contract, and a parser diagnostics implementation plan.
+Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, repository fixture parser integration, parser result reporting, a parser diagnostics contract, a parser diagnostics implementation plan, and parser diagnostics implementation.
 
-It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, L-UI rendering, richer parser diagnostics implementation, live movement, or operating system replacement.
+It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, L-UI rendering, live movement, or operating system replacement.
 
 ## License
 
