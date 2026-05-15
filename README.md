@@ -1,0 +1,61 @@
+# Latticra
+
+Status: real-system implementation seed
+Scope: formal implementation track for the Base1 / Phase1 / Fyr architecture.
+
+Latticra is the real-system implementation track for the Base1 / Phase1 / Fyr architecture.
+
+It is not the simulation lab. It is not a game. It is not a claim that a finished operating system exists today.
+
+Latticra exists to turn proven Phase1 concepts into a disciplined real-world system architecture through contracts, tests, evidence, formal state models, hardware profiles, and carefully gated implementation work.
+
+## Relationship to Phase1
+
+Phase1 remains the simulation, prototype, and evidence environment.
+
+Latticra is the implementation track that imports only what Phase1 has proven enough to promote.
+
+```text
+Phase1   -> explores, simulates, models, tests, and evaluates possibility
+Latticra -> formalizes, implements, validates, and promotes real-system capability
+```
+
+## Core idea
+
+Latticra treats computing as structured software universes built from explicit state lattices, grid-like execution domains, formal movement rules, safety gates, and evidence-backed promotion levels.
+
+The system direction includes:
+
+- Phase-derived operator movement and state models;
+- Base1-derived boot, recovery, and hardware evidence paths;
+- Fyr-derived native language and control surfaces;
+- Optics-derived state visibility and operator awareness;
+- lattice/grid/matrix-style state spaces for real embedded software universes.
+
+## First principles
+
+1. No real-world claim without evidence.
+2. No mutation before read-only visibility.
+3. No execution before a contract.
+4. No hardware effect before an explicit gate.
+5. No recovery action before rollback and failure behavior are documented.
+6. No concept promotion before tests and review.
+7. No confusion between simulation and implementation.
+
+## Initial documentation
+
+- [`docs/REAL_SYSTEM_CONTRACT.md`](docs/REAL_SYSTEM_CONTRACT.md) — real-system scope, rules, and non-confusion boundary.
+- [`docs/EVIDENCE_LADDER.md`](docs/EVIDENCE_LADDER.md) — promotion path from concept to real-system capability.
+- [`docs/PHASE1_IMPORT_RULE.md`](docs/PHASE1_IMPORT_RULE.md) — how Phase1 concepts may enter Latticra.
+- [`docs/NON_CLAIMS.md`](docs/NON_CLAIMS.md) — claims Latticra does not make yet.
+- [`docs/ARCHITECTURE_SEED.md`](docs/ARCHITECTURE_SEED.md) — initial architecture vocabulary and direction.
+
+## Current boundary
+
+Latticra currently contains the foundation contract only.
+
+It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, or operating system replacement.
+
+## North star
+
+Latticra is the path from tested simulation to real implementation: a professional, evidence-bound software universe architecture built from Phase1, Base1, and Fyr concepts only after they prove themselves.
