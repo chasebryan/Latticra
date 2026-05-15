@@ -156,13 +156,16 @@ static int parse_values(
            ast->parse_result.error == LATTICRA_L_UI_PARSE_OK;
 }
 
-static int expect_internal_for_purpose(const char *purpose, const char *message) {
+static int expect_parser_error_for_purpose(
+    const char *purpose,
+    latticra_l_ui_parse_error_t expected_error,
+    const char *message) {
     char source[8192];
     size_t source_len;
     latticra_l_ui_ast_result_t ast;
     EXPECT_TRUE(make_source(source, sizeof(source), purpose, "top", "bottom", &source_len), "invalid source builds");
     EXPECT_TRUE(latticra_l_ui_parse_ast(source, source_len, &ast) == LATTICRA_STATUS_OK, message);
-    EXPECT_TRUE(ast.parse_result.error == LATTICRA_L_UI_PARSE_INTERNAL_ERROR, "invalid escape classified internal");
+    EXPECT_TRUE(ast.parse_result.error == expected_error, "invalid escape parser error");
     EXPECT_TRUE(ast.rail_count == 0u && ast.field_count == 0u && ast.text_count == 0u, "invalid escape no partial AST");
     EXPECT_TRUE(ast.card.rail_count == 0u && ast.card.field_count == 0u && ast.card.text_count == 0u, "invalid escape no partial card counts");
     return 0;
@@ -241,27 +244,45 @@ static int string_escape_decodes_high_byte_hex(void) {
 }
 
 static int string_escape_rejects_lowercase_hex(void) {
-    return expect_internal_for_purpose("bad\\x0a", "lowercase hex AST status");
+    return expect_parser_error_for_purpose(
+        "bad\\x0a",
+        LATTICRA_L_UI_PARSE_INVALID_HEX_ESCAPE,
+        "lowercase hex AST status");
 }
 
 static int string_escape_rejects_short_hex(void) {
-    return expect_internal_for_purpose("bad\\x0", "short hex AST status");
+    return expect_parser_error_for_purpose(
+        "bad\\x0",
+        LATTICRA_L_UI_PARSE_INVALID_HEX_ESCAPE,
+        "short hex AST status");
 }
 
 static int string_escape_rejects_invalid_hex(void) {
-    return expect_internal_for_purpose("bad\\xGG", "invalid hex AST status");
+    return expect_parser_error_for_purpose(
+        "bad\\xGG",
+        LATTICRA_L_UI_PARSE_INVALID_HEX_ESCAPE,
+        "invalid hex AST status");
 }
 
 static int string_escape_rejects_unknown_escape(void) {
-    return expect_internal_for_purpose("bad\\a", "unknown escape AST status");
+    return expect_parser_error_for_purpose(
+        "bad\\a",
+        LATTICRA_L_UI_PARSE_INVALID_STRING_ESCAPE,
+        "unknown escape AST status");
 }
 
 static int string_escape_rejects_unterminated_escape(void) {
-    return expect_internal_for_purpose("bad\\x", "unterminated escape AST status");
+    return expect_parser_error_for_purpose(
+        "bad\\x",
+        LATTICRA_L_UI_PARSE_INVALID_HEX_ESCAPE,
+        "unterminated hex escape AST status");
 }
 
 static int string_escape_rejects_decoded_nul_until_length_storage_exists(void) {
-    return expect_internal_for_purpose("bad\\x00", "decoded NUL AST status");
+    return expect_parser_error_for_purpose(
+        "bad\\x00",
+        LATTICRA_L_UI_PARSE_DECODED_NUL_IN_STRING,
+        "decoded NUL AST status");
 }
 
 static int string_escape_rejects_literal_nul_until_length_storage_exists(void) {
@@ -281,7 +302,7 @@ static int string_escape_rejects_literal_nul_until_length_storage_exists(void) {
                     &source_len),
                 "literal NUL source builds");
     EXPECT_TRUE(latticra_l_ui_parse_ast(source, source_len, &ast) == LATTICRA_STATUS_OK, "literal NUL AST status");
-    EXPECT_TRUE(ast.parse_result.error == LATTICRA_L_UI_PARSE_INTERNAL_ERROR, "literal NUL classified internal");
+    EXPECT_TRUE(ast.parse_result.error == LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING, "literal NUL classified parser error");
     EXPECT_TRUE(ast.rail_count == 0u && ast.field_count == 0u && ast.text_count == 0u, "literal NUL no partial AST");
     return 0;
 }
@@ -301,7 +322,10 @@ static int fill_repeated(char *buffer, size_t len, char value) {
 static int string_escape_rejects_oversized_decoded_output(void) {
     char long_value[LATTICRA_L_UI_AST_PURPOSE_MAX + 1u];
     EXPECT_TRUE(fill_repeated(long_value, sizeof(long_value), 'x'), "long decoded value builds");
-    return expect_internal_for_purpose(long_value, "oversized decoded AST status");
+    return expect_parser_error_for_purpose(
+        long_value,
+        LATTICRA_L_UI_PARSE_STRING_VALUE_TOO_LARGE,
+        "oversized decoded AST status");
 }
 
 static int string_escape_preserves_source_spans(void) {
