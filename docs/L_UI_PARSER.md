@@ -1,13 +1,13 @@
 # Latticra L-UI Parser
 
-Status: initial implementation contract
-Scope: no-effect C parser for the first L-UI source fixture.
+Status: implementation contract
+Scope: no-effect C parser, parse summaries, source locations, and source spans for the first L-UI source fixture.
 
 ## Purpose
 
-The L-UI Parser is the first implementation of L-UI source validation.
+The L-UI Parser validates in-memory `.lui` source and returns a compact no-effect parse summary.
 
-It reads in-memory `.lui` source and returns a compact no-effect parse summary. It does not render UI, run L-UI behavior, perform file I/O, call Nucleus task handling, or mutate state.
+It does not render UI, run L-UI behavior, perform file I/O, call Nucleus task handling, or mutate state.
 
 ## Implementation files
 
@@ -15,7 +15,11 @@ It reads in-memory `.lui` source and returns a compact no-effect parse summary. 
 include/latticra/l_ui_parser.h
 src/l_ui_parser.c
 tests/l_ui_parser_invariants.c
+tests/l_ui_parser_location_invariants.c
+tests/l_ui_parser_source_span_invariants.c
 scripts/test-l-ui-parser.sh
+scripts/test-l-ui-parser-location.sh
+scripts/test-l-ui-parser-source-span.sh
 ```
 
 ## Source-size limit
@@ -34,14 +38,15 @@ source_too_large
 
 ## Public API
 
-Initial API:
+Current API:
 
 ```text
 latticra_l_ui_parse_error_label
 latticra_l_ui_parse_source
+latticra_l_ui_parse_result_report
 ```
 
-The first parser accepts in-memory source only. It does not read files directly.
+The parser accepts in-memory source only. It does not read files directly.
 
 ## Parse result
 
@@ -52,6 +57,7 @@ status
 error
 line
 column
+span
 card_name
 rail_count
 field_count
@@ -63,6 +69,17 @@ mutation_allowed
 server_allowed
 recovery_allowed
 hardware_allowed
+```
+
+The source span contains:
+
+```text
+start_offset
+end_offset
+start_line
+start_column
+end_line
+end_column
 ```
 
 For a valid fixture, the expected summary is:
@@ -81,6 +98,12 @@ mutation_allowed=0
 server_allowed=0
 recovery_allowed=0
 hardware_allowed=0
+span_start_offset=0
+span_end_offset=0
+span_start_line=1
+span_start_column=1
+span_end_line=1
+span_end_column=1
 ```
 
 ## Accepted fixture
@@ -129,19 +152,36 @@ The parser is intentionally conservative. It performs:
 - forbidden marker checks;
 - required rail checks;
 - required binding checks;
+- point-location metadata;
+- source-span metadata;
 - no-effect summary output.
 
 It does not produce a full AST yet.
 
-## Test command
+## Report shape
+
+The parser result report renders deterministic text and appends span fields:
+
+```text
+span_start_offset=<n>
+span_end_offset=<n>
+span_start_line=<n>
+span_start_column=<n>
+span_end_line=<n>
+span_end_column=<n>
+```
+
+## Test commands
 
 Run:
 
 ```sh
 sh scripts/test-l-ui-parser.sh
+sh scripts/test-l-ui-parser-location.sh
+sh scripts/test-l-ui-parser-source-span.sh
 ```
 
-The main C workflow runs the parser tests after existing state, transition, Nucleus, L-UI static report, grammar fixture, parser design, and parser plan guards.
+The main C workflow runs these checks after existing state, transition, Nucleus, L-UI static report, grammar fixture, parser design, and parser plan guards.
 
 ## Required invariants
 
@@ -171,22 +211,24 @@ error_results_preserve_no_execution_flags
 parse_error_labels_are_stable
 ```
 
+The source-span tests verify span offsets, exclusive end offsets, one-based line/column ranges, byte-based columns, LF/CRLF/CR handling, report fields, diagnostic span copying, and default success spans.
+
 ## Current evidence level
 
-This implementation is an L2 tested model for no-effect L-UI source validation.
+This implementation is an L2 tested model for no-effect L-UI source validation, point locations, and source-span metadata.
 
-It is not a renderer, interactive UI, shell, compositor, command language, Nucleus task runner, server client, update engine, recovery system, hardware system, boot system, or security boundary.
+It is not a renderer, interactive UI, shell, compositor, command language, Nucleus task runner, server client, update engine, recovery system, hardware system, boot system, AST system, or security boundary.
 
 ## Next implementation step
 
-The next implementation candidate after this parser is:
+The next implementation candidate after source spans is:
 
 ```text
-L-UI parser fixture integration
+L-UI parser AST contract
 ```
 
-That future work should make the parser test the repository `.lui` fixture path through controlled test inputs, still without file I/O in parser code.
+That future work should define AST shape, node ownership, source-span usage, and no-effect boundaries before any AST implementation.
 
 ## Non-claims
 
-This document and implementation do not claim L-UI rendering, command behavior, Nucleus task handling, live movement, origin mutation, recovery behavior, server interaction, self-update, hardware support, boot readiness, security isolation, sandboxing, or operating-system completeness.
+This document and implementation do not claim AST construction, L-UI rendering, command behavior, Nucleus task handling, live movement, origin mutation, recovery behavior, server interaction, self-update, hardware support, boot readiness, security isolation, sandboxing, or operating-system completeness.
