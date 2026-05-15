@@ -1,13 +1,13 @@
 # Latticra L-UI AST Detailed Report Implementation
 
-Status: initial implementation contract
-Scope: bounded detailed AST reporting for card, rail, field, text, source-span, and no-effect metadata.
+Status: implementation contract
+Scope: bounded detailed AST reporting for card, rail, field, text, source-span, escaped string, and no-effect metadata.
 
 ## Purpose
 
 The L-UI AST Detailed Report implementation renders deterministic text for the fixed-size L-UI AST metadata model.
 
-It makes card, rail, field, text, source-span, and binding-span metadata visible without adding rendering, command behavior, Nucleus task handling, live movement, state mutation, server interaction, recovery behavior, self-update behavior, hardware behavior, or boot behavior.
+It makes card, rail, field, text, source-span, binding-span, and escaped string metadata visible without adding rendering, command behavior, Nucleus task handling, live movement, state mutation, server interaction, recovery behavior, self-update behavior, hardware behavior, or boot behavior.
 
 ## Implementation files
 
@@ -15,7 +15,9 @@ It makes card, rail, field, text, source-span, and binding-span metadata visible
 include/latticra/l_ui_parser.h
 src/l_ui_parser_ast.c
 tests/l_ui_parser_ast_detailed_report_invariants.c
+tests/l_ui_ast_escaped_string_report_invariants.c
 scripts/test-l-ui-ast-detailed-report.sh
+scripts/test-l-ui-ast-escaped-string-report.sh
 ```
 
 ## Public API
@@ -30,7 +32,7 @@ latticra_l_ui_ast_detailed_report
 LATTICRA_L_UI_AST_DETAILED_REPORT_MAX = 16384
 ```
 
-The detailed report is larger than the compact AST report because it prints every populated rail, field, text node, source span, and binding span.
+The detailed report is larger than the compact AST report because it prints every populated rail, field, text node, source span, binding span, and escaped string field.
 
 ## Report shape
 
@@ -63,6 +65,26 @@ Then it renders sections in deterministic order:
 ```
 
 Unused capacity slots are not printed.
+
+## Escaped string fields
+
+The detailed report keeps existing literal fields and adds escaped variants:
+
+```text
+purpose=<literal-purpose>
+purpose_escaped=<escaped-purpose>
+value=<literal-text>
+value_escaped=<escaped-text>
+```
+
+Escaped fields are additive and appear only in:
+
+```text
+[card]
+[text <index>]
+```
+
+Escaped fields do not appear in failed-parse reports.
 
 ## Span fields
 
@@ -106,19 +128,17 @@ recovery_allowed=0
 hardware_allowed=0
 ```
 
-No partial AST nodes are printed for failed parses.
+No partial AST nodes or escaped fields are printed for failed parses.
 
 ## Escaping policy
 
-The first implementation renders current fixture text literally:
+Escaped string fields use the byte-oriented escaping model documented in:
 
 ```text
-Latticra / Nucleus Preview / effect-bound
-preview-only no-live-movement no-host-effect no-external-effect
-operator-visible Nucleus preview report
+docs/L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION.md
 ```
 
-A broader escaping model is deferred to a future contract.
+The first implementation renders current literal fields for compatibility while adding escaped fields for fixture-safe comparisons and future broader text handling.
 
 ## Compatibility
 
@@ -130,6 +150,7 @@ latticra_l_ui_parse_ast
 latticra_l_ui_parse_source
 latticra_l_ui_parse_result_report
 latticra_l_ui_diagnostic_report
+latticra_l_ui_ast_detailed_report existing required fields
 ```
 
 ## No-effect boundary
@@ -145,15 +166,16 @@ recovery_allowed=0
 hardware_allowed=0
 ```
 
-## Test command
+## Test commands
 
 Run:
 
 ```sh
 sh scripts/test-l-ui-ast-detailed-report.sh
+sh scripts/test-l-ui-ast-escaped-string-report.sh
 ```
 
-The main C workflow runs this check after the detailed report implementation-plan guard.
+The main C workflow runs these checks after the detailed report implementation-plan guard and escaped string report implementation-plan guard.
 
 ## Required invariants
 
@@ -181,21 +203,23 @@ detailed_report_omits_unused_capacity_slots
 detailed_report_handles_failed_parse
 ```
 
+The escaped string report tests verify additive escaped purpose/text fields and byte-oriented escaping behavior.
+
 ## Current evidence level
 
-This implementation is an L2 tested detailed metadata report for the fixed-size L-UI AST.
+This implementation is an L2 tested detailed metadata and escaped string report for the fixed-size L-UI AST.
 
 It is not a renderer, UI runtime, command surface, Nucleus task runner, server client, update engine, recovery system, hardware system, boot system, or security boundary.
 
 ## Next implementation step
 
-The next implementation candidate after detailed AST reporting is:
+The next implementation candidate after escaped string reporting is:
 
 ```text
-L-UI AST escaped string report contract
+L-UI AST source-backed text extraction contract
 ```
 
-That future work should define stable escaping for newlines, tabs, quotes, and non-printable bytes before broader text values are accepted.
+That future work should define how AST purpose and text values are extracted from source instead of fixed fixture metadata.
 
 ## Non-claims
 

@@ -7,9 +7,9 @@ Scope: stable escaping rules for detailed AST report string values before broade
 
 This document defines the escaped string report contract for L-UI AST reports.
 
-The current detailed AST report renders current fixture text literally because the accepted text values are controlled. Before broader L-UI text values are accepted, reports need stable escaping rules for newlines, tabs, quotes, backslashes, control bytes, and non-printable bytes.
+The detailed AST report now includes additive escaped fields for current fixture text values. Before broader L-UI text values are accepted, these rules define stable escaping behavior for newlines, tabs, quotes, backslashes, control bytes, and non-printable bytes.
 
-This document does not implement escaped string reporting.
+The implementation is documented separately in [`L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION.md`](L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION.md).
 
 ## Current boundary
 
@@ -22,15 +22,14 @@ fields
 text nodes
 source spans
 binding spans
+literal purpose/text fields
+escaped purpose/text fields
 no-effect flags
 ```
-
-The current detailed report does not yet define broad escaping behavior for arbitrary text values.
 
 This contract does not add:
 
 ```text
-escaped string implementation
 new parser grammar
 new accepted text values
 renderer integration
@@ -48,7 +47,7 @@ boot behavior
 
 ## Escaping purpose
 
-Escaped string reporting should make text output:
+Escaped string reporting makes text output:
 
 - deterministic;
 - single-line when required;
@@ -60,11 +59,11 @@ Escaped string reporting should make text output:
 - readable for common whitespace;
 - explicit for control and non-printable bytes.
 
-Escaping must remain metadata-only.
+Escaping remains metadata-only.
 
 ## Escaped fields
 
-The first escaping implementation should apply to report values that may contain arbitrary source text:
+Escaping applies to report values that may contain arbitrary source text:
 
 ```text
 card.purpose
@@ -75,20 +74,23 @@ It may later apply to labels or bindings if broader syntax permits non-identifie
 
 ## Report key naming
 
-The implementation plan must choose whether to replace existing value keys or add escaped variants.
-
-Preferred first implementation:
+The first implementation adds escaped variants:
 
 ```text
 purpose_escaped=<escaped-string>
 value_escaped=<escaped-string>
 ```
 
-Existing literal keys may remain for the current controlled fixture until a compatibility plan changes them.
+Existing literal keys remain:
+
+```text
+purpose=<literal-purpose>
+value=<literal-text>
+```
 
 ## Required escape sequences
 
-The first escaping implementation should support:
+Escaped string reporting supports:
 
 | Input byte | Report text |
 | --- | --- |
@@ -138,7 +140,7 @@ Rules:
 
 Escaping is byte-oriented, not Unicode-codepoint-oriented.
 
-The first implementation should treat source text as bytes and render non-ASCII bytes with `\xNN` escapes. A future Unicode display contract may define higher-level behavior later.
+The implementation treats input text as bytes and renders non-ASCII bytes with `\xNN` escapes. A future Unicode display contract may define higher-level behavior later.
 
 ## Buffer sizing rule
 
@@ -148,17 +150,17 @@ Worst-case escaped size is four output characters per input byte plus the termin
 input_len * 4 + 1
 ```
 
-The implementation plan must define bounded destination sizes and too-small behavior before code is added.
+The implementation uses private bounded buffers sized from the AST purpose/text capacities.
 
-## Helper function plan
+## Helper function
 
-A future implementation may add a private helper such as:
+The implementation uses a private helper:
 
 ```text
 escape_report_string
 ```
 
-Possible helper shape:
+Helper shape:
 
 ```text
 static latticra_status_t escape_report_string(
@@ -168,18 +170,18 @@ static latticra_status_t escape_report_string(
     size_t output_len);
 ```
 
-The helper should remain private until a public need is proven.
+The helper remains private.
 
 ## Detailed report integration
 
-A future detailed report may render:
+The detailed report renders:
 
 ```text
 purpose_escaped=<escaped-purpose>
 value_escaped=<escaped-text>
 ```
 
-The implementation plan must decide exact placement in:
+Placement:
 
 ```text
 [card]
@@ -188,9 +190,9 @@ The implementation plan must decide exact placement in:
 
 ## Failed parse behavior
 
-Escaping should not change failed-parse detailed report behavior.
+Escaping does not change failed-parse detailed report behavior.
 
-Failed parse detailed reports should continue to render:
+Failed parse detailed reports continue to render:
 
 ```text
 parse_error=<error-label>
@@ -199,11 +201,13 @@ field_count=0
 text_count=0
 ```
 
+Escaped fields do not appear in failed-parse reports.
+
 ## Compatibility rule
 
-Escaped string reporting must be additive for the first implementation.
+Escaped string reporting is additive.
 
-It must not change:
+It does not change:
 
 ```text
 latticra_l_ui_ast_report
@@ -218,7 +222,7 @@ latticra_l_ui_ast_detailed_report existing required fields
 
 Escaped string reporting is metadata output only.
 
-It must preserve:
+It preserves:
 
 ```text
 no_effect=1
@@ -231,7 +235,7 @@ hardware_allowed=0
 
 ## Implementation gate
 
-Escaped string report implementation must not begin until a separate implementation plan defines:
+Escaped string report implementation required a separate implementation plan defining:
 
 1. public API decision;
 2. private helper shape;
@@ -243,9 +247,11 @@ Escaped string report implementation must not begin until a separate implementat
 8. exact invariant tests;
 9. compatibility expectations.
 
-## Future test list
+That plan is recorded in [`L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION_PLAN.md`](L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION_PLAN.md).
 
-A future implementation plan should include tests for:
+## Test list
+
+Implementation tests verify:
 
 ```text
 escape_preserves_printable_ascii
@@ -269,7 +275,7 @@ detailed_report_escape_does_not_change_failed_parse_report
 
 ## Forbidden behavior
 
-A future escaped string implementation must not:
+Escaped string implementation must not:
 
 - add file I/O to parser or AST code;
 - write files;
@@ -296,8 +302,8 @@ This contract is guarded by:
 sh scripts/test-l-ui-ast-escaped-string-report-contract.sh
 ```
 
-The guard is static. It does not implement escaped string reporting.
+The guard is static. It validates the contract text.
 
 ## Non-claims
 
-This document does not implement escaped string reporting, broaden accepted L-UI text syntax, implement Unicode display behavior, add L-UI rendering, add command behavior, add Nucleus task handling, add live movement, add origin mutation, add recovery behavior, add server interaction, add self-update, add hardware support, add boot readiness, claim security isolation, claim sandboxing, or claim operating-system completeness.
+This document does not broaden accepted L-UI text syntax, implement Unicode display behavior, add L-UI rendering, add command behavior, add Nucleus task handling, add live movement, add origin mutation, add recovery behavior, add server interaction, add self-update, add hardware support, add boot readiness, claim security isolation, claim sandboxing, or claim operating-system completeness.

@@ -69,3 +69,5 @@ jobs:
         run: sh scripts/test-l-ui-ast-escaped-string-report-contract.sh
       - name: Run L-UI AST escaped string report implementation plan guard
         run: sh scripts/test-l-ui-ast-escaped-string-report-implementation-plan.sh
+      - name: Run L-UI AST escaped string report tests
+        run: sh scripts/test-l-ui-ast-escaped-string-report.sh
