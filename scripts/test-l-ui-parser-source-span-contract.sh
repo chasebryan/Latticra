@@ -18,11 +18,11 @@ if [ ! -f "$doc" ]; then
 fi
 
 require_contains 'Status: source-span contract' "$doc"
-require_contains 'This document does not implement source spans.' "$doc"
+require_contains 'The implementation is documented separately' "$doc"
 require_contains 'Source unit rules' "$doc"
 require_contains 'Line and column range rules' "$doc"
 require_contains 'Newline policy' "$doc"
-require_contains 'Proposed span struct' "$doc"
+require_contains 'Span struct' "$doc"
 require_contains 'Parse result integration' "$doc"
 require_contains 'Diagnostic integration' "$doc"
 require_contains 'Initial span targets' "$doc"
@@ -30,7 +30,7 @@ require_contains 'Span target behavior' "$doc"
 require_contains 'Empty span rule' "$doc"
 require_contains 'No-effect rule' "$doc"
 require_contains 'Implementation gate' "$doc"
-require_contains 'Future test list' "$doc"
+require_contains 'Test list' "$doc"
 require_contains 'Forbidden behavior' "$doc"
 require_contains 'Non-claims' "$doc"
 
@@ -52,7 +52,7 @@ for rule in \
   'Line and column are one-based.' \
   'Columns are byte-based' \
   'host text mode' \
-  'Empty spans are allowed only for missing constructs.'
+  'Empty spans are allowed only for missing constructs or successful/default results.'
 do
   require_contains "$rule" "$doc"
 done
