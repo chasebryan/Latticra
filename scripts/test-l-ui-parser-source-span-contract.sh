@@ -6,7 +6,7 @@ doc="docs/L_UI_PARSER_SOURCE_SPAN_CONTRACT.md"
 require_contains() {
   pattern="$1"
   file="$2"
-  if ! grep -Fq "$pattern" "$file"; then
+  if ! grep -Fq -- "$pattern" "$file"; then
     printf 'l-ui parser source-span contract: missing required pattern: %s\n' "$pattern" >&2
     exit 1
   fi
