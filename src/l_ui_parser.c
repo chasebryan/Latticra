@@ -138,21 +138,6 @@ static int find_slice_index(
     return 0;
 }
 
-static int find_slice_location(
-    const char *source,
-    size_t source_len,
-    const char *needle,
-    size_t *line,
-    size_t *column) {
-    size_t index;
-    if (!find_slice_index(source, source_len, needle, &index)) {
-        location_default(line, column);
-        return 0;
-    }
-    location_for_index(source, source_len, index, line, column);
-    return 1;
-}
-
 static int find_slice_span(
     const char *source,
     size_t source_len,
@@ -169,24 +154,6 @@ static int find_slice_span(
 
 static int contains_slice(const char *source, size_t source_len, const char *needle) {
     return find_slice_index(source, source_len, needle, 0);
-}
-
-static void card_body_location(
-    const char *source,
-    size_t source_len,
-    size_t *line,
-    size_t *column) {
-    const char *card = "card NucleusPreview {";
-    size_t card_index;
-    size_t body_index;
-
-    if (find_slice_index(source, source_len, card, &card_index)) {
-        body_index = card_index + strlen(card) - 1u;
-        location_for_index(source, source_len, body_index, line, column);
-        return;
-    }
-
-    location_default(line, column);
 }
 
 static void card_body_span(
@@ -243,21 +210,6 @@ static int find_unbalanced_brace_span(
     return 0;
 }
 
-static int find_unbalanced_brace_location(const char *source, size_t source_len, size_t *line, size_t *column) {
-    latticra_l_ui_source_span_t span;
-    if (!find_unbalanced_brace_span(source, source_len, &span)) {
-        location_default(line, column);
-        return 0;
-    }
-    if (line != 0) {
-        *line = span.start_line;
-    }
-    if (column != 0) {
-        *column = span.start_column;
-    }
-    return 1;
-}
-
 static int find_unterminated_string_span(
     const char *source,
     size_t source_len,
@@ -292,21 +244,6 @@ static int find_unterminated_string_span(
 
     span_default(span);
     return 0;
-}
-
-static int find_unterminated_string_location(const char *source, size_t source_len, size_t *line, size_t *column) {
-    latticra_l_ui_source_span_t span;
-    if (!find_unterminated_string_span(source, source_len, &span)) {
-        location_default(line, column);
-        return 0;
-    }
-    if (line != 0) {
-        *line = span.start_line;
-    }
-    if (column != 0) {
-        *column = span.start_column;
-    }
-    return 1;
 }
 
 static void set_safe_defaults(latticra_l_ui_parse_result_t *result) {
@@ -386,25 +323,6 @@ static int has_unsupported_effect_span(
     return 0;
 }
 
-static int has_unsupported_effect_location(
-    const char *source,
-    size_t source_len,
-    size_t *line,
-    size_t *column) {
-    latticra_l_ui_source_span_t span;
-    if (!has_unsupported_effect_span(source, source_len, &span)) {
-        location_default(line, column);
-        return 0;
-    }
-    if (line != 0) {
-        *line = span.start_line;
-    }
-    if (column != 0) {
-        *column = span.start_column;
-    }
-    return 1;
-}
-
 static int has_forbidden_marker_span(
     const char *source,
     size_t source_len,
@@ -430,25 +348,6 @@ static int has_forbidden_marker_span(
 
     span_default(span);
     return 0;
-}
-
-static int has_forbidden_marker_location(
-    const char *source,
-    size_t source_len,
-    size_t *line,
-    size_t *column) {
-    latticra_l_ui_source_span_t span;
-    if (!has_forbidden_marker_span(source, source_len, &span)) {
-        location_default(line, column);
-        return 0;
-    }
-    if (line != 0) {
-        *line = span.start_line;
-    }
-    if (column != 0) {
-        *column = span.start_column;
-    }
-    return 1;
 }
 
 static int find_unknown_binding_prefix_span(
@@ -479,30 +378,10 @@ static int find_unknown_binding_prefix_span(
     return 0;
 }
 
-static int find_unknown_binding_prefix_location(
+static latticra_l_ui_parse_error_t validate_required_rails_span(
     const char *source,
     size_t source_len,
-    size_t *line,
-    size_t *column) {
-    latticra_l_ui_source_span_t span;
-    if (!find_unknown_binding_prefix_span(source, source_len, &span)) {
-        location_default(line, column);
-        return 0;
-    }
-    if (line != 0) {
-        *line = span.start_line;
-    }
-    if (column != 0) {
-        *column = span.start_column;
-    }
-    return 1;
-}
-
-static latticra_l_ui_parse_error_t validate_required_rails(
-    const char *source,
-    size_t source_len,
-    size_t *line,
-    size_t *column) {
+    latticra_l_ui_source_span_t *span) {
     const char *rails[] = {
         "rail top {",
         "rail state {",
@@ -518,35 +397,19 @@ static latticra_l_ui_parse_error_t validate_required_rails(
 
     for (index = 0u; index < sizeof(rails) / sizeof(rails[0]); index++) {
         if (!contains_slice(source, source_len, rails[index])) {
-            card_body_location(source, source_len, line, column);
+            card_body_span(source, source_len, span);
             return LATTICRA_L_UI_PARSE_MISSING_RAIL;
         }
     }
 
-    location_default(line, column);
-    return LATTICRA_L_UI_PARSE_OK;
-}
-
-static latticra_l_ui_parse_error_t validate_required_rails_span(
-    const char *source,
-    size_t source_len,
-    latticra_l_ui_source_span_t *span) {
-    size_t line;
-    size_t column;
-    latticra_l_ui_parse_error_t error = validate_required_rails(source, source_len, &line, &column);
-    if (error != LATTICRA_L_UI_PARSE_OK) {
-        card_body_span(source, source_len, span);
-        return error;
-    }
     span_default(span);
     return LATTICRA_L_UI_PARSE_OK;
 }
 
-static latticra_l_ui_parse_error_t validate_required_bindings(
+static latticra_l_ui_parse_error_t validate_required_bindings_span(
     const char *source,
     size_t source_len,
-    size_t *line,
-    size_t *column) {
+    latticra_l_ui_source_span_t *span) {
     const char *bindings[] = {
         "field origin bind state.origin",
         "field route bind state.route",
@@ -576,26 +439,11 @@ static latticra_l_ui_parse_error_t validate_required_bindings(
 
     for (index = 0u; index < sizeof(bindings) / sizeof(bindings[0]); index++) {
         if (!contains_slice(source, source_len, bindings[index])) {
-            card_body_location(source, source_len, line, column);
+            card_body_span(source, source_len, span);
             return LATTICRA_L_UI_PARSE_MISSING_REQUIRED_BINDING;
         }
     }
 
-    location_default(line, column);
-    return LATTICRA_L_UI_PARSE_OK;
-}
-
-static latticra_l_ui_parse_error_t validate_required_bindings_span(
-    const char *source,
-    size_t source_len,
-    latticra_l_ui_source_span_t *span) {
-    size_t line;
-    size_t column;
-    latticra_l_ui_parse_error_t error = validate_required_bindings(source, source_len, &line, &column);
-    if (error != LATTICRA_L_UI_PARSE_OK) {
-        card_body_span(source, source_len, span);
-        return error;
-    }
     span_default(span);
     return LATTICRA_L_UI_PARSE_OK;
 }
@@ -650,8 +498,6 @@ latticra_status_t latticra_l_ui_parse_source(
     latticra_l_ui_parse_result_t *result) {
     latticra_l_ui_parse_error_t rail_error;
     latticra_l_ui_parse_error_t binding_error;
-    size_t line = 1u;
-    size_t column = 1u;
     latticra_l_ui_source_span_t span;
 
     if (source == 0 || result == 0) {
@@ -747,8 +593,6 @@ latticra_status_t latticra_l_ui_parse_source(
     result->column = 1u;
     span_default(&result->span);
 
-    (void)line;
-    (void)column;
     return LATTICRA_STATUS_OK;
 }
 
