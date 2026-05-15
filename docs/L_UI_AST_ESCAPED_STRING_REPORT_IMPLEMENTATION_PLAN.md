@@ -88,7 +88,16 @@ These do not need to be public unless future callers need direct escaping suppor
 
 ## Escaped fields
 
-Add escaped fields to the detailed report only:
+Add escaped fields to the detailed report only.
+
+Escaped source fields:
+
+```text
+card.purpose
+text.value
+```
+
+Report keys:
 
 ```text
 purpose_escaped=<escaped-purpose>
