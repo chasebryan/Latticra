@@ -29,3 +29,5 @@ jobs:
         run: sh scripts/test-l-ui-parser-design.sh
       - name: Run L-UI parser implementation plan guard
         run: sh scripts/test-l-ui-parser-implementation-plan.sh
+      - name: Run L-UI parser tests
+        run: sh scripts/test-l-ui-parser.sh
