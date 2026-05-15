@@ -57,3 +57,5 @@ jobs:
         run: sh scripts/test-l-ui-parser-ast-contract.sh
       - name: Run L-UI parser AST implementation plan guard
         run: sh scripts/test-l-ui-parser-ast-implementation-plan.sh
+      - name: Run L-UI parser AST tests
+        run: sh scripts/test-l-ui-parser-ast.sh
