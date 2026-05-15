@@ -60,6 +60,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION.md`](L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION.md) — byte-oriented escaped string fields for detailed AST report metadata.
 - [`L_UI_AST_SOURCE_BACKED_TEXT_CONTRACT.md`](L_UI_AST_SOURCE_BACKED_TEXT_CONTRACT.md) — source-backed extraction rules for AST purpose and text values before implementation.
 - [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md) — source-backed extraction helpers, quote handling, capacity behavior, span decisions, exact tests, and compatibility expectations.
+- [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md) — source-backed extraction of AST purpose and text values from validated L-UI source.
 
 ## Implementation rule
 
@@ -107,12 +108,13 @@ L-UI AST escaped string report implementation plan + guardrails
 L-UI AST escaped string report implementation + invariants
 L-UI AST source-backed text contract + guardrails
 L-UI AST source-backed text implementation plan + guardrails
+L-UI AST source-backed text extraction implementation + invariants
 ```
 
 The next implementation target should be:
 
 ```text
-L-UI AST source-backed text extraction implementation
+L-UI string-literal escape contract
 ```
 
-That target should add source-backed extraction helpers, quote-safe copying, capacity checks, exact invariant tests, and docs while preserving parser and report compatibility.
+That target should define whether and how string escapes are decoded before AST extraction decodes escape sequences.

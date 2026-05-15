@@ -1,15 +1,15 @@
 # Latticra L-UI AST Source-Backed Text Contract
 
 Status: source-backed text contract
-Scope: future extraction of AST purpose and text values from validated L-UI source instead of fixed fixture metadata.
+Scope: extraction of AST purpose and text values from validated L-UI source instead of fixed fixture metadata.
 
 ## Purpose
 
 This document defines the source-backed text extraction contract for the L-UI AST.
 
-The current AST implementation builds fixed metadata for the first accepted `NucleusPreview` fixture. Its purpose and text values are known fixture literals. The next step is to define how those values should be extracted from validated source while preserving source spans, escaped reporting, no-effect behavior, and deterministic output.
+The AST implementation extracts purpose and text values from validated `NucleusPreview` source while preserving source spans, escaped reporting, no-effect behavior, and deterministic output.
 
-This document does not implement source-backed text extraction.
+The implementation is documented separately in [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md).
 
 ## Current boundary
 
@@ -19,8 +19,8 @@ The current AST stack provides:
 validated L-UI parser
 source spans
 fixed-size AST metadata
-fixed fixture purpose value
-fixed fixture text values
+source-backed purpose value
+source-backed text values
 compact AST report
 detailed AST report
 escaped detailed report fields
@@ -30,7 +30,6 @@ no-effect flags
 This contract does not add:
 
 ```text
-source-backed extraction implementation
 new accepted grammar
 new renderer behavior
 interactive UI behavior
@@ -47,7 +46,7 @@ boot behavior
 
 ## Extraction purpose
 
-Source-backed text extraction should make the AST reflect the actual validated `.lui` source text for:
+Source-backed text extraction makes the AST reflect the actual validated `.lui` source text for:
 
 ```text
 card.purpose
@@ -58,7 +57,7 @@ This allows fixture text changes to be represented in AST metadata without hard-
 
 ## Extraction targets
 
-The first implementation should extract:
+The implementation extracts:
 
 ```text
 purpose "..."
@@ -67,7 +66,7 @@ text "..."
 
 from the already-validated source.
 
-The first accepted fixture should still produce:
+The first accepted fixture still produces:
 
 ```text
 purpose=operator-visible Nucleus preview report
@@ -77,11 +76,11 @@ value=preview-only no-live-movement no-host-effect no-external-effect
 
 ## No grammar broadening rule
 
-Source-backed extraction must not broaden accepted L-UI syntax by itself.
+Source-backed extraction does not broaden accepted L-UI syntax by itself.
 
-The parser must still reject unsupported forms according to the existing parser contracts.
+The parser still rejects unsupported forms according to the existing parser contracts.
 
-Extraction must only run after successful validation by:
+Extraction runs only after successful validation by:
 
 ```text
 latticra_l_ui_parse_source
@@ -89,53 +88,59 @@ latticra_l_ui_parse_source
 
 ## Ownership rule
 
-Extracted text must be copied into fixed AST storage.
+Extracted text is copied into fixed AST storage.
 
-The AST must not retain borrowed pointers into the source buffer.
+The AST does not retain borrowed pointers into the source buffer.
 
-Required destination fields:
+Destination fields:
 
 ```text
 latticra_l_ui_ast_card_t.purpose
 latticra_l_ui_ast_text_t.value
 ```
 
-The extraction implementation must preserve NUL-terminated C strings in AST storage.
+The extraction implementation preserves NUL-terminated C strings in AST storage.
 
 ## Capacity rule
 
-Extraction must respect existing capacities:
+Extraction respects existing capacities:
 
 ```text
 LATTICRA_L_UI_AST_PURPOSE_MAX
 LATTICRA_L_UI_AST_TEXT_MAX
 ```
 
-The first implementation should reject or classify oversized extracted strings with a stable error behavior defined in the implementation plan.
+The first implementation classifies oversized extracted strings with:
 
-It must not truncate silently.
+```text
+LATTICRA_L_UI_PARSE_INTERNAL_ERROR
+```
+
+and avoids partial AST output.
+
+It does not truncate silently.
 
 ## Span rule
 
-Extracted values should keep source-span metadata.
+Extracted values keep source-span metadata where currently supported.
 
 For purpose:
 
 ```text
-card.purpose_span or equivalent future span field
+card.span covers the card block
 ```
 
 For text:
 
 ```text
-text.span
+text.span covers the extracted text value range
 ```
 
-The current `text.span` already covers text values. The implementation plan must decide whether a separate `purpose_span` field is needed or whether the card span remains sufficient for the first source-backed step.
+No public `purpose_span` field is added in the first source-backed extraction implementation.
 
 ## Quote handling rule
 
-The first source-backed implementation should extract quoted string contents.
+The implementation extracts quoted string contents.
 
 For source:
 
@@ -144,31 +149,32 @@ purpose "abc"
 text "xyz"
 ```
 
-AST values should be:
+AST values are:
 
 ```text
 abc
 xyz
 ```
 
-The surrounding quotes must not be copied into AST values.
+The surrounding quotes are not copied into AST values.
 
 ## Escape handling boundary
 
 Current L-UI string escape semantics are not fully defined.
 
-The first source-backed extraction should not introduce broad escape decoding unless a string-literal escape contract is added first.
+The first source-backed extraction does not introduce broad escape decoding.
 
-Allowed first behavior options for the implementation plan:
+Behavior:
 
-1. copy raw bytes between quotes without decoding escapes; or
-2. support only existing literal fixture text with no escape decoding.
+```text
+copy raw bytes between quotes without decoding escapes
+```
 
-The implementation plan must choose one behavior before code is added.
+Escaped quotes may be respected to find the closing quote, but the resulting AST value keeps the raw backslash and quote bytes.
 
 ## Detailed report relationship
 
-Detailed reports should continue to render:
+Detailed reports continue to render:
 
 ```text
 purpose=<literal-purpose>
@@ -177,11 +183,11 @@ value=<literal-text>
 value_escaped=<escaped-text>
 ```
 
-After source-backed extraction, those report values should reflect extracted source values.
+After source-backed extraction, those report values reflect extracted source values.
 
 ## Failed parse behavior
 
-Failed parse behavior must remain unchanged.
+Failed parse behavior remains unchanged.
 
 If source validation fails:
 
@@ -195,7 +201,7 @@ failed-parse detailed report only
 
 Source-backed text extraction is metadata-only.
 
-It must preserve:
+It preserves:
 
 ```text
 no_effect=1
@@ -208,7 +214,7 @@ hardware_allowed=0
 
 ## Compatibility rule
 
-Source-backed text extraction must not change:
+Source-backed text extraction does not change:
 
 ```text
 latticra_l_ui_parse_source
@@ -219,7 +225,7 @@ parser error labels
 existing accepted fixture summary
 ```
 
-The first accepted fixture should still report the same AST summary counts:
+The first accepted fixture still reports the same AST summary counts:
 
 ```text
 rail_count=9
@@ -229,7 +235,7 @@ text_count=2
 
 ## Implementation gate
 
-Source-backed text extraction implementation must not begin until a separate implementation plan defines:
+Source-backed text extraction implementation required a separate implementation plan defining:
 
 1. extraction helper shapes;
 2. exact extraction targets;
@@ -242,9 +248,11 @@ Source-backed text extraction implementation must not begin until a separate imp
 9. exact invariant tests;
 10. compatibility expectations.
 
-## Future test list
+That plan is recorded in [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md).
 
-A future implementation plan should include tests for:
+## Test list
+
+Source-backed text implementation tests verify:
 
 ```text
 source_backed_purpose_matches_fixture_source
@@ -261,11 +269,12 @@ source_backed_text_rejects_or_classifies_oversized_purpose
 source_backed_text_rejects_or_classifies_oversized_text
 source_backed_text_does_not_change_failed_parse_report
 source_backed_text_is_deterministic
+source_backed_text_does_not_decode_escapes
 ```
 
 ## Forbidden behavior
 
-A future source-backed text implementation must not:
+Source-backed text implementation must not:
 
 - add file I/O to parser or AST code;
 - write files;
@@ -292,8 +301,8 @@ This contract is guarded by:
 sh scripts/test-l-ui-ast-source-backed-text-contract.sh
 ```
 
-The guard is static. It does not implement source-backed text extraction.
+The guard is static. It validates the contract text.
 
 ## Non-claims
 
-This document does not implement source-backed text extraction, broaden accepted L-UI text syntax, implement string escape decoding, implement Unicode display behavior, add L-UI rendering, add command behavior, add Nucleus task handling, add live movement, add origin mutation, add recovery behavior, add server interaction, add self-update, add hardware support, add boot readiness, claim security isolation, claim sandboxing, or claim operating-system completeness.
+This document does not broaden accepted L-UI text syntax, implement string escape decoding, implement Unicode display behavior, add L-UI rendering, add command behavior, add Nucleus task handling, add live movement, add origin mutation, add recovery behavior, add server interaction, add self-update, add hardware support, add boot readiness, claim security isolation, claim sandboxing, or claim operating-system completeness.

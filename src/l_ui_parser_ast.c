@@ -137,6 +137,42 @@ static int find_slice_index(
     return 0;
 }
 
+static int find_slice_index_from(
+    const char *source,
+    size_t source_len,
+    const char *needle,
+    size_t start_index,
+    size_t *out_index) {
+    size_t needle_len;
+    size_t index;
+
+    if (source == 0 || needle == 0 || start_index > source_len) {
+        return 0;
+    }
+
+    needle_len = strlen(needle);
+    if (needle_len == 0u) {
+        if (out_index != 0) {
+            *out_index = start_index;
+        }
+        return 1;
+    }
+    if (source_len < needle_len || start_index > source_len - needle_len) {
+        return 0;
+    }
+
+    for (index = start_index; index <= source_len - needle_len; index++) {
+        if (memcmp(source + index, needle, needle_len) == 0) {
+            if (out_index != 0) {
+                *out_index = index;
+            }
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 static void span_for_slice(
     const char *source,
     size_t source_len,
@@ -182,6 +218,112 @@ static void span_for_rail(
         end++;
     }
     span_for_range(source, source_len, start, end, span);
+}
+
+static latticra_status_t copy_extracted_value(
+    const char *source,
+    size_t start_offset,
+    size_t end_offset,
+    char *destination,
+    size_t destination_len) {
+    size_t value_len;
+
+    if (source == 0 || destination == 0) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (destination_len == 0u || end_offset < start_offset) {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+
+    value_len = end_offset - start_offset;
+    if (value_len >= destination_len) {
+        destination[0] = '\0';
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+
+    (void)memcpy(destination, source + start_offset, value_len);
+    destination[value_len] = '\0';
+    return LATTICRA_STATUS_OK;
+}
+
+static latticra_status_t extract_quoted_value_after_token(
+    const char *source,
+    size_t source_len,
+    const char *token,
+    size_t occurrence,
+    char *destination,
+    size_t destination_len,
+    latticra_l_ui_source_span_t *value_span) {
+    size_t token_len;
+    size_t search_index = 0u;
+    size_t found_index = 0u;
+    size_t found_count = 0u;
+    size_t quote_index;
+    size_t value_start;
+    size_t value_end;
+    int found_token = 0;
+    int escaped = 0;
+
+    if (source == 0 || token == 0 || destination == 0 || value_span == 0) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+
+    destination[0] = '\0';
+    span_default(value_span);
+    token_len = strlen(token);
+
+    while (find_slice_index_from(source, source_len, token, search_index, &found_index)) {
+        if (found_count == occurrence) {
+            found_token = 1;
+            break;
+        }
+        found_count++;
+        search_index = found_index + token_len;
+    }
+
+    if (!found_token) {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+
+    quote_index = found_index + token_len;
+    while (quote_index < source_len && (source[quote_index] == ' ' || source[quote_index] == '\t')) {
+        quote_index++;
+    }
+    if (quote_index >= source_len || source[quote_index] != '"') {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+
+    value_start = quote_index + 1u;
+    value_end = value_start;
+    while (value_end < source_len) {
+        char ch = source[value_end];
+        if (escaped) {
+            escaped = 0;
+            value_end++;
+            continue;
+        }
+        if (ch == '\\') {
+            escaped = 1;
+            value_end++;
+            continue;
+        }
+        if (ch == '"') {
+            latticra_status_t status = copy_extracted_value(
+                source,
+                value_start,
+                value_end,
+                destination,
+                destination_len);
+            if (status != LATTICRA_STATUS_OK) {
+                return status;
+            }
+            span_for_range(source, source_len, value_start, value_end, value_span);
+            return LATTICRA_STATUS_OK;
+        }
+        value_end++;
+    }
+
+    return LATTICRA_STATUS_BUFFER_TOO_SMALL;
 }
 
 static void ast_default(latticra_l_ui_ast_result_t *ast) {
@@ -300,10 +442,18 @@ static void fill_text(
     latticra_l_ui_ast_result_t *ast,
     size_t index,
     const char *value,
-    const char *source,
-    size_t source_len) {
+    const latticra_l_ui_source_span_t *span) {
     copy_literal(ast->texts[index].value, sizeof(ast->texts[index].value), value);
-    span_for_slice(source, source_len, value, &ast->texts[index].span);
+    ast->texts[index].span = *span;
+}
+
+static latticra_status_t ast_internal_error(
+    latticra_l_ui_ast_result_t *ast,
+    const latticra_l_ui_parse_result_t *parse_result) {
+    ast_default(ast);
+    ast->parse_result = *parse_result;
+    ast->parse_result.error = LATTICRA_L_UI_PARSE_INTERNAL_ERROR;
+    return LATTICRA_STATUS_OK;
 }
 
 latticra_status_t latticra_l_ui_parse_ast(
@@ -312,6 +462,12 @@ latticra_status_t latticra_l_ui_parse_ast(
     latticra_l_ui_ast_result_t *ast) {
     latticra_status_t status;
     latticra_l_ui_parse_result_t parse_result;
+    latticra_l_ui_source_span_t purpose_span;
+    latticra_l_ui_source_span_t top_text_span;
+    latticra_l_ui_source_span_t bottom_text_span;
+    char extracted_purpose[LATTICRA_L_UI_AST_PURPOSE_MAX];
+    char extracted_top_text[LATTICRA_L_UI_AST_PURPOSE_MAX];
+    char extracted_bottom_text[LATTICRA_L_UI_AST_PURPOSE_MAX];
     static const char *field_names[] = {
         "origin", "route", "axis", "path",
         "breadcrumb", "trace",
@@ -350,12 +506,47 @@ latticra_status_t latticra_l_ui_parse_ast(
 
     if (LATTICRA_L_UI_AST_RAIL_MAX < 9u || LATTICRA_L_UI_AST_FIELD_MAX < 23u ||
         LATTICRA_L_UI_AST_TEXT_MAX < 2u) {
-        ast->parse_result.error = LATTICRA_L_UI_PARSE_INTERNAL_ERROR;
-        return LATTICRA_STATUS_OK;
+        return ast_internal_error(ast, &parse_result);
+    }
+
+    status = extract_quoted_value_after_token(
+        source,
+        source_len,
+        "purpose ",
+        0u,
+        extracted_purpose,
+        sizeof(extracted_purpose),
+        &purpose_span);
+    if (status != LATTICRA_STATUS_OK) {
+        return ast_internal_error(ast, &parse_result);
+    }
+
+    status = extract_quoted_value_after_token(
+        source,
+        source_len,
+        "text ",
+        0u,
+        extracted_top_text,
+        sizeof(extracted_top_text),
+        &top_text_span);
+    if (status != LATTICRA_STATUS_OK) {
+        return ast_internal_error(ast, &parse_result);
+    }
+
+    status = extract_quoted_value_after_token(
+        source,
+        source_len,
+        "text ",
+        1u,
+        extracted_bottom_text,
+        sizeof(extracted_bottom_text),
+        &bottom_text_span);
+    if (status != LATTICRA_STATUS_OK) {
+        return ast_internal_error(ast, &parse_result);
     }
 
     copy_literal(ast->card.name, sizeof(ast->card.name), "NucleusPreview");
-    copy_literal(ast->card.purpose, sizeof(ast->card.purpose), "operator-visible Nucleus preview report");
+    copy_literal(ast->card.purpose, sizeof(ast->card.purpose), extracted_purpose);
     copy_literal(ast->card.effect, sizeof(ast->card.effect), "none");
     copy_literal(ast->card.boundary, sizeof(ast->card.boundary), "preview_only");
     span_for_card(source, source_len, &ast->card.span);
@@ -377,8 +568,8 @@ latticra_status_t latticra_l_ui_parse_ast(
         fill_field(ast, index, field_names[index], bindings[index], source, source_len);
     }
 
-    fill_text(ast, 0u, "Latticra / Nucleus Preview / effect-bound", source, source_len);
-    fill_text(ast, 1u, "preview-only no-live-movement no-host-effect no-external-effect", source, source_len);
+    fill_text(ast, 0u, extracted_top_text, &top_text_span);
+    fill_text(ast, 1u, extracted_bottom_text, &bottom_text_span);
 
     ast->rail_count = 9u;
     ast->field_count = 23u;
@@ -390,6 +581,7 @@ latticra_status_t latticra_l_ui_parse_ast(
     ast->recovery_allowed = 0;
     ast->hardware_allowed = 0;
 
+    (void)purpose_span;
     return LATTICRA_STATUS_OK;
 }
 

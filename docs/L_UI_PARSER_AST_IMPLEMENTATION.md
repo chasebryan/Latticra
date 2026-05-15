@@ -1,13 +1,13 @@
 # Latticra L-UI Parser AST Implementation
 
 Status: implementation contract
-Scope: fixed-size AST metadata, parse-result integration, source-span-aware nodes, compact and detailed AST reports, and no-effect invariants.
+Scope: fixed-size AST metadata, source-backed purpose/text extraction, parse-result integration, source-span-aware nodes, compact and detailed AST reports, and no-effect invariants.
 
 ## Purpose
 
 The L-UI Parser AST implementation builds a fixed-size metadata tree for validated L-UI source.
 
-It depends on successful source validation. It copies labels, bindings, text values, and source spans into bounded public structures. It does not add rendering, command behavior, Nucleus task handling, live movement, state mutation, server interaction, recovery behavior, self-update behavior, hardware behavior, or boot behavior.
+It depends on successful source validation. It copies labels, bindings, source-backed purpose text, source-backed text values, and source spans into bounded public structures. It does not add rendering, command behavior, Nucleus task handling, live movement, state mutation, server interaction, recovery behavior, self-update behavior, hardware behavior, or boot behavior.
 
 ## Implementation files
 
@@ -16,8 +16,10 @@ include/latticra/l_ui_parser.h
 src/l_ui_parser_ast.c
 tests/l_ui_parser_ast_invariants.c
 tests/l_ui_parser_ast_detailed_report_invariants.c
+tests/l_ui_ast_source_backed_text_invariants.c
 scripts/test-l-ui-parser-ast.sh
 scripts/test-l-ui-ast-detailed-report.sh
+scripts/test-l-ui-ast-source-backed-text.sh
 ```
 
 ## Public API
@@ -114,6 +116,28 @@ recovery_allowed=0
 hardware_allowed=0
 ```
 
+## Source-backed text extraction
+
+The AST extracts these values from validated source:
+
+```text
+purpose "..." -> ast.card.purpose
+first text "..." -> ast.texts[0].value
+second text "..." -> ast.texts[1].value
+```
+
+The surrounding quotes are not copied into AST values.
+
+The extraction copies raw bytes between quotes and does not decode string escapes.
+
+If an extracted value is too large for its fixed destination buffer, AST construction classifies the result as:
+
+```text
+LATTICRA_L_UI_PARSE_INTERNAL_ERROR
+```
+
+and avoids partial AST counts.
+
 ## Source-span usage
 
 The AST copies source spans into populated nodes:
@@ -125,6 +149,8 @@ field.span
 field.binding_span
 text.span
 ```
+
+Text spans cover the extracted text value range. No public purpose span is currently exposed.
 
 Spans are metadata only.
 
@@ -183,7 +209,7 @@ hardware_allowed=<0|1>
 
 ## Detailed AST report
 
-The detailed AST report renders deterministic card, rail, field, text, source-span, binding-span, and no-effect metadata.
+The detailed AST report renders deterministic card, rail, field, text, source-span, binding-span, escaped-string, and no-effect metadata.
 
 The detailed report starts with:
 
@@ -211,9 +237,10 @@ Run:
 ```sh
 sh scripts/test-l-ui-parser-ast.sh
 sh scripts/test-l-ui-ast-detailed-report.sh
+sh scripts/test-l-ui-ast-source-backed-text.sh
 ```
 
-The main C workflow runs these checks after the AST implementation-plan guard and detailed report implementation-plan guard.
+The main C workflow runs these checks after the AST implementation-plan guard, detailed report implementation-plan guard, and source-backed text implementation-plan guard.
 
 ## Required invariants
 
@@ -242,21 +269,23 @@ ast_node_kind_labels_are_stable
 
 The detailed report tests verify deterministic card, rail, field, text, source-span, binding-span, failed-parse, and no-effect output.
 
+The source-backed text tests verify extracted purpose/text values, copy ownership, quote exclusion, capacity failure classification, detailed report updates, no-effect preservation, and raw escape preservation.
+
 ## Current evidence level
 
-This implementation is an L2 tested metadata AST and detailed-report model for validated L-UI source.
+This implementation is an L2 tested metadata AST, source-backed text extraction, and detailed-report model for validated L-UI source.
 
 It is not a renderer, UI runtime, command surface, Nucleus task runner, server client, update engine, recovery system, hardware system, boot system, or security boundary.
 
 ## Next implementation step
 
-The next implementation candidate after detailed AST reporting is:
+The next implementation candidate after source-backed text extraction is:
 
 ```text
-L-UI AST escaped string report contract
+L-UI string-literal escape contract
 ```
 
-That future work should define stable escaping for newlines, tabs, quotes, and non-printable bytes before broader text values are accepted.
+That future work should define whether and how string escapes are decoded before AST extraction decodes escape sequences.
 
 ## Non-claims
 

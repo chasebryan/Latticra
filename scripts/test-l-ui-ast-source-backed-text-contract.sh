@@ -18,7 +18,7 @@ if [ ! -f "$doc" ]; then
 fi
 
 require_contains 'Status: source-backed text contract' "$doc"
-require_contains 'This document does not implement source-backed text extraction.' "$doc"
+require_contains 'The implementation is documented separately' "$doc"
 require_contains 'Extraction purpose' "$doc"
 require_contains 'Extraction targets' "$doc"
 require_contains 'No grammar broadening rule' "$doc"
@@ -32,7 +32,7 @@ require_contains 'Failed parse behavior' "$doc"
 require_contains 'No-effect rule' "$doc"
 require_contains 'Compatibility rule' "$doc"
 require_contains 'Implementation gate' "$doc"
-require_contains 'Future test list' "$doc"
+require_contains 'Test list' "$doc"
 require_contains 'Forbidden behavior' "$doc"
 require_contains 'Non-claims' "$doc"
 
@@ -60,11 +60,11 @@ do
 done
 
 for behavior in \
-  'The surrounding quotes must not be copied into AST values.' \
+  'The surrounding quotes are not copied into AST values.' \
   'copy raw bytes between quotes without decoding escapes' \
-  'support only existing literal fixture text with no escape decoding' \
-  'It must not truncate silently.' \
-  'The AST must not retain borrowed pointers into the source buffer.'
+  'Escaped quotes may be respected to find the closing quote' \
+  'It does not truncate silently.' \
+  'The AST does not retain borrowed pointers into the source buffer.'
 do
   require_contains "$behavior" "$doc"
 done
@@ -113,7 +113,8 @@ for test_name in \
   source_backed_text_rejects_or_classifies_oversized_purpose \
   source_backed_text_rejects_or_classifies_oversized_text \
   source_backed_text_does_not_change_failed_parse_report \
-  source_backed_text_is_deterministic
+  source_backed_text_is_deterministic \
+  source_backed_text_does_not_decode_escapes
 do
   require_contains "$test_name" "$doc"
 done
