@@ -1,15 +1,15 @@
 # Latticra L-UI AST Detailed Report Contract
 
 Status: detailed report contract
-Scope: deterministic rail, field, text, source-span, and no-effect reporting before detailed AST report implementation.
+Scope: deterministic rail, field, text, source-span, and no-effect reporting for the fixed-size L-UI AST.
 
 ## Purpose
 
 This document defines the detailed report contract for the L-UI AST.
 
-The current AST implementation exposes a compact summary report. A detailed report should make card, rail, field, text, and source-span metadata visible without adding rendering, traversal runtime, command behavior, live movement, mutation, or external effects.
+The AST implementation exposes a compact summary report and a detailed metadata report. The detailed report makes card, rail, field, text, and source-span metadata visible without adding rendering, traversal runtime, command behavior, live movement, mutation, or external effects.
 
-This document does not implement detailed AST reporting.
+The implementation is documented separately in [`L_UI_AST_DETAILED_REPORT_IMPLEMENTATION.md`](L_UI_AST_DETAILED_REPORT_IMPLEMENTATION.md).
 
 ## Current boundary
 
@@ -23,13 +23,13 @@ field metadata
 text metadata
 source spans
 compact AST summary report
+detailed AST metadata report
 no-effect flags
 ```
 
 This contract does not add:
 
 ```text
-detailed AST report implementation
 interactive UI behavior
 renderer integration
 command behavior
@@ -45,9 +45,9 @@ boot behavior
 
 ## Detailed report purpose
 
-A detailed AST report should provide deterministic, inspectable text for validated L-UI metadata.
+A detailed AST report provides deterministic, inspectable text for validated L-UI metadata.
 
-It should support:
+It supports:
 
 - reviewing the parsed card;
 - inspecting rail order and counts;
@@ -57,17 +57,17 @@ It should support:
 - debugging fixture changes;
 - future tooling that consumes stable text output.
 
-It must remain metadata-only.
+It remains metadata-only.
 
-## Report function plan
+## Report function
 
-A future implementation may add:
+Implemented public function:
 
 ```text
 latticra_l_ui_ast_detailed_report
 ```
 
-Proposed signature:
+Signature:
 
 ```text
 latticra_status_t latticra_l_ui_ast_detailed_report(
@@ -76,21 +76,21 @@ latticra_status_t latticra_l_ui_ast_detailed_report(
     size_t buffer_len);
 ```
 
-This should be additive and should not change the existing compact AST report.
+This is additive and does not change the existing compact AST report.
 
 ## Report capacity
 
-A future implementation should add or reuse a bounded capacity such as:
+The bounded capacity is:
 
 ```text
-LATTICRA_L_UI_AST_DETAILED_REPORT_MAX = 8192
+LATTICRA_L_UI_AST_DETAILED_REPORT_MAX = 16384
 ```
 
-The implementation plan must confirm the final value before code is added.
+The detailed report is larger than the compact AST report because it renders all populated rails, fields, text nodes, source spans, and binding spans.
 
 ## Top-level report shape
 
-The report should start with:
+The report starts with:
 
 ```text
 L-UI AST DETAILED REPORT
@@ -111,7 +111,7 @@ hardware_allowed=0
 
 ## Span field format
 
-Every node section that includes a span should render:
+Every node section that includes a span renders:
 
 ```text
 span_start_offset=<n>
@@ -122,11 +122,11 @@ span_end_line=<n>
 span_end_column=<n>
 ```
 
-The span field names must match existing parser and diagnostic report span fields.
+The span field names match existing parser and diagnostic report span fields.
 
 ## Card section
 
-The card section should render:
+The card section renders:
 
 ```text
 [card]
@@ -148,7 +148,7 @@ span_end_column=<n>
 
 ## Rail section
 
-Each rail should render in AST order:
+Each rail renders in AST order:
 
 ```text
 [rail <index>]
@@ -182,7 +182,7 @@ bottom
 
 ## Field section
 
-Each field should render in AST order:
+Each field renders in AST order:
 
 ```text
 [field <index>]
@@ -207,7 +207,7 @@ Field sections must not treat bindings as executable references.
 
 ## Text section
 
-Each text node should render in AST order:
+Each text node renders in AST order:
 
 ```text
 [text <index>]
@@ -240,31 +240,35 @@ Rules:
 
 ## Escaping policy
 
-The first detailed report may emit current fixture text literally because the fixture text is controlled.
+The first detailed report emits current fixture text literally because the fixture text is controlled.
 
 Before accepting broader L-UI text values, a future escaping contract should define how to render newlines, tabs, quotes, and non-printable bytes.
 
 ## Failed parse behavior
 
-If AST construction failed due to a parser error, a detailed report should either:
+If AST construction failed due to a parser error, detailed reporting returns a compact failed-parse report:
 
 ```text
-return a compact failed-parse report
+L-UI AST DETAILED REPORT
+parse_error=<error-label>
+rail_count=0
+field_count=0
+text_count=0
+no_effect=1
+execution_allowed=0
+mutation_allowed=0
+server_allowed=0
+recovery_allowed=0
+hardware_allowed=0
 ```
 
-or
-
-```text
-reject detailed report generation with a stable status
-```
-
-The implementation plan must choose one behavior before code is added.
+No partial AST nodes are printed for failed parses.
 
 ## No-effect rule
 
 Detailed reporting is metadata output only.
 
-It must preserve:
+It preserves:
 
 ```text
 no_effect=1
@@ -277,9 +281,9 @@ hardware_allowed=0
 
 ## Compatibility rule
 
-The detailed report must be additive.
+The detailed report is additive.
 
-It must not change:
+It does not change:
 
 ```text
 latticra_l_ui_ast_report
@@ -291,7 +295,7 @@ latticra_l_ui_diagnostic_report
 
 ## Implementation gate
 
-Detailed AST report implementation must not begin until a separate implementation plan defines:
+Detailed AST report implementation required a separate implementation plan defining:
 
 1. public API addition;
 2. report capacity;
@@ -302,9 +306,11 @@ Detailed AST report implementation must not begin until a separate implementatio
 7. exact invariant tests;
 8. compatibility expectations.
 
-## Future test list
+That plan is recorded in [`L_UI_AST_DETAILED_REPORT_IMPLEMENTATION_PLAN.md`](L_UI_AST_DETAILED_REPORT_IMPLEMENTATION_PLAN.md).
 
-A future implementation plan should include tests for:
+## Test list
+
+Detailed report implementation tests verify:
 
 ```text
 detailed_report_contains_title
@@ -325,11 +331,12 @@ detailed_report_is_deterministic
 detailed_report_rejects_bad_arguments
 detailed_report_rejects_small_buffers
 detailed_report_omits_unused_capacity_slots
+detailed_report_handles_failed_parse
 ```
 
 ## Forbidden behavior
 
-A future detailed report implementation must not:
+A detailed report implementation must not:
 
 - add file I/O to parser code;
 - write files;
@@ -354,8 +361,8 @@ This contract is guarded by:
 sh scripts/test-l-ui-ast-detailed-report-contract.sh
 ```
 
-The guard is static. It does not implement detailed AST reporting.
+The guard is static. It validates the contract text.
 
 ## Non-claims
 
-This document does not implement detailed AST reporting, L-UI rendering, command behavior, Nucleus task handling, live movement, origin mutation, recovery behavior, server interaction, self-update, hardware support, boot readiness, security isolation, sandboxing, or operating-system completeness.
+This document does not implement L-UI rendering, command behavior, Nucleus task handling, live movement, origin mutation, recovery behavior, server interaction, self-update, hardware support, boot readiness, security isolation, sandboxing, or operating-system completeness.
