@@ -137,11 +137,7 @@ static void card_body_location(
     location_default(line, column);
 }
 
-static int find_unbalanced_brace_location(
-    const char *source,
-    size_t source_len,
-    size_t *line,
-    size_t *column) {
+static int find_unbalanced_brace_location(const char *source, size_t source_len, size_t *line, size_t *column) {
     size_t index;
     size_t first_open_index = 0u;
     int has_open = 0;
@@ -175,11 +171,7 @@ static int find_unbalanced_brace_location(
     return 0;
 }
 
-static int find_unterminated_string_location(
-    const char *source,
-    size_t source_len,
-    size_t *line,
-    size_t *column) {
+static int find_unterminated_string_location(const char *source, size_t source_len, size_t *line, size_t *column) {
     size_t index;
     size_t opening_quote_index = 0u;
     int in_string = 0;
@@ -242,9 +234,7 @@ static latticra_status_t set_error_at(
     return LATTICRA_STATUS_OK;
 }
 
-static latticra_status_t set_error(
-    latticra_l_ui_parse_result_t *result,
-    latticra_l_ui_parse_error_t error) {
+static latticra_status_t set_error(latticra_l_ui_parse_result_t *result, latticra_l_ui_parse_error_t error) {
     return set_error_at(result, error, 1u, 1u);
 }
 
@@ -269,10 +259,6 @@ static int has_unsupported_effect_location(
         if (find_slice_location(source, source_len, effects[index], line, column)) {
             return 1;
         }
-    }
-
-    if (find_slice_location(source, source_len, "effect ", line, column)) {
-        return 1;
     }
 
     location_default(line, column);
@@ -454,8 +440,8 @@ latticra_status_t latticra_l_ui_parse_source(
     latticra_l_ui_parse_result_t *result) {
     latticra_l_ui_parse_error_t rail_error;
     latticra_l_ui_parse_error_t binding_error;
-    size_t line;
-    size_t column;
+    size_t line = 1u;
+    size_t column = 1u;
 
     if (source == 0 || result == 0) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
@@ -500,10 +486,13 @@ latticra_status_t latticra_l_ui_parse_source(
         return set_error_at(result, LATTICRA_L_UI_PARSE_MISSING_EFFECT, line, column);
     }
 
-    if (has_unsupported_effect_location(source, source_len, &line, &column) ||
-        !contains_slice(source, source_len, "effect none")) {
-        if (line == 0u || column == 0u) {
-            find_slice_location(source, source_len, "effect ", &line, &column);
+    if (has_unsupported_effect_location(source, source_len, &line, &column)) {
+        return set_error_at(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_EFFECT, line, column);
+    }
+
+    if (!contains_slice(source, source_len, "effect none")) {
+        if (!find_slice_location(source, source_len, "effect ", &line, &column)) {
+            location_default(&line, &column);
         }
         return set_error_at(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_EFFECT, line, column);
     }
