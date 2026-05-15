@@ -59,6 +59,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION_PLAN.md`](L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION_PLAN.md) — escaped string report helper shape, escaped fields, destination sizes, too-small behavior, exact tests, and compatibility expectations.
 - [`L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION.md`](L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION.md) — byte-oriented escaped string fields for detailed AST report metadata.
 - [`L_UI_AST_SOURCE_BACKED_TEXT_CONTRACT.md`](L_UI_AST_SOURCE_BACKED_TEXT_CONTRACT.md) — source-backed extraction rules for AST purpose and text values before implementation.
+- [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md) — source-backed extraction helpers, quote handling, capacity behavior, span decisions, exact tests, and compatibility expectations.
 
 ## Implementation rule
 
@@ -105,12 +106,13 @@ L-UI AST escaped string report contract + guardrails
 L-UI AST escaped string report implementation plan + guardrails
 L-UI AST escaped string report implementation + invariants
 L-UI AST source-backed text contract + guardrails
+L-UI AST source-backed text implementation plan + guardrails
 ```
 
 The next implementation target should be:
 
 ```text
-L-UI AST source-backed text extraction implementation plan
+L-UI AST source-backed text extraction implementation
 ```
 
-That target should define extraction helpers, quote handling, capacity behavior, span decisions, exact tests, and compatibility expectations before implementation.
+That target should add source-backed extraction helpers, quote-safe copying, capacity checks, exact invariant tests, and docs while preserving parser and report compatibility.
