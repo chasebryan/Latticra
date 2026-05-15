@@ -37,3 +37,5 @@ jobs:
         run: sh scripts/test-l-ui-parser-result-report.sh
       - name: Run L-UI parser diagnostics contract guard
         run: sh scripts/test-l-ui-parser-diagnostics-contract.sh
+      - name: Run L-UI parser diagnostics implementation plan guard
+        run: sh scripts/test-l-ui-parser-diagnostics-implementation-plan.sh
