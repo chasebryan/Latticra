@@ -52,6 +52,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_PARSER_AST_CONTRACT.md`](L_UI_PARSER_AST_CONTRACT.md) — future AST shape, node ownership, source-span usage, capacity rules, diagnostics relationship, and no-effect boundaries.
 - [`L_UI_PARSER_AST_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_AST_IMPLEMENTATION_PLAN.md) — AST public API changes, struct placement, capacity constants, ownership/lifetime rules, source-span integration, exact tests, and compatibility expectations.
 - [`L_UI_PARSER_AST_IMPLEMENTATION.md`](L_UI_PARSER_AST_IMPLEMENTATION.md) — fixed-size AST metadata, source-span-aware nodes, deterministic report, and no-effect invariants.
+- [`L_UI_AST_DETAILED_REPORT_CONTRACT.md`](L_UI_AST_DETAILED_REPORT_CONTRACT.md) — deterministic rail, field, text, and source-span reporting rules before detailed AST report implementation.
 
 ## Implementation rule
 
@@ -91,12 +92,13 @@ L-UI parser source-span implementation + invariants
 L-UI parser AST contract + guardrails
 L-UI parser AST implementation plan + guardrails
 L-UI parser AST implementation + invariants
+L-UI AST detailed report contract + guardrails
 ```
 
 The next implementation target should be:
 
 ```text
-L-UI AST detailed report contract
+L-UI AST detailed report implementation plan
 ```
 
-That target should define deterministic rail, field, text, and source-span reporting before adding detailed AST reports.
+That target should define the public API addition, report capacity, exact section order, failed-parse behavior, escaping policy, exact tests, and compatibility expectations before implementing detailed reports.
