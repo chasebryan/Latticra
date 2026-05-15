@@ -19,3 +19,5 @@ jobs:
         run: sh scripts/test-state-lattice.sh
       - name: Run tri-plane transition tests
         run: sh scripts/test-tri-plane-transition.sh
+      - name: Run Nucleus preview tests
+        run: sh scripts/test-nucleus-preview.sh
