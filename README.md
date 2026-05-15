@@ -74,6 +74,7 @@ Core seed documents:
 - [`docs/L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md`](docs/L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md) — diagnostic structs, mapping functions, report surface, and invariants.
 - [`docs/L_UI_PARSER_LINE_COLUMN_PRECISION_PLAN.md`](docs/L_UI_PARSER_LINE_COLUMN_PRECISION_PLAN.md) — line/column precision rules, newline policy, byte-column behavior, and future tests.
 - [`docs/L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION_PLAN.md`](docs/L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION_PLAN.md) — helper shapes, parser touch points, implementation tests, and boundaries before precise location code.
+- [`docs/L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION.md`](docs/L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION.md) — private location helpers, parser touch-point updates, and location invariants.
 
 Run the current implementation checks with:
 
@@ -93,13 +94,14 @@ sh scripts/test-l-ui-parser-diagnostics-implementation-plan.sh
 sh scripts/test-l-ui-parser-diagnostics.sh
 sh scripts/test-l-ui-parser-line-column-precision-plan.sh
 sh scripts/test-l-ui-parser-line-column-precision-implementation-plan.sh
+sh scripts/test-l-ui-parser-location.sh
 ```
 
 ## Current boundary
 
-Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, repository fixture parser integration, parser result reporting, a parser diagnostics contract, a parser diagnostics implementation plan, parser diagnostics implementation, a line/column precision plan, and a line/column precision implementation plan.
+Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, repository fixture parser integration, parser result reporting, a parser diagnostics contract, a parser diagnostics implementation plan, parser diagnostics implementation, a line/column precision plan, a line/column precision implementation plan, and line/column precision implementation.
 
-It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, L-UI rendering, precise parser location implementation, live movement, or operating system replacement.
+It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, L-UI rendering, live movement, or operating system replacement.
 
 ## License
 
