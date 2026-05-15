@@ -11,6 +11,8 @@ The current AST source-backed text extraction copies raw bytes between quotes an
 
 This document does not implement string-literal escape decoding.
 
+The implementation plan is documented separately in [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md).
+
 ## Current boundary
 
 The current L-UI AST stack provides:
@@ -232,6 +234,8 @@ String-literal escape decoding implementation must not begin until a separate im
 9. test file names;
 10. exact invariant tests;
 11. compatibility expectations.
+
+That plan is recorded in [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md).
 
 ## Future test list
 
