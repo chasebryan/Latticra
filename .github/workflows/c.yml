@@ -47,3 +47,5 @@ jobs:
         run: sh scripts/test-l-ui-parser-line-column-precision-implementation-plan.sh
       - name: Run L-UI parser location tests
         run: sh scripts/test-l-ui-parser-location.sh
+      - name: Run L-UI parser source-span contract guard
+        run: sh scripts/test-l-ui-parser-source-span-contract.sh
