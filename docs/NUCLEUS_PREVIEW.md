@@ -1,13 +1,13 @@
 # Latticra Nucleus Preview Classification
 
 Status: initial implementation contract
-Scope: request classification, effect policy, no-execution flags, and preview-only boundaries.
+Scope: request classification, effect policy, no-execution flags, operator-visible reports, and preview-only boundaries.
 
 ## Purpose
 
 Nucleus Preview Classification is the third Latticra implementation unit.
 
-It introduces the first Nucleus-adjacent classifier without task execution, mutation, server interaction, recovery execution, hardware access, or update behavior.
+It introduces the first Nucleus-adjacent classifier and operator-visible report surface without task execution, mutation, server interaction, recovery execution, hardware access, or update behavior.
 
 ## Implementation files
 
@@ -93,7 +93,7 @@ for preview-allowed request kinds.
 
 ## No-execution boundary
 
-The classifier must always return:
+The classifier and report surface must always preserve:
 
 ```text
 executed=0
@@ -105,6 +105,27 @@ hardware_allowed=0
 
 This preserves the preview-only boundary.
 
+## Operator-visible report
+
+The preview report renders classifier output as deterministic text.
+
+Required report fields:
+
+```text
+LATTICRA NUCLEUS PREVIEW
+request=<request-kind>
+requested_effect=<effect>
+policy=<policy-result>
+reason=<policy-reason>
+executed=0
+mutation_allowed=0
+server_interaction_allowed=0
+recovery_allowed=0
+hardware_allowed=0
+```
+
+The report must handle both allowed previews and denied previews without changing policy state or performing work.
+
 ## Public API
 
 Initial API:
@@ -114,6 +135,7 @@ latticra_request_kind_label
 latticra_policy_result_label
 latticra_policy_reason_label
 latticra_nucleus_classify_preview
+latticra_nucleus_preview_report
 ```
 
 ## Test command
@@ -128,7 +150,7 @@ The main C workflow runs state-lattice, tri-plane transition, and Nucleus previe
 
 ## Current evidence level
 
-This implementation is an L2 tested model for request/effect classification.
+This implementation is an L2 tested model for request/effect classification and operator-visible preview reporting.
 
 It is not live Nucleus orchestration, task execution, server interaction, self-update, recovery behavior, hardware behavior, boot behavior, or a security boundary.
 
@@ -137,10 +159,10 @@ It is not live Nucleus orchestration, task execution, server interaction, self-u
 The next implementation candidate after this model is:
 
 ```text
-operator-visible Nucleus preview report
+L-UI static report fixture
 ```
 
-That future work should render classifier results but still avoid live mutation.
+That future work should define terminal-facing layout fixtures for these reports while still avoiding live mutation.
 
 ## Non-claims
 
