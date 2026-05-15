@@ -1,5 +1,6 @@
 #include "latticra/l_ui_parser.h"
 
+#include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -433,6 +434,229 @@ latticra_status_t latticra_l_ui_ast_report(
             buffer[0] = '\0';
         }
         return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+
+    return LATTICRA_STATUS_OK;
+}
+
+static latticra_status_t append_text(char *buffer, size_t buffer_len, size_t *used, const char *format, ...) {
+    va_list args;
+    int written;
+    size_t remaining;
+
+    if (buffer == 0 || used == 0 || format == 0) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (*used >= buffer_len) {
+        if (buffer_len > 0u) {
+            buffer[0] = '\0';
+        }
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+
+    remaining = buffer_len - *used;
+    va_start(args, format);
+    written = vsnprintf(buffer + *used, remaining, format, args);
+    va_end(args);
+
+    if (written < 0 || (size_t)written >= remaining) {
+        if (buffer_len > 0u) {
+            buffer[0] = '\0';
+        }
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+
+    *used += (size_t)written;
+    return LATTICRA_STATUS_OK;
+}
+
+static latticra_status_t append_span_fields(
+    char *buffer,
+    size_t buffer_len,
+    size_t *used,
+    const char *prefix,
+    const latticra_l_ui_source_span_t *span) {
+    const char *safe_prefix = prefix == 0 ? "" : prefix;
+    latticra_status_t status;
+
+    status = append_text(buffer, buffer_len, used, "%sspan_start_offset=%zu\n", safe_prefix, span->start_offset);
+    if (status != LATTICRA_STATUS_OK) return status;
+    status = append_text(buffer, buffer_len, used, "%sspan_end_offset=%zu\n", safe_prefix, span->end_offset);
+    if (status != LATTICRA_STATUS_OK) return status;
+    status = append_text(buffer, buffer_len, used, "%sspan_start_line=%zu\n", safe_prefix, span->start_line);
+    if (status != LATTICRA_STATUS_OK) return status;
+    status = append_text(buffer, buffer_len, used, "%sspan_start_column=%zu\n", safe_prefix, span->start_column);
+    if (status != LATTICRA_STATUS_OK) return status;
+    status = append_text(buffer, buffer_len, used, "%sspan_end_line=%zu\n", safe_prefix, span->end_line);
+    if (status != LATTICRA_STATUS_OK) return status;
+    return append_text(buffer, buffer_len, used, "%sspan_end_column=%zu\n", safe_prefix, span->end_column);
+}
+
+static latticra_status_t append_failed_parse_report(
+    char *buffer,
+    size_t buffer_len,
+    size_t *used,
+    const latticra_l_ui_ast_result_t *ast) {
+    latticra_status_t status;
+
+    status = append_text(buffer, buffer_len, used, "L-UI AST DETAILED REPORT\n");
+    if (status != LATTICRA_STATUS_OK) return status;
+    status = append_text(
+        buffer,
+        buffer_len,
+        used,
+        "parse_error=%s\n",
+        latticra_l_ui_parse_error_label(ast->parse_result.error));
+    if (status != LATTICRA_STATUS_OK) return status;
+    status = append_text(buffer, buffer_len, used, "rail_count=0\nfield_count=0\ntext_count=0\n");
+    if (status != LATTICRA_STATUS_OK) return status;
+    return append_text(
+        buffer,
+        buffer_len,
+        used,
+        "no_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nhardware_allowed=%d\n",
+        ast->no_effect,
+        ast->execution_allowed,
+        ast->mutation_allowed,
+        ast->server_allowed,
+        ast->recovery_allowed,
+        ast->hardware_allowed);
+}
+
+static latticra_status_t append_card_section(
+    char *buffer,
+    size_t buffer_len,
+    size_t *used,
+    const latticra_l_ui_ast_result_t *ast) {
+    latticra_status_t status;
+
+    status = append_text(buffer, buffer_len, used, "[card]\nkind=card\n");
+    if (status != LATTICRA_STATUS_OK) return status;
+    status = append_text(
+        buffer,
+        buffer_len,
+        used,
+        "name=%s\npurpose=%s\neffect=%s\nboundary=%s\nrail_count=%zu\nfield_count=%zu\ntext_count=%zu\n",
+        ast->card.name,
+        ast->card.purpose,
+        ast->card.effect,
+        ast->card.boundary,
+        ast->card.rail_count,
+        ast->card.field_count,
+        ast->card.text_count);
+    if (status != LATTICRA_STATUS_OK) return status;
+    return append_span_fields(buffer, buffer_len, used, "", &ast->card.span);
+}
+
+static latticra_status_t append_rail_section(
+    char *buffer,
+    size_t buffer_len,
+    size_t *used,
+    const latticra_l_ui_ast_result_t *ast,
+    size_t index) {
+    const latticra_l_ui_ast_rail_t *rail = &ast->rails[index];
+    latticra_status_t status;
+
+    status = append_text(buffer, buffer_len, used, "[rail %zu]\nkind=rail\n", index);
+    if (status != LATTICRA_STATUS_OK) return status;
+    status = append_text(
+        buffer,
+        buffer_len,
+        used,
+        "name=%s\nfirst_field_index=%zu\nfield_count=%zu\nfirst_text_index=%zu\ntext_count=%zu\n",
+        rail->name,
+        rail->first_field_index,
+        rail->field_count,
+        rail->first_text_index,
+        rail->text_count);
+    if (status != LATTICRA_STATUS_OK) return status;
+    return append_span_fields(buffer, buffer_len, used, "", &rail->span);
+}
+
+static latticra_status_t append_field_section(
+    char *buffer,
+    size_t buffer_len,
+    size_t *used,
+    const latticra_l_ui_ast_result_t *ast,
+    size_t index) {
+    const latticra_l_ui_ast_field_t *field = &ast->fields[index];
+    latticra_status_t status;
+
+    status = append_text(buffer, buffer_len, used, "[field %zu]\nkind=field\n", index);
+    if (status != LATTICRA_STATUS_OK) return status;
+    status = append_text(buffer, buffer_len, used, "name=%s\nbinding=%s\n", field->name, field->binding);
+    if (status != LATTICRA_STATUS_OK) return status;
+    status = append_span_fields(buffer, buffer_len, used, "", &field->span);
+    if (status != LATTICRA_STATUS_OK) return status;
+    return append_span_fields(buffer, buffer_len, used, "binding_", &field->binding_span);
+}
+
+static latticra_status_t append_text_section(
+    char *buffer,
+    size_t buffer_len,
+    size_t *used,
+    const latticra_l_ui_ast_result_t *ast,
+    size_t index) {
+    const latticra_l_ui_ast_text_t *text = &ast->texts[index];
+    latticra_status_t status;
+
+    status = append_text(buffer, buffer_len, used, "[text %zu]\nkind=text\nvalue=%s\n", index, text->value);
+    if (status != LATTICRA_STATUS_OK) return status;
+    return append_span_fields(buffer, buffer_len, used, "", &text->span);
+}
+
+latticra_status_t latticra_l_ui_ast_detailed_report(
+    const latticra_l_ui_ast_result_t *ast,
+    char *buffer,
+    size_t buffer_len) {
+    latticra_status_t status;
+    size_t used = 0u;
+    size_t index;
+
+    if (ast == 0 || buffer == 0) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+
+    if (ast->parse_result.error != LATTICRA_L_UI_PARSE_OK) {
+        return append_failed_parse_report(buffer, buffer_len, &used, ast);
+    }
+
+    status = append_text(
+        buffer,
+        buffer_len,
+        &used,
+        "L-UI AST DETAILED REPORT\ncard=%s\npurpose=%s\neffect=%s\nboundary=%s\nrail_count=%zu\nfield_count=%zu\ntext_count=%zu\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nhardware_allowed=%d\n",
+        ast->card.name,
+        ast->card.purpose,
+        ast->card.effect,
+        ast->card.boundary,
+        ast->rail_count,
+        ast->field_count,
+        ast->text_count,
+        ast->no_effect,
+        ast->execution_allowed,
+        ast->mutation_allowed,
+        ast->server_allowed,
+        ast->recovery_allowed,
+        ast->hardware_allowed);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    status = append_card_section(buffer, buffer_len, &used, ast);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    for (index = 0u; index < ast->rail_count; index++) {
+        status = append_rail_section(buffer, buffer_len, &used, ast, index);
+        if (status != LATTICRA_STATUS_OK) return status;
+    }
+
+    for (index = 0u; index < ast->field_count; index++) {
+        status = append_field_section(buffer, buffer_len, &used, ast, index);
+        if (status != LATTICRA_STATUS_OK) return status;
+    }
+
+    for (index = 0u; index < ast->text_count; index++) {
+        status = append_text_section(buffer, buffer_len, &used, ast, index);
+        if (status != LATTICRA_STATUS_OK) return status;
     }
 
     return LATTICRA_STATUS_OK;
