@@ -22,6 +22,7 @@ extern "C" {
 #define LATTICRA_L_UI_AST_BINDING_MAX 96u
 #define LATTICRA_L_UI_AST_PURPOSE_MAX 128u
 #define LATTICRA_L_UI_AST_REPORT_MAX 2048u
+#define LATTICRA_L_UI_AST_DETAILED_REPORT_MAX 8192u
 
 typedef enum {
     LATTICRA_L_UI_PARSE_OK = 0,
@@ -183,6 +184,11 @@ latticra_status_t latticra_l_ui_parse_ast(
     latticra_l_ui_ast_result_t *ast);
 
 latticra_status_t latticra_l_ui_ast_report(
+    const latticra_l_ui_ast_result_t *ast,
+    char *buffer,
+    size_t buffer_len);
+
+latticra_status_t latticra_l_ui_ast_detailed_report(
     const latticra_l_ui_ast_result_t *ast,
     char *buffer,
     size_t buffer_len);
