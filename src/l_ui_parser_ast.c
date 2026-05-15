@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 
+#define LATTICRA_L_UI_AST_ESCAPED_PURPOSE_MAX ((LATTICRA_L_UI_AST_PURPOSE_MAX * 4u) + 1u)
+#define LATTICRA_L_UI_AST_ESCAPED_TEXT_MAX ((LATTICRA_L_UI_AST_PURPOSE_MAX * 4u) + 1u)
+
 static void copy_literal(char *destination, size_t destination_len, const char *source) {
     if (destination_len == 0u) {
         return;
@@ -470,6 +473,73 @@ static latticra_status_t append_text(char *buffer, size_t buffer_len, size_t *us
     return LATTICRA_STATUS_OK;
 }
 
+static latticra_status_t escape_report_string(
+    const char *input,
+    size_t input_len,
+    char *output,
+    size_t output_len) {
+    static const char hex[] = "0123456789ABCDEF";
+    size_t input_index;
+    size_t output_index = 0u;
+
+    if (input == 0 || output == 0) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (output_len == 0u) {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+
+    for (input_index = 0u; input_index < input_len; input_index++) {
+        unsigned char byte = (unsigned char)input[input_index];
+        const char *short_escape = 0;
+        char hex_escape[4];
+        size_t needed;
+
+        if (byte == '\n') {
+            short_escape = "\\n";
+        } else if (byte == '\r') {
+            short_escape = "\\r";
+        } else if (byte == '\t') {
+            short_escape = "\\t";
+        } else if (byte == '"') {
+            short_escape = "\\\"";
+        } else if (byte == '\\') {
+            short_escape = "\\\\";
+        }
+
+        if (short_escape != 0) {
+            needed = strlen(short_escape);
+            if (output_index + needed >= output_len) {
+                output[0] = '\0';
+                return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+            }
+            (void)memcpy(output + output_index, short_escape, needed);
+            output_index += needed;
+        } else if (byte >= 0x20u && byte <= 0x7Eu) {
+            if (output_index + 1u >= output_len) {
+                output[0] = '\0';
+                return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+            }
+            output[output_index] = (char)byte;
+            output_index++;
+        } else {
+            hex_escape[0] = '\\';
+            hex_escape[1] = 'x';
+            hex_escape[2] = hex[(byte >> 4u) & 0x0Fu];
+            hex_escape[3] = hex[byte & 0x0Fu];
+            if (output_index + sizeof(hex_escape) >= output_len) {
+                output[0] = '\0';
+                return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+            }
+            (void)memcpy(output + output_index, hex_escape, sizeof(hex_escape));
+            output_index += sizeof(hex_escape);
+        }
+    }
+
+    output[output_index] = '\0';
+    return LATTICRA_STATUS_OK;
+}
+
 static latticra_status_t append_span_fields(
     char *buffer,
     size_t buffer_len,
@@ -529,6 +599,10 @@ static latticra_status_t append_card_section(
     size_t *used,
     const latticra_l_ui_ast_result_t *ast) {
     latticra_status_t status;
+    char escaped_purpose[LATTICRA_L_UI_AST_ESCAPED_PURPOSE_MAX];
+
+    status = escape_report_string(ast->card.purpose, strlen(ast->card.purpose), escaped_purpose, sizeof(escaped_purpose));
+    if (status != LATTICRA_STATUS_OK) return status;
 
     status = append_text(buffer, buffer_len, used, "[card]\nkind=card\n");
     if (status != LATTICRA_STATUS_OK) return status;
@@ -536,9 +610,10 @@ static latticra_status_t append_card_section(
         buffer,
         buffer_len,
         used,
-        "name=%s\npurpose=%s\neffect=%s\nboundary=%s\nrail_count=%zu\nfield_count=%zu\ntext_count=%zu\n",
+        "name=%s\npurpose=%s\npurpose_escaped=%s\neffect=%s\nboundary=%s\nrail_count=%zu\nfield_count=%zu\ntext_count=%zu\n",
         ast->card.name,
         ast->card.purpose,
+        escaped_purpose,
         ast->card.effect,
         ast->card.boundary,
         ast->card.rail_count,
@@ -599,8 +674,12 @@ static latticra_status_t append_text_section(
     size_t index) {
     const latticra_l_ui_ast_text_t *text = &ast->texts[index];
     latticra_status_t status;
+    char escaped_text[LATTICRA_L_UI_AST_ESCAPED_TEXT_MAX];
 
-    status = append_text(buffer, buffer_len, used, "[text %zu]\nkind=text\nvalue=%s\n", index, text->value);
+    status = escape_report_string(text->value, strlen(text->value), escaped_text, sizeof(escaped_text));
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    status = append_text(buffer, buffer_len, used, "[text %zu]\nkind=text\nvalue=%s\nvalue_escaped=%s\n", index, text->value, escaped_text);
     if (status != LATTICRA_STATUS_OK) return status;
     return append_span_fields(buffer, buffer_len, used, "", &text->span);
 }
