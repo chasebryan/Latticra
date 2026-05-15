@@ -36,6 +36,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_STATIC_REPORT.md`](L_UI_STATIC_REPORT.md) — terminal-facing L-UI static report fixture for Nucleus/state rails.
 - [`L_UI_SOURCE_GRAMMAR.md`](L_UI_SOURCE_GRAMMAR.md) — L-UI source grammar draft and `.lui` fixture guardrails.
 - [`L_UI_PARSER_DESIGN.md`](L_UI_PARSER_DESIGN.md) — parser design contract, error categories, no-effect constraints, and implementation gate.
+- [`L_UI_PARSER_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_IMPLEMENTATION_PLAN.md) — parser implementation language, module shape, API, source-size limit, and exact test list before parser code.
 
 ## Implementation rule
 
@@ -59,12 +60,13 @@ Nucleus preview request classification + report invariants
 L-UI static report fixture + rail invariants
 L-UI source grammar draft + fixture guardrails
 L-UI parser design contract + guardrails
+L-UI parser implementation plan + guardrails
 ```
 
 The next implementation target should be:
 
 ```text
-L-UI parser implementation planning
+L-UI parser implementation
 ```
 
-That target should decide parser implementation language, module shape, and exact test list before adding parser code.
+That target should add the planned no-effect C parser, exact parser invariant tests, and no renderer or execution behavior.
