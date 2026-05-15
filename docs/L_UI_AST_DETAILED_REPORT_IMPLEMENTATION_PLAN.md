@@ -43,7 +43,7 @@ include/latticra/l_ui_parser.h
 ```
 
 ```text
-#define LATTICRA_L_UI_AST_DETAILED_REPORT_MAX 8192u
+#define LATTICRA_L_UI_AST_DETAILED_REPORT_MAX 16384u
 
 latticra_status_t latticra_l_ui_ast_detailed_report(
     const latticra_l_ui_ast_result_t *ast,
@@ -72,7 +72,7 @@ Detailed report generation should live in `src/l_ui_parser_ast.c` with the compa
 Use:
 
 ```text
-LATTICRA_L_UI_AST_DETAILED_REPORT_MAX = 8192
+LATTICRA_L_UI_AST_DETAILED_REPORT_MAX = 16384
 ```
 
 The report function must return `LATTICRA_STATUS_BUFFER_TOO_SMALL` when the provided buffer cannot hold the full deterministic report.

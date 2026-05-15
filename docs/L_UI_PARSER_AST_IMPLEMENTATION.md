@@ -1,7 +1,7 @@
 # Latticra L-UI Parser AST Implementation
 
-Status: initial implementation contract
-Scope: fixed-size AST metadata, parse-result integration, source-span-aware nodes, deterministic AST report, and no-effect invariants.
+Status: implementation contract
+Scope: fixed-size AST metadata, parse-result integration, source-span-aware nodes, compact and detailed AST reports, and no-effect invariants.
 
 ## Purpose
 
@@ -15,7 +15,9 @@ It depends on successful source validation. It copies labels, bindings, text val
 include/latticra/l_ui_parser.h
 src/l_ui_parser_ast.c
 tests/l_ui_parser_ast_invariants.c
+tests/l_ui_parser_ast_detailed_report_invariants.c
 scripts/test-l-ui-parser-ast.sh
+scripts/test-l-ui-ast-detailed-report.sh
 ```
 
 ## Public API
@@ -24,6 +26,7 @@ scripts/test-l-ui-parser-ast.sh
 latticra_l_ui_ast_node_kind_label
 latticra_l_ui_parse_ast
 latticra_l_ui_ast_report
+latticra_l_ui_ast_detailed_report
 ```
 
 ## Public types
@@ -49,6 +52,7 @@ LATTICRA_L_UI_AST_LABEL_MAX = 64
 LATTICRA_L_UI_AST_BINDING_MAX = 96
 LATTICRA_L_UI_AST_PURPOSE_MAX = 128
 LATTICRA_L_UI_AST_REPORT_MAX = 2048
+LATTICRA_L_UI_AST_DETAILED_REPORT_MAX = 16384
 ```
 
 ## Node kinds
@@ -155,9 +159,11 @@ hardware_allowed=0
 
 No partial AST is emitted in the first implementation.
 
-## AST report
+Detailed AST reporting renders a compact failed-parse report in this case.
 
-The AST report renders:
+## Compact AST report
+
+The compact AST report renders:
 
 ```text
 L-UI AST SUMMARY
@@ -175,17 +181,39 @@ recovery_allowed=<0|1>
 hardware_allowed=<0|1>
 ```
 
-Detailed node reporting is intentionally deferred.
+## Detailed AST report
 
-## Test command
+The detailed AST report renders deterministic card, rail, field, text, source-span, binding-span, and no-effect metadata.
+
+The detailed report starts with:
+
+```text
+L-UI AST DETAILED REPORT
+card=NucleusPreview
+purpose=operator-visible Nucleus preview report
+effect=none
+boundary=preview_only
+rail_count=9
+field_count=23
+text_count=2
+```
+
+Detailed report capacity:
+
+```text
+LATTICRA_L_UI_AST_DETAILED_REPORT_MAX = 16384
+```
+
+## Test commands
 
 Run:
 
 ```sh
 sh scripts/test-l-ui-parser-ast.sh
+sh scripts/test-l-ui-ast-detailed-report.sh
 ```
 
-The main C workflow runs this check after the AST implementation-plan guard.
+The main C workflow runs these checks after the AST implementation-plan guard and detailed report implementation-plan guard.
 
 ## Required invariants
 
@@ -212,23 +240,23 @@ ast_labels_are_stable
 ast_node_kind_labels_are_stable
 ```
 
-The implementation also checks bad argument and small-buffer behavior.
+The detailed report tests verify deterministic card, rail, field, text, source-span, binding-span, failed-parse, and no-effect output.
 
 ## Current evidence level
 
-This implementation is an L2 tested metadata AST model for validated L-UI source.
+This implementation is an L2 tested metadata AST and detailed-report model for validated L-UI source.
 
 It is not a renderer, UI runtime, command surface, Nucleus task runner, server client, update engine, recovery system, hardware system, boot system, or security boundary.
 
 ## Next implementation step
 
-The next implementation candidate after the AST is:
+The next implementation candidate after detailed AST reporting is:
 
 ```text
-L-UI AST detailed report contract
+L-UI AST escaped string report contract
 ```
 
-That future work should define deterministic rail, field, text, and source-span reporting before adding detailed AST reports.
+That future work should define stable escaping for newlines, tabs, quotes, and non-printable bytes before broader text values are accepted.
 
 ## Non-claims
 

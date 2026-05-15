@@ -49,7 +49,7 @@ do
 done
 
 for value in \
-  'LATTICRA_L_UI_AST_DETAILED_REPORT_MAX = 8192' \
+  'LATTICRA_L_UI_AST_DETAILED_REPORT_MAX = 16384' \
   'L-UI AST DETAILED REPORT' \
   'parse_error=<error-label>' \
   'card=NucleusPreview' \

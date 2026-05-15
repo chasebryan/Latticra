@@ -18,9 +18,9 @@ if [ ! -f "$doc" ]; then
 fi
 
 require_contains 'Status: detailed report contract' "$doc"
-require_contains 'This document does not implement detailed AST reporting.' "$doc"
+require_contains 'The implementation is documented separately' "$doc"
 require_contains 'Detailed report purpose' "$doc"
-require_contains 'Report function plan' "$doc"
+require_contains 'Report function' "$doc"
 require_contains 'Report capacity' "$doc"
 require_contains 'Top-level report shape' "$doc"
 require_contains 'Span field format' "$doc"
@@ -34,7 +34,7 @@ require_contains 'Failed parse behavior' "$doc"
 require_contains 'No-effect rule' "$doc"
 require_contains 'Compatibility rule' "$doc"
 require_contains 'Implementation gate' "$doc"
-require_contains 'Future test list' "$doc"
+require_contains 'Test list' "$doc"
 require_contains 'Forbidden behavior' "$doc"
 require_contains 'Non-claims' "$doc"
 
@@ -44,6 +44,8 @@ for api in \
 do
   require_contains "$api" "$doc"
 done
+
+require_contains 'LATTICRA_L_UI_AST_DETAILED_REPORT_MAX = 16384' "$doc"
 
 for title in \
   'L-UI AST DETAILED REPORT' \
@@ -137,7 +139,8 @@ for test_name in \
   detailed_report_is_deterministic \
   detailed_report_rejects_bad_arguments \
   detailed_report_rejects_small_buffers \
-  detailed_report_omits_unused_capacity_slots
+  detailed_report_omits_unused_capacity_slots \
+  detailed_report_handles_failed_parse
 do
   require_contains "$test_name" "$doc"
 done
