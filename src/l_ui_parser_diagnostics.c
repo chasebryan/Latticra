@@ -182,6 +182,7 @@ latticra_status_t latticra_l_ui_diagnostic_from_parse_result(
     copy_literal(diagnostic->hint, sizeof(diagnostic->hint), diagnostic_hint_for_error(parse_result->error));
     diagnostic->line = parse_result->line;
     diagnostic->column = parse_result->column;
+    diagnostic->span = parse_result->span;
     diagnostic->no_effect = parse_result->no_effect;
     diagnostic->execution_allowed = parse_result->execution_allowed;
     diagnostic->mutation_allowed = parse_result->mutation_allowed;
@@ -217,7 +218,13 @@ latticra_status_t latticra_l_ui_diagnostic_report(
         "mutation_allowed=%d\n"
         "server_allowed=%d\n"
         "recovery_allowed=%d\n"
-        "hardware_allowed=%d\n",
+        "hardware_allowed=%d\n"
+        "span_start_offset=%zu\n"
+        "span_end_offset=%zu\n"
+        "span_start_line=%zu\n"
+        "span_start_column=%zu\n"
+        "span_end_line=%zu\n"
+        "span_end_column=%zu\n",
         latticra_l_ui_diagnostic_severity_label(diagnostic->severity),
         diagnostic->code,
         diagnostic->message,
@@ -229,7 +236,13 @@ latticra_status_t latticra_l_ui_diagnostic_report(
         diagnostic->mutation_allowed,
         diagnostic->server_allowed,
         diagnostic->recovery_allowed,
-        diagnostic->hardware_allowed);
+        diagnostic->hardware_allowed,
+        diagnostic->span.start_offset,
+        diagnostic->span.end_offset,
+        diagnostic->span.start_line,
+        diagnostic->span.start_column,
+        diagnostic->span.end_line,
+        diagnostic->span.end_column);
 
     if (written < 0 || (size_t)written >= buffer_len) {
         if (buffer_len > 0u) {
