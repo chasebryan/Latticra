@@ -65,6 +65,44 @@ static void location_for_index(
     }
 }
 
+static void span_default(latticra_l_ui_source_span_t *span) {
+    if (span == 0) {
+        return;
+    }
+    span->start_offset = 0u;
+    span->end_offset = 0u;
+    span->start_line = 1u;
+    span->start_column = 1u;
+    span->end_line = 1u;
+    span->end_column = 1u;
+}
+
+static void span_for_range(
+    const char *source,
+    size_t source_len,
+    size_t start_offset,
+    size_t end_offset,
+    latticra_l_ui_source_span_t *span) {
+    if (span == 0) {
+        return;
+    }
+
+    if (start_offset > source_len) {
+        start_offset = source_len;
+    }
+    if (end_offset > source_len) {
+        end_offset = source_len;
+    }
+    if (end_offset < start_offset) {
+        end_offset = start_offset;
+    }
+
+    span->start_offset = start_offset;
+    span->end_offset = end_offset;
+    location_for_index(source, source_len, start_offset, &span->start_line, &span->start_column);
+    location_for_index(source, source_len, end_offset, &span->end_line, &span->end_column);
+}
+
 static int find_slice_index(
     const char *source,
     size_t source_len,
@@ -100,18 +138,17 @@ static int find_slice_index(
     return 0;
 }
 
-static int find_slice_location(
+static int find_slice_span(
     const char *source,
     size_t source_len,
     const char *needle,
-    size_t *line,
-    size_t *column) {
+    latticra_l_ui_source_span_t *span) {
     size_t index;
     if (!find_slice_index(source, source_len, needle, &index)) {
-        location_default(line, column);
+        span_default(span);
         return 0;
     }
-    location_for_index(source, source_len, index, line, column);
+    span_for_range(source, source_len, index, index + strlen(needle), span);
     return 1;
 }
 
@@ -119,25 +156,27 @@ static int contains_slice(const char *source, size_t source_len, const char *nee
     return find_slice_index(source, source_len, needle, 0);
 }
 
-static void card_body_location(
+static void card_body_span(
     const char *source,
     size_t source_len,
-    size_t *line,
-    size_t *column) {
+    latticra_l_ui_source_span_t *span) {
     const char *card = "card NucleusPreview {";
     size_t card_index;
     size_t body_index;
 
     if (find_slice_index(source, source_len, card, &card_index)) {
         body_index = card_index + strlen(card) - 1u;
-        location_for_index(source, source_len, body_index, line, column);
+        span_for_range(source, source_len, body_index, body_index, span);
         return;
     }
 
-    location_default(line, column);
+    span_default(span);
 }
 
-static int find_unbalanced_brace_location(const char *source, size_t source_len, size_t *line, size_t *column) {
+static int find_unbalanced_brace_span(
+    const char *source,
+    size_t source_len,
+    latticra_l_ui_source_span_t *span) {
     size_t index;
     size_t first_open_index = 0u;
     int has_open = 0;
@@ -152,7 +191,7 @@ static int find_unbalanced_brace_location(const char *source, size_t source_len,
             depth++;
         } else if (source[index] == '}') {
             if (depth == 0) {
-                location_for_index(source, source_len, index, line, column);
+                span_for_range(source, source_len, index, index + 1u, span);
                 return 1;
             }
             depth--;
@@ -163,15 +202,18 @@ static int find_unbalanced_brace_location(const char *source, size_t source_len,
     }
 
     if (depth != 0 && has_open) {
-        location_for_index(source, source_len, first_open_index, line, column);
+        span_for_range(source, source_len, first_open_index, first_open_index + 1u, span);
         return 1;
     }
 
-    location_default(line, column);
+    span_default(span);
     return 0;
 }
 
-static int find_unterminated_string_location(const char *source, size_t source_len, size_t *line, size_t *column) {
+static int find_unterminated_string_span(
+    const char *source,
+    size_t source_len,
+    latticra_l_ui_source_span_t *span) {
     size_t index;
     size_t opening_quote_index = 0u;
     int in_string = 0;
@@ -196,11 +238,11 @@ static int find_unterminated_string_location(const char *source, size_t source_l
     }
 
     if (in_string) {
-        location_for_index(source, source_len, opening_quote_index, line, column);
+        span_for_range(source, source_len, opening_quote_index, source_len, span);
         return 1;
     }
 
-    location_default(line, column);
+    span_default(span);
     return 0;
 }
 
@@ -209,6 +251,7 @@ static void set_safe_defaults(latticra_l_ui_parse_result_t *result) {
     result->error = LATTICRA_L_UI_PARSE_OK;
     result->line = 1u;
     result->column = 1u;
+    span_default(&result->span);
     result->card_name[0] = '\0';
     result->rail_count = 0u;
     result->field_count = 0u;
@@ -222,27 +265,42 @@ static void set_safe_defaults(latticra_l_ui_parse_result_t *result) {
     result->hardware_allowed = 0;
 }
 
+static latticra_status_t set_error_with_span(
+    latticra_l_ui_parse_result_t *result,
+    latticra_l_ui_parse_error_t error,
+    const latticra_l_ui_source_span_t *span) {
+    set_safe_defaults(result);
+    result->error = error;
+    if (span != 0) {
+        result->span = *span;
+        result->line = span->start_line == 0u ? 1u : span->start_line;
+        result->column = span->start_column == 0u ? 1u : span->start_column;
+    }
+    return LATTICRA_STATUS_OK;
+}
+
 static latticra_status_t set_error_at(
     latticra_l_ui_parse_result_t *result,
     latticra_l_ui_parse_error_t error,
     size_t line,
     size_t column) {
-    set_safe_defaults(result);
-    result->error = error;
-    result->line = line == 0u ? 1u : line;
-    result->column = column == 0u ? 1u : column;
-    return LATTICRA_STATUS_OK;
+    latticra_l_ui_source_span_t span;
+    span_default(&span);
+    span.start_line = line == 0u ? 1u : line;
+    span.start_column = column == 0u ? 1u : column;
+    span.end_line = span.start_line;
+    span.end_column = span.start_column;
+    return set_error_with_span(result, error, &span);
 }
 
 static latticra_status_t set_error(latticra_l_ui_parse_result_t *result, latticra_l_ui_parse_error_t error) {
     return set_error_at(result, error, 1u, 1u);
 }
 
-static int has_unsupported_effect_location(
+static int has_unsupported_effect_span(
     const char *source,
     size_t source_len,
-    size_t *line,
-    size_t *column) {
+    latticra_l_ui_source_span_t *span) {
     const char *effects[] = {
         "effect read",
         "effect local_mutation",
@@ -256,20 +314,19 @@ static int has_unsupported_effect_location(
     size_t index;
 
     for (index = 0u; index < sizeof(effects) / sizeof(effects[0]); index++) {
-        if (find_slice_location(source, source_len, effects[index], line, column)) {
+        if (find_slice_span(source, source_len, effects[index], span)) {
             return 1;
         }
     }
 
-    location_default(line, column);
+    span_default(span);
     return 0;
 }
 
-static int has_forbidden_marker_location(
+static int has_forbidden_marker_span(
     const char *source,
     size_t source_len,
-    size_t *line,
-    size_t *column) {
+    latticra_l_ui_source_span_t *span) {
     const char *markers[] = {
         "execute ",
         "host_mutation",
@@ -284,20 +341,19 @@ static int has_forbidden_marker_location(
     size_t index;
 
     for (index = 0u; index < sizeof(markers) / sizeof(markers[0]); index++) {
-        if (find_slice_location(source, source_len, markers[index], line, column)) {
+        if (find_slice_span(source, source_len, markers[index], span)) {
             return 1;
         }
     }
 
-    location_default(line, column);
+    span_default(span);
     return 0;
 }
 
-static int find_unknown_binding_prefix_location(
+static int find_unknown_binding_prefix_span(
     const char *source,
     size_t source_len,
-    size_t *line,
-    size_t *column) {
+    latticra_l_ui_source_span_t *span) {
     const char *prefixes[] = {
         " bind host.",
         " bind network.",
@@ -306,23 +362,26 @@ static int find_unknown_binding_prefix_location(
     };
     size_t index;
     size_t found_index;
+    size_t target_start;
+    size_t target_len;
 
     for (index = 0u; index < sizeof(prefixes) / sizeof(prefixes[0]); index++) {
         if (find_slice_index(source, source_len, prefixes[index], &found_index)) {
-            location_for_index(source, source_len, found_index + strlen(" bind "), line, column);
+            target_start = found_index + strlen(" bind ");
+            target_len = strlen(prefixes[index]) - strlen(" bind ");
+            span_for_range(source, source_len, target_start, target_start + target_len, span);
             return 1;
         }
     }
 
-    location_default(line, column);
+    span_default(span);
     return 0;
 }
 
-static latticra_l_ui_parse_error_t validate_required_rails(
+static latticra_l_ui_parse_error_t validate_required_rails_span(
     const char *source,
     size_t source_len,
-    size_t *line,
-    size_t *column) {
+    latticra_l_ui_source_span_t *span) {
     const char *rails[] = {
         "rail top {",
         "rail state {",
@@ -338,20 +397,19 @@ static latticra_l_ui_parse_error_t validate_required_rails(
 
     for (index = 0u; index < sizeof(rails) / sizeof(rails[0]); index++) {
         if (!contains_slice(source, source_len, rails[index])) {
-            card_body_location(source, source_len, line, column);
+            card_body_span(source, source_len, span);
             return LATTICRA_L_UI_PARSE_MISSING_RAIL;
         }
     }
 
-    location_default(line, column);
+    span_default(span);
     return LATTICRA_L_UI_PARSE_OK;
 }
 
-static latticra_l_ui_parse_error_t validate_required_bindings(
+static latticra_l_ui_parse_error_t validate_required_bindings_span(
     const char *source,
     size_t source_len,
-    size_t *line,
-    size_t *column) {
+    latticra_l_ui_source_span_t *span) {
     const char *bindings[] = {
         "field origin bind state.origin",
         "field route bind state.route",
@@ -381,12 +439,12 @@ static latticra_l_ui_parse_error_t validate_required_bindings(
 
     for (index = 0u; index < sizeof(bindings) / sizeof(bindings[0]); index++) {
         if (!contains_slice(source, source_len, bindings[index])) {
-            card_body_location(source, source_len, line, column);
+            card_body_span(source, source_len, span);
             return LATTICRA_L_UI_PARSE_MISSING_REQUIRED_BINDING;
         }
     }
 
-    location_default(line, column);
+    span_default(span);
     return LATTICRA_L_UI_PARSE_OK;
 }
 
@@ -440,14 +498,14 @@ latticra_status_t latticra_l_ui_parse_source(
     latticra_l_ui_parse_result_t *result) {
     latticra_l_ui_parse_error_t rail_error;
     latticra_l_ui_parse_error_t binding_error;
-    size_t line = 1u;
-    size_t column = 1u;
+    latticra_l_ui_source_span_t span;
 
     if (source == 0 || result == 0) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
     set_safe_defaults(result);
+    span_default(&span);
 
     if (source_len == 0u) {
         return set_error(result, LATTICRA_L_UI_PARSE_EMPTY_SOURCE);
@@ -457,19 +515,19 @@ latticra_status_t latticra_l_ui_parse_source(
         return set_error(result, LATTICRA_L_UI_PARSE_SOURCE_TOO_LARGE);
     }
 
-    if (find_unterminated_string_location(source, source_len, &line, &column)) {
-        return set_error_at(result, LATTICRA_L_UI_PARSE_UNTERMINATED_STRING, line, column);
+    if (find_unterminated_string_span(source, source_len, &span)) {
+        return set_error_with_span(result, LATTICRA_L_UI_PARSE_UNTERMINATED_STRING, &span);
     }
 
-    if (find_unbalanced_brace_location(source, source_len, &line, &column)) {
-        return set_error_at(result, LATTICRA_L_UI_PARSE_UNBALANCED_BRACE, line, column);
+    if (find_unbalanced_brace_span(source, source_len, &span)) {
+        return set_error_with_span(result, LATTICRA_L_UI_PARSE_UNBALANCED_BRACE, &span);
     }
 
     if (!contains_slice(source, source_len, "lui 0.1")) {
-        if (!find_slice_location(source, source_len, "lui", &line, &column)) {
-            location_default(&line, &column);
+        if (!find_slice_span(source, source_len, "lui", &span)) {
+            span_default(&span);
         }
-        return set_error_at(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_VERSION, line, column);
+        return set_error_with_span(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_VERSION, &span);
     }
 
     if (!contains_slice(source, source_len, "card NucleusPreview {")) {
@@ -477,52 +535,52 @@ latticra_status_t latticra_l_ui_parse_source(
     }
 
     if (!contains_slice(source, source_len, "purpose ")) {
-        card_body_location(source, source_len, &line, &column);
-        return set_error_at(result, LATTICRA_L_UI_PARSE_MISSING_PURPOSE, line, column);
+        card_body_span(source, source_len, &span);
+        return set_error_with_span(result, LATTICRA_L_UI_PARSE_MISSING_PURPOSE, &span);
     }
 
     if (!contains_slice(source, source_len, "effect ")) {
-        card_body_location(source, source_len, &line, &column);
-        return set_error_at(result, LATTICRA_L_UI_PARSE_MISSING_EFFECT, line, column);
+        card_body_span(source, source_len, &span);
+        return set_error_with_span(result, LATTICRA_L_UI_PARSE_MISSING_EFFECT, &span);
     }
 
-    if (has_unsupported_effect_location(source, source_len, &line, &column)) {
-        return set_error_at(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_EFFECT, line, column);
+    if (has_unsupported_effect_span(source, source_len, &span)) {
+        return set_error_with_span(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_EFFECT, &span);
     }
 
     if (!contains_slice(source, source_len, "effect none")) {
-        if (!find_slice_location(source, source_len, "effect ", &line, &column)) {
-            location_default(&line, &column);
+        if (!find_slice_span(source, source_len, "effect ", &span)) {
+            span_default(&span);
         }
-        return set_error_at(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_EFFECT, line, column);
+        return set_error_with_span(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_EFFECT, &span);
     }
 
     if (!contains_slice(source, source_len, "boundary ")) {
-        card_body_location(source, source_len, &line, &column);
-        return set_error_at(result, LATTICRA_L_UI_PARSE_MISSING_BOUNDARY, line, column);
+        card_body_span(source, source_len, &span);
+        return set_error_with_span(result, LATTICRA_L_UI_PARSE_MISSING_BOUNDARY, &span);
     }
 
     if (!contains_slice(source, source_len, "boundary preview_only")) {
-        find_slice_location(source, source_len, "boundary ", &line, &column);
-        return set_error_at(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_BOUNDARY, line, column);
+        find_slice_span(source, source_len, "boundary ", &span);
+        return set_error_with_span(result, LATTICRA_L_UI_PARSE_UNSUPPORTED_BOUNDARY, &span);
     }
 
-    if (has_forbidden_marker_location(source, source_len, &line, &column)) {
-        return set_error_at(result, LATTICRA_L_UI_PARSE_FORBIDDEN_BEHAVIOR_MARKER, line, column);
+    if (has_forbidden_marker_span(source, source_len, &span)) {
+        return set_error_with_span(result, LATTICRA_L_UI_PARSE_FORBIDDEN_BEHAVIOR_MARKER, &span);
     }
 
-    rail_error = validate_required_rails(source, source_len, &line, &column);
+    rail_error = validate_required_rails_span(source, source_len, &span);
     if (rail_error != LATTICRA_L_UI_PARSE_OK) {
-        return set_error_at(result, rail_error, line, column);
+        return set_error_with_span(result, rail_error, &span);
     }
 
-    if (find_unknown_binding_prefix_location(source, source_len, &line, &column)) {
-        return set_error_at(result, LATTICRA_L_UI_PARSE_UNKNOWN_BINDING_PREFIX, line, column);
+    if (find_unknown_binding_prefix_span(source, source_len, &span)) {
+        return set_error_with_span(result, LATTICRA_L_UI_PARSE_UNKNOWN_BINDING_PREFIX, &span);
     }
 
-    binding_error = validate_required_bindings(source, source_len, &line, &column);
+    binding_error = validate_required_bindings_span(source, source_len, &span);
     if (binding_error != LATTICRA_L_UI_PARSE_OK) {
-        return set_error_at(result, binding_error, line, column);
+        return set_error_with_span(result, binding_error, &span);
     }
 
     copy_literal(result->card_name, sizeof(result->card_name), "NucleusPreview");
@@ -533,6 +591,7 @@ latticra_status_t latticra_l_ui_parse_source(
     result->error = LATTICRA_L_UI_PARSE_OK;
     result->line = 1u;
     result->column = 1u;
+    span_default(&result->span);
 
     return LATTICRA_STATUS_OK;
 }
@@ -565,7 +624,13 @@ latticra_status_t latticra_l_ui_parse_result_report(
         "mutation_allowed=%d\n"
         "server_allowed=%d\n"
         "recovery_allowed=%d\n"
-        "hardware_allowed=%d\n",
+        "hardware_allowed=%d\n"
+        "span_start_offset=%zu\n"
+        "span_end_offset=%zu\n"
+        "span_start_line=%zu\n"
+        "span_start_column=%zu\n"
+        "span_end_line=%zu\n"
+        "span_end_column=%zu\n",
         (int)result->status,
         latticra_l_ui_parse_error_label(result->error),
         result->line,
@@ -580,7 +645,13 @@ latticra_status_t latticra_l_ui_parse_result_report(
         result->mutation_allowed,
         result->server_allowed,
         result->recovery_allowed,
-        result->hardware_allowed);
+        result->hardware_allowed,
+        result->span.start_offset,
+        result->span.end_offset,
+        result->span.start_line,
+        result->span.start_column,
+        result->span.end_line,
+        result->span.end_column);
 
     if (written < 0 || (size_t)written >= buffer_len) {
         if (buffer_len > 0u) {
