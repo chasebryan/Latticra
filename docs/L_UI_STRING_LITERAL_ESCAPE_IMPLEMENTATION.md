@@ -228,6 +228,12 @@ LATTICRA_L_UI_PARSE_INTERNAL_ERROR
 
 until a future parser diagnostics contract promotes them to first-class parser errors.
 
+That parser-level extension is now specified by:
+
+```text
+L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_CONTRACT.md
+```
+
 ## Failed parse compatibility
 
 Existing failed parse behavior remains unchanged:
@@ -303,13 +309,19 @@ It is not a parser-level string escape diagnostic system, Unicode display model,
 
 ## Next implementation step
 
-The next implementation candidate is:
+The parser-level string escape diagnostics contract is recorded in:
 
 ```text
-L-UI parser-level string escape diagnostics contract
+L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_CONTRACT.md
 ```
 
-That future work should decide whether invalid escapes receive specific parser errors, diagnostic codes, source spans, messages, and hints instead of AST-level internal-error classification.
+The next implementation candidate after that contract is:
+
+```text
+L-UI parser-level string escape diagnostics implementation plan
+```
+
+That future work should define parser enum additions, diagnostic code additions, parse error labels, source-span handling, validation order, messages, hints, AST compatibility, report compatibility, and exact tests before parser diagnostics are extended.
 
 ## Non-claims
 
