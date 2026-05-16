@@ -76,7 +76,7 @@ for helper in \
   decode_l_ui_string_literal_value \
   extract_decoded_quoted_value_after_token \
   'size_t *decoded_len' \
-  'decoded_len must be set only on success' \
+  '`decoded_len` must be set only on success' \
   'fill_text' \
   'value_len' \
   'extracted_purpose_len'
@@ -89,7 +89,7 @@ for capacity in \
   'decoded_len < destination_len' \
   'compatibility C string still needs a trailing NUL byte' \
   LATTICRA_L_UI_PARSE_STRING_VALUE_TOO_LARGE
- do
+do
   require_contains "$capacity" "$doc"
 done
 
