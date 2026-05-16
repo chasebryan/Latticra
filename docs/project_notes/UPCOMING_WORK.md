@@ -6,27 +6,27 @@ Last updated: 2026-05-15 22:49 CDT
 ## Recommended next slice
 
 ```text
-L-UI semantic validation implementation
+LIR shape contract
 ```
 
 Purpose:
 
 ```text
-add the planned semantic validation API, semantic result structs, diagnostics, reports, rail checks, field checks, binding checks, text checks, and invariants
+define the first Latticra Intermediate Representation shape before any L-UI semantic lowering or Lat integration code
 ```
 
 ## Near-term queue
 
-1. L-UI semantic validation implementation.
-2. LIR shape contract.
-3. Lat grammar contract.
-4. L-UI rendering contract.
-5. Nucleus task execution contract.
-6. Runtime boundary contract.
-7. Defensive threat model contract.
-8. Public status update after major milestones.
-9. Completion percentage review after semantic validation implementation.
-10. Strategy estimate review after semantic validation implementation.
+1. LIR shape contract.
+2. Lat grammar contract.
+3. L-UI rendering contract.
+4. Nucleus task execution contract.
+5. Runtime boundary contract.
+6. Defensive threat model contract.
+7. Public status update after major milestones.
+8. Completion percentage review after LIR shape planning.
+9. Strategy estimate review after LIR shape planning.
+10. Semantic validation implementation follow-up review after CI feedback.
 
 ## Quality rules
 
@@ -43,8 +43,8 @@ consistent with public Latticra identity
 
 ## Current project priorities
 
-- Move from parser/source-policy foundation toward semantic validation.
+- Move from parser/source-policy/semantic validation foundation toward LIR shape planning.
 - Maintain professional public docs.
 - Keep status and completion estimates current.
 - Keep security ambitions framed as mission and design targets until proven.
-- Move toward LIR after parser/AST semantic validation stabilizes.
+- Move toward Lat grammar after LIR shape is clearly contracted.
