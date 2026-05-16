@@ -58,12 +58,12 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat grammar contract, C/C++ foundation direction, and Lat grammar implementation plan toward bounded Lat parser implementation.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat grammar contract, C/C++ foundation direction, and bounded Lat parser implementation toward the governed C++ authority-layer contract.
 
 The next recommended implementation lane is:
 
 ```text
-Lat language grammar implementation
+Constrained C++ authority layer contract
 ```
 
 ## Current non-claim
