@@ -114,6 +114,7 @@ typedef struct {
 typedef struct {
     char name[LATTICRA_L_UI_AST_LABEL_MAX];
     char purpose[LATTICRA_L_UI_AST_PURPOSE_MAX];
+    size_t purpose_len;
     char effect[LATTICRA_L_UI_LABEL_MAX];
     char boundary[LATTICRA_L_UI_LABEL_MAX];
     latticra_l_ui_source_span_t span;
@@ -140,6 +141,7 @@ typedef struct {
 
 typedef struct {
     char value[LATTICRA_L_UI_AST_PURPOSE_MAX];
+    size_t value_len;
     latticra_l_ui_source_span_t span;
 } latticra_l_ui_ast_text_t;
 
