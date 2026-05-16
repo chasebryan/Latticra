@@ -93,7 +93,8 @@ The repository currently includes guarded documents, tests, and no-effect C impl
 - semantic validation contract;
 - semantic validation implementation plan;
 - semantic validation implementation;
-- LIR shape contract.
+- LIR shape contract;
+- LIR shape implementation plan.
 
 Run the current implementation checks with the scripts listed in [`docs/FOUNDATION_INDEX.md`](docs/FOUNDATION_INDEX.md) or through the repository C workflow.
 
