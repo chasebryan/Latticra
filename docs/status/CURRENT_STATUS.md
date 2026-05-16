@@ -20,6 +20,7 @@ The repository currently emphasizes:
 - explicit length-carrying AST string storage;
 - escaped decoded NUL acceptance;
 - literal source-buffer NUL rejection policy;
+- semantic validation planning;
 - no-effect preview boundaries.
 
 ## Rough completion estimates
@@ -29,8 +30,8 @@ These percentages are planning estimates only.
 | Area | Estimated completion |
 | --- | ---: |
 | Overall Latticra system | 16% |
-| L-UI parser / AST / string foundation | 82% |
-| Foundation documents and contracts | 66% |
+| L-UI parser / AST / string foundation | 83% |
+| Foundation documents and contracts | 67% |
 | Public documentation posture | 66% |
 | Strategy/status/funding framework | 40% |
 | Lat / Latticra Programming Language | 5% |
@@ -65,6 +66,7 @@ escaped decoded NUL acceptance
 source-buffer literal NUL policy contract
 source-buffer literal NUL policy implementation plan
 source-buffer literal NUL policy implementation
+semantic validation contract
 security policy
 public legacy association guard
 strategy index
@@ -89,6 +91,7 @@ Latticra does not currently provide:
 - Nucleus task execution;
 - L-UI rendering;
 - literal source NUL acceptance;
+- semantic validation implementation;
 - live movement;
 - operating-system replacement.
 
@@ -105,12 +108,13 @@ This is a mission direction, not a current security guarantee.
 Recommended next work:
 
 ```text
-L-UI semantic validation contract
+L-UI semantic validation implementation plan
 ```
 
 After that:
 
 ```text
+L-UI semantic validation implementation
 LIR shape contract
 Lat language grammar contract
 L-UI rendering contract
