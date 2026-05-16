@@ -206,7 +206,7 @@ for text_rule in \
   'top rail -> first text node' \
   'bottom rail -> second text node' \
   'exactly two text nodes exist' \
-  'value_len is used for length-aware checks'
+  '`value_len` is used for length-aware checks'
 do
   require_contains "$text_rule" "$doc"
 done
