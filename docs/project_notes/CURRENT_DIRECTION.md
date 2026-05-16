@@ -44,7 +44,7 @@ The current technical lane is moving from the L-UI parser, AST, source-policy, d
 The next recommended implementation lane is:
 
 ```text
-LIR shape contract
+LIR shape implementation plan
 ```
 
 ## Current non-claim
