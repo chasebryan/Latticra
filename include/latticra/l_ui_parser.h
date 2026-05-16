@@ -19,6 +19,7 @@ extern "C" {
 #define LATTICRA_L_UI_AST_FIELD_MAX 64u
 #define LATTICRA_L_UI_AST_TEXT_MAX 16u
 #define LATTICRA_L_UI_AST_LABEL_MAX 64u
+#define LATTICRA_L_UI_AST_NAME_MAX LATTICRA_L_UI_AST_LABEL_MAX
 #define LATTICRA_L_UI_AST_BINDING_MAX 96u
 #define LATTICRA_L_UI_AST_PURPOSE_MAX 128u
 #define LATTICRA_L_UI_AST_REPORT_MAX 2048u
@@ -185,9 +186,9 @@ typedef struct {
     size_t rail_index;
     size_t field_index;
     size_t text_index;
-    char card_name[LATTICRA_L_UI_AST_LABEL_MAX];
-    char rail_name[LATTICRA_L_UI_AST_LABEL_MAX];
-    char field_name[LATTICRA_L_UI_AST_LABEL_MAX];
+    char card_name[LATTICRA_L_UI_AST_NAME_MAX];
+    char rail_name[LATTICRA_L_UI_AST_NAME_MAX];
+    char field_name[LATTICRA_L_UI_AST_NAME_MAX];
     char binding[LATTICRA_L_UI_AST_BINDING_MAX];
     size_t rail_count;
     size_t field_count;
