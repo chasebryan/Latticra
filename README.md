@@ -89,7 +89,8 @@ The repository currently includes guarded documents, tests, and no-effect C impl
 - source-backed AST text extraction;
 - length-carrying AST string storage;
 - decoded NUL acceptance through escaped `\x00`;
-- literal source-buffer NUL rejection policy enforcement.
+- literal source-buffer NUL rejection policy enforcement;
+- semantic validation contract.
 
 Run the current implementation checks with the scripts listed in [`docs/FOUNDATION_INDEX.md`](docs/FOUNDATION_INDEX.md) or through the repository C workflow.
 
@@ -107,6 +108,7 @@ Latticra does not yet provide:
 - self-update execution;
 - Nucleus task execution;
 - L-UI rendering;
+- semantic validation implementation;
 - literal source NUL acceptance;
 - live movement;
 - operating-system replacement;

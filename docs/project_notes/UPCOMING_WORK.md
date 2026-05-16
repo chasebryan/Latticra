@@ -6,26 +6,26 @@ Last updated: 2026-05-15 22:49 CDT
 ## Recommended next slice
 
 ```text
-L-UI semantic validation contract
+L-UI semantic validation implementation plan
 ```
 
 Purpose:
 
 ```text
-define semantic checks beyond structural parsing, including field and binding consistency, duplicate handling, rail semantics, and reportable validation errors
+define the exact public API, semantic result structs, diagnostics, reports, rail checks, field checks, binding checks, text checks, and tests before semantic validation code
 ```
 
 ## Near-term queue
 
-1. L-UI semantic validation contract.
-2. LIR shape contract.
-3. Lat grammar contract.
-4. L-UI rendering contract.
-5. Nucleus task execution contract.
-6. Runtime boundary contract.
-7. Defensive threat model contract.
-8. Public status update after major milestones.
-9. Strategy estimate review after the next implementation merge.
+1. L-UI semantic validation implementation plan.
+2. L-UI semantic validation implementation.
+3. LIR shape contract.
+4. Lat grammar contract.
+5. L-UI rendering contract.
+6. Nucleus task execution contract.
+7. Runtime boundary contract.
+8. Defensive threat model contract.
+9. Public status update after major milestones.
 10. Completion percentage review after semantic validation planning.
 
 ## Quality rules
@@ -47,4 +47,4 @@ consistent with public Latticra identity
 - Maintain professional public docs.
 - Keep status and completion estimates current.
 - Keep security ambitions framed as mission and design targets until proven.
-- Move toward LIR after parser/AST source policy stabilizes.
+- Move toward LIR after parser/AST semantic validation stabilizes.

@@ -24,6 +24,32 @@ non-claims
 next step
 ```
 
+## 2026-05-15 22:49 CDT — L-UI semantic validation contract
+
+Status: contract added
+
+Latticra added the contract for a future L-UI semantic validation layer after structural parsing, AST construction, source policies, and string handling.
+
+Why it matters:
+
+This moves L-UI from structural validity toward meaning. The contract defines future checks for required rails, duplicate rails, duplicate fields, field ownership, binding consistency, text placement, card metadata, semantic diagnostics, source-span behavior, and no-effect preservation.
+
+Validation:
+
+```text
+sh scripts/test-l-ui-semantic-validation-contract.sh
+```
+
+Non-claims:
+
+This update does not implement semantic validation, LIR lowering, L-UI rendering, command behavior, Nucleus task execution, malware prevention, ransomware prevention, or operating-system behavior.
+
+Next step:
+
+```text
+L-UI semantic validation implementation plan
+```
+
 ## 2026-05-15 22:49 CDT — Source-buffer literal NUL policy implementation
 
 Status: implementation added
