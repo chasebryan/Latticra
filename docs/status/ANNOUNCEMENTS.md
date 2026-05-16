@@ -1,7 +1,7 @@
 # Latticra Announcements
 
 Status: public announcement log
-Last updated: 2026-05-15 22:49 CDT
+Last updated: 2026-05-16 16:15 CDT
 Scope: dated public updates, status notes, and milestone announcements.
 
 ## Purpose
@@ -22,6 +22,38 @@ why it matters
 validation
 non-claims
 next step
+```
+
+## 2026-05-16 16:15 CDT — C/C++ foundation direction
+
+Status: direction aligned
+
+Latticra aligned its language strategy with the current C/C++ foundation direction:
+
+```text
+C is the metal.
+C++ is the disciplined structure.
+Latticra is the contract.
+```
+
+Why it matters:
+
+The public implementation direction is now a constrained C/C++ foundation for a security-conscious system. C owns the secure substrate, C++ is limited to a governed authority layer for policy, validators, effect gates, audit logic, and bounded orchestration, and Lat / Latticra Language remains the contract/declaration layer.
+
+Validation:
+
+```text
+sh scripts/test-c-cpp-foundation-direction.sh
+```
+
+Non-claims:
+
+This update does not implement C++ infrastructure, claim unrestricted C++, implement Lat parsing, implement LIR execution, add runtime behavior, provide malware prevention, provide ransomware prevention, or create an operating system.
+
+Next step:
+
+```text
+Lat language grammar implementation plan
 ```
 
 ## 2026-05-15 22:49 CDT — Lat language grammar contract
