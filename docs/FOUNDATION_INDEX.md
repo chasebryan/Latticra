@@ -95,6 +95,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LIR_SHAPE_IMPLEMENTATION_PLAN.md`](LIR_SHAPE_IMPLEMENTATION_PLAN.md) — exact public API, structs, capacities, node kinds, edge kinds, errors, report format, source-span mapping, and tests before LIR code.
 - [`LIR_SHAPE_IMPLEMENTATION.md`](LIR_SHAPE_IMPLEMENTATION.md) — bounded no-effect LIR shape API, lowering, reports, and invariants for semantically valid L-UI ASTs.
 - [`LAT_LANGUAGE_GRAMMAR_CONTRACT.md`](LAT_LANGUAGE_GRAMMAR_CONTRACT.md) — first Lat / Latticra Language grammar contract for Lat-Core before parser implementation.
+- [`LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md`](LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md) — exact public API, parser result structs, AST structs, capacities, error labels, reports, fixture paths, string handling, source-span mapping, and tests before Lat parser code.
 - [`L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — decoding rules for quoted L-UI source string escapes.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md) — parser-level validation decision, AST decoding helper shape, NUL/capacity/span/report behavior, exact tests, and compatibility expectations before string-literal escape decoding.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md) — byte-oriented string-literal escape decoding for source-backed L-UI AST purpose and text values.
@@ -168,6 +169,7 @@ LIR shape contract + guardrails
 LIR shape implementation plan + guardrails
 LIR shape implementation + invariants
 Lat language grammar contract + guardrails
+Lat language grammar implementation plan + guardrails
 L-UI string-literal escape contract + guardrails
 L-UI string-literal escape implementation plan + guardrails
 L-UI string-literal escape decoding implementation + invariants
@@ -176,7 +178,7 @@ L-UI string-literal escape decoding implementation + invariants
 The next implementation target should be:
 
 ```text
-Lat language grammar implementation plan
+Lat language grammar implementation
 ```
 
-That target should define the exact public API, parser result structs, AST structs, capacities, error labels, reports, fixture paths, string handling, source-span mapping, and tests before Lat parser code.
+That target should add the exact public API, parser result structs, AST structs, capacities, error labels, reports, fixture paths, string handling, source-span mapping, and tests defined by the implementation plan.
