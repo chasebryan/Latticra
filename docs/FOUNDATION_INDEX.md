@@ -1,13 +1,13 @@
 # Latticra Foundation Index
 
 Status: initial planning index
-Scope: foundation documents required before implementation code begins.
+Scope: foundation documents, project operations records, and implementation documents.
 
 ## Purpose
 
-This index collects the first architecture, policy, language, and implementation documents for Latticra.
+This index collects the first architecture, policy, language, operations, strategy, status, and implementation documents for Latticra.
 
-Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, and precursor-promotion rules before expanding real implementation work.
+Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, strategy records, status records, and precursor-promotion rules before expanding real implementation work.
 
 ## Foundation documents
 
@@ -28,6 +28,19 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
 - [`LICENSE_POLICY.md`](LICENSE_POLICY.md) — Apache-2.0 project licensing, contributions, branding, and future notice rules.
+
+## Project operations documents
+
+- [`../STATUS.md`](../STATUS.md) — root status shortcut with completion estimates and next step.
+- [`../SECURITY.md`](../SECURITY.md) — vulnerability reporting, safe testing rules, and security non-claims.
+- [`strategy/README.md`](strategy/README.md) — strategy index and dated strategy-record rules.
+- [`strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md`](strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md) — active national-security open-system strategy record.
+- [`status/README.md`](status/README.md) — status index and update rules.
+- [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) — current progress, completion estimates, and next priorities.
+- [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
+- [`project_notes/README.md`](project_notes/README.md) — short project notes index.
+- [`project_notes/CURRENT_DIRECTION.md`](project_notes/CURRENT_DIRECTION.md) — current direction, target users, and technical lane.
+- [`project_notes/UPCOMING_WORK.md`](project_notes/UPCOMING_WORK.md) — recommended next slices and near-term queue.
 
 ## Initial implementation and design documents
 
@@ -89,9 +102,10 @@ No implementation code should be added until the relevant contract document exis
 
 ## Current priority
 
-Implemented/guarded foundation units:
+Implemented/guarded foundation and operations units:
 
 ```text
+project strategy/status framework + guardrails
 language naming policy + guardrails
 state lattice fixture + invariant tests
 tri-plane transition model + invariant tests
