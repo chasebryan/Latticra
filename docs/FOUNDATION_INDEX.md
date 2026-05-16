@@ -17,7 +17,8 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`NON_CLAIMS.md`](NON_CLAIMS.md) — claims Latticra does not currently make.
 - [`ARCHITECTURE_SEED.md`](ARCHITECTURE_SEED.md) — initial state-lattice and software-universe vocabulary.
 - [`NAMING_SYSTEM.md`](NAMING_SYSTEM.md) — formal naming rules for translating Phase1-era concepts into professional Latticra terms.
-- [`LANGUAGE_STRATEGY.md`](LANGUAGE_STRATEGY.md) — role of C, Rust, L, L-UI, and future LIR.
+- [`LANGUAGE_NAMING_POLICY.md`](LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy; forbids plain `L` and `.l` as public identifiers.
+- [`LANGUAGE_STRATEGY.md`](LANGUAGE_STRATEGY.md) — role of C, Rust, Lat, L-UI, and future LIR.
 - [`SUPERVISOR_ARCHITECTURE.md`](SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor model and orchestration responsibilities.
 - [`FEATURE_TRANSLATION_LEDGER.md`](FEATURE_TRANSLATION_LEDGER.md) — Phase1-to-Latticra feature rename and promotion ledger.
 - [`EFFECT_GATES.md`](EFFECT_GATES.md) — effect categories, gating rules, and visibility requirements.
@@ -86,6 +87,7 @@ No implementation code should be added until the relevant contract document exis
 Implemented/guarded foundation units:
 
 ```text
+language naming policy + guardrails
 state lattice fixture + invariant tests
 tri-plane transition model + invariant tests
 Nucleus preview request classification + report invariants
