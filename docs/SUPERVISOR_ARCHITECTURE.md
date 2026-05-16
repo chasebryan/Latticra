@@ -23,7 +23,7 @@ Nucleus owns or coordinates:
 - server interaction gates;
 - operator-visible reports;
 - evidence records;
-- language boundaries for L-family documents.
+- language boundaries for Lat-family documents.
 
 ## Initial boundaries
 
@@ -50,7 +50,7 @@ Nucleus
   Update Engine
   Server Gateway
   Report Engine
-  L Boundary
+  Lat Boundary
   Evidence Recorder
 ```
 
@@ -98,11 +98,11 @@ It must keep local operation possible unless a deployment profile explicitly req
 
 The Report Engine produces operator-visible state, effect, risk, health, lock, update, and evidence reports.
 
-### L Boundary
+### Lat Boundary
 
-The L Boundary controls how L, L-UI, and future L-Orch documents are parsed, validated, and handled.
+The Lat Boundary controls how Lat, L-UI, and future Lat-Orch documents are parsed, validated, and handled.
 
-Early L behavior should be assertion/report only.
+Early Lat behavior should be assertion/report only.
 
 ### Evidence Recorder
 
