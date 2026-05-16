@@ -23,6 +23,7 @@ extern "C" {
 #define LATTICRA_L_UI_AST_PURPOSE_MAX 128u
 #define LATTICRA_L_UI_AST_REPORT_MAX 2048u
 #define LATTICRA_L_UI_AST_DETAILED_REPORT_MAX 16384u
+#define LATTICRA_L_UI_SEMANTIC_REPORT_MAX 2048u
 
 typedef enum {
     LATTICRA_L_UI_PARSE_OK = 0,
@@ -51,6 +52,20 @@ typedef enum {
     LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING = 23,
     LATTICRA_L_UI_PARSE_STRING_VALUE_TOO_LARGE = 24
 } latticra_l_ui_parse_error_t;
+
+typedef enum {
+    LATTICRA_L_UI_SEMANTIC_OK = 0,
+    LATTICRA_L_UI_SEMANTIC_PARSER_FAILED = 1,
+    LATTICRA_L_UI_SEMANTIC_DUPLICATE_RAIL = 2,
+    LATTICRA_L_UI_SEMANTIC_MISSING_REQUIRED_RAIL = 3,
+    LATTICRA_L_UI_SEMANTIC_DUPLICATE_FIELD = 4,
+    LATTICRA_L_UI_SEMANTIC_FIELD_RAIL_MISMATCH = 5,
+    LATTICRA_L_UI_SEMANTIC_BINDING_FIELD_MISMATCH = 6,
+    LATTICRA_L_UI_SEMANTIC_UNSUPPORTED_BINDING_TARGET = 7,
+    LATTICRA_L_UI_SEMANTIC_TEXT_RAIL_MISMATCH = 8,
+    LATTICRA_L_UI_SEMANTIC_CARD_COUNT_MISMATCH = 9,
+    LATTICRA_L_UI_SEMANTIC_INTERNAL_ERROR = 10
+} latticra_l_ui_semantic_error_t;
 
 typedef enum {
     LATTICRA_L_UI_DIAGNOSTIC_OK = 0,
@@ -162,7 +177,31 @@ typedef struct {
     int hardware_allowed;
 } latticra_l_ui_ast_result_t;
 
+typedef struct {
+    latticra_status_t status;
+    latticra_l_ui_semantic_error_t error;
+    latticra_l_ui_parse_error_t parser_error;
+    latticra_l_ui_source_span_t span;
+    size_t rail_index;
+    size_t field_index;
+    size_t text_index;
+    char card_name[LATTICRA_L_UI_AST_LABEL_MAX];
+    char rail_name[LATTICRA_L_UI_AST_LABEL_MAX];
+    char field_name[LATTICRA_L_UI_AST_LABEL_MAX];
+    char binding[LATTICRA_L_UI_AST_BINDING_MAX];
+    size_t rail_count;
+    size_t field_count;
+    size_t text_count;
+    int no_effect;
+    int execution_allowed;
+    int mutation_allowed;
+    int server_allowed;
+    int recovery_allowed;
+    int hardware_allowed;
+} latticra_l_ui_semantic_result_t;
+
 const char *latticra_l_ui_parse_error_label(latticra_l_ui_parse_error_t error);
+const char *latticra_l_ui_semantic_error_label(latticra_l_ui_semantic_error_t error);
 const char *latticra_l_ui_diagnostic_severity_label(
     latticra_l_ui_diagnostic_severity_t severity);
 const char *latticra_l_ui_ast_node_kind_label(latticra_l_ui_ast_node_kind_t kind);
@@ -198,6 +237,15 @@ latticra_status_t latticra_l_ui_ast_report(
 
 latticra_status_t latticra_l_ui_ast_detailed_report(
     const latticra_l_ui_ast_result_t *ast,
+    char *buffer,
+    size_t buffer_len);
+
+latticra_status_t latticra_l_ui_validate_semantics(
+    const latticra_l_ui_ast_result_t *ast,
+    latticra_l_ui_semantic_result_t *result);
+
+latticra_status_t latticra_l_ui_semantic_report(
+    const latticra_l_ui_semantic_result_t *result,
     char *buffer,
     size_t buffer_len);
 
