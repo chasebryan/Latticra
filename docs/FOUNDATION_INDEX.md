@@ -65,8 +65,9 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_AST_SOURCE_BACKED_TEXT_CONTRACT.md`](L_UI_AST_SOURCE_BACKED_TEXT_CONTRACT.md) — source-backed extraction rules for AST purpose and text values before implementation.
 - [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md) — source-backed extraction helpers, quote handling, capacity behavior, span decisions, exact tests, and compatibility expectations.
 - [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md) — source-backed extraction of AST purpose and text values from validated L-UI source.
-- [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_CONTRACT.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_CONTRACT.md) — future explicit decoded byte lengths for L-UI AST purpose and text values before AST string storage is extended.
+- [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_CONTRACT.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_CONTRACT.md) — explicit decoded byte lengths for L-UI AST purpose and text values.
 - [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION_PLAN.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION_PLAN.md) — public struct field placement, initialization rules, decode length assignment, report fields, length-aware escaping, and exact tests before storage code changes.
+- [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION.md) — explicit decoded byte lengths for L-UI AST purpose and text values.
 - [`L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — decoding rules for quoted L-UI source string escapes.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md) — parser-level validation decision, AST decoding helper shape, NUL/capacity/span/report behavior, exact tests, and compatibility expectations before string-literal escape decoding.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md) — byte-oriented string-literal escape decoding for source-backed L-UI AST purpose and text values.
@@ -124,6 +125,7 @@ L-UI AST source-backed text implementation plan + guardrails
 L-UI AST source-backed text extraction implementation + invariants
 L-UI AST length-carrying string storage contract + guardrails
 L-UI AST length-carrying string storage implementation plan + guardrails
+L-UI AST length-carrying string storage implementation + invariants
 L-UI string-literal escape contract + guardrails
 L-UI string-literal escape implementation plan + guardrails
 L-UI string-literal escape decoding implementation + invariants
@@ -132,7 +134,7 @@ L-UI string-literal escape decoding implementation + invariants
 The next implementation target should be:
 
 ```text
-L-UI AST length-carrying string storage implementation
+L-UI decoded-NUL acceptance contract
 ```
 
-That target should add explicit AST string length fields, assign decoded lengths during source-backed extraction, make detailed report escaping length-aware, preserve NUL rejection, and validate exact invariants according to the implementation plan.
+That target should decide whether `\x00` can become accepted now that AST storage has explicit lengths, and what parser diagnostic, AST, report, and compatibility rules are required.
