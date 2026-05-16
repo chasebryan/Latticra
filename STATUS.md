@@ -27,10 +27,10 @@ docs/strategy/README.md
 | --- | ---: |
 | Overall Latticra system | 18% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 72% |
+| Foundation documents and contracts | 73% |
 | Public documentation posture | 67% |
 | Strategy/status/funding framework | 41% |
-| Lat / Latticra Programming Language | 6% |
+| Lat / Latticra Programming Language | 7% |
 | LIR / Intermediate Representation | 10% |
 | C/C++ foundation direction | 12% |
 
@@ -47,7 +47,7 @@ Latticra is the contract.
 ## Current next step
 
 ```text
-Lat language grammar implementation plan
+Lat language grammar implementation
 ```
 
 ## Non-claims

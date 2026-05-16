@@ -19,6 +19,12 @@ Lat is the approved short name for the Latticra Language. The canonical source e
 
 This contract defines the first syntax shape for Lat-Core declarations only. It does not implement a parser, compiler, interpreter, runtime, package format, command behavior, Nucleus task execution, LIR lowering, L-UI rendering, or operating-system behavior.
 
+The implementation plan is recorded in:
+
+```text
+LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md
+```
+
 ## Naming boundary
 
 Lat must follow the language naming policy:
@@ -373,6 +379,12 @@ recovery_allowed=<0|1>
 hardware_allowed=<0|1>
 ```
 
+The exact implementation report is defined in:
+
+```text
+LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md
+```
+
 ## Source-span behavior
 
 Future Lat parser and AST work should preserve source spans for:
@@ -462,6 +474,7 @@ That next planning slice is:
 
 ```text
 Lat language grammar implementation plan
+LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md
 ```
 
 ## Future test list
@@ -486,6 +499,12 @@ lat_grammar_report_is_deterministic
 lat_grammar_does_not_lower_to_lir
 lat_grammar_does_not_execute_declarations
 lat_grammar_is_deterministic
+```
+
+The implementation-plan test list is now recorded in:
+
+```text
+LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md
 ```
 
 ## Forbidden behavior

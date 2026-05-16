@@ -24,6 +24,32 @@ non-claims
 next step
 ```
 
+## 2026-05-16 16:15 CDT — Lat grammar implementation plan
+
+Status: implementation plan added
+
+Latticra added the implementation plan for the first Lat / Latticra Language grammar parser.
+
+Why it matters:
+
+The plan turns the Lat grammar contract into exact public API, parser result structs, AST structs, capacity constants, error labels, reports, fixture paths, parser ownership rules, string handling, source-span mapping, and invariant-test expectations before any Lat parser code is added.
+
+Validation:
+
+```text
+sh scripts/test-lat-language-grammar-implementation-plan.sh
+```
+
+Non-claims:
+
+This update does not implement Lat, Lat-Core, Lat-Orch, a parser, compiler, interpreter, runtime, LIR lowering, L-UI rendering, Nucleus task execution, malware prevention, ransomware prevention, or operating-system behavior.
+
+Next step:
+
+```text
+Lat language grammar implementation
+```
+
 ## 2026-05-16 16:15 CDT — C/C++ foundation direction
 
 Status: direction aligned
