@@ -138,6 +138,42 @@ static int find_slice_index(
     return 0;
 }
 
+static int find_slice_index_from(
+    const char *source,
+    size_t source_len,
+    const char *needle,
+    size_t start_index,
+    size_t *out_index) {
+    size_t needle_len;
+    size_t index;
+
+    if (source == 0 || needle == 0 || start_index > source_len) {
+        return 0;
+    }
+
+    needle_len = strlen(needle);
+    if (needle_len == 0u) {
+        if (out_index != 0) {
+            *out_index = start_index;
+        }
+        return 1;
+    }
+    if (source_len < needle_len || start_index > source_len - needle_len) {
+        return 0;
+    }
+
+    for (index = start_index; index <= source_len - needle_len; index++) {
+        if (memcmp(source + index, needle, needle_len) == 0) {
+            if (out_index != 0) {
+                *out_index = index;
+            }
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 static int find_slice_span(
     const char *source,
     size_t source_len,
@@ -244,6 +280,214 @@ static int find_unterminated_string_span(
 
     span_default(span);
     return 0;
+}
+
+static int is_upper_hex_digit(unsigned char byte) {
+    return (byte >= (unsigned char)'0' && byte <= (unsigned char)'9') ||
+           (byte >= (unsigned char)'A' && byte <= (unsigned char)'F');
+}
+
+static unsigned char upper_hex_value(unsigned char byte) {
+    if (byte >= (unsigned char)'0' && byte <= (unsigned char)'9') {
+        return (unsigned char)(byte - (unsigned char)'0');
+    }
+    return (unsigned char)(10u + (byte - (unsigned char)'A'));
+}
+
+static latticra_l_ui_parse_error_t validate_string_literal_escape_span(
+    const char *source,
+    size_t source_len,
+    size_t value_start,
+    size_t value_end,
+    size_t destination_len,
+    latticra_l_ui_source_span_t *span) {
+    size_t input_index = value_start;
+    size_t decoded_len = 0u;
+
+    while (input_index < value_end) {
+        unsigned char byte = (unsigned char)source[input_index];
+        unsigned char decoded = 0u;
+        size_t next_index = input_index + 1u;
+
+        if (byte == 0u) {
+            span_for_range(source, source_len, input_index, input_index + 1u, span);
+            return LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING;
+        }
+
+        if (byte != (unsigned char)'\\') {
+            decoded = byte;
+        } else {
+            if (input_index + 1u >= value_end) {
+                span_for_range(source, source_len, input_index, value_end, span);
+                return LATTICRA_L_UI_PARSE_UNTERMINATED_ESCAPE;
+            }
+
+            byte = (unsigned char)source[input_index + 1u];
+            if (byte == (unsigned char)'\\') {
+                decoded = (unsigned char)'\\';
+                next_index = input_index + 2u;
+            } else if (byte == (unsigned char)'"') {
+                decoded = (unsigned char)'"';
+                next_index = input_index + 2u;
+            } else if (byte == (unsigned char)'n') {
+                decoded = (unsigned char)'\n';
+                next_index = input_index + 2u;
+            } else if (byte == (unsigned char)'r') {
+                decoded = (unsigned char)'\r';
+                next_index = input_index + 2u;
+            } else if (byte == (unsigned char)'t') {
+                decoded = (unsigned char)'\t';
+                next_index = input_index + 2u;
+            } else if (byte == (unsigned char)'x') {
+                unsigned char high;
+                unsigned char low;
+
+                if (input_index + 3u >= value_end) {
+                    span_for_range(source, source_len, input_index, value_end, span);
+                    return LATTICRA_L_UI_PARSE_INVALID_HEX_ESCAPE;
+                }
+
+                high = (unsigned char)source[input_index + 2u];
+                low = (unsigned char)source[input_index + 3u];
+                if (!is_upper_hex_digit(high) || !is_upper_hex_digit(low)) {
+                    span_for_range(source, source_len, input_index, input_index + 4u, span);
+                    return LATTICRA_L_UI_PARSE_INVALID_HEX_ESCAPE;
+                }
+
+                decoded = (unsigned char)((upper_hex_value(high) << 4u) | upper_hex_value(low));
+                if (decoded == 0u) {
+                    span_for_range(source, source_len, input_index, input_index + 4u, span);
+                    return LATTICRA_L_UI_PARSE_DECODED_NUL_IN_STRING;
+                }
+                next_index = input_index + 4u;
+            } else {
+                span_for_range(source, source_len, input_index, input_index + 2u, span);
+                return LATTICRA_L_UI_PARSE_INVALID_STRING_ESCAPE;
+            }
+        }
+
+        if (decoded == 0u) {
+            span_for_range(source, source_len, input_index, next_index, span);
+            return LATTICRA_L_UI_PARSE_DECODED_NUL_IN_STRING;
+        }
+        if (decoded_len + 1u >= destination_len) {
+            span_for_range(source, source_len, value_start, value_end, span);
+            return LATTICRA_L_UI_PARSE_STRING_VALUE_TOO_LARGE;
+        }
+
+        decoded_len++;
+        input_index = next_index;
+    }
+
+    span_default(span);
+    return LATTICRA_L_UI_PARSE_OK;
+}
+
+static latticra_l_ui_parse_error_t validate_quoted_value_after_token(
+    const char *source,
+    size_t source_len,
+    const char *token,
+    size_t occurrence,
+    size_t destination_len,
+    latticra_l_ui_source_span_t *span) {
+    size_t token_len;
+    size_t search_index = 0u;
+    size_t found_index = 0u;
+    size_t found_count = 0u;
+    size_t quote_index;
+    size_t value_start;
+    size_t value_end;
+    int found_token = 0;
+    int escaped = 0;
+
+    span_default(span);
+    token_len = strlen(token);
+
+    while (find_slice_index_from(source, source_len, token, search_index, &found_index)) {
+        if (found_count == occurrence) {
+            found_token = 1;
+            break;
+        }
+        found_count++;
+        search_index = found_index + token_len;
+    }
+
+    if (!found_token) {
+        return LATTICRA_L_UI_PARSE_OK;
+    }
+
+    quote_index = found_index + token_len;
+    while (quote_index < source_len && (source[quote_index] == ' ' || source[quote_index] == '\t')) {
+        quote_index++;
+    }
+    if (quote_index >= source_len || source[quote_index] != '"') {
+        return LATTICRA_L_UI_PARSE_OK;
+    }
+
+    value_start = quote_index + 1u;
+    value_end = value_start;
+    while (value_end < source_len) {
+        char ch = source[value_end];
+        if (escaped) {
+            escaped = 0;
+            value_end++;
+            continue;
+        }
+        if (ch == '\\') {
+            escaped = 1;
+            value_end++;
+            continue;
+        }
+        if (ch == '"') {
+            return validate_string_literal_escape_span(
+                source,
+                source_len,
+                value_start,
+                value_end,
+                destination_len,
+                span);
+        }
+        value_end++;
+    }
+
+    return LATTICRA_L_UI_PARSE_OK;
+}
+
+static latticra_l_ui_parse_error_t validate_l_ui_string_literal_escapes(
+    const char *source,
+    size_t source_len,
+    latticra_l_ui_source_span_t *span) {
+    latticra_l_ui_parse_error_t error;
+
+    error = validate_quoted_value_after_token(
+        source,
+        source_len,
+        "purpose ",
+        0u,
+        LATTICRA_L_UI_AST_PURPOSE_MAX,
+        span);
+    if (error != LATTICRA_L_UI_PARSE_OK) {
+        return error;
+    }
+
+    error = validate_quoted_value_after_token(
+        source,
+        source_len,
+        "text ",
+        0u,
+        LATTICRA_L_UI_AST_PURPOSE_MAX,
+        span);
+    if (error != LATTICRA_L_UI_PARSE_OK) {
+        return error;
+    }
+
+    return validate_quoted_value_after_token(
+        source,
+        source_len,
+        "text ",
+        1u,
+        LATTICRA_L_UI_AST_PURPOSE_MAX,
+        span);
 }
 
 static void set_safe_defaults(latticra_l_ui_parse_result_t *result) {
@@ -487,6 +731,19 @@ const char *latticra_l_ui_parse_error_label(latticra_l_ui_parse_error_t error) {
     case LATTICRA_L_UI_PARSE_SOURCE_TOO_LARGE:
         return "source_too_large";
     case LATTICRA_L_UI_PARSE_INTERNAL_ERROR:
+        return "internal_error";
+    case LATTICRA_L_UI_PARSE_INVALID_STRING_ESCAPE:
+        return "invalid_string_escape";
+    case LATTICRA_L_UI_PARSE_INVALID_HEX_ESCAPE:
+        return "invalid_hex_escape";
+    case LATTICRA_L_UI_PARSE_UNTERMINATED_ESCAPE:
+        return "unterminated_escape";
+    case LATTICRA_L_UI_PARSE_DECODED_NUL_IN_STRING:
+        return "decoded_nul_in_string";
+    case LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING:
+        return "literal_nul_in_string";
+    case LATTICRA_L_UI_PARSE_STRING_VALUE_TOO_LARGE:
+        return "string_value_too_large";
     default:
         return "internal_error";
     }
@@ -498,6 +755,7 @@ latticra_status_t latticra_l_ui_parse_source(
     latticra_l_ui_parse_result_t *result) {
     latticra_l_ui_parse_error_t rail_error;
     latticra_l_ui_parse_error_t binding_error;
+    latticra_l_ui_parse_error_t string_escape_error;
     latticra_l_ui_source_span_t span;
 
     if (source == 0 || result == 0) {
@@ -581,6 +839,11 @@ latticra_status_t latticra_l_ui_parse_source(
     binding_error = validate_required_bindings_span(source, source_len, &span);
     if (binding_error != LATTICRA_L_UI_PARSE_OK) {
         return set_error_with_span(result, binding_error, &span);
+    }
+
+    string_escape_error = validate_l_ui_string_literal_escapes(source, source_len, &span);
+    if (string_escape_error != LATTICRA_L_UI_PARSE_OK) {
+        return set_error_with_span(result, string_escape_error, &span);
     }
 
     copy_literal(result->card_name, sizeof(result->card_name), "NucleusPreview");

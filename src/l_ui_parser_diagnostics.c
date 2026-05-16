@@ -62,6 +62,19 @@ static const char *diagnostic_code_for_error(latticra_l_ui_parse_error_t error) 
     case LATTICRA_L_UI_PARSE_SOURCE_TOO_LARGE:
         return "LUI0017";
     case LATTICRA_L_UI_PARSE_INTERNAL_ERROR:
+        return "LUI0018";
+    case LATTICRA_L_UI_PARSE_INVALID_STRING_ESCAPE:
+        return "LUI0019";
+    case LATTICRA_L_UI_PARSE_INVALID_HEX_ESCAPE:
+        return "LUI0020";
+    case LATTICRA_L_UI_PARSE_UNTERMINATED_ESCAPE:
+        return "LUI0021";
+    case LATTICRA_L_UI_PARSE_DECODED_NUL_IN_STRING:
+        return "LUI0022";
+    case LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING:
+        return "LUI0023";
+    case LATTICRA_L_UI_PARSE_STRING_VALUE_TOO_LARGE:
+        return "LUI0024";
     default:
         return "LUI0018";
     }
@@ -106,6 +119,19 @@ static const char *diagnostic_message_for_error(latticra_l_ui_parse_error_t erro
     case LATTICRA_L_UI_PARSE_SOURCE_TOO_LARGE:
         return "Source exceeds the supported size limit.";
     case LATTICRA_L_UI_PARSE_INTERNAL_ERROR:
+        return "Parser reached an internal error.";
+    case LATTICRA_L_UI_PARSE_INVALID_STRING_ESCAPE:
+        return "String literal escape is not supported.";
+    case LATTICRA_L_UI_PARSE_INVALID_HEX_ESCAPE:
+        return "Hex string escape must use exactly two uppercase hexadecimal digits.";
+    case LATTICRA_L_UI_PARSE_UNTERMINATED_ESCAPE:
+        return "String literal escape is not terminated.";
+    case LATTICRA_L_UI_PARSE_DECODED_NUL_IN_STRING:
+        return "Decoded NUL bytes are not supported in AST strings.";
+    case LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING:
+        return "Literal NUL bytes are not supported in AST strings.";
+    case LATTICRA_L_UI_PARSE_STRING_VALUE_TOO_LARGE:
+        return "Decoded string value exceeds the supported AST storage limit.";
     default:
         return "Parser reached an internal error.";
     }
@@ -150,6 +176,19 @@ static const char *diagnostic_hint_for_error(latticra_l_ui_parse_error_t error) 
     case LATTICRA_L_UI_PARSE_SOURCE_TOO_LARGE:
         return "Keep L-UI source at or below LATTICRA_L_UI_SOURCE_MAX.";
     case LATTICRA_L_UI_PARSE_INTERNAL_ERROR:
+        return "Report the internal parser error.";
+    case LATTICRA_L_UI_PARSE_INVALID_STRING_ESCAPE:
+        return "Use only \134\134, \134\042, \134n, \134r, \134t, or uppercase \134xNN escapes.";
+    case LATTICRA_L_UI_PARSE_INVALID_HEX_ESCAPE:
+        return "Use exactly two uppercase hex digits, such as \\x0A or \\x7F.";
+    case LATTICRA_L_UI_PARSE_UNTERMINATED_ESCAPE:
+        return "Complete the escape sequence or remove the trailing backslash.";
+    case LATTICRA_L_UI_PARSE_DECODED_NUL_IN_STRING:
+        return "Avoid \\x00 until length-carrying AST strings exist.";
+    case LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING:
+        return "Remove literal NUL bytes from the source string.";
+    case LATTICRA_L_UI_PARSE_STRING_VALUE_TOO_LARGE:
+        return "Shorten the decoded purpose or text value.";
     default:
         return "Report the internal parser error.";
     }

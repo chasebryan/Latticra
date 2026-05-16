@@ -273,7 +273,7 @@ static int source_backed_text_rejects_or_classifies_oversized_purpose(void) {
     EXPECT_TRUE(fill_repeated(long_value, sizeof(long_value), 'p'), "long purpose builds");
     EXPECT_TRUE(make_source(source, sizeof(source), long_value, "small top", "small bottom"), "oversized purpose source builds");
     EXPECT_TRUE(latticra_l_ui_parse_ast(source, strlen(source), &ast) == LATTICRA_STATUS_OK, "oversized purpose AST status");
-    EXPECT_TRUE(ast.parse_result.error == LATTICRA_L_UI_PARSE_INTERNAL_ERROR, "oversized purpose classified internal");
+    EXPECT_TRUE(ast.parse_result.error == LATTICRA_L_UI_PARSE_STRING_VALUE_TOO_LARGE, "oversized purpose classified too large");
     EXPECT_TRUE(ast.rail_count == 0u && ast.field_count == 0u && ast.text_count == 0u, "oversized purpose no partial AST");
     return 0;
 }
@@ -285,7 +285,7 @@ static int source_backed_text_rejects_or_classifies_oversized_text(void) {
     EXPECT_TRUE(fill_repeated(long_value, sizeof(long_value), 't'), "long text builds");
     EXPECT_TRUE(make_source(source, sizeof(source), "small purpose", long_value, "small bottom"), "oversized text source builds");
     EXPECT_TRUE(latticra_l_ui_parse_ast(source, strlen(source), &ast) == LATTICRA_STATUS_OK, "oversized text AST status");
-    EXPECT_TRUE(ast.parse_result.error == LATTICRA_L_UI_PARSE_INTERNAL_ERROR, "oversized text classified internal");
+    EXPECT_TRUE(ast.parse_result.error == LATTICRA_L_UI_PARSE_STRING_VALUE_TOO_LARGE, "oversized text classified too large");
     EXPECT_TRUE(ast.rail_count == 0u && ast.field_count == 0u && ast.text_count == 0u, "oversized text no partial AST");
     return 0;
 }

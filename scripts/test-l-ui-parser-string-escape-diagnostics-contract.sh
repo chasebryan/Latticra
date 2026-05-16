@@ -18,12 +18,12 @@ if [ ! -f "$doc" ]; then
 fi
 
 require_contains 'Status: parser string escape diagnostics contract' "$doc"
-require_contains 'This document does not implement parser-level string escape diagnostics.' "$doc"
+require_contains 'The implementation is documented separately' "$doc"
 require_contains 'Relationship to existing diagnostics' "$doc"
 require_contains 'Current boundary' "$doc"
 require_contains 'Diagnostic purpose' "$doc"
-require_contains 'Proposed parser error additions' "$doc"
-require_contains 'Proposed diagnostic codes' "$doc"
+require_contains 'Parser error additions' "$doc"
+require_contains 'Diagnostic codes' "$doc"
 require_contains 'Stable messages' "$doc"
 require_contains 'Hint language' "$doc"
 require_contains 'Source-span behavior' "$doc"
@@ -33,8 +33,8 @@ require_contains 'AST compatibility' "$doc"
 require_contains 'Report relationship' "$doc"
 require_contains 'No-effect rule' "$doc"
 require_contains 'Compatibility rule' "$doc"
-require_contains 'Implementation gate' "$doc"
-require_contains 'Future test list' "$doc"
+require_contains 'Implementation evidence' "$doc"
+require_contains 'Test list' "$doc"
 require_contains 'Forbidden behavior' "$doc"
 require_contains 'Non-claims' "$doc"
 
@@ -42,6 +42,8 @@ for related in \
   docs/L_UI_PARSER_DIAGNOSTICS.md \
   docs/L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION_PLAN.md \
   docs/L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md \
+  docs/L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md \
+  docs/L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION.md \
   docs/L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md \
   docs/L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md \
   docs/L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md \
@@ -176,7 +178,7 @@ do
   require_contains "$test_name" "$doc"
 done
 
-for gate in \
+for evidence in \
   'parser enum additions' \
   'diagnostic code additions' \
   'parse error labels' \
@@ -189,7 +191,7 @@ for gate in \
   'exact test file names' \
   'exact invariant tests'
 do
-  require_contains "$gate" "$doc"
+  require_contains "$evidence" "$doc"
 done
 
 for forbidden in \
