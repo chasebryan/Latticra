@@ -39,12 +39,12 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, and LIR shape foundation toward Lat grammar planning.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, and Lat grammar contract toward Lat grammar implementation planning.
 
 The next recommended implementation lane is:
 
 ```text
-Lat language grammar contract
+Lat language grammar implementation plan
 ```
 
 ## Current non-claim
