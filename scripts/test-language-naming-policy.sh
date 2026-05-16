@@ -64,7 +64,7 @@ require_contains 'sh scripts/test-language-naming-policy.sh' "$policy"
 require_contains 'Non-claims' "$policy"
 
 require_contains 'Scope: C, constrained C++, Lat, L-UI, LIR, and implementation ordering.' "$strategy"
-require_contains 'avoid using plain `L` as the public native language name' "$strategy"
+require_contains 'avoids using plain `L` as the public native language name' "$strategy"
 require_contains 'LANGUAGE_NAMING_POLICY.md' "$strategy"
 require_contains 'C_CPP_FOUNDATION_DIRECTION.md' "$strategy"
 require_contains 'C is the metal.' "$strategy"
