@@ -256,9 +256,14 @@ static latticra_status_t decode_l_ui_string_literal_value(
     size_t start_offset,
     size_t end_offset,
     char *destination,
-    size_t destination_len) {
+    size_t destination_len,
+    size_t *decoded_len) {
     size_t input_index;
     size_t output_index = 0u;
+
+    if (decoded_len != 0) {
+        *decoded_len = 0u;
+    }
 
     if (source == 0 || destination == 0) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
@@ -332,6 +337,9 @@ static latticra_status_t decode_l_ui_string_literal_value(
     }
 
     destination[output_index] = '\0';
+    if (decoded_len != 0) {
+        *decoded_len = output_index;
+    }
     return LATTICRA_STATUS_OK;
 }
 
@@ -342,6 +350,7 @@ static latticra_status_t extract_decoded_quoted_value_after_token(
     size_t occurrence,
     char *destination,
     size_t destination_len,
+    size_t *decoded_len,
     latticra_l_ui_source_span_t *value_span) {
     size_t token_len;
     size_t search_index = 0u;
@@ -358,6 +367,9 @@ static latticra_status_t extract_decoded_quoted_value_after_token(
     }
 
     destination[0] = '\0';
+    if (decoded_len != 0) {
+        *decoded_len = 0u;
+    }
     span_default(value_span);
     token_len = strlen(token);
 
@@ -402,7 +414,8 @@ static latticra_status_t extract_decoded_quoted_value_after_token(
                 value_start,
                 value_end,
                 destination,
-                destination_len);
+                destination_len,
+                decoded_len);
             if (status != LATTICRA_STATUS_OK) {
                 return status;
             }
@@ -437,6 +450,7 @@ static void ast_default(latticra_l_ui_ast_result_t *ast) {
 
     ast->card.name[0] = '\0';
     ast->card.purpose[0] = '\0';
+    ast->card.purpose_len = 0u;
     ast->card.effect[0] = '\0';
     ast->card.boundary[0] = '\0';
     span_default(&ast->card.span);
@@ -462,6 +476,7 @@ static void ast_default(latticra_l_ui_ast_result_t *ast) {
 
     for (index = 0u; index < LATTICRA_L_UI_AST_TEXT_MAX; index++) {
         ast->texts[index].value[0] = '\0';
+        ast->texts[index].value_len = 0u;
         span_default(&ast->texts[index].span);
     }
 
@@ -531,8 +546,10 @@ static void fill_text(
     latticra_l_ui_ast_result_t *ast,
     size_t index,
     const char *value,
+    size_t value_len,
     const latticra_l_ui_source_span_t *span) {
     copy_literal(ast->texts[index].value, sizeof(ast->texts[index].value), value);
+    ast->texts[index].value_len = value_len;
     ast->texts[index].span = *span;
 }
 
@@ -557,6 +574,9 @@ latticra_status_t latticra_l_ui_parse_ast(
     char extracted_purpose[LATTICRA_L_UI_AST_PURPOSE_MAX];
     char extracted_top_text[LATTICRA_L_UI_AST_PURPOSE_MAX];
     char extracted_bottom_text[LATTICRA_L_UI_AST_PURPOSE_MAX];
+    size_t extracted_purpose_len = 0u;
+    size_t extracted_top_text_len = 0u;
+    size_t extracted_bottom_text_len = 0u;
     static const char *field_names[] = {
         "origin", "route", "axis", "path",
         "breadcrumb", "trace",
@@ -605,6 +625,7 @@ latticra_status_t latticra_l_ui_parse_ast(
         0u,
         extracted_purpose,
         sizeof(extracted_purpose),
+        &extracted_purpose_len,
         &purpose_span);
     if (status != LATTICRA_STATUS_OK) {
         return ast_internal_error(ast, &parse_result);
@@ -617,6 +638,7 @@ latticra_status_t latticra_l_ui_parse_ast(
         0u,
         extracted_top_text,
         sizeof(extracted_top_text),
+        &extracted_top_text_len,
         &top_text_span);
     if (status != LATTICRA_STATUS_OK) {
         return ast_internal_error(ast, &parse_result);
@@ -629,6 +651,7 @@ latticra_status_t latticra_l_ui_parse_ast(
         1u,
         extracted_bottom_text,
         sizeof(extracted_bottom_text),
+        &extracted_bottom_text_len,
         &bottom_text_span);
     if (status != LATTICRA_STATUS_OK) {
         return ast_internal_error(ast, &parse_result);
@@ -636,6 +659,7 @@ latticra_status_t latticra_l_ui_parse_ast(
 
     copy_literal(ast->card.name, sizeof(ast->card.name), "NucleusPreview");
     copy_literal(ast->card.purpose, sizeof(ast->card.purpose), extracted_purpose);
+    ast->card.purpose_len = extracted_purpose_len;
     copy_literal(ast->card.effect, sizeof(ast->card.effect), "none");
     copy_literal(ast->card.boundary, sizeof(ast->card.boundary), "preview_only");
     span_for_card(source, source_len, &ast->card.span);
@@ -657,8 +681,8 @@ latticra_status_t latticra_l_ui_parse_ast(
         fill_field(ast, index, field_names[index], bindings[index], source, source_len);
     }
 
-    fill_text(ast, 0u, extracted_top_text, &top_text_span);
-    fill_text(ast, 1u, extracted_bottom_text, &bottom_text_span);
+    fill_text(ast, 0u, extracted_top_text, extracted_top_text_len, &top_text_span);
+    fill_text(ast, 1u, extracted_bottom_text, extracted_bottom_text_len, &bottom_text_span);
 
     ast->rail_count = 9u;
     ast->field_count = 23u;
@@ -754,7 +778,7 @@ static latticra_status_t append_text(char *buffer, size_t buffer_len, size_t *us
     return LATTICRA_STATUS_OK;
 }
 
-static latticra_status_t escape_report_string(
+static latticra_status_t escape_report_bytes(
     const char *input,
     size_t input_len,
     char *output,
@@ -882,7 +906,7 @@ static latticra_status_t append_card_section(
     latticra_status_t status;
     char escaped_purpose[LATTICRA_L_UI_AST_ESCAPED_PURPOSE_MAX];
 
-    status = escape_report_string(ast->card.purpose, strlen(ast->card.purpose), escaped_purpose, sizeof(escaped_purpose));
+    status = escape_report_bytes(ast->card.purpose, ast->card.purpose_len, escaped_purpose, sizeof(escaped_purpose));
     if (status != LATTICRA_STATUS_OK) return status;
 
     status = append_text(buffer, buffer_len, used, "[card]\nkind=card\n");
@@ -891,9 +915,10 @@ static latticra_status_t append_card_section(
         buffer,
         buffer_len,
         used,
-        "name=%s\npurpose=%s\npurpose_escaped=%s\neffect=%s\nboundary=%s\nrail_count=%zu\nfield_count=%zu\ntext_count=%zu\n",
+        "name=%s\npurpose=%s\npurpose_len=%zu\npurpose_escaped=%s\neffect=%s\nboundary=%s\nrail_count=%zu\nfield_count=%zu\ntext_count=%zu\n",
         ast->card.name,
         ast->card.purpose,
+        ast->card.purpose_len,
         escaped_purpose,
         ast->card.effect,
         ast->card.boundary,
@@ -957,10 +982,10 @@ static latticra_status_t append_text_section(
     latticra_status_t status;
     char escaped_text[LATTICRA_L_UI_AST_ESCAPED_TEXT_MAX];
 
-    status = escape_report_string(text->value, strlen(text->value), escaped_text, sizeof(escaped_text));
+    status = escape_report_bytes(text->value, text->value_len, escaped_text, sizeof(escaped_text));
     if (status != LATTICRA_STATUS_OK) return status;
 
-    status = append_text(buffer, buffer_len, used, "[text %zu]\nkind=text\nvalue=%s\nvalue_escaped=%s\n", index, text->value, escaped_text);
+    status = append_text(buffer, buffer_len, used, "[text %zu]\nkind=text\nvalue=%s\nvalue_len=%zu\nvalue_escaped=%s\n", index, text->value, text->value_len, escaped_text);
     if (status != LATTICRA_STATUS_OK) return status;
     return append_span_fields(buffer, buffer_len, used, "", &text->span);
 }
