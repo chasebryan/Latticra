@@ -7,6 +7,18 @@ Latticra is a contract-first systems architecture project focused on explicit st
 
 It is not a finished operating system, sandbox, installer, recovery system, production runtime, or security boundary.
 
+## Motto
+
+> “The simulacrum is never what hides the truth.” — Jean Baudrillard
+
+## Mission
+
+Latticra is being built toward a defensive, auditable, open systems architecture.
+
+The long-term goal is to make unsafe or malicious behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, and carefully promoted implementation slices.
+
+This is a mission direction, not a current security guarantee.
+
 ## Core idea
 
 Latticra treats complex computing behavior as structured state spaces with explicit contracts.
@@ -48,6 +60,18 @@ Core seed documents:
 - [`docs/SUPERVISOR_ARCHITECTURE.md`](docs/SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor and orchestration architecture.
 - [`docs/ROADMAP.md`](docs/ROADMAP.md) — design-first implementation sequence.
 
+## Status and strategy
+
+Public status and strategy records are available here:
+
+- [`STATUS.md`](STATUS.md) — root status shortcut.
+- [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md) — current progress, completion estimates, and next priorities.
+- [`docs/status/ANNOUNCEMENTS.md`](docs/status/ANNOUNCEMENTS.md) — announcement log and milestone notes.
+- [`docs/strategy/README.md`](docs/strategy/README.md) — strategy index and update rules.
+- [`docs/project_notes/README.md`](docs/project_notes/README.md) — short project notes and upcoming work.
+
+Completion percentages are planning estimates only. They are not release promises, security certifications, or production-readiness metrics.
+
 ## Current implementation areas
 
 The repository currently includes guarded documents, tests, and no-effect C implementation slices for:
@@ -85,7 +109,21 @@ Latticra does not yet provide:
 - L-UI rendering;
 - literal source NUL acceptance implementation;
 - live movement;
-- operating-system replacement.
+- operating-system replacement;
+- malware prevention guarantees;
+- ransomware prevention guarantees.
+
+## Support
+
+Sponsorship helps fund Latticra planning, documentation, tests, and implementation work.
+
+Support Bryforge:
+
+```text
+https://buymeacoffee.com/Bryforge
+```
+
+GitHub funding metadata is also provided in `.github/FUNDING.yml`.
 
 ## Security
 
