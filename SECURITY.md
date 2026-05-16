@@ -2,7 +2,7 @@
 
 ## Project status
 
-Latticra is an early real-system implementation track for the Base1 / Phase1 / Fyr architecture.
+Latticra is an early-stage systems architecture and language implementation project.
 
 It is not currently a finished operating system, hardened sandbox, production runtime, installer, recovery writer, hardware mutation tool, server agent, or security boundary.
 
