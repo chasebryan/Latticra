@@ -181,7 +181,7 @@ static int string_escape_diagnostic_rejects_unknown_escape_lui0019(void) {
         LATTICRA_L_UI_PARSE_INVALID_STRING_ESCAPE,
         "LUI0019",
         "String literal escape is not supported.",
-        "Use only \\, \", \n, \r, \t, or uppercase \xNN escapes.");
+        "Use only \134\134, \134\042, \134n, \134r, \134t, or uppercase \134xNN escapes.");
 }
 
 static int string_escape_diagnostic_rejects_lowercase_hex_lui0020(void) {
