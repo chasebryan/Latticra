@@ -252,13 +252,48 @@ static int string_escape_diagnostic_rejects_unterminated_escape_lui0021(void) {
     return 0;
 }
 
-static int string_escape_diagnostic_rejects_decoded_nul_lui0022(void) {
-    return expect_escape_diagnostic_for_purpose(
-        "bad\\x00",
-        LATTICRA_L_UI_PARSE_DECODED_NUL_IN_STRING,
-        "LUI0022",
-        "Decoded NUL bytes are not supported in AST strings.",
-        DECODED_NUL_HINT);
+static int string_escape_diagnostic_preserves_decoded_nul_lui0022(void) {
+    latticra_l_ui_parse_result_t result;
+    latticra_l_ui_diagnostic_t diagnostic;
+
+    result.status = LATTICRA_STATUS_OK;
+    result.error = LATTICRA_L_UI_PARSE_DECODED_NUL_IN_STRING;
+    result.line = 3u;
+    result.column = 15u;
+    result.span.start_offset = 0u;
+    result.span.end_offset = 4u;
+    result.span.start_line = 3u;
+    result.span.start_column = 15u;
+    result.span.end_line = 3u;
+    result.span.end_column = 19u;
+    result.card_name[0] = '\0';
+    result.rail_count = 0u;
+    result.field_count = 0u;
+    result.effect[0] = '\0';
+    result.boundary[0] = '\0';
+    result.no_effect = 1;
+    result.execution_allowed = 0;
+    result.mutation_allowed = 0;
+    result.server_allowed = 0;
+    result.recovery_allowed = 0;
+    result.hardware_allowed = 0;
+
+    EXPECT_TRUE(latticra_l_ui_diagnostic_from_parse_result(&result, &diagnostic) == LATTICRA_STATUS_OK, "decoded NUL diagnostic status");
+    EXPECT_TRUE(diagnostic.severity == LATTICRA_L_UI_DIAGNOSTIC_ERROR, "decoded NUL severity");
+    EXPECT_STR_EQ(diagnostic.code, "LUI0022", "decoded NUL code remains stable");
+    EXPECT_STR_EQ(diagnostic.message, "Decoded NUL bytes are not supported in AST strings.", "decoded NUL message remains stable");
+    EXPECT_STR_EQ(diagnostic.hint, DECODED_NUL_HINT, "decoded NUL hint remains stable");
+    return 0;
+}
+
+static int string_escape_diagnostic_accepts_x00_without_lui0022(void) {
+    char source[8192];
+    size_t source_len;
+    latticra_l_ui_parse_result_t result;
+    EXPECT_TRUE(make_source(source, sizeof(source), "bad\\x00", "top", "bottom", &source_len), "decoded NUL source builds");
+    EXPECT_TRUE(latticra_l_ui_parse_source(source, source_len, &result) == LATTICRA_STATUS_OK, "decoded NUL parse status");
+    EXPECT_TRUE(result.error == LATTICRA_L_UI_PARSE_OK, "decoded NUL no longer emits LUI0022 from real source");
+    return 0;
 }
 
 static int string_escape_diagnostic_rejects_literal_nul_lui0023(void) {
@@ -405,7 +440,8 @@ int main(void) {
     if (string_escape_diagnostic_rejects_short_hex_lui0020() != 0) return 1;
     if (string_escape_diagnostic_rejects_invalid_hex_lui0020() != 0) return 1;
     if (string_escape_diagnostic_rejects_unterminated_escape_lui0021() != 0) return 1;
-    if (string_escape_diagnostic_rejects_decoded_nul_lui0022() != 0) return 1;
+    if (string_escape_diagnostic_preserves_decoded_nul_lui0022() != 0) return 1;
+    if (string_escape_diagnostic_accepts_x00_without_lui0022() != 0) return 1;
     if (string_escape_diagnostic_rejects_literal_nul_lui0023() != 0) return 1;
     if (string_escape_diagnostic_rejects_oversized_decoded_output_lui0024() != 0) return 1;
     if (string_escape_diagnostic_reports_source_span() != 0) return 1;
