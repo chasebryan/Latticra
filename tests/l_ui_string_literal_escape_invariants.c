@@ -243,6 +243,23 @@ static int string_escape_decodes_high_byte_hex(void) {
     return 0;
 }
 
+static int string_escape_decodes_nul_with_explicit_length(void) {
+    char source[4096];
+    char report[LATTICRA_L_UI_AST_DETAILED_REPORT_MAX];
+    static const char expected[] = { 'b', 'a', 'd', '\0', 'n', 'u', 'l' };
+    latticra_l_ui_ast_result_t ast;
+    size_t source_len;
+    EXPECT_TRUE(parse_values("bad\\x00nul", "top", "bottom", &ast, source, sizeof(source), &source_len), "decoded NUL source parses");
+    EXPECT_TRUE(ast.card.purpose_len == sizeof(expected), "decoded NUL explicit length");
+    EXPECT_TRUE(strlen(ast.card.purpose) == 3u, "decoded NUL C-string prefix");
+    EXPECT_MEM_EQ(ast.card.purpose, expected, sizeof(expected), "decoded NUL bytes");
+    EXPECT_TRUE(latticra_l_ui_ast_detailed_report(&ast, report, sizeof(report)) == LATTICRA_STATUS_OK, "decoded NUL report status");
+    EXPECT_TRUE(strstr(report, "purpose_len=7\n") != 0, "decoded NUL purpose_len report");
+    EXPECT_TRUE(strstr(report, "purpose_escaped=bad\\x00nul\n") != 0, "decoded NUL escaped report");
+    (void)source_len;
+    return 0;
+}
+
 static int string_escape_rejects_lowercase_hex(void) {
     return expect_parser_error_for_purpose(
         "bad\\x0a",
@@ -278,14 +295,7 @@ static int string_escape_rejects_unterminated_escape(void) {
         "unterminated hex escape AST status");
 }
 
-static int string_escape_rejects_decoded_nul_until_length_storage_exists(void) {
-    return expect_parser_error_for_purpose(
-        "bad\\x00",
-        LATTICRA_L_UI_PARSE_DECODED_NUL_IN_STRING,
-        "decoded NUL AST status");
-}
-
-static int string_escape_rejects_literal_nul_until_length_storage_exists(void) {
+static int string_escape_rejects_literal_nul_until_source_buffer_contract_exists(void) {
     char source[8192];
     static const char purpose[] = { 'b', 'a', 'd', '\0', 'n', 'u', 'l' };
     size_t source_len;
@@ -421,13 +431,13 @@ int main(void) {
     if (string_escape_decodes_tab() != 0) return 1;
     if (string_escape_decodes_uppercase_hex() != 0) return 1;
     if (string_escape_decodes_high_byte_hex() != 0) return 1;
+    if (string_escape_decodes_nul_with_explicit_length() != 0) return 1;
     if (string_escape_rejects_lowercase_hex() != 0) return 1;
     if (string_escape_rejects_short_hex() != 0) return 1;
     if (string_escape_rejects_invalid_hex() != 0) return 1;
     if (string_escape_rejects_unknown_escape() != 0) return 1;
     if (string_escape_rejects_unterminated_escape() != 0) return 1;
-    if (string_escape_rejects_decoded_nul_until_length_storage_exists() != 0) return 1;
-    if (string_escape_rejects_literal_nul_until_length_storage_exists() != 0) return 1;
+    if (string_escape_rejects_literal_nul_until_source_buffer_contract_exists() != 0) return 1;
     if (string_escape_rejects_oversized_decoded_output() != 0) return 1;
     if (string_escape_preserves_source_spans() != 0) return 1;
     if (string_escape_updates_detailed_report_escaped_fields() != 0) return 1;

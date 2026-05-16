@@ -236,13 +236,20 @@ static int ast_string_storage_escaped_report_uses_explicit_lengths(void) {
     return 0;
 }
 
-static int ast_string_storage_still_rejects_decoded_nul_until_acceptance_contract(void) {
+static int ast_string_storage_accepts_decoded_nul_after_acceptance_contract(void) {
     char source[4096];
+    char report[LATTICRA_L_UI_AST_DETAILED_REPORT_MAX];
     size_t source_len;
     latticra_l_ui_ast_result_t ast;
-    EXPECT_TRUE(make_source(source, sizeof(source), "bad\\x00", "top", "bottom", &source_len), "decoded NUL source builds");
-    EXPECT_TRUE(latticra_l_ui_parse_ast(source, source_len, &ast) == LATTICRA_STATUS_OK, "decoded NUL AST status");
-    EXPECT_TRUE(ast.parse_result.error == LATTICRA_L_UI_PARSE_DECODED_NUL_IN_STRING, "decoded NUL still rejected");
+    static const char expected[] = { 'A', '\0', 'B' };
+    EXPECT_TRUE(parse_values("A\\x00B", "top", "bottom", &ast, source, sizeof(source), &source_len) == 0, "decoded NUL AST status");
+    EXPECT_TRUE(ast.card.purpose_len == sizeof(expected), "decoded NUL counted in purpose_len");
+    EXPECT_TRUE(strlen(ast.card.purpose) == 1u, "decoded NUL C-string prefix compatibility");
+    EXPECT_TRUE(memcmp(ast.card.purpose, expected, sizeof(expected)) == 0, "decoded NUL stored in purpose bytes");
+    EXPECT_TRUE(latticra_l_ui_ast_detailed_report(&ast, report, sizeof(report)) == LATTICRA_STATUS_OK, "decoded NUL report builds");
+    EXPECT_TRUE(strstr(report, "purpose_len=3\n") != 0, "decoded NUL purpose_len report");
+    EXPECT_TRUE(strstr(report, "purpose_escaped=A\\x00B\n") != 0, "decoded NUL purpose escaped report");
+    (void)source_len;
     return 0;
 }
 
@@ -360,7 +367,7 @@ int main(void) {
     if (ast_string_storage_preserves_existing_c_string_fields() != 0) return 1;
     if (ast_string_storage_updates_detailed_report_lengths() != 0) return 1;
     if (ast_string_storage_escaped_report_uses_explicit_lengths() != 0) return 1;
-    if (ast_string_storage_still_rejects_decoded_nul_until_acceptance_contract() != 0) return 1;
+    if (ast_string_storage_accepts_decoded_nul_after_acceptance_contract() != 0) return 1;
     if (ast_string_storage_still_rejects_literal_nul_until_acceptance_contract() != 0) return 1;
     if (ast_string_storage_still_rejects_oversized_decoded_output() != 0) return 1;
     if (ast_string_storage_preserves_source_spans() != 0) return 1;
