@@ -91,6 +91,8 @@ jobs:
         run: sh scripts/test-l-ui-ast-length-carrying-string-storage-implementation-plan.sh
       - name: Run L-UI AST length-carrying string storage tests
         run: sh scripts/test-l-ui-ast-length-carrying-string-storage.sh
+      - name: Run L-UI decoded NUL acceptance contract guard
+        run: sh scripts/test-l-ui-decoded-nul-acceptance-contract.sh
       - name: Run L-UI string-literal escape contract guard
         run: sh scripts/test-l-ui-string-literal-escape-contract.sh
       - name: Run L-UI string-literal escape implementation plan guard
