@@ -89,6 +89,7 @@ The long-term goal is to reduce the effectiveness of malware and ransomware by d
 Early mechanisms that support this goal:
 
 - source-aware parsing;
+- semantic validation;
 - deterministic diagnostics;
 - no-effect defaults;
 - effect classification;
@@ -109,8 +110,8 @@ Estimated as of 2026-05-15 22:49 CDT:
 
 | Area | Estimate |
 | --- | ---: |
-| Overall Latticra system | 16% |
-| L-UI parser / AST / string foundation | 84% |
+| Overall Latticra system | 17% |
+| L-UI parser / AST / string foundation | 86% |
 | Foundation docs and contracts | 68% |
 | Lat / Latticra Programming Language | 5% |
 | LIR | 5% |
@@ -125,8 +126,8 @@ These percentages are rough planning estimates, not formal release metrics.
 
 1. Keep public docs professional and self-contained.
 2. Keep security claims evidence-bound.
-3. Move from semantic validation planning into semantic validation implementation.
-4. Move from parser/AST foundation toward LIR after semantic validation implementation.
+3. Move from L-UI parser/source-policy/semantic validation foundation toward LIR shape planning.
+4. Move from parser/AST foundation toward Lat and LIR after LIR shape planning.
 5. Define Lat language contracts before implementation.
 6. Expand Nucleus from preview/reporting into carefully gated execution planning.
 7. Build status reporting and public progress estimates.
@@ -166,10 +167,10 @@ Buy Me a Coffee: Bryforge
 Recommended next slice:
 
 ```text
-L-UI semantic validation implementation
+LIR shape contract
 ```
 
-This turns the semantic validation implementation plan into bounded code, reports, diagnostics, and invariants.
+This defines the first Latticra Intermediate Representation shape before semantic lowering or Lat integration code.
 
 ## Non-claims
 
