@@ -458,6 +458,12 @@ Lat parser implementation must not begin until a separate implementation plan de
 12. compatibility expectations;
 13. non-claims.
 
+That next planning slice is:
+
+```text
+Lat language grammar implementation plan
+```
+
 ## Future test list
 
 A future implementation plan should include tests for:
