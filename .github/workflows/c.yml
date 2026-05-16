@@ -27,6 +27,8 @@ jobs:
         run: sh scripts/test-lat-language-grammar-contract.sh
       - name: Run Lat language grammar implementation plan guard
         run: sh scripts/test-lat-language-grammar-implementation-plan.sh
+      - name: Run Lat language grammar tests
+        run: sh scripts/test-lat-language-grammar.sh
       - name: Run state lattice tests
         run: sh scripts/test-state-lattice.sh
       - name: Run tri-plane transition tests
