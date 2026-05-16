@@ -6,27 +6,27 @@ Last updated: 2026-05-15 22:49 CDT
 ## Recommended next slice
 
 ```text
-LIR shape implementation
+Lat language grammar contract
 ```
 
 Purpose:
 
 ```text
-add the planned bounded LIR API, structs, capacities, node kinds, edge kinds, errors, report, semantic prerequisite checks, source-span mapping, and invariants
+define the first Lat / Latticra Programming Language grammar before implementation, lowering, execution, or runtime behavior
 ```
 
 ## Near-term queue
 
-1. LIR shape implementation.
-2. Lat grammar contract.
-3. L-UI rendering contract.
-4. Nucleus task execution contract.
-5. Runtime boundary contract.
-6. Defensive threat model contract.
+1. Lat grammar contract.
+2. L-UI rendering contract.
+3. Nucleus task execution contract.
+4. Runtime boundary contract.
+5. Defensive threat model contract.
+6. LIR follow-up review after CI feedback.
 7. Public status update after major milestones.
-8. Completion percentage review after LIR implementation.
-9. Strategy estimate review after LIR implementation.
-10. LIR follow-up review after CI feedback.
+8. Completion percentage review after Lat grammar planning.
+9. Strategy estimate review after Lat grammar planning.
+10. LIR-to-Lat relationship review after the Lat grammar contract.
 
 ## Quality rules
 
@@ -43,8 +43,8 @@ consistent with public Latticra identity
 
 ## Current project priorities
 
-- Move from parser/source-policy/semantic validation foundation toward LIR shape implementation.
+- Move from parser/source-policy/semantic validation and LIR shape foundation toward Lat grammar planning.
 - Maintain professional public docs.
 - Keep status and completion estimates current.
 - Keep security ambitions framed as mission and design targets until proven.
-- Move toward Lat grammar after LIR shape is clearly implemented.
+- Keep LIR metadata-only until separate lowering or execution contracts exist.
