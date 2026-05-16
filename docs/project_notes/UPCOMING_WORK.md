@@ -6,27 +6,27 @@ Last updated: 2026-05-15 22:49 CDT
 ## Recommended next slice
 
 ```text
-LIR shape contract
+LIR shape implementation plan
 ```
 
 Purpose:
 
 ```text
-define the first Latticra Intermediate Representation shape before any L-UI semantic lowering or Lat integration code
+define exact public API, structs, capacities, node kinds, edge kinds, errors, reports, semantic prerequisite behavior, source-span mapping, and tests before LIR code
 ```
 
 ## Near-term queue
 
-1. LIR shape contract.
-2. Lat grammar contract.
-3. L-UI rendering contract.
-4. Nucleus task execution contract.
-5. Runtime boundary contract.
-6. Defensive threat model contract.
-7. Public status update after major milestones.
-8. Completion percentage review after LIR shape planning.
-9. Strategy estimate review after LIR shape planning.
-10. Semantic validation implementation follow-up review after CI feedback.
+1. LIR shape implementation plan.
+2. LIR shape implementation.
+3. Lat grammar contract.
+4. L-UI rendering contract.
+5. Nucleus task execution contract.
+6. Runtime boundary contract.
+7. Defensive threat model contract.
+8. Public status update after major milestones.
+9. Completion percentage review after LIR implementation planning.
+10. Strategy estimate review after LIR implementation planning.
 
 ## Quality rules
 
@@ -43,8 +43,8 @@ consistent with public Latticra identity
 
 ## Current project priorities
 
-- Move from parser/source-policy/semantic validation foundation toward LIR shape planning.
+- Move from parser/source-policy/semantic validation foundation toward LIR shape implementation planning.
 - Maintain professional public docs.
 - Keep status and completion estimates current.
 - Keep security ambitions framed as mission and design targets until proven.
-- Move toward Lat grammar after LIR shape is clearly contracted.
+- Move toward Lat grammar after LIR shape is clearly planned and implemented.

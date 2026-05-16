@@ -90,6 +90,7 @@ Early mechanisms that support this goal:
 
 - source-aware parsing;
 - semantic validation;
+- LIR shape planning;
 - deterministic diagnostics;
 - no-effect defaults;
 - effect classification;
@@ -112,9 +113,9 @@ Estimated as of 2026-05-15 22:49 CDT:
 | --- | ---: |
 | Overall Latticra system | 17% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation docs and contracts | 68% |
+| Foundation docs and contracts | 69% |
 | Lat / Latticra Programming Language | 5% |
-| LIR | 5% |
+| LIR | 6% |
 | Nucleus real task execution | 10% |
 | Runtime / OS-universe direction | 5% |
 | Security-hardening implementation | 5% |
@@ -126,7 +127,7 @@ These percentages are rough planning estimates, not formal release metrics.
 
 1. Keep public docs professional and self-contained.
 2. Keep security claims evidence-bound.
-3. Move from L-UI parser/source-policy/semantic validation foundation toward LIR shape planning.
+3. Move from LIR shape contract into LIR implementation planning.
 4. Move from parser/AST foundation toward Lat and LIR after LIR shape planning.
 5. Define Lat language contracts before implementation.
 6. Expand Nucleus from preview/reporting into carefully gated execution planning.
@@ -167,10 +168,10 @@ Buy Me a Coffee: Bryforge
 Recommended next slice:
 
 ```text
-LIR shape contract
+LIR shape implementation plan
 ```
 
-This defines the first Latticra Intermediate Representation shape before semantic lowering or Lat integration code.
+This turns the LIR shape contract into exact API, structure, capacity, node, edge, error, report, and test planning before implementation code.
 
 ## Non-claims
 
