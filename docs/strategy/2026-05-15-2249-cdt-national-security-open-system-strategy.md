@@ -137,8 +137,8 @@ Estimated as of 2026-05-16 16:15 CDT:
 | --- | ---: |
 | Overall Latticra system | 18% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation docs and contracts | 72% |
-| Lat / Latticra Programming Language | 6% |
+| Foundation docs and contracts | 73% |
+| Lat / Latticra Programming Language | 7% |
 | LIR | 10% |
 | C/C++ foundation direction | 12% |
 | Nucleus real task execution | 10% |
@@ -153,8 +153,8 @@ These percentages are rough planning estimates, not formal release metrics.
 1. Keep public docs professional and self-contained.
 2. Keep security claims evidence-bound.
 3. Preserve the constrained C/C++ foundation direction.
-4. Move from Lat grammar contract into Lat parser/grammar implementation planning.
-5. Keep Lat metadata-only until separate parser, lowering, execution, or runtime contracts exist.
+4. Move from Lat grammar implementation planning into bounded Lat parser implementation.
+5. Keep Lat metadata-only until separate lowering, execution, or runtime contracts exist.
 6. Define constrained C++ authority-layer contracts before C++ policy/validator implementation.
 7. Expand Nucleus from preview/reporting into carefully gated execution planning.
 8. Build status reporting and public progress estimates.
@@ -194,10 +194,10 @@ Buy Me a Coffee: Bryforge
 Recommended next slice:
 
 ```text
-Lat language grammar implementation plan
+Lat language grammar implementation
 ```
 
-This turns the Lat grammar contract into exact parser API, AST, capacity, report, source-span, fixture, and test planning before implementation code.
+This turns the Lat grammar implementation plan into bounded parser API, AST, report, source-span, fixture, and invariant code.
 
 ## Non-claims
 
