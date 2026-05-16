@@ -110,8 +110,8 @@ Estimated as of 2026-05-15 22:49 CDT:
 | Area | Estimate |
 | --- | ---: |
 | Overall Latticra system | 16% |
-| L-UI parser / AST / string foundation | 82% |
-| Foundation docs and contracts | 66% |
+| L-UI parser / AST / string foundation | 83% |
+| Foundation docs and contracts | 67% |
 | Lat / Latticra Programming Language | 5% |
 | LIR | 5% |
 | Nucleus real task execution | 10% |
@@ -125,8 +125,8 @@ These percentages are rough planning estimates, not formal release metrics.
 
 1. Keep public docs professional and self-contained.
 2. Keep security claims evidence-bound.
-3. Move from L-UI parser/source-policy foundation toward semantic validation.
-4. Move from parser/AST foundation toward LIR and semantic validation.
+3. Move from L-UI parser/source-policy foundation toward semantic validation implementation planning.
+4. Move from parser/AST foundation toward LIR after semantic validation planning.
 5. Define Lat language contracts before implementation.
 6. Expand Nucleus from preview/reporting into carefully gated execution planning.
 7. Build status reporting and public progress estimates.
@@ -166,10 +166,10 @@ Buy Me a Coffee: Bryforge
 Recommended next slice:
 
 ```text
-L-UI semantic validation contract
+L-UI semantic validation implementation plan
 ```
 
-This moves the current L-UI lane from structural parsing and source policy into semantic validation planning.
+This turns the semantic validation contract into exact public API, diagnostic, report, source-span, and invariant-test planning before implementation code.
 
 ## Non-claims
 
