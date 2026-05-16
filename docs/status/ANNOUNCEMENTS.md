@@ -24,6 +24,32 @@ non-claims
 next step
 ```
 
+## 2026-05-15 22:49 CDT — Lat language grammar contract
+
+Status: contract added
+
+Latticra added the first grammar contract for Lat / Latticra Language.
+
+Why it matters:
+
+The project now has a controlled grammar boundary for Lat-Core before any parser, compiler, interpreter, LIR lowering, or execution work begins. The contract defines the public naming boundary, `.lat` extension policy, source unit shape, declaration kinds, lexical grammar, string literal rules, effect literals, state/policy/transition/assertion/effect declaration forms, source spans, no-effect behavior, and future tests.
+
+Validation:
+
+```text
+sh scripts/test-lat-language-grammar-contract.sh
+```
+
+Non-claims:
+
+This update does not implement Lat, Lat-Core, Lat-Orch, a parser, compiler, interpreter, runtime, LIR lowering, L-UI rendering, Nucleus task execution, malware prevention, ransomware prevention, or operating-system behavior.
+
+Next step:
+
+```text
+Lat language grammar implementation plan
+```
+
 ## 2026-05-15 22:49 CDT — LIR shape implementation
 
 Status: implementation added
