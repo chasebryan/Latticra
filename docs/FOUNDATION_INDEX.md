@@ -88,6 +88,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION_PLAN.md`](L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION_PLAN.md) — exact parser, diagnostic, AST, report, span, and test plan for literal source-buffer NUL rejection policy enforcement.
 - [`L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION.md`](L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION.md) — tested enforcement of literal source-buffer NUL rejection while escaped decoded NUL remains accepted.
 - [`L_UI_SEMANTIC_VALIDATION_CONTRACT.md`](L_UI_SEMANTIC_VALIDATION_CONTRACT.md) — future semantic validation layer after structural parsing, AST construction, source policies, and string handling.
+- [`L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md`](L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md) — public API, semantic result, diagnostic mapping, reports, semantic checks, and exact tests before semantic validation code.
 - [`L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — decoding rules for quoted L-UI source string escapes.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md) — parser-level validation decision, AST decoding helper shape, NUL/capacity/span/report behavior, exact tests, and compatibility expectations before string-literal escape decoding.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md) — byte-oriented string-literal escape decoding for source-backed L-UI AST purpose and text values.
@@ -154,6 +155,7 @@ L-UI source-buffer literal NUL policy contract + guardrails
 L-UI source-buffer literal NUL policy implementation plan + guardrails
 L-UI source-buffer literal NUL policy implementation + invariants
 L-UI semantic validation contract + guardrails
+L-UI semantic validation implementation plan + guardrails
 L-UI string-literal escape contract + guardrails
 L-UI string-literal escape implementation plan + guardrails
 L-UI string-literal escape decoding implementation + invariants
@@ -162,7 +164,7 @@ L-UI string-literal escape decoding implementation + invariants
 The next implementation target should be:
 
 ```text
-L-UI semantic validation implementation plan
+L-UI semantic validation implementation
 ```
 
-That target should define the public API, semantic result structs, semantic error enum, diagnostic mapping, reports, rail checks, field checks, binding checks, text checks, and exact tests before semantic validation code.
+That target should add the public API, semantic result struct, semantic error enum, diagnostic mapping, reports, rail checks, field checks, binding checks, text checks, and exact tests defined by the implementation plan.
