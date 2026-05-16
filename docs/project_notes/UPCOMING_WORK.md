@@ -6,27 +6,27 @@ Last updated: 2026-05-15 22:49 CDT
 ## Recommended next slice
 
 ```text
-L-UI semantic validation implementation plan
+L-UI semantic validation implementation
 ```
 
 Purpose:
 
 ```text
-define the exact public API, semantic result structs, diagnostics, reports, rail checks, field checks, binding checks, text checks, and tests before semantic validation code
+add the planned semantic validation API, semantic result structs, diagnostics, reports, rail checks, field checks, binding checks, text checks, and invariants
 ```
 
 ## Near-term queue
 
-1. L-UI semantic validation implementation plan.
-2. L-UI semantic validation implementation.
-3. LIR shape contract.
-4. Lat grammar contract.
-5. L-UI rendering contract.
-6. Nucleus task execution contract.
-7. Runtime boundary contract.
-8. Defensive threat model contract.
-9. Public status update after major milestones.
-10. Completion percentage review after semantic validation planning.
+1. L-UI semantic validation implementation.
+2. LIR shape contract.
+3. Lat grammar contract.
+4. L-UI rendering contract.
+5. Nucleus task execution contract.
+6. Runtime boundary contract.
+7. Defensive threat model contract.
+8. Public status update after major milestones.
+9. Completion percentage review after semantic validation implementation.
+10. Strategy estimate review after semantic validation implementation.
 
 ## Quality rules
 
