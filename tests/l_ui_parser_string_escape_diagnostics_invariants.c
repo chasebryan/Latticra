@@ -75,6 +75,13 @@ static const char SOURCE_SUFFIX[] =
     "\" }\n"
     "}\n";
 
+static const char INVALID_STRING_HINT[] =
+    "Use only \134\134, \134\042, \134n, \134r, \134t, or uppercase \134xNN escapes.";
+static const char INVALID_HEX_HINT[] =
+    "Use exactly two uppercase hex digits, such as \134x0A or \134x7F.";
+static const char DECODED_NUL_HINT[] =
+    "Avoid \134x00 until length-carrying AST strings exist.";
+
 static int append_bytes(char *buffer, size_t buffer_len, size_t *used, const char *bytes, size_t bytes_len) {
     if (buffer == 0 || used == 0 || bytes == 0 || *used > buffer_len || bytes_len > buffer_len - *used) {
         return 0;
@@ -181,7 +188,7 @@ static int string_escape_diagnostic_rejects_unknown_escape_lui0019(void) {
         LATTICRA_L_UI_PARSE_INVALID_STRING_ESCAPE,
         "LUI0019",
         "String literal escape is not supported.",
-        "Use only \134\134, \134\042, \134n, \134r, \134t, or uppercase \134xNN escapes.");
+        INVALID_STRING_HINT);
 }
 
 static int string_escape_diagnostic_rejects_lowercase_hex_lui0020(void) {
@@ -190,7 +197,7 @@ static int string_escape_diagnostic_rejects_lowercase_hex_lui0020(void) {
         LATTICRA_L_UI_PARSE_INVALID_HEX_ESCAPE,
         "LUI0020",
         "Hex string escape must use exactly two uppercase hexadecimal digits.",
-        "Use exactly two uppercase hex digits, such as \x0A or \x7F.");
+        INVALID_HEX_HINT);
 }
 
 static int string_escape_diagnostic_rejects_short_hex_lui0020(void) {
@@ -199,7 +206,7 @@ static int string_escape_diagnostic_rejects_short_hex_lui0020(void) {
         LATTICRA_L_UI_PARSE_INVALID_HEX_ESCAPE,
         "LUI0020",
         "Hex string escape must use exactly two uppercase hexadecimal digits.",
-        "Use exactly two uppercase hex digits, such as \x0A or \x7F.");
+        INVALID_HEX_HINT);
 }
 
 static int string_escape_diagnostic_rejects_invalid_hex_lui0020(void) {
@@ -208,7 +215,7 @@ static int string_escape_diagnostic_rejects_invalid_hex_lui0020(void) {
         LATTICRA_L_UI_PARSE_INVALID_HEX_ESCAPE,
         "LUI0020",
         "Hex string escape must use exactly two uppercase hexadecimal digits.",
-        "Use exactly two uppercase hex digits, such as \x0A or \x7F.");
+        INVALID_HEX_HINT);
 }
 
 static int string_escape_diagnostic_rejects_unterminated_escape_lui0021(void) {
@@ -251,7 +258,7 @@ static int string_escape_diagnostic_rejects_decoded_nul_lui0022(void) {
         LATTICRA_L_UI_PARSE_DECODED_NUL_IN_STRING,
         "LUI0022",
         "Decoded NUL bytes are not supported in AST strings.",
-        "Avoid \x00 until length-carrying AST strings exist.");
+        DECODED_NUL_HINT);
 }
 
 static int string_escape_diagnostic_rejects_literal_nul_lui0023(void) {
