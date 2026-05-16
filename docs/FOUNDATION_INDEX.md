@@ -68,6 +68,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_CONTRACT.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_CONTRACT.md) — explicit decoded byte lengths for L-UI AST purpose and text values.
 - [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION_PLAN.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION_PLAN.md) — public struct field placement, initialization rules, decode length assignment, report fields, length-aware escaping, and exact tests before storage code changes.
 - [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION.md) — explicit decoded byte lengths for L-UI AST purpose and text values.
+- [`L_UI_DECODED_NUL_ACCEPTANCE_CONTRACT.md`](L_UI_DECODED_NUL_ACCEPTANCE_CONTRACT.md) — future escaped decoded NUL acceptance rules after length-carrying AST string storage.
 - [`L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — decoding rules for quoted L-UI source string escapes.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md) — parser-level validation decision, AST decoding helper shape, NUL/capacity/span/report behavior, exact tests, and compatibility expectations before string-literal escape decoding.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md) — byte-oriented string-literal escape decoding for source-backed L-UI AST purpose and text values.
@@ -126,6 +127,7 @@ L-UI AST source-backed text extraction implementation + invariants
 L-UI AST length-carrying string storage contract + guardrails
 L-UI AST length-carrying string storage implementation plan + guardrails
 L-UI AST length-carrying string storage implementation + invariants
+L-UI decoded NUL acceptance contract + guardrails
 L-UI string-literal escape contract + guardrails
 L-UI string-literal escape implementation plan + guardrails
 L-UI string-literal escape decoding implementation + invariants
@@ -134,7 +136,7 @@ L-UI string-literal escape decoding implementation + invariants
 The next implementation target should be:
 
 ```text
-L-UI decoded-NUL acceptance contract
+L-UI decoded-NUL acceptance implementation plan
 ```
 
-That target should decide whether `\x00` can become accepted now that AST storage has explicit lengths, and what parser diagnostic, AST, report, and compatibility rules are required.
+That target should define parser validation changes, decode helper changes, AST storage expectations, report expectations, diagnostic compatibility behavior, source-span expectations, and exact invariant tests before accepting escaped `\x00`.
