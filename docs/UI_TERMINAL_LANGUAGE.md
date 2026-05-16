@@ -5,7 +5,7 @@ Scope: terminal/operator UI language direction, rails, reports, and non-claims.
 
 ## Purpose
 
-Latticra should define its terminal and operator interface language before implementation code begins.
+Latticra should define its terminal and operator interface language before implementation code expands.
 
 The terminal UI should not be a pile of hard-coded strings. It should become a controlled, declarative surface that can render state, effects, gates, evidence, and supervisor reports clearly.
 
@@ -17,7 +17,7 @@ The planned UI language or dialect is:
 L-UI
 ```
 
-L-UI is part of the L language family, but it should remain narrower than full L.
+L-UI is part of the Latticra language family, but it should remain narrower than full Lat.
 
 ## Role
 
@@ -108,9 +108,9 @@ Nucleus supplies state. L-UI renders it.
 
 L-UI should not own policy decisions, effect gates, update behavior, server interaction, or hidden task execution.
 
-## L-UI and L
+## L-UI and Lat
 
-L may eventually generate or validate L-UI documents.
+Lat may eventually generate or validate L-UI documents.
 
 Early L-UI should be static and fixture-backed.
 
