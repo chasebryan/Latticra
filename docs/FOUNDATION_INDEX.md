@@ -82,7 +82,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION_PLAN.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION_PLAN.md) — public struct field placement, initialization rules, decode length assignment, report fields, length-aware escaping, and exact tests before storage code changes.
 - [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION.md) — explicit decoded byte lengths for L-UI AST purpose and text values.
 - [`L_UI_DECODED_NUL_ACCEPTANCE_CONTRACT.md`](L_UI_DECODED_NUL_ACCEPTANCE_CONTRACT.md) — escaped decoded NUL acceptance rules after length-carrying AST string storage.
-- [`L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION_PLAN.md`](L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION_PLAN.md) — parser validation changes, decode helper changes, AST/report expectations, diagnostic compatibility, source spans, and exact tests before accepting escaped `\x00`.
+- [`L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION_PLAN.md`](L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION_PLAN.md) — parser validation changes, decode helper changes, AST/report expectations, diagnostic compatibility, source spans, and exact tests before accepting escaped `\\x00`.
 - [`L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION.md`](L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION.md) — escaped decoded NUL acceptance for L-UI source-backed AST strings.
 - [`L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_CONTRACT.md`](L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_CONTRACT.md) — policy keeping literal source-buffer NUL rejected while escaped decoded NUL remains accepted.
 - [`L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION_PLAN.md`](L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION_PLAN.md) — exact parser, diagnostic, AST, report, span, and test plan for literal source-buffer NUL rejection policy enforcement.
@@ -90,6 +90,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`L_UI_SEMANTIC_VALIDATION_CONTRACT.md`](L_UI_SEMANTIC_VALIDATION_CONTRACT.md) — semantic validation layer after structural parsing, AST construction, source policies, and string handling.
 - [`L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md`](L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md) — public API, semantic result, diagnostic mapping, reports, semantic checks, and exact tests before semantic validation code.
 - [`L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION.md`](L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION.md) — no-effect semantic validation API, reports, checks, and invariants for L-UI ASTs.
+- [`LIR_SHAPE_CONTRACT.md`](LIR_SHAPE_CONTRACT.md) — first Latticra Intermediate Representation shape before semantic lowering, Lat integration, rendering, or execution.
 - [`L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — decoding rules for quoted L-UI source string escapes.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md) — parser-level validation decision, AST decoding helper shape, NUL/capacity/span/report behavior, exact tests, and compatibility expectations before string-literal escape decoding.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md) — byte-oriented string-literal escape decoding for source-backed L-UI AST purpose and text values.
@@ -158,6 +159,7 @@ L-UI source-buffer literal NUL policy implementation + invariants
 L-UI semantic validation contract + guardrails
 L-UI semantic validation implementation plan + guardrails
 L-UI semantic validation implementation + invariants
+LIR shape contract + guardrails
 L-UI string-literal escape contract + guardrails
 L-UI string-literal escape implementation plan + guardrails
 L-UI string-literal escape decoding implementation + invariants
@@ -166,7 +168,7 @@ L-UI string-literal escape decoding implementation + invariants
 The next implementation target should be:
 
 ```text
-LIR shape contract
+LIR shape implementation plan
 ```
 
-That target should define the first Latticra Intermediate Representation shape before semantic lowering or Lat integration code.
+That target should define the exact public API, structs, capacities, node kinds, edge kinds, errors, reports, semantic prerequisite behavior, source-span mapping, and tests before LIR code.
