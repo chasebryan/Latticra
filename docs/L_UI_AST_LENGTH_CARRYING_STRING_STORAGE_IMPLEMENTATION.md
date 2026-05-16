@@ -154,7 +154,13 @@ Parser-level diagnostics continue to reject:
 literal 0x00 -> LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING
 ```
 
-A later decoded-NUL acceptance contract may change this, but not this implementation.
+The decoded-NUL acceptance contract is recorded in:
+
+```text
+L_UI_DECODED_NUL_ACCEPTANCE_CONTRACT.md
+```
+
+A later decoded-NUL acceptance implementation may change escaped `\x00` behavior, but not literal source NUL rejection.
 
 ## Detailed report behavior
 
@@ -321,13 +327,19 @@ It is not decoded-NUL acceptance, literal-NUL acceptance, a Unicode display mode
 
 ## Next implementation step
 
-The next implementation candidate is:
+The decoded-NUL acceptance contract is recorded in:
 
 ```text
-L-UI decoded-NUL acceptance contract
+L_UI_DECODED_NUL_ACCEPTANCE_CONTRACT.md
 ```
 
-That future work should decide whether `\x00` can become accepted now that AST storage has explicit lengths, and what compatibility/reporting rules are required.
+The next implementation candidate after that contract is:
+
+```text
+L-UI decoded-NUL acceptance implementation plan
+```
+
+That future work should define parser validation changes, decode helper changes, AST storage expectations, report expectations, diagnostic compatibility behavior, source-span expectations, and exact invariant tests before accepting escaped `\x00`.
 
 ## Non-claims
 
