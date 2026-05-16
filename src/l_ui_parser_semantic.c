@@ -168,11 +168,41 @@ static latticra_status_t parser_failed_result(
     return LATTICRA_STATUS_OK;
 }
 
-latticra_status_t latticra_l_ui_validate_semantics(
+static latticra_status_t check_duplicate_rails(
     const latticra_l_ui_ast_result_t *ast,
     latticra_l_ui_semantic_result_t *result) {
     size_t index;
     size_t other;
+    for (index = 0u; index < ast->rail_count; index++) {
+        for (other = index + 1u; other < ast->rail_count; other++) {
+            if (ast->rails[index].name[0] != '\0' && strcmp(ast->rails[index].name, ast->rails[other].name) == 0) {
+                return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_DUPLICATE_RAIL, other, 0u, 0u, &ast->rails[other].span);
+            }
+        }
+    }
+    return LATTICRA_STATUS_OK;
+}
+
+static latticra_status_t check_duplicate_fields(
+    const latticra_l_ui_ast_result_t *ast,
+    latticra_l_ui_semantic_result_t *result) {
+    size_t index;
+    size_t other;
+    for (index = 0u; index < ast->field_count; index++) {
+        for (other = index + 1u; other < ast->field_count; other++) {
+            if (ast->fields[index].name[0] != '\0' && strcmp(ast->fields[index].name, ast->fields[other].name) == 0) {
+                return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_DUPLICATE_FIELD, 0u, other, 0u, &ast->fields[other].span);
+            }
+        }
+    }
+    return LATTICRA_STATUS_OK;
+}
+
+latticra_status_t latticra_l_ui_validate_semantics(
+    const latticra_l_ui_ast_result_t *ast,
+    latticra_l_ui_semantic_result_t *result) {
+    size_t index;
+    latticra_status_t status;
 
     if (ast == 0 || result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     semantic_default(result);
@@ -195,15 +225,15 @@ latticra_status_t latticra_l_ui_validate_semantics(
         return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_CARD_COUNT_MISMATCH, 0u, 0u, 0u, &ast->card.span);
     }
 
+    status = check_duplicate_rails(ast, result);
+    if (result->error != LATTICRA_L_UI_SEMANTIC_OK) return status;
+    status = check_duplicate_fields(ast, result);
+    if (result->error != LATTICRA_L_UI_SEMANTIC_OK) return status;
+
     for (index = 0u; index < 9u; index++) {
         const latticra_l_ui_ast_rail_t *rail = &ast->rails[index];
         if (rail->name[0] == '\0' || strcmp(rail->name, expected_rail_name(index)) != 0) {
             return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_MISSING_REQUIRED_RAIL, index, 0u, 0u, &rail->span);
-        }
-        for (other = index + 1u; other < ast->rail_count; other++) {
-            if (strcmp(rail->name, ast->rails[other].name) == 0) {
-                return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_DUPLICATE_RAIL, other, 0u, 0u, &ast->rails[other].span);
-            }
         }
         if (rail->first_field_index != expected_rail_first_field_index(index) ||
             rail->field_count != expected_rail_field_count(index) ||
@@ -217,11 +247,6 @@ latticra_status_t latticra_l_ui_validate_semantics(
         const latticra_l_ui_ast_field_t *field = &ast->fields[index];
         if (field->name[0] == '\0' || strcmp(field->name, expected_field_name(index)) != 0) {
             return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_FIELD_RAIL_MISMATCH, 0u, index, 0u, &field->span);
-        }
-        for (other = index + 1u; other < ast->field_count; other++) {
-            if (strcmp(field->name, ast->fields[other].name) == 0) {
-                return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_DUPLICATE_FIELD, 0u, other, 0u, &ast->fields[other].span);
-            }
         }
         if (!starts_with_allowed_binding_prefix(field->binding)) {
             return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_UNSUPPORTED_BINDING_TARGET, 0u, index, 0u, &field->binding_span);
