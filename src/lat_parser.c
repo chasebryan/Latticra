@@ -278,6 +278,24 @@ static latticra_lat_parse_error_t read_string(
     return LATTICRA_LAT_PARSE_UNTERMINATED_STRING;
 }
 
+static int read_integer(lat_cursor_t *cursor, char *buffer, size_t buffer_len, latticra_lat_source_span_t *span) {
+    size_t used = 0u;
+    if (cursor == 0 || buffer == 0 || buffer_len == 0u) return 0;
+    buffer[0] = '\0';
+    skip_ws_and_comments(cursor);
+    if (span != 0) *span = span_start(cursor);
+    if (!isdigit((unsigned char)cursor_peek(cursor))) return 0;
+    while (!cursor_at_end(cursor) && isdigit((unsigned char)cursor_peek(cursor))) {
+        if (used + 1u >= buffer_len) return 0;
+        buffer[used] = cursor_peek(cursor);
+        used += 1u;
+        cursor_advance(cursor);
+    }
+    buffer[used] = '\0';
+    if (span != 0) span_finish(span, cursor);
+    return 1;
+}
+
 static int read_value(
     lat_cursor_t *cursor,
     char *buffer,
@@ -291,7 +309,10 @@ static int read_value(
         if (error != 0) *error = string_error;
         return string_error == LATTICRA_LAT_PARSE_OK;
     }
-    return read_identifier(cursor, buffer, buffer_len, span);
+    if (isdigit((unsigned char)cursor_peek(cursor))) return read_integer(cursor, buffer, buffer_len, span);
+    if (read_identifier(cursor, buffer, buffer_len, span)) return 1;
+    if (error != 0) *error = LATTICRA_LAT_PARSE_UNKNOWN_DECLARATION;
+    return 0;
 }
 
 static latticra_lat_effect_t effect_from_label(const char *label) {
@@ -448,6 +469,12 @@ static latticra_lat_parse_error_t parse_declaration(lat_cursor_t *cursor, lattic
     return LATTICRA_LAT_PARSE_UNBALANCED_BRACE;
 }
 
+static int marker_boundary(const char *source, size_t source_len, size_t start, size_t len) {
+    int before_ok = start == 0u || !is_ident_continue(source[start - 1u]);
+    int after_ok = start + len >= source_len || !is_ident_continue(source[start + len]);
+    return before_ok && after_ok;
+}
+
 static int contains_forbidden_marker_outside_comment(const char *source, size_t source_len) {
     static const char *markers[] = { "exec", "spawn", "syscall", "socket", "open_file", "write_file", "hardware_write" };
     size_t index = 0u;
@@ -467,7 +494,7 @@ static int contains_forbidden_marker_outside_comment(const char *source, size_t 
         }
         for (marker_index = 0u; marker_index < sizeof(markers) / sizeof(markers[0]); marker_index++) {
             size_t len = strlen(markers[marker_index]);
-            if (index + len <= source_len && strncmp(source + index, markers[marker_index], len) == 0) return 1;
+            if (index + len <= source_len && strncmp(source + index, markers[marker_index], len) == 0 && marker_boundary(source, source_len, index, len)) return 1;
         }
         index += 1u;
     }
@@ -497,6 +524,7 @@ latticra_status_t latticra_lat_parse_source(
     latticra_lat_parse_result_t *result) {
     lat_cursor_t cursor;
     latticra_lat_parse_error_t error;
+    latticra_lat_source_span_t module_span;
 
     if (source == 0 || result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     result_default(result);
@@ -522,6 +550,7 @@ latticra_status_t latticra_lat_parse_source(
     cursor.offset = 0u;
     cursor.line = 1u;
     cursor.column = 1u;
+    module_span = span_start(&cursor);
 
     if (match_keyword(&cursor, "l")) {
         set_error(result, LATTICRA_LAT_PARSE_UNSUPPORTED_EXTENSION_CLAIM, &cursor);
@@ -535,7 +564,7 @@ latticra_status_t latticra_lat_parse_source(
         set_error(result, LATTICRA_LAT_PARSE_MISSING_MODULE, &cursor);
         return LATTICRA_STATUS_OK;
     }
-    result->module.span = span_start(&cursor);
+    result->module.span = module_span;
     if (!read_identifier(&cursor, result->module.module_name, sizeof(result->module.module_name), 0)) {
         set_error(result, LATTICRA_LAT_PARSE_INVALID_MODULE_NAME, &cursor);
         return LATTICRA_STATUS_OK;
