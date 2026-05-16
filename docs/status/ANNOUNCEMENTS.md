@@ -24,6 +24,32 @@ non-claims
 next step
 ```
 
+## 2026-05-15 22:49 CDT — L-UI semantic validation implementation plan
+
+Status: implementation plan added
+
+Latticra added the implementation plan for the future L-UI semantic validation layer.
+
+Why it matters:
+
+The plan turns the semantic-validation contract into exact public API, result struct, error enum, diagnostic mapping, report format, rail checks, field checks, binding checks, text checks, parser-failed behavior, source-span rules, and invariant-test expectations.
+
+Validation:
+
+```text
+sh scripts/test-l-ui-semantic-validation-implementation-plan.sh
+```
+
+Non-claims:
+
+This update does not implement semantic validation, LIR lowering, L-UI rendering, command behavior, Nucleus task execution, malware prevention, ransomware prevention, or operating-system behavior.
+
+Next step:
+
+```text
+L-UI semantic validation implementation
+```
+
 ## 2026-05-15 22:49 CDT — L-UI semantic validation contract
 
 Status: contract added
