@@ -28,8 +28,8 @@ These percentages are planning estimates only.
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 15% |
-| L-UI parser / AST / string foundation | 81% |
+| Overall Latticra system | 16% |
+| L-UI parser / AST / string foundation | 82% |
 | Foundation documents and contracts | 66% |
 | Public documentation posture | 66% |
 | Strategy/status/funding framework | 40% |
@@ -64,6 +64,7 @@ length-carrying AST string storage
 escaped decoded NUL acceptance
 source-buffer literal NUL policy contract
 source-buffer literal NUL policy implementation plan
+source-buffer literal NUL policy implementation
 security policy
 public legacy association guard
 strategy index
@@ -87,7 +88,7 @@ Latticra does not currently provide:
 - self-update execution;
 - Nucleus task execution;
 - L-UI rendering;
-- literal source NUL acceptance implementation;
+- literal source NUL acceptance;
 - live movement;
 - operating-system replacement.
 
@@ -104,13 +105,12 @@ This is a mission direction, not a current security guarantee.
 Recommended next work:
 
 ```text
-L-UI source-buffer literal NUL policy implementation
+L-UI semantic validation contract
 ```
 
 After that:
 
 ```text
-L-UI semantic validation contract
 LIR shape contract
 Lat language grammar contract
 L-UI rendering contract

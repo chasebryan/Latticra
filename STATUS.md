@@ -25,8 +25,8 @@ docs/strategy/README.md
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 15% |
-| L-UI parser / AST / string foundation | 81% |
+| Overall Latticra system | 16% |
+| L-UI parser / AST / string foundation | 82% |
 | Foundation documents and contracts | 66% |
 | Public documentation posture | 66% |
 | Strategy/status/funding framework | 40% |
@@ -36,7 +36,7 @@ These percentages are planning estimates only. They are not release promises, se
 ## Current next step
 
 ```text
-L-UI source-buffer literal NUL policy implementation
+L-UI semantic validation contract
 ```
 
 ## Non-claims
