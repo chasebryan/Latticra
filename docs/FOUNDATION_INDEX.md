@@ -71,6 +71,7 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_DECODED_NUL_ACCEPTANCE_CONTRACT.md`](L_UI_DECODED_NUL_ACCEPTANCE_CONTRACT.md) — escaped decoded NUL acceptance rules after length-carrying AST string storage.
 - [`L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION_PLAN.md`](L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION_PLAN.md) — parser validation changes, decode helper changes, AST/report expectations, diagnostic compatibility, source spans, and exact tests before accepting escaped `\x00`.
 - [`L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION.md`](L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION.md) — escaped decoded NUL acceptance for L-UI source-backed AST strings.
+- [`L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_CONTRACT.md`](L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_CONTRACT.md) — policy keeping literal source-buffer NUL rejected while escaped decoded NUL remains accepted.
 - [`L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — decoding rules for quoted L-UI source string escapes.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md) — parser-level validation decision, AST decoding helper shape, NUL/capacity/span/report behavior, exact tests, and compatibility expectations before string-literal escape decoding.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md) — byte-oriented string-literal escape decoding for source-backed L-UI AST purpose and text values.
@@ -132,6 +133,7 @@ L-UI AST length-carrying string storage implementation + invariants
 L-UI decoded NUL acceptance contract + guardrails
 L-UI decoded NUL acceptance implementation plan + guardrails
 L-UI decoded NUL acceptance implementation + invariants
+L-UI source-buffer literal NUL policy contract + guardrails
 L-UI string-literal escape contract + guardrails
 L-UI string-literal escape implementation plan + guardrails
 L-UI string-literal escape decoding implementation + invariants
@@ -140,7 +142,7 @@ L-UI string-literal escape decoding implementation + invariants
 The next implementation target should be:
 
 ```text
-L-UI source-buffer literal NUL policy contract
+L-UI source-buffer literal NUL policy implementation plan
 ```
 
 That target should decide whether literal NUL bytes in source buffers remain permanently forbidden or receive their own length-aware source input policy.

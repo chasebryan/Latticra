@@ -97,6 +97,8 @@ jobs:
         run: sh scripts/test-l-ui-decoded-nul-acceptance-implementation-plan.sh
       - name: Run L-UI decoded NUL acceptance tests
         run: sh scripts/test-l-ui-decoded-nul-acceptance.sh
+      - name: Run L-UI source-buffer literal NUL policy contract guard
+        run: sh scripts/test-l-ui-source-buffer-literal-nul-policy-contract.sh
       - name: Run L-UI string-literal escape contract guard
         run: sh scripts/test-l-ui-string-literal-escape-contract.sh
       - name: Run L-UI string-literal escape implementation plan guard

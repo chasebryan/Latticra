@@ -64,6 +64,12 @@ LUI0023 literal_nul_in_string
 
 This implementation does not add a source-buffer literal-NUL acceptance model.
 
+The literal-NUL source-buffer policy contract is recorded in:
+
+```text
+L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_CONTRACT.md
+```
+
 ## Parser validation behavior
 
 Parser validation in:
@@ -310,10 +316,16 @@ It is not literal source NUL acceptance, Unicode display behavior, renderer beha
 
 ## Next implementation step
 
-The next implementation candidate is:
+The source-buffer literal NUL policy contract is recorded in:
 
 ```text
-L-UI source-buffer literal NUL policy contract
+L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_CONTRACT.md
+```
+
+The next implementation candidate after that contract is:
+
+```text
+L-UI source-buffer literal NUL policy implementation plan
 ```
 
 That future work should decide whether literal NUL bytes in source buffers remain permanently forbidden or receive their own length-aware source input policy.
