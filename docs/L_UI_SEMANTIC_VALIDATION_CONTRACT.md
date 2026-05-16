@@ -13,6 +13,12 @@ Semantic validation is the next layer. It should validate meaning after structur
 
 This document does not implement semantic validation.
 
+The implementation plan is recorded in:
+
+```text
+L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md
+```
+
 ## Relationship to previous work
 
 This contract depends on:
@@ -328,6 +334,12 @@ Semantic validation implementation must not begin until a separate implementatio
 11. compatibility expectations;
 12. non-claims.
 
+That plan is recorded in:
+
+```text
+L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md
+```
+
 ## Future test list
 
 A future implementation plan should include tests for:
@@ -349,6 +361,12 @@ semantic_validation_does_not_change_ast_report
 semantic_validation_does_not_change_escaped_x00_acceptance
 semantic_validation_does_not_change_literal_nul_rejection
 semantic_validation_is_deterministic
+```
+
+The implementation-plan test list is now recorded in:
+
+```text
+L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md
 ```
 
 ## Forbidden behavior
