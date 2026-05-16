@@ -24,6 +24,32 @@ non-claims
 next step
 ```
 
+## 2026-05-15 22:49 CDT — LIR shape contract
+
+Status: contract added
+
+Latticra added the first LIR shape contract for the Latticra Intermediate Representation.
+
+Why it matters:
+
+The project now has a representation target after L-UI structural parsing, AST construction, and semantic validation. The contract defines the first LIR module shape, source kinds, node kinds, node shape, edge shape, binding shape, text shape, semantic prerequisites, no-effect metadata, source-span rules, report expectations, capacity policy, and future tests.
+
+Validation:
+
+```text
+sh scripts/test-lir-shape-contract.sh
+```
+
+Non-claims:
+
+This update does not implement LIR, LIR lowering, L-UI rendering, Lat execution, command behavior, Nucleus task execution, malware prevention, ransomware prevention, or operating-system behavior.
+
+Next step:
+
+```text
+LIR shape implementation plan
+```
+
 ## 2026-05-15 22:49 CDT — L-UI semantic validation implementation
 
 Status: implementation added
