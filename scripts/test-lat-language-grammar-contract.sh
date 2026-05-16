@@ -18,7 +18,7 @@ if [ ! -f "$doc" ]; then
 fi
 
 require_contains 'Status: Lat language grammar contract' "$doc"
-require_contains 'This document does not implement a parser, compiler, interpreter, runtime, package format, command behavior, Nucleus task execution, LIR lowering, L-UI rendering, or operating-system behavior.' "$doc"
+require_contains 'It does not implement a parser, compiler, interpreter, runtime, package format, command behavior, Nucleus task execution, LIR lowering, L-UI rendering, or operating-system behavior.' "$doc"
 require_contains 'Naming boundary' "$doc"
 require_contains 'Relationship to previous work' "$doc"
 require_contains 'First grammar target' "$doc"
