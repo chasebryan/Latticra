@@ -24,6 +24,32 @@ non-claims
 next step
 ```
 
+## 2026-05-15 22:49 CDT — Source-buffer literal NUL policy implementation
+
+Status: implementation added
+
+Latticra added focused invariant tests and CI coverage for enforcing the policy that literal source-buffer `0x00` remains rejected while escaped decoded NUL remains accepted through `\x00`.
+
+Why it matters:
+
+This locks down a source-input boundary that matters for C-compatible tooling and source inspection. Literal source NUL remains a distinct source-buffer error, while escaped decoded NUL remains the accepted way to express a NUL byte inside supported string values.
+
+Validation:
+
+```text
+sh scripts/test-l-ui-source-buffer-literal-nul-policy.sh
+```
+
+Non-claims:
+
+This update does not accept literal source NUL bytes, add a new source-buffer ownership model, add L-UI rendering, add runtime security guarantees, or claim malware/ransomware prevention.
+
+Next step:
+
+```text
+L-UI semantic validation contract
+```
+
 ## 2026-05-15 22:49 CDT — Source-buffer literal NUL policy implementation plan
 
 Status: implementation plan added
