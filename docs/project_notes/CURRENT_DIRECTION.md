@@ -39,12 +39,12 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, and diagnostic foundation toward semantic validation.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, and semantic validation foundation toward LIR shape planning.
 
 The next recommended implementation lane is:
 
 ```text
-L-UI semantic validation implementation
+LIR shape contract
 ```
 
 ## Current non-claim
