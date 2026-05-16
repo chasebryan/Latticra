@@ -44,7 +44,7 @@ The current technical lane is still the L-UI parser, AST, source-policy, and dia
 The next recommended implementation lane is:
 
 ```text
-L-UI source-buffer literal NUL policy implementation plan
+L-UI source-buffer literal NUL policy implementation
 ```
 
 ## Current non-claim

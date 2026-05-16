@@ -110,8 +110,8 @@ Estimated as of 2026-05-15 22:49 CDT:
 | Area | Estimate |
 | --- | ---: |
 | Overall Latticra system | 15% |
-| L-UI parser / AST / string foundation | 80% |
-| Foundation docs and contracts | 65% |
+| L-UI parser / AST / string foundation | 81% |
+| Foundation docs and contracts | 66% |
 | Lat / Latticra Programming Language | 5% |
 | LIR | 5% |
 | Nucleus real task execution | 10% |
@@ -131,7 +131,7 @@ These percentages are rough planning estimates, not formal release metrics.
 6. Expand Nucleus from preview/reporting into carefully gated execution planning.
 7. Build status reporting and public progress estimates.
 8. Prepare funding and sponsorship surfaces without overcommercializing the technical docs.
-9. Maintain an assistant reference folder so continuity is preserved.
+9. Maintain project notes so current direction and upcoming work remain clear.
 10. Preserve quality, clarity, and consistency across every public artifact.
 
 ## Quality requirements
@@ -166,10 +166,10 @@ Buy Me a Coffee: Bryforge
 Recommended next slice:
 
 ```text
-L-UI source-buffer literal NUL policy implementation plan
+L-UI source-buffer literal NUL policy implementation
 ```
 
-This continues the current L-UI source-policy lane while the new strategy/status framework gives the project better public structure.
+This continues the current L-UI source-policy lane now that the implementation plan has defined exact tests and enforcement expectations.
 
 ## Non-claims
 

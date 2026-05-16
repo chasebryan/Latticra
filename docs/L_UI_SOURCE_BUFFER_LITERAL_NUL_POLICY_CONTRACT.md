@@ -19,6 +19,12 @@ This contract keeps literal source NUL bytes rejected by default and defines wha
 
 This document does not implement literal NUL acceptance.
 
+The implementation plan is recorded in:
+
+```text
+L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION_PLAN.md
+```
+
 ## Relationship to previous work
 
 This contract depends on:
@@ -208,6 +214,12 @@ A future implementation may revisit literal source NUL only after a separate imp
 
 Until that exists, literal source NUL remains forbidden.
 
+The current implementation plan keeps literal source NUL rejected and adds exact enforcement tests:
+
+```text
+L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION_PLAN.md
+```
+
 ## Compatibility expectations
 
 This policy must not change:
@@ -264,6 +276,12 @@ literal_nul_policy_does_not_materialize_partial_ast
 literal_nul_policy_does_not_change_escaped_x00_acceptance
 literal_nul_policy_does_not_change_failed_parse_report
 literal_nul_policy_is_deterministic
+```
+
+That implementation-plan test list is now recorded in:
+
+```text
+L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION_PLAN.md
 ```
 
 ## Forbidden behavior
