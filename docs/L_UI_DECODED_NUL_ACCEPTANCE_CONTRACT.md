@@ -18,6 +18,8 @@ Now that AST purpose and text values carry explicit decoded byte lengths, a futu
 
 This document does not implement decoded NUL acceptance.
 
+The implementation plan is documented separately in [`L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION_PLAN.md`](L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION_PLAN.md).
+
 ## Relationship to previous work
 
 This contract depends on:
@@ -302,6 +304,8 @@ Decoded NUL acceptance implementation must not begin until a separate implementa
 8. exact invariant tests;
 9. compatibility expectations;
 10. non-claims.
+
+That plan is recorded in [`L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION_PLAN.md`](L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION_PLAN.md).
 
 ## Future test list
 
