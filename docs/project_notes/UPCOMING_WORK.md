@@ -6,27 +6,27 @@ Last updated: 2026-05-15 22:49 CDT
 ## Recommended next slice
 
 ```text
-L-UI source-buffer literal NUL policy implementation plan
+L-UI source-buffer literal NUL policy implementation
 ```
 
 Purpose:
 
 ```text
-define exact tests and implementation rules for keeping literal source-buffer NUL rejected while escaped decoded NUL remains accepted
+implement and test the already-planned rule that literal source-buffer NUL remains rejected while escaped decoded NUL remains accepted
 ```
 
 ## Near-term queue
 
-1. L-UI source-buffer literal NUL policy implementation plan.
-2. L-UI source-buffer literal NUL policy implementation.
-3. L-UI semantic validation contract.
-4. LIR shape contract.
-5. Lat grammar contract.
-6. L-UI rendering contract.
-7. Nucleus task execution contract.
-8. Runtime boundary contract.
-9. Defensive threat model contract.
-10. Public status update after major milestones.
+1. L-UI source-buffer literal NUL policy implementation.
+2. L-UI semantic validation contract.
+3. LIR shape contract.
+4. Lat grammar contract.
+5. L-UI rendering contract.
+6. Nucleus task execution contract.
+7. Runtime boundary contract.
+8. Defensive threat model contract.
+9. Public status update after major milestones.
+10. Strategy estimate review after the next implementation merge.
 
 ## Quality rules
 
