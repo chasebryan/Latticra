@@ -17,6 +17,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Run public legacy association policy guard
         run: sh scripts/test-public-legacy-association-policy.sh
+      - name: Run project strategy/status framework guard
+        run: sh scripts/test-project-strategy-status-framework.sh
       - name: Run language naming policy guard
         run: sh scripts/test-language-naming-policy.sh
       - name: Run state lattice tests
