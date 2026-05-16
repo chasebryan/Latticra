@@ -203,6 +203,12 @@ LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING
 
 NUL bytes remain rejected until a length-carrying AST string storage contract exists.
 
+That storage contract is now recorded in:
+
+```text
+L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_CONTRACT.md
+```
+
 ## AST compatibility behavior
 
 Invalid escapes are rejected by:
@@ -319,13 +325,19 @@ It is not a length-carrying AST string model, Unicode display model, renderer, U
 
 ## Next implementation step
 
-The next implementation candidate is:
+The length-carrying AST string storage contract is recorded in:
 
 ```text
-L-UI length-carrying AST string storage contract
+L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_CONTRACT.md
 ```
 
-That future work should define explicit AST string lengths before decoded NUL bytes can ever be accepted.
+The next implementation candidate after that contract is:
+
+```text
+L-UI AST length-carrying string storage implementation plan
+```
+
+That future work should define public struct field placement, initialization rules, source-backed extraction length assignment, string decode length assignment, report field additions, length-aware escaped report helper shape, and exact invariant tests before storage code changes.
 
 ## Non-claims
 
