@@ -7,7 +7,7 @@ Scope: foundation documents, project operations records, and implementation docu
 
 This index collects the first architecture, policy, language, operations, strategy, status, and implementation documents for Latticra.
 
-Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, strategy records, status records, and precursor-promotion rules before expanding real implementation work.
+Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, strategy records, status records, C/C++ foundation direction, and precursor-promotion rules before expanding real implementation work.
 
 ## Foundation documents
 
@@ -16,10 +16,11 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`PRECURSOR_PROMOTION_RULE.md`](PRECURSOR_PROMOTION_RULE.md) — rules for promoting precursor research, prototypes, experiments, and external lessons into Latticra.
 - [`NON_CLAIMS.md`](NON_CLAIMS.md) — claims Latticra does not currently make.
 - [`ARCHITECTURE_SEED.md`](ARCHITECTURE_SEED.md) — initial state-lattice and software-universe vocabulary.
+- [`C_CPP_FOUNDATION_DIRECTION.md`](C_CPP_FOUNDATION_DIRECTION.md) — active constrained C/C++ foundation direction: C is the metal, C++ is the disciplined structure, Latticra is the contract.
 - [`NAMING_SYSTEM.md`](NAMING_SYSTEM.md) — formal naming rules for professional Latticra terminology.
 - [`FEATURE_TRANSLATION_LEDGER.md`](FEATURE_TRANSLATION_LEDGER.md) — vocabulary ledger for translating exploratory labels into Latticra architecture terms.
 - [`LANGUAGE_NAMING_POLICY.md`](LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy; forbids plain `L` and `.l` as public identifiers.
-- [`LANGUAGE_STRATEGY.md`](LANGUAGE_STRATEGY.md) — role of C, Rust, Lat, L-UI, and LIR.
+- [`LANGUAGE_STRATEGY.md`](LANGUAGE_STRATEGY.md) — role of C, constrained C++, Lat, L-UI, and LIR.
 - [`SUPERVISOR_ARCHITECTURE.md`](SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor model and orchestration responsibilities.
 - [`EFFECT_GATES.md`](EFFECT_GATES.md) — effect categories, gating rules, and visibility requirements.
 - [`UI_TERMINAL_LANGUAGE.md`](UI_TERMINAL_LANGUAGE.md) — L-UI terminal/operator interface language direction.
@@ -58,7 +59,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION_PLAN.md) — diagnostics API shape, exact tests, and report extension rules before diagnostic code.
 - [`L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md`](L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md) — diagnostic structs, mapping functions, report surface, and invariants.
 - [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_CONTRACT.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_CONTRACT.md) — parser-level invalid string escape diagnostics, diagnostic codes, source spans, messages, hints, and compatibility rules.
-- [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md) — parser enum additions, diagnostic mapping updates, validation helpers, source-span behavior, exact tests, and compatibility expectations before parser-level string escape diagnostics code.
+- [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md) — parser enum additions, diagnostic mapping updates, validation helpers, source-span behavior, exact tests, and compatibility expectations.
 - [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION.md) — parser-level diagnostics for invalid L-UI string-literal escape sequences.
 - [`L_UI_PARSER_LINE_COLUMN_PRECISION_PLAN.md`](L_UI_PARSER_LINE_COLUMN_PRECISION_PLAN.md) — line/column precision rules, newline policy, byte-column behavior, and future tests.
 - [`L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION_PLAN.md) — helper shapes, parser touch points, implementation tests, and boundaries before precise location code.
@@ -116,6 +117,7 @@ Implemented/guarded foundation and operations units:
 ```text
 project strategy/status framework + guardrails
 language naming policy + guardrails
+C/C++ foundation direction + guardrails
 state lattice fixture + invariant tests
 tri-plane transition model + invariant tests
 Nucleus preview request classification + report invariants
