@@ -24,6 +24,32 @@ non-claims
 next step
 ```
 
+## 2026-05-16 16:15 CDT — Constrained C++ authority layer contract
+
+Status: contract added
+
+Latticra added the first constrained C++ authority-layer contract.
+
+Why it matters:
+
+The project now has explicit policy boundaries for future C++ use above the C substrate. The contract defines allowed C++ responsibilities, forbidden unrestricted-C++ posture, ownership/lifetime rules, allocation rules, exception rules, RTTI/reflection rules, template rules, C ABI boundary rules, no-effect flags, audit expectations, validator categories, result labels, future file paths, build policy, and exact future tests.
+
+Validation:
+
+```text
+sh scripts/test-constrained-cpp-authority-layer-contract.sh
+```
+
+Non-claims:
+
+This update does not implement C++ infrastructure, policy code, validators, effect gates, audit logic, orchestration, Lat execution, LIR execution, L-UI rendering, malware prevention, ransomware prevention, or operating-system behavior.
+
+Next step:
+
+```text
+Constrained C++ authority layer implementation plan
+```
+
 ## 2026-05-16 16:15 CDT — Lat grammar implementation
 
 Status: implementation added
