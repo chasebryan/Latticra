@@ -112,7 +112,7 @@ Early mechanisms that support this goal:
 - source-aware parsing;
 - semantic validation;
 - LIR shape planning;
-- Lat grammar planning;
+- Lat grammar implementation;
 - constrained C substrate behavior;
 - governed C++ authority-layer planning;
 - deterministic diagnostics;
@@ -135,10 +135,10 @@ Estimated as of 2026-05-16 16:15 CDT:
 
 | Area | Estimate |
 | --- | ---: |
-| Overall Latticra system | 18% |
+| Overall Latticra system | 19% |
 | L-UI parser / AST / string foundation | 86% |
 | Foundation docs and contracts | 73% |
-| Lat / Latticra Programming Language | 7% |
+| Lat / Latticra Programming Language | 10% |
 | LIR | 10% |
 | C/C++ foundation direction | 12% |
 | Nucleus real task execution | 10% |
@@ -153,7 +153,7 @@ These percentages are rough planning estimates, not formal release metrics.
 1. Keep public docs professional and self-contained.
 2. Keep security claims evidence-bound.
 3. Preserve the constrained C/C++ foundation direction.
-4. Move from Lat grammar implementation planning into bounded Lat parser implementation.
+4. Move from bounded Lat parser implementation toward a constrained C++ authority-layer contract.
 5. Keep Lat metadata-only until separate lowering, execution, or runtime contracts exist.
 6. Define constrained C++ authority-layer contracts before C++ policy/validator implementation.
 7. Expand Nucleus from preview/reporting into carefully gated execution planning.
@@ -194,10 +194,10 @@ Buy Me a Coffee: Bryforge
 Recommended next slice:
 
 ```text
-Lat language grammar implementation
+Constrained C++ authority layer contract
 ```
 
-This turns the Lat grammar implementation plan into bounded parser API, AST, report, source-span, fixture, and invariant code.
+This defines the governed C++ policy, validator, effect-gate, audit, ownership, lifetime, exception, allocation, and boundary rules before any C++ authority-layer implementation.
 
 ## Non-claims
 
