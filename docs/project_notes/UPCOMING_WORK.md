@@ -6,27 +6,27 @@ Last updated: 2026-05-15 22:49 CDT
 ## Recommended next slice
 
 ```text
-Lat language grammar contract
+Lat language grammar implementation plan
 ```
 
 Purpose:
 
 ```text
-define the first Lat / Latticra Programming Language grammar before implementation, lowering, execution, or runtime behavior
+define exact public API, parser result structs, AST structs, capacities, error labels, reports, fixture paths, string handling, source-span mapping, and tests before Lat parser code
 ```
 
 ## Near-term queue
 
-1. Lat grammar contract.
-2. L-UI rendering contract.
-3. Nucleus task execution contract.
-4. Runtime boundary contract.
-5. Defensive threat model contract.
-6. LIR follow-up review after CI feedback.
+1. Lat language grammar implementation plan.
+2. Lat language grammar implementation.
+3. L-UI rendering contract.
+4. Nucleus task execution contract.
+5. Runtime boundary contract.
+6. Defensive threat model contract.
 7. Public status update after major milestones.
-8. Completion percentage review after Lat grammar planning.
-9. Strategy estimate review after Lat grammar planning.
-10. LIR-to-Lat relationship review after the Lat grammar contract.
+8. Completion percentage review after Lat grammar implementation planning.
+9. Strategy estimate review after Lat grammar implementation planning.
+10. LIR-to-Lat relationship review after the Lat grammar implementation plan.
 
 ## Quality rules
 
@@ -43,8 +43,8 @@ consistent with public Latticra identity
 
 ## Current project priorities
 
-- Move from parser/source-policy/semantic validation and LIR shape foundation toward Lat grammar planning.
+- Move from Lat grammar contract into implementation planning.
 - Maintain professional public docs.
 - Keep status and completion estimates current.
 - Keep security ambitions framed as mission and design targets until proven.
-- Keep LIR metadata-only until separate lowering or execution contracts exist.
+- Keep Lat metadata-only until separate parser, lowering, or execution contracts exist.
