@@ -111,7 +111,8 @@ The repository currently includes guarded documents, tests, and no-effect C impl
 - LIR shape contract;
 - LIR shape implementation plan;
 - LIR shape implementation;
-- Lat language grammar contract.
+- Lat language grammar contract;
+- Lat language grammar implementation plan.
 
 Run the current implementation checks with the scripts listed in [`docs/FOUNDATION_INDEX.md`](docs/FOUNDATION_INDEX.md) or through the repository C workflow.
 
