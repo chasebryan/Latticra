@@ -25,19 +25,19 @@ docs/strategy/README.md
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 17% |
+| Overall Latticra system | 18% |
 | L-UI parser / AST / string foundation | 86% |
 | Foundation documents and contracts | 70% |
 | Public documentation posture | 66% |
 | Strategy/status/funding framework | 40% |
-| LIR / Intermediate Representation | 7% |
+| LIR / Intermediate Representation | 10% |
 
 These percentages are planning estimates only. They are not release promises, security certifications, or production-readiness metrics.
 
 ## Current next step
 
 ```text
-LIR shape implementation
+Lat language grammar contract
 ```
 
 ## Non-claims
