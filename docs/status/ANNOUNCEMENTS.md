@@ -24,6 +24,32 @@ non-claims
 next step
 ```
 
+## 2026-05-16 16:15 CDT — Lat grammar implementation
+
+Status: implementation added
+
+Latticra added the first bounded Lat / Latticra Language grammar parser implementation.
+
+Why it matters:
+
+The project now has metadata-only Lat-Core parsing for module declarations, declaration records, clauses, effect metadata, source spans, deterministic reports, and no-effect flags. The implementation is bounded C substrate work and does not execute, lower, compile, interpret, or mutate anything.
+
+Validation:
+
+```text
+sh scripts/test-lat-language-grammar.sh
+```
+
+Non-claims:
+
+This update does not implement Lat execution, Lat compilation, Lat interpretation, LIR lowering, L-UI rendering, Nucleus task execution, malware prevention, ransomware prevention, or operating-system behavior.
+
+Next step:
+
+```text
+Constrained C++ authority layer contract
+```
+
 ## 2026-05-16 16:15 CDT — Lat grammar implementation plan
 
 Status: implementation plan added
