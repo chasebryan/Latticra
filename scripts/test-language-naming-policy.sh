@@ -3,6 +3,7 @@ set -eu
 
 policy="docs/LANGUAGE_NAMING_POLICY.md"
 strategy="docs/LANGUAGE_STRATEGY.md"
+foundation="docs/C_CPP_FOUNDATION_DIRECTION.md"
 
 require_contains() {
   pattern="$1"
@@ -20,6 +21,11 @@ fi
 
 if [ ! -f "$strategy" ]; then
   printf 'language naming policy: missing doc: %s\n' "$strategy" >&2
+  exit 1
+fi
+
+if [ ! -f "$foundation" ]; then
+  printf 'language naming policy: missing doc: %s\n' "$foundation" >&2
   exit 1
 fi
 
@@ -57,9 +63,17 @@ require_contains 'Current validation command' "$policy"
 require_contains 'sh scripts/test-language-naming-policy.sh' "$policy"
 require_contains 'Non-claims' "$policy"
 
-require_contains 'Scope: C, Rust, Lat, L-UI, LIR, and implementation ordering.' "$strategy"
-require_contains 'avoid using plain `L` as the public native language name' "$strategy"
+require_contains 'Scope: C, constrained C++, Lat, L-UI, LIR, and implementation ordering.' "$strategy"
+require_contains 'avoids using plain `L` as the public native language name' "$strategy"
 require_contains 'LANGUAGE_NAMING_POLICY.md' "$strategy"
+require_contains 'C_CPP_FOUNDATION_DIRECTION.md' "$strategy"
+require_contains 'C is the metal.' "$strategy"
+require_contains 'C++ is the disciplined structure.' "$strategy"
+require_contains 'Latticra is the contract.' "$strategy"
+require_contains 'This does not mean unrestricted C++.' "$strategy"
+require_contains 'C secure substrate' "$strategy"
+require_contains 'C++ governed authority layer' "$strategy"
+require_contains 'Rust is not the current public foundation direction for Latticra.' "$strategy"
 require_contains 'Lat / Latticra Language' "$strategy"
 require_contains 'Canonical source extension:' "$strategy"
 require_contains '.lat' "$strategy"
@@ -69,5 +83,12 @@ require_contains 'Lat-Orch' "$strategy"
 require_contains 'The `.lui` extension remains valid' "$strategy"
 require_contains 'The `.lir` extension is reserved' "$strategy"
 require_contains 'The project should not use `.l` as the canonical source extension.' "$strategy"
+require_contains 'C and constrained C++ implementations' "$strategy"
+
+require_contains 'Status: active language direction' "$foundation"
+require_contains 'A constrained C/C++ foundation for a security-conscious system.' "$foundation"
+require_contains 'C is the metal.' "$foundation"
+require_contains 'C++ is the disciplined structure.' "$foundation"
+require_contains 'Latticra is the contract.' "$foundation"
 
 printf 'language_naming_policy: ok\n'

@@ -1,25 +1,92 @@
 # Latticra Language Strategy
 
-Status: initial language strategy
-Scope: C, Rust, Lat, L-UI, LIR, and implementation ordering.
+Status: active language strategy
+Scope: C, constrained C++, Lat, L-UI, LIR, and implementation ordering.
 
 ## Purpose
 
 Latticra needs a language strategy from the beginning.
 
-The real system should not grow as an accidental collection of shell scripts, raw C files, ad-hoc config formats, and UI strings. Latticra should define which languages own which parts of the architecture before implementation begins.
+The real system should not grow as an accidental collection of shell scripts, raw C files, ad-hoc config formats, and UI strings. Latticra should define which languages own which parts of the architecture before implementation expands.
 
-This document has been updated to avoid using plain `L` as the public native language name. The language naming policy is defined in [`LANGUAGE_NAMING_POLICY.md`](LANGUAGE_NAMING_POLICY.md).
+This document avoids using plain `L` as the public native language name. The language naming policy is defined in [`LANGUAGE_NAMING_POLICY.md`](LANGUAGE_NAMING_POLICY.md).
+
+The active C/C++ foundation direction is defined in [`C_CPP_FOUNDATION_DIRECTION.md`](C_CPP_FOUNDATION_DIRECTION.md).
+
+## Direction summary
+
+```text
+C is the metal.
+C++ is the disciplined structure.
+Latticra is the contract.
+```
+
+Latticra should use a constrained C/C++ foundation for a security-conscious system.
+
+This does not mean unrestricted C++.
 
 ## Language roles
 
 | Language | Role |
 | --- | --- |
-| C | Low-level substrate, ABI surfaces, freestanding boundaries, embedded portability, and hardware-adjacent components. |
-| Rust | Tooling, validators, host-side builders, test harnesses, services, and server-side utilities. |
-| Lat / Latticra Language | Native Latticra language family for state, policy, orchestration, assertions, and controlled system expression. |
+| C | Secure substrate, boot paths, ABI boundaries, platform shims, fixed-size data structures, and freestanding-adjacent boundaries. |
+| C++ | Governed authority layer for policy, validators, effect gates, audit logic, bounded orchestration structures, and safe wrappers over C substrate APIs. |
+| Lat / Latticra Language | Native contract/declaration language family for state, policy, orchestration, assertions, and controlled system expression. |
 | L-UI | Terminal/operator UI declaration language or dialect. |
 | LIR | Latticra Intermediate Representation for validating and lowering Latticra language-family documents. |
+
+## C secure substrate
+
+C owns the lowest software boundary.
+
+Primary C responsibilities:
+
+- boot paths;
+- ABI boundaries;
+- platform shims;
+- fixed-size data structures;
+- freestanding-adjacent boundaries;
+- minimal substrate behavior;
+- portable test fixtures.
+
+C must remain disciplined:
+
+- no unsafe string APIs;
+- no unchecked pointer mutation;
+- no undefined behavior tolerated;
+- no implicit effects without explicit gates;
+- no global mutable state unless named in a contract;
+- all transitions return status codes;
+- all source/input behavior remains bounded and testable.
+
+## C++ governed authority layer
+
+C++ is allowed above the C substrate as a governed authority layer.
+
+Primary C++ responsibilities:
+
+- policy logic;
+- validators;
+- effect gates;
+- audit logic;
+- bounded orchestration structures;
+- operator-visible reports;
+- higher-level state coordination;
+- safe wrappers around C substrate APIs.
+
+C++ must be constrained.
+
+It is not:
+
+```text
+unrestricted C++
+exception-heavy C++
+reflection-heavy C++
+template metaprogramming as architecture
+hidden allocation by default
+implicit authority
+unchecked host execution
+```
 
 ## Lat / Latticra Language
 
@@ -133,40 +200,17 @@ Purpose:
 - preserve source spans;
 - reject forbidden behavior;
 - support deterministic testing;
-- provide stable input for C/Rust implementations.
+- provide stable input for C and constrained C++ implementations.
 
 LIR should be boring, explicit, serializable, and test-friendly.
 
 The `.lir` extension is reserved for Latticra Intermediate Representation and should remain internal or generated until a future contract promotes it.
 
-## C policy
+## Rust relationship
 
-C is allowed where machine control and portability matter.
+Rust is not the current public foundation direction for Latticra.
 
-C must follow a strict subset:
-
-- fixed-size structs where possible;
-- no unsafe string APIs;
-- no hidden allocation in the early core;
-- no undefined behavior tolerated;
-- no unchecked pointer mutation;
-- no implicit effects without explicit gates;
-- no global mutable state unless named in a contract;
-- all transitions return status codes.
-
-## Rust policy
-
-Rust is preferred for:
-
-- validators;
-- CLI tools;
-- documentation guards;
-- package/update tools;
-- server interaction prototypes;
-- test harnesses;
-- host-side automation.
-
-Rust does not replace the need for a disciplined low-level C ABI when Latticra touches embedded or boot-adjacent surfaces.
+Rust may appear only as optional external tooling or historical comparison if separately justified, but it is not the default public implementation lane and should not be presented as a primary foundation layer.
 
 ## Extension policy
 
@@ -191,17 +235,15 @@ The project should not use `.l` as the canonical source extension.
 ## Implementation order
 
 1. Define contracts and docs.
-2. Add C state lattice fixture.
-3. Add invariant tests.
-4. Add Rust validation tooling if needed.
-5. Define Lat-Core grammar draft.
-6. Define LIR shape.
-7. Add parser prototype only after syntax contracts stabilize.
-8. Add L-UI only after state reports are stable.
-9. Add Lat-Orch only after effect gates are stable.
+2. Add C substrate fixtures and invariant tests.
+3. Add C parser, AST, semantic validation, and LIR metadata foundations.
+4. Define constrained C++ policy/validator/effect-gate layers after C substrate contracts stabilize.
+5. Define Lat-Core grammar and implementation plans before parser code.
+6. Define Lat-to-LIR lowering only after parser and semantic contracts exist.
+7. Add execution only after explicit runtime/effect/security contracts.
 
 ## Non-claims
 
-This document does not claim that Lat, Lat-Core, Lat-Orch, L-UI, or LIR are fully implemented.
+This document does not claim that Lat, Lat-Core, Lat-Orch, L-UI, LIR, C++ authority layers, or any runtime are fully implemented.
 
-It defines the intended language architecture before native-language implementation begins.
+It defines the intended language architecture before broader native-language implementation begins.

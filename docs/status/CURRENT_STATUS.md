@@ -1,7 +1,7 @@
 # Latticra Current Status
 
 Status: public status record
-Last updated: 2026-05-15 22:49 CDT
+Last updated: 2026-05-16 16:15 CDT
 Scope: current progress, completion estimates, merged capability areas, and next priorities.
 
 ## Project status
@@ -13,6 +13,7 @@ The repository currently emphasizes:
 - public project identity;
 - strategy and status documentation;
 - security-policy documentation;
+- constrained C/C++ foundation direction;
 - L-UI parser and AST foundation;
 - deterministic diagnostics;
 - source-span metadata;
@@ -25,6 +26,16 @@ The repository currently emphasizes:
 - Lat grammar planning;
 - no-effect preview boundaries.
 
+## Direction checkpoint
+
+```text
+C is the metal.
+C++ is the disciplined structure.
+Latticra is the contract.
+```
+
+The C/C++ foundation direction is guarded as an active language strategy. It means C owns the secure substrate, constrained C++ owns governed policy/validator/effect-gate/audit layers, and Lat / Latticra Language remains the contract/declaration layer.
+
 ## Rough completion estimates
 
 These percentages are planning estimates only.
@@ -33,11 +44,12 @@ These percentages are planning estimates only.
 | --- | ---: |
 | Overall Latticra system | 18% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 71% |
-| Public documentation posture | 66% |
-| Strategy/status/funding framework | 40% |
+| Foundation documents and contracts | 72% |
+| Public documentation posture | 67% |
+| Strategy/status/funding framework | 41% |
 | Lat / Latticra Programming Language | 6% |
 | LIR / Intermediate Representation | 10% |
+| C/C++ foundation direction | 12% |
 | Nucleus real task execution | 10% |
 | Runtime / operating-system-universe direction | 5% |
 | Security-hardening implementation | 5% |
@@ -75,6 +87,7 @@ LIR shape contract
 LIR shape implementation plan
 LIR shape implementation
 Lat language grammar contract
+C/C++ foundation direction
 security policy
 public legacy association guard
 strategy index
@@ -92,6 +105,7 @@ Latticra does not currently provide:
 - a recovery writer;
 - a production language runtime;
 - a hardened sandbox;
+- unrestricted C++ authority;
 - malware prevention;
 - ransomware prevention;
 - network interaction;
@@ -109,7 +123,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make malicious behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, and operator-visible state.
+The long-term goal is to make malicious behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, and governed authority layers.
 
 This is a mission direction, not a current security guarantee.
 

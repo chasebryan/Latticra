@@ -19,12 +19,25 @@ The long-term goal is to make unsafe or malicious behavior harder to hide and ea
 
 This is a mission direction, not a current security guarantee.
 
+## Direction checkpoint
+
+```text
+C is the metal.
+C++ is the disciplined structure.
+Latticra is the contract.
+```
+
+Latticra uses a constrained C/C++ foundation direction: C owns the secure substrate, C++ is limited to governed policy/validator/effect-gate/audit layers, and Lat / Latticra Language remains the contract/declaration layer.
+
+This does not mean unrestricted C++.
+
 ## Core idea
 
 Latticra treats complex computing behavior as structured state spaces with explicit contracts.
 
 The system direction includes:
 
+- constrained C/C++ foundation direction;
 - state lattices;
 - transition models;
 - effect gates;
@@ -55,8 +68,9 @@ Core seed documents:
 - [`docs/PRECURSOR_PROMOTION_RULE.md`](docs/PRECURSOR_PROMOTION_RULE.md) — how precursor research may be promoted into Latticra.
 - [`docs/NON_CLAIMS.md`](docs/NON_CLAIMS.md) — claims Latticra does not currently make.
 - [`docs/ARCHITECTURE_SEED.md`](docs/ARCHITECTURE_SEED.md) — initial architecture vocabulary and direction.
+- [`docs/C_CPP_FOUNDATION_DIRECTION.md`](docs/C_CPP_FOUNDATION_DIRECTION.md) — constrained C/C++ foundation direction.
 - [`docs/LANGUAGE_NAMING_POLICY.md`](docs/LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy.
-- [`docs/LANGUAGE_STRATEGY.md`](docs/LANGUAGE_STRATEGY.md) — C, Rust, Lat, L-UI, and LIR roles.
+- [`docs/LANGUAGE_STRATEGY.md`](docs/LANGUAGE_STRATEGY.md) — C, constrained C++, Lat, L-UI, and LIR roles.
 - [`docs/SUPERVISOR_ARCHITECTURE.md`](docs/SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor and orchestration architecture.
 - [`docs/ROADMAP.md`](docs/ROADMAP.md) — design-first implementation sequence.
 
@@ -76,6 +90,7 @@ Completion percentages are planning estimates only. They are not release promise
 
 The repository currently includes guarded documents, tests, and no-effect C implementation slices for:
 
+- constrained C/C++ foundation direction;
 - state lattice fixtures;
 - tri-plane transition preview modeling;
 - Nucleus preview reporting;
@@ -110,6 +125,7 @@ Latticra does not yet provide:
 - a recovery writer;
 - a production language runtime;
 - a hardened sandbox;
+- unrestricted C++ authority;
 - network interaction;
 - self-update execution;
 - Nucleus task execution;
