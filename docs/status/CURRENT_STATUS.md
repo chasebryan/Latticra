@@ -29,10 +29,10 @@ These percentages are planning estimates only.
 | Area | Estimated completion |
 | --- | ---: |
 | Overall Latticra system | 15% |
-| L-UI parser / AST / string foundation | 80% |
-| Foundation documents and contracts | 65% |
-| Public documentation posture | 65% |
-| Strategy/status/funding framework | 35% |
+| L-UI parser / AST / string foundation | 81% |
+| Foundation documents and contracts | 66% |
+| Public documentation posture | 66% |
+| Strategy/status/funding framework | 40% |
 | Lat / Latticra Programming Language | 5% |
 | LIR / Intermediate Representation | 5% |
 | Nucleus real task execution | 10% |
@@ -63,6 +63,7 @@ source-backed AST text extraction
 length-carrying AST string storage
 escaped decoded NUL acceptance
 source-buffer literal NUL policy contract
+source-buffer literal NUL policy implementation plan
 security policy
 public legacy association guard
 strategy index
@@ -103,13 +104,12 @@ This is a mission direction, not a current security guarantee.
 Recommended next work:
 
 ```text
-L-UI source-buffer literal NUL policy implementation plan
+L-UI source-buffer literal NUL policy implementation
 ```
 
 After that:
 
 ```text
-L-UI source-buffer literal NUL policy implementation
 L-UI semantic validation contract
 LIR shape contract
 Lat language grammar contract
