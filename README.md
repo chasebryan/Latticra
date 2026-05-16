@@ -90,7 +90,8 @@ The repository currently includes guarded documents, tests, and no-effect C impl
 - length-carrying AST string storage;
 - decoded NUL acceptance through escaped `\x00`;
 - literal source-buffer NUL rejection policy enforcement;
-- semantic validation contract.
+- semantic validation contract;
+- semantic validation implementation plan.
 
 Run the current implementation checks with the scripts listed in [`docs/FOUNDATION_INDEX.md`](docs/FOUNDATION_INDEX.md) or through the repository C workflow.
 
