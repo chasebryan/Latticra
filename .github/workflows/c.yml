@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Run language naming policy guard
+        run: sh scripts/test-language-naming-policy.sh
       - name: Run state lattice tests
         run: sh scripts/test-state-lattice.sh
       - name: Run tri-plane transition tests
