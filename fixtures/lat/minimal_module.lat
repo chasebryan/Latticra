@@ -1,0 +1,10 @@
+lat module RootModule {
+  state RootCell {
+    origin = "0/0"
+    route = "ROOT"
+    axis = "ROOT"
+    path = "/"
+    host_effect = none
+    external_effect = none
+  }
+}
