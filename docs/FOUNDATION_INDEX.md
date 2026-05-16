@@ -43,8 +43,9 @@ Latticra should refine its language model, supervisor model, effect gates, serve
 - [`L_UI_PARSER_DIAGNOSTICS.md`](L_UI_PARSER_DIAGNOSTICS.md) — parser diagnostic codes, stable messages, line/column rules, and future diagnostics gate.
 - [`L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION_PLAN.md) — diagnostics API shape, exact tests, and report extension rules before diagnostic code.
 - [`L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md`](L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md) — diagnostic structs, mapping functions, report surface, and invariants.
-- [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_CONTRACT.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_CONTRACT.md) — future parser-level invalid string escape diagnostics, diagnostic codes, source spans, messages, hints, and compatibility rules.
+- [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_CONTRACT.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_CONTRACT.md) — parser-level invalid string escape diagnostics, diagnostic codes, source spans, messages, hints, and compatibility rules.
 - [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md) — parser enum additions, diagnostic mapping updates, validation helpers, source-span behavior, exact tests, and compatibility expectations before parser-level string escape diagnostics code.
+- [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION.md) — parser-level diagnostics for invalid L-UI string-literal escape sequences.
 - [`L_UI_PARSER_LINE_COLUMN_PRECISION_PLAN.md`](L_UI_PARSER_LINE_COLUMN_PRECISION_PLAN.md) — line/column precision rules, newline policy, byte-column behavior, and future tests.
 - [`L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION_PLAN.md) — helper shapes, parser touch points, implementation tests, and boundaries before precise location code.
 - [`L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION.md`](L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION.md) — private location helpers, parser touch-point updates, and location invariants.
@@ -98,6 +99,7 @@ L-UI parser diagnostics implementation plan + guardrails
 L-UI parser diagnostics implementation + invariants
 L-UI parser string escape diagnostics contract + guardrails
 L-UI parser string escape diagnostics implementation plan + guardrails
+L-UI parser string escape diagnostics implementation + invariants
 L-UI parser line-column precision plan + guardrails
 L-UI parser line-column precision implementation plan + guardrails
 L-UI parser line-column precision implementation + invariants
@@ -124,7 +126,7 @@ L-UI string-literal escape decoding implementation + invariants
 The next implementation target should be:
 
 ```text
-L-UI parser-level string escape diagnostics implementation
+L-UI length-carrying AST string storage contract
 ```
 
-That target should add parser enum values, diagnostic mappings, string escape validation, source spans, AST/report compatibility behavior, and exact invariant tests according to the implementation plan.
+That target should define explicit decoded string lengths before decoded NUL bytes can ever be accepted.
