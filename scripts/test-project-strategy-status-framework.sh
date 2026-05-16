@@ -34,11 +34,13 @@ require_file docs/L_UI_SEMANTIC_VALIDATION_CONTRACT.md
 require_file docs/L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md
 require_file docs/L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION.md
 require_file docs/LIR_SHAPE_CONTRACT.md
+require_file docs/LIR_SHAPE_IMPLEMENTATION_PLAN.md
 require_file scripts/test-l-ui-source-buffer-literal-nul-policy.sh
 require_file scripts/test-l-ui-semantic-validation-contract.sh
 require_file scripts/test-l-ui-semantic-validation-implementation-plan.sh
 require_file scripts/test-l-ui-semantic-validation.sh
 require_file scripts/test-lir-shape-contract.sh
+require_file scripts/test-lir-shape-implementation-plan.sh
 
 require_contains 'buy_me_a_coffee: Bryforge' .github/FUNDING.yml
 require_contains 'https://buymeacoffee.com/Bryforge' README.md
@@ -55,18 +57,19 @@ require_contains 'docs/project_notes/README.md' README.md
 require_contains 'literal source-buffer NUL rejection policy enforcement' README.md
 require_contains 'semantic validation implementation' README.md
 require_contains 'LIR shape contract' README.md
+require_contains 'LIR shape implementation plan' README.md
 require_contains 'LIR implementation' README.md
 require_contains 'LIR lowering' README.md
 
 require_contains 'Status: public status shortcut' STATUS.md
 require_contains 'Overall Latticra system' STATUS.md
-require_contains 'LIR shape implementation plan' STATUS.md
+require_contains 'LIR shape implementation' STATUS.md
 require_contains 'planning estimates only' STATUS.md
 require_contains '17%' STATUS.md
 require_contains '86%' STATUS.md
-require_contains '69%' STATUS.md
+require_contains '70%' STATUS.md
 require_contains '40%' STATUS.md
-require_contains '6%' STATUS.md
+require_contains '7%' STATUS.md
 
 require_contains 'Project operations documents' docs/FOUNDATION_INDEX.md
 require_contains '../STATUS.md' docs/FOUNDATION_INDEX.md
@@ -83,7 +86,8 @@ require_contains 'L-UI semantic validation contract + guardrails' docs/FOUNDATIO
 require_contains 'L-UI semantic validation implementation plan + guardrails' docs/FOUNDATION_INDEX.md
 require_contains 'L-UI semantic validation implementation + invariants' docs/FOUNDATION_INDEX.md
 require_contains 'LIR shape contract + guardrails' docs/FOUNDATION_INDEX.md
-require_contains 'LIR shape implementation plan' docs/FOUNDATION_INDEX.md
+require_contains 'LIR shape implementation plan + guardrails' docs/FOUNDATION_INDEX.md
+require_contains 'LIR shape implementation' docs/FOUNDATION_INDEX.md
 
 require_contains 'Status: active strategy index' docs/strategy/README.md
 require_contains '2026-05-15-2249-cdt-national-security-open-system-strategy.md' docs/strategy/README.md
@@ -97,15 +101,15 @@ require_contains 'national-security-grade discipline' docs/strategy/2026-05-15-2
 require_contains 'auditable' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 require_contains 'semantic validation' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 require_contains 'LIR shape planning' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
+require_contains 'LIR shape implementation' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 require_contains 'defensive' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 require_contains 'Primary target users' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 require_contains 'government infrastructure stakeholders' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 require_contains 'Latticra does not currently prevent malware or ransomware.' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 require_contains 'Buy Me a Coffee: Bryforge' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
-require_contains 'LIR shape implementation plan' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 require_contains '86%' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
-require_contains '69%' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
-require_contains '6%' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
+require_contains '70%' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
+require_contains '7%' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 
 require_contains 'Status: active status index' docs/status/README.md
 require_contains 'CURRENT_STATUS.md' docs/status/README.md
@@ -118,18 +122,19 @@ require_contains 'Overall Latticra system' docs/status/CURRENT_STATUS.md
 require_contains '17%' docs/status/CURRENT_STATUS.md
 require_contains 'L-UI parser / AST / string foundation' docs/status/CURRENT_STATUS.md
 require_contains '86%' docs/status/CURRENT_STATUS.md
-require_contains '69%' docs/status/CURRENT_STATUS.md
+require_contains '70%' docs/status/CURRENT_STATUS.md
 require_contains '40%' docs/status/CURRENT_STATUS.md
 require_contains 'LIR / Intermediate Representation' docs/status/CURRENT_STATUS.md
-require_contains '6%' docs/status/CURRENT_STATUS.md
+require_contains '7%' docs/status/CURRENT_STATUS.md
 require_contains 'source-buffer literal NUL policy implementation' docs/status/CURRENT_STATUS.md
 require_contains 'semantic validation implementation' docs/status/CURRENT_STATUS.md
 require_contains 'LIR shape contract' docs/status/CURRENT_STATUS.md
+require_contains 'LIR shape implementation plan' docs/status/CURRENT_STATUS.md
 require_contains 'LIR lowering' docs/status/CURRENT_STATUS.md
 require_contains 'LIR implementation' docs/status/CURRENT_STATUS.md
 require_contains 'Current non-claims' docs/status/CURRENT_STATUS.md
 require_contains 'Next recommended work' docs/status/CURRENT_STATUS.md
-require_contains 'LIR shape implementation plan' docs/status/CURRENT_STATUS.md
+require_contains 'LIR shape implementation' docs/status/CURRENT_STATUS.md
 
 require_contains 'Status: public announcement log' docs/status/ANNOUNCEMENTS.md
 require_contains '2026-05-15 22:49 CDT' docs/status/ANNOUNCEMENTS.md
@@ -138,8 +143,10 @@ require_contains 'Source-buffer literal NUL policy implementation' docs/status/A
 require_contains 'L-UI semantic validation implementation plan' docs/status/ANNOUNCEMENTS.md
 require_contains 'L-UI semantic validation implementation' docs/status/ANNOUNCEMENTS.md
 require_contains 'LIR shape contract' docs/status/ANNOUNCEMENTS.md
-require_contains 'sh scripts/test-lir-shape-contract.sh' docs/status/ANNOUNCEMENTS.md
 require_contains 'LIR shape implementation plan' docs/status/ANNOUNCEMENTS.md
+require_contains 'sh scripts/test-lir-shape-contract.sh' docs/status/ANNOUNCEMENTS.md
+require_contains 'sh scripts/test-lir-shape-implementation-plan.sh' docs/status/ANNOUNCEMENTS.md
+require_contains 'LIR shape implementation' docs/status/ANNOUNCEMENTS.md
 require_contains 'Non-claims' docs/status/ANNOUNCEMENTS.md
 
 require_contains 'Status: active project notes index' docs/project_notes/README.md
@@ -148,11 +155,11 @@ require_contains 'UPCOMING_WORK.md' docs/project_notes/README.md
 require_contains 'Status: active project note' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Current direction' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Current technical lane' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'LIR shape implementation plan' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'LIR shape implementation' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Status: active project note' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Recommended next slice' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Near-term queue' docs/project_notes/UPCOMING_WORK.md
-require_contains 'LIR shape implementation plan' docs/project_notes/UPCOMING_WORK.md
+require_contains 'LIR shape implementation' docs/project_notes/UPCOMING_WORK.md
 
 require_contains 'Status: initial implementation contract' docs/L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION.md
 require_contains 'literal_nul_policy_rejects_purpose_literal_nul' docs/L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION.md
@@ -168,8 +175,13 @@ require_contains 'Status: initial implementation contract' docs/L_UI_SEMANTIC_VA
 require_contains 'semantic_validation_accepts_current_fixture' docs/L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION.md
 require_contains 'LIR shape contract' docs/L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION.md
 require_contains 'Status: LIR shape contract' docs/LIR_SHAPE_CONTRACT.md
+require_contains 'LIR_SHAPE_IMPLEMENTATION_PLAN.md' docs/LIR_SHAPE_CONTRACT.md
 require_contains 'latticra_lir_module_t' docs/LIR_SHAPE_CONTRACT.md
 require_contains 'LATTICRA LIR REPORT' docs/LIR_SHAPE_CONTRACT.md
 require_contains 'lir_shape_accepts_semantically_valid_l_ui_fixture' docs/LIR_SHAPE_CONTRACT.md
+require_contains 'Status: implementation planning contract' docs/LIR_SHAPE_IMPLEMENTATION_PLAN.md
+require_contains 'LATTICRA_LIR_NODE_MAX 96u' docs/LIR_SHAPE_IMPLEMENTATION_PLAN.md
+require_contains 'latticra_lir_lower_l_ui_ast' docs/LIR_SHAPE_IMPLEMENTATION_PLAN.md
+require_contains 'lir_shape_error_labels_are_stable' docs/LIR_SHAPE_IMPLEMENTATION_PLAN.md
 
 printf 'project_strategy_status_framework: ok\n'
