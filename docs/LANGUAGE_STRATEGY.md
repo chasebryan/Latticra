@@ -1,7 +1,7 @@
 # Latticra Language Strategy
 
 Status: initial language strategy
-Scope: C, Rust, L, L-UI, LIR, and implementation ordering.
+Scope: C, Rust, Lat, L-UI, LIR, and implementation ordering.
 
 ## Purpose
 
@@ -9,33 +9,43 @@ Latticra needs a language strategy from the beginning.
 
 The real system should not grow as an accidental collection of shell scripts, raw C files, ad-hoc config formats, and UI strings. Latticra should define which languages own which parts of the architecture before implementation begins.
 
+This document has been updated to avoid using plain `L` as the public native language name. The language naming policy is defined in [`LANGUAGE_NAMING_POLICY.md`](LANGUAGE_NAMING_POLICY.md).
+
 ## Language roles
 
 | Language | Role |
 | --- | --- |
-| C | Low-level substrate, ABI surfaces, freestanding boundaries, embedded portability, hardware-adjacent components. |
-| Rust | Tooling, validators, host-side builders, test harnesses, safe services, server-side utilities. |
-| L | Native Latticra language for state, policy, orchestration, assertions, and controlled system expression. |
+| C | Low-level substrate, ABI surfaces, freestanding boundaries, embedded portability, and hardware-adjacent components. |
+| Rust | Tooling, validators, host-side builders, test harnesses, services, and server-side utilities. |
+| Lat / Latticra Language | Native Latticra language family for state, policy, orchestration, assertions, and controlled system expression. |
 | L-UI | Terminal/operator UI declaration language or dialect. |
-| LIR | Latticra Intermediate Representation for validating and lowering L-family documents. |
+| LIR | Latticra Intermediate Representation for validating and lowering Latticra language-family documents. |
 
-## L
+## Lat / Latticra Language
 
 The native language is planned as:
 
 ```text
-L
+Lat
 ```
 
 Full descriptive name:
 
 ```text
-The Latticra Language
+Latticra Language
 ```
 
-L should begin as a controlled system language, not a general-purpose programming language.
+Canonical source extension:
 
-Early L responsibilities:
+```text
+.lat
+```
+
+Plain `L` and `.l` are not the public language name or canonical file extension.
+
+Lat should begin as a controlled system language, not a general-purpose programming language.
+
+Early Lat responsibilities:
 
 - declare lattice state;
 - declare policies;
@@ -45,18 +55,11 @@ Early L responsibilities:
 - describe supervisor orchestration plans;
 - describe operator-visible state reports.
 
-L should not initially provide:
+Lat should not initially provide a general-purpose runtime, unrestricted system access, production runtime claims, or broad platform claims.
 
-- arbitrary host execution;
-- unsafe memory access;
-- network access;
-- hardware mutation;
-- self-update execution;
-- production runtime claims.
+## Lat-Core
 
-## L-Core
-
-L-Core is the first language target.
+Lat-Core is the first native-language target.
 
 Purpose:
 
@@ -64,7 +67,7 @@ Purpose:
 state + policy + assertion + transition declaration
 ```
 
-Example direction:
+Lat example syntax only:
 
 ```text
 state RootCell {
@@ -85,9 +88,9 @@ transition move_right from RootCell {
 
 This is example syntax only. It is not implemented yet.
 
-## L-Orch
+## Lat-Orch
 
-L-Orch is the future orchestration dialect for Nucleus.
+Lat-Orch is the future orchestration dialect for Nucleus.
 
 Purpose:
 
@@ -95,7 +98,7 @@ Purpose:
 supervisor task planning + effect gates + recovery visibility + update staging
 ```
 
-L-Orch must be explicit about:
+Lat-Orch must be explicit about:
 
 - requested effect;
 - required gate;
@@ -117,13 +120,15 @@ operator rails + state cards + reports + safe command surfaces
 
 L-UI should be declarative, not a hidden imperative UI runtime.
 
+The `.lui` extension remains valid for L-UI fixtures and source documents.
+
 ## LIR
 
 LIR is the Latticra Intermediate Representation.
 
 Purpose:
 
-- normalize L documents;
+- normalize Lat and L-UI documents;
 - validate names and effects;
 - preserve source spans;
 - reject forbidden behavior;
@@ -131,6 +136,8 @@ Purpose:
 - provide stable input for C/Rust implementations.
 
 LIR should be boring, explicit, serializable, and test-friendly.
+
+The `.lir` extension is reserved for Latticra Intermediate Representation and should remain internal or generated until a future contract promotes it.
 
 ## C policy
 
@@ -143,7 +150,7 @@ C must follow a strict subset:
 - no hidden allocation in the early core;
 - no undefined behavior tolerated;
 - no unchecked pointer mutation;
-- no host/network/hardware effects without explicit gates;
+- no implicit effects without explicit gates;
 - no global mutable state unless named in a contract;
 - all transitions return status codes.
 
@@ -161,20 +168,40 @@ Rust is preferred for:
 
 Rust does not replace the need for a disciplined low-level C ABI when Latticra touches embedded or boot-adjacent surfaces.
 
+## Extension policy
+
+The reserved Latticra language-family extensions are:
+
+```text
+.lat
+.lui
+.lir
+```
+
+Meaning:
+
+| Extension | Meaning |
+| --- | --- |
+| `.lat` | Latticra Language source, including future Lat-Core and Lat-Orch forms. |
+| `.lui` | Latticra UI declaration source. |
+| `.lir` | Latticra Intermediate Representation, internal or generated unless later promoted. |
+
+The project should not use `.l` as the canonical source extension.
+
 ## Implementation order
 
 1. Define contracts and docs.
 2. Add C state lattice fixture.
 3. Add invariant tests.
 4. Add Rust validation tooling if needed.
-5. Define L-Core grammar draft.
+5. Define Lat-Core grammar draft.
 6. Define LIR shape.
 7. Add parser prototype only after syntax contracts stabilize.
 8. Add L-UI only after state reports are stable.
-9. Add L-Orch only after effect gates are stable.
+9. Add Lat-Orch only after effect gates are stable.
 
 ## Non-claims
 
-This document does not claim that L, L-UI, L-Orch, or LIR are implemented.
+This document does not claim that Lat, Lat-Core, Lat-Orch, L-UI, or LIR are fully implemented.
 
-It defines the intended language architecture before implementation begins.
+It defines the intended language architecture before native-language implementation begins.
