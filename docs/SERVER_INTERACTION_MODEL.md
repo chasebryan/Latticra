@@ -21,7 +21,7 @@ Server interaction is a gated capability, not a hidden dependency.
 | --- | --- | --- |
 | Update server | Signed update manifests and version metadata. | Planned. |
 | Evidence server | Validation reports, evidence bundles, hardware profile records. | Planned. |
-| Package server | L, L-UI, and supervisor module packages. | Planned. |
+| Package server | Lat, L-UI, and supervisor module packages. | Planned. |
 | Support server | Diagnostic report submission and support guidance. | Planned. |
 | Trust metadata server | Keys, revocation metadata, trust roots, and policy bundles. | Planned. |
 
