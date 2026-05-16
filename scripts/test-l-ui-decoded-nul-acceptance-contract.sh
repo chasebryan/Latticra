@@ -76,9 +76,9 @@ done
 for transition in \
   'LATTICRA_L_UI_PARSE_DECODED_NUL_IN_STRING' \
   'LUI0022 decoded_nul_in_string' \
-  'LUI0022 must remain a stable diagnostic code for compatibility' \
+  '`LUI0022` must remain a stable diagnostic code for compatibility' \
   'should no longer trigger it after decoded-NUL acceptance is implemented' \
-  'LUI0023 literal_nul_in_string remains active'
+  '`LUI0023 literal_nul_in_string` remains active'
 do
   require_contains "$transition" "$doc"
 done
