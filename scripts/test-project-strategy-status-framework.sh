@@ -20,6 +20,7 @@ require_contains() {
 
 require_file .github/FUNDING.yml
 require_file STATUS.md
+require_file docs/FOUNDATION_INDEX.md
 require_file docs/strategy/README.md
 require_file docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 require_file docs/status/README.md
@@ -46,6 +47,17 @@ require_contains 'Status: public status shortcut' STATUS.md
 require_contains 'Overall Latticra system' STATUS.md
 require_contains 'L-UI source-buffer literal NUL policy implementation plan' STATUS.md
 require_contains 'planning estimates only' STATUS.md
+
+require_contains 'Project operations documents' docs/FOUNDATION_INDEX.md
+require_contains '../STATUS.md' docs/FOUNDATION_INDEX.md
+require_contains '../SECURITY.md' docs/FOUNDATION_INDEX.md
+require_contains 'strategy/README.md' docs/FOUNDATION_INDEX.md
+require_contains 'strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md' docs/FOUNDATION_INDEX.md
+require_contains 'status/CURRENT_STATUS.md' docs/FOUNDATION_INDEX.md
+require_contains 'status/ANNOUNCEMENTS.md' docs/FOUNDATION_INDEX.md
+require_contains 'project_notes/CURRENT_DIRECTION.md' docs/FOUNDATION_INDEX.md
+require_contains 'project_notes/UPCOMING_WORK.md' docs/FOUNDATION_INDEX.md
+require_contains 'project strategy/status framework + guardrails' docs/FOUNDATION_INDEX.md
 
 require_contains 'Status: active strategy index' docs/strategy/README.md
 require_contains '2026-05-15-2249-cdt-national-security-open-system-strategy.md' docs/strategy/README.md
