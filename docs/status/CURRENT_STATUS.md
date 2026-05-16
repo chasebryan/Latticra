@@ -22,6 +22,7 @@ The repository currently emphasizes:
 - literal source-buffer NUL rejection policy;
 - semantic validation implementation;
 - LIR shape implementation;
+- Lat grammar planning;
 - no-effect preview boundaries.
 
 ## Rough completion estimates
@@ -32,10 +33,10 @@ These percentages are planning estimates only.
 | --- | ---: |
 | Overall Latticra system | 18% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 70% |
+| Foundation documents and contracts | 71% |
 | Public documentation posture | 66% |
 | Strategy/status/funding framework | 40% |
-| Lat / Latticra Programming Language | 5% |
+| Lat / Latticra Programming Language | 6% |
 | LIR / Intermediate Representation | 10% |
 | Nucleus real task execution | 10% |
 | Runtime / operating-system-universe direction | 5% |
@@ -73,6 +74,7 @@ semantic validation implementation
 LIR shape contract
 LIR shape implementation plan
 LIR shape implementation
+Lat language grammar contract
 security policy
 public legacy association guard
 strategy index
@@ -97,6 +99,7 @@ Latticra does not currently provide:
 - Nucleus task execution;
 - L-UI rendering;
 - LIR execution;
+- Lat parser implementation;
 - Lat grammar implementation;
 - literal source NUL acceptance;
 - live movement;
@@ -115,12 +118,13 @@ This is a mission direction, not a current security guarantee.
 Recommended next work:
 
 ```text
-Lat language grammar contract
+Lat language grammar implementation plan
 ```
 
 After that:
 
 ```text
+Lat language grammar implementation
 L-UI rendering contract
 Nucleus task execution contract
 ```
