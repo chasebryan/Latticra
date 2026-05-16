@@ -19,7 +19,7 @@ Those universes are composed of:
 - grids;
 - matrices;
 - state planes;
-- movement rules;
+- transition rules;
 - execution domains;
 - visibility rails;
 - evidence gates;
@@ -30,7 +30,7 @@ Those universes are composed of:
 
 ```text
 L0 Contract Layer
-  Real-system contract, non-claims, evidence ladder, import rules.
+  Real-system contract, non-claims, evidence ladder, promotion rules.
 
 L1 State Lattice Layer
   Explicit state cells, paths, axes, routes, origins, traces, breadcrumbs.
@@ -39,13 +39,13 @@ L2 Transition Layer
   Pure transition models and denial rules before live movement.
 
 L3 Visibility Layer
-  Operator-readable state reports, Optics-derived rails, health/risk/lock surfaces.
+  Operator-readable state reports, visibility rails, health/risk/lock surfaces.
 
 L4 Language Layer
-  Fyr-derived read-only scripting and assertion candidates.
+  Lat declarations, read-only source forms, and assertion candidates.
 
 L5 Evidence Layer
-  Validation reports, VM evidence, real-device read-only evidence, promotion records.
+  Validation reports, virtual-target evidence, read-only hardware evidence, promotion records.
 
 L6 Embedded Implementation Layer
   Narrow real-system implementation candidates after evidence gates.
@@ -53,7 +53,7 @@ L6 Embedded Implementation Layer
 
 ## Initial state vocabulary
 
-Latticra begins with state vocabulary inherited from Phase1 concepts but does not claim live movement yet.
+Latticra begins with a compact state vocabulary but does not claim live movement yet.
 
 ```text
 origin
@@ -108,7 +108,7 @@ A future transition engine should accept:
 
 ```text
 current_state
-movement_request
+transition_request
 operator_intent
 policy_context
 ```
@@ -140,8 +140,8 @@ The long-term goal is to make complex system behavior visible, navigable, testab
 lattice-state
 lattice-transition
 lattice-report
-phase-import-packet
-fyr-assertion-candidate
+promotion-packet
+lat-assertion-candidate
 hardware-profile-contract
 evidence-record
 promotion-record
@@ -156,7 +156,7 @@ docs/
   contracts/
   evidence/
   architecture/
-  imports/
+  promotion/
   hardware/
 
 src/
@@ -177,6 +177,6 @@ Do not add this full structure until the first implementation slice requires it.
 
 ## North star
 
-Latticra should become the formal real implementation of a lattice-oriented computing universe derived from Phase1, Base1, and Fyr evidence.
+Latticra should become a formal, evidence-bound implementation of a lattice-oriented computing architecture.
 
 It should remain academically serious, implementation-focused, evidence-bound, and safe to reason about.

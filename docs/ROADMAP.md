@@ -5,9 +5,9 @@ Scope: design-first planning, implementation order, and promotion rules.
 
 ## Purpose
 
-Latticra should be planned, refined, and documented before implementation code begins.
+Latticra should be planned, refined, and documented before broad implementation work begins.
 
-This roadmap keeps the project disciplined while preserving the ambition of building a real system from Phase1, Base1, and Fyr lessons.
+This roadmap keeps the project disciplined while preserving the ambition of building a real, evidence-bound systems architecture and programming-language stack.
 
 ## Roadmap principle
 
@@ -17,7 +17,7 @@ fixtures before runtime
 read-only before mutation
 local before server
 hosted before hardware
-VM before real device
+virtual target before real device
 read-only device evidence before real execution
 ```
 
@@ -26,20 +26,21 @@ read-only device evidence before real execution
 Goal:
 
 ```text
-define the system before implementing it
+define the system before expanding implementation
 ```
 
 Required documents:
 
 - real-system contract;
 - evidence ladder;
-- Phase1 import rule;
+- precursor promotion rule;
 - non-claims;
 - architecture seed;
 - naming system;
+- language naming policy;
 - language strategy;
 - supervisor architecture;
-- feature translation ledger;
+- feature vocabulary ledger;
 - effect gates;
 - L-UI direction;
 - server interaction model;
@@ -50,7 +51,7 @@ Required documents:
 Exit criteria:
 
 - documents linked from README and foundation index;
-- no implementation claim;
+- no implementation claim beyond tested repository evidence;
 - first implementation target named.
 
 ## Stage 1: State lattice fixture
@@ -101,7 +102,7 @@ Non-claims:
 Goal:
 
 ```text
-model movement safely before implementing live movement
+model transitions safely before implementing live movement
 ```
 
 Scope:
@@ -143,7 +144,7 @@ Non-claims:
 - no updates;
 - no recovery behavior.
 
-## Stage 4: L-Core draft
+## Stage 4: Lat-Core draft
 
 Goal:
 
@@ -213,7 +214,7 @@ Scope:
 - no hardware effects;
 - no boot effects.
 
-## Stage 8: VM evidence profiles
+## Stage 8: Virtual-target evidence profiles
 
 Goal:
 
@@ -258,26 +259,16 @@ Goal:
 consider narrow real-world actions after evidence supports them
 ```
 
-Required before entry:
+Scope:
 
-- tests;
-- VM evidence;
-- real-device read-only evidence;
-- rollback model;
-- failure behavior;
-- operator confirmation;
-- safety review.
-
-## Current next step
-
-After the planning documents are merged, the next PR should be:
-
-```text
-Add state lattice fixture and invariant tests
-```
+- explicit operator approval;
+- preflight checks;
+- audit output;
+- rollback/failure plan;
+- no hidden effects.
 
 ## Non-claims
 
-This roadmap does not claim Latticra has implemented any runtime, supervisor, language, update system, server system, boot system, or hardware support.
+This roadmap does not implement any stage by itself.
 
-It defines the sequence for disciplined implementation.
+It defines sequencing and boundaries so Latticra can advance through evidence-backed implementation slices.

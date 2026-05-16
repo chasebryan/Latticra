@@ -106,11 +106,11 @@ Nucleus must consult the Effect Gate before any task is carried out.
 
 The Effect Gate does not decide all policy. It decides whether the effect class is known, allowed, gated, blocked, or failed.
 
-## Relationship to L
+## Relationship to Lat
 
-L documents must declare intended effects.
+Lat documents must declare intended effects.
 
-If an L document omits an effect declaration, the default is:
+If a Lat document omits an effect declaration, the default is:
 
 ```text
 effect = none

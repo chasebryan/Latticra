@@ -26,9 +26,8 @@ Latticra does not currently claim to be:
 - a virtual machine monitor;
 - a container runtime;
 - a firmware replacement;
-- a Base1 release;
-- a production Fyr runtime;
-- a production Phase1 replacement.
+- a production language runtime;
+- a production systems platform.
 
 ## Hardware non-claims
 
@@ -60,9 +59,9 @@ Latticra does not currently claim:
 - tamper resistance;
 - cryptographic correctness.
 
-## Simulation boundary
+## Preview boundary
 
-Simulation, preview, and modeled behavior must not be described as real-world capability unless the evidence ladder supports that claim.
+Preview and modeled behavior must not be described as real-world capability unless the evidence ladder supports that claim.
 
 Examples:
 
@@ -90,7 +89,7 @@ fixture-backed
 tested
 preview-only
 read-only validated
-VM-evidenced
+virtual-target evidenced
 real-device read-only evidenced
 gated experimental
 ```
