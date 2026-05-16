@@ -58,16 +58,16 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat grammar contract, and C/C++ foundation direction toward Lat grammar implementation planning.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat grammar contract, C/C++ foundation direction, and Lat grammar implementation plan toward bounded Lat parser implementation.
 
 The next recommended implementation lane is:
 
 ```text
-Lat language grammar implementation plan
+Lat language grammar implementation
 ```
 
 ## Current non-claim
 
-Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, or provide a production security boundary.
+Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide a Lat runtime, or provide a production security boundary.
 
 Those are long-term goals and design targets, not current claims.
