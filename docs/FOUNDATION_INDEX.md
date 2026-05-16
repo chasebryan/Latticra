@@ -86,6 +86,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION.md`](L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION.md) — escaped decoded NUL acceptance for L-UI source-backed AST strings.
 - [`L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_CONTRACT.md`](L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_CONTRACT.md) — policy keeping literal source-buffer NUL rejected while escaped decoded NUL remains accepted.
 - [`L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION_PLAN.md`](L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION_PLAN.md) — exact parser, diagnostic, AST, report, span, and test plan for literal source-buffer NUL rejection policy enforcement.
+- [`L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION.md`](L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION.md) — tested enforcement of literal source-buffer NUL rejection while escaped decoded NUL remains accepted.
 - [`L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — decoding rules for quoted L-UI source string escapes.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md) — parser-level validation decision, AST decoding helper shape, NUL/capacity/span/report behavior, exact tests, and compatibility expectations before string-literal escape decoding.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md) — byte-oriented string-literal escape decoding for source-backed L-UI AST purpose and text values.
@@ -150,6 +151,7 @@ L-UI decoded NUL acceptance implementation plan + guardrails
 L-UI decoded NUL acceptance implementation + invariants
 L-UI source-buffer literal NUL policy contract + guardrails
 L-UI source-buffer literal NUL policy implementation plan + guardrails
+L-UI source-buffer literal NUL policy implementation + invariants
 L-UI string-literal escape contract + guardrails
 L-UI string-literal escape implementation plan + guardrails
 L-UI string-literal escape decoding implementation + invariants
@@ -158,7 +160,7 @@ L-UI string-literal escape decoding implementation + invariants
 The next implementation target should be:
 
 ```text
-L-UI source-buffer literal NUL policy implementation
+L-UI semantic validation contract
 ```
 
-That target should implement and test the planned rule that literal NUL bytes in source buffers remain rejected while escaped decoded NUL remains accepted.
+That target should define semantic validation beyond structural parsing, including field/binding consistency, duplicate handling, rail semantics, and reportable validation errors.
