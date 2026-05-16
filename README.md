@@ -53,7 +53,8 @@ Core seed documents:
 - [`docs/PHASE1_IMPORT_RULE.md`](docs/PHASE1_IMPORT_RULE.md) — how Phase1 concepts may enter Latticra.
 - [`docs/NON_CLAIMS.md`](docs/NON_CLAIMS.md) — claims Latticra does not make yet.
 - [`docs/ARCHITECTURE_SEED.md`](docs/ARCHITECTURE_SEED.md) — initial architecture vocabulary and direction.
-- [`docs/LANGUAGE_STRATEGY.md`](docs/LANGUAGE_STRATEGY.md) — C, Rust, L, L-UI, and LIR roles.
+- [`docs/LANGUAGE_NAMING_POLICY.md`](docs/LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy.
+- [`docs/LANGUAGE_STRATEGY.md`](docs/LANGUAGE_STRATEGY.md) — C, Rust, Lat, L-UI, and LIR roles.
 - [`docs/SUPERVISOR_ARCHITECTURE.md`](docs/SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor and orchestration architecture.
 - [`docs/ROADMAP.md`](docs/ROADMAP.md) — design-first implementation sequence.
 
@@ -102,6 +103,7 @@ Core seed documents:
 Run the current implementation checks with:
 
 ```sh
+sh scripts/test-language-naming-policy.sh
 sh scripts/test-state-lattice.sh
 sh scripts/test-tri-plane-transition.sh
 sh scripts/test-nucleus-preview.sh
@@ -145,7 +147,7 @@ sh scripts/test-l-ui-string-literal-escape.sh
 
 ## Current boundary
 
-Latticra currently contains foundation contracts, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, repository fixture parser integration, parser result reporting, a parser diagnostics contract, a parser diagnostics implementation plan, parser diagnostics implementation, a parser string escape diagnostics contract, a parser string escape diagnostics implementation plan, a parser string escape diagnostics implementation, a line/column precision plan, a line/column precision implementation plan, line/column precision implementation, a source-span contract, a source-span implementation plan, source-span implementation, an AST contract, an AST implementation plan, an AST implementation, an AST detailed report contract, an AST detailed report implementation plan, an AST detailed report implementation, an AST escaped string report contract, an AST escaped string report implementation plan, an AST escaped string report implementation, an AST source-backed text contract, an AST source-backed text implementation plan, an AST source-backed text extraction implementation, an AST length-carrying string storage contract, an AST length-carrying string storage implementation plan, a string-literal escape contract, a string-literal escape implementation plan, and a string-literal escape decoding implementation.
+Latticra currently contains foundation contracts, a language naming policy, an initial no-effect state lattice fixture, a pure preview tri-plane transition model, Nucleus preview request classification with operator-visible reporting, a static L-UI report fixture, an L-UI source grammar draft with static fixtures, an L-UI parser design contract, an L-UI parser implementation plan, an initial no-effect L-UI parser, repository fixture parser integration, parser result reporting, a parser diagnostics contract, a parser diagnostics implementation plan, parser diagnostics implementation, a parser string escape diagnostics contract, a parser string escape diagnostics implementation plan, a parser string escape diagnostics implementation, a line/column precision plan, a line/column precision implementation plan, line/column precision implementation, a source-span contract, a source-span implementation plan, source-span implementation, an AST contract, an AST implementation plan, an AST implementation, an AST detailed report contract, an AST detailed report implementation plan, an AST detailed report implementation, an AST escaped string report contract, an AST escaped string report implementation plan, an AST escaped string report implementation, an AST source-backed text contract, an AST source-backed text implementation plan, an AST source-backed text extraction implementation, an AST length-carrying string storage contract, an AST length-carrying string storage implementation plan, a string-literal escape contract, a string-literal escape implementation plan, and a string-literal escape decoding implementation.
 
 It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, L-UI rendering, length-carrying AST string storage implementation, decoded NUL support, live movement, or operating system replacement.
 
