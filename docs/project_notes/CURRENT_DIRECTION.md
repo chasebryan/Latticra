@@ -38,6 +38,24 @@ Lat / Latticra Language: contract and declaration layer.
 
 This does not mean unrestricted C++.
 
+## Current C++ authority boundary
+
+The C++ authority layer is now contract-bound as a future governed layer only.
+
+It may plan for:
+
+```text
+policy logic
+validators
+effect gates
+audit logic
+bounded orchestration structures
+operator-visible reports
+safe wrappers around C substrate APIs
+```
+
+It does not currently implement C++ infrastructure, C++ policy code, C++ validators, C++ effect gates, C++ audit logic, or unrestricted C++ authority.
+
 ## Mission target
 
 The long-term mission is to build a complete open-source operating-system universe and programming-language stack that makes unsafe behavior harder to hide and easier to inspect.
@@ -58,16 +76,16 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat grammar contract, C/C++ foundation direction, and bounded Lat parser implementation toward the governed C++ authority-layer contract.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, and constrained C++ authority-layer contract toward the authority-layer implementation plan.
 
 The next recommended implementation lane is:
 
 ```text
-Constrained C++ authority layer contract
+Constrained C++ authority layer implementation plan
 ```
 
 ## Current non-claim
 
-Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide a Lat runtime, or provide a production security boundary.
+Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an implemented C++ authority layer, provide a Lat runtime, or provide a production security boundary.
 
 Those are long-term goals and design targets, not current claims.
