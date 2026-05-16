@@ -236,10 +236,12 @@ latticra_status_t latticra_l_ui_validate_semantics(
             return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_MISSING_REQUIRED_RAIL, index, 0u, 0u, &rail->span);
         }
         if (rail->first_field_index != expected_rail_first_field_index(index) ||
-            rail->field_count != expected_rail_field_count(index) ||
-            rail->first_text_index != expected_rail_first_text_index(index) ||
-            rail->text_count != expected_rail_text_count(index)) {
+            rail->field_count != expected_rail_field_count(index)) {
             return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_FIELD_RAIL_MISMATCH, index, rail->first_field_index, rail->first_text_index, &rail->span);
+        }
+        if (rail->first_text_index != expected_rail_first_text_index(index) ||
+            rail->text_count != expected_rail_text_count(index)) {
+            return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_TEXT_RAIL_MISMATCH, index, rail->first_field_index, rail->first_text_index, &rail->span);
         }
     }
 
