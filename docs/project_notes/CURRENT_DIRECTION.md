@@ -44,7 +44,7 @@ The current technical lane is moving from the L-UI parser, AST, source-policy, a
 The next recommended implementation lane is:
 
 ```text
-L-UI semantic validation contract
+L-UI semantic validation implementation plan
 ```
 
 ## Current non-claim
