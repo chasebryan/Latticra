@@ -5,22 +5,22 @@ Scope: foundation documents required before implementation code begins.
 
 ## Purpose
 
-This index collects the first architecture documents for Latticra.
+This index collects the first architecture, policy, language, and implementation documents for Latticra.
 
-Latticra should refine its language model, supervisor model, effect gates, server model, update model, target architectures, and Phase1 concept translations before real implementation work begins.
+Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, and precursor-promotion rules before expanding real implementation work.
 
 ## Foundation documents
 
-- [`REAL_SYSTEM_CONTRACT.md`](REAL_SYSTEM_CONTRACT.md) — project identity, real-system boundary, and relationship to Phase1, Base1, and Fyr.
+- [`REAL_SYSTEM_CONTRACT.md`](REAL_SYSTEM_CONTRACT.md) — project identity, real-system boundary, evidence rules, and non-claims.
 - [`EVIDENCE_LADDER.md`](EVIDENCE_LADDER.md) — promotion levels from concept to real-system capability.
-- [`PHASE1_IMPORT_RULE.md`](PHASE1_IMPORT_RULE.md) — rules for importing proven Phase1 concepts into Latticra.
+- [`PRECURSOR_PROMOTION_RULE.md`](PRECURSOR_PROMOTION_RULE.md) — rules for promoting precursor research, prototypes, experiments, and external lessons into Latticra.
 - [`NON_CLAIMS.md`](NON_CLAIMS.md) — claims Latticra does not currently make.
 - [`ARCHITECTURE_SEED.md`](ARCHITECTURE_SEED.md) — initial state-lattice and software-universe vocabulary.
-- [`NAMING_SYSTEM.md`](NAMING_SYSTEM.md) — formal naming rules for translating Phase1-era concepts into professional Latticra terms.
+- [`NAMING_SYSTEM.md`](NAMING_SYSTEM.md) — formal naming rules for professional Latticra terminology.
+- [`FEATURE_TRANSLATION_LEDGER.md`](FEATURE_TRANSLATION_LEDGER.md) — vocabulary ledger for translating exploratory labels into Latticra architecture terms.
 - [`LANGUAGE_NAMING_POLICY.md`](LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy; forbids plain `L` and `.l` as public identifiers.
 - [`LANGUAGE_STRATEGY.md`](LANGUAGE_STRATEGY.md) — role of C, Rust, Lat, L-UI, and future LIR.
 - [`SUPERVISOR_ARCHITECTURE.md`](SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor model and orchestration responsibilities.
-- [`FEATURE_TRANSLATION_LEDGER.md`](FEATURE_TRANSLATION_LEDGER.md) — Phase1-to-Latticra feature rename and promotion ledger.
 - [`EFFECT_GATES.md`](EFFECT_GATES.md) — effect categories, gating rules, and visibility requirements.
 - [`UI_TERMINAL_LANGUAGE.md`](UI_TERMINAL_LANGUAGE.md) — L-UI terminal/operator interface language direction.
 - [`SERVER_INTERACTION_MODEL.md`](SERVER_INTERACTION_MODEL.md) — signed, optional, inspectable server interaction model.
