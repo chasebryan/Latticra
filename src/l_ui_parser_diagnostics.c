@@ -178,7 +178,8 @@ static const char *diagnostic_hint_for_error(latticra_l_ui_parse_error_t error) 
     case LATTICRA_L_UI_PARSE_INTERNAL_ERROR:
         return "Report the internal parser error.";
     case LATTICRA_L_UI_PARSE_INVALID_STRING_ESCAPE:
-        return "Use only \\\\, \\\", \\n, \\r, \\t, or uppercase \\xNN escapes.";
+        return "Use only \\\\, \\\""
+               ", \\n, \\r, \\t, or uppercase \\xNN escapes.";
     case LATTICRA_L_UI_PARSE_INVALID_HEX_ESCAPE:
         return "Use exactly two uppercase hex digits, such as \\x0A or \\x7F.";
     case LATTICRA_L_UI_PARSE_UNTERMINATED_ESCAPE:
