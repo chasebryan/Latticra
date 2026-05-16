@@ -18,6 +18,8 @@ That storage model cannot represent decoded NUL bytes or safely report byte-orie
 
 This document does not implement length-carrying AST strings.
 
+The implementation plan is documented separately in [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION_PLAN.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION_PLAN.md).
+
 ## Relationship to previous work
 
 This contract depends on:
@@ -329,6 +331,8 @@ Length-carrying AST string storage implementation must not begin until a separat
 9. exact test file names;
 10. exact invariant tests;
 11. compatibility expectations.
+
+That plan is recorded in [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION_PLAN.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION_PLAN.md).
 
 ## Future test list
 
