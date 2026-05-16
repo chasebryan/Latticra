@@ -1,23 +1,25 @@
 # Latticra L-UI Parser String Escape Diagnostics Contract
 
 Status: parser string escape diagnostics contract
-Scope: future parser-level diagnostics for invalid L-UI string-literal escape sequences before parser diagnostics are extended.
+Scope: parser-level diagnostics for invalid L-UI string-literal escape sequences before and after parser diagnostics extension.
 
 ## Purpose
 
 This document defines the parser-level diagnostics contract for invalid L-UI string-literal escape sequences.
 
-The current string-literal escape decoder runs during AST construction. Invalid escapes are currently classified as:
+The string-literal escape decoder originally ran during AST construction. Invalid escapes were classified as:
 
 ```text
 LATTICRA_L_UI_PARSE_INTERNAL_ERROR
 ```
 
-at the AST layer so the structural parser remains compatible. This contract defines the future parser-level diagnostic surface before parser validation is extended to report invalid escapes directly.
+at the AST layer so the structural parser remained compatible. This contract defined the parser-level diagnostic surface before parser validation was extended to report invalid escapes directly.
 
 This document does not implement parser-level string escape diagnostics.
 
 The implementation plan is documented separately in [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md).
+
+The implementation is documented separately in [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION.md).
 
 ## Relationship to existing diagnostics
 
@@ -28,6 +30,7 @@ docs/L_UI_PARSER_DIAGNOSTICS.md
 docs/L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION_PLAN.md
 docs/L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md
 docs/L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md
+docs/L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION.md
 docs/L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md
 docs/L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md
 docs/L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md
@@ -36,7 +39,7 @@ src/l_ui_parser.c
 src/l_ui_parser_ast.c
 ```
 
-The existing diagnostics contract owns stable parser diagnostic language. This contract defines the future extension set for rejected string-literal escapes only.
+The existing diagnostics contract owns stable parser diagnostic language. This contract defines the extension set for rejected string-literal escapes only.
 
 ## Current boundary
 
@@ -47,7 +50,7 @@ structural L-UI parser diagnostics
 source spans
 line and column metadata
 string-literal escape decoding during AST construction
-AST-level invalid escape classification through LATTICRA_L_UI_PARSE_INTERNAL_ERROR
+parser-level invalid escape diagnostics
 escaped detailed AST report fields
 no-effect flags
 ```
@@ -55,7 +58,6 @@ no-effect flags
 This contract does not add:
 
 ```text
-parser-level invalid escape implementation
 new accepted escape sequences
 length-carrying AST strings
 Unicode display behavior
@@ -74,9 +76,9 @@ boot behavior
 
 ## Diagnostic purpose
 
-Parser-level string escape diagnostics should make rejected string-literal escapes visible before AST construction.
+Parser-level string escape diagnostics make rejected string-literal escapes visible before AST construction.
 
-The future behavior should allow:
+The behavior allows:
 
 ```text
 latticra_l_ui_parse_source
@@ -86,9 +88,9 @@ latticra_l_ui_diagnostic_report
 
 to report stable invalid-escape categories, messages, hints, source spans, and no-effect flags.
 
-## Proposed parser error additions
+## Parser error additions
 
-A future implementation may extend `latticra_l_ui_parse_error_t` after the current `LATTICRA_L_UI_PARSE_INTERNAL_ERROR` value with:
+The implementation extends `latticra_l_ui_parse_error_t` after `LATTICRA_L_UI_PARSE_INTERNAL_ERROR` with:
 
 ```text
 LATTICRA_L_UI_PARSE_INVALID_STRING_ESCAPE
@@ -99,11 +101,11 @@ LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING
 LATTICRA_L_UI_PARSE_STRING_VALUE_TOO_LARGE
 ```
 
-These names are reserved by this contract for the first parser-level string escape diagnostics implementation.
+These names are reserved by this contract for parser-level string escape diagnostics.
 
-## Proposed diagnostic codes
+## Diagnostic codes
 
-The future diagnostic codes should extend the existing `LUI0000` through `LUI0018` code range:
+The diagnostic codes extend the existing `LUI0000` through `LUI0018` code range:
 
 ```text
 LUI0019 invalid_string_escape
@@ -114,11 +116,11 @@ LUI0023 literal_nul_in_string
 LUI0024 string_value_too_large
 ```
 
-The code numbers must remain stable once implemented.
+The code numbers are stable.
 
 ## Stable messages
 
-Initial message language should be concise and deterministic:
+Message language is concise and deterministic:
 
 | Code | Message |
 | --- | --- |
@@ -129,11 +131,11 @@ Initial message language should be concise and deterministic:
 | `LUI0023` | Literal NUL bytes are not supported in AST strings. |
 | `LUI0024` | Decoded string value exceeds the supported AST storage limit. |
 
-Messages must not include dynamic source fragments in the first implementation.
+Messages do not include dynamic source fragments.
 
 ## Hint language
 
-Initial hint language should be stable:
+Hint language is stable:
 
 | Code | Hint |
 | --- | --- |
@@ -170,17 +172,17 @@ Line and column remain one-based byte positions in the in-memory source buffer.
 
 ## Validation order
 
-Future parser-level string escape validation should run only after basic source-size and null-argument checks.
+Parser-level string escape validation runs only after basic structural fixture checks.
 
-It should run before AST construction and before AST values are materialized.
+It runs before AST construction and before AST values are materialized.
 
-It should not hide earlier structural parser errors when those errors occur before a string-literal escape can be inspected deterministically.
+It must not hide earlier structural parser errors when those errors occur before a string-literal escape can be inspected deterministically.
 
-When source structure is valid but a string escape is invalid, the string escape diagnostic should be reported instead of allowing AST construction to classify an internal error.
+When source structure is valid but a string escape is invalid, the string escape diagnostic is reported instead of allowing AST construction to classify an internal error.
 
 ## Accepted escape compatibility
 
-Parser-level diagnostics must preserve the currently accepted escape set:
+Parser-level diagnostics preserve the accepted escape set:
 
 ```text
 \\
@@ -197,7 +199,7 @@ The diagnostics implementation must not broaden accepted escapes without a separ
 
 ## AST compatibility
 
-After parser-level diagnostics are implemented, invalid escapes should be rejected by:
+Invalid escapes are rejected by:
 
 ```text
 latticra_l_ui_parse_source
@@ -205,7 +207,7 @@ latticra_l_ui_parse_source
 
 before AST construction runs.
 
-For invalid escape source, AST behavior should become:
+For invalid escape source, AST behavior is:
 
 ```text
 ast.parse_result.error = parser-level string escape error
@@ -215,11 +217,11 @@ ast.text_count = 0
 failed-parse detailed report only
 ```
 
-Accepted escapes should continue to decode in AST values exactly as the current string-literal escape implementation defines.
+Accepted escapes continue to decode in AST values exactly as the string-literal escape implementation defines.
 
 ## Report relationship
 
-Future diagnostic reports should render:
+Diagnostic reports render:
 
 ```text
 diagnostic_severity=error
@@ -228,15 +230,15 @@ diagnostic_message=<stable-message>
 diagnostic_hint=<stable-hint>
 ```
 
-Parser result reports should continue to include stable parse error labels.
+Parser result reports continue to include stable parse error labels.
 
-Detailed AST reports should continue using the failed-parse report path for rejected sources.
+Detailed AST reports continue using the failed-parse report path for rejected sources.
 
 ## No-effect rule
 
 Parser-level string escape diagnostics are metadata-only.
 
-They must preserve:
+They preserve:
 
 ```text
 no_effect=1
@@ -249,7 +251,7 @@ hardware_allowed=0
 
 ## Compatibility rule
 
-A future implementation must not change:
+The implementation must not change:
 
 ```text
 accepted string-literal escape decoding
@@ -261,7 +263,7 @@ existing parser error labels for current errors
 existing accepted fixture summary counts
 ```
 
-The first accepted fixture should still report:
+The first accepted fixture still reports:
 
 ```text
 rail_count=9
@@ -271,9 +273,9 @@ effect=none
 boundary=preview_only
 ```
 
-## Implementation gate
+## Implementation evidence
 
-Parser-level string escape diagnostics implementation must not begin until a separate implementation plan defines:
+Parser-level string escape diagnostics implementation required a separate implementation plan defining:
 
 1. parser enum additions;
 2. diagnostic code additions;
@@ -289,9 +291,11 @@ Parser-level string escape diagnostics implementation must not begin until a sep
 
 That plan is recorded in [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md).
 
-## Future test list
+The implementation is recorded in [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION.md).
 
-A future implementation plan should include tests for:
+## Test list
+
+The implementation tests verify:
 
 ```text
 string_escape_diagnostic_rejects_unknown_escape_lui0019
@@ -313,7 +317,7 @@ string_escape_diagnostic_is_deterministic
 
 ## Forbidden behavior
 
-A future parser-level string escape diagnostics implementation must not:
+The parser-level string escape diagnostics implementation must not:
 
 - add file I/O to parser or AST code;
 - write files;
@@ -334,7 +338,7 @@ A future parser-level string escape diagnostics implementation must not:
 - allow decoded NUL bytes before length-carrying AST strings exist;
 - broaden accepted grammar beyond the string-literal escape contract.
 
-## Current validation command
+## Current validation commands
 
 This contract is guarded by:
 
@@ -342,8 +346,12 @@ This contract is guarded by:
 sh scripts/test-l-ui-parser-string-escape-diagnostics-contract.sh
 ```
 
-The guard is static. It does not implement parser-level string escape diagnostics.
+The implementation is tested by:
+
+```sh
+sh scripts/test-l-ui-parser-string-escape-diagnostics.sh
+```
 
 ## Non-claims
 
-This document does not implement parser-level string escape diagnostics, change parser error enums, change diagnostic codes, change AST storage, implement length-carrying AST strings, broaden accepted L-UI syntax, implement Unicode display behavior, add L-UI rendering, add command behavior, add Nucleus task handling, add live movement, add origin mutation, add recovery behavior, add server interaction, add self-update, add hardware support, add boot readiness, claim security isolation, claim sandboxing, or operating-system completeness.
+This document and implementation do not change AST storage, implement length-carrying AST strings, allow decoded NUL bytes, broaden accepted L-UI syntax, implement Unicode display behavior, add L-UI rendering, add command behavior, add Nucleus task handling, add live movement, add origin mutation, add recovery behavior, add server interaction, add self-update, add hardware support, add boot readiness, claim security isolation, claim sandboxing, or claim operating-system completeness.
