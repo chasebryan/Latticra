@@ -1,19 +1,19 @@
 # Latticra Real-System Contract
 
 Status: initial contract
-Scope: project identity, implementation boundary, evidence rules, and relationship to Phase1.
+Scope: project identity, implementation boundary, evidence rules, and non-claims.
 
 ## Purpose
 
-Latticra is the real-system implementation track for the Base1 / Phase1 / Fyr architecture.
+Latticra is a contract-first real-system implementation track for lattice-oriented computing architecture and the Latticra Programming Language.
 
-It is built to separate formal implementation from simulation and prototype work.
+It exists to separate formal implementation from exploratory research, informal prototypes, and premature real-system claims.
 
-Phase1 may explore. Latticra must prove.
+Latticra may learn from precursor work, but public Latticra capability must be proven inside this repository through contracts, tests, evidence, and explicit boundaries.
 
 ## Identity
 
-Latticra means a lattice-oriented real-system architecture: a computing environment built from explicit state spaces, grids, matrices, movement rules, safety gates, and evidence-backed promotion.
+Latticra means a lattice-oriented real-system architecture: a computing environment built from explicit state spaces, grids, matrices, transition rules, safety gates, and evidence-backed promotion.
 
 The name should communicate:
 
@@ -21,46 +21,16 @@ The name should communicate:
 - software universes;
 - embedded real-system direction;
 - formal implementation;
-- simulation-to-reality promotion;
+- evidence-bound promotion;
 - professional computer-science grounding.
 
-## Relationship to Phase1
+## Project boundary
 
-Phase1 is the proving environment.
+Latticra is its own public project identity.
 
-Latticra is the implementation environment.
+Public documentation should describe Latticra by its own architecture, contracts, language direction, tests, and implementation evidence.
 
-```text
-Phase1 responsibility:
-- simulate concepts;
-- prototype command surfaces;
-- test feasibility;
-- preserve evidence;
-- discover design constraints;
-- prevent premature real-system claims.
-
-Latticra responsibility:
-- import proven concepts;
-- formalize state contracts;
-- implement narrow real components;
-- validate hardware paths;
-- record promotion evidence;
-- keep real-system boundaries clear.
-```
-
-## Relationship to Base1
-
-Base1 is the boot, recovery, and hardware evidence lineage that informs Latticra.
-
-Latticra should not reuse the Base1 name as the repository identity because Base1 already has a specific architectural role.
-
-Base1-derived work may enter Latticra only when it is evidence-backed and clearly scoped.
-
-## Relationship to Fyr
-
-Fyr is the native Phase1 language and future Latticra control/programming language candidate.
-
-Fyr-related work in Latticra must remain bounded until the language has implementation, safety, runtime, and validation evidence.
+Precursor research and prototypes may inform private design decisions or documented promotion packets, but they are not public dependencies and are not public capability claims.
 
 ## Required rule
 
@@ -69,7 +39,7 @@ No capability may enter Latticra as a real-system feature unless it has:
 1. a written contract;
 2. a non-claims section;
 3. tests or validation evidence;
-4. an import source from Phase1 or direct Latticra design;
+4. a direct Latticra purpose or documented precursor-promotion packet;
 5. a failure model;
 6. a rollback or recovery boundary when mutation is involved;
 7. an operator-visible status surface.
@@ -93,4 +63,4 @@ This contract does not authorize:
 
 Latticra starts in contract-first mode.
 
-The first implementation work should be models, fixtures, tests, validation reports, and import rules. Live or mutating work comes later.
+The first implementation work should be models, fixtures, tests, validation reports, and promotion rules. Live or mutating work comes later.
