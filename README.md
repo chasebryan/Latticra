@@ -161,6 +161,10 @@ Latticra currently contains foundation contracts, a language naming policy, an i
 
 It does not yet provide a kernel, bootable image, installer, recovery writer, hardware mutation tool, production language runtime, hardened sandbox, network interaction, self-update execution, Nucleus task execution, L-UI rendering, literal source NUL acceptance implementation, live movement, or operating system replacement.
 
+## Security
+
+See [`SECURITY.md`](SECURITY.md) for vulnerability reporting, supported branch status, safe testing rules, and security non-claims.
+
 ## License
 
 Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`](docs/LICENSE_POLICY.md).
