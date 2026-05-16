@@ -1,31 +1,31 @@
 # Latticra Naming System
 
 Status: initial naming system
-Scope: professional terminology, Phase1 concept translation, and implementation naming rules.
+Scope: professional terminology, public architecture naming, and implementation naming rules.
 
 ## Purpose
 
-Latticra needs a professional naming system before implementation begins.
+Latticra needs a professional naming system before implementation work expands.
 
-Phase1 was allowed to use exploratory and expressive names while discovering what was possible. Latticra should use names that fit academic systems work, embedded software, formal state models, and real implementation.
+Public names should fit academic systems work, embedded software, formal state models, deterministic validation, and real implementation.
 
 ## Naming principles
 
-1. Use names that describe function before mythology.
-2. Keep experimental names in Phase1 unless they become formalized.
-3. Avoid names that make Latticra sound like a game, fantasy world, or toy OS.
+1. Use names that describe function before metaphor.
+2. Keep exploratory names out of public architecture unless they become formalized.
+3. Avoid names that make Latticra sound like a game, fantasy world, or toy operating system.
 4. Prefer systems, formal methods, embedded software, and computer-science vocabulary.
-5. Preserve powerful conceptual meaning through precise implementation terms.
-6. Avoid overloading Base1, Phase1, and Fyr names inside Latticra.
+5. Preserve strong conceptual meaning through precise implementation terms.
+6. Avoid public dependency on predecessor project names.
 
 ## Primary project names
 
 | Name | Meaning |
 | --- | --- |
-| Latticra | Real-system implementation track for lattice/grid/matrix-based software universes. |
-| L | Native Latticra language family. |
+| Latticra | Lattice-oriented systems architecture and implementation project. |
+| Lat / Latticra Language | Native Latticra programming language family. |
 | Nucleus | Latticra supervisor and orchestration core. |
-| L-UI | Terminal/operator interface language or dialect. |
+| L-UI | Terminal/operator interface declaration language or dialect. |
 | LIR | Latticra Intermediate Representation. |
 
 ## Preferred implementation vocabulary
@@ -35,24 +35,23 @@ Phase1 was allowed to use exploratory and expressive names while discovering wha
 | Software universe | Lattice universe |
 | State space | State lattice |
 | Movement | Transition |
-| Phase movement | Lattice transition |
-| Trilateral Phase Movement | Tri-plane transition model |
-| Route/origin/axis/path | Keep as route/origin/axis/path |
-| Optics | Lens or visibility rail |
+| Multi-plane movement | Tri-plane transition model |
+| Route/origin/axis/path | Route/origin/axis/path |
+| Visibility surface | Lens or visibility rail |
 | Rails | Operator rails or state rails |
-| Portal | Gate or transition gate |
-| Safe portal | Recovery gate |
-| Mirror | Reflection surface or state reflection |
+| Portal-like boundary | Gate or transition gate |
+| Safe transition boundary | Recovery gate |
+| Mirror-like view | Reflection surface or state reflection |
 | Entity | Cell actor or lattice actor |
-| Ghost | Shadow context or inactive context |
-| Nest | Domain stack or nested domain |
-| Fracture | Partition, split domain, or fault boundary |
-| Fractal | Recursive lattice or recursive domain |
-| Floor | Layer, tier, or plane |
-| Black Arts | Staged candidate system |
-| White Arts | Verification and repair suite |
-| Base1 | Substrate evidence lineage |
-| Fyr | Phase-native language ancestor to L |
+| Inactive context | Shadow context |
+| Nested scope | Domain stack or nested domain |
+| Split/fault boundary | Partition, split domain, or fault boundary |
+| Recursive structure | Recursive lattice or recursive domain |
+| Floor/layer concept | Layer, tier, or plane |
+| Staged candidate work | Staged candidate system |
+| Verification and repair work | Verification and repair suite |
+| Hardware evidence path | Substrate evidence path |
+| Native language family | Lat / Latticra Language |
 
 ## Names to avoid in formal architecture
 
@@ -71,7 +70,7 @@ fantasy universe
 hacker magic
 ```
 
-These can remain historical or Phase1-era vocabulary, but Latticra implementation names should be clearer.
+These can remain private brainstorming vocabulary, but Latticra implementation names should be clearer.
 
 ## Naming levels
 
@@ -80,7 +79,7 @@ Use distinct naming levels:
 ```text
 Project name: Latticra
 Supervisor name: Nucleus
-Language name: L
+Language name: Lat / Latticra Language
 Interface dialect: L-UI
 Intermediate form: LIR
 State model: State lattice
@@ -90,28 +89,36 @@ Gate model: Effect gate
 
 ## File and module naming rules
 
-Use lowercase kebab-case for docs:
+Use uppercase snake-case for major public docs already in the repository:
 
 ```text
-state-lattice.md
-tri-plane-transition.md
-effect-gates.md
+STATE_LATTICE.md
+TRI_PLANE_TRANSITION.md
+EFFECT_GATES.md
 ```
 
 Use lowercase snake_case for C/Rust source:
 
 ```text
-lattice_state.c
+state_lattice.c
 tri_plane_transition.rs
 effect_gate.h
 ```
 
-Use `l_` prefix for L language internals only when needed:
+Use `lat_` or explicit `latticra_` prefixes for native language internals when needed:
 
 ```text
-l_parser
-l_runtime
-l_ir
+lat_parser
+lat_runtime
+latticra_ir
+```
+
+Use `l_ui_` for existing L-UI parser and report code:
+
+```text
+l_ui_parser
+l_ui_parser_ast
+l_ui_parser_diagnostics
 ```
 
 ## Review rule
@@ -120,25 +127,31 @@ A new Latticra name should answer:
 
 1. What does it do?
 2. Is it professional?
-3. Is it distinct from Phase1 simulation names?
+3. Is it understandable without project lore?
 4. Does it avoid overclaiming?
-5. Can a systems engineer understand it without lore?
+5. Can a systems engineer understand it from the public docs?
 
 ## Current decision
 
-The native language name is planned as:
+The native language name is:
 
 ```text
-L
+Lat / Latticra Language
 ```
 
-The supervisor name is planned as:
+The canonical native source extension is:
+
+```text
+.lat
+```
+
+The supervisor name is:
 
 ```text
 Nucleus
 ```
 
-The UI language or dialect is planned as:
+The UI language or dialect is:
 
 ```text
 L-UI
