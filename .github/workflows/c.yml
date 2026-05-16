@@ -111,6 +111,8 @@ jobs:
         run: sh scripts/test-l-ui-semantic-validation-contract.sh
       - name: Run L-UI semantic validation implementation plan guard
         run: sh scripts/test-l-ui-semantic-validation-implementation-plan.sh
+      - name: Run L-UI semantic validation tests
+        run: sh scripts/test-l-ui-semantic-validation.sh
       - name: Run L-UI string-literal escape contract guard
         run: sh scripts/test-l-ui-string-literal-escape-contract.sh
       - name: Run L-UI string-literal escape implementation plan guard
