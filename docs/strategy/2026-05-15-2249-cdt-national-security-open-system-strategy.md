@@ -113,9 +113,9 @@ Estimated as of 2026-05-15 22:49 CDT:
 | --- | ---: |
 | Overall Latticra system | 17% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation docs and contracts | 69% |
+| Foundation docs and contracts | 70% |
 | Lat / Latticra Programming Language | 5% |
-| LIR | 6% |
+| LIR | 7% |
 | Nucleus real task execution | 10% |
 | Runtime / OS-universe direction | 5% |
 | Security-hardening implementation | 5% |
@@ -127,8 +127,8 @@ These percentages are rough planning estimates, not formal release metrics.
 
 1. Keep public docs professional and self-contained.
 2. Keep security claims evidence-bound.
-3. Move from LIR shape contract into LIR implementation planning.
-4. Move from parser/AST foundation toward Lat and LIR after LIR shape planning.
+3. Move from LIR implementation planning into bounded LIR shape implementation.
+4. Move from parser/AST foundation toward Lat and LIR after LIR shape implementation.
 5. Define Lat language contracts before implementation.
 6. Expand Nucleus from preview/reporting into carefully gated execution planning.
 7. Build status reporting and public progress estimates.
@@ -168,10 +168,10 @@ Buy Me a Coffee: Bryforge
 Recommended next slice:
 
 ```text
-LIR shape implementation plan
+LIR shape implementation
 ```
 
-This turns the LIR shape contract into exact API, structure, capacity, node, edge, error, report, and test planning before implementation code.
+This turns the LIR shape implementation plan into bounded API, structure, report, and invariant code.
 
 ## Non-claims
 
