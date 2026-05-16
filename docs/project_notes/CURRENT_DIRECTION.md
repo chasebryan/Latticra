@@ -39,12 +39,12 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is still the L-UI parser, AST, source-policy, and diagnostic foundation.
+The current technical lane is moving from the L-UI parser, AST, source-policy, and diagnostic foundation toward semantic validation.
 
 The next recommended implementation lane is:
 
 ```text
-L-UI source-buffer literal NUL policy implementation
+L-UI semantic validation contract
 ```
 
 ## Current non-claim
