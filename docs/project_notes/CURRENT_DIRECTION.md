@@ -1,7 +1,7 @@
 # Latticra Current Direction
 
 Status: active project note
-Last updated: 2026-05-15 22:49 CDT
+Last updated: 2026-05-16 16:15 CDT
 
 ## Current direction
 
@@ -17,7 +17,26 @@ contract-driven
 evidence-bound
 operator-visible
 security-conscious from the beginning
+constrained C/C++ foundation
 ```
+
+## C/C++ foundation checkpoint
+
+```text
+C is the metal.
+C++ is the disciplined structure.
+Latticra is the contract.
+```
+
+Meaning:
+
+```text
+C: secure substrate, boot paths, ABI boundaries, platform shims.
+C++: governed authority layer, policy, validators, effect gates, audit logic.
+Lat / Latticra Language: contract and declaration layer.
+```
+
+This does not mean unrestricted C++.
 
 ## Mission target
 
@@ -39,7 +58,7 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, and Lat grammar contract toward Lat grammar implementation planning.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat grammar contract, and C/C++ foundation direction toward Lat grammar implementation planning.
 
 The next recommended implementation lane is:
 
@@ -49,6 +68,6 @@ Lat language grammar implementation plan
 
 ## Current non-claim
 
-Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, or provide a production security boundary.
+Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, or provide a production security boundary.
 
 Those are long-term goals and design targets, not current claims.
