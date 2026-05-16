@@ -70,7 +70,7 @@ static const char VALID_FIXTURE[] =
 
 static int escape_case(const char *input, size_t input_len, const char *expected, const char *message) {
     char output[128];
-    EXPECT_TRUE(escape_report_string(input, input_len, output, sizeof(output)) == LATTICRA_STATUS_OK, message);
+    EXPECT_TRUE(escape_report_bytes(input, input_len, output, sizeof(output)) == LATTICRA_STATUS_OK, message);
     EXPECT_STR_EQ(output, expected, message);
     return 0;
 }
@@ -129,7 +129,7 @@ static int escape_rejects_small_buffers(void) {
     char output[4];
     const char input[] = { (char)0xFF, (char)0xFF };
     EXPECT_TRUE(
-        escape_report_string(input, sizeof(input), output, sizeof(output)) == LATTICRA_STATUS_BUFFER_TOO_SMALL,
+        escape_report_bytes(input, sizeof(input), output, sizeof(output)) == LATTICRA_STATUS_BUFFER_TOO_SMALL,
         "small escape buffer should be rejected");
     EXPECT_TRUE(output[0] == '\0', "small escape buffer should be cleared");
     return 0;
@@ -139,8 +139,8 @@ static int escape_is_deterministic(void) {
     char output_one[128];
     char output_two[128];
     const char input[] = "a\n\t\\\"\x7F";
-    EXPECT_TRUE(escape_report_string(input, strlen(input), output_one, sizeof(output_one)) == LATTICRA_STATUS_OK, "first escape");
-    EXPECT_TRUE(escape_report_string(input, strlen(input), output_two, sizeof(output_two)) == LATTICRA_STATUS_OK, "second escape");
+    EXPECT_TRUE(escape_report_bytes(input, strlen(input), output_one, sizeof(output_one)) == LATTICRA_STATUS_OK, "first escape");
+    EXPECT_TRUE(escape_report_bytes(input, strlen(input), output_two, sizeof(output_two)) == LATTICRA_STATUS_OK, "second escape");
     EXPECT_STR_EQ(output_one, output_two, "escaped output deterministic");
     return 0;
 }
@@ -194,7 +194,9 @@ static int detailed_report_escapes_mutated_values(void) {
     char report[LATTICRA_L_UI_AST_DETAILED_REPORT_MAX];
     EXPECT_TRUE(latticra_l_ui_parse_ast(VALID_FIXTURE, strlen(VALID_FIXTURE), &ast) == LATTICRA_STATUS_OK, "mutated value AST builds");
     (void)snprintf(ast.card.purpose, sizeof(ast.card.purpose), "line\nquote\"slash\\tab\t");
+    ast.card.purpose_len = strlen(ast.card.purpose);
     (void)snprintf(ast.texts[0].value, sizeof(ast.texts[0].value), "text\r\nnext");
+    ast.texts[0].value_len = strlen(ast.texts[0].value);
     EXPECT_TRUE(latticra_l_ui_ast_detailed_report(&ast, report, sizeof(report)) == LATTICRA_STATUS_OK, "mutated report builds");
     EXPECT_TRUE(strstr(report, "purpose_escaped=line\\nquote\\\"slash\\\\tab\\t\n") != 0, "mutated purpose escaped");
     EXPECT_TRUE(strstr(report, "value_escaped=text\\r\\nnext\n") != 0, "mutated text escaped");
