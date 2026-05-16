@@ -13,6 +13,12 @@ The current repository has structural L-UI parsing, AST construction, source spa
 
 This document does not implement LIR.
 
+The implementation plan is recorded in:
+
+```text
+LIR_SHAPE_IMPLEMENTATION_PLAN.md
+```
+
 ## Relationship to previous work
 
 This contract depends on:
@@ -290,6 +296,12 @@ LATTICRA_LIR_TEXT_MAX bounded and deterministic
 
 A future implementation plan must name exact constants before code is added.
 
+The exact first implementation-plan constants are recorded in:
+
+```text
+LIR_SHAPE_IMPLEMENTATION_PLAN.md
+```
+
 ## Error model
 
 LIR should have a separate error space from parser and semantic errors.
@@ -371,6 +383,12 @@ LIR implementation must not begin until a separate implementation plan defines:
 11. compatibility expectations;
 12. non-claims.
 
+That plan is recorded in:
+
+```text
+LIR_SHAPE_IMPLEMENTATION_PLAN.md
+```
+
 ## Future test list
 
 A future implementation plan should include tests for:
@@ -393,6 +411,12 @@ lir_shape_does_not_change_semantic_report
 lir_shape_does_not_change_escaped_x00_acceptance
 lir_shape_does_not_change_literal_nul_rejection
 lir_shape_is_deterministic
+```
+
+The implementation-plan test list is now recorded in:
+
+```text
+LIR_SHAPE_IMPLEMENTATION_PLAN.md
 ```
 
 ## Forbidden behavior

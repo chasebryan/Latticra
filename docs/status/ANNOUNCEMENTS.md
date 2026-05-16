@@ -24,6 +24,32 @@ non-claims
 next step
 ```
 
+## 2026-05-15 22:49 CDT — LIR shape implementation plan
+
+Status: implementation plan added
+
+Latticra added the implementation plan for the first LIR shape.
+
+Why it matters:
+
+The plan turns the LIR shape contract into exact public API, struct, capacity, enum, report, semantic prerequisite, source-span mapping, documentation, and invariant-test expectations before any LIR code is added.
+
+Validation:
+
+```text
+sh scripts/test-lir-shape-implementation-plan.sh
+```
+
+Non-claims:
+
+This update does not implement LIR, LIR lowering, L-UI rendering, Lat execution, command behavior, Nucleus task execution, malware prevention, ransomware prevention, or operating-system behavior.
+
+Next step:
+
+```text
+LIR shape implementation
+```
+
 ## 2026-05-15 22:49 CDT — LIR shape contract
 
 Status: contract added

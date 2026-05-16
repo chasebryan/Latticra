@@ -32,11 +32,11 @@ These percentages are planning estimates only.
 | --- | ---: |
 | Overall Latticra system | 17% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 69% |
+| Foundation documents and contracts | 70% |
 | Public documentation posture | 66% |
 | Strategy/status/funding framework | 40% |
 | Lat / Latticra Programming Language | 5% |
-| LIR / Intermediate Representation | 6% |
+| LIR / Intermediate Representation | 7% |
 | Nucleus real task execution | 10% |
 | Runtime / operating-system-universe direction | 5% |
 | Security-hardening implementation | 5% |
@@ -71,6 +71,7 @@ semantic validation contract
 semantic validation implementation plan
 semantic validation implementation
 LIR shape contract
+LIR shape implementation plan
 security policy
 public legacy association guard
 strategy index
@@ -113,13 +114,12 @@ This is a mission direction, not a current security guarantee.
 Recommended next work:
 
 ```text
-LIR shape implementation plan
+LIR shape implementation
 ```
 
 After that:
 
 ```text
-LIR shape implementation
 Lat language grammar contract
 L-UI rendering contract
 Nucleus task execution contract

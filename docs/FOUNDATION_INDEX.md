@@ -91,6 +91,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md`](L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md) — public API, semantic result, diagnostic mapping, reports, semantic checks, and exact tests before semantic validation code.
 - [`L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION.md`](L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION.md) — no-effect semantic validation API, reports, checks, and invariants for L-UI ASTs.
 - [`LIR_SHAPE_CONTRACT.md`](LIR_SHAPE_CONTRACT.md) — first Latticra Intermediate Representation shape before semantic lowering, Lat integration, rendering, or execution.
+- [`LIR_SHAPE_IMPLEMENTATION_PLAN.md`](LIR_SHAPE_IMPLEMENTATION_PLAN.md) — exact public API, structs, capacities, node kinds, edge kinds, errors, report format, source-span mapping, and tests before LIR code.
 - [`L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — decoding rules for quoted L-UI source string escapes.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md) — parser-level validation decision, AST decoding helper shape, NUL/capacity/span/report behavior, exact tests, and compatibility expectations before string-literal escape decoding.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md) — byte-oriented string-literal escape decoding for source-backed L-UI AST purpose and text values.
@@ -160,6 +161,7 @@ L-UI semantic validation contract + guardrails
 L-UI semantic validation implementation plan + guardrails
 L-UI semantic validation implementation + invariants
 LIR shape contract + guardrails
+LIR shape implementation plan + guardrails
 L-UI string-literal escape contract + guardrails
 L-UI string-literal escape implementation plan + guardrails
 L-UI string-literal escape decoding implementation + invariants
@@ -168,7 +170,7 @@ L-UI string-literal escape decoding implementation + invariants
 The next implementation target should be:
 
 ```text
-LIR shape implementation plan
+LIR shape implementation
 ```
 
-That target should define the exact public API, structs, capacities, node kinds, edge kinds, errors, reports, semantic prerequisite behavior, source-span mapping, and tests before LIR code.
+That target should add the exact public API, structs, capacities, node kinds, edge kinds, errors, reports, semantic prerequisite behavior, source-span mapping, and tests defined by the implementation plan.
