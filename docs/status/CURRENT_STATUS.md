@@ -30,8 +30,8 @@ These percentages are planning estimates only.
 | Area | Estimated completion |
 | --- | ---: |
 | Overall Latticra system | 16% |
-| L-UI parser / AST / string foundation | 83% |
-| Foundation documents and contracts | 67% |
+| L-UI parser / AST / string foundation | 84% |
+| Foundation documents and contracts | 68% |
 | Public documentation posture | 66% |
 | Strategy/status/funding framework | 40% |
 | Lat / Latticra Programming Language | 5% |
@@ -67,6 +67,7 @@ source-buffer literal NUL policy contract
 source-buffer literal NUL policy implementation plan
 source-buffer literal NUL policy implementation
 semantic validation contract
+semantic validation implementation plan
 security policy
 public legacy association guard
 strategy index
@@ -108,13 +109,12 @@ This is a mission direction, not a current security guarantee.
 Recommended next work:
 
 ```text
-L-UI semantic validation implementation plan
+L-UI semantic validation implementation
 ```
 
 After that:
 
 ```text
-L-UI semantic validation implementation
 LIR shape contract
 Lat language grammar contract
 L-UI rendering contract
