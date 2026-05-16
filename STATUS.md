@@ -27,12 +27,13 @@ docs/strategy/README.md
 | --- | ---: |
 | Overall Latticra system | 19% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 73% |
-| Public documentation posture | 67% |
-| Strategy/status/funding framework | 41% |
+| Foundation documents and contracts | 74% |
+| Public documentation posture | 68% |
+| Strategy/status/funding framework | 42% |
 | Lat / Latticra Programming Language | 10% |
 | LIR / Intermediate Representation | 10% |
-| C/C++ foundation direction | 12% |
+| C/C++ foundation direction | 14% |
+| Constrained C++ authority layer | 4% |
 
 These percentages are planning estimates only. They are not release promises, security certifications, or production-readiness metrics.
 
@@ -47,9 +48,9 @@ Latticra is the contract.
 ## Current next step
 
 ```text
-Constrained C++ authority layer contract
+Constrained C++ authority layer implementation plan
 ```
 
 ## Non-claims
 
-Latticra does not currently provide a finished operating system, hardened sandbox, production security boundary, malware prevention, ransomware prevention, production runtime, unrestricted C++ authority, or public release readiness.
+Latticra does not currently provide a finished operating system, hardened sandbox, production security boundary, malware prevention, ransomware prevention, production runtime, unrestricted C++ authority, implemented C++ authority layer, or public release readiness.
