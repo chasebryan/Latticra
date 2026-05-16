@@ -95,7 +95,8 @@ The repository currently includes guarded documents, tests, and no-effect C impl
 - semantic validation implementation;
 - LIR shape contract;
 - LIR shape implementation plan;
-- LIR shape implementation.
+- LIR shape implementation;
+- Lat language grammar contract.
 
 Run the current implementation checks with the scripts listed in [`docs/FOUNDATION_INDEX.md`](docs/FOUNDATION_INDEX.md) or through the repository C workflow.
 
@@ -114,6 +115,7 @@ Latticra does not yet provide:
 - Nucleus task execution;
 - L-UI rendering;
 - LIR execution;
+- Lat parser implementation;
 - Lat grammar implementation;
 - literal source NUL acceptance;
 - live movement;
@@ -139,7 +141,7 @@ See [`SECURITY.md`](SECURITY.md) for vulnerability reporting, supported branch s
 
 ## License
 
-Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`](docs/LICENSE_POLICY.md).
+Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`).
 
 ## North star
 
