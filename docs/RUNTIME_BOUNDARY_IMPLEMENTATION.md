@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Implementation
 
 Status: initial implementation record
-Scope: C runtime boundary API surface, deterministic labels, default-deny classification, authority prerequisites, authority flag report fields, authority label report fields, Nucleus task prerequisites, Nucleus task flag report fields, render/Lat/LIR prerequisite status report fields, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
+Scope: C runtime boundary API surface, deterministic labels, default-deny classification, authority prerequisites, authority flag report fields, authority label report fields, Nucleus task prerequisites, Nucleus task flag report fields, render/Lat/LIR prerequisite status report fields, render/Lat/LIR prerequisite denials, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
 
 ## Purpose
 
@@ -31,6 +31,7 @@ tests/runtime_boundary_authority_flag_report.c
 tests/runtime_boundary_authority_label_report.c
 tests/runtime_boundary_task_flag_report.c
 tests/runtime_boundary_prerequisite_status_report.c
+tests/runtime_boundary_prerequisite_denial.c
 scripts/test-runtime-boundary.sh
 docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md
 ```
@@ -54,8 +55,11 @@ Nucleus task-result prerequisite checks for task-report requests
 task policy and task reason metadata copying
 task executed/mutation/server/recovery/hardware flag copying and report visibility
 render status/error metadata copying and report visibility
+render-report prerequisite denial when render metadata is missing or failed
 Lat parser status/error metadata copying and report visibility
+Lat validation prerequisite denial when Lat metadata is missing or failed
 LIR status/error metadata copying and report visibility
+LIR validation prerequisite denial when LIR metadata is missing or failed
 source identity copying
 source span metadata copying
 unknown request denial
@@ -94,6 +98,9 @@ missing Nucleus task metadata is denied for task reports
 valid Nucleus task metadata is copied for task reports
 Nucleus task effect flags are copied and visible in reports
 render/Lat/LIR prerequisite status fields are visible in reports
+failed render metadata is denied with render-failed
+failed Lat metadata is denied with parser-failed
+failed LIR metadata is denied with lir-failed
 unknown requests are denied
 unknown effects are denied
 operational request kinds require a future gate
