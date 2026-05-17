@@ -52,6 +52,9 @@ const char *latticra_runtime_boundary_denial_label(latticra_runtime_boundary_den
     if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_NULL_ARGUMENT) return "null-argument";
     if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_UNKNOWN_REQUEST) return "unknown-request";
     if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_UNKNOWN_EFFECT) return "unknown-effect";
+    if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_AUTHORITY_FAILED) return "authority-failed";
+    if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_TASK_FAILED) return "task-failed";
+    if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_NON_NO_EFFECT_FLAGS) return "non-no-effect-flags";
     if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_RUNTIME_DISABLED) return "runtime-disabled";
     if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_OPERATOR_CONFIRMATION_NOT_SUPPORTED) return "operator-confirmation-not-supported";
     if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_EFFECT_REQUIRES_FUTURE_GATE) return "future-gate-required";
@@ -80,6 +83,16 @@ static void seed_result(latticra_runtime_boundary_result_t *result) {
     result->record.policy = LATTICRA_RUNTIME_BOUNDARY_POLICY_DENY;
     result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_RUNTIME_DISABLED;
     result->record.gate_state = LATTICRA_RUNTIME_BOUNDARY_GATE_BLOCKED;
+    result->record.task_policy = LATTICRA_NUCLEUS_TASK_POLICY_DENY;
+    result->record.task_reason = LATTICRA_NUCLEUS_TASK_DENIAL_IMPLEMENTATION_NOT_PRESENT;
+}
+
+static int authority_flags_ok(const latticra_runtime_boundary_authority_summary_t *authority) {
+    return authority != 0 && authority->status == LATTICRA_STATUS_OK && authority->no_effect == 1 && authority->execution_allowed == 0 && authority->mutation_allowed == 0 && authority->server_allowed == 0 && authority->recovery_allowed == 0 && authority->hardware_allowed == 0;
+}
+
+static int task_result_ok(const latticra_nucleus_task_result_t *task) {
+    return task != 0 && task->status == LATTICRA_STATUS_OK && task->record_count > 0u && task->record.denial == LATTICRA_NUCLEUS_TASK_DENIAL_OK && task->record.executed == 0 && task->record.mutation_allowed == 0 && task->record.server_interaction_allowed == 0 && task->record.recovery_allowed == 0 && task->record.hardware_allowed == 0;
 }
 
 latticra_status_t latticra_runtime_boundary_classify(const latticra_runtime_boundary_request_t *request, latticra_runtime_boundary_result_t *result) {
@@ -93,6 +106,23 @@ latticra_status_t latticra_runtime_boundary_classify(const latticra_runtime_boun
     result->record.requested_effect = request->requested_effect;
     result->record.mode = request->mode;
     result->record.operator_confirmation = request->operator_confirmation;
+    if (request->authority != 0) result->record.authority = *request->authority;
+    if (request->task != 0) {
+        result->record.task_policy = request->task->record.policy;
+        result->record.task_reason = request->task->record.denial;
+    }
+    if (request->authority == 0) {
+        result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_AUTHORITY_FAILED;
+        return LATTICRA_STATUS_OK;
+    }
+    if (!authority_flags_ok(request->authority)) {
+        result->record.denial = request->authority->status == LATTICRA_STATUS_OK ? LATTICRA_RUNTIME_BOUNDARY_DENIAL_NON_NO_EFFECT_FLAGS : LATTICRA_RUNTIME_BOUNDARY_DENIAL_AUTHORITY_FAILED;
+        return LATTICRA_STATUS_OK;
+    }
+    if (request->request_kind == LATTICRA_RUNTIME_BOUNDARY_NUCLEUS_TASK_REPORT && !task_result_ok(request->task)) {
+        result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_TASK_FAILED;
+        return LATTICRA_STATUS_OK;
+    }
     if (request->operator_confirmation != LATTICRA_RUNTIME_BOUNDARY_OPERATOR_NOT_APPLICABLE) {
         result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_OPERATOR_CONFIRMATION_NOT_SUPPORTED;
     }
