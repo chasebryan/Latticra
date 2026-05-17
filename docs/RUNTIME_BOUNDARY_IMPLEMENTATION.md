@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Implementation
 
 Status: initial implementation record
-Scope: C runtime boundary API surface, deterministic labels, default-deny classification, authority prerequisites, Nucleus task prerequisites, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
+Scope: C runtime boundary API surface, deterministic labels, default-deny classification, authority prerequisites, Nucleus task prerequisites, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
 
 ## Purpose
 
@@ -39,6 +39,8 @@ The source provides:
 ```text
 deterministic request/effect/mode/policy/denial/gate/operator labels
 default-deny classification
+runtime_id copying
+record_count initialization and report visibility
 authority presence and status checks
 authority no-effect flag checks
 Nucleus task-result prerequisite checks for task-report requests
@@ -50,7 +52,7 @@ unknown effect denial
 future-gate classification for operational request kinds
 operator-confirmation non-override behavior
 bounded report output with policy, reason, and gate state
-expanded report output for request, requested effect, mode, operator confirmation, authority status, authority no-effect state, task policy, task reason, no-effect flag, execution flag, mutation flag, source identity, and source span metadata
+expanded report output for runtime_id, record_count, request, requested effect, mode, operator confirmation, authority status, authority no-effect state, task policy, task reason, no-effect flag, execution flag, mutation flag, source identity, and source span metadata
 small-buffer rejection and clearing
 ```
 
@@ -66,6 +68,9 @@ The invariant test verifies:
 
 ```text
 runtime boundary classification initializes a no-effect result
+runtime_id is copied from request to record
+record_count is initialized
+runtime_id and record_count report fields are present
 default policy denies
 source identity metadata is copied
 source span metadata is copied

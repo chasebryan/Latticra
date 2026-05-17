@@ -33,6 +33,7 @@ static latticra_nucleus_task_result_t task_ok(void) {
 static latticra_runtime_boundary_request_t base_request(const latticra_runtime_boundary_authority_summary_t *authority) {
     latticra_runtime_boundary_request_t request;
     memset(&request, 0, sizeof(request));
+    (void)snprintf(request.runtime_id, sizeof(request.runtime_id), "%s", "runtime-001");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_PARSE_ONLY;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_REPORT_ONLY;
@@ -45,6 +46,7 @@ static int runtime_boundary_smoke_classifies_without_effects(void) {
     latticra_runtime_boundary_request_t request = base_request(&authority);
     latticra_runtime_boundary_result_t result;
     EXPECT_TRUE(latticra_runtime_boundary_classify(&request, &result) == LATTICRA_STATUS_OK, "classify status");
+    EXPECT_TRUE(strcmp(result.record.runtime_id, "runtime-001") == 0, "runtime id copied");
     EXPECT_TRUE(result.no_effect == 1, "no-effect flag preserved");
     EXPECT_TRUE(result.record_count == 1u, "record count initialized");
     EXPECT_TRUE(result.execution_allowed == 0, "execution denied");
@@ -182,6 +184,8 @@ static int runtime_boundary_report_is_bounded(void) {
     memset(&result, 0, sizeof(result));
     result.status = LATTICRA_STATUS_OK;
     result.no_effect = 1;
+    result.record_count = 1u;
+    (void)snprintf(result.record.runtime_id, sizeof(result.record.runtime_id), "%s", "runtime-001");
     result.record.request_kind = LATTICRA_RUNTIME_BOUNDARY_PARSE_ONLY;
     result.record.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     result.record.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_REPORT_ONLY;
@@ -201,6 +205,8 @@ static int runtime_boundary_report_is_bounded(void) {
     result.record.source_span.end_column = 15u;
     EXPECT_TRUE(latticra_runtime_boundary_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "report status");
     EXPECT_TRUE(strstr(report, "LATTICRA RUNTIME BOUNDARY REPORT") != 0, "report header");
+    EXPECT_TRUE(strstr(report, "runtime_id=runtime-001") != 0, "report runtime id");
+    EXPECT_TRUE(strstr(report, "record_count=1") != 0, "report record count");
     EXPECT_TRUE(strstr(report, "request=parse-only") != 0, "report request");
     EXPECT_TRUE(strstr(report, "requested_effect=none") != 0, "report effect");
     EXPECT_TRUE(strstr(report, "mode=report-only") != 0, "report mode");
