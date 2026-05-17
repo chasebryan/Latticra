@@ -71,6 +71,14 @@ The current renderer provides deterministic operator-visible text reports over a
 
 It does not provide terminal control, interactive UI behavior, command behavior, Lat execution, LIR execution, Nucleus task execution, mutation, file I/O, network I/O, recovery behavior, hardware behavior, or production UI claims.
 
+## Current Nucleus task boundary
+
+The Nucleus task execution contract now defines the first future task execution boundary.
+
+It establishes denied-by-default task handling, explicit prerequisites, authority checks, effect-gate checks, task-record expectations, report surfaces, future file paths, exact future tests, compatibility expectations, and non-claims before any task execution code.
+
+It does not implement Nucleus task execution, command behavior, mutation, network behavior, recovery behavior, hardware behavior, boot behavior, rollback, or production runtime claims.
+
 ## Mission target
 
 The long-term mission is to build a complete open-source operating-system universe and programming-language stack that makes unsafe behavior harder to hide and easier to inspect.
@@ -91,16 +99,16 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, and first no-effect L-UI renderer implementation toward Nucleus task execution contract planning.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, and Nucleus task execution contract toward Nucleus task execution implementation planning.
 
 The next recommended implementation lane is:
 
 ```text
-Nucleus task execution contract
+Nucleus task execution implementation plan
 ```
 
 ## Current non-claim
 
-Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide interactive L-UI rendering, provide terminal-control L-UI rendering, provide a Lat runtime, or provide a production security boundary.
+Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide Nucleus task execution, provide interactive L-UI rendering, provide terminal-control L-UI rendering, provide a Lat runtime, or provide a production security boundary.
 
 Those are long-term goals and design targets, not current claims.
