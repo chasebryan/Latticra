@@ -7,7 +7,7 @@ Scope: foundation documents, project operations records, implementation document
 
 This index collects the first architecture, policy, language, operations, strategy, status, and implementation documents for Latticra.
 
-Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, strategy records, status records, C/C++ foundation direction, constrained C++ authority-layer policy, L-UI rendering path, Nucleus task execution boundary, and precursor-promotion rules before expanding real implementation work.
+Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, strategy records, status records, C/C++ foundation direction, constrained C++ authority-layer policy, L-UI rendering path, Nucleus task execution boundary, runtime boundary, and precursor-promotion rules before expanding real implementation work.
 
 ## Foundation documents
 
@@ -22,6 +22,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md) — first no-effect constrained C++ authority implementation.
 - [`NUCLEUS_TASK_EXECUTION_CONTRACT.md`](NUCLEUS_TASK_EXECUTION_CONTRACT.md) — first denied-by-default Nucleus task execution contract before task execution code.
 - [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md) — exact Nucleus task execution implementation plan before task execution code.
+- [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md) — first no-effect C Nucleus task classification/report implementation.
 - [`L_UI_RENDERING_CONTRACT.md`](L_UI_RENDERING_CONTRACT.md) — first L-UI rendering contract before renderer implementation.
 - [`L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI rendering implementation plan before renderer code.
 - [`L_UI_RENDERING_IMPLEMENTATION.md`](L_UI_RENDERING_IMPLEMENTATION.md) — first no-effect C L-UI renderer implementation.
@@ -58,6 +59,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NUCLEUS_PREVIEW.md`](NUCLEUS_PREVIEW.md) — Nucleus request/effect classification, report surface, and no-execution invariants.
 - [`NUCLEUS_TASK_EXECUTION_CONTRACT.md`](NUCLEUS_TASK_EXECUTION_CONTRACT.md) — future task execution boundary, prerequisites, authority checks, effect gates, task records, reports, and non-claims before execution code.
 - [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md) — exact future Nucleus task API, structs, enums, reports, buffers, tests, and non-claims before task execution code.
+- [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md) — first no-effect task classification, denied-by-default policy, authority prerequisites, deterministic reports, and invariants.
 - [`L_UI_STATIC_REPORT.md`](L_UI_STATIC_REPORT.md) — terminal-facing L-UI static report fixture for Nucleus/state rails.
 - [`L_UI_SOURCE_GRAMMAR.md`](L_UI_SOURCE_GRAMMAR.md) — L-UI source grammar draft and `.lui` fixture guardrails.
 - [`L_UI_PARSER_DESIGN.md`](L_UI_PARSER_DESIGN.md) — parser design contract, error categories, no-effect constraints, and implementation gate.
@@ -120,6 +122,7 @@ tri-plane transition model + invariant tests
 Nucleus preview request classification + report invariants
 Nucleus task execution contract + guardrails
 Nucleus task execution implementation plan + guardrails
+Nucleus task execution implementation + invariants
 L-UI static report fixture + rail invariants
 L-UI source grammar draft + fixture guardrails
 L-UI parser design contract + guardrails
@@ -180,7 +183,7 @@ L-UI rendering implementation + invariants
 The next implementation target should be:
 
 ```text
-Nucleus task execution implementation
+Runtime boundary contract
 ```
 
-That target should implement the first no-effect C Nucleus task classification/report surface with explicit API, denied-by-default policy, authority prerequisites, effect-gate metadata, caller-provided buffers, deterministic reports, and invariant tests.
+That target should define the first runtime boundary contract before any runtime behavior, including allowed surfaces, denied effects, execution limits, authority prerequisites, task prerequisites, report expectations, future files, exact tests, compatibility expectations, and non-claims.

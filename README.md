@@ -43,6 +43,7 @@ The system direction includes:
 - constrained C++ authority-layer implementation;
 - Nucleus task execution contract;
 - Nucleus task execution implementation plan;
+- Nucleus task execution implementation;
 - L-UI rendering contract;
 - L-UI rendering implementation plan;
 - L-UI rendering implementation;
@@ -82,6 +83,7 @@ Core seed documents:
 - [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md) — initial no-effect constrained C++ authority layer.
 - [`docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md`](docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md) — first Nucleus task execution contract before task execution code.
 - [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md) — exact Nucleus task execution implementation plan before task execution code.
+- [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md) — initial no-effect C Nucleus task classification/report implementation.
 - [`docs/L_UI_RENDERING_CONTRACT.md`](docs/L_UI_RENDERING_CONTRACT.md) — first L-UI rendering contract before renderer implementation.
 - [`docs/L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](docs/L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI rendering implementation plan before renderer code.
 - [`docs/L_UI_RENDERING_IMPLEMENTATION.md`](docs/L_UI_RENDERING_IMPLEMENTATION.md) — initial no-effect C L-UI renderer implementation.
@@ -112,6 +114,7 @@ The repository currently includes guarded documents, tests, no-effect C implemen
 - constrained C++ authority-layer implementation;
 - Nucleus task execution contract;
 - Nucleus task execution implementation plan;
+- Nucleus task execution implementation;
 - L-UI rendering contract;
 - L-UI rendering implementation plan;
 - L-UI rendering implementation;
@@ -155,7 +158,7 @@ Latticra does not yet provide:
 - effect-performing implemented C++ authority layer;
 - network interaction;
 - self-update execution;
-- Nucleus task execution;
+- effect-performing Nucleus task execution;
 - interactive L-UI rendering;
 - terminal-control L-UI rendering;
 - LIR execution;

@@ -66,6 +66,18 @@ define exact public API, header path, source path, render request struct, render
 ## Latest completed implementation slice
 
 ```text
+Nucleus task execution implementation
+```
+
+Purpose completed:
+
+```text
+implement the first no-effect C Nucleus task classification/report surface using the guarded implementation plan, with explicit API, denied-by-default policy, authority prerequisites, effect-gate metadata, caller-provided buffers, deterministic reports, and invariant tests
+```
+
+## Previous implementation slice
+
+```text
 L-UI rendering implementation
 ```
 
@@ -75,7 +87,7 @@ Purpose completed:
 implement the first no-effect C L-UI renderer using the guarded implementation plan, with explicit API, caller-provided buffers, deterministic report output, semantic/LIR/authority prerequisites, source-span rendering, length-aware text rendering, and invariant tests
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Constrained C++ authority layer implementation
@@ -90,27 +102,27 @@ implement the first no-effect constrained C++ authority layer using the guarded 
 ## Recommended next slice
 
 ```text
-Nucleus task execution implementation
+Runtime boundary contract
 ```
 
 Purpose:
 
 ```text
-implement the first no-effect C Nucleus task classification/report surface using the guarded implementation plan, with explicit API, denied-by-default policy, authority prerequisites, effect-gate metadata, caller-provided buffers, deterministic reports, and invariant tests
+define the first runtime boundary contract before any runtime behavior, including allowed surfaces, denied effects, execution limits, authority prerequisites, task prerequisites, report expectations, future files, exact tests, compatibility expectations, and non-claims
 ```
 
 ## Near-term queue
 
-1. Nucleus task execution implementation.
-2. Runtime boundary contract.
-3. Defensive threat model contract.
+1. Runtime boundary contract.
+2. Defensive threat model contract.
+3. Runtime boundary implementation plan after the runtime boundary contract is merged.
 4. Public status update after major milestones.
 5. Completion percentage review after Nucleus task execution implementation.
 6. Strategy estimate review after Nucleus task execution implementation.
 7. C++ authority implementation review after initial no-effect validator/audit slice.
 8. Rendering-to-Nucleus boundary review after task execution implementation.
 9. L-UI rendering detailed report refinement after initial renderer implementation.
-10. Runtime boundary implementation plan after the runtime boundary contract is merged.
+10. Nucleus task execution refinement only after runtime boundary contract.
 
 ## Quality rules
 
@@ -132,7 +144,7 @@ consistent with the C/C++ foundation direction
 - Keep the constrained C++ authority layer no-effect until separate effect contracts exist.
 - Keep L-UI rendering no-effect and presentation-only.
 - Keep Nucleus task execution no-effect and denied-by-default.
-- Move next into Nucleus task execution implementation.
+- Move next into runtime boundary contract planning.
 - Maintain professional public docs.
 - Keep status and completion estimates current.
 - Keep security ambitions framed as mission and design targets until proven.

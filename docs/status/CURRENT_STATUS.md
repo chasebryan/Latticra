@@ -21,6 +21,7 @@ The repository currently emphasizes:
 - initial no-effect L-UI rendering implementation;
 - Nucleus task execution contract planning;
 - Nucleus task execution implementation planning;
+- initial no-effect Nucleus task execution classification/report implementation;
 - L-UI parser and AST foundation;
 - deterministic diagnostics;
 - source-span metadata;
@@ -73,6 +74,7 @@ tri-plane transition preview model
 Nucleus preview request classification
 Nucleus task execution contract
 Nucleus task execution implementation plan
+Nucleus task execution implementation
 L-UI static report fixture
 L-UI source grammar fixtures
 L-UI parser implementation
@@ -129,7 +131,7 @@ Latticra does not currently provide:
 - ransomware prevention;
 - network interaction;
 - self-update execution;
-- Nucleus task execution;
+- effect-performing Nucleus task execution;
 - interactive L-UI rendering;
 - terminal-control L-UI rendering;
 - LIR execution;
@@ -177,12 +179,20 @@ Nucleus task execution implementation plan
 Latest completed implementation slice:
 
 ```text
-L-UI rendering implementation
+Nucleus task execution implementation
 ```
 
 ## Previous implementation slice
 
 Previous implementation slice:
+
+```text
+L-UI rendering implementation
+```
+
+## Earlier implementation slice
+
+Earlier implementation slice:
 
 ```text
 Constrained C++ authority layer implementation
@@ -209,14 +219,14 @@ L-UI rendering contract
 Recommended next work:
 
 ```text
-Nucleus task execution implementation
+Runtime boundary contract
 ```
 
 After that:
 
 ```text
-Runtime boundary contract
 Defensive threat model contract
+Runtime boundary implementation plan
 ```
 
 ## Update rule
