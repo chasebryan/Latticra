@@ -48,19 +48,19 @@ Latticra is the contract.
 ## Latest completed contract slice
 
 ```text
-Runtime boundary contract
+Defensive threat model contract
 ```
 
 ## Previous contract slice
 
 ```text
-Nucleus task execution contract
+Runtime boundary contract
 ```
 
 ## Earlier contract slice
 
 ```text
-L-UI rendering contract
+Nucleus task execution contract
 ```
 
 ## Latest completed planning slice
@@ -102,9 +102,9 @@ L-UI rendering implementation
 ## Current next step
 
 ```text
-Defensive threat model contract
+Defensive threat model implementation plan
 ```
 
 ## Non-claims
 
-Latticra does not currently provide a finished operating system, hardened sandbox, production security boundary, malware prevention, ransomware prevention, production runtime, effect-performing runtime behavior, command execution, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing Nucleus task execution, interactive L-UI rendering, terminal-control L-UI rendering, or public release readiness.
+Latticra does not currently provide a finished operating system, hardened sandbox, production security boundary, malware prevention, ransomware prevention, production runtime, effect-performing runtime behavior, command execution, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing Nucleus task execution, interactive L-UI rendering, terminal-control L-UI rendering, certified protection, or public release readiness.
