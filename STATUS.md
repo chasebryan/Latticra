@@ -45,6 +45,18 @@ C++ is the disciplined structure.
 Latticra is the contract.
 ```
 
+## Latest completed contract slice
+
+```text
+Nucleus task execution contract
+```
+
+## Previous contract slice
+
+```text
+L-UI rendering contract
+```
+
 ## Latest completed planning slice
 
 ```text
@@ -69,18 +81,12 @@ L-UI rendering implementation
 Constrained C++ authority layer implementation
 ```
 
-## Latest completed contract slice
-
-```text
-L-UI rendering contract
-```
-
 ## Current next step
 
 ```text
-Nucleus task execution contract
+Nucleus task execution implementation plan
 ```
 
 ## Non-claims
 
-Latticra does not currently provide a finished operating system, hardened sandbox, production security boundary, malware prevention, ransomware prevention, production runtime, unrestricted C++ authority, effect-performing implemented C++ authority layer, interactive L-UI rendering, terminal-control L-UI rendering, or public release readiness.
+Latticra does not currently provide a finished operating system, hardened sandbox, production security boundary, malware prevention, ransomware prevention, production runtime, unrestricted C++ authority, effect-performing implemented C++ authority layer, Nucleus task execution, interactive L-UI rendering, terminal-control L-UI rendering, or public release readiness.
