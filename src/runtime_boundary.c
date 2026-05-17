@@ -146,10 +146,21 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
     if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
     buffer[0] = '\0';
     written = snprintf(buffer, buffer_len,
-        "LATTICRA RUNTIME BOUNDARY REPORT\npolicy=%s\nreason=%s\ngate=%s\n",
+        "LATTICRA RUNTIME BOUNDARY REPORT\nrequest=%s\nrequested_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nauthority_status=%d\nauthority_no_effect=%d\ntask_policy=%s\ntask_reason=%s\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\n",
+        latticra_runtime_boundary_request_kind_label(result->record.request_kind),
+        latticra_runtime_boundary_effect_label(result->record.requested_effect),
+        latticra_runtime_boundary_mode_label(result->record.mode),
         latticra_runtime_boundary_policy_label(result->record.policy),
         latticra_runtime_boundary_denial_label(result->record.denial),
-        latticra_runtime_boundary_gate_state_label(result->record.gate_state));
+        latticra_runtime_boundary_gate_state_label(result->record.gate_state),
+        latticra_runtime_boundary_operator_confirmation_label(result->record.operator_confirmation),
+        (int)result->record.authority.status,
+        result->record.authority.no_effect,
+        latticra_nucleus_task_policy_label(result->record.task_policy),
+        latticra_nucleus_task_denial_label(result->record.task_reason),
+        result->no_effect,
+        result->execution_allowed,
+        result->mutation_allowed);
     if (written < 0 || (size_t)written >= buffer_len) {
         buffer[0] = '\0';
         return LATTICRA_STATUS_BUFFER_TOO_SMALL;
