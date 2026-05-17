@@ -40,6 +40,7 @@ The system direction includes:
 - constrained C/C++ foundation direction;
 - constrained C++ authority-layer contract;
 - constrained C++ authority-layer implementation plan;
+- constrained C++ authority-layer implementation;
 - state lattices;
 - transition models;
 - effect gates;
@@ -73,6 +74,7 @@ Core seed documents:
 - [`docs/C_CPP_FOUNDATION_DIRECTION.md`](docs/C_CPP_FOUNDATION_DIRECTION.md) — constrained C/C++ foundation direction.
 - [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md) — governed C++ authority-layer contract.
 - [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md) — exact constrained C++ authority-layer implementation plan before code.
+- [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md) — initial no-effect constrained C++ authority layer.
 - [`docs/LANGUAGE_NAMING_POLICY.md`](docs/LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy.
 - [`docs/LANGUAGE_STRATEGY.md`](docs/LANGUAGE_STRATEGY.md) — C, constrained C++, Lat, L-UI, and LIR roles.
 - [`docs/SUPERVISOR_ARCHITECTURE.md`](docs/SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor and orchestration architecture.
@@ -92,11 +94,12 @@ Completion percentages are planning estimates only. They are not release promise
 
 ## Current implementation areas
 
-The repository currently includes guarded documents, tests, and no-effect C implementation slices for:
+The repository currently includes guarded documents, tests, no-effect C implementation slices, and the first no-effect constrained C++ authority-layer slice for:
 
 - constrained C/C++ foundation direction;
 - constrained C++ authority-layer contract;
 - constrained C++ authority-layer implementation plan;
+- constrained C++ authority-layer implementation;
 - state lattice fixtures;
 - tri-plane transition preview modeling;
 - Nucleus preview reporting;
@@ -134,7 +137,7 @@ Latticra does not yet provide:
 - a production language runtime;
 - a hardened sandbox;
 - unrestricted C++ authority;
-- implemented C++ authority layer;
+- effect-performing implemented C++ authority layer;
 - network interaction;
 - self-update execution;
 - Nucleus task execution;
