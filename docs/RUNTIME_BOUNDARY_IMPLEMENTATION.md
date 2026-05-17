@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Implementation
 
 Status: initial implementation record
-Scope: C runtime boundary API surface, deterministic labels, default-deny classification, no-effect allow-mode classification, authority prerequisites, authority flag report fields, authority label report fields, Nucleus task prerequisites, Nucleus task flag report fields, render/Lat/LIR prerequisite status report fields, render/Lat/LIR prerequisite denials, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
+Scope: C runtime boundary API surface, deterministic labels, default-deny classification, no-effect allow-mode classification, authority prerequisites, authority flag report fields, authority label report fields, Nucleus task prerequisites, Nucleus task flag report fields, render/Lat/LIR prerequisite status report fields, render/Lat/LIR prerequisite denials and happy paths, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
 
 ## Purpose
 
@@ -33,6 +33,7 @@ tests/runtime_boundary_task_flag_report.c
 tests/runtime_boundary_prerequisite_status_report.c
 tests/runtime_boundary_prerequisite_denial.c
 tests/runtime_boundary_allow_modes.c
+tests/runtime_boundary_prerequisite_happy_paths.c
 scripts/test-runtime-boundary.sh
 docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md
 ```
@@ -60,10 +61,13 @@ task policy and task reason metadata copying
 task executed/mutation/server/recovery/hardware flag copying and report visibility
 render status/error metadata copying and report visibility
 render-report prerequisite denial when render metadata is missing or failed
+render-report happy path when render metadata is OK and report mode matches
 Lat parser status/error metadata copying and report visibility
 Lat validation prerequisite denial when Lat metadata is missing or failed
+Lat validation happy path when Lat metadata is OK and validation mode matches
 LIR status/error metadata copying and report visibility
 LIR validation prerequisite denial when LIR metadata is missing or failed
+LIR validation happy path when LIR metadata is OK and validation mode matches
 source identity copying
 source span metadata copying
 unknown request denial
@@ -93,6 +97,9 @@ runtime_id and record_count report fields are present
 matched no-effect report mode allows report requests
 matched no-effect validation mode allows validation requests
 matched no-effect classification mode allows classification requests
+valid render metadata allows render-report in report mode
+valid Lat parser metadata allows Lat validation in validation mode
+valid LIR metadata allows LIR validation in validation mode
 mismatched modes remain denied
 default policy denies
 source identity metadata is copied
