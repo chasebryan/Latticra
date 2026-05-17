@@ -26,6 +26,7 @@ This slice includes:
 include/latticra/runtime_boundary.h
 src/runtime_boundary.c
 tests/runtime_boundary_invariants.c
+tests/runtime_boundary_effect_flag_report.c
 scripts/test-runtime-boundary.sh
 docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md
 ```
@@ -52,7 +53,7 @@ unknown effect denial
 future-gate classification for operational request kinds
 operator-confirmation non-override behavior
 bounded report output with policy, reason, and gate state
-expanded report output for runtime_id, record_count, request, requested effect, mode, operator confirmation, authority status, authority no-effect state, task policy, task reason, no-effect flag, execution flag, mutation flag, source identity, and source span metadata
+expanded report output for runtime_id, record_count, request, requested effect, mode, operator confirmation, authority status, authority no-effect state, task policy, task reason, no-effect flag, execution flag, mutation flag, file I/O flag, network flag, server flag, recovery flag, rollback flag, hardware flag, boot flag, source identity, and source span metadata
 small-buffer rejection and clearing
 ```
 
@@ -64,7 +65,7 @@ Run:
 sh scripts/test-runtime-boundary.sh
 ```
 
-The invariant test verifies:
+The runtime boundary tests verify:
 
 ```text
 runtime boundary classification initializes a no-effect result
@@ -86,6 +87,7 @@ operator confirmation does not override policy
 runtime boundary reports are bounded
 expanded report fields are present
 source identity and source span report fields are present
+file I/O, network, server, recovery, rollback, hardware, and boot report flags are present and zero
 small buffers are rejected and cleared
 null arguments are handled safely
 ```
