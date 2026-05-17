@@ -23,6 +23,7 @@ require_file STATUS.md
 require_file README.md
 require_file docs/FOUNDATION_INDEX.md
 require_file docs/C_CPP_FOUNDATION_DIRECTION.md
+require_file docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
 require_file docs/LANGUAGE_STRATEGY.md
 require_file docs/strategy/README.md
 require_file docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
@@ -48,6 +49,7 @@ require_file tests/lat_language_grammar_invariants.c
 require_file scripts/test-lat-language-grammar.sh
 require_file fixtures/lat/minimal_module.lat
 require_file scripts/test-c-cpp-foundation-direction.sh
+require_file scripts/test-constrained-cpp-authority-layer-contract.sh
 require_file scripts/test-l-ui-source-buffer-literal-nul-policy.sh
 require_file scripts/test-l-ui-semantic-validation-contract.sh
 require_file scripts/test-l-ui-semantic-validation-implementation-plan.sh
@@ -76,14 +78,15 @@ require_contains 'docs/status/ANNOUNCEMENTS.md' README.md
 require_contains 'docs/strategy/README.md' README.md
 require_contains 'docs/project_notes/README.md' README.md
 require_contains 'C_CPP_FOUNDATION_DIRECTION.md' README.md
+require_contains 'CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md' README.md
 require_contains 'constrained C/C++ foundation direction' README.md
+require_contains 'constrained C++ authority-layer contract' README.md
 require_contains 'literal source-buffer NUL rejection policy enforcement' README.md
 require_contains 'semantic validation implementation' README.md
 require_contains 'LIR shape implementation' README.md
-require_contains 'Lat language grammar contract' README.md
-require_contains 'Lat language grammar implementation plan' README.md
 require_contains 'Lat language grammar implementation' README.md
 require_contains 'unrestricted C++ authority' README.md
+require_contains 'implemented C++ authority layer' README.md
 require_contains 'LIR execution' README.md
 require_contains 'Lat execution' README.md
 require_contains 'Lat compiler' README.md
@@ -91,20 +94,19 @@ require_contains 'Lat interpreter' README.md
 
 require_contains 'Status: public status shortcut' STATUS.md
 require_contains 'Overall Latticra system' STATUS.md
-require_contains 'Constrained C++ authority layer contract' STATUS.md
+require_contains 'Constrained C++ authority layer implementation plan' STATUS.md
 require_contains 'planning estimates only' STATUS.md
 require_contains '19%' STATUS.md
 require_contains '86%' STATUS.md
-require_contains '73%' STATUS.md
-require_contains '67%' STATUS.md
-require_contains '41%' STATUS.md
+require_contains '74%' STATUS.md
+require_contains '68%' STATUS.md
+require_contains '42%' STATUS.md
 require_contains '10%' STATUS.md
-require_contains '12%' STATUS.md
+require_contains '14%' STATUS.md
+require_contains '4%' STATUS.md
 require_contains 'C/C++ foundation direction' STATUS.md
-require_contains 'C is the metal.' STATUS.md
-require_contains 'C++ is the disciplined structure.' STATUS.md
-require_contains 'Latticra is the contract.' STATUS.md
-require_contains 'unrestricted C++ authority' STATUS.md
+require_contains 'Constrained C++ authority layer' STATUS.md
+require_contains 'implemented C++ authority layer' STATUS.md
 
 require_contains 'Status: active language direction' docs/C_CPP_FOUNDATION_DIRECTION.md
 require_contains 'C is the metal.' docs/C_CPP_FOUNDATION_DIRECTION.md
@@ -114,8 +116,26 @@ require_contains 'A constrained C/C++ foundation for a security-conscious system
 require_contains 'C secure substrate' docs/C_CPP_FOUNDATION_DIRECTION.md
 require_contains 'C++ governed authority layer' docs/C_CPP_FOUNDATION_DIRECTION.md
 require_contains 'Not unrestricted C++' docs/C_CPP_FOUNDATION_DIRECTION.md
-require_contains 'Rust is not the current public foundation direction for Latticra.' docs/C_CPP_FOUNDATION_DIRECTION.md
 require_contains 'sh scripts/test-c-cpp-foundation-direction.sh' docs/C_CPP_FOUNDATION_DIRECTION.md
+
+require_contains 'Status: constrained C++ authority layer contract' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'C++ is permitted only as a governed authority layer above the C substrate.' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'Allowed C++ responsibilities' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'Forbidden C++ posture' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'Ownership policy' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'Allocation policy' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'Exception policy' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'RTTI and reflection policy' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'Template policy' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'C ABI boundary policy' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'Effect gate policy' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'Audit policy' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'Validator policy' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'Error/result policy' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'Future implementation gate' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'cpp_authority_layer_preserves_no_effect_flags' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'sh scripts/test-constrained-cpp-authority-layer-contract.sh' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
+require_contains 'This document does not implement C++ infrastructure' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
 
 require_contains 'Scope: C, constrained C++, Lat, L-UI, LIR, and implementation ordering.' docs/LANGUAGE_STRATEGY.md
 require_contains 'C_CPP_FOUNDATION_DIRECTION.md' docs/LANGUAGE_STRATEGY.md
@@ -132,22 +152,16 @@ require_contains 'Project operations documents' docs/FOUNDATION_INDEX.md
 require_contains '../STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains '../SECURITY.md' docs/FOUNDATION_INDEX.md
 require_contains 'C_CPP_FOUNDATION_DIRECTION.md' docs/FOUNDATION_INDEX.md
+require_contains 'CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md' docs/FOUNDATION_INDEX.md
 require_contains 'LANGUAGE_STRATEGY.md' docs/FOUNDATION_INDEX.md
-require_contains 'strategy/README.md' docs/FOUNDATION_INDEX.md
-require_contains 'strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md' docs/FOUNDATION_INDEX.md
-require_contains 'status/CURRENT_STATUS.md' docs/FOUNDATION_INDEX.md
-require_contains 'status/ANNOUNCEMENTS.md' docs/FOUNDATION_INDEX.md
-require_contains 'project_notes/CURRENT_DIRECTION.md' docs/FOUNDATION_INDEX.md
-require_contains 'project_notes/UPCOMING_WORK.md' docs/FOUNDATION_INDEX.md
 require_contains 'project strategy/status framework + guardrails' docs/FOUNDATION_INDEX.md
 require_contains 'language naming policy + guardrails' docs/FOUNDATION_INDEX.md
 require_contains 'C/C++ foundation direction + guardrails' docs/FOUNDATION_INDEX.md
+require_contains 'constrained C++ authority layer contract + guardrails' docs/FOUNDATION_INDEX.md
 require_contains 'L-UI semantic validation implementation + invariants' docs/FOUNDATION_INDEX.md
 require_contains 'LIR shape implementation + invariants' docs/FOUNDATION_INDEX.md
-require_contains 'Lat language grammar contract + guardrails' docs/FOUNDATION_INDEX.md
-require_contains 'Lat language grammar implementation plan + guardrails' docs/FOUNDATION_INDEX.md
 require_contains 'Lat language grammar implementation + invariants' docs/FOUNDATION_INDEX.md
-require_contains 'Constrained C++ authority layer contract' docs/FOUNDATION_INDEX.md
+require_contains 'Constrained C++ authority layer implementation plan' docs/FOUNDATION_INDEX.md
 
 require_contains 'Status: active strategy index' docs/strategy/README.md
 require_contains '2026-05-15-2249-cdt-national-security-open-system-strategy.md' docs/strategy/README.md
@@ -163,15 +177,13 @@ require_contains 'Direction checkpoint' docs/strategy/2026-05-15-2249-cdt-nation
 require_contains 'C is the metal.' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 require_contains 'C++ is the disciplined structure.' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 require_contains 'Latticra is the contract.' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
-require_contains 'This is a constrained C/C++ foundation direction.' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
-require_contains 'Lat grammar implementation' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
-require_contains 'bounded Lat parser implementation' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
-require_contains 'Constrained C++ authority layer contract' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
-require_contains 'governed C++ policy, validator, effect-gate, audit, ownership, lifetime, exception, allocation, and boundary rules' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
+require_contains 'constrained C++ authority-layer contract' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
+require_contains 'Constrained C++ authority layer implementation plan' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
+require_contains 'implemented C++ authority layer' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 require_contains '19%' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
-require_contains '10%' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
-require_contains '12%' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
-require_contains 'unrestricted C++ authority' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
+require_contains '74%' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
+require_contains '14%' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
+require_contains '4%' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 require_contains 'Buy Me a Coffee: Bryforge' docs/strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md
 
 require_contains 'Status: active status index' docs/status/README.md
@@ -181,34 +193,35 @@ require_contains 'completion percentages' docs/status/README.md
 
 require_contains 'Status: public status record' docs/status/CURRENT_STATUS.md
 require_contains 'Last updated: 2026-05-16 16:15 CDT' docs/status/CURRENT_STATUS.md
-require_contains 'Lat grammar implementation' docs/status/CURRENT_STATUS.md
-require_contains 'Lat language grammar implementation' docs/status/CURRENT_STATUS.md
+require_contains 'governed C++ authority-layer planning' docs/status/CURRENT_STATUS.md
 require_contains 'Constrained C++ authority layer contract' docs/status/CURRENT_STATUS.md
-require_contains 'Lat execution' docs/status/CURRENT_STATUS.md
-require_contains 'Lat compiler' docs/status/CURRENT_STATUS.md
-require_contains 'Lat interpreter' docs/status/CURRENT_STATUS.md
+require_contains 'Constrained C++ authority layer implementation plan' docs/status/CURRENT_STATUS.md
+require_contains 'implemented C++ authority layer' docs/status/CURRENT_STATUS.md
 require_contains 'C/C++ foundation direction' docs/status/CURRENT_STATUS.md
-require_contains '19%' docs/status/CURRENT_STATUS.md
-require_contains '10%' docs/status/CURRENT_STATUS.md
-require_contains '12%' docs/status/CURRENT_STATUS.md
+require_contains 'Constrained C++ authority layer' docs/status/CURRENT_STATUS.md
+require_contains '74%' docs/status/CURRENT_STATUS.md
+require_contains '68%' docs/status/CURRENT_STATUS.md
+require_contains '42%' docs/status/CURRENT_STATUS.md
+require_contains '14%' docs/status/CURRENT_STATUS.md
+require_contains '4%' docs/status/CURRENT_STATUS.md
 
 require_contains 'Status: public announcement log' docs/status/ANNOUNCEMENTS.md
 require_contains '2026-05-16 16:15 CDT' docs/status/ANNOUNCEMENTS.md
-require_contains 'Lat grammar implementation' docs/status/ANNOUNCEMENTS.md
-require_contains 'sh scripts/test-lat-language-grammar.sh' docs/status/ANNOUNCEMENTS.md
 require_contains 'Constrained C++ authority layer contract' docs/status/ANNOUNCEMENTS.md
+require_contains 'sh scripts/test-constrained-cpp-authority-layer-contract.sh' docs/status/ANNOUNCEMENTS.md
+require_contains 'Constrained C++ authority layer implementation plan' docs/status/ANNOUNCEMENTS.md
 require_contains 'Non-claims' docs/status/ANNOUNCEMENTS.md
 
 require_contains 'Status: active project notes index' docs/project_notes/README.md
 require_contains 'CURRENT_DIRECTION.md' docs/project_notes/README.md
 require_contains 'UPCOMING_WORK.md' docs/project_notes/README.md
 require_contains 'Status: active project note' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'bounded Lat parser implementation' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Constrained C++ authority layer contract' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'unrestricted C++ authority' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Current C++ authority boundary' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Constrained C++ authority layer implementation plan' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'implemented C++ authority layer' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Status: active project note' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Recommended next slice' docs/project_notes/UPCOMING_WORK.md
-require_contains 'Constrained C++ authority layer contract' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Constrained C++ authority layer implementation plan' docs/project_notes/UPCOMING_WORK.md
 require_contains 'C/C++ foundation direction' docs/project_notes/UPCOMING_WORK.md
 
 require_contains 'Status: LIR shape contract' docs/LIR_SHAPE_CONTRACT.md
@@ -222,21 +235,16 @@ require_contains 'Lat-Core' docs/LAT_LANGUAGE_GRAMMAR_CONTRACT.md
 require_contains 'Status: implementation planning contract' docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md
 require_contains 'latticra_lat_parse_result_t' docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md
 require_contains 'LATTICRA_LAT_SOURCE_MAX 65536u' docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md
-require_contains 'fixtures/lat/minimal_module.lat' docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md
-require_contains 'lat_grammar_accepts_minimal_module' docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md
 require_contains 'Status: initial implementation contract' docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md
 require_contains 'latticra_lat_parse_source' docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md
-require_contains 'fixtures/lat/minimal_module.lat' docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md
-require_contains 'lat_grammar_accepts_minimal_module' docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md
 require_contains 'Constrained C++ authority layer contract' docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md
 
 require_contains 'LATTICRA_LAT_SOURCE_MAX 65536u' include/latticra/lat_parser.h
 require_contains 'latticra_lat_parse_result_t' include/latticra/lat_parser.h
 require_contains 'latticra_lat_parse_source' include/latticra/lat_parser.h
-require_contains 'latticra_lat_parse_report' include/latticra/lat_parser.h
 require_contains 'LAT GRAMMAR REPORT' src/lat_parser.c
 require_contains 'lat_grammar_accepts_minimal_module' tests/lat_language_grammar_invariants.c
 require_contains 'lat module RootModule' fixtures/lat/minimal_module.lat
-require_contains 'sh scripts/test-lat-language-grammar.sh' docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md
+require_contains 'Run constrained C++ authority layer contract guard' .github/workflows/c.yml
 
 printf 'project_strategy_status_framework: ok\n'
