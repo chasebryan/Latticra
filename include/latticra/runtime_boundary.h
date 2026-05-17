@@ -157,6 +157,11 @@ typedef struct {
     latticra_runtime_boundary_authority_summary_t authority;
     latticra_nucleus_task_policy_t task_policy;
     latticra_nucleus_task_denial_t task_reason;
+    int task_executed;
+    int task_mutation_allowed;
+    int task_server_interaction_allowed;
+    int task_recovery_allowed;
+    int task_hardware_allowed;
     char source_identity[LATTICRA_RUNTIME_BOUNDARY_SOURCE_IDENTITY_MAX];
     latticra_l_ui_source_span_t source_span;
     int executed;
