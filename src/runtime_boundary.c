@@ -87,6 +87,14 @@ static void seed_result(latticra_runtime_boundary_result_t *result) {
     result->record.task_reason = LATTICRA_NUCLEUS_TASK_DENIAL_IMPLEMENTATION_NOT_PRESENT;
 }
 
+static void copy_runtime_id(const latticra_runtime_boundary_request_t *request, latticra_runtime_boundary_result_t *result) {
+    size_t n;
+    n = strlen(request->runtime_id);
+    if (n >= sizeof(result->record.runtime_id)) n = sizeof(result->record.runtime_id) - 1u;
+    memcpy(result->record.runtime_id, request->runtime_id, n);
+    result->record.runtime_id[n] = '\0';
+}
+
 static void copy_source_identity(const latticra_runtime_boundary_request_t *request, latticra_runtime_boundary_result_t *result) {
     size_t n;
     if (request->source_identity == 0 || request->source_identity_len == 0u) return;
@@ -111,6 +119,7 @@ latticra_status_t latticra_runtime_boundary_classify(const latticra_runtime_boun
         result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_NULL_ARGUMENT;
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
+    copy_runtime_id(request, result);
     result->record.request_kind = request->request_kind;
     result->record.requested_effect = request->requested_effect;
     result->record.mode = request->mode;
@@ -157,7 +166,9 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
     if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
     buffer[0] = '\0';
     written = snprintf(buffer, buffer_len,
-        "LATTICRA RUNTIME BOUNDARY REPORT\nrequest=%s\nrequested_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nauthority_status=%d\nauthority_no_effect=%d\ntask_policy=%s\ntask_reason=%s\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
+        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nauthority_status=%d\nauthority_no_effect=%d\ntask_policy=%s\ntask_reason=%s\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
+        result->record.runtime_id,
+        (unsigned long)result->record_count,
         latticra_runtime_boundary_request_kind_label(result->record.request_kind),
         latticra_runtime_boundary_effect_label(result->record.requested_effect),
         latticra_runtime_boundary_mode_label(result->record.mode),
