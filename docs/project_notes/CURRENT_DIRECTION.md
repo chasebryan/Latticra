@@ -63,6 +63,14 @@ deterministic authority report rendering
 
 The implementation does not provide unrestricted C++ authority, an effect-performing implemented C++ authority layer, runtime execution, mutation authority, file authority, network authority, recovery authority, hardware authority, or production security guarantees.
 
+## Current L-UI rendering boundary
+
+The L-UI rendering contract now defines the first future rendering boundary.
+
+It allows planning for deterministic operator-visible text output over validated L-UI/LIR metadata only.
+
+It does not implement L-UI rendering, terminal control, interactive UI behavior, command behavior, Lat execution, LIR execution, Nucleus task execution, mutation, file I/O, network I/O, recovery behavior, hardware behavior, or production UI claims.
+
 ## Mission target
 
 The long-term mission is to build a complete open-source operating-system universe and programming-language stack that makes unsafe behavior harder to hide and easier to inspect.
@@ -83,16 +91,16 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, and first no-effect C++ authority implementation toward L-UI rendering contract work.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, and L-UI rendering contract toward L-UI rendering implementation planning.
 
 The next recommended implementation lane is:
 
 ```text
-L-UI rendering contract
+L-UI rendering implementation plan
 ```
 
 ## Current non-claim
 
-Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing implemented C++ authority layer, provide a Lat runtime, or provide a production security boundary.
+Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing implemented C++ authority layer, provide implemented L-UI rendering, provide a Lat runtime, or provide a production security boundary.
 
 Those are long-term goals and design targets, not current claims.

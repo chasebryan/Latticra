@@ -57,12 +57,18 @@ Constrained C++ authority layer implementation plan
 Constrained C++ authority layer implementation
 ```
 
-## Current next step
+## Latest completed contract slice
 
 ```text
 L-UI rendering contract
 ```
 
+## Current next step
+
+```text
+L-UI rendering implementation plan
+```
+
 ## Non-claims
 
-Latticra does not currently provide a finished operating system, hardened sandbox, production security boundary, malware prevention, ransomware prevention, production runtime, unrestricted C++ authority, effect-performing implemented C++ authority layer, or public release readiness.
+Latticra does not currently provide a finished operating system, hardened sandbox, production security boundary, malware prevention, ransomware prevention, production runtime, unrestricted C++ authority, effect-performing implemented C++ authority layer, implemented L-UI rendering, or public release readiness.

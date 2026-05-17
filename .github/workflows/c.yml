@@ -133,6 +133,8 @@ jobs:
         run: sh scripts/test-lir-shape-implementation-plan.sh
       - name: Run LIR shape tests
         run: sh scripts/test-lir-shape.sh
+      - name: Run L-UI rendering contract guard
+        run: sh scripts/test-l-ui-rendering-contract.sh
       - name: Run L-UI string-literal escape contract guard
         run: sh scripts/test-l-ui-string-literal-escape-contract.sh
       - name: Run L-UI string-literal escape implementation plan guard
