@@ -17,6 +17,7 @@ The repository currently emphasizes:
 - governed C++ authority-layer planning;
 - initial no-effect constrained C++ authority-layer implementation;
 - L-UI rendering contract planning;
+- L-UI rendering implementation planning;
 - L-UI parser and AST foundation;
 - deterministic diagnostics;
 - source-span metadata;
@@ -98,6 +99,7 @@ Constrained C++ authority layer contract
 Constrained C++ authority layer implementation plan
 Constrained C++ authority layer implementation
 L-UI rendering contract
+L-UI rendering implementation plan
 security policy
 public legacy association guard
 strategy index
@@ -139,12 +141,20 @@ The long-term goal is to make malicious behavior harder to hide and easier to in
 
 This is a mission direction, not a current security guarantee.
 
+## Previous planning slice
+
+Previous planning slice:
+
+```text
+Constrained C++ authority layer implementation plan
+```
+
 ## Latest completed planning slice
 
 Latest completed planning slice:
 
 ```text
-Constrained C++ authority layer implementation plan
+L-UI rendering implementation plan
 ```
 
 ## Latest completed implementation slice
@@ -168,13 +178,12 @@ L-UI rendering contract
 Recommended next work:
 
 ```text
-L-UI rendering implementation plan
+L-UI rendering implementation
 ```
 
 After that:
 
 ```text
-L-UI rendering implementation
 Nucleus task execution contract
 Runtime boundary contract
 ```
