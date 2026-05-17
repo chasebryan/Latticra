@@ -44,6 +44,7 @@ The system direction includes:
 - Nucleus task execution contract;
 - Nucleus task execution implementation plan;
 - Nucleus task execution implementation;
+- Runtime boundary contract;
 - L-UI rendering contract;
 - L-UI rendering implementation plan;
 - L-UI rendering implementation;
@@ -84,6 +85,7 @@ Core seed documents:
 - [`docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md`](docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md) — first Nucleus task execution contract before task execution code.
 - [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md) — exact Nucleus task execution implementation plan before task execution code.
 - [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md) — initial no-effect C Nucleus task classification/report implementation.
+- [`docs/RUNTIME_BOUNDARY_CONTRACT.md`](docs/RUNTIME_BOUNDARY_CONTRACT.md) — first runtime boundary contract before runtime behavior.
 - [`docs/L_UI_RENDERING_CONTRACT.md`](docs/L_UI_RENDERING_CONTRACT.md) — first L-UI rendering contract before renderer implementation.
 - [`docs/L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](docs/L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI rendering implementation plan before renderer code.
 - [`docs/L_UI_RENDERING_IMPLEMENTATION.md`](docs/L_UI_RENDERING_IMPLEMENTATION.md) — initial no-effect C L-UI renderer implementation.
@@ -115,6 +117,7 @@ The repository currently includes guarded documents, tests, no-effect C implemen
 - Nucleus task execution contract;
 - Nucleus task execution implementation plan;
 - Nucleus task execution implementation;
+- Runtime boundary contract;
 - L-UI rendering contract;
 - L-UI rendering implementation plan;
 - L-UI rendering implementation;
@@ -159,6 +162,8 @@ Latticra does not yet provide:
 - network interaction;
 - self-update execution;
 - effect-performing Nucleus task execution;
+- runtime behavior;
+- command execution;
 - interactive L-UI rendering;
 - terminal-control L-UI rendering;
 - LIR execution;

@@ -23,6 +23,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NUCLEUS_TASK_EXECUTION_CONTRACT.md`](NUCLEUS_TASK_EXECUTION_CONTRACT.md) — first denied-by-default Nucleus task execution contract before task execution code.
 - [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md) — exact Nucleus task execution implementation plan before task execution code.
 - [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md) — first no-effect C Nucleus task classification/report implementation.
+- [`RUNTIME_BOUNDARY_CONTRACT.md`](RUNTIME_BOUNDARY_CONTRACT.md) — first disabled-by-default runtime boundary contract before runtime behavior.
 - [`L_UI_RENDERING_CONTRACT.md`](L_UI_RENDERING_CONTRACT.md) — first L-UI rendering contract before renderer implementation.
 - [`L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI rendering implementation plan before renderer code.
 - [`L_UI_RENDERING_IMPLEMENTATION.md`](L_UI_RENDERING_IMPLEMENTATION.md) — first no-effect C L-UI renderer implementation.
@@ -60,6 +61,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NUCLEUS_TASK_EXECUTION_CONTRACT.md`](NUCLEUS_TASK_EXECUTION_CONTRACT.md) — future task execution boundary, prerequisites, authority checks, effect gates, task records, reports, and non-claims before execution code.
 - [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md) — exact future Nucleus task API, structs, enums, reports, buffers, tests, and non-claims before task execution code.
 - [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md) — first no-effect task classification, denied-by-default policy, authority prerequisites, deterministic reports, and invariants.
+- [`RUNTIME_BOUNDARY_CONTRACT.md`](RUNTIME_BOUNDARY_CONTRACT.md) — first runtime boundary, disabled-by-default posture, denied effects, prerequisites, report surface, and non-claims before runtime code.
 - [`L_UI_STATIC_REPORT.md`](L_UI_STATIC_REPORT.md) — terminal-facing L-UI static report fixture for Nucleus/state rails.
 - [`L_UI_SOURCE_GRAMMAR.md`](L_UI_SOURCE_GRAMMAR.md) — L-UI source grammar draft and `.lui` fixture guardrails.
 - [`L_UI_PARSER_DESIGN.md`](L_UI_PARSER_DESIGN.md) — parser design contract, error categories, no-effect constraints, and implementation gate.
@@ -123,6 +125,7 @@ Nucleus preview request classification + report invariants
 Nucleus task execution contract + guardrails
 Nucleus task execution implementation plan + guardrails
 Nucleus task execution implementation + invariants
+Runtime boundary contract + guardrails
 L-UI static report fixture + rail invariants
 L-UI source grammar draft + fixture guardrails
 L-UI parser design contract + guardrails
@@ -183,7 +186,7 @@ L-UI rendering implementation + invariants
 The next implementation target should be:
 
 ```text
-Runtime boundary contract
+Runtime boundary implementation plan
 ```
 
-That target should define the first runtime boundary contract before any runtime behavior, including allowed surfaces, denied effects, execution limits, authority prerequisites, task prerequisites, report expectations, future files, exact tests, compatibility expectations, and non-claims.
+That target should define exact public API, header path, source path, runtime request struct, runtime record struct, runtime result struct, runtime mode enum, runtime policy enum, runtime denial enum, authority summary usage, Nucleus task result usage, effect-gate state usage, operator-confirmation metadata, report format, capacity constants, output-buffer behavior, exact tests, compatibility expectations, and non-claims before runtime boundary code.

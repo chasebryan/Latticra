@@ -47,6 +47,8 @@ jobs:
         run: sh scripts/test-nucleus-task-execution-implementation-plan.sh
       - name: Run Nucleus task execution tests
         run: sh scripts/test-nucleus-task-execution.sh
+      - name: Run runtime boundary contract guard
+        run: sh scripts/test-runtime-boundary-contract.sh
       - name: Run L-UI static report tests
         run: sh scripts/test-l-ui-static-report.sh
       - name: Run L-UI grammar fixture tests

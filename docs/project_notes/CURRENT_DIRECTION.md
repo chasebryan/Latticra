@@ -73,11 +73,19 @@ It does not provide terminal control, interactive UI behavior, command behavior,
 
 ## Current Nucleus task boundary
 
-The Nucleus task execution lane now has a contract, implementation plan, and first no-effect C classification/report implementation.
+The Nucleus task execution lane has a contract, implementation plan, and first no-effect C classification/report implementation.
 
 The current implementation provides denied-by-default task classification and deterministic task reports with explicit request kinds, effects, policies, denial reasons, authority metadata, preview prerequisites, and no-effect flags.
 
 It does not implement effect-performing Nucleus task execution, command behavior, mutation, network behavior, recovery behavior, hardware behavior, boot behavior, rollback, or production runtime claims.
+
+## Current runtime boundary
+
+The runtime boundary contract now defines the first explicit line between validated metadata/report/classification surfaces and future runtime behavior.
+
+It establishes a disabled-by-default runtime posture, report/validation/preview/classification-only eligible surfaces, explicit authority/task/effect prerequisites, deterministic runtime boundary report expectations, future files, exact future tests, compatibility expectations, and non-claims before any runtime boundary implementation code.
+
+It does not implement runtime behavior, command execution, Lat execution, LIR execution, task effect execution, mutation, file I/O, network I/O, recovery behavior, rollback, hardware behavior, boot behavior, terminal control, sandboxing, or production runtime claims.
 
 ## Mission target
 
@@ -99,16 +107,16 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, and first no-effect Nucleus task classification/report implementation toward the runtime boundary contract.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, and runtime boundary contract toward runtime boundary implementation planning.
 
 The next recommended implementation lane is:
 
 ```text
-Runtime boundary contract
+Runtime boundary implementation plan
 ```
 
 ## Current non-claim
 
-Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide effect-performing Nucleus task execution, provide interactive L-UI rendering, provide terminal-control L-UI rendering, provide a Lat runtime, or provide a production security boundary.
+Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide effect-performing Nucleus task execution, provide runtime behavior, provide command execution, provide interactive L-UI rendering, provide terminal-control L-UI rendering, provide a Lat runtime, or provide a production security boundary.
 
 Those are long-term goals and design targets, not current claims.

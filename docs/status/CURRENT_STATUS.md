@@ -22,6 +22,7 @@ The repository currently emphasizes:
 - Nucleus task execution contract planning;
 - Nucleus task execution implementation planning;
 - initial no-effect Nucleus task execution classification/report implementation;
+- Runtime boundary contract planning;
 - L-UI parser and AST foundation;
 - deterministic diagnostics;
 - source-span metadata;
@@ -75,6 +76,7 @@ Nucleus preview request classification
 Nucleus task execution contract
 Nucleus task execution implementation plan
 Nucleus task execution implementation
+Runtime boundary contract
 L-UI static report fixture
 L-UI source grammar fixtures
 L-UI parser implementation
@@ -124,6 +126,8 @@ Latticra does not currently provide:
 - an installer;
 - a recovery writer;
 - a production language runtime;
+- runtime behavior;
+- command execution;
 - a hardened sandbox;
 - unrestricted C++ authority;
 - effect-performing implemented C++ authority layer;
@@ -146,7 +150,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make malicious behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, and denied-by-default task boundaries.
+The long-term goal is to make malicious behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, and explicit runtime boundaries.
 
 This is a mission direction, not a current security guarantee.
 
@@ -203,12 +207,20 @@ Constrained C++ authority layer implementation
 Latest completed contract slice:
 
 ```text
-Nucleus task execution contract
+Runtime boundary contract
 ```
 
 ## Previous contract slice
 
 Previous contract slice:
+
+```text
+Nucleus task execution contract
+```
+
+## Earlier contract slice
+
+Earlier contract slice:
 
 ```text
 L-UI rendering contract
@@ -219,14 +231,14 @@ L-UI rendering contract
 Recommended next work:
 
 ```text
-Runtime boundary contract
+Runtime boundary implementation plan
 ```
 
 After that:
 
 ```text
 Defensive threat model contract
-Runtime boundary implementation plan
+Runtime boundary implementation
 ```
 
 ## Update rule
