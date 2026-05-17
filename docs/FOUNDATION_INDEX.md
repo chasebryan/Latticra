@@ -21,6 +21,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md) — Constrained C++ authority layer implementation plan for exact API, namespace, file path, build, exception, RTTI, allocation, ownership, C ABI, validator, audit report, and test planning before implementation code.
 - [`CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md) — first no-effect constrained C++ authority implementation.
 - [`NUCLEUS_TASK_EXECUTION_CONTRACT.md`](NUCLEUS_TASK_EXECUTION_CONTRACT.md) — first denied-by-default Nucleus task execution contract before task execution code.
+- [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md) — exact Nucleus task execution implementation plan before task execution code.
 - [`L_UI_RENDERING_CONTRACT.md`](L_UI_RENDERING_CONTRACT.md) — first L-UI rendering contract before renderer implementation.
 - [`L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI rendering implementation plan before renderer code.
 - [`L_UI_RENDERING_IMPLEMENTATION.md`](L_UI_RENDERING_IMPLEMENTATION.md) — first no-effect C L-UI renderer implementation.
@@ -56,6 +57,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`TRI_PLANE_TRANSITION.md`](TRI_PLANE_TRANSITION.md) — pure preview transition model, denial reasons, and no-effect invariants.
 - [`NUCLEUS_PREVIEW.md`](NUCLEUS_PREVIEW.md) — Nucleus request/effect classification, report surface, and no-execution invariants.
 - [`NUCLEUS_TASK_EXECUTION_CONTRACT.md`](NUCLEUS_TASK_EXECUTION_CONTRACT.md) — future task execution boundary, prerequisites, authority checks, effect gates, task records, reports, and non-claims before execution code.
+- [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md) — exact future Nucleus task API, structs, enums, reports, buffers, tests, and non-claims before task execution code.
 - [`L_UI_STATIC_REPORT.md`](L_UI_STATIC_REPORT.md) — terminal-facing L-UI static report fixture for Nucleus/state rails.
 - [`L_UI_SOURCE_GRAMMAR.md`](L_UI_SOURCE_GRAMMAR.md) — L-UI source grammar draft and `.lui` fixture guardrails.
 - [`L_UI_PARSER_DESIGN.md`](L_UI_PARSER_DESIGN.md) — parser design contract, error categories, no-effect constraints, and implementation gate.
@@ -117,6 +119,7 @@ state lattice fixture + invariant tests
 tri-plane transition model + invariant tests
 Nucleus preview request classification + report invariants
 Nucleus task execution contract + guardrails
+Nucleus task execution implementation plan + guardrails
 L-UI static report fixture + rail invariants
 L-UI source grammar draft + fixture guardrails
 L-UI parser design contract + guardrails
@@ -177,7 +180,7 @@ L-UI rendering implementation + invariants
 The next implementation target should be:
 
 ```text
-Nucleus task execution implementation plan
+Nucleus task execution implementation
 ```
 
-That target should define exact public API, header path, source path, task request struct, task result struct, task record struct, policy enum, denial enum, effect-gate enum usage, authority summary usage, operator-confirmation metadata, rollback metadata, report format, capacity constants, output-buffer behavior, exact tests, compatibility expectations, and non-claims before any task execution code.
+That target should implement the first no-effect C Nucleus task classification/report surface with explicit API, denied-by-default policy, authority prerequisites, effect-gate metadata, caller-provided buffers, deterministic reports, and invariant tests.
