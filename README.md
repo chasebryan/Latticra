@@ -39,6 +39,7 @@ The system direction includes:
 
 - constrained C/C++ foundation direction;
 - constrained C++ authority-layer contract;
+- constrained C++ authority-layer implementation plan;
 - state lattices;
 - transition models;
 - effect gates;
@@ -71,6 +72,7 @@ Core seed documents:
 - [`docs/ARCHITECTURE_SEED.md`](docs/ARCHITECTURE_SEED.md) — initial architecture vocabulary and direction.
 - [`docs/C_CPP_FOUNDATION_DIRECTION.md`](docs/C_CPP_FOUNDATION_DIRECTION.md) — constrained C/C++ foundation direction.
 - [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md) — governed C++ authority-layer contract.
+- [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md) — exact constrained C++ authority-layer implementation plan before code.
 - [`docs/LANGUAGE_NAMING_POLICY.md`](docs/LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy.
 - [`docs/LANGUAGE_STRATEGY.md`](docs/LANGUAGE_STRATEGY.md) — C, constrained C++, Lat, L-UI, and LIR roles.
 - [`docs/SUPERVISOR_ARCHITECTURE.md`](docs/SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor and orchestration architecture.
@@ -94,6 +96,7 @@ The repository currently includes guarded documents, tests, and no-effect C impl
 
 - constrained C/C++ foundation direction;
 - constrained C++ authority-layer contract;
+- constrained C++ authority-layer implementation plan;
 - state lattice fixtures;
 - tri-plane transition preview modeling;
 - Nucleus preview reporting;
@@ -106,7 +109,7 @@ The repository currently includes guarded documents, tests, and no-effect C impl
 - escaped string reporting;
 - source-backed AST text extraction;
 - length-carrying AST string storage;
-- decoded NUL acceptance through escaped `\x00`;
+- decoded NUL acceptance through escaped `\\x00`;
 - literal source-buffer NUL rejection policy enforcement;
 - semantic validation contract;
 - semantic validation implementation plan;
