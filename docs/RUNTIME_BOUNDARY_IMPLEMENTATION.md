@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Implementation
 
 Status: initial implementation record
-Scope: C runtime boundary API surface, deterministic labels, default-deny classification, future-gate classification, smoke invariants, caller-provided report buffer, no-effect posture, and non-claims.
+Scope: C runtime boundary API surface, deterministic labels, default-deny classification, authority prerequisites, Nucleus task prerequisites, future-gate classification, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
 
 ## Purpose
 
@@ -39,6 +39,10 @@ The source provides:
 ```text
 deterministic request/effect/mode/policy/denial/gate/operator labels
 default-deny classification
+authority presence and status checks
+authority no-effect flag checks
+Nucleus task-result prerequisite checks for task-report requests
+task policy and task reason metadata copying
 unknown request denial
 unknown effect denial
 future-gate classification for operational request kinds
@@ -60,6 +64,11 @@ The invariant test verifies:
 ```text
 runtime boundary classification initializes a no-effect result
 default policy denies
+missing authority is denied
+failed authority status is denied
+non-no-effect authority flags are denied
+missing Nucleus task metadata is denied for task reports
+valid Nucleus task metadata is copied for task reports
 unknown requests are denied
 unknown effects are denied
 operational request kinds require a future gate
