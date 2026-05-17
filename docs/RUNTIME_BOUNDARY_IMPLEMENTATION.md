@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Implementation
 
 Status: initial implementation record
-Scope: C runtime boundary API surface, deterministic labels, default-deny classification, authority prerequisites, authority flag report fields, authority label report fields, Nucleus task prerequisites, Nucleus task flag report fields, render/Lat/LIR prerequisite status report fields, render/Lat/LIR prerequisite denials, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
+Scope: C runtime boundary API surface, deterministic labels, default-deny classification, no-effect allow-mode classification, authority prerequisites, authority flag report fields, authority label report fields, Nucleus task prerequisites, Nucleus task flag report fields, render/Lat/LIR prerequisite status report fields, render/Lat/LIR prerequisite denials, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
 
 ## Purpose
 
@@ -32,6 +32,7 @@ tests/runtime_boundary_authority_label_report.c
 tests/runtime_boundary_task_flag_report.c
 tests/runtime_boundary_prerequisite_status_report.c
 tests/runtime_boundary_prerequisite_denial.c
+tests/runtime_boundary_allow_modes.c
 scripts/test-runtime-boundary.sh
 docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md
 ```
@@ -45,6 +46,9 @@ The source provides:
 ```text
 deterministic request/effect/mode/policy/denial/gate/operator labels
 default-deny classification
+no-effect report-mode allow classification
+no-effect validation-mode allow classification
+no-effect classification-mode allow classification
 runtime_id copying
 record_count initialization and report visibility
 authority presence and status checks
@@ -86,6 +90,10 @@ runtime boundary classification initializes a no-effect result
 runtime_id is copied from request to record
 record_count is initialized
 runtime_id and record_count report fields are present
+matched no-effect report mode allows report requests
+matched no-effect validation mode allows validation requests
+matched no-effect classification mode allows classification requests
+mismatched modes remain denied
 default policy denies
 source identity metadata is copied
 source span metadata is copied
