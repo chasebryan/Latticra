@@ -48,15 +48,15 @@ Latticra is the contract.
 ## Latest completed slice
 
 ```text
-Constrained C++ authority layer implementation plan
+Constrained C++ authority layer implementation
 ```
 
 ## Current next step
 
 ```text
-Constrained C++ authority layer implementation
+L-UI rendering contract
 ```
 
 ## Non-claims
 
-Latticra does not currently provide a finished operating system, hardened sandbox, production security boundary, malware prevention, ransomware prevention, production runtime, unrestricted C++ authority, implemented C++ authority layer, or public release readiness.
+Latticra does not currently provide a finished operating system, hardened sandbox, production security boundary, malware prevention, ransomware prevention, production runtime, unrestricted C++ authority, effect-performing implemented C++ authority layer, or public release readiness.
