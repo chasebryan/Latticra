@@ -41,6 +41,7 @@ The system direction includes:
 - constrained C++ authority-layer contract;
 - constrained C++ authority-layer implementation plan;
 - constrained C++ authority-layer implementation;
+- Nucleus task execution contract;
 - L-UI rendering contract;
 - L-UI rendering implementation plan;
 - L-UI rendering implementation;
@@ -78,6 +79,7 @@ Core seed documents:
 - [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md) — governed C++ authority-layer contract.
 - [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md) — exact constrained C++ authority-layer implementation plan before code.
 - [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md) — initial no-effect constrained C++ authority layer.
+- [`docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md`](docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md) — first Nucleus task execution contract before task execution code.
 - [`docs/L_UI_RENDERING_CONTRACT.md`](docs/L_UI_RENDERING_CONTRACT.md) — first L-UI rendering contract before renderer implementation.
 - [`docs/L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](docs/L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI rendering implementation plan before renderer code.
 - [`docs/L_UI_RENDERING_IMPLEMENTATION.md`](docs/L_UI_RENDERING_IMPLEMENTATION.md) — initial no-effect C L-UI renderer implementation.
@@ -106,6 +108,7 @@ The repository currently includes guarded documents, tests, no-effect C implemen
 - constrained C++ authority-layer contract;
 - constrained C++ authority-layer implementation plan;
 - constrained C++ authority-layer implementation;
+- Nucleus task execution contract;
 - L-UI rendering contract;
 - L-UI rendering implementation plan;
 - L-UI rendering implementation;
