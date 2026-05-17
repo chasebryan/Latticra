@@ -14,6 +14,7 @@ The repository currently emphasizes:
 - strategy and status documentation;
 - security-policy documentation;
 - constrained C/C++ foundation direction;
+- governed C++ authority-layer planning;
 - L-UI parser and AST foundation;
 - deterministic diagnostics;
 - source-span metadata;
@@ -44,12 +45,13 @@ These percentages are planning estimates only.
 | --- | ---: |
 | Overall Latticra system | 19% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 73% |
-| Public documentation posture | 67% |
-| Strategy/status/funding framework | 41% |
+| Foundation documents and contracts | 74% |
+| Public documentation posture | 68% |
+| Strategy/status/funding framework | 42% |
 | Lat / Latticra Programming Language | 10% |
 | LIR / Intermediate Representation | 10% |
-| C/C++ foundation direction | 12% |
+| C/C++ foundation direction | 14% |
+| Constrained C++ authority layer | 4% |
 | Nucleus real task execution | 10% |
 | Runtime / operating-system-universe direction | 5% |
 | Security-hardening implementation | 5% |
@@ -90,6 +92,7 @@ Lat language grammar contract
 Lat language grammar implementation plan
 Lat language grammar implementation
 C/C++ foundation direction
+Constrained C++ authority layer contract
 security policy
 public legacy association guard
 strategy index
@@ -108,6 +111,7 @@ Latticra does not currently provide:
 - a production language runtime;
 - a hardened sandbox;
 - unrestricted C++ authority;
+- implemented C++ authority layer;
 - malware prevention;
 - ransomware prevention;
 - network interaction;
@@ -135,12 +139,13 @@ This is a mission direction, not a current security guarantee.
 Recommended next work:
 
 ```text
-Constrained C++ authority layer contract
+Constrained C++ authority layer implementation plan
 ```
 
 After that:
 
 ```text
+Constrained C++ authority layer implementation
 L-UI rendering contract
 Nucleus task execution contract
 ```

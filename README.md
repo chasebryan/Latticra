@@ -38,6 +38,7 @@ Latticra treats complex computing behavior as structured state spaces with expli
 The system direction includes:
 
 - constrained C/C++ foundation direction;
+- constrained C++ authority-layer contract;
 - state lattices;
 - transition models;
 - effect gates;
@@ -69,6 +70,7 @@ Core seed documents:
 - [`docs/NON_CLAIMS.md`](docs/NON_CLAIMS.md) — claims Latticra does not currently make.
 - [`docs/ARCHITECTURE_SEED.md`](docs/ARCHITECTURE_SEED.md) — initial architecture vocabulary and direction.
 - [`docs/C_CPP_FOUNDATION_DIRECTION.md`](docs/C_CPP_FOUNDATION_DIRECTION.md) — constrained C/C++ foundation direction.
+- [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md) — governed C++ authority-layer contract.
 - [`docs/LANGUAGE_NAMING_POLICY.md`](docs/LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy.
 - [`docs/LANGUAGE_STRATEGY.md`](docs/LANGUAGE_STRATEGY.md) — C, constrained C++, Lat, L-UI, and LIR roles.
 - [`docs/SUPERVISOR_ARCHITECTURE.md`](docs/SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor and orchestration architecture.
@@ -91,6 +93,7 @@ Completion percentages are planning estimates only. They are not release promise
 The repository currently includes guarded documents, tests, and no-effect C implementation slices for:
 
 - constrained C/C++ foundation direction;
+- constrained C++ authority-layer contract;
 - state lattice fixtures;
 - tri-plane transition preview modeling;
 - Nucleus preview reporting;
@@ -128,6 +131,7 @@ Latticra does not yet provide:
 - a production language runtime;
 - a hardened sandbox;
 - unrestricted C++ authority;
+- implemented C++ authority layer;
 - network interaction;
 - self-update execution;
 - Nucleus task execution;

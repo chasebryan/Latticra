@@ -114,6 +114,7 @@ Early mechanisms that support this goal:
 - LIR shape planning;
 - Lat grammar implementation;
 - constrained C substrate behavior;
+- constrained C++ authority-layer contract;
 - governed C++ authority-layer planning;
 - deterministic diagnostics;
 - no-effect defaults;
@@ -137,10 +138,11 @@ Estimated as of 2026-05-16 16:15 CDT:
 | --- | ---: |
 | Overall Latticra system | 19% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation docs and contracts | 73% |
+| Foundation docs and contracts | 74% |
 | Lat / Latticra Programming Language | 10% |
 | LIR | 10% |
-| C/C++ foundation direction | 12% |
+| C/C++ foundation direction | 14% |
+| Constrained C++ authority layer | 4% |
 | Nucleus real task execution | 10% |
 | Runtime / OS-universe direction | 5% |
 | Security-hardening implementation | 5% |
@@ -153,9 +155,9 @@ These percentages are rough planning estimates, not formal release metrics.
 1. Keep public docs professional and self-contained.
 2. Keep security claims evidence-bound.
 3. Preserve the constrained C/C++ foundation direction.
-4. Move from bounded Lat parser implementation toward a constrained C++ authority-layer contract.
+4. Move from constrained C++ authority-layer contract into implementation planning.
 5. Keep Lat metadata-only until separate lowering, execution, or runtime contracts exist.
-6. Define constrained C++ authority-layer contracts before C++ policy/validator implementation.
+6. Define constrained C++ authority-layer implementation plans before C++ policy/validator implementation.
 7. Expand Nucleus from preview/reporting into carefully gated execution planning.
 8. Build status reporting and public progress estimates.
 9. Maintain project notes so current direction and upcoming work remain clear.
@@ -194,13 +196,13 @@ Buy Me a Coffee: Bryforge
 Recommended next slice:
 
 ```text
-Constrained C++ authority layer contract
+Constrained C++ authority layer implementation plan
 ```
 
-This defines the governed C++ policy, validator, effect-gate, audit, ownership, lifetime, exception, allocation, and boundary rules before any C++ authority-layer implementation.
+This turns the constrained C++ authority-layer contract into exact API, namespace, file path, build, exception, RTTI, allocation, ownership, C ABI, validator, audit report, and test planning before implementation code.
 
 ## Non-claims
 
-This strategy does not implement an operating system, sandbox, malware defense, ransomware defense, kernel, recovery system, update system, hardware system, production runtime, unrestricted C++ authority, or security boundary.
+This strategy does not implement an operating system, sandbox, malware defense, ransomware defense, kernel, recovery system, update system, hardware system, production runtime, unrestricted C++ authority, implemented C++ authority layer, or security boundary.
 
 It records strategic direction and quality expectations only.

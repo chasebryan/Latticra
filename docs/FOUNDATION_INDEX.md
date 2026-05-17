@@ -7,7 +7,7 @@ Scope: foundation documents, project operations records, and implementation docu
 
 This index collects the first architecture, policy, language, operations, strategy, status, and implementation documents for Latticra.
 
-Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, strategy records, status records, C/C++ foundation direction, and precursor-promotion rules before expanding real implementation work.
+Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, strategy records, status records, C/C++ foundation direction, constrained C++ authority-layer policy, and precursor-promotion rules before expanding real implementation work.
 
 ## Foundation documents
 
@@ -17,6 +17,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NON_CLAIMS.md`](NON_CLAIMS.md) — claims Latticra does not currently make.
 - [`ARCHITECTURE_SEED.md`](ARCHITECTURE_SEED.md) — initial state-lattice and software-universe vocabulary.
 - [`C_CPP_FOUNDATION_DIRECTION.md`](C_CPP_FOUNDATION_DIRECTION.md) — active constrained C/C++ foundation direction: C is the metal, C++ is the disciplined structure, Latticra is the contract.
+- [`CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md) — governed C++ policy, validator, effect-gate, audit, ownership, lifetime, allocation, exception, and boundary contract before implementation.
 - [`NAMING_SYSTEM.md`](NAMING_SYSTEM.md) — formal naming rules for professional Latticra terminology.
 - [`FEATURE_TRANSLATION_LEDGER.md`](FEATURE_TRANSLATION_LEDGER.md) — vocabulary ledger for translating exploratory labels into Latticra architecture terms.
 - [`LANGUAGE_NAMING_POLICY.md`](LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy; forbids plain `L` and `.l` as public identifiers.
@@ -120,6 +121,7 @@ Implemented/guarded foundation and operations units:
 project strategy/status framework + guardrails
 language naming policy + guardrails
 C/C++ foundation direction + guardrails
+constrained C++ authority layer contract + guardrails
 state lattice fixture + invariant tests
 tri-plane transition model + invariant tests
 Nucleus preview request classification + report invariants
@@ -180,7 +182,7 @@ L-UI string-literal escape decoding implementation + invariants
 The next implementation target should be:
 
 ```text
-Constrained C++ authority layer contract
+Constrained C++ authority layer implementation plan
 ```
 
-That target should define the governed C++ policy, validator, effect-gate, audit, ownership, lifetime, exception, allocation, and boundary rules before any C++ authority-layer implementation.
+That target should define exact API, namespace, file path, build, exception, RTTI, allocation, ownership, C ABI, validator, audit report, and test planning before implementation code.
