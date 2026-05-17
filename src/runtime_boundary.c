@@ -166,7 +166,7 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
     if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
     buffer[0] = '\0';
     written = snprintf(buffer, buffer_len,
-        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nauthority_status=%d\nauthority_no_effect=%d\ntask_policy=%s\ntask_reason=%s\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
+        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nauthority_status=%d\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
         result->record.runtime_id,
         (unsigned long)result->record_count,
         latticra_runtime_boundary_request_kind_label(result->record.request_kind),
@@ -178,6 +178,11 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         latticra_runtime_boundary_operator_confirmation_label(result->record.operator_confirmation),
         (int)result->record.authority.status,
         result->record.authority.no_effect,
+        result->record.authority.execution_allowed,
+        result->record.authority.mutation_allowed,
+        result->record.authority.server_allowed,
+        result->record.authority.recovery_allowed,
+        result->record.authority.hardware_allowed,
         latticra_nucleus_task_policy_label(result->record.task_policy),
         latticra_nucleus_task_denial_label(result->record.task_reason),
         result->no_effect,
