@@ -45,7 +45,13 @@ C++ is the disciplined structure.
 Latticra is the contract.
 ```
 
-## Latest completed slice
+## Latest completed planning slice
+
+```text
+Constrained C++ authority layer implementation plan
+```
+
+## Latest completed implementation slice
 
 ```text
 Constrained C++ authority layer implementation
