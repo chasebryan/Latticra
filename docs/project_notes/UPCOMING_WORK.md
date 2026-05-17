@@ -87,6 +87,18 @@ Purpose completed:
 implement the first no-effect C Nucleus task classification/report surface using the guarded implementation plan, with explicit API, denied-by-default policy, authority prerequisites, effect-gate metadata, caller-provided buffers, deterministic reports, and invariant tests
 ```
 
+## Earlier implementation slice
+
+```text
+L-UI rendering implementation
+```
+
+Purpose completed:
+
+```text
+implement the first no-effect C L-UI renderer using the guarded implementation plan, with explicit API, caller-provided buffers, deterministic report output, semantic/LIR/authority prerequisites, source-span rendering, length-aware text rendering, and invariant tests
+```
+
 ## Recommended next slice
 
 ```text
