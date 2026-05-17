@@ -65,9 +65,9 @@ The implementation does not provide unrestricted C++ authority, an effect-perfor
 
 ## Current L-UI rendering boundary
 
-The L-UI rendering contract now defines the first future rendering boundary.
+The L-UI rendering contract and L-UI rendering implementation plan now define the first future rendering boundary.
 
-It allows planning for deterministic operator-visible text output over validated L-UI/LIR metadata only.
+The implementation plan defines exact public API, header path, source path, render request struct, render result struct, render mode enum, render error enum, capacity constants, output buffer rules, section order, source-span rendering rules, embedded NUL rendering rules, authority metadata rendering rules, exact tests, compatibility expectations, and non-claims before renderer code.
 
 It does not implement L-UI rendering, terminal control, interactive UI behavior, command behavior, Lat execution, LIR execution, Nucleus task execution, mutation, file I/O, network I/O, recovery behavior, hardware behavior, or production UI claims.
 
@@ -91,12 +91,12 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, and L-UI rendering contract toward L-UI rendering implementation planning.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, and L-UI rendering implementation plan toward the first renderer implementation.
 
 The next recommended implementation lane is:
 
 ```text
-L-UI rendering implementation plan
+L-UI rendering implementation
 ```
 
 ## Current non-claim

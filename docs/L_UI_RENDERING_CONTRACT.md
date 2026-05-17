@@ -11,7 +11,7 @@ L-UI rendering means turning already validated L-UI/LIR metadata into determinis
 
 This document does not implement L-UI rendering.
 
-The future implementation plan should be recorded in:
+The implementation plan is recorded in:
 
 ```text
 L_UI_RENDERING_IMPLEMENTATION_PLAN.md
@@ -408,7 +408,7 @@ L-UI rendering implementation must not begin until a separate implementation pla
 16. compatibility expectations;
 17. non-claims.
 
-That plan should be recorded in:
+That plan is recorded in:
 
 ```text
 L_UI_RENDERING_IMPLEMENTATION_PLAN.md
@@ -427,7 +427,7 @@ docs/L_UI_RENDERING_IMPLEMENTATION_PLAN.md
 docs/L_UI_RENDERING_IMPLEMENTATION.md
 ```
 
-The implementation plan must confirm exact paths before renderer code is added.
+The implementation plan confirms exact paths before renderer code is added.
 
 ## Future test list
 
@@ -452,6 +452,12 @@ l_ui_rendering_does_not_change_lir_report
 l_ui_rendering_does_not_execute_bindings
 l_ui_rendering_does_not_call_nucleus_execution
 l_ui_rendering_is_deterministic
+```
+
+The implementation-plan test list is now recorded in:
+
+```text
+L_UI_RENDERING_IMPLEMENTATION_PLAN.md
 ```
 
 ## Forbidden behavior
