@@ -15,6 +15,7 @@ The repository currently emphasizes:
 - security-policy documentation;
 - constrained C/C++ foundation direction;
 - governed C++ authority-layer planning;
+- initial no-effect constrained C++ authority-layer implementation;
 - L-UI parser and AST foundation;
 - deterministic diagnostics;
 - source-span metadata;
@@ -94,6 +95,7 @@ Lat language grammar implementation
 C/C++ foundation direction
 Constrained C++ authority layer contract
 Constrained C++ authority layer implementation plan
+Constrained C++ authority layer implementation
 security policy
 public legacy association guard
 strategy index
@@ -112,7 +114,7 @@ Latticra does not currently provide:
 - a production language runtime;
 - a hardened sandbox;
 - unrestricted C++ authority;
-- implemented C++ authority layer;
+- effect-performing implemented C++ authority layer;
 - malware prevention;
 - ransomware prevention;
 - network interaction;
@@ -143,19 +145,27 @@ Latest completed planning slice:
 Constrained C++ authority layer implementation plan
 ```
 
-## Next recommended work
+## Latest completed implementation slice
 
-Recommended next work:
+Latest completed implementation slice:
 
 ```text
 Constrained C++ authority layer implementation
 ```
 
-After that:
+## Next recommended work
+
+Recommended next work:
 
 ```text
 L-UI rendering contract
+```
+
+After that:
+
+```text
 Nucleus task execution contract
+Runtime boundary contract
 ```
 
 ## Update rule
