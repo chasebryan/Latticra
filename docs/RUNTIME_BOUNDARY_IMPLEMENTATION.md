@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Implementation
 
 Status: initial implementation record
-Scope: first C runtime boundary API surface, compileable source stub, smoke invariants, caller-provided report buffer, no-effect posture, and non-claims.
+Scope: C runtime boundary API surface, deterministic labels, default-deny classification, future-gate classification, smoke invariants, caller-provided report buffer, no-effect posture, and non-claims.
 
 ## Purpose
 
@@ -14,13 +14,13 @@ docs/RUNTIME_BOUNDARY_CONTRACT.md
 docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md
 ```
 
-This slice adds the public runtime boundary API, source file, smoke invariant tests, and test runner.
+This slice adds the public runtime boundary API, source file, invariant tests, and test runner.
 
-The current source is intentionally no-effect and disabled-by-default. It does not implement operational runtime behavior.
+The current source is no-effect and disabled-by-default. It does not implement operational runtime behavior.
 
 ## Implementation files
 
-This slice adds:
+This slice includes:
 
 ```text
 include/latticra/runtime_boundary.h
@@ -34,7 +34,18 @@ docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md
 
 The public API defines request kinds, effects, modes, policies, denial labels, gate states, operator-confirmation metadata, authority summary metadata, request records, result records, classifier entry point, and report entry point.
 
-The initial source provides a compileable no-effect API surface and deterministic bounded report entry point.
+The source provides:
+
+```text
+deterministic request/effect/mode/policy/denial/gate/operator labels
+default-deny classification
+unknown request denial
+unknown effect denial
+future-gate classification for operational request kinds
+operator-confirmation non-override behavior
+bounded report output with policy, reason, and gate state
+small-buffer rejection and clearing
+```
 
 ## Validation
 
@@ -44,11 +55,17 @@ Run:
 sh scripts/test-runtime-boundary.sh
 ```
 
-The smoke test verifies:
+The invariant test verifies:
 
 ```text
 runtime boundary classification initializes a no-effect result
+default policy denies
+unknown requests are denied
+unknown effects are denied
+operational request kinds require a future gate
+operator confirmation does not override policy
 runtime boundary reports are bounded
+small buffers are rejected and cleared
 null arguments are handled safely
 ```
 
@@ -58,4 +75,4 @@ This implementation does not provide runtime behavior, command behavior, Lat exe
 
 ## Note
 
-The full classification policy remains specified in the contract and implementation plan. This first source slice establishes the public C API and compile/test surface while preserving the denied-by-default runtime boundary.
+The fuller classification policy remains specified in the contract and implementation plan. This source slice expands the public C API behavior while preserving the denied-by-default runtime boundary.
