@@ -1,0 +1,182 @@
+#!/usr/bin/env sh
+set -eu
+
+doc="docs/DEFENSIVE_THREAT_MODEL_VALIDATION.md"
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  if ! grep -Fq -- "$pattern" "$file"; then
+    printf 'defensive threat model validation: missing required pattern: %s\n' "$pattern" >&2
+    exit 1
+  fi
+}
+
+if [ ! -f "$doc" ]; then
+  printf 'defensive threat model validation: missing doc: %s\n' "$doc" >&2
+  exit 1
+fi
+
+require_contains 'Status: defensive threat model validation ledger' "$doc"
+require_contains 'This document does not implement security controls.' "$doc"
+require_contains 'Protected asset matrix' "$doc"
+require_contains 'Trust boundary matrix' "$doc"
+require_contains 'Assumption matrix' "$doc"
+require_contains 'Abuse-case mapping' "$doc"
+require_contains 'Evidence matrix' "$doc"
+require_contains 'External standards alignment ledger' "$doc"
+require_contains 'Validation matrix' "$doc"
+require_contains 'Non-goal matrix' "$doc"
+require_contains 'Compatibility expectations' "$doc"
+require_contains 'Current gaps' "$doc"
+require_contains 'Non-claims' "$doc"
+
+for source_doc in \
+  docs/DEFENSIVE_THREAT_MODEL_CONTRACT.md \
+  docs/DEFENSIVE_THREAT_MODEL_IMPLEMENTATION_PLAN.md
+do
+  require_contains "$source_doc" "$doc"
+done
+
+for asset in \
+  'source text integrity' \
+  'parse results' \
+  'diagnostic metadata' \
+  'source spans' \
+  'AST metadata' \
+  'semantic validation results' \
+  'LIR metadata' \
+  'Lat parse metadata' \
+  'L-UI render metadata' \
+  'Nucleus preview records' \
+  'Nucleus task records' \
+  'runtime boundary records' \
+  'authority audit records' \
+  'operator-visible reports' \
+  'effect-gate decisions' \
+  'project claims and status records'
+do
+  require_contains "$asset" "$doc"
+done
+
+for boundary in \
+  'source input boundary' \
+  'parser boundary' \
+  'semantic validation boundary' \
+  'LIR lowering boundary' \
+  'Lat grammar boundary' \
+  'L-UI rendering boundary' \
+  'Nucleus preview boundary' \
+  'Nucleus task classification boundary' \
+  'runtime boundary' \
+  'authority validation boundary' \
+  'operator report boundary' \
+  'repository documentation boundary' \
+  'external standards alignment boundary'
+do
+  require_contains "$boundary" "$doc"
+done
+
+for abuse in \
+  'malformed source causes unclear diagnostics' \
+  'escaped data hides operator-visible content' \
+  'literal source-buffer NUL causes parser confusion' \
+  'duplicate names cause ambiguous binding' \
+  'invalid binding prefix bypasses semantic validation' \
+  'invalid LIR input reaches rendering' \
+  'failed authority metadata is treated as allowed' \
+  'unknown request is treated as allowed' \
+  'unknown effect is treated as allowed' \
+  'future-gated request is treated as executable' \
+  'operator confirmation overrides policy' \
+  'report omits denial reason' \
+  'status documentation overclaims implementation state' \
+  'external standard is referenced as if it were certification' \
+  'outdated external guidance remains marked current'
+do
+  require_contains "$abuse" "$doc"
+done
+
+for evidence in \
+  'contract document' \
+  'implementation plan' \
+  'implementation document' \
+  'unit or invariant tests' \
+  'static guard when applicable' \
+  'deterministic report output when applicable' \
+  'negative tests for denied behavior' \
+  'status update' \
+  'non-claim update' \
+  'compatibility check' \
+  'external standards source check' \
+  'standards alignment gap entry'
+do
+  require_contains "$evidence" "$doc"
+done
+
+for external in \
+  'NSA Cybersecurity Advisories & Guidance' \
+  'https://www.nsa.gov/Press-Room/Cybersecurity-Advisories-Guidance/' \
+  'CISA Secure by Design' \
+  'https://www.cisa.gov/securebydesign' \
+  'CISA Cross-Sector Cybersecurity Performance Goals' \
+  'https://www.cisa.gov/cross-sector-cybersecurity-performance-goals' \
+  'CISA Known Exploited Vulnerabilities Catalog' \
+  'https://www.cisa.gov/known-exploited-vulnerabilities-catalog' \
+  'FBI Cyber' \
+  'https://www.fbi.gov/investigate/cyber' \
+  'Date checked: 2026-05-17' \
+  'fetcher returned 403' \
+  'manual source review' \
+  'certification/compliance/protection'
+do
+  require_contains "$external" "$doc"
+done
+
+for validation in \
+  'positive tests for allowed no-effect behavior' \
+  'negative tests for denied effect behavior' \
+  'unknown request tests' \
+  'unknown effect tests' \
+  'malformed input tests' \
+  'small-buffer tests' \
+  'deterministic report tests' \
+  'no-mutation tests' \
+  'no-network tests' \
+  'no-hardware tests' \
+  'no-recovery tests' \
+  'operator confirmation non-override tests' \
+  'status/non-claim guard tests'
+do
+  require_contains "$validation" "$doc"
+done
+
+for non_goal in \
+  'attack tooling' \
+  'exploit development' \
+  'payload generation' \
+  'credential access' \
+  'stealth behavior' \
+  'bypass instructions' \
+  'persistence mechanisms' \
+  'exfiltration behavior' \
+  'certification claim' \
+  'compliance claim' \
+  'production protection claim'
+do
+  require_contains "$non_goal" "$doc"
+done
+
+for gap in \
+  'external standards ledger needs recurring manual review' \
+  'runtime boundary source needs fuller policy expansion' \
+  'abuse-case mapping needs broader fixture coverage' \
+  'external advisory-by-advisory mapping is not complete' \
+  'no certification or compliance mapping exists'
+do
+  require_contains "$gap" "$doc"
+done
+
+require_contains 'sh scripts/test-defensive-threat-model-validation.sh' "$doc"
+
+printf 'defensive_threat_model_validation: ok\n'
