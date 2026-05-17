@@ -40,23 +40,22 @@ This does not mean unrestricted C++.
 
 ## Current C++ authority boundary
 
-The C++ authority layer is now contract-bound and implementation-plan-bound as a future governed layer.
+The C++ authority layer is now contract-bound, implementation-plan-bound, and represented by its first no-effect implementation slice.
 
-It may plan and implement only no-effect authority behavior first:
+It currently implements no-effect authority behavior only:
 
 ```text
-policy logic
-validators
-effect gates
-audit logic
-bounded orchestration structures
-operator-visible reports
-safe wrappers around C substrate APIs
+explicit status labels
+explicit effect labels
+explicit validator labels
+fixed-capacity audit records
+Lat parse-result metadata validation
+LIR shape metadata validation
+effect classification without performing effects
+deterministic authority report rendering
 ```
 
-The Constrained C++ authority layer implementation plan defines the first exact implementation boundary for API, namespace, file paths, C++ standard, compiler flags, exception policy, RTTI policy, allocation policy, ownership/lifetime rules, result labels, C ABI boundaries, validators, audit reports, and tests.
-
-It does not currently provide an implemented C++ authority layer, unrestricted C++ authority, runtime execution, mutation authority, file authority, network authority, recovery authority, hardware authority, or production security guarantee.
+The implementation does not provide unrestricted C++ authority, runtime execution, mutation authority, file authority, network authority, recovery authority, hardware authority, or production security guarantees.
 
 ## Mission target
 
@@ -78,16 +77,16 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, and constrained C++ authority-layer implementation plan toward the first no-effect authority-layer implementation.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, and first no-effect C++ authority implementation toward L-UI rendering contract work.
 
 The next recommended implementation lane is:
 
 ```text
-Constrained C++ authority layer implementation
+L-UI rendering contract
 ```
 
 ## Current non-claim
 
-Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an implemented C++ authority layer, provide a Lat runtime, or provide a production security boundary.
+Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide a Lat runtime, or provide a production security boundary.
 
 Those are long-term goals and design targets, not current claims.
