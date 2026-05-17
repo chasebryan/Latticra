@@ -39,18 +39,6 @@ Purpose completed:
 define the first contract for future Nucleus task execution boundaries, prerequisites, authority checks, no-effect defaults, denial behavior, report surfaces, exact future tests, compatibility expectations, and non-claims before any task execution code
 ```
 
-## Earlier contract slice
-
-```text
-L-UI rendering contract
-```
-
-Purpose completed:
-
-```text
-define the first contract for rendering validated L-UI/LIR metadata into operator-visible output without execution, mutation, network behavior, recovery behavior, hardware behavior, or production UI claims
-```
-
 ## Latest completed planning slice
 
 ```text
@@ -78,6 +66,18 @@ define exact public API, C implementation files, task request/result/record stru
 ## Latest completed implementation slice
 
 ```text
+Runtime boundary implementation
+```
+
+Purpose completed:
+
+```text
+add the first C runtime boundary public API, compileable source surface, smoke invariants, dedicated test runner, dedicated workflow, and implementation record while preserving disabled-by-default runtime behavior
+```
+
+## Previous implementation slice
+
+```text
 Nucleus task execution implementation
 ```
 
@@ -87,54 +87,30 @@ Purpose completed:
 implement the first no-effect C Nucleus task classification/report surface using the guarded implementation plan, with explicit API, denied-by-default policy, authority prerequisites, effect-gate metadata, caller-provided buffers, deterministic reports, and invariant tests
 ```
 
-## Previous implementation slice
-
-```text
-L-UI rendering implementation
-```
-
-Purpose completed:
-
-```text
-implement the first no-effect C L-UI renderer using the guarded implementation plan, with explicit API, caller-provided buffers, deterministic report output, semantic/LIR/authority prerequisites, source-span rendering, length-aware text rendering, and invariant tests
-```
-
-## Earlier implementation slice
-
-```text
-Constrained C++ authority layer implementation
-```
-
-Purpose completed:
-
-```text
-implement the first no-effect constrained C++ authority layer using the guarded implementation plan, with explicit API, fixed-capacity audit reporting, Lat metadata validation, LIR metadata validation, effect classification without performing effects, and invariant tests
-```
-
 ## Recommended next slice
 
 ```text
-Runtime boundary implementation
+Defensive threat model contract
 ```
 
 Purpose:
 
 ```text
-implement the first no-effect C runtime boundary classification/report surface using the guarded implementation plan, with explicit API, disabled-by-default policy, authority prerequisites, Nucleus task prerequisites, effect-gate metadata, caller-provided buffers, deterministic reports, and invariant tests
+define the first defensive threat model contract for Latticra, including protected assets, assumed adversary capabilities, non-goals, trust boundaries, evidence expectations, abuse-case vocabulary, validation expectations, and non-claims before additional security-facing implementation work
 ```
 
 ## Near-term queue
 
-1. Runtime boundary implementation.
-2. Defensive threat model contract.
+1. Defensive threat model contract.
+2. Runtime boundary refinement.
 3. Public status update after major milestones.
-4. Completion percentage review after runtime boundary implementation.
-5. Strategy estimate review after runtime boundary implementation.
+4. Completion percentage review after defensive threat model contract.
+5. Strategy estimate review after defensive threat model contract.
 6. C++ authority implementation review after initial no-effect validator/audit slice.
 7. Runtime-to-threat-model boundary review after runtime boundary implementation.
 8. L-UI rendering detailed report refinement after initial renderer implementation.
-9. Nucleus task execution refinement only after runtime boundary implementation.
-10. Runtime boundary refinement only after defensive threat model contract.
+9. Nucleus task execution refinement only after defensive threat model contract.
+10. Runtime boundary implementation expansion only after threat model review.
 
 ## Quality rules
 
@@ -157,7 +133,7 @@ consistent with the C/C++ foundation direction
 - Keep L-UI rendering no-effect and presentation-only.
 - Keep Nucleus task execution no-effect and denied-by-default.
 - Keep runtime behavior no-effect and disabled-by-default.
-- Move next into runtime boundary implementation.
+- Move next into defensive threat model contract planning.
 - Maintain professional public docs.
 - Keep status and completion estimates current.
 - Keep security ambitions framed as mission and design targets until proven.
