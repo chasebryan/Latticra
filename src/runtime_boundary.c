@@ -87,6 +87,15 @@ static void seed_result(latticra_runtime_boundary_result_t *result) {
     result->record.task_reason = LATTICRA_NUCLEUS_TASK_DENIAL_IMPLEMENTATION_NOT_PRESENT;
 }
 
+static void copy_source_identity(const latticra_runtime_boundary_request_t *request, latticra_runtime_boundary_result_t *result) {
+    size_t n;
+    if (request->source_identity == 0 || request->source_identity_len == 0u) return;
+    n = request->source_identity_len;
+    if (n >= sizeof(result->record.source_identity)) n = sizeof(result->record.source_identity) - 1u;
+    memcpy(result->record.source_identity, request->source_identity, n);
+    result->record.source_identity[n] = '\0';
+}
+
 static int authority_flags_ok(const latticra_runtime_boundary_authority_summary_t *authority) {
     return authority != 0 && authority->status == LATTICRA_STATUS_OK && authority->no_effect == 1 && authority->execution_allowed == 0 && authority->mutation_allowed == 0 && authority->server_allowed == 0 && authority->recovery_allowed == 0 && authority->hardware_allowed == 0;
 }
@@ -106,6 +115,8 @@ latticra_status_t latticra_runtime_boundary_classify(const latticra_runtime_boun
     result->record.requested_effect = request->requested_effect;
     result->record.mode = request->mode;
     result->record.operator_confirmation = request->operator_confirmation;
+    result->record.source_span = request->source_span;
+    copy_source_identity(request, result);
     if (request->authority != 0) result->record.authority = *request->authority;
     if (request->task != 0) {
         result->record.task_policy = request->task->record.policy;
@@ -146,7 +157,7 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
     if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
     buffer[0] = '\0';
     written = snprintf(buffer, buffer_len,
-        "LATTICRA RUNTIME BOUNDARY REPORT\nrequest=%s\nrequested_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nauthority_status=%d\nauthority_no_effect=%d\ntask_policy=%s\ntask_reason=%s\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\n",
+        "LATTICRA RUNTIME BOUNDARY REPORT\nrequest=%s\nrequested_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nauthority_status=%d\nauthority_no_effect=%d\ntask_policy=%s\ntask_reason=%s\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
         latticra_runtime_boundary_request_kind_label(result->record.request_kind),
         latticra_runtime_boundary_effect_label(result->record.requested_effect),
         latticra_runtime_boundary_mode_label(result->record.mode),
@@ -160,7 +171,14 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         latticra_nucleus_task_denial_label(result->record.task_reason),
         result->no_effect,
         result->execution_allowed,
-        result->mutation_allowed);
+        result->mutation_allowed,
+        result->record.source_identity,
+        (unsigned long)result->record.source_span.start_offset,
+        (unsigned long)result->record.source_span.end_offset,
+        (unsigned long)result->record.source_span.start_line,
+        (unsigned long)result->record.source_span.start_column,
+        (unsigned long)result->record.source_span.end_line,
+        (unsigned long)result->record.source_span.end_column);
     if (written < 0 || (size_t)written >= buffer_len) {
         buffer[0] = '\0';
         return LATTICRA_STATUS_BUFFER_TOO_SMALL;
