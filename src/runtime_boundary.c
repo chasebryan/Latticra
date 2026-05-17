@@ -113,6 +113,21 @@ static void copy_task_flags(const latticra_nucleus_task_result_t *task, latticra
     result->record.task_hardware_allowed = task->record.hardware_allowed;
 }
 
+static void copy_prerequisites(const latticra_runtime_boundary_request_t *request, latticra_runtime_boundary_result_t *result) {
+    if (request->render != 0) {
+        result->record.render_status = request->render->status;
+        result->record.render_error = request->render->error;
+    }
+    if (request->lat != 0) {
+        result->record.lat_status = request->lat->status;
+        result->record.lat_error = request->lat->error;
+    }
+    if (request->lir != 0) {
+        result->record.lir_status = request->lir->status;
+        result->record.lir_error = request->lir->error;
+    }
+}
+
 static int authority_flags_ok(const latticra_runtime_boundary_authority_summary_t *authority) {
     return authority != 0 && authority->status == LATTICRA_STATUS_OK && authority->no_effect == 1 && authority->execution_allowed == 0 && authority->mutation_allowed == 0 && authority->server_allowed == 0 && authority->recovery_allowed == 0 && authority->hardware_allowed == 0;
 }
@@ -135,6 +150,7 @@ latticra_status_t latticra_runtime_boundary_classify(const latticra_runtime_boun
     result->record.operator_confirmation = request->operator_confirmation;
     result->record.source_span = request->source_span;
     copy_source_identity(request, result);
+    copy_prerequisites(request, result);
     if (request->authority != 0) result->record.authority = *request->authority;
     if (request->task != 0) {
         result->record.task_policy = request->task->record.policy;
@@ -176,7 +192,7 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
     if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
     buffer[0] = '\0';
     written = snprintf(buffer, buffer_len,
-        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nauthority_status=%d\nauthority_status_label=%s\nauthority_validator=%s\nauthority_requested_effect=%s\nauthority_reason=%s\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\ntask_executed=%d\ntask_mutation_allowed=%d\ntask_server_interaction_allowed=%d\ntask_recovery_allowed=%d\ntask_hardware_allowed=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
+        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nauthority_status=%d\nauthority_status_label=%s\nauthority_validator=%s\nauthority_requested_effect=%s\nauthority_reason=%s\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\ntask_executed=%d\ntask_mutation_allowed=%d\ntask_server_interaction_allowed=%d\ntask_recovery_allowed=%d\ntask_hardware_allowed=%d\nrender_status=%d\nrender_error=%d\nlat_status=%d\nlat_error=%d\nlir_status=%d\nlir_error=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
         result->record.runtime_id,
         (unsigned long)result->record_count,
         latticra_runtime_boundary_request_kind_label(result->record.request_kind),
@@ -204,6 +220,12 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         result->record.task_server_interaction_allowed,
         result->record.task_recovery_allowed,
         result->record.task_hardware_allowed,
+        (int)result->record.render_status,
+        (int)result->record.render_error,
+        (int)result->record.lat_status,
+        (int)result->record.lat_error,
+        (int)result->record.lir_status,
+        (int)result->record.lir_error,
         result->no_effect,
         result->execution_allowed,
         result->mutation_allowed,
