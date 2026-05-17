@@ -83,6 +83,12 @@ It does not implement effect-performing Nucleus task execution, command behavior
 
 The runtime boundary lane now has a contract and implementation plan.
 
+Planning milestone preserved:
+
+```text
+Runtime boundary implementation plan
+```
+
 The implementation plan defines exact public API, C implementation files, runtime request/record/result structs, runtime mode enum, policy enum, denial enum, effect enum, authority summary usage, Nucleus task result usage, effect-gate state usage, operator-confirmation metadata, report format, capacity constants, output-buffer behavior, exact tests, compatibility expectations, and non-claims before runtime boundary code.
 
 It does not implement runtime behavior, command execution, Lat execution, LIR execution, task effect execution, mutation, file I/O, network I/O, recovery behavior, rollback, hardware behavior, boot behavior, terminal control, sandboxing, or production runtime claims.
