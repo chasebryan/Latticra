@@ -1,13 +1,13 @@
 # Latticra Foundation Index
 
-Status: initial planning index
-Scope: foundation documents, project operations records, and implementation documents.
+Status: active planning index
+Scope: foundation documents, project operations records, implementation documents, guard scripts, and current next-slice direction.
 
 ## Purpose
 
 This index collects the first architecture, policy, language, operations, strategy, status, and implementation documents for Latticra.
 
-Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, strategy records, status records, C/C++ foundation direction, constrained C++ authority-layer policy, and precursor-promotion rules before expanding real implementation work.
+Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, strategy records, status records, C/C++ foundation direction, constrained C++ authority-layer policy, L-UI rendering path, and precursor-promotion rules before expanding real implementation work.
 
 ## Foundation documents
 
@@ -18,6 +18,9 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`ARCHITECTURE_SEED.md`](ARCHITECTURE_SEED.md) — initial state-lattice and software-universe vocabulary.
 - [`C_CPP_FOUNDATION_DIRECTION.md`](C_CPP_FOUNDATION_DIRECTION.md) — active constrained C/C++ foundation direction: C is the metal, C++ is the disciplined structure, Latticra is the contract.
 - [`CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md) — governed C++ policy, validator, effect-gate, audit, ownership, lifetime, allocation, exception, and boundary contract before implementation.
+- [`CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md) — exact API, namespace, file path, build, exception, RTTI, allocation, ownership, C ABI, validator, audit report, and test planning before implementation code.
+- [`CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md) — first no-effect constrained C++ authority implementation.
+- [`L_UI_RENDERING_CONTRACT.md`](L_UI_RENDERING_CONTRACT.md) — first L-UI rendering contract before renderer implementation.
 - [`NAMING_SYSTEM.md`](NAMING_SYSTEM.md) — formal naming rules for professional Latticra terminology.
 - [`FEATURE_TRANSLATION_LEDGER.md`](FEATURE_TRANSLATION_LEDGER.md) — vocabulary ledger for translating exploratory labels into Latticra architecture terms.
 - [`LANGUAGE_NAMING_POLICY.md`](LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy; forbids plain `L` and `.l` as public identifiers.
@@ -57,37 +60,16 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`L_UI_PARSER_FIXTURE_INTEGRATION.md`](L_UI_PARSER_FIXTURE_INTEGRATION.md) — repository `.lui` fixture validation through controlled parser test input.
 - [`L_UI_PARSER_RESULT_REPORT.md`](L_UI_PARSER_RESULT_REPORT.md) — deterministic parser result summaries for valid and error parse states.
 - [`L_UI_PARSER_DIAGNOSTICS.md`](L_UI_PARSER_DIAGNOSTICS.md) — parser diagnostic codes, stable messages, line/column rules, and future diagnostics gate.
-- [`L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION_PLAN.md) — diagnostics API shape, exact tests, and report extension rules before diagnostic code.
 - [`L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md`](L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md) — diagnostic structs, mapping functions, report surface, and invariants.
-- [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_CONTRACT.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_CONTRACT.md) — parser-level invalid string escape diagnostics, diagnostic codes, source spans, messages, hints, and compatibility rules.
-- [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION_PLAN.md) — parser enum additions, diagnostic mapping updates, validation helpers, source-span behavior, exact tests, and compatibility expectations.
 - [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION.md) — parser-level diagnostics for invalid L-UI string-literal escape sequences.
-- [`L_UI_PARSER_LINE_COLUMN_PRECISION_PLAN.md`](L_UI_PARSER_LINE_COLUMN_PRECISION_PLAN.md) — line/column precision rules, newline policy, byte-column behavior, and future tests.
-- [`L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION_PLAN.md) — helper shapes, parser touch points, implementation tests, and boundaries before precise location code.
 - [`L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION.md`](L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION.md) — private location helpers, parser touch-point updates, and location invariants.
-- [`L_UI_PARSER_SOURCE_SPAN_CONTRACT.md`](L_UI_PARSER_SOURCE_SPAN_CONTRACT.md) — future source ranges, span rules, byte offsets, line/column ranges, and no-effect boundaries.
-- [`L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION_PLAN.md) — source-span public API changes, report extensions, exact tests, and compatibility expectations before span code.
 - [`L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION.md`](L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION.md) — public source-span metadata, parse-result spans, diagnostic spans, report extensions, and invariants.
-- [`L_UI_PARSER_AST_CONTRACT.md`](L_UI_PARSER_AST_CONTRACT.md) — future AST shape, node ownership, source-span usage, capacity rules, diagnostics relationship, and no-effect boundaries.
-- [`L_UI_PARSER_AST_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_AST_IMPLEMENTATION_PLAN.md) — AST public API changes, struct placement, capacity constants, ownership/lifetime rules, source-span integration, exact tests, and compatibility expectations.
 - [`L_UI_PARSER_AST_IMPLEMENTATION.md`](L_UI_PARSER_AST_IMPLEMENTATION.md) — fixed-size AST metadata, source-span-aware nodes, deterministic report, and no-effect invariants.
-- [`L_UI_AST_DETAILED_REPORT_CONTRACT.md`](L_UI_AST_DETAILED_REPORT_CONTRACT.md) — deterministic rail, field, text, and source-span reporting rules before detailed AST report implementation.
-- [`L_UI_AST_DETAILED_REPORT_IMPLEMENTATION_PLAN.md`](L_UI_AST_DETAILED_REPORT_IMPLEMENTATION_PLAN.md) — detailed AST report public API addition, capacity, section order, failed-parse behavior, escaping policy, exact tests, and compatibility expectations.
 - [`L_UI_AST_DETAILED_REPORT_IMPLEMENTATION.md`](L_UI_AST_DETAILED_REPORT_IMPLEMENTATION.md) — bounded detailed AST report for card, rail, field, text, source-span, and no-effect metadata.
-- [`L_UI_AST_ESCAPED_STRING_REPORT_CONTRACT.md`](L_UI_AST_ESCAPED_STRING_REPORT_CONTRACT.md) — stable escaped string report rules for broader L-UI text values before implementation.
-- [`L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION_PLAN.md`](L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION_PLAN.md) — escaped string report helper shape, escaped fields, destination sizes, too-small behavior, exact tests, and compatibility expectations.
 - [`L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION.md`](L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION.md) — byte-oriented escaped string fields for detailed AST report metadata.
-- [`L_UI_AST_SOURCE_BACKED_TEXT_CONTRACT.md`](L_UI_AST_SOURCE_BACKED_TEXT_CONTRACT.md) — source-backed extraction rules for AST purpose and text values before implementation.
-- [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION_PLAN.md) — source-backed extraction helpers, quote handling, capacity behavior, span decisions, exact tests, and compatibility expectations.
 - [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md) — source-backed extraction of AST purpose and text values from validated L-UI source.
-- [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_CONTRACT.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_CONTRACT.md) — explicit decoded byte lengths for L-UI AST purpose and text values.
-- [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION_PLAN.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION_PLAN.md) — public struct field placement, initialization rules, decode length assignment, report fields, length-aware escaping, and exact tests before storage code changes.
 - [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION.md) — explicit decoded byte lengths for L-UI AST purpose and text values.
-- [`L_UI_DECODED_NUL_ACCEPTANCE_CONTRACT.md`](L_UI_DECODED_NUL_ACCEPTANCE_CONTRACT.md) — escaped decoded NUL acceptance rules after length-carrying AST string storage.
-- [`L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION_PLAN.md`](L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION_PLAN.md) — parser validation changes, decode helper changes, AST/report expectations, diagnostic compatibility, source spans, and exact tests before accepting escaped `\\x00`.
 - [`L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION.md`](L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION.md) — escaped decoded NUL acceptance for L-UI source-backed AST strings.
-- [`L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_CONTRACT.md`](L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_CONTRACT.md) — policy keeping literal source-buffer NUL rejected while escaped decoded NUL remains accepted.
-- [`L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION_PLAN.md`](L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION_PLAN.md) — exact parser, diagnostic, AST, report, span, and test plan for literal source-buffer NUL rejection policy enforcement.
 - [`L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION.md`](L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION.md) — tested enforcement of literal source-buffer NUL rejection while escaped decoded NUL remains accepted.
 - [`L_UI_SEMANTIC_VALIDATION_CONTRACT.md`](L_UI_SEMANTIC_VALIDATION_CONTRACT.md) — semantic validation layer after structural parsing, AST construction, source policies, and string handling.
 - [`L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md`](L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md) — public API, semantic result, diagnostic mapping, reports, semantic checks, and exact tests before semantic validation code.
@@ -101,6 +83,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — decoding rules for quoted L-UI source string escapes.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md) — parser-level validation decision, AST decoding helper shape, NUL/capacity/span/report behavior, exact tests, and compatibility expectations before string-literal escape decoding.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md) — byte-oriented string-literal escape decoding for source-backed L-UI AST purpose and text values.
+- [`L_UI_RENDERING_CONTRACT.md`](L_UI_RENDERING_CONTRACT.md) — first operator-visible L-UI rendering contract before renderer implementation.
 
 ## Implementation rule
 
@@ -122,6 +105,8 @@ project strategy/status framework + guardrails
 language naming policy + guardrails
 C/C++ foundation direction + guardrails
 constrained C++ authority layer contract + guardrails
+constrained C++ authority layer implementation plan + guardrails
+constrained C++ authority layer implementation + invariants
 state lattice fixture + invariant tests
 tri-plane transition model + invariant tests
 Nucleus preview request classification + report invariants
@@ -177,12 +162,13 @@ Lat language grammar implementation + invariants
 L-UI string-literal escape contract + guardrails
 L-UI string-literal escape implementation plan + guardrails
 L-UI string-literal escape decoding implementation + invariants
+L-UI rendering contract + guardrails
 ```
 
 The next implementation target should be:
 
 ```text
-Constrained C++ authority layer implementation plan
+L-UI rendering implementation plan
 ```
 
-That target should define exact API, namespace, file path, build, exception, RTTI, allocation, ownership, C ABI, validator, audit report, and test planning before implementation code.
+That target should define exact public API, header path, source path, render request struct, render result struct, render mode enum, render error enum, capacity constants, output buffer rules, section order, source-span rendering rules, embedded NUL rendering rules, authority metadata rendering rules, exact tests, compatibility expectations, and non-claims before renderer code.
