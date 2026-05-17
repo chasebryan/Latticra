@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Implementation
 
 Status: initial implementation record
-Scope: C runtime boundary API surface, deterministic labels, default-deny classification, no-effect allow-mode classification, authority prerequisites, authority flag report fields, authority label report fields, Nucleus task prerequisites, Nucleus task flag report fields, render/Lat/LIR prerequisite status report fields, render/Lat/LIR prerequisite denials and happy paths, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
+Scope: C runtime boundary API surface, deterministic labels, default-deny classification, no-effect allow-mode classification, authority prerequisites, authority flag report fields, authority label report fields, Nucleus task prerequisites and happy path, Nucleus task flag report fields, render/Lat/LIR prerequisite status report fields, render/Lat/LIR prerequisite denials and happy paths, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
 
 ## Purpose
 
@@ -34,6 +34,7 @@ tests/runtime_boundary_prerequisite_status_report.c
 tests/runtime_boundary_prerequisite_denial.c
 tests/runtime_boundary_allow_modes.c
 tests/runtime_boundary_prerequisite_happy_paths.c
+tests/runtime_boundary_task_report_happy_path.c
 scripts/test-runtime-boundary.sh
 docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md
 ```
@@ -57,6 +58,7 @@ authority no-effect flag checks
 authority execution/mutation/server/recovery/hardware flag report visibility
 authority status label, validator label, requested-effect label, and denial-reason report visibility
 Nucleus task-result prerequisite checks for task-report requests
+Nucleus task-report happy path when task metadata is OK and report mode matches
 task policy and task reason metadata copying
 task executed/mutation/server/recovery/hardware flag copying and report visibility
 render status/error metadata copying and report visibility
@@ -100,6 +102,7 @@ matched no-effect classification mode allows classification requests
 valid render metadata allows render-report in report mode
 valid Lat parser metadata allows Lat validation in validation mode
 valid LIR metadata allows LIR validation in validation mode
+valid Nucleus task metadata allows task-report in report mode
 mismatched modes remain denied
 default policy denies
 source identity metadata is copied
