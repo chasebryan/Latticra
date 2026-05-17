@@ -11,18 +11,65 @@
         } \
     } while (0)
 
-static int runtime_boundary_smoke_classifies_without_effects(void) {
+static latticra_runtime_boundary_request_t base_request(void) {
     latticra_runtime_boundary_request_t request;
-    latticra_runtime_boundary_result_t result;
     memset(&request, 0, sizeof(request));
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_PARSE_ONLY;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_REPORT_ONLY;
+    return request;
+}
+
+static int runtime_boundary_smoke_classifies_without_effects(void) {
+    latticra_runtime_boundary_request_t request = base_request();
+    latticra_runtime_boundary_result_t result;
     EXPECT_TRUE(latticra_runtime_boundary_classify(&request, &result) == LATTICRA_STATUS_OK, "classify status");
     EXPECT_TRUE(result.no_effect == 1, "no-effect flag preserved");
     EXPECT_TRUE(result.record_count == 1u, "record count initialized");
     EXPECT_TRUE(result.execution_allowed == 0, "execution denied");
     EXPECT_TRUE(result.mutation_allowed == 0, "mutation denied");
+    EXPECT_TRUE(result.record.policy == LATTICRA_RUNTIME_BOUNDARY_POLICY_DENY, "default policy denies");
+    return 0;
+}
+
+static int runtime_boundary_denies_unknown_request(void) {
+    latticra_runtime_boundary_request_t request = base_request();
+    latticra_runtime_boundary_result_t result;
+    request.request_kind = LATTICRA_RUNTIME_BOUNDARY_UNKNOWN;
+    EXPECT_TRUE(latticra_runtime_boundary_classify(&request, &result) == LATTICRA_STATUS_OK, "unknown request status");
+    EXPECT_TRUE(result.record.denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_UNKNOWN_REQUEST, "unknown request denied");
+    EXPECT_TRUE(result.record.policy == LATTICRA_RUNTIME_BOUNDARY_POLICY_DENY, "unknown request policy deny");
+    return 0;
+}
+
+static int runtime_boundary_denies_unknown_effect(void) {
+    latticra_runtime_boundary_request_t request = base_request();
+    latticra_runtime_boundary_result_t result;
+    request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_UNKNOWN;
+    EXPECT_TRUE(latticra_runtime_boundary_classify(&request, &result) == LATTICRA_STATUS_OK, "unknown effect status");
+    EXPECT_TRUE(result.record.denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_UNKNOWN_EFFECT, "unknown effect denied");
+    return 0;
+}
+
+static int runtime_boundary_future_gates_operational_requests(void) {
+    latticra_runtime_boundary_request_t request = base_request();
+    latticra_runtime_boundary_result_t result;
+    request.request_kind = LATTICRA_RUNTIME_BOUNDARY_COMMAND_EXECUTE;
+    EXPECT_TRUE(latticra_runtime_boundary_classify(&request, &result) == LATTICRA_STATUS_OK, "future gate status");
+    EXPECT_TRUE(result.record.policy == LATTICRA_RUNTIME_BOUNDARY_POLICY_REQUIRES_FUTURE_GATE, "future gate policy");
+    EXPECT_TRUE(result.record.denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_EFFECT_REQUIRES_FUTURE_GATE, "future gate reason");
+    EXPECT_TRUE(result.record.gate_state == LATTICRA_RUNTIME_BOUNDARY_GATE_PLANNED, "future gate planned");
+    EXPECT_TRUE(result.record.executed == 0, "future gate not executed");
+    return 0;
+}
+
+static int runtime_boundary_operator_confirmation_does_not_override_policy(void) {
+    latticra_runtime_boundary_request_t request = base_request();
+    latticra_runtime_boundary_result_t result;
+    request.operator_confirmation = LATTICRA_RUNTIME_BOUNDARY_OPERATOR_PRESENT;
+    EXPECT_TRUE(latticra_runtime_boundary_classify(&request, &result) == LATTICRA_STATUS_OK, "operator confirmation status");
+    EXPECT_TRUE(result.record.denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_OPERATOR_CONFIRMATION_NOT_SUPPORTED, "operator confirmation denied");
+    EXPECT_TRUE(result.record.policy == LATTICRA_RUNTIME_BOUNDARY_POLICY_DENY, "operator confirmation cannot allow");
     return 0;
 }
 
@@ -32,15 +79,19 @@ static int runtime_boundary_report_is_bounded(void) {
     char tiny[1];
     memset(&result, 0, sizeof(result));
     result.status = LATTICRA_STATUS_OK;
+    result.record.policy = LATTICRA_RUNTIME_BOUNDARY_POLICY_DENY;
+    result.record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_RUNTIME_DISABLED;
     EXPECT_TRUE(latticra_runtime_boundary_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "report status");
-    EXPECT_TRUE(report[0] != '\0', "report emits text");
+    EXPECT_TRUE(strstr(report, "LATTICRA RUNTIME BOUNDARY REPORT") != 0, "report header");
+    EXPECT_TRUE(strstr(report, "policy=deny") != 0, "report policy");
     EXPECT_TRUE(latticra_runtime_boundary_report(&result, tiny, sizeof(tiny)) == LATTICRA_STATUS_BUFFER_TOO_SMALL, "small buffer rejected");
+    EXPECT_TRUE(tiny[0] == '\0', "small buffer cleared");
     return 0;
 }
 
 static int runtime_boundary_null_arguments_are_rejected(void) {
     latticra_runtime_boundary_result_t result;
-    EXPECT_TRUE(latticra_runtime_boundary_classify(0, &result) == LATTICRA_STATUS_OK || latticra_runtime_boundary_classify(0, &result) == LATTICRA_STATUS_NULL_ARGUMENT, "null request handled");
+    EXPECT_TRUE(latticra_runtime_boundary_classify(0, &result) == LATTICRA_STATUS_NULL_ARGUMENT, "null request rejected");
     EXPECT_TRUE(latticra_runtime_boundary_classify(0, 0) == LATTICRA_STATUS_NULL_ARGUMENT, "null result rejected");
     EXPECT_TRUE(latticra_runtime_boundary_report(0, 0, 0u) == LATTICRA_STATUS_NULL_ARGUMENT, "null report args rejected");
     return 0;
@@ -48,6 +99,10 @@ static int runtime_boundary_null_arguments_are_rejected(void) {
 
 int main(void) {
     if (runtime_boundary_smoke_classifies_without_effects() != 0) return 1;
+    if (runtime_boundary_denies_unknown_request() != 0) return 1;
+    if (runtime_boundary_denies_unknown_effect() != 0) return 1;
+    if (runtime_boundary_future_gates_operational_requests() != 0) return 1;
+    if (runtime_boundary_operator_confirmation_does_not_override_policy() != 0) return 1;
     if (runtime_boundary_report_is_bounded() != 0) return 1;
     if (runtime_boundary_null_arguments_are_rejected() != 0) return 1;
     puts("runtime_boundary_invariants: ok");
