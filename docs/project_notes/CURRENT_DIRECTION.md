@@ -40,7 +40,7 @@ This does not mean unrestricted C++.
 
 ## Current C++ authority boundary
 
-The C++ authority layer is now contract-bound, implementation-plan-bound, and represented by its first no-effect implementation slice.
+The C++ authority layer is contract-bound, implementation-plan-bound, and represented by its first no-effect implementation slice.
 
 Planning milestone preserved:
 
@@ -65,19 +65,19 @@ The implementation does not provide unrestricted C++ authority, an effect-perfor
 
 ## Current L-UI rendering boundary
 
-The L-UI rendering lane now has a contract, implementation plan, and first no-effect C implementation.
+The L-UI rendering lane has a contract, implementation plan, and first no-effect C implementation.
 
 The current renderer provides deterministic operator-visible text reports over already validated L-UI/LIR metadata and a C-compatible authority summary.
 
-It does not provide terminal control, interactive UI behavior, command behavior, Lat execution, LIR execution, Nucleus task execution, mutation, file I/O, network I/O, recovery behavior, hardware behavior, or production UI claims.
+It does not provide terminal control, interactive UI behavior, command behavior, Lat execution, LIR execution, Nucleus effect execution, mutation, file I/O, network I/O, recovery behavior, hardware behavior, or production UI claims.
 
 ## Current Nucleus task boundary
 
-The Nucleus task execution lane now has a contract and implementation plan.
+The Nucleus task execution lane now has a contract, implementation plan, and first no-effect C classification/report implementation.
 
-The implementation plan defines exact public API, C implementation files, request/result/record structs, policy enum, denial enum, effect-gate enum usage, authority summary usage, operator-confirmation metadata, rollback metadata, report format, capacity constants, output-buffer behavior, exact tests, compatibility expectations, and non-claims before task execution code.
+The current implementation provides denied-by-default task classification and deterministic task reports with explicit request kinds, effects, policies, denial reasons, authority metadata, preview prerequisites, and no-effect flags.
 
-It does not implement Nucleus task execution, command behavior, mutation, network behavior, recovery behavior, hardware behavior, boot behavior, rollback, or production runtime claims.
+It does not implement effect-performing Nucleus task execution, command behavior, mutation, network behavior, recovery behavior, hardware behavior, boot behavior, rollback, or production runtime claims.
 
 ## Mission target
 
@@ -99,16 +99,16 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, and Nucleus task execution implementation plan toward the first no-effect task classification/report implementation.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, and first no-effect Nucleus task classification/report implementation toward the runtime boundary contract.
 
 The next recommended implementation lane is:
 
 ```text
-Nucleus task execution implementation
+Runtime boundary contract
 ```
 
 ## Current non-claim
 
-Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide Nucleus task execution, provide interactive L-UI rendering, provide terminal-control L-UI rendering, provide a Lat runtime, or provide a production security boundary.
+Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide effect-performing Nucleus task execution, provide interactive L-UI rendering, provide terminal-control L-UI rendering, provide a Lat runtime, or provide a production security boundary.
 
 Those are long-term goals and design targets, not current claims.
