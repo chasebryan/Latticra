@@ -42,6 +42,12 @@ This does not mean unrestricted C++.
 
 The C++ authority layer is now contract-bound, implementation-plan-bound, and represented by its first no-effect implementation slice.
 
+Planning milestone preserved:
+
+```text
+Constrained C++ authority layer implementation plan
+```
+
 It currently implements no-effect authority behavior only:
 
 ```text
