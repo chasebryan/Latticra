@@ -41,6 +41,8 @@ jobs:
         run: sh scripts/test-tri-plane-transition.sh
       - name: Run Nucleus preview tests
         run: sh scripts/test-nucleus-preview.sh
+      - name: Run Nucleus task execution contract guard
+        run: sh scripts/test-nucleus-task-execution-contract.sh
       - name: Run L-UI static report tests
         run: sh scripts/test-l-ui-static-report.sh
       - name: Run L-UI grammar fixture tests
