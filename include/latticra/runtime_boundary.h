@@ -162,6 +162,12 @@ typedef struct {
     int task_server_interaction_allowed;
     int task_recovery_allowed;
     int task_hardware_allowed;
+    latticra_status_t render_status;
+    latticra_l_ui_render_error_t render_error;
+    latticra_status_t lat_status;
+    latticra_lat_parse_error_t lat_error;
+    latticra_status_t lir_status;
+    latticra_lir_error_t lir_error;
     char source_identity[LATTICRA_RUNTIME_BOUNDARY_SOURCE_IDENTITY_MAX];
     latticra_l_ui_source_span_t source_span;
     int executed;

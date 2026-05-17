@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Implementation
 
 Status: initial implementation record
-Scope: C runtime boundary API surface, deterministic labels, default-deny classification, authority prerequisites, authority flag report fields, authority label report fields, Nucleus task prerequisites, Nucleus task flag report fields, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
+Scope: C runtime boundary API surface, deterministic labels, default-deny classification, authority prerequisites, authority flag report fields, authority label report fields, Nucleus task prerequisites, Nucleus task flag report fields, render/Lat/LIR prerequisite status report fields, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
 
 ## Purpose
 
@@ -30,6 +30,7 @@ tests/runtime_boundary_effect_flag_report.c
 tests/runtime_boundary_authority_flag_report.c
 tests/runtime_boundary_authority_label_report.c
 tests/runtime_boundary_task_flag_report.c
+tests/runtime_boundary_prerequisite_status_report.c
 scripts/test-runtime-boundary.sh
 docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md
 ```
@@ -52,6 +53,9 @@ authority status label, validator label, requested-effect label, and denial-reas
 Nucleus task-result prerequisite checks for task-report requests
 task policy and task reason metadata copying
 task executed/mutation/server/recovery/hardware flag copying and report visibility
+render status/error metadata copying and report visibility
+Lat parser status/error metadata copying and report visibility
+LIR status/error metadata copying and report visibility
 source identity copying
 source span metadata copying
 unknown request denial
@@ -59,7 +63,7 @@ unknown effect denial
 future-gate classification for operational request kinds
 operator-confirmation non-override behavior
 bounded report output with policy, reason, and gate state
-expanded report output for runtime_id, record_count, request, requested effect, mode, operator confirmation, authority status, authority label strings, authority no-effect state, authority effect flags, task policy, task reason, task effect flags, no-effect flag, execution flag, mutation flag, file I/O flag, network flag, server flag, recovery flag, rollback flag, hardware flag, boot flag, source identity, and source span metadata
+expanded report output for runtime_id, record_count, request, requested effect, mode, operator confirmation, authority status, authority label strings, authority no-effect state, authority effect flags, task policy, task reason, task effect flags, render prerequisite status, Lat prerequisite status, LIR prerequisite status, no-effect flag, execution flag, mutation flag, file I/O flag, network flag, server flag, recovery flag, rollback flag, hardware flag, boot flag, source identity, and source span metadata
 small-buffer rejection and clearing
 ```
 
@@ -89,6 +93,7 @@ authority label strings are present in reports
 missing Nucleus task metadata is denied for task reports
 valid Nucleus task metadata is copied for task reports
 Nucleus task effect flags are copied and visible in reports
+render/Lat/LIR prerequisite status fields are visible in reports
 unknown requests are denied
 unknown effects are denied
 operational request kinds require a future gate
