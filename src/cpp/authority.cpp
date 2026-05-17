@@ -567,6 +567,11 @@ authority_status render_authority_audit_report(
     }
 
     clear_output(buffer, buffer_len);
+
+    if (report.record_count > LATTICRA_AUTHORITY_AUDIT_RECORD_MAX) {
+        return authority_status::capacity_exceeded;
+    }
+
     std::size_t offset = 0u;
 
     const bool ok =
