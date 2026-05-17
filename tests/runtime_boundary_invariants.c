@@ -36,7 +36,7 @@ static latticra_runtime_boundary_request_t base_request(const latticra_runtime_b
     (void)snprintf(request.runtime_id, sizeof(request.runtime_id), "%s", "runtime-001");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_PARSE_ONLY;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
-    request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_REPORT_ONLY;
+    request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_DISABLED;
     request.authority = authority;
     return request;
 }
