@@ -60,10 +60,16 @@ L-UI rendering contract
 ## Latest completed planning slice
 
 ```text
-L-UI rendering implementation plan
+Nucleus task execution implementation plan
 ```
 
 ## Previous planning slice
+
+```text
+L-UI rendering implementation plan
+```
+
+## Earlier planning slice
 
 ```text
 Constrained C++ authority layer implementation plan
@@ -84,7 +90,7 @@ Constrained C++ authority layer implementation
 ## Current next step
 
 ```text
-Nucleus task execution implementation plan
+Nucleus task execution implementation
 ```
 
 ## Non-claims

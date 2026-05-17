@@ -73,9 +73,9 @@ It does not provide terminal control, interactive UI behavior, command behavior,
 
 ## Current Nucleus task boundary
 
-The Nucleus task execution contract now defines the first future task execution boundary.
+The Nucleus task execution lane now has a contract and implementation plan.
 
-It establishes denied-by-default task handling, explicit prerequisites, authority checks, effect-gate checks, task-record expectations, report surfaces, future file paths, exact future tests, compatibility expectations, and non-claims before any task execution code.
+The implementation plan defines exact public API, C implementation files, request/result/record structs, policy enum, denial enum, effect-gate enum usage, authority summary usage, operator-confirmation metadata, rollback metadata, report format, capacity constants, output-buffer behavior, exact tests, compatibility expectations, and non-claims before task execution code.
 
 It does not implement Nucleus task execution, command behavior, mutation, network behavior, recovery behavior, hardware behavior, boot behavior, rollback, or production runtime claims.
 
@@ -99,12 +99,12 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, and Nucleus task execution contract toward Nucleus task execution implementation planning.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, and Nucleus task execution implementation plan toward the first no-effect task classification/report implementation.
 
 The next recommended implementation lane is:
 
 ```text
-Nucleus task execution implementation plan
+Nucleus task execution implementation
 ```
 
 ## Current non-claim

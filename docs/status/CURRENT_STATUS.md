@@ -20,6 +20,7 @@ The repository currently emphasizes:
 - L-UI rendering implementation planning;
 - initial no-effect L-UI rendering implementation;
 - Nucleus task execution contract planning;
+- Nucleus task execution implementation planning;
 - L-UI parser and AST foundation;
 - deterministic diagnostics;
 - source-span metadata;
@@ -71,6 +72,7 @@ state lattice fixture
 tri-plane transition preview model
 Nucleus preview request classification
 Nucleus task execution contract
+Nucleus task execution implementation plan
 L-UI static report fixture
 L-UI source grammar fixtures
 L-UI parser implementation
@@ -146,12 +148,20 @@ The long-term goal is to make malicious behavior harder to hide and easier to in
 
 This is a mission direction, not a current security guarantee.
 
+## Earlier planning slice
+
+Earlier planning slice:
+
+```text
+Constrained C++ authority layer implementation plan
+```
+
 ## Previous planning slice
 
 Previous planning slice:
 
 ```text
-Constrained C++ authority layer implementation plan
+L-UI rendering implementation plan
 ```
 
 ## Latest completed planning slice
@@ -159,7 +169,7 @@ Constrained C++ authority layer implementation plan
 Latest completed planning slice:
 
 ```text
-L-UI rendering implementation plan
+Nucleus task execution implementation plan
 ```
 
 ## Latest completed implementation slice
@@ -199,7 +209,7 @@ L-UI rendering contract
 Recommended next work:
 
 ```text
-Nucleus task execution implementation plan
+Nucleus task execution implementation
 ```
 
 After that:
