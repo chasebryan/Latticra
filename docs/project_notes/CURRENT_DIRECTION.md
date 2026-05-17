@@ -81,9 +81,15 @@ It does not implement effect-performing Nucleus task execution, command behavior
 
 ## Current runtime boundary
 
-The runtime boundary contract now defines the first explicit line between validated metadata/report/classification surfaces and future runtime behavior.
+The runtime boundary lane now has a contract and implementation plan.
 
-It establishes a disabled-by-default runtime posture, report/validation/preview/classification-only eligible surfaces, explicit authority/task/effect prerequisites, deterministic runtime boundary report expectations, future files, exact future tests, compatibility expectations, and non-claims before any runtime boundary implementation code.
+Planning milestone preserved:
+
+```text
+Runtime boundary implementation plan
+```
+
+The implementation plan defines exact public API, C implementation files, runtime request/record/result structs, runtime mode enum, policy enum, denial enum, effect enum, authority summary usage, Nucleus task result usage, effect-gate state usage, operator-confirmation metadata, report format, capacity constants, output-buffer behavior, exact tests, compatibility expectations, and non-claims before runtime boundary code.
 
 It does not implement runtime behavior, command execution, Lat execution, LIR execution, task effect execution, mutation, file I/O, network I/O, recovery behavior, rollback, hardware behavior, boot behavior, terminal control, sandboxing, or production runtime claims.
 
@@ -107,12 +113,12 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, and runtime boundary contract toward runtime boundary implementation planning.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, runtime boundary contract, and runtime boundary implementation plan toward the first no-effect runtime boundary classification/report implementation.
 
 The next recommended implementation lane is:
 
 ```text
-Runtime boundary implementation plan
+Runtime boundary implementation
 ```
 
 ## Current non-claim

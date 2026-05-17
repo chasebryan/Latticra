@@ -54,6 +54,18 @@ define the first contract for rendering validated L-UI/LIR metadata into operato
 ## Latest completed planning slice
 
 ```text
+Runtime boundary implementation plan
+```
+
+Purpose completed:
+
+```text
+define exact public API, header path, source path, runtime request struct, runtime record struct, runtime result struct, runtime mode enum, runtime policy enum, runtime denial enum, authority summary usage, Nucleus task result usage, effect-gate state usage, operator-confirmation metadata, report format, capacity constants, output-buffer behavior, exact tests, compatibility expectations, and non-claims before runtime boundary code
+```
+
+## Previous planning slice
+
+```text
 Nucleus task execution implementation plan
 ```
 
@@ -61,18 +73,6 @@ Purpose completed:
 
 ```text
 define exact public API, C implementation files, task request/result/record structs, policy enum, denial enum, effect-gate enum usage, authority summary usage, operator-confirmation metadata, rollback metadata, report format, capacity constants, output-buffer behavior, exact tests, compatibility expectations, and non-claims before Nucleus task execution code
-```
-
-## Previous planning slice
-
-```text
-L-UI rendering implementation plan
-```
-
-Purpose completed:
-
-```text
-define exact public API, header path, source path, render request struct, render result struct, render mode enum, render error enum, capacity constants, output buffer rules, section order, source-span rendering rules, embedded NUL rendering rules, authority metadata rendering rules, exact tests, compatibility expectations, and non-claims before renderer code
 ```
 
 ## Latest completed implementation slice
@@ -114,27 +114,27 @@ implement the first no-effect constrained C++ authority layer using the guarded 
 ## Recommended next slice
 
 ```text
-Runtime boundary implementation plan
+Runtime boundary implementation
 ```
 
 Purpose:
 
 ```text
-define exact public API, header path, source path, runtime request struct, runtime record struct, runtime result struct, runtime mode enum, runtime policy enum, runtime denial enum, authority summary usage, Nucleus task result usage, effect-gate state usage, operator-confirmation metadata, report format, capacity constants, output-buffer behavior, exact tests, compatibility expectations, and non-claims before runtime boundary code
+implement the first no-effect C runtime boundary classification/report surface using the guarded implementation plan, with explicit API, disabled-by-default policy, authority prerequisites, Nucleus task prerequisites, effect-gate metadata, caller-provided buffers, deterministic reports, and invariant tests
 ```
 
 ## Near-term queue
 
-1. Runtime boundary implementation plan.
-2. Runtime boundary implementation.
-3. Defensive threat model contract.
-4. Public status update after major milestones.
-5. Completion percentage review after runtime boundary implementation planning.
-6. Strategy estimate review after runtime boundary implementation planning.
-7. C++ authority implementation review after initial no-effect validator/audit slice.
-8. Rendering-to-Nucleus boundary review after runtime boundary contract.
-9. L-UI rendering detailed report refinement after initial renderer implementation.
-10. Nucleus task execution refinement only after runtime boundary implementation planning.
+1. Runtime boundary implementation.
+2. Defensive threat model contract.
+3. Public status update after major milestones.
+4. Completion percentage review after runtime boundary implementation.
+5. Strategy estimate review after runtime boundary implementation.
+6. C++ authority implementation review after initial no-effect validator/audit slice.
+7. Runtime-to-threat-model boundary review after runtime boundary implementation.
+8. L-UI rendering detailed report refinement after initial renderer implementation.
+9. Nucleus task execution refinement only after runtime boundary implementation.
+10. Runtime boundary refinement only after defensive threat model contract.
 
 ## Quality rules
 
@@ -156,8 +156,8 @@ consistent with the C/C++ foundation direction
 - Keep the constrained C++ authority layer no-effect until separate effect contracts exist.
 - Keep L-UI rendering no-effect and presentation-only.
 - Keep Nucleus task execution no-effect and denied-by-default.
-- Keep runtime behavior disabled until a separate implementation plan and implementation exist.
-- Move next into runtime boundary implementation planning.
+- Keep runtime behavior no-effect and disabled-by-default.
+- Move next into runtime boundary implementation.
 - Maintain professional public docs.
 - Keep status and completion estimates current.
 - Keep security ambitions framed as mission and design targets until proven.

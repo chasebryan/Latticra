@@ -23,6 +23,7 @@ The repository currently emphasizes:
 - Nucleus task execution implementation planning;
 - initial no-effect Nucleus task execution classification/report implementation;
 - Runtime boundary contract planning;
+- Runtime boundary implementation planning;
 - L-UI parser and AST foundation;
 - deterministic diagnostics;
 - source-span metadata;
@@ -77,6 +78,7 @@ Nucleus task execution contract
 Nucleus task execution implementation plan
 Nucleus task execution implementation
 Runtime boundary contract
+Runtime boundary implementation plan
 L-UI static report fixture
 L-UI source grammar fixtures
 L-UI parser implementation
@@ -167,7 +169,7 @@ Constrained C++ authority layer implementation plan
 Previous planning slice:
 
 ```text
-L-UI rendering implementation plan
+Nucleus task execution implementation plan
 ```
 
 ## Latest completed planning slice
@@ -175,7 +177,7 @@ L-UI rendering implementation plan
 Latest completed planning slice:
 
 ```text
-Nucleus task execution implementation plan
+Runtime boundary implementation plan
 ```
 
 ## Latest completed implementation slice
@@ -231,14 +233,14 @@ L-UI rendering contract
 Recommended next work:
 
 ```text
-Runtime boundary implementation plan
+Runtime boundary implementation
 ```
 
 After that:
 
 ```text
 Defensive threat model contract
-Runtime boundary implementation
+Runtime boundary refinement
 ```
 
 ## Update rule
