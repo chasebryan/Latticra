@@ -18,7 +18,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`ARCHITECTURE_SEED.md`](ARCHITECTURE_SEED.md) — initial state-lattice and software-universe vocabulary.
 - [`C_CPP_FOUNDATION_DIRECTION.md`](C_CPP_FOUNDATION_DIRECTION.md) — active constrained C/C++ foundation direction: C is the metal, C++ is the disciplined structure, Latticra is the contract.
 - [`CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md) — governed C++ policy, validator, effect-gate, audit, ownership, lifetime, allocation, exception, and boundary contract before implementation.
-- [`CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md) — exact API, namespace, file path, build, exception, RTTI, allocation, ownership, C ABI, validator, audit report, and test planning before implementation code.
+- [`CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md) — Constrained C++ authority layer implementation plan for exact API, namespace, file path, build, exception, RTTI, allocation, ownership, C ABI, validator, audit report, and test planning before implementation code.
 - [`CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md) — first no-effect constrained C++ authority implementation.
 - [`L_UI_RENDERING_CONTRACT.md`](L_UI_RENDERING_CONTRACT.md) — first L-UI rendering contract before renderer implementation.
 - [`NAMING_SYSTEM.md`](NAMING_SYSTEM.md) — formal naming rules for professional Latticra terminology.
@@ -105,7 +105,7 @@ project strategy/status framework + guardrails
 language naming policy + guardrails
 C/C++ foundation direction + guardrails
 constrained C++ authority layer contract + guardrails
-constrained C++ authority layer implementation plan + guardrails
+Constrained C++ authority layer implementation plan + guardrails
 constrained C++ authority layer implementation + invariants
 state lattice fixture + invariant tests
 tri-plane transition model + invariant tests
