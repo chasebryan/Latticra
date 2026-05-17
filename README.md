@@ -1,11 +1,10 @@
 # Latticra
 
-Status: early real-system implementation seed
-Scope: evidence-bound systems architecture, L-UI, and the Latticra Programming Language.
+Status: early-stage systems architecture implementation seed.
 
-Latticra is a contract-first systems architecture project focused on explicit state models, deterministic parsers, operator-visible reports, effect boundaries, and eventually the Latticra Programming Language.
+Latticra is a contract-first systems architecture project for high-assurance infrastructure engineering. The project focuses on explicit state models, deterministic validation, constrained authority, bounded intermediate representations, disabled-by-default effects, and operator-visible reports.
 
-It is not a finished operating system, sandbox, installer, recovery system, production runtime, or security boundary.
+The long-term direction is a disciplined software architecture suitable for mission-critical infrastructure settings. The current repository is foundational engineering work, not a deployed platform or certified product.
 
 ## Motto
 
@@ -13,11 +12,7 @@ It is not a finished operating system, sandbox, installer, recovery system, prod
 
 ## Mission
 
-Latticra is being built toward a defensive, auditable, open systems architecture.
-
-The long-term goal is to make unsafe or malicious behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, and carefully promoted implementation slices.
-
-This is a mission direction, not a current security guarantee.
+Latticra is being built as a defensive, auditable, open systems architecture. The project is intended to mature toward infrastructure settings where behavior must be inspectable, explicit, bounded, and governed before it becomes operational.
 
 ## Direction checkpoint
 
@@ -27,169 +22,66 @@ C++ is the disciplined structure.
 Latticra is the contract.
 ```
 
-Latticra uses a constrained C/C++ foundation direction: C owns the secure substrate, C++ is limited to governed policy/validator/effect-gate/audit layers, and Lat / Latticra Language remains the contract/declaration layer.
-
 This does not mean unrestricted C++.
 
-## Core idea
+Current roles:
 
-Latticra treats complex computing behavior as structured state spaces with explicit contracts.
+```text
+C: substrate, ABI boundaries, bounded records, implementation surfaces
+Constrained C++: policy, validation, gate, and audit logic
+Lat / Latticra Language: declaration and contract layer
+LIR: bounded intermediate representation
+L-UI: operator-visible declaration and reporting surface
+Nucleus: coordination, classification, and report boundary
+Runtime boundary: disabled-by-default line before operational behavior
+```
 
-The system direction includes:
+## Current implementation posture
 
-- constrained C/C++ foundation direction;
-- constrained C++ authority-layer contract;
-- constrained C++ authority-layer implementation plan;
-- constrained C++ authority-layer implementation;
-- Nucleus task execution contract;
-- Nucleus task execution implementation plan;
-- Nucleus task execution implementation;
-- Runtime boundary contract;
-- Runtime boundary implementation plan;
-- L-UI rendering contract;
-- L-UI rendering implementation plan;
-- L-UI rendering implementation;
-- state lattices;
-- transition models;
-- effect gates;
-- operator-visible reports;
-- source-aware diagnostics;
-- L-UI interface declarations;
-- Lat / Latticra Programming Language planning;
-- LIR / Latticra Intermediate Representation planning.
+The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, and state-lattice models.
 
-## First principles
+Current implementation remains report/classification oriented. It is not active runtime behavior.
 
-1. No real-world claim without evidence.
-2. No mutation before read-only visibility.
-3. No execution before a contract.
-4. No hardware effect before an explicit gate.
-5. No recovery action before rollback and failure behavior are documented.
-6. No concept promotion before tests and review.
-7. No confusion between research, prototypes, and implementation.
+## Boundary
+
+Latticra does not currently provide a kernel, bootable image, installer, production runtime, runtime behavior, command execution, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing task execution, interactive L-UI rendering, terminal-control L-UI rendering, LIR execution, Lat execution, Lat compiler, Lat interpreter, accreditation, certification, or operating-system replacement.
 
 ## Initial documentation
 
-Start with [`docs/FOUNDATION_INDEX.md`](docs/FOUNDATION_INDEX.md) for the full foundation map.
+Start with [`docs/FOUNDATION_INDEX.md`](docs/FOUNDATION_INDEX.md).
 
-Core seed documents:
+Important records:
 
-- [`docs/REAL_SYSTEM_CONTRACT.md`](docs/REAL_SYSTEM_CONTRACT.md) — project identity, real-system boundary, evidence rules, and non-claims.
-- [`docs/EVIDENCE_LADDER.md`](docs/EVIDENCE_LADDER.md) — promotion path from concept to implementation candidate.
-- [`docs/PRECURSOR_PROMOTION_RULE.md`](docs/PRECURSOR_PROMOTION_RULE.md) — how precursor research may be promoted into Latticra.
-- [`docs/NON_CLAIMS.md`](docs/NON_CLAIMS.md) — claims Latticra does not currently make.
-- [`docs/ARCHITECTURE_SEED.md`](docs/ARCHITECTURE_SEED.md) — initial architecture vocabulary and direction.
-- [`docs/C_CPP_FOUNDATION_DIRECTION.md`](docs/C_CPP_FOUNDATION_DIRECTION.md) — constrained C/C++ foundation direction.
-- [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md) — governed C++ authority-layer contract.
-- [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md) — exact constrained C++ authority-layer implementation plan before code.
-- [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md) — initial no-effect constrained C++ authority layer.
-- [`docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md`](docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md) — first Nucleus task execution contract before task execution code.
-- [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md) — exact Nucleus task execution implementation plan before task execution code.
-- [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md) — initial no-effect C Nucleus task classification/report implementation.
-- [`docs/RUNTIME_BOUNDARY_CONTRACT.md`](docs/RUNTIME_BOUNDARY_CONTRACT.md) — first runtime boundary contract before runtime behavior.
-- [`docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md`](docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md) — exact runtime boundary implementation plan before runtime boundary code.
-- [`docs/L_UI_RENDERING_CONTRACT.md`](docs/L_UI_RENDERING_CONTRACT.md) — first L-UI rendering contract before renderer implementation.
-- [`docs/L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](docs/L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI rendering implementation plan before renderer code.
-- [`docs/L_UI_RENDERING_IMPLEMENTATION.md`](docs/L_UI_RENDERING_IMPLEMENTATION.md) — initial no-effect C L-UI renderer implementation.
-- [`docs/LANGUAGE_NAMING_POLICY.md`](docs/LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy.
-- [`docs/LANGUAGE_STRATEGY.md`](docs/LANGUAGE_STRATEGY.md) — C, constrained C++, Lat, L-UI, and LIR roles.
-- [`docs/SUPERVISOR_ARCHITECTURE.md`](docs/SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor and orchestration architecture.
-- [`docs/ROADMAP.md`](docs/ROADMAP.md) — design-first implementation sequence.
+- [`STATUS.md`](STATUS.md)
+- [`SECURITY.md`](SECURITY.md)
+- [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md)
+- [`docs/status/ANNOUNCEMENTS.md`](docs/status/ANNOUNCEMENTS.md)
+- [`docs/strategy/README.md`](docs/strategy/README.md)
+- [`docs/project_notes/README.md`](docs/project_notes/README.md)
+- [`docs/C_CPP_FOUNDATION_DIRECTION.md`](docs/C_CPP_FOUNDATION_DIRECTION.md)
+- [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md)
+- [`docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md`](docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md)
+- [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md)
+- [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md)
+- [`docs/RUNTIME_BOUNDARY_CONTRACT.md`](docs/RUNTIME_BOUNDARY_CONTRACT.md)
+- [`docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md`](docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md)
+- [`docs/L_UI_RENDERING_IMPLEMENTATION.md`](docs/L_UI_RENDERING_IMPLEMENTATION.md)
 
 ## Status and strategy
 
-Public status and strategy records are available here:
+Status and strategy records are maintained in `STATUS.md`, `docs/status/CURRENT_STATUS.md`, `docs/status/ANNOUNCEMENTS.md`, `docs/strategy/README.md`, and `docs/project_notes/README.md`.
 
-- [`STATUS.md`](STATUS.md) — root status shortcut.
-- [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md) — current progress, completion estimates, and next priorities.
-- [`docs/status/ANNOUNCEMENTS.md`](docs/status/ANNOUNCEMENTS.md) — announcement log and milestone notes.
-- [`docs/strategy/README.md`](docs/strategy/README.md) — strategy index and update rules.
-- [`docs/project_notes/README.md`](docs/project_notes/README.md) — short project notes and upcoming work.
+## Validation
 
-Completion percentages are planning estimates only. They are not release promises, security certifications, or production-readiness metrics.
-
-## Current implementation areas
-
-The repository currently includes guarded documents, tests, no-effect C implementation slices, and the first no-effect constrained C++ authority-layer slice for:
-
-- constrained C/C++ foundation direction;
-- constrained C++ authority-layer contract;
-- constrained C++ authority-layer implementation plan;
-- constrained C++ authority-layer implementation;
-- Nucleus task execution contract;
-- Nucleus task execution implementation plan;
-- Nucleus task execution implementation;
-- Runtime boundary contract;
-- Runtime boundary implementation plan;
-- L-UI rendering contract;
-- L-UI rendering implementation plan;
-- L-UI rendering implementation;
-- state lattice fixtures;
-- tri-plane transition preview modeling;
-- Nucleus preview reporting;
-- L-UI grammar fixtures;
-- L-UI parser result reports;
-- L-UI diagnostics;
-- line/column and source-span metadata;
-- L-UI AST construction;
-- detailed AST reports;
-- escaped string reporting;
-- source-backed AST text extraction;
-- length-carrying AST string storage;
-- decoded NUL acceptance through escaped `\\x00`;
-- literal source-buffer NUL rejection policy enforcement;
-- semantic validation contract;
-- semantic validation implementation plan;
-- semantic validation implementation;
-- LIR shape contract;
-- LIR shape implementation plan;
-- LIR shape implementation;
-- Lat language grammar contract;
-- Lat language grammar implementation plan;
-- Lat language grammar implementation.
-
-Run the current implementation checks with the scripts listed in [`docs/FOUNDATION_INDEX.md`](docs/FOUNDATION_INDEX.md) or through the repository C workflow.
-
-## Current boundary
-
-Latticra does not yet provide:
-
-- a kernel;
-- a bootable image;
-- an installer;
-- a recovery writer;
-- a production language runtime;
-- a hardened sandbox;
-- unrestricted C++ authority;
-- effect-performing implemented C++ authority layer;
-- network interaction;
-- self-update execution;
-- effect-performing Nucleus task execution;
-- runtime behavior;
-- command execution;
-- interactive L-UI rendering;
-- terminal-control L-UI rendering;
-- LIR execution;
-- Lat execution;
-- Lat compiler;
-- Lat interpreter;
-- literal source NUL acceptance;
-- live movement;
-- operating-system replacement;
-- malware prevention guarantees;
-- ransomware prevention guarantees.
+The repository uses shell guards and C invariant tests through the C workflow.
 
 ## Support
-
-Sponsorship helps fund Latticra planning, documentation, tests, and implementation work.
 
 Support Bryforge:
 
 ```text
 https://buymeacoffee.com/Bryforge
 ```
-
-GitHub funding metadata is also provided in `.github/FUNDING.yml`.
 
 ## Security
 
@@ -198,7 +90,3 @@ See [`SECURITY.md`](SECURITY.md) for vulnerability reporting, supported branch s
 ## License
 
 Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`](docs/LICENSE_POLICY.md).
-
-## North star
-
-Latticra is intended to become a professional, evidence-bound software universe architecture built from explicit contracts, deterministic validation, and carefully promoted implementation slices.

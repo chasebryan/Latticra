@@ -81,7 +81,7 @@ It does not implement effect-performing Nucleus task execution, command behavior
 
 ## Current runtime boundary
 
-The runtime boundary lane now has a contract and implementation plan.
+The runtime boundary lane now has a contract, implementation plan, and initial no-effect C API/report surface.
 
 Planning milestone preserved:
 
@@ -89,9 +89,9 @@ Planning milestone preserved:
 Runtime boundary implementation plan
 ```
 
-The implementation plan defines exact public API, C implementation files, runtime request/record/result structs, runtime mode enum, policy enum, denial enum, effect enum, authority summary usage, Nucleus task result usage, effect-gate state usage, operator-confirmation metadata, report format, capacity constants, output-buffer behavior, exact tests, compatibility expectations, and non-claims before runtime boundary code.
+The current implementation adds the public runtime boundary header, source file, smoke invariants, report entry point, implementation record, and dedicated runtime-boundary workflow. It establishes a compileable boundary surface while preserving a disabled-by-default posture.
 
-It does not implement runtime behavior, command execution, Lat execution, LIR execution, task effect execution, mutation, file I/O, network I/O, recovery behavior, rollback, hardware behavior, boot behavior, terminal control, sandboxing, or production runtime claims.
+It does not implement effect-performing runtime behavior, command execution, Lat execution, LIR execution, task effect execution, mutation, file I/O, network I/O, recovery behavior, rollback, hardware behavior, boot behavior, terminal control, sandboxing, or production runtime claims.
 
 ## Mission target
 
@@ -113,16 +113,16 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, runtime boundary contract, and runtime boundary implementation plan toward the first no-effect runtime boundary classification/report implementation.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, runtime boundary contract, runtime boundary implementation plan, and initial runtime boundary API/smoke implementation toward a defensive threat model contract.
 
 The next recommended implementation lane is:
 
 ```text
-Runtime boundary implementation
+Defensive threat model contract
 ```
 
 ## Current non-claim
 
-Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide effect-performing Nucleus task execution, provide runtime behavior, provide command execution, provide interactive L-UI rendering, provide terminal-control L-UI rendering, provide a Lat runtime, or provide a production security boundary.
+Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide effect-performing Nucleus task execution, provide effect-performing runtime behavior, provide command execution, provide interactive L-UI rendering, provide terminal-control L-UI rendering, provide a Lat runtime, or provide a production security boundary.
 
 Those are long-term goals and design targets, not current claims.

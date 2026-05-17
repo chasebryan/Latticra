@@ -7,7 +7,7 @@ Scope: foundation documents, project operations records, implementation document
 
 This index collects the first architecture, policy, language, operations, strategy, status, and implementation documents for Latticra.
 
-Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, strategy records, status records, C/C++ foundation direction, constrained C++ authority-layer policy, L-UI rendering path, Nucleus task execution boundary, runtime boundary, and precursor-promotion rules before expanding real implementation work.
+Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, strategy records, status records, C/C++ foundation direction, constrained C++ authority-layer policy, L-UI rendering path, Nucleus task execution boundary, runtime boundary, defensive threat model, and precursor-promotion rules before expanding real implementation work.
 
 ## Foundation documents
 
@@ -25,6 +25,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md) — first no-effect C Nucleus task classification/report implementation.
 - [`RUNTIME_BOUNDARY_CONTRACT.md`](RUNTIME_BOUNDARY_CONTRACT.md) — first disabled-by-default runtime boundary contract before runtime behavior.
 - [`RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md`](RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md) — exact runtime boundary implementation plan before runtime boundary code.
+- [`RUNTIME_BOUNDARY_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_IMPLEMENTATION.md) — first no-effect runtime boundary API, smoke tests, runner, and implementation record.
 - [`L_UI_RENDERING_CONTRACT.md`](L_UI_RENDERING_CONTRACT.md) — first L-UI rendering contract before renderer implementation.
 - [`L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI rendering implementation plan before renderer code.
 - [`L_UI_RENDERING_IMPLEMENTATION.md`](L_UI_RENDERING_IMPLEMENTATION.md) — first no-effect C L-UI renderer implementation.
@@ -64,6 +65,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md) — first no-effect task classification, denied-by-default policy, authority prerequisites, deterministic reports, and invariants.
 - [`RUNTIME_BOUNDARY_CONTRACT.md`](RUNTIME_BOUNDARY_CONTRACT.md) — first runtime boundary, disabled-by-default posture, denied effects, prerequisites, report surface, and non-claims before runtime code.
 - [`RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md`](RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md) — exact future runtime API, structs, enums, reports, buffers, tests, task usage, authority usage, and non-claims before runtime boundary code.
+- [`RUNTIME_BOUNDARY_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_IMPLEMENTATION.md) — first runtime boundary public API, source surface, smoke invariants, dedicated runner, and dedicated workflow record.
 - [`L_UI_STATIC_REPORT.md`](L_UI_STATIC_REPORT.md) — terminal-facing L-UI static report fixture for Nucleus/state rails.
 - [`L_UI_SOURCE_GRAMMAR.md`](L_UI_SOURCE_GRAMMAR.md) — L-UI source grammar draft and `.lui` fixture guardrails.
 - [`L_UI_PARSER_DESIGN.md`](L_UI_PARSER_DESIGN.md) — parser design contract, error categories, no-effect constraints, and implementation gate.
@@ -129,6 +131,7 @@ Nucleus task execution implementation plan + guardrails
 Nucleus task execution implementation + invariants
 Runtime boundary contract + guardrails
 Runtime boundary implementation plan + guardrails
+Runtime boundary implementation + smoke invariants
 L-UI static report fixture + rail invariants
 L-UI source grammar draft + fixture guardrails
 L-UI parser design contract + guardrails
@@ -189,7 +192,7 @@ L-UI rendering implementation + invariants
 The next implementation target should be:
 
 ```text
-Runtime boundary implementation
+Defensive threat model contract
 ```
 
-That target should implement the first no-effect C runtime boundary classification/report surface with explicit API, disabled-by-default policy, authority prerequisites, Nucleus task prerequisites, effect-gate metadata, caller-provided buffers, deterministic reports, and invariant tests.
+That target should define the first defensive threat model contract for Latticra, including protected assets, assumed adversary capabilities, non-goals, trust boundaries, evidence expectations, abuse-case vocabulary, validation expectations, and non-claims before additional security-facing implementation work.

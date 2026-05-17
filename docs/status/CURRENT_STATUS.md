@@ -24,6 +24,7 @@ The repository currently emphasizes:
 - initial no-effect Nucleus task execution classification/report implementation;
 - Runtime boundary contract planning;
 - Runtime boundary implementation planning;
+- initial runtime boundary API, source, smoke tests, and report surface;
 - L-UI parser and AST foundation;
 - deterministic diagnostics;
 - source-span metadata;
@@ -79,6 +80,7 @@ Nucleus task execution implementation plan
 Nucleus task execution implementation
 Runtime boundary contract
 Runtime boundary implementation plan
+Runtime boundary implementation
 L-UI static report fixture
 L-UI source grammar fixtures
 L-UI parser implementation
@@ -128,7 +130,7 @@ Latticra does not currently provide:
 - an installer;
 - a recovery writer;
 - a production language runtime;
-- runtime behavior;
+- effect-performing runtime behavior;
 - command execution;
 - a hardened sandbox;
 - unrestricted C++ authority;
@@ -185,7 +187,7 @@ Runtime boundary implementation plan
 Latest completed implementation slice:
 
 ```text
-Nucleus task execution implementation
+Runtime boundary implementation
 ```
 
 ## Previous implementation slice
@@ -193,7 +195,7 @@ Nucleus task execution implementation
 Previous implementation slice:
 
 ```text
-L-UI rendering implementation
+Nucleus task execution implementation
 ```
 
 ## Earlier implementation slice
@@ -201,7 +203,7 @@ L-UI rendering implementation
 Earlier implementation slice:
 
 ```text
-Constrained C++ authority layer implementation
+L-UI rendering implementation
 ```
 
 ## Latest completed contract slice
@@ -233,14 +235,14 @@ L-UI rendering contract
 Recommended next work:
 
 ```text
-Runtime boundary implementation
+Defensive threat model contract
 ```
 
 After that:
 
 ```text
-Defensive threat model contract
 Runtime boundary refinement
+C++ authority implementation review
 ```
 
 ## Update rule
