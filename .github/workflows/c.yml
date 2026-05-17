@@ -25,6 +25,8 @@ jobs:
         run: sh scripts/test-c-cpp-foundation-direction.sh
       - name: Run constrained C++ authority layer contract guard
         run: sh scripts/test-constrained-cpp-authority-layer-contract.sh
+      - name: Run constrained C++ authority layer implementation plan guard
+        run: sh scripts/test-constrained-cpp-authority-layer-implementation-plan.sh
       - name: Run Lat language grammar contract guard
         run: sh scripts/test-lat-language-grammar-contract.sh
       - name: Run Lat language grammar implementation plan guard

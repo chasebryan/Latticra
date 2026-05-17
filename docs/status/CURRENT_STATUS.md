@@ -93,6 +93,7 @@ Lat language grammar implementation plan
 Lat language grammar implementation
 C/C++ foundation direction
 Constrained C++ authority layer contract
+Constrained C++ authority layer implementation plan
 security policy
 public legacy association guard
 strategy index
@@ -134,18 +135,25 @@ The long-term goal is to make malicious behavior harder to hide and easier to in
 
 This is a mission direction, not a current security guarantee.
 
-## Next recommended work
+## Latest completed planning slice
 
-Recommended next work:
+Latest completed planning slice:
 
 ```text
 Constrained C++ authority layer implementation plan
 ```
 
-After that:
+## Next recommended work
+
+Recommended next work:
 
 ```text
 Constrained C++ authority layer implementation
+```
+
+After that:
+
+```text
 L-UI rendering contract
 Nucleus task execution contract
 ```

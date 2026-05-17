@@ -40,9 +40,9 @@ This does not mean unrestricted C++.
 
 ## Current C++ authority boundary
 
-The C++ authority layer is now contract-bound as a future governed layer only.
+The C++ authority layer is now contract-bound and implementation-plan-bound as a future governed layer.
 
-It may plan for:
+It may plan and implement only no-effect authority behavior first:
 
 ```text
 policy logic
@@ -54,7 +54,9 @@ operator-visible reports
 safe wrappers around C substrate APIs
 ```
 
-It does not currently implement C++ infrastructure, C++ policy code, C++ validators, C++ effect gates, C++ audit logic, or unrestricted C++ authority.
+The Constrained C++ authority layer implementation plan defines the first exact implementation boundary for API, namespace, file paths, C++ standard, compiler flags, exception policy, RTTI policy, allocation policy, ownership/lifetime rules, result labels, C ABI boundaries, validators, audit reports, and tests.
+
+It does not currently provide an implemented C++ authority layer, unrestricted C++ authority, runtime execution, mutation authority, file authority, network authority, recovery authority, hardware authority, or production security guarantee.
 
 ## Mission target
 
@@ -76,12 +78,12 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, and constrained C++ authority-layer contract toward the authority-layer implementation plan.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, and constrained C++ authority-layer implementation plan toward the first no-effect authority-layer implementation.
 
 The next recommended implementation lane is:
 
 ```text
-Constrained C++ authority layer implementation plan
+Constrained C++ authority layer implementation
 ```
 
 ## Current non-claim
