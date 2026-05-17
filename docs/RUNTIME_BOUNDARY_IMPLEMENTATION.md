@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Implementation
 
 Status: initial implementation record
-Scope: C runtime boundary API surface, deterministic labels, default-deny classification, authority prerequisites, Nucleus task prerequisites, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
+Scope: C runtime boundary API surface, deterministic labels, default-deny classification, authority prerequisites, authority flag report fields, Nucleus task prerequisites, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
 
 ## Purpose
 
@@ -27,6 +27,7 @@ include/latticra/runtime_boundary.h
 src/runtime_boundary.c
 tests/runtime_boundary_invariants.c
 tests/runtime_boundary_effect_flag_report.c
+tests/runtime_boundary_authority_flag_report.c
 scripts/test-runtime-boundary.sh
 docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md
 ```
@@ -44,6 +45,7 @@ runtime_id copying
 record_count initialization and report visibility
 authority presence and status checks
 authority no-effect flag checks
+authority execution/mutation/server/recovery/hardware flag report visibility
 Nucleus task-result prerequisite checks for task-report requests
 task policy and task reason metadata copying
 source identity copying
@@ -53,7 +55,7 @@ unknown effect denial
 future-gate classification for operational request kinds
 operator-confirmation non-override behavior
 bounded report output with policy, reason, and gate state
-expanded report output for runtime_id, record_count, request, requested effect, mode, operator confirmation, authority status, authority no-effect state, task policy, task reason, no-effect flag, execution flag, mutation flag, file I/O flag, network flag, server flag, recovery flag, rollback flag, hardware flag, boot flag, source identity, and source span metadata
+expanded report output for runtime_id, record_count, request, requested effect, mode, operator confirmation, authority status, authority no-effect state, authority effect flags, task policy, task reason, no-effect flag, execution flag, mutation flag, file I/O flag, network flag, server flag, recovery flag, rollback flag, hardware flag, boot flag, source identity, and source span metadata
 small-buffer rejection and clearing
 ```
 
@@ -78,6 +80,7 @@ source span metadata is copied
 missing authority is denied
 failed authority status is denied
 non-no-effect authority flags are denied
+authority effect flags are present and zero in reports
 missing Nucleus task metadata is denied for task reports
 valid Nucleus task metadata is copied for task reports
 unknown requests are denied
