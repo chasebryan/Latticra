@@ -6,13 +6,23 @@ Latticra is a contract-first systems architecture project for high-assurance inf
 
 The long-term direction is a disciplined software architecture suitable for mission-critical infrastructure settings. The current repository is foundational engineering work, not a deployed platform or certified product.
 
-## Architecture posture
+## Motto
+
+> “The simulacrum is never what hides the truth.” — Jean Baudrillard
+
+## Mission
+
+Latticra is being built as a defensive, auditable, open systems architecture. The project is intended to mature toward infrastructure settings where behavior must be inspectable, explicit, bounded, and governed before it becomes operational.
+
+## Direction checkpoint
 
 ```text
 C is the metal.
 C++ is the disciplined structure.
 Latticra is the contract.
 ```
+
+This does not mean unrestricted C++.
 
 Current roles:
 
@@ -28,15 +38,15 @@ Runtime boundary: disabled-by-default line before operational behavior
 
 ## Current implementation posture
 
-The repository contains guarded documents, tests, and no-effect implementation slices for C/C++ direction, constrained authority reporting, Nucleus classification, runtime-boundary planning, L-UI parsing/rendering, LIR shape metadata, Lat grammar parsing, and state-lattice models.
+The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, and state-lattice models.
 
 Current implementation remains report/classification oriented. It is not active runtime behavior.
 
 ## Boundary
 
-Latticra does not currently provide a kernel, bootable image, installer, production runtime, unrestricted authority, active task execution, runtime behavior, terminal-control UI behavior, accreditation, certification, or operating-system replacement.
+Latticra does not currently provide a kernel, bootable image, installer, production runtime, runtime behavior, command execution, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing task execution, interactive L-UI rendering, terminal-control L-UI rendering, LIR execution, Lat execution, Lat compiler, Lat interpreter, accreditation, certification, or operating-system replacement.
 
-## Documentation
+## Initial documentation
 
 Start with [`docs/FOUNDATION_INDEX.md`](docs/FOUNDATION_INDEX.md).
 
@@ -44,13 +54,38 @@ Important records:
 
 - [`STATUS.md`](STATUS.md)
 - [`SECURITY.md`](SECURITY.md)
+- [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md)
+- [`docs/status/ANNOUNCEMENTS.md`](docs/status/ANNOUNCEMENTS.md)
+- [`docs/strategy/README.md`](docs/strategy/README.md)
+- [`docs/project_notes/README.md`](docs/project_notes/README.md)
+- [`docs/C_CPP_FOUNDATION_DIRECTION.md`](docs/C_CPP_FOUNDATION_DIRECTION.md)
+- [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md)
+- [`docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md`](docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md)
+- [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md)
+- [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md)
 - [`docs/RUNTIME_BOUNDARY_CONTRACT.md`](docs/RUNTIME_BOUNDARY_CONTRACT.md)
 - [`docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md`](docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md)
-- [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md)
+- [`docs/L_UI_RENDERING_IMPLEMENTATION.md`](docs/L_UI_RENDERING_IMPLEMENTATION.md)
+
+## Status and strategy
+
+Status and strategy records are maintained in `STATUS.md`, `docs/status/CURRENT_STATUS.md`, `docs/status/ANNOUNCEMENTS.md`, `docs/strategy/README.md`, and `docs/project_notes/README.md`.
 
 ## Validation
 
 The repository uses shell guards and C invariant tests through the C workflow.
+
+## Support
+
+Support Bryforge:
+
+```text
+https://buymeacoffee.com/Bryforge
+```
+
+## Security
+
+See [`SECURITY.md`](SECURITY.md) for vulnerability reporting, supported branch status, safe testing rules, and security non-claims.
 
 ## License
 
