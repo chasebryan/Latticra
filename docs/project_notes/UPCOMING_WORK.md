@@ -3,7 +3,7 @@
 Status: active project note
 Last updated: 2026-05-16 16:15 CDT
 
-## Previous planning slice
+## Earlier planning slice
 
 ```text
 Constrained C++ authority layer implementation plan
@@ -42,6 +42,18 @@ define the first contract for rendering validated L-UI/LIR metadata into operato
 ## Latest completed planning slice
 
 ```text
+Nucleus task execution implementation plan
+```
+
+Purpose completed:
+
+```text
+define exact public API, C implementation files, task request/result/record structs, policy enum, denial enum, effect-gate enum usage, authority summary usage, operator-confirmation metadata, rollback metadata, report format, capacity constants, output-buffer behavior, exact tests, compatibility expectations, and non-claims before Nucleus task execution code
+```
+
+## Previous planning slice
+
+```text
 L-UI rendering implementation plan
 ```
 
@@ -78,27 +90,27 @@ implement the first no-effect constrained C++ authority layer using the guarded 
 ## Recommended next slice
 
 ```text
-Nucleus task execution implementation plan
+Nucleus task execution implementation
 ```
 
 Purpose:
 
 ```text
-define exact public API, header path, source path, task request struct, task result struct, task record struct, policy enum, denial enum, effect-gate enum usage, authority summary usage, operator-confirmation metadata, rollback metadata, report format, capacity constants, output-buffer behavior, exact tests, compatibility expectations, and non-claims before any task execution code
+implement the first no-effect C Nucleus task classification/report surface using the guarded implementation plan, with explicit API, denied-by-default policy, authority prerequisites, effect-gate metadata, caller-provided buffers, deterministic reports, and invariant tests
 ```
 
 ## Near-term queue
 
-1. Nucleus task execution implementation plan.
+1. Nucleus task execution implementation.
 2. Runtime boundary contract.
 3. Defensive threat model contract.
 4. Public status update after major milestones.
-5. Completion percentage review after Nucleus task execution implementation planning.
-6. Strategy estimate review after Nucleus task execution implementation planning.
+5. Completion percentage review after Nucleus task execution implementation.
+6. Strategy estimate review after Nucleus task execution implementation.
 7. C++ authority implementation review after initial no-effect validator/audit slice.
-8. Rendering-to-Nucleus boundary review before task execution implementation.
+8. Rendering-to-Nucleus boundary review after task execution implementation.
 9. L-UI rendering detailed report refinement after initial renderer implementation.
-10. Nucleus task execution implementation only after plan merge.
+10. Runtime boundary implementation plan after the runtime boundary contract is merged.
 
 ## Quality rules
 
@@ -119,8 +131,8 @@ consistent with the C/C++ foundation direction
 - Preserve the C/C++ foundation checkpoint: C is the metal, C++ is the disciplined structure, Latticra is the contract.
 - Keep the constrained C++ authority layer no-effect until separate effect contracts exist.
 - Keep L-UI rendering no-effect and presentation-only.
-- Keep Nucleus task execution contract-only until a separate implementation plan exists.
-- Move next into Nucleus task execution implementation planning.
+- Keep Nucleus task execution no-effect and denied-by-default.
+- Move next into Nucleus task execution implementation.
 - Maintain professional public docs.
 - Keep status and completion estimates current.
 - Keep security ambitions framed as mission and design targets until proven.
