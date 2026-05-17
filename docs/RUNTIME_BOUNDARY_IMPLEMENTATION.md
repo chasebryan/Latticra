@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Implementation
 
 Status: initial implementation record
-Scope: C runtime boundary API surface, deterministic labels, default-deny classification, authority prerequisites, Nucleus task prerequisites, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
+Scope: C runtime boundary API surface, deterministic labels, default-deny classification, authority prerequisites, Nucleus task prerequisites, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
 
 ## Purpose
 
@@ -43,12 +43,14 @@ authority presence and status checks
 authority no-effect flag checks
 Nucleus task-result prerequisite checks for task-report requests
 task policy and task reason metadata copying
+source identity copying
+source span metadata copying
 unknown request denial
 unknown effect denial
 future-gate classification for operational request kinds
 operator-confirmation non-override behavior
 bounded report output with policy, reason, and gate state
-expanded report output for request, requested effect, mode, operator confirmation, authority status, authority no-effect state, task policy, task reason, no-effect flag, execution flag, and mutation flag
+expanded report output for request, requested effect, mode, operator confirmation, authority status, authority no-effect state, task policy, task reason, no-effect flag, execution flag, mutation flag, source identity, and source span metadata
 small-buffer rejection and clearing
 ```
 
@@ -65,6 +67,8 @@ The invariant test verifies:
 ```text
 runtime boundary classification initializes a no-effect result
 default policy denies
+source identity metadata is copied
+source span metadata is copied
 missing authority is denied
 failed authority status is denied
 non-no-effect authority flags are denied
@@ -76,6 +80,7 @@ operational request kinds require a future gate
 operator confirmation does not override policy
 runtime boundary reports are bounded
 expanded report fields are present
+source identity and source span report fields are present
 small buffers are rejected and cleared
 null arguments are handled safely
 ```

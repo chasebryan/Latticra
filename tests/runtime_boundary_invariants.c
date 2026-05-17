@@ -53,6 +53,29 @@ static int runtime_boundary_smoke_classifies_without_effects(void) {
     return 0;
 }
 
+static int runtime_boundary_copies_source_metadata(void) {
+    latticra_runtime_boundary_authority_summary_t authority = authority_ok();
+    latticra_runtime_boundary_request_t request = base_request(&authority);
+    latticra_runtime_boundary_result_t result;
+    request.source_identity = "fixture://runtime/source.lat";
+    request.source_identity_len = strlen(request.source_identity);
+    request.source_span.start_offset = 7u;
+    request.source_span.end_offset = 19u;
+    request.source_span.start_line = 2u;
+    request.source_span.start_column = 3u;
+    request.source_span.end_line = 2u;
+    request.source_span.end_column = 15u;
+    EXPECT_TRUE(latticra_runtime_boundary_classify(&request, &result) == LATTICRA_STATUS_OK, "source metadata classify");
+    EXPECT_TRUE(strcmp(result.record.source_identity, "fixture://runtime/source.lat") == 0, "source identity copied");
+    EXPECT_TRUE(result.record.source_span.start_offset == 7u, "span start offset copied");
+    EXPECT_TRUE(result.record.source_span.end_offset == 19u, "span end offset copied");
+    EXPECT_TRUE(result.record.source_span.start_line == 2u, "span start line copied");
+    EXPECT_TRUE(result.record.source_span.start_column == 3u, "span start column copied");
+    EXPECT_TRUE(result.record.source_span.end_line == 2u, "span end line copied");
+    EXPECT_TRUE(result.record.source_span.end_column == 15u, "span end column copied");
+    return 0;
+}
+
 static int runtime_boundary_requires_authority(void) {
     latticra_runtime_boundary_request_t request = base_request(0);
     latticra_runtime_boundary_result_t result;
@@ -169,6 +192,13 @@ static int runtime_boundary_report_is_bounded(void) {
     result.record.authority.no_effect = 1;
     result.record.task_policy = LATTICRA_NUCLEUS_TASK_POLICY_ALLOW_REPORT;
     result.record.task_reason = LATTICRA_NUCLEUS_TASK_DENIAL_OK;
+    (void)snprintf(result.record.source_identity, sizeof(result.record.source_identity), "%s", "fixture://runtime/source.lat");
+    result.record.source_span.start_offset = 7u;
+    result.record.source_span.end_offset = 19u;
+    result.record.source_span.start_line = 2u;
+    result.record.source_span.start_column = 3u;
+    result.record.source_span.end_line = 2u;
+    result.record.source_span.end_column = 15u;
     EXPECT_TRUE(latticra_runtime_boundary_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "report status");
     EXPECT_TRUE(strstr(report, "LATTICRA RUNTIME BOUNDARY REPORT") != 0, "report header");
     EXPECT_TRUE(strstr(report, "request=parse-only") != 0, "report request");
@@ -185,6 +215,13 @@ static int runtime_boundary_report_is_bounded(void) {
     EXPECT_TRUE(strstr(report, "no_effect=1") != 0, "report no-effect flag");
     EXPECT_TRUE(strstr(report, "execution_allowed=0") != 0, "report execution flag");
     EXPECT_TRUE(strstr(report, "mutation_allowed=0") != 0, "report mutation flag");
+    EXPECT_TRUE(strstr(report, "source_identity=fixture://runtime/source.lat") != 0, "report source identity");
+    EXPECT_TRUE(strstr(report, "span_start_offset=7") != 0, "report span start offset");
+    EXPECT_TRUE(strstr(report, "span_end_offset=19") != 0, "report span end offset");
+    EXPECT_TRUE(strstr(report, "span_start_line=2") != 0, "report span start line");
+    EXPECT_TRUE(strstr(report, "span_start_column=3") != 0, "report span start column");
+    EXPECT_TRUE(strstr(report, "span_end_line=2") != 0, "report span end line");
+    EXPECT_TRUE(strstr(report, "span_end_column=15") != 0, "report span end column");
     EXPECT_TRUE(latticra_runtime_boundary_report(&result, tiny, sizeof(tiny)) == LATTICRA_STATUS_BUFFER_TOO_SMALL, "small buffer rejected");
     EXPECT_TRUE(tiny[0] == '\0', "small buffer cleared");
     return 0;
@@ -200,6 +237,7 @@ static int runtime_boundary_null_arguments_are_rejected(void) {
 
 int main(void) {
     if (runtime_boundary_smoke_classifies_without_effects() != 0) return 1;
+    if (runtime_boundary_copies_source_metadata() != 0) return 1;
     if (runtime_boundary_requires_authority() != 0) return 1;
     if (runtime_boundary_requires_authority_success() != 0) return 1;
     if (runtime_boundary_requires_no_effect_authority_flags() != 0) return 1;
