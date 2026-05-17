@@ -17,3 +17,5 @@ jobs:
         uses: actions/checkout@v4
       - name: Run defensive threat model contract guard
         run: sh scripts/test-defensive-threat-model-contract.sh
+      - name: Run defensive threat model implementation plan guard
+        run: sh scripts/test-defensive-threat-model-implementation-plan.sh
