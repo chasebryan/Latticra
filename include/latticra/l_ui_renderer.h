@@ -65,6 +65,18 @@ typedef struct {
     char card_name[LATTICRA_L_UI_RENDER_LABEL_MAX];
     char effect[LATTICRA_L_UI_RENDER_LABEL_MAX];
     char boundary[LATTICRA_L_UI_RENDER_LABEL_MAX];
+    char rail_names[LATTICRA_L_UI_AST_RAIL_MAX][LATTICRA_L_UI_RENDER_LABEL_MAX];
+    size_t rail_field_counts[LATTICRA_L_UI_AST_RAIL_MAX];
+    size_t rail_text_counts[LATTICRA_L_UI_AST_RAIL_MAX];
+    latticra_l_ui_source_span_t rail_spans[LATTICRA_L_UI_AST_RAIL_MAX];
+    char field_names[LATTICRA_L_UI_AST_FIELD_MAX][LATTICRA_L_UI_RENDER_LABEL_MAX];
+    char field_bindings[LATTICRA_L_UI_AST_FIELD_MAX][LATTICRA_L_UI_AST_BINDING_MAX];
+    char field_binding_prefixes[LATTICRA_L_UI_AST_FIELD_MAX][LATTICRA_L_UI_RENDER_LABEL_MAX];
+    latticra_l_ui_source_span_t field_spans[LATTICRA_L_UI_AST_FIELD_MAX];
+    latticra_l_ui_source_span_t field_binding_spans[LATTICRA_L_UI_AST_FIELD_MAX];
+    size_t text_value_lens[LATTICRA_L_UI_AST_TEXT_MAX];
+    char text_escaped_values[LATTICRA_L_UI_AST_TEXT_MAX][LATTICRA_L_UI_AST_PURPOSE_MAX];
+    latticra_l_ui_source_span_t text_spans[LATTICRA_L_UI_AST_TEXT_MAX];
     size_t rail_count;
     size_t field_count;
     size_t text_count;
