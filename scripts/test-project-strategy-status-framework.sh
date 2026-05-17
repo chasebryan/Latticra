@@ -33,6 +33,7 @@ require_file docs/status/ANNOUNCEMENTS.md
 require_file docs/project_notes/README.md
 require_file docs/project_notes/CURRENT_DIRECTION.md
 require_file docs/project_notes/UPCOMING_WORK.md
+require_file docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md
 require_file docs/L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION.md
 require_file docs/L_UI_SEMANTIC_VALIDATION_CONTRACT.md
 require_file docs/L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md
@@ -66,6 +67,7 @@ require_file scripts/test-lir-shape-implementation-plan.sh
 require_file scripts/test-lir-shape.sh
 require_file scripts/test-l-ui-rendering-contract.sh
 require_file scripts/test-l-ui-rendering-implementation-plan.sh
+require_file scripts/test-nucleus-task-execution-contract.sh
 require_file scripts/test-lat-language-grammar-contract.sh
 require_file scripts/test-lat-language-grammar-implementation-plan.sh
 
@@ -88,9 +90,12 @@ require_contains 'docs/strategy/README.md' README.md
 require_contains 'docs/project_notes/README.md' README.md
 require_contains 'C_CPP_FOUNDATION_DIRECTION.md' README.md
 require_contains 'CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md' README.md
+require_contains 'NUCLEUS_TASK_EXECUTION_CONTRACT.md' README.md
 require_contains 'L_UI_RENDERING_IMPLEMENTATION.md' README.md
 require_contains 'constrained C/C++ foundation direction' README.md
 require_contains 'constrained C++ authority-layer contract' README.md
+require_contains 'Nucleus task execution contract' README.md
+require_contains 'Nucleus task execution' README.md
 require_contains 'L-UI rendering implementation' README.md
 require_contains 'literal source-buffer NUL rejection policy enforcement' README.md
 require_contains 'semantic validation implementation' README.md
@@ -110,6 +115,7 @@ require_contains 'Overall Latticra system' STATUS.md
 require_contains 'Constrained C++ authority layer implementation plan' STATUS.md
 require_contains 'L-UI rendering implementation' STATUS.md
 require_contains 'Nucleus task execution contract' STATUS.md
+require_contains 'Nucleus task execution implementation plan' STATUS.md
 require_contains 'planning estimates only' STATUS.md
 require_contains '19%' STATUS.md
 require_contains '86%' STATUS.md
@@ -152,6 +158,14 @@ require_contains 'cpp_authority_layer_preserves_no_effect_flags' docs/CONSTRAINE
 require_contains 'sh scripts/test-constrained-cpp-authority-layer-contract.sh' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
 require_contains 'This document does not implement C++ infrastructure' docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md
 
+require_contains 'Status: Nucleus task execution contract' docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md
+require_contains 'This document does not implement Nucleus task execution.' docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md
+require_contains 'First task execution posture' docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md
+require_contains 'default policy: deny' docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md
+require_contains 'operator confirmation allowed to override: no' docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md
+require_contains 'NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md' docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md
+require_contains 'sh scripts/test-nucleus-task-execution-contract.sh' docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md
+
 require_contains 'Scope: C, constrained C++, Lat, L-UI, LIR, and implementation ordering.' docs/LANGUAGE_STRATEGY.md
 require_contains 'C_CPP_FOUNDATION_DIRECTION.md' docs/LANGUAGE_STRATEGY.md
 require_contains 'C is the metal.' docs/LANGUAGE_STRATEGY.md
@@ -168,17 +182,18 @@ require_contains '../STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains '../SECURITY.md' docs/FOUNDATION_INDEX.md
 require_contains 'C_CPP_FOUNDATION_DIRECTION.md' docs/FOUNDATION_INDEX.md
 require_contains 'CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md' docs/FOUNDATION_INDEX.md
+require_contains 'NUCLEUS_TASK_EXECUTION_CONTRACT.md' docs/FOUNDATION_INDEX.md
 require_contains 'LANGUAGE_STRATEGY.md' docs/FOUNDATION_INDEX.md
 require_contains 'project strategy/status framework + guardrails' docs/FOUNDATION_INDEX.md
 require_contains 'language naming policy + guardrails' docs/FOUNDATION_INDEX.md
 require_contains 'C/C++ foundation direction + guardrails' docs/FOUNDATION_INDEX.md
 require_contains 'constrained C++ authority layer contract + guardrails' docs/FOUNDATION_INDEX.md
+require_contains 'Nucleus task execution contract + guardrails' docs/FOUNDATION_INDEX.md
 require_contains 'L-UI semantic validation implementation + invariants' docs/FOUNDATION_INDEX.md
 require_contains 'LIR shape implementation + invariants' docs/FOUNDATION_INDEX.md
 require_contains 'Lat language grammar implementation + invariants' docs/FOUNDATION_INDEX.md
 require_contains 'Constrained C++ authority layer implementation plan' docs/FOUNDATION_INDEX.md
 require_contains 'L-UI rendering implementation + invariants' docs/FOUNDATION_INDEX.md
-require_contains 'Nucleus task execution contract' docs/FOUNDATION_INDEX.md
 
 require_contains 'Status: active strategy index' docs/strategy/README.md
 require_contains '2026-05-15-2249-cdt-national-security-open-system-strategy.md' docs/strategy/README.md
@@ -215,6 +230,7 @@ require_contains 'Constrained C++ authority layer contract' docs/status/CURRENT_
 require_contains 'Constrained C++ authority layer implementation plan' docs/status/CURRENT_STATUS.md
 require_contains 'L-UI rendering implementation' docs/status/CURRENT_STATUS.md
 require_contains 'Nucleus task execution contract' docs/status/CURRENT_STATUS.md
+require_contains 'Nucleus task execution implementation plan' docs/status/CURRENT_STATUS.md
 require_contains 'effect-performing implemented C++ authority layer' docs/status/CURRENT_STATUS.md
 require_contains 'interactive L-UI rendering' docs/status/CURRENT_STATUS.md
 require_contains 'terminal-control L-UI rendering' docs/status/CURRENT_STATUS.md
@@ -241,11 +257,14 @@ require_contains 'Current C++ authority boundary' docs/project_notes/CURRENT_DIR
 require_contains 'Constrained C++ authority layer implementation plan' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'effect-performing C++ authority layer' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Current L-UI rendering boundary' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Nucleus task execution contract' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Current Nucleus task boundary' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Nucleus task execution implementation plan' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Status: active project note' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Recommended next slice' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Constrained C++ authority layer implementation plan' docs/project_notes/UPCOMING_WORK.md
 require_contains 'L-UI rendering implementation' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Nucleus task execution contract' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Nucleus task execution implementation plan' docs/project_notes/UPCOMING_WORK.md
 require_contains 'C/C++ foundation direction' docs/project_notes/UPCOMING_WORK.md
 
 require_contains 'Status: LIR shape contract' docs/LIR_SHAPE_CONTRACT.md
@@ -275,5 +294,6 @@ require_contains 'l_ui_rendering_accepts_semantically_valid_l_ui_fixture' tests/
 require_contains 'lat module RootModule' fixtures/lat/minimal_module.lat
 require_contains 'Run constrained C++ authority layer contract guard' .github/workflows/c.yml
 require_contains 'Run L-UI rendering tests' .github/workflows/c.yml
+require_contains 'Run Nucleus task execution contract guard' .github/workflows/c.yml
 
 printf 'project_strategy_status_framework: ok\n'
