@@ -83,6 +83,12 @@ It does not implement effect-performing Nucleus task execution, command behavior
 
 The runtime boundary lane now has a contract, implementation plan, and initial no-effect C API/report surface.
 
+Planning milestone preserved:
+
+```text
+Runtime boundary implementation plan
+```
+
 The current implementation adds the public runtime boundary header, source file, smoke invariants, report entry point, implementation record, and dedicated runtime-boundary workflow. It establishes a compileable boundary surface while preserving a disabled-by-default posture.
 
 It does not implement effect-performing runtime behavior, command execution, Lat execution, LIR execution, task effect execution, mutation, file I/O, network I/O, recovery behavior, rollback, hardware behavior, boot behavior, terminal control, sandboxing, or production runtime claims.
