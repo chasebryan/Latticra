@@ -55,7 +55,7 @@ effect classification without performing effects
 deterministic authority report rendering
 ```
 
-The implementation does not provide unrestricted C++ authority, runtime execution, mutation authority, file authority, network authority, recovery authority, hardware authority, or production security guarantees.
+The implementation does not provide unrestricted C++ authority, an effect-performing implemented C++ authority layer, runtime execution, mutation authority, file authority, network authority, recovery authority, hardware authority, or production security guarantees.
 
 ## Mission target
 
@@ -87,6 +87,6 @@ L-UI rendering contract
 
 ## Current non-claim
 
-Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide a Lat runtime, or provide a production security boundary.
+Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing implemented C++ authority layer, provide a Lat runtime, or provide a production security boundary.
 
 Those are long-term goals and design targets, not current claims.
