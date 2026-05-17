@@ -84,27 +84,27 @@ Constrained C++ authority layer implementation plan
 ## Latest completed implementation slice
 
 ```text
-Nucleus task execution implementation
+Runtime boundary implementation
 ```
 
 ## Previous implementation slice
 
 ```text
-L-UI rendering implementation
+Nucleus task execution implementation
 ```
 
 ## Earlier implementation slice
 
 ```text
-Constrained C++ authority layer implementation
+L-UI rendering implementation
 ```
 
 ## Current next step
 
 ```text
-Runtime boundary implementation
+Defensive threat model contract
 ```
 
 ## Non-claims
 
-Latticra does not currently provide a finished operating system, hardened sandbox, production security boundary, malware prevention, ransomware prevention, production runtime, runtime behavior, command execution, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing Nucleus task execution, interactive L-UI rendering, terminal-control L-UI rendering, or public release readiness.
+Latticra does not currently provide a finished operating system, hardened sandbox, production security boundary, malware prevention, ransomware prevention, production runtime, effect-performing runtime behavior, command execution, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing Nucleus task execution, interactive L-UI rendering, terminal-control L-UI rendering, or public release readiness.
