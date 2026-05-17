@@ -18,6 +18,7 @@ The repository currently emphasizes:
 - initial no-effect constrained C++ authority-layer implementation;
 - L-UI rendering contract planning;
 - L-UI rendering implementation planning;
+- initial no-effect L-UI rendering implementation;
 - L-UI parser and AST foundation;
 - deterministic diagnostics;
 - source-span metadata;
@@ -100,6 +101,7 @@ Constrained C++ authority layer implementation plan
 Constrained C++ authority layer implementation
 L-UI rendering contract
 L-UI rendering implementation plan
+L-UI rendering implementation
 security policy
 public legacy association guard
 strategy index
@@ -124,7 +126,8 @@ Latticra does not currently provide:
 - network interaction;
 - self-update execution;
 - Nucleus task execution;
-- implemented L-UI rendering;
+- interactive L-UI rendering;
+- terminal-control L-UI rendering;
 - LIR execution;
 - Lat execution;
 - Lat compiler;
@@ -137,7 +140,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make malicious behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, and eventually deterministic rendering surfaces.
+The long-term goal is to make malicious behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, and deterministic rendering surfaces.
 
 This is a mission direction, not a current security guarantee.
 
@@ -162,6 +165,14 @@ L-UI rendering implementation plan
 Latest completed implementation slice:
 
 ```text
+L-UI rendering implementation
+```
+
+## Previous implementation slice
+
+Previous implementation slice:
+
+```text
 Constrained C++ authority layer implementation
 ```
 
@@ -178,14 +189,14 @@ L-UI rendering contract
 Recommended next work:
 
 ```text
-L-UI rendering implementation
+Nucleus task execution contract
 ```
 
 After that:
 
 ```text
-Nucleus task execution contract
 Runtime boundary contract
+Defensive threat model contract
 ```
 
 ## Update rule

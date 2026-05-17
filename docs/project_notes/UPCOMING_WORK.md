@@ -42,6 +42,18 @@ define exact public API, header path, source path, render request struct, render
 ## Latest completed implementation slice
 
 ```text
+L-UI rendering implementation
+```
+
+Purpose completed:
+
+```text
+implement the first no-effect C L-UI renderer using the guarded implementation plan, with explicit API, caller-provided buffers, deterministic report output, semantic/LIR/authority prerequisites, source-span rendering, length-aware text rendering, and invariant tests
+```
+
+## Previous implementation slice
+
+```text
 Constrained C++ authority layer implementation
 ```
 
@@ -54,27 +66,27 @@ implement the first no-effect constrained C++ authority layer using the guarded 
 ## Recommended next slice
 
 ```text
-L-UI rendering implementation
+Nucleus task execution contract
 ```
 
 Purpose:
 
 ```text
-implement the first no-effect C L-UI renderer using the guarded implementation plan, with explicit API, caller-provided buffers, deterministic report output, semantic/LIR/authority prerequisites, source-span rendering, length-aware text rendering, and invariant tests
+define the first contract for future Nucleus task execution boundaries, prerequisites, authority checks, no-effect defaults, denial behavior, report surfaces, exact future tests, and non-claims before any task execution code
 ```
 
 ## Near-term queue
 
-1. L-UI rendering implementation.
-2. Nucleus task execution contract.
-3. Runtime boundary contract.
-4. Defensive threat model contract.
-5. Public status update after major milestones.
-6. Completion percentage review after L-UI rendering implementation.
-7. Strategy estimate review after L-UI rendering implementation.
-8. C++ authority implementation review after initial no-effect validator/audit slice.
-9. Rendering-to-Nucleus boundary review before any task execution contract.
-10. L-UI rendering detailed report refinement after initial renderer implementation.
+1. Nucleus task execution contract.
+2. Runtime boundary contract.
+3. Defensive threat model contract.
+4. Public status update after major milestones.
+5. Completion percentage review after L-UI rendering implementation.
+6. Strategy estimate review after L-UI rendering implementation.
+7. C++ authority implementation review after initial no-effect validator/audit slice.
+8. Rendering-to-Nucleus boundary review before task execution implementation planning.
+9. L-UI rendering detailed report refinement after initial renderer implementation.
+10. Nucleus task execution implementation plan after the contract is merged.
 
 ## Quality rules
 
@@ -95,7 +107,7 @@ consistent with the C/C++ foundation direction
 - Preserve the C/C++ foundation checkpoint: C is the metal, C++ is the disciplined structure, Latticra is the contract.
 - Keep the constrained C++ authority layer no-effect until separate effect contracts exist.
 - Keep L-UI rendering no-effect and presentation-only.
-- Move next into L-UI rendering implementation.
+- Move next into Nucleus task execution contract planning.
 - Maintain professional public docs.
 - Keep status and completion estimates current.
 - Keep security ambitions framed as mission and design targets until proven.

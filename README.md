@@ -43,6 +43,7 @@ The system direction includes:
 - constrained C++ authority-layer implementation;
 - L-UI rendering contract;
 - L-UI rendering implementation plan;
+- L-UI rendering implementation;
 - state lattices;
 - transition models;
 - effect gates;
@@ -79,6 +80,7 @@ Core seed documents:
 - [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md) — initial no-effect constrained C++ authority layer.
 - [`docs/L_UI_RENDERING_CONTRACT.md`](docs/L_UI_RENDERING_CONTRACT.md) — first L-UI rendering contract before renderer implementation.
 - [`docs/L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](docs/L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI rendering implementation plan before renderer code.
+- [`docs/L_UI_RENDERING_IMPLEMENTATION.md`](docs/L_UI_RENDERING_IMPLEMENTATION.md) — initial no-effect C L-UI renderer implementation.
 - [`docs/LANGUAGE_NAMING_POLICY.md`](docs/LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy.
 - [`docs/LANGUAGE_STRATEGY.md`](docs/LANGUAGE_STRATEGY.md) — C, constrained C++, Lat, L-UI, and LIR roles.
 - [`docs/SUPERVISOR_ARCHITECTURE.md`](docs/SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor and orchestration architecture.
@@ -106,6 +108,7 @@ The repository currently includes guarded documents, tests, no-effect C implemen
 - constrained C++ authority-layer implementation;
 - L-UI rendering contract;
 - L-UI rendering implementation plan;
+- L-UI rendering implementation;
 - state lattice fixtures;
 - tri-plane transition preview modeling;
 - Nucleus preview reporting;
@@ -147,7 +150,8 @@ Latticra does not yet provide:
 - network interaction;
 - self-update execution;
 - Nucleus task execution;
-- implemented L-UI rendering;
+- interactive L-UI rendering;
+- terminal-control L-UI rendering;
 - LIR execution;
 - Lat execution;
 - Lat compiler;

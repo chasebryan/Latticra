@@ -65,11 +65,11 @@ The implementation does not provide unrestricted C++ authority, an effect-perfor
 
 ## Current L-UI rendering boundary
 
-The L-UI rendering contract and L-UI rendering implementation plan now define the first future rendering boundary.
+The L-UI rendering lane now has a contract, implementation plan, and first no-effect C implementation.
 
-The implementation plan defines exact public API, header path, source path, render request struct, render result struct, render mode enum, render error enum, capacity constants, output buffer rules, section order, source-span rendering rules, embedded NUL rendering rules, authority metadata rendering rules, exact tests, compatibility expectations, and non-claims before renderer code.
+The current renderer provides deterministic operator-visible text reports over already validated L-UI/LIR metadata and a C-compatible authority summary.
 
-It does not implement L-UI rendering, terminal control, interactive UI behavior, command behavior, Lat execution, LIR execution, Nucleus task execution, mutation, file I/O, network I/O, recovery behavior, hardware behavior, or production UI claims.
+It does not provide terminal control, interactive UI behavior, command behavior, Lat execution, LIR execution, Nucleus task execution, mutation, file I/O, network I/O, recovery behavior, hardware behavior, or production UI claims.
 
 ## Mission target
 
@@ -91,16 +91,16 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, and L-UI rendering implementation plan toward the first renderer implementation.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, and first no-effect L-UI renderer implementation toward Nucleus task execution contract planning.
 
 The next recommended implementation lane is:
 
 ```text
-L-UI rendering implementation
+Nucleus task execution contract
 ```
 
 ## Current non-claim
 
-Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing implemented C++ authority layer, provide implemented L-UI rendering, provide a Lat runtime, or provide a production security boundary.
+Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide interactive L-UI rendering, provide terminal-control L-UI rendering, provide a Lat runtime, or provide a production security boundary.
 
 Those are long-term goals and design targets, not current claims.

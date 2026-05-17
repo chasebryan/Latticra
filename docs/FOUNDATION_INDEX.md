@@ -7,7 +7,7 @@ Scope: foundation documents, project operations records, implementation document
 
 This index collects the first architecture, policy, language, operations, strategy, status, and implementation documents for Latticra.
 
-Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, strategy records, status records, C/C++ foundation direction, constrained C++ authority-layer policy, L-UI rendering path, and precursor-promotion rules before expanding real implementation work.
+Latticra should refine its language model, supervisor model, effect gates, source model, update model, target architectures, strategy records, status records, C/C++ foundation direction, constrained C++ authority-layer policy, L-UI rendering path, Nucleus task execution boundary, and precursor-promotion rules before expanding real implementation work.
 
 ## Foundation documents
 
@@ -22,6 +22,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md) — first no-effect constrained C++ authority implementation.
 - [`L_UI_RENDERING_CONTRACT.md`](L_UI_RENDERING_CONTRACT.md) — first L-UI rendering contract before renderer implementation.
 - [`L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI rendering implementation plan before renderer code.
+- [`L_UI_RENDERING_IMPLEMENTATION.md`](L_UI_RENDERING_IMPLEMENTATION.md) — first no-effect C L-UI renderer implementation.
 - [`NAMING_SYSTEM.md`](NAMING_SYSTEM.md) — formal naming rules for professional Latticra terminology.
 - [`FEATURE_TRANSLATION_LEDGER.md`](FEATURE_TRANSLATION_LEDGER.md) — vocabulary ledger for translating exploratory labels into Latticra architecture terms.
 - [`LANGUAGE_NAMING_POLICY.md`](LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy; forbids plain `L` and `.l` as public identifiers.
@@ -86,6 +87,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md) — byte-oriented string-literal escape decoding for source-backed L-UI AST purpose and text values.
 - [`L_UI_RENDERING_CONTRACT.md`](L_UI_RENDERING_CONTRACT.md) — first operator-visible L-UI rendering contract before renderer implementation.
 - [`L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI renderer API, structures, modes, errors, capacities, output rules, report format, and tests before renderer code.
+- [`L_UI_RENDERING_IMPLEMENTATION.md`](L_UI_RENDERING_IMPLEMENTATION.md) — first no-effect C L-UI renderer implementation.
 
 ## Implementation rule
 
@@ -166,12 +168,13 @@ L-UI string-literal escape implementation plan + guardrails
 L-UI string-literal escape decoding implementation + invariants
 L-UI rendering contract + guardrails
 L-UI rendering implementation plan + guardrails
+L-UI rendering implementation + invariants
 ```
 
 The next implementation target should be:
 
 ```text
-L-UI rendering implementation
+Nucleus task execution contract
 ```
 
-That target should implement the first no-effect C L-UI renderer with explicit API, caller-provided buffers, deterministic report output, semantic/LIR/authority prerequisites, source-span rendering, length-aware text rendering, and invariant tests.
+That target should define the first contract for future Nucleus task execution boundaries, prerequisites, authority checks, no-effect defaults, denial behavior, report surfaces, exact future tests, and non-claims before any task execution code.
