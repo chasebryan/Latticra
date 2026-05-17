@@ -1,0 +1,19 @@
+name: Defensive Threat Model
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  defensive-threat-model:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run defensive threat model contract guard
+        run: sh scripts/test-defensive-threat-model-contract.sh

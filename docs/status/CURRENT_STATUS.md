@@ -25,6 +25,7 @@ The repository currently emphasizes:
 - Runtime boundary contract planning;
 - Runtime boundary implementation planning;
 - initial runtime boundary API, source, smoke tests, and report surface;
+- Defensive threat model contract planning;
 - L-UI parser and AST foundation;
 - deterministic diagnostics;
 - source-span metadata;
@@ -81,6 +82,7 @@ Nucleus task execution implementation
 Runtime boundary contract
 Runtime boundary implementation plan
 Runtime boundary implementation
+Defensive threat model contract
 L-UI static report fixture
 L-UI source grammar fixtures
 L-UI parser implementation
@@ -148,13 +150,14 @@ Latticra does not currently provide:
 - Lat interpreter;
 - literal source NUL acceptance;
 - live movement;
+- certified protection;
 - operating-system replacement.
 
 ## Current mission alignment
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make malicious behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, and explicit runtime boundaries.
+The long-term goal is to make malicious behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, explicit runtime boundaries, and evidence-bound threat modeling.
 
 This is a mission direction, not a current security guarantee.
 
@@ -211,7 +214,7 @@ L-UI rendering implementation
 Latest completed contract slice:
 
 ```text
-Runtime boundary contract
+Defensive threat model contract
 ```
 
 ## Previous contract slice
@@ -219,7 +222,7 @@ Runtime boundary contract
 Previous contract slice:
 
 ```text
-Nucleus task execution contract
+Runtime boundary contract
 ```
 
 ## Earlier contract slice
@@ -227,7 +230,7 @@ Nucleus task execution contract
 Earlier contract slice:
 
 ```text
-L-UI rendering contract
+Nucleus task execution contract
 ```
 
 ## Next recommended work
@@ -235,14 +238,14 @@ L-UI rendering contract
 Recommended next work:
 
 ```text
-Defensive threat model contract
+Defensive threat model implementation plan
 ```
 
 After that:
 
 ```text
+Defensive threat model validation
 Runtime boundary refinement
-C++ authority implementation review
 ```
 
 ## Update rule
