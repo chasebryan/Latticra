@@ -48,6 +48,12 @@ Latticra is the contract.
 ## Latest completed planning slice
 
 ```text
+L-UI rendering implementation plan
+```
+
+## Previous planning slice
+
+```text
 Constrained C++ authority layer implementation plan
 ```
 
@@ -66,7 +72,7 @@ L-UI rendering contract
 ## Current next step
 
 ```text
-L-UI rendering implementation plan
+L-UI rendering implementation
 ```
 
 ## Non-claims
