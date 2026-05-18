@@ -1,7 +1,7 @@
 # Latticra Current Direction
 
 Status: active project note
-Last updated: 2026-05-16 16:15 CDT
+Last updated: 2026-05-18 18:15 CDT
 
 ## Current direction
 
@@ -33,10 +33,28 @@ Meaning:
 ```text
 C: secure substrate, boot paths, ABI boundaries, platform shims.
 C++: governed authority layer, policy, validators, effect gates, audit logic.
-Lat / Latticra Language: contract and declaration layer.
+Lat / Latticra Language: contract, semantic validation, and declaration layer.
 ```
 
 This does not mean unrestricted C++.
+
+## Current Lat semantic validation boundary
+
+The Lat lane now has a grammar parser and a bounded no-effect semantic validation layer.
+
+The current validator consumes parser metadata and checks:
+
+```text
+declaration identity
+transition source resolution
+state-field vocabulary
+effect targets
+effect values
+no-effect preservation
+deterministic semantic reports
+```
+
+The implementation does not provide Lat execution, Lat interpretation, Lat compilation, Lat-to-LIR lowering, runtime behavior, command execution, state mutation, file I/O, network I/O, recovery behavior, hardware behavior, or operating-system behavior.
 
 ## Current C++ authority boundary
 
@@ -113,16 +131,16 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, runtime boundary contract, runtime boundary implementation plan, and initial runtime boundary API/smoke implementation toward a defensive threat model contract.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, Lat semantic validation foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, runtime boundary contract, runtime boundary implementation plan, and initial runtime boundary API/smoke implementation toward a Lat-to-LIR lowering contract.
 
 The next recommended implementation lane is:
 
 ```text
-Defensive threat model contract
+Lat-to-LIR lowering contract
 ```
 
 ## Current non-claim
 
-Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide effect-performing Nucleus task execution, provide effect-performing runtime behavior, provide command execution, provide interactive L-UI rendering, provide terminal-control L-UI rendering, provide a Lat runtime, or provide a production security boundary.
+Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide effect-performing Nucleus task execution, provide effect-performing runtime behavior, provide command execution, provide interactive L-UI rendering, provide terminal-control L-UI rendering, provide a Lat runtime, provide Lat-to-LIR lowering, or provide a production security boundary.
 
 Those are long-term goals and design targets, not current claims.
