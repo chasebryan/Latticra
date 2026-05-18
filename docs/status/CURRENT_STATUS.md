@@ -2,6 +2,7 @@
 
 Status: public status record
 Last updated: 2026-05-16 16:15 CDT
+Latest semantic validation note: 2026-05-18 18:15 CDT
 Scope: current progress, completion estimates, merged capability areas, and next priorities.
 
 ## Project status
@@ -36,7 +37,10 @@ The repository currently emphasizes:
 - semantic validation implementation;
 - LIR shape implementation;
 - Lat grammar implementation;
+- Lat semantic validation foundation;
 - no-effect preview boundaries.
+
+Lat now has a bounded no-effect semantic validation layer after the grammar parser. The validator consumes parser metadata, checks declaration identity, transition source resolution, state-field vocabulary, effect targets, effect values, and no-effect preservation, then emits deterministic semantic reports.
 
 ## Direction checkpoint
 
@@ -109,6 +113,7 @@ LIR shape implementation
 Lat language grammar contract
 Lat language grammar implementation plan
 Lat language grammar implementation
+Lat semantic validation foundation
 C/C++ foundation direction
 Constrained C++ authority layer contract
 Constrained C++ authority layer implementation plan
@@ -148,6 +153,7 @@ Latticra does not currently provide:
 - Lat execution;
 - Lat compiler;
 - Lat interpreter;
+- Lat-to-LIR lowering;
 - literal source NUL acceptance;
 - live movement;
 - certified protection;
@@ -157,7 +163,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make malicious behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, explicit runtime boundaries, and evidence-bound threat modeling.
+The long-term goal is to make malicious behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, explicit runtime boundaries, Lat semantic validation, and evidence-bound threat modeling.
 
 This is a mission direction, not a current security guarantee.
 
@@ -174,7 +180,7 @@ Constrained C++ authority layer implementation plan
 Previous planning slice:
 
 ```text
-Nucleus task execution implementation plan
+Runtime boundary implementation plan
 ```
 
 ## Latest completed planning slice
@@ -182,7 +188,7 @@ Nucleus task execution implementation plan
 Latest completed planning slice:
 
 ```text
-Runtime boundary implementation plan
+Lat semantic validation implementation plan
 ```
 
 ## Latest completed implementation slice
@@ -190,7 +196,7 @@ Runtime boundary implementation plan
 Latest completed implementation slice:
 
 ```text
-Runtime boundary implementation
+Lat semantic validation foundation
 ```
 
 ## Previous implementation slice
@@ -198,7 +204,7 @@ Runtime boundary implementation
 Previous implementation slice:
 
 ```text
-Nucleus task execution implementation
+Runtime boundary implementation
 ```
 
 ## Earlier implementation slice
@@ -206,7 +212,7 @@ Nucleus task execution implementation
 Earlier implementation slice:
 
 ```text
-L-UI rendering implementation
+Nucleus task execution implementation
 ```
 
 ## Latest completed contract slice
@@ -214,7 +220,7 @@ L-UI rendering implementation
 Latest completed contract slice:
 
 ```text
-Defensive threat model contract
+Lat semantic validation contract
 ```
 
 ## Previous contract slice
@@ -222,7 +228,7 @@ Defensive threat model contract
 Previous contract slice:
 
 ```text
-Runtime boundary contract
+Defensive threat model contract
 ```
 
 ## Earlier contract slice
@@ -230,7 +236,7 @@ Runtime boundary contract
 Earlier contract slice:
 
 ```text
-Nucleus task execution contract
+Runtime boundary contract
 ```
 
 ## Next recommended work
@@ -238,13 +244,14 @@ Nucleus task execution contract
 Recommended next work:
 
 ```text
-Defensive threat model implementation plan
+Lat-to-LIR lowering contract
 ```
 
 After that:
 
 ```text
-Defensive threat model validation
+Lat-to-LIR lowering implementation plan
+Defensive threat model validation refinement
 Runtime boundary refinement
 ```
 
