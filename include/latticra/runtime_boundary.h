@@ -1,7 +1,7 @@
 #ifndef LATTICRA_RUNTIME_BOUNDARY_H
 #define LATTICRA_RUNTIME_BOUNDARY_H
 
-#include "latticra/nucleus_task.h"
+#include "latticra/nucleus_task_plan.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -36,7 +36,8 @@ typedef enum {
     LATTICRA_RUNTIME_BOUNDARY_ROLLBACK_ACTION = 18,
     LATTICRA_RUNTIME_BOUNDARY_HARDWARE_ACTION = 19,
     LATTICRA_RUNTIME_BOUNDARY_BOOT_ACTION = 20,
-    LATTICRA_RUNTIME_BOUNDARY_UNKNOWN = 21
+    LATTICRA_RUNTIME_BOUNDARY_NUCLEUS_TASK_PLAN_REPORT = 21,
+    LATTICRA_RUNTIME_BOUNDARY_UNKNOWN = 22
 } latticra_runtime_boundary_request_kind_t;
 
 typedef enum {
@@ -136,6 +137,7 @@ typedef struct {
     latticra_runtime_boundary_operator_confirmation_t operator_confirmation;
     const latticra_runtime_boundary_authority_summary_t *authority;
     const latticra_nucleus_task_result_t *task;
+    const latticra_nucleus_task_plan_result_t *plan;
     const latticra_l_ui_render_result_t *render;
     const latticra_lir_module_t *lir;
     const latticra_lat_parse_result_t *lat;
@@ -162,6 +164,19 @@ typedef struct {
     int task_server_interaction_allowed;
     int task_recovery_allowed;
     int task_hardware_allowed;
+    latticra_nucleus_task_plan_policy_t plan_policy;
+    latticra_nucleus_task_plan_denial_t plan_reason;
+    size_t plan_task_count;
+    size_t plan_accepted_count;
+    size_t plan_blocked_count;
+    int plan_has_blocked_task;
+    size_t plan_first_blocked_index;
+    int plan_no_effect;
+    int plan_execution_allowed;
+    int plan_mutation_allowed;
+    int plan_server_allowed;
+    int plan_recovery_allowed;
+    int plan_hardware_allowed;
     latticra_status_t render_status;
     latticra_l_ui_render_error_t render_error;
     latticra_status_t lat_status;
