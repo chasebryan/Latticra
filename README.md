@@ -29,7 +29,7 @@ Current roles:
 ```text
 C: substrate, ABI boundaries, bounded records, implementation surfaces
 Constrained C++: policy, validation, gate, and audit logic
-Lat / Latticra Language: declaration, semantic validation, and contract layer
+Lat / Latticra Language: declaration, semantic validation, lowering metadata, and contract layer
 LIR: bounded intermediate representation
 L-UI: operator-visible declaration and reporting surface
 Nucleus: coordination, classification, and report boundary
@@ -38,15 +38,15 @@ Runtime boundary: disabled-by-default line before operational behavior
 
 ## Current implementation posture
 
-The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, Lat semantic validation foundation, and state-lattice models.
+The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, and state-lattice models.
 
-Lat now has a bounded no-effect semantic validation layer after the grammar parser. The validator consumes parser metadata, checks declaration identity, transition source resolution, state-field vocabulary, effect targets, effect values, and no-effect preservation, then emits deterministic semantic reports.
+Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The current lowering implementation consumes parser and semantic metadata, preserves source spans and no-effect flags, emits deterministic lowering reports, and materializes a `lat_module` LIR shape without executing Lat.
 
 Current implementation remains report/classification oriented. It is not active runtime behavior.
 
 ## Boundary
 
-Latticra does not currently provide a kernel, bootable image, installer, production runtime, runtime behavior, command execution, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing task execution, interactive L-UI rendering, terminal-control L-UI rendering, LIR execution, Lat execution, Lat compiler, Lat interpreter, Lat-to-LIR lowering, accreditation, certification, or operating-system replacement.
+Latticra does not currently provide a kernel, bootable image, installer, production runtime, runtime behavior, command execution, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing task execution, interactive L-UI rendering, terminal-control L-UI rendering, LIR execution, Lat execution, Lat compiler, Lat interpreter, accreditation, certification, or operating-system replacement.
 
 ## Initial documentation
 
@@ -71,6 +71,9 @@ Important records:
 - [`docs/LAT_LANGUAGE_FOUNDATION_ANALYSIS.md`](docs/LAT_LANGUAGE_FOUNDATION_ANALYSIS.md)
 - [`docs/LAT_SEMANTIC_VALIDATION_CONTRACT.md`](docs/LAT_SEMANTIC_VALIDATION_CONTRACT.md)
 - [`docs/LAT_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md`](docs/LAT_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md)
+- [`docs/LAT_TO_LIR_LOWERING_CONTRACT.md`](docs/LAT_TO_LIR_LOWERING_CONTRACT.md)
+- [`docs/LAT_TO_LIR_LOWERING_IMPLEMENTATION_PLAN.md`](docs/LAT_TO_LIR_LOWERING_IMPLEMENTATION_PLAN.md)
+- [`docs/LAT_TO_LIR_LOWERING_IMPLEMENTATION.md`](docs/LAT_TO_LIR_LOWERING_IMPLEMENTATION.md)
 
 ## Status and strategy
 
@@ -84,6 +87,12 @@ Lat semantic validation is covered by:
 
 ```sh
 sh scripts/test-lat-semantic-validation.sh
+```
+
+Lat-to-LIR lowering is covered by:
+
+```sh
+sh scripts/test-lat-to-lir-lowering.sh
 ```
 
 ## Support
@@ -100,4 +109,4 @@ See [`SECURITY.md`](SECURITY.md) for vulnerability reporting, supported branch s
 
 ## License
 
-Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`](docs/LICENSE_POLICY.md).
+Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`).
