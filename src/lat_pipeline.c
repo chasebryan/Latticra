@@ -33,6 +33,14 @@ static void pipeline_result_default(latticra_lat_pipeline_result_t *result) {
     result->clause_count = 0u;
     result->node_count = 0u;
     result->edge_count = 0u;
+    result->last_completed_stage = LATTICRA_LAT_PIPELINE_STAGE_NONE;
+    result->failed_stage = LATTICRA_LAT_PIPELINE_STAGE_NONE;
+    result->parse_ok = 0;
+    result->semantic_ok = 0;
+    result->lowering_ok = 0;
+    result->lir_ok = 0;
+    result->no_effect_chain_ok = 1;
+    result->evidence_level = 0u;
     result->semantic_valid = 0;
     result->no_effect = 1;
     result->execution_allowed = 0;
@@ -53,6 +61,20 @@ const char *latticra_lat_pipeline_error_label(latticra_lat_pipeline_error_t erro
     case LATTICRA_LAT_PIPELINE_NO_EFFECT_VIOLATION: return "no_effect_violation";
     case LATTICRA_LAT_PIPELINE_INTERNAL_ERROR:
     default: return "internal_error";
+    }
+}
+
+const char *latticra_lat_pipeline_stage_label(latticra_lat_pipeline_stage_t stage) {
+    switch (stage) {
+    case LATTICRA_LAT_PIPELINE_STAGE_NONE: return "none";
+    case LATTICRA_LAT_PIPELINE_STAGE_PARSE: return "parse";
+    case LATTICRA_LAT_PIPELINE_STAGE_SEMANTIC: return "semantic";
+    case LATTICRA_LAT_PIPELINE_STAGE_LOWERING: return "lowering";
+    case LATTICRA_LAT_PIPELINE_STAGE_LIR: return "lir";
+    case LATTICRA_LAT_PIPELINE_STAGE_EFFECT_CHECK: return "effect-check";
+    case LATTICRA_LAT_PIPELINE_STAGE_REPORT: return "report";
+    case LATTICRA_LAT_PIPELINE_STAGE_UNKNOWN:
+    default: return "unknown";
     }
 }
 
@@ -100,6 +122,10 @@ static void summarize_parse_semantic(
     pipeline_result->declaration_count = parse_result->declaration_count;
     pipeline_result->clause_count = parse_result->clause_count;
     pipeline_result->semantic_valid = semantic_result->semantic_valid;
+    pipeline_result->parse_ok = parse_result->error == LATTICRA_LAT_PARSE_OK;
+    pipeline_result->semantic_ok = semantic_result->error == LATTICRA_LAT_SEMANTIC_OK && semantic_result->semantic_valid == 1;
+    if (pipeline_result->parse_ok) pipeline_result->last_completed_stage = LATTICRA_LAT_PIPELINE_STAGE_PARSE;
+    if (pipeline_result->semantic_ok) pipeline_result->last_completed_stage = LATTICRA_LAT_PIPELINE_STAGE_SEMANTIC;
     pipeline_result->no_effect = parse_result->no_effect && semantic_result->no_effect;
     pipeline_result->execution_allowed = parse_result->execution_allowed || semantic_result->execution_allowed;
     pipeline_result->mutation_allowed = parse_result->mutation_allowed || semantic_result->mutation_allowed;
@@ -122,12 +148,60 @@ static void summarize_pipeline(
     pipeline_result->lir_error = module->error;
     pipeline_result->node_count = lowering_result->node_count;
     pipeline_result->edge_count = lowering_result->edge_count;
+    pipeline_result->lowering_ok = lowering_result->error == LATTICRA_LAT_TO_LIR_OK;
+    pipeline_result->lir_ok = module->error == LATTICRA_LIR_OK;
+    if (pipeline_result->lowering_ok) pipeline_result->last_completed_stage = LATTICRA_LAT_PIPELINE_STAGE_LOWERING;
+    if (pipeline_result->lir_ok) pipeline_result->last_completed_stage = LATTICRA_LAT_PIPELINE_STAGE_LIR;
     pipeline_result->no_effect = pipeline_result->no_effect && module->no_effect && lowering_result->no_effect;
     pipeline_result->execution_allowed = pipeline_result->execution_allowed || module->execution_allowed || lowering_result->execution_allowed;
     pipeline_result->mutation_allowed = pipeline_result->mutation_allowed || module->mutation_allowed || lowering_result->mutation_allowed;
     pipeline_result->server_allowed = pipeline_result->server_allowed || module->server_allowed;
     pipeline_result->recovery_allowed = pipeline_result->recovery_allowed || module->recovery_allowed;
     pipeline_result->hardware_allowed = pipeline_result->hardware_allowed || module->hardware_allowed;
+    pipeline_result->no_effect_chain_ok = no_effect_ok(parse_result, semantic_result, module, lowering_result);
+}
+
+static void finalize_pipeline_report_refinement(latticra_lat_pipeline_result_t *pipeline_result) {
+    if (pipeline_result == 0) return;
+
+    pipeline_result->failed_stage = LATTICRA_LAT_PIPELINE_STAGE_NONE;
+    pipeline_result->evidence_level = 1u;
+
+    if (pipeline_result->error == LATTICRA_LAT_PIPELINE_NULL_ARGUMENT) {
+        pipeline_result->failed_stage = LATTICRA_LAT_PIPELINE_STAGE_UNKNOWN;
+        pipeline_result->evidence_level = 0u;
+        return;
+    }
+    if (pipeline_result->error == LATTICRA_LAT_PIPELINE_INTERNAL_ERROR) {
+        pipeline_result->failed_stage = LATTICRA_LAT_PIPELINE_STAGE_UNKNOWN;
+        pipeline_result->evidence_level = 0u;
+        return;
+    }
+    if (pipeline_result->error == LATTICRA_LAT_PIPELINE_PARSE_NOT_OK) {
+        pipeline_result->failed_stage = LATTICRA_LAT_PIPELINE_STAGE_PARSE;
+        pipeline_result->evidence_level = 1u;
+        return;
+    }
+    if (pipeline_result->error == LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK ||
+        pipeline_result->error == LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_VALID) {
+        pipeline_result->failed_stage = LATTICRA_LAT_PIPELINE_STAGE_SEMANTIC;
+        pipeline_result->evidence_level = 1u;
+        return;
+    }
+    if (pipeline_result->error == LATTICRA_LAT_PIPELINE_LOWERING_NOT_OK) {
+        pipeline_result->failed_stage = LATTICRA_LAT_PIPELINE_STAGE_LOWERING;
+        pipeline_result->evidence_level = 1u;
+        return;
+    }
+    if (pipeline_result->error == LATTICRA_LAT_PIPELINE_NO_EFFECT_VIOLATION) {
+        pipeline_result->failed_stage = LATTICRA_LAT_PIPELINE_STAGE_EFFECT_CHECK;
+        pipeline_result->evidence_level = 1u;
+        return;
+    }
+
+    pipeline_result->last_completed_stage = LATTICRA_LAT_PIPELINE_STAGE_REPORT;
+    pipeline_result->failed_stage = LATTICRA_LAT_PIPELINE_STAGE_NONE;
+    pipeline_result->evidence_level = 2u;
 }
 
 latticra_status_t latticra_lat_pipeline_run_source(
@@ -148,6 +222,7 @@ latticra_status_t latticra_lat_pipeline_run_source(
             pipeline_result->status = LATTICRA_STATUS_NULL_ARGUMENT;
             pipeline_result->error = LATTICRA_LAT_PIPELINE_NULL_ARGUMENT;
             pipeline_result->source_len = source_len;
+            finalize_pipeline_report_refinement(pipeline_result);
         }
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
@@ -159,6 +234,7 @@ latticra_status_t latticra_lat_pipeline_run_source(
         pipeline_result->status = parse_status;
         pipeline_result->error = LATTICRA_LAT_PIPELINE_INTERNAL_ERROR;
         pipeline_result->source_len = source_len;
+        finalize_pipeline_report_refinement(pipeline_result);
         return parse_status;
     }
 
@@ -167,6 +243,7 @@ latticra_status_t latticra_lat_pipeline_run_source(
         pipeline_result->status = semantic_status;
         pipeline_result->error = LATTICRA_LAT_PIPELINE_INTERNAL_ERROR;
         summarize_parse_semantic(source_len, parse_result, semantic_result, pipeline_result);
+        finalize_pipeline_report_refinement(pipeline_result);
         return semantic_status;
     }
 
@@ -175,6 +252,7 @@ latticra_status_t latticra_lat_pipeline_run_source(
         pipeline_result->status = lowering_status;
         pipeline_result->error = LATTICRA_LAT_PIPELINE_INTERNAL_ERROR;
         summarize_parse_semantic(source_len, parse_result, semantic_result, pipeline_result);
+        finalize_pipeline_report_refinement(pipeline_result);
         return lowering_status;
     }
 
@@ -182,28 +260,40 @@ latticra_status_t latticra_lat_pipeline_run_source(
 
     if (parse_result->error != LATTICRA_LAT_PARSE_OK) {
         pipeline_result->error = LATTICRA_LAT_PIPELINE_PARSE_NOT_OK;
+        finalize_pipeline_report_refinement(pipeline_result);
         return LATTICRA_STATUS_OK;
     }
     if (semantic_result->error == LATTICRA_LAT_SEMANTIC_NO_EFFECT_VIOLATION ||
         lowering_result->error == LATTICRA_LAT_TO_LIR_NO_EFFECT_VIOLATION ||
         !no_effect_ok(parse_result, semantic_result, module, lowering_result)) {
         pipeline_result->error = LATTICRA_LAT_PIPELINE_NO_EFFECT_VIOLATION;
+        pipeline_result->no_effect_chain_ok = 0;
+        finalize_pipeline_report_refinement(pipeline_result);
         return LATTICRA_STATUS_OK;
     }
     if (semantic_result->error != LATTICRA_LAT_SEMANTIC_OK) {
         pipeline_result->error = LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK;
+        finalize_pipeline_report_refinement(pipeline_result);
         return LATTICRA_STATUS_OK;
     }
     if (semantic_result->semantic_valid != 1) {
         pipeline_result->error = LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_VALID;
+        finalize_pipeline_report_refinement(pipeline_result);
         return LATTICRA_STATUS_OK;
     }
     if (lowering_result->error != LATTICRA_LAT_TO_LIR_OK || module->error != LATTICRA_LIR_OK) {
         pipeline_result->error = LATTICRA_LAT_PIPELINE_LOWERING_NOT_OK;
+        finalize_pipeline_report_refinement(pipeline_result);
         return LATTICRA_STATUS_OK;
     }
 
     pipeline_result->error = LATTICRA_LAT_PIPELINE_OK;
+    pipeline_result->parse_ok = 1;
+    pipeline_result->semantic_ok = 1;
+    pipeline_result->lowering_ok = 1;
+    pipeline_result->lir_ok = 1;
+    pipeline_result->no_effect_chain_ok = 1;
+    finalize_pipeline_report_refinement(pipeline_result);
     return LATTICRA_STATUS_OK;
 }
 
@@ -230,6 +320,14 @@ latticra_status_t latticra_lat_pipeline_report(
         "clause_count=%zu\n"
         "node_count=%zu\n"
         "edge_count=%zu\n"
+        "last_completed_stage=%s\n"
+        "failed_stage=%s\n"
+        "parse_ok=%d\n"
+        "semantic_ok=%d\n"
+        "lowering_ok=%d\n"
+        "lir_ok=%d\n"
+        "no_effect_chain_ok=%d\n"
+        "evidence_level=%u\n"
         "no_effect=%d\n"
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
@@ -255,6 +353,14 @@ latticra_status_t latticra_lat_pipeline_report(
         result->clause_count,
         result->node_count,
         result->edge_count,
+        latticra_lat_pipeline_stage_label(result->last_completed_stage),
+        latticra_lat_pipeline_stage_label(result->failed_stage),
+        result->parse_ok,
+        result->semantic_ok,
+        result->lowering_ok,
+        result->lir_ok,
+        result->no_effect_chain_ok,
+        result->evidence_level,
         result->no_effect,
         result->execution_allowed,
         result->mutation_allowed,
