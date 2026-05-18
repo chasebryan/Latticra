@@ -18,6 +18,18 @@ define exact public API, namespace, file paths, C++ standard, compiler flags, ex
 ## Latest completed contract slice
 
 ```text
+Lat-to-LIR lowering contract
+```
+
+Purpose completed:
+
+```text
+define the first Lat-to-LIR lowering boundary after grammar parsing and semantic validation, including semantic prerequisites, LIR node and edge mapping, source-span preservation, effect preservation, diagnostics, reports, compatibility requirements, and non-claims before any lowering code
+```
+
+## Previous contract slice
+
+```text
 Lat semantic validation contract
 ```
 
@@ -27,31 +39,19 @@ Purpose completed:
 define the first semantic validation boundary after bounded Lat grammar parsing, including declaration identity, transition source resolution, state-field vocabulary, effect metadata, clause validation, no-effect preservation, deterministic reports, and non-claims
 ```
 
-## Previous contract slice
-
-```text
-Runtime boundary contract
-```
-
-Purpose completed:
-
-```text
-define the first runtime boundary contract before any runtime behavior, including allowed surfaces, denied effects, execution limits, authority prerequisites, task prerequisites, report expectations, future files, exact tests, compatibility expectations, and non-claims
-```
-
-## Earlier contract slice
-
-```text
-Nucleus task execution contract
-```
-
-Purpose completed:
-
-```text
-define the first contract for future Nucleus task execution boundaries, prerequisites, authority checks, no-effect defaults, denial behavior, report surfaces, exact future tests, compatibility expectations, and non-claims before any task execution code
-```
-
 ## Latest completed planning slice
+
+```text
+Lat-to-LIR lowering implementation plan
+```
+
+Purpose completed:
+
+```text
+define exact public API, files, structs, errors, capacity accounting, node mapping, edge mapping, source-span mapping, report format, tests, compatibility expectations, and non-claims before Lat-to-LIR lowering code
+```
+
+## Previous planning slice
 
 ```text
 Lat semantic validation implementation plan
@@ -63,31 +63,19 @@ Purpose completed:
 define exact public API, result structs, diagnostics, validation rules, report surface, fixture, tests, compatibility expectations, and non-claims before semantic validation code
 ```
 
-## Previous planning slice
-
-```text
-Runtime boundary implementation plan
-```
-
-Purpose completed:
-
-```text
-define exact public API, header path, source path, runtime request struct, runtime record struct, runtime result struct, runtime mode enum, runtime policy enum, runtime denial enum, authority summary usage, Nucleus task result usage, effect-gate state usage, operator-confirmation metadata, report format, capacity constants, output-buffer behavior, exact tests, compatibility expectations, and non-claims before runtime boundary code
-```
-
-## Earlier planning slice
-
-```text
-Nucleus task execution implementation plan
-```
-
-Purpose completed:
-
-```text
-define exact public API, C implementation files, task request/result/record structs, policy enum, denial enum, effect-gate enum usage, authority summary usage, operator-confirmation metadata, rollback metadata, report format, capacity constants, output-buffer behavior, exact tests, compatibility expectations, and non-claims before Nucleus task execution code
-```
-
 ## Latest completed implementation slice
+
+```text
+Lat-to-LIR lowering implementation
+```
+
+Purpose completed:
+
+```text
+add the first bounded no-effect C Lat-to-LIR lowering layer, with parser and semantic prerequisites, lat_module LIR output, source-span preservation, no-effect flag preservation, deterministic lowering reports, invariant tests, and workflow coverage
+```
+
+## Previous implementation slice
 
 ```text
 Lat semantic validation foundation
@@ -99,66 +87,38 @@ Purpose completed:
 add the first bounded no-effect C semantic validation layer after the Lat grammar parser, with declaration identity checks, transition source resolution, state-field vocabulary checks, effect-target checks, effect-value checks, no-effect preservation, deterministic reports, fixture coverage, invariant tests, and CI coverage
 ```
 
-## Previous implementation slice
+## Historical implementation slices
 
 ```text
 Runtime boundary implementation
-```
-
-Purpose completed:
-
-```text
-add the first C runtime boundary public API, compileable source surface, smoke invariants, dedicated test runner, dedicated workflow, and implementation record while preserving disabled-by-default runtime behavior
-```
-
-## Earlier implementation slice
-
-```text
 Nucleus task execution implementation
-```
-
-Purpose completed:
-
-```text
-implement the first no-effect C Nucleus task classification/report surface using the guarded implementation plan, with explicit API, denied-by-default policy, authority prerequisites, effect-gate metadata, caller-provided buffers, deterministic reports, and invariant tests
-```
-
-## UI implementation slice
-
-```text
 L-UI rendering implementation
-```
-
-Purpose completed:
-
-```text
-implement the first no-effect C L-UI renderer using the guarded implementation plan, with explicit API, caller-provided buffers, deterministic report output, semantic/LIR/authority prerequisites, source-span rendering, length-aware text rendering, and invariant tests
 ```
 
 ## Recommended next slice
 
 ```text
-Lat-to-LIR lowering contract
+Lat-specific LIR refinement plan
 ```
 
 Purpose:
 
 ```text
-define the first Lat-to-LIR lowering boundary after grammar parsing and semantic validation, including semantic prerequisites, LIR node and edge mapping, source-span preservation, effect preservation, diagnostics, reports, compatibility requirements, and non-claims before any lowering code
+define whether Lat needs dedicated LIR node or edge kinds beyond the current conservative mapping, including compatibility requirements, report expectations, capacity impact, and non-claims before any enum or shape expansion
 ```
 
 ## Near-term queue
 
-1. Lat-to-LIR lowering contract.
-2. Lat-to-LIR lowering implementation plan.
-3. Lat normalized module model contract.
-4. Runtime boundary refinement.
-5. Public status update after major milestones.
-6. Completion percentage review after Lat-to-LIR contract.
-7. Strategy estimate review after Lat semantic validation foundation.
-8. C++ authority implementation review after initial no-effect validator/audit slice.
-9. L-UI rendering detailed report refinement after initial renderer implementation.
-10. Nucleus task execution refinement only after the next language-lowering contract.
+1. Lat-specific LIR refinement plan.
+2. Lat-to-LIR implementation documentation/status verification.
+3. Public status update after major milestones.
+4. Completion percentage review after Lat-to-LIR implementation.
+5. Strategy estimate review after Lat semantic validation and lowering foundations.
+6. C++ authority implementation review after initial no-effect validator/audit slice.
+7. L-UI rendering detailed report refinement after initial renderer implementation.
+8. Runtime boundary refinement.
+9. Nucleus task execution refinement only after the next language representation review.
+10. Defensive threat model validation refinement.
 
 ## Quality rules
 
@@ -182,8 +142,9 @@ consistent with the C/C++ foundation direction
 - Keep Nucleus task execution no-effect and denied-by-default.
 - Keep runtime behavior no-effect and disabled-by-default.
 - Keep Lat semantic validation no-effect and metadata-only.
-- Move next into Lat-to-LIR lowering contract planning.
+- Keep Lat-to-LIR lowering no-effect and metadata-only.
+- Move next into Lat-specific LIR refinement planning.
 - Maintain professional public docs.
 - Keep status and completion estimates current.
-- Keep Lat metadata-only until separate lowering or execution contracts exist.
+- Keep Lat metadata-only until separate execution contracts exist.
 - Keep C++ constrained by the governed authority-layer implementation plan.
