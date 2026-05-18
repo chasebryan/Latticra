@@ -29,7 +29,7 @@ Current roles:
 ```text
 C: substrate, ABI boundaries, bounded records, implementation surfaces
 Constrained C++: policy, validation, gate, and audit logic
-Lat / Latticra Language: declaration and contract layer
+Lat / Latticra Language: declaration, semantic validation, and contract layer
 LIR: bounded intermediate representation
 L-UI: operator-visible declaration and reporting surface
 Nucleus: coordination, classification, and report boundary
@@ -38,13 +38,15 @@ Runtime boundary: disabled-by-default line before operational behavior
 
 ## Current implementation posture
 
-The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, and state-lattice models.
+The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, Lat semantic validation foundation, and state-lattice models.
+
+Lat now has a bounded no-effect semantic validation layer after the grammar parser. The validator consumes parser metadata, checks declaration identity, transition source resolution, state-field vocabulary, effect targets, effect values, and no-effect preservation, then emits deterministic semantic reports.
 
 Current implementation remains report/classification oriented. It is not active runtime behavior.
 
 ## Boundary
 
-Latticra does not currently provide a kernel, bootable image, installer, production runtime, runtime behavior, command execution, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing task execution, interactive L-UI rendering, terminal-control L-UI rendering, LIR execution, Lat execution, Lat compiler, Lat interpreter, accreditation, certification, or operating-system replacement.
+Latticra does not currently provide a kernel, bootable image, installer, production runtime, runtime behavior, command execution, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing task execution, interactive L-UI rendering, terminal-control L-UI rendering, LIR execution, Lat execution, Lat compiler, Lat interpreter, Lat-to-LIR lowering, accreditation, certification, or operating-system replacement.
 
 ## Initial documentation
 
@@ -66,6 +68,9 @@ Important records:
 - [`docs/RUNTIME_BOUNDARY_CONTRACT.md`](docs/RUNTIME_BOUNDARY_CONTRACT.md)
 - [`docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md`](docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md)
 - [`docs/L_UI_RENDERING_IMPLEMENTATION.md`](docs/L_UI_RENDERING_IMPLEMENTATION.md)
+- [`docs/LAT_LANGUAGE_FOUNDATION_ANALYSIS.md`](docs/LAT_LANGUAGE_FOUNDATION_ANALYSIS.md)
+- [`docs/LAT_SEMANTIC_VALIDATION_CONTRACT.md`](docs/LAT_SEMANTIC_VALIDATION_CONTRACT.md)
+- [`docs/LAT_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md`](docs/LAT_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md)
 
 ## Status and strategy
 
@@ -74,6 +79,12 @@ Status and strategy records are maintained in `STATUS.md`, `docs/status/CURRENT_
 ## Validation
 
 The repository uses shell guards and C invariant tests through the C workflow.
+
+Lat semantic validation is covered by:
+
+```sh
+sh scripts/test-lat-semantic-validation.sh
+```
 
 ## Support
 
