@@ -10,6 +10,7 @@ const char *latticra_runtime_boundary_request_kind_label(latticra_runtime_bounda
     case LATTICRA_RUNTIME_BOUNDARY_CLASSIFY_ONLY: return "classify-only";
     case LATTICRA_RUNTIME_BOUNDARY_RENDER_REPORT: return "render-report";
     case LATTICRA_RUNTIME_BOUNDARY_NUCLEUS_TASK_REPORT: return "nucleus-task-report";
+    case LATTICRA_RUNTIME_BOUNDARY_NUCLEUS_TASK_PLAN_REPORT: return "nucleus-task-plan-report";
     case LATTICRA_RUNTIME_BOUNDARY_LAT_VALIDATE: return "lat-validate";
     case LATTICRA_RUNTIME_BOUNDARY_LIR_VALIDATE: return "lir-validate";
     case LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK: return "authority-check";
@@ -88,6 +89,9 @@ static void seed_result(latticra_runtime_boundary_result_t *result) {
     result->record.gate_state = LATTICRA_RUNTIME_BOUNDARY_GATE_BLOCKED;
     result->record.task_policy = LATTICRA_NUCLEUS_TASK_POLICY_DENY;
     result->record.task_reason = LATTICRA_NUCLEUS_TASK_DENIAL_IMPLEMENTATION_NOT_PRESENT;
+    result->record.plan_policy = LATTICRA_NUCLEUS_TASK_PLAN_POLICY_DENY;
+    result->record.plan_reason = LATTICRA_NUCLEUS_TASK_PLAN_DENIAL_EMPTY_PLAN;
+    result->record.plan_no_effect = 1;
 }
 
 static void copy_runtime_id(const latticra_runtime_boundary_request_t *request, latticra_runtime_boundary_result_t *result) {
@@ -116,6 +120,23 @@ static void copy_task_flags(const latticra_nucleus_task_result_t *task, latticra
     result->record.task_hardware_allowed = task->record.hardware_allowed;
 }
 
+static void copy_plan_fields(const latticra_nucleus_task_plan_result_t *plan, latticra_runtime_boundary_result_t *result) {
+    if (plan == 0) return;
+    result->record.plan_policy = plan->record.policy;
+    result->record.plan_reason = plan->record.denial;
+    result->record.plan_task_count = plan->record.task_count;
+    result->record.plan_accepted_count = plan->record.accepted_count;
+    result->record.plan_blocked_count = plan->record.blocked_count;
+    result->record.plan_has_blocked_task = plan->record.has_blocked_task;
+    result->record.plan_first_blocked_index = plan->record.first_blocked_index;
+    result->record.plan_no_effect = plan->record.no_effect;
+    result->record.plan_execution_allowed = plan->record.execution_allowed;
+    result->record.plan_mutation_allowed = plan->record.mutation_allowed;
+    result->record.plan_server_allowed = plan->record.server_allowed;
+    result->record.plan_recovery_allowed = plan->record.recovery_allowed;
+    result->record.plan_hardware_allowed = plan->record.hardware_allowed;
+}
+
 static void copy_prerequisites(const latticra_runtime_boundary_request_t *request, latticra_runtime_boundary_result_t *result) {
     if (request->render != 0) {
         result->record.render_status = request->render->status;
@@ -139,6 +160,26 @@ static int task_result_ok(const latticra_nucleus_task_result_t *task) {
     return task != 0 && task->status == LATTICRA_STATUS_OK && task->record_count > 0u && task->record.denial == LATTICRA_NUCLEUS_TASK_DENIAL_OK && task->record.executed == 0 && task->record.mutation_allowed == 0 && task->record.server_interaction_allowed == 0 && task->record.recovery_allowed == 0 && task->record.hardware_allowed == 0;
 }
 
+static int plan_result_ok(const latticra_nucleus_task_plan_result_t *plan) {
+    return plan != 0 &&
+           plan->status == LATTICRA_STATUS_OK &&
+           plan->record_count > 0u &&
+           plan->record.policy == LATTICRA_NUCLEUS_TASK_PLAN_POLICY_ALLOW_NO_EFFECT_SEQUENCE &&
+           plan->record.denial == LATTICRA_NUCLEUS_TASK_PLAN_DENIAL_OK &&
+           plan->no_effect == 1 &&
+           plan->execution_allowed == 0 &&
+           plan->mutation_allowed == 0 &&
+           plan->server_allowed == 0 &&
+           plan->recovery_allowed == 0 &&
+           plan->hardware_allowed == 0 &&
+           plan->record.no_effect == 1 &&
+           plan->record.execution_allowed == 0 &&
+           plan->record.mutation_allowed == 0 &&
+           plan->record.server_allowed == 0 &&
+           plan->record.recovery_allowed == 0 &&
+           plan->record.hardware_allowed == 0;
+}
+
 static int render_ok(const latticra_l_ui_render_result_t *render) {
     return render != 0 && render->status == LATTICRA_STATUS_OK && render->error == LATTICRA_L_UI_RENDER_OK;
 }
@@ -155,7 +196,7 @@ static void allow_matching_no_effect_mode(const latticra_runtime_boundary_reques
     if (result->record.policy != LATTICRA_RUNTIME_BOUNDARY_POLICY_DENY || result->record.denial != LATTICRA_RUNTIME_BOUNDARY_DENIAL_RUNTIME_DISABLED) return;
     if (request->requested_effect != LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE && request->requested_effect != LATTICRA_RUNTIME_BOUNDARY_EFFECT_READ) return;
 
-    if ((request->request_kind == LATTICRA_RUNTIME_BOUNDARY_PARSE_ONLY || request->request_kind == LATTICRA_RUNTIME_BOUNDARY_RENDER_REPORT || request->request_kind == LATTICRA_RUNTIME_BOUNDARY_NUCLEUS_TASK_REPORT) && request->mode == LATTICRA_RUNTIME_BOUNDARY_MODE_REPORT_ONLY) {
+    if ((request->request_kind == LATTICRA_RUNTIME_BOUNDARY_PARSE_ONLY || request->request_kind == LATTICRA_RUNTIME_BOUNDARY_RENDER_REPORT || request->request_kind == LATTICRA_RUNTIME_BOUNDARY_NUCLEUS_TASK_REPORT || request->request_kind == LATTICRA_RUNTIME_BOUNDARY_NUCLEUS_TASK_PLAN_REPORT) && request->mode == LATTICRA_RUNTIME_BOUNDARY_MODE_REPORT_ONLY) {
         result->record.policy = LATTICRA_RUNTIME_BOUNDARY_POLICY_ALLOW_REPORT;
         result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_OK;
         result->record.gate_state = LATTICRA_RUNTIME_BOUNDARY_GATE_DISABLED;
@@ -200,6 +241,9 @@ latticra_status_t latticra_runtime_boundary_classify(const latticra_runtime_boun
         result->record.task_reason = request->task->record.denial;
         copy_task_flags(request->task, result);
     }
+    if (request->plan != 0) {
+        copy_plan_fields(request->plan, result);
+    }
     if (request->authority == 0) {
         result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_AUTHORITY_FAILED;
         return LATTICRA_STATUS_OK;
@@ -221,6 +265,10 @@ latticra_status_t latticra_runtime_boundary_classify(const latticra_runtime_boun
         return LATTICRA_STATUS_OK;
     }
     if (request->request_kind == LATTICRA_RUNTIME_BOUNDARY_NUCLEUS_TASK_REPORT && !task_result_ok(request->task)) {
+        result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_TASK_FAILED;
+        return LATTICRA_STATUS_OK;
+    }
+    if (request->request_kind == LATTICRA_RUNTIME_BOUNDARY_NUCLEUS_TASK_PLAN_REPORT && !plan_result_ok(request->plan)) {
         result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_TASK_FAILED;
         return LATTICRA_STATUS_OK;
     }
@@ -248,7 +296,7 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
     if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
     buffer[0] = '\0';
     written = snprintf(buffer, buffer_len,
-        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nallowed_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nauthority_status=%d\nauthority_status_label=%s\nauthority_validator=%s\nauthority_requested_effect=%s\nauthority_reason=%s\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\ntask_executed=%d\ntask_mutation_allowed=%d\ntask_server_interaction_allowed=%d\ntask_recovery_allowed=%d\ntask_hardware_allowed=%d\nrender_status=%d\nrender_error=%d\nlat_status=%d\nlat_error=%d\nlir_status=%d\nlir_error=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
+        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nallowed_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nauthority_status=%d\nauthority_status_label=%s\nauthority_validator=%s\nauthority_requested_effect=%s\nauthority_reason=%s\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\ntask_executed=%d\ntask_mutation_allowed=%d\ntask_server_interaction_allowed=%d\ntask_recovery_allowed=%d\ntask_hardware_allowed=%d\nplan_policy=%s\nplan_reason=%s\nplan_task_count=%lu\nplan_accepted_count=%lu\nplan_blocked_count=%lu\nplan_has_blocked_task=%d\nplan_first_blocked_index=%lu\nplan_no_effect=%d\nplan_execution_allowed=%d\nplan_mutation_allowed=%d\nplan_server_allowed=%d\nplan_recovery_allowed=%d\nplan_hardware_allowed=%d\nrender_status=%d\nrender_error=%d\nlat_status=%d\nlat_error=%d\nlir_status=%d\nlir_error=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
         result->record.runtime_id,
         (unsigned long)result->record_count,
         latticra_runtime_boundary_request_kind_label(result->record.request_kind),
@@ -277,6 +325,19 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         result->record.task_server_interaction_allowed,
         result->record.task_recovery_allowed,
         result->record.task_hardware_allowed,
+        latticra_nucleus_task_plan_policy_label(result->record.plan_policy),
+        latticra_nucleus_task_plan_denial_label(result->record.plan_reason),
+        (unsigned long)result->record.plan_task_count,
+        (unsigned long)result->record.plan_accepted_count,
+        (unsigned long)result->record.plan_blocked_count,
+        result->record.plan_has_blocked_task,
+        (unsigned long)result->record.plan_first_blocked_index,
+        result->record.plan_no_effect,
+        result->record.plan_execution_allowed,
+        result->record.plan_mutation_allowed,
+        result->record.plan_server_allowed,
+        result->record.plan_recovery_allowed,
+        result->record.plan_hardware_allowed,
         (int)result->record.render_status,
         (int)result->record.render_error,
         (int)result->record.lat_status,
