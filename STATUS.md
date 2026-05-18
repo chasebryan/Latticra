@@ -1,7 +1,7 @@
 # Latticra Status
 
 Status: public status shortcut
-Last updated: 2026-05-16 16:15 CDT
+Last updated: 2026-05-18 18:15 CDT
 
 For the current project status, completion estimates, and next priorities, see:
 
@@ -48,63 +48,71 @@ Latticra is the contract.
 ## Latest completed contract slice
 
 ```text
-Defensive threat model contract
+Lat semantic validation contract
 ```
 
 ## Previous contract slice
 
 ```text
-Runtime boundary contract
+Defensive threat model contract
 ```
 
 ## Earlier contract slice
 
 ```text
-Nucleus task execution contract
+Runtime boundary contract
 ```
 
 ## Latest completed planning slice
 
 ```text
-Runtime boundary implementation plan
+Lat semantic validation implementation plan
 ```
 
 ## Previous planning slice
 
 ```text
-Nucleus task execution implementation plan
+Runtime boundary implementation plan
 ```
 
 ## Earlier planning slice
 
 ```text
-Constrained C++ authority layer implementation plan
+Nucleus task execution implementation plan
 ```
 
 ## Latest completed implementation slice
 
 ```text
-Runtime boundary implementation
+Lat semantic validation foundation
 ```
 
 ## Previous implementation slice
 
 ```text
-Nucleus task execution implementation
+Runtime boundary implementation
 ```
 
 ## Earlier implementation slice
 
 ```text
-L-UI rendering implementation
+Nucleus task execution implementation
 ```
 
 ## Current next step
 
 ```text
-Defensive threat model implementation plan
+Lat-to-LIR lowering contract
 ```
+
+## Current Lat semantic validation boundary
+
+Lat now has a bounded no-effect semantic validation layer after the grammar parser.
+
+The validator consumes parser metadata, checks declaration identity, transition source resolution, state-field vocabulary, effect targets, effect values, and no-effect preservation, then emits deterministic semantic reports.
+
+This is not Lat execution, interpretation, compilation, LIR lowering, runtime behavior, command execution, or operating-system behavior.
 
 ## Non-claims
 
-Latticra does not currently provide a finished operating system, hardened sandbox, production security boundary, malware prevention, ransomware prevention, production runtime, effect-performing runtime behavior, command execution, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing Nucleus task execution, interactive L-UI rendering, terminal-control L-UI rendering, certified protection, or public release readiness.
+Latticra does not currently provide a finished operating system, hardened sandbox, production security boundary, malware prevention, ransomware prevention, production runtime, effect-performing runtime behavior, command execution, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing Nucleus task execution, interactive L-UI rendering, terminal-control L-UI rendering, certified protection, Lat-to-LIR lowering, Lat execution, Lat compiler, Lat interpreter, or public release readiness.
