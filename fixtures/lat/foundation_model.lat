@@ -1,0 +1,39 @@
+lat module FoundationModule {
+  state RootCell {
+    origin = "0/0"
+    route = "ROOT"
+    axis = "ROOT"
+    path = "/"
+    health = "ok"
+    risk = "low"
+    lock = "open"
+    host_effect = none
+    external_effect = none
+  }
+
+  effect PreviewOnly {
+    host = none
+    external = none
+    network = none
+    hardware = none
+  }
+
+  policy SafePreview {
+    require risk != "high"
+    require lock == "open"
+    ensure host_effect == none
+    ensure external_effect == none
+  }
+
+  transition MoveRight from RootCell {
+    require lock == "open"
+    effect host = none
+    effect external = none
+  }
+
+  assertion RootCellIsSafe {
+    require health == "ok"
+    require host_effect == none
+    require external_effect == none
+  }
+}
