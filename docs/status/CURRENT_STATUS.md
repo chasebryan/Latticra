@@ -2,7 +2,7 @@
 
 Status: public status record
 Last updated: 2026-05-16 16:15 CDT
-Latest semantic validation note: 2026-05-18 18:15 CDT
+Latest Lat-to-LIR lowering note: 2026-05-18 18:15 CDT
 Scope: current progress, completion estimates, merged capability areas, and next priorities.
 
 ## Project status
@@ -16,31 +16,28 @@ The repository currently emphasizes:
 - security-policy documentation;
 - constrained C/C++ foundation direction;
 - governed C++ authority-layer planning;
+- Constrained C++ authority layer contract;
+- Constrained C++ authority layer implementation plan;
 - initial no-effect constrained C++ authority-layer implementation;
-- L-UI rendering contract planning;
-- L-UI rendering implementation planning;
-- initial no-effect L-UI rendering implementation;
-- Nucleus task execution contract planning;
-- Nucleus task execution implementation planning;
-- initial no-effect Nucleus task execution classification/report implementation;
-- Runtime boundary contract planning;
-- Runtime boundary implementation planning;
+- L-UI rendering implementation;
+- Nucleus task execution contract;
+- Nucleus task execution implementation plan;
+- Nucleus task execution implementation;
+- Runtime boundary contract;
+- Runtime boundary implementation plan;
 - initial runtime boundary API, source, smoke tests, and report surface;
-- Defensive threat model contract planning;
-- L-UI parser and AST foundation;
 - deterministic diagnostics;
 - source-span metadata;
-- string-literal escape handling;
-- explicit length-carrying AST string storage;
-- escaped decoded NUL acceptance;
-- literal source-buffer NUL rejection policy;
 - semantic validation implementation;
 - LIR shape implementation;
 - Lat grammar implementation;
 - Lat semantic validation foundation;
+- Lat-to-LIR lowering contract;
+- Lat-to-LIR lowering implementation plan;
+- Lat-to-LIR lowering implementation;
 - no-effect preview boundaries.
 
-Lat now has a bounded no-effect semantic validation layer after the grammar parser. The validator consumes parser metadata, checks declaration identity, transition source resolution, state-field vocabulary, effect targets, effect values, and no-effect preservation, then emits deterministic semantic reports.
+Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The current lowering implementation consumes parser and semantic results, creates a `lat_module` LIR module shape, preserves source spans and no-effect flags, and emits deterministic lowering reports.
 
 ## Direction checkpoint
 
@@ -87,23 +84,7 @@ Runtime boundary contract
 Runtime boundary implementation plan
 Runtime boundary implementation
 Defensive threat model contract
-L-UI static report fixture
-L-UI source grammar fixtures
 L-UI parser implementation
-parser result reporting
-parser diagnostics
-parser string-escape diagnostics
-line/column precision
-source-span metadata
-AST construction
-detailed AST reports
-escaped string reporting
-source-backed AST text extraction
-length-carrying AST string storage
-escaped decoded NUL acceptance
-source-buffer literal NUL policy contract
-source-buffer literal NUL policy implementation plan
-source-buffer literal NUL policy implementation
 semantic validation contract
 semantic validation implementation plan
 semantic validation implementation
@@ -114,6 +95,9 @@ Lat language grammar contract
 Lat language grammar implementation plan
 Lat language grammar implementation
 Lat semantic validation foundation
+Lat-to-LIR lowering contract
+Lat-to-LIR lowering implementation plan
+Lat-to-LIR lowering implementation
 C/C++ foundation direction
 Constrained C++ authority layer contract
 Constrained C++ authority layer implementation plan
@@ -135,17 +119,11 @@ Latticra does not currently provide:
 - a kernel;
 - a bootable image;
 - an installer;
-- a recovery writer;
 - a production language runtime;
 - effect-performing runtime behavior;
 - command execution;
-- a hardened sandbox;
 - unrestricted C++ authority;
 - effect-performing implemented C++ authority layer;
-- malware prevention;
-- ransomware prevention;
-- network interaction;
-- self-update execution;
 - effect-performing Nucleus task execution;
 - interactive L-UI rendering;
 - terminal-control L-UI rendering;
@@ -153,34 +131,23 @@ Latticra does not currently provide:
 - Lat execution;
 - Lat compiler;
 - Lat interpreter;
-- Lat-to-LIR lowering;
-- literal source NUL acceptance;
 - live movement;
-- certified protection;
 - operating-system replacement.
 
 ## Current mission alignment
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make malicious behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, explicit runtime boundaries, Lat semantic validation, and evidence-bound threat modeling.
+The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, explicit runtime boundaries, Lat semantic validation, and Lat-to-LIR metadata lowering.
 
 This is a mission direction, not a current security guarantee.
 
-## Earlier planning slice
+## Latest completed contract slice
 
-Earlier planning slice:
-
-```text
-Constrained C++ authority layer implementation plan
-```
-
-## Previous planning slice
-
-Previous planning slice:
+Latest completed contract slice:
 
 ```text
-Runtime boundary implementation plan
+Lat-to-LIR lowering contract
 ```
 
 ## Latest completed planning slice
@@ -188,7 +155,7 @@ Runtime boundary implementation plan
 Latest completed planning slice:
 
 ```text
-Lat semantic validation implementation plan
+Lat-to-LIR lowering implementation plan
 ```
 
 ## Latest completed implementation slice
@@ -196,7 +163,7 @@ Lat semantic validation implementation plan
 Latest completed implementation slice:
 
 ```text
-Lat semantic validation foundation
+Lat-to-LIR lowering implementation
 ```
 
 ## Previous implementation slice
@@ -204,7 +171,7 @@ Lat semantic validation foundation
 Previous implementation slice:
 
 ```text
-Runtime boundary implementation
+Lat semantic validation foundation
 ```
 
 ## Earlier implementation slice
@@ -212,31 +179,7 @@ Runtime boundary implementation
 Earlier implementation slice:
 
 ```text
-Nucleus task execution implementation
-```
-
-## Latest completed contract slice
-
-Latest completed contract slice:
-
-```text
-Lat semantic validation contract
-```
-
-## Previous contract slice
-
-Previous contract slice:
-
-```text
-Defensive threat model contract
-```
-
-## Earlier contract slice
-
-Earlier contract slice:
-
-```text
-Runtime boundary contract
+Runtime boundary implementation
 ```
 
 ## Next recommended work
@@ -244,14 +187,13 @@ Runtime boundary contract
 Recommended next work:
 
 ```text
-Lat-to-LIR lowering contract
+Lat-to-LIR lowering status integration
 ```
 
 After that:
 
 ```text
-Lat-to-LIR lowering implementation plan
-Defensive threat model validation refinement
+Lat-specific LIR refinement plan
 Runtime boundary refinement
 ```
 
