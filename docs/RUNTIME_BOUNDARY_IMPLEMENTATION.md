@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Implementation
 
 Status: initial implementation record
-Scope: C runtime boundary API surface, deterministic labels, default-deny classification, no-effect allow-mode classification, authority prerequisites, authority flag report fields, authority label report fields, Nucleus task prerequisites and happy path, Nucleus task flag report fields, render/Lat/LIR prerequisite status report fields, render/Lat/LIR prerequisite denials and happy paths, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
+Scope: C runtime boundary API surface, deterministic labels, default-deny classification, no-effect allow-mode classification, allowed-effect report field, authority prerequisites, authority flag report fields, authority label report fields, Nucleus task prerequisites and happy path, Nucleus task flag report fields, render/Lat/LIR prerequisite status report fields, render/Lat/LIR prerequisite denials and happy paths, runtime identity copying, source metadata copying, future-gate classification, expanded report fields, invariant tests, caller-provided report buffer, no-effect posture, and non-claims.
 
 ## Purpose
 
@@ -27,6 +27,7 @@ include/latticra/runtime_boundary.h
 src/runtime_boundary.c
 tests/runtime_boundary_invariants.c
 tests/runtime_boundary_effect_flag_report.c
+tests/runtime_boundary_allowed_effect_report.c
 tests/runtime_boundary_authority_flag_report.c
 tests/runtime_boundary_authority_label_report.c
 tests/runtime_boundary_task_flag_report.c
@@ -51,6 +52,7 @@ default-deny classification
 no-effect report-mode allow classification
 no-effect validation-mode allow classification
 no-effect classification-mode allow classification
+allowed-effect report visibility
 runtime_id copying
 record_count initialization and report visibility
 authority presence and status checks
@@ -77,7 +79,7 @@ unknown effect denial
 future-gate classification for operational request kinds
 operator-confirmation non-override behavior
 bounded report output with policy, reason, and gate state
-expanded report output for runtime_id, record_count, request, requested effect, mode, operator confirmation, authority status, authority label strings, authority no-effect state, authority effect flags, task policy, task reason, task effect flags, render prerequisite status, Lat prerequisite status, LIR prerequisite status, no-effect flag, execution flag, mutation flag, file I/O flag, network flag, server flag, recovery flag, rollback flag, hardware flag, boot flag, source identity, and source span metadata
+expanded report output for runtime_id, record_count, request, requested effect, allowed effect, mode, operator confirmation, authority status, authority label strings, authority no-effect state, authority effect flags, task policy, task reason, task effect flags, render prerequisite status, Lat prerequisite status, LIR prerequisite status, no-effect flag, execution flag, mutation flag, file I/O flag, network flag, server flag, recovery flag, rollback flag, hardware flag, boot flag, source identity, and source span metadata
 small-buffer rejection and clearing
 ```
 
@@ -96,6 +98,7 @@ runtime boundary classification initializes a no-effect result
 runtime_id is copied from request to record
 record_count is initialized
 runtime_id and record_count report fields are present
+requested-effect and allowed-effect report fields are present
 matched no-effect report mode allows report requests
 matched no-effect validation mode allows validation requests
 matched no-effect classification mode allows classification requests
