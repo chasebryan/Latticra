@@ -85,6 +85,29 @@ static int no_effect_ok(
            lowering_result->mutation_allowed == 0;
 }
 
+static void summarize_parse_semantic(
+    size_t source_len,
+    const latticra_lat_parse_result_t *parse_result,
+    const latticra_lat_semantic_result_t *semantic_result,
+    latticra_lat_pipeline_result_t *pipeline_result) {
+    if (parse_result == 0 || semantic_result == 0 || pipeline_result == 0) return;
+
+    pipeline_result->source_len = source_len;
+    pipeline_result->parse_error = parse_result->error;
+    pipeline_result->semantic_error = semantic_result->error;
+    pipeline_result->span = parse_result->module.span;
+    copy_text(pipeline_result->module_name, sizeof(pipeline_result->module_name), parse_result->module.module_name);
+    pipeline_result->declaration_count = parse_result->declaration_count;
+    pipeline_result->clause_count = parse_result->clause_count;
+    pipeline_result->semantic_valid = semantic_result->semantic_valid;
+    pipeline_result->no_effect = parse_result->no_effect && semantic_result->no_effect;
+    pipeline_result->execution_allowed = parse_result->execution_allowed || semantic_result->execution_allowed;
+    pipeline_result->mutation_allowed = parse_result->mutation_allowed || semantic_result->mutation_allowed;
+    pipeline_result->server_allowed = parse_result->server_allowed || semantic_result->server_allowed;
+    pipeline_result->recovery_allowed = parse_result->recovery_allowed || semantic_result->recovery_allowed;
+    pipeline_result->hardware_allowed = parse_result->hardware_allowed || semantic_result->hardware_allowed;
+}
+
 static void summarize_pipeline(
     size_t source_len,
     const latticra_lat_parse_result_t *parse_result,
@@ -94,24 +117,17 @@ static void summarize_pipeline(
     latticra_lat_pipeline_result_t *pipeline_result) {
     if (parse_result == 0 || semantic_result == 0 || module == 0 || lowering_result == 0 || pipeline_result == 0) return;
 
-    pipeline_result->source_len = source_len;
-    pipeline_result->parse_error = parse_result->error;
-    pipeline_result->semantic_error = semantic_result->error;
+    summarize_parse_semantic(source_len, parse_result, semantic_result, pipeline_result);
     pipeline_result->lowering_error = lowering_result->error;
     pipeline_result->lir_error = module->error;
-    pipeline_result->span = parse_result->module.span;
-    copy_text(pipeline_result->module_name, sizeof(pipeline_result->module_name), parse_result->module.module_name);
-    pipeline_result->declaration_count = parse_result->declaration_count;
-    pipeline_result->clause_count = parse_result->clause_count;
     pipeline_result->node_count = lowering_result->node_count;
     pipeline_result->edge_count = lowering_result->edge_count;
-    pipeline_result->semantic_valid = semantic_result->semantic_valid;
-    pipeline_result->no_effect = parse_result->no_effect && semantic_result->no_effect && module->no_effect && lowering_result->no_effect;
-    pipeline_result->execution_allowed = parse_result->execution_allowed || semantic_result->execution_allowed || module->execution_allowed || lowering_result->execution_allowed;
-    pipeline_result->mutation_allowed = parse_result->mutation_allowed || semantic_result->mutation_allowed || module->mutation_allowed || lowering_result->mutation_allowed;
-    pipeline_result->server_allowed = parse_result->server_allowed || semantic_result->server_allowed || module->server_allowed;
-    pipeline_result->recovery_allowed = parse_result->recovery_allowed || semantic_result->recovery_allowed || module->recovery_allowed;
-    pipeline_result->hardware_allowed = parse_result->hardware_allowed || semantic_result->hardware_allowed || module->hardware_allowed;
+    pipeline_result->no_effect = pipeline_result->no_effect && module->no_effect && lowering_result->no_effect;
+    pipeline_result->execution_allowed = pipeline_result->execution_allowed || module->execution_allowed || lowering_result->execution_allowed;
+    pipeline_result->mutation_allowed = pipeline_result->mutation_allowed || module->mutation_allowed || lowering_result->mutation_allowed;
+    pipeline_result->server_allowed = pipeline_result->server_allowed || module->server_allowed;
+    pipeline_result->recovery_allowed = pipeline_result->recovery_allowed || module->recovery_allowed;
+    pipeline_result->hardware_allowed = pipeline_result->hardware_allowed || module->hardware_allowed;
 }
 
 latticra_status_t latticra_lat_pipeline_run_source(
@@ -126,7 +142,15 @@ latticra_status_t latticra_lat_pipeline_run_source(
     latticra_status_t semantic_status;
     latticra_status_t lowering_status;
 
-    if (source == 0 || parse_result == 0 || semantic_result == 0 || module == 0 || lowering_result == 0 || pipeline_result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (source == 0 || parse_result == 0 || semantic_result == 0 || module == 0 || lowering_result == 0 || pipeline_result == 0) {
+        if (pipeline_result != 0) {
+            pipeline_result_default(pipeline_result);
+            pipeline_result->status = LATTICRA_STATUS_NULL_ARGUMENT;
+            pipeline_result->error = LATTICRA_LAT_PIPELINE_NULL_ARGUMENT;
+            pipeline_result->source_len = source_len;
+        }
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
 
     pipeline_result_default(pipeline_result);
 
@@ -142,7 +166,7 @@ latticra_status_t latticra_lat_pipeline_run_source(
     if (semantic_status != LATTICRA_STATUS_OK) {
         pipeline_result->status = semantic_status;
         pipeline_result->error = LATTICRA_LAT_PIPELINE_INTERNAL_ERROR;
-        summarize_pipeline(source_len, parse_result, semantic_result, module, lowering_result, pipeline_result);
+        summarize_parse_semantic(source_len, parse_result, semantic_result, pipeline_result);
         return semantic_status;
     }
 
@@ -150,7 +174,7 @@ latticra_status_t latticra_lat_pipeline_run_source(
     if (lowering_status != LATTICRA_STATUS_OK) {
         pipeline_result->status = lowering_status;
         pipeline_result->error = LATTICRA_LAT_PIPELINE_INTERNAL_ERROR;
-        summarize_pipeline(source_len, parse_result, semantic_result, module, lowering_result, pipeline_result);
+        summarize_parse_semantic(source_len, parse_result, semantic_result, pipeline_result);
         return lowering_status;
     }
 
@@ -158,6 +182,12 @@ latticra_status_t latticra_lat_pipeline_run_source(
 
     if (parse_result->error != LATTICRA_LAT_PARSE_OK) {
         pipeline_result->error = LATTICRA_LAT_PIPELINE_PARSE_NOT_OK;
+        return LATTICRA_STATUS_OK;
+    }
+    if (semantic_result->error == LATTICRA_LAT_SEMANTIC_NO_EFFECT_VIOLATION ||
+        lowering_result->error == LATTICRA_LAT_TO_LIR_NO_EFFECT_VIOLATION ||
+        !no_effect_ok(parse_result, semantic_result, module, lowering_result)) {
+        pipeline_result->error = LATTICRA_LAT_PIPELINE_NO_EFFECT_VIOLATION;
         return LATTICRA_STATUS_OK;
     }
     if (semantic_result->error != LATTICRA_LAT_SEMANTIC_OK) {
@@ -170,10 +200,6 @@ latticra_status_t latticra_lat_pipeline_run_source(
     }
     if (lowering_result->error != LATTICRA_LAT_TO_LIR_OK || module->error != LATTICRA_LIR_OK) {
         pipeline_result->error = LATTICRA_LAT_PIPELINE_LOWERING_NOT_OK;
-        return LATTICRA_STATUS_OK;
-    }
-    if (!no_effect_ok(parse_result, semantic_result, module, lowering_result)) {
-        pipeline_result->error = LATTICRA_LAT_PIPELINE_NO_EFFECT_VIOLATION;
         return LATTICRA_STATUS_OK;
     }
 
