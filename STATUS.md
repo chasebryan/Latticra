@@ -63,6 +63,12 @@ Defensive threat model contract
 Runtime boundary contract
 ```
 
+## Earlier task contract slice
+
+```text
+Nucleus task execution contract
+```
+
 ## Latest completed planning slice
 
 ```text
@@ -97,6 +103,12 @@ Runtime boundary implementation
 
 ```text
 Nucleus task execution implementation
+```
+
+## Earlier UI implementation slice
+
+```text
+L-UI rendering implementation
 ```
 
 ## Current next step
