@@ -47,6 +47,11 @@ require_file docs/LIR_SHAPE_IMPLEMENTATION.md
 require_file docs/LAT_LANGUAGE_GRAMMAR_CONTRACT.md
 require_file docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md
 require_file docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md
+require_file docs/LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md
+require_file docs/LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION_PLAN.md
+require_file docs/LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION.md
+require_file tests/lat_specific_lir_refinement_invariants.c
+require_file scripts/test-lat-specific-lir-refinement.sh
 require_file docs/L_UI_RENDERING_CONTRACT.md
 require_file docs/L_UI_RENDERING_IMPLEMENTATION_PLAN.md
 require_file docs/L_UI_RENDERING_IMPLEMENTATION.md
@@ -125,6 +130,9 @@ require_contains 'LIR execution' README.md
 require_contains 'Lat execution' README.md
 require_contains 'Lat compiler' README.md
 require_contains 'Lat interpreter' README.md
+require_contains 'Lat-specific LIR refinement implementation' README.md
+require_contains 'LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION.md' README.md
+require_contains 'sh scripts/test-lat-specific-lir-refinement.sh' README.md
 
 require_contains 'Status: public status shortcut' STATUS.md
 require_contains 'Overall Latticra system' STATUS.md
@@ -149,6 +157,12 @@ require_contains '4%' STATUS.md
 require_contains 'C/C++ foundation direction' STATUS.md
 require_contains 'Constrained C++ authority layer' STATUS.md
 require_contains 'effect-performing implemented C++ authority layer' STATUS.md
+require_contains '23%' STATUS.md
+require_contains '78%' STATUS.md
+require_contains '72%' STATUS.md
+require_contains '46%' STATUS.md
+require_contains '18%' STATUS.md
+require_contains 'Lat-specific LIR refinement implementation' STATUS.md
 
 require_contains 'Status: active language direction' docs/C_CPP_FOUNDATION_DIRECTION.md
 require_contains 'C is the metal.' docs/C_CPP_FOUNDATION_DIRECTION.md
@@ -292,6 +306,12 @@ require_contains '68%' docs/status/CURRENT_STATUS.md
 require_contains '42%' docs/status/CURRENT_STATUS.md
 require_contains '14%' docs/status/CURRENT_STATUS.md
 require_contains '4%' docs/status/CURRENT_STATUS.md
+require_contains '23%' docs/status/CURRENT_STATUS.md
+require_contains '78%' docs/status/CURRENT_STATUS.md
+require_contains '72%' docs/status/CURRENT_STATUS.md
+require_contains '46%' docs/status/CURRENT_STATUS.md
+require_contains '18%' docs/status/CURRENT_STATUS.md
+require_contains 'Lat-specific LIR refinement implementation' docs/status/CURRENT_STATUS.md
 
 require_contains 'Status: public announcement log' docs/status/ANNOUNCEMENTS.md
 require_contains '2026-05-16 16:15 CDT' docs/status/ANNOUNCEMENTS.md
@@ -299,6 +319,8 @@ require_contains 'Constrained C++ authority layer contract' docs/status/ANNOUNCE
 require_contains 'sh scripts/test-constrained-cpp-authority-layer-contract.sh' docs/status/ANNOUNCEMENTS.md
 require_contains 'Constrained C++ authority layer implementation plan' docs/status/ANNOUNCEMENTS.md
 require_contains 'Non-claims' docs/status/ANNOUNCEMENTS.md
+require_contains 'Lat-specific LIR refinement implementation' docs/status/ANNOUNCEMENTS.md
+require_contains 'sh scripts/test-lat-specific-lir-refinement.sh' docs/status/ANNOUNCEMENTS.md
 
 require_contains 'Status: active project notes index' docs/project_notes/README.md
 require_contains 'CURRENT_DIRECTION.md' docs/project_notes/README.md
@@ -323,6 +345,8 @@ require_contains 'Nucleus task execution implementation' docs/project_notes/UPCO
 require_contains 'Runtime boundary contract' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Runtime boundary implementation plan' docs/project_notes/UPCOMING_WORK.md
 require_contains 'C/C++ foundation direction' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Runtime boundary refinement plan' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Lat-specific LIR refinement no-effect' docs/project_notes/UPCOMING_WORK.md
 
 require_contains 'Status: LIR shape contract' docs/LIR_SHAPE_CONTRACT.md
 require_contains 'Status: initial implementation contract' docs/LIR_SHAPE_IMPLEMENTATION.md
@@ -342,6 +366,8 @@ require_contains 'Constrained C++ authority layer contract' docs/LAT_LANGUAGE_GR
 require_contains 'LATTICRA_LAT_SOURCE_MAX 65536u' include/latticra/lat_parser.h
 require_contains 'latticra_lat_parse_result_t' include/latticra/lat_parser.h
 require_contains 'latticra_lat_parse_source' include/latticra/lat_parser.h
+require_contains 'LATTICRA_LIR_NODE_LAT_STATE' include/latticra/lir.h
+require_contains 'LATTICRA_LIR_EDGE_TRANSITIONS_FROM' include/latticra/lir.h
 require_contains 'latticra_l_ui_render_result_t' include/latticra/l_ui_renderer.h
 require_contains 'latticra_l_ui_render_report' include/latticra/l_ui_renderer.h
 require_contains 'latticra_nucleus_task_result_t' include/latticra/nucleus_task.h
@@ -350,6 +376,7 @@ require_contains 'LAT GRAMMAR REPORT' src/lat_parser.c
 require_contains 'LATTICRA L-UI RENDER REPORT' src/l_ui_renderer.c
 require_contains 'LATTICRA NUCLEUS TASK REPORT' src/nucleus_task.c
 require_contains 'lat_grammar_accepts_minimal_module' tests/lat_language_grammar_invariants.c
+require_contains 'lat_specific_lir_uses_lat_declaration_node_kinds' tests/lat_specific_lir_refinement_invariants.c
 require_contains 'l_ui_rendering_accepts_semantically_valid_l_ui_fixture' tests/l_ui_rendering_invariants.c
 require_contains 'nucleus_task_execution_denies_unknown_request' tests/nucleus_task_execution_invariants.c
 require_contains 'lat module RootModule' fixtures/lat/minimal_module.lat

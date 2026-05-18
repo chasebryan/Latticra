@@ -3,6 +3,7 @@
 Status: public status shortcut
 Last updated: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
+Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
 
 For the current project status, completion estimates, and next priorities, see:
 
@@ -26,17 +27,17 @@ docs/strategy/README.md
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 20% |
+| Overall Latticra system | 23% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 75% |
-| Public documentation posture | 69% |
-| Strategy/status/funding framework | 43% |
-| Lat / Latticra Programming Language | 12% |
-| LIR / Intermediate Representation | 11% |
+| Foundation documents and contracts | 78% |
+| Public documentation posture | 72% |
+| Strategy/status/funding framework | 46% |
+| Lat / Latticra Programming Language | 18% |
+| LIR / Intermediate Representation | 18% |
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
 
-Previous baseline before the Lat pipeline status update: overall system 19%, foundation documents and contracts 74%, public documentation posture 68%, strategy/status/funding framework 42%, and Lat / Latticra Programming Language 10%.
+Previous baselines retained for status-audit continuity: overall system 19% and 20%, foundation documents and contracts 74% and 75%, public documentation posture 68% and 69%, strategy/status/funding framework 42% and 43%, Lat / Latticra Programming Language 10% and 12%, and LIR / Intermediate Representation 11%.
 
 These percentages are planning estimates only. They are not release promises or production-readiness metrics.
 
@@ -60,6 +61,9 @@ Lat-to-LIR lowering implementation
 Lat pipeline contract
 Lat pipeline implementation plan
 Lat pipeline implementation
+Lat-specific LIR refinement contract
+Lat-specific LIR refinement implementation plan
+Lat-specific LIR refinement implementation
 Constrained C++ authority layer implementation plan
 Runtime boundary contract
 Runtime boundary implementation plan
@@ -73,7 +77,7 @@ L-UI rendering implementation
 ## Current next step
 
 ```text
-Lat-specific LIR refinement plan
+Runtime boundary refinement plan
 ```
 
 ## Current Lat pipeline boundary
@@ -81,6 +85,10 @@ Lat-specific LIR refinement plan
 Lat now has a bounded no-effect path from source bytes through grammar parsing, semantic validation, Lat-to-LIR lowering, and deterministic pipeline reporting.
 
 The current pipeline implementation composes existing parser, semantic, lowering, and LIR metadata outputs. It preserves no-effect flags and produces a `LAT PIPELINE REPORT` without executing Lat or LIR.
+
+## Current Lat-specific LIR refinement boundary
+
+Lat-to-LIR lowering now emits explicit Lat declaration node kinds and an explicit transition-source edge kind. This makes Lat state, policy, transition, assertion, requirement, and effect-declaration metadata visible inside the LIR shape while preserving the no-effect boundary.
 
 ## Current Lat-to-LIR lowering boundary
 

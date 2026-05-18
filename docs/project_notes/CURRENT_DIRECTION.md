@@ -48,11 +48,14 @@ bounded grammar parser
 bounded no-effect semantic validation
 bounded no-effect Lat-to-LIR metadata lowering
 bounded no-effect Lat pipeline reporting
+bounded no-effect Lat-specific LIR refinement
 ```
 
 The current Lat-to-LIR lowering implementation consumes parser and semantic metadata, creates a `lat_module` LIR shape, preserves source spans and no-effect flags, and emits deterministic lowering reports.
 
 The current Lat pipeline composes Lat source parsing, semantic validation, Lat-to-LIR lowering, LIR metadata, and deterministic pipeline reporting into one no-effect integration path.
+
+The current Lat-specific LIR refinement makes Lat declarations and transition-source edges explicit in LIR while preserving source spans, counts, and no-effect flags.
 
 It does not provide Lat execution, Lat interpretation, Lat compilation, LIR execution, runtime behavior, command execution, state mutation, file I/O, network I/O, recovery behavior, hardware behavior, or operating-system behavior.
 
@@ -131,12 +134,12 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, Lat semantic validation foundation, Lat-to-LIR lowering contract, Lat-to-LIR lowering implementation plan, first no-effect Lat-to-LIR lowering implementation, first no-effect Lat pipeline implementation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, runtime boundary contract, runtime boundary implementation plan, and initial runtime boundary API/smoke implementation toward Lat-specific LIR refinement planning.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, Lat semantic validation foundation, Lat-to-LIR lowering contract, Lat-to-LIR lowering implementation plan, first no-effect Lat-to-LIR lowering implementation, first no-effect Lat pipeline implementation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, runtime boundary contract, runtime boundary implementation plan, and initial runtime boundary API/smoke implementation toward runtime boundary refinement planning.
 
 The next recommended implementation lane is:
 
 ```text
-Lat-specific LIR refinement plan
+Runtime boundary refinement plan
 ```
 
 ## Current non-claim

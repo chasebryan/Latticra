@@ -102,10 +102,22 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Lat-specific LIR refinement plan
+Runtime boundary refinement plan
 ```
 
 Purpose:
+
+```text
+define the next no-effect runtime boundary refinement after Lat pipeline and Lat-specific LIR refinement, including compatibility requirements, report expectations, prerequisite metadata, and non-claims before any runtime behavior expands
+```
+
+Recent completed slice retained for continuity:
+
+```text
+Lat-specific LIR refinement plan
+```
+
+Purpose completed:
 
 ```text
 define whether Lat needs dedicated LIR node or edge kinds beyond the current conservative mapping, including compatibility requirements, report expectations, capacity impact, and non-claims before any enum or shape expansion
@@ -113,7 +125,7 @@ define whether Lat needs dedicated LIR node or edge kinds beyond the current con
 
 ## Near-term queue
 
-1. Lat-specific LIR refinement plan.
+1. Runtime boundary refinement plan.
 2. Lat-to-LIR implementation documentation/status verification.
 3. Public status update after major milestones.
 4. Completion percentage review after Lat-to-LIR implementation.
@@ -147,7 +159,8 @@ consistent with the C/C++ foundation direction
 - Keep runtime behavior no-effect and disabled-by-default.
 - Keep Lat semantic validation no-effect and metadata-only.
 - Keep Lat-to-LIR lowering no-effect and metadata-only.
-- Move next into Lat-specific LIR refinement planning.
+- Keep Lat-specific LIR refinement no-effect and metadata-only.
+- Move next into runtime boundary refinement planning.
 - Maintain professional public docs.
 - Keep status and completion estimates current.
 - Keep Lat metadata-only until separate execution contracts exist.

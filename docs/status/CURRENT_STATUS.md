@@ -4,6 +4,7 @@ Status: public status record
 Last updated: 2026-05-16 16:15 CDT
 Latest Lat-to-LIR lowering note: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
+Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
 Scope: current progress, completion estimates, merged capability areas, and next priorities.
 
 ## Project status
@@ -36,14 +37,19 @@ The repository currently emphasizes:
 - Lat-to-LIR lowering contract;
 - Lat-to-LIR lowering implementation plan;
 - Lat-to-LIR lowering implementation;
-- Lat pipeline contract;
-- Lat pipeline implementation plan;
-- Lat pipeline implementation;
+- Lat-specific LIR refinement contract;
+- Lat-specific LIR refinement implementation plan;
+- Lat-specific LIR refinement implementation;
+- Lat-specific LIR refinement contract;
+- Lat-specific LIR refinement implementation plan;
+- Lat-specific LIR refinement implementation;
 - no-effect preview boundaries.
 
 Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The current lowering implementation consumes parser and semantic results, creates a `lat_module` LIR module shape, preserves source spans and no-effect flags, and emits deterministic lowering reports.
 
 The Lat pipeline composes source parsing, semantic validation, Lat-to-LIR lowering, LIR metadata, and deterministic pipeline reporting into one no-effect integration boundary. It preserves metadata visibility without executing Lat, executing LIR, mutating state, or providing runtime behavior.
+
+The Lat-specific LIR refinement gives Lat declarations explicit LIR node kinds and a transition-source edge kind. This improves inspectability of Lat-derived LIR without changing no-effect behavior or adding execution.
 
 ## Direction checkpoint
 
@@ -61,13 +67,13 @@ These percentages are planning estimates only.
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 20% |
+| Overall Latticra system | 23% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 75% |
-| Public documentation posture | 69% |
-| Strategy/status/funding framework | 43% |
-| Lat / Latticra Programming Language | 12% |
-| LIR / Intermediate Representation | 11% |
+| Foundation documents and contracts | 78% |
+| Public documentation posture | 72% |
+| Strategy/status/funding framework | 46% |
+| Lat / Latticra Programming Language | 18% |
+| LIR / Intermediate Representation | 18% |
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
 | Nucleus real task execution | 10% |
@@ -75,7 +81,7 @@ These percentages are planning estimates only.
 | Security-hardening implementation | 5% |
 | Public product readiness | 5% |
 
-Previous baseline before the Lat pipeline status update: foundation documents and contracts 74%, public documentation posture 68%, strategy/status/funding framework 42%, C/C++ foundation direction 14%, and constrained C++ authority layer 4%.
+Previous baselines retained for status-audit continuity: foundation documents and contracts 74% and 75%, public documentation posture 68% and 69%, strategy/status/funding framework 42% and 43%, Lat / Latticra Programming Language 10% and 12%, LIR / Intermediate Representation 10% and 11%, C/C++ foundation direction 14%, and constrained C++ authority layer 4%.
 
 ## Current implemented evidence areas
 
@@ -109,6 +115,9 @@ Lat-to-LIR lowering implementation
 Lat pipeline contract
 Lat pipeline implementation plan
 Lat pipeline implementation
+Lat-specific LIR refinement contract
+Lat-specific LIR refinement implementation plan
+Lat-specific LIR refinement implementation
 C/C++ foundation direction
 Constrained C++ authority layer contract
 Constrained C++ authority layer implementation plan
@@ -149,7 +158,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, explicit runtime boundaries, Lat semantic validation, Lat-to-LIR metadata lowering, and Lat pipeline reporting.
+The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, explicit runtime boundaries, Lat semantic validation, Lat-to-LIR metadata lowering, and Lat pipeline reporting, and Lat-specific LIR refinement.
 
 This is a mission direction, not a current security guarantee.
 
@@ -182,7 +191,7 @@ Lat pipeline implementation
 Previous implementation slice:
 
 ```text
-Lat-to-LIR lowering implementation
+Lat pipeline implementation
 ```
 
 ## Earlier implementation slice
@@ -190,7 +199,7 @@ Lat-to-LIR lowering implementation
 Earlier implementation slice:
 
 ```text
-Lat semantic validation foundation
+Lat-to-LIR lowering implementation
 ```
 
 ## Next recommended work
@@ -198,7 +207,7 @@ Lat semantic validation foundation
 Recommended next work:
 
 ```text
-Lat-specific LIR refinement plan
+Runtime boundary refinement plan
 ```
 
 After that:

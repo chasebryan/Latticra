@@ -159,15 +159,22 @@ static int no_effect_ok(
 }
 
 static latticra_lir_node_kind_t declaration_node_kind(latticra_lat_declaration_kind_t kind) {
-    if (kind == LATTICRA_LAT_DECLARATION_EFFECT) return LATTICRA_LIR_NODE_EFFECT;
-    return LATTICRA_LIR_NODE_FIELD;
+    switch (kind) {
+    case LATTICRA_LAT_DECLARATION_STATE: return LATTICRA_LIR_NODE_LAT_STATE;
+    case LATTICRA_LAT_DECLARATION_POLICY: return LATTICRA_LIR_NODE_LAT_POLICY;
+    case LATTICRA_LAT_DECLARATION_TRANSITION: return LATTICRA_LIR_NODE_LAT_TRANSITION;
+    case LATTICRA_LAT_DECLARATION_ASSERTION: return LATTICRA_LIR_NODE_LAT_ASSERTION;
+    case LATTICRA_LAT_DECLARATION_EFFECT: return LATTICRA_LIR_NODE_LAT_EFFECT_DECLARATION;
+    case LATTICRA_LAT_DECLARATION_UNKNOWN:
+    default: return LATTICRA_LIR_NODE_UNKNOWN;
+    }
 }
 
 static latticra_lir_node_kind_t clause_node_kind(const char *keyword) {
     if (keyword == 0) return LATTICRA_LIR_NODE_UNKNOWN;
     if (strcmp(keyword, "field") == 0) return LATTICRA_LIR_NODE_FIELD;
-    if (strcmp(keyword, "require") == 0) return LATTICRA_LIR_NODE_BINDING;
-    if (strcmp(keyword, "ensure") == 0) return LATTICRA_LIR_NODE_BINDING;
+    if (strcmp(keyword, "require") == 0) return LATTICRA_LIR_NODE_LAT_REQUIREMENT;
+    if (strcmp(keyword, "ensure") == 0) return LATTICRA_LIR_NODE_LAT_REQUIREMENT;
     if (strcmp(keyword, "effect") == 0) return LATTICRA_LIR_NODE_EFFECT;
     return LATTICRA_LIR_NODE_UNKNOWN;
 }
@@ -332,7 +339,7 @@ latticra_status_t latticra_lir_lower_lat_module(
                 module->error = LATTICRA_LIR_SEMANTIC_FAILED;
                 return LATTICRA_STATUS_OK;
             }
-            if (!append_edge(module, declaration_node_index(index), declaration_node_index(state_index), LATTICRA_LIR_EDGE_BINDS, declaration->span)) goto capacity_failed;
+            if (!append_edge(module, declaration_node_index(index), declaration_node_index(state_index), LATTICRA_LIR_EDGE_TRANSITIONS_FROM, declaration->span)) goto capacity_failed;
         }
     }
 

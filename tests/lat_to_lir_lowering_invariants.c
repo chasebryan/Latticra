@@ -113,9 +113,14 @@ static int lat_to_lir_preserves_metadata(void) {
     EXPECT_STR_EQ(module.module_name, "FoundationModule", "module name");
     EXPECT_STR_EQ(module.effect, "none", "effect label");
     EXPECT_STR_EQ(module.boundary, "lat_semantic_only", "boundary label");
+    EXPECT_TRUE(module.nodes[1].kind == LATTICRA_LIR_NODE_LAT_STATE, "state node kind");
+    EXPECT_TRUE(module.nodes[2].kind == LATTICRA_LIR_NODE_LAT_EFFECT_DECLARATION, "effect declaration node kind");
+    EXPECT_TRUE(module.nodes[3].kind == LATTICRA_LIR_NODE_LAT_POLICY, "policy node kind");
+    EXPECT_TRUE(module.nodes[4].kind == LATTICRA_LIR_NODE_LAT_TRANSITION, "transition node kind");
+    EXPECT_TRUE(module.nodes[5].kind == LATTICRA_LIR_NODE_LAT_ASSERTION, "assertion node kind");
     EXPECT_STR_EQ(module.nodes[4].name, "MoveRight", "transition node name");
     EXPECT_STR_EQ(module.nodes[4].binding, "RootCell", "transition source metadata");
-    EXPECT_TRUE(module.edges[28].edge_kind == LATTICRA_LIR_EDGE_BINDS, "transition edge");
+    EXPECT_TRUE(module.edges[28].edge_kind == LATTICRA_LIR_EDGE_TRANSITIONS_FROM, "transition edge");
     return 0;
 }
 

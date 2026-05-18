@@ -94,6 +94,12 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LAT_LANGUAGE_GRAMMAR_CONTRACT.md`](LAT_LANGUAGE_GRAMMAR_CONTRACT.md) — first Lat / Latticra Language grammar contract for Lat-Core before parser implementation.
 - [`LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md`](LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md) — exact public API, parser result structs, AST structs, capacities, error labels, reports, fixture paths, string handling, source-span mapping, and tests before Lat parser code.
 - [`LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md`](LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md) — bounded no-effect Lat / Latticra Language grammar parser, AST metadata, reports, fixture, and invariants.
+- [`LAT_PIPELINE_CONTRACT.md`](LAT_PIPELINE_CONTRACT.md) — bounded no-effect Lat pipeline contract after parser, semantic validation, and Lat-to-LIR lowering.
+- [`LAT_PIPELINE_IMPLEMENTATION_PLAN.md`](LAT_PIPELINE_IMPLEMENTATION_PLAN.md) — exact Lat pipeline API, result struct, report, tests, workflow, compatibility expectations, and non-claims.
+- [`LAT_PIPELINE_IMPLEMENTATION.md`](LAT_PIPELINE_IMPLEMENTATION.md) — first bounded no-effect Lat pipeline implementation.
+- [`LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md`](LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md) — explicit Lat declaration node and transition-source edge refinement contract.
+- [`LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION_PLAN.md`](LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION_PLAN.md) — exact Lat-specific LIR enum, label, lowering, test, workflow, and compatibility plan.
+- [`LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION.md`](LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION.md) — first no-effect Lat-specific LIR refinement implementation.
 - [`L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — decoding rules for quoted L-UI source string escapes.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md) — parser-level validation decision, AST decoding helper shape, NUL/capacity/span/report behavior, exact tests, and compatibility expectations before string-literal escape decoding.
 - [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md) — byte-oriented string-literal escape decoding for source-backed L-UI AST purpose and text values.
@@ -181,6 +187,8 @@ LIR shape implementation + invariants
 Lat language grammar contract + guardrails
 Lat language grammar implementation plan + guardrails
 Lat language grammar implementation + invariants
+Lat pipeline implementation + invariants
+Lat-specific LIR refinement implementation + invariants
 L-UI string-literal escape contract + guardrails
 L-UI string-literal escape implementation plan + guardrails
 L-UI string-literal escape decoding implementation + invariants
@@ -192,7 +200,7 @@ L-UI rendering implementation + invariants
 The next implementation target should be:
 
 ```text
-Defensive threat model contract
+Runtime boundary refinement plan
 ```
 
-That target should define the first defensive threat model contract for Latticra, including protected assets, assumed adversary capabilities, non-goals, trust boundaries, evidence expectations, abuse-case vocabulary, validation expectations, and non-claims before additional security-facing implementation work.
+That target should define the next no-effect runtime boundary refinement after Lat pipeline and Lat-specific LIR refinement, including prerequisite metadata, report expectations, compatibility requirements, exact tests, and non-claims before any runtime behavior expands.

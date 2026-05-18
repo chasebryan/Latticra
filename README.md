@@ -38,11 +38,13 @@ Runtime boundary: disabled-by-default line before operational behavior
 
 ## Current implementation posture
 
-The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, and state-lattice models.
+The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, Lat-specific LIR refinement implementation, and state-lattice models.
 
 Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The current lowering implementation consumes parser and semantic metadata, preserves source spans and no-effect flags, emits deterministic lowering reports, and materializes a `lat_module` LIR shape without executing Lat.
 
 The Lat pipeline now composes source parsing, semantic validation, Lat-to-LIR lowering, and deterministic pipeline reporting into one bounded no-effect integration path. It is a metadata/report boundary, not a compiler, interpreter, executor, runtime, or operating-system surface.
+
+The Lat-specific LIR refinement now gives Lat declarations explicit LIR node kinds and a transition-source edge kind while preserving the existing no-effect metadata path and bounded report posture.
 
 Current implementation remains report/classification oriented. It is not active runtime behavior.
 
@@ -79,6 +81,9 @@ Important records:
 - [`docs/LAT_PIPELINE_CONTRACT.md`](docs/LAT_PIPELINE_CONTRACT.md)
 - [`docs/LAT_PIPELINE_IMPLEMENTATION_PLAN.md`](docs/LAT_PIPELINE_IMPLEMENTATION_PLAN.md)
 - [`docs/LAT_PIPELINE_IMPLEMENTATION.md`](docs/LAT_PIPELINE_IMPLEMENTATION.md)
+- [`docs/LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md`](docs/LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md)
+- [`docs/LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION_PLAN.md`](docs/LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION_PLAN.md)
+- [`docs/LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION.md`](docs/LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION.md)
 
 ## Status and strategy
 
@@ -104,6 +109,12 @@ Lat pipeline integration is covered by:
 
 ```sh
 sh scripts/test-lat-pipeline.sh
+```
+
+Lat-specific LIR refinement is covered by:
+
+```sh
+sh scripts/test-lat-specific-lir-refinement.sh
 ```
 
 ## Support
