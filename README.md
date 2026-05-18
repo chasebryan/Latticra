@@ -38,9 +38,11 @@ Runtime boundary: disabled-by-default line before operational behavior
 
 ## Current implementation posture
 
-The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, and state-lattice models.
+The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, and state-lattice models.
 
 Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The current lowering implementation consumes parser and semantic metadata, preserves source spans and no-effect flags, emits deterministic lowering reports, and materializes a `lat_module` LIR shape without executing Lat.
+
+The Lat pipeline now composes source parsing, semantic validation, Lat-to-LIR lowering, and deterministic pipeline reporting into one bounded no-effect integration path. It is a metadata/report boundary, not a compiler, interpreter, executor, runtime, or operating-system surface.
 
 Current implementation remains report/classification oriented. It is not active runtime behavior.
 
@@ -74,6 +76,9 @@ Important records:
 - [`docs/LAT_TO_LIR_LOWERING_CONTRACT.md`](docs/LAT_TO_LIR_LOWERING_CONTRACT.md)
 - [`docs/LAT_TO_LIR_LOWERING_IMPLEMENTATION_PLAN.md`](docs/LAT_TO_LIR_LOWERING_IMPLEMENTATION_PLAN.md)
 - [`docs/LAT_TO_LIR_LOWERING_IMPLEMENTATION.md`](docs/LAT_TO_LIR_LOWERING_IMPLEMENTATION.md)
+- [`docs/LAT_PIPELINE_CONTRACT.md`](docs/LAT_PIPELINE_CONTRACT.md)
+- [`docs/LAT_PIPELINE_IMPLEMENTATION_PLAN.md`](docs/LAT_PIPELINE_IMPLEMENTATION_PLAN.md)
+- [`docs/LAT_PIPELINE_IMPLEMENTATION.md`](docs/LAT_PIPELINE_IMPLEMENTATION.md)
 
 ## Status and strategy
 
@@ -93,6 +98,12 @@ Lat-to-LIR lowering is covered by:
 
 ```sh
 sh scripts/test-lat-to-lir-lowering.sh
+```
+
+Lat pipeline integration is covered by:
+
+```sh
+sh scripts/test-lat-pipeline.sh
 ```
 
 ## Support

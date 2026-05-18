@@ -2,6 +2,7 @@
 
 Status: public announcement log
 Last updated: 2026-05-16 16:15 CDT
+Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Scope: dated public updates, status notes, and milestone announcements.
 
 ## Purpose
@@ -22,6 +23,36 @@ why it matters
 validation
 non-claims
 next step
+```
+
+## 2026-05-18 19:40 CDT — Lat pipeline implementation
+
+Status: implementation added
+
+Latticra added the first bounded no-effect Lat pipeline implementation.
+
+What changed:
+
+The new Lat pipeline composes the existing grammar parser, semantic validator, Lat-to-LIR lowering layer, and LIR metadata output into one deterministic integration/report boundary.
+
+Why it matters:
+
+Lat now has a single tested path from source bytes through parsing, semantic validation, metadata lowering, and pipeline reporting. This makes the language lane easier to validate as one coherent foundation while preserving the project’s no-effect boundary.
+
+Validation:
+
+```text
+sh scripts/test-lat-pipeline.sh
+```
+
+Non-claims:
+
+This update does not implement Lat execution, Lat compilation, Lat interpretation, LIR execution, command behavior, runtime behavior, mutation, file I/O, network I/O, recovery behavior, hardware behavior, malware prevention, ransomware prevention, sandboxing, certification, accreditation, or operating-system behavior.
+
+Next step:
+
+```text
+Lat-specific LIR refinement plan
 ```
 
 ## 2026-05-16 16:15 CDT — Constrained C++ authority layer contract
