@@ -1,0 +1,205 @@
+#include "latticra/lat_pipeline.h"
+
+#include <stdio.h>
+#include <string.h>
+
+#define EXPECT_TRUE(condition, message) \
+    do { \
+        if (!(condition)) { \
+            fprintf(stderr, "FAIL: %s\n", message); \
+            return 1; \
+        } \
+    } while (0)
+
+#define EXPECT_STR_EQ(actual, expected, message) \
+    do { \
+        if (strcmp((actual), (expected)) != 0) { \
+            fprintf(stderr, "FAIL: %s: expected '%s' got '%s'\n", message, (expected), (actual)); \
+            return 1; \
+        } \
+    } while (0)
+
+static const char FOUNDATION_MODEL[] =
+    "lat module FoundationModule {\n"
+    "  state RootCell {\n"
+    "    origin = \"0/0\"\n"
+    "    route = \"ROOT\"\n"
+    "    axis = \"ROOT\"\n"
+    "    path = \"/\"\n"
+    "    health = \"ok\"\n"
+    "    risk = \"low\"\n"
+    "    lock = \"open\"\n"
+    "    host_effect = none\n"
+    "    external_effect = none\n"
+    "  }\n"
+    "  effect PreviewOnly {\n"
+    "    host = none\n"
+    "    external = none\n"
+    "    network = none\n"
+    "    hardware = none\n"
+    "  }\n"
+    "  policy SafePreview {\n"
+    "    require risk != \"high\"\n"
+    "    require lock == \"open\"\n"
+    "    ensure host_effect == none\n"
+    "    ensure external_effect == none\n"
+    "  }\n"
+    "  transition MoveRight from RootCell {\n"
+    "    require lock == \"open\"\n"
+    "    effect host = none\n"
+    "    effect external = none\n"
+    "  }\n"
+    "  assertion RootCellIsSafe {\n"
+    "    require health == \"ok\"\n"
+    "    require host_effect == none\n"
+    "    require external_effect == none\n"
+    "  }\n"
+    "}\n";
+
+static int run_pipeline(
+    const char *source,
+    latticra_lat_parse_result_t *parse,
+    latticra_lat_semantic_result_t *semantic,
+    latticra_lir_module_t *module,
+    latticra_lat_to_lir_result_t *lowering,
+    latticra_lat_pipeline_result_t *pipeline) {
+    EXPECT_TRUE(latticra_lat_pipeline_run_source(source, strlen(source), parse, semantic, module, lowering, pipeline) == LATTICRA_STATUS_OK, "pipeline status OK");
+    return 0;
+}
+
+static int lat_pipeline_accepts_foundation_model(void) {
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lir_module_t module;
+    latticra_lat_to_lir_result_t lowering;
+    latticra_lat_pipeline_result_t pipeline;
+    EXPECT_TRUE(run_pipeline(FOUNDATION_MODEL, &parse, &semantic, &module, &lowering, &pipeline) == 0, "foundation pipeline run");
+    EXPECT_TRUE(parse.error == LATTICRA_LAT_PARSE_OK, "parse ok");
+    EXPECT_TRUE(semantic.error == LATTICRA_LAT_SEMANTIC_OK, "semantic ok");
+    EXPECT_TRUE(lowering.error == LATTICRA_LAT_TO_LIR_OK, "lowering ok");
+    EXPECT_TRUE(module.error == LATTICRA_LIR_OK, "lir ok");
+    EXPECT_TRUE(pipeline.error == LATTICRA_LAT_PIPELINE_OK, "pipeline ok");
+    return 0;
+}
+
+static int lat_pipeline_preserves_counts(void) {
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lir_module_t module;
+    latticra_lat_to_lir_result_t lowering;
+    latticra_lat_pipeline_result_t pipeline;
+    EXPECT_TRUE(run_pipeline(FOUNDATION_MODEL, &parse, &semantic, &module, &lowering, &pipeline) == 0, "count pipeline run");
+    EXPECT_TRUE(pipeline.declaration_count == 5u, "declaration count");
+    EXPECT_TRUE(pipeline.clause_count == 23u, "clause count");
+    EXPECT_TRUE(pipeline.node_count == 29u, "node count");
+    EXPECT_TRUE(pipeline.edge_count == 29u, "edge count");
+    EXPECT_STR_EQ(pipeline.module_name, "FoundationModule", "module name");
+    return 0;
+}
+
+static int lat_pipeline_rejects_parse_failure(void) {
+    static const char source[] = "lat module Bad { unknown Thing { } }\n";
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lir_module_t module;
+    latticra_lat_to_lir_result_t lowering;
+    latticra_lat_pipeline_result_t pipeline;
+    EXPECT_TRUE(run_pipeline(source, &parse, &semantic, &module, &lowering, &pipeline) == 0, "parse failure pipeline run");
+    EXPECT_TRUE(parse.error != LATTICRA_LAT_PARSE_OK, "parse failed");
+    EXPECT_TRUE(pipeline.error == LATTICRA_LAT_PIPELINE_PARSE_NOT_OK, "pipeline parse failure");
+    EXPECT_TRUE(lowering.error == LATTICRA_LAT_TO_LIR_PARSE_NOT_OK, "lowering parse failure");
+    return 0;
+}
+
+static int lat_pipeline_rejects_semantic_failure(void) {
+    static const char source[] =
+        "lat module BadTransition {\n"
+        "  transition MoveRight from MissingState {\n"
+        "    require lock == \"open\"\n"
+        "    effect host = none\n"
+        "  }\n"
+        "}\n";
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lir_module_t module;
+    latticra_lat_to_lir_result_t lowering;
+    latticra_lat_pipeline_result_t pipeline;
+    EXPECT_TRUE(run_pipeline(source, &parse, &semantic, &module, &lowering, &pipeline) == 0, "semantic failure pipeline run");
+    EXPECT_TRUE(parse.error == LATTICRA_LAT_PARSE_OK, "parse ok before semantic failure");
+    EXPECT_TRUE(semantic.error == LATTICRA_LAT_SEMANTIC_UNKNOWN_TRANSITION_SOURCE, "semantic failure captured");
+    EXPECT_TRUE(pipeline.error == LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK, "pipeline semantic failure");
+    EXPECT_TRUE(lowering.error == LATTICRA_LAT_TO_LIR_SEMANTIC_NOT_OK, "lowering semantic failure");
+    return 0;
+}
+
+static int lat_pipeline_preserves_no_effect_flags(void) {
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lir_module_t module;
+    latticra_lat_to_lir_result_t lowering;
+    latticra_lat_pipeline_result_t pipeline;
+    EXPECT_TRUE(run_pipeline(FOUNDATION_MODEL, &parse, &semantic, &module, &lowering, &pipeline) == 0, "flags pipeline run");
+    EXPECT_TRUE(pipeline.no_effect == 1, "pipeline no-effect");
+    EXPECT_TRUE(pipeline.execution_allowed == 0, "pipeline execution flag");
+    EXPECT_TRUE(pipeline.mutation_allowed == 0, "pipeline mutation flag");
+    EXPECT_TRUE(pipeline.server_allowed == 0, "pipeline server flag");
+    EXPECT_TRUE(pipeline.recovery_allowed == 0, "pipeline recovery flag");
+    EXPECT_TRUE(pipeline.hardware_allowed == 0, "pipeline hardware flag");
+    return 0;
+}
+
+static int lat_pipeline_report_is_deterministic(void) {
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lir_module_t module;
+    latticra_lat_to_lir_result_t lowering;
+    latticra_lat_pipeline_result_t pipeline;
+    char one[LATTICRA_LAT_PIPELINE_REPORT_MAX];
+    char two[LATTICRA_LAT_PIPELINE_REPORT_MAX];
+    EXPECT_TRUE(run_pipeline(FOUNDATION_MODEL, &parse, &semantic, &module, &lowering, &pipeline) == 0, "report pipeline run");
+    EXPECT_TRUE(latticra_lat_pipeline_report(&pipeline, one, sizeof(one)) == LATTICRA_STATUS_OK, "first report");
+    EXPECT_TRUE(latticra_lat_pipeline_report(&pipeline, two, sizeof(two)) == LATTICRA_STATUS_OK, "second report");
+    EXPECT_STR_EQ(one, two, "report deterministic");
+    EXPECT_TRUE(strstr(one, "LAT PIPELINE REPORT\n") != 0, "report header");
+    EXPECT_TRUE(strstr(one, "error=ok\n") != 0, "report ok");
+    EXPECT_TRUE(strstr(one, "lowering_error=ok\n") != 0, "lowering ok in report");
+    return 0;
+}
+
+static int lat_pipeline_report_rejects_small_buffer(void) {
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lir_module_t module;
+    latticra_lat_to_lir_result_t lowering;
+    latticra_lat_pipeline_result_t pipeline;
+    char tiny[8];
+    EXPECT_TRUE(run_pipeline(FOUNDATION_MODEL, &parse, &semantic, &module, &lowering, &pipeline) == 0, "small report pipeline run");
+    EXPECT_TRUE(latticra_lat_pipeline_report(&pipeline, tiny, sizeof(tiny)) == LATTICRA_STATUS_BUFFER_TOO_SMALL, "small report rejected");
+    EXPECT_TRUE(tiny[0] == '\0', "small report cleared");
+    return 0;
+}
+
+static int lat_pipeline_error_labels_are_stable(void) {
+    EXPECT_STR_EQ(latticra_lat_pipeline_error_label(LATTICRA_LAT_PIPELINE_OK), "ok", "ok label");
+    EXPECT_STR_EQ(latticra_lat_pipeline_error_label(LATTICRA_LAT_PIPELINE_NULL_ARGUMENT), "null_argument", "null label");
+    EXPECT_STR_EQ(latticra_lat_pipeline_error_label(LATTICRA_LAT_PIPELINE_PARSE_NOT_OK), "parse_not_ok", "parse label");
+    EXPECT_STR_EQ(latticra_lat_pipeline_error_label(LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK), "semantic_not_ok", "semantic label");
+    EXPECT_STR_EQ(latticra_lat_pipeline_error_label(LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_VALID), "semantic_not_valid", "semantic valid label");
+    EXPECT_STR_EQ(latticra_lat_pipeline_error_label(LATTICRA_LAT_PIPELINE_LOWERING_NOT_OK), "lowering_not_ok", "lowering label");
+    EXPECT_STR_EQ(latticra_lat_pipeline_error_label(LATTICRA_LAT_PIPELINE_NO_EFFECT_VIOLATION), "no_effect_violation", "flags label");
+    return 0;
+}
+
+int main(void) {
+    if (lat_pipeline_accepts_foundation_model() != 0) return 1;
+    if (lat_pipeline_preserves_counts() != 0) return 1;
+    if (lat_pipeline_rejects_parse_failure() != 0) return 1;
+    if (lat_pipeline_rejects_semantic_failure() != 0) return 1;
+    if (lat_pipeline_preserves_no_effect_flags() != 0) return 1;
+    if (lat_pipeline_report_is_deterministic() != 0) return 1;
+    if (lat_pipeline_report_rejects_small_buffer() != 0) return 1;
+    if (lat_pipeline_error_labels_are_stable() != 0) return 1;
+
+    puts("lat_pipeline_invariants: ok");
+    return 0;
+}
