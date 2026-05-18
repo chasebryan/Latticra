@@ -1,0 +1,131 @@
+# Latticra Runtime Boundary Refinement Implementation
+
+Status: initial runtime boundary refinement implementation
+Scope: no-effect runtime-boundary evidence reporting for Lat pipeline and Lat-specific LIR metadata.
+
+## Purpose
+
+This implementation slice refines the runtime boundary so it can classify and report Lat pipeline evidence and Lat-specific LIR evidence without executing Lat, executing LIR, mutating state, performing I/O, opening network connections, touching hardware, or enabling runtime behavior.
+
+The implementation follows:
+
+```text
+docs/RUNTIME_BOUNDARY_REFINEMENT_PLAN.md
+```
+
+## Added / changed files
+
+```text
+include/latticra/runtime_boundary.h
+src/runtime_boundary.c
+tests/runtime_boundary_lat_pipeline_evidence.c
+docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
+```
+
+The existing runtime boundary test runner automatically includes the new invariant file:
+
+```text
+scripts/test-runtime-boundary.sh
+```
+
+## Public API refinement
+
+The runtime boundary request now accepts optional Lat pipeline metadata:
+
+```text
+const latticra_lat_pipeline_result_t *lat_pipeline
+```
+
+The runtime boundary request kinds now include:
+
+```text
+LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE
+```
+
+The runtime boundary record now carries no-effect evidence fields for:
+
+```text
+lat_pipeline_status
+lat_pipeline_error
+lat_pipeline_semantic_valid
+lat_pipeline_source_len
+lat_pipeline_node_count
+lat_pipeline_edge_count
+lat_lir_source_kind
+lat_lir_module_node_count
+lat_lir_transition_edge_count
+lat_lir_has_lat_state_nodes
+lat_lir_has_lat_transition_nodes
+lat_lir_has_transition_source_edges
+```
+
+## Behavior
+
+The new `lat-pipeline-validate` request is allowed only when:
+
+```text
+mode == validation-only
+requested effect is none or read
+authority metadata is present and no-effect
+Lat pipeline metadata is present and OK
+Lat pipeline semantic_valid is true
+Lat pipeline no-effect flags are preserved
+```
+
+Failed Lat pipeline metadata is denied with the closest existing runtime-boundary denial label:
+
+```text
+parse_not_ok -> parser-failed
+semantic_not_ok / semantic_not_valid -> semantic-failed
+no_effect_violation -> non-no-effect-flags
+other pipeline failure -> lir-failed
+```
+
+Lat execution and LIR execution remain future-gated.
+
+## Report surface
+
+`latticra_runtime_boundary_report` now includes deterministic report fields for Lat pipeline and Lat-specific LIR evidence.
+
+The runtime boundary report capacity is increased to preserve bounded output with the expanded report surface.
+
+## Validation
+
+Run:
+
+```sh
+sh scripts/test-runtime-boundary.sh
+```
+
+The focused evidence tests verify:
+
+```text
+runtime_boundary_allows_valid_lat_pipeline_metadata
+runtime_boundary_denies_failed_lat_pipeline_metadata
+runtime_boundary_reports_lat_pipeline_evidence
+runtime_boundary_keeps_lat_lir_execution_future_gated
+```
+
+## Compatibility
+
+This refinement preserves existing runtime boundary behavior for:
+
+```text
+parse-only
+validate-only
+classify-only
+render-report
+nucleus-task-report
+lat-validate
+lir-validate
+authority-check
+future-gated operational request kinds
+unknown request denial
+unknown effect denial
+operator confirmation non-override behavior
+small-buffer behavior
+```
+
+## Boundary
+
+This implementation does not provide runtime behavior, command execution, Lat execution, LIR execution, task effect execution, live movement, state mutation, file I/O, network I/O, server interaction, self-update, recovery behavior, rollback, hardware support, boot behavior, terminal control, security isolation, sandboxing, malware prevention, ransomware prevention, certification, accreditation, or operating-system completeness.

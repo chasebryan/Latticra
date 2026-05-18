@@ -1,6 +1,7 @@
 #ifndef LATTICRA_RUNTIME_BOUNDARY_H
 #define LATTICRA_RUNTIME_BOUNDARY_H
 
+#include "latticra/lat_pipeline.h"
 #include "latticra/nucleus_task.h"
 
 #ifdef __cplusplus
@@ -11,7 +12,7 @@ extern "C" {
 #define LATTICRA_RUNTIME_BOUNDARY_LABEL_MAX 64u
 #define LATTICRA_RUNTIME_BOUNDARY_REASON_MAX 128u
 #define LATTICRA_RUNTIME_BOUNDARY_SOURCE_IDENTITY_MAX 128u
-#define LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX 4096u
+#define LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX 8192u
 #define LATTICRA_RUNTIME_BOUNDARY_RECORD_MAX 16u
 
 typedef enum {
@@ -36,7 +37,8 @@ typedef enum {
     LATTICRA_RUNTIME_BOUNDARY_ROLLBACK_ACTION = 18,
     LATTICRA_RUNTIME_BOUNDARY_HARDWARE_ACTION = 19,
     LATTICRA_RUNTIME_BOUNDARY_BOOT_ACTION = 20,
-    LATTICRA_RUNTIME_BOUNDARY_UNKNOWN = 21
+    LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE = 21,
+    LATTICRA_RUNTIME_BOUNDARY_UNKNOWN = 22
 } latticra_runtime_boundary_request_kind_t;
 
 typedef enum {
@@ -139,6 +141,7 @@ typedef struct {
     const latticra_l_ui_render_result_t *render;
     const latticra_lir_module_t *lir;
     const latticra_lat_parse_result_t *lat;
+    const latticra_lat_pipeline_result_t *lat_pipeline;
     const char *source_identity;
     size_t source_identity_len;
     latticra_l_ui_source_span_t source_span;
@@ -168,6 +171,18 @@ typedef struct {
     latticra_lat_parse_error_t lat_error;
     latticra_status_t lir_status;
     latticra_lir_error_t lir_error;
+    latticra_status_t lat_pipeline_status;
+    latticra_lat_pipeline_error_t lat_pipeline_error;
+    int lat_pipeline_semantic_valid;
+    size_t lat_pipeline_source_len;
+    size_t lat_pipeline_node_count;
+    size_t lat_pipeline_edge_count;
+    latticra_lir_source_kind_t lat_lir_source_kind;
+    size_t lat_lir_module_node_count;
+    size_t lat_lir_transition_edge_count;
+    int lat_lir_has_lat_state_nodes;
+    int lat_lir_has_lat_transition_nodes;
+    int lat_lir_has_transition_source_edges;
     char source_identity[LATTICRA_RUNTIME_BOUNDARY_SOURCE_IDENTITY_MAX];
     latticra_l_ui_source_span_t source_span;
     int executed;

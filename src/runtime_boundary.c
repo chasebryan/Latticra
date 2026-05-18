@@ -13,6 +13,7 @@ const char *latticra_runtime_boundary_request_kind_label(latticra_runtime_bounda
     case LATTICRA_RUNTIME_BOUNDARY_LAT_VALIDATE: return "lat-validate";
     case LATTICRA_RUNTIME_BOUNDARY_LIR_VALIDATE: return "lir-validate";
     case LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK: return "authority-check";
+    case LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE: return "lat-pipeline-validate";
     case LATTICRA_RUNTIME_BOUNDARY_UNKNOWN: return "unknown";
     default: return "future-gated";
     }
@@ -56,6 +57,7 @@ const char *latticra_runtime_boundary_denial_label(latticra_runtime_boundary_den
     if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_TASK_FAILED) return "task-failed";
     if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_RENDER_FAILED) return "render-failed";
     if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_PARSER_FAILED) return "parser-failed";
+    if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_SEMANTIC_FAILED) return "semantic-failed";
     if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_LIR_FAILED) return "lir-failed";
     if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_NON_NO_EFFECT_FLAGS) return "non-no-effect-flags";
     if (denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_RUNTIME_DISABLED) return "runtime-disabled";
@@ -78,6 +80,24 @@ const char *latticra_runtime_boundary_operator_confirmation_label(latticra_runti
     return "not-applicable";
 }
 
+static const char *runtime_lat_pipeline_error_label(latticra_lat_pipeline_error_t error) {
+    if (error == LATTICRA_LAT_PIPELINE_OK) return "ok";
+    if (error == LATTICRA_LAT_PIPELINE_NULL_ARGUMENT) return "null_argument";
+    if (error == LATTICRA_LAT_PIPELINE_PARSE_NOT_OK) return "parse_not_ok";
+    if (error == LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK) return "semantic_not_ok";
+    if (error == LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_VALID) return "semantic_not_valid";
+    if (error == LATTICRA_LAT_PIPELINE_LOWERING_NOT_OK) return "lowering_not_ok";
+    if (error == LATTICRA_LAT_PIPELINE_NO_EFFECT_VIOLATION) return "no_effect_violation";
+    return "internal_error";
+}
+
+static const char *runtime_lir_source_kind_label(latticra_lir_source_kind_t kind) {
+    if (kind == LATTICRA_LIR_SOURCE_L_UI_CARD) return "l_ui_card";
+    if (kind == LATTICRA_LIR_SOURCE_LAT_MODULE) return "lat_module";
+    if (kind == LATTICRA_LIR_SOURCE_INTERNAL_FIXTURE) return "internal_fixture";
+    return "unknown";
+}
+
 static void seed_result(latticra_runtime_boundary_result_t *result) {
     memset(result, 0, sizeof(*result));
     result->status = LATTICRA_STATUS_OK;
@@ -88,6 +108,7 @@ static void seed_result(latticra_runtime_boundary_result_t *result) {
     result->record.gate_state = LATTICRA_RUNTIME_BOUNDARY_GATE_BLOCKED;
     result->record.task_policy = LATTICRA_NUCLEUS_TASK_POLICY_DENY;
     result->record.task_reason = LATTICRA_NUCLEUS_TASK_DENIAL_IMPLEMENTATION_NOT_PRESENT;
+    result->record.lat_lir_source_kind = LATTICRA_LIR_SOURCE_UNKNOWN;
 }
 
 static void copy_runtime_id(const latticra_runtime_boundary_request_t *request, latticra_runtime_boundary_result_t *result) {
@@ -116,6 +137,33 @@ static void copy_task_flags(const latticra_nucleus_task_result_t *task, latticra
     result->record.task_hardware_allowed = task->record.hardware_allowed;
 }
 
+static void copy_lat_pipeline(const latticra_lat_pipeline_result_t *lat_pipeline, latticra_runtime_boundary_result_t *result) {
+    if (lat_pipeline == 0) return;
+    result->record.lat_pipeline_status = lat_pipeline->status;
+    result->record.lat_pipeline_error = lat_pipeline->error;
+    result->record.lat_pipeline_semantic_valid = lat_pipeline->semantic_valid;
+    result->record.lat_pipeline_source_len = lat_pipeline->source_len;
+    result->record.lat_pipeline_node_count = lat_pipeline->node_count;
+    result->record.lat_pipeline_edge_count = lat_pipeline->edge_count;
+}
+
+static void copy_lat_lir_evidence(const latticra_lir_module_t *lir, latticra_runtime_boundary_result_t *result) {
+    size_t index;
+    if (lir == 0) return;
+    result->record.lat_lir_source_kind = lir->source_kind;
+    result->record.lat_lir_module_node_count = lir->node_count;
+    for (index = 0u; index < lir->node_count && index < LATTICRA_LIR_NODE_MAX; index++) {
+        if (lir->nodes[index].kind == LATTICRA_LIR_NODE_LAT_STATE) result->record.lat_lir_has_lat_state_nodes = 1;
+        if (lir->nodes[index].kind == LATTICRA_LIR_NODE_LAT_TRANSITION) result->record.lat_lir_has_lat_transition_nodes = 1;
+    }
+    for (index = 0u; index < lir->edge_count && index < LATTICRA_LIR_EDGE_MAX; index++) {
+        if (lir->edges[index].edge_kind == LATTICRA_LIR_EDGE_TRANSITIONS_FROM) {
+            result->record.lat_lir_transition_edge_count += 1u;
+            result->record.lat_lir_has_transition_source_edges = 1;
+        }
+    }
+}
+
 static void copy_prerequisites(const latticra_runtime_boundary_request_t *request, latticra_runtime_boundary_result_t *result) {
     if (request->render != 0) {
         result->record.render_status = request->render->status;
@@ -128,7 +176,9 @@ static void copy_prerequisites(const latticra_runtime_boundary_request_t *reques
     if (request->lir != 0) {
         result->record.lir_status = request->lir->status;
         result->record.lir_error = request->lir->error;
+        copy_lat_lir_evidence(request->lir, result);
     }
+    copy_lat_pipeline(request->lat_pipeline, result);
 }
 
 static int authority_flags_ok(const latticra_runtime_boundary_authority_summary_t *authority) {
@@ -151,6 +201,19 @@ static int lir_ok(const latticra_lir_module_t *lir) {
     return lir != 0 && lir->status == LATTICRA_STATUS_OK && lir->error == LATTICRA_LIR_OK;
 }
 
+static int lat_pipeline_ok(const latticra_lat_pipeline_result_t *lat_pipeline) {
+    return lat_pipeline != 0 &&
+           lat_pipeline->status == LATTICRA_STATUS_OK &&
+           lat_pipeline->error == LATTICRA_LAT_PIPELINE_OK &&
+           lat_pipeline->semantic_valid == 1 &&
+           lat_pipeline->no_effect == 1 &&
+           lat_pipeline->execution_allowed == 0 &&
+           lat_pipeline->mutation_allowed == 0 &&
+           lat_pipeline->server_allowed == 0 &&
+           lat_pipeline->recovery_allowed == 0 &&
+           lat_pipeline->hardware_allowed == 0;
+}
+
 static void allow_matching_no_effect_mode(const latticra_runtime_boundary_request_t *request, latticra_runtime_boundary_result_t *result) {
     if (result->record.policy != LATTICRA_RUNTIME_BOUNDARY_POLICY_DENY || result->record.denial != LATTICRA_RUNTIME_BOUNDARY_DENIAL_RUNTIME_DISABLED) return;
     if (request->requested_effect != LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE && request->requested_effect != LATTICRA_RUNTIME_BOUNDARY_EFFECT_READ) return;
@@ -163,7 +226,7 @@ static void allow_matching_no_effect_mode(const latticra_runtime_boundary_reques
         return;
     }
 
-    if ((request->request_kind == LATTICRA_RUNTIME_BOUNDARY_VALIDATE_ONLY || request->request_kind == LATTICRA_RUNTIME_BOUNDARY_LAT_VALIDATE || request->request_kind == LATTICRA_RUNTIME_BOUNDARY_LIR_VALIDATE || request->request_kind == LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK) && request->mode == LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY) {
+    if ((request->request_kind == LATTICRA_RUNTIME_BOUNDARY_VALIDATE_ONLY || request->request_kind == LATTICRA_RUNTIME_BOUNDARY_LAT_VALIDATE || request->request_kind == LATTICRA_RUNTIME_BOUNDARY_LIR_VALIDATE || request->request_kind == LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK || request->request_kind == LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE) && request->mode == LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY) {
         result->record.policy = LATTICRA_RUNTIME_BOUNDARY_POLICY_ALLOW_VALIDATION;
         result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_OK;
         result->record.gate_state = LATTICRA_RUNTIME_BOUNDARY_GATE_DISABLED;
@@ -220,6 +283,13 @@ latticra_status_t latticra_runtime_boundary_classify(const latticra_runtime_boun
         result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_LIR_FAILED;
         return LATTICRA_STATUS_OK;
     }
+    if (request->request_kind == LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE && !lat_pipeline_ok(request->lat_pipeline)) {
+        if (request->lat_pipeline != 0 && request->lat_pipeline->error == LATTICRA_LAT_PIPELINE_PARSE_NOT_OK) result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_PARSER_FAILED;
+        else if (request->lat_pipeline != 0 && (request->lat_pipeline->error == LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK || request->lat_pipeline->error == LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_VALID)) result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_SEMANTIC_FAILED;
+        else if (request->lat_pipeline != 0 && request->lat_pipeline->error == LATTICRA_LAT_PIPELINE_NO_EFFECT_VIOLATION) result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_NON_NO_EFFECT_FLAGS;
+        else result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_LIR_FAILED;
+        return LATTICRA_STATUS_OK;
+    }
     if (request->request_kind == LATTICRA_RUNTIME_BOUNDARY_NUCLEUS_TASK_REPORT && !task_result_ok(request->task)) {
         result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_TASK_FAILED;
         return LATTICRA_STATUS_OK;
@@ -248,7 +318,7 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
     if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
     buffer[0] = '\0';
     written = snprintf(buffer, buffer_len,
-        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nallowed_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nauthority_status=%d\nauthority_status_label=%s\nauthority_validator=%s\nauthority_requested_effect=%s\nauthority_reason=%s\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\ntask_executed=%d\ntask_mutation_allowed=%d\ntask_server_interaction_allowed=%d\ntask_recovery_allowed=%d\ntask_hardware_allowed=%d\nrender_status=%d\nrender_error=%d\nlat_status=%d\nlat_error=%d\nlir_status=%d\nlir_error=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
+        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nallowed_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nauthority_status=%d\nauthority_status_label=%s\nauthority_validator=%s\nauthority_requested_effect=%s\nauthority_reason=%s\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\ntask_executed=%d\ntask_mutation_allowed=%d\ntask_server_interaction_allowed=%d\ntask_recovery_allowed=%d\ntask_hardware_allowed=%d\nrender_status=%d\nrender_error=%d\nlat_status=%d\nlat_error=%d\nlir_status=%d\nlir_error=%d\nlat_pipeline_status=%d\nlat_pipeline_error=%s\nlat_pipeline_semantic_valid=%d\nlat_pipeline_source_len=%lu\nlat_pipeline_node_count=%lu\nlat_pipeline_edge_count=%lu\nlat_lir_source_kind=%s\nlat_lir_module_node_count=%lu\nlat_lir_transition_edge_count=%lu\nlat_lir_has_lat_state_nodes=%d\nlat_lir_has_lat_transition_nodes=%d\nlat_lir_has_transition_source_edges=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
         result->record.runtime_id,
         (unsigned long)result->record_count,
         latticra_runtime_boundary_request_kind_label(result->record.request_kind),
@@ -283,6 +353,18 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         (int)result->record.lat_error,
         (int)result->record.lir_status,
         (int)result->record.lir_error,
+        (int)result->record.lat_pipeline_status,
+        runtime_lat_pipeline_error_label(result->record.lat_pipeline_error),
+        result->record.lat_pipeline_semantic_valid,
+        (unsigned long)result->record.lat_pipeline_source_len,
+        (unsigned long)result->record.lat_pipeline_node_count,
+        (unsigned long)result->record.lat_pipeline_edge_count,
+        runtime_lir_source_kind_label(result->record.lat_lir_source_kind),
+        (unsigned long)result->record.lat_lir_module_node_count,
+        (unsigned long)result->record.lat_lir_transition_edge_count,
+        result->record.lat_lir_has_lat_state_nodes,
+        result->record.lat_lir_has_lat_transition_nodes,
+        result->record.lat_lir_has_transition_source_edges,
         result->no_effect,
         result->execution_allowed,
         result->mutation_allowed,

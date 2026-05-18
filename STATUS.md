@@ -5,6 +5,7 @@ Last updated: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
 Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
+Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
 
 For the current project status, completion estimates, and next priorities, see:
 
@@ -28,18 +29,18 @@ docs/strategy/README.md
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 24% |
+| Overall Latticra system | 26% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 79% |
-| Public documentation posture | 73% |
-| Strategy/status/funding framework | 47% |
-| Lat / Latticra Programming Language | 18% |
-| LIR / Intermediate Representation | 18% |
+| Foundation documents and contracts | 80% |
+| Public documentation posture | 74% |
+| Strategy/status/funding framework | 48% |
+| Lat / Latticra Programming Language | 19% |
+| LIR / Intermediate Representation | 19% |
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
-| Runtime / operating-system-universe direction | 6% |
+| Runtime / operating-system-universe direction | 9% |
 
-Previous baselines retained for status-audit continuity: overall system 19%, 20%, and 23%; foundation documents and contracts 74%, 75%, and 78%; public documentation posture 68%, 69%, and 72%; strategy/status/funding framework 42%, 43%, and 46%; Lat / Latticra Programming Language 10% and 12%; LIR / Intermediate Representation 11%; C/C++ foundation direction 14%; and constrained C++ authority layer 4%.
+Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, and 24%; foundation documents and contracts 74%, 75%, 78%, and 79%; public documentation posture 68%, 69%, 72%, and 73%; strategy/status/funding framework 42%, 43%, 46%, and 47%; Lat / Latticra Programming Language 10%, 12%, and 18%; LIR / Intermediate Representation 11% and 18%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%.
 
 These percentages are planning estimates only. They are not release promises or production-readiness metrics.
 
@@ -71,6 +72,7 @@ Runtime boundary contract
 Runtime boundary implementation plan
 Runtime boundary implementation
 Runtime boundary refinement plan
+Runtime boundary refinement implementation
 Nucleus task execution contract
 Nucleus task execution implementation plan
 Nucleus task execution implementation
@@ -80,12 +82,12 @@ L-UI rendering implementation
 ## Current next step
 
 ```text
-Runtime boundary refinement implementation
+Runtime boundary report refinement
 ```
 
 ## Current runtime boundary refinement boundary
 
-The runtime boundary refinement plan defines how future runtime-boundary records and reports may consume Lat pipeline and Lat-specific LIR metadata while preserving disabled-by-default, no-effect classification behavior.
+The runtime boundary now carries no-effect Lat pipeline evidence and Lat-specific LIR evidence in records and reports. The new refinement gives runtime-boundary classification a validation-only `lat-pipeline-validate` request path while preserving disabled-by-default behavior and future-gated execution requests.
 
 ## Current Lat pipeline boundary
 
