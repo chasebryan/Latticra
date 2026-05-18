@@ -38,13 +38,15 @@ Runtime boundary: disabled-by-default line before operational behavior
 
 ## Current implementation posture
 
-The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, Lat-specific LIR refinement implementation, and state-lattice models.
+The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, Runtime boundary refinement plan, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, Lat-specific LIR refinement implementation, and state-lattice models.
 
 Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The current lowering implementation consumes parser and semantic metadata, preserves source spans and no-effect flags, emits deterministic lowering reports, and materializes a `lat_module` LIR shape without executing Lat.
 
 The Lat pipeline now composes source parsing, semantic validation, Lat-to-LIR lowering, and deterministic pipeline reporting into one bounded no-effect integration path. It is a metadata/report boundary, not a compiler, interpreter, executor, runtime, or operating-system surface.
 
 The Lat-specific LIR refinement now gives Lat declarations explicit LIR node kinds and a transition-source edge kind while preserving the existing no-effect metadata path and bounded report posture.
+
+The Runtime boundary refinement plan defines how future runtime-boundary records may consume Lat pipeline and Lat-specific LIR metadata while preserving disabled-by-default, no-effect classification behavior.
 
 Current implementation remains report/classification oriented. It is not active runtime behavior.
 
@@ -71,6 +73,8 @@ Important records:
 - [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md)
 - [`docs/RUNTIME_BOUNDARY_CONTRACT.md`](docs/RUNTIME_BOUNDARY_CONTRACT.md)
 - [`docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md`](docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md)
+- [`docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md`](docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md)
+- [`docs/RUNTIME_BOUNDARY_REFINEMENT_PLAN.md`](docs/RUNTIME_BOUNDARY_REFINEMENT_PLAN.md)
 - [`docs/L_UI_RENDERING_IMPLEMENTATION.md`](docs/L_UI_RENDERING_IMPLEMENTATION.md)
 - [`docs/LAT_LANGUAGE_FOUNDATION_ANALYSIS.md`](docs/LAT_LANGUAGE_FOUNDATION_ANALYSIS.md)
 - [`docs/LAT_SEMANTIC_VALIDATION_CONTRACT.md`](docs/LAT_SEMANTIC_VALIDATION_CONTRACT.md)
@@ -115,6 +119,12 @@ Lat-specific LIR refinement is covered by:
 
 ```sh
 sh scripts/test-lat-specific-lir-refinement.sh
+```
+
+Runtime boundary refinement planning is covered by:
+
+```sh
+sh scripts/test-runtime-boundary-refinement-plan.sh
 ```
 
 ## Support

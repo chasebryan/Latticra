@@ -4,6 +4,7 @@ Status: public status shortcut
 Last updated: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
+Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
 
 For the current project status, completion estimates, and next priorities, see:
 
@@ -27,17 +28,18 @@ docs/strategy/README.md
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 23% |
+| Overall Latticra system | 24% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 78% |
-| Public documentation posture | 72% |
-| Strategy/status/funding framework | 46% |
+| Foundation documents and contracts | 79% |
+| Public documentation posture | 73% |
+| Strategy/status/funding framework | 47% |
 | Lat / Latticra Programming Language | 18% |
 | LIR / Intermediate Representation | 18% |
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
+| Runtime / operating-system-universe direction | 6% |
 
-Previous baselines retained for status-audit continuity: overall system 19% and 20%, foundation documents and contracts 74% and 75%, public documentation posture 68% and 69%, strategy/status/funding framework 42% and 43%, Lat / Latticra Programming Language 10% and 12%, and LIR / Intermediate Representation 11%.
+Previous baselines retained for status-audit continuity: overall system 19%, 20%, and 23%; foundation documents and contracts 74%, 75%, and 78%; public documentation posture 68%, 69%, and 72%; strategy/status/funding framework 42%, 43%, and 46%; Lat / Latticra Programming Language 10% and 12%; LIR / Intermediate Representation 11%; C/C++ foundation direction 14%; and constrained C++ authority layer 4%.
 
 These percentages are planning estimates only. They are not release promises or production-readiness metrics.
 
@@ -68,6 +70,7 @@ Constrained C++ authority layer implementation plan
 Runtime boundary contract
 Runtime boundary implementation plan
 Runtime boundary implementation
+Runtime boundary refinement plan
 Nucleus task execution contract
 Nucleus task execution implementation plan
 Nucleus task execution implementation
@@ -77,8 +80,12 @@ L-UI rendering implementation
 ## Current next step
 
 ```text
-Runtime boundary refinement plan
+Runtime boundary refinement implementation
 ```
+
+## Current runtime boundary refinement boundary
+
+The runtime boundary refinement plan defines how future runtime-boundary records and reports may consume Lat pipeline and Lat-specific LIR metadata while preserving disabled-by-default, no-effect classification behavior.
 
 ## Current Lat pipeline boundary
 

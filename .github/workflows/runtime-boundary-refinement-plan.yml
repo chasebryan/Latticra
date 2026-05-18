@@ -1,0 +1,19 @@
+name: Runtime Boundary Refinement Plan
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  runtime-boundary-refinement-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run runtime boundary refinement plan guard
+        run: sh scripts/test-runtime-boundary-refinement-plan.sh
