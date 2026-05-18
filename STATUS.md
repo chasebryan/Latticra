@@ -36,6 +36,8 @@ docs/strategy/README.md
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
 
+Previous baseline before the Lat pipeline status update: overall system 19%, foundation documents and contracts 74%, public documentation posture 68%, strategy/status/funding framework 42%, and Lat / Latticra Programming Language 10%.
+
 These percentages are planning estimates only. They are not release promises or production-readiness metrics.
 
 ## Current direction checkpoint

@@ -75,6 +75,8 @@ These percentages are planning estimates only.
 | Security-hardening implementation | 5% |
 | Public product readiness | 5% |
 
+Previous baseline before the Lat pipeline status update: foundation documents and contracts 74%, public documentation posture 68%, strategy/status/funding framework 42%, C/C++ foundation direction 14%, and constrained C++ authority layer 4%.
+
 ## Current implemented evidence areas
 
 Implemented or guarded areas include:
