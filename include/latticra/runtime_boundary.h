@@ -116,6 +116,36 @@ typedef enum {
     LATTICRA_RUNTIME_BOUNDARY_OPERATOR_NOT_SUPPORTED = 4
 } latticra_runtime_boundary_operator_confirmation_t;
 
+typedef enum {
+    LATTICRA_RUNTIME_BOUNDARY_REPORT_DECLARATIVE = 0,
+    LATTICRA_RUNTIME_BOUNDARY_REPORT_BOUNDARY_SEEKING = 1,
+    LATTICRA_RUNTIME_BOUNDARY_REPORT_DENIED = 2,
+    LATTICRA_RUNTIME_BOUNDARY_REPORT_INVALID = 3
+} latticra_runtime_boundary_report_classification_t;
+
+typedef enum {
+    LATTICRA_RUNTIME_BOUNDARY_DOMAIN_MEMORY = 0,
+    LATTICRA_RUNTIME_BOUNDARY_DOMAIN_FILESYSTEM = 1,
+    LATTICRA_RUNTIME_BOUNDARY_DOMAIN_NETWORK = 2,
+    LATTICRA_RUNTIME_BOUNDARY_DOMAIN_PROCESS = 3,
+    LATTICRA_RUNTIME_BOUNDARY_DOMAIN_DEVICE = 4,
+    LATTICRA_RUNTIME_BOUNDARY_DOMAIN_CLOCK = 5,
+    LATTICRA_RUNTIME_BOUNDARY_DOMAIN_RANDOMNESS = 6,
+    LATTICRA_RUNTIME_BOUNDARY_DOMAIN_HOST = 7,
+    LATTICRA_RUNTIME_BOUNDARY_DOMAIN_EXTERNAL_CALL = 8,
+    LATTICRA_RUNTIME_BOUNDARY_DOMAIN_PERSISTENCE = 9,
+    LATTICRA_RUNTIME_BOUNDARY_DOMAIN_SCHEDULER = 10,
+    LATTICRA_RUNTIME_BOUNDARY_DOMAIN_UNKNOWN = 11
+} latticra_runtime_boundary_domain_t;
+
+typedef enum {
+    LATTICRA_RUNTIME_BOUNDARY_AUTH_NOT_REQUESTED = 0,
+    LATTICRA_RUNTIME_BOUNDARY_AUTH_REQUESTED = 1,
+    LATTICRA_RUNTIME_BOUNDARY_AUTH_DENIED = 2,
+    LATTICRA_RUNTIME_BOUNDARY_AUTH_UNAVAILABLE = 3,
+    LATTICRA_RUNTIME_BOUNDARY_AUTH_RESERVED_FOR_FUTURE = 4
+} latticra_runtime_boundary_authorization_state_t;
+
 typedef struct {
     latticra_status_t status;
     char status_label[LATTICRA_RUNTIME_BOUNDARY_LABEL_MAX];
@@ -157,6 +187,9 @@ typedef struct {
     latticra_runtime_boundary_denial_t denial;
     latticra_runtime_boundary_gate_state_t gate_state;
     latticra_runtime_boundary_operator_confirmation_t operator_confirmation;
+    latticra_runtime_boundary_report_classification_t report_classification;
+    latticra_runtime_boundary_domain_t boundary_domain;
+    latticra_runtime_boundary_authorization_state_t authorization_state;
     latticra_runtime_boundary_authority_summary_t authority;
     latticra_nucleus_task_policy_t task_policy;
     latticra_nucleus_task_denial_t task_reason;
@@ -220,6 +253,9 @@ const char *latticra_runtime_boundary_policy_label(latticra_runtime_boundary_pol
 const char *latticra_runtime_boundary_denial_label(latticra_runtime_boundary_denial_t denial);
 const char *latticra_runtime_boundary_gate_state_label(latticra_runtime_boundary_gate_state_t gate_state);
 const char *latticra_runtime_boundary_operator_confirmation_label(latticra_runtime_boundary_operator_confirmation_t confirmation);
+const char *latticra_runtime_boundary_report_classification_label(latticra_runtime_boundary_report_classification_t classification);
+const char *latticra_runtime_boundary_domain_label(latticra_runtime_boundary_domain_t domain);
+const char *latticra_runtime_boundary_authorization_state_label(latticra_runtime_boundary_authorization_state_t state);
 
 latticra_status_t latticra_runtime_boundary_classify(
     const latticra_runtime_boundary_request_t *request,
