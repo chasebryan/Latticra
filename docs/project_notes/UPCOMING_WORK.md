@@ -90,7 +90,11 @@ add the first bounded no-effect C semantic validation layer after the Lat gramma
 ## Historical implementation slices
 
 ```text
+Runtime boundary contract
+Runtime boundary implementation plan
 Runtime boundary implementation
+Nucleus task execution contract
+Nucleus task execution implementation plan
 Nucleus task execution implementation
 L-UI rendering implementation
 ```
