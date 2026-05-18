@@ -51,6 +51,9 @@ Latticra is the contract.
 Lat semantic validation contract
 Lat semantic validation implementation plan
 Lat semantic validation foundation
+Lat-to-LIR lowering contract
+Lat-to-LIR lowering implementation plan
+Lat-to-LIR lowering implementation
 Constrained C++ authority layer implementation plan
 Runtime boundary contract
 Runtime boundary implementation plan
@@ -64,14 +67,14 @@ L-UI rendering implementation
 ## Current next step
 
 ```text
-Lat-to-LIR lowering contract
+Lat-to-LIR lowering status integration
 ```
 
-## Current Lat semantic validation boundary
+## Current Lat-to-LIR lowering boundary
 
-Lat now has a bounded no-effect semantic validation layer after the grammar parser.
+Lat now has a bounded no-effect path from parser metadata through semantic validation into LIR metadata.
 
-The validator consumes parser metadata, checks declaration identity, transition source resolution, state-field vocabulary, effect targets, effect values, and no-effect preservation, then emits deterministic semantic reports.
+The current lowering implementation consumes parser and semantic results, creates a `lat_module` LIR module shape, preserves source spans and no-effect flags, and emits deterministic lowering reports.
 
 Boundary terms tracked by the project status guard:
 
