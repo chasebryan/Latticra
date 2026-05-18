@@ -114,8 +114,13 @@ static void set_blocked(latticra_nucleus_task_plan_result_t *result,
     result->record.denial = denial;
     result->record.has_blocked_task = 1;
     result->record.first_blocked_index = index;
-    result->record.blocked_count = result->record.task_count > result->record.accepted_count ?
-        result->record.task_count - result->record.accepted_count : 1u;
+    if (result->record.task_count == 0u) {
+        result->record.blocked_count = 0u;
+    } else if (result->record.task_count > result->record.accepted_count) {
+        result->record.blocked_count = result->record.task_count - result->record.accepted_count;
+    } else {
+        result->record.blocked_count = 1u;
+    }
     result->record.no_effect = 1;
     result->record.execution_allowed = 0;
     result->record.mutation_allowed = 0;
