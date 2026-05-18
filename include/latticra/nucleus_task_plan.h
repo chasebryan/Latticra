@@ -3,6 +3,8 @@
 
 #include "latticra/nucleus_task.h"
 
+#include <stddef.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
