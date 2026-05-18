@@ -33,28 +33,24 @@ Meaning:
 ```text
 C: secure substrate, boot paths, ABI boundaries, platform shims.
 C++: governed authority layer, policy, validators, effect gates, audit logic.
-Lat / Latticra Language: contract, semantic validation, and declaration layer.
+Lat / Latticra Language: contract, semantic validation, metadata lowering, and declaration layer.
 ```
 
 This does not mean unrestricted C++.
 
-## Current Lat semantic validation boundary
+## Current Lat language boundary
 
-The Lat lane now has a grammar parser and a bounded no-effect semantic validation layer.
-
-The current validator consumes parser metadata and checks:
+The Lat lane now has:
 
 ```text
-declaration identity
-transition source resolution
-state-field vocabulary
-effect targets
-effect values
-no-effect preservation
-deterministic semantic reports
+bounded grammar parser
+bounded no-effect semantic validation
+bounded no-effect Lat-to-LIR metadata lowering
 ```
 
-The implementation does not provide Lat execution, Lat interpretation, Lat compilation, Lat-to-LIR lowering, runtime behavior, command execution, state mutation, file I/O, network I/O, recovery behavior, hardware behavior, or operating-system behavior.
+The current Lat-to-LIR lowering implementation consumes parser and semantic metadata, creates a `lat_module` LIR shape, preserves source spans and no-effect flags, and emits deterministic lowering reports.
+
+It does not provide Lat execution, Lat interpretation, Lat compilation, runtime behavior, command execution, state mutation, file I/O, network I/O, recovery behavior, hardware behavior, or operating-system behavior.
 
 ## Current C++ authority boundary
 
@@ -131,16 +127,16 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, Lat semantic validation foundation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, runtime boundary contract, runtime boundary implementation plan, and initial runtime boundary API/smoke implementation toward a Lat-to-LIR lowering contract.
+The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, Lat semantic validation foundation, Lat-to-LIR lowering contract, Lat-to-LIR lowering implementation plan, first no-effect Lat-to-LIR lowering implementation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, runtime boundary contract, runtime boundary implementation plan, and initial runtime boundary API/smoke implementation toward Lat-specific LIR refinement planning.
 
 The next recommended implementation lane is:
 
 ```text
-Lat-to-LIR lowering contract
+Lat-specific LIR refinement plan
 ```
 
 ## Current non-claim
 
-Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide effect-performing Nucleus task execution, provide effect-performing runtime behavior, provide command execution, provide interactive L-UI rendering, provide terminal-control L-UI rendering, provide a Lat runtime, provide Lat-to-LIR lowering, or provide a production security boundary.
+Latticra does not currently prevent malware or ransomware, provide a hardened sandbox, replace an operating system, provide unrestricted C++ authority, provide an effect-performing C++ authority layer, provide effect-performing Nucleus task execution, provide effect-performing runtime behavior, provide command execution, provide interactive L-UI rendering, provide terminal-control L-UI rendering, provide a Lat runtime, or provide a production security boundary.
 
 Those are long-term goals and design targets, not current claims.
