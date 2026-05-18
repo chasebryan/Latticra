@@ -8,6 +8,7 @@ for test_file in tests/runtime_boundary_*.c; do
   cc $CFLAGS \
     -Iinclude \
     src/runtime_boundary.c \
+    src/nucleus_task_plan.c \
     src/nucleus_task.c \
     src/nucleus_preview.c \
     src/state_lattice.c \
