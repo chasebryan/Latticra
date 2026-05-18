@@ -134,7 +134,7 @@ latticra_status_t latticra_nucleus_task_plan_evaluate(const latticra_nucleus_tas
     size_t i;
     if (result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     default_result(result);
-    if (request == 0 || request->tasks == 0) {
+    if (request == 0) {
         result->record.denial = LATTICRA_NUCLEUS_TASK_PLAN_DENIAL_NULL_ARGUMENT;
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
@@ -150,6 +150,11 @@ latticra_status_t latticra_nucleus_task_plan_evaluate(const latticra_nucleus_tas
                     LATTICRA_NUCLEUS_TASK_PLAN_DENIAL_EMPTY_PLAN,
                     0u);
         return LATTICRA_STATUS_OK;
+    }
+
+    if (request->tasks == 0) {
+        result->record.denial = LATTICRA_NUCLEUS_TASK_PLAN_DENIAL_NULL_ARGUMENT;
+        return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
     if (request->task_count > LATTICRA_NUCLEUS_TASK_PLAN_TASK_MAX) {
