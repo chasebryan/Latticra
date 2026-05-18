@@ -25,6 +25,36 @@ non-claims
 next step
 ```
 
+## 2026-05-18 21:30 CDT — Lat-specific LIR refinement implementation
+
+Status: implementation added
+
+Latticra added the first Lat-specific LIR refinement implementation.
+
+What changed:
+
+Lat-to-LIR lowering now emits explicit LIR node kinds for Lat states, policies, transitions, assertions, requirements, and effect declarations, plus an explicit transition-source edge kind.
+
+Why it matters:
+
+This makes Lat-derived LIR easier to inspect and audit. Operators and later authority layers can distinguish Lat semantic roles without guessing from generic field or binding nodes.
+
+Validation:
+
+```text
+sh scripts/test-lat-specific-lir-refinement.sh
+```
+
+Non-claims:
+
+This update does not implement Lat execution, LIR execution, runtime behavior, command behavior, mutation, file I/O, network I/O, recovery behavior, hardware behavior, sandboxing, malware prevention, ransomware prevention, certification, accreditation, or operating-system behavior.
+
+Next step:
+
+```text
+Runtime boundary refinement plan
+```
+
 ## 2026-05-18 19:40 CDT — Lat pipeline implementation
 
 Status: implementation added

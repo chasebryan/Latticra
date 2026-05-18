@@ -129,6 +129,12 @@ const char *latticra_lir_node_kind_label(latticra_lir_node_kind_t kind) {
     case LATTICRA_LIR_NODE_BINDING: return "binding";
     case LATTICRA_LIR_NODE_EFFECT: return "effect";
     case LATTICRA_LIR_NODE_BOUNDARY: return "boundary";
+    case LATTICRA_LIR_NODE_LAT_STATE: return "lat_state";
+    case LATTICRA_LIR_NODE_LAT_POLICY: return "lat_policy";
+    case LATTICRA_LIR_NODE_LAT_TRANSITION: return "lat_transition";
+    case LATTICRA_LIR_NODE_LAT_ASSERTION: return "lat_assertion";
+    case LATTICRA_LIR_NODE_LAT_REQUIREMENT: return "lat_requirement";
+    case LATTICRA_LIR_NODE_LAT_EFFECT_DECLARATION: return "lat_effect_declaration";
     case LATTICRA_LIR_NODE_UNKNOWN:
     default: return "unknown";
     }
@@ -140,6 +146,7 @@ const char *latticra_lir_edge_kind_label(latticra_lir_edge_kind_t kind) {
     case LATTICRA_LIR_EDGE_BINDS: return "binds";
     case LATTICRA_LIR_EDGE_ANNOTATES: return "annotates";
     case LATTICRA_LIR_EDGE_ORDERS_BEFORE: return "orders_before";
+    case LATTICRA_LIR_EDGE_TRANSITIONS_FROM: return "transitions_from";
     case LATTICRA_LIR_EDGE_UNKNOWN:
     default: return "unknown";
     }
