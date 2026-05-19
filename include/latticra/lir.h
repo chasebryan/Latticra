@@ -68,6 +68,20 @@ typedef enum {
     LATTICRA_LIR_INTERNAL_ERROR = 8
 } latticra_lir_error_t;
 
+typedef enum {
+    LATTICRA_LIR_REPORT_EMPTY = 0,
+    LATTICRA_LIR_REPORT_MATERIALIZED = 1,
+    LATTICRA_LIR_REPORT_REJECTED = 2,
+    LATTICRA_LIR_REPORT_INVALID = 3
+} latticra_lir_report_classification_t;
+
+typedef enum {
+    LATTICRA_LIR_SHAPE_UNKNOWN = 0,
+    LATTICRA_LIR_SHAPE_L_UI_CARD_GRAPH = 1,
+    LATTICRA_LIR_SHAPE_LAT_MODULE_GRAPH = 2,
+    LATTICRA_LIR_SHAPE_INTERNAL_FIXTURE_GRAPH = 3
+} latticra_lir_shape_kind_t;
+
 typedef struct {
     latticra_lir_node_kind_t kind;
     char name[LATTICRA_LIR_NAME_MAX];
@@ -107,6 +121,8 @@ typedef struct {
     latticra_status_t status;
     latticra_lir_error_t error;
     latticra_lir_source_kind_t source_kind;
+    latticra_lir_report_classification_t report_classification;
+    latticra_lir_shape_kind_t shape_kind;
     char module_name[LATTICRA_LIR_NAME_MAX];
     char card_name[LATTICRA_LIR_NAME_MAX];
     char effect[LATTICRA_LIR_NAME_MAX];
@@ -120,6 +136,13 @@ typedef struct {
     size_t edge_count;
     size_t binding_count;
     size_t text_count;
+    size_t contains_edge_count;
+    size_t binds_edge_count;
+    size_t annotates_edge_count;
+    size_t orders_before_edge_count;
+    size_t transitions_from_edge_count;
+    int no_effect_chain_ok;
+    unsigned int evidence_level;
     int no_effect;
     int execution_allowed;
     int mutation_allowed;
@@ -133,6 +156,8 @@ const char *latticra_lir_source_kind_label(latticra_lir_source_kind_t kind);
 const char *latticra_lir_node_kind_label(latticra_lir_node_kind_t kind);
 const char *latticra_lir_edge_kind_label(latticra_lir_edge_kind_t kind);
 const char *latticra_lir_resolved_binding_kind_label(latticra_lir_resolved_binding_kind_t kind);
+const char *latticra_lir_report_classification_label(latticra_lir_report_classification_t classification);
+const char *latticra_lir_shape_kind_label(latticra_lir_shape_kind_t shape_kind);
 
 latticra_status_t latticra_lir_lower_l_ui_ast(
     const latticra_l_ui_ast_result_t *ast,

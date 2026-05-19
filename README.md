@@ -38,11 +38,13 @@ Runtime boundary: disabled-by-default line before operational behavior
 
 ## Current implementation posture
 
-The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Nucleus task report refinement, Runtime boundary contract, Runtime boundary refinement plan, Runtime boundary refinement implementation, Runtime boundary report refinement, Runtime boundary policy matrix refinement, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, Lat semantic diagnostics refinement, LIR shape implementation, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, Lat pipeline report refinement, Lat-specific LIR refinement implementation, and state-lattice models.
+The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Nucleus task report refinement, Runtime boundary contract, Runtime boundary refinement plan, Runtime boundary refinement implementation, Runtime boundary report refinement, Runtime boundary policy matrix refinement, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, Lat semantic diagnostics refinement, LIR shape implementation, LIR report refinement, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, Lat pipeline report refinement, Lat-specific LIR refinement implementation, and state-lattice models.
 
 Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The current lowering implementation consumes parser and semantic metadata, preserves source spans and no-effect flags, emits deterministic lowering reports, and materializes a `lat_module` LIR shape without executing Lat.
 
 The Lat semantic diagnostics refinement now adds deterministic diagnostic classes, category counters, first-diagnostic indices, and report fields. These fields make semantic failures easier to audit without changing validation outcomes or adding execution.
+
+The LIR report refinement now adds deterministic report classification, graph-shape labeling, edge-kind summary counts, no-effect-chain status, and evidence-level reporting. These fields make LIR graphs easier to audit without changing lowering behavior or adding execution.
 
 The Lat pipeline now composes source parsing, semantic validation, Lat-to-LIR lowering, and deterministic pipeline reporting into one bounded no-effect integration path. It is a metadata/report boundary, not a compiler, interpreter, executor, runtime, or operating-system surface.
 
@@ -94,6 +96,8 @@ Important records:
 - [`docs/LAT_SEMANTIC_VALIDATION_CONTRACT.md`](docs/LAT_SEMANTIC_VALIDATION_CONTRACT.md)
 - [`docs/LAT_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md`](docs/LAT_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md)
 - [`docs/LAT_SEMANTIC_DIAGNOSTICS_REFINEMENT.md`](docs/LAT_SEMANTIC_DIAGNOSTICS_REFINEMENT.md)
+- [`docs/LIR_SHAPE_IMPLEMENTATION.md`](docs/LIR_SHAPE_IMPLEMENTATION.md)
+- [`docs/LIR_REPORT_REFINEMENT.md`](docs/LIR_REPORT_REFINEMENT.md)
 - [`docs/LAT_TO_LIR_LOWERING_CONTRACT.md`](docs/LAT_TO_LIR_LOWERING_CONTRACT.md)
 - [`docs/LAT_TO_LIR_LOWERING_IMPLEMENTATION_PLAN.md`](docs/LAT_TO_LIR_LOWERING_IMPLEMENTATION_PLAN.md)
 - [`docs/LAT_TO_LIR_LOWERING_IMPLEMENTATION.md`](docs/LAT_TO_LIR_LOWERING_IMPLEMENTATION.md)
@@ -124,6 +128,13 @@ Lat semantic diagnostics refinement is covered by:
 ```sh
 sh scripts/test-lat-semantic-diagnostics-refinement.sh
 sh scripts/test-lat-semantic-validation.sh
+```
+
+LIR report refinement is covered by:
+
+```sh
+sh scripts/test-lir-report-refinement.sh
+sh scripts/test-lir-shape.sh
 ```
 
 Lat-to-LIR lowering is covered by:
