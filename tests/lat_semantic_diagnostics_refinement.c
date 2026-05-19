@@ -145,7 +145,7 @@ static int lat_semantic_diagnostics_refinement_reports_reference_class(void) {
     EXPECT_TRUE(parse_and_validate(source, &parse, &semantic) == 0, "reference diagnostic semantic run");
     EXPECT_TRUE(semantic.error == LATTICRA_LAT_SEMANTIC_UNKNOWN_TRANSITION_SOURCE, "reference diagnostic error");
     EXPECT_TRUE(semantic.diagnostic_class == LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_REFERENCE, "reference diagnostic class");
-    EXPECT_TRUE(semantic.reference_diagnostic_count == 1u, "reference diagnostic count");
+    EXPECT_TRUE(semantic.reference_diagnostic_count == 2u, "reference diagnostic count preserves per-clause source checks");
     EXPECT_TRUE(semantic.first_diagnostic_declaration_index == 0u, "reference first declaration index");
     return 0;
 }
