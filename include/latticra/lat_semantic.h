@@ -28,6 +28,17 @@ typedef enum {
     LATTICRA_LAT_SEMANTIC_INTERNAL_ERROR = 14
 } latticra_lat_semantic_error_t;
 
+typedef enum {
+    LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_VALID = 0,
+    LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_PARSE = 1,
+    LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_DECLARATION = 2,
+    LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_REFERENCE = 3,
+    LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_REQUIREMENT = 4,
+    LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_EFFECT = 5,
+    LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_NO_EFFECT = 6,
+    LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_INTERNAL = 7
+} latticra_lat_semantic_diagnostic_class_t;
+
 typedef struct {
     latticra_lat_semantic_error_t error;
     latticra_lat_source_span_t span;
@@ -44,6 +55,16 @@ typedef struct {
     char module_name[LATTICRA_LAT_NAME_MAX];
     int semantic_valid;
     size_t diagnostic_count;
+    latticra_lat_semantic_diagnostic_class_t diagnostic_class;
+    size_t parse_diagnostic_count;
+    size_t declaration_diagnostic_count;
+    size_t reference_diagnostic_count;
+    size_t requirement_diagnostic_count;
+    size_t effect_diagnostic_count;
+    size_t no_effect_diagnostic_count;
+    size_t internal_diagnostic_count;
+    size_t first_diagnostic_declaration_index;
+    size_t first_diagnostic_clause_index;
     latticra_lat_semantic_diagnostic_t diagnostics[LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_MAX];
     size_t declaration_count;
     size_t state_count;
@@ -60,6 +81,7 @@ typedef struct {
 } latticra_lat_semantic_result_t;
 
 const char *latticra_lat_semantic_error_label(latticra_lat_semantic_error_t error);
+const char *latticra_lat_semantic_diagnostic_class_label(latticra_lat_semantic_diagnostic_class_t diagnostic_class);
 
 latticra_status_t latticra_lat_validate_module(
     const latticra_lat_parse_result_t *parse_result,
