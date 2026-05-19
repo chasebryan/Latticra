@@ -6,6 +6,7 @@ Latest Lat-to-LIR lowering note: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
 Latest Lat pipeline diagnostic integration note: 2026-05-19 14:20 CDT
+Latest Lat pipeline diagnostic main test audit note: 2026-05-19 17:15 CDT
 Latest Lat semantic diagnostics refinement note: 2026-05-19 00:35 CDT
 Latest LIR report refinement note: 2026-05-19 00:55 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
@@ -62,6 +63,7 @@ The repository currently emphasizes:
 - Lat pipeline implementation;
 - Lat pipeline report refinement;
 - Lat pipeline diagnostic integration refinement;
+- Lat pipeline diagnostic integration main test audit;
 - Lat-specific LIR refinement contract;
 - Lat-specific LIR refinement implementation plan;
 - Lat-specific LIR refinement implementation;
@@ -76,6 +78,8 @@ The Lat pipeline composes source parsing, semantic validation, Lat-to-LIR loweri
 The Lat pipeline report refinement adds deterministic stage-summary metadata for last completed stage, failed stage, per-stage OK flags, no-effect-chain status, and evidence level. This makes the pipeline report easier to audit without changing no-effect behavior.
 
 The Lat pipeline diagnostic integration refinement adds a companion diagnostic integration surface that combines pipeline error/stage state with Lat semantic diagnostic class, semantic error, diagnostic count, and first-diagnostic indices while preserving no-execution behavior.
+
+The Lat pipeline diagnostic main test audit verifies that the companion diagnostic integration is covered by both the focused guard and the main Lat pipeline test runner.
 
 The Lat-specific LIR refinement gives Lat declarations explicit LIR node kinds and a transition-source edge kind. This improves inspectability of Lat-derived LIR without changing no-effect behavior or adding execution.
 
@@ -168,6 +172,7 @@ Lat pipeline implementation plan
 Lat pipeline implementation
 Lat pipeline report refinement
 Lat pipeline diagnostic integration refinement
+Lat pipeline diagnostic integration main test audit
 Lat-specific LIR refinement contract
 Lat-specific LIR refinement implementation plan
 Lat-specific LIR refinement implementation
@@ -211,7 +216,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat-to-LIR metadata lowering, LIR report refinement, Lat pipeline reporting, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
+The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat-to-LIR metadata lowering, LIR report refinement, Lat pipeline reporting, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic integration main test audit, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
 
 This is a mission direction, not a current security guarantee.
 
@@ -260,14 +265,14 @@ Runtime boundary domain matrix refinement
 Recommended next work:
 
 ```text
-RBDM report README/foundation index alignment
+Lat pipeline diagnostic README/foundation index alignment
 ```
 
 After that:
 
 ```text
-Runtime boundary domain matrix report status announcement
-Runtime boundary domain matrix report main test integration
+Lat pipeline diagnostic status announcement
+Lat pipeline diagnostic current status rollup
 ```
 
 ## Update rule
