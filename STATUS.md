@@ -6,6 +6,7 @@ Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
 Latest Lat pipeline diagnostic integration note: 2026-05-19 14:20 CDT
 Latest Lat pipeline diagnostic main test audit note: 2026-05-19 17:15 CDT
+Latest Lat pipeline diagnostic status/docs alignment note: 2026-05-19 17:25 CDT
 Latest Lat semantic diagnostics refinement note: 2026-05-19 00:35 CDT
 Latest LIR report refinement note: 2026-05-19 00:55 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
@@ -82,6 +83,7 @@ Lat pipeline implementation
 Lat pipeline report refinement
 Lat pipeline diagnostic integration refinement
 Lat pipeline diagnostic integration main test audit
+Lat pipeline diagnostic status/docs alignment
 Lat-specific LIR refinement contract
 Lat-specific LIR refinement implementation plan
 Lat-specific LIR refinement implementation
@@ -110,7 +112,7 @@ RBDM report status announcement
 ## Current next step
 
 ```text
-Lat pipeline diagnostic status/docs alignment
+Lat pipeline diagnostic README/foundation index alignment
 ```
 
 ## Current runtime boundary domain matrix report boundary
@@ -119,7 +121,7 @@ The runtime boundary domain matrix now has deterministic report rendering for do
 
 ## Current Lat pipeline diagnostic boundary
 
-The Lat pipeline now has a companion diagnostic integration surface that combines pipeline error/stage state with Lat semantic diagnostic class, semantic error, diagnostic count, and first-diagnostic indices while preserving no-execution behavior.
+The Lat pipeline now has a companion diagnostic integration surface that combines pipeline error/stage state with Lat semantic diagnostic class, semantic error, diagnostic count, and first-diagnostic indices while preserving no-execution behavior. The companion diagnostic integration is now covered by both the focused guard and the main Lat pipeline test runner.
 
 ## Current runtime boundary domain matrix boundary
 
@@ -151,7 +153,7 @@ The Lat pipeline report now includes deterministic stage-summary metadata for la
 
 ## Current Lat-specific LIR refinement boundary
 
-Lat-to-LIR lowering now emits explicit Lat declaration node kinds and an explicit transition-source edge kind. This makes Lat state, policy, transition, assertion, requirement, and effect-declaration metadata visible inside the LIR shape while preserving the no-effect boundary.
+Lat-to-LIR lowering now emits explicit Lat declaration nodes and an explicit transition-source edge. This makes Lat state, policy, transition, assertion, requirement, and effect-declaration metadata visible inside the LIR shape while preserving the no-effect boundary.
 
 ## Current Lat-to-LIR lowering boundary
 
