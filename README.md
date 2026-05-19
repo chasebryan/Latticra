@@ -38,7 +38,7 @@ Runtime boundary: disabled-by-default line before operational behavior
 
 ## Current implementation posture
 
-The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Nucleus task report refinement, Runtime boundary contract, Runtime boundary refinement plan, Runtime boundary refinement implementation, Runtime boundary report refinement, Runtime boundary policy matrix refinement, Runtime boundary domain matrix refinement, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, Lat semantic diagnostics refinement, LIR shape implementation, LIR report refinement, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat-specific LIR refinement implementation, and state-lattice models.
+The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Nucleus task report refinement, Runtime boundary contract, Runtime boundary refinement plan, Runtime boundary refinement implementation, Runtime boundary report refinement, Runtime boundary policy matrix refinement, Runtime boundary domain matrix refinement, Runtime boundary domain matrix report integration, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, Lat semantic diagnostics refinement, LIR shape implementation, LIR report refinement, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat-specific LIR refinement implementation, and state-lattice models.
 
 Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The current lowering implementation consumes parser and semantic metadata, preserves source spans and no-effect flags, emits deterministic lowering reports, and materializes a `lat_module` LIR shape without executing Lat.
 
@@ -64,6 +64,8 @@ The Runtime boundary policy matrix refinement now adds deterministic policy-matr
 
 The Runtime boundary domain matrix refinement now adds a companion domain matrix evaluator for classifying resolved boundary domains as declarative, operational, future-gated, blocked, invalid, or unknown.
 
+The Runtime boundary domain matrix report integration now adds deterministic report rendering for domain-matrix cell, domain label, domain flags, effect-allowed state, authority-available state, and evidence level.
+
 Current implementation remains report/classification oriented. It is not active runtime behavior.
 
 ## Boundary
@@ -81,6 +83,7 @@ Important records:
 - [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md)
 - [`docs/status/ANNOUNCEMENTS.md`](docs/status/ANNOUNCEMENTS.md)
 - [`docs/status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](docs/status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md)
+- [`docs/status/RBDM_REPORT_INTEGRATION_STATUS.md`](docs/status/RBDM_REPORT_INTEGRATION_STATUS.md)
 - [`docs/strategy/README.md`](docs/strategy/README.md)
 - [`docs/project_notes/README.md`](docs/project_notes/README.md)
 - [`docs/C_CPP_FOUNDATION_DIRECTION.md`](docs/C_CPP_FOUNDATION_DIRECTION.md)
@@ -97,6 +100,7 @@ Important records:
 - [`docs/RUNTIME_BOUNDARY_REPORT_REFINEMENT.md`](docs/RUNTIME_BOUNDARY_REPORT_REFINEMENT.md)
 - [`docs/RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md`](docs/RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md)
 - [`docs/RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md`](docs/RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md)
+- [`docs/RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md`](docs/RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md)
 - [`docs/L_UI_RENDERING_IMPLEMENTATION.md`](docs/L_UI_RENDERING_IMPLEMENTATION.md)
 - [`docs/LAT_LANGUAGE_FOUNDATION_ANALYSIS.md`](docs/LAT_LANGUAGE_FOUNDATION_ANALYSIS.md)
 - [`docs/LAT_SEMANTIC_VALIDATION_CONTRACT.md`](docs/LAT_SEMANTIC_VALIDATION_CONTRACT.md)
@@ -118,7 +122,7 @@ Important records:
 
 ## Status and strategy
 
-Status and strategy records are maintained in `STATUS.md`, `docs/status/CURRENT_STATUS.md`, `docs/status/ANNOUNCEMENTS.md`, `docs/status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`, `docs/strategy/README.md`, and `docs/project_notes/README.md`.
+Status and strategy records are maintained in `STATUS.md`, `docs/status/CURRENT_STATUS.md`, `docs/status/ANNOUNCEMENTS.md`, `docs/status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`, `docs/status/RBDM_REPORT_INTEGRATION_STATUS.md`, `docs/strategy/README.md`, and `docs/project_notes/README.md`.
 
 ## Validation
 
@@ -213,6 +217,13 @@ Runtime boundary domain matrix refinement is covered by:
 
 ```sh
 sh scripts/test-runtime-boundary-domain-matrix-refinement.sh
+sh scripts/test-runtime-boundary.sh
+```
+
+Runtime boundary domain matrix report integration is covered by:
+
+```sh
+sh scripts/test-runtime-boundary-domain-matrix-report-integration.sh
 sh scripts/test-runtime-boundary.sh
 ```
 
