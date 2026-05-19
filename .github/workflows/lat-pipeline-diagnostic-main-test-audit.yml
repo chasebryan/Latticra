@@ -1,0 +1,18 @@
+name: Lat Pipeline Diagnostic Main Test Audit
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sh scripts/test-lat-pipeline-diagnostic-main-test-integration-audit.sh
+      - run: sh scripts/test-lat-pipeline.sh
