@@ -7,7 +7,7 @@ Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
 Latest Lat pipeline diagnostic integration note: 2026-05-19 14:20 CDT
 Latest Lat pipeline diagnostic main test audit note: 2026-05-19 17:15 CDT
 Latest Lat pipeline diagnostic status/docs alignment note: 2026-05-19 17:25 CDT
-Latest Lat pipeline diagnostic README/foundation index alignment note: 2026-05-19 17:35 CDT
+Latest Lat pipeline diagnostic foundation index alignment note: 2026-05-19 17:35 CDT
 Latest Lat semantic diagnostics refinement note: 2026-05-19 00:35 CDT
 Latest LIR report refinement note: 2026-05-19 00:55 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
@@ -85,7 +85,7 @@ Lat pipeline report refinement
 Lat pipeline diagnostic integration refinement
 Lat pipeline diagnostic integration main test audit
 Lat pipeline diagnostic status/docs alignment
-Lat pipeline diagnostic README/foundation index alignment
+Lat pipeline diagnostic foundation index alignment
 Lat-specific LIR refinement contract
 Lat-specific LIR refinement implementation plan
 Lat-specific LIR refinement implementation
