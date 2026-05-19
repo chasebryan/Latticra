@@ -4,6 +4,7 @@ Status: public status shortcut
 Last updated: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
+Latest Lat semantic diagnostics refinement note: 2026-05-19 00:35 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
 Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
 Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
@@ -33,18 +34,18 @@ docs/strategy/README.md
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 30% |
+| Overall Latticra system | 31% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 84% |
-| Public documentation posture | 78% |
-| Strategy/status/funding framework | 52% |
-| Lat / Latticra Programming Language | 21% |
+| Foundation documents and contracts | 85% |
+| Public documentation posture | 79% |
+| Strategy/status/funding framework | 53% |
+| Lat / Latticra Programming Language | 23% |
 | LIR / Intermediate Representation | 19% |
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
 | Runtime / operating-system-universe direction | 14% |
 
-Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, 28%, and 29%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, 82%, and 83%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, 76%, and 77%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, 50%, and 51%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, and 21%; LIR / Intermediate Representation 11%, 18%, and 19%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, 11%, and 13%.
+Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, 28%, 29%, and 30%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, 82%, 83%, and 84%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, 76%, 77%, and 78%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, 50%, 51%, and 52%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, and 21%; LIR / Intermediate Representation 11%, 18%, and 19%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, 11%, 13%, and 14%.
 
 These percentages are planning estimates only. They are not release promises or production-readiness metrics.
 
@@ -62,6 +63,7 @@ Latticra is the contract.
 Lat semantic validation contract
 Lat semantic validation implementation plan
 Lat semantic validation foundation
+Lat semantic diagnostics refinement
 Lat-to-LIR lowering contract
 Lat-to-LIR lowering implementation plan
 Lat-to-LIR lowering implementation
@@ -90,8 +92,12 @@ L-UI rendering implementation
 ## Current next step
 
 ```text
-Lat semantic diagnostics refinement
+LIR report refinement
 ```
+
+## Current Lat semantic boundary
+
+Lat semantic validation now reports deterministic diagnostic classes, diagnostic category counters, first-diagnostic declaration and clause indices, and expanded report fields while preserving validation outcomes and no-effect behavior.
 
 ## Current Nucleus task boundary
 
