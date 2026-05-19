@@ -14,6 +14,7 @@ Latest project notes upcoming work alignment note: 2026-05-19 18:05 CDT
 Latest current direction project notes alignment note: 2026-05-19 18:15 CDT
 Latest project notes index alignment note: 2026-05-19 18:25 CDT
 Latest current status and announcement consistency review note: 2026-05-19 18:35 CDT
+Latest completion percentage review note: 2026-05-19 18:45 CDT
 Latest Lat semantic diagnostics refinement note: 2026-05-19 00:35 CDT
 Latest LIR report refinement note: 2026-05-19 00:55 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
@@ -51,18 +52,18 @@ docs/strategy/README.md
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 34% |
+| Overall Latticra system | 35% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 88% |
-| Public documentation posture | 82% |
-| Strategy/status/funding framework | 56% |
-| Lat / Latticra Programming Language | 24% |
+| Foundation documents and contracts | 89% |
+| Public documentation posture | 83% |
+| Strategy/status/funding framework | 57% |
+| Lat / Latticra Programming Language | 25% |
 | LIR / Intermediate Representation | 22% |
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
-| Runtime / operating-system-universe direction | 16% |
+| Runtime / operating-system-universe direction | 17% |
 
-Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, 28%, 29%, 30%, 31%, 32%, and 33%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, 82%, 83%, 84%, 85%, 86%, and 87%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, 76%, 77%, 78%, 79%, 80%, and 81%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, 50%, 51%, 52%, 53%, 54%, and 55%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, 21%, 23%, and 24%; LIR / Intermediate Representation 11%, 18%, 19%, and 22%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, 11%, 13%, 14%, and 15%.
+Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, 28%, 29%, 30%, 31%, 32%, 33%, and 34%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, 82%, 83%, 84%, 85%, 86%, 87%, and 88%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, 76%, 77%, 78%, 79%, 80%, 81%, and 82%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, 50%, 51%, 52%, 53%, 54%, 55%, and 56%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, 21%, 23%, and 24%; LIR / Intermediate Representation 11%, 18%, 19%, and 22%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, 11%, 13%, 14%, 15%, and 16%.
 
 These percentages are planning estimates only. They are not release promises or production-readiness metrics.
 
@@ -121,12 +122,13 @@ Project notes upcoming work alignment
 Current direction project notes alignment
 Project notes index alignment
 Current status and announcement consistency review
+Completion percentage review
 ```
 
 ## Current next step
 
 ```text
-Completion percentage review after recent report/diagnostic/audit/project-notes slices
+Strategy estimate review after project-notes refresh
 ```
 
 ## Current runtime boundary domain matrix report boundary
