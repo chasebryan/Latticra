@@ -37,6 +37,16 @@ static void result_default(latticra_lat_semantic_result_t *result) {
     result->module_name[0] = '\0';
     result->semantic_valid = 0;
     result->diagnostic_count = 0u;
+    result->diagnostic_class = LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_VALID;
+    result->parse_diagnostic_count = 0u;
+    result->declaration_diagnostic_count = 0u;
+    result->reference_diagnostic_count = 0u;
+    result->requirement_diagnostic_count = 0u;
+    result->effect_diagnostic_count = 0u;
+    result->no_effect_diagnostic_count = 0u;
+    result->internal_diagnostic_count = 0u;
+    result->first_diagnostic_declaration_index = 0u;
+    result->first_diagnostic_clause_index = 0u;
     for (index = 0u; index < LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_MAX; index++) {
         diagnostic_default(&result->diagnostics[index]);
     }
@@ -75,6 +85,77 @@ const char *latticra_lat_semantic_error_label(latticra_lat_semantic_error_t erro
     }
 }
 
+const char *latticra_lat_semantic_diagnostic_class_label(latticra_lat_semantic_diagnostic_class_t diagnostic_class) {
+    switch (diagnostic_class) {
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_VALID: return "valid";
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_PARSE: return "parse";
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_DECLARATION: return "declaration";
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_REFERENCE: return "reference";
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_REQUIREMENT: return "requirement";
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_EFFECT: return "effect";
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_NO_EFFECT: return "no-effect";
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_INTERNAL:
+    default: return "internal";
+    }
+}
+
+static latticra_lat_semantic_diagnostic_class_t diagnostic_class_for_error(latticra_lat_semantic_error_t error) {
+    switch (error) {
+    case LATTICRA_LAT_SEMANTIC_OK: return LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_VALID;
+    case LATTICRA_LAT_SEMANTIC_PARSE_NOT_OK: return LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_PARSE;
+    case LATTICRA_LAT_SEMANTIC_DUPLICATE_DECLARATION:
+    case LATTICRA_LAT_SEMANTIC_INVALID_STATE_FIELD:
+    case LATTICRA_LAT_SEMANTIC_INVALID_CLAUSE_FOR_DECLARATION:
+    case LATTICRA_LAT_SEMANTIC_EMPTY_DECLARATION:
+        return LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_DECLARATION;
+    case LATTICRA_LAT_SEMANTIC_UNKNOWN_TRANSITION_SOURCE:
+        return LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_REFERENCE;
+    case LATTICRA_LAT_SEMANTIC_INVALID_REQUIRE_LEFT:
+        return LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_REQUIREMENT;
+    case LATTICRA_LAT_SEMANTIC_INVALID_EFFECT_TARGET:
+    case LATTICRA_LAT_SEMANTIC_INVALID_EFFECT_VALUE:
+    case LATTICRA_LAT_SEMANTIC_EFFECT_REQUIRES_GATE:
+        return LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_EFFECT;
+    case LATTICRA_LAT_SEMANTIC_NO_EFFECT_VIOLATION:
+        return LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_NO_EFFECT;
+    case LATTICRA_LAT_SEMANTIC_NULL_ARGUMENT:
+    case LATTICRA_LAT_SEMANTIC_CAPACITY_EXCEEDED:
+    case LATTICRA_LAT_SEMANTIC_INTERNAL_ERROR:
+    default:
+        return LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_INTERNAL;
+    }
+}
+
+static void count_diagnostic_class(latticra_lat_semantic_result_t *result, latticra_lat_semantic_diagnostic_class_t diagnostic_class) {
+    if (result == 0) return;
+    switch (diagnostic_class) {
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_PARSE:
+        result->parse_diagnostic_count += 1u;
+        break;
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_DECLARATION:
+        result->declaration_diagnostic_count += 1u;
+        break;
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_REFERENCE:
+        result->reference_diagnostic_count += 1u;
+        break;
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_REQUIREMENT:
+        result->requirement_diagnostic_count += 1u;
+        break;
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_EFFECT:
+        result->effect_diagnostic_count += 1u;
+        break;
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_NO_EFFECT:
+        result->no_effect_diagnostic_count += 1u;
+        break;
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_INTERNAL:
+        result->internal_diagnostic_count += 1u;
+        break;
+    case LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_VALID:
+    default:
+        break;
+    }
+}
+
 static int add_diagnostic(
     latticra_lat_semantic_result_t *result,
     latticra_lat_semantic_error_t error,
@@ -84,11 +165,15 @@ static int add_diagnostic(
     const char *name,
     const char *detail) {
     latticra_lat_semantic_diagnostic_t *diagnostic;
+    latticra_lat_semantic_diagnostic_class_t diagnostic_class;
     if (result == 0) return 0;
     result->semantic_valid = 0;
+    diagnostic_class = diagnostic_class_for_error(error);
     if (result->diagnostic_count >= LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_MAX) {
         if (result->error == LATTICRA_LAT_SEMANTIC_OK) {
             result->error = LATTICRA_LAT_SEMANTIC_CAPACITY_EXCEEDED;
+            result->diagnostic_class = LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_INTERNAL;
+            result->internal_diagnostic_count += 1u;
         }
         return 0;
     }
@@ -99,8 +184,14 @@ static int add_diagnostic(
     diagnostic->clause_index = clause_index;
     copy_text(diagnostic->name, sizeof(diagnostic->name), name);
     copy_text(diagnostic->detail, sizeof(diagnostic->detail), detail);
+    if (result->diagnostic_count == 0u) {
+        result->first_diagnostic_declaration_index = declaration_index;
+        result->first_diagnostic_clause_index = clause_index;
+    }
+    count_diagnostic_class(result, diagnostic_class);
     if (result->error == LATTICRA_LAT_SEMANTIC_OK) {
         result->error = error;
+        result->diagnostic_class = diagnostic_class;
         result->span = diagnostic->span;
     }
     result->diagnostic_count += 1u;
@@ -489,6 +580,8 @@ latticra_status_t latticra_lat_validate_module(
     if (parse_result == 0) {
         result->status = LATTICRA_STATUS_NULL_ARGUMENT;
         result->error = LATTICRA_LAT_SEMANTIC_NULL_ARGUMENT;
+        result->diagnostic_class = LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_INTERNAL;
+        result->internal_diagnostic_count = 1u;
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
     copy_counts_from_parse(parse_result, result);
@@ -510,6 +603,7 @@ latticra_status_t latticra_lat_validate_module(
     }
     if (result->diagnostic_count == 0u) {
         result->error = LATTICRA_LAT_SEMANTIC_OK;
+        result->diagnostic_class = LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_VALID;
         result->semantic_valid = 1;
     }
     return LATTICRA_STATUS_OK;
@@ -529,6 +623,7 @@ latticra_status_t latticra_lat_semantic_report(
         "LAT SEMANTIC REPORT\n"
         "status=%d\n"
         "error=%s\n"
+        "diagnostic_class=%s\n"
         "semantic_valid=%d\n"
         "module=%s\n"
         "declaration_count=%zu\n"
@@ -538,6 +633,15 @@ latticra_status_t latticra_lat_semantic_report(
         "assertion_count=%zu\n"
         "effect_count=%zu\n"
         "diagnostic_count=%zu\n"
+        "parse_diagnostic_count=%zu\n"
+        "declaration_diagnostic_count=%zu\n"
+        "reference_diagnostic_count=%zu\n"
+        "requirement_diagnostic_count=%zu\n"
+        "effect_diagnostic_count=%zu\n"
+        "no_effect_diagnostic_count=%zu\n"
+        "internal_diagnostic_count=%zu\n"
+        "first_diagnostic_declaration_index=%zu\n"
+        "first_diagnostic_clause_index=%zu\n"
         "no_effect=%d\n"
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
@@ -555,6 +659,7 @@ latticra_status_t latticra_lat_semantic_report(
         "span_end_column=%zu\n",
         (int)result->status,
         latticra_lat_semantic_error_label(result->error),
+        latticra_lat_semantic_diagnostic_class_label(result->diagnostic_class),
         result->semantic_valid,
         result->module_name,
         result->declaration_count,
@@ -564,6 +669,15 @@ latticra_status_t latticra_lat_semantic_report(
         result->assertion_count,
         result->effect_count,
         result->diagnostic_count,
+        result->parse_diagnostic_count,
+        result->declaration_diagnostic_count,
+        result->reference_diagnostic_count,
+        result->requirement_diagnostic_count,
+        result->effect_diagnostic_count,
+        result->no_effect_diagnostic_count,
+        result->internal_diagnostic_count,
+        result->first_diagnostic_declaration_index,
+        result->first_diagnostic_clause_index,
         result->no_effect,
         result->execution_allowed,
         result->mutation_allowed,
