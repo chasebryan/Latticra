@@ -64,6 +64,8 @@ static void module_default(latticra_lir_module_t *module) {
     module->status = LATTICRA_STATUS_OK;
     module->error = LATTICRA_LIR_OK;
     module->source_kind = LATTICRA_LIR_SOURCE_UNKNOWN;
+    module->report_classification = LATTICRA_LIR_REPORT_EMPTY;
+    module->shape_kind = LATTICRA_LIR_SHAPE_UNKNOWN;
     module->module_name[0] = '\0';
     module->card_name[0] = '\0';
     module->effect[0] = '\0';
@@ -73,6 +75,13 @@ static void module_default(latticra_lir_module_t *module) {
     module->edge_count = 0u;
     module->binding_count = 0u;
     module->text_count = 0u;
+    module->contains_edge_count = 0u;
+    module->binds_edge_count = 0u;
+    module->annotates_edge_count = 0u;
+    module->orders_before_edge_count = 0u;
+    module->transitions_from_edge_count = 0u;
+    module->no_effect_chain_ok = 1;
+    module->evidence_level = 0u;
     module->no_effect = 1;
     module->execution_allowed = 0;
     module->mutation_allowed = 0;
@@ -125,6 +134,81 @@ const char *latticra_lat_to_lir_error_label(latticra_lat_to_lir_error_t error) {
     case LATTICRA_LAT_TO_LIR_INTERNAL_ERROR:
     default: return "internal_error";
     }
+}
+
+static int lir_no_effect_chain_ok(const latticra_lir_module_t *module) {
+    return module != 0 &&
+           module->no_effect == 1 &&
+           module->execution_allowed == 0 &&
+           module->mutation_allowed == 0 &&
+           module->server_allowed == 0 &&
+           module->recovery_allowed == 0 &&
+           module->hardware_allowed == 0;
+}
+
+static latticra_lir_shape_kind_t lir_shape_kind_for_source(latticra_lir_source_kind_t source_kind) {
+    switch (source_kind) {
+    case LATTICRA_LIR_SOURCE_L_UI_CARD: return LATTICRA_LIR_SHAPE_L_UI_CARD_GRAPH;
+    case LATTICRA_LIR_SOURCE_LAT_MODULE: return LATTICRA_LIR_SHAPE_LAT_MODULE_GRAPH;
+    case LATTICRA_LIR_SOURCE_INTERNAL_FIXTURE: return LATTICRA_LIR_SHAPE_INTERNAL_FIXTURE_GRAPH;
+    case LATTICRA_LIR_SOURCE_UNKNOWN:
+    default: return LATTICRA_LIR_SHAPE_UNKNOWN;
+    }
+}
+
+static void finalize_lir_report_refinement(latticra_lir_module_t *module) {
+    size_t index;
+    if (module == 0) return;
+
+    module->contains_edge_count = 0u;
+    module->binds_edge_count = 0u;
+    module->annotates_edge_count = 0u;
+    module->orders_before_edge_count = 0u;
+    module->transitions_from_edge_count = 0u;
+
+    for (index = 0u; index < module->edge_count && index < LATTICRA_LIR_EDGE_MAX; index++) {
+        switch (module->edges[index].edge_kind) {
+        case LATTICRA_LIR_EDGE_CONTAINS:
+            module->contains_edge_count += 1u;
+            break;
+        case LATTICRA_LIR_EDGE_BINDS:
+            module->binds_edge_count += 1u;
+            break;
+        case LATTICRA_LIR_EDGE_ANNOTATES:
+            module->annotates_edge_count += 1u;
+            break;
+        case LATTICRA_LIR_EDGE_ORDERS_BEFORE:
+            module->orders_before_edge_count += 1u;
+            break;
+        case LATTICRA_LIR_EDGE_TRANSITIONS_FROM:
+            module->transitions_from_edge_count += 1u;
+            break;
+        case LATTICRA_LIR_EDGE_UNKNOWN:
+        default:
+            break;
+        }
+    }
+
+    module->no_effect_chain_ok = lir_no_effect_chain_ok(module);
+    module->shape_kind = module->node_count == 0u ? LATTICRA_LIR_SHAPE_UNKNOWN : lir_shape_kind_for_source(module->source_kind);
+
+    if (module->status != LATTICRA_STATUS_OK || module->error == LATTICRA_LIR_NULL_ARGUMENT || module->source_kind == LATTICRA_LIR_SOURCE_UNKNOWN) {
+        module->report_classification = LATTICRA_LIR_REPORT_INVALID;
+        module->evidence_level = 0u;
+        return;
+    }
+    if (module->error != LATTICRA_LIR_OK) {
+        module->report_classification = LATTICRA_LIR_REPORT_REJECTED;
+        module->evidence_level = 1u;
+        return;
+    }
+    if (module->node_count == 0u) {
+        module->report_classification = LATTICRA_LIR_REPORT_EMPTY;
+        module->evidence_level = 0u;
+        return;
+    }
+    module->report_classification = LATTICRA_LIR_REPORT_MATERIALIZED;
+    module->evidence_level = module->no_effect_chain_ok ? 2u : 1u;
 }
 
 static void copy_summary(
@@ -251,24 +335,28 @@ latticra_status_t latticra_lir_lower_lat_module(
         result->error = LATTICRA_LAT_TO_LIR_PARSE_NOT_OK;
         module->error = LATTICRA_LIR_SEMANTIC_FAILED;
         module->source_kind = LATTICRA_LIR_SOURCE_LAT_MODULE;
+        finalize_lir_report_refinement(module);
         return LATTICRA_STATUS_OK;
     }
     if (semantic_result->error != LATTICRA_LAT_SEMANTIC_OK) {
         result->error = LATTICRA_LAT_TO_LIR_SEMANTIC_NOT_OK;
         module->error = LATTICRA_LIR_SEMANTIC_FAILED;
         module->source_kind = LATTICRA_LIR_SOURCE_LAT_MODULE;
+        finalize_lir_report_refinement(module);
         return LATTICRA_STATUS_OK;
     }
     if (semantic_result->semantic_valid != 1) {
         result->error = LATTICRA_LAT_TO_LIR_SEMANTIC_NOT_VALID;
         module->error = LATTICRA_LIR_SEMANTIC_FAILED;
         module->source_kind = LATTICRA_LIR_SOURCE_LAT_MODULE;
+        finalize_lir_report_refinement(module);
         return LATTICRA_STATUS_OK;
     }
     if (!no_effect_ok(parse_result, semantic_result)) {
         result->error = LATTICRA_LAT_TO_LIR_NO_EFFECT_VIOLATION;
         module->error = LATTICRA_LIR_SEMANTIC_FAILED;
         module->source_kind = LATTICRA_LIR_SOURCE_LAT_MODULE;
+        finalize_lir_report_refinement(module);
         return LATTICRA_STATUS_OK;
     }
 
@@ -277,6 +365,8 @@ latticra_status_t latticra_lir_lower_lat_module(
     if (required_nodes > LATTICRA_LIR_NODE_MAX || required_edges > LATTICRA_LIR_EDGE_MAX) {
         result->error = LATTICRA_LAT_TO_LIR_CAPACITY_EXCEEDED;
         module->error = LATTICRA_LIR_CAPACITY_EXCEEDED;
+        module->source_kind = LATTICRA_LIR_SOURCE_LAT_MODULE;
+        finalize_lir_report_refinement(module);
         return LATTICRA_STATUS_OK;
     }
 
@@ -316,6 +406,7 @@ latticra_status_t latticra_lir_lower_lat_module(
         if (kind == LATTICRA_LIR_NODE_UNKNOWN) {
             result->error = LATTICRA_LAT_TO_LIR_UNSUPPORTED_EFFECT;
             module->error = LATTICRA_LIR_UNSUPPORTED_NODE_KIND;
+            finalize_lir_report_refinement(module);
             return LATTICRA_STATUS_OK;
         }
         for (decl_index = 0u; decl_index < parse_result->declaration_count; decl_index++) {
@@ -337,6 +428,7 @@ latticra_status_t latticra_lir_lower_lat_module(
             if (state_index >= LATTICRA_LAT_DECLARATION_MAX) {
                 result->error = LATTICRA_LAT_TO_LIR_SEMANTIC_NOT_VALID;
                 module->error = LATTICRA_LIR_SEMANTIC_FAILED;
+                finalize_lir_report_refinement(module);
                 return LATTICRA_STATUS_OK;
             }
             if (!append_edge(module, declaration_node_index(index), declaration_node_index(state_index), LATTICRA_LIR_EDGE_TRANSITIONS_FROM, declaration->span)) goto capacity_failed;
@@ -349,6 +441,7 @@ latticra_status_t latticra_lir_lower_lat_module(
     result->no_effect = 1;
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
+    finalize_lir_report_refinement(module);
     return LATTICRA_STATUS_OK;
 
 capacity_failed:
@@ -357,6 +450,8 @@ capacity_failed:
     result->edge_count = 0u;
     module_default(module);
     module->error = LATTICRA_LIR_CAPACITY_EXCEEDED;
+    module->source_kind = LATTICRA_LIR_SOURCE_LAT_MODULE;
+    finalize_lir_report_refinement(module);
     return LATTICRA_STATUS_OK;
 }
 
