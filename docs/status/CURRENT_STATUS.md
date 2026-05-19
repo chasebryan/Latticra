@@ -4,6 +4,7 @@ Status: public status record
 Last updated: 2026-05-16 16:15 CDT
 Latest Lat-to-LIR lowering note: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
+Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
 Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
 Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
@@ -46,6 +47,7 @@ The repository currently emphasizes:
 - Lat pipeline contract;
 - Lat pipeline implementation plan;
 - Lat pipeline implementation;
+- Lat pipeline report refinement;
 - Lat-specific LIR refinement contract;
 - Lat-specific LIR refinement implementation plan;
 - Lat-specific LIR refinement implementation;
@@ -54,6 +56,8 @@ The repository currently emphasizes:
 Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The current lowering implementation consumes parser and semantic results, creates a `lat_module` LIR module shape, preserves source spans and no-effect flags, and emits deterministic lowering reports.
 
 The Lat pipeline composes source parsing, semantic validation, Lat-to-LIR lowering, LIR metadata, and deterministic pipeline reporting into one no-effect integration boundary. It preserves metadata visibility without executing Lat, executing LIR, mutating state, or providing runtime behavior.
+
+The Lat pipeline report refinement adds deterministic stage-summary metadata for last completed stage, failed stage, per-stage OK flags, no-effect-chain status, and evidence level. This makes the pipeline report easier to audit without changing no-effect behavior.
 
 The Lat-specific LIR refinement gives Lat declarations explicit LIR node kinds and a transition-source edge kind. This improves inspectability of Lat-derived LIR without changing no-effect behavior or adding execution.
 
@@ -77,12 +81,12 @@ These percentages are planning estimates only.
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 27% |
+| Overall Latticra system | 28% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 81% |
-| Public documentation posture | 75% |
-| Strategy/status/funding framework | 49% |
-| Lat / Latticra Programming Language | 19% |
+| Foundation documents and contracts | 82% |
+| Public documentation posture | 76% |
+| Strategy/status/funding framework | 50% |
+| Lat / Latticra Programming Language | 21% |
 | LIR / Intermediate Representation | 19% |
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
@@ -91,7 +95,7 @@ These percentages are planning estimates only.
 | Security-hardening implementation | 5% |
 | Public product readiness | 5% |
 
-Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, and 26%; foundation documents and contracts 74%, 75%, 78%, 79%, and 80%; public documentation posture 68%, 69%, 72%, 73%, and 74%; strategy/status/funding framework 42%, 43%, 46%, 47%, and 48%; Lat / Latticra Programming Language 10%, 12%, 18%, and 19%; LIR / Intermediate Representation 10%, 11%, 18%, and 19%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6% and 9%.
+Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, and 27%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, and 81%; public documentation posture 68%, 69%, 72%, 73%, 74%, and 75%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, and 49%; Lat / Latticra Programming Language 10%, 12%, 18%, and 19%; LIR / Intermediate Representation 10%, 11%, 18%, and 19%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6% and 9%.
 
 ## Current implemented evidence areas
 
@@ -128,6 +132,7 @@ Lat-to-LIR lowering implementation
 Lat pipeline contract
 Lat pipeline implementation plan
 Lat pipeline implementation
+Lat pipeline report refinement
 Lat-specific LIR refinement contract
 Lat-specific LIR refinement implementation plan
 Lat-specific LIR refinement implementation
@@ -171,7 +176,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, explicit runtime boundaries, Lat semantic validation, Lat-to-LIR metadata lowering, Lat pipeline reporting, Lat-specific LIR refinement, runtime boundary evidence reporting, and runtime boundary report refinement.
+The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, explicit runtime boundaries, Lat semantic validation, Lat-to-LIR metadata lowering, Lat pipeline reporting, Lat pipeline report refinement, Lat-specific LIR refinement, runtime boundary evidence reporting, and runtime boundary report refinement.
 
 This is a mission direction, not a current security guarantee.
 
@@ -196,7 +201,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Runtime boundary report refinement
+Lat pipeline report refinement
 ```
 
 ## Previous implementation slice
@@ -204,7 +209,7 @@ Runtime boundary report refinement
 Previous implementation slice:
 
 ```text
-Runtime boundary refinement implementation
+Runtime boundary report refinement
 ```
 
 ## Earlier implementation slice
@@ -212,7 +217,7 @@ Runtime boundary refinement implementation
 Earlier implementation slice:
 
 ```text
-Lat-specific LIR refinement implementation
+Runtime boundary refinement implementation
 ```
 
 ## Next recommended work
@@ -220,14 +225,14 @@ Lat-specific LIR refinement implementation
 Recommended next work:
 
 ```text
-Lat pipeline report refinement
+Runtime boundary policy matrix refinement
 ```
 
 After that:
 
 ```text
-Runtime boundary policy matrix refinement
 Nucleus task report refinement
+Lat semantic diagnostics refinement
 ```
 
 ## Update rule
