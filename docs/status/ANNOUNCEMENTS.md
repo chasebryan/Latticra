@@ -4,6 +4,7 @@ Status: public announcement log
 Last updated: 2026-05-16 16:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest announcement rollup note: 2026-05-19 15:05 CDT
+Latest RBDM report status announcement note: 2026-05-19 16:45 CDT
 Scope: dated public updates, status notes, and milestone announcements.
 
 ## Purpose
@@ -24,6 +25,47 @@ why it matters
 validation
 non-claims
 next step
+```
+
+## 2026-05-19 16:45 CDT — Runtime boundary domain matrix report integration
+
+Status: report integration added
+
+Latticra added deterministic report rendering for the Runtime Boundary Domain Matrix companion surface.
+
+What changed:
+
+```text
+RBDM report rendering
+cell label output
+domain label output
+known/operational/declarative/future-gated flags
+effect-allowed flag
+authority-available flag
+evidence-level output
+small-buffer and null-argument handling
+```
+
+Why it matters:
+
+The runtime-boundary domain matrix can now be evaluated and rendered as a stable text report. This makes boundary-domain evidence easier to inspect without granting runtime authority or expanding behavior.
+
+Validation:
+
+```text
+sh scripts/test-runtime-boundary-domain-matrix-report-integration.sh
+sh scripts/test-runtime-boundary-domain-matrix-refinement.sh
+sh scripts/test-runtime-boundary.sh
+```
+
+Non-claims:
+
+This update does not implement runtime behavior, command execution, Lat execution, LIR execution, task effect execution, state mutation, file I/O, network I/O, server interaction, recovery behavior, hardware behavior, sandboxing, malware prevention, ransomware prevention, certification, accreditation, or operating-system behavior.
+
+Next step:
+
+```text
+Runtime boundary domain matrix report main test integration audit
 ```
 
 ## 2026-05-19 15:05 CDT — Recent no-effect refinement rollup
