@@ -102,6 +102,36 @@ typedef enum {
     LATTICRA_NUCLEUS_TASK_ROLLBACK_BLOCKED = 4
 } latticra_nucleus_task_rollback_state_t;
 
+typedef enum {
+    LATTICRA_NUCLEUS_TASK_REPORT_ACCEPTED = 0,
+    LATTICRA_NUCLEUS_TASK_REPORT_FUTURE_GATED = 1,
+    LATTICRA_NUCLEUS_TASK_REPORT_DENIED = 2,
+    LATTICRA_NUCLEUS_TASK_REPORT_INVALID = 3
+} latticra_nucleus_task_report_classification_t;
+
+typedef enum {
+    LATTICRA_NUCLEUS_TASK_DOMAIN_STATE = 0,
+    LATTICRA_NUCLEUS_TASK_DOMAIN_TRANSITION = 1,
+    LATTICRA_NUCLEUS_TASK_DOMAIN_RENDER = 2,
+    LATTICRA_NUCLEUS_TASK_DOMAIN_LAT = 3,
+    LATTICRA_NUCLEUS_TASK_DOMAIN_LIR = 4,
+    LATTICRA_NUCLEUS_TASK_DOMAIN_AUTHORITY = 5,
+    LATTICRA_NUCLEUS_TASK_DOMAIN_SERVER = 6,
+    LATTICRA_NUCLEUS_TASK_DOMAIN_UPDATE = 7,
+    LATTICRA_NUCLEUS_TASK_DOMAIN_RECOVERY = 8,
+    LATTICRA_NUCLEUS_TASK_DOMAIN_HARDWARE = 9,
+    LATTICRA_NUCLEUS_TASK_DOMAIN_BOOT = 10,
+    LATTICRA_NUCLEUS_TASK_DOMAIN_UNKNOWN = 11
+} latticra_nucleus_task_domain_t;
+
+typedef enum {
+    LATTICRA_NUCLEUS_TASK_AUTH_NOT_REQUESTED = 0,
+    LATTICRA_NUCLEUS_TASK_AUTH_CHECKED = 1,
+    LATTICRA_NUCLEUS_TASK_AUTH_DENIED = 2,
+    LATTICRA_NUCLEUS_TASK_AUTH_RESERVED_FOR_FUTURE = 3,
+    LATTICRA_NUCLEUS_TASK_AUTH_UNAVAILABLE = 4
+} latticra_nucleus_task_authorization_state_t;
+
 typedef struct {
     latticra_status_t status;
     char status_label[LATTICRA_NUCLEUS_TASK_LABEL_MAX];
@@ -142,6 +172,11 @@ typedef struct {
     latticra_nucleus_task_gate_state_t gate_state;
     latticra_nucleus_task_operator_confirmation_t operator_confirmation;
     latticra_nucleus_task_rollback_state_t rollback_state;
+    latticra_nucleus_task_report_classification_t report_classification;
+    latticra_nucleus_task_domain_t task_domain;
+    latticra_nucleus_task_authorization_state_t authorization_state;
+    int prerequisites_satisfied;
+    int no_effect_chain_ok;
     latticra_nucleus_task_authority_summary_t authority;
     char source_identity[LATTICRA_NUCLEUS_TASK_SOURCE_IDENTITY_MAX];
     latticra_l_ui_source_span_t source_span;
@@ -172,6 +207,9 @@ const char *latticra_nucleus_task_denial_label(latticra_nucleus_task_denial_t de
 const char *latticra_nucleus_task_gate_state_label(latticra_nucleus_task_gate_state_t gate_state);
 const char *latticra_nucleus_task_operator_confirmation_label(latticra_nucleus_task_operator_confirmation_t confirmation);
 const char *latticra_nucleus_task_rollback_state_label(latticra_nucleus_task_rollback_state_t rollback_state);
+const char *latticra_nucleus_task_report_classification_label(latticra_nucleus_task_report_classification_t classification);
+const char *latticra_nucleus_task_domain_label(latticra_nucleus_task_domain_t domain);
+const char *latticra_nucleus_task_authorization_state_label(latticra_nucleus_task_authorization_state_t state);
 
 latticra_status_t latticra_nucleus_task_classify(
     const latticra_nucleus_task_request_t *request,

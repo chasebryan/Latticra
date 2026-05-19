@@ -10,6 +10,7 @@ Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
 Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
 Latest runtime boundary report refinement note: 2026-05-18 23:10 CDT
 Latest runtime boundary policy matrix refinement note: 2026-05-18 23:55 CDT
+Latest Nucleus task report refinement note: 2026-05-19 00:15 CDT
 Scope: current progress, completion estimates, merged capability areas, and next priorities.
 
 ## Project status
@@ -30,6 +31,7 @@ The repository currently emphasizes:
 - Nucleus task execution contract;
 - Nucleus task execution implementation plan;
 - Nucleus task execution implementation;
+- Nucleus task report refinement;
 - Runtime boundary contract;
 - Runtime boundary implementation plan;
 - Runtime boundary implementation;
@@ -63,6 +65,8 @@ The Lat pipeline report refinement adds deterministic stage-summary metadata for
 
 The Lat-specific LIR refinement gives Lat declarations explicit LIR node kinds and a transition-source edge kind. This improves inspectability of Lat-derived LIR without changing no-effect behavior or adding execution.
 
+The Nucleus task report refinement adds deterministic report classification, task-domain labeling, authorization-state labeling, prerequisite status, and no-effect-chain status. This makes Nucleus task reports easier to audit while preserving no-effect behavior.
+
 The Runtime boundary refinement implementation reports Lat pipeline evidence and Lat-specific LIR evidence at the runtime boundary while preserving disabled-by-default, no-effect classification behavior.
 
 The Runtime boundary report refinement adds explicit report classification, boundary-domain labeling, authorization-state labeling, and evidence-level reporting so boundary intent is visible without granting runtime authority.
@@ -85,21 +89,21 @@ These percentages are planning estimates only.
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 29% |
+| Overall Latticra system | 30% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 83% |
-| Public documentation posture | 77% |
-| Strategy/status/funding framework | 51% |
+| Foundation documents and contracts | 84% |
+| Public documentation posture | 78% |
+| Strategy/status/funding framework | 52% |
 | Lat / Latticra Programming Language | 21% |
 | LIR / Intermediate Representation | 19% |
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
-| Nucleus real task execution | 10% |
-| Runtime / operating-system-universe direction | 13% |
+| Nucleus real task execution | 11% |
+| Runtime / operating-system-universe direction | 14% |
 | Security-hardening implementation | 5% |
 | Public product readiness | 5% |
 
-Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, and 28%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, and 82%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, and 76%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, and 50%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, and 21%; LIR / Intermediate Representation 10%, 11%, 18%, and 19%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, and 11%.
+Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, 28%, and 29%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, 82%, and 83%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, 76%, and 77%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, 50%, and 51%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, and 21%; LIR / Intermediate Representation 10%, 11%, 18%, and 19%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, 11%, and 13%.
 
 ## Current implemented evidence areas
 
@@ -112,6 +116,7 @@ Nucleus preview request classification
 Nucleus task execution contract
 Nucleus task execution implementation plan
 Nucleus task execution implementation
+Nucleus task report refinement
 Runtime boundary contract
 Runtime boundary implementation plan
 Runtime boundary implementation
@@ -181,7 +186,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, explicit runtime boundaries, Lat semantic validation, Lat-to-LIR metadata lowering, Lat pipeline reporting, Lat pipeline report refinement, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
+The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, explicit runtime boundaries, Lat semantic validation, Lat-to-LIR metadata lowering, Lat pipeline reporting, Lat pipeline report refinement, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
 
 This is a mission direction, not a current security guarantee.
 
@@ -206,7 +211,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Runtime boundary policy matrix refinement
+Nucleus task report refinement
 ```
 
 ## Previous implementation slice
@@ -214,7 +219,7 @@ Runtime boundary policy matrix refinement
 Previous implementation slice:
 
 ```text
-Lat pipeline report refinement
+Runtime boundary policy matrix refinement
 ```
 
 ## Earlier implementation slice
@@ -222,7 +227,7 @@ Lat pipeline report refinement
 Earlier implementation slice:
 
 ```text
-Runtime boundary report refinement
+Lat pipeline report refinement
 ```
 
 ## Next recommended work
@@ -230,14 +235,14 @@ Runtime boundary report refinement
 Recommended next work:
 
 ```text
-Nucleus task report refinement
+Lat semantic diagnostics refinement
 ```
 
 After that:
 
 ```text
-Lat semantic diagnostics refinement
 LIR report refinement
+Runtime boundary domain matrix refinement
 ```
 
 ## Update rule

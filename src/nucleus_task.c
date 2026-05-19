@@ -40,6 +40,11 @@ static void default_record(latticra_nucleus_task_record_t *record) {
     record->gate_state = LATTICRA_NUCLEUS_TASK_GATE_DISABLED;
     record->operator_confirmation = LATTICRA_NUCLEUS_TASK_OPERATOR_NOT_APPLICABLE;
     record->rollback_state = LATTICRA_NUCLEUS_TASK_ROLLBACK_NOT_APPLICABLE;
+    record->report_classification = LATTICRA_NUCLEUS_TASK_REPORT_DENIED;
+    record->task_domain = LATTICRA_NUCLEUS_TASK_DOMAIN_UNKNOWN;
+    record->authorization_state = LATTICRA_NUCLEUS_TASK_AUTH_DENIED;
+    record->prerequisites_satisfied = 0;
+    record->no_effect_chain_ok = 1;
     default_authority(&record->authority);
     record->source_identity[0] = '\0';
     default_span(&record->source_span);
@@ -227,6 +232,123 @@ const char *latticra_nucleus_task_rollback_state_label(latticra_nucleus_task_rol
     }
 }
 
+const char *latticra_nucleus_task_report_classification_label(latticra_nucleus_task_report_classification_t classification) {
+    switch (classification) {
+    case LATTICRA_NUCLEUS_TASK_REPORT_ACCEPTED: return "accepted";
+    case LATTICRA_NUCLEUS_TASK_REPORT_FUTURE_GATED: return "future-gated";
+    case LATTICRA_NUCLEUS_TASK_REPORT_DENIED: return "denied";
+    case LATTICRA_NUCLEUS_TASK_REPORT_INVALID:
+    default: return "invalid";
+    }
+}
+
+const char *latticra_nucleus_task_domain_label(latticra_nucleus_task_domain_t domain) {
+    switch (domain) {
+    case LATTICRA_NUCLEUS_TASK_DOMAIN_STATE: return "state";
+    case LATTICRA_NUCLEUS_TASK_DOMAIN_TRANSITION: return "transition";
+    case LATTICRA_NUCLEUS_TASK_DOMAIN_RENDER: return "render";
+    case LATTICRA_NUCLEUS_TASK_DOMAIN_LAT: return "lat";
+    case LATTICRA_NUCLEUS_TASK_DOMAIN_LIR: return "lir";
+    case LATTICRA_NUCLEUS_TASK_DOMAIN_AUTHORITY: return "authority";
+    case LATTICRA_NUCLEUS_TASK_DOMAIN_SERVER: return "server";
+    case LATTICRA_NUCLEUS_TASK_DOMAIN_UPDATE: return "update";
+    case LATTICRA_NUCLEUS_TASK_DOMAIN_RECOVERY: return "recovery";
+    case LATTICRA_NUCLEUS_TASK_DOMAIN_HARDWARE: return "hardware";
+    case LATTICRA_NUCLEUS_TASK_DOMAIN_BOOT: return "boot";
+    case LATTICRA_NUCLEUS_TASK_DOMAIN_UNKNOWN:
+    default: return "unknown";
+    }
+}
+
+const char *latticra_nucleus_task_authorization_state_label(latticra_nucleus_task_authorization_state_t state) {
+    switch (state) {
+    case LATTICRA_NUCLEUS_TASK_AUTH_NOT_REQUESTED: return "not-requested";
+    case LATTICRA_NUCLEUS_TASK_AUTH_CHECKED: return "checked";
+    case LATTICRA_NUCLEUS_TASK_AUTH_DENIED: return "denied";
+    case LATTICRA_NUCLEUS_TASK_AUTH_RESERVED_FOR_FUTURE: return "reserved-for-future";
+    case LATTICRA_NUCLEUS_TASK_AUTH_UNAVAILABLE:
+    default: return "unavailable";
+    }
+}
+
+static int task_kind_is_future_gated(latticra_nucleus_task_request_kind_t kind) {
+    return kind == LATTICRA_NUCLEUS_TASK_SERVER_INTERACTION ||
+           kind == LATTICRA_NUCLEUS_TASK_SELF_UPDATE ||
+           kind == LATTICRA_NUCLEUS_TASK_RECOVERY_ACTION ||
+           kind == LATTICRA_NUCLEUS_TASK_HARDWARE_ACTION ||
+           kind == LATTICRA_NUCLEUS_TASK_BOOT_ACTION;
+}
+
+static latticra_nucleus_task_domain_t task_domain_for_kind(latticra_nucleus_task_request_kind_t kind) {
+    switch (kind) {
+    case LATTICRA_NUCLEUS_TASK_STATE_REPORT: return LATTICRA_NUCLEUS_TASK_DOMAIN_STATE;
+    case LATTICRA_NUCLEUS_TASK_TRANSITION_PREVIEW: return LATTICRA_NUCLEUS_TASK_DOMAIN_TRANSITION;
+    case LATTICRA_NUCLEUS_TASK_RENDER_REPORT: return LATTICRA_NUCLEUS_TASK_DOMAIN_RENDER;
+    case LATTICRA_NUCLEUS_TASK_LAT_VALIDATE: return LATTICRA_NUCLEUS_TASK_DOMAIN_LAT;
+    case LATTICRA_NUCLEUS_TASK_LIR_VALIDATE: return LATTICRA_NUCLEUS_TASK_DOMAIN_LIR;
+    case LATTICRA_NUCLEUS_TASK_AUTHORITY_CHECK: return LATTICRA_NUCLEUS_TASK_DOMAIN_AUTHORITY;
+    case LATTICRA_NUCLEUS_TASK_SERVER_INTERACTION: return LATTICRA_NUCLEUS_TASK_DOMAIN_SERVER;
+    case LATTICRA_NUCLEUS_TASK_SELF_UPDATE: return LATTICRA_NUCLEUS_TASK_DOMAIN_UPDATE;
+    case LATTICRA_NUCLEUS_TASK_RECOVERY_ACTION: return LATTICRA_NUCLEUS_TASK_DOMAIN_RECOVERY;
+    case LATTICRA_NUCLEUS_TASK_HARDWARE_ACTION: return LATTICRA_NUCLEUS_TASK_DOMAIN_HARDWARE;
+    case LATTICRA_NUCLEUS_TASK_BOOT_ACTION: return LATTICRA_NUCLEUS_TASK_DOMAIN_BOOT;
+    case LATTICRA_NUCLEUS_TASK_UNKNOWN:
+    default: return LATTICRA_NUCLEUS_TASK_DOMAIN_UNKNOWN;
+    }
+}
+
+static int result_no_effect_chain_ok(const latticra_nucleus_task_result_t *result) {
+    if (result == 0) return 0;
+    return no_effect_flags_ok(result->no_effect,
+                              result->execution_allowed,
+                              result->mutation_allowed,
+                              result->server_allowed,
+                              result->recovery_allowed,
+                              result->hardware_allowed) &&
+           result->record.executed == 0 &&
+           result->record.mutation_allowed == 0 &&
+           result->record.server_interaction_allowed == 0 &&
+           result->record.recovery_allowed == 0 &&
+           result->record.hardware_allowed == 0;
+}
+
+static void finalize_task_report_refinement(latticra_nucleus_task_result_t *result) {
+    if (result == 0) return;
+
+    result->record.task_domain = task_domain_for_kind(result->record.request_kind);
+    result->record.no_effect_chain_ok = result_no_effect_chain_ok(result);
+    result->record.prerequisites_satisfied = result->record.denial == LATTICRA_NUCLEUS_TASK_DENIAL_OK ? 1 : 0;
+
+    if (result->record.denial == LATTICRA_NUCLEUS_TASK_DENIAL_NULL_ARGUMENT ||
+        result->record.denial == LATTICRA_NUCLEUS_TASK_DENIAL_UNKNOWN_REQUEST ||
+        result->record.denial == LATTICRA_NUCLEUS_TASK_DENIAL_UNKNOWN_EFFECT) {
+        result->record.report_classification = LATTICRA_NUCLEUS_TASK_REPORT_INVALID;
+        result->record.authorization_state = LATTICRA_NUCLEUS_TASK_AUTH_UNAVAILABLE;
+        result->record.evidence_level = 0u;
+        return;
+    }
+
+    if (result->record.policy == LATTICRA_NUCLEUS_TASK_POLICY_REQUIRES_FUTURE_GATE ||
+        task_kind_is_future_gated(result->record.request_kind)) {
+        result->record.report_classification = LATTICRA_NUCLEUS_TASK_REPORT_FUTURE_GATED;
+        result->record.authorization_state = LATTICRA_NUCLEUS_TASK_AUTH_RESERVED_FOR_FUTURE;
+        result->record.evidence_level = 1u;
+        return;
+    }
+
+    if (result->record.denial == LATTICRA_NUCLEUS_TASK_DENIAL_OK) {
+        result->record.report_classification = LATTICRA_NUCLEUS_TASK_REPORT_ACCEPTED;
+        result->record.authorization_state = result->record.request_kind == LATTICRA_NUCLEUS_TASK_AUTHORITY_CHECK ?
+            LATTICRA_NUCLEUS_TASK_AUTH_CHECKED : LATTICRA_NUCLEUS_TASK_AUTH_NOT_REQUESTED;
+        result->record.evidence_level = 2u;
+        return;
+    }
+
+    result->record.report_classification = LATTICRA_NUCLEUS_TASK_REPORT_DENIED;
+    result->record.authorization_state = LATTICRA_NUCLEUS_TASK_AUTH_DENIED;
+    result->record.evidence_level = 1u;
+}
+
 static void copy_authority(latticra_nucleus_task_authority_summary_t *destination,
                            const latticra_nucleus_task_authority_summary_t *source) {
     if (destination == 0) return;
@@ -291,6 +413,7 @@ static void set_denial(latticra_nucleus_task_result_t *result,
     result->server_allowed = 0;
     result->recovery_allowed = 0;
     result->hardware_allowed = 0;
+    finalize_task_report_refinement(result);
 }
 
 static void set_allowed(latticra_nucleus_task_result_t *result,
@@ -307,6 +430,7 @@ static void set_allowed(latticra_nucleus_task_result_t *result,
     result->record.server_interaction_allowed = 0;
     result->record.recovery_allowed = 0;
     result->record.hardware_allowed = 0;
+    finalize_task_report_refinement(result);
 }
 
 static int effect_is_preview_eligible(latticra_nucleus_task_effect_t effect) {
@@ -504,6 +628,11 @@ latticra_status_t latticra_nucleus_task_report(const latticra_nucleus_task_resul
         !appendf(buffer, buffer_len, &used, "allowed_effect=%s\n", latticra_nucleus_task_effect_label(record->allowed_effect)) ||
         !appendf(buffer, buffer_len, &used, "policy=%s\n", latticra_nucleus_task_policy_label(record->policy)) ||
         !appendf(buffer, buffer_len, &used, "reason=%s\n", latticra_nucleus_task_denial_label(record->denial)) ||
+        !appendf(buffer, buffer_len, &used, "report_classification=%s\n", latticra_nucleus_task_report_classification_label(record->report_classification)) ||
+        !appendf(buffer, buffer_len, &used, "task_domain=%s\n", latticra_nucleus_task_domain_label(record->task_domain)) ||
+        !appendf(buffer, buffer_len, &used, "authorization_state=%s\n", latticra_nucleus_task_authorization_state_label(record->authorization_state)) ||
+        !appendf(buffer, buffer_len, &used, "prerequisites_satisfied=%d\n", record->prerequisites_satisfied) ||
+        !appendf(buffer, buffer_len, &used, "no_effect_chain_ok=%d\n", record->no_effect_chain_ok) ||
         !appendf(buffer, buffer_len, &used, "authority_status=%s\n", record->authority.status_label) ||
         !appendf(buffer, buffer_len, &used, "authority_validator=%s\n", record->authority.validator_label) ||
         !appendf(buffer, buffer_len, &used, "authority_reason=%s\n", record->authority.denial_reason) ||
