@@ -38,7 +38,7 @@ Runtime boundary: disabled-by-default line before operational behavior
 
 ## Current implementation posture
 
-The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, Runtime boundary refinement plan, Runtime boundary refinement implementation, Runtime boundary report refinement, Runtime boundary policy matrix refinement, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, Lat pipeline report refinement, Lat-specific LIR refinement implementation, and state-lattice models.
+The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Nucleus task report refinement, Runtime boundary contract, Runtime boundary refinement plan, Runtime boundary refinement implementation, Runtime boundary report refinement, Runtime boundary policy matrix refinement, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, Lat pipeline report refinement, Lat-specific LIR refinement implementation, and state-lattice models.
 
 Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The current lowering implementation consumes parser and semantic metadata, preserves source spans and no-effect flags, emits deterministic lowering reports, and materializes a `lat_module` LIR shape without executing Lat.
 
@@ -47,6 +47,8 @@ The Lat pipeline now composes source parsing, semantic validation, Lat-to-LIR lo
 The Lat pipeline report refinement now adds deterministic stage-summary metadata for the last completed stage, failed stage, per-stage OK flags, no-effect-chain status, and evidence level. These fields make the pipeline report easier to audit without changing no-effect behavior.
 
 The Lat-specific LIR refinement now gives Lat declarations explicit LIR node kinds and a transition-source edge kind while preserving the existing no-effect metadata path and bounded report posture.
+
+The Nucleus task report refinement now adds deterministic report classification, task-domain labeling, authorization-state labeling, prerequisite status, and no-effect-chain status to Nucleus task reports. These fields make task classification easier to audit without adding task execution.
 
 The Runtime boundary refinement implementation now carries no-effect Lat pipeline evidence and Lat-specific LIR evidence through runtime-boundary records and reports. It adds a validation-only `lat-pipeline-validate` request path while preserving disabled-by-default behavior and future-gated execution requests.
 
@@ -77,6 +79,7 @@ Important records:
 - [`docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md`](docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md)
 - [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md)
 - [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md)
+- [`docs/NUCLEUS_TASK_REPORT_REFINEMENT.md`](docs/NUCLEUS_TASK_REPORT_REFINEMENT.md)
 - [`docs/RUNTIME_BOUNDARY_CONTRACT.md`](docs/RUNTIME_BOUNDARY_CONTRACT.md)
 - [`docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md`](docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md)
 - [`docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md`](docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md)
@@ -138,6 +141,13 @@ Lat-specific LIR refinement is covered by:
 sh scripts/test-lat-specific-lir-refinement.sh
 ```
 
+Nucleus task report refinement is covered by:
+
+```sh
+sh scripts/test-nucleus-task-report-refinement.sh
+sh scripts/test-nucleus-task-execution.sh
+```
+
 Runtime boundary refinement planning is covered by:
 
 ```sh
@@ -178,4 +188,4 @@ See [`SECURITY.md`](SECURITY.md) for vulnerability reporting, supported branch s
 
 ## License
 
-Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`](docs/LICENSE_POLICY.md).
+Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`].
