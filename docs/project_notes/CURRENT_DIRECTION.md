@@ -1,8 +1,10 @@
 # Latticra Current Direction
 
 Status: active project note
-Last updated: 2026-05-18 18:15 CDT
+Last updated: 2026-05-19 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
+Latest Lat pipeline diagnostic audit note: 2026-05-19 17:15 CDT
+Latest runtime boundary domain matrix report note: 2026-05-19 16:20 CDT
 
 ## Current direction
 
@@ -48,12 +50,18 @@ bounded grammar parser
 bounded no-effect semantic validation
 bounded no-effect Lat-to-LIR metadata lowering
 bounded no-effect Lat pipeline reporting
+bounded no-effect Lat pipeline diagnostic integration
+bounded no-effect Lat pipeline diagnostic main test audit
 bounded no-effect Lat-specific LIR refinement
 ```
 
 The current Lat-to-LIR lowering implementation consumes parser and semantic metadata, creates a `lat_module` LIR shape, preserves source spans and no-effect flags, and emits deterministic lowering reports.
 
-The current Lat pipeline composes Lat source parsing, semantic validation, Lat-to-LIR lowering, LIR metadata, and deterministic pipeline reporting into one no-effect integration path.
+The current Lat pipeline composes Lat source parsing, semantic validation, Lat-to-LIR lowering, LIR metadata, deterministic pipeline reporting, and companion diagnostic reporting into one no-effect integration path.
+
+The current Lat pipeline diagnostic integration combines pipeline error/stage state with Lat semantic diagnostic class, semantic error, diagnostic count, and first-diagnostic indices.
+
+The current Lat pipeline diagnostic main test audit verifies that the diagnostic integration is covered by both the focused guard and the main Lat pipeline test runner.
 
 The current Lat-specific LIR refinement makes Lat declarations and transition-source edges explicit in LIR while preserving source spans, counts, and no-effect flags.
 
@@ -94,15 +102,23 @@ It does not provide terminal control, interactive UI behavior, command behavior,
 
 ## Current Nucleus task boundary
 
-The Nucleus task execution lane has a contract, implementation plan, and first no-effect C classification/report implementation.
+The Nucleus task execution lane has a contract, implementation plan, first no-effect C classification/report implementation, and deterministic task report refinement.
 
-The current implementation provides denied-by-default task classification and deterministic task reports with explicit request kinds, effects, policies, denial reasons, authority metadata, preview prerequisites, and no-effect flags.
+Planning and implementation milestones preserved:
+
+```text
+Nucleus task execution implementation plan
+Nucleus task execution implementation
+Nucleus task report refinement
+```
+
+The current implementation provides denied-by-default task classification and deterministic task reports with explicit request kinds, effects, policies, denial reasons, authorization labels, prerequisite status, authority metadata, preview prerequisites, no-effect-chain status, and no-effect flags.
 
 It does not implement effect-performing Nucleus task execution, command behavior, mutation, network behavior, recovery behavior, hardware behavior, boot behavior, rollback, or production runtime claims.
 
 ## Current runtime boundary
 
-The runtime boundary lane now has a contract, implementation plan, and initial no-effect C API/report surface.
+The runtime boundary lane now has a contract, implementation plan, initial no-effect C API/report surface, no-effect Lat evidence refinement, runtime boundary report refinement, runtime boundary policy matrix refinement, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, and main-test audit coverage.
 
 Planning milestone preserved:
 
@@ -111,6 +127,10 @@ Runtime boundary implementation plan
 ```
 
 The current implementation adds the public runtime boundary header, source file, smoke invariants, report entry point, implementation record, and dedicated runtime-boundary workflow. It establishes a compileable boundary surface while preserving a disabled-by-default posture.
+
+The current runtime boundary domain matrix evaluator classifies resolved boundary domains as declarative, operational, future-gated, blocked, invalid, or unknown.
+
+The current runtime boundary domain matrix report integration renders deterministic report fields for matrix cell, domain label, domain flags, effect-allowed state, authority-available state, and evidence level.
 
 It does not implement effect-performing runtime behavior, command execution, Lat execution, LIR execution, task effect execution, mutation, file I/O, network I/O, recovery behavior, rollback, hardware behavior, boot behavior, terminal control, sandboxing, or production runtime claims.
 
@@ -134,12 +154,18 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane is moving from the L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape foundation, Lat parser foundation, Lat semantic validation foundation, Lat-to-LIR lowering contract, Lat-to-LIR lowering implementation plan, first no-effect Lat-to-LIR lowering implementation, first no-effect Lat pipeline implementation, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, runtime boundary contract, runtime boundary implementation plan, and initial runtime boundary API/smoke implementation toward runtime boundary refinement planning.
+The current technical lane has moved through L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape, LIR report refinement, Lat parser foundation, Lat semantic validation, Lat semantic diagnostics, Lat-to-LIR lowering, Lat pipeline, Lat pipeline report refinement, Lat pipeline diagnostic integration, Lat pipeline diagnostic main-test audit, Lat-specific LIR refinement, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, Nucleus task report refinement, runtime boundary contract, runtime boundary implementation plan, initial runtime boundary API/smoke implementation, runtime boundary refinement implementation, runtime boundary report refinement, runtime boundary policy matrix refinement, runtime boundary domain matrix refinement, and runtime boundary domain matrix report integration.
 
-The next recommended implementation lane is:
+The next recommended documentation lane is:
 
 ```text
-Runtime boundary refinement plan
+Project notes index alignment
+```
+
+After that, the next recommended review lane is:
+
+```text
+Current status and announcement consistency review
 ```
 
 ## Current non-claim
