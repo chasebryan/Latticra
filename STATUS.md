@@ -13,6 +13,7 @@ Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
 Latest runtime boundary report refinement note: 2026-05-18 23:10 CDT
 Latest runtime boundary policy matrix refinement note: 2026-05-18 23:55 CDT
 Latest runtime boundary domain matrix refinement note: 2026-05-19 14:10 CDT
+Latest runtime boundary domain matrix report integration note: 2026-05-19 16:20 CDT
 Latest Nucleus task report refinement note: 2026-05-19 00:15 CDT
 Latest announcement rollup note: 2026-05-19 15:05 CDT
 
@@ -38,18 +39,18 @@ docs/strategy/README.md
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 33% |
+| Overall Latticra system | 34% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 87% |
-| Public documentation posture | 81% |
-| Strategy/status/funding framework | 55% |
+| Foundation documents and contracts | 88% |
+| Public documentation posture | 82% |
+| Strategy/status/funding framework | 56% |
 | Lat / Latticra Programming Language | 24% |
 | LIR / Intermediate Representation | 22% |
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
-| Runtime / operating-system-universe direction | 15% |
+| Runtime / operating-system-universe direction | 16% |
 
-Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, 28%, 29%, 30%, 31%, and 32%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, 82%, 83%, 84%, 85%, and 86%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, 76%, 77%, 78%, 79%, and 80%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, 50%, 51%, 52%, 53%, and 54%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, 21%, and 23%; LIR / Intermediate Representation 11%, 18%, 19%, and 22%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, 11%, 13%, and 14%.
+Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, 28%, 29%, 30%, 31%, 32%, and 33%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, 82%, 83%, 84%, 85%, 86%, and 87%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, 76%, 77%, 78%, 79%, 80%, and 81%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, 50%, 51%, 52%, 53%, 54%, and 55%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, 21%, 23%, and 24%; LIR / Intermediate Representation 11%, 18%, 19%, and 22%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, 11%, 13%, 14%, and 15%.
 
 These percentages are planning estimates only. They are not release promises or production-readiness metrics.
 
@@ -89,6 +90,7 @@ Runtime boundary refinement implementation
 Runtime boundary report refinement
 Runtime boundary policy matrix refinement
 Runtime boundary domain matrix refinement
+Runtime boundary domain matrix report integration
 Nucleus task execution contract
 Nucleus task execution implementation plan
 Nucleus task execution implementation
@@ -100,8 +102,12 @@ Status announcements rollup
 ## Current next step
 
 ```text
-Runtime boundary domain matrix report integration
+RBDM report README/foundation index alignment
 ```
+
+## Current runtime boundary domain matrix report boundary
+
+The runtime boundary domain matrix now has deterministic report rendering for domain-matrix cell, domain label, known/operational/declarative/future-gated flags, effect-allowed status, authority-available status, and evidence level.
 
 ## Current Lat pipeline diagnostic boundary
 

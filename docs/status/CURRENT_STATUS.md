@@ -14,6 +14,7 @@ Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
 Latest runtime boundary report refinement note: 2026-05-18 23:10 CDT
 Latest runtime boundary policy matrix refinement note: 2026-05-18 23:55 CDT
 Latest runtime boundary domain matrix refinement note: 2026-05-19 14:10 CDT
+Latest runtime boundary domain matrix report integration note: 2026-05-19 16:20 CDT
 Latest Nucleus task report refinement note: 2026-05-19 00:15 CDT
 Scope: current progress, completion estimates, merged capability areas, and next priorities.
 
@@ -44,6 +45,7 @@ The repository currently emphasizes:
 - Runtime boundary report refinement;
 - Runtime boundary policy matrix refinement;
 - Runtime boundary domain matrix refinement;
+- Runtime boundary domain matrix report integration;
 - deterministic diagnostics;
 - source-span metadata;
 - semantic validation implementation;
@@ -89,6 +91,8 @@ The Runtime boundary policy matrix refinement adds explicit policy-matrix cell l
 
 The Runtime boundary domain matrix refinement adds a companion domain matrix evaluator for classifying resolved boundary domains as declarative, operational, future-gated, blocked, invalid, or unknown.
 
+The Runtime boundary domain matrix report integration adds deterministic report rendering for domain-matrix cell, domain label, domain flags, effect-allowed state, authority-available state, and evidence level.
+
 ## Direction checkpoint
 
 ```text
@@ -105,21 +109,21 @@ These percentages are planning estimates only.
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 33% |
+| Overall Latticra system | 34% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 87% |
-| Public documentation posture | 81% |
-| Strategy/status/funding framework | 55% |
+| Foundation documents and contracts | 88% |
+| Public documentation posture | 82% |
+| Strategy/status/funding framework | 56% |
 | Lat / Latticra Programming Language | 24% |
 | LIR / Intermediate Representation | 22% |
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
 | Nucleus real task execution | 11% |
-| Runtime / operating-system-universe direction | 15% |
+| Runtime / operating-system-universe direction | 16% |
 | Security-hardening implementation | 5% |
 | Public product readiness | 5% |
 
-Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, 28%, 29%, 30%, 31%, and 32%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, 82%, 83%, 84%, 85%, and 86%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, 76%, 77%, 78%, 79%, and 80%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, 50%, 51%, 52%, 53%, and 54%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, 21%, and 23%; LIR / Intermediate Representation 10%, 11%, 18%, 19%, and 22%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, 11%, 13%, and 14%.
+Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, 28%, 29%, 30%, 31%, 32%, and 33%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, 82%, 83%, 84%, 85%, 86%, and 87%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, 76%, 77%, 78%, 79%, 80%, and 81%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, 50%, 51%, 52%, 53%, 54%, and 55%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, 21%, 23%, and 24%; LIR / Intermediate Representation 10%, 11%, 18%, 19%, and 22%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, 11%, 13%, 14%, and 15%.
 
 ## Current implemented evidence areas
 
@@ -141,6 +145,7 @@ Runtime boundary refinement implementation
 Runtime boundary report refinement
 Runtime boundary policy matrix refinement
 Runtime boundary domain matrix refinement
+Runtime boundary domain matrix report integration
 Defensive threat model contract
 L-UI parser implementation
 semantic validation contract
@@ -206,7 +211,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, explicit runtime boundaries, runtime boundary domain matrix refinement, Lat semantic validation, Lat semantic diagnostics refinement, Lat-to-LIR metadata lowering, LIR report refinement, Lat pipeline reporting, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
+The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat-to-LIR metadata lowering, LIR report refinement, Lat pipeline reporting, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
 
 This is a mission direction, not a current security guarantee.
 
@@ -231,7 +236,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Lat pipeline diagnostic integration refinement
+Runtime boundary domain matrix report integration
 ```
 
 ## Previous implementation slice
@@ -239,7 +244,7 @@ Lat pipeline diagnostic integration refinement
 Previous implementation slice:
 
 ```text
-Runtime boundary domain matrix refinement
+Lat pipeline diagnostic integration refinement
 ```
 
 ## Earlier implementation slice
@@ -247,7 +252,7 @@ Runtime boundary domain matrix refinement
 Earlier implementation slice:
 
 ```text
-LIR report refinement
+Runtime boundary domain matrix refinement
 ```
 
 ## Next recommended work
@@ -255,14 +260,14 @@ LIR report refinement
 Recommended next work:
 
 ```text
-README and foundation index alignment
+RBDM report README/foundation index alignment
 ```
 
 After that:
 
 ```text
-Status announcements rollup
-Runtime boundary domain matrix report integration
+Runtime boundary domain matrix report status announcement
+Runtime boundary domain matrix report main test integration
 ```
 
 ## Update rule
