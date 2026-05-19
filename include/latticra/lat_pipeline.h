@@ -20,6 +20,17 @@ typedef enum {
     LATTICRA_LAT_PIPELINE_INTERNAL_ERROR = 7
 } latticra_lat_pipeline_error_t;
 
+typedef enum {
+    LATTICRA_LAT_PIPELINE_STAGE_NONE = 0,
+    LATTICRA_LAT_PIPELINE_STAGE_PARSE = 1,
+    LATTICRA_LAT_PIPELINE_STAGE_SEMANTIC = 2,
+    LATTICRA_LAT_PIPELINE_STAGE_LOWERING = 3,
+    LATTICRA_LAT_PIPELINE_STAGE_LIR = 4,
+    LATTICRA_LAT_PIPELINE_STAGE_EFFECT_CHECK = 5,
+    LATTICRA_LAT_PIPELINE_STAGE_REPORT = 6,
+    LATTICRA_LAT_PIPELINE_STAGE_UNKNOWN = 7
+} latticra_lat_pipeline_stage_t;
+
 typedef struct {
     latticra_status_t status;
     latticra_lat_pipeline_error_t error;
@@ -34,6 +45,14 @@ typedef struct {
     size_t clause_count;
     size_t node_count;
     size_t edge_count;
+    latticra_lat_pipeline_stage_t last_completed_stage;
+    latticra_lat_pipeline_stage_t failed_stage;
+    int parse_ok;
+    int semantic_ok;
+    int lowering_ok;
+    int lir_ok;
+    int no_effect_chain_ok;
+    unsigned int evidence_level;
     int semantic_valid;
     int no_effect;
     int execution_allowed;
@@ -44,6 +63,7 @@ typedef struct {
 } latticra_lat_pipeline_result_t;
 
 const char *latticra_lat_pipeline_error_label(latticra_lat_pipeline_error_t error);
+const char *latticra_lat_pipeline_stage_label(latticra_lat_pipeline_stage_t stage);
 
 latticra_status_t latticra_lat_pipeline_run_source(
     const char *source,
