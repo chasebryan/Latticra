@@ -16,6 +16,8 @@ Latest runtime boundary report refinement note: 2026-05-18 23:10 CDT
 Latest runtime boundary policy matrix refinement note: 2026-05-18 23:55 CDT
 Latest runtime boundary domain matrix refinement note: 2026-05-19 14:10 CDT
 Latest runtime boundary domain matrix report integration note: 2026-05-19 16:20 CDT
+Latest project notes alignment note: 2026-05-19 18:25 CDT
+Latest status and announcement consistency review note: 2026-05-19 18:35 CDT
 Latest Nucleus task report refinement note: 2026-05-19 00:15 CDT
 Scope: current progress, completion estimates, merged capability areas, and next priorities.
 
@@ -67,6 +69,10 @@ The repository currently emphasizes:
 - Lat-specific LIR refinement contract;
 - Lat-specific LIR refinement implementation plan;
 - Lat-specific LIR refinement implementation;
+- project notes current-direction alignment;
+- project notes upcoming-work alignment;
+- project notes index alignment;
+- status and announcement consistency review;
 - no-effect preview boundaries.
 
 Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The current lowering implementation consumes parser and semantic results, creates a `lat_module` LIR module shape, preserves source spans and no-effect flags, and emits deterministic lowering reports.
@@ -96,6 +102,10 @@ The Runtime boundary policy matrix refinement adds explicit policy-matrix cell l
 The Runtime boundary domain matrix refinement adds a companion domain matrix evaluator for classifying resolved boundary domains as declarative, operational, future-gated, blocked, invalid, or unknown.
 
 The Runtime boundary domain matrix report integration adds deterministic report rendering for domain-matrix cell, domain label, domain flags, effect-allowed state, authority-available state, and evidence level.
+
+The project notes are now aligned across current direction, upcoming work, and project-notes index surfaces.
+
+The current status and announcement consistency review confirms the public status and announcement surfaces now point to the same next review lane.
 
 ## Direction checkpoint
 
@@ -183,6 +193,10 @@ Constrained C++ authority layer implementation
 L-UI rendering contract
 L-UI rendering implementation plan
 L-UI rendering implementation
+project notes current-direction alignment
+project notes upcoming-work alignment
+project notes index alignment
+status and announcement consistency review
 security policy
 public legacy association guard
 strategy index
@@ -241,7 +255,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Runtime boundary domain matrix report integration
+Project notes index alignment
 ```
 
 ## Previous implementation slice
@@ -249,7 +263,7 @@ Runtime boundary domain matrix report integration
 Previous implementation slice:
 
 ```text
-Lat pipeline diagnostic integration refinement
+Current direction project notes alignment
 ```
 
 ## Earlier implementation slice
@@ -257,7 +271,7 @@ Lat pipeline diagnostic integration refinement
 Earlier implementation slice:
 
 ```text
-Runtime boundary domain matrix refinement
+Project notes upcoming work alignment
 ```
 
 ## Next recommended work
@@ -265,14 +279,14 @@ Runtime boundary domain matrix refinement
 Recommended next work:
 
 ```text
-Lat pipeline diagnostic README/foundation index alignment
+Completion percentage review after recent report/diagnostic/audit/project-notes slices
 ```
 
 After that:
 
 ```text
-Lat pipeline diagnostic status announcement
-Lat pipeline diagnostic current status rollup
+Strategy estimate review after project-notes refresh
+Current status detail rollup only if new drift appears
 ```
 
 ## Update rule
