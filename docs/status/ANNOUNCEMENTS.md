@@ -4,6 +4,7 @@ Status: public announcement log
 Last updated: 2026-05-16 16:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline diagnostic status announcement note: 2026-05-19 17:45 CDT
+Latest status and announcement consistency review note: 2026-05-19 18:35 CDT
 Latest announcement rollup note: 2026-05-19 15:05 CDT
 Latest RBDM report status announcement note: 2026-05-19 16:45 CDT
 Scope: dated public updates, status notes, and milestone announcements.
@@ -26,6 +27,42 @@ why it matters
 validation
 non-claims
 next step
+```
+
+## 2026-05-19 18:35 CDT — Current status and announcement consistency review
+
+Status: consistency review added
+
+Latticra completed a status-surface consistency review after the recent Lat pipeline diagnostic, RBDM report, and project-notes alignment slices.
+
+What changed:
+
+```text
+STATUS.md next-step queue reviewed
+docs/status/CURRENT_STATUS.md next recommended work aligned
+docs/status/ANNOUNCEMENTS.md latest next-step surface aligned
+project-notes surfaces confirmed as recently refreshed
+consistency review record added
+```
+
+Why it matters:
+
+The public status shortcut, detailed current status, announcement log, and project notes now point toward the same next review lane instead of older completed Lat diagnostic README/foundation follow-ups.
+
+Validation:
+
+```text
+sh scripts/test-project-strategy-status-framework.sh
+```
+
+Non-claims:
+
+This update does not implement runtime behavior, command execution, Lat execution, LIR execution, state mutation, file I/O, network I/O, server interaction, recovery behavior, hardware behavior, sandboxing, malware prevention, ransomware prevention, certification, accreditation, or operating-system behavior.
+
+Next step:
+
+```text
+Completion percentage review after recent report/diagnostic/audit/project-notes slices
 ```
 
 ## 2026-05-19 17:45 CDT — Lat pipeline diagnostic main test audit
