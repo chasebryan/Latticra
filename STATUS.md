@@ -11,6 +11,7 @@ Latest Lat pipeline diagnostic foundation index alignment note: 2026-05-19 17:35
 Latest Lat pipeline diagnostic status announcement note: 2026-05-19 17:45 CDT
 Latest Lat pipeline diagnostic README alignment note: 2026-05-19 17:55 CDT
 Latest project notes upcoming work alignment note: 2026-05-19 18:05 CDT
+Latest current direction project notes alignment note: 2026-05-19 18:15 CDT
 Latest Lat semantic diagnostics refinement note: 2026-05-19 00:35 CDT
 Latest LIR report refinement note: 2026-05-19 00:55 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
@@ -115,12 +116,13 @@ Status announcements rollup
 RBDM report README/foundation index alignment
 RBDM report status announcement
 Project notes upcoming work alignment
+Current direction project notes alignment
 ```
 
 ## Current next step
 
 ```text
-Current direction project notes alignment
+Project notes index alignment
 ```
 
 ## Current runtime boundary domain matrix report boundary
