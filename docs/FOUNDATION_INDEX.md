@@ -59,6 +59,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) — current progress, completion estimates, and next priorities.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — status record for the Lat pipeline diagnostic integration slice.
+- [`status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — status record for the Lat pipeline diagnostic main test audit slice.
 - [`status/RBDM_REPORT_INTEGRATION_STATUS.md`](status/RBDM_REPORT_INTEGRATION_STATUS.md) — status record for the runtime-boundary domain matrix report integration slice.
 - [`project_notes/README.md`](project_notes/README.md) — short project notes index.
 - [`project_notes/CURRENT_DIRECTION.md`](project_notes/CURRENT_DIRECTION.md) — current direction, target users, and technical lane.
@@ -122,6 +123,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LAT_PIPELINE_IMPLEMENTATION.md`](LAT_PIPELINE_IMPLEMENTATION.md) — first bounded no-effect Lat pipeline implementation.
 - [`LAT_PIPELINE_REPORT_REFINEMENT.md`](LAT_PIPELINE_REPORT_REFINEMENT.md) — Lat pipeline stage-summary and report refinement.
 - [`LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md`](LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md) — companion Lat pipeline diagnostic integration API and report.
+- [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_INTEGRATION_AUDIT.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_INTEGRATION_AUDIT.md) — main Lat pipeline runner audit for diagnostic integration coverage.
 - [`LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md`](LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md) — explicit Lat declaration node and transition-source edge refinement contract.
 - [`LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION_PLAN.md`](LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION_PLAN.md) — exact Lat-specific LIR enum, label, lowering, test, workflow, and compatibility plan.
 - [`LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION.md`](LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION.md) — first no-effect Lat-specific LIR refinement implementation.
@@ -223,6 +225,7 @@ Lat-to-LIR lowering implementation + invariants
 Lat pipeline implementation + invariants
 Lat pipeline report refinement + invariants
 Lat pipeline diagnostic integration refinement + invariants
+Lat pipeline diagnostic integration main test audit + invariants
 Lat-specific LIR refinement implementation + invariants
 L-UI string-literal escape contract + guardrails
 L-UI string-literal escape implementation plan + guardrails
@@ -235,7 +238,7 @@ L-UI rendering implementation + invariants
 The next implementation target should be:
 
 ```text
-Runtime boundary domain matrix report status announcement
+Lat pipeline diagnostic status announcement
 ```
 
-That target should update announcement/status surfaces for the completed RBDM report integration and preserve the public non-claims before any runtime behavior expands.
+That target should update announcement/status surfaces for the completed Lat pipeline diagnostic audit and preserve the public non-claims before any runtime behavior expands.
