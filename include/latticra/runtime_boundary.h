@@ -146,6 +146,17 @@ typedef enum {
     LATTICRA_RUNTIME_BOUNDARY_AUTH_RESERVED_FOR_FUTURE = 4
 } latticra_runtime_boundary_authorization_state_t;
 
+typedef enum {
+    LATTICRA_RUNTIME_BOUNDARY_MATRIX_NO_EFFECT_REPORT = 0,
+    LATTICRA_RUNTIME_BOUNDARY_MATRIX_NO_EFFECT_VALIDATION = 1,
+    LATTICRA_RUNTIME_BOUNDARY_MATRIX_NO_EFFECT_CLASSIFICATION = 2,
+    LATTICRA_RUNTIME_BOUNDARY_MATRIX_FUTURE_GATED_OPERATION = 3,
+    LATTICRA_RUNTIME_BOUNDARY_MATRIX_BLOCKED_EFFECT = 4,
+    LATTICRA_RUNTIME_BOUNDARY_MATRIX_PREREQUISITE_DENIED = 5,
+    LATTICRA_RUNTIME_BOUNDARY_MATRIX_INVALID = 6,
+    LATTICRA_RUNTIME_BOUNDARY_MATRIX_UNSUPPORTED = 7
+} latticra_runtime_boundary_policy_matrix_cell_t;
+
 typedef struct {
     latticra_status_t status;
     char status_label[LATTICRA_RUNTIME_BOUNDARY_LABEL_MAX];
@@ -190,6 +201,11 @@ typedef struct {
     latticra_runtime_boundary_report_classification_t report_classification;
     latticra_runtime_boundary_domain_t boundary_domain;
     latticra_runtime_boundary_authorization_state_t authorization_state;
+    latticra_runtime_boundary_policy_matrix_cell_t policy_matrix_cell;
+    int matrix_effect_allowed;
+    int matrix_mode_allowed;
+    int matrix_requires_authority;
+    int matrix_requires_future_gate;
     latticra_runtime_boundary_authority_summary_t authority;
     latticra_nucleus_task_policy_t task_policy;
     latticra_nucleus_task_denial_t task_reason;
@@ -256,6 +272,7 @@ const char *latticra_runtime_boundary_operator_confirmation_label(latticra_runti
 const char *latticra_runtime_boundary_report_classification_label(latticra_runtime_boundary_report_classification_t classification);
 const char *latticra_runtime_boundary_domain_label(latticra_runtime_boundary_domain_t domain);
 const char *latticra_runtime_boundary_authorization_state_label(latticra_runtime_boundary_authorization_state_t state);
+const char *latticra_runtime_boundary_policy_matrix_cell_label(latticra_runtime_boundary_policy_matrix_cell_t cell);
 
 latticra_status_t latticra_runtime_boundary_classify(
     const latticra_runtime_boundary_request_t *request,

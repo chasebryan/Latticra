@@ -110,6 +110,17 @@ const char *latticra_runtime_boundary_authorization_state_label(latticra_runtime
     return "unavailable";
 }
 
+const char *latticra_runtime_boundary_policy_matrix_cell_label(latticra_runtime_boundary_policy_matrix_cell_t cell) {
+    if (cell == LATTICRA_RUNTIME_BOUNDARY_MATRIX_NO_EFFECT_REPORT) return "no-effect-report";
+    if (cell == LATTICRA_RUNTIME_BOUNDARY_MATRIX_NO_EFFECT_VALIDATION) return "no-effect-validation";
+    if (cell == LATTICRA_RUNTIME_BOUNDARY_MATRIX_NO_EFFECT_CLASSIFICATION) return "no-effect-classification";
+    if (cell == LATTICRA_RUNTIME_BOUNDARY_MATRIX_FUTURE_GATED_OPERATION) return "future-gated-operation";
+    if (cell == LATTICRA_RUNTIME_BOUNDARY_MATRIX_BLOCKED_EFFECT) return "blocked-effect";
+    if (cell == LATTICRA_RUNTIME_BOUNDARY_MATRIX_PREREQUISITE_DENIED) return "prerequisite-denied";
+    if (cell == LATTICRA_RUNTIME_BOUNDARY_MATRIX_INVALID) return "invalid";
+    return "unsupported";
+}
+
 static const char *runtime_lat_pipeline_error_label(latticra_lat_pipeline_error_t error) {
     if (error == LATTICRA_LAT_PIPELINE_OK) return "ok";
     if (error == LATTICRA_LAT_PIPELINE_NULL_ARGUMENT) return "null_argument";
@@ -136,6 +147,25 @@ static int runtime_boundary_kind_is_future_gated(latticra_runtime_boundary_reque
 static int runtime_boundary_effect_is_no_effect(latticra_runtime_boundary_effect_t effect) {
     return effect == LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE ||
            effect == LATTICRA_RUNTIME_BOUNDARY_EFFECT_READ;
+}
+
+static int runtime_boundary_mode_matches_request_kind(const latticra_runtime_boundary_request_t *request) {
+    if (request == 0) return 0;
+    if ((request->request_kind == LATTICRA_RUNTIME_BOUNDARY_PARSE_ONLY ||
+         request->request_kind == LATTICRA_RUNTIME_BOUNDARY_RENDER_REPORT ||
+         request->request_kind == LATTICRA_RUNTIME_BOUNDARY_NUCLEUS_TASK_REPORT) &&
+        request->mode == LATTICRA_RUNTIME_BOUNDARY_MODE_REPORT_ONLY) return 1;
+    if ((request->request_kind == LATTICRA_RUNTIME_BOUNDARY_VALIDATE_ONLY ||
+         request->request_kind == LATTICRA_RUNTIME_BOUNDARY_LAT_VALIDATE ||
+         request->request_kind == LATTICRA_RUNTIME_BOUNDARY_LIR_VALIDATE ||
+         request->request_kind == LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK ||
+         request->request_kind == LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE) &&
+        request->mode == LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY) return 1;
+    if (request->request_kind == LATTICRA_RUNTIME_BOUNDARY_CLASSIFY_ONLY &&
+        request->mode == LATTICRA_RUNTIME_BOUNDARY_MODE_CLASSIFICATION_ONLY) return 1;
+    if (runtime_boundary_kind_is_future_gated(request->request_kind) &&
+        request->mode == LATTICRA_RUNTIME_BOUNDARY_MODE_REQUIRES_FUTURE_GATE) return 1;
+    return 0;
 }
 
 static latticra_runtime_boundary_domain_t runtime_boundary_domain_for_request(const latticra_runtime_boundary_request_t *request) {
@@ -179,6 +209,49 @@ static latticra_runtime_boundary_domain_t runtime_boundary_domain_for_request(co
     return LATTICRA_RUNTIME_BOUNDARY_DOMAIN_UNKNOWN;
 }
 
+static void finalize_policy_matrix_metadata(const latticra_runtime_boundary_request_t *request, latticra_runtime_boundary_result_t *result) {
+    if (result == 0) return;
+
+    result->record.matrix_requires_authority = request != 0 ? 1 : 0;
+    result->record.matrix_requires_future_gate = request != 0 && runtime_boundary_kind_is_future_gated(request->request_kind) ? 1 : 0;
+    result->record.matrix_effect_allowed = request != 0 && runtime_boundary_effect_is_no_effect(request->requested_effect) ? 1 : 0;
+    result->record.matrix_mode_allowed = runtime_boundary_mode_matches_request_kind(request);
+
+    if (request == 0 ||
+        result->record.denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_NULL_ARGUMENT ||
+        result->record.denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_UNKNOWN_REQUEST ||
+        result->record.denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_UNKNOWN_EFFECT) {
+        result->record.policy_matrix_cell = LATTICRA_RUNTIME_BOUNDARY_MATRIX_INVALID;
+        return;
+    }
+    if (result->record.policy == LATTICRA_RUNTIME_BOUNDARY_POLICY_ALLOW_REPORT) {
+        result->record.policy_matrix_cell = LATTICRA_RUNTIME_BOUNDARY_MATRIX_NO_EFFECT_REPORT;
+        return;
+    }
+    if (result->record.policy == LATTICRA_RUNTIME_BOUNDARY_POLICY_ALLOW_VALIDATION) {
+        result->record.policy_matrix_cell = LATTICRA_RUNTIME_BOUNDARY_MATRIX_NO_EFFECT_VALIDATION;
+        return;
+    }
+    if (result->record.policy == LATTICRA_RUNTIME_BOUNDARY_POLICY_ALLOW_CLASSIFICATION) {
+        result->record.policy_matrix_cell = LATTICRA_RUNTIME_BOUNDARY_MATRIX_NO_EFFECT_CLASSIFICATION;
+        return;
+    }
+    if (result->record.policy == LATTICRA_RUNTIME_BOUNDARY_POLICY_REQUIRES_FUTURE_GATE ||
+        runtime_boundary_kind_is_future_gated(request->request_kind)) {
+        result->record.policy_matrix_cell = LATTICRA_RUNTIME_BOUNDARY_MATRIX_FUTURE_GATED_OPERATION;
+        return;
+    }
+    if (!result->record.matrix_effect_allowed) {
+        result->record.policy_matrix_cell = LATTICRA_RUNTIME_BOUNDARY_MATRIX_BLOCKED_EFFECT;
+        return;
+    }
+    if (result->record.denial != LATTICRA_RUNTIME_BOUNDARY_DENIAL_OK) {
+        result->record.policy_matrix_cell = LATTICRA_RUNTIME_BOUNDARY_MATRIX_PREREQUISITE_DENIED;
+        return;
+    }
+    result->record.policy_matrix_cell = LATTICRA_RUNTIME_BOUNDARY_MATRIX_UNSUPPORTED;
+}
+
 static void finalize_report_refinement_metadata(const latticra_runtime_boundary_request_t *request, latticra_runtime_boundary_result_t *result) {
     if (result == 0) return;
 
@@ -191,6 +264,7 @@ static void finalize_report_refinement_metadata(const latticra_runtime_boundary_
         result->record.report_classification = LATTICRA_RUNTIME_BOUNDARY_REPORT_INVALID;
         result->record.authorization_state = LATTICRA_RUNTIME_BOUNDARY_AUTH_UNAVAILABLE;
         result->record.evidence_level = 0u;
+        finalize_policy_matrix_metadata(request, result);
         return;
     }
 
@@ -201,6 +275,7 @@ static void finalize_report_refinement_metadata(const latticra_runtime_boundary_
         result->record.report_classification = LATTICRA_RUNTIME_BOUNDARY_REPORT_DECLARATIVE;
         result->record.authorization_state = LATTICRA_RUNTIME_BOUNDARY_AUTH_NOT_REQUESTED;
         result->record.evidence_level = 2u;
+        finalize_policy_matrix_metadata(request, result);
         return;
     }
 
@@ -209,6 +284,7 @@ static void finalize_report_refinement_metadata(const latticra_runtime_boundary_
         result->record.report_classification = LATTICRA_RUNTIME_BOUNDARY_REPORT_BOUNDARY_SEEKING;
         result->record.authorization_state = LATTICRA_RUNTIME_BOUNDARY_AUTH_RESERVED_FOR_FUTURE;
         result->record.evidence_level = 1u;
+        finalize_policy_matrix_metadata(request, result);
         return;
     }
 
@@ -216,6 +292,7 @@ static void finalize_report_refinement_metadata(const latticra_runtime_boundary_
         result->record.report_classification = LATTICRA_RUNTIME_BOUNDARY_REPORT_DENIED;
         result->record.authorization_state = LATTICRA_RUNTIME_BOUNDARY_AUTH_DENIED;
         result->record.evidence_level = 1u;
+        finalize_policy_matrix_metadata(request, result);
         return;
     }
 
@@ -223,12 +300,14 @@ static void finalize_report_refinement_metadata(const latticra_runtime_boundary_
         result->record.report_classification = LATTICRA_RUNTIME_BOUNDARY_REPORT_DENIED;
         result->record.authorization_state = LATTICRA_RUNTIME_BOUNDARY_AUTH_DENIED;
         result->record.evidence_level = 1u;
+        finalize_policy_matrix_metadata(request, result);
         return;
     }
 
     result->record.report_classification = LATTICRA_RUNTIME_BOUNDARY_REPORT_DECLARATIVE;
     result->record.authorization_state = LATTICRA_RUNTIME_BOUNDARY_AUTH_NOT_REQUESTED;
     result->record.evidence_level = 1u;
+    finalize_policy_matrix_metadata(request, result);
 }
 
 static void seed_result(latticra_runtime_boundary_result_t *result) {
@@ -242,6 +321,8 @@ static void seed_result(latticra_runtime_boundary_result_t *result) {
     result->record.report_classification = LATTICRA_RUNTIME_BOUNDARY_REPORT_DENIED;
     result->record.boundary_domain = LATTICRA_RUNTIME_BOUNDARY_DOMAIN_UNKNOWN;
     result->record.authorization_state = LATTICRA_RUNTIME_BOUNDARY_AUTH_DENIED;
+    result->record.policy_matrix_cell = LATTICRA_RUNTIME_BOUNDARY_MATRIX_PREREQUISITE_DENIED;
+    result->record.matrix_requires_authority = 1;
     result->record.task_policy = LATTICRA_NUCLEUS_TASK_POLICY_DENY;
     result->record.task_reason = LATTICRA_NUCLEUS_TASK_DENIAL_IMPLEMENTATION_NOT_PRESENT;
     result->record.lat_lir_source_kind = LATTICRA_LIR_SOURCE_UNKNOWN;
@@ -463,7 +544,7 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
     if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
     buffer[0] = '\0';
     written = snprintf(buffer, buffer_len,
-        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nallowed_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nreport_classification=%s\nboundary_domain=%s\nauthorization_state=%s\nevidence_level=%u\nauthority_status=%d\nauthority_status_label=%s\nauthority_validator=%s\nauthority_requested_effect=%s\nauthority_reason=%s\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\ntask_executed=%d\ntask_mutation_allowed=%d\ntask_server_interaction_allowed=%d\ntask_recovery_allowed=%d\ntask_hardware_allowed=%d\nrender_status=%d\nrender_error=%d\nlat_status=%d\nlat_error=%d\nlir_status=%d\nlir_error=%d\nlat_pipeline_status=%d\nlat_pipeline_error=%s\nlat_pipeline_semantic_valid=%d\nlat_pipeline_source_len=%lu\nlat_pipeline_node_count=%lu\nlat_pipeline_edge_count=%lu\nlat_lir_source_kind=%s\nlat_lir_module_node_count=%lu\nlat_lir_transition_edge_count=%lu\nlat_lir_has_lat_state_nodes=%d\nlat_lir_has_lat_transition_nodes=%d\nlat_lir_has_transition_source_edges=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
+        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nallowed_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nreport_classification=%s\nboundary_domain=%s\nauthorization_state=%s\nevidence_level=%u\npolicy_matrix_cell=%s\nmatrix_effect_allowed=%d\nmatrix_mode_allowed=%d\nmatrix_requires_authority=%d\nmatrix_requires_future_gate=%d\nauthority_status=%d\nauthority_status_label=%s\nauthority_validator=%s\nauthority_requested_effect=%s\nauthority_reason=%s\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\ntask_executed=%d\ntask_mutation_allowed=%d\ntask_server_interaction_allowed=%d\ntask_recovery_allowed=%d\ntask_hardware_allowed=%d\nrender_status=%d\nrender_error=%d\nlat_status=%d\nlat_error=%d\nlir_status=%d\nlir_error=%d\nlat_pipeline_status=%d\nlat_pipeline_error=%s\nlat_pipeline_semantic_valid=%d\nlat_pipeline_source_len=%lu\nlat_pipeline_node_count=%lu\nlat_pipeline_edge_count=%lu\nlat_lir_source_kind=%s\nlat_lir_module_node_count=%lu\nlat_lir_transition_edge_count=%lu\nlat_lir_has_lat_state_nodes=%d\nlat_lir_has_lat_transition_nodes=%d\nlat_lir_has_transition_source_edges=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
         result->record.runtime_id,
         (unsigned long)result->record_count,
         latticra_runtime_boundary_request_kind_label(result->record.request_kind),
@@ -478,6 +559,11 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         latticra_runtime_boundary_domain_label(result->record.boundary_domain),
         latticra_runtime_boundary_authorization_state_label(result->record.authorization_state),
         result->record.evidence_level,
+        latticra_runtime_boundary_policy_matrix_cell_label(result->record.policy_matrix_cell),
+        result->record.matrix_effect_allowed,
+        result->record.matrix_mode_allowed,
+        result->record.matrix_requires_authority,
+        result->record.matrix_requires_future_gate,
         (int)result->record.authority.status,
         result->record.authority.status_label,
         result->record.authority.validator_label,

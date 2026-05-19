@@ -8,6 +8,7 @@ Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
 Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
 Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
 Latest runtime boundary report refinement note: 2026-05-18 23:10 CDT
+Latest runtime boundary policy matrix refinement note: 2026-05-18 23:55 CDT
 
 For the current project status, completion estimates, and next priorities, see:
 
@@ -31,18 +32,18 @@ docs/strategy/README.md
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 28% |
+| Overall Latticra system | 29% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 82% |
-| Public documentation posture | 76% |
-| Strategy/status/funding framework | 50% |
+| Foundation documents and contracts | 83% |
+| Public documentation posture | 77% |
+| Strategy/status/funding framework | 51% |
 | Lat / Latticra Programming Language | 21% |
 | LIR / Intermediate Representation | 19% |
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
-| Runtime / operating-system-universe direction | 11% |
+| Runtime / operating-system-universe direction | 13% |
 
-Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, and 27%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, and 81%; public documentation posture 68%, 69%, 72%, 73%, 74%, and 75%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, and 49%; Lat / Latticra Programming Language 10%, 12%, 18%, and 19%; LIR / Intermediate Representation 11%, 18%, and 19%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6% and 9%.
+Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, and 28%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, and 82%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, and 76%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, and 50%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, and 21%; LIR / Intermediate Representation 11%, 18%, and 19%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, and 11%.
 
 These percentages are planning estimates only. They are not release promises or production-readiness metrics.
 
@@ -77,6 +78,7 @@ Runtime boundary implementation
 Runtime boundary refinement plan
 Runtime boundary refinement implementation
 Runtime boundary report refinement
+Runtime boundary policy matrix refinement
 Nucleus task execution contract
 Nucleus task execution implementation plan
 Nucleus task execution implementation
@@ -86,12 +88,12 @@ L-UI rendering implementation
 ## Current next step
 
 ```text
-Runtime boundary policy matrix refinement
+Nucleus task report refinement
 ```
 
 ## Current runtime boundary refinement boundary
 
-The runtime boundary now carries no-effect Lat pipeline evidence and Lat-specific LIR evidence in records and reports. It also reports explicit classification, boundary-domain, authorization-state, and evidence-level fields for runtime-boundary requests while preserving disabled-by-default behavior and future-gated execution requests.
+The runtime boundary now carries no-effect Lat pipeline evidence and Lat-specific LIR evidence in records and reports. It also reports explicit classification, boundary-domain, authorization-state, evidence-level, and policy-matrix fields for runtime-boundary requests while preserving disabled-by-default behavior and future-gated execution requests.
 
 ## Current Lat pipeline boundary
 

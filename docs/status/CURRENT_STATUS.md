@@ -9,6 +9,7 @@ Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
 Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
 Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
 Latest runtime boundary report refinement note: 2026-05-18 23:10 CDT
+Latest runtime boundary policy matrix refinement note: 2026-05-18 23:55 CDT
 Scope: current progress, completion estimates, merged capability areas, and next priorities.
 
 ## Project status
@@ -35,6 +36,7 @@ The repository currently emphasizes:
 - Runtime boundary refinement plan;
 - Runtime boundary refinement implementation;
 - Runtime boundary report refinement;
+- Runtime boundary policy matrix refinement;
 - deterministic diagnostics;
 - source-span metadata;
 - semantic validation implementation;
@@ -65,6 +67,8 @@ The Runtime boundary refinement implementation reports Lat pipeline evidence and
 
 The Runtime boundary report refinement adds explicit report classification, boundary-domain labeling, authorization-state labeling, and evidence-level reporting so boundary intent is visible without granting runtime authority.
 
+The Runtime boundary policy matrix refinement adds explicit policy-matrix cell labels plus effect, mode, authority, and future-gate report fields so the runtime-boundary decision shape is easier to audit without changing denied-by-default behavior.
+
 ## Direction checkpoint
 
 ```text
@@ -81,21 +85,21 @@ These percentages are planning estimates only.
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 28% |
+| Overall Latticra system | 29% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 82% |
-| Public documentation posture | 76% |
-| Strategy/status/funding framework | 50% |
+| Foundation documents and contracts | 83% |
+| Public documentation posture | 77% |
+| Strategy/status/funding framework | 51% |
 | Lat / Latticra Programming Language | 21% |
 | LIR / Intermediate Representation | 19% |
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
 | Nucleus real task execution | 10% |
-| Runtime / operating-system-universe direction | 11% |
+| Runtime / operating-system-universe direction | 13% |
 | Security-hardening implementation | 5% |
 | Public product readiness | 5% |
 
-Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, and 27%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, and 81%; public documentation posture 68%, 69%, 72%, 73%, 74%, and 75%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, and 49%; Lat / Latticra Programming Language 10%, 12%, 18%, and 19%; LIR / Intermediate Representation 10%, 11%, 18%, and 19%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6% and 9%.
+Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, and 28%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, and 82%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, and 76%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, and 50%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, and 21%; LIR / Intermediate Representation 10%, 11%, 18%, and 19%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, and 11%.
 
 ## Current implemented evidence areas
 
@@ -114,6 +118,7 @@ Runtime boundary implementation
 Runtime boundary refinement plan
 Runtime boundary refinement implementation
 Runtime boundary report refinement
+Runtime boundary policy matrix refinement
 Defensive threat model contract
 L-UI parser implementation
 semantic validation contract
@@ -176,7 +181,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, explicit runtime boundaries, Lat semantic validation, Lat-to-LIR metadata lowering, Lat pipeline reporting, Lat pipeline report refinement, Lat-specific LIR refinement, runtime boundary evidence reporting, and runtime boundary report refinement.
+The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, explicit runtime boundaries, Lat semantic validation, Lat-to-LIR metadata lowering, Lat pipeline reporting, Lat pipeline report refinement, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
 
 This is a mission direction, not a current security guarantee.
 
@@ -201,7 +206,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Lat pipeline report refinement
+Runtime boundary policy matrix refinement
 ```
 
 ## Previous implementation slice
@@ -209,7 +214,7 @@ Lat pipeline report refinement
 Previous implementation slice:
 
 ```text
-Runtime boundary report refinement
+Lat pipeline report refinement
 ```
 
 ## Earlier implementation slice
@@ -217,7 +222,7 @@ Runtime boundary report refinement
 Earlier implementation slice:
 
 ```text
-Runtime boundary refinement implementation
+Runtime boundary report refinement
 ```
 
 ## Next recommended work
@@ -225,14 +230,14 @@ Runtime boundary refinement implementation
 Recommended next work:
 
 ```text
-Runtime boundary policy matrix refinement
+Nucleus task report refinement
 ```
 
 After that:
 
 ```text
-Nucleus task report refinement
 Lat semantic diagnostics refinement
+LIR report refinement
 ```
 
 ## Update rule
