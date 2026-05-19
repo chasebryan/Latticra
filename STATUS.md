@@ -4,6 +4,7 @@ Status: public status shortcut
 Last updated: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
+Latest Lat pipeline diagnostic integration note: 2026-05-19 14:20 CDT
 Latest Lat semantic diagnostics refinement note: 2026-05-19 00:35 CDT
 Latest LIR report refinement note: 2026-05-19 00:55 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
@@ -11,6 +12,7 @@ Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
 Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
 Latest runtime boundary report refinement note: 2026-05-18 23:10 CDT
 Latest runtime boundary policy matrix refinement note: 2026-05-18 23:55 CDT
+Latest runtime boundary domain matrix refinement note: 2026-05-19 14:10 CDT
 Latest Nucleus task report refinement note: 2026-05-19 00:15 CDT
 
 For the current project status, completion estimates, and next priorities, see:
@@ -35,18 +37,18 @@ docs/strategy/README.md
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 32% |
+| Overall Latticra system | 33% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 86% |
-| Public documentation posture | 80% |
-| Strategy/status/funding framework | 54% |
-| Lat / Latticra Programming Language | 23% |
+| Foundation documents and contracts | 87% |
+| Public documentation posture | 81% |
+| Strategy/status/funding framework | 55% |
+| Lat / Latticra Programming Language | 24% |
 | LIR / Intermediate Representation | 22% |
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
-| Runtime / operating-system-universe direction | 14% |
+| Runtime / operating-system-universe direction | 15% |
 
-Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, 28%, 29%, 30%, and 31%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, 82%, 83%, 84%, and 85%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, 76%, 77%, 78%, and 79%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, 50%, 51%, 52%, and 53%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, and 21%; LIR / Intermediate Representation 11%, 18%, and 19%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, 11%, 13%, and 14%.
+Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, 28%, 29%, 30%, 31%, and 32%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, 82%, 83%, 84%, 85%, and 86%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, 76%, 77%, 78%, 79%, and 80%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, 50%, 51%, 52%, 53%, and 54%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, 21%, and 23%; LIR / Intermediate Representation 11%, 18%, 19%, and 22%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, 11%, 13%, and 14%.
 
 These percentages are planning estimates only. They are not release promises or production-readiness metrics.
 
@@ -72,9 +74,11 @@ Lat pipeline contract
 Lat pipeline implementation plan
 Lat pipeline implementation
 Lat pipeline report refinement
+Lat pipeline diagnostic integration refinement
 Lat-specific LIR refinement contract
 Lat-specific LIR refinement implementation plan
 Lat-specific LIR refinement implementation
+LIR report refinement
 Constrained C++ authority layer implementation plan
 Runtime boundary contract
 Runtime boundary implementation plan
@@ -83,6 +87,7 @@ Runtime boundary refinement plan
 Runtime boundary refinement implementation
 Runtime boundary report refinement
 Runtime boundary policy matrix refinement
+Runtime boundary domain matrix refinement
 Nucleus task execution contract
 Nucleus task execution implementation plan
 Nucleus task execution implementation
@@ -93,8 +98,16 @@ L-UI rendering implementation
 ## Current next step
 
 ```text
-Runtime boundary domain matrix refinement
+Lat pipeline diagnostic integration status record
 ```
+
+## Current Lat pipeline diagnostic boundary
+
+The Lat pipeline now has a companion diagnostic integration surface that combines pipeline error/stage state with Lat semantic diagnostic class, semantic error, diagnostic count, and first-diagnostic indices while preserving no-execution behavior.
+
+## Current runtime boundary domain matrix boundary
+
+The runtime boundary now has a companion domain matrix evaluator for classifying resolved boundary domains as declarative, operational, future-gated, blocked, invalid, or unknown.
 
 ## Current LIR boundary
 
