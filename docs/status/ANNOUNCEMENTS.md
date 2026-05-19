@@ -3,6 +3,7 @@
 Status: public announcement log
 Last updated: 2026-05-16 16:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
+Latest Lat pipeline diagnostic status announcement note: 2026-05-19 17:45 CDT
 Latest announcement rollup note: 2026-05-19 15:05 CDT
 Latest RBDM report status announcement note: 2026-05-19 16:45 CDT
 Scope: dated public updates, status notes, and milestone announcements.
@@ -25,6 +26,43 @@ why it matters
 validation
 non-claims
 next step
+```
+
+## 2026-05-19 17:45 CDT — Lat pipeline diagnostic main test audit
+
+Status: audit coverage added
+
+Latticra added an audit guard proving that the Lat pipeline diagnostic integration is covered by the main Lat pipeline test runner, not only by a focused companion guard.
+
+What changed:
+
+```text
+main Lat pipeline runner coverage verified
+Lat pipeline diagnostic companion sources verified in main runner
+Lat pipeline diagnostic integration test verified in main runner
+Lat Pipeline workflow coverage verified
+status record and foundation index references aligned
+```
+
+Why it matters:
+
+The Lat pipeline diagnostic integration now has two layers of coverage: focused diagnostic tests and the broader main pipeline test runner. This makes the diagnostic surface harder to accidentally disconnect from normal pipeline validation.
+
+Validation:
+
+```text
+sh scripts/test-lat-pipeline-diagnostic-main-test-integration-audit.sh
+sh scripts/test-lat-pipeline.sh
+```
+
+Non-claims:
+
+This update does not implement Lat execution, Lat compilation, Lat interpretation, LIR execution, runtime behavior, command execution, state mutation, file I/O, network I/O, server interaction, recovery behavior, hardware behavior, sandboxing, malware prevention, ransomware prevention, certification, accreditation, or operating-system behavior.
+
+Next step:
+
+```text
+Lat pipeline diagnostic README alignment
 ```
 
 ## 2026-05-19 16:45 CDT — Runtime boundary domain matrix report integration
