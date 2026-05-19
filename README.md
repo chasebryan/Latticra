@@ -38,7 +38,7 @@ Runtime boundary: disabled-by-default line before operational behavior
 
 ## Current implementation posture
 
-The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, Runtime boundary refinement plan, Runtime boundary refinement implementation, Runtime boundary report refinement, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, Lat pipeline report refinement, Lat-specific LIR refinement implementation, and state-lattice models.
+The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, Runtime boundary refinement plan, Runtime boundary refinement implementation, Runtime boundary report refinement, Runtime boundary policy matrix refinement, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, Lat pipeline report refinement, Lat-specific LIR refinement implementation, and state-lattice models.
 
 Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The current lowering implementation consumes parser and semantic metadata, preserves source spans and no-effect flags, emits deterministic lowering reports, and materializes a `lat_module` LIR shape without executing Lat.
 
@@ -51,6 +51,8 @@ The Lat-specific LIR refinement now gives Lat declarations explicit LIR node kin
 The Runtime boundary refinement implementation now carries no-effect Lat pipeline evidence and Lat-specific LIR evidence through runtime-boundary records and reports. It adds a validation-only `lat-pipeline-validate` request path while preserving disabled-by-default behavior and future-gated execution requests.
 
 The Runtime boundary report refinement now adds deterministic report classification, boundary-domain labeling, authorization-state labeling, and evidence-level reporting. These fields describe boundary intent; they do not grant runtime authority or execute effects.
+
+The Runtime boundary policy matrix refinement now adds deterministic policy-matrix metadata for matrix cell, effect allowance, mode allowance, authority requirement, and future-gate requirement. These fields make the policy decision shape easier to audit without changing the denied-by-default runtime boundary.
 
 Current implementation remains report/classification oriented. It is not active runtime behavior.
 
@@ -81,6 +83,7 @@ Important records:
 - [`docs/RUNTIME_BOUNDARY_REFINEMENT_PLAN.md`](docs/RUNTIME_BOUNDARY_REFINEMENT_PLAN.md)
 - [`docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md`](docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md)
 - [`docs/RUNTIME_BOUNDARY_REPORT_REFINEMENT.md`](docs/RUNTIME_BOUNDARY_REPORT_REFINEMENT.md)
+- [`docs/RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md`](docs/RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md)
 - [`docs/L_UI_RENDERING_IMPLEMENTATION.md`](docs/L_UI_RENDERING_IMPLEMENTATION.md)
 - [`docs/LAT_LANGUAGE_FOUNDATION_ANALYSIS.md`](docs/LAT_LANGUAGE_FOUNDATION_ANALYSIS.md)
 - [`docs/LAT_SEMANTIC_VALIDATION_CONTRACT.md`](docs/LAT_SEMANTIC_VALIDATION_CONTRACT.md)
@@ -151,6 +154,13 @@ Runtime boundary report refinement is covered by:
 
 ```sh
 sh scripts/test-runtime-boundary-report-refinement.sh
+sh scripts/test-runtime-boundary.sh
+```
+
+Runtime boundary policy matrix refinement is covered by:
+
+```sh
+sh scripts/test-runtime-boundary-policy-matrix-refinement.sh
 sh scripts/test-runtime-boundary.sh
 ```
 
