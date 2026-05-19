@@ -32,6 +32,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`RUNTIME_BOUNDARY_REPORT_REFINEMENT.md`](RUNTIME_BOUNDARY_REPORT_REFINEMENT.md) — deterministic runtime-boundary report classification, domain, authorization, and evidence fields.
 - [`RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md`](RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md) — runtime-boundary policy matrix metadata and invariant tests.
 - [`RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md`](RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md) — companion domain matrix evaluator for resolved runtime-boundary domains.
+- [`RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md`](RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md) — deterministic report rendering for runtime-boundary domain matrix results.
 - [`L_UI_RENDERING_CONTRACT.md`](L_UI_RENDERING_CONTRACT.md) — first L-UI rendering contract before renderer implementation.
 - [`L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI rendering implementation plan before renderer code.
 - [`L_UI_RENDERING_IMPLEMENTATION.md`](L_UI_RENDERING_IMPLEMENTATION.md) — first no-effect C L-UI renderer implementation.
@@ -58,6 +59,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) — current progress, completion estimates, and next priorities.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — status record for the Lat pipeline diagnostic integration slice.
+- [`status/RBDM_REPORT_INTEGRATION_STATUS.md`](status/RBDM_REPORT_INTEGRATION_STATUS.md) — status record for the runtime-boundary domain matrix report integration slice.
 - [`project_notes/README.md`](project_notes/README.md) — short project notes index.
 - [`project_notes/CURRENT_DIRECTION.md`](project_notes/CURRENT_DIRECTION.md) — current direction, target users, and technical lane.
 - [`project_notes/UPCOMING_WORK.md`](project_notes/UPCOMING_WORK.md) — recommended next slices and near-term queue.
@@ -79,6 +81,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`RUNTIME_BOUNDARY_REPORT_REFINEMENT.md`](RUNTIME_BOUNDARY_REPORT_REFINEMENT.md) — runtime-boundary report refinement implementation.
 - [`RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md`](RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md) — runtime-boundary policy matrix refinement implementation.
 - [`RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md`](RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md) — runtime-boundary domain matrix refinement record.
+- [`RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md`](RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md) — runtime-boundary domain matrix report integration record.
 - [`L_UI_STATIC_REPORT.md`](L_UI_STATIC_REPORT.md) — terminal-facing L-UI static report fixture for Nucleus/state rails.
 - [`L_UI_SOURCE_GRAMMAR.md`](L_UI_SOURCE_GRAMMAR.md) — L-UI source grammar draft and `.lui` fixture guardrails.
 - [`L_UI_PARSER_DESIGN.md`](L_UI_PARSER_DESIGN.md) — parser design contract, error categories, no-effect constraints, and implementation gate.
@@ -164,6 +167,7 @@ Runtime boundary implementation + smoke invariants
 Runtime boundary report refinement + invariants
 Runtime boundary policy matrix refinement + invariants
 Runtime boundary domain matrix refinement + invariants
+Runtime boundary domain matrix report integration + invariants
 L-UI static report fixture + rail invariants
 L-UI source grammar draft + fixture guardrails
 L-UI parser design contract + guardrails
@@ -231,7 +235,7 @@ L-UI rendering implementation + invariants
 The next implementation target should be:
 
 ```text
-Status announcements rollup
+Runtime boundary domain matrix report status announcement
 ```
 
-That target should align `docs/status/ANNOUNCEMENTS.md` with the recent no-effect slices and preserve the public non-claims before any runtime behavior expands.
+That target should update announcement/status surfaces for the completed RBDM report integration and preserve the public non-claims before any runtime behavior expands.
