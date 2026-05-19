@@ -3,6 +3,7 @@
 Status: public announcement log
 Last updated: 2026-05-16 16:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
+Latest announcement rollup note: 2026-05-19 15:05 CDT
 Scope: dated public updates, status notes, and milestone announcements.
 
 ## Purpose
@@ -23,6 +24,52 @@ why it matters
 validation
 non-claims
 next step
+```
+
+## 2026-05-19 15:05 CDT — Recent no-effect refinement rollup
+
+Status: public rollup added
+
+Latticra completed a sequence of no-effect refinement slices that strengthen reporting, diagnostics, and evidence visibility across Lat, LIR, Nucleus, and the runtime boundary.
+
+What changed:
+
+```text
+Runtime boundary report refinement
+Runtime boundary policy matrix refinement
+Runtime boundary domain matrix refinement
+Nucleus task report refinement
+Lat semantic diagnostics refinement
+LIR report refinement
+Lat pipeline report refinement
+Lat pipeline diagnostic integration refinement
+README and foundation index alignment
+Current status detail alignment
+```
+
+Why it matters:
+
+The project now has more explicit evidence surfaces for classification, domains, policy posture, diagnostic class, graph shape, pipeline stage, and no-effect-chain status. These make the system easier to audit without claiming runtime authority.
+
+Validation:
+
+```text
+sh scripts/test-runtime-boundary.sh
+sh scripts/test-runtime-boundary-domain-matrix-refinement.sh
+sh scripts/test-nucleus-task-execution.sh
+sh scripts/test-lat-semantic-validation.sh
+sh scripts/test-lir-shape.sh
+sh scripts/test-lat-pipeline.sh
+```
+
+Non-claims:
+
+This rollup does not implement runtime behavior, command execution, Lat execution, LIR execution, task effect execution, state mutation, file I/O, network I/O, server interaction, recovery behavior, hardware behavior, sandboxing, malware prevention, ransomware prevention, certification, accreditation, or operating-system behavior.
+
+Next step:
+
+```text
+Runtime boundary domain matrix report integration
 ```
 
 ## 2026-05-18 21:30 CDT — Lat-specific LIR refinement implementation
