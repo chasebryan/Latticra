@@ -18,6 +18,7 @@ Latest runtime boundary domain matrix refinement note: 2026-05-19 14:10 CDT
 Latest runtime boundary domain matrix report integration note: 2026-05-19 16:20 CDT
 Latest project notes alignment note: 2026-05-19 18:25 CDT
 Latest status and announcement consistency review note: 2026-05-19 18:35 CDT
+Latest completion percentage review note: 2026-05-19 18:45 CDT
 Latest Nucleus task report refinement note: 2026-05-19 00:15 CDT
 Scope: current progress, completion estimates, merged capability areas, and next priorities.
 
@@ -73,6 +74,7 @@ The repository currently emphasizes:
 - project notes upcoming-work alignment;
 - project notes index alignment;
 - status and announcement consistency review;
+- completion percentage review;
 - no-effect preview boundaries.
 
 Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The current lowering implementation consumes parser and semantic results, creates a `lat_module` LIR module shape, preserves source spans and no-effect flags, and emits deterministic lowering reports.
@@ -107,6 +109,8 @@ The project notes are now aligned across current direction, upcoming work, and p
 
 The current status and announcement consistency review confirms the public status and announcement surfaces now point to the same next review lane.
 
+The completion percentage review conservatively updates planning estimates after the recent report, diagnostic, audit, README, foundation-index, project-notes, and status-consistency slices.
+
 ## Direction checkpoint
 
 ```text
@@ -123,21 +127,21 @@ These percentages are planning estimates only.
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 34% |
+| Overall Latticra system | 35% |
 | L-UI parser / AST / string foundation | 86% |
-| Foundation documents and contracts | 88% |
-| Public documentation posture | 82% |
-| Strategy/status/funding framework | 56% |
-| Lat / Latticra Programming Language | 24% |
+| Foundation documents and contracts | 89% |
+| Public documentation posture | 83% |
+| Strategy/status/funding framework | 57% |
+| Lat / Latticra Programming Language | 25% |
 | LIR / Intermediate Representation | 22% |
 | C/C++ foundation direction | 14% |
 | Constrained C++ authority layer | 4% |
 | Nucleus real task execution | 11% |
-| Runtime / operating-system-universe direction | 16% |
+| Runtime / operating-system-universe direction | 17% |
 | Security-hardening implementation | 5% |
 | Public product readiness | 5% |
 
-Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, 28%, 29%, 30%, 31%, 32%, and 33%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, 82%, 83%, 84%, 85%, 86%, and 87%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, 76%, 77%, 78%, 79%, 80%, and 81%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, 50%, 51%, 52%, 53%, 54%, and 55%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, 21%, 23%, and 24%; LIR / Intermediate Representation 10%, 11%, 18%, 19%, and 22%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, 11%, 13%, 14%, and 15%.
+Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, 28%, 29%, 30%, 31%, 32%, 33%, and 34%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, 82%, 83%, 84%, 85%, 86%, 87%, and 88%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, 76%, 77%, 78%, 79%, 80%, 81%, and 82%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, 50%, 51%, 52%, 53%, 54%, 55%, and 56%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, 21%, 23%, and 24%; LIR / Intermediate Representation 10%, 11%, 18%, 19%, and 22%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, 11%, 13%, 14%, 15%, and 16%.
 
 ## Current implemented evidence areas
 
@@ -197,6 +201,7 @@ project notes current-direction alignment
 project notes upcoming-work alignment
 project notes index alignment
 status and announcement consistency review
+completion percentage review
 security policy
 public legacy association guard
 strategy index
@@ -255,7 +260,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Project notes index alignment
+Completion percentage review
 ```
 
 ## Previous implementation slice
@@ -263,7 +268,7 @@ Project notes index alignment
 Previous implementation slice:
 
 ```text
-Current direction project notes alignment
+Current status and announcement consistency review
 ```
 
 ## Earlier implementation slice
@@ -271,7 +276,7 @@ Current direction project notes alignment
 Earlier implementation slice:
 
 ```text
-Project notes upcoming work alignment
+Project notes index alignment
 ```
 
 ## Next recommended work
@@ -279,14 +284,14 @@ Project notes upcoming work alignment
 Recommended next work:
 
 ```text
-Completion percentage review after recent report/diagnostic/audit/project-notes slices
+Strategy estimate review after project-notes refresh
 ```
 
 After that:
 
 ```text
-Strategy estimate review after project-notes refresh
 Current status detail rollup only if new drift appears
+C++ authority implementation review after initial no-effect validator/audit slice
 ```
 
 ## Update rule
