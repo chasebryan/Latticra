@@ -1,0 +1,21 @@
+name: LIR Report Refinement
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  lir-report-refinement:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run LIR report refinement guard
+        run: sh scripts/test-lir-report-refinement.sh
+      - name: Run LIR shape tests
+        run: sh scripts/test-lir-shape.sh
