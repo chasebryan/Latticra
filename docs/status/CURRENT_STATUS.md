@@ -19,6 +19,7 @@ Latest runtime boundary domain matrix report integration note: 2026-05-19 16:20 
 Latest project notes alignment note: 2026-05-19 18:25 CDT
 Latest status and announcement consistency review note: 2026-05-19 18:35 CDT
 Latest completion percentage review note: 2026-05-19 18:45 CDT
+Latest strategy estimate review note: 2026-05-19 18:45 CDT
 Latest Nucleus task report refinement note: 2026-05-19 00:15 CDT
 Scope: current progress, completion estimates, merged capability areas, and next priorities.
 
@@ -75,6 +76,7 @@ The repository currently emphasizes:
 - project notes index alignment;
 - status and announcement consistency review;
 - completion percentage review;
+- strategy estimate review;
 - no-effect preview boundaries.
 
 Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The current lowering implementation consumes parser and semantic results, creates a `lat_module` LIR module shape, preserves source spans and no-effect flags, and emits deterministic lowering reports.
@@ -110,6 +112,8 @@ The project notes are now aligned across current direction, upcoming work, and p
 The current status and announcement consistency review confirms the public status and announcement surfaces now point to the same next review lane.
 
 The completion percentage review conservatively updates planning estimates after the recent report, diagnostic, audit, README, foundation-index, project-notes, and status-consistency slices.
+
+The strategy estimate review records the current planning estimate posture in the strategy layer while preserving the original dated strategy record as historical context.
 
 ## Direction checkpoint
 
@@ -202,6 +206,7 @@ project notes upcoming-work alignment
 project notes index alignment
 status and announcement consistency review
 completion percentage review
+strategy estimate review
 security policy
 public legacy association guard
 strategy index
@@ -260,7 +265,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Completion percentage review
+Strategy estimate review
 ```
 
 ## Previous implementation slice
@@ -268,7 +273,7 @@ Completion percentage review
 Previous implementation slice:
 
 ```text
-Current status and announcement consistency review
+Completion percentage review
 ```
 
 ## Earlier implementation slice
@@ -276,7 +281,7 @@ Current status and announcement consistency review
 Earlier implementation slice:
 
 ```text
-Project notes index alignment
+Current status and announcement consistency review
 ```
 
 ## Next recommended work
@@ -284,14 +289,14 @@ Project notes index alignment
 Recommended next work:
 
 ```text
-Strategy estimate review after project-notes refresh
+C++ authority implementation review after initial no-effect validator/audit slice
 ```
 
 After that:
 
 ```text
 Current status detail rollup only if new drift appears
-C++ authority implementation review after initial no-effect validator/audit slice
+C++ authority status/docs alignment if review changes public posture
 ```
 
 ## Update rule
