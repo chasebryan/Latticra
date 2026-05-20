@@ -1,7 +1,7 @@
 # Latticra Status Index
 
 Status: active status index
-Last updated: 2026-05-20 03:20 CDT
+Last updated: 2026-05-20 03:50 CDT
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
 ## Purpose
@@ -36,6 +36,7 @@ non-claims
 - [`NUCLEUS_TASK_README_STATUS_ALIGNMENT.md`](NUCLEUS_TASK_README_STATUS_ALIGNMENT.md) — Nucleus task README/status alignment.
 - [`NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md`](NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md) — Nucleus task report-only execution refinement status.
 - [`NUCLEUS_TASK_REPORT_ONLY_EXECUTION_README_STATUS_ALIGNMENT.md`](NUCLEUS_TASK_REPORT_ONLY_EXECUTION_README_STATUS_ALIGNMENT.md) — Nucleus task report-only execution README/status alignment.
+- [`PROJECT_NOTES_NUCLEUS_ANNOUNCEMENT_README_ALIGNMENT_STATUS_CHECK.md`](PROJECT_NOTES_NUCLEUS_ANNOUNCEMENT_README_ALIGNMENT_STATUS_CHECK.md) — project-notes Nucleus announcement README alignment status/index check.
 - [`PROJECT_NOTES_NUCLEUS_REPORT_ONLY_ALIGNMENT_STATUS_INDEX_CHECK.md`](PROJECT_NOTES_NUCLEUS_REPORT_ONLY_ALIGNMENT_STATUS_INDEX_CHECK.md) — project-notes Nucleus report-only alignment status/index check.
 - [`PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`](PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md) — public entry-point consistency scan.
 - [`PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md`](PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md) — project-notes follow-up status/index check.
