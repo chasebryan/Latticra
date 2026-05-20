@@ -1,7 +1,7 @@
 # Latticra Current Status
 
 Status: public status record
-Last updated: 2026-05-16 16:15 CDT
+Last updated: 2026-05-20 01:45 CDT
 Latest Lat-to-LIR lowering note: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
@@ -18,6 +18,7 @@ Latest C++ authority expansion contract review note: 2026-05-19 20:55 CDT
 Latest Nucleus task no-effect report alignment note: 2026-05-19 21:15 CDT
 Latest Nucleus task README/status alignment note: 2026-05-19 21:25 CDT
 Latest Nucleus task report-only execution refinement note: 2026-05-19 21:35 CDT
+Latest Nucleus task report-only execution README/status alignment note: 2026-05-20 01:45 CDT
 Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
 Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
 Latest runtime boundary report refinement note: 2026-05-18 23:10 CDT
@@ -77,6 +78,7 @@ The repository currently emphasizes:
 - Nucleus task no-effect report alignment;
 - Nucleus task README/status alignment;
 - Nucleus task report-only execution refinement;
+- Nucleus task report-only execution README/status alignment;
 - Runtime boundary contract;
 - Runtime boundary implementation plan;
 - Runtime boundary implementation;
@@ -162,6 +164,8 @@ The Nucleus task README/status alignment makes that no-effect report alignment d
 
 The Nucleus task report-only execution refinement adds explicit execution-status, effect-status, and runtime-status labels to Nucleus task records and deterministic reports while preserving no-effect, non-executing behavior.
 
+The Nucleus task report-only execution README/status alignment makes the report-only execution refinement discoverable from README, root status, current status, status index, and foundation index without changing implementation behavior.
+
 The Runtime boundary refinement implementation reports Lat pipeline evidence and Lat-specific LIR evidence at the runtime boundary while preserving disabled-by-default, no-effect classification behavior.
 
 The Runtime boundary report refinement adds explicit report classification, boundary-domain labeling, authorization-state labeling, and evidence-level reporting so boundary intent is visible without granting runtime authority.
@@ -227,6 +231,7 @@ Nucleus task report refinement
 Nucleus task no-effect report alignment
 Nucleus task README/status alignment
 Nucleus task report-only execution refinement
+Nucleus task report-only execution README/status alignment
 Runtime boundary contract
 Runtime boundary implementation plan
 Runtime boundary implementation
@@ -347,7 +352,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Nucleus task report-only execution refinement
+Nucleus task report-only execution README/status alignment
 ```
 
 ## Previous implementation slice
@@ -355,7 +360,7 @@ Nucleus task report-only execution refinement
 Previous implementation slice:
 
 ```text
-Nucleus task README/status alignment
+Nucleus task report-only execution refinement
 ```
 
 ## Earlier implementation slice
@@ -363,7 +368,7 @@ Nucleus task README/status alignment
 Earlier implementation slice:
 
 ```text
-Nucleus task no-effect report alignment
+Nucleus task README/status alignment
 ```
 
 ## Next recommended work
@@ -371,13 +376,13 @@ Nucleus task no-effect report alignment
 Recommended next work:
 
 ```text
-Nucleus task report-only execution README/status alignment
+Completion estimate review only if capability posture changes
 ```
 
 After that:
 
 ```text
-Completion estimate review only if capability posture changes
+Continue small guarded report/status alignment only when drift appears
 ```
 
 ## Update rule
