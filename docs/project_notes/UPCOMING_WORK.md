@@ -1,11 +1,11 @@
 # Latticra Upcoming Work
 
 Status: active project note
-Last updated: 2026-05-19 18:05 CDT
+Last updated: 2026-05-19 19:55 CDT
 
 ## Purpose
 
-This note tracks the near-term work queue after the recent no-effect Lat, LIR, Nucleus, and runtime-boundary refinements.
+This note tracks the near-term work queue after the recent no-effect Lat, LIR, Nucleus, runtime-boundary, authority review, status, announcement, foundation-index, and public-entry alignment slices.
 
 The project remains evidence-bound and report/classification oriented. The queue should continue to prefer small, reviewable, guarded slices over broad runtime behavior.
 
@@ -67,18 +67,31 @@ Nucleus task execution implementation plan
 ## Latest completed implementation slice
 
 ```text
-Lat pipeline diagnostic README alignment
+Public entry-point consistency scan
 ```
 
 Purpose completed:
 
 ```text
-align the public README with the Lat pipeline diagnostic integration and main-test audit records while preserving guard-required project identity and non-claim language
+refresh README, status index, current status, and root status so public entry points list the newest authority review, completion review, announcement review, and public-entry scan records
 ```
 
 ## Previous implementation slices
 
 ```text
+Status announcement review index alignment
+Status announcement review
+Authority foundation index alignment
+Current status detail rollup
+Authority status/docs alignment
+Authority implementation review
+Strategy estimate review
+Completion percentage review
+Current status and announcement consistency review
+Project notes index alignment
+Current direction project notes alignment
+Project notes upcoming work alignment
+Lat pipeline diagnostic README alignment
 Lat pipeline diagnostic status announcement
 Lat pipeline diagnostic foundation index alignment
 Lat pipeline diagnostic status/docs alignment
@@ -116,28 +129,26 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Current direction project notes alignment
+Project notes follow-up alignment status/index check
 ```
 
 Purpose:
 
 ```text
-update docs/project_notes/CURRENT_DIRECTION.md so the project notes match the current Lat pipeline diagnostic, RBDM report, runtime-boundary, and no-effect status surfaces
+verify the project-notes refresh is reflected from root status, current status, status index, and foundation index without changing implementation behavior
 ```
 
 ## Near-term queue
 
-1. Current direction project notes alignment.
-2. Project notes index alignment.
-3. Current status and announcement consistency review after the project-notes refresh.
-4. Runtime boundary domain matrix report status audit only if new status drift appears.
-5. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
-6. Completion percentage review after the recent report/diagnostic/audit slices.
-7. Strategy estimate review after the project-notes refresh.
-8. C++ authority implementation review after initial no-effect validator/audit slice.
-9. L-UI rendering detailed report refinement after initial renderer implementation.
-10. Nucleus task execution refinement only after the next language representation review.
-11. Defensive threat model validation refinement.
+1. Project notes follow-up alignment status/index check.
+2. Authority status announcement only if public messaging changes.
+3. Completion estimate review only if capability posture changes.
+4. C++ authority expansion contract only if new authority behavior is proposed.
+5. L-UI rendering detailed report refinement after public entry-point surfaces remain stable.
+6. Nucleus task execution refinement only after the next language representation review.
+7. Defensive threat model validation refinement.
+8. Runtime boundary domain matrix report status audit only if new status drift appears.
+9. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
 
 ## Quality rules
 
@@ -165,7 +176,7 @@ consistent with the C/C++ foundation direction
 - Keep Lat-specific LIR refinement no-effect and metadata-only.
 - Keep Lat pipeline diagnostic integration no-effect and metadata-only.
 - Keep Runtime boundary domain matrix report integration report-only and no-effect.
-- Move next into current direction project notes alignment.
+- Move next into project notes follow-up alignment status/index check.
 - Maintain professional public docs.
 - Keep status and completion estimates current.
 - Keep Lat metadata-only until separate execution contracts exist.

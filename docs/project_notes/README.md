@@ -1,7 +1,7 @@
 # Latticra Project Notes
 
 Status: active project notes index
-Last updated: 2026-05-19 18:25 CDT
+Last updated: 2026-05-19 19:55 CDT
 
 ## Purpose
 
@@ -11,8 +11,8 @@ The project notes are intentionally lighter than the foundation documents. They 
 
 ## Files
 
-- `CURRENT_DIRECTION.md` — current technical lane, boundaries, non-claims, and project direction after the recent Lat pipeline diagnostic, RBDM report, Nucleus task, and runtime-boundary refinements.
-- `UPCOMING_WORK.md` — current near-term queue after the recent no-effect report, diagnostic, audit, README, foundation-index, and project-notes alignment slices.
+- `CURRENT_DIRECTION.md` — current technical lane, boundaries, non-claims, and project direction after the recent Lat pipeline diagnostic, RBDM report, authority review, public entry-point, Nucleus task, and runtime-boundary refinements.
+- `UPCOMING_WORK.md` — current near-term queue after the recent no-effect report, diagnostic, audit, README, foundation-index, announcement, public-entry, and project-notes alignment slices.
 
 ## Current note posture
 
@@ -35,11 +35,16 @@ consistent with the no-effect runtime boundary
 ## Related records
 
 - `STATUS.md`
+- `README.md`
 - `docs/status/CURRENT_STATUS.md`
 - `docs/status/ANNOUNCEMENTS.md`
+- `docs/status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`
+- `docs/status/STATUS_ANNOUNCEMENT_REVIEW.md`
+- `docs/status/CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md`
 - `docs/status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`
 - `docs/status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`
 - `docs/status/RBDM_REPORT_INTEGRATION_STATUS.md`
+- `docs/CPP_AUTHORITY_IMPLEMENTATION_REVIEW.md`
 - `docs/strategy/README.md`
 - `docs/FOUNDATION_INDEX.md`
 
