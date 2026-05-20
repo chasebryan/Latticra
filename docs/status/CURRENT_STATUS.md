@@ -1,7 +1,7 @@
 # Latticra Current Status
 
 Status: public status record
-Last updated: 2026-05-20 03:00 CDT
+Last updated: 2026-05-20 03:20 CDT
 Latest Lat-to-LIR lowering note: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
@@ -22,6 +22,7 @@ Latest Nucleus task report-only execution README/status alignment note: 2026-05-
 Latest project notes Nucleus report-only alignment note: 2026-05-20 02:20 CDT
 Latest project notes Nucleus report-only status/index check note: 2026-05-20 02:45 CDT
 Latest Nucleus report-only announcement review note: 2026-05-20 03:00 CDT
+Latest Nucleus report-only announcement README alignment note: 2026-05-20 03:20 CDT
 Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
 Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
 Latest runtime boundary report refinement note: 2026-05-18 23:10 CDT
@@ -72,6 +73,7 @@ The repository currently emphasizes:
 - project notes Nucleus report-only alignment;
 - project notes Nucleus report-only status/index check;
 - Nucleus report-only announcement review;
+- Nucleus report-only announcement README alignment;
 - language representation review;
 - L-UI rendering implementation;
 - L-UI rendering detailed report refinement;
@@ -178,6 +180,8 @@ The project notes Nucleus report-only status/index check verifies that the proje
 
 The Nucleus report-only announcement review confirms that no separate public announcement entry is needed because the recent Nucleus report-only and project-notes slices were documentation/status alignment only, with no capability posture or public-product-readiness change.
 
+The Nucleus report-only announcement README alignment makes the no-new-announcement review discoverable from README and the project-notes index without adding a public announcement entry or changing implementation behavior.
+
 The Runtime boundary refinement implementation reports Lat pipeline evidence and Lat-specific LIR evidence at the runtime boundary while preserving disabled-by-default, no-effect classification behavior.
 
 The Runtime boundary report refinement adds explicit report classification, boundary-domain labeling, authorization-state labeling, and evidence-level reporting so boundary intent is visible without granting runtime authority.
@@ -247,6 +251,7 @@ Nucleus task report-only execution README/status alignment
 Project notes Nucleus report-only alignment
 Project notes Nucleus report-only status/index check
 Nucleus report-only announcement review
+Nucleus report-only announcement README alignment
 Runtime boundary contract
 Runtime boundary implementation plan
 Runtime boundary implementation
@@ -367,7 +372,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Nucleus report-only announcement review
+Nucleus report-only announcement README alignment
 ```
 
 ## Previous implementation slice
@@ -375,7 +380,7 @@ Nucleus report-only announcement review
 Previous implementation slice:
 
 ```text
-Project notes Nucleus report-only status/index check
+Nucleus report-only announcement review
 ```
 
 ## Earlier implementation slice
@@ -383,7 +388,7 @@ Project notes Nucleus report-only status/index check
 Earlier implementation slice:
 
 ```text
-Project notes Nucleus report-only alignment
+Project notes Nucleus report-only status/index check
 ```
 
 ## Next recommended work
