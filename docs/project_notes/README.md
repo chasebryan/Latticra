@@ -1,7 +1,7 @@
 # Latticra Project Notes
 
 Status: active project notes index
-Last updated: 2026-05-20 03:20 CDT
+Last updated: 2026-05-20 03:55 CDT
 
 ## Purpose
 
@@ -42,6 +42,7 @@ consistent with no-new-announcement decisions unless capability posture changes
 - `docs/status/ANNOUNCEMENTS.md`
 - `docs/status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_REVIEW.md`
 - `docs/status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_README_ALIGNMENT.md`
+- `docs/status/PROJECT_NOTES_NUCLEUS_ANNOUNCEMENT_README_ALIGNMENT_STATUS_CHECK.md`
 - `docs/status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md`
 - `docs/status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_README_STATUS_ALIGNMENT.md`
 - `docs/status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`
