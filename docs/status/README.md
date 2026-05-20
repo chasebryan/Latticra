@@ -1,7 +1,7 @@
 # Latticra Status Index
 
 Status: active status index
-Last updated: 2026-05-19 21:05 CDT
+Last updated: 2026-05-19 21:15 CDT
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
 ## Purpose
@@ -30,6 +30,7 @@ non-claims
 - [`LANGUAGE_REPRESENTATION_REVIEW.md`](LANGUAGE_REPRESENTATION_REVIEW.md) — language representation review before Nucleus refinement.
 - [`L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md`](L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md) — L-UI rendering detailed report refinement status.
 - [`L_UI_RENDERING_README_STATUS_ALIGNMENT.md`](L_UI_RENDERING_README_STATUS_ALIGNMENT.md) — L-UI rendering README/status alignment.
+- [`NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md`](NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md) — Nucleus task no-effect report alignment status.
 - [`PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`](PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md) — public entry-point consistency scan.
 - [`PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md`](PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md) — project-notes follow-up status/index check.
 - [`STATUS_ANNOUNCEMENT_REVIEW.md`](STATUS_ANNOUNCEMENT_REVIEW.md) — status announcement review.

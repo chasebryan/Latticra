@@ -45,8 +45,11 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) — current progress, completion estimates, and next priorities.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
+- [`status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
 - [`status/CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md`](status/CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md) — status record for the constrained C++ authority implementation review.
+- [`status/LANGUAGE_REPRESENTATION_REVIEW.md`](status/LANGUAGE_REPRESENTATION_REVIEW.md) — language representation review before no-effect Nucleus refinement.
 - [`status/L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md`](status/L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md) — status record for the L-UI rendering detailed report refinement.
+- [`status/NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md`](status/NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md) — status record for the Nucleus task no-effect report alignment refinement.
 - [`status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — status record for the Lat pipeline diagnostic integration slice.
 - [`status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — status record for the Lat pipeline diagnostic main test audit slice.
 - [`status/RBDM_REPORT_INTEGRATION_STATUS.md`](status/RBDM_REPORT_INTEGRATION_STATUS.md) — status record for the runtime-boundary domain matrix report integration slice.
@@ -68,6 +71,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md) — exact future Nucleus task API, structs, enums, reports, buffers, tests, and non-claims before task execution code.
 - [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md) — first no-effect task classification, denied-by-default policy, authority prerequisites, deterministic reports, and invariants.
 - [`NUCLEUS_TASK_REPORT_REFINEMENT.md`](NUCLEUS_TASK_REPORT_REFINEMENT.md) — Nucleus task report refinement metadata, tests, guard, and workflow.
+- [`NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT.md`](NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT.md) — explicit no-effect report alignment labels for Nucleus task records and reports.
 - [`RUNTIME_BOUNDARY_CONTRACT.md`](RUNTIME_BOUNDARY_CONTRACT.md) — first runtime boundary, disabled-by-default posture, denied effects, prerequisites, report surface, and non-claims before runtime code.
 - [`RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md`](RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md) — exact future runtime API, structs, enums, reports, buffers, tests, task usage, authority usage, and non-claims before runtime boundary code.
 - [`RUNTIME_BOUNDARY_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_IMPLEMENTATION.md) — first runtime boundary public API, source surface, smoke invariants, dedicated runner, and dedicated workflow record.
@@ -142,6 +146,7 @@ Nucleus task execution contract + guardrails
 Nucleus task execution implementation plan + guardrails
 Nucleus task execution implementation + invariants
 Nucleus task report refinement + invariants
+Nucleus task no-effect report alignment + invariants
 Runtime boundary contract + guardrails
 Runtime boundary implementation plan + guardrails
 Runtime boundary implementation + smoke invariants
@@ -172,7 +177,7 @@ L-UI rendering detailed report refinement + invariants
 The next implementation target should be:
 
 ```text
-L-UI rendering detailed report README/status alignment
+Nucleus task no-effect report README/status alignment
 ```
 
-That target should update public entry points after the detailed report refinement while preserving the public non-claims before any runtime behavior expands.
+That target should update public entry points after the Nucleus no-effect report alignment while preserving the public non-claims before any runtime behavior expands.

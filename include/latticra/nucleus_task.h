@@ -177,6 +177,9 @@ typedef struct {
     latticra_nucleus_task_authorization_state_t authorization_state;
     int prerequisites_satisfied;
     int no_effect_chain_ok;
+    char report_alignment[LATTICRA_NUCLEUS_TASK_LABEL_MAX];
+    char no_effect_policy[LATTICRA_NUCLEUS_TASK_LABEL_MAX];
+    char representation_gate[LATTICRA_NUCLEUS_TASK_LABEL_MAX];
     latticra_nucleus_task_authority_summary_t authority;
     char source_identity[LATTICRA_NUCLEUS_TASK_SOURCE_IDENTITY_MAX];
     latticra_l_ui_source_span_t source_span;
