@@ -1,0 +1,21 @@
+name: Kernel Lifecycle Subsystem Summary
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  kernel-lifecycle-subsystem-summary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run kernel lifecycle subsystem summary guard
+        run: sh scripts/test-kernel-lifecycle-subsystem-summary.sh
+      - name: Run kernel lifecycle subsystem summary report runner guard
+        run: sh scripts/test-kernel-lifecycle-subsystem-summary-report-runner.sh
