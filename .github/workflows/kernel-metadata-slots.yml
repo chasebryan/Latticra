@@ -1,0 +1,21 @@
+name: Kernel Metadata Slots
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  kernel-metadata-slots:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run kernel metadata slot guard
+        run: sh scripts/test-kernel-scheduler.sh
+      - name: Run kernel metadata slot report guard
+        run: sh scripts/test-kernel-scheduler-report-runner.sh
