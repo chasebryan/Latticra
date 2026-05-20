@@ -28,6 +28,15 @@ require_absent() {
   fi
 }
 
+require_absent_section() {
+  section="$1"
+  file="$2"
+  if grep -Eq "^[[:space:]]*${section}([[:space:]]|$)" "$file"; then
+    printf 'fedora local rpm static validation: unexpected section in %s: %s\n' "$file" "$section" >&2
+    exit 1
+  fi
+}
+
 require_file docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
 require_file docs/FEDORA_LOCAL_RPM_VALIDATION_PLAN.md
 require_file packaging/fedora/latticra.spec
@@ -54,10 +63,10 @@ require_contains '%install' packaging/fedora/latticra.spec
 require_contains '%files' packaging/fedora/latticra.spec
 require_contains '%changelog' packaging/fedora/latticra.spec
 
-require_absent '%pre' packaging/fedora/latticra.spec
-require_absent '%post' packaging/fedora/latticra.spec
-require_absent '%preun' packaging/fedora/latticra.spec
-require_absent '%postun' packaging/fedora/latticra.spec
+require_absent_section '%pre' packaging/fedora/latticra.spec
+require_absent_section '%post' packaging/fedora/latticra.spec
+require_absent_section '%preun' packaging/fedora/latticra.spec
+require_absent_section '%postun' packaging/fedora/latticra.spec
 require_absent '.service' packaging/fedora/latticra.spec
 require_absent '%{_bindir}' packaging/fedora/latticra.spec
 require_absent '%{_sbindir}' packaging/fedora/latticra.spec
