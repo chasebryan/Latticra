@@ -1,7 +1,7 @@
 # Latticra Status Index
 
 Status: active status index
-Last updated: 2026-05-15 22:49 CDT
+Last updated: 2026-05-19 18:55 CDT
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
 ## Purpose
@@ -22,6 +22,12 @@ non-claims
 
 - [`CURRENT_STATUS.md`](CURRENT_STATUS.md) — current project status, completion estimates, and next priorities.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
+- [`COMPLETION_PERCENTAGE_REVIEW.md`](COMPLETION_PERCENTAGE_REVIEW.md) — latest completion-percentage planning review.
+- [`STATUS_ANNOUNCEMENT_CONSISTENCY_REVIEW.md`](STATUS_ANNOUNCEMENT_CONSISTENCY_REVIEW.md) — status/announcement consistency review.
+- [`CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md`](CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md) — constrained C++ authority implementation review status.
+- [`LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — Lat pipeline diagnostic integration status.
+- [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — Lat pipeline diagnostic main-test audit status.
+- [`RBDM_REPORT_INTEGRATION_STATUS.md`](RBDM_REPORT_INTEGRATION_STATUS.md) — runtime-boundary domain matrix report integration status.
 
 ## Status update rules
 
