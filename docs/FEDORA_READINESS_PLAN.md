@@ -1,0 +1,227 @@
+# Fedora Readiness Plan
+
+Status: planning and compatibility record
+Scope: preparing Latticra for Fedora-friendly packaging, testing, and community review.
+
+## Purpose
+
+This plan prepares Latticra for a future Fedora-facing path without claiming Fedora acceptance, endorsement, official inclusion, or distribution status.
+
+The near-term target is:
+
+```text
+Latticra builds cleanly on Fedora Linux.
+Latticra can be described honestly as an upstream project preparing for Fedora package review.
+Latticra avoids Fedora trademark confusion.
+Latticra preserves its current non-claims.
+```
+
+## Terminology boundary
+
+Use:
+
+```text
+Fedora readiness
+Fedora packaging readiness
+Fedora compatibility lane
+Latticra on Fedora
+future package review candidate
+```
+
+Avoid claiming:
+
+```text
+official Fedora package
+Fedora spin
+Fedora remix
+Fedora edition
+Fedora merger
+Fedora endorsement
+operating-system replacement
+```
+
+Those terms require separate Fedora community, packaging, legal, and trademark review.
+
+## Fedora-facing requirements to respect
+
+Before Latticra can be proposed as a package candidate, it should be checked against Fedora package review expectations:
+
+```text
+package naming
+spec file hygiene
+Fedora allowed license posture
+accurate License field
+license text handling
+source archive reproducibility
+successful build on supported architectures where claimed
+BuildRequires completeness
+no bundled system libraries
+valid file ownership
+valid permissions
+rpmlint or equivalent package lint output
+mock build readiness
+```
+
+## Current Latticra posture
+
+Current Latticra evidence is still early-stage and report-oriented.
+
+Known current posture:
+
+```text
+kernel lifecycle evidence exists
+final_state=memory-map-ready
+external_effect_performed=0
+runtime_entry_allowed=0
+scheduler_execution_allowed=0
+memory_allocation_allowed=0
+not bootable
+not installer-ready
+not a Fedora derivative
+not a production operating system
+```
+
+This makes the first Fedora-facing target a development package or source package candidate, not a distribution, image, spin, remix, or replacement operating system.
+
+## Phase 1: Fedora build lane
+
+Add a Fedora build/test lane that proves the project compiles with Fedora toolchains.
+
+Suggested future files:
+
+```text
+scripts/test-fedora-build-lane.sh
+.github/workflows/fedora-build-lane.yml
+```
+
+Initial checks should be conservative:
+
+```text
+C compiler available
+project C guards compile
+kernel lifecycle guards compile
+no external authority claims added
+```
+
+## Phase 2: package metadata lane
+
+Add packaging metadata only after the Fedora build lane is clean.
+
+Suggested future files:
+
+```text
+packaging/fedora/latticra.spec
+packaging/fedora/README.md
+scripts/test-fedora-spec-static.sh
+.github/workflows/fedora-spec-static.yml
+```
+
+The first spec should be treated as a local development draft until it passes review.
+
+## Phase 3: license and source audit lane
+
+Before any package submission, verify:
+
+```text
+root license state
+file-level SPDX state
+license text included as needed
+third-party material inventory
+documentation license decision
+trademark and branding boundary
+```
+
+This should align with the existing Latticra license migration plan.
+
+## Phase 4: local RPM and mock lane
+
+After package metadata exists, add local package validation:
+
+```text
+rpmbuild source package
+rpmlint output captured
+mock build validated
+installed files inspected
+uninstall behavior checked
+```
+
+This lane should remain local or Copr-oriented until the project is mature enough for review.
+
+## Phase 5: Fedora review candidate lane
+
+Only after the earlier lanes pass should Latticra be described as a Fedora review candidate.
+
+A future review-prep document should include:
+
+```text
+upstream URL
+source archive URL
+package summary
+package description
+license expression
+BuildRequires list
+runtime Requires list
+rpmlint output
+mock build output
+known non-claims
+```
+
+## Trademark and naming posture
+
+The project should not use Fedora marks in a way that suggests official status.
+
+Preferred naming:
+
+```text
+Latticra Fedora readiness
+Latticra package draft for Fedora
+Latticra on Fedora Linux
+```
+
+Avoid naming:
+
+```text
+Fedora Latticra
+Latticra Fedora Edition
+Fedora Latticra OS
+Official Fedora Latticra
+```
+
+## Non-claims
+
+This plan does not:
+
+```text
+submit Latticra to Fedora
+create a Fedora package
+create a Fedora spin
+create a Fedora remix
+claim Fedora endorsement
+claim Fedora legal approval
+claim production readiness
+claim operating-system completeness
+```
+
+## Recommended next slice
+
+Recommended next slice:
+
+```text
+Add Fedora build lane plan
+```
+
+That should define the exact build/test commands for Fedora Linux before adding RPM packaging files.
+
+## Validation
+
+This planning slice is guarded by:
+
+```sh
+sh scripts/test-fedora-readiness-plan.sh
+```
+
+Expected output:
+
+```text
+fedora_readiness_plan: ok
+```
