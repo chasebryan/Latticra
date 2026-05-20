@@ -10,6 +10,7 @@ Latest Lat pipeline diagnostic main test audit note: 2026-05-19 17:15 CDT
 Latest Lat semantic diagnostics refinement note: 2026-05-19 00:35 CDT
 Latest LIR report refinement note: 2026-05-19 00:55 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
+Latest language representation review note: 2026-05-19 21:05 CDT
 Latest L-UI rendering detailed report refinement note: 2026-05-19 20:25 CDT
 Latest L-UI rendering README/status alignment note: 2026-05-19 20:35 CDT
 Latest L-UI completion estimate review note: 2026-05-19 20:45 CDT
@@ -61,6 +62,7 @@ The repository currently emphasizes:
 - public entry-point consistency scan;
 - project notes follow-up alignment;
 - project notes follow-up status/index check;
+- language representation review;
 - L-UI rendering implementation;
 - L-UI rendering detailed report refinement;
 - L-UI rendering README/status alignment;
@@ -119,6 +121,8 @@ The Lat pipeline diagnostic integration refinement adds a companion diagnostic i
 The Lat pipeline diagnostic main test audit verifies that the companion diagnostic integration is covered by both the focused guard and the main Lat pipeline test runner.
 
 The Lat-specific LIR refinement gives Lat declarations explicit LIR node kinds and a transition-source edge kind. This improves inspectability of Lat-derived LIR without changing no-effect behavior or adding execution.
+
+The language representation review confirms that the Lat, LIR, and L-UI representation stack is stable enough for a bounded no-effect Nucleus report/refinement slice, while still forbidding Lat execution, LIR execution, runtime behavior, command execution, mutation, file I/O, network I/O, recovery behavior, and hardware behavior.
 
 The LIR report refinement adds deterministic report classification, graph-shape labels, edge-kind summary counts, no-effect-chain status, and evidence level while preserving lowering outcomes and non-execution behavior.
 
@@ -243,6 +247,7 @@ Lat pipeline diagnostic integration main test audit
 Lat-specific LIR refinement contract
 Lat-specific LIR refinement implementation plan
 Lat-specific LIR refinement implementation
+language representation review
 C/C++ foundation direction
 Constrained C++ authority layer contract
 Constrained C++ authority layer implementation plan
@@ -327,7 +332,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-C++ authority expansion contract review
+Language representation review
 ```
 
 ## Previous implementation slice
@@ -335,7 +340,7 @@ C++ authority expansion contract review
 Previous implementation slice:
 
 ```text
-L-UI completion estimate review
+C++ authority expansion contract review
 ```
 
 ## Earlier implementation slice
@@ -343,7 +348,7 @@ L-UI completion estimate review
 Earlier implementation slice:
 
 ```text
-L-UI rendering README/status alignment
+L-UI completion estimate review
 ```
 
 ## Next recommended work
@@ -351,13 +356,13 @@ L-UI rendering README/status alignment
 Recommended next work:
 
 ```text
-Nucleus task execution refinement only after the next language representation review
+Nucleus task execution no-effect report alignment
 ```
 
 After that:
 
 ```text
-C++ authority expansion contract only if new authority behavior is proposed
+Nucleus task execution refinement only if it remains no-effect and report-only
 ```
 
 ## Update rule
