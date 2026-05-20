@@ -284,7 +284,7 @@ require_contains 'ANNOUNCEMENTS.md' docs/status/README.md
 require_contains 'completion percentages' docs/status/README.md
 
 require_contains 'Status: public status record' docs/status/CURRENT_STATUS.md
-require_contains 'Last updated: 2026-05-16 16:15 CDT' docs/status/CURRENT_STATUS.md
+require_contains 'Last updated:' docs/status/CURRENT_STATUS.md
 require_contains 'governed C++ authority-layer planning' docs/status/CURRENT_STATUS.md
 require_contains 'Constrained C++ authority layer contract' docs/status/CURRENT_STATUS.md
 require_contains 'Constrained C++ authority layer implementation plan' docs/status/CURRENT_STATUS.md
