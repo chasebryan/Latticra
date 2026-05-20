@@ -1,0 +1,21 @@
+name: Kernel Subsystem Registry
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  kernel-subsystem-registry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run kernel subsystem registry guard
+        run: sh scripts/test-kernel-subsystem-registry.sh
+      - name: Run kernel subsystem registry report runner guard
+        run: sh scripts/test-kernel-subsystem-registry-report-runner.sh
