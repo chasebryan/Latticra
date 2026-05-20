@@ -20,26 +20,11 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md) — governed C++ policy, validator, effect-gate, audit, ownership, lifetime, allocation, exception, and boundary contract before implementation.
 - [`CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION_PLAN.md) — Constrained C++ authority layer implementation plan for exact API, namespace, file path, build, exception, RTTI, allocation, ownership, C ABI, validator, audit report, and test planning before implementation code.
 - [`CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md) — first no-effect constrained C++ authority implementation.
-- [`NUCLEUS_TASK_EXECUTION_CONTRACT.md`](NUCLEUS_TASK_EXECUTION_CONTRACT.md) — first denied-by-default Nucleus task execution contract before task execution code.
-- [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md) — exact Nucleus task execution implementation plan before task execution code.
-- [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md) — first no-effect C Nucleus task classification/report implementation.
-- [`NUCLEUS_TASK_REPORT_REFINEMENT.md`](NUCLEUS_TASK_REPORT_REFINEMENT.md) — deterministic Nucleus task report classification, domains, authorization states, prerequisite status, and no-effect-chain status.
-- [`RUNTIME_BOUNDARY_CONTRACT.md`](RUNTIME_BOUNDARY_CONTRACT.md) — first disabled-by-default runtime boundary contract before runtime behavior.
-- [`RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md`](RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md) — exact runtime boundary implementation plan before runtime boundary code.
-- [`RUNTIME_BOUNDARY_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_IMPLEMENTATION.md) — first no-effect runtime boundary API, smoke tests, runner, and implementation record.
-- [`RUNTIME_BOUNDARY_REFINEMENT_PLAN.md`](RUNTIME_BOUNDARY_REFINEMENT_PLAN.md) — no-effect runtime boundary refinement planning after Lat pipeline and Lat-specific LIR evidence.
-- [`RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md) — runtime-boundary evidence refinement implementation.
-- [`RUNTIME_BOUNDARY_REPORT_REFINEMENT.md`](RUNTIME_BOUNDARY_REPORT_REFINEMENT.md) — deterministic runtime-boundary report classification, domain, authorization, and evidence fields.
-- [`RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md`](RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md) — runtime-boundary policy matrix metadata and invariant tests.
-- [`RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md`](RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md) — companion domain matrix evaluator for resolved runtime-boundary domains.
-- [`RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md`](RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md) — deterministic report rendering for runtime-boundary domain matrix results.
-- [`L_UI_RENDERING_CONTRACT.md`](L_UI_RENDERING_CONTRACT.md) — first L-UI rendering contract before renderer implementation.
-- [`L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI rendering implementation plan before renderer code.
-- [`L_UI_RENDERING_IMPLEMENTATION.md`](L_UI_RENDERING_IMPLEMENTATION.md) — first no-effect C L-UI renderer implementation.
+- [`CPP_AUTHORITY_IMPLEMENTATION_REVIEW.md`](CPP_AUTHORITY_IMPLEMENTATION_REVIEW.md) — review confirming the constrained C++ authority implementation remains no-effect, metadata-only, fixed-capacity, and denied-by-default.
+- [`LANGUAGE_STRATEGY.md`](LANGUAGE_STRATEGY.md) — role of C, constrained C++, Lat, L-UI, and LIR.
+- [`LANGUAGE_NAMING_POLICY.md`](LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy; forbids plain `L` and `.l` as public identifiers.
 - [`NAMING_SYSTEM.md`](NAMING_SYSTEM.md) — formal naming rules for professional Latticra terminology.
 - [`FEATURE_TRANSLATION_LEDGER.md`](FEATURE_TRANSLATION_LEDGER.md) — vocabulary ledger for translating exploratory labels into Latticra architecture terms.
-- [`LANGUAGE_NAMING_POLICY.md`](LANGUAGE_NAMING_POLICY.md) — Lat / Latticra Language naming and extension policy; forbids plain `L` and `.l` as public identifiers.
-- [`LANGUAGE_STRATEGY.md`](LANGUAGE_STRATEGY.md) — role of C, constrained C++, Lat, L-UI, and LIR.
 - [`SUPERVISOR_ARCHITECTURE.md`](SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor model and orchestration responsibilities.
 - [`EFFECT_GATES.md`](EFFECT_GATES.md) — effect categories, gating rules, and visibility requirements.
 - [`UI_TERMINAL_LANGUAGE.md`](UI_TERMINAL_LANGUAGE.md) — L-UI terminal/operator interface language direction.
@@ -55,12 +40,16 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`../SECURITY.md`](../SECURITY.md) — vulnerability reporting, safe testing rules, and security non-claims.
 - [`strategy/README.md`](strategy/README.md) — strategy index and dated strategy-record rules.
 - [`strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md`](strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md) — active national-security open-system strategy record.
+- [`strategy/2026-05-19-1845-cdt-strategy-estimate-review.md`](strategy/2026-05-19-1845-cdt-strategy-estimate-review.md) — latest strategy estimate review.
 - [`status/README.md`](status/README.md) — status index and update rules.
 - [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) — current progress, completion estimates, and next priorities.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
+- [`status/CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md`](status/CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md) — status record for the constrained C++ authority implementation review.
 - [`status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — status record for the Lat pipeline diagnostic integration slice.
 - [`status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — status record for the Lat pipeline diagnostic main test audit slice.
 - [`status/RBDM_REPORT_INTEGRATION_STATUS.md`](status/RBDM_REPORT_INTEGRATION_STATUS.md) — status record for the runtime-boundary domain matrix report integration slice.
+- [`status/COMPLETION_PERCENTAGE_REVIEW.md`](status/COMPLETION_PERCENTAGE_REVIEW.md) — completion-percentage planning review.
+- [`status/STATUS_ANNOUNCEMENT_CONSISTENCY_REVIEW.md`](status/STATUS_ANNOUNCEMENT_CONSISTENCY_REVIEW.md) — status/announcement consistency review.
 - [`project_notes/README.md`](project_notes/README.md) — short project notes index.
 - [`project_notes/CURRENT_DIRECTION.md`](project_notes/CURRENT_DIRECTION.md) — current direction, target users, and technical lane.
 - [`project_notes/UPCOMING_WORK.md`](project_notes/UPCOMING_WORK.md) — recommended next slices and near-term queue.
@@ -88,20 +77,6 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`L_UI_PARSER_DESIGN.md`](L_UI_PARSER_DESIGN.md) — parser design contract, error categories, no-effect constraints, and implementation gate.
 - [`L_UI_PARSER_IMPLEMENTATION_PLAN.md`](L_UI_PARSER_IMPLEMENTATION_PLAN.md) — parser implementation language, module shape, API, source-size limit, and exact test list before parser code.
 - [`L_UI_PARSER.md`](L_UI_PARSER.md) — initial no-effect C parser, summary result, error labels, and parser invariants.
-- [`L_UI_PARSER_FIXTURE_INTEGRATION.md`](L_UI_PARSER_FIXTURE_INTEGRATION.md) — repository `.lui` fixture validation through controlled parser test input.
-- [`L_UI_PARSER_RESULT_REPORT.md`](L_UI_PARSER_RESULT_REPORT.md) — deterministic parser result summaries for valid and error parse states.
-- [`L_UI_PARSER_DIAGNOSTICS.md`](L_UI_PARSER_DIAGNOSTICS.md) — parser diagnostic codes, stable messages, line/column rules, and future diagnostics gate.
-- [`L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md`](L_UI_PARSER_DIAGNOSTICS_IMPLEMENTATION.md) — diagnostic structs, mapping functions, report surface, and invariants.
-- [`L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION.md`](L_UI_PARSER_STRING_ESCAPE_DIAGNOSTICS_IMPLEMENTATION.md) — parser-level diagnostics for invalid L-UI string-literal escape sequences.
-- [`L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION.md`](L_UI_PARSER_LINE_COLUMN_PRECISION_IMPLEMENTATION.md) — private location helpers, parser touch-point updates, and location invariants.
-- [`L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION.md`](L_UI_PARSER_SOURCE_SPAN_IMPLEMENTATION.md) — public source-span metadata, parse-result spans, diagnostic spans, report extensions, and invariants.
-- [`L_UI_PARSER_AST_IMPLEMENTATION.md`](L_UI_PARSER_AST_IMPLEMENTATION.md) — fixed-size AST metadata, source-span-aware nodes, deterministic report, and no-effect invariants.
-- [`L_UI_AST_DETAILED_REPORT_IMPLEMENTATION.md`](L_UI_AST_DETAILED_REPORT_IMPLEMENTATION.md) — bounded detailed AST report for card, rail, field, text, source-span, and no-effect metadata.
-- [`L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION.md`](L_UI_AST_ESCAPED_STRING_REPORT_IMPLEMENTATION.md) — byte-oriented escaped string fields for detailed AST report metadata.
-- [`L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md`](L_UI_AST_SOURCE_BACKED_TEXT_IMPLEMENTATION.md) — source-backed extraction of AST purpose and text values from validated L-UI source.
-- [`L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION.md`](L_UI_AST_LENGTH_CARRYING_STRING_STORAGE_IMPLEMENTATION.md) — explicit decoded byte lengths for L-UI AST purpose and text values.
-- [`L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION.md`](L_UI_DECODED_NUL_ACCEPTANCE_IMPLEMENTATION.md) — escaped decoded NUL acceptance for L-UI source-backed AST strings.
-- [`L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION.md`](L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION.md) — tested enforcement of literal source-buffer NUL rejection while escaped decoded NUL remains accepted.
 - [`L_UI_SEMANTIC_VALIDATION_CONTRACT.md`](L_UI_SEMANTIC_VALIDATION_CONTRACT.md) — semantic validation layer after structural parsing, AST construction, source policies, and string handling.
 - [`L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md`](L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md) — public API, semantic result, diagnostic mapping, reports, semantic checks, and exact tests before semantic validation code.
 - [`L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION.md`](L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION.md) — no-effect semantic validation API, reports, checks, and invariants for L-UI ASTs.
@@ -127,9 +102,6 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md`](LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md) — explicit Lat declaration node and transition-source edge refinement contract.
 - [`LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION_PLAN.md`](LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION_PLAN.md) — exact Lat-specific LIR enum, label, lowering, test, workflow, and compatibility plan.
 - [`LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION.md`](LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION.md) — first no-effect Lat-specific LIR refinement implementation.
-- [`L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md`](L_UI_STRING_LITERAL_ESCAPE_CONTRACT.md) — decoding rules for quoted L-UI source string escapes.
-- [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION_PLAN.md) — parser-level validation decision, AST decoding helper shape, NUL/capacity/span/report behavior, exact tests, and compatibility expectations before string-literal escape decoding.
-- [`L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md`](L_UI_STRING_LITERAL_ESCAPE_IMPLEMENTATION.md) — byte-oriented string-literal escape decoding for source-backed L-UI AST purpose and text values.
 - [`L_UI_RENDERING_CONTRACT.md`](L_UI_RENDERING_CONTRACT.md) — first operator-visible L-UI rendering contract before renderer implementation.
 - [`L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI renderer API, structures, modes, errors, capacities, output rules, report format, and tests before renderer code.
 - [`L_UI_RENDERING_IMPLEMENTATION.md`](L_UI_RENDERING_IMPLEMENTATION.md) — first no-effect C L-UI renderer implementation.
@@ -156,6 +128,7 @@ C/C++ foundation direction + guardrails
 constrained C++ authority layer contract + guardrails
 Constrained C++ authority layer implementation plan + guardrails
 constrained C++ authority layer implementation + invariants
+constrained C++ authority implementation review + status alignment
 state lattice fixture + invariant tests
 tri-plane transition model + invariant tests
 Nucleus preview request classification + report invariants
@@ -175,50 +148,9 @@ L-UI source grammar draft + fixture guardrails
 L-UI parser design contract + guardrails
 L-UI parser implementation plan + guardrails
 L-UI parser implementation + invariants
-L-UI parser fixture integration + repository fixture validation
-L-UI parser result report + invariants
-L-UI parser diagnostics contract + guardrails
-L-UI parser diagnostics implementation plan + guardrails
-L-UI parser diagnostics implementation + invariants
-L-UI parser string escape diagnostics contract + guardrails
-L-UI parser string escape diagnostics implementation plan + guardrails
-L-UI parser string escape diagnostics implementation + invariants
-L-UI parser line-column precision plan + guardrails
-L-UI parser line-column precision implementation plan + guardrails
-L-UI parser line-column precision implementation + invariants
-L-UI parser source-span contract + guardrails
-L-UI parser source-span implementation plan + guardrails
-L-UI parser source-span implementation + invariants
-L-UI parser AST contract + guardrails
-L-UI parser AST implementation plan + guardrails
-L-UI parser AST implementation + invariants
-L-UI AST detailed report contract + guardrails
-L-UI AST detailed report implementation plan + guardrails
-L-UI AST detailed report implementation + invariants
-L-UI AST escaped string report contract + guardrails
-L-UI AST escaped string report implementation plan + guardrails
-L-UI AST escaped string report implementation + invariants
-L-UI AST source-backed text contract + guardrails
-L-UI AST source-backed text implementation plan + guardrails
-L-UI AST source-backed text extraction implementation + invariants
-L-UI AST length-carrying string storage contract + guardrails
-L-UI AST length-carrying string storage implementation plan + guardrails
-L-UI AST length-carrying string storage implementation + invariants
-L-UI decoded NUL acceptance contract + guardrails
-L-UI decoded NUL acceptance implementation plan + guardrails
-L-UI decoded NUL acceptance implementation + invariants
-L-UI source-buffer literal NUL policy contract + guardrails
-L-UI source-buffer literal NUL policy implementation plan + guardrails
-L-UI source-buffer literal NUL policy implementation + invariants
-L-UI semantic validation contract + guardrails
-L-UI semantic validation implementation plan + guardrails
 L-UI semantic validation implementation + invariants
-LIR shape contract + guardrails
-LIR shape implementation plan + guardrails
 LIR shape implementation + invariants
 LIR report refinement + invariants
-Lat language grammar contract + guardrails
-Lat language grammar implementation plan + guardrails
 Lat language grammar implementation + invariants
 Lat semantic diagnostics refinement + invariants
 Lat-to-LIR lowering implementation + invariants
@@ -227,18 +159,13 @@ Lat pipeline report refinement + invariants
 Lat pipeline diagnostic integration refinement + invariants
 Lat pipeline diagnostic integration main test audit + invariants
 Lat-specific LIR refinement implementation + invariants
-L-UI string-literal escape contract + guardrails
-L-UI string-literal escape implementation plan + guardrails
-L-UI string-literal escape decoding implementation + invariants
-L-UI rendering contract + guardrails
-L-UI rendering implementation plan + guardrails
 L-UI rendering implementation + invariants
 ```
 
 The next implementation target should be:
 
 ```text
-Lat pipeline diagnostic status announcement
+Authority status announcement if public messaging changes
 ```
 
-That target should update announcement/status surfaces for the completed Lat pipeline diagnostic audit and preserve the public non-claims before any runtime behavior expands.
+That target should update announcement/status surfaces for the completed authority review only if public messaging changes, while preserving the public non-claims before any runtime behavior expands.
