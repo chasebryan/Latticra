@@ -1,0 +1,19 @@
+name: Kernel Lifecycle Status Alignment
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  kernel-lifecycle-status-alignment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run kernel lifecycle status alignment guard
+        run: sh scripts/test-kernel-lifecycle-status-alignment.sh
