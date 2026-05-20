@@ -16,6 +16,7 @@ Latest L-UI rendering README/status alignment note: 2026-05-19 20:35 CDT
 Latest L-UI completion estimate review note: 2026-05-19 20:45 CDT
 Latest C++ authority expansion contract review note: 2026-05-19 20:55 CDT
 Latest Nucleus task no-effect report alignment note: 2026-05-19 21:15 CDT
+Latest Nucleus task README/status alignment note: 2026-05-19 21:25 CDT
 Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
 Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
 Latest runtime boundary report refinement note: 2026-05-18 23:10 CDT
@@ -73,6 +74,7 @@ The repository currently emphasizes:
 - Nucleus task execution implementation;
 - Nucleus task report refinement;
 - Nucleus task no-effect report alignment;
+- Nucleus task README/status alignment;
 - Runtime boundary contract;
 - Runtime boundary implementation plan;
 - Runtime boundary implementation;
@@ -154,6 +156,8 @@ The Nucleus task report refinement adds deterministic report classification, tas
 
 The Nucleus task no-effect report alignment adds explicit report-alignment, no-effect-policy, and representation-gate labels to Nucleus task records and deterministic reports while preserving non-execution behavior.
 
+The Nucleus task README/status alignment makes that no-effect report alignment discoverable from README and the status index without changing implementation behavior.
+
 The Runtime boundary refinement implementation reports Lat pipeline evidence and Lat-specific LIR evidence at the runtime boundary while preserving disabled-by-default, no-effect classification behavior.
 
 The Runtime boundary report refinement adds explicit report classification, boundary-domain labeling, authorization-state labeling, and evidence-level reporting so boundary intent is visible without granting runtime authority.
@@ -217,6 +221,7 @@ Nucleus task execution implementation plan
 Nucleus task execution implementation
 Nucleus task report refinement
 Nucleus task no-effect report alignment
+Nucleus task README/status alignment
 Runtime boundary contract
 Runtime boundary implementation plan
 Runtime boundary implementation
@@ -312,7 +317,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, Nucleus task no-effect report alignment, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat-to-LIR metadata lowering, LIR report refinement, Lat pipeline reporting, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic integration main test audit, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
+The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, Nucleus task no-effect report alignment, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat-to-LIR metadata lowering, LIR report refinement, Lat pipeline reporting, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic main test audit, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
 
 This is a mission direction, not a current security guarantee.
 
@@ -337,7 +342,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Nucleus task no-effect report alignment
+Nucleus task README/status alignment
 ```
 
 ## Previous implementation slice
@@ -345,7 +350,7 @@ Nucleus task no-effect report alignment
 Previous implementation slice:
 
 ```text
-Language representation review
+Nucleus task no-effect report alignment
 ```
 
 ## Earlier implementation slice
@@ -353,7 +358,7 @@ Language representation review
 Earlier implementation slice:
 
 ```text
-C++ authority expansion contract review
+Language representation review
 ```
 
 ## Next recommended work
@@ -361,13 +366,13 @@ C++ authority expansion contract review
 Recommended next work:
 
 ```text
-Nucleus task no-effect report README/status alignment
+Nucleus task execution refinement only if it remains no-effect and report-only
 ```
 
 After that:
 
 ```text
-Nucleus task execution refinement only if it remains no-effect and report-only
+Completion estimate review only if capability posture changes
 ```
 
 ## Update rule
