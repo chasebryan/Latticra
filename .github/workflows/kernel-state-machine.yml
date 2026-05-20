@@ -1,0 +1,21 @@
+name: Kernel State Machine
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  kernel-state-machine:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run kernel state machine guard
+        run: sh scripts/test-kernel-state-machine.sh
+      - name: Run kernel state machine report guard
+        run: sh scripts/test-kernel-state-machine-report-runner.sh
