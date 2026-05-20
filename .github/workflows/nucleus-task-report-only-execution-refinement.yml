@@ -1,0 +1,21 @@
+name: Nucleus Task Report-Only Execution Refinement
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  nucleus-task-report-only-execution-refinement:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run Nucleus report-only execution refinement guard
+        run: sh scripts/test-nucleus-task-report-only-execution-refinement.sh
+      - name: Run Nucleus task execution tests
+        run: sh scripts/test-nucleus-task-execution.sh

@@ -24,3 +24,4 @@ cc $CFLAGS \
 /tmp/latticra-nucleus-task-report-refinement
 
 sh scripts/test-nucleus-task-no-effect-report-alignment.sh
+sh scripts/test-nucleus-task-report-only-execution-refinement.sh

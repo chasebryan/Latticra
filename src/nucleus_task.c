@@ -48,6 +48,9 @@ static void default_record(latticra_nucleus_task_record_t *record) {
     record->report_alignment[0] = '\0';
     record->no_effect_policy[0] = '\0';
     record->representation_gate[0] = '\0';
+    record->execution_status[0] = '\0';
+    record->effect_status[0] = '\0';
+    record->runtime_status[0] = '\0';
     default_authority(&record->authority);
     record->source_identity[0] = '\0';
     default_span(&record->source_span);
@@ -326,6 +329,15 @@ static void apply_no_effect_report_alignment(latticra_nucleus_task_result_t *res
     (void)copy_checked(result->record.representation_gate,
                        sizeof(result->record.representation_gate),
                        "language-representation-reviewed");
+    (void)copy_checked(result->record.execution_status,
+                       sizeof(result->record.execution_status),
+                       "not-executed");
+    (void)copy_checked(result->record.effect_status,
+                       sizeof(result->record.effect_status),
+                       "report-only");
+    (void)copy_checked(result->record.runtime_status,
+                       sizeof(result->record.runtime_status),
+                       "not-entered");
 }
 
 static void finalize_task_report_refinement(latticra_nucleus_task_result_t *result) {
@@ -653,6 +665,9 @@ latticra_status_t latticra_nucleus_task_report(const latticra_nucleus_task_resul
         !appendf(buffer, buffer_len, &used, "report_alignment=%s\n", record->report_alignment) ||
         !appendf(buffer, buffer_len, &used, "no_effect_policy=%s\n", record->no_effect_policy) ||
         !appendf(buffer, buffer_len, &used, "representation_gate=%s\n", record->representation_gate) ||
+        !appendf(buffer, buffer_len, &used, "execution_status=%s\n", record->execution_status) ||
+        !appendf(buffer, buffer_len, &used, "effect_status=%s\n", record->effect_status) ||
+        !appendf(buffer, buffer_len, &used, "runtime_status=%s\n", record->runtime_status) ||
         !appendf(buffer, buffer_len, &used, "authority_status=%s\n", record->authority.status_label) ||
         !appendf(buffer, buffer_len, &used, "authority_validator=%s\n", record->authority.validator_label) ||
         !appendf(buffer, buffer_len, &used, "authority_reason=%s\n", record->authority.denial_reason) ||
