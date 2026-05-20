@@ -1,7 +1,7 @@
 # Latticra Current Status
 
 Status: public status record
-Last updated: 2026-05-20 01:45 CDT
+Last updated: 2026-05-20 02:45 CDT
 Latest Lat-to-LIR lowering note: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
@@ -19,6 +19,8 @@ Latest Nucleus task no-effect report alignment note: 2026-05-19 21:15 CDT
 Latest Nucleus task README/status alignment note: 2026-05-19 21:25 CDT
 Latest Nucleus task report-only execution refinement note: 2026-05-19 21:35 CDT
 Latest Nucleus task report-only execution README/status alignment note: 2026-05-20 01:45 CDT
+Latest project notes Nucleus report-only alignment note: 2026-05-20 02:20 CDT
+Latest project notes Nucleus report-only status/index check note: 2026-05-20 02:45 CDT
 Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
 Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
 Latest runtime boundary report refinement note: 2026-05-18 23:10 CDT
@@ -66,6 +68,8 @@ The repository currently emphasizes:
 - public entry-point consistency scan;
 - project notes follow-up alignment;
 - project notes follow-up status/index check;
+- project notes Nucleus report-only alignment;
+- project notes Nucleus report-only status/index check;
 - language representation review;
 - L-UI rendering implementation;
 - L-UI rendering detailed report refinement;
@@ -166,6 +170,10 @@ The Nucleus task report-only execution refinement adds explicit execution-status
 
 The Nucleus task report-only execution README/status alignment makes the report-only execution refinement discoverable from README, root status, current status, status index, and foundation index without changing implementation behavior.
 
+The project notes Nucleus report-only alignment refreshes current direction, upcoming work, and the project-notes index after the Nucleus task report-only execution README/status alignment.
+
+The project notes Nucleus report-only status/index check verifies that the project-notes Nucleus report-only alignment is represented from root status, detailed current status, the status index, and the foundation index without changing implementation behavior or completion estimates.
+
 The Runtime boundary refinement implementation reports Lat pipeline evidence and Lat-specific LIR evidence at the runtime boundary while preserving disabled-by-default, no-effect classification behavior.
 
 The Runtime boundary report refinement adds explicit report classification, boundary-domain labeling, authorization-state labeling, and evidence-level reporting so boundary intent is visible without granting runtime authority.
@@ -232,6 +240,8 @@ Nucleus task no-effect report alignment
 Nucleus task README/status alignment
 Nucleus task report-only execution refinement
 Nucleus task report-only execution README/status alignment
+Project notes Nucleus report-only alignment
+Project notes Nucleus report-only status/index check
 Runtime boundary contract
 Runtime boundary implementation plan
 Runtime boundary implementation
@@ -352,7 +362,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Nucleus task report-only execution README/status alignment
+Project notes Nucleus report-only status/index check
 ```
 
 ## Previous implementation slice
@@ -360,7 +370,7 @@ Nucleus task report-only execution README/status alignment
 Previous implementation slice:
 
 ```text
-Nucleus task report-only execution refinement
+Project notes Nucleus report-only alignment
 ```
 
 ## Earlier implementation slice
@@ -368,7 +378,7 @@ Nucleus task report-only execution refinement
 Earlier implementation slice:
 
 ```text
-Nucleus task README/status alignment
+Nucleus task report-only execution README/status alignment
 ```
 
 ## Next recommended work
