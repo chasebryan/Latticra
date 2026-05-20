@@ -1,0 +1,19 @@
+name: Fedora Local RPM Spec Draft Plan
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-local-rpm-spec-draft-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run Fedora local RPM spec draft plan guard
+        run: sh scripts/test-fedora-local-rpm-spec-draft-plan.sh
