@@ -49,6 +49,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md`](status/CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md) — status record for the constrained C++ authority implementation review.
 - [`status/LANGUAGE_REPRESENTATION_REVIEW.md`](status/LANGUAGE_REPRESENTATION_REVIEW.md) — language representation review before no-effect Nucleus refinement.
 - [`status/L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md`](status/L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md) — status record for the L-UI rendering detailed report refinement.
+- [`status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_REVIEW.md`](status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_REVIEW.md) — no-new-announcement review after the Nucleus report-only and project-notes alignment slices.
 - [`status/NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md`](status/NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md) — status record for the Nucleus task no-effect report alignment refinement.
 - [`status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md`](status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md) — status record for the Nucleus task report-only execution refinement.
 - [`status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_README_STATUS_ALIGNMENT.md`](status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_README_STATUS_ALIGNMENT.md) — README/status alignment for the Nucleus task report-only execution refinement.
@@ -155,6 +156,7 @@ Nucleus task report-only execution refinement + invariants
 Nucleus task report-only execution README/status alignment + public entry-point alignment
 Project notes Nucleus report-only alignment + project-note alignment
 Project notes Nucleus report-only status/index check + public status alignment
+Nucleus report-only announcement review + no-new-announcement review
 Runtime boundary contract + guardrails
 Runtime boundary implementation plan + guardrails
 Runtime boundary implementation + smoke invariants
