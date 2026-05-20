@@ -1,13 +1,15 @@
 # Latticra Current Direction
 
 Status: active project note
-Last updated: 2026-05-20 02:20 CDT
+Last updated: 2026-05-20 03:35 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline diagnostic audit note: 2026-05-19 17:15 CDT
 Latest runtime boundary domain matrix report note: 2026-05-19 16:20 CDT
 Latest public entry-point consistency scan note: 2026-05-19 19:45 CDT
 Latest Nucleus task report-only execution refinement note: 2026-05-19 21:35 CDT
 Latest Nucleus task report-only execution README/status alignment note: 2026-05-20 01:45 CDT
+Latest Nucleus report-only announcement review note: 2026-05-20 03:00 CDT
+Latest Nucleus report-only announcement README alignment note: 2026-05-20 03:20 CDT
 
 ## Current direction
 
@@ -118,13 +120,17 @@ Nucleus task report refinement
 Nucleus task no-effect report alignment
 Nucleus task report-only execution refinement
 Nucleus task report-only execution README/status alignment
+Nucleus report-only announcement review
+Nucleus report-only announcement README alignment
 ```
 
 The current implementation provides denied-by-default task classification and deterministic task reports with explicit request kinds, effects, policies, denial reasons, authorization labels, prerequisite status, authority metadata, preview prerequisites, no-effect-chain status, no-effect-policy status, representation-gate status, execution status, effect status, runtime status, and no-effect flags.
 
 The report-only execution refinement makes the execution boundary explicit with `execution_status=not-executed`, `effect_status=report-only`, and `runtime_status=not-entered` while preserving non-execution behavior.
 
-It does not implement effect-performing Nucleus task execution, command behavior, mutation, network behavior, recovery behavior, hardware behavior, boot behavior, rollback, or production runtime claims.
+The no-new-announcement review confirms that the recent Nucleus report-only and project-notes slices were documentation/status alignment only and did not justify a separate public announcement entry.
+
+It does not implement effect-performing Nucleus task execution, command behavior, mutation, network behavior, recovery behavior, hardware behavior, boot behavior, rollback, public-product readiness, or production runtime claims.
 
 ## Current runtime boundary
 
@@ -146,9 +152,9 @@ It does not implement effect-performing runtime behavior, command execution, Lat
 
 ## Public entry-point posture
 
-The recent Nucleus task report-only execution README/status alignment refreshed README, root status, current status, the status index, and the foundation index after the Nucleus report-only execution refinement.
+The recent Nucleus report-only announcement README alignment refreshed README, the project-notes index, root status, current status, the status index, and the foundation index after the Nucleus report-only announcement review.
 
-That alignment was documentation/status-only and did not change implementation behavior or completion estimates.
+That alignment was documentation/status-only. It did not add a public announcement entry, implementation behavior, capability posture change, or completion-estimate change.
 
 ## Mission target
 
@@ -170,7 +176,7 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane has moved through L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape, LIR report refinement, Lat parser foundation, Lat semantic validation, Lat semantic diagnostics, Lat-to-LIR lowering, Lat pipeline, Lat pipeline report refinement, Lat pipeline diagnostic integration, Lat pipeline diagnostic main-test audit, Lat-specific LIR refinement, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, authority implementation review, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, L-UI rendering detailed report refinement, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, Nucleus task report-only execution README/status alignment, runtime boundary contract, runtime boundary implementation plan, initial runtime boundary API/smoke implementation, runtime boundary refinement implementation, runtime boundary report refinement, runtime boundary policy matrix refinement, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, authority/status/foundation index alignment, status announcement review, and public entry-point consistency scan.
+The current technical lane has moved through L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape, LIR report refinement, Lat parser foundation, Lat semantic validation, Lat semantic diagnostics, Lat-to-LIR lowering, Lat pipeline, Lat pipeline report refinement, Lat pipeline diagnostic integration, Lat pipeline diagnostic main-test audit, Lat-specific LIR refinement, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, authority implementation review, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, L-UI rendering detailed report refinement, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, Nucleus task report-only execution README/status alignment, project-notes Nucleus report-only alignment, project-notes Nucleus report-only status/index check, Nucleus report-only announcement review, Nucleus report-only announcement README alignment, runtime boundary contract, runtime boundary implementation plan, initial runtime boundary API/smoke implementation, runtime boundary refinement implementation, runtime boundary report refinement, runtime boundary policy matrix refinement, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, authority/status/foundation index alignment, status announcement review, and public entry-point consistency scan.
 
 The next recommended review lane is:
 
