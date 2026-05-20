@@ -157,6 +157,8 @@ jobs:
         run: sh scripts/test-l-ui-rendering-implementation-plan.sh
       - name: Run L-UI rendering tests
         run: sh scripts/test-l-ui-rendering.sh
+      - name: Run L-UI rendering detailed report refinement guard
+        run: sh scripts/test-l-ui-rendering-detailed-report-refinement.sh
       - name: Run L-UI string-literal escape contract guard
         run: sh scripts/test-l-ui-string-literal-escape-contract.sh
       - name: Run L-UI string-literal escape implementation plan guard

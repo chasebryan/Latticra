@@ -44,11 +44,16 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/README.md`](status/README.md) — status index and update rules.
 - [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) — current progress, completion estimates, and next priorities.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
+- [`status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`status/CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md`](status/CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md) — status record for the constrained C++ authority implementation review.
+- [`status/L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md`](status/L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md) — status record for the L-UI rendering detailed report refinement.
 - [`status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — status record for the Lat pipeline diagnostic integration slice.
 - [`status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — status record for the Lat pipeline diagnostic main test audit slice.
 - [`status/RBDM_REPORT_INTEGRATION_STATUS.md`](status/RBDM_REPORT_INTEGRATION_STATUS.md) — status record for the runtime-boundary domain matrix report integration slice.
 - [`status/COMPLETION_PERCENTAGE_REVIEW.md`](status/COMPLETION_PERCENTAGE_REVIEW.md) — completion-percentage planning review.
+- [`status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`](status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md) — public entry-point consistency scan.
+- [`status/PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md`](status/PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md) — project-notes follow-up status/index check.
+- [`status/STATUS_ANNOUNCEMENT_REVIEW.md`](status/STATUS_ANNOUNCEMENT_REVIEW.md) — status announcement review.
 - [`status/STATUS_ANNOUNCEMENT_CONSISTENCY_REVIEW.md`](status/STATUS_ANNOUNCEMENT_CONSISTENCY_REVIEW.md) — status/announcement consistency review.
 - [`project_notes/README.md`](project_notes/README.md) — short project notes index.
 - [`project_notes/CURRENT_DIRECTION.md`](project_notes/CURRENT_DIRECTION.md) — current direction, target users, and technical lane.
@@ -105,6 +110,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`L_UI_RENDERING_CONTRACT.md`](L_UI_RENDERING_CONTRACT.md) — first operator-visible L-UI rendering contract before renderer implementation.
 - [`L_UI_RENDERING_IMPLEMENTATION_PLAN.md`](L_UI_RENDERING_IMPLEMENTATION_PLAN.md) — exact L-UI renderer API, structures, modes, errors, capacities, output rules, report format, and tests before renderer code.
 - [`L_UI_RENDERING_IMPLEMENTATION.md`](L_UI_RENDERING_IMPLEMENTATION.md) — first no-effect C L-UI renderer implementation.
+- [`L_UI_RENDERING_DETAILED_REPORT_REFINEMENT.md`](L_UI_RENDERING_DETAILED_REPORT_REFINEMENT.md) — explicit detailed-render report metadata refinement for no-effect L-UI reports.
 
 ## Implementation rule
 
@@ -160,12 +166,13 @@ Lat pipeline diagnostic integration refinement + invariants
 Lat pipeline diagnostic integration main test audit + invariants
 Lat-specific LIR refinement implementation + invariants
 L-UI rendering implementation + invariants
+L-UI rendering detailed report refinement + invariants
 ```
 
 The next implementation target should be:
 
 ```text
-Authority status announcement if public messaging changes
+L-UI rendering detailed report README/status alignment
 ```
 
-That target should update announcement/status surfaces for the completed authority review only if public messaging changes, while preserving the public non-claims before any runtime behavior expands.
+That target should update public entry points after the detailed report refinement while preserving the public non-claims before any runtime behavior expands.
