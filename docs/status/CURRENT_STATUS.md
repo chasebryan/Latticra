@@ -10,6 +10,7 @@ Latest Lat pipeline diagnostic main test audit note: 2026-05-19 17:15 CDT
 Latest Lat semantic diagnostics refinement note: 2026-05-19 00:35 CDT
 Latest LIR report refinement note: 2026-05-19 00:55 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
+Latest L-UI rendering detailed report refinement note: 2026-05-19 20:25 CDT
 Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
 Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
 Latest runtime boundary report refinement note: 2026-05-18 23:10 CDT
@@ -57,6 +58,7 @@ The repository currently emphasizes:
 - project notes follow-up alignment;
 - project notes follow-up status/index check;
 - L-UI rendering implementation;
+- L-UI rendering detailed report refinement;
 - Nucleus task execution contract;
 - Nucleus task execution implementation plan;
 - Nucleus task execution implementation;
@@ -113,6 +115,8 @@ The Lat pipeline diagnostic main test audit verifies that the companion diagnost
 The Lat-specific LIR refinement gives Lat declarations explicit LIR node kinds and a transition-source edge kind. This improves inspectability of Lat-derived LIR without changing no-effect behavior or adding execution.
 
 The LIR report refinement adds deterministic report classification, graph-shape labels, edge-kind summary counts, no-effect-chain status, and evidence level while preserving lowering outcomes and non-execution behavior.
+
+The L-UI rendering detailed report refinement adds explicit report classification, detail level, detailed-report availability, detailed section count, deterministic section sequence, no-effect-chain status, and evidence level to the no-effect renderer report surface.
 
 The authority implementation review confirms the constrained C++ authority layer remains no-effect, metadata-only, fixed-capacity, and denied-by-default.
 
@@ -242,6 +246,7 @@ project notes follow-up status/index check
 L-UI rendering contract
 L-UI rendering implementation plan
 L-UI rendering implementation
+L-UI rendering detailed report refinement
 project notes current-direction alignment
 project notes upcoming-work alignment
 project notes index alignment
@@ -307,7 +312,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Authority status announcement review
+L-UI rendering detailed report refinement
 ```
 
 ## Previous implementation slice
@@ -315,7 +320,7 @@ Authority status announcement review
 Previous implementation slice:
 
 ```text
-Project notes follow-up alignment status/index check
+Authority status announcement review
 ```
 
 ## Earlier implementation slice
@@ -323,7 +328,7 @@ Project notes follow-up alignment status/index check
 Earlier implementation slice:
 
 ```text
-Project notes follow-up alignment
+Project notes follow-up alignment status/index check
 ```
 
 ## Next recommended work
@@ -331,7 +336,7 @@ Project notes follow-up alignment
 Recommended next work:
 
 ```text
-L-UI rendering detailed report refinement after public entry-point surfaces remain stable
+L-UI rendering detailed report README/status alignment
 ```
 
 After that:
