@@ -63,6 +63,13 @@ static void result_default(latticra_l_ui_render_result_t *result) {
     result->node_count = 0u;
     result->edge_count = 0u;
     result->section_count = 0u;
+    result->report_classification[0] = '\0';
+    result->detail_level[0] = '\0';
+    result->section_sequence[0] = '\0';
+    result->no_effect_chain[0] = '\0';
+    result->evidence_level[0] = '\0';
+    result->detailed_report_available = 0;
+    result->detailed_section_count = 0u;
     span_default(&result->span);
     authority_default(&result->authority);
     result->no_effect = 1;
@@ -157,6 +164,23 @@ const char *latticra_l_ui_render_mode_label(latticra_l_ui_render_mode_t mode) {
     case LATTICRA_L_UI_RENDER_MODE_AUTHORITY_ONLY: return "authority_only";
     default: return "unknown";
     }
+}
+
+static const char *report_classification_label(latticra_l_ui_render_mode_t mode) {
+    switch (mode) {
+    case LATTICRA_L_UI_RENDER_MODE_SUMMARY: return "summary_report";
+    case LATTICRA_L_UI_RENDER_MODE_DETAILED: return "detailed_report";
+    case LATTICRA_L_UI_RENDER_MODE_DIAGNOSTICS_ONLY: return "diagnostics_report";
+    case LATTICRA_L_UI_RENDER_MODE_AUTHORITY_ONLY: return "authority_report";
+    default: return "unknown_report";
+    }
+}
+
+static const char *section_sequence_label(latticra_l_ui_render_mode_t mode) {
+    if (mode == LATTICRA_L_UI_RENDER_MODE_DETAILED) {
+        return "HEADER,CARD,AUTHORITY,RAILS,FIELDS,TEXT,BINDINGS,LIR,SOURCE_SPANS,NO_EFFECT_FLAGS";
+    }
+    return "HEADER";
 }
 
 static latticra_status_t set_error(
@@ -293,7 +317,12 @@ latticra_status_t latticra_l_ui_render(
         !copy_checked(result->authority.status_label, sizeof(result->authority.status_label), request->authority->status_label) ||
         !copy_checked(result->authority.validator_label, sizeof(result->authority.validator_label), request->authority->validator_label) ||
         !copy_checked(result->authority.requested_effect_label, sizeof(result->authority.requested_effect_label), request->authority->requested_effect_label) ||
-        !copy_checked(result->authority.denial_reason, sizeof(result->authority.denial_reason), request->authority->denial_reason)) {
+        !copy_checked(result->authority.denial_reason, sizeof(result->authority.denial_reason), request->authority->denial_reason) ||
+        !copy_checked(result->report_classification, sizeof(result->report_classification), report_classification_label(request->mode)) ||
+        !copy_checked(result->detail_level, sizeof(result->detail_level), latticra_l_ui_render_mode_label(request->mode)) ||
+        !copy_checked(result->section_sequence, sizeof(result->section_sequence), section_sequence_label(request->mode)) ||
+        !copy_checked(result->no_effect_chain, sizeof(result->no_effect_chain), "preserved") ||
+        !copy_checked(result->evidence_level, sizeof(result->evidence_level), "metadata")) {
         return set_error(result, LATTICRA_L_UI_RENDER_CAPACITY_EXCEEDED);
     }
 
@@ -303,7 +332,9 @@ latticra_status_t latticra_l_ui_render(
     result->binding_count = request->lir->binding_count;
     result->node_count = request->lir->node_count;
     result->edge_count = request->lir->edge_count;
-    result->section_count = request->mode == LATTICRA_L_UI_RENDER_MODE_DETAILED ? 10u : 1u;
+    result->section_count = request->mode == LATTICRA_L_UI_RENDER_MODE_DETAILED ? LATTICRA_L_UI_RENDER_DETAILED_SECTION_COUNT : 1u;
+    result->detailed_report_available = request->mode == LATTICRA_L_UI_RENDER_MODE_DETAILED ? 1 : 0;
+    result->detailed_section_count = result->detailed_report_available ? LATTICRA_L_UI_RENDER_DETAILED_SECTION_COUNT : 0u;
     result->span = request->ast->card.span;
     result->authority.status = request->authority->status;
     result->authority.no_effect = request->authority->no_effect;
@@ -349,6 +380,13 @@ static int append_header(const latticra_l_ui_render_result_t *result, char *buff
            appendf(buffer, buffer_len, used, "status=%d\n", (int)result->status) &&
            appendf(buffer, buffer_len, used, "error=%s\n", latticra_l_ui_render_error_label(result->error)) &&
            appendf(buffer, buffer_len, used, "mode=%s\n", latticra_l_ui_render_mode_label(result->mode)) &&
+           appendf(buffer, buffer_len, used, "report_classification=%s\n", result->report_classification) &&
+           appendf(buffer, buffer_len, used, "detail_level=%s\n", result->detail_level) &&
+           appendf(buffer, buffer_len, used, "detailed_report_available=%d\n", result->detailed_report_available) &&
+           appendf(buffer, buffer_len, used, "detailed_section_count=%lu\n", (unsigned long)result->detailed_section_count) &&
+           appendf(buffer, buffer_len, used, "section_sequence=%s\n", result->section_sequence) &&
+           appendf(buffer, buffer_len, used, "no_effect_chain=%s\n", result->no_effect_chain) &&
+           appendf(buffer, buffer_len, used, "evidence_level=%s\n", result->evidence_level) &&
            appendf(buffer, buffer_len, used, "card=%s\n", result->card_name) &&
            appendf(buffer, buffer_len, used, "effect=%s\n", result->effect) &&
            appendf(buffer, buffer_len, used, "boundary=%s\n", result->boundary) &&
