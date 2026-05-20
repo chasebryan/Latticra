@@ -1,10 +1,11 @@
 # Latticra Current Direction
 
 Status: active project note
-Last updated: 2026-05-19 18:15 CDT
+Last updated: 2026-05-19 19:55 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline diagnostic audit note: 2026-05-19 17:15 CDT
 Latest runtime boundary domain matrix report note: 2026-05-19 16:20 CDT
+Latest public entry-point consistency scan note: 2026-05-19 19:45 CDT
 
 ## Current direction
 
@@ -69,7 +70,7 @@ It does not provide Lat execution, Lat interpretation, Lat compilation, LIR exec
 
 ## Current C++ authority boundary
 
-The C++ authority layer is contract-bound, implementation-plan-bound, and represented by its first no-effect implementation slice.
+The C++ authority layer is contract-bound, implementation-plan-bound, and represented by its first no-effect implementation slice plus an implementation review.
 
 Planning milestone preserved:
 
@@ -89,6 +90,8 @@ LIR shape metadata validation
 effect classification without performing effects
 deterministic authority report rendering
 ```
+
+The authority implementation review confirmed that the layer remains no-effect, metadata-only, fixed-capacity, and denied-by-default.
 
 The implementation does not provide unrestricted C++ authority, an effect-performing implemented C++ authority layer, runtime execution, mutation authority, file authority, network authority, recovery authority, hardware authority, or production security guarantees.
 
@@ -134,6 +137,12 @@ The current runtime boundary domain matrix report integration renders determinis
 
 It does not implement effect-performing runtime behavior, command execution, Lat execution, LIR execution, task effect execution, mutation, file I/O, network I/O, recovery behavior, rollback, hardware behavior, boot behavior, terminal control, sandboxing, or production runtime claims.
 
+## Public entry-point posture
+
+The recent public entry-point consistency scan refreshed README, root status, current status, and the status index after the authority review and announcement-review work.
+
+That scan was documentation-only and did not change implementation behavior.
+
 ## Mission target
 
 The long-term mission is to build a complete open-source operating-system universe and programming-language stack that makes unsafe behavior harder to hide and easier to inspect.
@@ -154,18 +163,18 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane has moved through L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape, LIR report refinement, Lat parser foundation, Lat semantic validation, Lat semantic diagnostics, Lat-to-LIR lowering, Lat pipeline, Lat pipeline report refinement, Lat pipeline diagnostic integration, Lat pipeline diagnostic main-test audit, Lat-specific LIR refinement, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, Nucleus task report refinement, runtime boundary contract, runtime boundary implementation plan, initial runtime boundary API/smoke implementation, runtime boundary refinement implementation, runtime boundary report refinement, runtime boundary policy matrix refinement, runtime boundary domain matrix refinement, and runtime boundary domain matrix report integration.
+The current technical lane has moved through L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape, LIR report refinement, Lat parser foundation, Lat semantic validation, Lat semantic diagnostics, Lat-to-LIR lowering, Lat pipeline, Lat pipeline report refinement, Lat pipeline diagnostic integration, Lat pipeline diagnostic main-test audit, Lat-specific LIR refinement, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, authority implementation review, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, Nucleus task report refinement, runtime boundary contract, runtime boundary implementation plan, initial runtime boundary API/smoke implementation, runtime boundary refinement implementation, runtime boundary report refinement, runtime boundary policy matrix refinement, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, authority/status/foundation index alignment, status announcement review, and public entry-point consistency scan.
 
 The next recommended documentation lane is:
 
 ```text
-Project notes index alignment
+Project notes follow-up alignment status/index check
 ```
 
 After that, the next recommended review lane is:
 
 ```text
-Current status and announcement consistency review
+Authority status announcement only if public messaging changes
 ```
 
 ## Current non-claim
