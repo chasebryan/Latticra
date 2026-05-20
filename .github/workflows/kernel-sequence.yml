@@ -17,3 +17,5 @@ jobs:
         uses: actions/checkout@v4
       - name: Run kernel sequence guard
         run: sh scripts/test-kernel-lifecycle.sh
+      - name: Run kernel lifecycle report runner guard
+        run: sh scripts/test-kernel-lifecycle-report-runner.sh
