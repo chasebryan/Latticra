@@ -32,6 +32,7 @@ Latest C++ authority expansion contract review note: 2026-05-19 20:55 CDT
 Latest language representation review note: 2026-05-19 21:05 CDT
 Latest Nucleus task no-effect report alignment note: 2026-05-19 21:15 CDT
 Latest Nucleus task README/status alignment note: 2026-05-19 21:25 CDT
+Latest Nucleus task report-only execution refinement note: 2026-05-19 21:35 CDT
 Latest Lat semantic diagnostics refinement note: 2026-05-19 00:35 CDT
 Latest LIR report refinement note: 2026-05-19 00:55 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
@@ -135,6 +136,7 @@ C++ authority expansion contract review
 Language representation review
 Nucleus task no-effect report alignment
 Nucleus task README/status alignment
+Nucleus task report-only execution refinement
 Runtime boundary contract
 Runtime boundary implementation plan
 Runtime boundary implementation
@@ -163,7 +165,7 @@ Completion percentage review
 ## Current next step
 
 ```text
-Nucleus task execution refinement only if it remains no-effect and report-only
+Nucleus task report-only execution README/status alignment
 ```
 
 ## Current runtime boundary domain matrix report boundary
@@ -188,7 +190,7 @@ Lat semantic validation now reports deterministic diagnostic classes, diagnostic
 
 ## Current Nucleus task boundary
 
-The Nucleus task layer remains no-effect and denied-by-default. It now reports explicit task report classification, task-domain labels, authorization-state labels, prerequisite status, no-effect-chain status, report-alignment status, no-effect-policy status, and representation-gate status while preserving non-execution behavior.
+The Nucleus task layer remains no-effect and denied-by-default. It now reports explicit task report classification, task-domain labels, authorization-state labels, prerequisite status, no-effect-chain status, report-alignment status, no-effect-policy status, representation-gate status, execution status, effect status, and runtime status while preserving non-execution behavior.
 
 ## Current runtime boundary refinement boundary
 
