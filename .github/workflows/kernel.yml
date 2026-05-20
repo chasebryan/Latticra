@@ -1,0 +1,21 @@
+name: Kernel
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  kernel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run kernel guard
+        run: sh scripts/test-kernel.sh
+      - name: Run kernel report runner guard
+        run: sh scripts/test-kernel-report-runner.sh
