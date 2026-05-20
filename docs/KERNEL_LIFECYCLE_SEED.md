@@ -9,14 +9,18 @@ This slice builds on the kernel state machine.
 
 The state machine can mutate one in-memory state object through gated steps. This lifecycle seed runs the approved sequence through that state machine and records the final state, step count, state-change count, completion flag, and external-effect flag.
 
+The companion report runner emits the deterministic lifecycle report from a deliberately allowed lifecycle request so the current kernel sequence evidence can be inspected through a small operator-facing tool.
+
 ## Files
 
 ```text
 include/latticra/kernel_lifecycle.h
 src/kernel_lifecycle.c
 tests/kernel_lifecycle.c
+tools/kernel_lifecycle_report.c
 scripts/test-kernel-lifecycle.sh
-.github/workflows/kernel-lifecycle.yml
+scripts/test-kernel-lifecycle-report-runner.sh
+.github/workflows/kernel-sequence.yml
 docs/KERNEL_LIFECYCLE_SEED.md
 ```
 
@@ -54,7 +58,40 @@ The result must still report:
 external_effect_performed=0
 ```
 
-This means no filesystem effect, network effect, process effect, device effect, runtime-entry effect, or host mutation is introduced.
+This means no Latticra runtime filesystem effect, network effect, process effect, device effect, runtime-entry effect, or host mutation is introduced.
+
+The report runner only prints the deterministic lifecycle report for validation and operator inspection. The guard captures that report as test output while preserving the project boundary that the kernel lifecycle itself performs no external effects.
+
+## Report runner
+
+Run:
+
+```sh
+sh scripts/test-kernel-lifecycle-report-runner.sh
+```
+
+Expected output:
+
+```text
+kernel_lifecycle_report_runner: ok
+```
+
+The guard verifies:
+
+```text
+LATTICRA KERNEL LIFECYCLE REPORT
+lifecycle_status=lifecycle-complete
+policy_status=gate-allowed
+final_state=memory-map-ready
+step_count=4
+state_change_count=4
+lifecycle_complete=1
+external_effect_performed=0
+machine_log_count=4
+evidence_level=10
+```
+
+It also verifies the first and final transition log entries.
 
 ## Validation
 
@@ -62,15 +99,17 @@ Run:
 
 ```sh
 sh scripts/test-kernel-lifecycle.sh
+sh scripts/test-kernel-lifecycle-report-runner.sh
 ```
 
 Expected output:
 
 ```text
 kernel_lifecycle: ok
+kernel_lifecycle_report_runner: ok
 ```
 
-The guard verifies:
+The guards verify:
 
 ```text
 default request is denied
@@ -78,6 +117,7 @@ allowed lifecycle reaches memory-map-ready
 intermediate target stops correctly
 step limit is respected
 report includes lifecycle completion and transition log
+report runner emits deterministic lifecycle evidence
 external_effect_performed=0 remains true
 ```
 
@@ -86,7 +126,7 @@ external_effect_performed=0 remains true
 This slice does not add:
 
 ```text
-filesystem writes
+filesystem writes in the Latticra kernel lifecycle
 network access
 process execution
 runtime entry
@@ -100,4 +140,4 @@ operating-system replacement
 
 ## Next possible lane
 
-A later slice may add a lifecycle report runner, lifecycle rollback, or state persistence plan before any external effects are introduced.
+A later slice may add lifecycle rollback, lifecycle-to-subsystem summary reporting, or state persistence planning before any external effects are introduced.
