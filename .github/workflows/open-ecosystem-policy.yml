@@ -1,0 +1,19 @@
+name: Open Ecosystem Policy
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  open-ecosystem-policy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run open ecosystem policy guard
+        run: sh scripts/test-open-ecosystem-policy.sh
