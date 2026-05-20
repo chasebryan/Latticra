@@ -1,7 +1,7 @@
 # Latticra Status Index
 
 Status: active status index
-Last updated: 2026-05-20 03:00 CDT
+Last updated: 2026-05-20 03:20 CDT
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
 ## Purpose
@@ -31,6 +31,7 @@ non-claims
 - [`L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md`](L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md) — L-UI rendering detailed report refinement status.
 - [`L_UI_RENDERING_README_STATUS_ALIGNMENT.md`](L_UI_RENDERING_README_STATUS_ALIGNMENT.md) — L-UI rendering README/status alignment.
 - [`NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_REVIEW.md`](NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_REVIEW.md) — no-new-announcement review after Nucleus report-only alignment slices.
+- [`NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_README_ALIGNMENT.md`](NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_README_ALIGNMENT.md) — README/project-notes alignment after the Nucleus report-only announcement review.
 - [`NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md`](NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md) — Nucleus task no-effect report alignment status.
 - [`NUCLEUS_TASK_README_STATUS_ALIGNMENT.md`](NUCLEUS_TASK_README_STATUS_ALIGNMENT.md) — Nucleus task README/status alignment.
 - [`NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md`](NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md) — Nucleus task report-only execution refinement status.
