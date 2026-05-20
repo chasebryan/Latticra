@@ -13,6 +13,7 @@ extern "C" {
 #define LATTICRA_L_UI_RENDER_LINE_MAX 512u
 #define LATTICRA_L_UI_RENDER_SECTION_MAX 16u
 #define LATTICRA_L_UI_RENDER_AUTHORITY_REPORT_MAX 4096u
+#define LATTICRA_L_UI_RENDER_DETAILED_SECTION_COUNT 10u
 
 typedef enum {
     LATTICRA_L_UI_RENDER_OK = 0,
@@ -84,6 +85,13 @@ typedef struct {
     size_t node_count;
     size_t edge_count;
     size_t section_count;
+    char report_classification[LATTICRA_L_UI_RENDER_LABEL_MAX];
+    char detail_level[LATTICRA_L_UI_RENDER_LABEL_MAX];
+    char section_sequence[LATTICRA_L_UI_RENDER_REASON_MAX];
+    char no_effect_chain[LATTICRA_L_UI_RENDER_LABEL_MAX];
+    char evidence_level[LATTICRA_L_UI_RENDER_LABEL_MAX];
+    int detailed_report_available;
+    size_t detailed_section_count;
     latticra_l_ui_source_span_t span;
     latticra_l_ui_render_authority_summary_t authority;
     int no_effect;
