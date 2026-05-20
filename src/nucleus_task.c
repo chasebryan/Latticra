@@ -45,6 +45,9 @@ static void default_record(latticra_nucleus_task_record_t *record) {
     record->authorization_state = LATTICRA_NUCLEUS_TASK_AUTH_DENIED;
     record->prerequisites_satisfied = 0;
     record->no_effect_chain_ok = 1;
+    record->report_alignment[0] = '\0';
+    record->no_effect_policy[0] = '\0';
+    record->representation_gate[0] = '\0';
     default_authority(&record->authority);
     record->source_identity[0] = '\0';
     default_span(&record->source_span);
@@ -312,12 +315,26 @@ static int result_no_effect_chain_ok(const latticra_nucleus_task_result_t *resul
            result->record.hardware_allowed == 0;
 }
 
+static void apply_no_effect_report_alignment(latticra_nucleus_task_result_t *result) {
+    if (result == 0) return;
+    (void)copy_checked(result->record.report_alignment,
+                       sizeof(result->record.report_alignment),
+                       "no-effect-report-alignment");
+    (void)copy_checked(result->record.no_effect_policy,
+                       sizeof(result->record.no_effect_policy),
+                       result->record.no_effect_chain_ok == 1 ? "preserved" : "violated");
+    (void)copy_checked(result->record.representation_gate,
+                       sizeof(result->record.representation_gate),
+                       "language-representation-reviewed");
+}
+
 static void finalize_task_report_refinement(latticra_nucleus_task_result_t *result) {
     if (result == 0) return;
 
     result->record.task_domain = task_domain_for_kind(result->record.request_kind);
     result->record.no_effect_chain_ok = result_no_effect_chain_ok(result);
     result->record.prerequisites_satisfied = result->record.denial == LATTICRA_NUCLEUS_TASK_DENIAL_OK ? 1 : 0;
+    apply_no_effect_report_alignment(result);
 
     if (result->record.denial == LATTICRA_NUCLEUS_TASK_DENIAL_NULL_ARGUMENT ||
         result->record.denial == LATTICRA_NUCLEUS_TASK_DENIAL_UNKNOWN_REQUEST ||
@@ -633,6 +650,9 @@ latticra_status_t latticra_nucleus_task_report(const latticra_nucleus_task_resul
         !appendf(buffer, buffer_len, &used, "authorization_state=%s\n", latticra_nucleus_task_authorization_state_label(record->authorization_state)) ||
         !appendf(buffer, buffer_len, &used, "prerequisites_satisfied=%d\n", record->prerequisites_satisfied) ||
         !appendf(buffer, buffer_len, &used, "no_effect_chain_ok=%d\n", record->no_effect_chain_ok) ||
+        !appendf(buffer, buffer_len, &used, "report_alignment=%s\n", record->report_alignment) ||
+        !appendf(buffer, buffer_len, &used, "no_effect_policy=%s\n", record->no_effect_policy) ||
+        !appendf(buffer, buffer_len, &used, "representation_gate=%s\n", record->representation_gate) ||
         !appendf(buffer, buffer_len, &used, "authority_status=%s\n", record->authority.status_label) ||
         !appendf(buffer, buffer_len, &used, "authority_validator=%s\n", record->authority.validator_label) ||
         !appendf(buffer, buffer_len, &used, "authority_reason=%s\n", record->authority.denial_reason) ||
