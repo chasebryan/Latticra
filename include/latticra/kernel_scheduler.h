@@ -20,9 +20,9 @@ typedef struct {
     size_t slot_index;
     char label[LATTICRA_KERNEL_SCHEDULER_LABEL_MAX];
     char state[LATTICRA_KERNEL_SCHEDULER_LABEL_MAX];
-    char dispatch_status[LATTICRA_KERNEL_SCHEDULER_LABEL_MAX];
-    int runnable;
-    int dispatched;
+    char selection_status[LATTICRA_KERNEL_SCHEDULER_LABEL_MAX];
+    int selectable;
+    int selected;
     int no_effect;
     unsigned int evidence_level;
 } latticra_kernel_scheduler_slot_t;
@@ -35,8 +35,8 @@ typedef struct {
     latticra_kernel_scheduler_slot_t slots[LATTICRA_KERNEL_SCHEDULER_SLOT_MAX];
     size_t slot_count;
     int no_effect;
-    int dispatch_allowed;
-    int context_switch_allowed;
+    int slot_selection_allowed;
+    int scheduler_activation_allowed;
     unsigned int evidence_level;
 } latticra_kernel_scheduler_result_t;
 
