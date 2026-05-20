@@ -21,6 +21,7 @@ Latest current status detail rollup note: 2026-05-19 19:05 CDT
 Latest foundation index alignment note: 2026-05-19 19:15 CDT
 Latest status announcement review note: 2026-05-19 19:25 CDT
 Latest status announcement review index alignment note: 2026-05-19 19:35 CDT
+Latest public entry-point consistency scan note: 2026-05-19 19:45 CDT
 Latest Lat semantic diagnostics refinement note: 2026-05-19 00:35 CDT
 Latest LIR report refinement note: 2026-05-19 00:55 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
@@ -113,6 +114,7 @@ Current status detail rollup
 Authority foundation index alignment
 Status announcement review
 Status announcement review index alignment
+Public entry-point consistency scan
 Runtime boundary contract
 Runtime boundary implementation plan
 Runtime boundary implementation
@@ -141,7 +143,7 @@ Completion percentage review
 ## Current next step
 
 ```text
-Public entry-point consistency scan
+Project notes follow-up alignment
 ```
 
 ## Current runtime boundary domain matrix report boundary
