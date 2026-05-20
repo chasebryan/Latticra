@@ -1,11 +1,11 @@
 # Latticra Upcoming Work
 
 Status: active project note
-Last updated: 2026-05-19 19:55 CDT
+Last updated: 2026-05-20 02:20 CDT
 
 ## Purpose
 
-This note tracks the near-term work queue after the recent no-effect Lat, LIR, Nucleus, runtime-boundary, authority review, status, announcement, foundation-index, and public-entry alignment slices.
+This note tracks the near-term work queue after the recent no-effect Lat, LIR, Nucleus, runtime-boundary, authority review, status, announcement, foundation-index, public-entry, and Nucleus report-only execution README/status alignment slices.
 
 The project remains evidence-bound and report/classification oriented. The queue should continue to prefer small, reviewable, guarded slices over broad runtime behavior.
 
@@ -67,18 +67,30 @@ Nucleus task execution implementation plan
 ## Latest completed implementation slice
 
 ```text
-Public entry-point consistency scan
+Nucleus task report-only execution README/status alignment
 ```
 
 Purpose completed:
 
 ```text
-refresh README, status index, current status, and root status so public entry points list the newest authority review, completion review, announcement review, and public-entry scan records
+make the Nucleus task report-only execution refinement discoverable from README, root status, current status, status index, and foundation index while preserving no-effect/report-only behavior and leaving completion estimates unchanged
 ```
 
 ## Previous implementation slices
 
 ```text
+Nucleus task report-only execution refinement
+Nucleus task README/status alignment
+Nucleus task no-effect report alignment
+Language representation review
+C++ authority expansion contract review
+L-UI completion estimate review
+L-UI rendering README/status alignment
+L-UI rendering detailed report refinement
+Authority announcement review
+Project notes follow-up status/index check
+Project notes follow-up alignment
+Public entry-point consistency scan
 Status announcement review index alignment
 Status announcement review
 Authority foundation index alignment
@@ -129,26 +141,26 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Project notes follow-up alignment status/index check
+Completion estimate review only if capability posture changes
 ```
 
 Purpose:
 
 ```text
-verify the project-notes refresh is reflected from root status, current status, status index, and foundation index without changing implementation behavior
+review completion estimates only after a future slice changes capability posture, implementation scope, public readiness, or evidence level; skip if the change is documentation/status alignment only
 ```
 
 ## Near-term queue
 
-1. Project notes follow-up alignment status/index check.
-2. Authority status announcement only if public messaging changes.
-3. Completion estimate review only if capability posture changes.
+1. Completion estimate review only if capability posture changes.
+2. Continue small guarded report/status alignment only when drift appears.
+3. Authority status announcement only if public messaging changes.
 4. C++ authority expansion contract only if new authority behavior is proposed.
-5. L-UI rendering detailed report refinement after public entry-point surfaces remain stable.
-6. Nucleus task execution refinement only after the next language representation review.
-7. Defensive threat model validation refinement.
-8. Runtime boundary domain matrix report status audit only if new status drift appears.
-9. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
+5. Nucleus task execution refinement only after the next language representation review and a separate effect contract.
+6. Defensive threat model validation refinement.
+7. Runtime boundary domain matrix report status audit only if new status drift appears.
+8. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
+9. Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review.
 
 ## Quality rules
 
@@ -162,6 +174,7 @@ evidence-bound
 clear about non-claims
 consistent with public Latticra identity
 consistent with the C/C++ foundation direction
+consistent with the report-only Nucleus boundary
 ```
 
 ## Current project priorities
@@ -169,15 +182,15 @@ consistent with the C/C++ foundation direction
 - Preserve the C/C++ foundation checkpoint: C is the metal, C++ is the disciplined structure, Latticra is the contract.
 - Keep the constrained C++ authority layer no-effect until separate effect contracts exist.
 - Keep L-UI rendering no-effect and presentation-only.
-- Keep Nucleus task execution no-effect and denied-by-default.
+- Keep Nucleus task execution no-effect, report-only, and denied-by-default.
 - Keep runtime behavior no-effect and disabled-by-default.
 - Keep Lat semantic validation no-effect and metadata-only.
 - Keep Lat-to-LIR lowering no-effect and metadata-only.
 - Keep Lat-specific LIR refinement no-effect and metadata-only.
 - Keep Lat pipeline diagnostic integration no-effect and metadata-only.
 - Keep Runtime boundary domain matrix report integration report-only and no-effect.
-- Move next into project notes follow-up alignment status/index check.
+- Do not update completion estimates after documentation/status-only alignment.
 - Maintain professional public docs.
-- Keep status and completion estimates current.
+- Keep status and completion estimates current only when capability posture changes.
 - Keep Lat metadata-only until separate execution contracts exist.
 - Keep C++ constrained by the governed authority-layer implementation plan.
