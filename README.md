@@ -197,4 +197,4 @@ See [`SECURITY.md`](SECURITY.md) for vulnerability reporting, supported branch s
 
 ## License
 
-Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`].
+Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`](docs/LICENSE_POLICY.md).
