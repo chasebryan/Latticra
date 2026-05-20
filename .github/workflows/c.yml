@@ -61,6 +61,8 @@ jobs:
         run: sh scripts/test-runtime-boundary-report-refinement.sh
       - name: Run system bootstrap guard
         run: sh scripts/test-system-bootstrap.sh
+      - name: Run kernel guard
+        run: sh scripts/test-kernel.sh
       - name: Run L-UI static report tests
         run: sh scripts/test-l-ui-static-report.sh
       - name: Run L-UI grammar fixture tests
