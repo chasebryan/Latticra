@@ -11,6 +11,7 @@ Latest Lat semantic diagnostics refinement note: 2026-05-19 00:35 CDT
 Latest LIR report refinement note: 2026-05-19 00:55 CDT
 Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
 Latest L-UI rendering detailed report refinement note: 2026-05-19 20:25 CDT
+Latest L-UI rendering README/status alignment note: 2026-05-19 20:35 CDT
 Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
 Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
 Latest runtime boundary report refinement note: 2026-05-18 23:10 CDT
@@ -59,6 +60,7 @@ The repository currently emphasizes:
 - project notes follow-up status/index check;
 - L-UI rendering implementation;
 - L-UI rendering detailed report refinement;
+- L-UI rendering README/status alignment;
 - Nucleus task execution contract;
 - Nucleus task execution implementation plan;
 - Nucleus task execution implementation;
@@ -117,6 +119,8 @@ The Lat-specific LIR refinement gives Lat declarations explicit LIR node kinds a
 The LIR report refinement adds deterministic report classification, graph-shape labels, edge-kind summary counts, no-effect-chain status, and evidence level while preserving lowering outcomes and non-execution behavior.
 
 The L-UI rendering detailed report refinement adds explicit report classification, detail level, detailed-report availability, detailed section count, deterministic section sequence, no-effect-chain status, and evidence level to the no-effect renderer report surface.
+
+The L-UI rendering README/status alignment makes that detailed-report refinement discoverable from the README and status index without changing implementation behavior.
 
 The authority implementation review confirms the constrained C++ authority layer remains no-effect, metadata-only, fixed-capacity, and denied-by-default.
 
@@ -247,6 +251,7 @@ L-UI rendering contract
 L-UI rendering implementation plan
 L-UI rendering implementation
 L-UI rendering detailed report refinement
+L-UI rendering README/status alignment
 project notes current-direction alignment
 project notes upcoming-work alignment
 project notes index alignment
@@ -312,7 +317,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-L-UI rendering detailed report refinement
+L-UI rendering README/status alignment
 ```
 
 ## Previous implementation slice
@@ -320,7 +325,7 @@ L-UI rendering detailed report refinement
 Previous implementation slice:
 
 ```text
-Authority status announcement review
+L-UI rendering detailed report refinement
 ```
 
 ## Earlier implementation slice
@@ -328,7 +333,7 @@ Authority status announcement review
 Earlier implementation slice:
 
 ```text
-Project notes follow-up alignment status/index check
+Authority status announcement review
 ```
 
 ## Next recommended work
@@ -336,13 +341,12 @@ Project notes follow-up alignment status/index check
 Recommended next work:
 
 ```text
-L-UI rendering detailed report README/status alignment
+Completion estimate review only if capability posture changes
 ```
 
 After that:
 
 ```text
-Completion estimate review only if capability posture changes
 C++ authority expansion contract only if new authority behavior is proposed
 ```
 
