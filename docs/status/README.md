@@ -1,7 +1,7 @@
 # Latticra Status Index
 
 Status: active status index
-Last updated: 2026-05-19 20:55 CDT
+Last updated: 2026-05-19 21:05 CDT
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
 ## Purpose
@@ -27,6 +27,7 @@ non-claims
 - [`COMPLETION_PERCENTAGE_REVIEW.md`](COMPLETION_PERCENTAGE_REVIEW.md) — latest completion-percentage planning review.
 - [`CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
 - [`CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md`](CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md) — constrained C++ authority implementation review status.
+- [`LANGUAGE_REPRESENTATION_REVIEW.md`](LANGUAGE_REPRESENTATION_REVIEW.md) — language representation review before Nucleus refinement.
 - [`L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md`](L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md) — L-UI rendering detailed report refinement status.
 - [`L_UI_RENDERING_README_STATUS_ALIGNMENT.md`](L_UI_RENDERING_README_STATUS_ALIGNMENT.md) — L-UI rendering README/status alignment.
 - [`PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`](PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md) — public entry-point consistency scan.
