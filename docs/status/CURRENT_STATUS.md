@@ -21,6 +21,8 @@ Latest status and announcement consistency review note: 2026-05-19 18:35 CDT
 Latest completion percentage review note: 2026-05-19 18:45 CDT
 Latest strategy estimate review note: 2026-05-19 18:45 CDT
 Latest authority implementation review note: 2026-05-19 18:55 CDT
+Latest authority status/docs alignment note: 2026-05-19 19:00 CDT
+Latest current status detail rollup note: 2026-05-19 19:05 CDT
 Latest Nucleus task report refinement note: 2026-05-19 00:15 CDT
 Scope: current progress, completion estimates, merged capability areas, and next priorities.
 
@@ -39,6 +41,8 @@ The repository currently emphasizes:
 - Constrained C++ authority layer implementation plan;
 - initial no-effect constrained C++ authority-layer implementation;
 - authority implementation review;
+- authority status/docs alignment;
+- current status detail rollup;
 - L-UI rendering implementation;
 - Nucleus task execution contract;
 - Nucleus task execution implementation plan;
@@ -98,6 +102,10 @@ The Lat-specific LIR refinement gives Lat declarations explicit LIR node kinds a
 The LIR report refinement adds deterministic report classification, graph-shape labels, edge-kind summary counts, no-effect-chain status, and evidence level while preserving lowering outcomes and non-execution behavior.
 
 The authority implementation review confirms the constrained C++ authority layer remains no-effect, metadata-only, fixed-capacity, and denied-by-default.
+
+The authority status/docs alignment makes the authority review status discoverable from the status index and detailed status surface.
+
+The current status detail rollup closes the drift where the detailed status page still pointed to already-completed authority status/docs alignment.
 
 The Nucleus task report refinement adds deterministic report classification, task-domain labeling, authorization-state labeling, prerequisite status, and no-effect-chain status. This makes Nucleus task reports easier to audit while preserving no-effect behavior.
 
@@ -203,6 +211,8 @@ Constrained C++ authority layer contract
 Constrained C++ authority layer implementation plan
 Constrained C++ authority layer implementation
 authority implementation review
+authority status/docs alignment
+current status detail rollup
 L-UI rendering contract
 L-UI rendering implementation plan
 L-UI rendering implementation
@@ -270,7 +280,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Authority implementation review
+Current status detail rollup
 ```
 
 ## Previous implementation slice
@@ -278,7 +288,7 @@ Authority implementation review
 Previous implementation slice:
 
 ```text
-Strategy estimate review
+Authority status/docs alignment
 ```
 
 ## Earlier implementation slice
@@ -286,7 +296,7 @@ Strategy estimate review
 Earlier implementation slice:
 
 ```text
-Completion percentage review
+Authority implementation review
 ```
 
 ## Next recommended work
@@ -294,14 +304,14 @@ Completion percentage review
 Recommended next work:
 
 ```text
-Authority status/docs alignment
+Authority foundation index alignment
 ```
 
 After that:
 
 ```text
-Current status detail rollup only if new drift appears
 Authority status announcement if public messaging changes
+Completion estimate review only if capability posture changes
 ```
 
 ## Update rule
