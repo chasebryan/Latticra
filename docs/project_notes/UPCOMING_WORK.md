@@ -1,11 +1,11 @@
 # Latticra Upcoming Work
 
 Status: active project note
-Last updated: 2026-05-20 02:20 CDT
+Last updated: 2026-05-20 03:35 CDT
 
 ## Purpose
 
-This note tracks the near-term work queue after the recent no-effect Lat, LIR, Nucleus, runtime-boundary, authority review, status, announcement, foundation-index, public-entry, and Nucleus report-only execution README/status alignment slices.
+This note tracks the near-term work queue after the recent no-effect Lat, LIR, Nucleus, runtime-boundary, authority review, status, announcement-review, foundation-index, public-entry, project-notes, and Nucleus report-only announcement README alignment slices.
 
 The project remains evidence-bound and report/classification oriented. The queue should continue to prefer small, reviewable, guarded slices over broad runtime behavior.
 
@@ -67,18 +67,22 @@ Nucleus task execution implementation plan
 ## Latest completed implementation slice
 
 ```text
-Nucleus task report-only execution README/status alignment
+Nucleus report-only announcement README alignment
 ```
 
 Purpose completed:
 
 ```text
-make the Nucleus task report-only execution refinement discoverable from README, root status, current status, status index, and foundation index while preserving no-effect/report-only behavior and leaving completion estimates unchanged
+make the Nucleus report-only no-new-announcement review discoverable from README, project-notes index, root status, current status, status index, and foundation index while preserving the decision not to add a separate public announcement entry
 ```
 
 ## Previous implementation slices
 
 ```text
+Nucleus report-only announcement review
+Project notes Nucleus report-only status/index check
+Project notes Nucleus report-only alignment
+Nucleus task report-only execution README/status alignment
 Nucleus task report-only execution refinement
 Nucleus task README/status alignment
 Nucleus task no-effect report alignment
@@ -175,6 +179,7 @@ clear about non-claims
 consistent with public Latticra identity
 consistent with the C/C++ foundation direction
 consistent with the report-only Nucleus boundary
+consistent with no-new-announcement decisions unless capability posture changes
 ```
 
 ## Current project priorities
@@ -190,6 +195,7 @@ consistent with the report-only Nucleus boundary
 - Keep Lat pipeline diagnostic integration no-effect and metadata-only.
 - Keep Runtime boundary domain matrix report integration report-only and no-effect.
 - Do not update completion estimates after documentation/status-only alignment.
+- Do not add public announcement entries for documentation/status-only alignment.
 - Maintain professional public docs.
 - Keep status and completion estimates current only when capability posture changes.
 - Keep Lat metadata-only until separate execution contracts exist.
