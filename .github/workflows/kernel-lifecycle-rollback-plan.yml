@@ -1,0 +1,19 @@
+name: Kernel Lifecycle Rollback Plan
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  kernel-lifecycle-rollback-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run kernel lifecycle rollback plan guard
+        run: sh scripts/test-kernel-lifecycle-rollback-plan.sh
