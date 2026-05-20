@@ -1,7 +1,7 @@
 # Latticra Status Index
 
 Status: active status index
-Last updated: 2026-05-19 19:45 CDT
+Last updated: 2026-05-19 20:05 CDT
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
 ## Purpose
@@ -24,6 +24,7 @@ non-claims
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
 - [`COMPLETION_PERCENTAGE_REVIEW.md`](COMPLETION_PERCENTAGE_REVIEW.md) — latest completion-percentage planning review.
 - [`PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`](PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md) — public entry-point consistency scan.
+- [`PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md`](PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md) — project-notes follow-up status/index check.
 - [`STATUS_ANNOUNCEMENT_REVIEW.md`](STATUS_ANNOUNCEMENT_REVIEW.md) — status announcement review.
 - [`STATUS_ANNOUNCEMENT_CONSISTENCY_REVIEW.md`](STATUS_ANNOUNCEMENT_CONSISTENCY_REVIEW.md) — status/announcement consistency review.
 - [`CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md`](CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md) — constrained C++ authority implementation review status.
