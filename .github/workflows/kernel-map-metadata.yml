@@ -1,0 +1,21 @@
+name: Kernel Map Metadata
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  kernel-map-metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run kernel map metadata guard
+        run: sh scripts/test-kernel-memory-map.sh
+      - name: Run kernel map metadata report guard
+        run: sh scripts/test-kernel-memory-map-report-runner.sh
