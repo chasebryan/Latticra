@@ -27,6 +27,8 @@ Latest authority foundation index alignment note: 2026-05-19 19:15 CDT
 Latest status announcement review note: 2026-05-19 19:25 CDT
 Latest status announcement review index alignment note: 2026-05-19 19:35 CDT
 Latest public entry-point consistency scan note: 2026-05-19 19:45 CDT
+Latest project notes follow-up alignment note: 2026-05-19 19:55 CDT
+Latest project notes follow-up status/index check note: 2026-05-19 20:05 CDT
 Latest Nucleus task report refinement note: 2026-05-19 00:15 CDT
 Scope: current progress, completion estimates, merged capability areas, and next priorities.
 
@@ -50,6 +52,8 @@ The repository currently emphasizes:
 - authority foundation index alignment;
 - status announcement review;
 - public entry-point consistency scan;
+- project notes follow-up alignment;
+- project notes follow-up status/index check;
 - L-UI rendering implementation;
 - Nucleus task execution contract;
 - Nucleus task execution implementation plan;
@@ -115,6 +119,10 @@ The authority status/docs alignment makes the authority review status discoverab
 The authority foundation index alignment makes the authority review and review status visible from the main foundation index.
 
 The public entry-point consistency scan refreshes README and status-index references after the recent authority/status/foundation/announcement slices.
+
+The project notes follow-up alignment refreshes the current-direction note, upcoming-work queue, and project-notes index after the public entry-point consistency scan.
+
+The project notes follow-up status/index check verifies that the project-notes refresh is represented from the status index and detailed status surface.
 
 The Nucleus task report refinement adds deterministic report classification, task-domain labeling, authorization-state labeling, prerequisite status, and no-effect-chain status. This makes Nucleus task reports easier to audit while preserving no-effect behavior.
 
@@ -224,6 +232,8 @@ authority status/docs alignment
 authority foundation index alignment
 current status detail rollup
 public entry-point consistency scan
+project notes follow-up alignment
+project notes follow-up status/index check
 L-UI rendering contract
 L-UI rendering implementation plan
 L-UI rendering implementation
@@ -292,7 +302,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Public entry-point consistency scan
+Project notes follow-up alignment status/index check
 ```
 
 ## Previous implementation slice
@@ -300,7 +310,7 @@ Public entry-point consistency scan
 Previous implementation slice:
 
 ```text
-Status announcement review index alignment
+Project notes follow-up alignment
 ```
 
 ## Earlier implementation slice
@@ -308,7 +318,7 @@ Status announcement review index alignment
 Earlier implementation slice:
 
 ```text
-Status announcement review
+Public entry-point consistency scan
 ```
 
 ## Next recommended work
@@ -316,14 +326,14 @@ Status announcement review
 Recommended next work:
 
 ```text
-Project notes follow-up alignment
+Authority status announcement only if public messaging changes
 ```
 
 After that:
 
 ```text
 Completion estimate review only if capability posture changes
-Authority status announcement only if public messaging changes
+L-UI rendering detailed report refinement after public entry-point surfaces remain stable
 ```
 
 ## Update rule
