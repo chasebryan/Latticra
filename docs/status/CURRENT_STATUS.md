@@ -23,6 +23,10 @@ Latest strategy estimate review note: 2026-05-19 18:45 CDT
 Latest authority implementation review note: 2026-05-19 18:55 CDT
 Latest authority status/docs alignment note: 2026-05-19 19:00 CDT
 Latest current status detail rollup note: 2026-05-19 19:05 CDT
+Latest authority foundation index alignment note: 2026-05-19 19:15 CDT
+Latest status announcement review note: 2026-05-19 19:25 CDT
+Latest status announcement review index alignment note: 2026-05-19 19:35 CDT
+Latest public entry-point consistency scan note: 2026-05-19 19:45 CDT
 Latest Nucleus task report refinement note: 2026-05-19 00:15 CDT
 Scope: current progress, completion estimates, merged capability areas, and next priorities.
 
@@ -43,6 +47,9 @@ The repository currently emphasizes:
 - authority implementation review;
 - authority status/docs alignment;
 - current status detail rollup;
+- authority foundation index alignment;
+- status announcement review;
+- public entry-point consistency scan;
 - L-UI rendering implementation;
 - Nucleus task execution contract;
 - Nucleus task execution implementation plan;
@@ -105,7 +112,9 @@ The authority implementation review confirms the constrained C++ authority layer
 
 The authority status/docs alignment makes the authority review status discoverable from the status index and detailed status surface.
 
-The current status detail rollup closes the drift where the detailed status page still pointed to already-completed authority status/docs alignment.
+The authority foundation index alignment makes the authority review and review status visible from the main foundation index.
+
+The public entry-point consistency scan refreshes README and status-index references after the recent authority/status/foundation/announcement slices.
 
 The Nucleus task report refinement adds deterministic report classification, task-domain labeling, authorization-state labeling, prerequisite status, and no-effect-chain status. This makes Nucleus task reports easier to audit while preserving no-effect behavior.
 
@@ -212,13 +221,16 @@ Constrained C++ authority layer implementation plan
 Constrained C++ authority layer implementation
 authority implementation review
 authority status/docs alignment
+authority foundation index alignment
 current status detail rollup
+public entry-point consistency scan
 L-UI rendering contract
 L-UI rendering implementation plan
 L-UI rendering implementation
 project notes current-direction alignment
 project notes upcoming-work alignment
 project notes index alignment
+status announcement review
 status and announcement consistency review
 completion percentage review
 strategy estimate review
@@ -280,7 +292,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Current status detail rollup
+Public entry-point consistency scan
 ```
 
 ## Previous implementation slice
@@ -288,7 +300,7 @@ Current status detail rollup
 Previous implementation slice:
 
 ```text
-Authority status/docs alignment
+Status announcement review index alignment
 ```
 
 ## Earlier implementation slice
@@ -296,7 +308,7 @@ Authority status/docs alignment
 Earlier implementation slice:
 
 ```text
-Authority implementation review
+Status announcement review
 ```
 
 ## Next recommended work
@@ -304,14 +316,14 @@ Authority implementation review
 Recommended next work:
 
 ```text
-Authority foundation index alignment
+Project notes follow-up alignment
 ```
 
 After that:
 
 ```text
-Authority status announcement if public messaging changes
 Completion estimate review only if capability posture changes
+Authority status announcement only if public messaging changes
 ```
 
 ## Update rule
