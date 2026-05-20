@@ -52,6 +52,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md`](status/NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md) — status record for the Nucleus task no-effect report alignment refinement.
 - [`status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md`](status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md) — status record for the Nucleus task report-only execution refinement.
 - [`status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_README_STATUS_ALIGNMENT.md`](status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_README_STATUS_ALIGNMENT.md) — README/status alignment for the Nucleus task report-only execution refinement.
+- [`status/PROJECT_NOTES_NUCLEUS_REPORT_ONLY_ALIGNMENT_STATUS_INDEX_CHECK.md`](status/PROJECT_NOTES_NUCLEUS_REPORT_ONLY_ALIGNMENT_STATUS_INDEX_CHECK.md) — status/index check for the project-notes Nucleus report-only alignment.
 - [`status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — status record for the Lat pipeline diagnostic integration slice.
 - [`status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — status record for the Lat pipeline diagnostic main test audit slice.
 - [`status/RBDM_REPORT_INTEGRATION_STATUS.md`](status/RBDM_REPORT_INTEGRATION_STATUS.md) — status record for the runtime-boundary domain matrix report integration slice.
@@ -152,6 +153,8 @@ Nucleus task report refinement + invariants
 Nucleus task no-effect report alignment + invariants
 Nucleus task report-only execution refinement + invariants
 Nucleus task report-only execution README/status alignment + public entry-point alignment
+Project notes Nucleus report-only alignment + project-note alignment
+Project notes Nucleus report-only status/index check + public status alignment
 Runtime boundary contract + guardrails
 Runtime boundary implementation plan + guardrails
 Runtime boundary implementation + smoke invariants
