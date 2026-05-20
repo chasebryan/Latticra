@@ -1,0 +1,19 @@
+name: License Migration Plan
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  license-migration-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run license migration plan guard
+        run: sh scripts/test-license-migration-plan.sh
