@@ -1,7 +1,7 @@
 # Latticra Project Notes
 
 Status: active project notes index
-Last updated: 2026-05-20 02:20 CDT
+Last updated: 2026-05-20 03:20 CDT
 
 ## Purpose
 
@@ -11,8 +11,8 @@ The project notes are intentionally lighter than the foundation documents. They 
 
 ## Files
 
-- `CURRENT_DIRECTION.md` — current technical lane, boundaries, non-claims, and project direction after the recent Lat pipeline diagnostic, RBDM report, authority review, L-UI report, Nucleus task, runtime-boundary, and README/status alignment slices.
-- `UPCOMING_WORK.md` — current near-term queue after the recent no-effect report, diagnostic, audit, README, foundation-index, announcement, public-entry, project-notes, and Nucleus report-only execution alignment slices.
+- `CURRENT_DIRECTION.md` — current technical lane, boundaries, non-claims, and project direction after the recent Lat pipeline diagnostic, RBDM report, authority review, L-UI report, Nucleus task, runtime-boundary, README/status alignment, and no-new-announcement review slices.
+- `UPCOMING_WORK.md` — current near-term queue after the recent no-effect report, diagnostic, audit, README, foundation-index, announcement-review, public-entry, project-notes, and Nucleus report-only execution alignment slices.
 
 ## Current note posture
 
@@ -31,6 +31,7 @@ clear about non-claims
 consistent with the C/C++ foundation direction
 consistent with the no-effect runtime boundary
 consistent with the Nucleus report-only execution boundary
+consistent with no-new-announcement decisions unless capability posture changes
 ```
 
 ## Related records
@@ -39,6 +40,8 @@ consistent with the Nucleus report-only execution boundary
 - `README.md`
 - `docs/status/CURRENT_STATUS.md`
 - `docs/status/ANNOUNCEMENTS.md`
+- `docs/status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_REVIEW.md`
+- `docs/status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_README_ALIGNMENT.md`
 - `docs/status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md`
 - `docs/status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_README_STATUS_ALIGNMENT.md`
 - `docs/status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`
