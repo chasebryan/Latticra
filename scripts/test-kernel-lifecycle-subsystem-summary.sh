@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+: "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
+
+cc $CFLAGS \
+  -Iinclude \
+  src/state_lattice.c \
+  src/nucleus_preview.c \
+  src/nucleus_task.c \
+  src/runtime_boundary.c \
+  src/system_bootstrap.c \
+  src/kernel.c \
+  src/kernel_subsystem_registry.c \
+  src/kernel_scheduler.c \
+  src/kernel_memory_map.c \
+  src/kernel_state.c \
+  src/kernel_state_machine.c \
+  src/kernel_lifecycle.c \
+  src/kernel_lifecycle_subsystem_summary.c \
+  tests/kernel_lifecycle_subsystem_summary.c \
+  -o /tmp/latticra-kernel-lifecycle-subsystem-summary
+
+/tmp/latticra-kernel-lifecycle-subsystem-summary

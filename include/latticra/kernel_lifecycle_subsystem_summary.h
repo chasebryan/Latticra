@@ -1,0 +1,74 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+#ifndef LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_H
+#define LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_H
+
+#include "latticra/kernel_lifecycle.h"
+#include "latticra/kernel_subsystem_registry.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX 64u
+#define LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_REPORT_MAX 24576u
+#define LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_ENTRY_MAX \
+    LATTICRA_KERNEL_SUBSYSTEM_REGISTRY_ENTRY_MAX
+
+typedef struct {
+    latticra_kernel_lifecycle_request_t lifecycle_request;
+    latticra_kernel_subsystem_registry_request_t registry_request;
+} latticra_kernel_lifecycle_subsystem_summary_request_t;
+
+typedef struct {
+    latticra_kernel_subsystem_kind_t kind;
+    char name[LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX];
+    char registry_status[LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX];
+    char lifecycle_relation[LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX];
+    char authority_status[LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX];
+    char effect_boundary[LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX];
+    int lifecycle_ready;
+    int authority_allowed;
+    int no_effect;
+    unsigned int evidence_level;
+} latticra_kernel_lifecycle_subsystem_summary_entry_t;
+
+typedef struct {
+    latticra_status_t status;
+    char summary_status[LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX];
+    char final_state[LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX];
+    latticra_kernel_lifecycle_result_t lifecycle;
+    latticra_kernel_subsystem_registry_result_t registry;
+    latticra_kernel_lifecycle_subsystem_summary_entry_t entries[
+        LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_ENTRY_MAX];
+    size_t entry_count;
+    size_t lifecycle_step_count;
+    size_t lifecycle_state_change_count;
+    int lifecycle_complete;
+    int lifecycle_state_mutated;
+    int external_effect_performed;
+    int registry_no_effect;
+    int runtime_entry_allowed;
+    int scheduler_execution_allowed;
+    int memory_allocation_allowed;
+    int no_external_effect_chain;
+    unsigned int evidence_level;
+} latticra_kernel_lifecycle_subsystem_summary_result_t;
+
+latticra_status_t latticra_kernel_lifecycle_subsystem_summary_default_request(
+    latticra_kernel_lifecycle_subsystem_summary_request_t *request);
+
+latticra_status_t latticra_kernel_lifecycle_subsystem_summary_evaluate(
+    const latticra_kernel_lifecycle_subsystem_summary_request_t *request,
+    latticra_kernel_lifecycle_subsystem_summary_result_t *result);
+
+latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
+    const latticra_kernel_lifecycle_subsystem_summary_result_t *result,
+    char *buffer,
+    size_t buffer_len);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
