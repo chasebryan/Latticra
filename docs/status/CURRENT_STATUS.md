@@ -13,6 +13,7 @@ Latest Lat-specific LIR refinement note: 2026-05-18 21:30 CDT
 Latest L-UI rendering detailed report refinement note: 2026-05-19 20:25 CDT
 Latest L-UI rendering README/status alignment note: 2026-05-19 20:35 CDT
 Latest L-UI completion estimate review note: 2026-05-19 20:45 CDT
+Latest C++ authority expansion contract review note: 2026-05-19 20:55 CDT
 Latest runtime boundary refinement plan note: 2026-05-18 22:15 CDT
 Latest runtime boundary refinement implementation note: 2026-05-18 22:45 CDT
 Latest runtime boundary report refinement note: 2026-05-18 23:10 CDT
@@ -50,6 +51,7 @@ The repository currently emphasizes:
 - Constrained C++ authority layer contract;
 - Constrained C++ authority layer implementation plan;
 - initial no-effect constrained C++ authority-layer implementation;
+- C++ authority expansion contract review;
 - authority implementation review;
 - authority status/docs alignment;
 - authority announcement review;
@@ -125,6 +127,8 @@ The L-UI rendering detailed report refinement adds explicit report classificatio
 The L-UI rendering README/status alignment makes that detailed-report refinement discoverable from the README and status index without changing implementation behavior.
 
 The L-UI completion estimate review conservatively updates planning estimates after the no-effect renderer report metadata and validation work. It does not change runtime, security-hardening, authority, or product-readiness estimates.
+
+The C++ authority expansion contract review records that no new expansion contract is needed because no new authority behavior has been proposed.
 
 The authority implementation review confirms the constrained C++ authority layer remains no-effect, metadata-only, fixed-capacity, and denied-by-default.
 
@@ -243,6 +247,7 @@ C/C++ foundation direction
 Constrained C++ authority layer contract
 Constrained C++ authority layer implementation plan
 Constrained C++ authority layer implementation
+C++ authority expansion contract review
 authority implementation review
 authority status/docs alignment
 authority announcement review
@@ -322,7 +327,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-L-UI completion estimate review
+C++ authority expansion contract review
 ```
 
 ## Previous implementation slice
@@ -330,7 +335,7 @@ L-UI completion estimate review
 Previous implementation slice:
 
 ```text
-L-UI rendering README/status alignment
+L-UI completion estimate review
 ```
 
 ## Earlier implementation slice
@@ -338,7 +343,7 @@ L-UI rendering README/status alignment
 Earlier implementation slice:
 
 ```text
-L-UI rendering detailed report refinement
+L-UI rendering README/status alignment
 ```
 
 ## Next recommended work
@@ -346,13 +351,13 @@ L-UI rendering detailed report refinement
 Recommended next work:
 
 ```text
-C++ authority expansion contract only if new authority behavior is proposed
+Nucleus task execution refinement only after the next language representation review
 ```
 
 After that:
 
 ```text
-Nucleus task execution refinement only after the next language representation review
+C++ authority expansion contract only if new authority behavior is proposed
 ```
 
 ## Update rule
