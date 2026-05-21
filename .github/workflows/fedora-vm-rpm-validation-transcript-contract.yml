@@ -1,0 +1,18 @@
+name: Fedora VM RPM Validation Transcript Contract
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-vm-rpm-validation-transcript-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Fedora VM RPM validation transcript contract guard
+        run: sh scripts/test-fedora-disposable-vm-local-rpm-validation-transcript-contract.sh
