@@ -42,9 +42,12 @@ require_file docs/FEDORA_LOCAL_RPM_VALIDATION_PLAN.md
 require_file packaging/fedora/latticra.spec
 require_file scripts/test-fedora-local-rpm-spec-skeleton.sh
 require_file scripts/test-fedora-local-rpm-validation-plan.sh
+require_file scripts/test-latticra-no-effect-cli-status-surface.sh
+require_file src/latticra_cli.c
 
 sh scripts/test-fedora-local-rpm-spec-skeleton.sh
 sh scripts/test-fedora-local-rpm-validation-plan.sh
+sh scripts/test-latticra-no-effect-cli-status-surface.sh
 
 require_contains 'Status: active static validation lane' docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'static checks for the local RPM spec skeleton' docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
@@ -62,14 +65,25 @@ require_contains '%build' packaging/fedora/latticra.spec
 require_contains '%install' packaging/fedora/latticra.spec
 require_contains '%files' packaging/fedora/latticra.spec
 require_contains '%changelog' packaging/fedora/latticra.spec
+require_contains 'sh scripts/test-latticra-no-effect-cli-status-surface.sh' packaging/fedora/latticra.spec
+require_contains 'cc %{optflags} -std=c99 -Wall -Wextra -Werror -pedantic src/latticra_cli.c -o build/latticra' packaging/fedora/latticra.spec
+require_contains 'install -m 0755 build/latticra %{buildroot}%{_bindir}/latticra' packaging/fedora/latticra.spec
+require_contains 'install -m 0644 README.md %{buildroot}%{_docdir}/%{name}/README.md' packaging/fedora/latticra.spec
+require_contains '%{_bindir}/latticra' packaging/fedora/latticra.spec
+require_contains '%doc %{_docdir}/%{name}/README.md' packaging/fedora/latticra.spec
 
+require_absent 'BuildArch:      noarch' packaging/fedora/latticra.spec
 require_absent_section '%pre' packaging/fedora/latticra.spec
 require_absent_section '%post' packaging/fedora/latticra.spec
 require_absent_section '%preun' packaging/fedora/latticra.spec
 require_absent_section '%postun' packaging/fedora/latticra.spec
 require_absent '.service' packaging/fedora/latticra.spec
-require_absent '%{_bindir}' packaging/fedora/latticra.spec
 require_absent '%{_sbindir}' packaging/fedora/latticra.spec
 require_absent 'systemctl' packaging/fedora/latticra.spec
+require_absent '/usr/lib/systemd/system' packaging/fedora/latticra.spec
+require_absent '/usr/lib/modules' packaging/fedora/latticra.spec
+require_absent '/boot/latticra' packaging/fedora/latticra.spec
+require_absent '/usr/share/selinux' packaging/fedora/latticra.spec
+require_absent '/etc/latticra' packaging/fedora/latticra.spec
 
 printf 'fedora_local_rpm_static_validation: ok\n'
