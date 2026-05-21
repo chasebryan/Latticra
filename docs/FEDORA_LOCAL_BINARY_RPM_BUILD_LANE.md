@@ -33,6 +33,14 @@ SELinux policy files
 runtime configuration
 ```
 
+Because the current package is documentation-only and does not install compiled ELF payloads, this local build lane disables debug package generation for the lane with:
+
+```text
+debug_package %{nil}
+```
+
+That is a local build-lane constraint, not a permanent Fedora packaging decision. Debug/source package behavior should be revisited once Latticra installs compiled payloads.
+
 ## Build inputs
 
 The lane uses:
@@ -80,7 +88,8 @@ rpmbuild -bb packaging/fedora/latticra.spec \
   --define "_sourcedir <temporary-rpm-workdir>/SOURCES" \
   --define "_rpmdir <temporary-rpm-workdir>/RPMS" \
   --define "_builddir <temporary-rpm-workdir>/BUILD" \
-  --define "_buildrootdir <temporary-rpm-workdir>/BUILDROOT"
+  --define "_buildrootdir <temporary-rpm-workdir>/BUILDROOT" \
+  --define "debug_package %{nil}"
 ```
 
 ## RPM inspection
@@ -102,6 +111,7 @@ This lane passes only if:
 Fedora environment is present
 rpm-build is available
 source archive fixture can be formed
+debug package generation is disabled for the current doc-only payload
 rpmbuild produces one local latticra RPM
 rpm -qpi can read package metadata
 rpm -qpl can list payload files
