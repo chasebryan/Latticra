@@ -1,0 +1,18 @@
+name: Fedora Host Install Preflight Plan
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-host-install-preflight-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Fedora host install preflight plan guard
+        run: sh scripts/test-fedora-host-install-preflight-plan.sh
