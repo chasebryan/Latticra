@@ -11,7 +11,6 @@ Summary:        Contract-first systems architecture and language project
 License:        LicenseRef-Latticra-TBD
 URL:            https://github.com/Bryforge/Latticra
 Source0:        %{name}-%{version}.tar.gz
-BuildArch:      noarch
 
 BuildRequires:  gcc
 BuildRequires:  make
@@ -28,14 +27,23 @@ sh scripts/test-state-lattice.sh
 sh scripts/test-system-bootstrap.sh
 sh scripts/test-kernel.sh
 sh scripts/test-kernel-lifecycle.sh
+sh scripts/test-latticra-no-effect-cli-status-surface.sh
+mkdir -p build
+cc %{optflags} -std=c99 -Wall -Wextra -Werror -pedantic src/latticra_cli.c -o build/latticra
 
 %install
+mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_docdir}/%{name}
+install -m 0755 build/latticra %{buildroot}%{_bindir}/latticra
 install -m 0644 README.md %{buildroot}%{_docdir}/%{name}/README.md
 
 %files
+%{_bindir}/latticra
 %doc %{_docdir}/%{name}/README.md
 
 %changelog
+* Thu May 21 2026 Bryforge <noreply@example.invalid> - 0.0.0-0.1.local
+- Add no-effect CLI binary to local RPM payload draft without claiming VM validation.
+
 * Wed May 20 2026 Bryforge <noreply@example.invalid> - 0.0.0-0.1.local
 - Add local-only RPM spec draft skeleton.
