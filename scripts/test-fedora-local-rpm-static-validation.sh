@@ -14,7 +14,7 @@ require_contains() {
   pattern="$1"
   file="$2"
   if ! grep -Fq -- "$pattern" "$file"; then
-    printf 'fedora local rpm static validation: missing required pattern in %s: %s\n' "$file" "$pattern" >&2
+    printf 'fedora local rpm static validation: missing required pattern in %s: %s\n' "$file" >&2
     exit 1
   fi
 }
@@ -47,7 +47,6 @@ require_file src/latticra_cli.c
 
 sh scripts/test-fedora-local-rpm-spec-skeleton.sh
 sh scripts/test-fedora-local-rpm-validation-plan.sh
-sh scripts/test-latticra-no-effect-cli-status-surface.sh
 
 require_contains 'Status: active static validation lane' docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'static checks for the local RPM spec skeleton' docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
@@ -55,6 +54,11 @@ require_contains 'does not run `rpmbuild`, `rpmlint`, or `mock`' docs/FEDORA_LOC
 require_contains 'does not create package artifacts' docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'Add rpmlint availability lane' docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'fedora_local_rpm_static_validation: ok' docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
+
+require_contains 'latticra_no_effect_cli_status_surface: ok' scripts/test-latticra-no-effect-cli-status-surface.sh
+require_contains 'LATTICRA STATUS REPORT' src/latticra_cli.c
+require_contains 'mode=no-effect' src/latticra_cli.c
+require_contains 'runtime_behavior=disabled' src/latticra_cli.c
 
 require_contains 'LOCAL-ONLY DRAFT' packaging/fedora/latticra.spec
 require_contains 'License:        LicenseRef-Latticra-TBD' packaging/fedora/latticra.spec
