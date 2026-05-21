@@ -14,5 +14,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run Fedora manual host RC checklist status alignment guard
-        run: sh scripts/test-fedora-manual-host-rc-checklist-status-alignment.sh
+      - name: Run current Fedora RC status alignment guard
+        run: sh scripts/test-fedora-manual-host-rc-decision-status-alignment.sh
