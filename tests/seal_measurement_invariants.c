@@ -59,7 +59,7 @@ static int measurement_fails_closed_for_invalid_input(void) {
     EXPECT_TRUE(latticra_seal_measure_file("/tmp", &measurement) == LATTICRA_STATUS_OK, "directory status");
     EXPECT_TRUE(measurement.error == LATTICRA_SEAL_MEASUREMENT_NOT_REGULAR, "directory error");
     EXPECT_TRUE(latticra_seal_measure_file("/tmp/latticra-seal-missing-file", &measurement) == LATTICRA_STATUS_OK, "missing status");
-    EXPECT_TRUE(measurement.error == LATTICRA_SEAL_MEASUREMENT_NOT_REGULAR, "missing error");
+    EXPECT_TRUE(measurement.error == LATTICRA_SEAL_MEASUREMENT_OPEN_FAILED, "missing error");
     EXPECT_TRUE(latticra_seal_measurement_is_read_only(0) == 0, "null helper");
     EXPECT_TRUE(latticra_seal_measurement_report(&measurement, tiny, sizeof(tiny)) == LATTICRA_STATUS_BUFFER_TOO_SMALL, "small buffer");
     EXPECT_TRUE(tiny[0] == '\0', "small buffer cleared");
