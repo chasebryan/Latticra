@@ -1,0 +1,18 @@
+name: Fedora VM RPM Evidence Status
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-vm-rpm-evidence-status:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Fedora VM RPM evidence status
+        run: sh scripts/test-fedora-disposable-vm-local-rpm-validation-evidence-status.sh
