@@ -1,0 +1,23 @@
+name: Fedora RPM Payload Report
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-rpm-payload-report:
+    runs-on: ubuntu-latest
+    container:
+      image: registry.fedoraproject.org/fedora:latest
+    steps:
+      - name: Prepare checkout tools
+        run: dnf -y install git tar gzip
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run Fedora RPM payload inspection report guard
+        run: sh scripts/test-fedora-rpm-payload-inspection-report.sh
