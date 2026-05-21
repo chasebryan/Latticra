@@ -1,0 +1,18 @@
+name: Fedora Install Preflight Snapshot Capture Plan
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-install-preflight-snapshot-capture-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Fedora install preflight snapshot capture plan guard
+        run: sh scripts/test-fedora-install-preflight-snapshot-capture-plan.sh
