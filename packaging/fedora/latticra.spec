@@ -1,6 +1,8 @@
 # LOCAL-ONLY DRAFT
 # Upstream packaging experiment for Latticra.
 
+%global debug_package %{nil}
+
 Name:           latticra
 Version:        0.0.0
 Release:        0.1.local%{?dist}
@@ -9,6 +11,7 @@ Summary:        Contract-first systems architecture and language project
 License:        LicenseRef-Latticra-TBD
 URL:            https://github.com/Bryforge/Latticra
 Source0:        %{name}-%{version}.tar.gz
+BuildArch:      noarch
 
 BuildRequires:  gcc
 BuildRequires:  make

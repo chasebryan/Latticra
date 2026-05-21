@@ -3,6 +3,9 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-kernel.XXXXXX")"
+bin="$tmpdir/latticra-kernel"
+
 cc $CFLAGS \
   -Iinclude \
   src/state_lattice.c \
@@ -12,6 +15,6 @@ cc $CFLAGS \
   src/system_bootstrap.c \
   src/kernel.c \
   tests/kernel.c \
-  -o /tmp/latticra-kernel
+  -o "$bin"
 
-/tmp/latticra-kernel
+"$bin"
