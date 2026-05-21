@@ -38,7 +38,7 @@ Runtime boundary: disabled-by-default line before operational behavior
 
 ## Current implementation posture
 
-The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, authority implementation review, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, Nucleus report-only announcement review, Runtime boundary contract, Runtime boundary refinement plan, Runtime boundary refinement implementation, Runtime boundary report refinement, Runtime boundary policy matrix refinement, Runtime boundary domain matrix refinement, Runtime boundary domain matrix report integration, L-UI rendering implementation, L-UI rendering detailed report refinement, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, Lat semantic diagnostics refinement, LIR shape implementation, LIR report refinement, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic main test audit, Lat-specific LIR refinement implementation, status announcement review, public entry-point consistency scan, Fedora RPM gate evidence, disposable Fedora VM local RPM validation evidence, and state-lattice models.
+The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, authority implementation review, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, Nucleus report-only announcement review, Runtime boundary contract, Runtime boundary refinement plan, Runtime boundary refinement implementation, Runtime boundary report refinement, Runtime boundary policy matrix refinement, Runtime boundary domain matrix refinement, Runtime boundary domain matrix report integration, L-UI rendering implementation, L-UI rendering detailed report refinement, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, Lat semantic diagnostics refinement, LIR shape implementation, LIR report refinement, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic main test audit, Lat-specific LIR refinement implementation, status announcement review, public entry-point consistency scan, Fedora RPM gate evidence, disposable Fedora VM local RPM validation evidence, disposable Fedora VM CLI payload validation evidence, and state-lattice models.
 
 Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The Lat pipeline composes source parsing, semantic validation, Lat-to-LIR lowering, LIR metadata, deterministic pipeline reporting, and companion diagnostic reporting into a no-effect integration boundary.
 
@@ -60,16 +60,15 @@ The Runtime boundary domain matrix report integration adds deterministic report 
 
 Current implementation remains report/classification oriented. It is not active runtime behavior.
 
-## Fedora disposable VM local RPM validation
+## Fedora disposable VM RPM validation
 
-Latticra now has one evidence-backed host-facing validation path: **disposable Fedora VM local RPM validation**.
-
-The validated path is narrow:
+Latticra now has two evidence-backed disposable Fedora VM validation records:
 
 ```text
-disposable_vm_validation_completed=1
-live_host_validation_completed=1
+disposable_vm_local_rpm_validation_completed=1
+disposable_vm_cli_validation_completed=1
 host_install_ready=1
+host_install_ready_for_cli_payload=1
 production_installer_ready=0
 fedora_distribution_ready=0
 fedora_approval_claimed=0
@@ -78,33 +77,42 @@ immutable_fedora_ready=0
 evidence_level=9
 ```
 
-The validated package is a local, documentation-only, noarch RPM:
+The original validated local RPM path was documentation-only:
 
 ```text
 latticra-0.0.0-0.1.local.fc44.noarch.rpm
-```
-
-The validated payload remains:
-
-```text
 /usr/share/doc/latticra/README.md
 ```
 
-The successful disposable Fedora VM transcript recorded package build, RPM install, RPM verification, RPM removal, and post-removal absence verification.
+The newer validated disposable Fedora VM CLI payload path is:
+
+```text
+latticra-0.0.0-0.1.local.fc44.x86_64.rpm
+/usr/bin/latticra
+/usr/share/doc/latticra/README.md
+```
+
+The successful disposable Fedora VM CLI transcript recorded package build, RPM install, RPM verification, CLI status/version/report validation, invalid-command validation, RPM removal, and post-removal absence verification.
+
+This means the local CLI RPM payload has evidence-backed disposable Fedora VM validation.
 
 This does **not** mean Latticra is production ready, Fedora approved, Fedora distribution ready, daily-driver safe, immutable-Fedora ready, a production installer, a bootable OS replacement, a security product, a sandbox, or a malware/ransomware prevention system.
 
 Evidence records:
 
+- [`docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md`](docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md)
+- [`docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md`](docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md)
+- [`docs/FEDORA_VM_CLI_PAYLOAD_VALIDATION_LANE.md`](docs/FEDORA_VM_CLI_PAYLOAD_VALIDATION_LANE.md)
+- [`docs/FEDORA_VM_CLI_TRANSCRIPT_CONTRACT.md`](docs/FEDORA_VM_CLI_TRANSCRIPT_CONTRACT.md)
 - [`docs/status/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md`](docs/status/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md)
 - [`docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md`](docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md)
 - [`docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_TRANSCRIPT_CONTRACT.md`](docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_TRANSCRIPT_CONTRACT.md)
 
 ## Boundary
 
-Latticra does not currently provide a kernel, bootable image, production installer, Fedora-approved package, Fedora distribution-ready package, daily-driver installer, immutable Fedora installer, production runtime, runtime behavior, command execution, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing task execution, interactive L-UI rendering, terminal-control L-UI rendering, LIR execution, Lat execution, Lat compiler, Lat interpreter, accreditation, certification, or operating-system replacement.
+Latticra does not currently provide a kernel, bootable image, production installer, Fedora-approved package, Fedora distribution-ready package, daily-driver installer, immutable Fedora installer, production runtime, runtime behavior, command execution beyond the validated no-effect `latticra` CLI status/version/report surface, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing task execution, interactive L-UI rendering, terminal-control L-UI rendering, LIR execution, Lat execution, Lat compiler, Lat interpreter, accreditation, certification, or operating-system replacement.
 
-The only install-readiness statement currently supported by evidence is disposable Fedora VM local RPM validation for the documentation-only local RPM described above.
+The only install-readiness statements currently supported by evidence are disposable Fedora VM local RPM validation for the documentation-only RPM and disposable Fedora VM CLI payload validation for the local no-effect CLI RPM described above.
 
 ## Initial documentation
 
@@ -116,8 +124,12 @@ Important records:
 - [`SECURITY.md`](SECURITY.md)
 - [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md)
 - [`docs/status/ANNOUNCEMENTS.md`](docs/status/ANNOUNCEMENTS.md)
+- [`docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md`](docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md)
+- [`docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md`](docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md)
 - [`docs/status/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md`](docs/status/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md)
 - [`docs/status/FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md`](docs/status/FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md)
+- [`docs/FEDORA_VM_CLI_PAYLOAD_VALIDATION_LANE.md`](docs/FEDORA_VM_CLI_PAYLOAD_VALIDATION_LANE.md)
+- [`docs/FEDORA_VM_CLI_TRANSCRIPT_CONTRACT.md`](docs/FEDORA_VM_CLI_TRANSCRIPT_CONTRACT.md)
 - [`docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md`](docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md)
 - [`docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_TRANSCRIPT_CONTRACT.md`](docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_TRANSCRIPT_CONTRACT.md)
 - [`docs/status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](docs/status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md)
@@ -176,11 +188,17 @@ Important records:
 
 ## Status and strategy
 
-Status and strategy records are maintained in `STATUS.md`, `docs/status/CURRENT_STATUS.md`, `docs/status/ANNOUNCEMENTS.md`, `docs/status/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md`, `docs/status/FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md`, `docs/status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`, `docs/status/COMPLETION_PERCENTAGE_REVIEW.md`, `docs/status/L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md`, `docs/status/L_UI_RENDERING_README_STATUS_ALIGNMENT.md`, `docs/status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_REVIEW.md`, `docs/status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_README_ALIGNMENT.md`, `docs/status/NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md`, `docs/status/NUCLEUS_TASK_README_STATUS_ALIGNMENT.md`, `docs/status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md`, `docs/status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_README_STATUS_ALIGNMENT.md`, `docs/status/PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md`, `docs/status/PROJECT_NOTES_NUCLEUS_ANNOUNCEMENT_README_ALIGNMENT_STATUS_CHECK.md`, `docs/status/PROJECT_NOTES_NUCLEUS_REPORT_ONLY_ALIGNMENT_STATUS_INDEX_CHECK.md`, `docs/status/STATUS_ANNOUNCEMENT_REVIEW.md`, `docs/status/STATUS_ANNOUNCEMENT_CONSISTENCY_REVIEW.md`, `docs/status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`, `docs/status/CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md`, `docs/status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`, `docs/status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`, `docs/status/RBDM_REPORT_INTEGRATION_STATUS.md`, `docs/strategy/README.md`, and `docs/project_notes/README.md`.
+Status and strategy records are maintained in `STATUS.md`, `docs/status/CURRENT_STATUS.md`, `docs/status/ANNOUNCEMENTS.md`, `docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md`, `docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md`, `docs/status/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md`, `docs/status/FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md`, `docs/status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`, `docs/status/COMPLETION_PERCENTAGE_REVIEW.md`, `docs/status/L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md`, `docs/status/L_UI_RENDERING_README_STATUS_ALIGNMENT.md`, `docs/status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_REVIEW.md`, `docs/status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_README_ALIGNMENT.md`, `docs/status/NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md`, `docs/status/NUCLEUS_TASK_README_STATUS_ALIGNMENT.md`, `docs/status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md`, `docs/status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_README_STATUS_ALIGNMENT.md`, `docs/status/PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md`, `docs/status/PROJECT_NOTES_NUCLEUS_ANNOUNCEMENT_README_ALIGNMENT_STATUS_CHECK.md`, `docs/status/PROJECT_NOTES_NUCLEUS_REPORT_ONLY_ALIGNMENT_STATUS_INDEX_CHECK.md`, `docs/status/STATUS_ANNOUNCEMENT_REVIEW.md`, `docs/status/STATUS_ANNOUNCEMENT_CONSISTENCY_REVIEW.md`, `docs/status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`, `docs/status/CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md`, `docs/status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`, `docs/status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`, `docs/status/RBDM_REPORT_INTEGRATION_STATUS.md`, `docs/strategy/README.md`, and `docs/project_notes/README.md`.
 
 ## Validation
 
 The repository uses shell guards and C invariant tests through the C workflow.
+
+Fedora disposable VM CLI payload validation evidence status is covered by:
+
+```sh
+sh scripts/test-fedora-vm-cli-payload-validation-evidence-status.sh
+```
 
 Fedora disposable VM local RPM validation evidence status is covered by:
 
