@@ -41,12 +41,8 @@ require_contains 'Add Fedora install preflight snapshot capture plan' docs/statu
 require_contains 'No host install' docs/status/FEDORA_HOST_INSTALL_PREFLIGHT_STATUS.md
 
 require_contains 'FEDORA_HOST_INSTALL_PREFLIGHT_STATUS.md' docs/status/README.md
-require_contains 'Current Fedora host install preflight checkpoint' docs/status/README.md
-require_contains 'Fedora host install preflight classifier' docs/status/README.md
-require_contains 'classification=ready-local-rpm' docs/status/README.md
-require_contains 'host_install_performed=0' docs/status/README.md
-require_contains 'host_mutation_performed=0' docs/status/README.md
-require_contains 'network_allowed=0' docs/status/README.md
-require_contains 'Add Fedora install preflight snapshot capture plan' docs/status/README.md
+require_contains 'status record for the no-effect Fedora host install preflight classifier' docs/status/README.md
+require_contains 'FEDORA_INSTALL_PREFLIGHT_SNAPSHOT_CAPTURE_STATUS.md' docs/status/README.md
+require_contains 'Current Fedora install preflight snapshot checkpoint' docs/status/README.md
 
 printf 'fedora_host_install_preflight_status_alignment: ok\n'
