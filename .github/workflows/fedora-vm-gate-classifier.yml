@@ -1,0 +1,20 @@
+name: Fedora VM Gate Classifier
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-vm-gate-classifier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run classifier guard
+        run: sh scripts/test-fedora-disposable-vm-effect-gate-classifier.sh
+      - name: Run docs guard
+        run: sh scripts/test-fedora-disposable-vm-effect-gate-classifier-docs.sh
