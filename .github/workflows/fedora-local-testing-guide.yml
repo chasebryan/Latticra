@@ -1,0 +1,18 @@
+name: Fedora Local Testing Guide
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-local-testing-guide:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Fedora local testing guide guard
+        run: sh scripts/test-fedora-local-testing-guide.sh
