@@ -10,7 +10,17 @@ The local Fedora RPM spec now packages the no-effect CLI as `%{_bindir}/latticra
 
 This document defines the evidence required before that expanded payload can be treated as validated in a disposable Fedora VM.
 
-This is a contract only. It does not run the validation lane, build a release RPM, install or remove an RPM, validate `/usr/bin/latticra`, or claim host install readiness for the CLI payload.
+This is a contract only.
+
+It does not run the validation lane.
+
+It does not build a release RPM.
+
+It does not install or remove an RPM.
+
+It does not validate `/usr/bin/latticra`.
+
+It does not claim host install readiness for the CLI payload.
 
 ## Required transcript header
 
