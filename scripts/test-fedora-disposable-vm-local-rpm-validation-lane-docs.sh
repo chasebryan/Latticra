@@ -20,8 +20,10 @@ require_contains() {
 }
 
 doc='docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md'
+runner='scripts/run-fedora-disposable-vm-local-rpm-validation-lane.sh'
 
 require_file "$doc"
+require_file "$runner"
 require_file docs/FEDORA_DISPOSABLE_VM_EFFECT_GATE.md
 require_file docs/FEDORA_DISPOSABLE_VM_EFFECT_GATE_CLASSIFIER.md
 require_file docs/status/FEDORA_DISPOSABLE_VM_EFFECT_GATE_CLASSIFIER_STATUS.md
@@ -64,5 +66,15 @@ require_contains 'fedora_approval_claimed=0' "$doc"
 require_contains 'fedora_disposable_vm_local_rpm_validation_lane_docs: ok' "$doc"
 require_contains 'Add disposable Fedora VM local RPM validation status alignment' "$doc"
 require_contains 'root README can be overhauled' "$doc"
+
+require_contains 'LATTICRA_ALLOW_DISPOSABLE_VM_RPM_VALIDATION' "$runner"
+require_contains 'LATTICRA_TARGET_IS_DISPOSABLE_FEDORA_VM' "$runner"
+require_contains 'LATTICRA_TARGET_IS_DAILY_DRIVER' "$runner"
+require_contains 'LATTICRA_TARGET_IS_PRODUCTION_HOST' "$runner"
+require_contains 'LATTICRA_TARGET_HAS_CLEAN_SNAPSHOT' "$runner"
+require_contains 'LATTICRA_TARGET_HAS_RECOVERY_PATH' "$runner"
+require_contains 'LATTICRA_OPERATOR_CONSENT_RECORDED' "$runner"
+require_contains 'validation_status=ok' "$runner"
+require_contains 'host_install_ready=1' "$runner"
 
 printf 'fedora_disposable_vm_local_rpm_validation_lane_docs: ok\n'
