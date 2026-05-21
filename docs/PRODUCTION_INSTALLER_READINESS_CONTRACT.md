@@ -179,4 +179,4 @@ This contract is not a production installer.
 
 It does not build, sign, publish, install, uninstall, upgrade, rollback, or distribute an installer.
 
-It does not claim production readiness, Fedora approval, Fedora distribution readiness, daily-driver readiness, immutable Fedora readiness, update safety, recovery safety, sandboxing, security hardening, malware prevention, ransomware prevention, OS-replacement readiness, or a production installer.
+It is not production readiness, not Fedora approval, not Fedora distribution readiness, not daily-driver readiness, not immutable Fedora readiness, not update safety, not recovery safety, not sandboxing, not security hardening, not malware prevention, not ransomware prevention, not OS-replacement readiness, and not a production installer claim.
