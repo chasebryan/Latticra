@@ -1,22 +1,20 @@
 # Latticra No-Effect CLI Packaging Contract Alignment
 
-Status: contract alignment record
-Evidence level: 7 packaging alignment, contract only
-Scope: future Fedora RPM payload transition for the no-effect `latticra` CLI.
+Status: packaging/spec alignment record
+Evidence level: 7 packaging alignment, local guard only
+Scope: Fedora RPM spec transition for the no-effect `latticra` CLI payload.
 
 ## Purpose
 
 The no-effect CLI status surface now exists as a local guarded C implementation.
 
-This record aligns the future Fedora RPM packaging transition before the package payload is changed.
+This record aligns the Fedora RPM spec transition that adds the no-effect CLI payload to the local RPM draft.
 
-This is contract/status alignment only.
+This is packaging/spec alignment only.
 
-It does not update `packaging/fedora/latticra.spec`.
+It updates `packaging/fedora/latticra.spec` for the CLI payload.
 
-It does not add `/usr/bin/latticra` to the RPM payload.
-
-It does not build a new RPM.
+It does not build a new RPM in CI.
 
 It does not install or remove an RPM.
 
@@ -28,77 +26,66 @@ It does not claim host install readiness for the CLI payload.
 
 ```text
 LATTICRA NO-EFFECT CLI PACKAGING CONTRACT ALIGNMENT
-packaging_alignment_version=1
+packaging_alignment_version=2
 cli_payload_contract_present=1
 cli_status_surface_implemented=1
 cli_packaging_alignment_present=1
-fedora_spec_updated_for_cli=0
-rpm_payload_expansion_performed=0
+fedora_spec_updated_for_cli=1
+rpm_payload_expansion_performed=1
 rpm_payload_validated=0
 ```
 
-## Current validated package boundary
+## Historical validated package boundary
 
-The current evidence-backed Fedora package remains the documentation-only local RPM:
-
-```text
-current_validated_package=latticra-0.0.0-0.1.local.fc44.noarch.rpm
-current_validated_payload=/usr/share/doc/latticra/README.md
-current_validated_payload_remains_documentation_only=1
-current_disposable_vm_rpm_evidence_remains_valid=1
-```
-
-The current spec remains a local draft with:
+The current evidence-backed Fedora validation record still applies only to the earlier documentation-only local RPM:
 
 ```text
-BuildArch: noarch
-%doc %{_docdir}/%{name}/README.md
+validated_package=latticra-0.0.0-0.1.local.fc44.noarch.rpm
+validated_payload=/usr/share/doc/latticra/README.md
+validated_payload_remains_documentation_only=1
+historical_disposable_vm_rpm_evidence_remains_limited=1
 ```
 
-This alignment does not change that current package boundary.
+That historical evidence does not validate the new CLI payload.
 
-## Future RPM payload transition requirements
+## Current spec payload target
 
-A future RPM payload-expansion PR may add the CLI only after the local CLI guard remains passing.
-
-The future payload target is:
+The local Fedora spec now targets this payload shape:
 
 ```text
 /usr/bin/latticra
 /usr/share/doc/latticra/README.md
 ```
 
-The future payload-expansion PR must also update the packaging classification:
+Because the CLI is a compiled C executable, the spec no longer declares:
 
 ```text
-future_rpm_contains_compiled_c_binary=1
-future_rpm_buildarch_must_not_be_noarch=1
-future_spec_must_remove_noarch_claim=1
-future_cli_binary_install_mode=0755
-future_doc_install_mode=0644
+BuildArch: noarch
 ```
 
-Because the CLI is a compiled C executable, a future RPM that includes it must not continue to present the payload as architecture-independent noarch packaging.
-
-## Future spec guard requirements
-
-A future spec-update guard should verify:
+The spec transition records:
 
 ```text
-src/latticra_cli.c_present=1
-cli_local_guard_present=1
-cli_local_guard_passes_before_packaging=1
-fedora_spec_installs_cli_binary=1
-fedora_spec_installs_readme=1
-fedora_spec_does_not_install_services=1
-fedora_spec_does_not_install_kernel_modules=1
-fedora_spec_does_not_install_boot_files=1
-fedora_spec_does_not_install_selinux_policy=1
-fedora_spec_does_not_enable_services=1
-fedora_spec_does_not_run_network_operations=1
+rpm_contains_compiled_c_binary=1
+buildarch_noarch_removed=1
+cli_binary_install_mode=0755
+doc_install_mode=0644
 ```
 
-## Forbidden future payload surfaces for this lane
+## Required spec properties
+
+The spec must verify the local CLI guard before compiling/installing the binary:
+
+```text
+sh scripts/test-latticra-no-effect-cli-status-surface.sh
+cc %{optflags} -std=c99 -Wall -Wextra -Werror -pedantic src/latticra_cli.c -o build/latticra
+install -m 0755 build/latticra %{buildroot}%{_bindir}/latticra
+install -m 0644 README.md %{buildroot}%{_docdir}/%{name}/README.md
+%{_bindir}/latticra
+%doc %{_docdir}/%{name}/README.md
+```
+
+## Forbidden payload surfaces for this lane
 
 The no-effect CLI packaging lane must not add:
 
@@ -110,9 +97,11 @@ The no-effect CLI packaging lane must not add:
 /usr/share/selinux
 ```
 
+The spec must also avoid service activation, package-manager actions, network actions, boot changes, kernel-module installation, and SELinux policy installation.
+
 ## Future disposable Fedora VM validation requirements
 
-After a future spec-update PR expands the payload, a separate disposable Fedora VM validation transcript must record:
+After this spec-update lane, a separate disposable Fedora VM validation transcript must record:
 
 ```text
 expanded_payload_validation_transcript_present=1
@@ -130,7 +119,7 @@ cli_removed_after_rpm_removal=1
 post_removal_cli_absence_verified=1
 ```
 
-Until that transcript exists, the CLI payload must remain unvalidated from a Fedora VM packaging perspective.
+Until that transcript exists, the CLI payload remains unvalidated from a disposable Fedora VM packaging perspective.
 
 ## Current readiness classification
 
@@ -138,8 +127,8 @@ Until that transcript exists, the CLI payload must remain unvalidated from a Fed
 cli_payload_contract_present=1
 cli_status_surface_implemented=1
 cli_packaging_alignment_present=1
-fedora_spec_updated_for_cli=0
-rpm_payload_expansion_performed=0
+fedora_spec_updated_for_cli=1
+rpm_payload_expansion_performed=1
 rpm_payload_validated=0
 disposable_vm_cli_validation_completed=0
 host_install_ready_for_cli_payload=0
@@ -165,19 +154,19 @@ latticra_no_effect_cli_packaging_contract_alignment: ok
 ## Next recommended lane
 
 ```text
-Update Fedora RPM spec for no-effect CLI payload without claiming VM validation
+Add disposable Fedora VM CLI payload validation transcript contract
 ```
 
-That future lane should compile/install the no-effect CLI into the RPM payload and record that a new disposable Fedora VM validation run is still required before any CLI payload install-readiness claim is made.
+That future lane should define the evidence contract for a real disposable Fedora VM RPM validation run against the expanded `/usr/bin/latticra` payload.
 
 ## Non-claims
 
-This alignment is not an RPM spec update.
-
-It is not RPM payload expansion.
+This alignment is not a completed RPM build transcript.
 
 It is not installation evidence for `/usr/bin/latticra`.
 
 It is not disposable Fedora VM validation of the CLI payload.
+
+It is not host install readiness for the CLI payload.
 
 It is not production readiness, Fedora approval, Fedora distribution readiness, daily-driver safety, immutable Fedora readiness, runtime behavior, Lat execution, LIR execution, service management, kernel integration, SELinux policy integration, update safety, recovery safety, malware prevention, ransomware prevention, sandboxing, or a production installer claim.
