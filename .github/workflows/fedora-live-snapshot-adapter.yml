@@ -1,0 +1,20 @@
+name: Fedora Live Snapshot Adapter
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-live-snapshot-adapter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Fedora live snapshot adapter guard
+        run: sh scripts/test-fedora-live-snapshot-adapter.sh
+      - name: Run Fedora live snapshot adapter docs guard
+        run: sh scripts/test-fedora-live-snapshot-adapter-docs.sh
