@@ -1,7 +1,7 @@
 # Latticra Status Index
 
 Status: active status index
-Last updated: 2026-05-21 01:15 CDT
+Last updated: 2026-05-21 01:20 CDT
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
 ## Purpose
@@ -87,6 +87,27 @@ The current next recommended Fedora lane is:
 Add manual host-install release-candidate checklist
 ```
 
+## Current Fedora RPM gate classifier checkpoint
+
+The previous Fedora RPM gate status alignment records:
+
+```text
+Fedora RPM gate classifier implementation
+install_gate_status=allowed
+install_gate_denial=none
+install_mutation_allowed=1
+install_mutation_performed=0
+host_mutation_performed=0
+network_allowed=0
+evidence_level=4
+```
+
+The previous next recommended Fedora lane was:
+
+```text
+Add Fedora local RPM removal and rollback plan
+```
+
 ## Current kernel lifecycle checkpoint
 
 The latest kernel status alignment records:
@@ -116,7 +137,8 @@ Status updates should be:
 - evidence-bound;
 - concise enough to read quickly;
 - honest about non-claims;
-- updated when major milestones merge;
+- updated when major merged PRs change the current checkpoint;
+- preserve older checkpoint headings while older guard workflows still validate them;
 - careful not to claim security capability before implementation and testing prove it.
 
 ## Completion percentage rule
