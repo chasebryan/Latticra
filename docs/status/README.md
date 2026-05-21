@@ -34,6 +34,7 @@ non-claims
 - [`FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_STATUS.md`](FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_STATUS.md) — status record for the gated disposable Fedora VM local RPM validation lane.
 - [`FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md`](FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md) — evidence status record for the successful disposable Fedora VM local RPM validation transcript.
 - [`FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md`](FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md) — Fedora disposable VM RPM README alignment.
+- [`FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md) — status record for the manually gated disposable Fedora VM CLI payload validation lane runner.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md`](COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md) — completion-estimate review after the L-UI detailed report refinement.
 - [`COMPLETION_PERCENTAGE_REVIEW.md`](COMPLETION_PERCENTAGE_REVIEW.md) — latest completion-percentage planning review.
@@ -57,6 +58,77 @@ non-claims
 - [`LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — Lat pipeline diagnostic integration status.
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — Lat pipeline diagnostic main-test audit status.
 - [`RBDM_REPORT_INTEGRATION_STATUS.md`](RBDM_REPORT_INTEGRATION_STATUS.md) — runtime-boundary domain matrix report integration status.
+
+## Current Fedora VM CLI payload validation lane checkpoint
+
+The latest Fedora VM CLI payload validation status alignment records:
+
+```text
+Fedora VM CLI payload validation lane runner
+source=PR #236
+validation_lane_documented=1
+validation_runner_present=1
+validation_lane_docs_guard_present=1
+validation_lane_docs_workflow_present=1
+runner_manual_only=1
+ci_auto_vm_cli_validation_allowed=0
+disposable_vm_target_required=1
+daily_driver_block_required=1
+production_host_block_required=1
+immutable_fedora_block_required=1
+clean_snapshot_required=1
+recovery_path_required=1
+operator_consent_required=1
+non_root_operator_required=1
+sudo_limited_to_rpm_install_removal=1
+fedora_target_required=1
+rpm_tooling_required=1
+rpmbuild_tooling_required=1
+cc_tooling_required=1
+local_cli_guard_required=1
+local_rpm_build_required=1
+rpm_payload_listing_required=1
+rpm_payload_cli_binary_required=1
+rpm_payload_readme_required=1
+rpm_payload_only_expected_surfaces_required=1
+unexpected_runtime_surface_absent_required=1
+installed_cli_binary_required=1
+installed_readme_required=1
+rpm_verify_required=1
+cli_status_validation_required=1
+cli_version_validation_required=1
+cli_report_validation_required=1
+cli_invalid_command_validation_required=1
+post_removal_cli_absence_required=1
+post_removal_readme_absence_required=1
+validation_report_schema_present=1
+target_evidence_level=9
+current_evidence_level=8
+evidence_level_9_achieved=0
+```
+
+Current readiness classification:
+
+```text
+fedora_vm_cli_transcript_contract_present=1
+fedora_vm_cli_payload_validation_lane_present=1
+fedora_vm_cli_payload_validation_runner_present=1
+fedora_vm_cli_payload_validation_status=blocked-pending-real-vm-run
+disposable_vm_cli_validation_transcript_present=0
+disposable_vm_cli_validation_completed=0
+host_install_ready_for_cli_payload=0
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+```
+
+The current next recommended Fedora lane is:
+
+```text
+Capture real disposable Fedora VM CLI payload validation transcript evidence
+```
 
 ## Current Fedora disposable VM RPM README alignment checkpoint
 
