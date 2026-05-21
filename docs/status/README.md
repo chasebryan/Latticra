@@ -32,6 +32,7 @@ non-claims
 - [`FEDORA_MANUAL_HOST_RC_DECISION_CLASSIFIER_STATUS.md`](FEDORA_MANUAL_HOST_RC_DECISION_CLASSIFIER_STATUS.md) — status record for the no-effect Fedora manual host RC decision classifier.
 - [`FEDORA_DISPOSABLE_VM_EFFECT_GATE_CLASSIFIER_STATUS.md`](FEDORA_DISPOSABLE_VM_EFFECT_GATE_CLASSIFIER_STATUS.md) — status record for the Fedora disposable VM effect gate classifier.
 - [`FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_STATUS.md`](FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_STATUS.md) — status record for the gated disposable Fedora VM local RPM validation lane.
+- [`FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md`](FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md) — evidence status record for the successful disposable Fedora VM local RPM validation transcript.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md`](COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md) — completion-estimate review after the L-UI detailed report refinement.
 - [`COMPLETION_PERCENTAGE_REVIEW.md`](COMPLETION_PERCENTAGE_REVIEW.md) — latest completion-percentage planning review.
@@ -56,9 +57,64 @@ non-claims
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — Lat pipeline diagnostic main-test audit status.
 - [`RBDM_REPORT_INTEGRATION_STATUS.md`](RBDM_REPORT_INTEGRATION_STATUS.md) — runtime-boundary domain matrix report integration status.
 
+## Current Fedora disposable VM local RPM validation evidence checkpoint
+
+The latest Fedora disposable VM local RPM validation evidence status records:
+
+```text
+source=operator disposable Fedora VM transcript
+repo_branch=pr-226
+followup_fix_pr=PR #226
+validated_package=latticra-0.0.0-0.1.local.fc44.noarch.rpm
+validation_status=ok
+package_name=latticra
+package_version=0.0.0
+disposable_vm_target_verified=1
+snapshot_evidence_present=1
+recovery_evidence_present=1
+operator_consent_recorded=1
+rpm_payload_listing_recorded=1
+rpm_payload_is_documentation_only=1
+unexpected_runtime_surface_absent=1
+vm_rpmdb_mutated=1
+vm_filesystem_mutated=1
+install_validation_performed=1
+removal_validation_performed=1
+post_removal_absence_verified=1
+live_host_validation_completed=1
+host_install_ready=1
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+evidence_level=9
+```
+
+Current readiness classification:
+
+```text
+disposable_vm_local_rpm_validation_lane_present=1
+disposable_vm_validation_transcript_present=1
+disposable_vm_validation_completed=1
+live_host_validation_completed=1
+host_install_ready=1
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+```
+
+The current next recommended Fedora lane is:
+
+```text
+Add README install-readiness wording limited to disposable Fedora VM local RPM validation
+```
+
+The root README wording must remain limited to disposable Fedora VM local RPM validation and must not claim production, Fedora distribution, immutable Fedora, daily-driver, security, recovery, or OS-replacement readiness.
+
 ## Current Fedora disposable VM local RPM validation lane checkpoint
 
-The latest Fedora disposable VM local RPM validation status alignment records:
+The previous Fedora disposable VM local RPM validation status alignment records:
 
 ```text
 Fedora disposable VM local RPM validation lane
@@ -85,7 +141,7 @@ current_evidence_level=8
 evidence_level_9_achieved=0
 ```
 
-Current readiness classification:
+Previous readiness classification:
 
 ```text
 manual_host_dry_run_transcript_contract_present=1
@@ -102,13 +158,11 @@ fedora_distribution_ready=0
 fedora_approval_claimed=0
 ```
 
-The current next recommended Fedora lane is:
+The previous recommended Fedora lane was:
 
 ```text
 Capture disposable Fedora VM local RPM validation transcript evidence
 ```
-
-The root README should not claim install readiness until real disposable Fedora VM validation evidence is recorded.
 
 ## Current Fedora disposable VM effect gate classifier checkpoint
 
