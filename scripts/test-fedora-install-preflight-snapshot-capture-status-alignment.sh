@@ -45,13 +45,11 @@ require_contains 'Add Fedora live read-only snapshot capture adapter' docs/statu
 
 require_contains 'FEDORA_INSTALL_PREFLIGHT_SNAPSHOT_CAPTURE_STATUS.md' docs/status/README.md
 require_contains 'status record for the no-effect Fedora install preflight snapshot capture implementation' docs/status/README.md
-require_contains 'FEDORA_LIVE_READONLY_SNAPSHOT_ADAPTER_STATUS.md' docs/status/README.md
-require_contains 'Current Fedora live read-only adapter checkpoint' docs/status/README.md
-require_contains 'live_probe_performed=1' docs/status/README.md
-require_contains 'snapshot_forwarded_to_classifier=1' docs/status/README.md
+require_contains 'FEDORA_RPM_GATE_CLASSIFIER_STATUS.md' docs/status/README.md
+require_contains 'Current Fedora RPM gate classifier checkpoint' docs/status/README.md
+require_contains 'install_mutation_performed=0' docs/status/README.md
 require_contains 'host_mutation_performed=0' docs/status/README.md
-require_contains 'host_install_performed=0' docs/status/README.md
-require_contains 'evidence_level=3' docs/status/README.md
-require_contains 'Add Fedora local RPM install mutation gate contract' docs/status/README.md
+require_contains 'evidence_level=4' docs/status/README.md
+require_contains 'Add Fedora local RPM removal and rollback plan' docs/status/README.md
 
 printf 'fedora_install_preflight_snapshot_capture_status_alignment: ok\n'
