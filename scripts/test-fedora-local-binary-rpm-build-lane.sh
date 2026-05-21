@@ -2,6 +2,19 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+rpmwork=""
+archive_staging=""
+
+cleanup() {
+  if [ -n "$rpmwork" ]; then
+    rm -rf "$rpmwork"
+  fi
+  if [ -n "$archive_staging" ]; then
+    rm -rf "$archive_staging"
+  fi
+}
+trap cleanup EXIT INT TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -46,6 +59,7 @@ require_contains 'Status: active local build lane' docs/FEDORA_LOCAL_BINARY_RPM_
 require_contains 'documentation-only package posture' docs/FEDORA_LOCAL_BINARY_RPM_BUILD_LANE.md
 require_contains 'rpm-build' docs/FEDORA_LOCAL_BINARY_RPM_BUILD_LANE.md
 require_contains 'rpmbuild -bb packaging/fedora/latticra.spec' docs/FEDORA_LOCAL_BINARY_RPM_BUILD_LANE.md
+require_contains 'debug_package %{nil}' docs/FEDORA_LOCAL_BINARY_RPM_BUILD_LANE.md
 require_contains 'rpm -qpi <generated-rpm>' docs/FEDORA_LOCAL_BINARY_RPM_BUILD_LANE.md
 require_contains 'rpm -qpl <generated-rpm>' docs/FEDORA_LOCAL_BINARY_RPM_BUILD_LANE.md
 require_contains 'does not run `mock`' docs/FEDORA_LOCAL_BINARY_RPM_BUILD_LANE.md
@@ -107,12 +121,12 @@ rpmbuild -bb packaging/fedora/latticra.spec \
   --define "_sourcedir $rpmwork/SOURCES" \
   --define "_rpmdir $rpmwork/RPMS" \
   --define "_builddir $rpmwork/BUILD" \
-  --define "_buildrootdir $rpmwork/BUILDROOT"
+  --define "_buildrootdir $rpmwork/BUILDROOT" \
+  --define "debug_package %{nil}"
 
 rpm_count="$(find "$rpmwork/RPMS" -type f -name 'latticra-*.rpm' | wc -l | tr -d ' ')"
 if [ "$rpm_count" != '1' ]; then
   printf 'fedora local binary rpm build lane: expected exactly one local RPM, found %s\n' "$rpm_count" >&2
-  rm -rf "$rpmwork" "$archive_staging"
   exit 1
 fi
 
@@ -131,7 +145,5 @@ require_no_payload '^/usr/lib/systemd/system/latticra\.service$'
 require_no_payload '(^|/)lib/modules(/|$)'
 require_no_payload '(^|/)boot(/|$)'
 require_no_payload '(^|/)selinux(/|$)'
-
-rm -rf "$rpmwork" "$archive_staging"
 
 printf 'fedora_local_binary_rpm_build_lane: ok\n'
