@@ -1,0 +1,20 @@
+name: Fedora Host Install Preflight
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-host-install-preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Fedora host install preflight classifier guard
+        run: sh scripts/test-fedora-host-install-preflight.sh
+      - name: Run Fedora host install preflight docs guard
+        run: sh scripts/test-fedora-host-install-preflight-docs.sh
