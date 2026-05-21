@@ -30,6 +30,7 @@ non-claims
 - [`FEDORA_INSTALLROOT_RPM_LIFECYCLE_STATUS.md`](FEDORA_INSTALLROOT_RPM_LIFECYCLE_STATUS.md) — status record for the controlled Fedora installroot RPM lifecycle lane.
 - [`FEDORA_MANUAL_HOST_RC_CHECKLIST_STATUS.md`](FEDORA_MANUAL_HOST_RC_CHECKLIST_STATUS.md) — status record for the manual Fedora host release-candidate checklist.
 - [`FEDORA_MANUAL_HOST_RC_DECISION_CLASSIFIER_STATUS.md`](FEDORA_MANUAL_HOST_RC_DECISION_CLASSIFIER_STATUS.md) — status record for the no-effect Fedora manual host RC decision classifier.
+- [`FEDORA_DISPOSABLE_VM_EFFECT_GATE_CLASSIFIER_STATUS.md`](FEDORA_DISPOSABLE_VM_EFFECT_GATE_CLASSIFIER_STATUS.md) — status record for the Fedora disposable VM effect gate classifier.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md`](COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md) — completion-estimate review after the L-UI detailed report refinement.
 - [`COMPLETION_PERCENTAGE_REVIEW.md`](COMPLETION_PERCENTAGE_REVIEW.md) — latest completion-percentage planning review.
@@ -54,9 +55,53 @@ non-claims
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — Lat pipeline diagnostic main-test audit status.
 - [`RBDM_REPORT_INTEGRATION_STATUS.md`](RBDM_REPORT_INTEGRATION_STATUS.md) — runtime-boundary domain matrix report integration status.
 
+## Current Fedora disposable VM effect gate classifier checkpoint
+
+The latest Fedora disposable VM effect gate classifier status alignment records:
+
+```text
+Fedora disposable VM effect gate classifier
+source=PR #221
+evidence_contract_present=1
+vm_effect_gate_present=1
+vm_gate_classifier_present=1
+vm_gate_classifier_guard_present=1
+vm_gate_classifier_docs_guard_present=1
+eligible_state_defined=1
+blocked_state_defined=1
+invalid_state_defined=1
+eligible_test_present=1
+blocked_target_tests_present=1
+blocked_package_tests_present=1
+blocked_prior_evidence_tests_present=1
+invalid_input_test_present=1
+classifier_evidence_level=8
+```
+
+Current readiness classification:
+
+```text
+manual_host_dry_run_transcript_contract_present=1
+disposable_vm_effect_gate_present=1
+disposable_vm_effect_gate_classifier_present=1
+disposable_vm_effect_gate_status=blocked-pending-vm-validation-lane
+disposable_vm_effect_eligible=0
+live_host_validation_completed=0
+host_install_ready=0
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+```
+
+The current next recommended Fedora lane is:
+
+```text
+Add disposable Fedora VM local RPM validation lane
+```
+
 ## Current Fedora manual host RC decision classifier checkpoint
 
-The latest Fedora manual host RC decision classifier status alignment records:
+The earlier Fedora manual host RC decision classifier status alignment records:
 
 ```text
 Fedora manual host RC decision classifier
@@ -88,7 +133,7 @@ fedora_distribution_ready=0
 fedora_approval_claimed=0
 ```
 
-Current readiness classification:
+Earlier readiness classification:
 
 ```text
 manual_host_rc_checklist_present=1
@@ -103,7 +148,7 @@ fedora_distribution_ready=0
 fedora_approval_claimed=0
 ```
 
-The current next recommended Fedora lane is:
+The earlier recommended Fedora lane was:
 
 ```text
 Add manual Fedora host dry-run transcript contract
