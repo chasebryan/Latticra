@@ -1,0 +1,23 @@
+name: Fedora rpmlint Availability
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-rpmlint-availability:
+    runs-on: ubuntu-latest
+    container:
+      image: registry.fedoraproject.org/fedora:latest
+    steps:
+      - name: Prepare checkout tools
+        run: dnf -y install git tar gzip
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run Fedora rpmlint availability guard
+        run: sh scripts/test-fedora-rpmlint-availability.sh
