@@ -29,6 +29,7 @@ non-claims
 - [`FEDORA_RPM_GATE_CLASSIFIER_STATUS.md`](FEDORA_RPM_GATE_CLASSIFIER_STATUS.md) — status record for the Fedora RPM gate classifier implementation.
 - [`FEDORA_INSTALLROOT_RPM_LIFECYCLE_STATUS.md`](FEDORA_INSTALLROOT_RPM_LIFECYCLE_STATUS.md) — status record for the controlled Fedora installroot RPM lifecycle lane.
 - [`FEDORA_MANUAL_HOST_RC_CHECKLIST_STATUS.md`](FEDORA_MANUAL_HOST_RC_CHECKLIST_STATUS.md) — status record for the manual Fedora host release-candidate checklist.
+- [`FEDORA_MANUAL_HOST_RC_DECISION_CLASSIFIER_STATUS.md`](FEDORA_MANUAL_HOST_RC_DECISION_CLASSIFIER_STATUS.md) — status record for the no-effect Fedora manual host RC decision classifier.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md`](COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md) — completion-estimate review after the L-UI detailed report refinement.
 - [`COMPLETION_PERCENTAGE_REVIEW.md`](COMPLETION_PERCENTAGE_REVIEW.md) — latest completion-percentage planning review.
@@ -53,9 +54,64 @@ non-claims
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — Lat pipeline diagnostic main-test audit status.
 - [`RBDM_REPORT_INTEGRATION_STATUS.md`](RBDM_REPORT_INTEGRATION_STATUS.md) — runtime-boundary domain matrix report integration status.
 
-## Current Fedora manual host RC checklist checkpoint
+## Current Fedora manual host RC decision classifier checkpoint
 
-The latest Fedora manual host RC checklist status alignment records:
+The latest Fedora manual host RC decision classifier status alignment records:
+
+```text
+Fedora manual host RC decision classifier
+source=PR #217
+decision_classifier_present=1
+decision_classifier_guard_present=1
+decision_classifier_docs_guard_present=1
+candidate_state_defined=1
+blocked_state_defined=1
+invalid_state_defined=1
+synthetic_candidate_test_present=1
+blocked_target_tests_present=1
+blocked_evidence_tests_present=1
+blocked_boundary_tests_present=1
+invalid_input_test_present=1
+classifier_evidence_level=7
+live_host_validation_completed=0
+host_change_performed=0
+sudo_invoked=0
+rpm_invoked=0
+dnf_invoked=0
+network_allowed=0
+service_operation_allowed=0
+boot_operation_allowed=0
+kernel_operation_allowed=0
+policy_operation_allowed=0
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+```
+
+Current readiness classification:
+
+```text
+manual_host_rc_checklist_present=1
+manual_host_rc_decision_classifier_present=1
+manual_host_rc_status=blocked-pending-real-transcript
+manual_host_release_candidate_ready=0
+manual_host_dry_run_transcript_present=0
+live_host_validation_completed=0
+host_install_ready=0
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+```
+
+The current next recommended Fedora lane is:
+
+```text
+Add manual Fedora host dry-run transcript contract
+```
+
+## Previous Fedora manual host RC checklist checkpoint
+
+The previous Fedora manual host RC checklist status alignment records:
 
 ```text
 Fedora manual host RC checklist
@@ -77,7 +133,7 @@ current_evidence_level=6
 evidence_level_7_achieved=0
 ```
 
-Current readiness classification:
+Previous readiness classification:
 
 ```text
 manual_host_rc_checklist_present=1
@@ -91,7 +147,7 @@ fedora_distribution_ready=0
 fedora_approval_claimed=0
 ```
 
-The current next recommended Fedora lane is:
+The previous recommended Fedora lane was:
 
 ```text
 Add no-effect Fedora manual host RC decision classifier
