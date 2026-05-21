@@ -1,0 +1,18 @@
+name: Local Installer Artifact Manifest Contract
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  local-installer-artifact-manifest-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run local installer artifact manifest contract guard
+        run: sh scripts/test-local-installer-artifact-manifest-contract.sh
