@@ -1,7 +1,7 @@
 # Latticra Status Index
 
 Status: active status index
-Last updated: 2026-05-20 23:20 CDT
+Last updated: 2026-05-20 23:45 CDT
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
 ## Purpose
@@ -25,6 +25,7 @@ non-claims
 - [`KERNEL_LIFECYCLE_EVIDENCE_STATUS.md`](KERNEL_LIFECYCLE_EVIDENCE_STATUS.md) — status alignment after the kernel lifecycle report runner, subsystem summary, and rollback plan.
 - [`FEDORA_HOST_INSTALL_PREFLIGHT_STATUS.md`](FEDORA_HOST_INSTALL_PREFLIGHT_STATUS.md) — status record for the no-effect Fedora host install preflight classifier.
 - [`FEDORA_INSTALL_PREFLIGHT_SNAPSHOT_CAPTURE_STATUS.md`](FEDORA_INSTALL_PREFLIGHT_SNAPSHOT_CAPTURE_STATUS.md) — status record for the no-effect Fedora install preflight snapshot capture implementation.
+- [`FEDORA_LIVE_READONLY_SNAPSHOT_ADAPTER_STATUS.md`](FEDORA_LIVE_READONLY_SNAPSHOT_ADAPTER_STATUS.md) — status record for the live read-only Fedora snapshot adapter implementation.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md`](COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md) — completion-estimate review after the L-UI detailed report refinement.
 - [`COMPLETION_PERCENTAGE_REVIEW.md`](COMPLETION_PERCENTAGE_REVIEW.md) — latest completion-percentage planning review.
@@ -49,14 +50,13 @@ non-claims
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — Lat pipeline diagnostic main-test audit status.
 - [`RBDM_REPORT_INTEGRATION_STATUS.md`](RBDM_REPORT_INTEGRATION_STATUS.md) — runtime-boundary domain matrix report integration status.
 
-## Current Fedora install preflight snapshot checkpoint
+## Current Fedora live read-only adapter checkpoint
 
-The latest Fedora snapshot-capture status alignment records:
+The latest Fedora live-adapter status alignment records:
 
 ```text
-Fedora install preflight snapshot capture implementation
-snapshot_capture_status=captured
-classifier_classification=ready-local-rpm
+Fedora live read-only snapshot adapter implementation
+live_probe_performed=1
 snapshot_forwarded_to_classifier=1
 sudo_validation_allowed=0
 install_command_allowed=0
@@ -65,13 +65,13 @@ network_allowed=0
 host_mutation_performed=0
 host_install_performed=0
 no_effect=1
-evidence_level=2
+evidence_level=3
 ```
 
 The current next recommended Fedora lane is:
 
 ```text
-Add Fedora live read-only snapshot capture adapter
+Add Fedora local RPM install mutation gate contract
 ```
 
 ## Current kernel lifecycle checkpoint
