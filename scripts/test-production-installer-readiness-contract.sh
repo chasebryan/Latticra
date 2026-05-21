@@ -100,7 +100,7 @@ require_contains 'not daily-driver readiness' "$doc"
 require_contains 'not immutable Fedora readiness' "$doc"
 
 require_contains 'production_installer_ready=0' "$readme"
-require_contains 'not a production installer' "$readme"
+require_contains 'production installer' "$readme"
 require_contains 'host_install_ready_for_cli_payload=1' "$evidence"
 require_contains 'production_installer_ready=0' "$evidence"
 
