@@ -1,7 +1,8 @@
 # Latticra Announcements
 
 Status: public announcement log
-Last updated: 2026-05-16 16:15 CDT
+Last updated: 2026-05-21 03:20 CDT
+Latest Fedora VM RPM validation milestone note: 2026-05-21 03:20 CDT
 Latest status announcement review note: 2026-05-19 19:25 CDT
 Latest authority foundation index alignment note: 2026-05-19 19:15 CDT
 Latest current status detail rollup note: 2026-05-19 19:05 CDT
@@ -29,6 +30,44 @@ why it matters
 validation
 non-claims
 next step
+```
+
+## 2026-05-21 03:20 CDT — Disposable Fedora VM local RPM validation milestone
+
+Status: evidence-backed validation milestone recorded
+
+Latticra completed and recorded a successful disposable Fedora VM local RPM validation path for the current documentation-only local RPM.
+
+What changed:
+
+```text
+disposable_vm_validation_completed=1
+live_host_validation_completed=1
+host_install_ready=1
+validated_package=latticra-0.0.0-0.1.local.fc44.noarch.rpm
+validated_payload=/usr/share/doc/latticra/README.md
+evidence_level=9
+```
+
+Why it matters:
+
+This is the first evidence-backed host-facing validation milestone for Latticra. The project now has a real disposable Fedora VM transcript showing package build, RPM install, RPM verification, RPM removal, and post-removal absence verification for the local documentation-only RPM.
+
+Validation:
+
+```text
+sh scripts/test-fedora-disposable-vm-local-rpm-validation-evidence-status.sh
+sh scripts/test-fedora-disposable-vm-rpm-readme-alignment.sh
+```
+
+Non-claims:
+
+This milestone does not claim production readiness, Fedora approval, Fedora distribution readiness, daily-driver safety, immutable Fedora readiness, security capability, update safety, recovery safety, sandboxing, malware prevention, ransomware prevention, bootable OS replacement behavior, kernel runtime readiness, or a production installer.
+
+Next step:
+
+```text
+Plan the next Fedora validation lane without widening README or announcement claims beyond disposable Fedora VM local RPM evidence.
 ```
 
 ## 2026-05-19 19:25 CDT — Status announcement review
