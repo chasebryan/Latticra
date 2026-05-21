@@ -12,7 +12,7 @@ The validation run built the local Latticra RPM with the no-effect CLI payload, 
 
 This is disposable Fedora VM CLI payload validation evidence.
 
-It is not production readiness, Fedora approval, Fedora distribution readiness, daily-driver safety, immutable Fedora readiness, or a production installer claim.
+It is not production readiness, not Fedora approval, not Fedora distribution readiness, not daily-driver safety, not immutable Fedora readiness, and not a production installer claim.
 
 ## Evidence source
 
@@ -174,4 +174,4 @@ That wording must remain narrow and should not claim production, Fedora distribu
 
 ## Non-claims
 
-This status record is not production readiness, Fedora approval, Fedora distribution readiness, daily-driver safety, immutable Fedora readiness, update safety, recovery safety, malware prevention, ransomware prevention, sandboxing, security hardening, or a production installer claim.
+This status record is not production readiness, not Fedora approval, not Fedora distribution readiness, not daily-driver safety, not immutable Fedora readiness, not update safety, not recovery safety, not malware prevention, not ransomware prevention, not sandboxing, not security hardening, and not a production installer claim.
