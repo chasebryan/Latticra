@@ -1,0 +1,18 @@
+name: Fedora VM RPM README Alignment
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-vm-rpm-readme-alignment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Fedora VM RPM README alignment
+        run: sh scripts/test-fedora-disposable-vm-rpm-readme-alignment.sh

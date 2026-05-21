@@ -33,6 +33,7 @@ non-claims
 - [`FEDORA_DISPOSABLE_VM_EFFECT_GATE_CLASSIFIER_STATUS.md`](FEDORA_DISPOSABLE_VM_EFFECT_GATE_CLASSIFIER_STATUS.md) — status record for the Fedora disposable VM effect gate classifier.
 - [`FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_STATUS.md`](FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_STATUS.md) — status record for the gated disposable Fedora VM local RPM validation lane.
 - [`FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md`](FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md) — evidence status record for the successful disposable Fedora VM local RPM validation transcript.
+- [`FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md`](FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md) — Fedora disposable VM RPM README alignment.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md`](COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md) — completion-estimate review after the L-UI detailed report refinement.
 - [`COMPLETION_PERCENTAGE_REVIEW.md`](COMPLETION_PERCENTAGE_REVIEW.md) — latest completion-percentage planning review.
@@ -56,6 +57,28 @@ non-claims
 - [`LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — Lat pipeline diagnostic integration status.
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — Lat pipeline diagnostic main-test audit status.
 - [`RBDM_REPORT_INTEGRATION_STATUS.md`](RBDM_REPORT_INTEGRATION_STATUS.md) — runtime-boundary domain matrix report integration status.
+
+## Current Fedora disposable VM RPM README alignment checkpoint
+
+The latest Fedora disposable VM RPM README alignment records:
+
+```text
+disposable_vm_local_rpm_validation_completed=1
+host_install_ready=1
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+```
+
+The README wording is now limited to disposable Fedora VM local RPM validation and does not claim production, Fedora distribution, immutable Fedora, daily-driver, security, recovery, or OS-replacement readiness.
+
+The current next recommended Fedora lane is:
+
+```text
+Add public announcement wording for disposable Fedora VM RPM validation milestone
+```
 
 ## Current Fedora disposable VM local RPM validation evidence checkpoint
 
@@ -104,13 +127,11 @@ daily_driver_install_ready=0
 immutable_fedora_ready=0
 ```
 
-The current next recommended Fedora lane is:
+The previous recommended Fedora lane was:
 
 ```text
 Add README install-readiness wording limited to disposable Fedora VM local RPM validation
 ```
-
-The root README wording must remain limited to disposable Fedora VM local RPM validation and must not claim production, Fedora distribution, immutable Fedora, daily-driver, security, recovery, or OS-replacement readiness.
 
 ## Current Fedora disposable VM local RPM validation lane checkpoint
 
