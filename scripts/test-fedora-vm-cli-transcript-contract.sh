@@ -1,0 +1,200 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+require_file() {
+  file="$1"
+  if [ ! -f "$file" ]; then
+    printf 'fedora vm cli transcript contract: missing file: %s\n' "$file" >&2
+    exit 1
+  fi
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  if ! grep -Fq -- "$pattern" "$file"; then
+    printf 'fedora vm cli transcript contract: missing required pattern in %s: %s\n' "$file" "$pattern" >&2
+    exit 1
+  fi
+}
+
+doc='docs/FEDORA_VM_CLI_TRANSCRIPT_CONTRACT.md'
+spec='packaging/fedora/latticra.spec'
+cli='src/latticra_cli.c'
+cli_guard='scripts/test-latticra-no-effect-cli-status-surface.sh'
+spec_status='docs/status/LATTICRA_NO_EFFECT_CLI_RPM_SPEC_UPDATE_STATUS.md'
+packaging_alignment='docs/LATTICRA_NO_EFFECT_CLI_PACKAGING_CONTRACT_ALIGNMENT.md'
+
+require_file "$doc"
+require_file "$spec"
+require_file "$cli"
+require_file "$cli_guard"
+require_file "$spec_status"
+require_file "$packaging_alignment"
+
+require_contains 'Status: contract record' "$doc"
+require_contains 'Evidence level: 9 target, contract only' "$doc"
+require_contains 'transcript schema for future disposable Fedora VM validation' "$doc"
+require_contains 'This is a contract only.' "$doc"
+require_contains 'It does not run the validation lane' "$doc"
+require_contains 'It does not build a release RPM' "$doc"
+require_contains 'It does not install or remove an RPM' "$doc"
+require_contains 'It does not validate `/usr/bin/latticra`' "$doc"
+require_contains 'It does not claim host install readiness for the CLI payload' "$doc"
+
+require_contains 'FEDORA VM CLI PAYLOAD VALIDATION TRANSCRIPT' "$doc"
+require_contains 'transcript_kind=disposable-vm-cli-payload-validation' "$doc"
+require_contains 'transcript_version=1' "$doc"
+require_contains 'operator_review_required=1' "$doc"
+require_contains 'validation_transcript_recorded_after_real_run=1' "$doc"
+
+require_contains 'target_is_disposable_fedora_vm=1' "$doc"
+require_contains 'target_is_daily_driver=0' "$doc"
+require_contains 'target_is_production_host=0' "$doc"
+require_contains 'target_is_immutable_fedora=0' "$doc"
+require_contains 'target_has_clean_snapshot=1' "$doc"
+require_contains 'target_has_recovery_path=1' "$doc"
+require_contains 'operator_consent_recorded=1' "$doc"
+require_contains 'fedora_os_release_recorded=1' "$doc"
+require_contains 'fedora_kernel_version_recorded=1' "$doc"
+require_contains 'rpm_tooling_recorded=1' "$doc"
+require_contains 'rpmbuild_tooling_recorded=1' "$doc"
+
+require_contains 'fedora_spec_updated_for_cli=1' "$doc"
+require_contains 'rpm_payload_expansion_performed=1' "$doc"
+require_contains 'rpm_contains_compiled_c_binary=1' "$doc"
+require_contains 'buildarch_noarch_removed=1' "$doc"
+require_contains 'cli_status_surface_implemented=1' "$doc"
+require_contains 'cli_status_surface_guarded_before_packaging=1' "$doc"
+require_contains 'local_cli_guard_passed=1' "$doc"
+require_contains 'local_rpm_built_from_current_tree=1' "$doc"
+require_contains 'src/latticra_cli.c' "$doc"
+require_contains 'scripts/test-latticra-no-effect-cli-status-surface.sh' "$doc"
+require_contains 'packaging/fedora/latticra.spec' "$doc"
+require_contains 'scripts/test-latticra-no-effect-cli-packaging-contract-alignment.sh' "$doc"
+require_contains 'scripts/test-latticra-no-effect-cli-rpm-spec-update-status.sh' "$doc"
+
+require_contains 'LATTICRA_ALLOW_DISPOSABLE_VM_RPM_VALIDATION=1' "$doc"
+require_contains 'LATTICRA_TARGET_IS_DISPOSABLE_FEDORA_VM=1' "$doc"
+require_contains 'LATTICRA_TARGET_IS_DAILY_DRIVER=0' "$doc"
+require_contains 'LATTICRA_TARGET_IS_PRODUCTION_HOST=0' "$doc"
+require_contains 'LATTICRA_TARGET_IS_IMMUTABLE_FEDORA=0' "$doc"
+require_contains 'LATTICRA_TARGET_HAS_CLEAN_SNAPSHOT=1' "$doc"
+require_contains 'LATTICRA_TARGET_HAS_RECOVERY_PATH=1' "$doc"
+require_contains 'LATTICRA_OPERATOR_CONSENT_RECORDED=1' "$doc"
+require_contains 'ID=fedora' "$doc"
+require_contains 'rpm_present=1' "$doc"
+require_contains 'rpmbuild_present=1' "$doc"
+
+require_contains 'rpm_build_command_recorded=1' "$doc"
+require_contains 'rpm_name_is_latticra=1' "$doc"
+require_contains 'rpm_version_recorded=1' "$doc"
+require_contains 'rpm_arch_recorded=1' "$doc"
+require_contains 'rpm_path_recorded=1' "$doc"
+require_contains 'rpm_metadata_recorded=1' "$doc"
+require_contains 'rpm_payload_listing_recorded=1' "$doc"
+require_contains 'rpm_payload_contains_cli_binary=1' "$doc"
+require_contains 'rpm_payload_contains_readme=1' "$doc"
+require_contains 'rpm_payload_contains_only_expected_surfaces=1' "$doc"
+require_contains 'unexpected_runtime_surface_absent=1' "$doc"
+require_contains '/usr/bin/latticra' "$doc"
+require_contains '/usr/share/doc/latticra/README.md' "$doc"
+require_contains '/etc/latticra' "$doc"
+require_contains '/usr/lib/systemd/system/latticra.service' "$doc"
+require_contains '/usr/lib/modules' "$doc"
+require_contains '/boot/latticra' "$doc"
+require_contains '/usr/share/selinux' "$doc"
+
+require_contains 'install_command_recorded=1' "$doc"
+require_contains 'install_result_recorded=1' "$doc"
+require_contains 'rpm_query_after_install_recorded=1' "$doc"
+require_contains 'installed_payload_listing_recorded=1' "$doc"
+require_contains 'installed_cli_binary_present=1' "$doc"
+require_contains 'installed_readme_present=1' "$doc"
+require_contains 'rpm_verify_completed=1' "$doc"
+require_contains 'cli_status_command_recorded=1' "$doc"
+require_contains 'cli_version_command_recorded=1' "$doc"
+require_contains 'cli_report_command_recorded=1' "$doc"
+require_contains 'cli_invalid_command_recorded=1' "$doc"
+require_contains 'cli_no_root_required=1' "$doc"
+require_contains 'cli_no_host_mutation_observed=1' "$doc"
+require_contains 'cli_no_network_observed=1' "$doc"
+require_contains 'cli_no_service_operation_observed=1' "$doc"
+require_contains 'cli_no_kernel_operation_observed=1' "$doc"
+require_contains 'cli_no_boot_operation_observed=1' "$doc"
+require_contains 'cli_no_selinux_policy_operation_observed=1' "$doc"
+
+require_contains 'LATTICRA STATUS REPORT' "$doc"
+require_contains 'project=latticra' "$doc"
+require_contains 'mode=no-effect' "$doc"
+require_contains 'runtime_behavior=disabled' "$doc"
+require_contains 'host_mutation=0' "$doc"
+require_contains 'network=0' "$doc"
+require_contains 'kernel_operation=0' "$doc"
+require_contains 'service_operation=0' "$doc"
+require_contains 'package_manager_operation=0' "$doc"
+require_contains 'boot_operation=0' "$doc"
+require_contains 'selinux_policy_operation=0' "$doc"
+require_contains 'effect_authority=denied' "$doc"
+require_contains 'latticra 0.0.0' "$doc"
+
+require_contains 'removal_command_recorded=1' "$doc"
+require_contains 'removal_result_recorded=1' "$doc"
+require_contains 'post_removal_query_recorded=1' "$doc"
+require_contains 'post_removal_absence_verified=1' "$doc"
+require_contains 'cli_removed_after_rpm_removal=1' "$doc"
+require_contains 'readme_removed_after_rpm_removal=1' "$doc"
+require_contains 'post_removal_cli_absence_verified=1' "$doc"
+require_contains 'post_removal_readme_absence_verified=1' "$doc"
+
+require_contains 'FEDORA VM CLI PAYLOAD VALIDATION LANE' "$doc"
+require_contains 'validation_status=ok' "$doc"
+require_contains 'package_name=latticra' "$doc"
+require_contains 'package_version_recorded=1' "$doc"
+require_contains 'package_arch_recorded=1' "$doc"
+require_contains 'disposable_vm_target_verified=1' "$doc"
+require_contains 'snapshot_evidence_present=1' "$doc"
+require_contains 'recovery_evidence_present=1' "$doc"
+require_contains 'cli_status_validation_performed=1' "$doc"
+require_contains 'cli_version_validation_performed=1' "$doc"
+require_contains 'cli_report_validation_performed=1' "$doc"
+require_contains 'disposable_vm_cli_validation_completed=1' "$doc"
+require_contains 'host_install_ready_for_cli_payload=1' "$doc"
+require_contains 'production_installer_ready=0' "$doc"
+require_contains 'fedora_distribution_ready=0' "$doc"
+require_contains 'fedora_approval_claimed=0' "$doc"
+require_contains 'daily_driver_install_ready=0' "$doc"
+require_contains 'immutable_fedora_ready=0' "$doc"
+require_contains 'evidence_level=9' "$doc"
+
+require_contains 'rpm_payload_validated=0' "$doc"
+require_contains 'disposable_vm_cli_validation_transcript_present=0' "$doc"
+require_contains 'disposable_vm_cli_validation_completed=0' "$doc"
+require_contains 'host_install_ready_for_cli_payload=0' "$doc"
+require_contains 'sh scripts/test-fedora-vm-cli-transcript-contract.sh' "$doc"
+require_contains 'fedora_vm_cli_transcript_contract: ok' "$doc"
+require_contains 'Add disposable Fedora VM CLI payload validation lane runner' "$doc"
+require_contains 'This contract is not a completed validation transcript' "$doc"
+require_contains 'not RPM install evidence' "$doc"
+require_contains 'not disposable Fedora VM validation of the CLI payload' "$doc"
+require_contains 'not production readiness' "$doc"
+require_contains 'Fedora approval' "$doc"
+require_contains 'Fedora distribution readiness' "$doc"
+require_contains 'daily-driver safety' "$doc"
+require_contains 'immutable Fedora readiness' "$doc"
+require_contains 'update safety' "$doc"
+require_contains 'recovery safety' "$doc"
+require_contains 'sandboxing' "$doc"
+require_contains 'production installer claim' "$doc"
+
+require_contains 'fedora_spec_updated_for_cli=1' "$spec_status"
+require_contains 'rpm_payload_expansion_performed=1' "$spec_status"
+require_contains 'rpm_payload_validated=0' "$spec_status"
+require_contains 'host_install_ready_for_cli_payload=0' "$spec_status"
+require_contains 'sh scripts/test-latticra-no-effect-cli-status-surface.sh' "$spec"
+require_contains '%{_bindir}/latticra' "$spec"
+require_contains 'LATTICRA STATUS REPORT' "$cli"
+require_contains 'latticra_no_effect_cli_status_surface: ok' "$cli_guard"
+
+printf 'fedora_vm_cli_transcript_contract: ok\n'
