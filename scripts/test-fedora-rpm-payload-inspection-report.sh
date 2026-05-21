@@ -2,6 +2,19 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+rpmwork=""
+archive_staging=""
+
+cleanup() {
+  if [ -n "$rpmwork" ]; then
+    rm -rf "$rpmwork"
+  fi
+  if [ -n "$archive_staging" ]; then
+    rm -rf "$archive_staging"
+  fi
+}
+trap cleanup EXIT INT TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -14,7 +27,7 @@ require_contains() {
   pattern="$1"
   file="$2"
   if ! grep -Fq -- "$pattern" "$file"; then
-    printf 'fedora rpm payload inspection report: missing required pattern in %s: %s\n' "$file" "$pattern" >&2
+    printf 'fedora rpm payload inspection report: missing required pattern in %s: %s\n' "$file" >&2
     exit 1
   fi
 }
@@ -52,11 +65,13 @@ require_file README.md
 
 require_contains 'Status: active generated-report lane' docs/FEDORA_RPM_PAYLOAD_INSPECTION_REPORT.md
 require_contains 'Fedora RPM Payload Inspection Report' docs/FEDORA_RPM_PAYLOAD_INSPECTION_REPORT.md
+require_contains 'debug_package %{nil}' docs/FEDORA_RPM_PAYLOAD_INSPECTION_REPORT.md
 require_contains 'rpm -qpi <generated-rpm>' docs/FEDORA_RPM_PAYLOAD_INSPECTION_REPORT.md
 require_contains 'rpm -qpl <generated-rpm>' docs/FEDORA_RPM_PAYLOAD_INSPECTION_REPORT.md
 require_contains 'README payload present: yes' docs/FEDORA_RPM_PAYLOAD_INSPECTION_REPORT.md
 require_contains 'command payload absent: yes' docs/FEDORA_RPM_PAYLOAD_INSPECTION_REPORT.md
 require_contains 'systemd service payload absent: yes' docs/FEDORA_RPM_PAYLOAD_INSPECTION_REPORT.md
+require_contains 'debug package generated: no' docs/FEDORA_RPM_PAYLOAD_INSPECTION_REPORT.md
 require_contains 'does not run `mock`' docs/FEDORA_RPM_PAYLOAD_INSPECTION_REPORT.md
 require_contains 'does not install Latticra' docs/FEDORA_RPM_PAYLOAD_INSPECTION_REPORT.md
 require_contains 'does not publish package artifacts' docs/FEDORA_RPM_PAYLOAD_INSPECTION_REPORT.md
@@ -112,12 +127,12 @@ rpmbuild -bb packaging/fedora/latticra.spec \
   --define "_sourcedir $rpmwork/SOURCES" \
   --define "_rpmdir $rpmwork/RPMS" \
   --define "_builddir $rpmwork/BUILD" \
-  --define "_buildrootdir $rpmwork/BUILDROOT"
+  --define "_buildrootdir $rpmwork/BUILDROOT" \
+  --define "debug_package %{nil}"
 
 rpm_count="$(find "$rpmwork/RPMS" -type f -name 'latticra-*.rpm' | wc -l | tr -d ' ')"
 if [ "$rpm_count" != '1' ]; then
   printf 'fedora rpm payload inspection report: expected exactly one local RPM, found %s\n' "$rpm_count" >&2
-  rm -rf "$rpmwork" "$archive_staging"
   exit 1
 fi
 
@@ -145,6 +160,7 @@ require_no_payload '(^|/)selinux(/|$)'
   printf 'Build posture\n'
   printf '-------------\n'
   printf 'local-only binary RPM build: yes\n'
+  printf 'debug package generated: no\n'
   printf 'installed during report: no\n'
   printf 'published during report: no\n\n'
   printf 'RPM metadata\n'
@@ -181,6 +197,7 @@ require_report_contains 'Boundary'
 require_report_contains 'Name: latticra'
 require_report_contains 'Version: 0.0.0'
 require_report_contains 'local-only binary RPM build: yes'
+require_report_contains 'debug package generated: no'
 require_report_contains 'installed during report: no'
 require_report_contains 'published during report: no'
 require_report_contains 'README payload present: yes'
@@ -195,7 +212,5 @@ require_report_contains 'mock used: no'
 require_report_contains 'host install performed: no'
 require_report_contains 'artifact published: no'
 require_report_contains 'Fedora submission performed: no'
-
-rm -rf "$rpmwork" "$archive_staging"
 
 printf 'fedora_rpm_payload_inspection_report: ok\n'
