@@ -1,7 +1,7 @@
 # Latticra Status Index
 
 Status: active status index
-Last updated: 2026-05-21 00:30 CDT
+Last updated: 2026-05-21 01:20 CDT
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
 ## Purpose
@@ -27,6 +27,7 @@ non-claims
 - [`FEDORA_INSTALL_PREFLIGHT_SNAPSHOT_CAPTURE_STATUS.md`](FEDORA_INSTALL_PREFLIGHT_SNAPSHOT_CAPTURE_STATUS.md) — status record for the no-effect Fedora install preflight snapshot capture implementation.
 - [`FEDORA_LIVE_READONLY_SNAPSHOT_ADAPTER_STATUS.md`](FEDORA_LIVE_READONLY_SNAPSHOT_ADAPTER_STATUS.md) — status record for the live read-only Fedora snapshot adapter implementation.
 - [`FEDORA_RPM_GATE_CLASSIFIER_STATUS.md`](FEDORA_RPM_GATE_CLASSIFIER_STATUS.md) — status record for the Fedora RPM gate classifier implementation.
+- [`FEDORA_INSTALLROOT_RPM_LIFECYCLE_STATUS.md`](FEDORA_INSTALLROOT_RPM_LIFECYCLE_STATUS.md) — status record for the controlled Fedora installroot RPM lifecycle lane.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md`](COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md) — completion-estimate review after the L-UI detailed report refinement.
 - [`COMPLETION_PERCENTAGE_REVIEW.md`](COMPLETION_PERCENTAGE_REVIEW.md) — latest completion-percentage planning review.
@@ -51,9 +52,44 @@ non-claims
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — Lat pipeline diagnostic main-test audit status.
 - [`RBDM_REPORT_INTEGRATION_STATUS.md`](RBDM_REPORT_INTEGRATION_STATUS.md) — runtime-boundary domain matrix report integration status.
 
+## Current Fedora installroot RPM lifecycle checkpoint
+
+The latest Fedora installroot status alignment records:
+
+```text
+Fedora installroot RPM lifecycle lane
+source=PR #213
+execution_lane_documented=1
+execution_guard_present=1
+local_rpm_build_path=present
+installroot_rpm_database_path=temporary
+installroot_filesystem_mutated=1
+installroot_rpmdb_mutated=1
+live_container_rpmdb_mutated=0
+developer_host_mutation_performed=0
+post_removal_absence_verified=1
+evidence_level=6
+```
+
+Current readiness classification:
+
+```text
+controlled_installroot_lifecycle_ready=1
+manual_host_install_ready=0
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+```
+
+The current next recommended Fedora lane is:
+
+```text
+Add manual host-install release-candidate checklist
+```
+
 ## Current Fedora RPM gate classifier checkpoint
 
-The latest Fedora RPM gate status alignment records:
+The previous Fedora RPM gate status alignment records:
 
 ```text
 Fedora RPM gate classifier implementation
@@ -66,7 +102,7 @@ network_allowed=0
 evidence_level=4
 ```
 
-The current next recommended Fedora lane is:
+The previous next recommended Fedora lane was:
 
 ```text
 Add Fedora local RPM removal and rollback plan
@@ -101,7 +137,8 @@ Status updates should be:
 - evidence-bound;
 - concise enough to read quickly;
 - honest about non-claims;
-- updated when major milestones merge;
+- updated when major merged PRs change the current checkpoint;
+- preserve older checkpoint headings while older guard workflows still validate them;
 - careful not to claim security capability before implementation and testing prove it.
 
 ## Completion percentage rule
