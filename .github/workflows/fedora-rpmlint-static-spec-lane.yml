@@ -1,0 +1,23 @@
+name: Fedora rpmlint Static Spec Lane
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-rpmlint-static-spec-lane:
+    runs-on: ubuntu-latest
+    container:
+      image: registry.fedoraproject.org/fedora:latest
+    steps:
+      - name: Prepare checkout tools
+        run: dnf -y install git tar gzip
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run Fedora rpmlint static spec lane guard
+        run: sh scripts/test-fedora-rpmlint-static-spec-lane.sh
