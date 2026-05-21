@@ -1,0 +1,18 @@
+name: Fedora RPM Removal Rollback Plan
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-rpm-removal-rollback-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Fedora RPM removal rollback plan guard
+        run: sh scripts/test-fedora-local-rpm-removal-rollback-plan.sh
