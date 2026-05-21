@@ -1,20 +1,12 @@
 # Latticra
 
-Status: early-stage systems architecture implementation seed.
-
-Latticra is a contract-first systems architecture project for high-assurance infrastructure engineering. The project focuses on explicit state models, deterministic validation, constrained authority, bounded intermediate representations, disabled-by-default effects, and operator-visible reports.
-
-The current repository is foundational engineering work, not a deployed platform or certified product.
-
-## Motto
+Status: early-stage, evidence-bound systems architecture repository.
 
 > “The simulacrum is never what hides the truth.” — Jean Baudrillard
 
-## Mission
+Latticra is a contract-first systems architecture project for high-assurance infrastructure engineering, Linux/Fedora integration research, Lat language development, bounded intermediate representation work, no-effect runtime-boundary modeling, and AI-era tool-boundary planning.
 
-Latticra is being built as a defensive, auditable, open systems architecture. The project is intended to mature toward infrastructure settings where behavior must be inspectable, explicit, bounded, and governed before it becomes operational.
-
-## Direction checkpoint
+The repository is foundational engineering work. It is not a deployed platform, certified product, production runtime, or operating-system replacement.
 
 ```text
 C is the metal.
@@ -22,47 +14,180 @@ C++ is the disciplined structure.
 Latticra is the contract.
 ```
 
-This does not mean unrestricted C++.
+## What Latticra is
 
-Current roles:
+Latticra is being built as a defensive, auditable, open systems architecture.
+
+Its core idea is simple: before any future system effect becomes operational, the request, identity, capability, policy, boundary, and evidence posture should be explicit and inspectable.
+
+Today, Latticra focuses on:
+
+- explicit state and boundary models;
+- deterministic validation and report surfaces;
+- constrained authority vocabulary;
+- disabled-by-default effect posture;
+- bounded C implementation records;
+- constrained C++ policy and audit direction;
+- Lat language parsing, validation, diagnostics, and metadata lowering;
+- LIR bounded intermediate representation reporting;
+- L-UI operator-visible report direction;
+- Nucleus coordination and task-boundary reports;
+- Runtime Boundary classification before operational behavior;
+- Latticra Seal tool-boundary and trust-boundary planning;
+- Fedora/Linux validation evidence for narrow host-facing paths.
+
+## What Latticra accomplishes today
+
+The current repository accomplishes an evidence-bound foundation, not a production platform.
+
+Current evidence-backed and guarded areas include:
 
 ```text
-C: substrate, ABI boundaries, bounded records, implementation surfaces
-Constrained C++: policy, validation, gate, and audit logic
-Lat / Latticra Language: declaration, semantic validation, lowering metadata, and contract layer
-LIR: bounded intermediate representation
-L-UI: operator-visible declaration and reporting surface
-Nucleus: coordination, classification, and report boundary
-Runtime boundary: disabled-by-default line before operational behavior
+public_project_identity=1
+foundation_documents_and_contracts=1
+status_and_strategy_records=1
+deterministic_shell_guards=1
+c_invariant_tests=1
+lat_parse_validate_lower_pipeline_present=1
+lir_metadata_reporting_present=1
+runtime_boundary_report_classification_present=1
+nucleus_report_only_task_boundary_present=1
+latticra_seal_report_only_tool_boundary_metadata_present=1
+fedora_disposable_vm_local_rpm_validation_present=1
+production_runtime_present=0
 ```
 
-## Current implementation posture
+This means Latticra currently provides contracts, metadata surfaces, local deterministic tests, report-only C slices, planning records, and validation evidence. It does not yet provide active runtime enforcement.
 
-The repository contains guarded documents, tests, and no-effect implementation slices for constrained C/C++ foundation direction, constrained C++ authority-layer contract, constrained authority reporting, authority implementation review, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, Nucleus report-only announcement review, Runtime boundary contract, Runtime boundary refinement plan, Runtime boundary refinement implementation, Runtime boundary report refinement, Runtime boundary policy matrix refinement, Runtime boundary domain matrix refinement, Runtime boundary domain matrix report integration, L-UI rendering implementation, L-UI rendering detailed report refinement, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, Lat semantic diagnostics refinement, LIR shape implementation, LIR report refinement, Lat language grammar implementation, Lat semantic validation foundation, Lat-to-LIR lowering implementation, Lat pipeline implementation, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic main test audit, Lat-specific LIR refinement implementation, status announcement review, public entry-point consistency scan, Fedora RPM gate evidence, disposable Fedora VM local RPM validation evidence, and state-lattice models.
+## What Latticra is not
 
-Lat now has a bounded no-effect path from grammar parsing to semantic validation to LIR metadata lowering. The Lat pipeline composes source parsing, semantic validation, Lat-to-LIR lowering, LIR metadata, deterministic pipeline reporting, and companion diagnostic reporting into a no-effect integration boundary.
+Latticra does not currently provide a kernel, bootable image, production installer, Fedora-approved package, Fedora distribution-ready package, daily-driver installer, immutable Fedora installer, production runtime, runtime behavior, command execution authority, unrestricted C++ authority, effect-performing C++ authority, effect-performing task execution, interactive L-UI rendering, terminal-control L-UI rendering, LIR execution, Lat execution, Lat compiler product, Lat interpreter product, accreditation, certification, or operating-system replacement.
 
-The Lat pipeline diagnostic integration refinement adds a companion diagnostic surface that combines pipeline error/stage state with Lat semantic diagnostic class, semantic error, diagnostic count, and first-diagnostic indices while preserving no-execution behavior.
+The project also does not currently claim to be a finished security product, sandbox, malware/ransomware prevention system, AI-agent security product, or production MCP implementation.
 
-The Lat pipeline diagnostic main test audit verifies that the diagnostic integration is covered by both the focused guard and the main Lat pipeline test runner.
+## Architecture map
 
-The constrained C++ authority implementation review confirms the authority layer remains no-effect, metadata-only, fixed-capacity, and denied-by-default.
+Latticra is organized as a layered systems architecture. The layers are still early, evidence-bound, and mostly no-effect.
 
-The L-UI rendering detailed report refinement adds explicit report classification, detail level, detailed-report availability, detailed section count, deterministic section sequence, no-effect-chain status, and evidence level to the no-effect renderer report surface.
+```text
+Lat
+  Contract/declaration language direction.
 
-The Nucleus task no-effect report alignment adds explicit report-alignment, no-effect-policy, and representation-gate labels to Nucleus task records and deterministic reports while preserving non-execution behavior.
+LIR
+  Bounded intermediate representation and graph-shape metadata.
 
-The Nucleus task report-only execution refinement adds explicit execution-status, effect-status, and runtime-status labels to Nucleus task records and deterministic reports while preserving report-only, non-executing behavior.
+L-UI
+  Operator-visible declaration and reporting surface.
 
-The Nucleus report-only announcement review confirms that no separate public announcement is needed because the recent Nucleus report-only and project-notes slices were documentation/status alignment only and did not change capability posture.
+Nucleus
+  Coordination, classification, task records, and report boundaries.
 
-The Runtime boundary domain matrix report integration adds deterministic report rendering for domain-matrix cell, domain label, domain flags, effect-allowed state, authority-available state, and evidence level.
+Runtime Boundary
+  Disabled-by-default classification line before operational behavior.
 
-Current implementation remains report/classification oriented. It is not active runtime behavior.
+Latticra Seal
+  Trust-boundary, request-boundary, policy-boundary, and tool-boundary planning.
+
+Fedora/Linux substrate
+  Current host-facing validation lane and integration target.
+```
+
+The current direction is not to replace Linux immediately. The current direction is to mature Latticra as a governed layer of contracts, metadata, reports, validation, and future authority gates that can be validated on Linux/Fedora before deeper independence is claimed.
+
+## Lat, LIR, and report-only language posture
+
+Lat is the Latticra language direction.
+
+The current Lat path is no-effect and metadata-oriented. It gives the project a bounded path from grammar parsing to semantic validation to LIR metadata lowering.
+
+Current posture:
+
+```text
+lat_parser_present=1
+lat_semantic_validation_present=1
+lat_diagnostics_present=1
+lat_to_lir_lowering_present=1
+lir_metadata_reporting_present=1
+lat_execution=0
+lir_execution=0
+compiler_product=0
+interpreter_product=0
+```
+
+The goal is not execution first. The goal is inspectable declaration, deterministic validation, and evidence-bearing representation before execution becomes a valid topic.
+
+## Latticra Seal
+
+<p align="center">
+  <img src="assets/latticra-seal-mascot-simple-0.png" alt="Latticra Seal mascot" width="360">
+</p>
+
+Latticra Seal is a substructure inside the Latticra ecosystem.
+
+Its role is to model trust-boundary, request-boundary, policy-boundary, and tool-boundary behavior for AI-era automation and MCP-style tool invocation planning while remaining evidence-bound and no-effect.
+
+Seal is not a separate production security product. It is the Latticra subsystem that asks:
+
+```text
+What is the tool?
+Who or what requested it?
+Were the parameters declared?
+Is the request fresh?
+Is the request signed?
+Was policy evaluated?
+Is runtime authority still denied?
+What report proves the boundary decision?
+```
+
+Current Seal posture:
+
+```text
+seal_agentic_automation_metadata_present=1
+seal_parameter_schema_metadata_present=1
+seal_request_freshness_metadata_present=1
+seal_signed_request_metadata_present=1
+seal_policy_decision_metadata_present=1
+seal_runtime_gate_metadata_present=1
+runtime_gate_report_only=1
+runtime_authority_granted=0
+effect_performed=0
+host_read_performed=0
+host_write_performed=0
+network_performed=0
+```
+
+The completed core blocked-request case set currently covers:
+
+```text
+unknown_tool_case_validated=1
+unsigned_request_case_validated=1
+stale_request_case_validated=1
+replayed_request_case_validated=1
+core_blocked_case_set_complete=1
+```
+
+A careful public claim is:
+
+```text
+Latticra Seal now has a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning.
+```
+
+That is intentionally limited. It does not mean Latticra Seal currently implements runtime enforcement, policy enforcement, cryptographic verification, MCP protocol behavior, MCP server behavior, MCP client behavior, AI-agent execution control, tool execution, host behavior, network behavior, object sealing, key storage, revocation lookup, or production agent security.
+
+Relevant Seal records:
+
+- [`docs/LATTICRA_SEAL_MCP_ALIGNMENT_PLAN.md`](docs/LATTICRA_SEAL_MCP_ALIGNMENT_PLAN.md)
+- [`docs/LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_CONTRACT.md`](docs/LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_PARAMETER_SCHEMA_CONTRACT.md`](docs/LATTICRA_SEAL_PARAMETER_SCHEMA_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_REQUEST_FRESHNESS_CONTRACT.md`](docs/LATTICRA_SEAL_REQUEST_FRESHNESS_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_SIGNED_REQUEST_CONTRACT.md`](docs/LATTICRA_SEAL_SIGNED_REQUEST_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_POLICY_DECISION_CONTRACT.md`](docs/LATTICRA_SEAL_POLICY_DECISION_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_RUNTIME_ENFORCEMENT_GATE_CONTRACT.md`](docs/LATTICRA_SEAL_RUNTIME_ENFORCEMENT_GATE_CONTRACT.md)
+- [`docs/status/SEAL_CORE_BLOCKED_CASES_STATUS.md`](docs/status/SEAL_CORE_BLOCKED_CASES_STATUS.md)
 
 ## Fedora disposable VM local RPM validation
 
-Latticra now has one evidence-backed host-facing validation path: **disposable Fedora VM local RPM validation**.
+Latticra now has one evidence-backed host-facing validation path: **Fedora disposable VM local RPM validation**.
 
 The validated path is narrow:
 
@@ -94,93 +219,36 @@ The successful disposable Fedora VM transcript recorded package build, RPM insta
 
 This does **not** mean Latticra is production ready, Fedora approved, Fedora distribution ready, daily-driver safe, immutable-Fedora ready, a production installer, a bootable OS replacement, a security product, a sandbox, or a malware/ransomware prevention system.
 
-Evidence records:
-
-- [`docs/status/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md`](docs/status/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md)
-- [`docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md`](docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md)
-- [`docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_TRANSCRIPT_CONTRACT.md`](docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_TRANSCRIPT_CONTRACT.md)
-
-## Boundary
-
-Latticra does not currently provide a kernel, bootable image, production installer, Fedora-approved package, Fedora distribution-ready package, daily-driver installer, immutable Fedora installer, production runtime, runtime behavior, command execution, unrestricted C++ authority, effect-performing implemented C++ authority layer, effect-performing task execution, interactive L-UI rendering, terminal-control L-UI rendering, LIR execution, Lat execution, Lat compiler, Lat interpreter, accreditation, certification, or operating-system replacement.
-
 The only install-readiness statement currently supported by evidence is disposable Fedora VM local RPM validation for the documentation-only local RPM described above.
 
-## Initial documentation
+Evidence records:
 
-Start with [`docs/FOUNDATION_INDEX.md`](docs/FOUNDATION_INDEX.md).
-
-Important records:
-
-- [`STATUS.md`](STATUS.md)
-- [`SECURITY.md`](SECURITY.md)
-- [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md)
-- [`docs/status/ANNOUNCEMENTS.md`](docs/status/ANNOUNCEMENTS.md)
 - [`docs/status/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md`](docs/status/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md)
 - [`docs/status/FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md`](docs/status/FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md)
 - [`docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md`](docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md)
 - [`docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_TRANSCRIPT_CONTRACT.md`](docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_TRANSCRIPT_CONTRACT.md)
-- [`docs/status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](docs/status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md)
-- [`docs/status/COMPLETION_PERCENTAGE_REVIEW.md`](docs/status/COMPLETION_PERCENTAGE_REVIEW.md)
-- [`docs/status/L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md`](docs/status/L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md)
-- [`docs/status/L_UI_RENDERING_README_STATUS_ALIGNMENT.md`](docs/status/L_UI_RENDERING_README_STATUS_ALIGNMENT.md)
-- [`docs/status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_REVIEW.md`](docs/status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_REVIEW.md)
-- [`docs/status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_README_ALIGNMENT.md`](docs/status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_README_ALIGNMENT.md)
-- [`docs/status/NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md`](docs/status/NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md)
-- [`docs/status/NUCLEUS_TASK_README_STATUS_ALIGNMENT.md`](docs/status/NUCLEUS_TASK_README_STATUS_ALIGNMENT.md)
-- [`docs/status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md`](docs/status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md)
-- [`docs/status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_README_STATUS_ALIGNMENT.md`](docs/status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_README_STATUS_ALIGNMENT.md)
-- [`docs/status/PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md`](docs/status/PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md)
-- [`docs/status/PROJECT_NOTES_NUCLEUS_ANNOUNCEMENT_README_ALIGNMENT_STATUS_CHECK.md`](docs/status/PROJECT_NOTES_NUCLEUS_ANNOUNCEMENT_README_ALIGNMENT_STATUS_CHECK.md)
-- [`docs/status/PROJECT_NOTES_NUCLEUS_REPORT_ONLY_ALIGNMENT_STATUS_INDEX_CHECK.md`](docs/status/PROJECT_NOTES_NUCLEUS_REPORT_ONLY_ALIGNMENT_STATUS_INDEX_CHECK.md)
-- [`docs/status/STATUS_ANNOUNCEMENT_REVIEW.md`](docs/status/STATUS_ANNOUNCEMENT_REVIEW.md)
-- [`docs/status/STATUS_ANNOUNCEMENT_CONSISTENCY_REVIEW.md`](docs/status/STATUS_ANNOUNCEMENT_CONSISTENCY_REVIEW.md)
-- [`docs/status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`](docs/status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md)
-- [`docs/status/CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md`](docs/status/CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md)
-- [`docs/status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](docs/status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md)
-- [`docs/status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](docs/status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md)
-- [`docs/status/RBDM_REPORT_INTEGRATION_STATUS.md`](docs/status/RBDM_REPORT_INTEGRATION_STATUS.md)
-- [`docs/strategy/README.md`](docs/strategy/README.md)
-- [`docs/strategy/2026-05-19-1845-cdt-strategy-estimate-review.md`](docs/strategy/2026-05-19-1845-cdt-strategy-estimate-review.md)
-- [`docs/project_notes/README.md`](docs/project_notes/README.md)
-- [`docs/C_CPP_FOUNDATION_DIRECTION.md`](docs/C_CPP_FOUNDATION_DIRECTION.md)
-- [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md)
-- [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_IMPLEMENTATION.md)
-- [`docs/CPP_AUTHORITY_IMPLEMENTATION_REVIEW.md`](docs/CPP_AUTHORITY_IMPLEMENTATION_REVIEW.md)
-- [`docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md`](docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md)
-- [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md)
-- [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md)
-- [`docs/NUCLEUS_TASK_REPORT_REFINEMENT.md`](docs/NUCLEUS_TASK_REPORT_REFINEMENT.md)
-- [`docs/NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT.md`](docs/NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT.md)
-- [`docs/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT.md`](docs/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT.md)
-- [`docs/RUNTIME_BOUNDARY_CONTRACT.md`](docs/RUNTIME_BOUNDARY_CONTRACT.md)
-- [`docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md`](docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md)
-- [`docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md`](docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md)
-- [`docs/RUNTIME_BOUNDARY_REFINEMENT_PLAN.md`](docs/RUNTIME_BOUNDARY_REFINEMENT_PLAN.md)
-- [`docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md`](docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md)
-- [`docs/RUNTIME_BOUNDARY_REPORT_REFINEMENT.md`](docs/RUNTIME_BOUNDARY_REPORT_REFINEMENT.md)
-- [`docs/RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md`](docs/RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md)
-- [`docs/RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md`](docs/RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md)
-- [`docs/RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md`](docs/RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md)
-- [`docs/L_UI_RENDERING_IMPLEMENTATION.md`](docs/L_UI_RENDERING_IMPLEMENTATION.md)
-- [`docs/L_UI_RENDERING_DETAILED_REPORT_REFINEMENT.md`](docs/L_UI_RENDERING_DETAILED_REPORT_REFINEMENT.md)
-- [`docs/LAT_SEMANTIC_DIAGNOSTICS_REFINEMENT.md`](docs/LAT_SEMANTIC_DIAGNOSTICS_REFINEMENT.md)
-- [`docs/LIR_SHAPE_IMPLEMENTATION.md`](docs/LIR_SHAPE_IMPLEMENTATION.md)
-- [`docs/LIR_REPORT_REFINEMENT.md`](docs/LIR_REPORT_REFINEMENT.md)
-- [`docs/LAT_TO_LIR_LOWERING_IMPLEMENTATION.md`](docs/LAT_TO_LIR_LOWERING_IMPLEMENTATION.md)
-- [`docs/LAT_PIPELINE_IMPLEMENTATION.md`](docs/LAT_PIPELINE_IMPLEMENTATION.md)
-- [`docs/LAT_PIPELINE_REPORT_REFINEMENT.md`](docs/LAT_PIPELINE_REPORT_REFINEMENT.md)
-- [`docs/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md`](docs/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md)
-- [`docs/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_INTEGRATION_AUDIT.md`](docs/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_INTEGRATION_AUDIT.md)
-- [`docs/LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION.md`](docs/LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION.md)
-
-## Status and strategy
-
-Status and strategy records are maintained in `STATUS.md`, `docs/status/CURRENT_STATUS.md`, `docs/status/ANNOUNCEMENTS.md`, `docs/status/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md`, `docs/status/FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md`, `docs/status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`, `docs/status/COMPLETION_PERCENTAGE_REVIEW.md`, `docs/status/L_UI_RENDERING_DETAILED_REPORT_REFINEMENT_STATUS.md`, `docs/status/L_UI_RENDERING_README_STATUS_ALIGNMENT.md`, `docs/status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_REVIEW.md`, `docs/status/NUCLEUS_REPORT_ONLY_ANNOUNCEMENT_README_ALIGNMENT.md`, `docs/status/NUCLEUS_TASK_NO_EFFECT_REPORT_ALIGNMENT_STATUS.md`, `docs/status/NUCLEUS_TASK_README_STATUS_ALIGNMENT.md`, `docs/status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT_STATUS.md`, `docs/status/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_README_STATUS_ALIGNMENT.md`, `docs/status/PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md`, `docs/status/PROJECT_NOTES_NUCLEUS_ANNOUNCEMENT_README_ALIGNMENT_STATUS_CHECK.md`, `docs/status/PROJECT_NOTES_NUCLEUS_REPORT_ONLY_ALIGNMENT_STATUS_INDEX_CHECK.md`, `docs/status/STATUS_ANNOUNCEMENT_REVIEW.md`, `docs/status/STATUS_ANNOUNCEMENT_CONSISTENCY_REVIEW.md`, `docs/status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`, `docs/status/CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md`, `docs/status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`, `docs/status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`, `docs/status/RBDM_REPORT_INTEGRATION_STATUS.md`, `docs/strategy/README.md`, and `docs/project_notes/README.md`.
 
 ## Validation
 
 The repository uses shell guards and C invariant tests through the C workflow.
+
+Core examples:
+
+```sh
+sh scripts/test-lat-pipeline.sh
+sh scripts/test-runtime-boundary.sh
+sh scripts/test-nucleus-task-execution.sh
+sh scripts/test-l-ui-rendering.sh
+```
+
+Seal case validation:
+
+```sh
+sh scripts/test-latticra-seal-unknown-tool-case.sh
+sh scripts/test-latticra-seal-unsigned-request-case.sh
+sh scripts/test-latticra-seal-stale-request-case.sh
+sh scripts/test-latticra-seal-replayed-request-case.sh
+```
 
 Fedora disposable VM local RPM validation evidence status is covered by:
 
@@ -194,52 +262,41 @@ Fedora disposable VM RPM README alignment is covered by:
 sh scripts/test-fedora-disposable-vm-rpm-readme-alignment.sh
 ```
 
-Lat pipeline diagnostic integration refinement is covered by:
+## Documentation map
 
-```sh
-sh scripts/test-lat-pipeline-diagnostic-integration-refinement.sh
-sh scripts/test-lat-pipeline.sh
-```
+Start with:
 
-Lat pipeline diagnostic main test audit is covered by:
+- [`docs/FOUNDATION_INDEX.md`](docs/FOUNDATION_INDEX.md)
+- [`STATUS.md`](STATUS.md)
+- [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md)
+- [`docs/status/ANNOUNCEMENTS.md`](docs/status/ANNOUNCEMENTS.md)
+- [`docs/status/README.md`](docs/status/README.md)
+- [`docs/strategy/README.md`](docs/strategy/README.md)
+- [`docs/project_notes/README.md`](docs/project_notes/README.md)
+- [`SECURITY.md`](SECURITY.md)
 
-```sh
-sh scripts/test-lat-pipeline-diagnostic-main-test-integration-audit.sh
-sh scripts/test-lat-pipeline.sh
-```
+Important architecture records:
 
-Lat-specific LIR refinement is covered by:
+- [`docs/C_CPP_FOUNDATION_DIRECTION.md`](docs/C_CPP_FOUNDATION_DIRECTION.md)
+- [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md)
+- [`docs/LAT_PIPELINE_IMPLEMENTATION.md`](docs/LAT_PIPELINE_IMPLEMENTATION.md)
+- [`docs/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md`](docs/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md)
+- [`docs/LIR_REPORT_REFINEMENT.md`](docs/LIR_REPORT_REFINEMENT.md)
+- [`docs/L_UI_RENDERING_IMPLEMENTATION.md`](docs/L_UI_RENDERING_IMPLEMENTATION.md)
+- [`docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md`](docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md)
+- [`docs/RUNTIME_BOUNDARY_CONTRACT.md`](docs/RUNTIME_BOUNDARY_CONTRACT.md)
 
-```sh
-sh scripts/test-lat-specific-lir-refinement.sh
-```
+## Development philosophy
 
-L-UI rendering detailed report refinement is covered by:
+Latticra follows an evidence-first development model.
 
-```sh
-sh scripts/test-l-ui-rendering-detailed-report-refinement.sh
-sh scripts/test-l-ui-rendering.sh
-```
+The repository should only claim what its contracts, tests, reports, and validation records support.
 
-Nucleus task no-effect report alignment is covered by:
-
-```sh
-sh scripts/test-nucleus-task-no-effect-report-alignment.sh
-sh scripts/test-nucleus-task-execution.sh
-```
-
-Nucleus task report-only execution refinement is covered by:
-
-```sh
-sh scripts/test-nucleus-task-report-only-execution-refinement.sh
-sh scripts/test-nucleus-task-execution.sh
-```
-
-Runtime boundary domain matrix report integration is covered by:
-
-```sh
-sh scripts/test-runtime-boundary-domain-matrix-report-integration.sh
-sh scripts/test-runtime-boundary.sh
+```text
+No contract without identity.
+No authority without capability.
+No effect without a boundary.
+No promotion without evidence.
 ```
 
 ## Support
