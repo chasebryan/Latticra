@@ -1,7 +1,7 @@
 # Latticra Status Index
 
 Status: active status index
-Last updated: 2026-05-21 01:20 CDT
+Last updated: 2026-05-21
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
 ## Purpose
@@ -28,6 +28,7 @@ non-claims
 - [`FEDORA_LIVE_READONLY_SNAPSHOT_ADAPTER_STATUS.md`](FEDORA_LIVE_READONLY_SNAPSHOT_ADAPTER_STATUS.md) — status record for the live read-only Fedora snapshot adapter implementation.
 - [`FEDORA_RPM_GATE_CLASSIFIER_STATUS.md`](FEDORA_RPM_GATE_CLASSIFIER_STATUS.md) — status record for the Fedora RPM gate classifier implementation.
 - [`FEDORA_INSTALLROOT_RPM_LIFECYCLE_STATUS.md`](FEDORA_INSTALLROOT_RPM_LIFECYCLE_STATUS.md) — status record for the controlled Fedora installroot RPM lifecycle lane.
+- [`FEDORA_MANUAL_HOST_RC_CHECKLIST_STATUS.md`](FEDORA_MANUAL_HOST_RC_CHECKLIST_STATUS.md) — status record for the manual Fedora host release-candidate checklist.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md`](COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md) — completion-estimate review after the L-UI detailed report refinement.
 - [`COMPLETION_PERCENTAGE_REVIEW.md`](COMPLETION_PERCENTAGE_REVIEW.md) — latest completion-percentage planning review.
@@ -52,9 +53,53 @@ non-claims
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — Lat pipeline diagnostic main-test audit status.
 - [`RBDM_REPORT_INTEGRATION_STATUS.md`](RBDM_REPORT_INTEGRATION_STATUS.md) — runtime-boundary domain matrix report integration status.
 
-## Current Fedora installroot RPM lifecycle checkpoint
+## Current Fedora manual host RC checklist checkpoint
 
-The latest Fedora installroot status alignment records:
+The latest Fedora manual host RC checklist status alignment records:
+
+```text
+Fedora manual host RC checklist
+source=PR #215
+checklist_documented=1
+checklist_guard_present=1
+controlled_installroot_lifecycle_ready=1
+manual_host_rc_status=blocked
+manual_host_release_candidate_ready=0
+live_host_validation_completed=0
+host_change_performed=0
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+fedora_candidate_compose_claimed=0
+fedora_go_no_go_claimed=0
+checklist_target_evidence_level=7
+current_evidence_level=6
+evidence_level_7_achieved=0
+```
+
+Current readiness classification:
+
+```text
+manual_host_rc_checklist_present=1
+manual_host_rc_guard_present=1
+manual_host_rc_status=blocked
+manual_host_release_candidate_ready=0
+live_host_validation_completed=0
+host_install_ready=0
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+```
+
+The current next recommended Fedora lane is:
+
+```text
+Add no-effect Fedora manual host RC decision classifier
+```
+
+## Previous Fedora installroot RPM lifecycle checkpoint
+
+The previous Fedora installroot status alignment records:
 
 ```text
 Fedora installroot RPM lifecycle lane
@@ -71,7 +116,7 @@ post_removal_absence_verified=1
 evidence_level=6
 ```
 
-Current readiness classification:
+Previous readiness classification:
 
 ```text
 controlled_installroot_lifecycle_ready=1
@@ -81,7 +126,7 @@ fedora_distribution_ready=0
 fedora_approval_claimed=0
 ```
 
-The current next recommended Fedora lane is:
+The previous recommended Fedora lane was:
 
 ```text
 Add manual host-install release-candidate checklist
