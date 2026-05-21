@@ -27,7 +27,7 @@ require_contains() {
   pattern="$1"
   file="$2"
   if ! grep -Fq -- "$pattern" "$file"; then
-    printf 'fedora rpm payload inspection report: missing required pattern in %s: %s\n' "$file" >&2
+    printf 'fedora rpm payload inspection report: missing required pattern in %s: %s\n' "$file" "$pattern" >&2
     exit 1
   fi
 }
@@ -150,27 +150,27 @@ require_no_payload '(^|/)boot(/|$)'
 require_no_payload '(^|/)selinux(/|$)'
 
 {
-  printf 'Fedora RPM Payload Inspection Report\n'
-  printf '====================================\n\n'
-  printf 'Package identity\n'
-  printf '----------------\n'
+  printf '%s\n' 'Fedora RPM Payload Inspection Report'
+  printf '%s\n\n' '===================================='
+  printf '%s\n' 'Package identity'
+  printf '%s\n' '----------------'
   printf 'Name: %s\n' "$name"
   printf 'Version: %s\n' "$version"
   printf 'Source archive: %s\n\n' "$archive"
-  printf 'Build posture\n'
-  printf '-------------\n'
+  printf '%s\n' 'Build posture'
+  printf '%s\n' '-------------'
   printf 'local-only binary RPM build: yes\n'
   printf 'debug package generated: no\n'
   printf 'installed during report: no\n'
   printf 'published during report: no\n\n'
-  printf 'RPM metadata\n'
-  printf '------------\n'
+  printf '%s\n' 'RPM metadata'
+  printf '%s\n' '------------'
   cat "$metadata_output"
-  printf '\nRPM payload\n'
-  printf '-----------\n'
+  printf '\n%s\n' 'RPM payload'
+  printf '%s\n' '-----------'
   cat "$payload_listing"
-  printf '\nPayload policy checks\n'
-  printf '---------------------\n'
+  printf '\n%s\n' 'Payload policy checks'
+  printf '%s\n' '---------------------'
   printf 'README payload present: yes\n'
   printf 'command payload absent: yes\n'
   printf 'configuration payload absent: yes\n'
@@ -179,8 +179,8 @@ require_no_payload '(^|/)selinux(/|$)'
   printf 'boot payload absent: yes\n'
   printf 'SELinux policy payload absent: yes\n'
   printf 'runtime configuration payload absent: yes\n\n'
-  printf 'Boundary\n'
-  printf '--------\n'
+  printf '%s\n' 'Boundary'
+  printf '%s\n' '--------'
   printf 'mock used: no\n'
   printf 'host install performed: no\n'
   printf 'artifact published: no\n'
