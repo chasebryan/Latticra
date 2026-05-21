@@ -1,0 +1,20 @@
+name: Fedora Manual Host RC Decision Classifier
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-manual-host-rc-decision-classifier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Fedora manual host RC decision classifier guard
+        run: sh scripts/test-fedora-manual-host-rc-decision-classifier.sh
+      - name: Run Fedora manual host RC decision classifier docs guard
+        run: sh scripts/test-fedora-manual-host-rc-decision-classifier-docs.sh
