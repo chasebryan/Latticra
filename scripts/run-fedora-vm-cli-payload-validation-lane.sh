@@ -54,6 +54,18 @@ require_no_payload_pattern() {
   fi
 }
 
+require_payload_only_expected_surfaces() {
+  while IFS= read -r payload_path; do
+    case "$payload_path" in
+      /usr/bin/latticra|/usr/share/doc/latticra|/usr/share/doc/latticra/README.md)
+        ;;
+      *)
+        fail "unexpected RPM payload surface: $payload_path"
+        ;;
+    esac
+  done <"$payload_listing"
+}
+
 require_output_field() {
   field="$1"
   file="$2"
@@ -85,6 +97,7 @@ require_command find
 require_command grep
 require_command gzip
 require_command id
+require_command mktemp
 require_command rpm
 require_command rpmbuild
 require_command sort
@@ -164,6 +177,7 @@ require_no_payload_pattern '^/usr/lib/modules(/|$)'
 require_no_payload_pattern '^/boot/latticra(/|$)'
 require_no_payload_pattern '^/usr/share/selinux(/|$)'
 require_no_payload_pattern '^/usr/sbin/latticra$'
+require_payload_only_expected_surfaces
 
 # Ensure a clean pre-state for the local package name.
 if rpm -q "$name" >/dev/null 2>&1; then
