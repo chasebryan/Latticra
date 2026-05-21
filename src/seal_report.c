@@ -18,7 +18,7 @@ latticra_seal_report_t latticra_seal_report_default(void) {
     report.contract_present = 1u;
     report.implementation_plan_present = 1u;
     report.report_only_supported = 1u;
-    report.measurement_supported = 0u;
+    report.measurement_supported = 1u;
     report.signing_supported = 0u;
     report.capability_gate_supported = 0u;
     report.sealed_objects_supported = 0u;
@@ -27,12 +27,12 @@ latticra_seal_report_t latticra_seal_report_default(void) {
     report.host_write_performed = 0u;
     report.network_performed = 0u;
     report.runtime_granted = 0u;
-    report.evidence_level = 2u;
-    copy_literal(report.status, sizeof(report.status), "report-only");
+    report.evidence_level = 3u;
+    copy_literal(report.status, sizeof(report.status), "report-and-measurement");
     copy_literal(
         report.note,
         sizeof(report.note),
-        "no measurement, no signing, no sealing, no runtime authority");
+        "read-only measurement supported; no signing, no sealing, no runtime authority");
 
     return report;
 }
