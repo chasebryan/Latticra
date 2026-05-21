@@ -31,6 +31,7 @@ non-claims
 - [`FEDORA_MANUAL_HOST_RC_CHECKLIST_STATUS.md`](FEDORA_MANUAL_HOST_RC_CHECKLIST_STATUS.md) — status record for the manual Fedora host release-candidate checklist.
 - [`FEDORA_MANUAL_HOST_RC_DECISION_CLASSIFIER_STATUS.md`](FEDORA_MANUAL_HOST_RC_DECISION_CLASSIFIER_STATUS.md) — status record for the no-effect Fedora manual host RC decision classifier.
 - [`FEDORA_DISPOSABLE_VM_EFFECT_GATE_CLASSIFIER_STATUS.md`](FEDORA_DISPOSABLE_VM_EFFECT_GATE_CLASSIFIER_STATUS.md) — status record for the Fedora disposable VM effect gate classifier.
+- [`FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_STATUS.md`](FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_STATUS.md) — status record for the gated disposable Fedora VM local RPM validation lane.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md`](COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md) — completion-estimate review after the L-UI detailed report refinement.
 - [`COMPLETION_PERCENTAGE_REVIEW.md`](COMPLETION_PERCENTAGE_REVIEW.md) — latest completion-percentage planning review.
@@ -54,6 +55,60 @@ non-claims
 - [`LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — Lat pipeline diagnostic integration status.
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — Lat pipeline diagnostic main-test audit status.
 - [`RBDM_REPORT_INTEGRATION_STATUS.md`](RBDM_REPORT_INTEGRATION_STATUS.md) — runtime-boundary domain matrix report integration status.
+
+## Current Fedora disposable VM local RPM validation lane checkpoint
+
+The latest Fedora disposable VM local RPM validation status alignment records:
+
+```text
+Fedora disposable VM local RPM validation lane
+source=PR #223
+validation_lane_documented=1
+validation_runner_present=1
+validation_lane_docs_guard_present=1
+validation_lane_docs_workflow_present=1
+runner_manual_only=1
+ci_auto_vm_rpm_validation_allowed=0
+disposable_vm_target_required=1
+daily_driver_block_required=1
+production_host_block_required=1
+immutable_fedora_block_required=1
+clean_snapshot_required=1
+recovery_path_required=1
+operator_consent_required=1
+rpm_payload_listing_required=1
+rpm_payload_documentation_only_required=1
+unexpected_runtime_surface_absent_required=1
+validation_report_schema_present=1
+target_evidence_level=9
+current_evidence_level=8
+evidence_level_9_achieved=0
+```
+
+Current readiness classification:
+
+```text
+manual_host_dry_run_transcript_contract_present=1
+disposable_vm_effect_gate_present=1
+disposable_vm_effect_gate_classifier_present=1
+disposable_vm_local_rpm_validation_lane_present=1
+disposable_vm_local_rpm_validation_status=blocked-pending-real-vm-run
+disposable_vm_validation_transcript_present=0
+disposable_vm_validation_completed=0
+live_host_validation_completed=0
+host_install_ready=0
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+```
+
+The current next recommended Fedora lane is:
+
+```text
+Capture disposable Fedora VM local RPM validation transcript evidence
+```
+
+The root README should not claim install readiness until real disposable Fedora VM validation evidence is recorded.
 
 ## Current Fedora disposable VM effect gate classifier checkpoint
 
