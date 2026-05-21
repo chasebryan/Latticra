@@ -1,3 +1,9 @@
+#ifndef _WIN32
+#ifndef _POSIX_C_SOURCE
+#define _POSIX_C_SOURCE 200809L
+#endif
+#endif
+
 #include "latticra/seal_measurement.h"
 
 #include <stdint.h>
@@ -5,13 +11,17 @@
 #include <string.h>
 
 #if defined(_WIN32)
+#include <io.h>
 #include <sys/stat.h>
-#define stat_fn _stat
+#define file_no _fileno
+#define fstat_fn _fstat
 #define stat_t struct _stat
 #define is_regular_file(mode) (((mode) & _S_IFREG) != 0)
 #else
 #include <sys/stat.h>
-#define stat_fn stat
+#include <unistd.h>
+#define file_no fileno
+#define fstat_fn fstat
 #define stat_t struct stat
 #define is_regular_file(mode) S_ISREG(mode)
 #endif
@@ -249,16 +259,17 @@ latticra_status_t latticra_seal_measure_file(
         return LATTICRA_STATUS_OK;
     }
 
-    if (stat_fn(path, &info) != 0 || !is_regular_file(info.st_mode)) {
-        out->error = LATTICRA_SEAL_MEASUREMENT_NOT_REGULAR;
-        copy_literal(out->status, sizeof(out->status), "not-regular");
-        return LATTICRA_STATUS_OK;
-    }
-
     file = fopen(path, "rb");
     if (file == NULL) {
         out->error = LATTICRA_SEAL_MEASUREMENT_OPEN_FAILED;
         copy_literal(out->status, sizeof(out->status), "open-failed");
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (fstat_fn(file_no(file), &info) != 0 || !is_regular_file(info.st_mode)) {
+        (void)fclose(file);
+        out->error = LATTICRA_SEAL_MEASUREMENT_NOT_REGULAR;
+        copy_literal(out->status, sizeof(out->status), "not-regular");
         return LATTICRA_STATUS_OK;
     }
 
