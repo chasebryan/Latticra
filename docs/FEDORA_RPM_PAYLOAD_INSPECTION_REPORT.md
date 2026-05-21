@@ -23,6 +23,14 @@ rpm -qpi <generated-rpm>
 rpm -qpl <generated-rpm>
 ```
 
+Because the current payload is documentation-only, this report lane keeps debug package generation disabled for the local build with:
+
+```text
+debug_package %{nil}
+```
+
+That keeps Fedora's debugsource machinery from producing an empty debugsource `%files` failure while there are no compiled payloads to inspect. Debug package behavior should be revisited once Latticra installs compiled files.
+
 ## Report sections
 
 The report should contain stable sections:
@@ -72,6 +80,7 @@ kernel module payload absent: yes
 boot payload absent: yes
 SELinux policy payload absent: yes
 runtime configuration payload absent: yes
+debug package generated: no
 ```
 
 These absence checks are positive evidence at this stage. They show that the local RPM does not accidentally promote runtime, service, boot, kernel, policy, or command authority before the project has earned those surfaces.
