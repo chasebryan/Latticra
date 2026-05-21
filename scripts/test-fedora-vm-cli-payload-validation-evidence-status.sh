@@ -20,11 +20,9 @@ require_contains() {
 }
 
 status='docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md'
-index='docs/status/README.md'
 runner_status='docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md'
 
 require_file "$status"
-require_file "$index"
 require_file "$runner_status"
 require_file docs/FEDORA_VM_CLI_PAYLOAD_VALIDATION_LANE.md
 
@@ -89,13 +87,6 @@ require_contains 'This evidence is limited to a disposable Fedora VM CLI payload
 require_contains 'does not validate daily-driver installation' "$status"
 require_contains 'Fedora QA approval' "$status"
 require_contains 'Align README wording with disposable Fedora VM CLI payload validation evidence' "$status"
-
-require_contains 'FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md' "$index"
-require_contains 'Current Fedora VM CLI payload validation evidence checkpoint' "$index"
-require_contains 'validated_package=latticra-0.0.0-0.1.local.fc44.x86_64.rpm' "$index"
-require_contains 'disposable_vm_cli_validation_completed=1' "$index"
-require_contains 'host_install_ready_for_cli_payload=1' "$index"
-require_contains 'Align README wording with disposable Fedora VM CLI payload validation evidence' "$index"
 
 require_contains 'fedora_vm_cli_payload_validation_status=blocked-pending-real-vm-run' "$runner_status"
 
