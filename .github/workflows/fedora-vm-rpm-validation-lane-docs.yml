@@ -1,0 +1,18 @@
+name: Fedora VM RPM Validation Lane Docs
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-vm-rpm-validation-lane-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Fedora VM RPM validation lane docs guard
+        run: sh scripts/test-fedora-disposable-vm-local-rpm-validation-lane-docs.sh
