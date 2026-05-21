@@ -1,13 +1,13 @@
 # Latticra Seal Report Implementation
 
-Status: initial no-effect Seal report implementation
-Scope: bounded C report surface for Latticra Seal status labels. This slice does not add measurement, signing, object sealing, key handling, runtime authority, host writes, network behavior, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
+Status: Seal report implementation with read-only measurement awareness
+Scope: bounded C report surface for Latticra Seal status labels. This surface now reports that read-only measurement support exists. It does not add signing, object sealing, key handling, runtime authority, host writes, network behavior, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
 
 ## Purpose
 
-This document records the first Latticra Seal report implementation.
+This document records the Latticra Seal report implementation.
 
-The implementation adds a deterministic report surface that makes the current Seal posture visible without performing operational work.
+The implementation adds a deterministic report surface that makes the current Seal posture visible without granting authority.
 
 ## Added files
 
@@ -33,14 +33,14 @@ The report uses fixed-size fields, no dynamic allocation, and bounded rendering 
 
 ## Default report posture
 
-The default report states:
+The default report now states:
 
 ```text
 seal_profile=latticra-seal/0.1-report
 contract_present=1
 implementation_plan_present=1
 report_only_supported=1
-measurement_supported=0
+measurement_supported=1
 signing_supported=0
 capability_gate_supported=0
 sealed_objects_supported=0
@@ -49,13 +49,15 @@ host_read_performed=0
 host_write_performed=0
 network_performed=0
 runtime_granted=0
-evidence_level=2
-status=report-only
+evidence_level=3
+status=report-and-measurement
 ```
 
 ## Effect boundary
 
-The implementation performs no host read, no host write, no network behavior, no runtime grant, and no object mutation.
+The report itself performs no host read, no host write, no network behavior, no runtime grant, and no object mutation.
+
+Read-only measurement is represented by the separate measurement surface.
 
 The helper `latticra_seal_report_is_no_effect` reports true only when all effect fields remain zero.
 
@@ -76,14 +78,14 @@ When the buffer is too small and has nonzero capacity, the renderer clears the f
 The invariant test verifies:
 
 ```text
-default report is report-only
+default report is report-only plus measurement-aware
 contract and plan are visible
-measurement remains unsupported
+measurement support is visible
 signing remains unsupported
 capability gate remains unsupported
 sealed objects remain unsupported
-no host read is performed
-no host write is performed
+no host read is performed by the report
+no host write is performed by the report
 no network behavior is performed
 no runtime grant is performed
 rendered report contains required labels
@@ -99,8 +101,14 @@ Run:
 sh scripts/test-latticra-seal-report.sh
 ```
 
+The measurement implementation is validated by:
+
+```sh
+sh scripts/test-latticra-seal-measurement.sh
+```
+
 ## Next valid slice
 
-The next valid Latticra Seal slice is a read-only measurement contract.
+The next valid Latticra Seal slice after read-only measurement is a signed evidence-manifest contract.
 
-That future slice must be contract-first and must not be added directly to this report implementation.
+That future slice must be contract-first and must not be added directly to the measurement implementation.
