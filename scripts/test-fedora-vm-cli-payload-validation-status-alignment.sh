@@ -19,12 +19,22 @@ require_contains() {
   fi
 }
 
+require_absent() {
+  pattern="$1"
+  file="$2"
+  if grep -Fq -- "$pattern" "$file"; then
+    printf 'fedora vm cli payload validation status alignment: unexpected pattern in %s: %s\n' "$file" "$pattern" >&2
+    exit 1
+  fi
+}
+
 status='docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md'
 index='docs/status/README.md'
 lane='docs/FEDORA_VM_CLI_PAYLOAD_VALIDATION_LANE.md'
 runner='scripts/run-fedora-vm-cli-payload-validation-lane.sh'
 docs_guard='scripts/test-fedora-vm-cli-payload-validation-lane-docs.sh'
-workflow='.github/workflows/fedora-vm-cli-payload-validation-lane-docs.yml'
+lane_workflow='.github/workflows/fedora-vm-cli-payload-validation-lane-docs.yml'
+status_workflow='.github/workflows/fedora-vm-cli-payload-validation-status.yml'
 contract='docs/FEDORA_VM_CLI_TRANSCRIPT_CONTRACT.md'
 
 require_file "$status"
@@ -32,7 +42,8 @@ require_file "$index"
 require_file "$lane"
 require_file "$runner"
 require_file "$docs_guard"
-require_file "$workflow"
+require_file "$lane_workflow"
+require_file "$status_workflow"
 require_file "$contract"
 require_file packaging/fedora/latticra.spec
 require_file src/latticra_cli.c
@@ -151,5 +162,10 @@ require_contains 'FEDORA VM CLI PAYLOAD VALIDATION TRANSCRIPT' "$contract"
 require_contains 'transcript_kind=disposable-vm-cli-payload-validation' "$contract"
 require_contains 'host_install_ready_for_cli_payload=0' "$contract"
 require_contains 'host_install_ready_for_cli_payload=1' "$contract"
+
+require_contains 'name: Fedora VM CLI Payload Validation Status' "$status_workflow"
+require_contains 'runs-on: ubuntu-latest' "$status_workflow"
+require_contains 'sh scripts/test-fedora-vm-cli-payload-validation-status-alignment.sh' "$status_workflow"
+require_absent 'sh scripts/run-fedora-vm-cli-payload-validation-lane.sh' "$status_workflow"
 
 printf 'fedora_vm_cli_payload_validation_status_alignment: ok\n'
