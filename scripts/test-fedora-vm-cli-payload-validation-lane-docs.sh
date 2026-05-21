@@ -77,7 +77,7 @@ require_contains 'rpmbuild_present=1' "$doc"
 require_contains 'cc_present=1' "$doc"
 require_contains 'sudo_present=1' "$doc"
 require_contains 'non-root operator account' "$doc"
-require_contains 'sudo only for RPM installation and removal' "$doc"
+require_contains 'uses `sudo` only for RPM installation and removal' "$doc"
 
 require_contains 'src/latticra_cli.c' "$doc"
 require_contains 'scripts/test-latticra-no-effect-cli-status-surface.sh' "$doc"
