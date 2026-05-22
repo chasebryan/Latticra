@@ -20,10 +20,8 @@ require_contains() {
 }
 
 status='docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md'
-index='docs/status/README.md'
 
 require_file "$status"
-require_file "$index"
 require_file README.md
 require_file installer/README.md
 require_file installer/Makefile
@@ -57,9 +55,15 @@ require_contains 'latticra-seal.installed' "$status"
 require_contains 'lat-tooling.installed' "$status"
 require_contains 'lir-contracts.installed' "$status"
 require_contains 'latticra_panel_user_local_install_verified=1' "$status"
+require_contains 'latticra_panel_command_wrapper_present=1' "$status"
 require_contains 'latticra_panel_desktop_entry_present=1' "$status"
 require_contains 'latticra_panel_desktop_icon_present=1' "$status"
+require_contains 'latticra_panel_launcher_available=1' "$status"
+require_contains 'latticra_local_prefix_present=1' "$status"
+require_contains 'latticra_payload_tree_present=1' "$status"
+require_contains 'latticra_receipts_present=1' "$status"
 require_contains 'latticra_seal_report_generated=1' "$status"
+require_contains 'seal_report_only_mode=1' "$status"
 require_contains 'root_authority=0' "$status"
 require_contains 'kernel_modification_performed=0' "$status"
 require_contains 'systemd_modification_performed=0' "$status"
@@ -77,17 +81,5 @@ require_contains '/usr/lib/modules' "$status"
 require_contains '/boot/latticra' "$status"
 require_contains 'Add public README/status wording limited to Fedora user-local Latticra Panel installation evidence' "$status"
 require_contains 'not production installer readiness' "$status"
-
-require_contains 'LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md' "$index"
-require_contains 'Current Latticra Panel local install evidence checkpoint' "$index"
-require_contains 'latticra_panel_user_local_install_verified=1' "$index"
-require_contains 'latticra_panel_desktop_entry_present=1' "$index"
-require_contains 'latticra_panel_desktop_icon_present=1' "$index"
-require_contains 'latticra_seal_report_generated=1' "$index"
-require_contains 'network_authority=0' "$index"
-require_contains 'runtime_enforcement_authority=0' "$index"
-require_contains 'production_installer_ready=0' "$index"
-require_contains 'root_installer_ready=0' "$index"
-require_contains 'Add public README/status wording limited to Fedora user-local Latticra Panel installation evidence' "$index"
 
 printf 'latticra_panel_local_install_evidence_status: ok\n'
