@@ -1,0 +1,30 @@
+profile = "seal_report_only"
+install_prefix = "~/.local/share/latticra"
+
+[components]
+lat_tooling = false
+lir_contracts = true
+seal_report_only = true
+fedora_validation = false
+docs_and_examples = true
+developer_cli_helpers = true
+
+[safety]
+dry_run = true
+allow_host_mutation = false
+allow_network_effect = false
+require_component_manifest = true
+require_artifact_measurements = true
+require_verification_policy_metadata = true
+write_operator_receipt = true
+
+[behavior]
+create_prefix_layout = true
+create_component_markers = true
+create_cli_shims = true
+preserve_existing_files = true
+build_gui_installer = true
+build_latticra_from_source = true
+install_payload_tree = true
+install_desktop_entry = true
+install_user_bin_wrappers = true

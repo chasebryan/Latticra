@@ -1,0 +1,48 @@
+[manifest]
+name = "latticra-installer-components"
+version = "0.2.0"
+production_installer_ready = false
+network_authority = false
+root_authority = false
+
+[components.lat_tooling]
+label = "Lat language tooling"
+default_enabled = true
+authority = "local-prefix"
+generated_paths = ["bin/lat", "components/lat-tooling.installed"]
+notes = "Early scaffold creates a shim until real Lat artifacts are wired in."
+
+[components.lir_contracts]
+label = "LIR contracts"
+default_enabled = true
+authority = "local-prefix"
+generated_paths = ["share/latticra/lir-contracts/README.md", "components/lir-contracts.installed"]
+notes = "Defines space for LIR contract documents and later compiled contract artifacts."
+
+[components.seal_report_only]
+label = "Latticra Seal report-only subsystem"
+default_enabled = true
+authority = "local-prefix"
+generated_paths = ["bin/latticra-seal", "etc/latticra/seal.toml", "components/latticra-seal.installed"]
+notes = "Report-only subsystem. No enforcement authority in this early installer."
+
+[components.fedora_validation]
+label = "Fedora validation files"
+default_enabled = false
+authority = "local-prefix"
+generated_paths = ["share/latticra/fedora-validation/README.md", "components/fedora-validation.installed"]
+notes = "Fedora validation workspace. Does not change the host OS."
+
+[components.docs_and_examples]
+label = "Documentation and examples"
+default_enabled = true
+authority = "local-prefix"
+generated_paths = ["share/latticra/docs/README.md", "components/docs-and-examples.installed"]
+notes = "Documentation landing space."
+
+[components.developer_cli_helpers]
+label = "Developer CLI helpers"
+default_enabled = true
+authority = "local-prefix"
+generated_paths = ["bin/latticra-doctor", "components/developer-cli-helpers.installed"]
+notes = "Small helpers for validating the local prefix install."
