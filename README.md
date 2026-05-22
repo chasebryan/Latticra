@@ -412,6 +412,15 @@ I use GitHub as the public workspace for my projects, experiments, documentation
 
 </details>
 
+<details>
+<summary><strong>Latticra in 5 minutes</strong></summary>
+
+Read the short overview here:
+
+[**Latticra in 5 minutes**](https://x.com/ckbryan91/status/2057763410771603832?s=20)
+
+</details>
+
 ## License
 
 Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`](docs/LICENSE_POLICY.md).
