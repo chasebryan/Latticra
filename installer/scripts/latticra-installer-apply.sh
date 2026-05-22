@@ -184,15 +184,36 @@ write_managed_file() {
   log "[write-managed] $target"
 }
 
+canonical_existing_path() {
+  path="$1"
+  dir=$(dirname -- "$path")
+  base=$(basename -- "$path")
+  if cd -- "$dir" 2>/dev/null; then
+    printf '%s/%s\n' "$(pwd -P)" "$base"
+  else
+    printf '%s\n' "$path"
+  fi
+}
+
 copy_if_exists() {
   src="$1"
   dest_dir="$2"
   if [ -e "$src" ]; then
     mkdir -p "$dest_dir"
     base=$(basename -- "$src")
-    rm -rf "$dest_dir/$base"
+    dest="$dest_dir/$base"
+
+    src_real=$(canonical_existing_path "$src")
+    dest_real=$(canonical_existing_path "$dest")
+
+    if [ "$src_real" = "$dest_real" ]; then
+      log "[preserve] $src already exists at install destination"
+      return 0
+    fi
+
+    rm -rf "$dest"
     cp -R "$src" "$dest_dir/"
-    log "[copy] $src -> $dest_dir/$base"
+    log "[copy] $src -> $dest"
   fi
 }
 
