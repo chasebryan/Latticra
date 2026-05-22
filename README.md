@@ -92,6 +92,7 @@ runtime_boundary_report_classification_present=1
 nucleus_report_only_task_boundary_present=1
 latticra_seal_report_only_tool_boundary_metadata_present=1
 latticra_seal_runtime_dry_run_report_surface_present=1
+latticra_seal_guarded_allowlist_report_surface_present=1
 fedora_disposable_vm_local_rpm_validation_present=1
 production_runtime_present=0
 ```
@@ -189,13 +190,23 @@ seal_policy_decision_metadata_present=1
 seal_runtime_gate_metadata_present=1
 seal_runtime_dry_run_metadata_present=1
 seal_runtime_dry_run_report_surface_present=1
+seal_guarded_allowlist_metadata_present=1
+seal_guarded_allowlist_report_surface_present=1
 operator_visible_runtime_dry_run_report=1
+operator_visible_guarded_allowlist_report=1
 runtime_dry_run_status_index_alignment_present=1
+guarded_allowlist_status_index_alignment_present=1
 runtime_gate_report_only=1
 policy_decision_state=report-only
 runtime_gate_state=report-only
 blocked_reason=default-deny-dry-run
 default_action_deny=1
+known_fixture_tool_candidate_visible=1
+allow_candidate_grants_authority=0
+allow_candidate_executes_tool=0
+allow_candidate_reads_host=0
+allow_candidate_writes_host=0
+allow_candidate_uses_network=0
 would_allow=0
 would_deny=1
 would_execute_tool=0
@@ -222,10 +233,12 @@ core_blocked_case_set_complete=1
 
 The current runtime dry-run lane records what would remain denied without executing tools, touching host state, using the network, or granting authority.
 
+The current guarded allowlist lane records that known local fixture tools may become candidate classifications only. A known fixture tool improves reporting but still grants no authority, executes no tool, reads no host state, writes no host state, and uses no network.
+
 A careful public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime dry-run path with operator-visible denial reporting for AI-era tool-boundary planning.
+Latticra Seal now has report-only runtime dry-run and guarded allowlist candidate-denial paths for AI-era tool-boundary planning.
 ```
 
 That is intentionally limited. It does not mean Latticra Seal currently implements runtime enforcement, policy enforcement, cryptographic verification, MCP protocol behavior, MCP server behavior, MCP client behavior, AI-agent execution control, tool execution, host behavior, network behavior, object sealing, key storage, revocation lookup, or production agent security.
@@ -243,6 +256,10 @@ Relevant Seal records:
 - [`docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_IMPLEMENTATION_PLAN.md`](docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_IMPLEMENTATION_PLAN.md)
 - [`docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_IMPLEMENTATION.md)
 - [`docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE.md`](docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE.md)
+- [`docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_CONTRACT.md`](docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_IMPLEMENTATION_PLAN.md`](docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_IMPLEMENTATION_PLAN.md)
+- [`docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_IMPLEMENTATION.md)
+- [`docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_REPORT_SURFACE.md`](docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_REPORT_SURFACE.md)
 - [`docs/status/SEAL_CORE_BLOCKED_CASES_STATUS.md`](docs/status/SEAL_CORE_BLOCKED_CASES_STATUS.md)
 - [`docs/status/SEAL_CORE_EVIDENCE_STATUS.md`](docs/status/SEAL_CORE_EVIDENCE_STATUS.md)
 - [`docs/status/SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md`](docs/status/SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md)
@@ -252,6 +269,9 @@ Relevant Seal records:
 - [`docs/status/SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE_STATUS.md`](docs/status/SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE_STATUS.md)
 - [`docs/status/SEAL_RUNTIME_DRY_RUN_STATUS_INDEX_ALIGNMENT.md`](docs/status/SEAL_RUNTIME_DRY_RUN_STATUS_INDEX_ALIGNMENT.md)
 - [`docs/status/SEAL_RUNTIME_DRY_RUN_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](docs/status/SEAL_RUNTIME_DRY_RUN_PUBLIC_ENTRYPOINT_ALIGNMENT.md)
+- [`docs/status/SEAL_GUARDED_ALLOWLIST_REPORT_SURFACE_STATUS.md`](docs/status/SEAL_GUARDED_ALLOWLIST_REPORT_SURFACE_STATUS.md)
+- [`docs/status/SEAL_GUARDED_ALLOWLIST_STATUS_INDEX_ALIGNMENT.md`](docs/status/SEAL_GUARDED_ALLOWLIST_STATUS_INDEX_ALIGNMENT.md)
+- [`docs/status/SEAL_GUARDED_ALLOWLIST_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](docs/status/SEAL_GUARDED_ALLOWLIST_PUBLIC_ENTRYPOINT_ALIGNMENT.md)
 
 ## Fedora disposable VM local RPM validation
 
@@ -325,6 +345,15 @@ sh scripts/test-latticra-seal-runtime-dry-run.sh
 sh scripts/test-latticra-seal-runtime-dry-run-report-surface.sh
 sh scripts/test-latticra-seal-runtime-dry-run-report-surface-status.sh
 sh scripts/test-latticra-seal-runtime-dry-run-status-index-alignment.sh
+```
+
+Seal guarded allowlist validation:
+
+```sh
+sh scripts/test-latticra-seal-guarded-allowlist.sh
+sh scripts/test-latticra-seal-guarded-allowlist-report-surface.sh
+sh scripts/test-latticra-seal-guarded-allowlist-report-surface-status.sh
+sh scripts/test-latticra-seal-guarded-allowlist-status-index-alignment.sh
 ```
 
 Fedora disposable VM local RPM validation evidence status is covered by:
@@ -423,4 +452,4 @@ Read the short overview here:
 
 ## License
 
-Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`](docs/LICENSE_POLICY.md).
+Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`).
