@@ -1,7 +1,10 @@
 # Latticra Status
 
 Status: public status shortcut
-Last updated: 2026-05-20 03:50 CDT
+Last updated: 2026-05-22 02:45 CDT
+Latest Seal core evidence status surface note: 2026-05-22 02:24 CDT
+Latest Seal core evidence index alignment note: 2026-05-22 02:37 CDT
+Latest Seal core evidence public entrypoint alignment note: 2026-05-22 02:45 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
 Latest Lat pipeline diagnostic integration note: 2026-05-19 14:20 CDT
@@ -102,6 +105,9 @@ Latticra is the contract.
 ## Current milestone ledger
 
 ```text
+Seal core evidence status surface
+Seal core evidence index alignment
+Seal core evidence public entrypoint alignment
 Lat semantic validation contract
 Lat semantic validation implementation plan
 Lat semantic validation foundation
@@ -179,6 +185,34 @@ Completion percentage review
 ```text
 Completion estimate review only if capability posture changes
 ```
+
+## Current Seal core evidence boundary
+
+The Seal core evidence status surface is now public-entrypoint visible.
+
+It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning.
+
+Current status fields:
+
+```text
+seal_core_evidence_status_surface_present=1
+operator_visible_status_surface=1
+core_blocked_case_set_complete=1
+runtime_gate_report_only=1
+runtime_authority_granted=0
+effect_performed=0
+host_read_performed=0
+host_write_performed=0
+network_performed=0
+runtime_enforcement_implemented=0
+policy_enforcement_implemented=0
+tool_execution_implemented=0
+ai_agent_security_claimed=0
+production_readiness_claimed=0
+external_endorsement_claimed=0
+```
+
+The public-entrypoint alignment is documentation/status alignment only and does not change implementation behavior or public readiness.
 
 ## Current runtime boundary domain matrix report boundary
 
