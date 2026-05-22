@@ -22,6 +22,48 @@ Latticra is the contract.
 
 This does not mean unrestricted C++. It means C owns the secure substrate, constrained C++ owns governed policy, validator, effect-gate, and audit layers, and Lat / Latticra language work remains the declaration and contract layer.
 
+## Latticra Panel installer
+
+Latticra Panel is the graphical local installer and control panel for Latticra, Lat, LIR, and Latticra Seal.
+
+Fedora prerequisites:
+
+```sh
+sudo dnf install -y rust cargo make gcc pkgconf-pkg-config \
+  libX11-devel libxcb-devel libXcursor-devel libXrandr-devel libXi-devel \
+  libxkbcommon-devel mesa-libGL-devel wayland-devel desktop-file-utils gtk3
+```
+
+Run the installer from source:
+
+```sh
+make -C installer gui
+```
+
+Safe dry-run:
+
+```sh
+make -C installer dry-run
+```
+
+Guarded user-local install:
+
+```sh
+make -C installer local-example
+make -C installer verify-local
+```
+
+Open after install:
+
+```sh
+export PATH="$HOME/.local/bin:$PATH"
+latticra-panel
+```
+
+This installer is user-local only. It does not use root, modify the kernel, modify systemd, change SELinux, or use network authority.
+
+Full installer notes are in [`installer/README.md`](installer/README.md).
+
 ## Status and strategy
 
 Start with the current project status, strategy, and project-note entry points:
