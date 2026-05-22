@@ -91,6 +91,7 @@ lir_metadata_reporting_present=1
 runtime_boundary_report_classification_present=1
 nucleus_report_only_task_boundary_present=1
 latticra_seal_report_only_tool_boundary_metadata_present=1
+latticra_seal_runtime_dry_run_report_surface_present=1
 fedora_disposable_vm_local_rpm_validation_present=1
 production_runtime_present=0
 ```
@@ -186,7 +187,22 @@ seal_request_freshness_metadata_present=1
 seal_signed_request_metadata_present=1
 seal_policy_decision_metadata_present=1
 seal_runtime_gate_metadata_present=1
+seal_runtime_dry_run_metadata_present=1
+seal_runtime_dry_run_report_surface_present=1
+operator_visible_runtime_dry_run_report=1
+runtime_dry_run_status_index_alignment_present=1
 runtime_gate_report_only=1
+policy_decision_state=report-only
+runtime_gate_state=report-only
+blocked_reason=default-deny-dry-run
+default_action_deny=1
+would_allow=0
+would_deny=1
+would_execute_tool=0
+would_read_host=0
+would_write_host=0
+would_use_network=0
+would_grant_runtime_authority=0
 runtime_authority_granted=0
 effect_performed=0
 host_read_performed=0
@@ -204,10 +220,12 @@ replayed_request_case_validated=1
 core_blocked_case_set_complete=1
 ```
 
+The current runtime dry-run lane records what would remain denied without executing tools, touching host state, using the network, or granting authority.
+
 A careful public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime dry-run path with operator-visible denial reporting for AI-era tool-boundary planning.
 ```
 
 That is intentionally limited. It does not mean Latticra Seal currently implements runtime enforcement, policy enforcement, cryptographic verification, MCP protocol behavior, MCP server behavior, MCP client behavior, AI-agent execution control, tool execution, host behavior, network behavior, object sealing, key storage, revocation lookup, or production agent security.
@@ -221,10 +239,19 @@ Relevant Seal records:
 - [`docs/LATTICRA_SEAL_SIGNED_REQUEST_CONTRACT.md`](docs/LATTICRA_SEAL_SIGNED_REQUEST_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_POLICY_DECISION_CONTRACT.md`](docs/LATTICRA_SEAL_POLICY_DECISION_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_RUNTIME_ENFORCEMENT_GATE_CONTRACT.md`](docs/LATTICRA_SEAL_RUNTIME_ENFORCEMENT_GATE_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_CONTRACT.md`](docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_IMPLEMENTATION_PLAN.md`](docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_IMPLEMENTATION_PLAN.md)
+- [`docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_IMPLEMENTATION.md)
+- [`docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE.md`](docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE.md)
 - [`docs/status/SEAL_CORE_BLOCKED_CASES_STATUS.md`](docs/status/SEAL_CORE_BLOCKED_CASES_STATUS.md)
 - [`docs/status/SEAL_CORE_EVIDENCE_STATUS.md`](docs/status/SEAL_CORE_EVIDENCE_STATUS.md)
 - [`docs/status/SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md`](docs/status/SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md)
 - [`docs/status/SEAL_CORE_EVIDENCE_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](docs/status/SEAL_CORE_EVIDENCE_PUBLIC_ENTRYPOINT_ALIGNMENT.md)
+- [`docs/status/SEAL_POLICY_DECISION_STATUS.md`](docs/status/SEAL_POLICY_DECISION_STATUS.md)
+- [`docs/status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md`](docs/status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md)
+- [`docs/status/SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE_STATUS.md`](docs/status/SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE_STATUS.md)
+- [`docs/status/SEAL_RUNTIME_DRY_RUN_STATUS_INDEX_ALIGNMENT.md`](docs/status/SEAL_RUNTIME_DRY_RUN_STATUS_INDEX_ALIGNMENT.md)
+- [`docs/status/SEAL_RUNTIME_DRY_RUN_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](docs/status/SEAL_RUNTIME_DRY_RUN_PUBLIC_ENTRYPOINT_ALIGNMENT.md)
 
 ## Fedora disposable VM local RPM validation
 
@@ -289,6 +316,15 @@ sh scripts/test-latticra-seal-unknown-tool-case.sh
 sh scripts/test-latticra-seal-unsigned-request-case.sh
 sh scripts/test-latticra-seal-stale-request-case.sh
 sh scripts/test-latticra-seal-replayed-request-case.sh
+```
+
+Seal runtime dry-run validation:
+
+```sh
+sh scripts/test-latticra-seal-runtime-dry-run.sh
+sh scripts/test-latticra-seal-runtime-dry-run-report-surface.sh
+sh scripts/test-latticra-seal-runtime-dry-run-report-surface-status.sh
+sh scripts/test-latticra-seal-runtime-dry-run-status-index-alignment.sh
 ```
 
 Fedora disposable VM local RPM validation evidence status is covered by:
