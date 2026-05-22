@@ -352,6 +352,30 @@ https://buymeacoffee.com/Bryforge
 
 See [`SECURITY.md`](SECURITY.md) for vulnerability reporting, supported branch status, safe testing rules, and security non-claims.
 
+<details>
+<summary><strong>About Me</strong></summary>
+
+# Chase Bryan
+
+I am a computer scientist, systems builder, and low-level software developer focused on operating systems, programming languages, security architecture, and Linux-native tooling.
+
+My work centers around **Latticra**, a systems research and development project exploring new ways to structure secure computing environments, kernel-adjacent design, Fedora/Linux integration, policy boundaries, and developer-first infrastructure.
+
+I am especially interested in:
+
+- Operating systems and kernel-level architecture
+- C, C++, Rust, and systems programming
+- Programming language design
+- Linux, Fedora, and open-source ecosystems
+- Secure computation and cryptographic foundations
+- Tool boundary planning, MCP, and AI-era software architecture
+
+My goal is to build technology that is practical, secure, understandable, and grounded in real engineering evidence — not hype.
+
+I use GitHub as the public workspace for my projects, experiments, documentation, and long-term development efforts.
+
+</details>
+
 ## License
 
 Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`](docs/LICENSE_POLICY.md).
