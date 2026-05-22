@@ -2,16 +2,54 @@
 
 Status: early-stage, evidence-bound systems architecture repository.
 
+## Motto
+
 > “The simulacrum is never what hides the truth.” — Jean Baudrillard
+
+## Mission
 
 Latticra is a contract-first systems architecture project for high-assurance infrastructure engineering, Linux/Fedora integration research, Lat language development, bounded intermediate representation work, no-effect runtime-boundary modeling, and AI-era tool-boundary planning.
 
 The repository is foundational engineering work. It is not a deployed platform, certified product, production runtime, or operating-system replacement.
 
+## Direction checkpoint
+
 ```text
 C is the metal.
 C++ is the disciplined structure.
 Latticra is the contract.
+```
+
+This does not mean unrestricted C++. It means C owns the secure substrate, constrained C++ owns governed policy, validator, effect-gate, and audit layers, and Lat / Latticra language work remains the declaration and contract layer.
+
+## Status and strategy
+
+Start with the current project status, strategy, and project-note entry points:
+
+- [`STATUS.md`](STATUS.md)
+- [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md)
+- [`docs/status/ANNOUNCEMENTS.md`](docs/status/ANNOUNCEMENTS.md)
+- [`docs/strategy/README.md`](docs/strategy/README.md)
+- [`docs/project_notes/README.md`](docs/project_notes/README.md)
+- [`docs/C_CPP_FOUNDATION_DIRECTION.md`](docs/C_CPP_FOUNDATION_DIRECTION.md)
+- [`docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](docs/CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md)
+- [`docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md`](docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md)
+- [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION_PLAN.md)
+- [`docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](docs/NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md)
+- [`docs/RUNTIME_BOUNDARY_CONTRACT.md`](docs/RUNTIME_BOUNDARY_CONTRACT.md)
+- [`docs/L_UI_RENDERING_IMPLEMENTATION.md`](docs/L_UI_RENDERING_IMPLEMENTATION.md)
+- [`docs/L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION.md`](docs/L_UI_SOURCE_BUFFER_LITERAL_NUL_POLICY_IMPLEMENTATION.md)
+- [`docs/L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION.md`](docs/L_UI_SEMANTIC_VALIDATION_IMPLEMENTATION.md)
+- [`docs/LIR_SHAPE_IMPLEMENTATION.md`](docs/LIR_SHAPE_IMPLEMENTATION.md)
+- [`docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md`](docs/LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md)
+- [`docs/LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION.md`](docs/LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION.md)
+
+Guarded status vocabulary includes: constrained C/C++ foundation direction, constrained C++ authority-layer contract, Nucleus task execution contract, Nucleus task execution implementation plan, Nucleus task execution implementation, Runtime boundary contract, runtime behavior, command execution, L-UI rendering implementation, literal source-buffer NUL rejection policy enforcement, semantic validation implementation, LIR shape implementation, Lat language grammar implementation, unrestricted C++ authority, effect-performing implemented C++ authority layer, interactive L-UI rendering, terminal-control L-UI rendering, LIR execution, Lat execution, Lat compiler, Lat interpreter, and Lat-specific LIR refinement implementation.
+
+Lat-specific LIR refinement validation entry point:
+
+```sh
+sh scripts/test-lat-specific-lir-refinement.sh
 ```
 
 ## What Latticra is
