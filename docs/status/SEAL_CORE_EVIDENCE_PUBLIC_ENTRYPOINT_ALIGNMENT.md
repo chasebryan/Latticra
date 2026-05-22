@@ -6,12 +6,12 @@ Scope: public entrypoint alignment after the Latticra Seal core evidence status 
 
 ## Purpose
 
-This record makes the completed Latticra Seal core evidence milestone visible from the main public entrypoints after the status surface and status index alignment slices.
+This record makes the completed Latticra Seal core evidence milestone visible from the root public entrypoints after the status surface and status index alignment slices.
 
 The purpose is to preserve the public evidence chain:
 
 ```text
-core evidence report -> public status update -> status surface -> status index alignment -> public entrypoint alignment
+core evidence report -> public status update -> status surface -> status index alignment -> root public entrypoint alignment
 ```
 
 ## Reviewed files
@@ -19,7 +19,6 @@ core evidence report -> public status update -> status surface -> status index a
 ```text
 README.md
 STATUS.md
-docs/FOUNDATION_INDEX.md
 docs/status/README.md
 docs/status/SEAL_CORE_EVIDENCE_STATUS.md
 docs/status/SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md
@@ -33,9 +32,10 @@ Current public entrypoint posture:
 readme_mentions_seal_core_evidence_status=1
 readme_mentions_seal_core_evidence_index_alignment=1
 root_status_mentions_seal_core_evidence=1
-foundation_index_mentions_seal_core_evidence=1
 status_index_mentions_seal_core_evidence=1
 seal_core_public_entrypoint_alignment_record_present=1
+foundation_index_entrypoint_followup_pending=1
+status_index_public_entrypoint_followup_pending=1
 mode=doc-public-entrypoint-alignment
 implementation_behavior_changed=0
 runtime_authority_granted=0
@@ -54,7 +54,7 @@ external_endorsement_claimed=0
 
 ## Current public summary
 
-The main public entrypoints now make the Seal core evidence milestone discoverable as:
+The root public entrypoints now make the Seal core evidence milestone discoverable as:
 
 ```text
 report-only runtime gate path present
@@ -105,6 +105,6 @@ It does not add runtime behavior, policy behavior, protocol behavior, host behav
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is a guarded policy-decision status surface or a no-effect dry-run planning contract for future runtime behavior.
+The next valid Latticra Seal slice is a foundation/status-index public-entrypoint follow-up, a guarded policy-decision status surface, or a no-effect dry-run planning contract for future runtime behavior.
 
 That future slice must preserve the report-only posture until a specific contract, deterministic local fixture, no-effect dry-run report, guarded allowlist posture, and validation path justify any later runtime work.
