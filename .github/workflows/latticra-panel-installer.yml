@@ -6,6 +6,9 @@ on:
       - "installer/**"
       - ".github/workflows/latticra-panel-installer.yml"
       - "README.md"
+      - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md"
+      - "scripts/test-latticra-panel-local-install-*.sh"
   push:
     branches:
       - main
@@ -13,6 +16,9 @@ on:
       - "installer/**"
       - ".github/workflows/latticra-panel-installer.yml"
       - "README.md"
+      - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md"
+      - "scripts/test-latticra-panel-local-install-*.sh"
 
 permissions:
   contents: read
@@ -56,6 +62,12 @@ jobs:
           for script in installer/scripts/*.sh; do
             sh -n "$script"
           done
+
+      - name: Validate Latticra Panel local install evidence status
+        run: sh scripts/test-latticra-panel-local-install-evidence-status.sh
+
+      - name: Validate Latticra Panel public entrypoint alignment
+        run: sh scripts/test-latticra-panel-local-install-public-entrypoint-alignment.sh
 
       - name: Run installer dry-run
         run: make -C installer dry-run
