@@ -1,7 +1,7 @@
 # Latticra Status Index
 
 Status: active status index
-Last updated: 2026-05-21
+Last updated: 2026-05-22
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
 ## Purpose
@@ -22,6 +22,8 @@ non-claims
 
 - [`CURRENT_STATUS.md`](CURRENT_STATUS.md) — current project status, completion estimates, and next priorities.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
+- [`SEAL_CORE_EVIDENCE_STATUS.md`](SEAL_CORE_EVIDENCE_STATUS.md) — Latticra Seal core evidence status surface after the completed report-only runtime gate evidence milestone.
+- [`SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md`](SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md) — Latticra Seal core evidence index alignment after the status surface.
 - [`KERNEL_LIFECYCLE_EVIDENCE_STATUS.md`](KERNEL_LIFECYCLE_EVIDENCE_STATUS.md) — status alignment after the kernel lifecycle report runner, subsystem summary, and rollback plan.
 - [`FEDORA_HOST_INSTALL_PREFLIGHT_STATUS.md`](FEDORA_HOST_INSTALL_PREFLIGHT_STATUS.md) — status record for the no-effect Fedora host install preflight classifier.
 - [`FEDORA_INSTALL_PREFLIGHT_SNAPSHOT_CAPTURE_STATUS.md`](FEDORA_INSTALL_PREFLIGHT_SNAPSHOT_CAPTURE_STATUS.md) — status record for the no-effect Fedora install preflight snapshot capture implementation.
@@ -58,6 +60,54 @@ non-claims
 - [`LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — Lat pipeline diagnostic integration status.
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — Lat pipeline diagnostic main-test audit status.
 - [`RBDM_REPORT_INTEGRATION_STATUS.md`](RBDM_REPORT_INTEGRATION_STATUS.md) — runtime-boundary domain matrix report integration status.
+
+## Current Latticra Seal core evidence checkpoint
+
+The latest Latticra Seal core evidence status surface records:
+
+```text
+seal_core_evidence_report_present=1
+seal_core_evidence_public_status_present=1
+seal_core_evidence_status_surface_present=1
+operator_visible_status_surface=1
+deterministic_local_report_path=1
+core_blocked_case_set_complete=1
+mcp_alignment_context=ai-era-tool-boundary-planning
+runtime_gate_report_only=1
+runtime_authority_granted=0
+effect_performed=0
+host_read_performed=0
+host_write_performed=0
+network_performed=0
+runtime_enforcement_implemented=0
+policy_enforcement_implemented=0
+tool_execution_implemented=0
+ai_agent_security_claimed=0
+production_readiness_claimed=0
+external_endorsement_claimed=0
+```
+
+Current Seal core case evidence:
+
+```text
+unknown_tool_case_validated=1
+unsigned_request_case_validated=1
+stale_request_case_validated=1
+replayed_request_case_validated=1
+core_blocked_case_set_complete=1
+```
+
+The careful current public claim is:
+
+```text
+Latticra Seal now has a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning.
+```
+
+The current next recommended Seal lane is:
+
+```text
+Add public entry-point refresh for the completed Seal core evidence milestone
+```
 
 ## Current Fedora VM CLI payload validation lane checkpoint
 
