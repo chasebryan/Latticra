@@ -1,0 +1,18 @@
+name: Latticra Lat Seal Roadmap
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'roadmap/**'
+
+jobs:
+  roadmap-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate Latticra Lat Seal roadmap
+        run: sh scripts/test-latticra-lat-seal-roadmap.sh
