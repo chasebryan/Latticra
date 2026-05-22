@@ -14,6 +14,9 @@ on:
       - ".github/workflows/latticra-panel-installer.yml"
       - "README.md"
 
+permissions:
+  contents: read
+
 jobs:
   installer:
     name: Installer dry-run and Rust check
