@@ -3,161 +3,211 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Latticra Documentation</title>
-  <meta name="description" content="Documentation entry point for Latticra, an early-stage evidence-bound systems architecture project.">
-  <meta name="theme-color" content="#f7f8fb">
+  <title>Latticra</title>
+  <meta name="description" content="Latticra documentation and project resources.">
+  <meta name="theme-color" content="#ffffff">
   <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-  <header class="site-header">
-    <div>
-      <a class="brand" href="./">Latticra</a>
-      <p class="subtitle">Documentation entry point for contract-first systems architecture.</p>
-    </div>
-    <nav class="nav-links" aria-label="Primary navigation">
-      <a href="#overview">Overview</a>
-      <a href="#architecture">Architecture</a>
-      <a href="#evidence">Evidence</a>
-      <a href="#resources">Resources</a>
-      <a href="https://github.com/Bryforge/Latticra">Repository</a>
-    </nav>
+  <header>
+    <h1>Latticra</h1>
+    <p class="tagline">Only claims backed by contracts, tests, and evidence.</p>
   </header>
 
-  <main>
-    <section id="overview" class="intro">
-      <p class="kicker">Project status: early-stage, evidence-bound systems architecture repository.</p>
-      <h1>Latticra is a contract-first architecture for making system boundaries explicit before authority is granted.</h1>
-      <p>
-        Latticra is research and foundational engineering work for high-assurance infrastructure, Linux/Fedora integration,
-        Lat language development, bounded intermediate representation work, runtime-boundary modeling, and AI-era tool-boundary planning.
-      </p>
-      <p>
-        The project should be read as an engineering record: <span class="term term-contract">contracts</span>,
-        <span class="term term-boundary">boundaries</span>, <span class="term term-evidence">evidence</span>,
-        <span class="term term-report">reports</span>, and carefully limited claims. It is not presented as a deployed platform,
-        certified product, production runtime, security product, or operating-system replacement.
-      </p>
-    </section>
+  <hr>
 
-    <section class="note" aria-label="Development principle">
-      <code>No contract without identity.</code>
-      <code>No authority without capability.</code>
-      <code>No effect without a boundary.</code>
-      <code>No promotion without evidence.</code>
-    </section>
+  <table class="layout" role="presentation">
+    <tr>
+      <td class="navcol">
+        <h2>About Latticra</h2>
+        <ul>
+          <li><a href="#about">Project description</a></li>
+          <li><a href="#goals">Project goals</a></li>
+          <li><a href="#architecture">Architecture map</a></li>
+          <li><a href="#nonclaims">Non-claims</a></li>
+        </ul>
 
-    <section id="architecture" class="section-block">
-      <h2>Architecture map</h2>
-      <p class="section-copy">
-        Latticra is organized as a small set of named layers. The current implementation posture is deliberately conservative:
-        declaration, metadata, classification, and reports come before runtime effects.
-      </p>
-      <table>
-        <thead>
-          <tr>
-            <th>Layer</th>
-            <th>Role</th>
-            <th>Current posture</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="term term-language">Lat</span></td>
-            <td>Contract and declaration language direction.</td>
-            <td>Parsing, validation, diagnostics, and metadata lowering.</td>
-          </tr>
-          <tr>
-            <td><span class="term term-ir">LIR</span></td>
-            <td>Bounded intermediate representation and graph-shape metadata.</td>
-            <td>Metadata reporting, not execution.</td>
-          </tr>
-          <tr>
-            <td><span class="term term-ui">L-UI</span></td>
-            <td>Operator-visible declaration and reporting surface.</td>
-            <td>Report direction and validation records.</td>
-          </tr>
-          <tr>
-            <td><span class="term term-nucleus">Nucleus</span></td>
-            <td>Coordination, classification, task records, and task-boundary reports.</td>
-            <td>Report-only task boundary modeling.</td>
-          </tr>
-          <tr>
-            <td><span class="term term-boundary">Runtime Boundary</span></td>
-            <td>Classification line before operational behavior.</td>
-            <td>Disabled-by-default boundary classification.</td>
-          </tr>
-          <tr>
-            <td><span class="term term-seal">Latticra Seal</span></td>
-            <td>Trust-boundary, request-boundary, policy-boundary, and tool-boundary planning.</td>
-            <td>Report-only AI/tool boundary records.</td>
-          </tr>
-          <tr>
-            <td><span class="term term-fedora">Fedora/Linux</span></td>
-            <td>Current host-facing validation lane and integration target.</td>
-            <td>Narrow validation evidence, not distribution readiness.</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+        <h2>Documentation</h2>
+        <ul>
+          <li><a href="https://github.com/Bryforge/Latticra/blob/main/README.md">README</a></li>
+          <li><a href="https://github.com/Bryforge/Latticra/blob/main/STATUS.md">Status</a></li>
+          <li><a href="https://github.com/Bryforge/Latticra/blob/main/docs/FOUNDATION_INDEX.md">Foundation index</a></li>
+          <li><a href="https://github.com/Bryforge/Latticra/blob/main/docs/status/CURRENT_STATUS.md">Current status</a></li>
+          <li><a href="https://github.com/Bryforge/Latticra/blob/main/docs/strategy/README.md">Strategy</a></li>
+          <li><a href="https://github.com/Bryforge/Latticra/blob/main/SECURITY.md">Security</a></li>
+        </ul>
 
-    <section id="evidence" class="section-block">
-      <h2>Evidence posture</h2>
-      <p class="section-copy">
-        The repository distinguishes between what exists, what is being planned, and what is explicitly not claimed.
-        This distinction is central to the project’s credibility.
-      </p>
-      <div class="evidence-list">
-        <article>
-          <h3><span class="status yes">present</span> Foundation documents and public identity</h3>
-          <p>Status records, strategy records, security policy, and documentation entry points exist in the repository.</p>
-        </article>
-        <article>
-          <h3><span class="status yes">present</span> Deterministic validation and report surfaces</h3>
-          <p>Current work emphasizes shell guards, C invariant tests, metadata records, and operator-visible reports.</p>
-        </article>
-        <article>
-          <h3><span class="status guarded">guarded</span> Fedora/Linux integration</h3>
-          <p>The supported statement is narrow: disposable Fedora VM local RPM validation for a documentation-only local RPM.</p>
-        </article>
-        <article>
-          <h3><span class="status no">not claimed</span> Production runtime or OS replacement</h3>
-          <p>Latticra does not currently claim active runtime enforcement, Fedora distribution readiness, certification, or operating-system replacement.</p>
-        </article>
-      </div>
-    </section>
+        <h2>Source</h2>
+        <ul>
+          <li><a href="https://github.com/Bryforge/Latticra">GitHub repository</a></li>
+          <li><a href="https://github.com/Bryforge/Latticra/tree/main/docs">Documentation tree</a></li>
+          <li><a href="https://github.com/Bryforge/Latticra/tree/main/scripts">Validation scripts</a></li>
+        </ul>
 
-    <section id="seal" class="section-block">
-      <h2>Latticra Seal</h2>
-      <p class="section-copy">
-        Latticra Seal is the project’s tool-boundary planning structure for AI-era automation and MCP-style tool invocation analysis.
-        Its present value is clarity: it records what would be denied, why it would be denied, and what evidence supports that boundary decision.
-      </p>
-      <ul class="compact-list">
-        <li><span class="term term-seal">Unknown tool</span>, <span class="term term-seal">unsigned request</span>, <span class="term term-seal">stale request</span>, and <span class="term term-seal">replayed request</span> cases are treated as blocked cases.</li>
-        <li>The runtime dry-run lane remains <span class="term term-report">report-only</span> and <span class="term term-boundary">no-effect</span>.</li>
-        <li>Guarded allowlist records improve classification, but do not grant authority or execute tools.</li>
-      </ul>
-    </section>
+        <h2>Subprojects</h2>
+        <ul>
+          <li><a href="#lat">Lat</a></li>
+          <li><a href="#lir">LIR</a></li>
+          <li><a href="#seal">Latticra Seal</a></li>
+          <li><a href="#fedora">Fedora/Linux lane</a></li>
+        </ul>
+      </td>
 
-    <section id="resources" class="section-block">
-      <h2>Resources</h2>
-      <p class="section-copy">Start with the primary records below. They are the best sources for understanding the project’s current state and limits.</p>
-      <div class="resource-grid">
-        <a href="https://github.com/Bryforge/Latticra/blob/main/README.md"><strong>Root README</strong><span>General project overview and public entry point.</span></a>
-        <a href="https://github.com/Bryforge/Latticra/blob/main/STATUS.md"><strong>Status</strong><span>Current high-level project status.</span></a>
-        <a href="https://github.com/Bryforge/Latticra/blob/main/docs/status/CURRENT_STATUS.md"><strong>Current Status</strong><span>Detailed current-state record.</span></a>
-        <a href="https://github.com/Bryforge/Latticra/blob/main/docs/FOUNDATION_INDEX.md"><strong>Foundation Index</strong><span>Index of foundation documents and contracts.</span></a>
-        <a href="https://github.com/Bryforge/Latticra/blob/main/docs/strategy/README.md"><strong>Strategy</strong><span>Planning and strategy entry point.</span></a>
-        <a href="https://github.com/Bryforge/Latticra/blob/main/SECURITY.md"><strong>Security</strong><span>Security policy, safe testing, and non-claims.</span></a>
-        <a href="https://github.com/Bryforge/Latticra/blob/main/docs/LATTICRA_SEAL_MCP_ALIGNMENT_PLAN.md"><strong>Seal MCP Alignment</strong><span>Tool-boundary planning direction.</span></a>
-        <a href="https://github.com/Bryforge/Latticra/blob/main/docs/C_CPP_FOUNDATION_DIRECTION.md"><strong>C/C++ Foundation</strong><span>Substrate and constrained authority direction.</span></a>
-      </div>
-    </section>
-  </main>
+      <td class="maincol">
+        <section id="about">
+          <h2>About Latticra</h2>
+          <p>
+            Latticra is an early-stage, evidence-bound systems architecture project. It studies how system requests,
+            identities, capabilities, policies, boundaries, and evidence records can be made explicit before authority is
+            granted or effects are performed.
+          </p>
+          <p>
+            The work currently centers on <span class="contract">contracts</span>, <span class="boundary">boundaries</span>,
+            <span class="evidence">evidence</span>, <span class="report">reports</span>, language metadata, and validation
+            records. The project is research and foundational engineering, not a production platform.
+          </p>
+        </section>
 
-  <footer class="site-footer">
-    <span>Latticra documentation site.</span>
-    <span>Built to keep claims small, inspectable, and evidence-bound.</span>
+        <section id="goals">
+          <h2>Project goals</h2>
+          <ul>
+            <li>Keep authority explicit, bounded, and reviewable.</li>
+            <li>Prefer deterministic validation and report surfaces before runtime behavior.</li>
+            <li>Separate present evidence from future architectural direction.</li>
+            <li>Use Fedora/Linux as a narrow validation lane without claiming distribution readiness.</li>
+            <li>Build language and intermediate-representation records before execution.</li>
+          </ul>
+        </section>
+
+        <section id="architecture">
+          <h2>Architecture map</h2>
+          <table class="data">
+            <tr>
+              <th>Layer</th>
+              <th>Role</th>
+              <th>Current state</th>
+            </tr>
+            <tr id="lat">
+              <td><span class="lat">Lat</span></td>
+              <td>Contract and declaration language direction.</td>
+              <td>Parser, validation, diagnostics, and metadata lowering records.</td>
+            </tr>
+            <tr id="lir">
+              <td><span class="lir">LIR</span></td>
+              <td>Bounded intermediate representation and graph-shape metadata.</td>
+              <td>Metadata reporting, not execution.</td>
+            </tr>
+            <tr>
+              <td><span class="lui">L-UI</span></td>
+              <td>Operator-visible declaration and report surface.</td>
+              <td>Report direction and validation records.</td>
+            </tr>
+            <tr>
+              <td><span class="nucleus">Nucleus</span></td>
+              <td>Coordination, task records, classification, and task-boundary reports.</td>
+              <td>Report-only task-boundary modeling.</td>
+            </tr>
+            <tr>
+              <td><span class="boundary">Runtime Boundary</span></td>
+              <td>Classification line before operational behavior.</td>
+              <td>Disabled-by-default boundary classification.</td>
+            </tr>
+            <tr id="seal">
+              <td><span class="seal">Latticra Seal</span></td>
+              <td>Trust-boundary, request-boundary, policy-boundary, and tool-boundary planning.</td>
+              <td>Report-only AI/tool boundary records.</td>
+            </tr>
+            <tr id="fedora">
+              <td><span class="fedora">Fedora/Linux</span></td>
+              <td>Current host-facing validation lane.</td>
+              <td>Narrow validation evidence, not Fedora approval or production readiness.</td>
+            </tr>
+          </table>
+        </section>
+
+        <section id="evidence">
+          <h2>Evidence posture</h2>
+          <p>
+            Latticra treats evidence as part of the architecture. A feature is not promoted in public language until a
+            document, script, invariant test, or transcript supports the claim.
+          </p>
+          <pre>public_project_identity=1
+foundation_documents_and_contracts=1
+deterministic_shell_guards=1
+c_invariant_tests=1
+lat_parse_validate_lower_pipeline_present=1
+runtime_boundary_report_classification_present=1
+production_runtime_present=0</pre>
+        </section>
+
+        <section id="seal-summary">
+          <h2>Latticra Seal</h2>
+          <p>
+            Latticra Seal records tool-boundary decisions for AI-era automation and MCP-style tool invocation planning.
+            It is currently <span class="report">report-only</span> and <span class="boundary">no-effect</span>.
+          </p>
+          <p>
+            Unknown tools, unsigned requests, stale requests, and replayed requests are modeled as blocked cases. Guarded
+            allowlist records improve classification only; they do not grant authority or execute tools.
+          </p>
+        </section>
+
+        <section id="validation">
+          <h2>Validation examples</h2>
+          <p>Representative local checks in the repository include:</p>
+          <pre>sh scripts/test-lat-pipeline.sh
+sh scripts/test-runtime-boundary.sh
+sh scripts/test-nucleus-task-execution.sh
+sh scripts/test-l-ui-rendering.sh
+sh scripts/test-latticra-seal-runtime-dry-run.sh</pre>
+        </section>
+
+        <section id="resources">
+          <h2>Primary resources</h2>
+          <table class="data resources">
+            <tr>
+              <th>Record</th>
+              <th>Purpose</th>
+            </tr>
+            <tr>
+              <td><a href="https://github.com/Bryforge/Latticra/blob/main/STATUS.md">STATUS.md</a></td>
+              <td>High-level current project state.</td>
+            </tr>
+            <tr>
+              <td><a href="https://github.com/Bryforge/Latticra/blob/main/docs/status/CURRENT_STATUS.md">CURRENT_STATUS.md</a></td>
+              <td>Detailed status record and claim vocabulary.</td>
+            </tr>
+            <tr>
+              <td><a href="https://github.com/Bryforge/Latticra/blob/main/docs/FOUNDATION_INDEX.md">FOUNDATION_INDEX.md</a></td>
+              <td>Index for foundation documents and contracts.</td>
+            </tr>
+            <tr>
+              <td><a href="https://github.com/Bryforge/Latticra/blob/main/docs/LATTICRA_SEAL_MCP_ALIGNMENT_PLAN.md">Seal MCP alignment plan</a></td>
+              <td>AI/tool-boundary planning direction.</td>
+            </tr>
+            <tr>
+              <td><a href="https://github.com/Bryforge/Latticra/blob/main/docs/C_CPP_FOUNDATION_DIRECTION.md">C/C++ foundation direction</a></td>
+              <td>Substrate and constrained authority-layer direction.</td>
+            </tr>
+          </table>
+        </section>
+
+        <section id="nonclaims">
+          <h2>Non-claims</h2>
+          <p>
+            Latticra does not currently claim to be a kernel, bootable operating system, production runtime, certified
+            product, Fedora distribution package, sandbox, malware prevention system, or production AI-agent security
+            product.
+          </p>
+        </section>
+      </td>
+    </tr>
+  </table>
+
+  <hr>
+
+  <footer>
+    <p>Latticra documentation. Source and records are maintained in the public repository.</p>
   </footer>
 </body>
 </html>
