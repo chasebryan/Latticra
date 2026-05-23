@@ -1,5 +1,15 @@
 # Latticra
 
+<p align="center">
+  <a href="https://bryforge.github.io/Latticra/"><strong>🌐 Latticra Website</strong></a>
+  ·
+  <a href="STATUS.md">Status</a>
+  ·
+  <a href="docs/FOUNDATION_INDEX.md">Foundation Index</a>
+  ·
+  <a href="docs/status/CURRENT_STATUS.md">Current Status</a>
+</p>
+
 Status: early-stage, evidence-bound systems architecture repository.
 
 ## Motto
