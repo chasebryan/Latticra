@@ -12,17 +12,26 @@ pub enum InstallProfile {
 
 impl Default for InstallProfile {
     fn default() -> Self {
-        Self::SealReportOnly
+        Self::DeveloperLocal
     }
 }
 
 impl InstallProfile {
     pub fn label(self) -> &'static str {
         match self {
-            Self::DeveloperLocal => "Developer Local",
+            Self::DeveloperLocal => "Guided Workbench",
             Self::SealReportOnly => "Seal Report-Only",
             Self::FedoraValidationVm => "Fedora Validation VM",
             Self::Custom => "Custom",
+        }
+    }
+
+    pub fn detail(self) -> &'static str {
+        match self {
+            Self::DeveloperLocal => "Safe first-run profile with Lat, LIR, Seal, docs, and helper commands enabled under dry-run authority.",
+            Self::SealReportOnly => "Minimal report-only Seal layout for users who only want receipts, reports, and documentation.",
+            Self::FedoraValidationVm => "Fedora/Linux validation workspace for VM testing and host-facing evidence capture.",
+            Self::Custom => "Manual operator profile. Use after the guided profiles make sense.",
         }
     }
 
@@ -31,6 +40,54 @@ impl InstallProfile {
             Self::DeveloperLocal,
             Self::SealReportOnly,
             Self::FedoraValidationVm,
+            Self::Custom,
+        ]
+    }
+}
+
+#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum SealCryptoProfile {
+    ReportOnly,
+    Blake2bEd25519,
+    XChaCha20Poly1305,
+    HybridSeal,
+    Custom,
+}
+
+impl Default for SealCryptoProfile {
+    fn default() -> Self {
+        Self::Blake2bEd25519
+    }
+}
+
+impl SealCryptoProfile {
+    pub fn label(self) -> &'static str {
+        match self {
+            Self::ReportOnly => "Report-only / no key authority",
+            Self::Blake2bEd25519 => "BLAKE2b + Ed25519",
+            Self::XChaCha20Poly1305 => "XChaCha20-Poly1305",
+            Self::HybridSeal => "Hybrid Seal profile",
+            Self::Custom => "Custom Seal profile",
+        }
+    }
+
+    pub fn detail(self) -> &'static str {
+        match self {
+            Self::ReportOnly => "Metadata-only Seal reports. No signing, encryption, key generation, or key storage is requested.",
+            Self::Blake2bEd25519 => "Default evidence-oriented profile for hashing and future signature requests without enabling private-key authority.",
+            Self::XChaCha20Poly1305 => "Authenticated-encryption profile for future sealed payload experiments. Kept report-only by default here.",
+            Self::HybridSeal => "Combined hash, signature, envelope, and AEAD planning profile for advanced Latticra Seal work.",
+            Self::Custom => "Manual profile fields are authoritative. Use only when the operator understands the selected algorithms.",
+        }
+    }
+
+    pub fn all() -> [SealCryptoProfile; 5] {
+        [
+            Self::ReportOnly,
+            Self::Blake2bEd25519,
+            Self::XChaCha20Poly1305,
+            Self::HybridSeal,
             Self::Custom,
         ]
     }
@@ -50,7 +107,7 @@ pub struct Components {
 impl Default for Components {
     fn default() -> Self {
         Self {
-            lat_tooling: false,
+            lat_tooling: true,
             lir_contracts: true,
             seal_report_only: true,
             fedora_validation: false,
@@ -118,12 +175,87 @@ impl Default for InstallBehavior {
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(default)]
+pub struct SealConfig {
+    pub crypto_profile: SealCryptoProfile,
+    pub hash_profile: String,
+    pub signature_profile: String,
+    pub encryption_profile: String,
+    pub envelope_profile: String,
+    pub key_storage_profile: String,
+    pub report_only: bool,
+    pub require_signed_manifest: bool,
+    pub write_seal_report: bool,
+}
+
+impl Default for SealConfig {
+    fn default() -> Self {
+        Self {
+            crypto_profile: SealCryptoProfile::default(),
+            hash_profile: "blake2b-256".to_owned(),
+            signature_profile: "ed25519-request-only".to_owned(),
+            encryption_profile: "xchacha20-poly1305-planned".to_owned(),
+            envelope_profile: "sealed-report-envelope".to_owned(),
+            key_storage_profile: "none-report-only".to_owned(),
+            report_only: true,
+            require_signed_manifest: false,
+            write_seal_report: true,
+        }
+    }
+}
+
+impl SealConfig {
+    pub fn apply_crypto_profile_defaults(&mut self) {
+        match self.crypto_profile {
+            SealCryptoProfile::ReportOnly => {
+                self.hash_profile = "metadata-digest-only".to_owned();
+                self.signature_profile = "none".to_owned();
+                self.encryption_profile = "none".to_owned();
+                self.envelope_profile = "report-only-envelope".to_owned();
+                self.key_storage_profile = "none-report-only".to_owned();
+                self.report_only = true;
+                self.require_signed_manifest = false;
+            }
+            SealCryptoProfile::Blake2bEd25519 => {
+                self.hash_profile = "blake2b-256".to_owned();
+                self.signature_profile = "ed25519-request-only".to_owned();
+                self.encryption_profile = "none".to_owned();
+                self.envelope_profile = "signed-manifest-ready-envelope".to_owned();
+                self.key_storage_profile = "none-report-only".to_owned();
+                self.report_only = true;
+                self.require_signed_manifest = false;
+            }
+            SealCryptoProfile::XChaCha20Poly1305 => {
+                self.hash_profile = "blake2b-256".to_owned();
+                self.signature_profile = "none".to_owned();
+                self.encryption_profile = "xchacha20-poly1305-planned".to_owned();
+                self.envelope_profile = "sealed-payload-planning-envelope".to_owned();
+                self.key_storage_profile = "none-report-only".to_owned();
+                self.report_only = true;
+                self.require_signed_manifest = false;
+            }
+            SealCryptoProfile::HybridSeal => {
+                self.hash_profile = "blake2b-256".to_owned();
+                self.signature_profile = "ed25519-request-only".to_owned();
+                self.encryption_profile = "xchacha20-poly1305-planned".to_owned();
+                self.envelope_profile = "hybrid-seal-planning-envelope".to_owned();
+                self.key_storage_profile = "operator-managed-future".to_owned();
+                self.report_only = true;
+                self.require_signed_manifest = true;
+            }
+            SealCryptoProfile::Custom => {}
+        }
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(default)]
 pub struct InstallerConfig {
     pub profile: InstallProfile,
     pub install_prefix: String,
     pub components: Components,
     pub safety: Safety,
     pub behavior: InstallBehavior,
+    pub seal: SealConfig,
 }
 
 impl Default for InstallerConfig {
@@ -134,6 +266,7 @@ impl Default for InstallerConfig {
             components: Components::default(),
             safety: Safety::default(),
             behavior: InstallBehavior::default(),
+            seal: SealConfig::default(),
         }
     }
 }
@@ -143,8 +276,16 @@ impl InstallerConfig {
         match self.profile {
             InstallProfile::DeveloperLocal => {
                 self.install_prefix = "~/.local/share/latticra".to_owned();
+                self.components = Components::default();
+                self.safety.dry_run = true;
+                self.safety.allow_host_mutation = false;
+                self.safety.allow_network_effect = false;
+                self.seal = SealConfig::default();
+            }
+            InstallProfile::SealReportOnly => {
+                self.install_prefix = "~/.local/share/latticra".to_owned();
                 self.components = Components {
-                    lat_tooling: true,
+                    lat_tooling: false,
                     lir_contracts: true,
                     seal_report_only: true,
                     fedora_validation: false,
@@ -154,13 +295,8 @@ impl InstallerConfig {
                 self.safety.dry_run = true;
                 self.safety.allow_host_mutation = false;
                 self.safety.allow_network_effect = false;
-            }
-            InstallProfile::SealReportOnly => {
-                self.install_prefix = "~/.local/share/latticra".to_owned();
-                self.components = Components::default();
-                self.safety.dry_run = true;
-                self.safety.allow_host_mutation = false;
-                self.safety.allow_network_effect = false;
+                self.seal.crypto_profile = SealCryptoProfile::ReportOnly;
+                self.seal.apply_crypto_profile_defaults();
             }
             InstallProfile::FedoraValidationVm => {
                 self.install_prefix = "~/.local/share/latticra-validation".to_owned();
@@ -175,6 +311,8 @@ impl InstallerConfig {
                 self.safety.dry_run = true;
                 self.safety.allow_host_mutation = false;
                 self.safety.allow_network_effect = false;
+                self.seal.crypto_profile = SealCryptoProfile::Blake2bEd25519;
+                self.seal.apply_crypto_profile_defaults();
             }
             InstallProfile::Custom => {}
         }
@@ -258,6 +396,25 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "developer_cli_helpers={}",
         config.components.developer_cli_helpers
     );
+    let _ = writeln!(out);
+    let _ = writeln!(out, "[seal]");
+    let _ = writeln!(out, "crypto_profile={}", config.seal.crypto_profile.label());
+    let _ = writeln!(out, "hash_profile={}", config.seal.hash_profile);
+    let _ = writeln!(out, "signature_profile={}", config.seal.signature_profile);
+    let _ = writeln!(out, "encryption_profile={}", config.seal.encryption_profile);
+    let _ = writeln!(out, "envelope_profile={}", config.seal.envelope_profile);
+    let _ = writeln!(
+        out,
+        "key_storage_profile={}",
+        config.seal.key_storage_profile
+    );
+    let _ = writeln!(out, "report_only={}", config.seal.report_only);
+    let _ = writeln!(
+        out,
+        "require_signed_manifest={}",
+        config.seal.require_signed_manifest
+    );
+    let _ = writeln!(out, "write_seal_report={}", config.seal.write_seal_report);
     let _ = writeln!(out);
     let _ = writeln!(out, "[safety]");
     let _ = writeln!(out, "dry_run={}", config.safety.dry_run);

@@ -1,5 +1,5 @@
 .RECIPEPREFIX := >
-.PHONY: help gui panel terminal tui build-gui build-panel dry-run local-example install-local verify-local uninstall-local fmt tree clean refresh-desktop
+.PHONY: help gui panel build-gui build-panel dry-run local-example install-local verify-local uninstall-local fmt tree clean refresh-desktop
 
 INSTALLER_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 GUI_DIR := $(INSTALLER_DIR)latticra-installer
@@ -11,10 +11,8 @@ RECEIPTS := $(INSTALLER_DIR)latticra-installer-receipts
 help:
 >@printf "%s\n" \
 >  "Latticra Panel commands:" \
->  "  make -C installer gui             Run Latticra Panel GUI from source" \
+>  "  make -C installer gui             Run Latticra Panel from source" \
 >  "  make -C installer panel           Same as gui" \
->  "  make -C installer terminal        Run terminal configuration panel from source" \
->  "  make -C installer tui             Same as terminal" \
 >  "  make -C installer build-gui       Build Latticra Panel release binary" \
 >  "  make -C installer build-panel     Same as build-gui" \
 >  "  make -C installer dry-run         Run guarded dry-install through the real engine" \
@@ -29,9 +27,6 @@ help:
 
 gui panel:
 >cd "$(GUI_DIR)" && LATTICRA_INSTALLER_ROOT="$(INSTALLER_DIR)" cargo run
-
-terminal tui:
->cd "$(GUI_DIR)" && LATTICRA_INSTALLER_ROOT="$(INSTALLER_DIR)" cargo run -- --terminal
 
 build-gui build-panel:
 >cd "$(GUI_DIR)" && cargo build --release

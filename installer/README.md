@@ -1,6 +1,8 @@
 # Latticra Panel
 
-Graphical and terminal installer/control panel for Latticra, Lat, LIR, and Latticra Seal.
+Graphical installer and first-run control panel for Latticra, Lat, LIR, and Latticra Seal.
+
+The panel is designed as the main first impression for Latticra. It opens as a maximized, resizable GUI workbench with guided defaults, visible authority boundaries, component configuration, delivery controls, plan/evidence review, and an embedded Latticra Console for panel-aware commands.
 
 ## Prerequisites
 
@@ -18,23 +20,44 @@ User-local command path:
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
-## Run the GUI from source
+## Run from source
 
 ```sh
 make -C installer gui
-```
-
-## Run the terminal panel from source
-
-```sh
-make -C installer terminal
 ```
 
 Equivalent direct command:
 
 ```sh
 cd installer/latticra-installer
-LATTICRA_INSTALLER_ROOT="$PWD/.." cargo run -- --terminal
+LATTICRA_INSTALLER_ROOT="$PWD/.." cargo run
+```
+
+## First-run flow
+
+1. Open **Guided Workbench**.
+2. Keep dry-run mode enabled.
+3. Generate and inspect the plan.
+4. Run Dry-Install to validate and write a receipt.
+5. Review the embedded console, plan, and engine log.
+6. Enable guarded local-prefix writes only after the dry-run evidence looks correct.
+
+## Embedded Latticra Console
+
+The console in the upper-right of the panel is not an unrestricted shell. It is a panel-aware operator console for common actions:
+
+```text
+help
+status
+plan
+save
+dry-run
+profile guided
+profile seal
+profile fedora
+mode dry
+mode local
+clear
 ```
 
 ## Dry-run
@@ -59,12 +82,6 @@ make -C installer verify-local
 
 ```sh
 latticra-panel
-```
-
-For the terminal configuration panel:
-
-```sh
-latticra-panel --terminal
 ```
 
 Or from the desktop app grid, open **Latticra Panel**.
