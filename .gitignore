@@ -28,3 +28,6 @@
 *.out
 latticra_substrate_engine
 latticra_theorem_engine
+
+# Local build outputs
+/build/
