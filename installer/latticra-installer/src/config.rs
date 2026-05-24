@@ -12,17 +12,26 @@ pub enum InstallProfile {
 
 impl Default for InstallProfile {
     fn default() -> Self {
-        Self::SealReportOnly
+        Self::DeveloperLocal
     }
 }
 
 impl InstallProfile {
     pub fn label(self) -> &'static str {
         match self {
-            Self::DeveloperLocal => "Developer Local",
+            Self::DeveloperLocal => "Guided Workbench",
             Self::SealReportOnly => "Seal Report-Only",
             Self::FedoraValidationVm => "Fedora Validation VM",
             Self::Custom => "Custom",
+        }
+    }
+
+    pub fn detail(self) -> &'static str {
+        match self {
+            Self::DeveloperLocal => "Safe first-run profile with Lat, LIR, Seal, docs, and helper commands enabled under dry-run authority.",
+            Self::SealReportOnly => "Minimal report-only Seal layout for users who only want receipts, reports, and documentation.",
+            Self::FedoraValidationVm => "Fedora/Linux validation workspace for VM testing and host-facing evidence capture.",
+            Self::Custom => "Manual operator profile. Use after the guided profiles make sense.",
         }
     }
 
@@ -50,7 +59,7 @@ pub struct Components {
 impl Default for Components {
     fn default() -> Self {
         Self {
-            lat_tooling: false,
+            lat_tooling: true,
             lir_contracts: true,
             seal_report_only: true,
             fedora_validation: false,
@@ -143,21 +152,21 @@ impl InstallerConfig {
         match self.profile {
             InstallProfile::DeveloperLocal => {
                 self.install_prefix = "~/.local/share/latticra".to_owned();
-                self.components = Components {
-                    lat_tooling: true,
-                    lir_contracts: true,
-                    seal_report_only: true,
-                    fedora_validation: false,
-                    docs_and_examples: true,
-                    developer_cli_helpers: true,
-                };
+                self.components = Components::default();
                 self.safety.dry_run = true;
                 self.safety.allow_host_mutation = false;
                 self.safety.allow_network_effect = false;
             }
             InstallProfile::SealReportOnly => {
                 self.install_prefix = "~/.local/share/latticra".to_owned();
-                self.components = Components::default();
+                self.components = Components {
+                    lat_tooling: false,
+                    lir_contracts: true,
+                    seal_report_only: true,
+                    fedora_validation: false,
+                    docs_and_examples: true,
+                    developer_cli_helpers: true,
+                };
                 self.safety.dry_run = true;
                 self.safety.allow_host_mutation = false;
                 self.safety.allow_network_effect = false;
