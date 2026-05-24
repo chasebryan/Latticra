@@ -22,12 +22,15 @@ require_contains() {
 alignment='docs/status/LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md'
 evidence='docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md'
 readme='README.md'
+installer_readme='installer/README.md'
 
 require_file "$alignment"
 require_file "$evidence"
 require_file "$readme"
-require_file installer/README.md
+require_file "$installer_readme"
+require_file installer/latticra-installer/src/ui.rs
 require_file scripts/test-latticra-panel-local-install-evidence-status.sh
+require_file scripts/check_latticra_panel_ui_design.py
 
 require_contains 'Status: public entrypoint alignment' "$alignment"
 require_contains 'Date: 2026-05-22' "$alignment"
@@ -60,10 +63,16 @@ require_contains '/usr/lib/modules' "$alignment"
 require_contains '/boot/latticra' "$alignment"
 require_contains 'Add status-index integration for Latticra Panel local-install evidence and public-entrypoint alignment' "$alignment"
 
-require_contains 'Latticra Panel is the graphical local installer and control panel for Latticra, Lat, LIR, and Latticra Seal.' "$readme"
+require_contains 'Latticra Panel is the GUI-first local installer and first-run control workbench for Latticra, Lat, LIR, and Latticra Seal.' "$readme"
 require_contains 'make -C installer local-example' "$readme"
 require_contains 'make -C installer verify-local' "$readme"
-require_contains 'This installer is user-local only. It does not use root, modify the kernel, modify systemd, change SELinux, or use network authority.' "$readme"
+require_contains 'It is intentionally user-local. It does not use root authority, kernel mutation, systemd mutation, SELinux mutation, or network authority.' "$readme"
+
+require_contains 'Graphical installer and first-run control panel for Latticra, Lat, LIR, and Latticra Seal.' "$installer_readme"
+require_contains 'The console in the upper-right of the panel is not an unrestricted shell.' "$installer_readme"
+require_contains 'no root' "$installer_readme"
+require_contains 'no network authority' "$installer_readme"
+require_contains 'user-local prefix only' "$installer_readme"
 
 require_contains 'Status: evidence status alignment' "$evidence"
 require_contains 'latticra_panel_user_local_install_verified=1' "$evidence"
