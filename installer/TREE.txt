@@ -25,4 +25,5 @@ installer/
     src/main.rs
     src/config.rs
     src/engine.rs
+    src/tui.rs
     src/ui.rs
