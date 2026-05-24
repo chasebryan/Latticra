@@ -29,6 +29,9 @@ checks = [
     (ui, '.with_inner_size([1600.0, 960.0])', 'window size'),
     (ui, '.with_min_inner_size([1100.0, 720.0])', 'minimum window size'),
     (ui, '.with_maximized(true)', 'maximized launch'),
+    (ui, 'fn deny_console_command(&mut self, command: &str)', 'console boundary function'),
+    (ui, 'Panel commands and local navigation only.', 'console boundary label'),
+    (ui, 'command outside panel allowlist', 'console blocked-message surface'),
     (readme, '## Embedded Latticra Console', 'README console section'),
     (readme, '## Safety baseline', 'README safety section'),
 ]
