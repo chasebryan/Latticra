@@ -9,16 +9,9 @@
 /latticra-installer-v*-*/
 /latticra-panel-v*-*/
 /apply-latticra-panel-app-image.sh
-
 # Latticra installer patch/generated files
 /installer/.patch-backups/
 /installer/latticra-installer-config.toml
-/installer/latticra-installer-plan.txt
-/installer/latticra-installer-receipts/
-/installer/latticra-installer/target/
-/installer/latticra-installer/latticra-installer-config.toml
-/installer/latticra-installer/latticra-installer-plan.txt
-
 # Latticra visual engine outputs
 *.mp4
 *.mov
@@ -28,6 +21,8 @@
 *.out
 latticra_substrate_engine
 latticra_theorem_engine
-
 # Local build outputs
 /build/
+latticra_nuclear_recursion_engine
+latticra-nuclear-recursion-engine.mp4
+# Nuclear recursion visual engine outputs
