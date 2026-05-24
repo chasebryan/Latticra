@@ -10,6 +10,12 @@ pub enum InstallProfile {
     Custom,
 }
 
+impl Default for InstallProfile {
+    fn default() -> Self {
+        Self::SealReportOnly
+    }
+}
+
 impl InstallProfile {
     pub fn label(self) -> &'static str {
         match self {
@@ -31,6 +37,7 @@ impl InstallProfile {
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(default)]
 pub struct Components {
     pub lat_tooling: bool,
     pub lir_contracts: bool,
@@ -40,7 +47,21 @@ pub struct Components {
     pub developer_cli_helpers: bool,
 }
 
+impl Default for Components {
+    fn default() -> Self {
+        Self {
+            lat_tooling: false,
+            lir_contracts: true,
+            seal_report_only: true,
+            fedora_validation: false,
+            docs_and_examples: true,
+            developer_cli_helpers: true,
+        }
+    }
+}
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(default)]
 pub struct Safety {
     pub dry_run: bool,
     pub allow_host_mutation: bool,
@@ -51,15 +72,52 @@ pub struct Safety {
     pub write_operator_receipt: bool,
 }
 
+impl Default for Safety {
+    fn default() -> Self {
+        Self {
+            dry_run: true,
+            allow_host_mutation: false,
+            allow_network_effect: false,
+            require_component_manifest: true,
+            require_artifact_measurements: true,
+            require_verification_policy_metadata: true,
+            write_operator_receipt: true,
+        }
+    }
+}
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(default)]
 pub struct InstallBehavior {
     pub create_prefix_layout: bool,
     pub create_component_markers: bool,
     pub create_cli_shims: bool,
     pub preserve_existing_files: bool,
+    pub build_gui_installer: bool,
+    pub build_latticra_from_source: bool,
+    pub install_payload_tree: bool,
+    pub install_desktop_entry: bool,
+    pub install_user_bin_wrappers: bool,
+}
+
+impl Default for InstallBehavior {
+    fn default() -> Self {
+        Self {
+            create_prefix_layout: true,
+            create_component_markers: true,
+            create_cli_shims: true,
+            preserve_existing_files: true,
+            build_gui_installer: true,
+            build_latticra_from_source: true,
+            install_payload_tree: true,
+            install_desktop_entry: true,
+            install_user_bin_wrappers: true,
+        }
+    }
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(default)]
 pub struct InstallerConfig {
     pub profile: InstallProfile,
     pub install_prefix: String,
@@ -71,31 +129,11 @@ pub struct InstallerConfig {
 impl Default for InstallerConfig {
     fn default() -> Self {
         Self {
-            profile: InstallProfile::SealReportOnly,
+            profile: InstallProfile::default(),
             install_prefix: "~/.local/share/latticra".to_owned(),
-            components: Components {
-                lat_tooling: false,
-                lir_contracts: true,
-                seal_report_only: true,
-                fedora_validation: false,
-                docs_and_examples: true,
-                developer_cli_helpers: true,
-            },
-            safety: Safety {
-                dry_run: true,
-                allow_host_mutation: false,
-                allow_network_effect: false,
-                require_component_manifest: true,
-                require_artifact_measurements: true,
-                require_verification_policy_metadata: true,
-                write_operator_receipt: true,
-            },
-            behavior: InstallBehavior {
-                create_prefix_layout: true,
-                create_component_markers: true,
-                create_cli_shims: true,
-                preserve_existing_files: true,
-            },
+            components: Components::default(),
+            safety: Safety::default(),
+            behavior: InstallBehavior::default(),
         }
     }
 }
@@ -119,14 +157,7 @@ impl InstallerConfig {
             }
             InstallProfile::SealReportOnly => {
                 self.install_prefix = "~/.local/share/latticra".to_owned();
-                self.components = Components {
-                    lat_tooling: false,
-                    lir_contracts: true,
-                    seal_report_only: true,
-                    fedora_validation: false,
-                    docs_and_examples: true,
-                    developer_cli_helpers: true,
-                };
+                self.components = Components::default();
                 self.safety.dry_run = true;
                 self.safety.allow_host_mutation = false;
                 self.safety.allow_network_effect = false;
@@ -148,12 +179,7 @@ impl InstallerConfig {
             InstallProfile::Custom => {}
         }
 
-        self.behavior = InstallBehavior {
-            create_prefix_layout: true,
-            create_component_markers: true,
-            create_cli_shims: true,
-            preserve_existing_files: true,
-        };
+        self.behavior = InstallBehavior::default();
     }
 
     pub fn execution_mode_label(&self) -> &'static str {
@@ -170,11 +196,16 @@ impl InstallerConfig {
         }
 
         if !self.safety.allow_host_mutation {
-            return Err("Real install requires allow_host_mutation=true. Keep dry-run enabled or explicitly authorize a guarded local-prefix install.".to_owned());
+            return Err(
+                "Real install requires allow_host_mutation=true. Keep dry-run enabled or explicitly authorize a guarded local-prefix install.".to_owned(),
+            );
         }
 
         if self.safety.allow_network_effect {
-            return Err("Network authority is not implemented in this installer. Disable allow_network_effect.".to_owned());
+            return Err(
+                "Network authority is not implemented in this installer. Disable allow_network_effect."
+                    .to_owned(),
+            );
         }
 
         Ok(())
@@ -278,19 +309,44 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "preserve_existing_files={}",
         config.behavior.preserve_existing_files
     );
+    let _ = writeln!(
+        out,
+        "build_gui_installer={}",
+        config.behavior.build_gui_installer
+    );
+    let _ = writeln!(
+        out,
+        "build_latticra_from_source={}",
+        config.behavior.build_latticra_from_source
+    );
+    let _ = writeln!(
+        out,
+        "install_payload_tree={}",
+        config.behavior.install_payload_tree
+    );
+    let _ = writeln!(
+        out,
+        "install_desktop_entry={}",
+        config.behavior.install_desktop_entry
+    );
+    let _ = writeln!(
+        out,
+        "install_user_bin_wrappers={}",
+        config.behavior.install_user_bin_wrappers
+    );
     let _ = writeln!(out);
     let _ = writeln!(out, "[next_action]");
     if config.safety.dry_run {
         let _ = writeln!(out, "result=execute-dry-install");
         let _ = writeln!(
             out,
-            "message=Press Run Dry-Install to validate and write a dry-install receipt."
+            "message=Run Dry-Install to validate and write a dry-install receipt."
         );
     } else if config.safety.allow_host_mutation {
         let _ = writeln!(out, "result=execute-local-prefix-install");
         let _ = writeln!(
             out,
-            "message=Press Install to write the guarded user-local prefix layout."
+            "message=Run Install to write the guarded user-local prefix layout."
         );
     } else {
         let _ = writeln!(out, "result=blocked");
