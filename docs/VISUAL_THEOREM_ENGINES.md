@@ -6,7 +6,7 @@ These engines are not ordinary animations. They are visual field demonstrations 
 
 ## Engines
 
-### substrate-engine/
+### latt-field-engines/substrate-engine/
 
 The figure-free Latticra Substrate Engine.
 
@@ -21,7 +21,7 @@ This version removes the human-like center figure and focuses entirely on the fi
 - Quantum deceleration
 - Cosmic regenesis
 
-### visual-theorem-engine/
+### latt-field-engines/visual-theorem-engine/
 
 The original cinematic theorem engine.
 
