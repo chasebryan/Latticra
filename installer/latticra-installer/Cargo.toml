@@ -2,7 +2,7 @@
 name = "latticra-panel"
 version = "0.2.0"
 edition = "2021"
-description = "Latticra Panel graphical installer and control panel"
+description = "Latticra Panel graphical and terminal installer/control panel"
 license = "MIT OR Apache-2.0"
 
 [dependencies]

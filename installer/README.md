@@ -1,6 +1,6 @@
 # Latticra Panel
 
-Graphical installer and control panel for Latticra, Lat, LIR, and Latticra Seal.
+Graphical and terminal installer/control panel for Latticra, Lat, LIR, and Latticra Seal.
 
 ## Prerequisites
 
@@ -18,10 +18,23 @@ User-local command path:
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
-## Run from source
+## Run the GUI from source
 
 ```sh
 make -C installer gui
+```
+
+## Run the terminal panel from source
+
+```sh
+make -C installer terminal
+```
+
+Equivalent direct command:
+
+```sh
+cd installer/latticra-installer
+LATTICRA_INSTALLER_ROOT="$PWD/.." cargo run -- --terminal
 ```
 
 ## Dry-run
@@ -46,6 +59,12 @@ make -C installer verify-local
 
 ```sh
 latticra-panel
+```
+
+For the terminal configuration panel:
+
+```sh
+latticra-panel --terminal
 ```
 
 Or from the desktop app grid, open **Latticra Panel**.
