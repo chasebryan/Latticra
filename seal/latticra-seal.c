@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <time.h>
 
+#define LATTICRA_SEAL_VERSION "v0.1"
 #define MANIFEST_PATH "latticra.seal"
 #define REPORT_DIR "reports"
 #define REPORT_PATH "reports/latticra-seal-cli-report.txt"
@@ -19,6 +20,12 @@ typedef struct {
 static bool file_exists(const char *path) {
     struct stat st;
     return stat(path, &st) == 0 && S_ISREG(st.st_mode);
+}
+
+static void ensure_report_dir(void) {
+    if (mkdir(REPORT_DIR, 0755) != 0 && errno != EEXIST) {
+        fprintf(stderr, "warning: could not create %s\n", REPORT_DIR);
+    }
 }
 
 static char *read_file(const char *path) {
@@ -148,40 +155,11 @@ static void check_manifest_shape(SealRun *run, const char *manifest) {
 static void check_policy_shape(SealRun *run, const char *manifest) {
     section(run, "Policy shape");
 
-    require_manifest_field(
-        run,
-        manifest,
-        "require_readme = true",
-        "policy requires README"
-    );
-
-    require_manifest_field(
-        run,
-        manifest,
-        "require_license = true",
-        "policy requires LICENSE"
-    );
-
-    require_manifest_field(
-        run,
-        manifest,
-        "deny_private_keys = true",
-        "policy denies private keys"
-    );
-
-    require_manifest_field(
-        run,
-        manifest,
-        "deny_env_files = true",
-        "policy denies .env files"
-    );
-
-    require_manifest_field(
-        run,
-        manifest,
-        "deny_obvious_tokens = true",
-        "policy denies obvious token markers"
-    );
+    require_manifest_field(run, manifest, "require_readme = true", "policy requires README");
+    require_manifest_field(run, manifest, "require_license = true", "policy requires LICENSE");
+    require_manifest_field(run, manifest, "deny_private_keys = true", "policy denies private keys");
+    require_manifest_field(run, manifest, "deny_env_files = true", "policy denies .env files");
+    require_manifest_field(run, manifest, "deny_obvious_tokens = true", "policy denies obvious token markers");
 }
 
 static void check_required_files(SealRun *run) {
@@ -212,7 +190,7 @@ static void write_header(SealRun *run) {
     }
 
     emit(run, "Latticra Seal CLI Report");
-    emit(run, "Version: v0.1");
+    emit(run, "Version: " LATTICRA_SEAL_VERSION);
     emit(run, "Mode: local-integrity");
     emit(run, stamp);
 }
@@ -241,8 +219,8 @@ static int finish(SealRun *run) {
     return run->failures == 0 ? 0 : 1;
 }
 
-int main(void) {
-    mkdir(REPORT_DIR, 0755);
+static int command_check(void) {
+    ensure_report_dir();
 
     SealRun run;
     run.failures = 0;
@@ -250,7 +228,7 @@ int main(void) {
     run.report = fopen(REPORT_PATH, "w");
 
     if (!run.report) {
-        fprintf(stderr, "Could not open report: %s\n", REPORT_PATH);
+        fprintf(stderr, "could not open report: %s\n", REPORT_PATH);
         return 2;
     }
 
@@ -284,4 +262,131 @@ int main(void) {
     int code = finish(&run);
     fclose(run.report);
     return code;
+}
+
+static void print_manifest_value(
+    const char *manifest,
+    const char *key,
+    const char *label
+) {
+    char pattern[128];
+    snprintf(pattern, sizeof(pattern), "%s = \"", key);
+
+    const char *start = strstr(manifest, pattern);
+    if (!start) {
+        printf("%s: missing\n", label);
+        return;
+    }
+
+    start += strlen(pattern);
+    const char *end = strchr(start, '"');
+
+    if (!end || end <= start) {
+        printf("%s: malformed\n", label);
+        return;
+    }
+
+    printf("%s: %.*s\n", label, (int)(end - start), start);
+}
+
+static int command_manifest(void) {
+    char *manifest = read_file(MANIFEST_PATH);
+
+    if (!manifest) {
+        fprintf(stderr, "could not read %s\n", MANIFEST_PATH);
+        return 1;
+    }
+
+    puts("Latticra Seal Manifest Summary");
+    puts("------------------------------");
+
+    print_manifest_value(manifest, "schema", "Schema");
+    print_manifest_value(manifest, "kind", "Kind");
+    print_manifest_value(manifest, "name", "Project");
+    print_manifest_value(manifest, "version", "Project Version");
+    print_manifest_value(manifest, "mode", "Seal Mode");
+    print_manifest_value(manifest, "status", "Seal Status");
+    print_manifest_value(manifest, "algorithm", "Digest Algorithm");
+    print_manifest_value(manifest, "trust_boundary", "Trust Boundary");
+
+    free(manifest);
+    return 0;
+}
+
+static int command_report(void) {
+    FILE *f = fopen(REPORT_PATH, "r");
+
+    if (!f) {
+        fprintf(stderr, "no report found at %s\n", REPORT_PATH);
+        fprintf(stderr, "run: ./build/latticra-seal check\n");
+        return 1;
+    }
+
+    int ch;
+    while ((ch = fgetc(f)) != EOF) {
+        putchar(ch);
+    }
+
+    fclose(f);
+    return 0;
+}
+
+static int command_version(void) {
+    puts("latticra-seal " LATTICRA_SEAL_VERSION);
+    return 0;
+}
+
+static int command_help(void) {
+    puts("Latticra Seal");
+    puts("");
+    puts("Usage:");
+    puts("  latticra-seal check");
+    puts("  latticra-seal manifest");
+    puts("  latticra-seal report");
+    puts("  latticra-seal version");
+    puts("  latticra-seal help");
+    puts("");
+    puts("Commands:");
+    puts("  check      verify manifest shape, policy shape, and required files");
+    puts("  manifest   print a compact manifest summary");
+    puts("  report     print the latest generated CLI report");
+    puts("  version    print the Seal CLI version");
+    puts("  help       show this help message");
+    return 0;
+}
+
+int main(int argc, char **argv) {
+    const char *command = "check";
+
+    if (argc >= 2) {
+        command = argv[1];
+    }
+
+    if (strcmp(command, "check") == 0) {
+        return command_check();
+    }
+
+    if (strcmp(command, "manifest") == 0) {
+        return command_manifest();
+    }
+
+    if (strcmp(command, "report") == 0) {
+        return command_report();
+    }
+
+    if (strcmp(command, "version") == 0) {
+        return command_version();
+    }
+
+    if (
+        strcmp(command, "help") == 0 ||
+        strcmp(command, "-h") == 0 ||
+        strcmp(command, "--help") == 0
+    ) {
+        return command_help();
+    }
+
+    fprintf(stderr, "unknown command: %s\n", command);
+    fprintf(stderr, "run: ./build/latticra-seal help\n");
+    return 2;
 }

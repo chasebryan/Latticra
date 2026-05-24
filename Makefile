@@ -11,3 +11,17 @@ seal-cli:
 
 seal-run: seal-cli
 	./build/latticra-seal
+
+.PHONY: seal-check seal-manifest seal-report seal-version
+
+seal-check: seal-cli
+	./build/latticra-seal check
+
+seal-manifest: seal-cli
+	./build/latticra-seal manifest
+
+seal-report: seal-cli
+	./build/latticra-seal report
+
+seal-version: seal-cli
+	./build/latticra-seal version
