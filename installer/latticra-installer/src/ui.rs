@@ -61,7 +61,8 @@ impl Default for LatticraInstallerApp {
             console_lines: vec![
                 format!("Latticra Panel v{PANEL_VERSION} bounded operator console online."),
                 "Authority baseline: root=0 network=0 runtime_enforcement=0.".to_owned(),
-                "Panel commands: help, status, plan, save, dry-run, profile seal, profile fedora.".to_owned(),
+                "Panel commands: help, status, plan, save, dry-run, profile seal, profile fedora."
+                    .to_owned(),
                 "Navigation commands: pwd, cd <dir>. External host commands are denied.".to_owned(),
             ],
             console_input: String::new(),
@@ -378,7 +379,9 @@ impl LatticraInstallerApp {
     }
 
     fn deny_console_command(&mut self, command: &str) {
-        self.push_console(format!("blocked: command outside panel allowlist: {command}"));
+        self.push_console(format!(
+            "blocked: command outside panel allowlist: {command}"
+        ));
         self.push_console("allowed panel commands: help, status, plan, save, dry-run, clear");
         self.push_console("allowed navigation commands: pwd, cd <path>");
     }
