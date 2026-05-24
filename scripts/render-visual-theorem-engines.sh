@@ -36,15 +36,15 @@ need_ffmpeg() {
 build() {
   mkdir -p "$OUT"
 
-  require_source "$ROOT/substrate-engine/latticra_substrate_engine_nofigure.c"
-  require_source "$ROOT/visual-theorem-engine/latticra_theorem_engine.c"
+  require_source "$ROOT/latt-field-engines/substrate-engine/latticra_substrate_engine_nofigure.c"
+  require_source "$ROOT/latt-field-engines/visual-theorem-engine/latticra_theorem_engine.c"
 
   "$CC_BIN" -std=gnu99 -O2 -Wall -Wextra -Wno-unused-function \
-    "$ROOT/substrate-engine/latticra_substrate_engine_nofigure.c" \
+    "$ROOT/latt-field-engines/substrate-engine/latticra_substrate_engine_nofigure.c" \
     -lm -o "$OUT/latticra_substrate_engine"
 
   "$CC_BIN" -std=gnu99 -O2 -Wall -Wextra -Wno-unused-function \
-    "$ROOT/visual-theorem-engine/latticra_theorem_engine.c" \
+    "$ROOT/latt-field-engines/visual-theorem-engine/latticra_theorem_engine.c" \
     -lm -o "$OUT/latticra_theorem_engine"
 
   echo "Built visual engines into: $OUT"
