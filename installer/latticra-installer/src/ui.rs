@@ -129,7 +129,10 @@ impl LatticraInstallerApp {
         self.config.seal.crypto_profile = profile;
         self.config.seal.apply_crypto_profile_defaults();
         self.refresh_plan();
-        self.status = format!("Seal crypto profile set to {}.", self.config.seal.crypto_profile.label());
+        self.status = format!(
+            "Seal crypto profile set to {}.",
+            self.config.seal.crypto_profile.label()
+        );
         self.push_console(format!(
             "seal.crypto_profile -> {}",
             self.config.seal.crypto_profile.label()
@@ -287,15 +290,22 @@ impl LatticraInstallerApp {
             ["help"] | ["?"] => {
                 self.push_console("panel: help, status, plan, save, dry-run, clear");
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
-                self.push_console("host: pwd, ls, git status, cargo check, cd <path>, or any normal user command");
+                self.push_console(
+                    "host: pwd, ls, git status, cargo check, cd <path>, or any normal user command",
+                );
             }
             ["status"] => {
                 self.push_console(format!("version={PANEL_VERSION} build={PANEL_BUILD}"));
                 self.push_console(format!("profile={}", self.config.profile.label()));
                 self.push_console(format!("mode={}", self.config.execution_mode_label()));
-                self.push_console(format!("seal_crypto={}", self.config.seal.crypto_profile.label()));
+                self.push_console(format!(
+                    "seal_crypto={}",
+                    self.config.seal.crypto_profile.label()
+                ));
                 self.push_console(format!("install_prefix={}", self.config.install_prefix));
-                self.push_console("root_authority=0 network_authority=0 runtime_enforcement_authority=0");
+                self.push_console(
+                    "root_authority=0 network_authority=0 runtime_enforcement_authority=0",
+                );
             }
             ["plan"] => {
                 self.refresh_plan();
@@ -433,13 +443,38 @@ impl LatticraInstallerApp {
 
         ui.separator();
         ui.label(egui::RichText::new("Workspace").strong());
-        nav_button(ui, &mut self.active_tab, WorkspaceTab::Dashboard, "Dashboard");
-        nav_button(ui, &mut self.active_tab, WorkspaceTab::Components, "Components");
-        nav_button(ui, &mut self.active_tab, WorkspaceTab::Seal, "Latticra Seal");
-        nav_button(ui, &mut self.active_tab, WorkspaceTab::Authority, "Authority gates");
+        nav_button(
+            ui,
+            &mut self.active_tab,
+            WorkspaceTab::Dashboard,
+            "Dashboard",
+        );
+        nav_button(
+            ui,
+            &mut self.active_tab,
+            WorkspaceTab::Components,
+            "Components",
+        );
+        nav_button(
+            ui,
+            &mut self.active_tab,
+            WorkspaceTab::Seal,
+            "Latticra Seal",
+        );
+        nav_button(
+            ui,
+            &mut self.active_tab,
+            WorkspaceTab::Authority,
+            "Authority gates",
+        );
         nav_button(ui, &mut self.active_tab, WorkspaceTab::Delivery, "Delivery");
         nav_button(ui, &mut self.active_tab, WorkspaceTab::Evidence, "Evidence");
-        nav_button(ui, &mut self.active_tab, WorkspaceTab::Procedure, "Procedure");
+        nav_button(
+            ui,
+            &mut self.active_tab,
+            WorkspaceTab::Procedure,
+            "Procedure",
+        );
 
         ui.separator();
         ui.label(egui::RichText::new("Authority baseline").strong());
@@ -522,20 +557,52 @@ impl LatticraInstallerApp {
         ui.add_space(8.0);
 
         ui.columns(2, |columns| {
-            self.profile_card(&mut columns[0], InstallProfile::DeveloperLocal, "Best first impression", "Full project surface with Lat, LIR, Seal, docs, helpers, and dry-run authority.");
-            self.profile_card(&mut columns[1], InstallProfile::SealReportOnly, "Minimal safe lane", "Report-only Seal and documentation lane for receipts and evidence.");
+            self.profile_card(
+                &mut columns[0],
+                InstallProfile::DeveloperLocal,
+                "Best first impression",
+                "Full project surface with Lat, LIR, Seal, docs, helpers, and dry-run authority.",
+            );
+            self.profile_card(
+                &mut columns[1],
+                InstallProfile::SealReportOnly,
+                "Minimal safe lane",
+                "Report-only Seal and documentation lane for receipts and evidence.",
+            );
         });
         ui.add_space(6.0);
         ui.columns(2, |columns| {
-            self.profile_card(&mut columns[0], InstallProfile::FedoraValidationVm, "Fedora validation", "VM-oriented Fedora/Linux validation workspace and evidence path.");
-            self.profile_card(&mut columns[1], InstallProfile::Custom, "Manual operator", "Advanced manual control after the guided defaults are understood.");
+            self.profile_card(
+                &mut columns[0],
+                InstallProfile::FedoraValidationVm,
+                "Fedora validation",
+                "VM-oriented Fedora/Linux validation workspace and evidence path.",
+            );
+            self.profile_card(
+                &mut columns[1],
+                InstallProfile::Custom,
+                "Manual operator",
+                "Advanced manual control after the guided defaults are understood.",
+            );
         });
 
         ui.add_space(12.0);
         ui.columns(3, |columns| {
-            workbench_card(&mut columns[0], "1. Plan", "Generate and inspect the exact installer plan before any run.");
-            workbench_card(&mut columns[1], "2. Receipt", "Run Dry-Install to validate and write an operator receipt.");
-            workbench_card(&mut columns[2], "3. Install", "Enable guarded local writes only after evidence looks correct.");
+            workbench_card(
+                &mut columns[0],
+                "1. Plan",
+                "Generate and inspect the exact installer plan before any run.",
+            );
+            workbench_card(
+                &mut columns[1],
+                "2. Receipt",
+                "Run Dry-Install to validate and write an operator receipt.",
+            );
+            workbench_card(
+                &mut columns[2],
+                "3. Install",
+                "Enable guarded local writes only after evidence looks correct.",
+            );
         });
     }
 
@@ -566,12 +633,42 @@ impl LatticraInstallerApp {
         ui.heading("Project components");
         ui.label("Choose what the panel prepares under the user-local Latticra prefix.");
         ui.add_space(6.0);
-        checkbox_note(ui, &mut self.config.components.lat_tooling, "Lat language tooling", "Language and contract declaration tooling surface.");
-        checkbox_note(ui, &mut self.config.components.lir_contracts, "LIR contracts", "Intermediate representation contracts and validation materials.");
-        checkbox_note(ui, &mut self.config.components.seal_report_only, "Latticra Seal report-only subsystem", "Tool-boundary and trust-boundary reporting without runtime enforcement claims.");
-        checkbox_note(ui, &mut self.config.components.fedora_validation, "Fedora validation files", "Fedora/Linux validation workspace, notes, and generated reports.");
-        checkbox_note(ui, &mut self.config.components.docs_and_examples, "Documentation and examples", "User-facing project notes and local examples.");
-        checkbox_note(ui, &mut self.config.components.developer_cli_helpers, "Developer CLI helpers", "Convenience wrappers for local exploration.");
+        checkbox_note(
+            ui,
+            &mut self.config.components.lat_tooling,
+            "Lat language tooling",
+            "Language and contract declaration tooling surface.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.components.lir_contracts,
+            "LIR contracts",
+            "Intermediate representation contracts and validation materials.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.components.seal_report_only,
+            "Latticra Seal report-only subsystem",
+            "Tool-boundary and trust-boundary reporting without runtime enforcement claims.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.components.fedora_validation,
+            "Fedora validation files",
+            "Fedora/Linux validation workspace, notes, and generated reports.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.components.docs_and_examples,
+            "Documentation and examples",
+            "User-facing project notes and local examples.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.components.developer_cli_helpers,
+            "Developer CLI helpers",
+            "Convenience wrappers for local exploration.",
+        );
     }
 
     fn show_seal_config(&mut self, ui: &mut egui::Ui) {
@@ -584,7 +681,11 @@ impl LatticraInstallerApp {
             .selected_text(self.config.seal.crypto_profile.label())
             .show_ui(ui, |ui| {
                 for profile in SealCryptoProfile::all() {
-                    ui.selectable_value(&mut self.config.seal.crypto_profile, profile, profile.label());
+                    ui.selectable_value(
+                        &mut self.config.seal.crypto_profile,
+                        profile,
+                        profile.label(),
+                    );
                 }
             });
         if self.config.seal.crypto_profile != old_profile {
@@ -595,12 +696,32 @@ impl LatticraInstallerApp {
 
         ui.separator();
         ui.columns(2, |columns| {
-            seal_profile_button(&mut columns[0], self, SealCryptoProfile::ReportOnly, "Zero-key report lane");
-            seal_profile_button(&mut columns[1], self, SealCryptoProfile::Blake2bEd25519, "Default evidence/signature planning lane");
+            seal_profile_button(
+                &mut columns[0],
+                self,
+                SealCryptoProfile::ReportOnly,
+                "Zero-key report lane",
+            );
+            seal_profile_button(
+                &mut columns[1],
+                self,
+                SealCryptoProfile::Blake2bEd25519,
+                "Default evidence/signature planning lane",
+            );
         });
         ui.columns(2, |columns| {
-            seal_profile_button(&mut columns[0], self, SealCryptoProfile::XChaCha20Poly1305, "AEAD sealed-payload planning lane");
-            seal_profile_button(&mut columns[1], self, SealCryptoProfile::HybridSeal, "Advanced hybrid planning lane");
+            seal_profile_button(
+                &mut columns[0],
+                self,
+                SealCryptoProfile::XChaCha20Poly1305,
+                "AEAD sealed-payload planning lane",
+            );
+            seal_profile_button(
+                &mut columns[1],
+                self,
+                SealCryptoProfile::HybridSeal,
+                "Advanced hybrid planning lane",
+            );
         });
 
         ui.separator();
@@ -625,17 +746,42 @@ impl LatticraInstallerApp {
             ui.label("Key storage");
             ui.text_edit_singleline(&mut self.config.seal.key_storage_profile);
         });
-        checkbox_note(ui, &mut self.config.seal.report_only, "Seal remains report-only", "No signing, encryption, key generation, or key storage occurs from this panel lane.");
-        checkbox_note(ui, &mut self.config.seal.require_signed_manifest, "Require signed manifest metadata", "Requires signed-manifest metadata in plans/receipts when using advanced profiles.");
-        checkbox_note(ui, &mut self.config.seal.write_seal_report, "Write Seal report", "Include Latticra Seal report metadata in generated local evidence.");
+        checkbox_note(
+            ui,
+            &mut self.config.seal.report_only,
+            "Seal remains report-only",
+            "No signing, encryption, key generation, or key storage occurs from this panel lane.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.seal.require_signed_manifest,
+            "Require signed manifest metadata",
+            "Requires signed-manifest metadata in plans/receipts when using advanced profiles.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.seal.write_seal_report,
+            "Write Seal report",
+            "Include Latticra Seal report metadata in generated local evidence.",
+        );
     }
 
     fn show_authority(&mut self, ui: &mut egui::Ui) {
         ui.heading("Safety and evidence gates");
         ui.label("Latticra Panel makes authority visible before anything effectful can happen.");
         ui.add_space(6.0);
-        checkbox_note(ui, &mut self.config.safety.dry_run, "Dry-run only", "Validation and receipts only. This is the recommended first-run mode.");
-        checkbox_note(ui, &mut self.config.safety.allow_host_mutation, "Allow guarded local-prefix writes", "Required only for an actual user-local install. Still no root/system mutation.");
+        checkbox_note(
+            ui,
+            &mut self.config.safety.dry_run,
+            "Dry-run only",
+            "Validation and receipts only. This is the recommended first-run mode.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.safety.allow_host_mutation,
+            "Allow guarded local-prefix writes",
+            "Required only for an actual user-local install. Still no root/system mutation.",
+        );
         self.config.safety.allow_network_effect = false;
         ui.add_enabled(
             false,
@@ -646,10 +792,30 @@ impl LatticraInstallerApp {
         );
         ui.small("Network authority remains disabled in this installer lane.");
         ui.separator();
-        checkbox_note(ui, &mut self.config.safety.require_component_manifest, "Require component manifest", "Refuse to proceed when component inventory evidence is missing.");
-        checkbox_note(ui, &mut self.config.safety.require_artifact_measurements, "Require artifact measurements", "Keep generated measurement evidence in the receipt chain.");
-        checkbox_note(ui, &mut self.config.safety.require_verification_policy_metadata, "Require verification policy metadata", "Preserve policy/evidence metadata expectations.");
-        checkbox_note(ui, &mut self.config.safety.write_operator_receipt, "Write operator-visible receipt", "Create a visible receipt for the configured run.");
+        checkbox_note(
+            ui,
+            &mut self.config.safety.require_component_manifest,
+            "Require component manifest",
+            "Refuse to proceed when component inventory evidence is missing.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.safety.require_artifact_measurements,
+            "Require artifact measurements",
+            "Keep generated measurement evidence in the receipt chain.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.safety.require_verification_policy_metadata,
+            "Require verification policy metadata",
+            "Preserve policy/evidence metadata expectations.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.safety.write_operator_receipt,
+            "Write operator-visible receipt",
+            "Create a visible receipt for the configured run.",
+        );
     }
 
     fn show_delivery(&mut self, ui: &mut egui::Ui) {
@@ -661,31 +827,84 @@ impl LatticraInstallerApp {
             ui.text_edit_singleline(&mut self.config.install_prefix);
             if ui.button("Reset").clicked() {
                 self.config.install_prefix = match self.config.profile {
-                    InstallProfile::FedoraValidationVm => "~/.local/share/latticra-validation".to_owned(),
+                    InstallProfile::FedoraValidationVm => {
+                        "~/.local/share/latticra-validation".to_owned()
+                    }
                     _ => "~/.local/share/latticra".to_owned(),
                 };
             }
         });
         ui.separator();
-        checkbox_note(ui, &mut self.config.behavior.create_prefix_layout, "Create prefix layout", "Prepare the user-local directory structure.");
-        checkbox_note(ui, &mut self.config.behavior.create_component_markers, "Create component markers", "Write installed component marker files.");
-        checkbox_note(ui, &mut self.config.behavior.create_cli_shims, "Create CLI shims", "Prepare command shims inside the user-local prefix.");
-        checkbox_note(ui, &mut self.config.behavior.preserve_existing_files, "Preserve existing files", "Refuse to overwrite unmanaged files.");
+        checkbox_note(
+            ui,
+            &mut self.config.behavior.create_prefix_layout,
+            "Create prefix layout",
+            "Prepare the user-local directory structure.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.behavior.create_component_markers,
+            "Create component markers",
+            "Write installed component marker files.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.behavior.create_cli_shims,
+            "Create CLI shims",
+            "Prepare command shims inside the user-local prefix.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.behavior.preserve_existing_files,
+            "Preserve existing files",
+            "Refuse to overwrite unmanaged files.",
+        );
         ui.separator();
-        checkbox_note(ui, &mut self.config.behavior.build_gui_installer, "Build Latticra Panel binary", "Build the panel itself when Cargo is available.");
-        checkbox_note(ui, &mut self.config.behavior.build_latticra_from_source, "Build Latticra from source when available", "Use supported root build systems when present.");
-        checkbox_note(ui, &mut self.config.behavior.install_payload_tree, "Install payload tree", "Copy project payload material into the local prefix.");
-        checkbox_note(ui, &mut self.config.behavior.install_desktop_entry, "Install desktop entry", "Expose Latticra Panel in the user app grid.");
-        checkbox_note(ui, &mut self.config.behavior.install_user_bin_wrappers, "Install user bin wrappers", "Install user-local wrappers for latticra, lat, seal, and panel commands.");
+        checkbox_note(
+            ui,
+            &mut self.config.behavior.build_gui_installer,
+            "Build Latticra Panel binary",
+            "Build the panel itself when Cargo is available.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.behavior.build_latticra_from_source,
+            "Build Latticra from source when available",
+            "Use supported root build systems when present.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.behavior.install_payload_tree,
+            "Install payload tree",
+            "Copy project payload material into the local prefix.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.behavior.install_desktop_entry,
+            "Install desktop entry",
+            "Expose Latticra Panel in the user app grid.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.behavior.install_user_bin_wrappers,
+            "Install user bin wrappers",
+            "Install user-local wrappers for latticra, lat, seal, and panel commands.",
+        );
     }
 
     fn show_evidence(&mut self, ui: &mut egui::Ui) {
         ui.heading("Plan, receipts, and evidence");
         ui.horizontal(|ui| {
-            if ui.selectable_label(self.show_plan_over_log, "Plan preview").clicked() {
+            if ui
+                .selectable_label(self.show_plan_over_log, "Plan preview")
+                .clicked()
+            {
                 self.show_plan_over_log = true;
             }
-            if ui.selectable_label(!self.show_plan_over_log, "Engine log").clicked() {
+            if ui
+                .selectable_label(!self.show_plan_over_log, "Engine log")
+                .clicked()
+            {
                 self.show_plan_over_log = false;
             }
             if ui.button("Refresh plan").clicked() {
@@ -714,13 +933,48 @@ impl LatticraInstallerApp {
         ui.heading("Recommended procedure");
         ui.label("A safe Latticra first run is evidence-first, then install-second.");
         ui.add_space(8.0);
-        procedure_row(ui, "01", "Choose Guided Workbench", "Start from a complete but dry configuration.");
-        procedure_row(ui, "02", "Inspect components", "Confirm Lat, LIR, Seal, docs, helpers, and Fedora validation intent.");
-        procedure_row(ui, "03", "Configure Seal", "Pick a report-only, signature-planning, AEAD-planning, or hybrid Seal profile.");
-        procedure_row(ui, "04", "Generate plan", "Write and inspect latticra-installer-plan.txt.");
-        procedure_row(ui, "05", "Run Dry-Install", "Validate the engine and create a receipt without host mutation.");
-        procedure_row(ui, "06", "Review evidence", "Read console output, plan, logs, and receipt paths.");
-        procedure_row(ui, "07", "Enable local install", "Only then enable guarded local-prefix writes.");
+        procedure_row(
+            ui,
+            "01",
+            "Choose Guided Workbench",
+            "Start from a complete but dry configuration.",
+        );
+        procedure_row(
+            ui,
+            "02",
+            "Inspect components",
+            "Confirm Lat, LIR, Seal, docs, helpers, and Fedora validation intent.",
+        );
+        procedure_row(
+            ui,
+            "03",
+            "Configure Seal",
+            "Pick a report-only, signature-planning, AEAD-planning, or hybrid Seal profile.",
+        );
+        procedure_row(
+            ui,
+            "04",
+            "Generate plan",
+            "Write and inspect latticra-installer-plan.txt.",
+        );
+        procedure_row(
+            ui,
+            "05",
+            "Run Dry-Install",
+            "Validate the engine and create a receipt without host mutation.",
+        );
+        procedure_row(
+            ui,
+            "06",
+            "Review evidence",
+            "Read console output, plan, logs, and receipt paths.",
+        );
+        procedure_row(
+            ui,
+            "07",
+            "Enable local install",
+            "Only then enable guarded local-prefix writes.",
+        );
     }
 
     fn show_action_buttons(&mut self, ui: &mut egui::Ui) {

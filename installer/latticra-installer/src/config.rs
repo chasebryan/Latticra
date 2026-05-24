@@ -403,9 +403,17 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "signature_profile={}", config.seal.signature_profile);
     let _ = writeln!(out, "encryption_profile={}", config.seal.encryption_profile);
     let _ = writeln!(out, "envelope_profile={}", config.seal.envelope_profile);
-    let _ = writeln!(out, "key_storage_profile={}", config.seal.key_storage_profile);
+    let _ = writeln!(
+        out,
+        "key_storage_profile={}",
+        config.seal.key_storage_profile
+    );
     let _ = writeln!(out, "report_only={}", config.seal.report_only);
-    let _ = writeln!(out, "require_signed_manifest={}", config.seal.require_signed_manifest);
+    let _ = writeln!(
+        out,
+        "require_signed_manifest={}",
+        config.seal.require_signed_manifest
+    );
     let _ = writeln!(out, "write_seal_report={}", config.seal.write_seal_report);
     let _ = writeln!(out);
     let _ = writeln!(out, "[safety]");
