@@ -1,24 +1,36 @@
 # UI Configuration Model
 
-The Latticra Panel exposes a small set of high-value choices without pretending that every future install scenario is solved. The graphical panel and terminal panel use the same `InstallerConfig` model, generate the same plan preview, and launch the same guarded installer engine.
+The Latticra Panel is now GUI-first. It exposes a guided first-run workbench rather than a numbered terminal menu, because the panel is expected to be the first major user-facing surface for Latticra.
+
+The graphical panel uses one shared `InstallerConfig` model, generates the same plan preview used by the guarded installer engine, and keeps authority boundaries visible before any install path runs.
+
+## First-run design principles
+
+- Strong safe defaults before manual toggles
+- Visual guided profiles instead of numbered terminal choices
+- Dry-run first, local writes later
+- Visible authority status at all times
+- Plan and receipt evidence before action
+- Embedded panel-aware console instead of a separate TUI
+- Adaptive maximized/resizable layout for Fedora workstations and smaller screens
 
 ## Profiles
 
-### Developer Local
+### Guided Workbench
 
-For local Latticra development. Enables Lat tooling, LIR contracts, Seal report-only files, docs, and developer helpers.
+Default profile. Enables Lat tooling, LIR contracts, Seal report-only files, docs, and developer helpers while keeping dry-run enabled and host/network authority denied.
 
 ### Seal Report-Only
 
-For users who only want the report-only Seal-side layout and documentation. This is the default profile.
+Minimal report-only Seal-side layout and documentation for users who only want receipts, reports, and evidence posture.
 
 ### Fedora Validation VM
 
-For a Fedora or Fedora-like validation VM. Enables the Fedora validation workspace.
+For a Fedora or Fedora-like validation VM. Enables the Fedora validation workspace and keeps the run dry by default.
 
 ### Custom
 
-Lets the operator manually choose components.
+Lets the operator manually choose components after the guided profiles are understood.
 
 ## Components
 
@@ -32,8 +44,8 @@ Lets the operator manually choose components.
 ## Safety and evidence
 
 - Dry-run mode
-- Explicit host mutation authority
-- Explicit network authority, currently unused and expected to remain disabled
+- Explicit guarded local-prefix write authority
+- Explicit network authority, currently disabled
 - Component manifest requirement
 - Artifact measurement requirement
 - Verification-policy metadata requirement
@@ -54,18 +66,22 @@ Lets the operator manually choose components.
 - Install the desktop entry
 - Install user-local command wrappers
 
-## Terminal panel
+## Embedded Latticra Console
 
-The terminal panel is available through:
+The embedded console is panel-aware and intentionally not an unrestricted shell. It supports quick operator commands such as:
 
-```sh
-make -C installer terminal
+```text
+help
+status
+plan
+save
+dry-run
+profile guided
+profile seal
+profile fedora
+mode dry
+mode local
+clear
 ```
 
-After a local install it is available through:
-
-```sh
-latticra-panel --terminal
-```
-
-The terminal panel intentionally mirrors the graphical panel's profile, component, safety, evidence, behavior, plan, and execution controls while remaining usable from shells, SSH sessions, and systems without a working desktop session.
+The console exists inside the GUI so users can stay in one coherent Latticra control surface while still getting terminal-style feedback and procedure visibility.
