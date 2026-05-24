@@ -37,6 +37,7 @@ exclude = [
   ".venv/",
   "reports/*.txt",
   "reports/*.json",
+  "latticra.seal.lock",
   "*.log",
   "*.tmp",
 ]

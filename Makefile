@@ -30,3 +30,11 @@ seal-version: seal-cli
 
 seal-hashes: seal-cli
 	./build/latticra-seal hashes
+
+.PHONY: seal-baseline seal-verify
+
+seal-baseline: seal-cli
+	./build/latticra-seal baseline
+
+seal-verify: seal-cli
+	./build/latticra-seal verify

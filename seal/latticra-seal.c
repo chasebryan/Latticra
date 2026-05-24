@@ -21,6 +21,7 @@
 #define REPORT_DIR "reports"
 #define REPORT_PATH "reports/latticra-seal-cli-report.txt"
 #define HASH_LIST_PATH "reports/latticra-seal-cli-hashes.txt"
+#define BASELINE_PATH "latticra.seal.lock"
 
 typedef struct {
     int failures;
@@ -223,7 +224,8 @@ static bool excluded_dir_name(const char *name) {
 static bool excluded_file_name(const char *path) {
     const char *name = basename_of(path);
 
-    return ends_with(name, ".log") ||
+    return strcmp(name, "latticra.seal.lock") == 0 ||
+           ends_with(name, ".log") ||
            ends_with(name, ".tmp") ||
            strcmp(name, ".DS_Store") == 0;
 }
@@ -602,6 +604,84 @@ static int command_manifest(void) {
     return 0;
 }
 
+
+static bool copy_file(const char *src, const char *dst) {
+    FILE *in = fopen(src, "rb");
+
+    if (!in) {
+        return false;
+    }
+
+    FILE *out = fopen(dst, "wb");
+
+    if (!out) {
+        fclose(in);
+        return false;
+    }
+
+    unsigned char buf[8192];
+    bool ok = true;
+
+    for (;;) {
+        size_t n = fread(buf, 1, sizeof(buf), in);
+
+        if (n > 0 && fwrite(buf, 1, n, out) != n) {
+            ok = false;
+            break;
+        }
+
+        if (n < sizeof(buf)) {
+            if (ferror(in)) {
+                ok = false;
+            }
+
+            break;
+        }
+    }
+
+    if (fclose(out) != 0) {
+        ok = false;
+    }
+
+    fclose(in);
+    return ok;
+}
+
+static bool files_equal(const char *a, const char *b) {
+    FILE *fa = fopen(a, "rb");
+
+    if (!fa) {
+        return false;
+    }
+
+    FILE *fb = fopen(b, "rb");
+
+    if (!fb) {
+        fclose(fa);
+        return false;
+    }
+
+    bool equal = true;
+
+    for (;;) {
+        int ca = fgetc(fa);
+        int cb = fgetc(fb);
+
+        if (ca != cb) {
+            equal = false;
+            break;
+        }
+
+        if (ca == EOF || cb == EOF) {
+            break;
+        }
+    }
+
+    fclose(fa);
+    fclose(fb);
+    return equal;
+}
+
 static int print_file_to_stdout(const char *path, const char *missing_hint) {
     FILE *f = fopen(path, "r");
 
@@ -623,6 +703,93 @@ static int print_file_to_stdout(const char *path, const char *missing_hint) {
 
     fclose(f);
     return 0;
+}
+
+
+static int command_baseline(void) {
+    int code = command_check();
+
+    if (code != 0) {
+        fprintf(stderr, "baseline refused because check did not pass\n");
+        return code;
+    }
+
+    if (!copy_file(HASH_LIST_PATH, BASELINE_PATH)) {
+        fprintf(stderr, "could not write baseline: %s\n", BASELINE_PATH);
+        return 1;
+    }
+
+    printf("Baseline written to: %s\n", BASELINE_PATH);
+    return 0;
+}
+
+
+static int command_verify(void) {
+    ensure_report_dir();
+
+    SealRun run;
+    run.failures = 0;
+    run.warnings = 0;
+    run.report = fopen(REPORT_PATH, "w");
+
+    if (!run.report) {
+        fprintf(stderr, "could not open report: %s\n", REPORT_PATH);
+        return 2;
+    }
+
+    write_header(&run);
+
+    section(&run, "Baseline presence");
+
+    if (!file_exists(BASELINE_PATH)) {
+        fail_run(&run, "latticra.seal.lock is missing");
+        int code = finish(&run);
+        fclose(run.report);
+        return code;
+    }
+
+    pass(&run, "latticra.seal.lock exists");
+
+    section(&run, "Manifest presence");
+
+    if (!file_exists(MANIFEST_PATH)) {
+        fail_run(&run, "latticra.seal is missing");
+        int code = finish(&run);
+        fclose(run.report);
+        return code;
+    }
+
+    pass(&run, "latticra.seal exists");
+
+    char *manifest = read_file(MANIFEST_PATH);
+
+    if (!manifest) {
+        fail_run(&run, "could not read latticra.seal");
+        int code = finish(&run);
+        fclose(run.report);
+        return code;
+    }
+
+    check_manifest_shape(&run, manifest);
+    check_policy_shape(&run, manifest);
+    check_required_files(&run);
+    write_digest_summary(&run);
+
+    free(manifest);
+
+    section(&run, "Baseline comparison");
+
+    if (run.failures == 0 && files_equal(HASH_LIST_PATH, BASELINE_PATH)) {
+        pass(&run, "current file hashes match latticra.seal.lock");
+    } else if (run.failures == 0) {
+        fail_run(&run, "current file hashes differ from latticra.seal.lock");
+    } else {
+        warn_run(&run, "baseline comparison skipped because earlier checks failed");
+    }
+
+    int code = finish(&run);
+    fclose(run.report);
+    return code;
 }
 
 static int command_report(void) {
@@ -650,6 +817,8 @@ static int command_help(void) {
     puts("Usage:");
     puts("  latticra-seal check");
     puts("  latticra-seal manifest");
+    puts("  latticra-seal baseline");
+    puts("  latticra-seal verify");
     puts("  latticra-seal report");
     puts("  latticra-seal hashes");
     puts("  latticra-seal version");
@@ -658,6 +827,8 @@ static int command_help(void) {
     puts("Commands:");
     puts("  check      verify manifest, policy, required files, and SHA-256 digests");
     puts("  manifest   print a compact manifest summary");
+    puts("  baseline   save the current hash list as latticra.seal.lock");
+    puts("  verify     compare current hashes against latticra.seal.lock");
     puts("  report     print the latest generated CLI report");
     puts("  hashes     print the latest generated file hash list");
     puts("  version    print the Seal CLI version");
@@ -678,6 +849,14 @@ int main(int argc, char **argv) {
 
     if (strcmp(command, "manifest") == 0) {
         return command_manifest();
+    }
+
+    if (strcmp(command, "baseline") == 0) {
+        return command_baseline();
+    }
+
+    if (strcmp(command, "verify") == 0) {
+        return command_verify();
     }
 
     if (strcmp(command, "report") == 0) {
