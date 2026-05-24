@@ -42,7 +42,7 @@ impl Default for LatticraInstallerApp {
             rx: None,
             install_state: InstallState::Idle,
             phase_index: 0,
-            phase_total: 7,
+            phase_total: 10,
             phase_title: "idle".to_owned(),
         }
     }
@@ -74,6 +74,7 @@ impl LatticraInstallerApp {
     }
 
     fn save_config(&mut self) {
+        self.config.safety.allow_network_effect = false;
         match toml::to_string_pretty(&self.config) {
             Ok(toml) => match fs::write("latticra-installer-config.toml", toml) {
                 Ok(_) => self.status = "Saved latticra-installer-config.toml".to_owned(),
@@ -84,6 +85,7 @@ impl LatticraInstallerApp {
     }
 
     fn write_plan(&mut self) {
+        self.config.safety.allow_network_effect = false;
         self.plan = render_plan(&self.config);
         match fs::write("latticra-installer-plan.txt", &self.plan) {
             Ok(_) => self.status = "Wrote latticra-installer-plan.txt".to_owned(),
@@ -92,12 +94,13 @@ impl LatticraInstallerApp {
     }
 
     fn start_install(&mut self) {
+        self.config.safety.allow_network_effect = false;
         match self.config.can_execute() {
             Ok(()) => {
                 self.plan = render_plan(&self.config);
                 self.logs.clear();
                 self.phase_index = 0;
-                self.phase_total = 7;
+                self.phase_total = 10;
                 self.phase_title = "starting".to_owned();
                 self.install_state = InstallState::Running;
                 self.status = format!("Starting {}...", self.config.execution_mode_label());
@@ -266,6 +269,29 @@ impl LatticraInstallerApp {
             &mut self.config.behavior.preserve_existing_files,
             "Preserve existing files",
         );
+
+        ui.separator();
+        ui.heading("Program delivery");
+        ui.checkbox(
+            &mut self.config.behavior.build_gui_installer,
+            "Build Latticra Panel binary",
+        );
+        ui.checkbox(
+            &mut self.config.behavior.build_latticra_from_source,
+            "Build Latticra from source when available",
+        );
+        ui.checkbox(
+            &mut self.config.behavior.install_payload_tree,
+            "Install payload tree",
+        );
+        ui.checkbox(
+            &mut self.config.behavior.install_desktop_entry,
+            "Install desktop entry",
+        );
+        ui.checkbox(
+            &mut self.config.behavior.install_user_bin_wrappers,
+            "Install user bin wrappers",
+        );
     }
 
     fn show_action_buttons(&mut self, ui: &mut egui::Ui) {
@@ -391,6 +417,7 @@ impl LatticraInstallerApp {
     }
 
     fn show_plan_panel(&mut self, ui: &mut egui::Ui) {
+        self.config.safety.allow_network_effect = false;
         self.plan = render_plan(&self.config);
         ui.heading("Install plan preview");
         egui::ScrollArea::vertical()
