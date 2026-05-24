@@ -1,0 +1,90 @@
+# latticra.seal — Latticra Seal Manifest v0.1
+
+schema = "latticra.seal/v0.1"
+format = "toml"
+kind = "local-integrity-manifest"
+
+[project]
+name = "Latticra"
+id = "latticra"
+version = "0.1.0"
+repository = "https://github.com/Bryforge/Latticra"
+description = "Linux-native systems research project for verifiable boundaries, policy structure, and secure project-state reasoning."
+license = "SEE LICENSE"
+
+[seal]
+mode = "local-integrity"
+status = "unsigned"
+algorithm = "sha256"
+digest_encoding = "hex"
+canonicalization = "relative-path + raw-bytes + unix-lf-preferred"
+trust_boundary = "project-root"
+created_by = "Latticra Seal bootstrap"
+created_at = "2026-05-24"
+
+[paths]
+include = [
+  ".",
+]
+
+exclude = [
+  ".git/",
+  "target/",
+  "build/",
+  "dist/",
+  "node_modules/",
+  "__pycache__/",
+  ".venv/",
+  "reports/*.txt",
+  "reports/*.json",
+  "*.log",
+  "*.tmp",
+]
+
+[policy]
+require_readme = true
+require_license = true
+deny_private_keys = true
+deny_env_files = true
+deny_obvious_tokens = true
+deny_large_binaries = false
+max_file_size_mb = 25
+
+[policy.required_files]
+paths = [
+  "README.md",
+  "LICENSE",
+]
+
+[policy.deny_filenames]
+patterns = [
+  ".env",
+  "id_rsa",
+  "id_ed25519",
+  "*.pem",
+  "*.key",
+]
+
+[policy.deny_contents]
+patterns = [
+  "BEGIN PRIVATE KEY",
+  "BEGIN RSA PRIVATE KEY",
+  "BEGIN OPENSSH PRIVATE KEY",
+  "OPENAI_API_KEY=",
+  "GITHUB_TOKEN=",
+  "AWS_SECRET_ACCESS_KEY=",
+]
+
+[report]
+default_output = "reports/latticra-seal-report.txt"
+hash_list_output = "reports/latticra-seal-file-hashes.txt"
+include_file_list = true
+include_policy_results = true
+include_digest_summary = true
+
+[proof]
+manifest_hash = ""
+root_hash = ""
+signature_algorithm = ""
+signature = ""
+public_key = ""
