@@ -18,3 +18,13 @@
 /installer/latticra-installer/target/
 /installer/latticra-installer/latticra-installer-config.toml
 /installer/latticra-installer/latticra-installer-plan.txt
+
+# Latticra visual engine outputs
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.o
+*.out
+latticra_substrate_engine
+latticra_theorem_engine
