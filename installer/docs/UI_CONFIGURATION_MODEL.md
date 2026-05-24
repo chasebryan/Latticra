@@ -1,6 +1,6 @@
 # UI Configuration Model
 
-The graphical installer exposes a small set of high-value choices without pretending that every future install scenario is solved.
+The Latticra Panel exposes a small set of high-value choices without pretending that every future install scenario is solved. The graphical panel and terminal panel use the same `InstallerConfig` model, generate the same plan preview, and launch the same guarded installer engine.
 
 ## Profiles
 
@@ -45,3 +45,27 @@ Lets the operator manually choose components.
 - Create component markers
 - Create CLI shims
 - Preserve existing files
+
+## Program delivery
+
+- Build the Latticra Panel binary when Cargo is available
+- Build Latticra from source when a supported root build system is available
+- Install the Latticra payload tree
+- Install the desktop entry
+- Install user-local command wrappers
+
+## Terminal panel
+
+The terminal panel is available through:
+
+```sh
+make -C installer terminal
+```
+
+After a local install it is available through:
+
+```sh
+latticra-panel --terminal
+```
+
+The terminal panel intentionally mirrors the graphical panel's profile, component, safety, evidence, behavior, plan, and execution controls while remaining usable from shells, SSH sessions, and systems without a working desktop session.
