@@ -75,7 +75,10 @@ impl TerminalPanel {
             "Latticra Seal report-only subsystem",
             self.config.components.seal_report_only,
         );
-        print_flag("Fedora validation files", self.config.components.fedora_validation);
+        print_flag(
+            "Fedora validation files",
+            self.config.components.fedora_validation,
+        );
         print_flag(
             "Documentation and examples",
             self.config.components.docs_and_examples,
@@ -212,7 +215,11 @@ impl TerminalPanel {
         loop {
             println!();
             println!("Components");
-            print_toggle(1, "Lat language tooling", self.config.components.lat_tooling);
+            print_toggle(
+                1,
+                "Lat language tooling",
+                self.config.components.lat_tooling,
+            );
             print_toggle(2, "LIR contracts", self.config.components.lir_contracts);
             print_toggle(
                 3,
@@ -394,8 +401,7 @@ impl TerminalPanel {
                         !self.config.behavior.create_component_markers;
                 }
                 "3" => {
-                    self.config.behavior.create_cli_shims =
-                        !self.config.behavior.create_cli_shims;
+                    self.config.behavior.create_cli_shims = !self.config.behavior.create_cli_shims;
                 }
                 "4" => {
                     self.config.behavior.preserve_existing_files =
