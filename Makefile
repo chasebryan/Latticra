@@ -6,7 +6,7 @@ seal:
 .PHONY: seal-policy-denials
 
 seal-policy-denials:
-	./scripts/test-latticra-seal-policy-denials.sh
+	bash ./scripts/test-latticra-seal-policy-denials.sh
 
 .PHONY: seal-cli seal-run
 
