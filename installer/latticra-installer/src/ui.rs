@@ -1,7 +1,8 @@
-use crate::config::{render_plan, InstallProfile, InstallerConfig};
+use crate::config::{render_plan, InstallProfile, InstallerConfig, SealCryptoProfile};
 use crate::engine::{self, InstallEvent};
 use eframe::egui;
 use std::fs;
+use std::process::Command;
 use std::sync::mpsc::Receiver;
 use std::time::Duration;
 
@@ -21,6 +22,7 @@ enum InstallState {
 enum WorkspaceTab {
     Dashboard,
     Components,
+    Seal,
     Authority,
     Delivery,
     Evidence,
@@ -34,6 +36,7 @@ pub struct LatticraInstallerApp {
     logs: Vec<String>,
     console_lines: Vec<String>,
     console_input: String,
+    terminal_cwd: String,
     show_plan_over_log: bool,
     active_tab: WorkspaceTab,
     seal_texture: Option<egui::TextureHandle>,
@@ -48,18 +51,22 @@ impl Default for LatticraInstallerApp {
     fn default() -> Self {
         let config = InstallerConfig::default();
         let plan = render_plan(&config);
+        let terminal_cwd = std::env::current_dir()
+            .map(|path| path.display().to_string())
+            .unwrap_or_else(|_| ".".to_owned());
         Self {
             config,
             plan,
             status: "Ready. Guided Workbench opens in dry-run authority.".to_owned(),
             logs: Vec::new(),
             console_lines: vec![
-                format!("Latticra Panel v{PANEL_VERSION} console online."),
+                format!("Latticra Panel v{PANEL_VERSION} host terminal online."),
                 "Authority baseline: root=0 network=0 runtime_enforcement=0.".to_owned(),
-                "This is a panel-aware console, not an unrestricted shell.".to_owned(),
-                "Try: help, status, plan, save, dry-run, profile fedora, profile seal.".to_owned(),
+                "Panel commands: help, status, plan, save, dry-run, profile seal, profile fedora.".to_owned(),
+                "Host commands: pwd, ls, git status, cargo check, cd <dir>. Runs as the current user.".to_owned(),
             ],
             console_input: String::new(),
+            terminal_cwd,
             show_plan_over_log: true,
             active_tab: WorkspaceTab::Dashboard,
             seal_texture: None,
@@ -99,8 +106,8 @@ impl LatticraInstallerApp {
 
     fn push_console(&mut self, line: impl Into<String>) {
         self.console_lines.push(line.into());
-        if self.console_lines.len() > 260 {
-            let drain_count = self.console_lines.len() - 260;
+        if self.console_lines.len() > 360 {
+            let drain_count = self.console_lines.len() - 360;
             self.console_lines.drain(0..drain_count);
         }
     }
@@ -116,6 +123,17 @@ impl LatticraInstallerApp {
         self.refresh_plan();
         self.status = format!("Applied {} defaults.", self.config.profile.label());
         self.push_console(format!("profile -> {}", self.config.profile.label()));
+    }
+
+    fn apply_seal_crypto_profile(&mut self, profile: SealCryptoProfile) {
+        self.config.seal.crypto_profile = profile;
+        self.config.seal.apply_crypto_profile_defaults();
+        self.refresh_plan();
+        self.status = format!("Seal crypto profile set to {}.", self.config.seal.crypto_profile.label());
+        self.push_console(format!(
+            "seal.crypto_profile -> {}",
+            self.config.seal.crypto_profile.label()
+        ));
     }
 
     fn set_mode_dry(&mut self) {
@@ -261,20 +279,21 @@ impl LatticraInstallerApp {
             return;
         }
 
-        self.push_console(format!("latticra-panel $ {command}"));
+        self.push_console(format!("{} $ {command}", self.terminal_cwd));
         let normalized = command.to_ascii_lowercase();
         let parts: Vec<&str> = normalized.split_whitespace().collect();
 
         match parts.as_slice() {
             ["help"] | ["?"] => {
-                self.push_console("commands: help, status, plan, save, dry-run, clear");
-                self.push_console("profiles: profile guided | profile seal | profile fedora | profile custom");
-                self.push_console("modes: mode dry | mode local");
+                self.push_console("panel: help, status, plan, save, dry-run, clear");
+                self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
+                self.push_console("host: pwd, ls, git status, cargo check, cd <path>, or any normal user command");
             }
             ["status"] => {
                 self.push_console(format!("version={PANEL_VERSION} build={PANEL_BUILD}"));
                 self.push_console(format!("profile={}", self.config.profile.label()));
                 self.push_console(format!("mode={}", self.config.execution_mode_label()));
+                self.push_console(format!("seal_crypto={}", self.config.seal.crypto_profile.label()));
                 self.push_console(format!("install_prefix={}", self.config.install_prefix));
                 self.push_console("root_authority=0 network_authority=0 runtime_enforcement_authority=0");
             }
@@ -297,7 +316,94 @@ impl LatticraInstallerApp {
                 self.apply_profile(InstallProfile::FedoraValidationVm)
             }
             ["profile", "custom"] => self.apply_profile(InstallProfile::Custom),
-            _ => self.push_console("unknown command. try: help"),
+            ["seal", "profile", "report"] | ["seal", "profile", "report-only"] => {
+                self.apply_seal_crypto_profile(SealCryptoProfile::ReportOnly)
+            }
+            ["seal", "profile", "sign"] | ["seal", "profile", "ed25519"] => {
+                self.apply_seal_crypto_profile(SealCryptoProfile::Blake2bEd25519)
+            }
+            ["seal", "profile", "aead"] | ["seal", "profile", "xchacha"] => {
+                self.apply_seal_crypto_profile(SealCryptoProfile::XChaCha20Poly1305)
+            }
+            ["seal", "profile", "hybrid"] => {
+                self.apply_seal_crypto_profile(SealCryptoProfile::HybridSeal)
+            }
+            ["seal", "profile", "custom"] => {
+                self.apply_seal_crypto_profile(SealCryptoProfile::Custom)
+            }
+            ["pwd"] => self.push_console(self.terminal_cwd.clone()),
+            ["cd"] => self.change_terminal_dir("."),
+            ["cd", path] => self.change_terminal_dir(path),
+            _ => self.run_host_command(&command),
+        }
+    }
+
+    fn change_terminal_dir(&mut self, path: &str) {
+        let base = std::path::PathBuf::from(&self.terminal_cwd);
+        let candidate = if path == "~" {
+            std::env::var_os("HOME")
+                .map(std::path::PathBuf::from)
+                .unwrap_or(base)
+        } else {
+            let path_buf = std::path::PathBuf::from(path);
+            if path_buf.is_absolute() {
+                path_buf
+            } else {
+                base.join(path_buf)
+            }
+        };
+
+        match candidate.canonicalize() {
+            Ok(resolved) if resolved.is_dir() => {
+                self.terminal_cwd = resolved.display().to_string();
+                self.push_console(format!("cwd -> {}", self.terminal_cwd));
+            }
+            Ok(resolved) => self.push_console(format!("not a directory: {}", resolved.display())),
+            Err(err) => self.push_console(format!("cd failed: {err}")),
+        }
+    }
+
+    fn run_host_command(&mut self, command: &str) {
+        self.push_console("[host] running user-shell command");
+        match Command::new("sh")
+            .arg("-lc")
+            .arg(command)
+            .current_dir(&self.terminal_cwd)
+            .env("LATTICRA_PREFIX", &self.config.install_prefix)
+            .output()
+        {
+            Ok(output) => {
+                let stdout = String::from_utf8_lossy(&output.stdout);
+                let stderr = String::from_utf8_lossy(&output.stderr);
+                let mut stdout_truncated = false;
+                let mut stderr_truncated = false;
+                for (index, line) in stdout.lines().enumerate() {
+                    if index >= 80 {
+                        stdout_truncated = true;
+                        break;
+                    }
+                    self.push_console(line.to_owned());
+                }
+                for (index, line) in stderr.lines().enumerate() {
+                    if index >= 80 {
+                        stderr_truncated = true;
+                        break;
+                    }
+                    self.push_console(format!("stderr: {line}"));
+                }
+                if stdout_truncated || stderr_truncated {
+                    self.push_console("[host] output truncated to first 80 stdout/stderr lines");
+                }
+                self.push_console(format!(
+                    "[host] exit={}",
+                    output
+                        .status
+                        .code()
+                        .map(|code| code.to_string())
+                        .unwrap_or_else(|| "signal".to_owned())
+                ));
+            }
+            Err(err) => self.push_console(format!("[host] failed to run command: {err}")),
         }
     }
 
@@ -306,10 +412,10 @@ impl LatticraInstallerApp {
             ui.heading(egui::RichText::new("Latticra Panel").size(22.0));
             ui.label(egui::RichText::new(format!("v{PANEL_VERSION}")).monospace());
             ui.separator();
-            ui.label("workbench for first-run configuration, validation, receipts, and operator control");
+            ui.label("workbench for first-run configuration, validation, receipts, terminal access, and Seal profiles");
             ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                ui.monospace(format!("seal={}", self.config.seal.crypto_profile.label()));
                 ui.monospace(format!("mode={}", self.config.execution_mode_label()));
-                ui.monospace(format!("build={PANEL_BUILD}"));
                 ui.monospace("root=0 network=0 runtime=0");
             });
         });
@@ -329,6 +435,7 @@ impl LatticraInstallerApp {
         ui.label(egui::RichText::new("Workspace").strong());
         nav_button(ui, &mut self.active_tab, WorkspaceTab::Dashboard, "Dashboard");
         nav_button(ui, &mut self.active_tab, WorkspaceTab::Components, "Components");
+        nav_button(ui, &mut self.active_tab, WorkspaceTab::Seal, "Latticra Seal");
         nav_button(ui, &mut self.active_tab, WorkspaceTab::Authority, "Authority gates");
         nav_button(ui, &mut self.active_tab, WorkspaceTab::Delivery, "Delivery");
         nav_button(ui, &mut self.active_tab, WorkspaceTab::Evidence, "Evidence");
@@ -370,6 +477,7 @@ impl LatticraInstallerApp {
                 match self.active_tab {
                     WorkspaceTab::Dashboard => self.show_dashboard(ui),
                     WorkspaceTab::Components => self.show_components(ui),
+                    WorkspaceTab::Seal => self.show_seal_config(ui),
                     WorkspaceTab::Authority => self.show_authority(ui),
                     WorkspaceTab::Delivery => self.show_delivery(ui),
                     WorkspaceTab::Evidence => self.show_evidence(ui),
@@ -393,6 +501,7 @@ impl LatticraInstallerApp {
                         status_chip(ui, "version", PANEL_VERSION);
                         status_chip(ui, "profile", self.config.profile.label());
                         status_chip(ui, "mode", self.config.execution_mode_label());
+                        status_chip(ui, "seal", self.config.seal.crypto_profile.label());
                     });
                 });
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::TOP), |ui| {
@@ -463,6 +572,62 @@ impl LatticraInstallerApp {
         checkbox_note(ui, &mut self.config.components.fedora_validation, "Fedora validation files", "Fedora/Linux validation workspace, notes, and generated reports.");
         checkbox_note(ui, &mut self.config.components.docs_and_examples, "Documentation and examples", "User-facing project notes and local examples.");
         checkbox_note(ui, &mut self.config.components.developer_cli_helpers, "Developer CLI helpers", "Convenience wrappers for local exploration.");
+    }
+
+    fn show_seal_config(&mut self, ui: &mut egui::Ui) {
+        ui.heading("Latticra Seal cryptographic profile");
+        ui.label("Choose the Seal crypto posture for reports, manifests, envelopes, and future sealed payload planning. The installer still remains report-only and no-effect unless explicit future authority is implemented.");
+        ui.add_space(8.0);
+
+        let old_profile = self.config.seal.crypto_profile;
+        egui::ComboBox::from_label("Seal crypto profile")
+            .selected_text(self.config.seal.crypto_profile.label())
+            .show_ui(ui, |ui| {
+                for profile in SealCryptoProfile::all() {
+                    ui.selectable_value(&mut self.config.seal.crypto_profile, profile, profile.label());
+                }
+            });
+        if self.config.seal.crypto_profile != old_profile {
+            self.config.seal.apply_crypto_profile_defaults();
+            self.refresh_plan();
+        }
+        ui.label(self.config.seal.crypto_profile.detail());
+
+        ui.separator();
+        ui.columns(2, |columns| {
+            seal_profile_button(&mut columns[0], self, SealCryptoProfile::ReportOnly, "Zero-key report lane");
+            seal_profile_button(&mut columns[1], self, SealCryptoProfile::Blake2bEd25519, "Default evidence/signature planning lane");
+        });
+        ui.columns(2, |columns| {
+            seal_profile_button(&mut columns[0], self, SealCryptoProfile::XChaCha20Poly1305, "AEAD sealed-payload planning lane");
+            seal_profile_button(&mut columns[1], self, SealCryptoProfile::HybridSeal, "Advanced hybrid planning lane");
+        });
+
+        ui.separator();
+        ui.heading("Seal parameters");
+        ui.horizontal(|ui| {
+            ui.label("Hash");
+            ui.text_edit_singleline(&mut self.config.seal.hash_profile);
+        });
+        ui.horizontal(|ui| {
+            ui.label("Signature");
+            ui.text_edit_singleline(&mut self.config.seal.signature_profile);
+        });
+        ui.horizontal(|ui| {
+            ui.label("Encryption");
+            ui.text_edit_singleline(&mut self.config.seal.encryption_profile);
+        });
+        ui.horizontal(|ui| {
+            ui.label("Envelope");
+            ui.text_edit_singleline(&mut self.config.seal.envelope_profile);
+        });
+        ui.horizontal(|ui| {
+            ui.label("Key storage");
+            ui.text_edit_singleline(&mut self.config.seal.key_storage_profile);
+        });
+        checkbox_note(ui, &mut self.config.seal.report_only, "Seal remains report-only", "No signing, encryption, key generation, or key storage occurs from this panel lane.");
+        checkbox_note(ui, &mut self.config.seal.require_signed_manifest, "Require signed manifest metadata", "Requires signed-manifest metadata in plans/receipts when using advanced profiles.");
+        checkbox_note(ui, &mut self.config.seal.write_seal_report, "Write Seal report", "Include Latticra Seal report metadata in generated local evidence.");
     }
 
     fn show_authority(&mut self, ui: &mut egui::Ui) {
@@ -551,10 +716,11 @@ impl LatticraInstallerApp {
         ui.add_space(8.0);
         procedure_row(ui, "01", "Choose Guided Workbench", "Start from a complete but dry configuration.");
         procedure_row(ui, "02", "Inspect components", "Confirm Lat, LIR, Seal, docs, helpers, and Fedora validation intent.");
-        procedure_row(ui, "03", "Generate plan", "Write and inspect latticra-installer-plan.txt.");
-        procedure_row(ui, "04", "Run Dry-Install", "Validate the engine and create a receipt without host mutation.");
-        procedure_row(ui, "05", "Review evidence", "Read console output, plan, logs, and receipt paths.");
-        procedure_row(ui, "06", "Enable local install", "Only then enable guarded local-prefix writes.");
+        procedure_row(ui, "03", "Configure Seal", "Pick a report-only, signature-planning, AEAD-planning, or hybrid Seal profile.");
+        procedure_row(ui, "04", "Generate plan", "Write and inspect latticra-installer-plan.txt.");
+        procedure_row(ui, "05", "Run Dry-Install", "Validate the engine and create a receipt without host mutation.");
+        procedure_row(ui, "06", "Review evidence", "Read console output, plan, logs, and receipt paths.");
+        procedure_row(ui, "07", "Enable local install", "Only then enable guarded local-prefix writes.");
     }
 
     fn show_action_buttons(&mut self, ui: &mut egui::Ui) {
@@ -628,12 +794,12 @@ impl LatticraInstallerApp {
     fn show_console_panel(&mut self, ui: &mut egui::Ui) {
         ui.group(|ui| {
             ui.horizontal(|ui| {
-                ui.heading("Latticra Console");
+                ui.heading("Host Quick Terminal");
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    ui.small(format!("v{PANEL_VERSION}"));
+                    ui.small(format!("cwd={}", self.terminal_cwd));
                 });
             });
-            ui.small("Panel-aware operator console. Not an unrestricted shell.");
+            ui.small("User-level shell bridge plus panel commands. No root broker is added by the panel.");
             ui.add_space(6.0);
 
             egui::Frame::none()
@@ -643,10 +809,10 @@ impl LatticraInstallerApp {
                 .show(ui, |ui| {
                     egui::ScrollArea::vertical()
                         .id_source("latticra_embedded_console")
-                        .max_height(300.0)
+                        .max_height(520.0)
                         .stick_to_bottom(true)
                         .show(ui, |ui| {
-                            ui.monospace("latticra@panel:~");
+                            ui.monospace("host@latticra-panel:~");
                             for line in &self.console_lines {
                                 ui.label(
                                     egui::RichText::new(line)
@@ -662,7 +828,7 @@ impl LatticraInstallerApp {
                         let response = ui.add(
                             egui::TextEdit::singleline(&mut self.console_input)
                                 .font(egui::TextStyle::Monospace)
-                                .hint_text("help | status | plan | save | dry-run"),
+                                .hint_text("host command or panel command: help | status | plan | dry-run"),
                         );
                         let enter_pressed = response.lost_focus()
                             && ui.input(|input| input.key_pressed(egui::Key::Enter));
@@ -677,7 +843,7 @@ impl LatticraInstallerApp {
 
             ui.add_space(6.0);
             ui.horizontal_wrapped(|ui| {
-                for command in ["help", "status", "plan", "save", "dry-run", "clear"] {
+                for command in ["help", "pwd", "ls", "git status", "cargo check", "plan", "dry-run", "clear"] {
                     if ui.button(command).clicked() {
                         self.console_input = command.to_owned();
                         self.run_console_command();
@@ -700,7 +866,7 @@ impl LatticraInstallerApp {
 
             egui::ScrollArea::vertical()
                 .id_source("latticra_right_evidence")
-                .max_height(260.0)
+                .max_height(220.0)
                 .stick_to_bottom(!self.show_plan_over_log)
                 .show(ui, |ui| {
                     if self.show_plan_over_log {
@@ -721,6 +887,8 @@ impl LatticraInstallerApp {
             ui.monospace(format!("Latticra Panel v{PANEL_VERSION}"));
             ui.separator();
             ui.monospace(format!("profile={}", self.config.profile.label()));
+            ui.separator();
+            ui.monospace(format!("seal={}", self.config.seal.crypto_profile.label()));
             ui.separator();
             ui.monospace(format!("mode={}", self.config.execution_mode_label()));
             ui.separator();
@@ -759,8 +927,8 @@ impl eframe::App for LatticraInstallerApp {
 
         egui::SidePanel::right("right_console")
             .resizable(true)
-            .default_width(500.0)
-            .min_width(380.0)
+            .default_width(680.0)
+            .min_width(500.0)
             .show(ctx, |ui| {
                 egui::ScrollArea::vertical()
                     .id_source("right_console_scroll")
@@ -797,6 +965,24 @@ fn workbench_card(ui: &mut egui::Ui, title: &str, body: &str) {
     ui.group(|ui| {
         ui.heading(title);
         ui.label(body);
+    });
+}
+
+fn seal_profile_button(
+    ui: &mut egui::Ui,
+    app: &mut LatticraInstallerApp,
+    profile: SealCryptoProfile,
+    note: &str,
+) {
+    ui.group(|ui| {
+        ui.heading(profile.label());
+        ui.label(note);
+        ui.small(profile.detail());
+        if app.config.seal.crypto_profile == profile {
+            ui.colored_label(egui::Color32::from_rgb(120, 220, 255), "selected");
+        } else if ui.button("Use profile").clicked() {
+            app.apply_seal_crypto_profile(profile);
+        }
     });
 }
 
@@ -842,8 +1028,8 @@ fn blend(a: egui::Color32, b: egui::Color32, t: f32) -> egui::Color32 {
 pub fn run() -> eframe::Result<()> {
     let options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default()
-            .with_inner_size([1440.0, 900.0])
-            .with_min_inner_size([980.0, 680.0])
+            .with_inner_size([1600.0, 960.0])
+            .with_min_inner_size([1100.0, 720.0])
             .with_maximized(true)
             .with_resizable(true)
             .with_title(format!("Latticra Panel v{PANEL_VERSION}"))
