@@ -48,3 +48,7 @@ seal-verify: seal-cli
 
 seal-demo: seal-cli
 	./scripts/demo-latticra-seal.sh
+
+.PHONY: seal-docs
+seal-docs:
+	sh scripts/test-latticra-seal-docs.sh
