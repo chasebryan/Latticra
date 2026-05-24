@@ -9,6 +9,7 @@ on:
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md"
       - "scripts/test-latticra-panel-local-install-*.sh"
+      - "scripts/check_latticra_panel_ui_design.py"
   push:
     branches:
       - main
@@ -19,6 +20,7 @@ on:
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md"
       - "scripts/test-latticra-panel-local-install-*.sh"
+      - "scripts/check_latticra_panel_ui_design.py"
 
 permissions:
   contents: read
@@ -56,6 +58,9 @@ jobs:
 
       - name: Check Rust installer crate
         run: cargo check --manifest-path installer/latticra-installer/Cargo.toml
+
+      - name: Validate Panel UI design checkpoint
+        run: python3 scripts/check_latticra_panel_ui_design.py
 
       - name: Validate installer shell scripts
         run: |
