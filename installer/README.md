@@ -44,7 +44,7 @@ LATTICRA_INSTALLER_ROOT="$PWD/.." cargo run
 
 ## Embedded Latticra Console
 
-The console in the upper-right of the panel is not an unrestricted shell. It is a panel-aware operator console for common actions:
+The console in the upper-right of the panel is not a shell. It is a panel-aware operator console for common actions and local navigation only:
 
 ```text
 help
@@ -57,8 +57,12 @@ profile seal
 profile fedora
 mode dry
 mode local
+pwd
+cd <path>
 clear
 ```
+
+External host processes are not launched from the embedded console. Installation and dry-run behavior must use dedicated panel commands or buttons such as `plan`, `save`, `dry-run`, `mode dry`, and `mode local`.
 
 ## Dry-run
 
