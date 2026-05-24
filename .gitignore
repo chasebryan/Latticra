@@ -21,7 +21,13 @@
 *.out
 latticra_substrate_engine
 latticra_theorem_engine
+<<<<<<< HEAD
 # Local build outputs
 /build/
 latticra_nuclear_recursion_engine
 latticra-nuclear-recursion-engine.mp4
+=======
+
+# Local build outputs
+/build/
+>>>>>>> 8164d8d (Document visual theorem engines)
