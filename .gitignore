@@ -26,3 +26,10 @@ latticra_theorem_engine
 latticra_nuclear_recursion_engine
 latticra-nuclear-recursion-engine.mp4
 # Nuclear recursion visual engine outputs
+
+# Latticra Seal generated artifacts
+build/
+reports/*.txt
+reports/*.json
+reports/*-hashes.txt
+!reports/.gitkeep
