@@ -5,6 +5,8 @@ use std::fs;
 use std::sync::mpsc::Receiver;
 use std::time::Duration;
 
+const PANEL_VERSION: &str = env!("CARGO_PKG_VERSION");
+const PANEL_BUILD: &str = "gui-workbench";
 const SEAL_PNG: &[u8] = include_bytes!("../assets/latticra-panel.png");
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -17,11 +19,12 @@ enum InstallState {
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum WorkspaceTab {
-    Guided,
+    Dashboard,
     Components,
-    Safety,
+    Authority,
     Delivery,
     Evidence,
+    Procedure,
 }
 
 pub struct LatticraInstallerApp {
@@ -48,16 +51,17 @@ impl Default for LatticraInstallerApp {
         Self {
             config,
             plan,
-            status: "Ready. Guided Workbench is selected with dry-run authority.".to_owned(),
+            status: "Ready. Guided Workbench opens in dry-run authority.".to_owned(),
             logs: Vec::new(),
             console_lines: vec![
-                "Latticra Panel console online.".to_owned(),
+                format!("Latticra Panel v{PANEL_VERSION} console online."),
                 "Authority baseline: root=0 network=0 runtime_enforcement=0.".to_owned(),
+                "This is a panel-aware console, not an unrestricted shell.".to_owned(),
                 "Try: help, status, plan, save, dry-run, profile fedora, profile seal.".to_owned(),
             ],
             console_input: String::new(),
             show_plan_over_log: true,
-            active_tab: WorkspaceTab::Guided,
+            active_tab: WorkspaceTab::Dashboard,
             seal_texture: None,
             rx: None,
             install_state: InstallState::Idle,
@@ -114,6 +118,22 @@ impl LatticraInstallerApp {
         self.push_console(format!("profile -> {}", self.config.profile.label()));
     }
 
+    fn set_mode_dry(&mut self) {
+        self.config.safety.dry_run = true;
+        self.config.safety.allow_host_mutation = false;
+        self.refresh_plan();
+        self.status = "Mode set to dry-install. Host writes are disabled.".to_owned();
+        self.push_console("mode -> dry-install");
+    }
+
+    fn set_mode_local(&mut self) {
+        self.config.safety.dry_run = false;
+        self.config.safety.allow_host_mutation = true;
+        self.refresh_plan();
+        self.status = "Mode set to guarded local-prefix install.".to_owned();
+        self.push_console("mode -> guarded local-prefix install");
+    }
+
     fn save_config(&mut self) {
         self.config.safety.allow_network_effect = false;
         match toml::to_string_pretty(&self.config) {
@@ -152,6 +172,8 @@ impl LatticraInstallerApp {
                 self.status = format!("Starting {}...", self.config.execution_mode_label());
                 self.push_console(format!("launching {}", self.config.execution_mode_label()));
                 self.rx = Some(engine::launch(self.config.clone()));
+                self.active_tab = WorkspaceTab::Evidence;
+                self.show_plan_over_log = false;
             }
             Err(err) => {
                 self.install_state = InstallState::Failed;
@@ -250,6 +272,7 @@ impl LatticraInstallerApp {
                 self.push_console("modes: mode dry | mode local");
             }
             ["status"] => {
+                self.push_console(format!("version={PANEL_VERSION} build={PANEL_BUILD}"));
                 self.push_console(format!("profile={}", self.config.profile.label()));
                 self.push_console(format!("mode={}", self.config.execution_mode_label()));
                 self.push_console(format!("install_prefix={}", self.config.install_prefix));
@@ -264,18 +287,8 @@ impl LatticraInstallerApp {
             ["save"] => self.save_config(),
             ["dry-run"] | ["run"] => self.start_install(),
             ["clear"] => self.console_lines.clear(),
-            ["mode", "dry"] => {
-                self.config.safety.dry_run = true;
-                self.config.safety.allow_host_mutation = false;
-                self.refresh_plan();
-                self.push_console("mode -> dry-install");
-            }
-            ["mode", "local"] => {
-                self.config.safety.dry_run = false;
-                self.config.safety.allow_host_mutation = true;
-                self.refresh_plan();
-                self.push_console("mode -> guarded local-prefix install");
-            }
+            ["mode", "dry"] => self.set_mode_dry(),
+            ["mode", "local"] => self.set_mode_local(),
             ["profile", "guided"] | ["profile", "workbench"] => {
                 self.apply_profile(InstallProfile::DeveloperLocal)
             }
@@ -290,103 +303,130 @@ impl LatticraInstallerApp {
 
     fn show_header(&mut self, ui: &mut egui::Ui) {
         ui.horizontal(|ui| {
-            ui.heading(egui::RichText::new("Latticra Panel").size(24.0));
+            ui.heading(egui::RichText::new("Latticra Panel").size(22.0));
+            ui.label(egui::RichText::new(format!("v{PANEL_VERSION}")).monospace());
             ui.separator();
-            ui.label("first-run configuration, validation, receipts, and operator control");
+            ui.label("workbench for first-run configuration, validation, receipts, and operator control");
             ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                 ui.monospace(format!("mode={}", self.config.execution_mode_label()));
+                ui.monospace(format!("build={PANEL_BUILD}"));
                 ui.monospace("root=0 network=0 runtime=0");
             });
         });
+    }
+
+    fn show_sidebar(&mut self, ui: &mut egui::Ui) {
+        ui.vertical_centered(|ui| {
+            if let Some(texture) = &self.seal_texture {
+                let image = egui::Image::new(texture).fit_to_exact_size(egui::vec2(132.0, 132.0));
+                ui.add(image);
+            }
+            ui.heading("Latticra");
+            ui.label(egui::RichText::new(format!("Panel v{PANEL_VERSION}")).monospace());
+        });
+
+        ui.separator();
+        ui.label(egui::RichText::new("Workspace").strong());
+        nav_button(ui, &mut self.active_tab, WorkspaceTab::Dashboard, "Dashboard");
+        nav_button(ui, &mut self.active_tab, WorkspaceTab::Components, "Components");
+        nav_button(ui, &mut self.active_tab, WorkspaceTab::Authority, "Authority gates");
+        nav_button(ui, &mut self.active_tab, WorkspaceTab::Delivery, "Delivery");
+        nav_button(ui, &mut self.active_tab, WorkspaceTab::Evidence, "Evidence");
+        nav_button(ui, &mut self.active_tab, WorkspaceTab::Procedure, "Procedure");
+
+        ui.separator();
+        ui.label(egui::RichText::new("Authority baseline").strong());
+        ui.monospace("production_installer_ready=0");
+        ui.monospace("root_authority=0");
+        ui.monospace("network_authority=0");
+        ui.monospace("runtime_enforcement_authority=0");
+
+        ui.separator();
+        ui.label(egui::RichText::new("Quick mode").strong());
+        if ui.button("Dry-run mode").clicked() {
+            self.set_mode_dry();
+        }
+        if ui.button("Guarded local mode").clicked() {
+            self.set_mode_local();
+        }
+
+        ui.separator();
+        ui.label(egui::RichText::new("Status").strong());
+        ui.label(&self.status);
+        if self.install_state == InstallState::Running {
+            ui.add(egui::ProgressBar::new(self.progress()).show_percentage());
+        }
     }
 
     fn show_main_workbench(&mut self, ui: &mut egui::Ui) {
         self.refresh_plan();
         egui::ScrollArea::vertical()
             .id_source("latticra_main_workbench")
+            .auto_shrink([false, false])
             .show(ui, |ui| {
                 self.show_hero_strip(ui);
                 ui.add_space(10.0);
-                self.show_workspace_tabs(ui);
-                ui.separator();
 
                 match self.active_tab {
-                    WorkspaceTab::Guided => self.show_guided_setup(ui),
+                    WorkspaceTab::Dashboard => self.show_dashboard(ui),
                     WorkspaceTab::Components => self.show_components(ui),
-                    WorkspaceTab::Safety => self.show_safety(ui),
+                    WorkspaceTab::Authority => self.show_authority(ui),
                     WorkspaceTab::Delivery => self.show_delivery(ui),
                     WorkspaceTab::Evidence => self.show_evidence(ui),
+                    WorkspaceTab::Procedure => self.show_procedure(ui),
                 }
 
                 ui.separator();
                 self.show_action_buttons(ui);
+                ui.add_space(16.0);
             });
     }
 
     fn show_hero_strip(&mut self, ui: &mut egui::Ui) {
-        ui.horizontal_top(|ui| {
-            if let Some(texture) = &self.seal_texture {
-                let image = egui::Image::new(texture).fit_to_exact_size(egui::vec2(132.0, 132.0));
-                ui.add(image);
-            }
-
-            ui.add_space(12.0);
-            ui.vertical(|ui| {
-                ui.heading("Guided Workbench");
-                ui.label(self.config.profile.detail());
-                ui.add_space(6.0);
-                ui.horizontal_wrapped(|ui| {
-                    status_chip(ui, "production_installer_ready", "0");
-                    status_chip(ui, "root_authority", "0");
-                    status_chip(ui, "network_authority", "0");
-                    status_chip(ui, "runtime_enforcement_authority", "0");
+        ui.group(|ui| {
+            ui.horizontal_top(|ui| {
+                ui.vertical(|ui| {
+                    ui.heading("Guided Workbench");
+                    ui.label(self.config.profile.detail());
+                    ui.add_space(6.0);
+                    ui.horizontal_wrapped(|ui| {
+                        status_chip(ui, "version", PANEL_VERSION);
+                        status_chip(ui, "profile", self.config.profile.label());
+                        status_chip(ui, "mode", self.config.execution_mode_label());
+                    });
                 });
-                ui.add_space(8.0);
-                if self.install_state == InstallState::Running {
-                    ui.label(format!(
-                        "Phase {}/{}: {}",
-                        self.phase_index, self.phase_total, self.phase_title
-                    ));
-                    ui.add(egui::ProgressBar::new(self.progress()).show_percentage());
-                } else {
-                    ui.label(&self.status);
-                }
+                ui.with_layout(egui::Layout::right_to_left(egui::Align::TOP), |ui| {
+                    ui.vertical(|ui| {
+                        status_chip(ui, "production_installer_ready", "0");
+                        status_chip(ui, "root_authority", "0");
+                        status_chip(ui, "network_authority", "0");
+                        status_chip(ui, "runtime_enforcement_authority", "0");
+                    });
+                });
             });
         });
     }
 
-    fn show_workspace_tabs(&mut self, ui: &mut egui::Ui) {
-        ui.horizontal_wrapped(|ui| {
-            ui.selectable_value(&mut self.active_tab, WorkspaceTab::Guided, "Guided setup");
-            ui.selectable_value(&mut self.active_tab, WorkspaceTab::Components, "Components");
-            ui.selectable_value(&mut self.active_tab, WorkspaceTab::Safety, "Safety + evidence");
-            ui.selectable_value(&mut self.active_tab, WorkspaceTab::Delivery, "Program delivery");
-            ui.selectable_value(&mut self.active_tab, WorkspaceTab::Evidence, "Plan + receipts");
-        });
-    }
-
-    fn show_guided_setup(&mut self, ui: &mut egui::Ui) {
+    fn show_dashboard(&mut self, ui: &mut egui::Ui) {
         ui.heading("Choose a starting lane");
-        ui.label("These are opinionated Latticra-safe defaults. The average user should start with Guided Workbench, generate a plan, then run a dry-install receipt before enabling any local writes.");
+        ui.label("The workbench starts with safe, useful defaults. Generate a plan and run a dry-install receipt before enabling any local writes.");
         ui.add_space(8.0);
 
         ui.columns(2, |columns| {
-            self.profile_card(&mut columns[0], InstallProfile::DeveloperLocal, "Best first impression", "Full project surface, dry-run only, with Lat/LIR/Seal/docs/helpers ready for inspection.");
-            self.profile_card(&mut columns[1], InstallProfile::SealReportOnly, "Minimal safe lane", "Report-only Seal and documentation lane for receipts and evidence without extra project payload.");
+            self.profile_card(&mut columns[0], InstallProfile::DeveloperLocal, "Best first impression", "Full project surface with Lat, LIR, Seal, docs, helpers, and dry-run authority.");
+            self.profile_card(&mut columns[1], InstallProfile::SealReportOnly, "Minimal safe lane", "Report-only Seal and documentation lane for receipts and evidence.");
         });
         ui.add_space(6.0);
         ui.columns(2, |columns| {
             self.profile_card(&mut columns[0], InstallProfile::FedoraValidationVm, "Fedora validation", "VM-oriented Fedora/Linux validation workspace and evidence path.");
-            self.profile_card(&mut columns[1], InstallProfile::Custom, "Manual operator", "Direct control for advanced users after the defaults are understood.");
+            self.profile_card(&mut columns[1], InstallProfile::Custom, "Manual operator", "Advanced manual control after the guided defaults are understood.");
         });
 
         ui.add_space(12.0);
-        ui.group(|ui| {
-            ui.heading("Recommended first-run procedure");
-            numbered_step(ui, "1", "Keep dry-run enabled and inspect the generated plan.");
-            numbered_step(ui, "2", "Run Dry-Install to validate configuration and write an operator receipt.");
-            numbered_step(ui, "3", "Review the console output and plan/receipt evidence.");
-            numbered_step(ui, "4", "Only then enable guarded local-prefix writes for a real user-local install.");
+        ui.columns(3, |columns| {
+            workbench_card(&mut columns[0], "1. Plan", "Generate and inspect the exact installer plan before any run.");
+            workbench_card(&mut columns[1], "2. Receipt", "Run Dry-Install to validate and write an operator receipt.");
+            workbench_card(&mut columns[2], "3. Install", "Enable guarded local writes only after evidence looks correct.");
         });
     }
 
@@ -425,9 +465,9 @@ impl LatticraInstallerApp {
         checkbox_note(ui, &mut self.config.components.developer_cli_helpers, "Developer CLI helpers", "Convenience wrappers for local exploration.");
     }
 
-    fn show_safety(&mut self, ui: &mut egui::Ui) {
+    fn show_authority(&mut self, ui: &mut egui::Ui) {
         ui.heading("Safety and evidence gates");
-        ui.label("The panel should make authority visible before anything effectful can happen.");
+        ui.label("Latticra Panel makes authority visible before anything effectful can happen.");
         ui.add_space(6.0);
         checkbox_note(ui, &mut self.config.safety.dry_run, "Dry-run only", "Validation and receipts only. This is the recommended first-run mode.");
         checkbox_note(ui, &mut self.config.safety.allow_host_mutation, "Allow guarded local-prefix writes", "Required only for an actual user-local install. Still no root/system mutation.");
@@ -490,7 +530,7 @@ impl LatticraInstallerApp {
 
         egui::ScrollArea::vertical()
             .id_source("latticra_evidence_panel")
-            .max_height(360.0)
+            .max_height(ui.available_height().max(260.0))
             .stick_to_bottom(!self.show_plan_over_log)
             .show(ui, |ui| {
                 if self.show_plan_over_log {
@@ -505,6 +545,18 @@ impl LatticraInstallerApp {
             });
     }
 
+    fn show_procedure(&mut self, ui: &mut egui::Ui) {
+        ui.heading("Recommended procedure");
+        ui.label("A safe Latticra first run is evidence-first, then install-second.");
+        ui.add_space(8.0);
+        procedure_row(ui, "01", "Choose Guided Workbench", "Start from a complete but dry configuration.");
+        procedure_row(ui, "02", "Inspect components", "Confirm Lat, LIR, Seal, docs, helpers, and Fedora validation intent.");
+        procedure_row(ui, "03", "Generate plan", "Write and inspect latticra-installer-plan.txt.");
+        procedure_row(ui, "04", "Run Dry-Install", "Validate the engine and create a receipt without host mutation.");
+        procedure_row(ui, "05", "Review evidence", "Read console output, plan, logs, and receipt paths.");
+        procedure_row(ui, "06", "Enable local install", "Only then enable guarded local-prefix writes.");
+    }
+
     fn show_action_buttons(&mut self, ui: &mut egui::Ui) {
         ui.horizontal_wrapped(|ui| {
             if ui.button("Save configuration").clicked() {
@@ -515,7 +567,7 @@ impl LatticraInstallerApp {
                 self.active_tab = WorkspaceTab::Evidence;
                 self.show_plan_over_log = true;
             }
-            if ui.button("Open evidence view").clicked() {
+            if ui.button("Open evidence").clicked() {
                 self.active_tab = WorkspaceTab::Evidence;
             }
         });
@@ -570,8 +622,6 @@ impl LatticraInstallerApp {
         let response = ui.add_enabled(can_execute, button);
         if response.clicked() {
             self.start_install();
-            self.active_tab = WorkspaceTab::Evidence;
-            self.show_plan_over_log = false;
         }
     }
 
@@ -580,10 +630,10 @@ impl LatticraInstallerApp {
             ui.horizontal(|ui| {
                 ui.heading("Latticra Console");
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    ui.small("embedded operator console");
+                    ui.small(format!("v{PANEL_VERSION}"));
                 });
             });
-            ui.small("Fedora-style control console. This is panel-aware, not an unrestricted shell.");
+            ui.small("Panel-aware operator console. Not an unrestricted shell.");
             ui.add_space(6.0);
 
             egui::Frame::none()
@@ -593,7 +643,7 @@ impl LatticraInstallerApp {
                 .show(ui, |ui| {
                     egui::ScrollArea::vertical()
                         .id_source("latticra_embedded_console")
-                        .max_height(310.0)
+                        .max_height(300.0)
                         .stick_to_bottom(true)
                         .show(ui, |ui| {
                             ui.monospace("latticra@panel:~");
@@ -627,24 +677,11 @@ impl LatticraInstallerApp {
 
             ui.add_space(6.0);
             ui.horizontal_wrapped(|ui| {
-                if ui.button("help").clicked() {
-                    self.console_input = "help".to_owned();
-                    self.run_console_command();
-                }
-                if ui.button("status").clicked() {
-                    self.console_input = "status".to_owned();
-                    self.run_console_command();
-                }
-                if ui.button("plan").clicked() {
-                    self.console_input = "plan".to_owned();
-                    self.run_console_command();
-                }
-                if ui.button("dry-run").clicked() {
-                    self.console_input = "dry-run".to_owned();
-                    self.run_console_command();
-                }
-                if ui.button("clear").clicked() {
-                    self.console_lines.clear();
+                for command in ["help", "status", "plan", "save", "dry-run", "clear"] {
+                    if ui.button(command).clicked() {
+                        self.console_input = command.to_owned();
+                        self.run_console_command();
+                    }
                 }
             });
         });
@@ -678,6 +715,18 @@ impl LatticraInstallerApp {
                 });
         });
     }
+
+    fn show_status_bar(&mut self, ui: &mut egui::Ui) {
+        ui.horizontal(|ui| {
+            ui.monospace(format!("Latticra Panel v{PANEL_VERSION}"));
+            ui.separator();
+            ui.monospace(format!("profile={}", self.config.profile.label()));
+            ui.separator();
+            ui.monospace(format!("mode={}", self.config.execution_mode_label()));
+            ui.separator();
+            ui.label(&self.status);
+        });
+    }
 }
 
 impl eframe::App for LatticraInstallerApp {
@@ -689,37 +738,50 @@ impl eframe::App for LatticraInstallerApp {
             ctx.request_repaint_after(Duration::from_millis(33));
         }
 
-        egui::TopBottomPanel::top("top").show(ctx, |ui| {
+        egui::TopBottomPanel::top("top_header").show(ctx, |ui| {
             self.show_header(ui);
         });
 
-        egui::CentralPanel::default().show(ctx, |ui| {
-            ui.add_space(8.0);
-            let total_width = ui.available_width();
-            let wide = total_width >= 1180.0;
+        egui::TopBottomPanel::bottom("bottom_status").show(ctx, |ui| {
+            self.show_status_bar(ui);
+        });
 
-            if wide {
-                let console_width = (total_width * 0.36).clamp(520.0, 720.0);
-                let left_width = (total_width - console_width - 18.0).max(560.0);
-                ui.horizontal_top(|ui| {
-                    ui.vertical(|ui| {
-                        ui.set_width(left_width);
-                        self.show_main_workbench(ui);
-                    });
-                    ui.add_space(12.0);
-                    ui.vertical(|ui| {
-                        ui.set_width(console_width);
+        egui::SidePanel::left("left_workbench_nav")
+            .resizable(true)
+            .default_width(250.0)
+            .min_width(210.0)
+            .show(ctx, |ui| {
+                egui::ScrollArea::vertical()
+                    .id_source("left_workbench_nav_scroll")
+                    .auto_shrink([false, false])
+                    .show(ui, |ui| self.show_sidebar(ui));
+            });
+
+        egui::SidePanel::right("right_console")
+            .resizable(true)
+            .default_width(500.0)
+            .min_width(380.0)
+            .show(ctx, |ui| {
+                egui::ScrollArea::vertical()
+                    .id_source("right_console_scroll")
+                    .auto_shrink([false, false])
+                    .show(ui, |ui| {
                         self.show_console_panel(ui);
                         ui.add_space(10.0);
                         self.show_right_evidence_panel(ui);
                     });
-                });
-            } else {
-                self.show_console_panel(ui);
-                ui.separator();
-                self.show_main_workbench(ui);
-            }
+            });
+
+        egui::CentralPanel::default().show(ctx, |ui| {
+            self.show_main_workbench(ui);
         });
+    }
+}
+
+fn nav_button(ui: &mut egui::Ui, active: &mut WorkspaceTab, tab: WorkspaceTab, label: &str) {
+    let selected = *active == tab;
+    if ui.selectable_label(selected, label).clicked() {
+        *active = tab;
     }
 }
 
@@ -731,14 +793,26 @@ fn status_chip(ui: &mut egui::Ui, key: &str, value: &str) {
     );
 }
 
-fn numbered_step(ui: &mut egui::Ui, number: &str, text: &str) {
-    ui.horizontal(|ui| {
-        ui.label(
-            egui::RichText::new(number)
-                .strong()
-                .color(egui::Color32::from_rgb(120, 220, 255)),
-        );
-        ui.label(text);
+fn workbench_card(ui: &mut egui::Ui, title: &str, body: &str) {
+    ui.group(|ui| {
+        ui.heading(title);
+        ui.label(body);
+    });
+}
+
+fn procedure_row(ui: &mut egui::Ui, number: &str, title: &str, body: &str) {
+    ui.group(|ui| {
+        ui.horizontal_top(|ui| {
+            ui.label(
+                egui::RichText::new(number)
+                    .strong()
+                    .color(egui::Color32::from_rgb(120, 220, 255)),
+            );
+            ui.vertical(|ui| {
+                ui.label(egui::RichText::new(title).strong());
+                ui.label(body);
+            });
+        });
     });
 }
 
@@ -768,17 +842,17 @@ fn blend(a: egui::Color32, b: egui::Color32, t: f32) -> egui::Color32 {
 pub fn run() -> eframe::Result<()> {
     let options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default()
-            .with_inner_size([1440.0, 960.0])
-            .with_min_inner_size([1040.0, 720.0])
+            .with_inner_size([1440.0, 900.0])
+            .with_min_inner_size([980.0, 680.0])
             .with_maximized(true)
             .with_resizable(true)
-            .with_title("Latticra Panel")
+            .with_title(format!("Latticra Panel v{PANEL_VERSION}"))
             .with_app_id("latticra-panel"),
         ..Default::default()
     };
 
     eframe::run_native(
-        "Latticra Panel",
+        &format!("Latticra Panel v{PANEL_VERSION}"),
         options,
         Box::new(|_| Ok(Box::<LatticraInstallerApp>::default())),
     )
