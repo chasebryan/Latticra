@@ -1,21 +1,50 @@
+#define _POSIX_C_SOURCE 200809L
+
+#include <dirent.h>
 #include <errno.h>
+#include <limits.h>
+#include <openssl/evp.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <unistd.h>
 
-#define LATTICRA_SEAL_VERSION "v0.1"
+#ifndef PATH_MAX
+#define PATH_MAX 4096
+#endif
+
+#define LATTICRA_SEAL_VERSION "v0.2-dev"
 #define MANIFEST_PATH "latticra.seal"
 #define REPORT_DIR "reports"
 #define REPORT_PATH "reports/latticra-seal-cli-report.txt"
+#define HASH_LIST_PATH "reports/latticra-seal-cli-hashes.txt"
 
 typedef struct {
     int failures;
     int warnings;
     FILE *report;
 } SealRun;
+
+typedef struct {
+    char **items;
+    size_t len;
+    size_t cap;
+} PathList;
+
+static char *xstrdup(const char *s) {
+    size_t n = strlen(s) + 1;
+    char *out = malloc(n);
+
+    if (!out) {
+        return NULL;
+    }
+
+    memcpy(out, s, n);
+    return out;
+}
 
 static bool file_exists(const char *path) {
     struct stat st;
@@ -28,8 +57,17 @@ static void ensure_report_dir(void) {
     }
 }
 
+static const char *visible_path(const char *path) {
+    if (path[0] == '.' && path[1] == '/') {
+        return path + 2;
+    }
+
+    return path;
+}
+
 static char *read_file(const char *path) {
     FILE *f = fopen(path, "rb");
+
     if (!f) {
         return NULL;
     }
@@ -40,6 +78,7 @@ static char *read_file(const char *path) {
     }
 
     long size = ftell(f);
+
     if (size < 0) {
         fclose(f);
         return NULL;
@@ -48,6 +87,7 @@ static char *read_file(const char *path) {
     rewind(f);
 
     char *buf = calloc((size_t)size + 1, 1);
+
     if (!buf) {
         fclose(f);
         return NULL;
@@ -68,7 +108,7 @@ static char *read_file(const char *path) {
 static void emit(SealRun *run, const char *line) {
     puts(line);
 
-    if (run->report) {
+    if (run && run->report) {
         fputs(line, run->report);
         fputc('\n', run->report);
     }
@@ -81,23 +121,230 @@ static void section(SealRun *run, const char *name) {
 }
 
 static void pass(SealRun *run, const char *msg) {
-    char line[512];
+    char line[1024];
     snprintf(line, sizeof(line), "PASS: %s", msg);
     emit(run, line);
 }
 
-static void warn(SealRun *run, const char *msg) {
-    char line[512];
-    run->warnings++;
+static void warn_run(SealRun *run, const char *msg) {
+    char line[1024];
+
+    if (run) {
+        run->warnings++;
+    }
+
     snprintf(line, sizeof(line), "WARN: %s", msg);
     emit(run, line);
 }
 
-static void fail(SealRun *run, const char *msg) {
-    char line[512];
-    run->failures++;
+static void fail_run(SealRun *run, const char *msg) {
+    char line[1024];
+
+    if (run) {
+        run->failures++;
+    }
+
     snprintf(line, sizeof(line), "FAIL: %s", msg);
     emit(run, line);
+}
+
+static bool pathlist_push(PathList *list, const char *path) {
+    if (list->len == list->cap) {
+        size_t next_cap = list->cap == 0 ? 64 : list->cap * 2;
+        char **next = realloc(list->items, next_cap * sizeof(char *));
+
+        if (!next) {
+            return false;
+        }
+
+        list->items = next;
+        list->cap = next_cap;
+    }
+
+    list->items[list->len] = xstrdup(path);
+
+    if (!list->items[list->len]) {
+        return false;
+    }
+
+    list->len++;
+    return true;
+}
+
+static void pathlist_free(PathList *list) {
+    for (size_t i = 0; i < list->len; i++) {
+        free(list->items[i]);
+    }
+
+    free(list->items);
+    list->items = NULL;
+    list->len = 0;
+    list->cap = 0;
+}
+
+static int cmp_string_ptr(const void *a, const void *b) {
+    const char *const *pa = a;
+    const char *const *pb = b;
+    return strcmp(*pa, *pb);
+}
+
+static const char *basename_of(const char *path) {
+    const char *slash = strrchr(path, '/');
+
+    if (!slash) {
+        return path;
+    }
+
+    return slash + 1;
+}
+
+static bool ends_with(const char *s, const char *suffix) {
+    size_t a = strlen(s);
+    size_t b = strlen(suffix);
+
+    if (b > a) {
+        return false;
+    }
+
+    return strcmp(s + a - b, suffix) == 0;
+}
+
+static bool excluded_dir_name(const char *name) {
+    return strcmp(name, ".git") == 0 ||
+           strcmp(name, "target") == 0 ||
+           strcmp(name, "build") == 0 ||
+           strcmp(name, "dist") == 0 ||
+           strcmp(name, "node_modules") == 0 ||
+           strcmp(name, ".venv") == 0 ||
+           strcmp(name, "__pycache__") == 0 ||
+           strcmp(name, "reports") == 0;
+}
+
+static bool excluded_file_name(const char *path) {
+    const char *name = basename_of(path);
+
+    return ends_with(name, ".log") ||
+           ends_with(name, ".tmp") ||
+           strcmp(name, ".DS_Store") == 0;
+}
+
+static void collect_files(SealRun *run, PathList *list, const char *dir_path) {
+    DIR *dir = opendir(dir_path);
+
+    if (!dir) {
+        char msg[512];
+        snprintf(msg, sizeof(msg), "could not open directory: %s", dir_path);
+        warn_run(run, msg);
+        return;
+    }
+
+    struct dirent *entry;
+
+    while ((entry = readdir(dir)) != NULL) {
+        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
+            continue;
+        }
+
+        char path[PATH_MAX];
+
+        int n = snprintf(path, sizeof(path), "%s/%s", dir_path, entry->d_name);
+
+        if (n < 0 || (size_t)n >= sizeof(path)) {
+            warn_run(run, "skipped path because it was too long");
+            continue;
+        }
+
+        struct stat st;
+
+        if (lstat(path, &st) != 0) {
+            char msg[512];
+            snprintf(msg, sizeof(msg), "could not stat path: %s", path);
+            warn_run(run, msg);
+            continue;
+        }
+
+        if (S_ISDIR(st.st_mode)) {
+            if (!excluded_dir_name(entry->d_name)) {
+                collect_files(run, list, path);
+            }
+
+            continue;
+        }
+
+        if (S_ISREG(st.st_mode)) {
+            if (!excluded_file_name(path)) {
+                if (!pathlist_push(list, path)) {
+                    fail_run(run, "out of memory while collecting file paths");
+                    closedir(dir);
+                    return;
+                }
+            }
+        }
+    }
+
+    closedir(dir);
+}
+
+static bool sha256_file(const char *path, char out_hex[65]) {
+    bool ok = false;
+    unsigned char digest[EVP_MAX_MD_SIZE];
+    unsigned int digest_len = 0;
+    unsigned char buf[8192];
+
+    FILE *f = fopen(path, "rb");
+
+    if (!f) {
+        return false;
+    }
+
+    EVP_MD_CTX *ctx = EVP_MD_CTX_new();
+
+    if (!ctx) {
+        fclose(f);
+        return false;
+    }
+
+    if (EVP_DigestInit_ex(ctx, EVP_sha256(), NULL) != 1) {
+        goto done;
+    }
+
+    for (;;) {
+        size_t n = fread(buf, 1, sizeof(buf), f);
+
+        if (n > 0) {
+            if (EVP_DigestUpdate(ctx, buf, n) != 1) {
+                goto done;
+            }
+        }
+
+        if (n < sizeof(buf)) {
+            if (ferror(f)) {
+                goto done;
+            }
+
+            break;
+        }
+    }
+
+    if (EVP_DigestFinal_ex(ctx, digest, &digest_len) != 1) {
+        goto done;
+    }
+
+    if (digest_len != 32) {
+        goto done;
+    }
+
+    for (unsigned int i = 0; i < digest_len; i++) {
+        snprintf(out_hex + (i * 2), 3, "%02x", digest[i]);
+    }
+
+    out_hex[64] = '\0';
+    ok = true;
+
+done:
+    EVP_MD_CTX_free(ctx);
+    fclose(f);
+    return ok;
 }
 
 static void require_manifest_field(
@@ -109,47 +356,18 @@ static void require_manifest_field(
     if (strstr(manifest, needle)) {
         pass(run, label);
     } else {
-        fail(run, label);
+        fail_run(run, label);
     }
 }
 
 static void check_manifest_shape(SealRun *run, const char *manifest) {
     section(run, "Manifest shape");
 
-    require_manifest_field(
-        run,
-        manifest,
-        "schema = \"latticra.seal/v0.1\"",
-        "schema is latticra.seal/v0.1"
-    );
-
-    require_manifest_field(
-        run,
-        manifest,
-        "format = \"toml\"",
-        "format is TOML-compatible"
-    );
-
-    require_manifest_field(
-        run,
-        manifest,
-        "kind = \"local-integrity-manifest\"",
-        "kind is local-integrity-manifest"
-    );
-
-    require_manifest_field(
-        run,
-        manifest,
-        "algorithm = \"sha256\"",
-        "hash algorithm is sha256"
-    );
-
-    require_manifest_field(
-        run,
-        manifest,
-        "trust_boundary = \"project-root\"",
-        "trust boundary is project-root"
-    );
+    require_manifest_field(run, manifest, "schema = \"latticra.seal/v0.1\"", "schema is latticra.seal/v0.1");
+    require_manifest_field(run, manifest, "format = \"toml\"", "format is TOML-compatible");
+    require_manifest_field(run, manifest, "kind = \"local-integrity-manifest\"", "kind is local-integrity-manifest");
+    require_manifest_field(run, manifest, "algorithm = \"sha256\"", "hash algorithm is sha256");
+    require_manifest_field(run, manifest, "trust_boundary = \"project-root\"", "trust boundary is project-root");
 }
 
 static void check_policy_shape(SealRun *run, const char *manifest) {
@@ -168,14 +386,80 @@ static void check_required_files(SealRun *run) {
     if (file_exists("README.md")) {
         pass(run, "README.md exists");
     } else {
-        fail(run, "README.md is missing");
+        fail_run(run, "README.md is missing");
     }
 
     if (file_exists("LICENSE")) {
         pass(run, "LICENSE exists");
     } else {
-        fail(run, "LICENSE is missing");
+        fail_run(run, "LICENSE is missing");
     }
+}
+
+static void write_digest_summary(SealRun *run) {
+    section(run, "Digest summary");
+
+    PathList list;
+    list.items = NULL;
+    list.len = 0;
+    list.cap = 0;
+
+    collect_files(run, &list, ".");
+
+    qsort(list.items, list.len, sizeof(char *), cmp_string_ptr);
+
+    FILE *hashes = fopen(HASH_LIST_PATH, "w");
+
+    if (!hashes) {
+        fail_run(run, "could not write hash list");
+        pathlist_free(&list);
+        return;
+    }
+
+    size_t hashed_count = 0;
+
+    for (size_t i = 0; i < list.len; i++) {
+        char hex[65];
+
+        if (!sha256_file(list.items[i], hex)) {
+            char msg[512];
+            snprintf(msg, sizeof(msg), "could not hash file: %s", visible_path(list.items[i]));
+            fail_run(run, msg);
+            continue;
+        }
+
+        fprintf(hashes, "%s  %s\n", hex, visible_path(list.items[i]));
+        hashed_count++;
+    }
+
+    fclose(hashes);
+
+    char manifest_hex[65];
+    char root_hex[65];
+
+    if (sha256_file(MANIFEST_PATH, manifest_hex)) {
+        char line[160];
+        snprintf(line, sizeof(line), "manifest_sha256: %s", manifest_hex);
+        emit(run, line);
+    } else {
+        fail_run(run, "could not hash manifest");
+    }
+
+    if (sha256_file(HASH_LIST_PATH, root_hex)) {
+        char line[160];
+        snprintf(line, sizeof(line), "root_digest_v0_2: %s", root_hex);
+        emit(run, line);
+    } else {
+        fail_run(run, "could not hash digest list");
+    }
+
+    char count_line[160];
+    snprintf(count_line, sizeof(count_line), "hashed_files: %zu", hashed_count);
+    emit(run, count_line);
+
+    emit(run, "hash_list: " HASH_LIST_PATH);
+
+    pathlist_free(&list);
 }
 
 static void write_header(SealRun *run) {
@@ -205,6 +489,7 @@ static int finish(SealRun *run) {
     }
 
     char summary[128];
+
     snprintf(
         summary,
         sizeof(summary),
@@ -237,7 +522,7 @@ static int command_check(void) {
     section(&run, "Manifest presence");
 
     if (!file_exists(MANIFEST_PATH)) {
-        fail(&run, "latticra.seal is missing");
+        fail_run(&run, "latticra.seal is missing");
         int code = finish(&run);
         fclose(run.report);
         return code;
@@ -246,8 +531,9 @@ static int command_check(void) {
     pass(&run, "latticra.seal exists");
 
     char *manifest = read_file(MANIFEST_PATH);
+
     if (!manifest) {
-        fail(&run, "could not read latticra.seal");
+        fail_run(&run, "could not read latticra.seal");
         int code = finish(&run);
         fclose(run.report);
         return code;
@@ -256,6 +542,7 @@ static int command_check(void) {
     check_manifest_shape(&run, manifest);
     check_policy_shape(&run, manifest);
     check_required_files(&run);
+    write_digest_summary(&run);
 
     free(manifest);
 
@@ -273,12 +560,14 @@ static void print_manifest_value(
     snprintf(pattern, sizeof(pattern), "%s = \"", key);
 
     const char *start = strstr(manifest, pattern);
+
     if (!start) {
         printf("%s: missing\n", label);
         return;
     }
 
     start += strlen(pattern);
+
     const char *end = strchr(start, '"');
 
     if (!end || end <= start) {
@@ -313,22 +602,41 @@ static int command_manifest(void) {
     return 0;
 }
 
-static int command_report(void) {
-    FILE *f = fopen(REPORT_PATH, "r");
+static int print_file_to_stdout(const char *path, const char *missing_hint) {
+    FILE *f = fopen(path, "r");
 
     if (!f) {
-        fprintf(stderr, "no report found at %s\n", REPORT_PATH);
-        fprintf(stderr, "run: ./build/latticra-seal check\n");
+        fprintf(stderr, "no file found at %s\n", path);
+
+        if (missing_hint) {
+            fprintf(stderr, "%s\n", missing_hint);
+        }
+
         return 1;
     }
 
     int ch;
+
     while ((ch = fgetc(f)) != EOF) {
         putchar(ch);
     }
 
     fclose(f);
     return 0;
+}
+
+static int command_report(void) {
+    return print_file_to_stdout(
+        REPORT_PATH,
+        "run: ./build/latticra-seal check"
+    );
+}
+
+static int command_hashes(void) {
+    return print_file_to_stdout(
+        HASH_LIST_PATH,
+        "run: ./build/latticra-seal check"
+    );
 }
 
 static int command_version(void) {
@@ -343,13 +651,15 @@ static int command_help(void) {
     puts("  latticra-seal check");
     puts("  latticra-seal manifest");
     puts("  latticra-seal report");
+    puts("  latticra-seal hashes");
     puts("  latticra-seal version");
     puts("  latticra-seal help");
     puts("");
     puts("Commands:");
-    puts("  check      verify manifest shape, policy shape, and required files");
+    puts("  check      verify manifest, policy, required files, and SHA-256 digests");
     puts("  manifest   print a compact manifest summary");
     puts("  report     print the latest generated CLI report");
+    puts("  hashes     print the latest generated file hash list");
     puts("  version    print the Seal CLI version");
     puts("  help       show this help message");
     return 0;
@@ -372,6 +682,10 @@ int main(int argc, char **argv) {
 
     if (strcmp(command, "report") == 0) {
         return command_report();
+    }
+
+    if (strcmp(command, "hashes") == 0) {
+        return command_hashes();
     }
 
     if (strcmp(command, "version") == 0) {

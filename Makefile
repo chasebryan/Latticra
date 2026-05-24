@@ -7,7 +7,7 @@ seal:
 
 seal-cli:
 	mkdir -p build
-	gcc -Wall -Wextra -O2 -std=c11 -o build/latticra-seal seal/latticra-seal.c
+	gcc -Wall -Wextra -O2 -std=c11 -o build/latticra-seal seal/latticra-seal.c -lcrypto
 
 seal-run: seal-cli
 	./build/latticra-seal
@@ -25,3 +25,8 @@ seal-report: seal-cli
 
 seal-version: seal-cli
 	./build/latticra-seal version
+
+.PHONY: seal-hashes
+
+seal-hashes: seal-cli
+	./build/latticra-seal hashes
