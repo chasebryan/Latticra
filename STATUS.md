@@ -1,7 +1,8 @@
 # Latticra Status
 
 Status: public status shortcut
-Last updated: 2026-05-22 02:45 CDT
+Last updated: 2026-05-24 CDT
+Latest current estimate refresh note: 2026-05-24 CDT
 Latest Seal core evidence status surface note: 2026-05-22 02:24 CDT
 Latest Seal core evidence index alignment note: 2026-05-22 02:37 CDT
 Latest Seal core evidence public entrypoint alignment note: 2026-05-22 02:45 CDT
@@ -79,20 +80,25 @@ docs/strategy/README.md
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 36% |
+| Overall Latticra system | 39% |
+| Latticra Seal / local evidence layer | 34% |
+| Latticra Panel / local control surface | 28% |
 | L-UI parser / AST / string foundation | 87% |
-| Foundation documents and contracts | 90% |
-| Public documentation posture | 84% |
-| Strategy/status/funding framework | 58% |
+| Foundation documents and contracts | 92% |
+| Public documentation posture | 88% |
+| Strategy/status/funding framework | 60% |
 | Lat / Latticra Programming Language | 25% |
 | LIR / Intermediate Representation | 22% |
-| C/C++ foundation direction | 14% |
+| C/C++ foundation direction | 18% |
 | Constrained C++ authority layer | 4% |
-| Runtime / operating-system-universe direction | 17% |
+| Nucleus real task execution | 11% |
+| Runtime / operating-system-universe direction | 19% |
+| Security-hardening implementation | 7% |
+| Public product readiness | 8% |
 
-Previous baselines retained for status-audit continuity: overall system 19%, 20%, 23%, 24%, 26%, 27%, 28%, 29%, 30%, 31%, 32%, 33%, 34%, and 35%; L-UI parser / AST / string foundation 86%; foundation documents and contracts 74%, 75%, 78%, 79%, 80%, 81%, 82%, 83%, 84%, 85%, 86%, 87%, 88%, and 89%; public documentation posture 68%, 69%, 72%, 73%, 74%, 75%, 76%, 77%, 78%, 79%, 80%, 81%, 82%, and 83%; strategy/status/funding framework 42%, 43%, 46%, 47%, 48%, 49%, 50%, 51%, 52%, 53%, 54%, 55%, 56%, and 57%; Lat / Latticra Programming Language 10%, 12%, 18%, 19%, 21%, 23%, and 24%; LIR / Intermediate Representation 11%, 18%, 19%, and 22%; C/C++ foundation direction 14%; constrained C++ authority layer 4%; and Runtime / operating-system-universe direction 6%, 9%, 11%, 13%, 14%, 15%, and 16%.
+These percentages are planning estimates only. They are not release promises, production-readiness metrics, security guarantees, Fedora approval claims, runtime-enforcement claims, or operating-system completeness claims.
 
-These percentages are planning estimates only. They are not release promises or production-readiness metrics.
+
 
 ## Current direction checkpoint
 
@@ -183,7 +189,7 @@ Completion percentage review
 ## Current next step
 
 ```text
-Completion estimate review only if capability posture changes
+Panel, Seal, and estimate review only when capability posture changes
 ```
 
 ## Current Seal core evidence boundary
