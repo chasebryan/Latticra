@@ -1,5 +1,14 @@
 # Latticra Seal Documentation
 
+> **Documentation update:** The former standalone Latticra Seal handbook has been superseded as the main project book by **The Latticra System Substrate: An Effect at Modern Security**.
+>
+> - [System Substrate documentation landing page](../latticra-system-substrate/)
+> - [System Substrate PDF](../latticra-system-substrate/the-latticra-system-substrate.pdf)
+> - [System Substrate DOCX](../latticra-system-substrate/the-latticra-system-substrate.docx)
+>
+> The file `latticra-seal-handbook.pdf` is retained as a compatibility path, but it now points to the System Substrate PDF content.
+
+
 Latticra Seal is the verification, reporting, and policy-boundary layer inside the Latticra ecosystem.
 
 It is designed to help Latticra describe, inspect, and verify local project/system state through bounded evidence such as manifests, hashes, receipts, policy checks, status reports, and no-effect runtime-boundary metadata.

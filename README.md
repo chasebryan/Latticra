@@ -6,8 +6,10 @@
 
 > “The simulacrum is never what hides the truth.” — Jean Baudrillard
 
-**Featured download:** [Latticra Seal Documentation Handbook PDF](docs/latticra-seal/latticra-seal-handbook.pdf)  
-**Source docs:** [docs/latticra-seal/](docs/latticra-seal/)
+**Featured handbook:** [The Latticra System Substrate PDF](docs/latticra-system-substrate/the-latticra-system-substrate.pdf)  
+**Editable handbook:** [The Latticra System Substrate DOCX](docs/latticra-system-substrate/the-latticra-system-substrate.docx)  
+**System Substrate docs:** [docs/latticra-system-substrate/](docs/latticra-system-substrate/)  
+**Seal subsystem docs:** [docs/latticra-seal/](docs/latticra-seal/)
 
 Latticra is an evidence-bound systems substrate for Linux-era and AI-era computing. Its purpose is to make system actions, automation, tool execution, and agentic workflows safer through deny-by-default authority, contract-first validation, cryptographic-verification planning, no-effect reporting, runtime gating, and auditable evidence.
 
@@ -27,6 +29,7 @@ This repository is foundational engineering work. It is not a deployed platform,
 - [Latticra Panel](#latticra-panel)
 - [Lat, LIR, and L-UI](#lat-lir-and-l-ui)
 - [Nucleus and Runtime Boundary](#nucleus-and-runtime-boundary)
+- [The Latticra System Substrate](#the-latticra-system-substrate)
 - [Latticra Seal](#latticra-seal)
 - [Fedora and local RPM work](#fedora-and-local-rpm-work)
 - [Visual theorem engines](#visual-theorem-engines)
@@ -499,6 +502,24 @@ Relevant documents:
 
 ---
 
+## The Latticra System Substrate
+
+The main project handbook is now **The Latticra System Substrate: An Effect at Modern Security**.
+
+Downloads:
+
+- [PDF edition](docs/latticra-system-substrate/the-latticra-system-substrate.pdf)
+- [Editable DOCX edition](docs/latticra-system-substrate/the-latticra-system-substrate.docx)
+- [Documentation landing page](docs/latticra-system-substrate/)
+
+This book supersedes the former standalone Latticra Seal handbook as the primary reader-facing project guide. It presents Latticra as an early, evidence-bound system substrate for making security-relevant effects visible, typed, reviewable, reproducible, and eventually governable.
+
+It covers the larger Latticra project: Seal, Panel, guarded local-prefix installation, receipts, reports, command contracts, Lat/LIR contract surfaces, validation lanes, runtime-boundary metadata, and research artifacts.
+
+It should not be read as a claim that Latticra is a production security product, hardened sandbox, malware prevention system, ransomware prevention system, kernel enforcement layer, root installer, network authority, or operating-system replacement.
+
+---
+
 ## Nucleus and Runtime Boundary
 
 Nucleus is the coordination and task-boundary layer. Its current implementation is report-only and denied by default.
@@ -804,6 +825,7 @@ Start here:
 - [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md)
 - [`docs/status/ANNOUNCEMENTS.md`](docs/status/ANNOUNCEMENTS.md)
 - [`docs/FOUNDATION_INDEX.md`](docs/FOUNDATION_INDEX.md)
+- [`docs/latticra-system-substrate/`](docs/latticra-system-substrate/)
 - [`docs/latticra/DOCUMENTATION_MAP.md`](docs/latticra/DOCUMENTATION_MAP.md)
 - [`docs/strategy/README.md`](docs/strategy/README.md)
 - [`docs/project_notes/README.md`](docs/project_notes/README.md)
