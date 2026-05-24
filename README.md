@@ -495,3 +495,9 @@ Read the short overview here:
 ## License
 
 Latticra uses Apache-2.0. See [`LICENSE`](LICENSE) and [`docs/LICENSE_POLICY.md`](docs/LICENSE_POLICY.md).
+
+## Visual theorem engines
+
+Latticra includes C-based visual theorem engines for rendering substrate, matrix, abstraction, axiom, particle-unification, quantum-deceleration, and regenesis models as MP4 demonstrations.
+
+See [`docs/VISUAL_THEOREM_ENGINES.md`](docs/VISUAL_THEOREM_ENGINES.md).
