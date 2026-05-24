@@ -3,6 +3,11 @@
 seal:
 	./scripts/latticra-seal-smoke.sh
 
+.PHONY: seal-policy-denials
+
+seal-policy-denials:
+	./scripts/test-latticra-seal-policy-denials.sh
+
 .PHONY: seal-cli seal-run
 
 seal-cli:
