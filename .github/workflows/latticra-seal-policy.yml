@@ -1,0 +1,36 @@
+name: Latticra Seal Policy
+
+on:
+  pull_request:
+    paths:
+      - "Makefile"
+      - "latticra.seal"
+      - "scripts/latticra-seal-smoke.sh"
+      - "scripts/test-latticra-seal-policy-denials.sh"
+      - ".github/workflows/latticra-seal-policy.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "Makefile"
+      - "latticra.seal"
+      - "scripts/latticra-seal-smoke.sh"
+      - "scripts/test-latticra-seal-policy-denials.sh"
+      - ".github/workflows/latticra-seal-policy.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  seal-policy:
+    name: Seal policy regression
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Run Seal smoke check
+        run: make seal
+
+      - name: Run Seal policy regression
+        run: make seal-policy-denials
