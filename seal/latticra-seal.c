@@ -16,7 +16,7 @@
 #define PATH_MAX 4096
 #endif
 
-#define LATTICRA_SEAL_VERSION "v0.2-dev"
+#define LATTICRA_SEAL_VERSION "v0.3-dev"
 #define MANIFEST_PATH "latticra.seal"
 #define REPORT_DIR "reports"
 #define REPORT_PATH "reports/latticra-seal-cli-report.txt"
@@ -34,6 +34,17 @@ typedef struct {
     size_t len;
     size_t cap;
 } PathList;
+
+typedef struct {
+    char *hash;
+    char *path;
+} HashEntry;
+
+typedef struct {
+    HashEntry *items;
+    size_t len;
+    size_t cap;
+} HashList;
 
 static char *xstrdup(const char *s) {
     size_t n = strlen(s) + 1;
@@ -605,6 +616,198 @@ static int command_manifest(void) {
 }
 
 
+
+static bool files_equal(const char *a, const char *b);
+
+static void strip_newline(char *s) {
+    size_t n = strlen(s);
+
+    while (n > 0 && (s[n - 1] == '\n' || s[n - 1] == '\r')) {
+        s[n - 1] = '\0';
+        n--;
+    }
+}
+
+static bool hashlist_push(HashList *list, const char *hash, const char *path) {
+    if (list->len == list->cap) {
+        size_t next_cap = list->cap == 0 ? 64 : list->cap * 2;
+        HashEntry *next = realloc(list->items, next_cap * sizeof(HashEntry));
+
+        if (!next) {
+            return false;
+        }
+
+        list->items = next;
+        list->cap = next_cap;
+    }
+
+    list->items[list->len].hash = xstrdup(hash);
+    list->items[list->len].path = xstrdup(path);
+
+    if (!list->items[list->len].hash || !list->items[list->len].path) {
+        free(list->items[list->len].hash);
+        free(list->items[list->len].path);
+        return false;
+    }
+
+    list->len++;
+    return true;
+}
+
+static void hashlist_free(HashList *list) {
+    for (size_t i = 0; i < list->len; i++) {
+        free(list->items[i].hash);
+        free(list->items[i].path);
+    }
+
+    free(list->items);
+    list->items = NULL;
+    list->len = 0;
+    list->cap = 0;
+}
+
+static int cmp_hash_entry_path(const void *a, const void *b) {
+    const HashEntry *ea = a;
+    const HashEntry *eb = b;
+    return strcmp(ea->path, eb->path);
+}
+
+
+static bool read_hash_list(const char *path, HashList *list) {
+    FILE *f = fopen(path, "r");
+
+    if (!f) {
+        return false;
+    }
+
+    char line[8192];
+
+    while (fgets(line, sizeof(line), f)) {
+        strip_newline(line);
+
+        if (strlen(line) < 67) {
+            continue;
+        }
+
+        char hash[65];
+        memcpy(hash, line, 64);
+        hash[64] = '\0';
+
+        char *file_path = line + 64;
+
+        while (*file_path == ' ' || *file_path == '\t') {
+            file_path++;
+        }
+
+        if (*file_path == '\0') {
+            continue;
+        }
+
+        if (!hashlist_push(list, hash, file_path)) {
+            fclose(f);
+            return false;
+        }
+    }
+
+    fclose(f);
+
+    qsort(list->items, list->len, sizeof(HashEntry), cmp_hash_entry_path);
+    return true;
+}
+
+static void emit_change(SealRun *run, const char *kind, const char *path) {
+    printf("%s: %s\n", kind, path);
+
+    if (run && run->report) {
+        fprintf(run->report, "%s: %s\n", kind, path);
+    }
+}
+
+
+static void compare_hash_lists_report(
+    SealRun *run,
+    const char *baseline_path,
+    const char *current_path
+) {
+    if (files_equal(current_path, baseline_path)) {
+        pass(run, "current file hashes match saved baseline");
+        return;
+    }
+
+    HashList baseline;
+    HashList current;
+
+    baseline.items = NULL;
+    baseline.len = 0;
+    baseline.cap = 0;
+
+    current.items = NULL;
+    current.len = 0;
+    current.cap = 0;
+
+    if (!read_hash_list(baseline_path, &baseline)) {
+        fail_run(run, "could not read saved baseline");
+        return;
+    }
+
+    if (!read_hash_list(current_path, &current)) {
+        hashlist_free(&baseline);
+        fail_run(run, "could not read current hash list");
+        return;
+    }
+
+    size_t i = 0;
+    size_t j = 0;
+    size_t changes = 0;
+
+    while (i < baseline.len || j < current.len) {
+        if (i >= baseline.len) {
+            emit_change(run, "ADDED", current.items[j].path);
+            changes++;
+            j++;
+            continue;
+        }
+
+        if (j >= current.len) {
+            emit_change(run, "REMOVED", baseline.items[i].path);
+            changes++;
+            i++;
+            continue;
+        }
+
+        int cmp = strcmp(baseline.items[i].path, current.items[j].path);
+
+        if (cmp == 0) {
+            if (strcmp(baseline.items[i].hash, current.items[j].hash) != 0) {
+                emit_change(run, "MODIFIED", current.items[j].path);
+                changes++;
+            }
+
+            i++;
+            j++;
+        } else if (cmp < 0) {
+            emit_change(run, "REMOVED", baseline.items[i].path);
+            changes++;
+            i++;
+        } else {
+            emit_change(run, "ADDED", current.items[j].path);
+            changes++;
+            j++;
+        }
+    }
+
+    if (changes == 0) {
+        pass(run, "current file hashes match saved baseline");
+    } else {
+        char summary[160];
+        snprintf(summary, sizeof(summary), "saved baseline differs: %zu change(s)", changes);
+        fail_run(run, summary);
+    }
+
+    hashlist_free(&baseline);
+    hashlist_free(&current);
+}
+
 static bool copy_file(const char *src, const char *dst) {
     FILE *in = fopen(src, "rb");
 
@@ -779,10 +982,8 @@ static int command_verify(void) {
 
     section(&run, "Baseline comparison");
 
-    if (run.failures == 0 && files_equal(HASH_LIST_PATH, BASELINE_PATH)) {
-        pass(&run, "current file hashes match latticra.seal.lock");
-    } else if (run.failures == 0) {
-        fail_run(&run, "current file hashes differ from latticra.seal.lock");
+    if (run.failures == 0) {
+        compare_hash_lists_report(&run, BASELINE_PATH, HASH_LIST_PATH);
     } else {
         warn_run(&run, "baseline comparison skipped because earlier checks failed");
     }
