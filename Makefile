@@ -38,3 +38,8 @@ seal-baseline: seal-cli
 
 seal-verify: seal-cli
 	./build/latticra-seal verify
+
+.PHONY: seal-demo
+
+seal-demo: seal-cli
+	./scripts/demo-latticra-seal.sh
