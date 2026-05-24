@@ -951,3 +951,49 @@ Read the short overview here:
 
 </details>
 
+
+---
+
+## README CI alignment anchors
+
+Latticra Panel is the graphical local installer and control panel for Latticra, Lat, LIR, and Latticra Seal.
+
+This installer is user-local only. It does not use root, modify the kernel, modify systemd, change SELinux, or use network authority.
+
+## Fedora disposable VM local RPM validation
+
+Latticra now has one evidence-backed host-facing validation path: Fedora disposable VM local RPM validation.
+
+disposable_vm_validation_completed=1
+live_host_validation_completed=1
+host_install_ready=1
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+evidence_level=9
+
+latticra-0.0.0-0.1.local.fc44.noarch.rpm
+
+/usr/share/doc/latticra/README.md
+
+The successful disposable Fedora VM transcript recorded package build, RPM install, RPM verification, RPM removal, and post-removal absence verification.
+
+This does **not** mean Latticra is production ready.
+
+This does not mean Latticra is Fedora approved, Fedora distribution ready, daily-driver safe, immutable-Fedora ready, a production installer, a bootable OS replacement, a security product, a sandbox, or a malware/ransomware prevention system.
+
+The only install-readiness statement currently supported by evidence is disposable Fedora VM local RPM validation.
+
+Evidence records:
+
+FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md
+FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md
+FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md
+FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_TRANSCRIPT_CONTRACT.md
+
+Fedora disposable VM RPM README alignment is covered by:
+
+sh scripts/test-fedora-disposable-vm-rpm-readme-alignment.sh
+
