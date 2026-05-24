@@ -6,6 +6,9 @@
 
 > “The simulacrum is never what hides the truth.” — Jean Baudrillard
 
+**Featured download:** [Latticra Seal Documentation Handbook PDF](docs/latticra-seal/latticra-seal-handbook.pdf)  
+**Source docs:** [docs/latticra-seal/](docs/latticra-seal/)
+
 Latticra is an evidence-bound systems substrate for Linux-era and AI-era computing. Its purpose is to make system actions, automation, tool execution, and agentic workflows safer through deny-by-default authority, contract-first validation, cryptographic-verification planning, no-effect reporting, runtime gating, and auditable evidence.
 
 This repository is foundational engineering work. It is not a deployed platform, certified product, production runtime, hardened sandbox, Fedora-approved package, daily-driver installer, bootable operating system, or operating-system replacement.
