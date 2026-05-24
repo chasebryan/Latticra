@@ -2,7 +2,6 @@ use crate::config::{render_plan, InstallProfile, InstallerConfig, SealCryptoProf
 use crate::engine::{self, InstallEvent};
 use eframe::egui;
 use std::fs;
-use std::process::Command;
 use std::sync::mpsc::Receiver;
 use std::time::Duration;
 
@@ -60,10 +59,11 @@ impl Default for LatticraInstallerApp {
             status: "Ready. Guided Workbench opens in dry-run authority.".to_owned(),
             logs: Vec::new(),
             console_lines: vec![
-                format!("Latticra Panel v{PANEL_VERSION} host terminal online."),
+                format!("Latticra Panel v{PANEL_VERSION} bounded operator console online."),
                 "Authority baseline: root=0 network=0 runtime_enforcement=0.".to_owned(),
-                "Panel commands: help, status, plan, save, dry-run, profile seal, profile fedora.".to_owned(),
-                "Host commands: pwd, ls, git status, cargo check, cd <dir>. Runs as the current user.".to_owned(),
+                "Panel commands: help, status, plan, save, dry-run, profile seal, profile fedora."
+                    .to_owned(),
+                "Navigation commands: pwd, cd <dir>. External host commands are denied.".to_owned(),
             ],
             console_input: String::new(),
             terminal_cwd,
@@ -283,6 +283,7 @@ impl LatticraInstallerApp {
         }
 
         self.push_console(format!("{} $ {command}", self.terminal_cwd));
+        let original_parts: Vec<&str> = command.split_whitespace().collect();
         let normalized = command.to_ascii_lowercase();
         let parts: Vec<&str> = normalized.split_whitespace().collect();
 
@@ -290,9 +291,7 @@ impl LatticraInstallerApp {
             ["help"] | ["?"] => {
                 self.push_console("panel: help, status, plan, save, dry-run, clear");
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
-                self.push_console(
-                    "host: pwd, ls, git status, cargo check, cd <path>, or any normal user command",
-                );
+                self.push_console("navigation: pwd, cd <path>; external host commands are denied");
             }
             ["status"] => {
                 self.push_console(format!("version={PANEL_VERSION} build={PANEL_BUILD}"));
@@ -343,8 +342,14 @@ impl LatticraInstallerApp {
             }
             ["pwd"] => self.push_console(self.terminal_cwd.clone()),
             ["cd"] => self.change_terminal_dir("."),
-            ["cd", path] => self.change_terminal_dir(path),
-            _ => self.run_host_command(&command),
+            ["cd", _] => {
+                if let Some(path) = original_parts.get(1) {
+                    self.change_terminal_dir(path);
+                } else {
+                    self.change_terminal_dir(".");
+                }
+            }
+            _ => self.deny_console_command(&command),
         }
     }
 
@@ -373,48 +378,12 @@ impl LatticraInstallerApp {
         }
     }
 
-    fn run_host_command(&mut self, command: &str) {
-        self.push_console("[host] running user-shell command");
-        match Command::new("sh")
-            .arg("-lc")
-            .arg(command)
-            .current_dir(&self.terminal_cwd)
-            .env("LATTICRA_PREFIX", &self.config.install_prefix)
-            .output()
-        {
-            Ok(output) => {
-                let stdout = String::from_utf8_lossy(&output.stdout);
-                let stderr = String::from_utf8_lossy(&output.stderr);
-                let mut stdout_truncated = false;
-                let mut stderr_truncated = false;
-                for (index, line) in stdout.lines().enumerate() {
-                    if index >= 80 {
-                        stdout_truncated = true;
-                        break;
-                    }
-                    self.push_console(line.to_owned());
-                }
-                for (index, line) in stderr.lines().enumerate() {
-                    if index >= 80 {
-                        stderr_truncated = true;
-                        break;
-                    }
-                    self.push_console(format!("stderr: {line}"));
-                }
-                if stdout_truncated || stderr_truncated {
-                    self.push_console("[host] output truncated to first 80 stdout/stderr lines");
-                }
-                self.push_console(format!(
-                    "[host] exit={}",
-                    output
-                        .status
-                        .code()
-                        .map(|code| code.to_string())
-                        .unwrap_or_else(|| "signal".to_owned())
-                ));
-            }
-            Err(err) => self.push_console(format!("[host] failed to run command: {err}")),
-        }
+    fn deny_console_command(&mut self, command: &str) {
+        self.push_console(format!(
+            "blocked: command outside panel allowlist: {command}"
+        ));
+        self.push_console("allowed panel commands: help, status, plan, save, dry-run, clear");
+        self.push_console("allowed navigation commands: pwd, cd <path>");
     }
 
     fn show_header(&mut self, ui: &mut egui::Ui) {
@@ -1053,7 +1022,7 @@ impl LatticraInstallerApp {
                     ui.small(format!("cwd={}", self.terminal_cwd));
                 });
             });
-            ui.small("User-level shell bridge plus panel commands. No root broker is added by the panel.");
+            ui.small("Panel commands and local navigation only. No external host process is launched by the console.");
             ui.add_space(6.0);
 
             egui::Frame::none()
@@ -1082,7 +1051,7 @@ impl LatticraInstallerApp {
                         let response = ui.add(
                             egui::TextEdit::singleline(&mut self.console_input)
                                 .font(egui::TextStyle::Monospace)
-                                .hint_text("host command or panel command: help | status | plan | dry-run"),
+                                .hint_text("panel command: help | status | pwd | cd | plan | dry-run"),
                         );
                         let enter_pressed = response.lost_focus()
                             && ui.input(|input| input.key_pressed(egui::Key::Enter));
@@ -1097,7 +1066,16 @@ impl LatticraInstallerApp {
 
             ui.add_space(6.0);
             ui.horizontal_wrapped(|ui| {
-                for command in ["help", "pwd", "ls", "git status", "cargo check", "plan", "dry-run", "clear"] {
+                for command in [
+                    "help",
+                    "status",
+                    "pwd",
+                    "plan",
+                    "dry-run",
+                    "mode dry",
+                    "mode local",
+                    "clear",
+                ] {
                     if ui.button(command).clicked() {
                         self.console_input = command.to_owned();
                         self.run_console_command();
