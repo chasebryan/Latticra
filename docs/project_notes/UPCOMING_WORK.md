@@ -145,18 +145,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Signing authorization contract planning, with completion estimate review only if capability posture changes
+Signing authorization metadata implementation, with completion estimate review only if capability posture changes
 ```
 
 Purpose:
 
 ```text
-plan the future Seal signing authorization boundary while preserving no signing, no verification, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority until separately implemented and guarded; review completion estimates only if capability posture, public readiness, or evidence level changes
+implement the future Seal signing authorization metadata boundary while preserving no signing, no verification, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority until separately implemented and guarded; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Signing authorization contract planning.
+1. Signing authorization metadata implementation.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.
@@ -195,7 +195,7 @@ consistent with no-new-announcement decisions unless capability posture changes
 - Keep Lat-specific LIR refinement no-effect and metadata-only.
 - Keep Lat pipeline diagnostic integration no-effect and metadata-only.
 - Keep Runtime boundary domain matrix report integration report-only and no-effect.
-- Keep Seal signature request metadata no-effect and unsigned until a separate signing authorization contract exists.
+- Keep Seal signing authorization no-effect and unsigned until a separate signing implementation and key-handling contract exists.
 - Do not update completion estimates after documentation/status-only alignment.
 - Do not add public announcement entries for documentation/status-only alignment.
 - Maintain professional public docs.

@@ -213,7 +213,7 @@ signature request metadata implementation
 
 It does not permit cryptographic signing, signature verification, private-key handling, key generation, trust-store behavior, revocation lookup, runtime handoff execution, effect execution, capability enforcement, runtime authority, host behavior, network behavior, object sealing, or kernel behavior.
 
-After signature request metadata exists and is guarded, the next valid planning slice is a signature request status/public-entry alignment or a future signing authorization contract that still must not add signing without a separate implementation contract.
+After signature request metadata and its status/public-entry checkpoint exist, the next valid planning slice is a signing authorization contract that still must not add signing without a separate implementation contract.
 
 ## Validation
 

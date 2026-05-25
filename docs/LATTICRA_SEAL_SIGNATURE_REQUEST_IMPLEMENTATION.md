@@ -151,6 +151,6 @@ seal signature request invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is signature request status/public-entry alignment or a future signing authorization contract.
+The next valid Latticra Seal implementation slice is signing authorization metadata implementation.
 
 That future slice must not add private-key handling, signing, verification, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately contracted, implemented, and guarded.
