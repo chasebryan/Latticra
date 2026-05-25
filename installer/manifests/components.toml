@@ -26,6 +26,13 @@ authority = "local-prefix"
 generated_paths = ["bin/latticra-seal", "etc/latticra/seal.toml", "components/latticra-seal.installed"]
 notes = "Report-only subsystem. No enforcement authority in this early installer."
 
+[components.nadia_offline_ai]
+label = "Nadia offline AI foundation"
+default_enabled = false
+authority = "local-prefix"
+generated_paths = ["bin/latticra-nadia", "etc/latticra/nadia.toml", "share/latticra/nadia/README.md", "components/nadia-offline-ai.installed"]
+notes = "Stage-0 offline AI foundation with awareness principles. No model runtime, model weights, tool execution, training, or network authority."
+
 [components.fedora_validation]
 label = "Fedora validation files"
 default_enabled = false

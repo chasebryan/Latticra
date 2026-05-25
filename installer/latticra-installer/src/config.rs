@@ -99,6 +99,7 @@ pub struct Components {
     pub lat_tooling: bool,
     pub lir_contracts: bool,
     pub seal_report_only: bool,
+    pub nadia_offline_ai: bool,
     pub fedora_validation: bool,
     pub docs_and_examples: bool,
     pub developer_cli_helpers: bool,
@@ -110,6 +111,7 @@ impl Default for Components {
             lat_tooling: true,
             lir_contracts: true,
             seal_report_only: true,
+            nadia_offline_ai: false,
             fedora_validation: false,
             docs_and_examples: true,
             developer_cli_helpers: true,
@@ -288,6 +290,7 @@ impl InstallerConfig {
                     lat_tooling: false,
                     lir_contracts: true,
                     seal_report_only: true,
+                    nadia_offline_ai: false,
                     fedora_validation: false,
                     docs_and_examples: true,
                     developer_cli_helpers: true,
@@ -304,6 +307,7 @@ impl InstallerConfig {
                     lat_tooling: true,
                     lir_contracts: true,
                     seal_report_only: true,
+                    nadia_offline_ai: false,
                     fedora_validation: true,
                     docs_and_examples: true,
                     developer_cli_helpers: true,
@@ -383,6 +387,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "nadia_offline_ai={}",
+        config.components.nadia_offline_ai
+    );
+    let _ = writeln!(
+        out,
         "fedora_validation={}",
         config.components.fedora_validation
     );
@@ -396,6 +405,22 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "developer_cli_helpers={}",
         config.components.developer_cli_helpers
     );
+    let _ = writeln!(out);
+    let _ = writeln!(out, "[nadia]");
+    let _ = writeln!(out, "system_name=Latticra Nadia");
+    let _ = writeln!(out, "stage=0-foundation");
+    let _ = writeln!(
+        out,
+        "component_selected={}",
+        config.components.nadia_offline_ai
+    );
+    let _ = writeln!(out, "human_dignity_principle=1");
+    let _ = writeln!(out, "survivor_witness_respect=1");
+    let _ = writeln!(out, "community_awareness_posture=1");
+    let _ = writeln!(out, "harm_aware_development=1");
+    let _ = writeln!(out, "model_runtime_present=0");
+    let _ = writeln!(out, "model_weights_installed=0");
+    let _ = writeln!(out, "tool_execution_authority=0");
     let _ = writeln!(out);
     let _ = writeln!(out, "[seal]");
     let _ = writeln!(out, "crypto_profile={}", config.seal.crypto_profile.label());

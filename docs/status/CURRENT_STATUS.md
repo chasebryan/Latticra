@@ -4,6 +4,7 @@ Status: public status record
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest Seal verification receipt status/public-entry note: 2026-05-25 CDT
+Latest Nadia offline AI Stage-0 foundation note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -109,6 +110,7 @@ The repository currently emphasizes:
 - Nucleus report-only announcement README alignment;
 - project notes Nucleus announcement README status/index check;
 - language representation review;
+- Nadia offline AI Stage-0 foundation for Panel installability, Console interoperability, and awareness principles;
 - L-UI rendering implementation;
 - L-UI rendering detailed report refinement;
 - L-UI rendering README/status alignment;
@@ -348,6 +350,7 @@ These percentages are planning estimates only.
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
+| Nadia offline AI foundation | 3% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |

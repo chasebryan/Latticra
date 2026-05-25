@@ -27,6 +27,7 @@ This repository is foundational engineering work. It is not a deployed platform,
 - [What Latticra does not claim](#what-latticra-does-not-claim)
 - [Quick start](#quick-start)
 - [Latticra Panel](#latticra-panel)
+- [Nadia Offline AI](#nadia-offline-ai)
 - [Lat, LIR, and L-UI](#lat-lir-and-l-ui)
 - [Nucleus and Runtime Boundary](#nucleus-and-runtime-boundary)
 - [The Latticra System Substrate](#the-latticra-system-substrate)
@@ -60,6 +61,7 @@ Latticra currently focuses on:
 - bounded C implementation records;
 - constrained C++ policy, validator, effect-gate, and audit direction;
 - Rust-based local GUI workbench work through Latticra Panel;
+- Nadia offline AI foundation planning and Panel-installable metadata;
 - Lat language parsing, validation, diagnostics, and metadata lowering;
 - LIR bounded intermediate-representation reporting;
 - L-UI operator-visible declaration and reporting surfaces;
@@ -89,6 +91,7 @@ The authoritative status files are [`STATUS.md`](STATUS.md) and [`docs/status/CU
 | Latticra Seal | Report-only tool-boundary, runtime dry-run, guarded allowlist, report-envelope metadata, signature-request metadata, signing authorization metadata, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, future key parsing implementation contract/plan, and bounded key parsing metadata/status surfaces exist; no production enforcement |
 | Fedora integration | Local-only package and validation lanes exist; not Fedora-approved or distribution-ready |
 | Latticra Panel | GUI-first local installer/control workbench exists; user-local and guarded |
+| Nadia offline AI | Stage-0 foundation exists; optional Panel component and metadata-only Console/CLI surface; no model runtime |
 | Security hardening | Early; no production security boundary claimed |
 | Product readiness | Early; no production platform claimed |
 
@@ -146,6 +149,10 @@ Latticra Seal
 Latticra Panel
   GUI-first local workbench for guided first-run configuration, evidence review, dry-run, and guarded local-prefix install.
   Current posture: user-local, no root, no network authority.
+
+Nadia Offline AI
+  Future local AI companion for Latticra software development, systems engineering, and AI development workflows.
+  Current posture: Stage-0 identity, Panel component, Console status metadata, local config, and productivity-ledger path only; no model runtime, model weights, tool execution, training, or network authority.
 
 Fedora/Linux substrate
   Current host-facing validation lane and integration target.
@@ -209,6 +216,10 @@ latticra_seal_verification_policy_status_present=1
 latticra_seal_verification_receipt_metadata_present=1
 latticra_seal_verification_receipt_status_present=1
 latticra_panel_gui_workbench_present=1
+nadia_offline_ai_stage_0_foundation_present=1
+nadia_panel_install_surface_present=1
+nadia_console_status_surface_present=1
+nadia_model_runtime_present=0
 fedora_local_rpm_draft_present=1
 visual_theorem_engines_present=1
 production_runtime_present=0
@@ -325,7 +336,7 @@ sh scripts/test-fedora-local-rpm-spec-skeleton.sh
 
 ## Latticra Panel
 
-Latticra Panel is the GUI-first local installer and first-run control workbench for Latticra, Lat, LIR, and Latticra Seal.
+Latticra Panel is the GUI-first local installer and first-run control workbench for Latticra, Lat, LIR, Latticra Seal, and the optional Nadia offline AI foundation.
 
 The panel is designed as the main first impression for Latticra. It opens as a maximized, resizable GUI workbench with guided defaults, visible authority boundaries, component configuration, delivery controls, plan/evidence review, and an embedded Latticra Console for panel-aware commands.
 
@@ -391,6 +402,7 @@ status
 plan
 save
 dry-run
+nadia status
 profile guided
 profile seal
 profile fedora
@@ -472,6 +484,7 @@ Or open **Latticra Panel** from the desktop app grid.
 ~/.local/bin/latticra
 ~/.local/bin/lat
 ~/.local/bin/latticra-seal
+~/.local/bin/latticra-nadia (when enabled)
 ~/.local/bin/latticra-panel
 ~/.local/share/applications/latticra-panel.desktop
 ~/.local/share/icons/hicolor/256x256/apps/latticra-panel.png
@@ -492,6 +505,33 @@ receipt/evidence before action
 ```
 
 Full installer notes are in [`installer/README.md`](installer/README.md).
+
+---
+
+## Nadia Offline AI
+
+Nadia is the selected name for Latticra's future offline AI companion. The name honors Nobel Peace Prize laureate Nadia Murad, whose testimony and advocacy have helped bring public attention to the enslavement and abuse of thousands of women in Iraq and Syria.
+
+Nadia gives the Latticra system a human-rights awareness posture: powerful local AI should remain bound to dignity, survivor-witness respect, community responsibility, and careful authority.
+
+Current Nadia status is Stage-0 foundation only:
+
+```text
+component_key=nadia_offline_ai
+command_name=latticra-nadia
+offline_by_default=1
+panel_install_surface_present=1
+console_status_surface_present=1
+human_dignity_principle=1
+community_awareness_posture=1
+model_runtime_present=0
+model_weights_installed=0
+network_authority=0
+tool_execution_authority=0
+self_modification_authority=0
+```
+
+See [`docs/NADIA_OFFLINE_AI_FOUNDATION.md`](docs/NADIA_OFFLINE_AI_FOUNDATION.md) and [`docs/status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](docs/status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md).
 
 ---
 

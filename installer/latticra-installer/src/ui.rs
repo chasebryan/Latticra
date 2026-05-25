@@ -289,7 +289,7 @@ impl LatticraInstallerApp {
 
         match parts.as_slice() {
             ["help"] | ["?"] => {
-                self.push_console("panel: help, status, plan, save, dry-run, clear");
+                self.push_console("panel: help, status, plan, save, dry-run, clear, nadia status");
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
             }
@@ -301,9 +301,28 @@ impl LatticraInstallerApp {
                     "seal_crypto={}",
                     self.config.seal.crypto_profile.label()
                 ));
+                self.push_console(format!(
+                    "nadia_offline_ai={}",
+                    self.config.components.nadia_offline_ai
+                ));
                 self.push_console(format!("install_prefix={}", self.config.install_prefix));
                 self.push_console(
                     "root_authority=0 network_authority=0 runtime_enforcement_authority=0",
+                );
+            }
+            ["nadia"] | ["nadia", "status"] => {
+                self.push_console("name=Nadia");
+                self.push_console("system_name=Latticra Nadia");
+                self.push_console(format!(
+                    "component_selected={}",
+                    self.config.components.nadia_offline_ai
+                ));
+                self.push_console("human_dignity_principle=1 community_awareness_posture=1");
+                self.push_console(
+                    "stage=0 foundation; model_runtime_present=0 model_weights_installed=0",
+                );
+                self.push_console(
+                    "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
                 );
             }
             ["plan"] => {
@@ -619,6 +638,12 @@ impl LatticraInstallerApp {
             &mut self.config.components.seal_report_only,
             "Latticra Seal report-only subsystem",
             "Tool-boundary and trust-boundary reporting without runtime enforcement claims.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.components.nadia_offline_ai,
+            "Nadia offline AI foundation",
+            "Stage-0 local AI identity, config, Console status, and productivity-ledger space.",
         );
         checkbox_note(
             ui,

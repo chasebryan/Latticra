@@ -1,6 +1,6 @@
 # Latticra Panel
 
-Graphical installer and first-run control panel for Latticra, Lat, LIR, and Latticra Seal.
+Graphical installer and first-run control panel for Latticra, Lat, LIR, Latticra Seal, and the Nadia offline AI foundation.
 
 The panel is designed as the main first impression for Latticra. It opens as a maximized, resizable GUI workbench with guided defaults, visible authority boundaries, component configuration, delivery controls, plan/evidence review, and an embedded Latticra Console for panel-aware commands.
 
@@ -52,6 +52,7 @@ status
 plan
 save
 dry-run
+nadia status
 profile guided
 profile seal
 profile fedora
@@ -96,11 +97,18 @@ Or from the desktop app grid, open **Latticra Panel**.
 ~/.local/bin/latticra
 ~/.local/bin/lat
 ~/.local/bin/latticra-seal
+~/.local/bin/latticra-nadia (when enabled)
 ~/.local/bin/latticra-panel
 ~/.local/share/applications/latticra-panel.desktop
 ~/.local/share/icons/hicolor/256x256/apps/latticra-panel.png
 ~/.local/share/latticra
 ```
+
+## Nadia offline AI foundation
+
+Nadia is Latticra's planned offline AI companion for software development, systems engineering, and AI development work. The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
+
+In the current installer lane, Nadia is Stage-0 only: local identity, config, Console status, component marker, and productivity-ledger space. No model runtime, model weights, tool execution, training, or network authority are installed.
 
 ## Uninstall managed local install
 

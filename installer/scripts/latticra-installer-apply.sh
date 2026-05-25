@@ -258,6 +258,7 @@ WRITE_OPERATOR_RECEIPT=$(cfg write_operator_receipt true)
 LAT_TOOLING=$(cfg lat_tooling true)
 LIR_CONTRACTS=$(cfg lir_contracts true)
 SEAL_REPORT_ONLY=$(cfg seal_report_only true)
+NADIA_OFFLINE_AI=$(cfg nadia_offline_ai false)
 FEDORA_VALIDATION=$(cfg fedora_validation false)
 DOCS_AND_EXAMPLES=$(cfg docs_and_examples true)
 DEVELOPER_CLI_HELPERS=$(cfg developer_cli_helpers true)
@@ -329,9 +330,22 @@ runtime_enforcement_authority=0
 lat_tooling=$LAT_TOOLING
 lir_contracts=$LIR_CONTRACTS
 seal_report_only=$SEAL_REPORT_ONLY
+nadia_offline_ai=$NADIA_OFFLINE_AI
 fedora_validation=$FEDORA_VALIDATION
 docs_and_examples=$DOCS_AND_EXAMPLES
 developer_cli_helpers=$DEVELOPER_CLI_HELPERS
+
+[nadia]
+system_name=Latticra Nadia
+stage=0-foundation
+component_selected=$NADIA_OFFLINE_AI
+human_dignity_principle=1
+survivor_witness_respect=1
+community_awareness_posture=1
+harm_aware_development=1
+model_runtime_present=0
+model_weights_installed=0
+tool_execution_authority=0
 
 [behavior]
 create_prefix_layout=$CREATE_PREFIX_LAYOUT
@@ -351,6 +365,7 @@ if bool_true "$DRY_RUN"; then
   log "[dry-run] would create $PREFIX"
   log "[dry-run] would install payload tree to $PAYLOAD_DIR"
   log "[dry-run] would install user commands in $USER_BIN"
+  log "[dry-run] would install Nadia offline AI foundation when enabled"
   log "[dry-run] would build/copy Latticra Panel when cargo is available"
   phase 6 "dry-run build project"
   log "[dry-run] would try Cargo/CMake/Make builds when configured"
@@ -475,6 +490,9 @@ if bool_true "$CREATE_COMPONENT_MARKERS"; then
   if bool_true "$SEAL_REPORT_ONLY"; then
     write_component_marker "$PREFIX/share/latticra/components/latticra-seal.installed" "seal_report_only"
   fi
+  if bool_true "$NADIA_OFFLINE_AI"; then
+    write_component_marker "$PREFIX/share/latticra/components/nadia-offline-ai.installed" "nadia_offline_ai"
+  fi
   if bool_true "$FEDORA_VALIDATION"; then
     write_component_marker "$PREFIX/share/latticra/components/fedora-validation.installed" "fedora_validation"
   fi
@@ -500,6 +518,40 @@ mode = "report-only"
 production_enforcement_ready = false
 operator_receipts = true
 SEALCONF
+fi
+
+if bool_true "$NADIA_OFFLINE_AI"; then
+  mkdir -p \
+    "$PREFIX/share/latticra/nadia/context-packs" \
+    "$PREFIX/share/latticra/nadia/model-registry" \
+    "$PREFIX/share/latticra/nadia/productivity-ledger"
+  write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
+name = "Nadia"
+system_name = "Latticra Nadia"
+stage = "0-foundation"
+mode = "offline-foundation"
+console_bridge = "panel-aware"
+productivity_ledger = "operator-reviewed-local"
+human_dignity_principle = true
+survivor_witness_respect = true
+community_awareness_posture = true
+harm_aware_development = true
+model_runtime_present = false
+model_weights_installed = false
+network_authority = false
+tool_execution_authority = false
+self_modification_authority = false
+production_ai_claimed = false
+NADIACONF
+  write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
+# Nadia Offline AI Foundation
+
+Nadia is the Stage-0 offline AI foundation for Latticra.
+
+The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
+
+This installed component reserves local context-pack, model-registry, and productivity-ledger paths. It does not install model weights, run inference, execute tools, use the network, train a model, or mutate source.
+NADIAREADME
 fi
 
 if bool_true "$FEDORA_VALIDATION"; then
@@ -551,6 +603,15 @@ case "\${1:-status}" in
     shift
     exec "\$HOME/.local/bin/latticra-seal" "\$@"
     ;;
+  nadia)
+    shift
+    if [ -x "\$HOME/.local/bin/latticra-nadia" ]; then
+      exec "\$HOME/.local/bin/latticra-nadia" "\$@"
+    fi
+    echo "Nadia offline AI foundation is not installed in this local prefix." >&2
+    echo "Enable the nadia_offline_ai component in Latticra Panel first." >&2
+    exit 1
+    ;;
   run)
     shift
     if [ -x "\$PREFIX/bin/latticra" ]; then
@@ -564,7 +625,7 @@ case "\${1:-status}" in
     if [ -x "\$PREFIX/bin/latticra" ]; then
       exec "\$PREFIX/bin/latticra" "\$@"
     fi
-    echo "usage: latticra {status|path|gui|receipts|docs|seal|run}" >&2
+    echo "usage: latticra {status|path|gui|receipts|docs|seal|nadia|run}" >&2
     exit 64
     ;;
 esac
@@ -624,6 +685,49 @@ case "\${1:-report}" in
     ;;
 esac
 SEALWRAP
+
+  if bool_true "$NADIA_OFFLINE_AI"; then
+    write_managed_file "$USER_BIN/latticra-nadia" 0755 <<NADIAWRAP
+#!/usr/bin/env sh
+# LATTICRA_INSTALLER_MANAGED=1
+PREFIX="\${LATTICRA_PREFIX:-$PREFIX}"
+NADIA_DIR="\$PREFIX/share/latticra/nadia"
+case "\${1:-status}" in
+  status)
+    echo "NADIA OFFLINE AI FOUNDATION"
+    echo
+    echo "name=Nadia"
+    echo "system_name=Latticra Nadia"
+    echo "stage=0-foundation"
+    echo "mode=offline-foundation"
+    echo "prefix=\$PREFIX"
+    echo "config=\$PREFIX/etc/latticra/nadia.toml"
+    echo "context_packs=\$NADIA_DIR/context-packs"
+    echo "model_registry=\$NADIA_DIR/model-registry"
+    echo "productivity_ledger=\$NADIA_DIR/productivity-ledger"
+    echo "human_dignity_principle=1"
+    echo "survivor_witness_respect=1"
+    echo "community_awareness_posture=1"
+    echo "harm_aware_development=1"
+    echo "console_interop_surface_present=1"
+    echo "panel_install_surface_present=1"
+    echo "model_runtime_present=0"
+    echo "model_weights_installed=0"
+    echo "network_authority=0"
+    echo "tool_execution_authority=0"
+    echo "self_modification_authority=0"
+    echo "production_ai_claimed=0"
+    ;;
+  path)
+    echo "\$NADIA_DIR"
+    ;;
+  *)
+    echo "usage: latticra-nadia {status|path}" >&2
+    exit 64
+    ;;
+esac
+NADIAWRAP
+  fi
 
   if [ -x "$PREFIX/bin/latticra-panel" ]; then
     write_managed_file "$USER_BIN/latticra-panel" 0755 <<GUIWRAP
@@ -745,6 +849,7 @@ installed_commands:
   $USER_BIN/latticra
   $USER_BIN/lat
   $USER_BIN/latticra-seal
+  $USER_BIN/latticra-nadia (when enabled)
   $USER_BIN/latticra-panel
   $USER_BIN/latticra-installer (compatibility)
 

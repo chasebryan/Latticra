@@ -5,6 +5,7 @@ install_prefix = "~/.local/share/latticra"
 lat_tooling = true
 lir_contracts = true
 seal_report_only = true
+nadia_offline_ai = false
 fedora_validation = false
 docs_and_examples = true
 developer_cli_helpers = true
