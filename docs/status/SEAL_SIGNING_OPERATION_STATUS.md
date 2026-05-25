@@ -16,14 +16,21 @@ It records that the implementation is bounded, deterministic, metadata-only, uns
 docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
 docs/LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md
+docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
+docs/status/SEAL_KEY_HANDLING_STATUS.md
 docs/status/SEAL_SIGNING_OPERATION_STATUS.md
 include/latticra/seal_signing_operation.h
 src/seal_signing_operation.c
 tests/seal_signing_operation_invariants.c
+include/latticra/seal_key_handling.h
+src/seal_key_handling.c
+tests/seal_key_handling_invariants.c
 scripts/test-latticra-seal-signing-operation-contract.sh
 scripts/test-latticra-seal-signing-operation.sh
 scripts/test-latticra-seal-signing-operation-status.sh
 scripts/test-latticra-seal-key-handling-contract.sh
+scripts/test-latticra-seal-key-handling.sh
+scripts/test-latticra-seal-key-handling-status.sh
 docs/LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
 docs/status/SEAL_SIGNER_INVOCATION_STATUS.md
@@ -49,6 +56,8 @@ seal_signing_operation_runner_present=1
 seal_signing_operation_metadata_present=1
 seal_signing_operation_status_present=1
 seal_key_handling_contract_present=1
+seal_key_handling_metadata_present=1
+seal_key_handling_status_present=1
 seal_signer_invocation_contract_present=1
 seal_signer_invocation_implementation_present=1
 seal_signer_invocation_status_present=1
@@ -96,6 +105,8 @@ sh scripts/test-latticra-seal-signing-operation-contract.sh
 sh scripts/test-latticra-seal-signing-operation.sh
 sh scripts/test-latticra-seal-signing-operation-status.sh
 sh scripts/test-latticra-seal-key-handling-contract.sh
+sh scripts/test-latticra-seal-key-handling.sh
+sh scripts/test-latticra-seal-key-handling-status.sh
 ```
 
 The predecessor signer invocation implementation remains covered by:
@@ -113,6 +124,8 @@ seal signing operation contract: ok
 seal signing operation invariants: ok
 seal signing operation status: ok
 seal key-handling contract: ok
+seal key-handling invariants: ok
+seal key-handling status: ok
 seal signer invocation contract: ok
 seal signer invocation invariants: ok
 seal signer invocation status: ok
@@ -126,6 +139,6 @@ It does not add signing, verification, signer invocation behavior, signer proces
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is key-handling metadata implementation or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is a key-material boundary contract or another narrow status/index alignment follow-up.
 
 That future slice must not add signing, verification, signer invocation behavior, public-key parsing, private-key handling, key material loading, key generation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

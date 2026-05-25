@@ -306,7 +306,7 @@ Failures must not sign, verify signatures, invoke a signer, parse public keys, l
 
 ## Promotion Rule
 
-This contract permits only the next implementation slice:
+This contract permits and now has only this implementation slice:
 
 ```text
 key-handling metadata implementation
@@ -314,7 +314,7 @@ key-handling metadata implementation
 
 It does not permit cryptographic signing, signature verification, signer invocation behavior, public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, runtime handoff execution, effect execution, capability enforcement, runtime authority, host behavior, network behavior, object sealing, or kernel behavior.
 
-After key-handling metadata exists and is guarded, the next valid planning slice is key-handling status/public-entry alignment or a future key-material contract that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
+After key-handling metadata and its status/public-entry checkpoint exist and are guarded, the next valid planning slice is a key-material boundary contract that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
 
 ## Validation
 

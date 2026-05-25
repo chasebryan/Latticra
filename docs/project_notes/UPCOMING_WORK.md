@@ -21,16 +21,28 @@ Purpose completed:
 define exact public API, namespace, file paths, C++ standard, compiler flags, exception policy, RTTI policy, allocation policy, ownership/lifetime rules, result labels, C ABI boundaries, validators, audit reports, and tests before any C++ authority-layer code
 ```
 
-## Latest completed contract slice
+## Latest completed status/public-entry slice
 
 ```text
-Latticra Seal key-handling boundary contract
+Latticra Seal key-handling status/public-entry alignment
 ```
 
 Purpose completed:
 
 ```text
-define the next metadata-only key-handling boundary after signing operation readiness while preserving no public-key parsing, no key material loading, no private-key handling, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority
+make the metadata-only key-handling checkpoint visible from the public entry points while preserving no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store loading, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
+Latticra Seal key-handling metadata implementation
+```
+
+## Previous contract slice
+
+```text
+Latticra Seal key-handling boundary contract
 ```
 
 ## Previous status/public-entry slice
@@ -39,7 +51,7 @@ define the next metadata-only key-handling boundary after signing operation read
 Latticra Seal signing operation status/public-entry alignment
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Latticra Seal signing operation metadata implementation
@@ -169,18 +181,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Seal key-handling metadata implementation, with no public-key parsing, key material loading, private-key handling, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
+Seal key-material boundary contract, with no public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 Purpose:
 
 ```text
-implement metadata-only key-handling classification after signing operation readiness while preserving no public-key parsing, no key material loading, no private-key handling, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+define the next metadata-only key-material boundary after key-handling readiness while preserving no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Seal key-handling metadata implementation.
+1. Seal key-material boundary contract.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.
@@ -219,7 +231,7 @@ consistent with no-new-announcement decisions unless capability posture changes
 - Keep Lat-specific LIR refinement no-effect and metadata-only.
 - Keep Lat pipeline diagnostic integration no-effect and metadata-only.
 - Keep Runtime boundary domain matrix report integration report-only and no-effect.
-- Keep Seal signer handoff no-effect and unsigned until a separate signing implementation and key-handling contract exists.
+- Keep Seal key-handling no-effect and unsigned until separate key-material and signing contracts exist.
 - Do not update completion estimates after documentation/status-only alignment.
 - Do not add public announcement entries for documentation/status-only alignment.
 - Maintain professional public docs.

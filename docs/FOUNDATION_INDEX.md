@@ -103,6 +103,8 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md`](LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md) — first no-effect signing operation metadata implementation.
 - [`status/SEAL_SIGNING_OPERATION_STATUS.md`](status/SEAL_SIGNING_OPERATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signing operation implementation.
 - [`LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md`](LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md) — metadata-only key-handling boundary after signing operation readiness.
+- [`LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md`](LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md) — first no-effect key-handling metadata implementation.
+- [`status/SEAL_KEY_HANDLING_STATUS.md`](status/SEAL_KEY_HANDLING_STATUS.md) — status/public-entry checkpoint for metadata-only Seal key-handling implementation.
 - [`status/SEAL_SIGNER_INVOCATION_STATUS.md`](status/SEAL_SIGNER_INVOCATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer invocation implementation.
 - [`status/SEAL_SIGNER_HANDOFF_STATUS.md`](status/SEAL_SIGNER_HANDOFF_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer handoff implementation.
 - [`status/SEAL_SIGNING_AUTHORIZATION_STATUS.md`](status/SEAL_SIGNING_AUTHORIZATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signing authorization implementation.
@@ -203,7 +205,7 @@ Latticra Seal signer invocation status/public-entry alignment + guardrails
 Latticra Seal signing operation contract + guardrails
 Latticra Seal signing operation metadata + invariants
 Latticra Seal signing operation status/public-entry alignment + guardrails
-Latticra Seal key-handling boundary contract + guardrails
+Latticra Seal key-handling status/public-entry alignment + guardrails
 L-UI static report fixture + rail invariants
 L-UI source grammar draft + fixture guardrails
 L-UI parser design contract + guardrails
@@ -227,7 +229,7 @@ L-UI rendering detailed report refinement + invariants
 The next status review target should be:
 
 ```text
-Seal key-handling metadata implementation, with no public-key parsing, key material loading, private-key handling, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
+Seal key-material boundary contract, with no public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 Completion-estimate review should be skipped unless a future slice changes capability posture, implementation scope, or public readiness rather than only aligning documentation/status surfaces.

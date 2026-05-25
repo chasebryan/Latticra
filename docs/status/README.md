@@ -23,6 +23,7 @@ non-claims
 - [`CURRENT_STATUS.md`](CURRENT_STATUS.md) — current project status, completion estimates, and next priorities.
 - [`CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](CURRENT_ESTIMATE_REFRESH_2026_05_24.md) - current planning-estimate refresh after Panel, Seal, documentation, and local evidence work.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
+- [`SEAL_KEY_HANDLING_STATUS.md`](SEAL_KEY_HANDLING_STATUS.md) — Latticra Seal key-handling metadata status and public-entry checkpoint.
 - [`SEAL_SIGNING_OPERATION_STATUS.md`](SEAL_SIGNING_OPERATION_STATUS.md) — Latticra Seal signing operation metadata status and public-entry checkpoint.
 - [`SEAL_SIGNER_INVOCATION_STATUS.md`](SEAL_SIGNER_INVOCATION_STATUS.md) — Latticra Seal signer invocation metadata status and public-entry checkpoint.
 - [`SEAL_SIGNER_HANDOFF_STATUS.md`](SEAL_SIGNER_HANDOFF_STATUS.md) — Latticra Seal signer handoff metadata status and public-entry checkpoint.
@@ -93,6 +94,8 @@ seal_signing_operation_contract_present=1
 seal_signing_operation_metadata_present=1
 seal_signing_operation_status_present=1
 seal_key_handling_contract_present=1
+seal_key_handling_metadata_present=1
+seal_key_handling_status_present=1
 operator_visible_status_surface=1
 deterministic_local_report_path=1
 core_blocked_case_set_complete=1
@@ -125,13 +128,13 @@ core_blocked_case_set_complete=1
 The careful current public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer handoff status/public-entry alignment, signer invocation metadata, signer invocation status/public-entry alignment, a signing operation contract, signing operation metadata, signing operation status/public-entry alignment, a key-handling boundary contract, and core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer handoff status/public-entry alignment, signer invocation metadata, signer invocation status/public-entry alignment, a signing operation contract, signing operation metadata, signing operation status/public-entry alignment, a key-handling boundary contract, key-handling metadata, key-handling status/public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 The current next recommended Seal lane is:
 
 ```text
-Add Seal key-handling metadata implementation that still handles no key material and performs no signing
+Add Seal key-material boundary contract that still handles no key material and performs no signing
 ```
 
 ## Current Fedora VM CLI payload validation lane checkpoint
