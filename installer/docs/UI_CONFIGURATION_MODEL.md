@@ -80,6 +80,7 @@ dry-run
 nadia status
 nadia context
 nadia runtime
+nadia plan
 profile guided
 profile seal
 profile fedora
@@ -90,4 +91,4 @@ clear
 
 The console exists inside the GUI so users can stay in one coherent Latticra control surface while still getting terminal-style feedback and procedure visibility.
 
-Nadia's Stage-0, Stage-1, and Stage-2 console surfaces are metadata-only inside the Panel and do not launch an external host process or model runtime.
+Nadia's Stage-0, Stage-1, Stage-2, and Stage-3 console surfaces are metadata-only inside the Panel and do not launch an external host process or model runtime.

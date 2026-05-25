@@ -1,4 +1,4 @@
-.PHONY: seal nadia-context nadia-runtime
+.PHONY: seal nadia-context nadia-runtime nadia-plan
 
 seal:
 	./scripts/latticra-seal-smoke.sh
@@ -8,6 +8,9 @@ nadia-context:
 
 nadia-runtime:
 	sh ./scripts/nadia-runtime-profile.sh
+
+nadia-plan:
+	sh ./scripts/nadia-prompt-plan.sh
 
 .PHONY: seal-policy-denials
 

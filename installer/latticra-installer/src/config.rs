@@ -432,6 +432,17 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(out, "runtime_family=llama.cpp-compatible");
     let _ = writeln!(out, "model_format=gguf");
+    let _ = writeln!(
+        out,
+        "developer_workbench_stage=3-developer-workbench-planning"
+    );
+    let _ = writeln!(out, "prompt_plan_command=scripts/nadia-prompt-plan.sh");
+    let _ = writeln!(
+        out,
+        "installed_prompt_plan_command=latticra-nadia prompt-plan"
+    );
+    let _ = writeln!(out, "requires_context_pack=1");
+    let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");
     let _ = writeln!(out, "survivor_witness_respect=1");
     let _ = writeln!(out, "community_awareness_posture=1");

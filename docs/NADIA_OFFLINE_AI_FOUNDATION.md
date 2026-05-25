@@ -175,6 +175,22 @@ See [`NADIA_RUNTIME_PROFILE_STAGE_2.md`](NADIA_RUNTIME_PROFILE_STAGE_2.md).
 
 Integrate Nadia with Latticra Console and Panel workflows for code navigation, patch planning, test selection, and evidence review. Keep source mutation behind explicit operator action.
 
+Current Stage-3 status:
+
+```text
+nadia_stage_3_developer_workbench_present=1
+prompt_plan_command=scripts/nadia-prompt-plan.sh
+installed_prompt_plan_command=latticra-nadia prompt-plan
+requires_context_pack=1
+requires_runtime_profile=1
+model_runtime_invoked=0
+inference_performed=0
+prompt_evaluated=0
+source_mutation_authority=0
+```
+
+See [`NADIA_DEVELOPER_WORKBENCH_STAGE_3.md`](NADIA_DEVELOPER_WORKBENCH_STAGE_3.md).
+
 ### Stage-4: Systems Engineering Mode
 
 Specialize prompts, retrieval, and validators for C, constrained C++, Rust Panel code, Lat/LIR/L-UI, Runtime Boundary, Seal, AI infrastructure, and Linux/Fedora integration.
@@ -209,6 +225,7 @@ Before Stage-3 starts, Latticra should keep these guards passing:
 sh scripts/test-nadia-offline-ai-stage-0.sh
 sh scripts/test-nadia-local-context-engine-stage-1.sh
 sh scripts/test-nadia-runtime-profile-stage-2.sh
+sh scripts/test-nadia-developer-workbench-stage-3.sh
 ```
 
-Before prompt planning or inference starts, a separate developer-workbench contract must exist and name context-pack use, runtime-profile use, prompt-plan boundaries, failure behavior, receipt fields, and non-claims.
+Before systems-engineering mode starts, a separate mode-taxonomy contract must exist and name domain labels, validators, failure behavior, receipt fields, and non-claims.

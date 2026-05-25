@@ -348,6 +348,11 @@ runtime_profile_command=scripts/nadia-runtime-profile.sh
 installed_runtime_profile_command=latticra-nadia runtime-profile
 runtime_family=llama.cpp-compatible
 model_format=gguf
+developer_workbench_stage=3-developer-workbench-planning
+prompt_plan_command=scripts/nadia-prompt-plan.sh
+installed_prompt_plan_command=latticra-nadia prompt-plan
+requires_context_pack=1
+requires_runtime_profile=1
 human_dignity_principle=1
 survivor_witness_respect=1
 community_awareness_posture=1
@@ -538,7 +543,8 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/context-packs" \
     "$PREFIX/share/latticra/nadia/model-registry" \
     "$PREFIX/share/latticra/nadia/productivity-ledger" \
-    "$PREFIX/share/latticra/nadia/runtime-profiles"
+    "$PREFIX/share/latticra/nadia/runtime-profiles" \
+    "$PREFIX/share/latticra/nadia/prompt-plans"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia"
@@ -553,6 +559,8 @@ runtime_profile_stage = "2-runtime-profile-boundary"
 runtime_profile_command = "scripts/nadia-runtime-profile.sh"
 runtime_family = "llama.cpp-compatible"
 model_format = "gguf"
+developer_workbench_stage = "3-developer-workbench-planning"
+prompt_plan_command = "scripts/nadia-prompt-plan.sh"
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -571,7 +579,7 @@ Nadia is the Stage-0 offline AI foundation for Latticra.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, model-registry, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack and runtime-readiness metadata when the operator runs latticra-nadia runtime-profile. It does not install model weights, run inference, use the network, train a model, or mutate source.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, model-registry, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, and prompt plans when the operator runs latticra-nadia prompt-plan. It does not evaluate prompts, install model weights, run inference, use the network, train a model, or mutate source.
 NADIAREADME
 fi
 
@@ -727,8 +735,10 @@ case "\${1:-status}" in
     echo "model_registry=\$NADIA_DIR/model-registry"
     echo "productivity_ledger=\$NADIA_DIR/productivity-ledger"
     echo "runtime_profiles=\$NADIA_DIR/runtime-profiles"
+    echo "prompt_plans=\$NADIA_DIR/prompt-plans"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
+    echo "prompt_plan_command=latticra-nadia prompt-plan"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -770,11 +780,26 @@ case "\${1:-status}" in
     fi
     exec sh "\$SCRIPT" --output "\$NADIA_DIR/runtime-profiles"
     ;;
+  prompt-plan|plan|workbench)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-prompt-plan.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia prompt-plan script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --context-pack "\$NADIA_DIR/context-packs/latest-context-pack.txt" \
+      --runtime-profile "\$NADIA_DIR/runtime-profiles/latest-runtime-profile.txt" \
+      --output "\$NADIA_DIR/prompt-plans"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|context-pack|runtime-profile|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|path}" >&2
     exit 64
     ;;
 esac

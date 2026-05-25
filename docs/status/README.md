@@ -25,6 +25,7 @@ non-claims
 - [`NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](NADIA_OFFLINE_AI_STAGE_0_STATUS.md) - Nadia offline AI Stage-0 foundation status for Panel installability, Console interoperability, and awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) - Nadia Stage-1 local context-engine status for no-network context-pack generation.
 - [`NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md`](NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md) - Nadia Stage-2 runtime-profile status for offline model-readiness metadata before inference.
+- [`NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md`](NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md) - Nadia Stage-3 developer-workbench status for prompt-plan generation without prompt evaluation.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
 - [`SEAL_VERIFICATION_RECEIPT_STATUS.md`](SEAL_VERIFICATION_RECEIPT_STATUS.md) — Latticra Seal verification receipt metadata status and public-entry checkpoint.
 - [`SEAL_VERIFICATION_POLICY_STATUS.md`](SEAL_VERIFICATION_POLICY_STATUS.md) — Latticra Seal verification policy metadata status and public-entry checkpoint.

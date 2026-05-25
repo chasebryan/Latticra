@@ -30,8 +30,8 @@ notes = "Report-only subsystem. No enforcement authority in this early installer
 label = "Nadia offline AI foundation"
 default_enabled = false
 authority = "local-prefix"
-generated_paths = ["bin/latticra-nadia", "etc/latticra/nadia.toml", "share/latticra/nadia/README.md", "share/latticra/nadia/context-packs", "share/latticra/nadia/runtime-profiles", "components/nadia-offline-ai.installed"]
-notes = "Stage-2 runtime-profile and Stage-1 local context-pack foundation with awareness principles. No inference, model installation, training, source mutation, or network authority."
+generated_paths = ["bin/latticra-nadia", "etc/latticra/nadia.toml", "share/latticra/nadia/README.md", "share/latticra/nadia/context-packs", "share/latticra/nadia/runtime-profiles", "share/latticra/nadia/prompt-plans", "components/nadia-offline-ai.installed"]
+notes = "Stage-3 prompt-plan workbench, Stage-2 runtime-profile, and Stage-1 local context-pack foundation with awareness principles. No prompt evaluation, inference, model installation, training, source mutation, or network authority."
 
 [components.fedora_validation]
 label = "Fedora validation files"

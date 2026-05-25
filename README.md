@@ -91,7 +91,7 @@ The authoritative status files are [`STATUS.md`](STATUS.md) and [`docs/status/CU
 | Latticra Seal | Report-only tool-boundary, runtime dry-run, guarded allowlist, report-envelope metadata, signature-request metadata, signing authorization metadata, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, future key parsing implementation contract/plan, and bounded key parsing metadata/status surfaces exist; no production enforcement |
 | Fedora integration | Local-only package and validation lanes exist; not Fedora-approved or distribution-ready |
 | Latticra Panel | GUI-first local installer/control workbench exists; user-local and guarded |
-| Nadia offline AI | Stage-2 runtime-profile boundary and Stage-1 context-pack generator exist; optional Panel component and metadata-only Console surface; no inference |
+| Nadia offline AI | Stage-3 prompt-plan workbench, Stage-2 runtime-profile boundary, and Stage-1 context-pack generator exist; optional Panel component and metadata-only Console surface; no inference |
 | Security hardening | Early; no production security boundary claimed |
 | Product readiness | Early; no production platform claimed |
 
@@ -152,7 +152,7 @@ Latticra Panel
 
 Nadia Offline AI
   Future local AI companion for Latticra software development, systems engineering, and AI development workflows.
-  Current posture: Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, Panel component, Console metadata, local config, and productivity-ledger path; no inference, prompt evaluation, model installation, training, source mutation, or network authority.
+  Current posture: Stage-3 prompt-plan workbench, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, Panel component, Console metadata, local config, and productivity-ledger path; no inference, prompt evaluation, model installation, training, source mutation, or network authority.
 
 Fedora/Linux substrate
   Current host-facing validation lane and integration target.
@@ -221,6 +221,8 @@ nadia_stage_1_local_context_engine_present=1
 nadia_context_pack_generator_present=1
 nadia_stage_2_runtime_profile_present=1
 nadia_runtime_profile_generator_present=1
+nadia_stage_3_developer_workbench_present=1
+nadia_prompt_plan_generator_present=1
 nadia_panel_install_surface_present=1
 nadia_console_status_surface_present=1
 nadia_model_runtime_present=0
@@ -409,6 +411,7 @@ dry-run
 nadia status
 nadia context
 nadia runtime
+nadia plan
 profile guided
 profile seal
 profile fedora
@@ -532,6 +535,9 @@ stage_2_runtime_profile_present=1
 runtime_profile_command=scripts/nadia-runtime-profile.sh
 installed_runtime_profile_command=latticra-nadia runtime-profile
 model_file_measurement=operator_provided_optional
+stage_3_developer_workbench_present=1
+prompt_plan_command=scripts/nadia-prompt-plan.sh
+installed_prompt_plan_command=latticra-nadia prompt-plan
 local_file_read_for_indexing=operator_invoked
 offline_by_default=1
 panel_install_surface_present=1
@@ -560,9 +566,10 @@ After a guarded local install with Nadia enabled:
 ```sh
 latticra-nadia context-pack
 latticra-nadia runtime-profile
+latticra-nadia prompt-plan
 ```
 
-See [`docs/NADIA_OFFLINE_AI_FOUNDATION.md`](docs/NADIA_OFFLINE_AI_FOUNDATION.md), [`docs/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](docs/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md), [`docs/NADIA_RUNTIME_PROFILE_STAGE_2.md`](docs/NADIA_RUNTIME_PROFILE_STAGE_2.md), [`docs/status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](docs/status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md), [`docs/status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](docs/status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md), and [`docs/status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md`](docs/status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md).
+See [`docs/NADIA_OFFLINE_AI_FOUNDATION.md`](docs/NADIA_OFFLINE_AI_FOUNDATION.md), [`docs/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](docs/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md), [`docs/NADIA_RUNTIME_PROFILE_STAGE_2.md`](docs/NADIA_RUNTIME_PROFILE_STAGE_2.md), [`docs/NADIA_DEVELOPER_WORKBENCH_STAGE_3.md`](docs/NADIA_DEVELOPER_WORKBENCH_STAGE_3.md), [`docs/status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](docs/status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md), [`docs/status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](docs/status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md), [`docs/status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md`](docs/status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md), and [`docs/status/NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md`](docs/status/NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md).
 
 ---
 

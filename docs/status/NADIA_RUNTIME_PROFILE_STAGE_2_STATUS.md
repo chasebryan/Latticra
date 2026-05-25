@@ -56,4 +56,4 @@ nadia_runtime_profile_stage_2: ok
 
 ## Next Stage
 
-Stage-3 should add a developer-workbench planning surface that can combine context-pack evidence and runtime-profile evidence into prompt plans without evaluating prompts.
+Stage-3 now adds a developer-workbench planning surface that combines context-pack evidence and runtime-profile evidence into prompt plans without evaluating prompts.

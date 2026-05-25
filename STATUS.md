@@ -7,6 +7,7 @@ Latest Seal verification receipt status/public-entry note: 2026-05-25 CDT
 Latest Nadia offline AI Stage-0 foundation note: 2026-05-25 CDT
 Latest Nadia local context engine Stage-1 note: 2026-05-25 CDT
 Latest Nadia runtime profile Stage-2 note: 2026-05-25 CDT
+Latest Nadia developer workbench Stage-3 note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -117,7 +118,7 @@ docs/strategy/README.md
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 7% |
+| Nadia offline AI foundation | 10% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |
@@ -150,6 +151,7 @@ Seal verification receipt status/public-entry alignment
 Nadia offline AI Stage-0 foundation
 Nadia local context engine Stage-1
 Nadia runtime profile Stage-2
+Nadia developer workbench Stage-3
 Seal verification policy status/public-entry alignment
 Seal key parsing status/public-entry alignment
 Seal bounded no-effect key parsing implementation
