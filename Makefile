@@ -1,10 +1,13 @@
-.PHONY: seal nadia-context
+.PHONY: seal nadia-context nadia-runtime
 
 seal:
 	./scripts/latticra-seal-smoke.sh
 
 nadia-context:
 	sh ./scripts/nadia-context-pack.sh --repo .
+
+nadia-runtime:
+	sh ./scripts/nadia-runtime-profile.sh
 
 .PHONY: seal-policy-denials
 

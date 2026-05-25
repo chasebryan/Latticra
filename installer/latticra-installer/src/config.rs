@@ -421,11 +421,25 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "installed_context_pack_command=latticra-nadia context-pack"
     );
     let _ = writeln!(out, "local_file_read_for_indexing=operator_invoked");
+    let _ = writeln!(out, "runtime_profile_stage=2-runtime-profile-boundary");
+    let _ = writeln!(
+        out,
+        "runtime_profile_command=scripts/nadia-runtime-profile.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_runtime_profile_command=latticra-nadia runtime-profile"
+    );
+    let _ = writeln!(out, "runtime_family=llama.cpp-compatible");
+    let _ = writeln!(out, "model_format=gguf");
     let _ = writeln!(out, "human_dignity_principle=1");
     let _ = writeln!(out, "survivor_witness_respect=1");
     let _ = writeln!(out, "community_awareness_posture=1");
     let _ = writeln!(out, "harm_aware_development=1");
     let _ = writeln!(out, "model_runtime_present=0");
+    let _ = writeln!(out, "model_runtime_invoked=0");
+    let _ = writeln!(out, "inference_performed=0");
+    let _ = writeln!(out, "prompt_evaluated=0");
     let _ = writeln!(out, "model_weights_installed=0");
     let _ = writeln!(out, "tool_execution_authority=0");
     let _ = writeln!(out, "source_mutation_authority=0");

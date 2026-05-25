@@ -343,11 +343,19 @@ context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
 installed_context_pack_command=latticra-nadia context-pack
 local_file_read_for_indexing=operator_invoked
+runtime_profile_stage=2-runtime-profile-boundary
+runtime_profile_command=scripts/nadia-runtime-profile.sh
+installed_runtime_profile_command=latticra-nadia runtime-profile
+runtime_family=llama.cpp-compatible
+model_format=gguf
 human_dignity_principle=1
 survivor_witness_respect=1
 community_awareness_posture=1
 harm_aware_development=1
 model_runtime_present=0
+model_runtime_invoked=0
+inference_performed=0
+prompt_evaluated=0
 model_weights_installed=0
 tool_execution_authority=0
 source_mutation_authority=0
@@ -529,7 +537,8 @@ if bool_true "$NADIA_OFFLINE_AI"; then
   mkdir -p \
     "$PREFIX/share/latticra/nadia/context-packs" \
     "$PREFIX/share/latticra/nadia/model-registry" \
-    "$PREFIX/share/latticra/nadia/productivity-ledger"
+    "$PREFIX/share/latticra/nadia/productivity-ledger" \
+    "$PREFIX/share/latticra/nadia/runtime-profiles"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia"
@@ -540,6 +549,10 @@ productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
 context_pack_command = "scripts/nadia-context-pack.sh"
 local_file_read_for_indexing = "operator-invoked"
+runtime_profile_stage = "2-runtime-profile-boundary"
+runtime_profile_command = "scripts/nadia-runtime-profile.sh"
+runtime_family = "llama.cpp-compatible"
+model_format = "gguf"
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -558,7 +571,7 @@ Nadia is the Stage-0 offline AI foundation for Latticra.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, model-registry, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack. It does not install model weights, run inference, use the network, train a model, or mutate source.
+This installed component reserves local context-pack, runtime-profile, model-registry, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack and runtime-readiness metadata when the operator runs latticra-nadia runtime-profile. It does not install model weights, run inference, use the network, train a model, or mutate source.
 NADIAREADME
 fi
 
@@ -713,7 +726,9 @@ case "\${1:-status}" in
     echo "context_packs=\$NADIA_DIR/context-packs"
     echo "model_registry=\$NADIA_DIR/model-registry"
     echo "productivity_ledger=\$NADIA_DIR/productivity-ledger"
+    echo "runtime_profiles=\$NADIA_DIR/runtime-profiles"
     echo "context_pack_command=latticra-nadia context-pack"
+    echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -721,6 +736,9 @@ case "\${1:-status}" in
     echo "console_interop_surface_present=1"
     echo "panel_install_surface_present=1"
     echo "model_runtime_present=0"
+    echo "model_runtime_invoked=0"
+    echo "inference_performed=0"
+    echo "prompt_evaluated=0"
     echo "model_weights_installed=0"
     echo "network_authority=0"
     echo "tool_execution_authority=0"
@@ -740,11 +758,23 @@ case "\${1:-status}" in
     fi
     exec sh "\$SCRIPT" --repo "\$PREFIX/lib/latticra" --output "\$NADIA_DIR/context-packs"
     ;;
+  runtime-profile|runtime|profile)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-runtime-profile.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia runtime-profile script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" --output "\$NADIA_DIR/runtime-profiles"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|context-pack|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|runtime-profile|path}" >&2
     exit 64
     ;;
 esac

@@ -290,7 +290,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context",
+                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context, nadia runtime",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -321,8 +321,9 @@ impl LatticraInstallerApp {
                 ));
                 self.push_console("human_dignity_principle=1 community_awareness_posture=1");
                 self.push_console("context_engine_stage=1-local-context-engine");
+                self.push_console("runtime_profile_stage=2-runtime-profile-boundary");
                 self.push_console(
-                    "stage=1 local-context-engine; model_runtime_present=0 model_weights_installed=0",
+                    "stage=2 runtime-profile-boundary; model_runtime_invoked=0 inference_performed=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -334,6 +335,15 @@ impl LatticraInstallerApp {
                 self.push_console("installed_cli=latticra-nadia context-pack");
                 self.push_console(
                     "network_authority=0 model_runtime_present=0 source_mutation_authority=0",
+                );
+            }
+            ["nadia", "runtime"] | ["nadia", "runtime-profile"] => {
+                self.push_console("nadia_runtime_profile=stage-2-runtime-profile-boundary");
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia runtime-profile");
+                self.push_console("runtime_family=llama.cpp-compatible model_format=gguf");
+                self.push_console(
+                    "model_runtime_invoked=0 inference_performed=0 prompt_evaluated=0",
                 );
             }
             ["plan"] => {

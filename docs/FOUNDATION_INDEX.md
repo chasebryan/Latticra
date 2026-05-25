@@ -31,6 +31,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`SERVER_INTERACTION_MODEL.md`](SERVER_INTERACTION_MODEL.md) — signed, optional, inspectable server interaction model.
 - [`NADIA_OFFLINE_AI_FOUNDATION.md`](NADIA_OFFLINE_AI_FOUNDATION.md) — Stage-0 foundation contract for Latticra Nadia, the planned offline AI companion for Latticra software development, systems engineering, AI development, and community-awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md) — Stage-1 no-network local context-pack engine for Nadia.
+- [`NADIA_RUNTIME_PROFILE_STAGE_2.md`](NADIA_RUNTIME_PROFILE_STAGE_2.md) — Stage-2 offline runtime-profile boundary for Nadia before inference.
 - [`SELF_UPDATE_MODEL.md`](SELF_UPDATE_MODEL.md) — staged signed update and rollback design.
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
@@ -47,6 +48,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) — current progress, completion estimates, and next priorities.
 - [`status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md) — status record for Nadia offline AI Stage-0 foundation, Panel installability, Console interoperability, and awareness principles.
 - [`status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) — status record for Nadia Stage-1 local context-pack generation.
+- [`status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md`](status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md) — status record for Nadia Stage-2 runtime-profile metadata before inference.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
@@ -228,6 +230,7 @@ Latticra Seal signing operation status/public-entry alignment + guardrails
 Latticra Seal verification receipt status/public-entry alignment + guardrails
 Nadia offline AI Stage-0 foundation + guardrails
 Nadia local context engine Stage-1 + guardrails
+Nadia runtime profile Stage-2 + guardrails
 Latticra Seal verification policy status/public-entry alignment + guardrails
 Latticra Seal key parsing status/public-entry alignment + guardrails
 Latticra Seal bounded no-effect key parsing metadata + invariants

@@ -53,4 +53,4 @@ nadia_local_context_engine_stage_1: ok
 
 ## Next Stage
 
-Stage-2 should define an offline inference-runtime contract before any model runtime, model file, quantization profile, prompt execution, or local generation path is added.
+Stage-2 now defines an offline runtime-profile boundary before any prompt execution or local generation path is added.

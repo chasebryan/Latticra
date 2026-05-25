@@ -155,6 +155,22 @@ See [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1
 
 Add a pluggable local runtime boundary for operator-provided models, likely GGUF-compatible first. Record model hashes, quantization, context length, hardware profile, and memory budget before use.
 
+Current Stage-2 status:
+
+```text
+nadia_stage_2_runtime_profile_present=1
+runtime_profile_command=scripts/nadia-runtime-profile.sh
+installed_runtime_profile_command=latticra-nadia runtime-profile
+model_file_measurement=operator_provided_optional
+runtime_family=llama.cpp-compatible
+model_format=gguf
+model_runtime_invoked=0
+inference_performed=0
+prompt_evaluated=0
+```
+
+See [`NADIA_RUNTIME_PROFILE_STAGE_2.md`](NADIA_RUNTIME_PROFILE_STAGE_2.md).
+
 ### Stage-3: Developer Workbench
 
 Integrate Nadia with Latticra Console and Panel workflows for code navigation, patch planning, test selection, and evidence review. Keep source mutation behind explicit operator action.
@@ -187,11 +203,12 @@ Stage-0 Nadia is not:
 
 ## Promotion Gate
 
-Before Stage-2 starts, Latticra should keep these guards passing:
+Before Stage-3 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
 sh scripts/test-nadia-local-context-engine-stage-1.sh
+sh scripts/test-nadia-runtime-profile-stage-2.sh
 ```
 
-Before Stage-2 starts, a separate inference-runtime contract must exist and name model format, runtime boundary, memory policy, prompt/context evidence, failure behavior, receipt fields, and non-claims.
+Before prompt planning or inference starts, a separate developer-workbench contract must exist and name context-pack use, runtime-profile use, prompt-plan boundaries, failure behavior, receipt fields, and non-claims.
