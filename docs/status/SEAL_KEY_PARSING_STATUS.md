@@ -22,6 +22,12 @@ src/seal_key_parsing.c
 tests/seal_key_parsing_invariants.c
 scripts/test-latticra-seal-key-parsing.sh
 scripts/test-latticra-seal-key-parsing-status.sh
+docs/LATTICRA_SEAL_VERIFICATION_POLICY_CONTRACT.md
+docs/LATTICRA_SEAL_VERIFICATION_POLICY_IMPLEMENTATION.md
+docs/status/SEAL_VERIFICATION_POLICY_STATUS.md
+scripts/test-latticra-seal-verification-policy-contract.sh
+scripts/test-latticra-seal-verification-policy.sh
+scripts/test-latticra-seal-verification-policy-status.sh
 docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_CONTRACT.md
 docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md
 docs/status/SEAL_PUBLIC_KEY_PARSING_STATUS.md
@@ -45,6 +51,9 @@ seal_key_parsing_invariant_test_present=1
 seal_key_parsing_runner_present=1
 seal_key_parsing_metadata_present=1
 seal_key_parsing_status_present=1
+seal_verification_policy_contract_present=1
+seal_verification_policy_implementation_present=1
+seal_verification_policy_status_present=1
 seal_future_key_parsing_implementation_contract_present=1
 seal_future_key_parsing_implementation_plan_present=1
 seal_public_key_parsing_contract_present=1
@@ -98,6 +107,7 @@ The implementation and status surface are covered by:
 ```sh
 sh scripts/test-latticra-seal-key-parsing.sh
 sh scripts/test-latticra-seal-key-parsing-status.sh
+sh scripts/test-latticra-seal-verification-policy-status.sh
 sh scripts/test-latticra-seal-future-key-parsing-implementation-plan.sh
 sh scripts/test-latticra-seal-public-key-parsing-status.sh
 ```
@@ -107,6 +117,7 @@ Expected output:
 ```text
 seal key parsing invariants: ok
 seal key parsing status: ok
+seal verification policy status: ok
 seal future key parsing implementation plan: ok
 seal public-key parsing status: ok
 ```
@@ -119,6 +130,6 @@ It does not add key material loading, private-key handling, key generation, hard
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is verification policy status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is verification receipt status/public-entry alignment or another narrow status/index alignment follow-up.
 
 That future slice must not add cryptographic verification, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

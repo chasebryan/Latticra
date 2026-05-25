@@ -118,10 +118,19 @@ Run:
 ```sh
 sh scripts/test-latticra-seal-verification-policy-contract.sh
 sh scripts/test-latticra-seal-verification-policy.sh
+sh scripts/test-latticra-seal-verification-policy-status.sh
+```
+
+Expected output:
+
+```text
+seal verification policy contract: ok
+seal verification policy invariants: ok
+seal verification policy status: ok
 ```
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is a verification receipt contract.
+The next valid Latticra Seal slice is verification receipt status/public-entry alignment.
 
-That future slice must be contract-first and must not be added directly to this verification policy metadata implementation.
+That future slice must not add cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority unless separately implemented and guarded.

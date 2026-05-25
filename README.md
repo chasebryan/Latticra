@@ -204,6 +204,8 @@ latticra_seal_future_key_parsing_implementation_contract_present=1
 latticra_seal_future_key_parsing_implementation_plan_present=1
 latticra_seal_key_parsing_metadata_present=1
 latticra_seal_key_parsing_status_present=1
+latticra_seal_verification_policy_metadata_present=1
+latticra_seal_verification_policy_status_present=1
 latticra_panel_gui_workbench_present=1
 fedora_local_rpm_draft_present=1
 visual_theorem_engines_present=1
@@ -659,6 +661,8 @@ seal_future_key_parsing_implementation_contract_present=1
 seal_future_key_parsing_implementation_plan_present=1
 seal_key_parsing_metadata_present=1
 seal_key_parsing_status_present=1
+seal_verification_policy_metadata_present=1
+seal_verification_policy_status_present=1
 runtime_gate_report_only=1
 policy_decision_state=report-only
 runtime_gate_state=report-only
@@ -746,6 +750,10 @@ The bounded key parsing metadata implementation now accepts caller-provided Ed25
 
 The key parsing status record makes that bounded public-key byte metadata checkpoint visible from the public entry points without changing implementation behavior.
 
+The verification policy metadata implementation records unsupported verification-policy posture from existing signature metadata and a caller-provided public-key identity label. It does not perform cryptographic verification, consume public-key bytes, load key material, handle private keys, query trust stores or revocation sources, touch host or network behavior, enforce capabilities, or grant runtime authority.
+
+The verification policy status record makes that metadata-only checkpoint visible from the public entry points without changing implementation behavior.
+
 That claim is intentionally limited. It does not mean Latticra Seal currently implements production runtime enforcement, policy enforcement, cryptographic key authority, MCP protocol behavior, MCP server behavior, MCP client behavior, AI-agent execution control, host behavior, network behavior, object sealing, key storage, or revocation lookup.
 
 Relevant Seal records:
@@ -787,6 +795,9 @@ Relevant Seal records:
 - [`docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md`](docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md)
 - [`docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md)
 - [`docs/status/SEAL_KEY_PARSING_STATUS.md`](docs/status/SEAL_KEY_PARSING_STATUS.md)
+- [`docs/LATTICRA_SEAL_VERIFICATION_POLICY_CONTRACT.md`](docs/LATTICRA_SEAL_VERIFICATION_POLICY_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_VERIFICATION_POLICY_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_VERIFICATION_POLICY_IMPLEMENTATION.md)
+- [`docs/status/SEAL_VERIFICATION_POLICY_STATUS.md`](docs/status/SEAL_VERIFICATION_POLICY_STATUS.md)
 - [`docs/status/SEAL_SIGNER_INVOCATION_STATUS.md`](docs/status/SEAL_SIGNER_INVOCATION_STATUS.md)
 - [`docs/status/SEAL_SIGNER_HANDOFF_STATUS.md`](docs/status/SEAL_SIGNER_HANDOFF_STATUS.md)
 - [`docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md`](docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md)

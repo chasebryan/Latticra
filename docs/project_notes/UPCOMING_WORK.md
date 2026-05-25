@@ -36,13 +36,13 @@ implement bounded key parsing metadata for caller-provided Ed25519 public-key by
 ## Latest completed status/public-entry slice
 
 ```text
-Latticra Seal key parsing status/public-entry alignment
+Latticra Seal verification policy status/public-entry alignment
 ```
 
 Purpose completed:
 
 ```text
-publish and guard the bounded key parsing metadata implementation from public/status entry points while preserving no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority
+publish and guard the existing metadata-only verification policy surface from public/status entry points while preserving no cryptographic verification, no signing, no public-key byte verification, no key material loading, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, no capability enforcement, and no runtime authority
 ```
 
 ## Earlier planning slice
@@ -72,13 +72,13 @@ define the next future key parsing implementation contract after public-key pars
 ## Previous status/public-entry slice
 
 ```text
-Latticra Seal public-key parsing status/public-entry alignment
+Latticra Seal key parsing status/public-entry alignment
 ```
 
 Purpose completed:
 
 ```text
-publish and guard the public-key parsing metadata implementation in the status and public-entry surfaces while preserving no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority
+publish and guard the bounded key parsing metadata implementation from public/status entry points while preserving no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority
 ```
 
 ## Previous implementation slice
@@ -295,18 +295,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Seal verification policy status/public-entry alignment, with metadata-only verification policy visibility and no cryptographic verification, signing, key material loading, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority
+Seal verification receipt status/public-entry alignment, with metadata-only verification receipt visibility and no cryptographic verification, signing, key material loading, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 Purpose:
 
 ```text
-publish and guard the existing metadata-only verification policy surface from public/status entry points while preserving no cryptographic verification, no signing, no key material loading, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+publish and guard the existing metadata-only verification receipt surface from public/status entry points while preserving no cryptographic verification, no signing, no key material loading, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Seal verification policy status/public-entry alignment.
+1. Seal verification receipt status/public-entry alignment.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.

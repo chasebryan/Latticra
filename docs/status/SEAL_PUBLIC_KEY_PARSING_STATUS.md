@@ -20,6 +20,9 @@ docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_CONTRACT.md
 docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md
 docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md
 docs/status/SEAL_KEY_PARSING_STATUS.md
+docs/LATTICRA_SEAL_VERIFICATION_POLICY_CONTRACT.md
+docs/LATTICRA_SEAL_VERIFICATION_POLICY_IMPLEMENTATION.md
+docs/status/SEAL_VERIFICATION_POLICY_STATUS.md
 include/latticra/seal_public_key_parsing.h
 include/latticra/seal_key_parsing.h
 src/seal_public_key_parsing.c
@@ -33,6 +36,9 @@ scripts/test-latticra-seal-future-key-parsing-implementation-contract.sh
 scripts/test-latticra-seal-future-key-parsing-implementation-plan.sh
 scripts/test-latticra-seal-key-parsing.sh
 scripts/test-latticra-seal-key-parsing-status.sh
+scripts/test-latticra-seal-verification-policy-contract.sh
+scripts/test-latticra-seal-verification-policy.sh
+scripts/test-latticra-seal-verification-policy-status.sh
 docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md
 docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
 docs/status/SEAL_KEY_MATERIAL_STATUS.md
@@ -61,6 +67,9 @@ seal_future_key_parsing_implementation_contract_present=1
 seal_future_key_parsing_implementation_plan_present=1
 seal_key_parsing_metadata_present=1
 seal_key_parsing_status_present=1
+seal_verification_policy_contract_present=1
+seal_verification_policy_implementation_present=1
+seal_verification_policy_status_present=1
 seal_key_material_contract_present=1
 seal_key_material_implementation_present=1
 seal_key_material_status_present=1
@@ -126,6 +135,7 @@ sh scripts/test-latticra-seal-future-key-parsing-implementation-contract.sh
 sh scripts/test-latticra-seal-future-key-parsing-implementation-plan.sh
 sh scripts/test-latticra-seal-key-parsing.sh
 sh scripts/test-latticra-seal-key-parsing-status.sh
+sh scripts/test-latticra-seal-verification-policy-status.sh
 ```
 
 The predecessor key-material implementation remains covered by:
@@ -146,6 +156,7 @@ seal future key parsing implementation contract: ok
 seal future key parsing implementation plan: ok
 seal key parsing invariants: ok
 seal key parsing status: ok
+seal verification policy status: ok
 seal key-material contract: ok
 seal key-material invariants: ok
 seal key-material status: ok
@@ -159,6 +170,6 @@ It does not add public-key parsing, key material loading, private-key handling, 
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is verification policy status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is verification receipt status/public-entry alignment or another narrow status/index alignment follow-up.
 
 That future slice must not add cryptographic verification, signing, public-key parsing behavior, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.
