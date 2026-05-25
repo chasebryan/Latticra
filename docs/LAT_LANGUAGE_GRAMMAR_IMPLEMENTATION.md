@@ -1,13 +1,15 @@
 # Latticra Lat Language Grammar Implementation
 
-Status: initial implementation contract
-Scope: bounded no-effect Lat / Latticra Language grammar parser, parse result model, AST metadata, report surface, fixture, and invariants.
+Status: implementation with line-comment metadata refinement
+Scope: bounded no-effect Lat / Latticra Language grammar parser, parse result model, AST metadata, line-comment metadata, report surface, fixture, and invariants.
 
 ## Purpose
 
 This implementation adds the first bounded parser for the Lat / Latticra Language grammar.
 
 The parser accepts the first Lat-Core declaration grammar shape and records module, declaration, clause, effect, source-span, and no-effect metadata.
+
+The parser also records deterministic line-comment metadata for audit visibility. Line comments are skipped by the grammar, may contain otherwise forbidden behavior marker words, and do not change no-effect flags or clause/operator behavior.
 
 This implementation does not execute Lat, compile Lat, interpret Lat, lower Lat to LIR, render L-UI, call Nucleus task behavior, read files, write files, open network connections, mutate state, or touch hardware.
 
@@ -191,6 +193,13 @@ transition_count
 assertion_count
 effect_count
 clause_count
+comment_count
+first_comment_start_offset
+first_comment_end_offset
+first_comment_start_line
+first_comment_start_column
+first_comment_end_line
+first_comment_end_column
 first_declaration_index
 first_declaration_kind
 first_declaration_name

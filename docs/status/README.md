@@ -27,6 +27,8 @@ non-claims
 - [`MACOS_DRY_RUN_PLAN_ADAPTER_STATUS.md`](MACOS_DRY_RUN_PLAN_ADAPTER_STATUS.md) - macOS dry-run plan adapter status for rendering user-local Application Support, app bundle, CLI-wrapper, receipt, and verification intent without writing artifacts.
 - [`MACOS_USER_LOCAL_APP_BUNDLE_CONTRACT_STATUS.md`](MACOS_USER_LOCAL_APP_BUNDLE_CONTRACT_STATUS.md) - macOS user-local app bundle contract status for exact files, managed markers, reset/uninstall behavior, and verification transcript requirements.
 - [`MACOS_USER_LOCAL_APP_BUNDLE_IMPLEMENTATION_PLAN_STATUS.md`](MACOS_USER_LOCAL_APP_BUNDLE_IMPLEMENTATION_PLAN_STATUS.md) - macOS user-local app bundle implementation plan status for no-effect writer phases, failure behavior, reset/uninstall sequencing, and guard tests.
+- [`MACOS_APP_BUNDLE_WRITER_DRY_RUN_STATUS.md`](MACOS_APP_BUNDLE_WRITER_DRY_RUN_STATUS.md) - macOS app bundle writer dry-run status for phase-report output, unsafe-path validation, marker inspection, and disabled commit behavior.
+- [`MACOS_APP_BUNDLE_WRITER_ALIGNMENT_STATUS.md`](MACOS_APP_BUNDLE_WRITER_ALIGNMENT_STATUS.md) - macOS app bundle writer alignment status separating the no-effect dry-run writer prototype from any future commit-capable writer.
 - [`NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](NADIA_OFFLINE_AI_STAGE_0_STATUS.md) - Nadia offline AI Stage-0 foundation status for Panel installability, Console interoperability, and awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) - Nadia Stage-1 local context-engine status for no-network context-pack generation.
 - [`NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md`](NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md) - Nadia Stage-2 runtime-profile status for offline model-readiness metadata before inference.
@@ -53,6 +55,7 @@ non-claims
 - [`NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23_STATUS.md`](NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23_STATUS.md) - Nadia Stage-23 tokenizer-artifact-binding contract status before tokenizer artifact opening, artifact reading, artifact hashing, artifact verification, artifact binding, tokenizer runtime attachment, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md`](NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md) - Nadia Stage-24 tokenizer-runtime-attachment contract status before tokenizer artifact opening, artifact reading, artifact hashing, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md`](NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md) - Nadia Stage-25 prompt-tokenization contract status before prompt text reading, prompt token creation, prompt token sequence recording, tokenizer runtime attachment, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26_STATUS.md`](NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26_STATUS.md) - Nadia Stage-26 prompt-token-sequence contract status before prompt token ID recording, token order recording, token offset recording, context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
 - [`../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md`](../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md) — defensive threat model validation refinement.
 - [`../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`](../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md) — runtime boundary policy expansion after threat-model validation.
@@ -98,6 +101,7 @@ non-claims
 - [`FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md) — status record for the manually gated disposable Fedora VM CLI payload validation lane runner.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md`](COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md) — completion-estimate review after the L-UI detailed report refinement.
+- [`COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md`](COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md) — README/status alignment for the completion-estimate review after runtime-boundary abuse-case fixtures.
 - [`COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md) — completion-estimate hold review after runtime-boundary abuse-case fixtures.
 - [`COMPLETION_PERCENTAGE_REVIEW.md`](COMPLETION_PERCENTAGE_REVIEW.md) — latest completion-percentage planning review.
 - [`CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
@@ -234,6 +238,7 @@ evidence_gap_map_present=1
 runtime_execution_added=0
 effect_execution_added=0
 runtime_authority_granted=0
+completion_estimate_review_readme_status_alignment_present=1
 completion_estimate_after_runtime_boundary_abuse_case_fixtures_present=1
 estimate_adjustment_required=0
 completion_estimate_review_required=0

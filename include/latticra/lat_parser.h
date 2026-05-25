@@ -103,6 +103,8 @@ typedef struct {
     latticra_lat_ast_clause_t clauses[LATTICRA_LAT_CLAUSE_MAX];
     size_t declaration_count;
     size_t clause_count;
+    size_t comment_count;
+    latticra_lat_source_span_t first_comment_span;
     int no_effect;
     int execution_allowed;
     int mutation_allowed;

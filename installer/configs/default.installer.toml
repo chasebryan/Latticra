@@ -11,6 +11,17 @@ fedora_validation = false
 docs_and_examples = true
 developer_cli_helpers = true
 
+[lc]
+profile = "panel_embedded"
+command_registry_profile = "c-static-table"
+substrate_bridge_profile = "metadata-bound"
+host_embedding_profile = "panel-contained"
+os_base_profile = "planned-no-boot-authority"
+panel_bridge = "panel-aware"
+report_only = true
+require_runtime_boundary_binding = true
+require_seal_capability_labels = true
+
 [safety]
 dry_run = true
 allow_host_mutation = false

@@ -219,7 +219,7 @@ uninstall receipt outside removed prefix
 ```text
 macos_user_local_app_bundle_implementation_plan_present=1
 macos_app_bundle_writer_present=0
-macos_app_bundle_writer_dry_run_present=0
+macos_app_bundle_writer_dry_run_present=1
 macos_app_bundle_created=0
 macos_install_verified=0
 macos_reset_uninstall_implemented=0
@@ -238,5 +238,5 @@ This plan is not macOS installation, macOS app bundle evidence, signed app evide
 ## Next Recommended Lane
 
 ```text
-Add a no-effect macOS app bundle writer dry-run prototype that emits the planned phase report, validates unsafe paths, and keeps commit_user_local_managed_artifacts=0.
+Add a no-effect macOS local candidate asset probe that checks a caller-supplied Panel executable and icon candidate without building, downloading, signing, notarizing, copying, or writing artifacts.
 ```

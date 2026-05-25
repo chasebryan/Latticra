@@ -1,4 +1,6 @@
-use crate::config::{render_plan, InstallProfile, InstallerConfig, SealCryptoProfile};
+use crate::config::{
+    render_plan, InstallProfile, InstallerConfig, LatticraConsoleProfile, SealCryptoProfile,
+};
 use crate::engine::{self, InstallEvent, RemovalOperation};
 use eframe::egui;
 use std::fs;
@@ -23,6 +25,7 @@ enum InstallState {
 enum WorkspaceTab {
     Dashboard,
     Components,
+    Console,
     Seal,
     Authority,
     Delivery,
@@ -63,7 +66,7 @@ impl Default for LatticraInstallerApp {
             console_lines: vec![
                 format!("Latticra Panel v{PANEL_VERSION} bounded operator console online."),
                 "Authority baseline: root=0 network=0 runtime_enforcement=0.".to_owned(),
-                "Panel commands: help, status, lc status, plan, save, dry-run, reset, uninstall, profile seal, profile fedora."
+                "Panel commands: help, status, lc status, lc profile <hosted|panel|host|os|custom>, plan, save, dry-run, reset, uninstall, profile seal, profile fedora."
                     .to_owned(),
                 "Navigation commands: pwd, cd <dir>. External host commands are denied.".to_owned(),
             ],
@@ -139,6 +142,14 @@ impl LatticraInstallerApp {
             "seal.crypto_profile -> {}",
             self.config.seal.crypto_profile.label()
         ));
+    }
+
+    fn apply_lc_profile(&mut self, profile: LatticraConsoleProfile) {
+        self.config.lc.profile = profile;
+        self.config.lc.apply_profile_defaults();
+        self.refresh_plan();
+        self.status = format!("LC profile set to {}.", self.config.lc.profile.label());
+        self.push_console(format!("lc.profile -> {}", self.config.lc.profile.label()));
     }
 
     fn set_mode_dry(&mut self) {
@@ -324,7 +335,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, lc status, lc commands, lc substrate, lc host, lc os, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding, nadia tokenizer-runtime-attachment, nadia prompt-tokenization",
+                    "panel: help, status, lc status, lc profiles, lc profile hosted|panel|host|os|custom, lc commands, lc substrate, lc host, lc os, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding, nadia tokenizer-runtime-attachment, nadia prompt-tokenization, nadia prompt-token-sequence",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -340,6 +351,11 @@ impl LatticraInstallerApp {
                 self.push_console(format!(
                     "latticra_console={}",
                     self.config.components.latticra_console
+                ));
+                self.push_console(format!("lc_profile={}", self.config.lc.profile.key()));
+                self.push_console(format!(
+                    "lc_profile_label={}",
+                    self.config.lc.profile.label()
                 ));
                 self.push_console(format!(
                     "nadia_offline_ai={}",
@@ -358,19 +374,63 @@ impl LatticraInstallerApp {
                     "component_selected={}",
                     self.config.components.latticra_console
                 ));
-                self.push_console(
-                    "configurable=1 panel_installable=1 panel_console_bridge=panel-aware",
-                );
-                self.push_console("command_registry_status=seed-registry");
-                self.push_console("substrate_bridge_status=metadata-bound");
-                self.push_console("host_embedding_status=planned");
-                self.push_console("os_base_status=planned-no-boot-authority");
+                self.push_console(format!("profile={}", self.config.lc.profile.key()));
+                self.push_console(format!("profile_label={}", self.config.lc.profile.label()));
+                self.push_console(format!(
+                    "configurable=1 panel_installable=1 panel_console_bridge={}",
+                    self.config.lc.panel_bridge
+                ));
+                self.push_console(format!(
+                    "command_registry_profile={}",
+                    self.config.lc.command_registry_profile
+                ));
+                self.push_console(format!(
+                    "substrate_bridge_profile={}",
+                    self.config.lc.substrate_bridge_profile
+                ));
+                self.push_console(format!(
+                    "host_embedding_profile={}",
+                    self.config.lc.host_embedding_profile
+                ));
+                self.push_console(format!(
+                    "os_base_profile={}",
+                    self.config.lc.os_base_profile
+                ));
+                self.push_console(format!("report_only={}", self.config.lc.report_only));
+                self.push_console(format!(
+                    "runtime_boundary_binding_required={}",
+                    self.config.lc.require_runtime_boundary_binding
+                ));
+                self.push_console(format!(
+                    "seal_capability_labels_required={}",
+                    self.config.lc.require_seal_capability_labels
+                ));
                 self.push_console(
                     "execution_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0",
                 );
             }
+            ["lc", "profiles"] | ["console", "profiles"] => {
+                for profile in LatticraConsoleProfile::all() {
+                    self.push_console(format!("{}: {}", profile.key(), profile.detail()));
+                }
+            }
+            ["lc", "profile", "hosted"] | ["lc", "profile", "hosted_reference"] => {
+                self.apply_lc_profile(LatticraConsoleProfile::HostedReference);
+            }
+            ["lc", "profile", "panel"] | ["lc", "profile", "panel_embedded"] => {
+                self.apply_lc_profile(LatticraConsoleProfile::PanelEmbedded);
+            }
+            ["lc", "profile", "host"] | ["lc", "profile", "host_embedded_planning"] => {
+                self.apply_lc_profile(LatticraConsoleProfile::HostEmbeddedPlanning);
+            }
+            ["lc", "profile", "os"] | ["lc", "profile", "os_base_planning"] => {
+                self.apply_lc_profile(LatticraConsoleProfile::OsBasePlanning);
+            }
+            ["lc", "profile", "custom"] => {
+                self.apply_lc_profile(LatticraConsoleProfile::Custom);
+            }
             ["lc", "commands"] | ["console", "commands"] => {
-                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc substrate,lc host,lc os");
+                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc profiles,lc substrate,lc host,lc os");
                 self.push_console("registry_authority=metadata-only external_host_processes=0");
             }
             ["lc", "substrate"] | ["console", "substrate"] => {
@@ -381,12 +441,18 @@ impl LatticraInstallerApp {
                 self.push_console("effect_boundary=no-effect runtime_enforcement_authority=0");
             }
             ["lc", "host"] | ["console", "host"] => {
-                self.push_console("lc.host_embedding=planned");
+                self.push_console(format!(
+                    "lc.host_embedding={}",
+                    self.config.lc.host_embedding_profile
+                ));
                 self.push_console("host_embedded_now=0 host_mutation_allowed=0 file_io_allowed=0");
                 self.push_console("future_host_role=embed-within-host-after-gates");
             }
             ["lc", "os"] | ["console", "os"] | ["lc", "base"] | ["console", "base"] => {
-                self.push_console("lc.os_base_status=planned-no-boot-authority");
+                self.push_console(format!(
+                    "lc.os_base_status={}",
+                    self.config.lc.os_base_profile
+                ));
                 self.push_console("future_os_base_claim=planned_not_claimed");
                 self.push_console(
                     "boot_allowed=0 kernel_enforcement_authority=0 production_os_claim=0",
@@ -462,7 +528,10 @@ impl LatticraInstallerApp {
                     "prompt_tokenization_contract_stage=25-prompt-tokenization-contract",
                 );
                 self.push_console(
-                    "stage=25 prompt-tokenization-contract; prompt_tokenization_performed=0 prompt_tokenized=0",
+                    "prompt_token_sequence_contract_stage=26-prompt-token-sequence-contract",
+                );
+                self.push_console(
+                    "stage=26 prompt-token-sequence-contract; prompt_token_sequence_recorded=0 context_window_assembled=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -735,6 +804,25 @@ impl LatticraInstallerApp {
                     "requires_tokenizer_runtime_attachment_contract=1 requires_future_prompt_token_sequence_contract=1",
                 );
             }
+            ["nadia", "prompt-token-sequence"]
+            | ["nadia", "token-sequence"]
+            | ["nadia", "prompt-sequence"]
+            | ["nadia", "prompt-token-sequence-contract"] => {
+                self.push_console(
+                    "nadia_prompt_token_sequence=stage-26-prompt-token-sequence-contract",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia prompt-token-sequence");
+                self.push_console(
+                    "prompt_token_sequence_contract_status=contract_only prompt_token_sequence_recorded=0",
+                );
+                self.push_console(
+                    "prompt_token_ids_recorded=0 context_window_assembled=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_tokenization_contract=1 requires_future_context_window_assembly_contract=1",
+                );
+            }
             ["nadia", "inference-readiness"]
             | ["nadia", "readiness"]
             | ["nadia", "inference-contract"] => {
@@ -975,6 +1063,12 @@ impl LatticraInstallerApp {
         nav_button(
             ui,
             &mut self.active_tab,
+            WorkspaceTab::Console,
+            "Latticra Console",
+        );
+        nav_button(
+            ui,
+            &mut self.active_tab,
             WorkspaceTab::Seal,
             "Latticra Seal",
         );
@@ -1037,6 +1131,7 @@ impl LatticraInstallerApp {
                 match self.active_tab {
                     WorkspaceTab::Dashboard => self.show_dashboard(ui),
                     WorkspaceTab::Components => self.show_components(ui),
+                    WorkspaceTab::Console => self.show_console_config(ui),
                     WorkspaceTab::Seal => self.show_seal_config(ui),
                     WorkspaceTab::Authority => self.show_authority(ui),
                     WorkspaceTab::Delivery => self.show_delivery(ui),
@@ -1218,7 +1313,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-25 prompt-tokenization contract with metadata-only Console surfaces.",
+            "Stage-26 prompt-token-sequence contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,
@@ -1237,6 +1332,121 @@ impl LatticraInstallerApp {
             &mut self.config.components.developer_cli_helpers,
             "Developer CLI helpers",
             "Convenience wrappers for local exploration.",
+        );
+    }
+
+    fn show_console_config(&mut self, ui: &mut egui::Ui) {
+        ui.heading("Latticra Console profile");
+        ui.label("Configure the LC installation profile, substrate bridge, and future host/OS-base posture while keeping the current authority boundary no-effect.");
+        ui.add_space(8.0);
+
+        let old_profile = self.config.lc.profile;
+        egui::ComboBox::from_label("LC profile")
+            .selected_text(self.config.lc.profile.label())
+            .show_ui(ui, |ui| {
+                for profile in LatticraConsoleProfile::all() {
+                    ui.selectable_value(&mut self.config.lc.profile, profile, profile.label());
+                }
+            });
+        if self.config.lc.profile != old_profile {
+            self.config.lc.apply_profile_defaults();
+            self.refresh_plan();
+        }
+        ui.label(self.config.lc.profile.detail());
+
+        ui.separator();
+        if ui.available_width() < 760.0 {
+            lc_profile_button(
+                ui,
+                self,
+                LatticraConsoleProfile::HostedReference,
+                "Reference metadata lane",
+            );
+            lc_profile_button(
+                ui,
+                self,
+                LatticraConsoleProfile::PanelEmbedded,
+                "Default Panel-installed lane",
+            );
+            lc_profile_button(
+                ui,
+                self,
+                LatticraConsoleProfile::HostEmbeddedPlanning,
+                "Future host-embedding lane",
+            );
+            lc_profile_button(
+                ui,
+                self,
+                LatticraConsoleProfile::OsBasePlanning,
+                "Future OS-base lane",
+            );
+        } else {
+            ui.columns(2, |columns| {
+                lc_profile_button(
+                    &mut columns[0],
+                    self,
+                    LatticraConsoleProfile::HostedReference,
+                    "Reference metadata lane",
+                );
+                lc_profile_button(
+                    &mut columns[1],
+                    self,
+                    LatticraConsoleProfile::PanelEmbedded,
+                    "Default Panel-installed lane",
+                );
+            });
+            ui.columns(2, |columns| {
+                lc_profile_button(
+                    &mut columns[0],
+                    self,
+                    LatticraConsoleProfile::HostEmbeddedPlanning,
+                    "Future host-embedding lane",
+                );
+                lc_profile_button(
+                    &mut columns[1],
+                    self,
+                    LatticraConsoleProfile::OsBasePlanning,
+                    "Future OS-base lane",
+                );
+            });
+        }
+
+        ui.separator();
+        ui.heading("LC substrate and embedding fields");
+        labeled_text_field(
+            ui,
+            "Command registry",
+            &mut self.config.lc.command_registry_profile,
+        );
+        labeled_text_field(
+            ui,
+            "Substrate bridge",
+            &mut self.config.lc.substrate_bridge_profile,
+        );
+        labeled_text_field(
+            ui,
+            "Host embedding",
+            &mut self.config.lc.host_embedding_profile,
+        );
+        labeled_text_field(ui, "OS base", &mut self.config.lc.os_base_profile);
+        labeled_text_field(ui, "Panel bridge", &mut self.config.lc.panel_bridge);
+        checkbox_note(
+            ui,
+            &mut self.config.lc.report_only,
+            "LC remains report-only",
+            "Current LC profiles emit configuration and evidence only.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.require_runtime_boundary_binding,
+            "Require Runtime Boundary binding",
+            "LC command surfaces must remain classified before future execution authority can exist.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.require_seal_capability_labels,
+            "Require Seal capability labels",
+            "LC commands keep explicit Seal labels while granting no cryptographic or runtime authority.",
         );
     }
 
@@ -1906,6 +2116,24 @@ fn profile_card_text(profile: InstallProfile) -> (&'static str, &'static str) {
             "Advanced manual control after the guided defaults are understood.",
         ),
     }
+}
+
+fn lc_profile_button(
+    ui: &mut egui::Ui,
+    app: &mut LatticraInstallerApp,
+    profile: LatticraConsoleProfile,
+    note: &str,
+) {
+    ui.group(|ui| {
+        ui.heading(profile.label());
+        ui.label(note);
+        ui.small(profile.detail());
+        if app.config.lc.profile == profile {
+            ui.colored_label(egui::Color32::from_rgb(120, 220, 255), "selected");
+        } else if ui.button("Use profile").clicked() {
+            app.apply_lc_profile(profile);
+        }
+    });
 }
 
 fn workbench_card(ui: &mut egui::Ui, title: &str, body: &str) {

@@ -16,6 +16,7 @@ The adapter renders user-local Application Support, app bundle, CLI wrapper, rec
 macos_dry_run_plan_adapter_present=1
 macos_user_local_app_bundle_contract_present=1
 macos_user_local_app_bundle_implementation_plan_present=1
+macos_app_bundle_writer_dry_run_present=1
 macos_dry_run_plan_script_present=1
 macos_dry_run_plan_guard_present=1
 macos_application_support_plan_present=1

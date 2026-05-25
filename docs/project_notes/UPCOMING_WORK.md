@@ -2,6 +2,7 @@
 
 Status: active project note
 Last updated: 2026-05-25 CDT
+Latest completion estimate review README/status alignment note: 2026-05-25 CDT
 Latest completion estimate review after runtime-boundary abuse-case fixtures note: 2026-05-25 CDT
 Latest runtime boundary abuse-case fixture expansion note: 2026-05-25 CDT
 Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
@@ -28,6 +29,30 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Lat grammar line-comment metadata refinement
+```
+
+Purpose completed:
+
+```text
+record deterministic Lat line-comment count and first-comment span metadata in parse results and grammar reports while preserving no Lat execution, no operator evaluation, no state mutation, no file I/O, no network I/O, no runtime authority, and no effect authority from comments
+```
+
+## Previous implementation slice
+
+```text
+Lat pipeline report declaration metadata integration
+```
+
+Purpose completed:
+
+```text
+copy first lowered declaration node index, kind, name, source name, parse index, first-clause index, clause count, and source declaration index from Lat-to-LIR lowering results into deterministic Lat pipeline reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Earlier implementation slice
+
+```text
 Lat pipeline diagnostic declaration metadata integration
 ```
 
@@ -37,7 +62,7 @@ Purpose completed:
 copy first lowered declaration node index, kind, name, source name, parse index, first-clause index, clause count, and source declaration index from Lat-to-LIR diagnostics into deterministic Lat pipeline diagnostic reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat-to-LIR diagnostic declaration metadata integration
@@ -625,6 +650,12 @@ L-UI rendering implementation
 Latest completed review slice:
 
 ```text
+Completion estimate review README/status alignment
+```
+
+Previous review slice:
+
+```text
 Completion estimate review after runtime-boundary abuse-case fixtures
 ```
 
@@ -643,6 +674,7 @@ Runtime boundary policy expansion after threat-model validation
 Current runtime boundary abuse-case fixture fields:
 
 ```text
+completion_estimate_review_readme_status_alignment_present=1
 runtime_boundary_abuse_case_fixture_expansion_present=1
 runtime_boundary_abuse_case_fixture_guard_present=1
 runtime_boundary_abuse_case_c_fixtures_present=1

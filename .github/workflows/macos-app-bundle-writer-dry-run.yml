@@ -1,0 +1,17 @@
+name: macOS App Bundle Writer Dry Run
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sh scripts/test-macos-app-bundle-writer-dry-run.sh

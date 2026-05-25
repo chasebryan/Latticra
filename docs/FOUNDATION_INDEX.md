@@ -28,6 +28,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`SUPERVISOR_ARCHITECTURE.md`](SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor model and orchestration responsibilities.
 - [`EFFECT_GATES.md`](EFFECT_GATES.md) — effect categories, gating rules, and visibility requirements.
 - [`UI_TERMINAL_LANGUAGE.md`](UI_TERMINAL_LANGUAGE.md) — L-UI terminal/operator interface language direction.
+- [`LATTICRA_CONSOLE_FOUNDATION.md`](LATTICRA_CONSOLE_FOUNDATION.md) — Latticra Console Stage-0 foundation, Panel installability, profile presets, command registry, Runtime Boundary binding, and future host/OS-base posture.
 - [`SERVER_INTERACTION_MODEL.md`](SERVER_INTERACTION_MODEL.md) — signed, optional, inspectable server interaction model.
 - [`NADIA_OFFLINE_AI_FOUNDATION.md`](NADIA_OFFLINE_AI_FOUNDATION.md) — Stage-0 foundation contract for Latticra Nadia Witness Foundation, the planned offline AI companion for Latticra software development, systems engineering, AI development, and community-awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md) — Stage-1 no-network local context-pack engine for Nadia.
@@ -55,6 +56,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23.md`](NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23.md) — Stage-23 tokenizer-artifact-binding contract for Nadia before tokenizer artifact opening, artifact reading, artifact hashing, artifact verification, artifact binding, tokenizer runtime attachment, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md`](NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md) — Stage-24 tokenizer-runtime-attachment contract for Nadia before tokenizer artifact opening, artifact reading, artifact hashing, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md`](NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md) — Stage-25 prompt-tokenization contract for Nadia before prompt text reading, prompt token creation, prompt token sequence recording, tokenizer runtime attachment, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26.md`](NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26.md) — Stage-26 prompt-token-sequence contract for Nadia before prompt token ID recording, token order recording, token offset recording, context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`SELF_UPDATE_MODEL.md`](SELF_UPDATE_MODEL.md) — staged signed update and rollback design.
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
@@ -99,6 +101,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23_STATUS.md`](status/NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23_STATUS.md) — status record for Nadia Stage-23 tokenizer-artifact-binding contract before tokenizer artifact opening, artifact reading, artifact hashing, artifact verification, artifact binding, tokenizer runtime attachment, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`status/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md`](status/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md) — status record for Nadia Stage-24 tokenizer-runtime-attachment contract before tokenizer artifact opening, artifact reading, artifact hashing, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`status/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md`](status/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md) — status record for Nadia Stage-25 prompt-tokenization contract before prompt text reading, prompt token creation, prompt token sequence recording, tokenizer runtime attachment, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26_STATUS.md`](status/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26_STATUS.md) — status record for Nadia Stage-26 prompt-token-sequence contract before prompt token ID recording, token order recording, token offset recording, context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
@@ -115,6 +118,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — status record for the Lat pipeline diagnostic integration slice.
 - [`status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — status record for the Lat pipeline diagnostic main test audit slice.
 - [`status/RBDM_REPORT_INTEGRATION_STATUS.md`](status/RBDM_REPORT_INTEGRATION_STATUS.md) — status record for the runtime-boundary domain matrix report integration slice.
+- [`status/COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md`](status/COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md) — README/status alignment for the completion-estimate hold review after runtime-boundary abuse-case fixtures.
 - [`status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md) — completion-estimate hold review after runtime-boundary abuse-case fixtures.
 - [`status/COMPLETION_PERCENTAGE_REVIEW.md`](status/COMPLETION_PERCENTAGE_REVIEW.md) — completion-percentage planning review.
 - [`status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`](status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md) — public entry-point consistency scan.
@@ -236,7 +240,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LIR_REPORT_REFINEMENT.md`](LIR_REPORT_REFINEMENT.md) — LIR report classification, graph shape, edge summary, no-effect-chain, and evidence fields.
 - [`LAT_LANGUAGE_GRAMMAR_CONTRACT.md`](LAT_LANGUAGE_GRAMMAR_CONTRACT.md) — first Lat / Latticra Language grammar contract for Lat-Core before parser implementation.
 - [`LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md`](LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md) — exact public API, parser result structs, AST structs, capacities, error labels, reports, fixture paths, string handling, source-span mapping, and tests before Lat parser code.
-- [`LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md`](LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md) — bounded no-effect Lat / Latticra Language grammar parser, AST metadata, first declaration/clause report metadata, fixture, and invariants.
+- [`LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md`](LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md) — bounded no-effect Lat / Latticra Language grammar parser, AST metadata, line-comment metadata, first declaration/clause report metadata, fixture, and invariants.
 - [`LAT_SEMANTIC_VALIDATION_CONTRACT.md`](LAT_SEMANTIC_VALIDATION_CONTRACT.md) — Lat semantic validation contract.
 - [`LAT_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md`](LAT_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md) — Lat semantic validation implementation plan.
 - [`LAT_SEMANTIC_DIAGNOSTICS_REFINEMENT.md`](LAT_SEMANTIC_DIAGNOSTICS_REFINEMENT.md) — Lat semantic diagnostic classes, counters, first-diagnostic indices, and report fields.
@@ -249,7 +253,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LAT_PIPELINE_CONTRACT.md`](LAT_PIPELINE_CONTRACT.md) — bounded no-effect Lat pipeline contract after parser, semantic validation, and Lat-to-LIR lowering.
 - [`LAT_PIPELINE_IMPLEMENTATION_PLAN.md`](LAT_PIPELINE_IMPLEMENTATION_PLAN.md) — exact Lat pipeline API, result struct, report, tests, workflow, compatibility expectations, and non-claims.
 - [`LAT_PIPELINE_IMPLEMENTATION.md`](LAT_PIPELINE_IMPLEMENTATION.md) — first bounded no-effect Lat pipeline implementation.
-- [`LAT_PIPELINE_REPORT_REFINEMENT.md`](LAT_PIPELINE_REPORT_REFINEMENT.md) — Lat pipeline stage-summary, first-clause metadata, and report refinement.
+- [`LAT_PIPELINE_REPORT_REFINEMENT.md`](LAT_PIPELINE_REPORT_REFINEMENT.md) — Lat pipeline stage-summary, first-declaration/first-clause metadata, and report refinement.
 - [`LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md`](LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md) — companion Lat pipeline diagnostic integration API, first-declaration/first-clause metadata, and report.
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_INTEGRATION_AUDIT.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_INTEGRATION_AUDIT.md) — main Lat pipeline runner audit for diagnostic integration coverage.
 - [`LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md`](LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md) — explicit Lat declaration node and transition-source edge refinement contract.
@@ -332,6 +336,7 @@ Latticra Seal policy decision status/public-entry alignment + guardrails
 Defensive threat model validation refinement + guardrails
 Runtime boundary policy expansion after threat-model validation + guardrails
 Runtime boundary abuse-case fixture expansion after policy expansion + guardrails
+Completion estimate review README/status alignment + guardrails
 Completion estimate review after runtime-boundary abuse-case fixtures + guardrails
 Latticra Seal capability gate status/public-entry alignment + guardrails
 Latticra Seal verification receipt status/public-entry alignment + guardrails
@@ -361,6 +366,7 @@ Nadia tokenizer artifact verification contract Stage-22 + guardrails
 Nadia tokenizer artifact binding contract Stage-23 + guardrails
 Nadia tokenizer runtime attachment contract Stage-24 + guardrails
 Nadia prompt tokenization contract Stage-25 + guardrails
+Nadia prompt token sequence contract Stage-26 + guardrails
 Latticra Seal verification policy status/public-entry alignment + guardrails
 Latticra Seal key parsing status/public-entry alignment + guardrails
 Latticra Seal bounded no-effect key parsing metadata + invariants
@@ -377,6 +383,7 @@ LIR shape implementation + invariants
 LIR report refinement + invariants
 Lat language grammar implementation + invariants
 Lat grammar report metadata integration + invariants
+Lat grammar line-comment metadata refinement + invariants
 Lat semantic diagnostics refinement + invariants
 Lat model normalization implementation + invariants
 Lat model report declaration metadata integration + invariants
@@ -388,6 +395,7 @@ Lat-to-LIR diagnostic declaration metadata integration + invariants
 Lat-to-LIR diagnostic clause metadata integration + invariants
 Lat pipeline diagnostic declaration metadata integration + invariants
 Lat pipeline diagnostic clause metadata integration + invariants
+Lat pipeline report declaration metadata integration + invariants
 Lat pipeline report clause metadata integration + invariants
 Lat pipeline implementation + invariants
 Lat pipeline report refinement + invariants
@@ -409,6 +417,7 @@ Current runtime boundary policy expansion status:
 ```text
 runtime_boundary_policy_expansion_after_threat_model_present=1
 runtime_boundary_abuse_case_fixture_expansion_present=1
+completion_estimate_review_readme_status_alignment_present=1
 completion_estimate_after_runtime_boundary_abuse_case_fixtures_present=1
 estimate_adjustment_required=0
 request_family_policy_map_present=1

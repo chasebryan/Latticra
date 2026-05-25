@@ -45,6 +45,8 @@ grep -Fq 'command_registry_no_effect=1' /tmp/latticra-console-report.txt
 grep -Fq 'runtime_boundary_bound=1' /tmp/latticra-console-report.txt
 grep -Fq 'seal_capability_labels_bound=1' /tmp/latticra-console-report.txt
 grep -Fq 'LATTICRA CONSOLE COMMAND REGISTRY' /tmp/latticra-console-report.txt
+grep -Fq 'command=lc profiles' /tmp/latticra-console-report.txt
+grep -Fq 'capability=lc.core.profiles' /tmp/latticra-console-report.txt
 grep -Fq 'command=lc substrate' /tmp/latticra-console-report.txt
 grep -Fq 'capability=lc.substrate.inspect' /tmp/latticra-console-report.txt
 grep -Fq 'launches_host_process=0' /tmp/latticra-console-report.txt
@@ -56,6 +58,7 @@ grep -Fq 'network_allowed=0' /tmp/latticra-console-report.txt
 grep -Fq 'boot_allowed=0' /tmp/latticra-console-report.txt
 grep -Fq 'LATTICRA CONSOLE HELP' /tmp/latticra-console-help.txt
 grep -Fq 'registry_source=c-static-table' /tmp/latticra-console-help.txt
+grep -Fq 'lc profiles' /tmp/latticra-console-help.txt
 grep -Fq 'lc substrate' /tmp/latticra-console-help.txt
 grep -Fq 'capability=lc.substrate.inspect' /tmp/latticra-console-help.txt
 grep -Fq 'host_process_launch_allowed=0' /tmp/latticra-console-help.txt
@@ -76,13 +79,21 @@ grep -Fq '[components.latticra_console]' installer/manifests/components.toml
 grep -Fq 'latticra_console = true' installer/configs/default.installer.toml
 grep -Fq 'latticra_console = true' installer/configs/local-prefix-example.installer.toml
 grep -Fq 'pub latticra_console: bool' installer/latticra-installer/src/config.rs
+grep -Fq 'pub struct LatticraConsoleConfig' installer/latticra-installer/src/config.rs
+grep -Fq 'LatticraConsoleProfile::PanelEmbedded' installer/latticra-installer/src/config.rs
 grep -Fq 'Latticra Console (LC)' installer/latticra-installer/src/ui.rs
+grep -Fq 'WorkspaceTab::Console' installer/latticra-installer/src/ui.rs
+grep -Fq 'profile = "panel_embedded"' installer/configs/default.installer.toml
+grep -Fq 'command_registry_profile = "c-static-table"' installer/configs/default.installer.toml
 grep -Fq 'LATTICRA_CONSOLE=$(cfg latticra_console true)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_PROFILE=$(cfg_section lc profile panel_embedded)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'profiles/hosted-reference.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'latticra-lc' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'render_lc_help()' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'render_lc_man()' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'render_lc_boundary()' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'Latticra Console Foundation' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'Panel Profile Presets' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Help And Manpage Rendering' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Runtime Boundary Binding' docs/LATTICRA_CONSOLE_FOUNDATION.md
 

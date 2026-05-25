@@ -96,6 +96,16 @@ int main(void) {
         failures += require_int("lc substrate host launch", command->launches_host_process, 0);
     }
 
+    command = latticra_console_find_command("lc profiles");
+    failures += require_int("find lc profiles", command != 0, 1);
+    if (command != 0) {
+        failures += require_text(
+            "lc profiles capability",
+            command->capability_label,
+            "lc.core.profiles");
+        failures += require_int("lc profiles no_effect", command->no_effect, 1);
+    }
+
     command = latticra_console_find_command("lc os");
     failures += require_int("find lc os", command != 0, 1);
     if (command != 0) {
@@ -139,6 +149,8 @@ int main(void) {
         registry_report,
         "LATTICRA CONSOLE COMMAND REGISTRY");
     failures += require_contains("registry_report", registry_report, "command=lc substrate");
+    failures += require_contains("registry_report", registry_report, "command=lc profiles");
+    failures += require_contains("registry_report", registry_report, "capability=lc.core.profiles");
     failures += require_contains("registry_report", registry_report, "capability=lc.substrate.inspect");
     failures += require_contains("registry_report", registry_report, "launches_host_process=0");
     failures += require_contains("registry_report", registry_report, "requires_future_gate=1");

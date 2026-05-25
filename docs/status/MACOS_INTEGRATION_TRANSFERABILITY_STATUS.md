@@ -20,6 +20,8 @@ macos_build_platform_probe_present=1
 macos_dry_run_plan_adapter_present=1
 macos_user_local_app_bundle_contract_present=1
 macos_user_local_app_bundle_implementation_plan_present=1
+macos_app_bundle_writer_dry_run_present=1
+macos_app_bundle_writer_alignment_present=1
 macos_transferable_surfaces_classified=1
 macos_adapter_requirements_recorded=1
 macos_user_local_paths_proposed=1
@@ -87,7 +89,7 @@ macos_integration_transferability: ok
 ## Next Recommended Lane
 
 ```text
-Add a no-effect macOS app bundle writer dry-run prototype that emits the planned phase report, validates unsafe paths, and keeps commit_user_local_managed_artifacts=0.
+Add a no-effect macOS local candidate asset probe that checks a caller-supplied Panel executable and icon candidate without building, downloading, signing, notarizing, copying, or writing artifacts.
 ```
 
 ## Non-Claims

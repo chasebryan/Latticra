@@ -1,0 +1,19 @@
+name: Quality Safety Guards
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  quality-safety-guards:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run quality safety guards
+        run: make quality-safety-guards

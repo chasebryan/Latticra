@@ -86,6 +86,7 @@ require_contains 'macOS user-local app bundle implementation plan' "$probe_doc"
 require_contains 'macos_dry_run_plan_adapter_present=1' "$probe_status"
 require_contains 'macos_user_local_app_bundle_contract_present=1' "$status"
 require_contains 'macos_user_local_app_bundle_implementation_plan_present=1' "$status"
+require_contains 'macos_app_bundle_writer_dry_run_present=1' "$status"
 
 require_contains 'MACOS DRY RUN PLAN ADAPTER' "$script"
 require_contains 'application_support_write_performed=0' "$script"

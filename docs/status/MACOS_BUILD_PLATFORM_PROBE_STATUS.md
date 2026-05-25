@@ -17,6 +17,7 @@ macos_build_platform_probe_present=1
 macos_dry_run_plan_adapter_present=1
 macos_user_local_app_bundle_contract_present=1
 macos_user_local_app_bundle_implementation_plan_present=1
+macos_app_bundle_writer_dry_run_present=1
 macos_probe_script_present=1
 macos_probe_guard_present=1
 macos_host_detection_recorded=1

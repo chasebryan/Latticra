@@ -17,6 +17,8 @@ This is contract/status work only. It does not create an app bundle, install wra
 ```text
 macos_user_local_app_bundle_contract_present=1
 macos_user_local_app_bundle_implementation_plan_present=1
+macos_app_bundle_writer_dry_run_present=1
+macos_app_bundle_writer_alignment_present=1
 macos_app_bundle_exact_files_recorded=1
 macos_info_plist_requirements_recorded=1
 macos_application_support_files_recorded=1

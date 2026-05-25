@@ -30,7 +30,15 @@ short_name=LC
 component_key=latticra_console
 panel_installable=1
 configurable=1
+profile=panel_embedded
 panel_console_bridge=panel-aware
+command_registry_profile=c-static-table
+substrate_bridge_profile=metadata-bound
+host_embedding_profile=panel-contained
+os_base_profile=planned-no-boot-authority
+report_only=true
+runtime_boundary_binding_required=true
+seal_capability_labels_required=true
 ```
 
 The Panel component creates:
@@ -39,7 +47,10 @@ The Panel component creates:
 etc/latticra/lc.toml
 share/latticra/lc/README.md
 share/latticra/lc/commands/seed-registry.txt
-share/latticra/lc/profiles
+share/latticra/lc/profiles/hosted-reference.toml
+share/latticra/lc/profiles/panel-embedded.toml
+share/latticra/lc/profiles/host-embedded-planning.toml
+share/latticra/lc/profiles/os-base-planning.toml
 share/latticra/lc/substrate
 share/latticra/lc/host-embedding
 share/latticra/components/latticra-console.installed
@@ -70,6 +81,7 @@ uninstall
 clear
 lc status
 lc commands
+lc profiles
 lc substrate
 lc host
 lc os
@@ -92,6 +104,46 @@ requires_future_gate
 ```
 
 The Stage-0 registry is still metadata-only. It reports identity, seed command metadata, substrate bridge, host-embedding plan, and future OS-base posture. It does not launch host commands.
+
+## Panel Profile Presets
+
+Latticra Panel now carries LC profile presets as a first-class installer configuration block:
+
+```toml
+[lc]
+profile = "panel_embedded"
+command_registry_profile = "c-static-table"
+substrate_bridge_profile = "metadata-bound"
+host_embedding_profile = "panel-contained"
+os_base_profile = "planned-no-boot-authority"
+panel_bridge = "panel-aware"
+report_only = true
+require_runtime_boundary_binding = true
+require_seal_capability_labels = true
+```
+
+The current presets are:
+
+```text
+hosted_reference -> hosted reference metadata without embedded-host claims
+panel_embedded -> default Panel-installed LC operator surface
+host_embedded_planning -> future host-embedding plan with zero host mutation authority
+os_base_planning -> future OS-base plan with zero boot, kernel, or runtime enforcement authority
+custom -> manual metadata fields under the same no-effect authority floor
+```
+
+Panel exposes the presets in a Latticra Console workspace tab and in the embedded console:
+
+```text
+lc profiles
+lc profile hosted
+lc profile panel
+lc profile host
+lc profile os
+lc profile custom
+```
+
+The install engine writes the selected profile into `etc/latticra/lc.toml` and installs the preset files under `share/latticra/lc/profiles/`. These profiles remain configuration metadata only.
 
 ## Help And Manpage Rendering
 
@@ -205,6 +257,6 @@ LC Stage-0 does not:
 
 ## Next Slices
 
-1. Add Panel profile presets for LC hosted, LC embedded, and LC OS-base planning.
-2. Add host-embedding contracts before any host integration behavior.
-3. Add boot-adjacent planning only after read-only host and VM evidence exists.
+1. Add host-embedding contracts before any host integration behavior.
+2. Add boot-adjacent planning only after read-only host and VM evidence exists.
+3. Add LC profile receipts so Panel saves profile selection as signed evidence when Seal signing authority exists.

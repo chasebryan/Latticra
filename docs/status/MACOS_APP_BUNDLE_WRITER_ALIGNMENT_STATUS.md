@@ -1,27 +1,27 @@
-# macOS User-Local App Bundle Implementation Plan Status
+# macOS App Bundle Writer Alignment Status
 
-Status: implementation plan status
+Status: writer alignment status
 Date: 2026-05-25 CDT
-Scope: status checkpoint after adding the no-effect macOS user-local app bundle implementation plan.
+Scope: status checkpoint after aligning dry-run writer public meaning against future commit-capable writer claims.
 
 ## Summary
 
-Latticra now has a no-effect implementation plan for a future macOS user-local app bundle writer.
+Latticra now has a macOS app bundle writer alignment record.
 
-The plan defines writer phases, failure behavior, reset/uninstall sequencing, verification commands, and required future guard tests. It keeps the writer absent and records that no app bundle, wrapper, Application Support file, receipt, or verification transcript has been created.
+The alignment makes the current capability explicit: a no-effect dry-run writer prototype exists, but a commit-capable writer, app bundle install, reset/uninstall implementation, and install verification transcript do not exist.
 
 ## Status Fields
 
 ```text
-macos_user_local_app_bundle_implementation_plan_present=1
-macos_app_bundle_writer_dry_run_present=1
 macos_app_bundle_writer_alignment_present=1
-macos_writer_phase_plan_recorded=1
-macos_writer_failure_behavior_recorded=1
-macos_reset_uninstall_sequence_recorded=1
-macos_writer_verification_commands_recorded=1
-macos_future_writer_guard_tests_recorded=1
+macos_dry_run_writer_public_meaning_recorded=1
+macos_commit_capable_writer_nonclaim_recorded=1
+macos_future_commit_gate_requirements_recorded=1
+macos_app_bundle_writer_dry_run_present=1
+macos_app_bundle_writer_commit_disabled=1
 macos_app_bundle_writer_present=0
+macos_app_bundle_commit_capable_writer_present=0
+commit_user_local_managed_artifacts=0
 macos_app_bundle_created=0
 macos_install_verified=0
 macos_reset_uninstall_implemented=0
@@ -48,23 +48,23 @@ production_installer_ready=0
 The careful public meaning is:
 
 ```text
-Latticra has a no-effect implementation plan for a future managed user-local macOS app bundle writer.
+Latticra has a no-effect macOS app bundle writer dry-run prototype that renders future writer phases and blocks unsafe paths while keeping all writes disabled.
 ```
 
-That does not mean Latticra has a macOS installer, app bundle, signed build, notarized build, launchd integration, Keychain integration, Endpoint Security integration, System Extension integration, privileged helper, or production security capability.
+That does not mean Latticra has a commit-capable macOS installer, app bundle, signed build, notarized build, launchd integration, Keychain integration, Endpoint Security integration, System Extension integration, privileged helper, or production security capability.
 
 ## Guard Validation
 
 This status record is guarded by:
 
 ```sh
-sh scripts/test-macos-user-local-app-bundle-implementation-plan.sh
+sh scripts/test-macos-app-bundle-writer-alignment.sh
 ```
 
 Expected output:
 
 ```text
-macos_user_local_app_bundle_implementation_plan: ok
+macos_app_bundle_writer_alignment: ok
 ```
 
 ## Next Recommended Lane

@@ -51,6 +51,8 @@ static void result_default(latticra_lat_parse_result_t *result) {
     }
     result->declaration_count = 0u;
     result->clause_count = 0u;
+    result->comment_count = 0u;
+    span_default(&result->first_comment_span);
     result->no_effect = 1;
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
@@ -116,6 +118,8 @@ typedef struct {
     size_t offset;
     size_t line;
     size_t column;
+    size_t comment_count;
+    latticra_lat_source_span_t first_comment_span;
 } lat_cursor_t;
 
 static int cursor_at_end(const lat_cursor_t *cursor) {
@@ -177,7 +181,11 @@ static void skip_ws_and_comments(lat_cursor_t *cursor) {
         again = 0;
         while (!cursor_at_end(cursor) && isspace((unsigned char)cursor_peek(cursor))) cursor_advance(cursor);
         if (!cursor_at_end(cursor) && cursor_peek(cursor) == '/' && cursor_peek_next(cursor) == '/') {
+            latticra_lat_source_span_t comment_span = span_start(cursor);
             while (!cursor_at_end(cursor) && cursor_peek(cursor) != '\n') cursor_advance(cursor);
+            span_finish(&comment_span, cursor);
+            if (cursor->comment_count == 0u) cursor->first_comment_span = comment_span;
+            cursor->comment_count += 1u;
             again = 1;
         }
     }
@@ -514,6 +522,8 @@ static latticra_lat_parse_error_t set_error(latticra_lat_parse_result_t *result,
     result->error = error;
     if (cursor != 0) {
         result->span = span_start(cursor);
+        result->comment_count = cursor->comment_count;
+        result->first_comment_span = cursor->first_comment_span;
     }
     return error;
 }
@@ -550,6 +560,8 @@ latticra_status_t latticra_lat_parse_source(
     cursor.offset = 0u;
     cursor.line = 1u;
     cursor.column = 1u;
+    cursor.comment_count = 0u;
+    span_default(&cursor.first_comment_span);
     module_span = span_start(&cursor);
 
     if (match_keyword(&cursor, "l")) {
@@ -579,6 +591,8 @@ latticra_status_t latticra_lat_parse_source(
             cursor_advance(&cursor);
             span_finish(&result->module.span, &cursor);
             result->span = result->module.span;
+            result->comment_count = cursor.comment_count;
+            result->first_comment_span = cursor.first_comment_span;
             result->error = LATTICRA_LAT_PARSE_OK;
             return LATTICRA_STATUS_OK;
         }
@@ -654,6 +668,13 @@ latticra_status_t latticra_lat_parse_report(
         "assertion_count=%zu\n"
         "effect_count=%zu\n"
         "clause_count=%zu\n"
+        "comment_count=%zu\n"
+        "first_comment_start_offset=%zu\n"
+        "first_comment_end_offset=%zu\n"
+        "first_comment_start_line=%zu\n"
+        "first_comment_start_column=%zu\n"
+        "first_comment_end_line=%zu\n"
+        "first_comment_end_column=%zu\n"
         "first_declaration_index=%zu\n"
         "first_declaration_kind=%s\n"
         "first_declaration_name=%s\n"
@@ -688,6 +709,13 @@ latticra_status_t latticra_lat_parse_report(
         result->module.assertion_count,
         result->module.effect_count,
         result->clause_count,
+        result->comment_count,
+        result->first_comment_span.start_offset,
+        result->first_comment_span.end_offset,
+        result->first_comment_span.start_line,
+        result->first_comment_span.start_column,
+        result->first_comment_span.end_line,
+        result->first_comment_span.end_column,
         first_declaration_index,
         latticra_lat_declaration_kind_label(first_declaration_kind),
         first_declaration_name,

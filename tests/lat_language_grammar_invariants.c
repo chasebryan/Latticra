@@ -148,6 +148,42 @@ static int lat_grammar_accepts_effect_declaration(void) {
     return 0;
 }
 
+static int lat_grammar_accepts_line_comments(void) {
+    static const char source[] =
+        "// exec spawn socket are inert in comments\n"
+        "lat module CommentModule { // module opener\n"
+        "  // state declaration lead-in\n"
+        "  state RootCell {\n"
+        "    origin = \"0/0\" // first field comment\n"
+        "    route = \"//not-comment\"\n"
+        "    // before declaration close\n"
+        "  }\n"
+        "  // before module close\n"
+        "}\n";
+    latticra_lat_parse_result_t result;
+    char report[LATTICRA_LAT_REPORT_MAX];
+
+    EXPECT_TRUE(parse_source(source, strlen(source), &result) == 0, "commented source parses");
+    EXPECT_TRUE(result.error == LATTICRA_LAT_PARSE_OK, "commented source OK");
+    EXPECT_STR_EQ(result.module.module_name, "CommentModule", "commented module name");
+    EXPECT_TRUE(result.declaration_count == 1u, "commented declaration count");
+    EXPECT_TRUE(result.clause_count == 2u, "commented clause count");
+    EXPECT_TRUE(result.comment_count == 6u, "comment count");
+    EXPECT_TRUE(result.first_comment_span.start_line == 1u, "first comment start line");
+    EXPECT_TRUE(result.first_comment_span.start_column == 1u, "first comment start column");
+    EXPECT_TRUE(result.first_comment_span.end_column > result.first_comment_span.start_column, "first comment width");
+    EXPECT_STR_EQ(result.clauses[1].right, "//not-comment", "string slash slash preserved");
+    EXPECT_TRUE(result.no_effect == 1, "comments preserve no-effect");
+    EXPECT_TRUE(result.execution_allowed == 0, "comments do not allow execution");
+
+    EXPECT_TRUE(latticra_lat_parse_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "comment report builds");
+    EXPECT_TRUE(strstr(report, "comment_count=6\n") != 0, "comment count report");
+    EXPECT_TRUE(strstr(report, "first_comment_start_line=1\n") != 0, "comment start line report");
+    EXPECT_TRUE(strstr(report, "first_comment_start_column=1\n") != 0, "comment start column report");
+    EXPECT_TRUE(strstr(report, "first_clause_right=0/0\n") != 0, "first clause remains stable");
+    return 0;
+}
+
 static int lat_grammar_rejects_plain_l_extension_claim(void) {
     static const char source[] = "l module RootModule { }\n";
     latticra_lat_parse_result_t result;
@@ -294,6 +330,7 @@ int main(void) {
     if (lat_grammar_accepts_transition_declaration() != 0) return 1;
     if (lat_grammar_accepts_assertion_declaration() != 0) return 1;
     if (lat_grammar_accepts_effect_declaration() != 0) return 1;
+    if (lat_grammar_accepts_line_comments() != 0) return 1;
     if (lat_grammar_rejects_plain_l_extension_claim() != 0) return 1;
     if (lat_grammar_rejects_unknown_keyword() != 0) return 1;
     if (lat_grammar_rejects_unterminated_string() != 0) return 1;

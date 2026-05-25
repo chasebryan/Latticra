@@ -138,6 +138,8 @@ policy_bypass_authority=0
 
 Nadia can now produce a prompt-tokenization contract that packages Stage-24 tokenizer-runtime-attachment evidence and records review requirements for a future prompt token sequence contract.
 
+Stage-26 now defines a prompt-token-sequence contract that keeps prompt token ID recording, token order recording, token offset recording, context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, and inference blocked.
+
 This is not prompt tokenization authority. It does not read prompts, create tokens, record token sequences, invoke a runtime, run inference, generate dialogue, or execute tools.
 
 ## Guard

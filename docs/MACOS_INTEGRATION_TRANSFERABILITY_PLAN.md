@@ -81,6 +81,8 @@ stage_1_macos_build_probe=present
 stage_2_macos_dry_run_plan=present
 stage_3_user_local_app_bundle_contract=present
 stage_3_user_local_app_bundle_implementation_plan=present
+stage_3_user_local_app_bundle_writer_dry_run=present
+stage_3_user_local_app_bundle_writer_alignment=present
 stage_3_user_local_app_bundle=future
 stage_4_user_local_verification_transcript=future
 stage_5_codesigning_notarization_plan=future
@@ -131,6 +133,21 @@ The Stage 3 app bundle implementation plan is implemented by:
 ```text
 docs/MACOS_USER_LOCAL_APP_BUNDLE_IMPLEMENTATION_PLAN.md
 docs/status/MACOS_USER_LOCAL_APP_BUNDLE_IMPLEMENTATION_PLAN_STATUS.md
+```
+
+The Stage 3 app bundle writer dry-run prototype is implemented by:
+
+```text
+docs/MACOS_APP_BUNDLE_WRITER_DRY_RUN.md
+scripts/macos-app-bundle-writer-dry-run.sh
+docs/status/MACOS_APP_BUNDLE_WRITER_DRY_RUN_STATUS.md
+```
+
+The Stage 3 app bundle writer alignment is implemented by:
+
+```text
+docs/MACOS_APP_BUNDLE_WRITER_ALIGNMENT.md
+docs/status/MACOS_APP_BUNDLE_WRITER_ALIGNMENT_STATUS.md
 ```
 
 ## App Bundle Direction
@@ -253,5 +270,5 @@ macos_production_ready=0
 ## Next Recommended Lane
 
 ```text
-Add a no-effect macOS app bundle writer dry-run prototype that emits the planned phase report, validates unsafe paths, and keeps commit_user_local_managed_artifacts=0.
+Add a no-effect macOS local candidate asset probe that checks a caller-supplied Panel executable and icon candidate without building, downloading, signing, notarizing, copying, or writing artifacts.
 ```

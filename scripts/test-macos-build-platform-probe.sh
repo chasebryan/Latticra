@@ -86,6 +86,7 @@ require_contains 'macos_build_platform_probe_present=1' "$transfer_status"
 require_contains 'macos_dry_run_plan_adapter_present=1' "$status"
 require_contains 'macos_user_local_app_bundle_contract_present=1' "$status"
 require_contains 'macos_user_local_app_bundle_implementation_plan_present=1' "$status"
+require_contains 'macos_app_bundle_writer_dry_run_present=1' "$status"
 
 require_contains 'MACOS BUILD PLATFORM PROBE' "$script"
 require_contains 'panel_build_performed=0' "$script"

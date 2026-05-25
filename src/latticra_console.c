@@ -126,6 +126,18 @@ static const latticra_console_command_t lc_commands[] = {
         0
     },
     {
+        "lc profiles",
+        "lc profiles",
+        "Show installed LC configuration profile presets.",
+        "lc.core.profiles",
+        LATTICRA_CONSOLE_COMMAND_CORE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
         "lc substrate",
         "lc substrate",
         "Inspect the metadata bridge to Lat, LIR, Nucleus, Runtime Boundary, and Seal.",
@@ -641,6 +653,7 @@ latticra_status_t latticra_console_manpage_report(
         "  latticra-lc status\n"
         "  latticra-lc help\n"
         "  latticra-lc commands\n"
+        "  latticra-lc profiles\n"
         "  latticra-lc substrate\n"
         "  latticra-lc host\n"
         "  latticra-lc os\n"

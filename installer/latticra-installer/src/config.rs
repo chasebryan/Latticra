@@ -93,6 +93,64 @@ impl SealCryptoProfile {
     }
 }
 
+#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum LatticraConsoleProfile {
+    HostedReference,
+    PanelEmbedded,
+    HostEmbeddedPlanning,
+    OsBasePlanning,
+    Custom,
+}
+
+impl Default for LatticraConsoleProfile {
+    fn default() -> Self {
+        Self::PanelEmbedded
+    }
+}
+
+impl LatticraConsoleProfile {
+    pub fn key(self) -> &'static str {
+        match self {
+            Self::HostedReference => "hosted_reference",
+            Self::PanelEmbedded => "panel_embedded",
+            Self::HostEmbeddedPlanning => "host_embedded_planning",
+            Self::OsBasePlanning => "os_base_planning",
+            Self::Custom => "custom",
+        }
+    }
+
+    pub fn label(self) -> &'static str {
+        match self {
+            Self::HostedReference => "Hosted Reference",
+            Self::PanelEmbedded => "Panel Embedded",
+            Self::HostEmbeddedPlanning => "Host-Embedded Planning",
+            Self::OsBasePlanning => "OS-Base Planning",
+            Self::Custom => "Custom LC",
+        }
+    }
+
+    pub fn detail(self) -> &'static str {
+        match self {
+            Self::HostedReference => "Reference LC metadata installed beside the Panel without claiming embedded host behavior.",
+            Self::PanelEmbedded => "Default Panel-installed LC profile for operator console workflows and substrate inspection.",
+            Self::HostEmbeddedPlanning => "Planning profile for future host embedding while retaining zero host mutation authority.",
+            Self::OsBasePlanning => "Planning profile for the eventual LC OS-base lane without boot, kernel, or runtime enforcement authority.",
+            Self::Custom => "Manual LC profile fields are authoritative while the authority floor remains no-effect.",
+        }
+    }
+
+    pub fn all() -> [LatticraConsoleProfile; 5] {
+        [
+            Self::HostedReference,
+            Self::PanelEmbedded,
+            Self::HostEmbeddedPlanning,
+            Self::OsBasePlanning,
+            Self::Custom,
+        ]
+    }
+}
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(default)]
 pub struct Components {
@@ -118,6 +176,72 @@ impl Default for Components {
             docs_and_examples: true,
             developer_cli_helpers: true,
         }
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(default)]
+pub struct LatticraConsoleConfig {
+    pub profile: LatticraConsoleProfile,
+    pub command_registry_profile: String,
+    pub substrate_bridge_profile: String,
+    pub host_embedding_profile: String,
+    pub os_base_profile: String,
+    pub panel_bridge: String,
+    pub report_only: bool,
+    pub require_runtime_boundary_binding: bool,
+    pub require_seal_capability_labels: bool,
+}
+
+impl Default for LatticraConsoleConfig {
+    fn default() -> Self {
+        let mut config = Self {
+            profile: LatticraConsoleProfile::default(),
+            command_registry_profile: "c-static-table".to_owned(),
+            substrate_bridge_profile: "metadata-bound".to_owned(),
+            host_embedding_profile: "panel-contained".to_owned(),
+            os_base_profile: "planned-no-boot-authority".to_owned(),
+            panel_bridge: "panel-aware".to_owned(),
+            report_only: true,
+            require_runtime_boundary_binding: true,
+            require_seal_capability_labels: true,
+        };
+        config.apply_profile_defaults();
+        config
+    }
+}
+
+impl LatticraConsoleConfig {
+    pub fn apply_profile_defaults(&mut self) {
+        match self.profile {
+            LatticraConsoleProfile::HostedReference => {
+                self.panel_bridge = "hosted-reference".to_owned();
+                self.host_embedding_profile = "not-embedded".to_owned();
+                self.os_base_profile = "planned-no-boot-authority".to_owned();
+            }
+            LatticraConsoleProfile::PanelEmbedded => {
+                self.panel_bridge = "panel-aware".to_owned();
+                self.host_embedding_profile = "panel-contained".to_owned();
+                self.os_base_profile = "planned-no-boot-authority".to_owned();
+            }
+            LatticraConsoleProfile::HostEmbeddedPlanning => {
+                self.panel_bridge = "panel-aware".to_owned();
+                self.host_embedding_profile = "host-embedded-planning".to_owned();
+                self.os_base_profile = "planned-no-boot-authority".to_owned();
+            }
+            LatticraConsoleProfile::OsBasePlanning => {
+                self.panel_bridge = "panel-aware".to_owned();
+                self.host_embedding_profile = "host-embedded-planning".to_owned();
+                self.os_base_profile = "os-base-planning-no-boot-authority".to_owned();
+            }
+            LatticraConsoleProfile::Custom => {}
+        }
+
+        self.command_registry_profile = "c-static-table".to_owned();
+        self.substrate_bridge_profile = "metadata-bound".to_owned();
+        self.report_only = true;
+        self.require_runtime_boundary_binding = true;
+        self.require_seal_capability_labels = true;
     }
 }
 
@@ -257,6 +381,7 @@ pub struct InstallerConfig {
     pub profile: InstallProfile,
     pub install_prefix: String,
     pub components: Components,
+    pub lc: LatticraConsoleConfig,
     pub safety: Safety,
     pub behavior: InstallBehavior,
     pub seal: SealConfig,
@@ -268,6 +393,7 @@ impl Default for InstallerConfig {
             profile: InstallProfile::default(),
             install_prefix: "~/.local/share/latticra".to_owned(),
             components: Components::default(),
+            lc: LatticraConsoleConfig::default(),
             safety: Safety::default(),
             behavior: InstallBehavior::default(),
             seal: SealConfig::default(),
@@ -284,6 +410,7 @@ impl InstallerConfig {
                 self.safety.dry_run = true;
                 self.safety.allow_host_mutation = false;
                 self.safety.allow_network_effect = false;
+                self.lc = LatticraConsoleConfig::default();
                 self.seal = SealConfig::default();
             }
             InstallProfile::SealReportOnly => {
@@ -301,6 +428,7 @@ impl InstallerConfig {
                 self.safety.dry_run = true;
                 self.safety.allow_host_mutation = false;
                 self.safety.allow_network_effect = false;
+                self.lc = LatticraConsoleConfig::default();
                 self.seal.crypto_profile = SealCryptoProfile::ReportOnly;
                 self.seal.apply_crypto_profile_defaults();
             }
@@ -319,6 +447,7 @@ impl InstallerConfig {
                 self.safety.dry_run = true;
                 self.safety.allow_host_mutation = false;
                 self.safety.allow_network_effect = false;
+                self.lc = LatticraConsoleConfig::default();
                 self.seal.crypto_profile = SealCryptoProfile::Blake2bEd25519;
                 self.seal.apply_crypto_profile_defaults();
             }
@@ -447,11 +576,48 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(out, "configurable=1");
     let _ = writeln!(out, "panel_installable=1");
-    let _ = writeln!(out, "panel_console_bridge=panel-aware");
+    let _ = writeln!(out, "profile={}", config.lc.profile.key());
+    let _ = writeln!(out, "profile_label={}", config.lc.profile.label());
+    let _ = writeln!(out, "panel_console_bridge={}", config.lc.panel_bridge);
+    let _ = writeln!(
+        out,
+        "command_registry_profile={}",
+        config.lc.command_registry_profile
+    );
+    let _ = writeln!(
+        out,
+        "substrate_bridge_profile={}",
+        config.lc.substrate_bridge_profile
+    );
+    let _ = writeln!(
+        out,
+        "host_embedding_profile={}",
+        config.lc.host_embedding_profile
+    );
+    let _ = writeln!(out, "os_base_profile={}", config.lc.os_base_profile);
+    let _ = writeln!(out, "report_only={}", config.lc.report_only);
+    let _ = writeln!(
+        out,
+        "runtime_boundary_binding_required={}",
+        config.lc.require_runtime_boundary_binding
+    );
+    let _ = writeln!(
+        out,
+        "seal_capability_labels_required={}",
+        config.lc.require_seal_capability_labels
+    );
     let _ = writeln!(out, "command_registry_status=seed-registry");
-    let _ = writeln!(out, "substrate_bridge_status=metadata-bound");
-    let _ = writeln!(out, "host_embedding_status=planned");
-    let _ = writeln!(out, "os_base_status=planned-no-boot-authority");
+    let _ = writeln!(
+        out,
+        "substrate_bridge_status={}",
+        config.lc.substrate_bridge_profile
+    );
+    let _ = writeln!(
+        out,
+        "host_embedding_status={}",
+        config.lc.host_embedding_profile
+    );
+    let _ = writeln!(out, "os_base_status={}", config.lc.os_base_profile);
     let _ = writeln!(out, "operator_shell_present=1");
     let _ = writeln!(out, "execution_allowed=0");
     let _ = writeln!(out, "host_mutation_allowed=0");
@@ -465,7 +631,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=25-prompt-tokenization-contract");
+    let _ = writeln!(out, "stage=26-prompt-token-sequence-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -1214,6 +1380,47 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "requires_tokenizer_runtime_attachment_contract=1");
     let _ = writeln!(out, "requires_future_prompt_token_sequence_contract=1");
     let _ = writeln!(out, "prompt_tokenization_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "prompt_token_sequence_contract_stage=26-prompt-token-sequence-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_token_sequence_contract_command=scripts/nadia-prompt-token-sequence-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_token_sequence_contract_command=latticra-nadia prompt-token-sequence"
+    );
+    let _ = writeln!(out, "prompt_token_sequence_stage=contract-only");
+    let _ = writeln!(
+        out,
+        "prompt_token_sequence_contract_status=contract_only"
+    );
+    let _ = writeln!(out, "prompt_token_sequence_authority=0");
+    let _ = writeln!(out, "prompt_token_sequence_allowed=0");
+    let _ = writeln!(out, "prompt_token_sequence_recorded=0");
+    let _ = writeln!(out, "prompt_token_sequence_metadata_present=1");
+    let _ = writeln!(
+        out,
+        "prompt_token_sequence_family=operator-reviewed-prompt-token-sequence"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_token_sequence_format=contract-only-offline-sequence"
+    );
+    let _ = writeln!(out, "prompt_token_sequence_decision=blocked_contract_only");
+    let _ = writeln!(out, "prompt_token_sequence_plan_recorded=1");
+    let _ = writeln!(out, "prompt_token_sequence_result_recorded=0");
+    let _ = writeln!(out, "prompt_token_sequence_count_recorded=0");
+    let _ = writeln!(out, "prompt_token_sequence_order_recorded=0");
+    let _ = writeln!(out, "prompt_token_sequence_runtime_invoked=0");
+    let _ = writeln!(out, "prompt_token_ids_recorded=0");
+    let _ = writeln!(out, "prompt_attention_mask_created=0");
+    let _ = writeln!(out, "context_window_assembled=0");
+    let _ = writeln!(out, "requires_prompt_tokenization_contract=1");
+    let _ = writeln!(out, "requires_future_context_window_assembly_contract=1");
+    let _ = writeln!(out, "prompt_token_sequence_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");
