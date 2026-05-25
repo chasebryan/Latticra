@@ -17,6 +17,7 @@ docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_CONTRACT.md
 docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md
 docs/status/SEAL_PUBLIC_KEY_PARSING_STATUS.md
 docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_CONTRACT.md
+docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md
 include/latticra/seal_public_key_parsing.h
 src/seal_public_key_parsing.c
 tests/seal_public_key_parsing_invariants.c
@@ -24,6 +25,7 @@ scripts/test-latticra-seal-public-key-parsing-contract.sh
 scripts/test-latticra-seal-public-key-parsing.sh
 scripts/test-latticra-seal-public-key-parsing-status.sh
 scripts/test-latticra-seal-future-key-parsing-implementation-contract.sh
+scripts/test-latticra-seal-future-key-parsing-implementation-plan.sh
 docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md
 docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
 docs/status/SEAL_KEY_MATERIAL_STATUS.md
@@ -49,6 +51,7 @@ seal_public_key_parsing_runner_present=1
 seal_public_key_parsing_metadata_present=1
 seal_public_key_parsing_status_present=1
 seal_future_key_parsing_implementation_contract_present=1
+seal_future_key_parsing_implementation_plan_present=1
 seal_key_material_contract_present=1
 seal_key_material_implementation_present=1
 seal_key_material_status_present=1
@@ -111,6 +114,7 @@ sh scripts/test-latticra-seal-public-key-parsing-contract.sh
 sh scripts/test-latticra-seal-public-key-parsing.sh
 sh scripts/test-latticra-seal-public-key-parsing-status.sh
 sh scripts/test-latticra-seal-future-key-parsing-implementation-contract.sh
+sh scripts/test-latticra-seal-future-key-parsing-implementation-plan.sh
 ```
 
 The predecessor key-material implementation remains covered by:
@@ -128,6 +132,7 @@ seal public-key parsing contract: ok
 seal public-key parsing invariants: ok
 seal public-key parsing status: ok
 seal future key parsing implementation contract: ok
+seal future key parsing implementation plan: ok
 seal key-material contract: ok
 seal key-material invariants: ok
 seal key-material status: ok
@@ -141,6 +146,6 @@ It does not add public-key parsing, key material loading, private-key handling, 
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is future key parsing implementation plan or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is bounded no-effect key parsing implementation or another narrow status/index alignment follow-up.
 
 That future slice must not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

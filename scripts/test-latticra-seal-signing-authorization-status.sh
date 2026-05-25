@@ -104,7 +104,7 @@ require_contains 'host_write_performed=0' "$status_file"
 require_contains 'network_performed=0' "$status_file"
 require_contains 'mode=metadata-only' "$status_file"
 require_contains 'status=signing-authorization-metadata' "$status_file"
-require_contains 'future key parsing implementation plan' "$status_file"
+require_contains 'bounded no-effect key parsing implementation' "$status_file"
 
 require_contains 'SEAL_SIGNING_AUTHORIZATION_STATUS.md' README.md
 require_contains 'latticra_seal_signing_authorization_status_present=1' README.md
@@ -176,6 +176,6 @@ require_contains 'Latticra Seal signer invocation contract' docs/project_notes/C
 require_contains 'Latticra Seal signer invocation metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal signer invocation status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal signing operation contract' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal future key parsing implementation plan' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Seal bounded no-effect key parsing implementation' docs/project_notes/UPCOMING_WORK.md
 
 printf 'seal signing authorization status: ok\n'

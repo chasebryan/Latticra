@@ -287,7 +287,7 @@ signing operation metadata implementation
 
 It does not permit cryptographic signing, signature verification, signer invocation behavior, private-key handling, key generation, trust-store behavior, revocation lookup, runtime handoff execution, effect execution, capability enforcement, runtime authority, host behavior, network behavior, object sealing, or kernel behavior.
 
-After signing operation metadata, its status/public-entry checkpoint, the key-handling boundary contract, key-handling metadata implementation, key-handling status/public-entry alignment, the key-material boundary contract, and key-material metadata implementation exist and are guarded, the next valid planning slice is future key parsing implementation plan or another narrow status/index alignment follow-up that still must not add signing without a separate implementation contract, key-handling contract, key-material contract, and guards.
+After signing operation metadata, its status/public-entry checkpoint, the key-handling boundary contract, key-handling metadata implementation, key-handling status/public-entry alignment, the key-material boundary contract, and key-material metadata implementation exist and are guarded, the next valid planning slice is bounded no-effect key parsing implementation or another narrow status/index alignment follow-up that still must not add signing without a separate implementation contract, key-handling contract, key-material contract, and guards.
 
 ## Validation
 

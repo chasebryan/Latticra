@@ -135,6 +135,6 @@ require_contains 'Latticra Seal signing operation status/public-entry alignment'
 require_contains 'Latticra Seal key-handling boundary contract' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal key-handling metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal key-handling status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal future key parsing implementation plan' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Seal bounded no-effect key parsing implementation' docs/project_notes/UPCOMING_WORK.md
 
 printf 'seal signing operation contract: ok\n'

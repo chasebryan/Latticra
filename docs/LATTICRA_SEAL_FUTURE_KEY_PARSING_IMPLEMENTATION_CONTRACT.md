@@ -192,6 +192,6 @@ seal future key parsing implementation contract: ok
 
 ## Next Valid Slice
 
-The next valid Latticra Seal slice is future key parsing implementation plan or another narrow status/index alignment follow-up.
+After the future key parsing implementation plan exists and is guarded, the next valid Latticra Seal slice is bounded no-effect key parsing implementation or another narrow status/index alignment follow-up.
 
-That future planning slice must not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.
+That future implementation slice may add guarded public-key byte parsing metadata only. It must not add key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior.

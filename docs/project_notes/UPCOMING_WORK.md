@@ -9,6 +9,18 @@ This note tracks the near-term work queue after the recent no-effect Lat, LIR, N
 
 The project remains evidence-bound and report/classification oriented. The queue should continue to prefer small, reviewable, guarded slices over broad runtime behavior.
 
+## Latest completed planning slice
+
+```text
+Latticra Seal future key parsing implementation plan
+```
+
+Purpose completed:
+
+```text
+define the exact future bounded no-effect key parsing API, file paths, record fields, accepted public-key byte formats, failure behavior, report shape, and tests while preserving no parser code in this slice, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority
+```
+
 ## Earlier planning slice
 
 ```text
@@ -149,7 +161,7 @@ Latticra Seal signer invocation contract
 Latticra Seal signing operation contract
 ```
 
-## Latest completed planning slice
+## Previous planning slice
 
 ```text
 Runtime boundary refinement plan
@@ -259,18 +271,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Seal future key parsing implementation plan, with no public-key parsing implementation, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
+Seal bounded no-effect key parsing implementation, with public-key byte parsing metadata only, no key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 Purpose:
 
 ```text
-define the next future key parsing implementation plan after the future key parsing implementation contract while preserving no public-key parsing implementation, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+implement the bounded no-effect key parsing surface from the completed plan for caller-provided public-key bytes only while preserving no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Seal future key parsing implementation plan.
+1. Seal bounded no-effect key parsing implementation.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.
