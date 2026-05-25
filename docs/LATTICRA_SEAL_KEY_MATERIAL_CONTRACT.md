@@ -322,10 +322,20 @@ Failures must not sign, verify signatures, invoke a signer, parse public keys, l
 
 ## Promotion Rule
 
-This contract permits only the next implementation slice:
+This contract permitted only the implementation slice:
 
 ```text
 key-material metadata implementation
+```
+
+That implementation slice now exists as:
+
+```text
+docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
+include/latticra/seal_key_material.h
+src/seal_key_material.c
+tests/seal_key_material_invariants.c
+scripts/test-latticra-seal-key-material.sh
 ```
 
 It does not permit public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, cryptographic signing, signature verification, signer invocation behavior, runtime handoff execution, effect execution, capability enforcement, runtime authority, host behavior, network behavior, object sealing, or kernel behavior.

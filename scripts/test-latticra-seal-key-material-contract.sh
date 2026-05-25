@@ -21,6 +21,11 @@ require_contains() {
 contract="docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md"
 
 require_file "$contract"
+require_file docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
+require_file include/latticra/seal_key_material.h
+require_file src/seal_key_material.c
+require_file tests/seal_key_material_invariants.c
+require_file scripts/test-latticra-seal-key-material.sh
 require_file docs/LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md
 require_file docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
 require_file docs/status/SEAL_KEY_HANDLING_STATUS.md
@@ -69,16 +74,36 @@ require_contains 'host_read_performed=0' "$contract"
 require_contains 'host_write_performed=0' "$contract"
 require_contains 'network_performed=0' "$contract"
 require_contains 'key-material metadata implementation' "$contract"
+require_contains 'Status: initial key-material metadata implementation' docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
+require_contains 'latticra_seal_key_material_t' docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
+require_contains 'latticra_seal_key_material_from_key_handling' docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
+require_contains 'key_material_state=key-material-metadata-only' docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
+require_contains 'key_material_ready=1' docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
+require_contains 'public_key_parsed=0' docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
+require_contains 'key_material_loaded=0' docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
+require_contains 'hardware_key_used=0' docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
+require_contains 'latticra_seal_key_material_t' include/latticra/seal_key_material.h
+require_contains 'latticra_seal_key_material_from_key_handling' src/seal_key_material.c
+require_contains 'seal key-material invariants: ok' tests/seal_key_material_invariants.c
 
 require_contains 'LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md' README.md
+require_contains 'LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md' README.md
 require_contains 'latticra_seal_key_material_contract_present=1' README.md
+require_contains 'latticra_seal_key_material_metadata_present=1' README.md
 require_contains 'seal_key_material_contract_present=1' README.md
+require_contains 'seal_key_material_metadata_present=1' README.md
 require_contains 'Seal key-material boundary contract' STATUS.md
+require_contains 'Seal key-material metadata implementation' STATUS.md
 require_contains 'seal_key_material_contract_present=1' STATUS.md
+require_contains 'seal_key_material_metadata_present=1' STATUS.md
 require_contains 'seal_key_material_contract_present=1' docs/status/README.md
+require_contains 'seal_key_material_metadata_present=1' docs/status/README.md
 require_contains 'Latticra Seal key-material boundary contract' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal key-material metadata implementation' docs/status/CURRENT_STATUS.md
 require_contains 'LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md' docs/FOUNDATION_INDEX.md
+require_contains 'LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal key-material boundary contract' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal key-material metadata implementation' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Latticra Seal key-material metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Seal key-material status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 
 printf 'seal key-material contract: ok\n'

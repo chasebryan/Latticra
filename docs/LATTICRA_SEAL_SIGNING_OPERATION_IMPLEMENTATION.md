@@ -177,6 +177,6 @@ seal signing operation invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is key-material metadata implementation or another narrow status/index alignment follow-up that still must not add signing without a separate implementation contract, key-handling contract, key-material contract, and guards.
+The next valid Latticra Seal planning slice is key-material status/public-entry alignment or another narrow status/index alignment follow-up that still must not add signing without a separate implementation contract, key-handling contract, key-material contract, and guards.
 
 The signing operation metadata implementation and its status/public-entry checkpoint are guarded checkpoints. Future work must not add private-key handling, signing, verification, signer invocation behavior, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

@@ -139,6 +139,6 @@ It does not add signing, verification, signer invocation behavior, signer proces
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is key-material metadata implementation or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is key-material status/public-entry alignment or another narrow status/index alignment follow-up.
 
 That future slice must not add signing, verification, signer invocation behavior, public-key parsing, private-key handling, key material loading, key generation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

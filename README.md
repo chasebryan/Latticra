@@ -86,7 +86,7 @@ The authoritative status files are [`STATUS.md`](STATUS.md) and [`docs/status/CU
 | L-UI | Parser, validation, and report/rendering foundations exist; no interactive terminal-control renderer |
 | Nucleus | Report-only task-boundary and classification work exists; no effect-performing execution |
 | Runtime Boundary | Denied-by-default classification and reporting exists; no runtime authority |
-| Latticra Seal | Report-only tool-boundary, runtime dry-run, guarded allowlist, report-envelope metadata, signature-request metadata, signing authorization metadata, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, and key-material boundary surfaces exist; no production enforcement |
+| Latticra Seal | Report-only tool-boundary, runtime dry-run, guarded allowlist, report-envelope metadata, signature-request metadata, signing authorization metadata, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, and key-material metadata surfaces exist; no production enforcement |
 | Fedora integration | Local-only package and validation lanes exist; not Fedora-approved or distribution-ready |
 | Latticra Panel | GUI-first local installer/control workbench exists; user-local and guarded |
 | Security hardening | Early; no production security boundary claimed |
@@ -141,7 +141,7 @@ Runtime Boundary
 
 Latticra Seal
   Trust-boundary, request-boundary, policy-boundary, tool-boundary, and crypto-profile planning.
-  Current posture: report-only runtime dry-run, guarded allowlist candidate-denial, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, and key-material boundary paths.
+  Current posture: report-only runtime dry-run, guarded allowlist candidate-denial, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, and key-material metadata paths.
 
 Latticra Panel
   GUI-first local workbench for guided first-run configuration, evidence review, dry-run, and guarded local-prefix install.
@@ -195,6 +195,7 @@ latticra_seal_key_handling_contract_present=1
 latticra_seal_key_handling_metadata_present=1
 latticra_seal_key_handling_status_present=1
 latticra_seal_key_material_contract_present=1
+latticra_seal_key_material_metadata_present=1
 latticra_panel_gui_workbench_present=1
 fedora_local_rpm_draft_present=1
 visual_theorem_engines_present=1
@@ -641,6 +642,7 @@ seal_key_handling_contract_present=1
 seal_key_handling_metadata_present=1
 seal_key_handling_status_present=1
 seal_key_material_contract_present=1
+seal_key_material_metadata_present=1
 runtime_gate_report_only=1
 policy_decision_state=report-only
 runtime_gate_state=report-only
@@ -708,7 +710,9 @@ The key-handling metadata implementation classifies ready signing operation meta
 
 The key-handling status record makes that metadata-only checkpoint visible from the public entry points without changing implementation behavior.
 
-The key-material boundary contract defines the next metadata-only classification boundary after key-handling readiness. It does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, capability enforcement, or runtime authority.
+The key-material boundary contract defines the metadata-only classification boundary after key-handling readiness. It does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, capability enforcement, or runtime authority.
+
+The key-material metadata implementation classifies ready key-handling metadata into a metadata-only key-material eligibility record. It does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, capability enforcement, or runtime authority.
 
 That claim is intentionally limited. It does not mean Latticra Seal currently implements production runtime enforcement, policy enforcement, cryptographic key authority, MCP protocol behavior, MCP server behavior, MCP client behavior, AI-agent execution control, host behavior, network behavior, object sealing, key storage, or revocation lookup.
 
@@ -742,6 +746,7 @@ Relevant Seal records:
 - [`docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md)
 - [`docs/status/SEAL_KEY_HANDLING_STATUS.md`](docs/status/SEAL_KEY_HANDLING_STATUS.md)
 - [`docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md`](docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md)
 - [`docs/status/SEAL_SIGNER_INVOCATION_STATUS.md`](docs/status/SEAL_SIGNER_INVOCATION_STATUS.md)
 - [`docs/status/SEAL_SIGNER_HANDOFF_STATUS.md`](docs/status/SEAL_SIGNER_HANDOFF_STATUS.md)
 - [`docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md`](docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md)

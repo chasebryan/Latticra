@@ -1,15 +1,15 @@
-# Latticra Seal Key-Handling Implementation
+# Latticra Seal Key-Material Implementation
 
-Status: initial key-handling metadata implementation
-Scope: bounded C metadata surface for classifying Seal key-handling eligibility after ready signing operation metadata. This slice does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store loading, revocation lookup, cryptographic signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
+Status: initial key-material metadata implementation
+Scope: bounded C metadata surface for classifying Seal key-material eligibility after ready key-handling metadata. This slice does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store loading, revocation lookup, cryptographic signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
 
 ## Purpose
 
-This document records the first Latticra Seal key-handling metadata implementation.
+This document records the first Latticra Seal key-material metadata implementation.
 
-The implementation consumes ready signing operation metadata and classifies whether the request remains eligible for a future metadata-only key-handling path.
+The implementation consumes ready key-handling metadata and classifies whether the request remains eligible for a future metadata-only key-material path.
 
-It is key-handling path classification only.
+It is key-material path classification only.
 
 It does not parse public keys.
 
@@ -22,62 +22,63 @@ It does not sign.
 ## Files
 
 ```text
-include/latticra/seal_key_handling.h
-src/seal_key_handling.c
-tests/seal_key_handling_invariants.c
-scripts/test-latticra-seal-key-handling.sh
+include/latticra/seal_key_material.h
+src/seal_key_material.c
+tests/seal_key_material_invariants.c
+scripts/test-latticra-seal-key-material.sh
 ```
 
 ## Required predecessors
 
-This implementation depends on the key-handling boundary contract and the signing operation metadata surface:
+This implementation depends on the key-material boundary contract and the key-handling metadata surface:
 
 ```text
+docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md
 docs/LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md
-docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md
-docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
-docs/status/SEAL_SIGNING_OPERATION_STATUS.md
-include/latticra/seal_signing_operation.h
-src/seal_signing_operation.c
-tests/seal_signing_operation_invariants.c
+docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
+docs/status/SEAL_KEY_HANDLING_STATUS.md
+include/latticra/seal_key_handling.h
+src/seal_key_handling.c
+tests/seal_key_handling_invariants.c
+scripts/test-latticra-seal-key-material-contract.sh
 scripts/test-latticra-seal-key-handling-contract.sh
-scripts/test-latticra-seal-signing-operation-contract.sh
-scripts/test-latticra-seal-signing-operation.sh
-scripts/test-latticra-seal-signing-operation-status.sh
+scripts/test-latticra-seal-key-handling.sh
+scripts/test-latticra-seal-key-handling-status.sh
 ```
 
 ## Implemented surface
 
-The key-handling metadata surface adds:
+The key-material metadata surface adds:
 
 ```text
-latticra_seal_key_handling_t
-latticra_seal_key_handling_error_t
-latticra_seal_key_handling_error_label
-latticra_seal_key_handling_from_operation
-latticra_seal_key_handling_is_metadata_only
-latticra_seal_key_handling_render
+latticra_seal_key_material_t
+latticra_seal_key_material_error_t
+latticra_seal_key_material_error_label
+latticra_seal_key_material_from_key_handling
+latticra_seal_key_material_is_metadata_only
+latticra_seal_key_material_render
 ```
 
 The implementation:
 
 ```text
-accepts signing operation metadata
-requires signing_operation_ready=1
-requires signing_operation_state=operation-metadata-only
+accepts key-handling metadata
+requires key_handling_ready=1
+requires key_handling_state=key-handling-metadata-only
 requires requested_signature=Ed25519-development
 requires requested_signing_authorization=metadata-only
 requires requested_signer_handoff=metadata-only
 requires requested_signer_invocation=metadata-only
 requires requested_signing_operation=metadata-only
-accepts requested_key_handling=metadata-only
-classifies the result as key_handling_state=key-handling-metadata-only
-sets key_handling_ready=1 only for metadata-only allowed signing operation states
-renders deterministic key-handling metadata
+requires requested_key_handling=metadata-only
+accepts requested_key_material=metadata-only
+classifies the result as key_material_state=key-material-metadata-only
+sets key_material_ready=1 only for metadata-only allowed key-handling states
+renders deterministic key-material metadata
 fails closed for invalid or denied predecessor metadata
 ```
 
-Even when key_handling_ready=1, these fields remain zero:
+Even when key_material_ready=1, these fields remain zero:
 
 ```text
 signature_performed=0
@@ -103,6 +104,7 @@ network_performed=0
 The successful metadata path renders:
 
 ```text
+key_material_profile=latticra-seal-key-material/0.1
 key_handling_profile=latticra-seal-key-handling/0.1
 signing_operation_profile=latticra-seal-signing-operation/0.1
 signer_invocation_profile=latticra-seal-signer-invocation/0.1
@@ -115,6 +117,7 @@ requested_signer_handoff=metadata-only
 requested_signer_invocation=metadata-only
 requested_signing_operation=metadata-only
 requested_key_handling=metadata-only
+requested_key_material=metadata-only
 signing_authorization_state=authorized-metadata-only
 signing_authorization_ready=1
 signer_handoff_state=handoff-metadata-only
@@ -125,11 +128,13 @@ signing_operation_state=operation-metadata-only
 signing_operation_ready=1
 key_handling_state=key-handling-metadata-only
 key_handling_ready=1
+key_material_state=key-material-metadata-only
+key_material_ready=1
 public_key_parsed=0
 key_material_loaded=0
 hardware_key_used=0
 mode=metadata-only
-status=key-handling-metadata
+status=key-material-metadata
 ```
 
 ## Failure behavior
@@ -138,8 +143,11 @@ The implementation fails closed for:
 
 ```text
 null output
-null signing operation
-invalid signing operation
+null key handling
+invalid key handling
+key_handling_ready=0
+key_handling_state not key-handling-metadata-only
+requested_key_handling not metadata-only
 signing_operation_ready=0
 signing_operation_state not operation-metadata-only
 requested_signing_operation not metadata-only
@@ -154,8 +162,8 @@ signing_authorization_state not authorized-metadata-only
 requested_signing_authorization not metadata-only
 missing requested signature
 unknown requested signature
-missing requested key handling
-unknown requested key handling
+missing requested key material
+unknown requested key material
 public-key parsing request
 key material loading request
 private-key handling request
@@ -163,8 +171,11 @@ key generation request
 hardware-key use request
 trust-store loading request
 revocation lookup request
+public-key parsing already present
+key material loading already present
 private-key handling already present
 key generation already present
+hardware-key use already present
 trust-store loading already present
 revocation lookup already present
 runtime authority already granted
@@ -186,19 +197,19 @@ Failures do not sign, verify signatures, invoke a signer, parse public keys, loa
 Run:
 
 ```sh
-sh scripts/test-latticra-seal-key-handling-contract.sh
-sh scripts/test-latticra-seal-key-handling.sh
+sh scripts/test-latticra-seal-key-material-contract.sh
+sh scripts/test-latticra-seal-key-material.sh
 ```
 
 Expected output:
 
 ```text
-seal key-handling contract: ok
-seal key-handling invariants: ok
+seal key-material contract: ok
+seal key-material invariants: ok
 ```
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is key-material status/public-entry alignment or another narrow status/index alignment follow-up that still must not add signing without separate key-material, signing, and guard contracts.
+The next valid Latticra Seal planning slice is key-material status/public-entry alignment or another narrow status/index alignment follow-up that still must not add public-key parsing without separate key-material, public-key, and guard contracts.
 
-The key-handling metadata implementation is a guarded checkpoint. Future work must not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, verification, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.
+The key-material metadata implementation is a guarded checkpoint. Future work must not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, verification, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.
