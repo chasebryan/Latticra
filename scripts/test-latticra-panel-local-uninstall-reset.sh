@@ -100,6 +100,14 @@ require_absent "$ICON_DIR/latticra-seal.png"
 require_contains 'mode=local-prefix-reset' "$RECEIPTS/latest-reset-receipt.txt"
 require_contains 'preserved_count=1' "$RECEIPTS/latest-reset-receipt.txt"
 
+HOME="$HOME_DIR" sh "$SCRIPT" --prefix "$PREFIX" --receipt-dir "$RECEIPTS" --operation uninstall --dry-run > "$TMP_DIR/uninstall-dry-run.out"
+
+require_contains 'operation=uninstall' "$TMP_DIR/uninstall-dry-run.out"
+require_contains 'mode=dry-uninstall' "$TMP_DIR/uninstall-dry-run.out"
+require_contains 'UNINSTALL_RESULT: success mode=dry-uninstall' "$TMP_DIR/uninstall-dry-run.out"
+require_contains 'operation=uninstall' "$RECEIPTS/latest-uninstall-receipt.txt"
+require_contains 'mode=dry-uninstall' "$RECEIPTS/latest-uninstall-receipt.txt"
+
 if HOME="$HOME_DIR" sh "$SCRIPT" --prefix "$HOME_DIR/not-latticra" --receipt-dir "$RECEIPTS" > "$TMP_DIR/unsafe.out" 2>&1; then
   fail "unsafe prefix should have been refused"
 fi

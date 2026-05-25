@@ -55,6 +55,8 @@ latticra_lir_lower_l_ui_ast
 latticra_lir_report
 ```
 
+The Lat-to-LIR clause metadata refinement adds `operator_text` to `latticra_lir_node_t` so Lat-derived clause nodes can preserve `=`, `==`, and `!=` metadata without overloading values or bindings. L-UI lowering leaves this field empty.
+
 ## Capacity constants
 
 The first LIR implementation uses exact bounded constants:

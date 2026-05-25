@@ -19,7 +19,7 @@ runtime_enforcement_authority=0
 - Write local operator receipts.
 - Create a guarded user-local prefix when explicitly authorized.
 - Create component markers and placeholder developer shims for validation.
-- Reset a guarded user-local prefix by removing managed wrappers, desktop metadata, known Panel icons, and the managed prefix.
+- Reset or uninstall a guarded user-local prefix by removing managed wrappers, desktop metadata, known Panel icons, and the managed prefix.
 
 ## Current forbidden behavior
 

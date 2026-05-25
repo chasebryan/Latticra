@@ -74,6 +74,7 @@ static void module_default(latticra_lir_module_t *module) {
         module->nodes[index].kind = LATTICRA_LIR_NODE_UNKNOWN;
         module->nodes[index].name[0] = '\0';
         module->nodes[index].value[0] = '\0';
+        module->nodes[index].operator_text[0] = '\0';
         module->nodes[index].binding[0] = '\0';
         span_default(&module->nodes[index].source_span);
         module->nodes[index].parent_index = 0u;
@@ -365,6 +366,7 @@ static void set_node(
     latticra_lir_node_kind_t kind,
     const char *name,
     const char *value,
+    const char *operator_text,
     const char *binding,
     const latticra_l_ui_source_span_t *span,
     size_t parent_index,
@@ -374,6 +376,7 @@ static void set_node(
     node->kind = kind;
     copy_literal(node->name, sizeof(node->name), name);
     copy_literal(node->value, sizeof(node->value), value);
+    copy_literal(node->operator_text, sizeof(node->operator_text), operator_text);
     copy_literal(node->binding, sizeof(node->binding), binding);
     if (span != 0) node->source_span = *span;
     node->parent_index = parent_index;
@@ -436,26 +439,26 @@ latticra_status_t latticra_lir_lower_l_ui_ast(
     module->recovery_allowed = ast->recovery_allowed;
     module->hardware_allowed = ast->hardware_allowed;
 
-    set_node(&module->nodes[LATTICRA_LIR_MODULE_NODE_INDEX], LATTICRA_LIR_NODE_MODULE, module->module_name, "", "", &ast->card.span, LATTICRA_LIR_ROOT_PARENT, LATTICRA_LIR_CARD_NODE_INDEX, 1u);
-    set_node(&module->nodes[LATTICRA_LIR_CARD_NODE_INDEX], LATTICRA_LIR_NODE_CARD, ast->card.name, ast->card.purpose, "", &ast->card.span, LATTICRA_LIR_MODULE_NODE_INDEX, LATTICRA_LIR_FIRST_RAIL_NODE_INDEX, 11u);
+    set_node(&module->nodes[LATTICRA_LIR_MODULE_NODE_INDEX], LATTICRA_LIR_NODE_MODULE, module->module_name, "", "", "", &ast->card.span, LATTICRA_LIR_ROOT_PARENT, LATTICRA_LIR_CARD_NODE_INDEX, 1u);
+    set_node(&module->nodes[LATTICRA_LIR_CARD_NODE_INDEX], LATTICRA_LIR_NODE_CARD, ast->card.name, ast->card.purpose, "", "", &ast->card.span, LATTICRA_LIR_MODULE_NODE_INDEX, LATTICRA_LIR_FIRST_RAIL_NODE_INDEX, 11u);
 
     for (index = 0u; index < ast->rail_count && index < 9u; index++) {
         size_t node_index = LATTICRA_LIR_FIRST_RAIL_NODE_INDEX + index;
         size_t first_child = ast->rails[index].field_count > 0u
             ? LATTICRA_LIR_FIRST_FIELD_NODE_INDEX + ast->rails[index].first_field_index
             : LATTICRA_LIR_FIRST_TEXT_NODE_INDEX + ast->rails[index].first_text_index;
-        set_node(&module->nodes[node_index], LATTICRA_LIR_NODE_RAIL, ast->rails[index].name, "", "", &ast->rails[index].span, LATTICRA_LIR_CARD_NODE_INDEX, first_child, ast->rails[index].field_count + ast->rails[index].text_count);
+        set_node(&module->nodes[node_index], LATTICRA_LIR_NODE_RAIL, ast->rails[index].name, "", "", "", &ast->rails[index].span, LATTICRA_LIR_CARD_NODE_INDEX, first_child, ast->rails[index].field_count + ast->rails[index].text_count);
     }
 
     for (index = 0u; index < ast->field_count && index < LATTICRA_LIR_EXPECTED_FIELD_COUNT; index++) {
         size_t node_index = LATTICRA_LIR_FIRST_FIELD_NODE_INDEX + index;
         size_t binding_node = LATTICRA_LIR_FIRST_BINDING_NODE_INDEX + index;
-        set_node(&module->nodes[node_index], LATTICRA_LIR_NODE_FIELD, ast->fields[index].name, "", ast->fields[index].binding, &ast->fields[index].span, rail_parent_for_field(ast, index), binding_node, 1u);
+        set_node(&module->nodes[node_index], LATTICRA_LIR_NODE_FIELD, ast->fields[index].name, "", "", ast->fields[index].binding, &ast->fields[index].span, rail_parent_for_field(ast, index), binding_node, 1u);
     }
 
     for (index = 0u; index < ast->text_count && index < LATTICRA_LIR_EXPECTED_TEXT_COUNT; index++) {
         size_t node_index = LATTICRA_LIR_FIRST_TEXT_NODE_INDEX + index;
-        set_node(&module->nodes[node_index], LATTICRA_LIR_NODE_TEXT, "text", ast->texts[index].value, "", &ast->texts[index].span, rail_parent_for_text(ast, index), 0u, 0u);
+        set_node(&module->nodes[node_index], LATTICRA_LIR_NODE_TEXT, "text", ast->texts[index].value, "", "", &ast->texts[index].span, rail_parent_for_text(ast, index), 0u, 0u);
         module->texts[index].text_node_index = node_index;
         copy_bytes_compat(module->texts[index].value, sizeof(module->texts[index].value), ast->texts[index].value, ast->texts[index].value_len);
         module->texts[index].value_len = ast->texts[index].value_len;
@@ -466,7 +469,7 @@ latticra_status_t latticra_lir_lower_l_ui_ast(
 
     for (index = 0u; index < ast->field_count && index < LATTICRA_LIR_EXPECTED_FIELD_COUNT; index++) {
         size_t node_index = LATTICRA_LIR_FIRST_BINDING_NODE_INDEX + index;
-        set_node(&module->nodes[node_index], LATTICRA_LIR_NODE_BINDING, "binding", ast->fields[index].binding, ast->fields[index].binding, &ast->fields[index].binding_span, LATTICRA_LIR_FIRST_FIELD_NODE_INDEX + index, 0u, 0u);
+        set_node(&module->nodes[node_index], LATTICRA_LIR_NODE_BINDING, "binding", ast->fields[index].binding, "", ast->fields[index].binding, &ast->fields[index].binding_span, LATTICRA_LIR_FIRST_FIELD_NODE_INDEX + index, 0u, 0u);
         module->bindings[index].field_node_index = LATTICRA_LIR_FIRST_FIELD_NODE_INDEX + index;
         copy_literal(module->bindings[index].binding_target, sizeof(module->bindings[index].binding_target), ast->fields[index].binding);
         copy_binding_prefix(module->bindings[index].binding_prefix, sizeof(module->bindings[index].binding_prefix), ast->fields[index].binding);
@@ -475,8 +478,8 @@ latticra_status_t latticra_lir_lower_l_ui_ast(
         module->binding_count += 1u;
     }
 
-    set_node(&module->nodes[LATTICRA_LIR_EFFECT_NODE_INDEX], LATTICRA_LIR_NODE_EFFECT, "effect", ast->card.effect, "", &ast->card.span, LATTICRA_LIR_CARD_NODE_INDEX, 0u, 0u);
-    set_node(&module->nodes[LATTICRA_LIR_BOUNDARY_NODE_INDEX], LATTICRA_LIR_NODE_BOUNDARY, "boundary", ast->card.boundary, "", &ast->card.span, LATTICRA_LIR_CARD_NODE_INDEX, 0u, 0u);
+    set_node(&module->nodes[LATTICRA_LIR_EFFECT_NODE_INDEX], LATTICRA_LIR_NODE_EFFECT, "effect", ast->card.effect, "", "", &ast->card.span, LATTICRA_LIR_CARD_NODE_INDEX, 0u, 0u);
+    set_node(&module->nodes[LATTICRA_LIR_BOUNDARY_NODE_INDEX], LATTICRA_LIR_NODE_BOUNDARY, "boundary", ast->card.boundary, "", "", &ast->card.span, LATTICRA_LIR_CARD_NODE_INDEX, 0u, 0u);
     module->node_count = LATTICRA_LIR_EXPECTED_NODE_COUNT;
 
     if (!append_edge(module, LATTICRA_LIR_MODULE_NODE_INDEX, LATTICRA_LIR_CARD_NODE_INDEX, LATTICRA_LIR_EDGE_CONTAINS, &ast->card.span)) goto capacity_failed;

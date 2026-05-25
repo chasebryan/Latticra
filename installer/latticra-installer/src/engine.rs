@@ -14,6 +14,29 @@ pub enum InstallEvent {
     Failed(String),
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum RemovalOperation {
+    Reset,
+    Uninstall,
+}
+
+impl RemovalOperation {
+    pub fn arg(self) -> &'static str {
+        match self {
+            Self::Reset => "reset",
+            Self::Uninstall => "uninstall",
+        }
+    }
+
+    pub fn mode_label(self, dry_run: bool) -> String {
+        if dry_run {
+            format!("dry-{}", self.arg())
+        } else {
+            format!("local-prefix-{}", self.arg())
+        }
+    }
+}
+
 pub fn launch(config: InstallerConfig) -> Receiver<InstallEvent> {
     let (tx, rx) = channel();
     thread::spawn(move || {
@@ -25,11 +48,14 @@ pub fn launch(config: InstallerConfig) -> Receiver<InstallEvent> {
     rx
 }
 
-pub fn launch_reset(config: InstallerConfig) -> Receiver<InstallEvent> {
+pub fn launch_removal(
+    config: InstallerConfig,
+    operation: RemovalOperation,
+) -> Receiver<InstallEvent> {
     let (tx, rx) = channel();
     thread::spawn(move || {
         let _ = tx.send(InstallEvent::Started);
-        if let Err(err) = run_reset_engine(config, &tx) {
+        if let Err(err) = run_removal_engine(config, operation, &tx) {
             let _ = tx.send(InstallEvent::Failed(err));
         }
     });
@@ -85,7 +111,11 @@ fn run_engine(config: InstallerConfig, tx: &Sender<InstallEvent>) -> Result<(), 
     stream_child(child, tx)
 }
 
-fn run_reset_engine(config: InstallerConfig, tx: &Sender<InstallEvent>) -> Result<(), String> {
+fn run_removal_engine(
+    config: InstallerConfig,
+    operation: RemovalOperation,
+    tx: &Sender<InstallEvent>,
+) -> Result<(), String> {
     config.can_reset()?;
 
     let script = find_uninstall_script().ok_or_else(|| {
@@ -93,15 +123,15 @@ fn run_reset_engine(config: InstallerConfig, tx: &Sender<InstallEvent>) -> Resul
     })?;
 
     let _ = tx.send(InstallEvent::Log(format!(
-        "ENGINE: reset_script={}",
+        "ENGINE: removal_script={}",
         script.display()
     )));
     let _ = tx.send(InstallEvent::Log(format!(
-        "ENGINE: reset_mode={}",
-        config.reset_mode_label()
+        "ENGINE: removal_mode={}",
+        operation.mode_label(config.safety.dry_run)
     )));
     let _ = tx.send(InstallEvent::Log(format!(
-        "ENGINE: reset_prefix={}",
+        "ENGINE: removal_prefix={}",
         config.install_prefix
     )));
 
@@ -109,7 +139,9 @@ fn run_reset_engine(config: InstallerConfig, tx: &Sender<InstallEvent>) -> Resul
     command
         .arg(&script)
         .arg("--prefix")
-        .arg(&config.install_prefix);
+        .arg(&config.install_prefix)
+        .arg("--operation")
+        .arg(operation.arg());
 
     if config.safety.dry_run {
         command.arg("--dry-run");

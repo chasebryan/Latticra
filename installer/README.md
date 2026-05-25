@@ -75,6 +75,7 @@ nadia tokenizer-specification
 nadia tokenizer-manifest
 nadia tokenizer-artifact-inventory
 nadia tokenizer-artifact-measurement
+nadia tokenizer-artifact-verification
 profile guided
 profile seal
 profile fedora
@@ -131,7 +132,7 @@ Or from the desktop app grid, open **Latticra Panel**.
 
 Nadia is Latticra's planned offline AI companion for software development, systems engineering, and AI development work. The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, harm-aware development, and an absolute non-sexual-use boundary visible in the system direction. Documentation and code identify the solemn implementation identity as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
 
-In the current installer lane, Nadia includes Stage-21 tokenizer-artifact-measurement contract metadata, Stage-20 tokenizer-artifact-inventory contract metadata, Stage-19 tokenizer-manifest contract metadata, Stage-18 tokenizer-specification contract metadata, Stage-17 tokenization-boundary contract metadata, Stage-16 prompt-evaluation handoff contract metadata, Stage-15 awareness-dialogue contract metadata, Stage-14 prompt-materialization contract metadata, Stage-13 prompt-receipt contract metadata, Stage-12 model-load contract metadata, Stage-11 runtime-invocation contract metadata, Stage-10 inference-readiness contract metadata, Stage-9 local model-registry contract metadata, Stage-8 prompt-evaluation contract metadata, Stage-7 report-only tool-preflight metadata, Stage-6 protective-safety metadata, Stage-5 productivity-ledger metadata, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan metadata, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, config, Console status, component marker, and productivity-ledger space. No sexual user functionality, dialogue generation, prompt text receipt, prompt source reading, prompt buffer allocation, prompt tokenization, prompt materialization, tokenizer artifact path resolution, tokenizer artifact opening, tokenizer artifact reading, tokenizer artifact scanning, tokenizer artifact hashing, tokenizer artifact measurement, tokenizer artifact digest recording, tokenizer artifact size recording, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, inference, prompt evaluation, tool execution, model installation, training, distillation, source mutation, or network authority are installed. Awareness-dialogue metadata defines future survivor-centered Q&A scope for official Nadia Initiative awareness topics, prompt-evaluation handoff metadata packages that evidence, tokenization-boundary metadata keeps prompt tokenization blocked, tokenizer-specification metadata records future review requirements, tokenizer-manifest metadata records future manifest review requirements, tokenizer-artifact-inventory metadata records future artifact measurement requirements, and tokenizer-artifact-measurement metadata records future artifact verification requirements; none grants dialogue generation, live web lookup, prompt evaluation, token generation, inference, or tool execution authority.
+In the current installer lane, Nadia includes Stage-22 tokenizer-artifact-verification contract metadata, Stage-21 tokenizer-artifact-measurement contract metadata, Stage-20 tokenizer-artifact-inventory contract metadata, Stage-19 tokenizer-manifest contract metadata, Stage-18 tokenizer-specification contract metadata, Stage-17 tokenization-boundary contract metadata, Stage-16 prompt-evaluation handoff contract metadata, Stage-15 awareness-dialogue contract metadata, Stage-14 prompt-materialization contract metadata, Stage-13 prompt-receipt contract metadata, Stage-12 model-load contract metadata, Stage-11 runtime-invocation contract metadata, Stage-10 inference-readiness contract metadata, Stage-9 local model-registry contract metadata, Stage-8 prompt-evaluation contract metadata, Stage-7 report-only tool-preflight metadata, Stage-6 protective-safety metadata, Stage-5 productivity-ledger metadata, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan metadata, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, config, Console status, component marker, and productivity-ledger space. No sexual user functionality, dialogue generation, prompt text receipt, prompt source reading, prompt buffer allocation, prompt tokenization, prompt materialization, tokenizer artifact path resolution, tokenizer artifact opening, tokenizer artifact reading, tokenizer artifact scanning, tokenizer artifact hashing, tokenizer artifact measurement, tokenizer artifact digest recording, tokenizer artifact size recording, tokenizer artifact verification, tokenizer artifact digest comparison, tokenizer artifact size comparison, tokenizer artifact binding, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, inference, prompt evaluation, tool execution, model installation, training, distillation, source mutation, or network authority are installed. Awareness-dialogue metadata defines future survivor-centered Q&A scope for official Nadia Initiative awareness topics, prompt-evaluation handoff metadata packages that evidence, tokenization-boundary metadata keeps prompt tokenization blocked, tokenizer-specification metadata records future review requirements, tokenizer-manifest metadata records future manifest review requirements, tokenizer-artifact-inventory metadata records future artifact measurement requirements, tokenizer-artifact-measurement metadata records future artifact verification requirements, and tokenizer-artifact-verification metadata records future artifact binding requirements; none grants dialogue generation, live web lookup, prompt evaluation, token generation, inference, or tool execution authority.
 
 After a guarded local install with Nadia enabled:
 
@@ -157,18 +158,23 @@ latticra-nadia tokenizer-specification
 latticra-nadia tokenizer-manifest
 latticra-nadia tokenizer-artifact-inventory
 latticra-nadia tokenizer-artifact-measurement
+latticra-nadia tokenizer-artifact-verification
 ```
 
 ## Uninstall managed local install
 
 ```sh
+make -C installer reset-dry-run
+make -C installer reset-local
 make -C installer uninstall-dry-run
 make -C installer uninstall-local
 latticra reset --dry-run
 latticra reset
+latticra uninstall --dry-run
+latticra uninstall
 ```
 
-This is the guarded start-fresh path for new Panel specifications. It removes managed command wrappers, the Panel desktop entry, known Panel icons, and the selected local prefix. Unmanaged files in `~/.local/bin` are preserved.
+Reset and uninstall remove the same managed artifacts: command wrappers, the Panel desktop entry, known Panel icons, and the selected local prefix. Use reset when the intent is to reinstall from new Panel specifications; use uninstall when the intent is to remove the local install. Unmanaged files in `~/.local/bin` are preserved.
 
 ## Safety baseline
 

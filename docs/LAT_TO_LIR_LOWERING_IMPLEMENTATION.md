@@ -44,6 +44,14 @@ scripts/test-lat-to-lir-diagnostic-refinement.sh
 docs/LAT_TO_LIR_DIAGNOSTIC_REFINEMENT.md
 ```
 
+Related clause metadata refinement:
+
+```text
+tests/lat_to_lir_clause_metadata_refinement.c
+scripts/test-lat-to-lir-clause-metadata-refinement.sh
+docs/LAT_TO_LIR_CLAUSE_METADATA_REFINEMENT.md
+```
+
 Related contract and plan files:
 
 ```text
@@ -159,6 +167,8 @@ The report records status, lowering error label, model error label, module name,
 
 The companion diagnostic refinement can classify those lowering records as valid, parse, semantic, model, effect-check, capacity, LIR, or internal without changing lowering behavior.
 
+The clause metadata refinement also reports first-clause node index, role, effect label, name, operator, and value so callers can confirm that lowered clause operators remain inspectable.
+
 Small output buffers return:
 
 ```text
@@ -203,6 +213,7 @@ normalized model lowers through the model-aware entry point
 source kind is lat_module
 declaration and clause counts are preserved
 model counts and first transition source index are preserved
+first clause role, operator, value, effect, and node index are preserved
 node and edge counts are deterministic
 module metadata is preserved
 transition source metadata is preserved
@@ -226,13 +237,13 @@ It is not a compiler, interpreter, runtime, package system, command surface, or 
 
 ## Next implementation candidate
 
-The next candidate is:
+The next completed refinement after model-driven diagnostics is:
 
 ```text
-Lat model-driven lowering diagnostics and status integration
+Lat-to-LIR clause metadata refinement
 ```
 
-After this model-driven lowering integration, a later refinement may broaden clause operator/value metadata or add focused diagnostics only through a separate bounded contract or plan.
+Later refinements may broaden clause reporting beyond the first lowered clause or integrate this metadata into higher-level diagnostics only through separate bounded slices.
 
 ## Non-claims
 

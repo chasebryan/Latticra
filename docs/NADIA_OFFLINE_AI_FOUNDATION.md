@@ -97,6 +97,7 @@ share/latticra/nadia/tokenizer-specification/
 share/latticra/nadia/tokenizer-manifest/
 share/latticra/nadia/tokenizer-artifact-inventory/
 share/latticra/nadia/tokenizer-artifact-measurement/
+share/latticra/nadia/tokenizer-artifact-verification/
 share/latticra/components/nadia-offline-ai.installed
 bin/latticra-nadia
 ```
@@ -1009,7 +1010,59 @@ See [`NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21.md`](NADIA_TOKENIZE
 
 ### Stage-22: Tokenizer Artifact Verification Contract
 
-Only after tokenizer-artifact-measurement metadata, tokenizer-artifact-inventory metadata, tokenizer-manifest metadata, tokenizer-specification metadata, tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a tokenizer artifact verification contract. The default remains no tokenizer artifact opening, no tokenizer artifact hashing, no tokenizer manifest loading, no tokenizer file opening, no tokenizer vocabulary loading, no prompt tokenization, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
+Record tokenizer-artifact-verification metadata after tokenizer-artifact-measurement metadata, tokenizer-artifact-inventory metadata, tokenizer-manifest metadata, tokenizer-specification metadata, tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-22 can define future tokenizer artifact verification review requirements, but it cannot open tokenizer artifacts, read tokenizer artifacts, hash tokenizer artifacts, compare artifact digests, compare artifact sizes, verify artifacts, bind artifacts, load tokenizer manifests, open tokenizer files, load vocabularies, tokenize prompts, evaluate prompts, generate dialogue, generate tokens, run inference, or use the network.
+
+```text
+nadia_stage_22_tokenizer_artifact_verification_contract_present=1
+tokenizer_artifact_verification_contract_command=scripts/nadia-tokenizer-artifact-verification-contract.sh
+installed_tokenizer_artifact_verification_contract_command=latticra-nadia tokenizer-artifact-verification
+tokenizer_artifact_verification_contract_status=contract_only
+tokenizer_artifact_verification_stage=contract-only
+tokenizer_artifact_verification_authority=0
+tokenizer_artifact_verification_allowed=0
+tokenizer_artifact_verification_performed=0
+tokenizer_artifact_verification_metadata_present=1
+tokenizer_artifact_verification_family=operator-reviewed-tokenizer-artifact-verification
+tokenizer_artifact_verification_format=contract-only-offline-verification
+tokenizer_artifact_verification_decision=blocked_contract_only
+tokenizer_artifact_verification_evidence_present=1
+tokenizer_artifact_verification_source_policy=operator-reviewed-offline
+tokenizer_artifact_verification_plan_recorded=1
+tokenizer_artifact_verification_method_planned=offline-digest-and-size-policy-review
+tokenizer_artifact_verification_comparison_performed=0
+tokenizer_artifact_verification_result_recorded=0
+tokenizer_artifact_verification_digest_match_recorded=0
+tokenizer_artifact_verification_size_match_recorded=0
+requires_tokenizer_artifact_measurement_contract=1
+requires_tokenizer_artifact_inventory_contract=1
+requires_tokenizer_manifest_contract=1
+requires_tokenizer_specification_contract=1
+requires_tokenization_boundary_contract=1
+requires_future_tokenizer_artifact_binding_contract=1
+tokenizer_artifact_verification_promotion_allowed=0
+tokenizer_artifact_verification_hash_computed=0
+tokenizer_artifact_verification_compared=0
+tokenizer_artifact_digest_recorded=0
+tokenizer_artifact_size_recorded=0
+tokenizer_artifact_file_opened=0
+tokenizer_artifact_file_read=0
+tokenizer_manifest_loaded=0
+tokenizer_manifest_parsed=0
+tokenizer_file_opened=0
+tokenizer_file_read=0
+tokenizer_vocab_loaded=0
+prompt_tokenized=0
+prompt_evaluated=0
+qa_dialogue_generated=0
+sexual_request_refusal=always
+manipulation_resistance=required
+```
+
+See [`NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22.md`](NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22.md).
+
+### Stage-23: Tokenizer Artifact Binding Contract
+
+Only after tokenizer-artifact-verification metadata, tokenizer-artifact-measurement metadata, tokenizer-artifact-inventory metadata, tokenizer-manifest metadata, tokenizer-specification metadata, tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a tokenizer artifact binding contract. The default remains no tokenizer artifact opening, no tokenizer artifact hashing, no tokenizer artifact verification, no tokenizer artifact binding, no tokenizer manifest loading, no tokenizer file opening, no tokenizer vocabulary loading, no prompt tokenization, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
 
 ## Non-Claims
 
@@ -1028,7 +1081,7 @@ The current Nadia foundation is not:
 
 ## Promotion Gate
 
-Before Stage-22 starts, Latticra should keep these guards passing:
+Before Stage-23 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -1053,6 +1106,7 @@ sh scripts/test-nadia-tokenizer-specification-contract-stage-18.sh
 sh scripts/test-nadia-tokenizer-manifest-contract-stage-19.sh
 sh scripts/test-nadia-tokenizer-artifact-inventory-contract-stage-20.sh
 sh scripts/test-nadia-tokenizer-artifact-measurement-contract-stage-21.sh
+sh scripts/test-nadia-tokenizer-artifact-verification-contract-stage-22.sh
 ```
 
-Before tokenizer artifact verification starts, a separate tokenizer artifact verification contract must exist and name tokenizer artifact verification metadata, tokenizer-artifact-measurement denial fields, tokenizer-artifact-inventory denial fields, tokenizer-manifest denial fields, tokenizer-file denial fields, prompt-tokenization denial fields, refusal boundary inheritance, operator review gates, and non-claims.
+Before tokenizer artifact binding starts, a separate tokenizer artifact binding contract must exist and name tokenizer artifact binding metadata, tokenizer-artifact-verification denial fields, tokenizer-artifact-measurement denial fields, tokenizer-artifact-inventory denial fields, tokenizer-manifest denial fields, tokenizer-file denial fields, prompt-tokenization denial fields, refusal boundary inheritance, operator review gates, and non-claims.

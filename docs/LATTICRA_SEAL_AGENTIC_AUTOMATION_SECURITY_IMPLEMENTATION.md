@@ -155,6 +155,6 @@ sh scripts/test-latticra-seal-agentic-automation-security.sh
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is request freshness status/public-entry alignment.
+The next valid Latticra Seal slice is signed request status/public-entry alignment.
 
-That future slice must not implement timestamp parsing, trusted clock behavior, nonce storage, replay-cache storage, context hashing, parameter hashing, freshness validation, replay detection, schema parsing, schema validation, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, or authority grants.
+That future slice must not implement signature generation, signature verification, public-key parsing, trust-store loading, private-key handling, key generation, hardware-key use, revocation lookup, network trust lookup, signed request enforcement, timestamp parsing, trusted clock behavior, nonce storage, replay-cache storage, context hashing, parameter hashing, freshness validation, replay detection, schema parsing, schema validation, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, or authority grants.

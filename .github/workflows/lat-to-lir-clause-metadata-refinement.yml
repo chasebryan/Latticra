@@ -1,0 +1,19 @@
+name: Lat-to-LIR Clause Metadata Refinement
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  lat-to-lir-clause-metadata-refinement:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run Lat-to-LIR clause metadata refinement tests
+        run: sh scripts/test-lat-to-lir-clause-metadata-refinement.sh

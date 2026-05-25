@@ -86,6 +86,7 @@ typedef struct {
     latticra_lir_node_kind_t kind;
     char name[LATTICRA_LIR_NAME_MAX];
     char value[LATTICRA_LIR_VALUE_MAX];
+    char operator_text[LATTICRA_LIR_NAME_MAX];
     char binding[LATTICRA_LIR_BINDING_MAX];
     latticra_l_ui_source_span_t source_span;
     size_t parent_index;

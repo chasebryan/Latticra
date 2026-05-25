@@ -99,6 +99,7 @@ nadia tokenizer-specification
 nadia tokenizer-manifest
 nadia tokenizer-artifact-inventory
 nadia tokenizer-artifact-measurement
+nadia tokenizer-artifact-verification
 profile guided
 profile seal
 profile fedora
@@ -109,4 +110,4 @@ clear
 
 The console exists inside the GUI so users can stay in one coherent Latticra control surface while still getting terminal-style feedback and procedure visibility.
 
-Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, Stage-11, Stage-12, Stage-13, Stage-14, Stage-15, Stage-16, Stage-17, Stage-18, Stage-19, Stage-20, and Stage-21 console surfaces are metadata-only inside the Panel and do not launch an external host process or model runtime.
+Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, Stage-11, Stage-12, Stage-13, Stage-14, Stage-15, Stage-16, Stage-17, Stage-18, Stage-19, Stage-20, Stage-21, and Stage-22 console surfaces are metadata-only inside the Panel and do not launch an external host process or model runtime.

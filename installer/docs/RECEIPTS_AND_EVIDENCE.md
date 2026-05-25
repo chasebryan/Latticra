@@ -17,10 +17,11 @@ The current receipt includes:
 - config measurement
 - generated install plan
 
-The reset receipt includes:
+The reset/uninstall receipt includes:
 
 - UTC timestamp
-- reset mode
+- operation label
+- operation mode
 - install prefix
 - command wrapper, desktop entry, icon, and prefix actions
 - removed, planned, preserved, and missing counts

@@ -30,6 +30,8 @@ transitions_from
 
 edge kind.
 
+The later Lat-to-LIR clause metadata refinement preserves clause operators in the LIR node `operator_text` field while keeping role labels in the existing node binding field.
+
 ## Validation
 
 Run:
@@ -39,6 +41,12 @@ sh scripts/test-lat-specific-lir-refinement.sh
 ```
 
 The test covers stable labels, declaration node kind mapping, requirement node mapping, transition-source edge mapping, counts, and no-effect preservation.
+
+Related operator metadata is covered by:
+
+```sh
+sh scripts/test-lat-to-lir-clause-metadata-refinement.sh
+```
 
 ## Boundary
 

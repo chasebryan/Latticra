@@ -51,6 +51,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19.md`](NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19.md) — Stage-19 tokenizer-manifest contract for Nadia before tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20.md`](NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20.md) — Stage-20 tokenizer-artifact-inventory contract for Nadia before tokenizer artifact path resolution, artifact scanning, artifact hashing, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21.md`](NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21.md) — Stage-21 tokenizer-artifact-measurement contract for Nadia before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest recording, artifact size recording, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22.md`](NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22.md) — Stage-22 tokenizer-artifact-verification contract for Nadia before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest comparison, artifact size comparison, artifact verification, artifact binding, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`SELF_UPDATE_MODEL.md`](SELF_UPDATE_MODEL.md) — staged signed update and rollback design.
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
@@ -87,6 +88,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19_STATUS.md`](status/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19_STATUS.md) — status record for Nadia Stage-19 tokenizer-manifest contract before tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`status/NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20_STATUS.md`](status/NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20_STATUS.md) — status record for Nadia Stage-20 tokenizer-artifact-inventory contract before tokenizer artifact path resolution, artifact scanning, artifact hashing, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`status/NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21_STATUS.md`](status/NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21_STATUS.md) — status record for Nadia Stage-21 tokenizer-artifact-measurement contract before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest recording, artifact size recording, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22_STATUS.md`](status/NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22_STATUS.md) — status record for Nadia Stage-22 tokenizer-artifact-verification contract before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest comparison, artifact size comparison, artifact verification, artifact binding, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
@@ -189,6 +191,10 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_PARAMETER_SCHEMA_IMPLEMENTATION.md`](LATTICRA_SEAL_PARAMETER_SCHEMA_IMPLEMENTATION.md) — first report-only parameter schema metadata implementation.
 - [`LATTICRA_SEAL_PARAMETER_SCHEMA_REPORT_SURFACE.md`](LATTICRA_SEAL_PARAMETER_SCHEMA_REPORT_SURFACE.md) — deterministic local report surface for Seal parameter schema metadata.
 - [`status/SEAL_PARAMETER_SCHEMA_STATUS.md`](status/SEAL_PARAMETER_SCHEMA_STATUS.md) — status/public-entry checkpoint for report-only Seal parameter schema metadata.
+- [`LATTICRA_SEAL_REQUEST_FRESHNESS_CONTRACT.md`](LATTICRA_SEAL_REQUEST_FRESHNESS_CONTRACT.md) — report-only request freshness/replay boundary after parameter schema metadata.
+- [`LATTICRA_SEAL_REQUEST_FRESHNESS_IMPLEMENTATION.md`](LATTICRA_SEAL_REQUEST_FRESHNESS_IMPLEMENTATION.md) — first report-only request freshness metadata implementation.
+- [`LATTICRA_SEAL_REQUEST_FRESHNESS_REPORT_SURFACE.md`](LATTICRA_SEAL_REQUEST_FRESHNESS_REPORT_SURFACE.md) — deterministic local report surface for Seal request freshness metadata.
+- [`status/SEAL_REQUEST_FRESHNESS_STATUS.md`](status/SEAL_REQUEST_FRESHNESS_STATUS.md) — status/public-entry checkpoint for report-only Seal request freshness metadata.
 - [`status/SEAL_SIGNER_INVOCATION_STATUS.md`](status/SEAL_SIGNER_INVOCATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer invocation implementation.
 - [`status/SEAL_SIGNER_HANDOFF_STATUS.md`](status/SEAL_SIGNER_HANDOFF_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer handoff implementation.
 - [`status/SEAL_SIGNING_AUTHORIZATION_STATUS.md`](status/SEAL_SIGNING_AUTHORIZATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signing authorization implementation.
@@ -214,6 +220,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LAT_TO_LIR_LOWERING_CONTRACT.md`](LAT_TO_LIR_LOWERING_CONTRACT.md) — Lat-to-LIR lowering contract.
 - [`LAT_TO_LIR_LOWERING_IMPLEMENTATION_PLAN.md`](LAT_TO_LIR_LOWERING_IMPLEMENTATION_PLAN.md) — Lat-to-LIR lowering implementation plan.
 - [`LAT_TO_LIR_LOWERING_IMPLEMENTATION.md`](LAT_TO_LIR_LOWERING_IMPLEMENTATION.md) — Lat-to-LIR lowering implementation.
+- [`LAT_TO_LIR_CLAUSE_METADATA_REFINEMENT.md`](LAT_TO_LIR_CLAUSE_METADATA_REFINEMENT.md) — Lat-to-LIR clause operator/value metadata refinement.
 - [`LAT_PIPELINE_CONTRACT.md`](LAT_PIPELINE_CONTRACT.md) — bounded no-effect Lat pipeline contract after parser, semantic validation, and Lat-to-LIR lowering.
 - [`LAT_PIPELINE_IMPLEMENTATION_PLAN.md`](LAT_PIPELINE_IMPLEMENTATION_PLAN.md) — exact Lat pipeline API, result struct, report, tests, workflow, compatibility expectations, and non-claims.
 - [`LAT_PIPELINE_IMPLEMENTATION.md`](LAT_PIPELINE_IMPLEMENTATION.md) — first bounded no-effect Lat pipeline implementation.
@@ -294,6 +301,7 @@ Latticra Seal runtime handoff status/public-entry alignment + guardrails
 Latticra Seal status rollup status/public-entry alignment + guardrails
 Latticra Seal agentic automation security public-entrypoint alignment + guardrails
 Latticra Seal parameter schema status/public-entry alignment + guardrails
+Latticra Seal request freshness status/public-entry alignment + guardrails
 Latticra Seal capability gate status/public-entry alignment + guardrails
 Latticra Seal verification receipt status/public-entry alignment + guardrails
 Nadia offline AI Stage-0 foundation + guardrails
@@ -318,6 +326,7 @@ Nadia tokenizer specification contract Stage-18 + guardrails
 Nadia tokenizer manifest contract Stage-19 + guardrails
 Nadia tokenizer artifact inventory contract Stage-20 + guardrails
 Nadia tokenizer artifact measurement contract Stage-21 + guardrails
+Nadia tokenizer artifact verification contract Stage-22 + guardrails
 Latticra Seal verification policy status/public-entry alignment + guardrails
 Latticra Seal key parsing status/public-entry alignment + guardrails
 Latticra Seal bounded no-effect key parsing metadata + invariants
@@ -335,6 +344,7 @@ LIR report refinement + invariants
 Lat language grammar implementation + invariants
 Lat semantic diagnostics refinement + invariants
 Lat-to-LIR lowering implementation + invariants
+Lat-to-LIR clause metadata refinement + invariants
 Lat pipeline implementation + invariants
 Lat pipeline report refinement + invariants
 Lat pipeline diagnostic integration refinement + invariants
@@ -347,7 +357,7 @@ L-UI rendering detailed report refinement + invariants
 The next status review target should be:
 
 ```text
-Seal request freshness status/public-entry alignment, with report-only freshness/replay metadata visibility and no timestamp parsing, trusted clock behavior, nonce storage, replay-cache storage, context hashing, parameter hashing, freshness validation, replay detection, runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority
+Seal signed request status/public-entry alignment, with report-only signed request metadata visibility and no signature generation, signature verification, public-key parsing, trust-store loading, private-key handling, key generation, hardware-key use, revocation lookup, network trust lookup, signed request enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority
 ```
 
 Completion-estimate review should be skipped unless a future slice changes capability posture, implementation scope, or public readiness rather than only aligning documentation/status surfaces.

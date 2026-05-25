@@ -72,7 +72,7 @@ readme_links_parameter_schema_status=1
 root_status_mentions_parameter_schema_status=1
 status_index_links_parameter_schema_status=1
 foundation_index_links_parameter_schema_status=1
-project_notes_point_to_request_freshness_status=1
+project_notes_point_to_signed_request_status=1
 schema_profile=latticra-seal-parameter-schema/0.1
 schema_present=0
 schema_parsing_supported=0
@@ -167,6 +167,6 @@ It does not add schema parsing, schema validation, MCP protocol behavior, MCP se
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is request freshness status/public-entry alignment.
+The next valid Latticra Seal slice is signed request status/public-entry alignment.
 
-That future slice must preserve the no-effect posture and must not implement timestamp parsing, trusted clock behavior, nonce storage, replay-cache storage, context hashing, parameter hashing, freshness validation, replay detection, schema parsing, schema validation, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, signing, or authority grants.
+That future slice must preserve the no-effect posture and must not implement signature generation, signature verification, public-key parsing, trust-store loading, private-key handling, key generation, hardware-key use, revocation lookup, network trust lookup, signed request enforcement, timestamp parsing, trusted clock behavior, nonce storage, replay-cache storage, context hashing, parameter hashing, freshness validation, replay detection, schema parsing, schema validation, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, signing, or authority grants.

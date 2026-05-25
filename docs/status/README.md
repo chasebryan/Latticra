@@ -44,7 +44,9 @@ non-claims
 - [`NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19_STATUS.md`](NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19_STATUS.md) - Nadia Stage-19 tokenizer-manifest contract status before tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20_STATUS.md`](NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20_STATUS.md) - Nadia Stage-20 tokenizer-artifact-inventory contract status before tokenizer artifact path resolution, artifact scanning, artifact hashing, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21_STATUS.md`](NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21_STATUS.md) - Nadia Stage-21 tokenizer-artifact-measurement contract status before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest recording, artifact size recording, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22_STATUS.md`](NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22_STATUS.md) - Nadia Stage-22 tokenizer-artifact-verification contract status before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest comparison, artifact size comparison, artifact verification, artifact binding, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
+- [`SEAL_REQUEST_FRESHNESS_STATUS.md`](SEAL_REQUEST_FRESHNESS_STATUS.md) — Latticra Seal request freshness status/public-entry alignment.
 - [`SEAL_PARAMETER_SCHEMA_STATUS.md`](SEAL_PARAMETER_SCHEMA_STATUS.md) — Latticra Seal parameter schema status/public-entry alignment.
 - [`SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md) — Latticra Seal agentic automation security public-entrypoint alignment.
 - [`SEAL_AGENTIC_AUTOMATION_SECURITY_REPORT_SURFACE_STATUS.md`](SEAL_AGENTIC_AUTOMATION_SECURITY_REPORT_SURFACE_STATUS.md) — Latticra Seal agentic automation security report surface status.
@@ -163,6 +165,10 @@ seal_parameter_schema_contract_present=1
 seal_parameter_schema_metadata_present=1
 seal_parameter_schema_report_surface_present=1
 seal_parameter_schema_status_present=1
+seal_request_freshness_contract_present=1
+seal_request_freshness_metadata_present=1
+seal_request_freshness_report_surface_present=1
+seal_request_freshness_status_present=1
 operator_visible_status_surface=1
 deterministic_local_report_path=1
 core_blocked_case_set_complete=1
@@ -195,13 +201,13 @@ core_blocked_case_set_complete=1
 The careful current public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 The current next recommended Seal lane is:
 
 ```text
-Add Seal request freshness status/public-entry alignment
+Add Seal signed request status/public-entry alignment
 ```
 
 ## Current Fedora VM CLI payload validation lane checkpoint

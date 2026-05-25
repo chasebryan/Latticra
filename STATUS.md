@@ -3,6 +3,7 @@
 Status: public status shortcut
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal request freshness status/public-entry note: 2026-05-25 CDT
 Latest Seal parameter schema status/public-entry note: 2026-05-25 CDT
 Latest Seal agentic automation security public-entrypoint note: 2026-05-25 CDT
 Latest Seal status rollup status/public-entry note: 2026-05-25 CDT
@@ -32,6 +33,7 @@ Latest Nadia tokenizer specification contract Stage-18 note: 2026-05-25 CDT
 Latest Nadia tokenizer manifest contract Stage-19 note: 2026-05-25 CDT
 Latest Nadia tokenizer artifact inventory contract Stage-20 note: 2026-05-25 CDT
 Latest Nadia tokenizer artifact measurement contract Stage-21 note: 2026-05-25 CDT
+Latest Nadia tokenizer artifact verification contract Stage-22 note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -70,6 +72,7 @@ Latest Lat pipeline model normalization integration note: 2026-05-25 CDT
 Latest Lat-to-LIR model lowering integration note: 2026-05-25 CDT
 Latest Lat-to-LIR diagnostic refinement note: 2026-05-25 CDT
 Latest Lat pipeline lowering diagnostic integration note: 2026-05-25 CDT
+Latest Lat-to-LIR clause metadata refinement note: 2026-05-25 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
 Latest Lat pipeline diagnostic integration note: 2026-05-19 14:20 CDT
@@ -147,7 +150,7 @@ docs/strategy/README.md
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 54% |
+| Nadia offline AI foundation | 56% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |
@@ -182,6 +185,7 @@ Seal runtime handoff status/public-entry alignment
 Seal status rollup status/public-entry alignment
 Seal agentic automation security public-entrypoint alignment
 Seal parameter schema status/public-entry alignment
+Seal request freshness status/public-entry alignment
 Seal verification receipt status/public-entry alignment
 Nadia offline AI Stage-0 foundation
 Nadia local context engine Stage-1
@@ -205,6 +209,7 @@ Nadia tokenizer specification contract Stage-18
 Nadia tokenizer manifest contract Stage-19
 Nadia tokenizer artifact inventory contract Stage-20
 Nadia tokenizer artifact measurement contract Stage-21
+Nadia tokenizer artifact verification contract Stage-22
 Seal verification policy status/public-entry alignment
 Seal key parsing status/public-entry alignment
 Seal bounded no-effect key parsing implementation
@@ -253,6 +258,7 @@ Lat pipeline model normalization integration
 Lat-to-LIR model lowering integration
 Lat-to-LIR diagnostic refinement
 Lat pipeline lowering diagnostic integration
+Lat-to-LIR clause metadata refinement
 Lat pipeline report refinement
 Lat pipeline diagnostic integration refinement
 Lat pipeline diagnostic integration main test audit
@@ -318,14 +324,14 @@ Completion percentage review
 ## Current next step
 
 ```text
-Seal request freshness status/public-entry alignment, with report-only freshness/replay metadata visibility and no timestamp parsing, trusted clock behavior, nonce storage, replay-cache storage, context hashing, parameter hashing, freshness validation, replay detection, runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority
+Seal signed request status/public-entry alignment, with report-only signed request metadata visibility and no signature generation, signature verification, public-key parsing, trust-store loading, private-key handling, key generation, hardware-key use, revocation lookup, network trust lookup, signed request enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority
 ```
 
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
 
-It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal status/public-entry slice makes the report-only parameter schema metadata and report surface visible from public status surfaces while preserving no schema parsing, schema validation, runtime execution, effect execution, capability enforcement, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority.
+It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal status/public-entry slice makes the report-only request freshness metadata and report surface visible from public status surfaces while preserving no timestamp parsing, trusted clock behavior, nonce storage, replay-cache storage, context hashing, parameter hashing, freshness validation, replay detection, runtime execution, effect execution, capability enforcement, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority.
 
 Current status fields:
 
@@ -382,6 +388,10 @@ seal_parameter_schema_contract_present=1
 seal_parameter_schema_metadata_present=1
 seal_parameter_schema_report_surface_present=1
 seal_parameter_schema_status_present=1
+seal_request_freshness_contract_present=1
+seal_request_freshness_metadata_present=1
+seal_request_freshness_report_surface_present=1
+seal_request_freshness_status_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1
@@ -470,6 +480,8 @@ The current lowering implementation consumes normalized Lat model metadata direc
 The Lat-to-LIR diagnostic refinement classifies lowering outcomes as valid, parse, semantic, model, effect-check, capacity, LIR, or internal, and emits deterministic diagnostic reports without changing lowering behavior.
 
 The Lat pipeline diagnostic integration now has a lowering-aware evaluator that can copy Lat-to-LIR diagnostic class, lowering error, model error, LIR error, model counts, transition source metadata, and failure flags into the pipeline diagnostic report.
+
+The Lat-to-LIR clause metadata refinement preserves clause operators in LIR node metadata and reports the first lowered clause role, effect, name, operator, value, and node index without evaluating operators or adding execution.
 
 Boundary terms tracked by the project status guard:
 

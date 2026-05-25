@@ -1,5 +1,5 @@
 use crate::config::{render_plan, InstallProfile, InstallerConfig, SealCryptoProfile};
-use crate::engine::{self, InstallEvent};
+use crate::engine::{self, InstallEvent, RemovalOperation};
 use eframe::egui;
 use std::fs;
 use std::sync::mpsc::Receiver;
@@ -63,7 +63,7 @@ impl Default for LatticraInstallerApp {
             console_lines: vec![
                 format!("Latticra Panel v{PANEL_VERSION} bounded operator console online."),
                 "Authority baseline: root=0 network=0 runtime_enforcement=0.".to_owned(),
-                "Panel commands: help, status, plan, save, dry-run, reset, profile seal, profile fedora."
+                "Panel commands: help, status, plan, save, dry-run, reset, uninstall, profile seal, profile fedora."
                     .to_owned(),
                 "Navigation commands: pwd, cd <dir>. External host commands are denied.".to_owned(),
             ],
@@ -206,18 +206,19 @@ impl LatticraInstallerApp {
         }
     }
 
-    fn start_reset(&mut self) {
+    fn start_removal(&mut self, operation: RemovalOperation) {
         self.config.safety.allow_network_effect = false;
         match self.config.can_reset() {
             Ok(()) => {
                 self.logs.clear();
                 self.phase_index = 0;
                 self.phase_total = 5;
-                self.phase_title = "starting reset".to_owned();
+                self.phase_title = format!("starting {}", operation.arg());
                 self.install_state = InstallState::Running;
-                self.status = format!("Starting {}...", self.config.reset_mode_label());
-                self.push_console(format!("launching {}", self.config.reset_mode_label()));
-                self.rx = Some(engine::launch_reset(self.config.clone()));
+                let mode_label = operation.mode_label(self.config.safety.dry_run);
+                self.status = format!("Starting {mode_label}...");
+                self.push_console(format!("launching {mode_label}"));
+                self.rx = Some(engine::launch_removal(self.config.clone(), operation));
                 self.active_tab = WorkspaceTab::Evidence;
                 self.show_plan_over_log = false;
             }
@@ -227,6 +228,14 @@ impl LatticraInstallerApp {
                 self.push_console(format!("blocked: {err}"));
             }
         }
+    }
+
+    fn start_reset(&mut self) {
+        self.start_removal(RemovalOperation::Reset);
+    }
+
+    fn start_uninstall(&mut self) {
+        self.start_removal(RemovalOperation::Uninstall);
     }
 
     fn drain_events(&mut self) {
@@ -315,7 +324,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, plan, save, dry-run, reset, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement",
+                    "panel: help, status, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -395,7 +404,10 @@ impl LatticraInstallerApp {
                     "tokenizer_artifact_measurement_contract_stage=21-tokenizer-artifact-measurement-contract",
                 );
                 self.push_console(
-                    "stage=21 tokenizer-artifact-measurement-contract; tokenizer_artifact_measurement_performed=0 prompt_tokenized=0",
+                    "tokenizer_artifact_verification_contract_stage=22-tokenizer-artifact-verification-contract",
+                );
+                self.push_console(
+                    "stage=22 tokenizer-artifact-verification-contract; tokenizer_artifact_verification_performed=0 prompt_tokenized=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -598,6 +610,24 @@ impl LatticraInstallerApp {
                     "prompt_tokenized=0 requires_tokenizer_artifact_inventory_contract=1 requires_future_tokenizer_artifact_verification_contract=1",
                 );
             }
+            ["nadia", "tokenizer-artifact-verification"]
+            | ["nadia", "tokenizer-verification"]
+            | ["nadia", "artifact-verification"] => {
+                self.push_console(
+                    "nadia_tokenizer_artifact_verification=stage-22-tokenizer-artifact-verification-contract",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia tokenizer-artifact-verification");
+                self.push_console(
+                    "tokenizer_artifact_verification_contract_status=contract_only tokenizer_artifact_verification_performed=0",
+                );
+                self.push_console(
+                    "tokenizer_artifact_verification_comparison_performed=0 tokenizer_artifact_file_opened=0 tokenizer_artifact_hash_computed=0",
+                );
+                self.push_console(
+                    "prompt_tokenized=0 requires_tokenizer_artifact_measurement_contract=1 requires_future_tokenizer_artifact_binding_contract=1",
+                );
+            }
             ["nadia", "inference-readiness"]
             | ["nadia", "readiness"]
             | ["nadia", "inference-contract"] => {
@@ -704,7 +734,8 @@ impl LatticraInstallerApp {
             }
             ["save"] => self.save_config(),
             ["dry-run"] | ["run"] => self.start_install(),
-            ["reset"] | ["reset-local"] | ["uninstall"] => self.start_reset(),
+            ["reset"] | ["reset-local"] => self.start_reset(),
+            ["uninstall"] | ["uninstall-local"] => self.start_uninstall(),
             ["clear"] => self.console_lines.clear(),
             ["mode", "dry"] => self.set_mode_dry(),
             ["mode", "local"] => self.set_mode_local(),
@@ -774,7 +805,7 @@ impl LatticraInstallerApp {
             "blocked: command outside panel allowlist: {command}"
         ));
         self.push_console(
-            "allowed panel commands: help, status, plan, save, dry-run, reset, clear",
+            "allowed panel commands: help, status, plan, save, dry-run, reset, uninstall, clear",
         );
         self.push_console("allowed navigation commands: pwd, cd <path>");
     }
@@ -1074,7 +1105,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-21 tokenizer-artifact-measurement contract with metadata-only Console surfaces.",
+            "Stage-22 tokenizer-artifact-verification contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,
@@ -1418,8 +1449,8 @@ impl LatticraInstallerApp {
         procedure_row(
             ui,
             "08",
-            "Reset when specifications change",
-            "Use the guarded reset path to remove the managed prefix, wrappers, desktop entry, and icons before reinstalling.",
+            "Reset or uninstall when specifications change",
+            "Use reset before reinstalling from new specs, or uninstall to remove the managed local install.",
         );
     }
 
@@ -1442,6 +1473,8 @@ impl LatticraInstallerApp {
         self.show_fluid_install_button(ui);
         ui.add_space(8.0);
         self.show_reset_button(ui);
+        ui.add_space(6.0);
+        self.show_uninstall_button(ui);
 
         if let Err(err) = self.config.can_execute() {
             ui.colored_label(egui::Color32::from_rgb(255, 160, 130), err);
@@ -1499,14 +1532,28 @@ impl LatticraInstallerApp {
     }
 
     fn show_reset_button(&mut self, ui: &mut egui::Ui) {
-        let running = self.install_state == InstallState::Running;
-        let can_reset = self.config.can_reset().is_ok() && !running;
         let label = if self.config.safety.dry_run {
             "Preview local reset"
         } else {
             "Reset installed local prefix"
         };
 
+        self.show_removal_button(ui, label, RemovalOperation::Reset);
+    }
+
+    fn show_uninstall_button(&mut self, ui: &mut egui::Ui) {
+        let label = if self.config.safety.dry_run {
+            "Preview uninstall"
+        } else {
+            "Uninstall managed local install"
+        };
+
+        self.show_removal_button(ui, label, RemovalOperation::Uninstall);
+    }
+
+    fn show_removal_button(&mut self, ui: &mut egui::Ui, label: &str, operation: RemovalOperation) {
+        let running = self.install_state == InstallState::Running;
+        let can_remove = self.config.can_reset().is_ok() && !running;
         let button_width = ui.available_width().min(340.0).max(180.0);
         let text_size = if button_width < 280.0 { 14.0 } else { 16.0 };
         let button = egui::Button::new(egui::RichText::new(label).size(text_size).strong())
@@ -1517,9 +1564,9 @@ impl LatticraInstallerApp {
                 egui::Color32::from_rgb(230, 185, 120),
             ));
 
-        let response = ui.add_enabled(can_reset, button);
+        let response = ui.add_enabled(can_remove, button);
         if response.clicked() {
-            self.start_reset();
+            self.start_removal(operation);
         }
     }
 
@@ -1589,6 +1636,7 @@ impl LatticraInstallerApp {
                     "plan",
                     "dry-run",
                     "reset",
+                    "uninstall",
                     "mode dry",
                     "mode local",
                     "clear",

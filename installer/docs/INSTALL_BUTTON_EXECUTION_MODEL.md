@@ -25,9 +25,11 @@ safety.allow_host_mutation = true
 
 The button creates a user-local install layout and writes selected component placeholders, markers, configuration files, and CLI shims. This is still not a production installer. It is a guarded early install path for development validation.
 
-### Local-prefix reset mode
+### Local-prefix reset and uninstall modes
 
-The reset action uses the same authority posture as local-prefix install. In dry-run mode it previews removal and writes a reset receipt. With guarded local-prefix writes enabled, it removes managed command wrappers, managed desktop entries, known Panel icons, and the selected guarded prefix so the operator can reinstall from a new specification.
+The reset and uninstall actions use the same authority posture as local-prefix install. In dry-run mode they preview removal and write a receipt. With guarded local-prefix writes enabled, they remove managed command wrappers, managed desktop entries, known Panel icons, and the selected guarded prefix.
+
+Reset and uninstall intentionally share removal mechanics. Reset means "remove the managed local install so I can reinstall from new specifications." Uninstall means "remove the managed local install and stop using it."
 
 ## State machine
 
@@ -43,7 +45,7 @@ Idle
   -> Complete
 ```
 
-Reset uses a shorter state sequence:
+Reset and uninstall use a shorter state sequence:
 
 ```text
 Idle
@@ -80,5 +82,10 @@ The reset action is separate:
 
 - `Preview local reset` when dry-run is active
 - `Reset installed local prefix` when guarded local-prefix writes are explicitly enabled
+
+The uninstall action is also separate:
+
+- `Preview uninstall` when dry-run is active
+- `Uninstall managed local install` when guarded local-prefix writes are explicitly enabled
 
 The progress bar follows emitted `PHASE n/total` messages from the install script.

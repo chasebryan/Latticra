@@ -54,6 +54,12 @@ static void result_default(latticra_lat_to_lir_result_t *result) {
     result->model_declaration_count = 0u;
     result->model_clause_count = 0u;
     result->first_transition_source_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_clause_node_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_clause_role = LATTICRA_LAT_MODEL_CLAUSE_UNKNOWN;
+    result->first_clause_effect = LATTICRA_LAT_EFFECT_UNKNOWN;
+    result->first_clause_name[0] = '\0';
+    result->first_clause_operator[0] = '\0';
+    result->first_clause_value[0] = '\0';
     result->node_count = 0u;
     result->edge_count = 0u;
     result->no_effect = 1;
@@ -95,6 +101,7 @@ static void module_default(latticra_lir_module_t *module) {
         module->nodes[index].kind = LATTICRA_LIR_NODE_UNKNOWN;
         module->nodes[index].name[0] = '\0';
         module->nodes[index].value[0] = '\0';
+        module->nodes[index].operator_text[0] = '\0';
         module->nodes[index].binding[0] = '\0';
         lir_span_default(&module->nodes[index].source_span);
         module->nodes[index].parent_index = 0u;
@@ -279,6 +286,7 @@ static void set_node(
     latticra_lir_node_kind_t kind,
     const char *name,
     const char *value,
+    const char *operator_text,
     const char *binding,
     latticra_lat_source_span_t span,
     size_t parent_index,
@@ -288,6 +296,7 @@ static void set_node(
     node->kind = kind;
     copy_text(node->name, sizeof(node->name), name);
     copy_text(node->value, sizeof(node->value), value);
+    copy_text(node->operator_text, sizeof(node->operator_text), operator_text);
     copy_text(node->binding, sizeof(node->binding), binding);
     node->source_span = convert_span(span);
     node->parent_index = parent_index;
@@ -317,6 +326,20 @@ static size_t declaration_node_index(size_t declaration_index) {
 
 static size_t model_clause_node_index(const latticra_lat_model_t *model, size_t clause_index) {
     return LATTICRA_LAT_TO_LIR_FIRST_DECL_INDEX + model->declaration_count + clause_index;
+}
+
+static void copy_first_clause_summary(
+    const latticra_lat_model_t *model,
+    latticra_lat_to_lir_result_t *result) {
+    const latticra_lat_model_clause_t *clause;
+    if (model == 0 || result == 0 || model->clause_count == 0u) return;
+    clause = &model->clauses[0];
+    result->first_clause_node_index = model_clause_node_index(model, 0u);
+    result->first_clause_role = clause->role;
+    result->first_clause_effect = clause->effect;
+    copy_text(result->first_clause_name, sizeof(result->first_clause_name), clause->name);
+    copy_text(result->first_clause_operator, sizeof(result->first_clause_operator), clause->operator_text);
+    copy_text(result->first_clause_value, sizeof(result->first_clause_value), clause->value);
 }
 
 static latticra_lat_to_lir_error_t lowering_error_from_model_error(latticra_lat_model_error_t error) {
@@ -421,7 +444,7 @@ latticra_status_t latticra_lir_lower_lat_model(
     module->recovery_allowed = model->recovery_allowed;
     module->hardware_allowed = model->hardware_allowed;
 
-    set_node(&module->nodes[LATTICRA_LAT_TO_LIR_MODULE_INDEX], LATTICRA_LIR_NODE_MODULE, model->module_name, "lat_module", "", model->span, LATTICRA_LAT_TO_LIR_ROOT_PARENT, LATTICRA_LAT_TO_LIR_FIRST_DECL_INDEX, model->declaration_count);
+    set_node(&module->nodes[LATTICRA_LAT_TO_LIR_MODULE_INDEX], LATTICRA_LIR_NODE_MODULE, model->module_name, "lat_module", "", "", model->span, LATTICRA_LAT_TO_LIR_ROOT_PARENT, LATTICRA_LAT_TO_LIR_FIRST_DECL_INDEX, model->declaration_count);
 
     for (index = 0u; index < model->declaration_count; index++) {
         const latticra_lat_model_declaration_t *declaration = &model->declarations[index];
@@ -445,7 +468,7 @@ latticra_status_t latticra_lir_lower_lat_model(
             }
             first_child_index = model_clause_node_index(model, declaration->first_clause_index);
         }
-        set_node(&module->nodes[node_index], declaration_node_kind(declaration->kind), declaration->name, kind_label, declaration->source_name, declaration->span, LATTICRA_LAT_TO_LIR_MODULE_INDEX, first_child_index, declaration->clause_count);
+        set_node(&module->nodes[node_index], declaration_node_kind(declaration->kind), declaration->name, kind_label, "", declaration->source_name, declaration->span, LATTICRA_LAT_TO_LIR_MODULE_INDEX, first_child_index, declaration->clause_count);
         if (!append_edge(module, LATTICRA_LAT_TO_LIR_MODULE_INDEX, node_index, LATTICRA_LIR_EDGE_CONTAINS, declaration->span)) goto capacity_failed;
     }
 
@@ -466,7 +489,7 @@ latticra_status_t latticra_lir_lower_lat_model(
             finalize_lir_report_refinement(module);
             return LATTICRA_STATUS_OK;
         }
-        set_node(&module->nodes[node_index], kind, clause->name, clause->value, latticra_lat_model_clause_role_label(clause->role), clause->span, declaration_node_index(owner), 0u, 0u);
+        set_node(&module->nodes[node_index], kind, clause->name, clause->value, clause->operator_text, latticra_lat_model_clause_role_label(clause->role), clause->span, declaration_node_index(owner), 0u, 0u);
         if (!append_edge(module, declaration_node_index(owner), node_index, LATTICRA_LIR_EDGE_CONTAINS, clause->span)) goto capacity_failed;
     }
 
@@ -489,6 +512,7 @@ latticra_status_t latticra_lir_lower_lat_model(
     result->error = LATTICRA_LAT_TO_LIR_OK;
     result->node_count = module->node_count;
     result->edge_count = module->edge_count;
+    copy_first_clause_summary(model, result);
     result->no_effect = model->no_effect;
     result->execution_allowed = model->execution_allowed;
     result->mutation_allowed = model->mutation_allowed;
@@ -551,6 +575,12 @@ latticra_status_t latticra_lat_to_lir_report(
         "model_declaration_count=%zu\n"
         "model_clause_count=%zu\n"
         "first_transition_source_index=%zu\n"
+        "first_clause_node_index=%zu\n"
+        "first_clause_role=%s\n"
+        "first_clause_effect=%s\n"
+        "first_clause_name=%s\n"
+        "first_clause_operator=%s\n"
+        "first_clause_value=%s\n"
         "node_count=%zu\n"
         "edge_count=%zu\n"
         "no_effect=%d\n"
@@ -571,6 +601,12 @@ latticra_status_t latticra_lat_to_lir_report(
         result->model_declaration_count,
         result->model_clause_count,
         result->first_transition_source_index,
+        result->first_clause_node_index,
+        latticra_lat_model_clause_role_label(result->first_clause_role),
+        latticra_lat_effect_label(result->first_clause_effect),
+        result->first_clause_name,
+        result->first_clause_operator,
+        result->first_clause_value,
         result->node_count,
         result->edge_count,
         result->no_effect,

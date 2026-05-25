@@ -3,6 +3,7 @@
 Status: public status record
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal request freshness status/public-entry note: 2026-05-25 CDT
 Latest Seal parameter schema status/public-entry note: 2026-05-25 CDT
 Latest Seal agentic automation security public-entrypoint note: 2026-05-25 CDT
 Latest Seal status rollup status/public-entry note: 2026-05-25 CDT
@@ -32,6 +33,7 @@ Latest Nadia tokenizer specification contract Stage-18 note: 2026-05-25 CDT
 Latest Nadia tokenizer manifest contract Stage-19 note: 2026-05-25 CDT
 Latest Nadia tokenizer artifact inventory contract Stage-20 note: 2026-05-25 CDT
 Latest Nadia tokenizer artifact measurement contract Stage-21 note: 2026-05-25 CDT
+Latest Nadia tokenizer artifact verification contract Stage-22 note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -67,6 +69,7 @@ Latest Lat pipeline model normalization integration note: 2026-05-25 CDT
 Latest Lat-to-LIR model lowering integration note: 2026-05-25 CDT
 Latest Lat-to-LIR diagnostic refinement note: 2026-05-25 CDT
 Latest Lat pipeline lowering diagnostic integration note: 2026-05-25 CDT
+Latest Lat-to-LIR clause metadata refinement note: 2026-05-25 CDT
 Latest Lat-to-LIR lowering note: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
@@ -164,6 +167,7 @@ The repository currently emphasizes:
 - Nadia tokenizer manifest contract Stage-19 before tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution;
 - Nadia tokenizer artifact inventory contract Stage-20 before tokenizer artifact path resolution, artifact scanning, artifact hashing, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution;
 - Nadia tokenizer artifact measurement contract Stage-21 before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest recording, artifact size recording, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution;
+- Nadia tokenizer artifact verification contract Stage-22 before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest comparison, artifact size comparison, artifact verification, artifact binding, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution;
 - L-UI rendering implementation;
 - L-UI rendering detailed report refinement;
 - L-UI rendering README/status alignment;
@@ -191,6 +195,7 @@ The repository currently emphasizes:
 - Latticra Seal status rollup status/public-entry alignment;
 - Latticra Seal agentic automation security public-entrypoint alignment;
 - Latticra Seal parameter schema status/public-entry alignment;
+- Latticra Seal request freshness status/public-entry alignment;
 - Latticra Seal verification receipt status/public-entry alignment;
 - Latticra Seal verification policy status/public-entry alignment;
 - Latticra Seal key parsing status/public-entry alignment;
@@ -241,6 +246,7 @@ The repository currently emphasizes:
 - Lat-to-LIR model lowering integration;
 - Lat-to-LIR diagnostic refinement;
 - Lat pipeline lowering diagnostic integration;
+- Lat-to-LIR clause metadata refinement;
 - Lat pipeline report refinement;
 - Lat pipeline diagnostic integration refinement;
 - Lat pipeline diagnostic integration main test audit;
@@ -260,6 +266,8 @@ Lat now has a bounded no-effect path from grammar parsing to semantic validation
 The Lat model normalization implementation builds typed declaration and clause index tables for states, policies, transitions, assertions, and effect declarations after semantic validation. It preserves source spans and no-effect flags without reading source bytes, executing Lat, or changing lowering behavior.
 
 The Lat-to-LIR diagnostic refinement classifies lowering outcomes as valid, parse, semantic, model, effect-check, capacity, LIR, or internal. It copies model errors, lowering errors, optional LIR errors, model counts, transition source metadata, no-effect flags, and evidence level into deterministic diagnostic reports without changing lowering behavior.
+
+The Lat-to-LIR clause metadata refinement preserves clause operators in LIR node metadata and exposes first lowered clause role, effect, name, operator, value, and node index in deterministic lowering reports without evaluating operators or adding execution.
 
 The Lat semantic diagnostics refinement adds deterministic diagnostic classes, category counters, first-diagnostic declaration/clause indices, and report fields. This makes semantic failures easier to audit without changing validation outcomes or adding execution.
 
@@ -405,6 +413,8 @@ The Latticra Seal agentic automation security public-entrypoint alignment makes 
 
 The Latticra Seal parameter schema status record makes the existing report-only parameter schema contract, metadata implementation, and deterministic report surface visible from public entry points while preserving no schema parsing, no schema validation, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority.
 
+The Latticra Seal request freshness status record makes the existing report-only request freshness contract, metadata implementation, and deterministic report surface visible from public entry points while preserving no timestamp parsing, no trusted clock behavior, no nonce storage, no replay-cache storage, no context hashing, no parameter hashing, no freshness validation, no replay detection, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority.
+
 The project notes are now aligned across current direction, upcoming work, and project-notes index surfaces.
 
 The current status and announcement consistency review confirms the public status and announcement surfaces now point to the same next review lane.
@@ -432,7 +442,7 @@ These percentages are planning estimates only.
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 54% |
+| Nadia offline AI foundation | 56% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |
@@ -487,6 +497,7 @@ Latticra Seal runtime handoff status/public-entry alignment
 Latticra Seal status rollup status/public-entry alignment
 Latticra Seal agentic automation security public-entrypoint alignment
 Latticra Seal parameter schema status/public-entry alignment
+Latticra Seal request freshness status/public-entry alignment
 Latticra Seal capability gate status/public-entry alignment
 Latticra Seal verification receipt status/public-entry alignment
 Latticra Seal verification policy status/public-entry alignment
@@ -532,6 +543,7 @@ Lat pipeline model normalization integration
 Lat-to-LIR model lowering integration
 Lat-to-LIR diagnostic refinement
 Lat pipeline lowering diagnostic integration
+Lat-to-LIR clause metadata refinement
 Lat pipeline report refinement
 Lat pipeline diagnostic integration refinement
 Lat pipeline diagnostic integration main test audit
@@ -615,7 +627,7 @@ Latticra Seal future key parsing implementation contract
 Latest completed status/public-entry slice:
 
 ```text
-Latticra Seal parameter schema status/public-entry alignment
+Latticra Seal request freshness status/public-entry alignment
 ```
 
 ## Previous status/public-entry slice
@@ -623,7 +635,7 @@ Latticra Seal parameter schema status/public-entry alignment
 Previous status/public-entry slice:
 
 ```text
-Latticra Seal agentic automation security public-entrypoint alignment
+Latticra Seal parameter schema status/public-entry alignment
 ```
 
 ## Latest completed implementation slice
@@ -735,7 +747,7 @@ Latticra Seal signer handoff metadata implementation
 Recommended next work:
 
 ```text
-Seal request freshness status/public-entry alignment, with report-only freshness/replay metadata visibility and no timestamp parsing, trusted clock behavior, nonce storage, replay-cache storage, context hashing, parameter hashing, freshness validation, replay detection, runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority
+Seal signed request status/public-entry alignment, with report-only signed request metadata visibility and no signature generation, signature verification, public-key parsing, trust-store loading, private-key handling, key generation, hardware-key use, revocation lookup, network trust lookup, signed request enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority
 ```
 
 After that:

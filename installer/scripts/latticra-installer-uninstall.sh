@@ -4,7 +4,7 @@ set -eu
 usage() {
   cat >&2 <<'USAGE'
 usage:
-  latticra-installer-uninstall.sh [--prefix <dir>] [--receipt-dir <dir>] [--dry-run] [--no-receipt]
+  latticra-installer-uninstall.sh [--prefix <dir>] [--receipt-dir <dir>] [--operation reset|uninstall] [--dry-run] [--no-receipt]
 
 Removes the managed Latticra Panel user-local install so the operator can start
 fresh from a new specification. The reset is limited to guarded Latticra
@@ -33,6 +33,7 @@ expand_path() {
 
 PREFIX_RAW="$HOME/.local/share/latticra"
 RECEIPT_DIR_RAW="$HOME/.local/share/latticra-reset-receipts"
+OPERATION=reset
 DRY_RUN=false
 WRITE_RECEIPT=true
 
@@ -47,6 +48,19 @@ while [ "$#" -gt 0 ]; do
       [ "$#" -ge 2 ] || fail "missing value for --receipt-dir"
       RECEIPT_DIR_RAW="$2"
       shift 2
+      ;;
+    --operation)
+      [ "$#" -ge 2 ] || fail "missing value for --operation"
+      OPERATION="$2"
+      shift 2
+      ;;
+    --reset)
+      OPERATION=reset
+      shift
+      ;;
+    --uninstall)
+      OPERATION=uninstall
+      shift
       ;;
     --dry-run)
       DRY_RUN=true
@@ -67,16 +81,24 @@ while [ "$#" -gt 0 ]; do
   esac
 done
 
+case "$OPERATION" in
+  reset|uninstall)
+    ;;
+  *)
+    fail "unknown operation: $OPERATION"
+    ;;
+esac
+
 PREFIX=$(expand_path "$PREFIX_RAW")
 RECEIPT_DIR=$(expand_path "$RECEIPT_DIR_RAW")
 USER_BIN="$HOME/.local/bin"
 APP_DIR="$HOME/.local/share/applications"
 ICON_DIR="$HOME/.local/share/icons/hicolor/256x256/apps"
 TS=$(date -u +"%Y%m%dT%H%M%SZ")
-MODE="local-prefix-reset"
+MODE="local-prefix-$OPERATION"
 
 if [ "$DRY_RUN" = true ]; then
-  MODE="dry-reset"
+  MODE="dry-$OPERATION"
 fi
 
 case "$PREFIX" in
@@ -103,11 +125,12 @@ missing_count=0
 
 if [ "$WRITE_RECEIPT" = true ]; then
   mkdir -p "$RECEIPT_DIR"
-  RECEIPT="$RECEIPT_DIR/latticra-panel-reset-receipt-$TS.txt"
+  RECEIPT="$RECEIPT_DIR/latticra-panel-$OPERATION-receipt-$TS.txt"
   cat > "$RECEIPT" <<RECEIPT_HEADER
-LATTICRA PANEL RESET RECEIPT
+LATTICRA PANEL ${OPERATION} RECEIPT
 
 timestamp_utc=$TS
+operation=$OPERATION
 mode=$MODE
 install_prefix=$PREFIX
 user_bin=$USER_BIN
@@ -189,7 +212,8 @@ remove_prefix() {
   log "[removed] managed prefix tree: $PREFIX"
 }
 
-log "Latticra Panel reset"
+log "Latticra Panel $OPERATION"
+log "operation=$OPERATION"
 log "mode=$MODE"
 log "prefix=$PREFIX"
 
@@ -211,7 +235,7 @@ done
 phase 4 "remove managed local prefix"
 remove_prefix
 
-phase 5 "refresh desktop metadata and write reset receipt"
+phase 5 "refresh desktop metadata and write operation receipt"
 if [ "$DRY_RUN" != true ]; then
   if command -v update-desktop-database >/dev/null 2>&1; then
     update-desktop-database "$APP_DIR" >/dev/null 2>&1 || true
@@ -227,18 +251,26 @@ log "removed_count=$removed_count"
 log "planned_count=$planned_count"
 log "preserved_count=$preserved_count"
 log "missing_count=$missing_count"
-log "RESET_RESULT: success mode=$MODE prefix=$PREFIX"
+if [ "$OPERATION" = uninstall ]; then
+  log "UNINSTALL_RESULT: success mode=$MODE prefix=$PREFIX"
+else
+  log "RESET_RESULT: success mode=$MODE prefix=$PREFIX"
+fi
 
 if [ -n "$RECEIPT" ]; then
-  log "RESET_RECEIPT: $RECEIPT"
+  if [ "$OPERATION" = uninstall ]; then
+    log "UNINSTALL_RECEIPT: $RECEIPT"
+  else
+    log "RESET_RECEIPT: $RECEIPT"
+  fi
 fi
 
 if [ "$DRY_RUN" = true ]; then
-  log "Latticra local reset dry-run complete."
+  log "Latticra local $OPERATION dry-run complete."
 else
-  log "Latticra local reset complete."
+  log "Latticra local $OPERATION complete."
 fi
 
 if [ -n "$RECEIPT" ]; then
-  cp "$RECEIPT" "$RECEIPT_DIR/latest-reset-receipt.txt"
+  cp "$RECEIPT" "$RECEIPT_DIR/latest-$OPERATION-receipt.txt"
 fi

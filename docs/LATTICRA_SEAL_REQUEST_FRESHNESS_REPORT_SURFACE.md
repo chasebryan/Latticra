@@ -91,6 +91,6 @@ It makes the freshness/replay metadata visible, but the stronger claim requires 
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is a request freshness report surface status record or a signed request metadata contract.
+The next valid Latticra Seal slice is signed request status/public-entry alignment.
 
-That future slice must not implement runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, freshness validation, replay detection, or authority grants unless a specific contract and validation path justify it.
+That future slice must not implement signature generation, signature verification, public-key parsing, trust-store loading, private-key handling, key generation, hardware-key use, revocation lookup, network trust lookup, signed request enforcement, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, freshness validation, replay detection, or authority grants unless a specific contract and validation path justify it.
