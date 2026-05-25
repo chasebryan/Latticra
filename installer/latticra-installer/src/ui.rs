@@ -290,7 +290,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety",
+                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -328,8 +328,9 @@ impl LatticraInstallerApp {
                 );
                 self.push_console("productivity_loop_stage=5-productivity-ledger-loop");
                 self.push_console("protective_safety_stage=6-protective-safety-boundary");
+                self.push_console("tool_authority_stage=7-guarded-tool-authority-preflight");
                 self.push_console(
-                    "stage=6 protective-safety-boundary; model_runtime_invoked=0 inference_performed=0",
+                    "stage=7 guarded-tool-authority-preflight; model_runtime_invoked=0 inference_performed=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -394,6 +395,17 @@ impl LatticraInstallerApp {
                 );
                 self.push_console(
                     "manipulation_resistance=required prompt_injection_override_authority=0 policy_bypass_authority=0",
+                );
+            }
+            ["nadia", "tool"] | ["nadia", "tool-preflight"] | ["nadia", "tool-authority"] => {
+                self.push_console("nadia_tool_authority=stage-7-guarded-tool-authority-preflight");
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia tool-preflight");
+                self.push_console(
+                    "preflight_decision=report_only_no_execution tool_execution_authority=0 tool_execution_performed=0",
+                );
+                self.push_console(
+                    "requires_protective_safety_boundary=1 authority_transition_allowed=0",
                 );
             }
             ["plan"] => {
@@ -714,7 +726,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-6 protective safety boundary with metadata-only Console surfaces.",
+            "Stage-7 report-only tool preflight with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,

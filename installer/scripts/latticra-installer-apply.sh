@@ -337,7 +337,7 @@ developer_cli_helpers=$DEVELOPER_CLI_HELPERS
 
 [nadia]
 system_name=Latticra Nadia
-stage=6-protective-safety-boundary
+stage=7-guarded-tool-authority-preflight
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -374,6 +374,22 @@ prompt_injection_override_authority=0
 manipulation_resistance=required
 policy_bypass_authority=0
 namesake_cause_awareness=1
+tool_authority_stage=7-guarded-tool-authority-preflight
+tool_authority_preflight_command=scripts/nadia-tool-authority-preflight.sh
+installed_tool_authority_preflight_command=latticra-nadia tool-preflight
+preflight_decision=report_only_no_execution
+tool_execution_performed=0
+tool_selection_authority=0
+shell_execution_authority=0
+network_tool_authority=0
+destructive_action_authority=0
+credential_access_authority=0
+requires_operator_approval=1
+requires_nucleus_gate=1
+requires_runtime_boundary_gate=1
+requires_seal_receipt=1
+requires_protective_safety_boundary=1
+authority_transition_allowed=0
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -569,12 +585,13 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/runtime-profiles" \
     "$PREFIX/share/latticra/nadia/prompt-plans" \
     "$PREFIX/share/latticra/nadia/mode-validations" \
-    "$PREFIX/share/latticra/nadia/protective-safety"
+    "$PREFIX/share/latticra/nadia/protective-safety" \
+    "$PREFIX/share/latticra/nadia/tool-preflights"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia"
-stage = "6-protective-safety-boundary"
-mode = "offline-protective-safety"
+stage = "7-guarded-tool-authority-preflight"
+mode = "offline-tool-preflight"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -606,6 +623,21 @@ prompt_injection_override_authority = false
 manipulation_resistance = "required"
 policy_bypass_authority = false
 namesake_cause_awareness = true
+tool_authority_stage = "7-guarded-tool-authority-preflight"
+tool_authority_preflight_command = "scripts/nadia-tool-authority-preflight.sh"
+preflight_decision = "report_only_no_execution"
+tool_execution_performed = false
+tool_selection_authority = false
+shell_execution_authority = false
+network_tool_authority = false
+destructive_action_authority = false
+credential_access_authority = false
+requires_operator_approval = true
+requires_nucleus_gate = true
+requires_runtime_boundary_gate = true
+requires_seal_receipt = true
+requires_protective_safety_boundary = true
+authority_transition_allowed = false
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -620,11 +652,11 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-6 protective-safety metadata lane.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-7 report-only tool-preflight metadata lane.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, model-registry, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, and protective-safety metadata when the operator runs latticra-nadia protective-safety. It does not provide sexual user functionality, evaluate prompts, install model weights, run inference, use the network, train or distill a model, or mutate source.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, model-registry, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, and report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight. It does not provide sexual user functionality, evaluate prompts, install model weights, run inference, execute tools, use the network, train or distill a model, or mutate source.
 NADIAREADME
 fi
 
@@ -772,8 +804,8 @@ case "\${1:-status}" in
     echo
     echo "name=Nadia"
     echo "system_name=Latticra Nadia"
-    echo "stage=6-protective-safety-boundary"
-    echo "mode=offline-protective-safety"
+    echo "stage=7-guarded-tool-authority-preflight"
+    echo "mode=offline-tool-preflight"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "context_packs=\$NADIA_DIR/context-packs"
@@ -783,6 +815,7 @@ case "\${1:-status}" in
     echo "prompt_plans=\$NADIA_DIR/prompt-plans"
     echo "mode_validations=\$NADIA_DIR/mode-validations"
     echo "protective_safety=\$NADIA_DIR/protective-safety"
+    echo "tool_preflights=\$NADIA_DIR/tool-preflights"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "prompt_plan_command=latticra-nadia prompt-plan"
@@ -806,6 +839,21 @@ case "\${1:-status}" in
     echo "manipulation_resistance=required"
     echo "policy_bypass_authority=0"
     echo "namesake_cause_awareness=1"
+    echo "tool_authority_stage=7-guarded-tool-authority-preflight"
+    echo "tool_authority_preflight_command=latticra-nadia tool-preflight"
+    echo "preflight_decision=report_only_no_execution"
+    echo "tool_execution_performed=0"
+    echo "tool_selection_authority=0"
+    echo "shell_execution_authority=0"
+    echo "network_tool_authority=0"
+    echo "destructive_action_authority=0"
+    echo "credential_access_authority=0"
+    echo "requires_operator_approval=1"
+    echo "requires_nucleus_gate=1"
+    echo "requires_runtime_boundary_gate=1"
+    echo "requires_seal_receipt=1"
+    echo "requires_protective_safety_boundary=1"
+    echo "authority_transition_allowed=0"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -906,11 +954,25 @@ case "\${1:-status}" in
       --productivity-entry "\$NADIA_DIR/productivity-ledger/latest-productivity-entry.txt" \
       --output "\$NADIA_DIR/protective-safety"
     ;;
+  tool-preflight|tool|tool-authority|preflight)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-tool-authority-preflight.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia tool-authority preflight script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --protective-safety "\$NADIA_DIR/protective-safety/latest-protective-safety.txt" \
+      --output "\$NADIA_DIR/tool-preflights"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|path}" >&2
     exit 64
     ;;
 esac

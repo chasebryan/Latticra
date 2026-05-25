@@ -265,7 +265,39 @@ See [`NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md`](NADIA_PROTECTIVE_SAFETY_BOUN
 
 ### Stage-7: Guarded Tool Authority
 
-Only after Nucleus, Runtime Boundary, Seal, Nadia ledger, and Nadia protective-safety gates mature, consider bounded tool execution. The default remains deny-by-default, receipt-bound, refusal-bound, and operator-visible.
+Add a report-only tool-authority preflight after the protective-safety boundary. Stage-7 can classify a proposed tool class but cannot execute tools.
+
+```text
+nadia_stage_7_guarded_tool_authority_present=1
+tool_authority_preflight_command=scripts/nadia-tool-authority-preflight.sh
+installed_tool_authority_preflight_command=latticra-nadia tool-preflight
+requires_protective_safety=1
+tool_authority_stage=preflight-only
+preflight_decision=report_only_no_execution
+tool_execution_authority=0
+tool_execution_performed=0
+tool_selection_authority=0
+shell_execution_authority=0
+network_tool_authority=0
+source_mutation_authority=0
+destructive_action_authority=0
+credential_access_authority=0
+requires_operator_approval=1
+requires_nucleus_gate=1
+requires_runtime_boundary_gate=1
+requires_seal_receipt=1
+requires_protective_safety_boundary=1
+authority_transition_allowed=0
+sexual_content_generation=0
+sexual_request_refusal=always
+manipulation_resistance=required
+```
+
+See [`NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md`](NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md).
+
+### Stage-8: Prompt Evaluation Contract
+
+Only after the context, runtime profile, prompt plan, mode validation, productivity ledger, protective safety boundary, and tool preflight gates mature, consider a prompt-evaluation contract. The default remains no prompt evaluation, no inference, no tool execution, no source mutation, and no sexual user functionality.
 
 ## Non-Claims
 
@@ -284,7 +316,7 @@ Stage-0 Nadia is not:
 
 ## Promotion Gate
 
-Before Stage-7 starts, Latticra should keep these guards passing:
+Before Stage-8 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -294,6 +326,7 @@ sh scripts/test-nadia-developer-workbench-stage-3.sh
 sh scripts/test-nadia-systems-engineering-mode-stage-4.sh
 sh scripts/test-nadia-productivity-loop-stage-5.sh
 sh scripts/test-nadia-protective-safety-boundary-stage-6.sh
+sh scripts/test-nadia-guarded-tool-authority-stage-7.sh
 ```
 
-Before guarded tool authority starts, a separate authority contract must exist and name deny-by-default tool scopes, execution constraints, operator review gates, receipts, failure behavior, and non-claims.
+Before prompt evaluation starts, a separate prompt-evaluation contract must exist and name refusal behavior, model-runtime invocation boundaries, prompt materialization, tool-denial behavior, receipt fields, and non-claims.

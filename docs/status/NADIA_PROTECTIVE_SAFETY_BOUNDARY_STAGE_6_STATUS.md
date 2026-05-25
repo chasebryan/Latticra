@@ -68,4 +68,4 @@ nadia_protective_safety_boundary_stage_6: ok
 
 ## Next Stage
 
-Stage-7 should consider guarded tool authority only after Nucleus, Runtime Boundary, Seal, Nadia ledger gates, and Nadia protective-safety gates define deny-by-default execution constraints, refusal boundaries, receipts, and operator review.
+Stage-7 now adds a report-only guarded tool-authority preflight after the protective-safety boundary. It still does not execute tools.

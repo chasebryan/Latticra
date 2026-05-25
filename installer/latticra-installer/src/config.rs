@@ -408,7 +408,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out);
     let _ = writeln!(out, "[nadia]");
     let _ = writeln!(out, "system_name=Latticra Nadia");
-    let _ = writeln!(out, "stage=6-protective-safety-boundary");
+    let _ = writeln!(out, "stage=7-guarded-tool-authority-preflight");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -485,6 +485,31 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "manipulation_resistance=required");
     let _ = writeln!(out, "policy_bypass_authority=0");
     let _ = writeln!(out, "namesake_cause_awareness=1");
+    let _ = writeln!(
+        out,
+        "tool_authority_stage=7-guarded-tool-authority-preflight"
+    );
+    let _ = writeln!(
+        out,
+        "tool_authority_preflight_command=scripts/nadia-tool-authority-preflight.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_tool_authority_preflight_command=latticra-nadia tool-preflight"
+    );
+    let _ = writeln!(out, "preflight_decision=report_only_no_execution");
+    let _ = writeln!(out, "tool_execution_performed=0");
+    let _ = writeln!(out, "tool_selection_authority=0");
+    let _ = writeln!(out, "shell_execution_authority=0");
+    let _ = writeln!(out, "network_tool_authority=0");
+    let _ = writeln!(out, "destructive_action_authority=0");
+    let _ = writeln!(out, "credential_access_authority=0");
+    let _ = writeln!(out, "requires_operator_approval=1");
+    let _ = writeln!(out, "requires_nucleus_gate=1");
+    let _ = writeln!(out, "requires_runtime_boundary_gate=1");
+    let _ = writeln!(out, "requires_seal_receipt=1");
+    let _ = writeln!(out, "requires_protective_safety_boundary=1");
+    let _ = writeln!(out, "authority_transition_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");
