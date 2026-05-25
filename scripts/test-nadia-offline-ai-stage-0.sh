@@ -119,6 +119,6 @@ require_contains 'nadia status' "$installer_readme"
 require_contains 'Nadia Murad' "$installer_readme"
 require_contains 'No inference, prompt evaluation, model installation, training, source mutation, or network authority are installed.' "$installer_readme"
 require_contains 'Nadia offline AI foundation' "$ui_model"
-require_contains "Nadia's Stage-0, Stage-1, Stage-2, and Stage-3 console surfaces are metadata-only" "$ui_model"
+require_contains "Nadia's Stage-0, Stage-1, Stage-2, Stage-3, and Stage-4 console surfaces are metadata-only" "$ui_model"
 
 printf 'nadia_offline_ai_stage_0: ok\n'

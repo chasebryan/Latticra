@@ -56,4 +56,4 @@ nadia_developer_workbench_stage_3: ok
 
 ## Next Stage
 
-Stage-4 should add systems-engineering mode taxonomies and validators for planning surfaces before any prompt evaluation or generation path is added.
+Stage-4 now adds systems-engineering mode taxonomies and validators for planning surfaces before any prompt evaluation or generation path is added.

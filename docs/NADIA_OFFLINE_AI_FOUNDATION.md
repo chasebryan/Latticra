@@ -193,7 +193,22 @@ See [`NADIA_DEVELOPER_WORKBENCH_STAGE_3.md`](NADIA_DEVELOPER_WORKBENCH_STAGE_3.m
 
 ### Stage-4: Systems Engineering Mode
 
-Specialize prompts, retrieval, and validators for C, constrained C++, Rust Panel code, Lat/LIR/L-UI, Runtime Boundary, Seal, AI infrastructure, and Linux/Fedora integration.
+Specialize prompt-plan validation with mode labels and validator sets for C, constrained C++, Rust Panel code, Lat/LIR/L-UI, Runtime Boundary, Seal, AI infrastructure, awareness safety, and Linux/Fedora integration.
+
+```text
+nadia_stage_4_systems_engineering_mode_present=1
+mode_validation_command=scripts/nadia-mode-validate.sh
+installed_mode_validation_command=latticra-nadia mode-validate
+requires_prompt_plan=1
+mode_taxonomy_present=1
+mode_allowed=1
+model_runtime_invoked=0
+inference_performed=0
+prompt_evaluated=0
+source_mutation_authority=0
+```
+
+See [`NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md`](NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md).
 
 ### Stage-5: Productivity Loop
 
@@ -219,13 +234,14 @@ Stage-0 Nadia is not:
 
 ## Promotion Gate
 
-Before Stage-3 starts, Latticra should keep these guards passing:
+Before Stage-5 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
 sh scripts/test-nadia-local-context-engine-stage-1.sh
 sh scripts/test-nadia-runtime-profile-stage-2.sh
 sh scripts/test-nadia-developer-workbench-stage-3.sh
+sh scripts/test-nadia-systems-engineering-mode-stage-4.sh
 ```
 
-Before systems-engineering mode starts, a separate mode-taxonomy contract must exist and name domain labels, validators, failure behavior, receipt fields, and non-claims.
+Before the productivity loop starts, a separate productivity-ledger contract must exist and name local learning inputs, review gates, ranking behavior, retention behavior, receipt fields, and non-claims.

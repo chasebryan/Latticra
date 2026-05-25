@@ -408,7 +408,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out);
     let _ = writeln!(out, "[nadia]");
     let _ = writeln!(out, "system_name=Latticra Nadia");
-    let _ = writeln!(out, "stage=1-local-context-engine");
+    let _ = writeln!(out, "stage=4-systems-engineering-mode-validation");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -441,6 +441,19 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         out,
         "installed_prompt_plan_command=latticra-nadia prompt-plan"
     );
+    let _ = writeln!(
+        out,
+        "systems_engineering_mode_stage=4-systems-engineering-mode-validation"
+    );
+    let _ = writeln!(
+        out,
+        "mode_validation_command=scripts/nadia-mode-validate.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_mode_validation_command=latticra-nadia mode-validate"
+    );
+    let _ = writeln!(out, "mode_taxonomy_present=1");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");
