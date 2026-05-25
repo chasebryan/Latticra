@@ -101,6 +101,7 @@ seal_key_material_contract_present=1
 seal_key_material_metadata_present=1
 seal_key_material_status_present=1
 seal_public_key_parsing_contract_present=1
+seal_public_key_parsing_metadata_present=1
 operator_visible_status_surface=1
 deterministic_local_report_path=1
 core_blocked_case_set_complete=1
@@ -133,13 +134,13 @@ core_blocked_case_set_complete=1
 The careful current public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer handoff status/public-entry alignment, signer invocation metadata, signer invocation status/public-entry alignment, a signing operation contract, signing operation metadata, signing operation status/public-entry alignment, a key-handling boundary contract, key-handling metadata, key-handling status/public-entry alignment, a key-material boundary contract, key-material metadata, key-material status/public-entry alignment, a public-key parsing boundary contract, and core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer handoff status/public-entry alignment, signer invocation metadata, signer invocation status/public-entry alignment, a signing operation contract, signing operation metadata, signing operation status/public-entry alignment, a key-handling boundary contract, key-handling metadata, key-handling status/public-entry alignment, a key-material boundary contract, key-material metadata, key-material status/public-entry alignment, a public-key parsing boundary contract, public-key parsing metadata, and core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 The current next recommended Seal lane is:
 
 ```text
-Add Seal public-key parsing metadata implementation that still parses no public keys, handles no key material, and performs no signing
+Add Seal public-key parsing status/public-entry alignment that still parses no public keys, handles no key material, and performs no signing
 ```
 
 ## Current Fedora VM CLI payload validation lane checkpoint

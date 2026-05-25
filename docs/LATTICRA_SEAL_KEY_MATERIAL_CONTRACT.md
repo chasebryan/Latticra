@@ -340,7 +340,7 @@ scripts/test-latticra-seal-key-material.sh
 
 It does not permit public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, cryptographic signing, signature verification, signer invocation behavior, runtime handoff execution, effect execution, capability enforcement, runtime authority, host behavior, network behavior, object sealing, or kernel behavior.
 
-After key-material metadata, its status/public-entry checkpoint, and the public-key parsing boundary contract exist and are guarded, the next valid planning slice is public-key parsing metadata implementation that still must not add public-key parsing without separate implementation, key-material, public-key, and guard contracts.
+After key-material metadata, its status/public-entry checkpoint, and the public-key parsing boundary contract exist and are guarded, the next valid planning slice is public-key parsing status/public-entry alignment that still must not add public-key parsing without separate implementation, key-material, public-key, and guard contracts.
 
 ## Validation
 

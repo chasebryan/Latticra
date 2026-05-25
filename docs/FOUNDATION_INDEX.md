@@ -109,6 +109,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md`](LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md) — first no-effect key-material metadata implementation.
 - [`status/SEAL_KEY_MATERIAL_STATUS.md`](status/SEAL_KEY_MATERIAL_STATUS.md) — status/public-entry checkpoint for metadata-only Seal key-material implementation.
 - [`LATTICRA_SEAL_PUBLIC_KEY_PARSING_CONTRACT.md`](LATTICRA_SEAL_PUBLIC_KEY_PARSING_CONTRACT.md) — metadata-only public-key parsing boundary after key-material status readiness.
+- [`LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md`](LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md) — first no-effect public-key parsing metadata implementation.
 - [`status/SEAL_SIGNER_INVOCATION_STATUS.md`](status/SEAL_SIGNER_INVOCATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer invocation implementation.
 - [`status/SEAL_SIGNER_HANDOFF_STATUS.md`](status/SEAL_SIGNER_HANDOFF_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer handoff implementation.
 - [`status/SEAL_SIGNING_AUTHORIZATION_STATUS.md`](status/SEAL_SIGNING_AUTHORIZATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signing authorization implementation.
@@ -233,7 +234,7 @@ L-UI rendering detailed report refinement + invariants
 The next status review target should be:
 
 ```text
-Seal public-key parsing metadata implementation, with no public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
+Seal public-key parsing status/public-entry alignment, with no public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 Completion-estimate review should be skipped unless a future slice changes capability posture, implementation scope, or public readiness rather than only aligning documentation/status surfaces.

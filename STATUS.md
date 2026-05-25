@@ -3,6 +3,7 @@
 Status: public status shortcut
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal public-key parsing implementation note: 2026-05-25 CDT
 Latest Seal public-key parsing contract note: 2026-05-25 CDT
 Latest Seal key-material status/public-entry note: 2026-05-25 CDT
 Latest Seal key-material implementation note: 2026-05-25 CDT
@@ -134,6 +135,7 @@ Latticra is the contract.
 ## Current milestone ledger
 
 ```text
+Seal public-key parsing metadata implementation
 Seal public-key parsing boundary contract
 Seal key-material status/public-entry alignment
 Seal key-material metadata implementation
@@ -235,14 +237,14 @@ Completion percentage review
 ## Current next step
 
 ```text
-Seal public-key parsing metadata implementation, with no public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
+Seal public-key parsing status/public-entry alignment, with no public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
 
-It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal contract slice defines a metadata-only public-key parsing boundary after key-material status readiness without public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, capability enforcement, or runtime authority.
+It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal implementation slice classifies ready key-material metadata into a metadata-only public-key parsing eligibility record without public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, capability enforcement, or runtime authority.
 
 Current status fields:
 
@@ -272,6 +274,7 @@ seal_key_material_contract_present=1
 seal_key_material_metadata_present=1
 seal_key_material_status_present=1
 seal_public_key_parsing_contract_present=1
+seal_public_key_parsing_metadata_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1

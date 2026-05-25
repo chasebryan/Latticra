@@ -198,6 +198,7 @@ latticra_seal_key_material_contract_present=1
 latticra_seal_key_material_metadata_present=1
 latticra_seal_key_material_status_present=1
 latticra_seal_public_key_parsing_contract_present=1
+latticra_seal_public_key_parsing_metadata_present=1
 latticra_panel_gui_workbench_present=1
 fedora_local_rpm_draft_present=1
 visual_theorem_engines_present=1
@@ -647,6 +648,7 @@ seal_key_material_contract_present=1
 seal_key_material_metadata_present=1
 seal_key_material_status_present=1
 seal_public_key_parsing_contract_present=1
+seal_public_key_parsing_metadata_present=1
 runtime_gate_report_only=1
 policy_decision_state=report-only
 runtime_gate_state=report-only
@@ -722,6 +724,8 @@ The key-material status record makes that metadata-only checkpoint visible from 
 
 The public-key parsing boundary contract defines the next metadata-only classification boundary after key-material status readiness. It does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, capability enforcement, or runtime authority.
 
+The public-key parsing metadata implementation classifies ready key-material metadata into a metadata-only public-key parsing eligibility record. It still parses no public keys, loads no key material, handles no private keys, performs no signing or verification, invokes no signer, touches no host or network behavior, enforces no capability, and grants no runtime authority.
+
 That claim is intentionally limited. It does not mean Latticra Seal currently implements production runtime enforcement, policy enforcement, cryptographic key authority, MCP protocol behavior, MCP server behavior, MCP client behavior, AI-agent execution control, host behavior, network behavior, object sealing, key storage, or revocation lookup.
 
 Relevant Seal records:
@@ -757,6 +761,7 @@ Relevant Seal records:
 - [`docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md)
 - [`docs/status/SEAL_KEY_MATERIAL_STATUS.md`](docs/status/SEAL_KEY_MATERIAL_STATUS.md)
 - [`docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_CONTRACT.md`](docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md)
 - [`docs/status/SEAL_SIGNER_INVOCATION_STATUS.md`](docs/status/SEAL_SIGNER_INVOCATION_STATUS.md)
 - [`docs/status/SEAL_SIGNER_HANDOFF_STATUS.md`](docs/status/SEAL_SIGNER_HANDOFF_STATUS.md)
 - [`docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md`](docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md)

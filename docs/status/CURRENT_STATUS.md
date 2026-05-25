@@ -3,6 +3,7 @@
 Status: public status record
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal public-key parsing implementation note: 2026-05-25 CDT
 Latest Seal public-key parsing contract note: 2026-05-25 CDT
 Latest Seal key-material status/public-entry note: 2026-05-25 CDT
 Latest Seal key-material implementation note: 2026-05-25 CDT
@@ -122,6 +123,7 @@ The repository currently emphasizes:
 - Runtime boundary policy matrix refinement;
 - Runtime boundary domain matrix refinement;
 - Runtime boundary domain matrix report integration;
+- Latticra Seal public-key parsing metadata implementation;
 - Latticra Seal public-key parsing boundary contract;
 - Latticra Seal key-material status/public-entry alignment;
 - Latticra Seal key-material metadata implementation;
@@ -288,6 +290,8 @@ The Latticra Seal key-material implementation adds bounded C metadata for classi
 The Latticra Seal key-material status record makes the metadata-only implementation visible from public entry points while preserving no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store loading, no revocation lookup, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
 
 The Latticra Seal public-key parsing boundary contract defines the next metadata-only classification boundary after key-material status readiness while preserving no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store loading, no revocation lookup, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
+
+The Latticra Seal public-key parsing implementation adds bounded C metadata for classifying ready key-material metadata as public-key-parsing-metadata-only for a future public-key parsing path while preserving no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store loading, no revocation lookup, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
 
 The project notes are now aligned across current direction, upcoming work, and project-notes index surfaces.
 
@@ -489,12 +493,20 @@ Latticra Seal key-material status/public-entry alignment
 Latest completed implementation slice:
 
 ```text
+Latticra Seal public-key parsing metadata implementation
+```
+
+## Previous implementation slice
+
+Previous implementation slice:
+
+```text
 Latticra Seal key-material metadata implementation
 ```
 
-## Latest completed contract slice
+## Previous contract slice
 
-Latest completed contract slice:
+Previous contract slice:
 
 ```text
 Latticra Seal key-material boundary contract
@@ -577,7 +589,7 @@ Latticra Seal signer handoff metadata implementation
 Recommended next work:
 
 ```text
-Seal public-key parsing metadata implementation, with no public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
+Seal public-key parsing status/public-entry alignment, with no public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 After that:
