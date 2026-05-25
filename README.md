@@ -215,6 +215,8 @@ latticra_seal_verification_policy_metadata_present=1
 latticra_seal_verification_policy_status_present=1
 latticra_seal_verification_receipt_metadata_present=1
 latticra_seal_verification_receipt_status_present=1
+latticra_seal_capability_gate_metadata_present=1
+latticra_seal_capability_gate_status_present=1
 latticra_panel_gui_workbench_present=1
 nadia_offline_ai_stage_0_foundation_present=1
 nadia_stage_1_local_context_engine_present=1
@@ -878,6 +880,8 @@ seal_verification_policy_metadata_present=1
 seal_verification_policy_status_present=1
 seal_verification_receipt_metadata_present=1
 seal_verification_receipt_status_present=1
+seal_capability_gate_metadata_present=1
+seal_capability_gate_status_present=1
 runtime_gate_report_only=1
 policy_decision_state=report-only
 runtime_gate_state=report-only
@@ -973,6 +977,10 @@ The verification receipt metadata implementation records unverified receipt meta
 
 The verification receipt status record makes that metadata-only checkpoint visible from the public entry points without changing implementation behavior.
 
+The capability gate metadata implementation records denied-by-default capability gate posture from unverified receipt metadata. It does not enforce capabilities, perform effects, verify signatures, assert verified receipt authority, touch host or network behavior, or grant runtime authority.
+
+The capability gate status record makes that metadata-only denied checkpoint visible from the public entry points without changing implementation behavior.
+
 That claim is intentionally limited. It does not mean Latticra Seal currently implements production runtime enforcement, policy enforcement, cryptographic key authority, MCP protocol behavior, MCP server behavior, MCP client behavior, AI-agent execution control, host behavior, network behavior, object sealing, key storage, or revocation lookup.
 
 Relevant Seal records:
@@ -1020,6 +1028,9 @@ Relevant Seal records:
 - [`docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md`](docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md)
 - [`docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md`](docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md)
+- [`docs/LATTICRA_SEAL_CAPABILITY_GATE_CONTRACT.md`](docs/LATTICRA_SEAL_CAPABILITY_GATE_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_CAPABILITY_GATE_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_CAPABILITY_GATE_IMPLEMENTATION.md)
+- [`docs/status/SEAL_CAPABILITY_GATE_STATUS.md`](docs/status/SEAL_CAPABILITY_GATE_STATUS.md)
 - [`docs/status/SEAL_SIGNER_INVOCATION_STATUS.md`](docs/status/SEAL_SIGNER_INVOCATION_STATUS.md)
 - [`docs/status/SEAL_SIGNER_HANDOFF_STATUS.md`](docs/status/SEAL_SIGNER_HANDOFF_STATUS.md)
 - [`docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md`](docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md)

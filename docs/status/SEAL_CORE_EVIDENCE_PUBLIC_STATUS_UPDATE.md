@@ -9,6 +9,8 @@ Latticra Seal has reached an important report-only milestone.
 
 The project now has an operator-visible evidence path for a report-only runtime gate and a completed core case evidence set covering:
 
+This is an operator-visible evidence report surface, not runtime enforcement.
+
 ```text
 unknown tool case
 unsigned request case

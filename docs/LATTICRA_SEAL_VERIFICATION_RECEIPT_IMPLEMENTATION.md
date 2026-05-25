@@ -120,6 +120,7 @@ Run:
 sh scripts/test-latticra-seal-verification-receipt-contract.sh
 sh scripts/test-latticra-seal-verification-receipt.sh
 sh scripts/test-latticra-seal-verification-receipt-status.sh
+sh scripts/test-latticra-seal-capability-gate-status.sh
 ```
 
 Expected output:
@@ -128,10 +129,11 @@ Expected output:
 seal verification receipt contract: ok
 seal verification receipt invariants: ok
 seal verification receipt status: ok
+seal capability gate status: ok
 ```
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is capability gate status/public-entry alignment.
+The next valid Latticra Seal slice is effect decision status/public-entry alignment.
 
-That future slice must not add capability enforcement, runtime authority, cryptographic verification, verified receipt authority, host behavior, network behavior, or object sealing unless separately implemented and guarded.
+That future slice must not add effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, host behavior, network behavior, or object sealing unless separately implemented and guarded.

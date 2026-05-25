@@ -3,6 +3,7 @@
 Status: public status shortcut
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal capability gate status/public-entry note: 2026-05-25 CDT
 Latest Seal verification receipt status/public-entry note: 2026-05-25 CDT
 Latest Nadia offline AI Stage-0 foundation note: 2026-05-25 CDT
 Latest Nadia local context engine Stage-1 note: 2026-05-25 CDT
@@ -156,6 +157,7 @@ Latticra is the contract.
 ## Current milestone ledger
 
 ```text
+Seal capability gate status/public-entry alignment
 Seal verification receipt status/public-entry alignment
 Nadia offline AI Stage-0 foundation
 Nadia local context engine Stage-1
@@ -278,14 +280,14 @@ Completion percentage review
 ## Current next step
 
 ```text
-Seal capability gate status/public-entry alignment, with metadata-only denied capability gate visibility and no capability enforcement, cryptographic verification, signing, key material loading, private-key handling, host behavior, network behavior, or runtime authority
+Seal effect decision status/public-entry alignment, with metadata-only denied effect decision visibility and no effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, or runtime authority
 ```
 
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
 
-It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal status slice makes metadata-only verification receipt posture visible from public status surfaces while preserving no cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, host behavior, network behavior, capability enforcement, or runtime authority.
+It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal status slice makes metadata-only denied capability gate posture visible from public status surfaces while preserving no capability enforcement, effect execution, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, host behavior, network behavior, or runtime authority.
 
 Current status fields:
 
@@ -325,6 +327,8 @@ seal_verification_policy_metadata_present=1
 seal_verification_policy_status_present=1
 seal_verification_receipt_metadata_present=1
 seal_verification_receipt_status_present=1
+seal_capability_gate_metadata_present=1
+seal_capability_gate_status_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1

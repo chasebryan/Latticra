@@ -122,10 +122,19 @@ Run:
 ```sh
 sh scripts/test-latticra-seal-capability-gate-contract.sh
 sh scripts/test-latticra-seal-capability-gate.sh
+sh scripts/test-latticra-seal-capability-gate-status.sh
+```
+
+Expected output:
+
+```text
+seal capability gate contract: ok
+seal capability gate invariants: ok
+seal capability gate status: ok
 ```
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is an effect authorization contract.
+The next valid Latticra Seal slice is effect decision status/public-entry alignment.
 
-That future slice must be contract-first and must not be added directly to this capability gate metadata implementation.
+That future slice must not add effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, host behavior, network behavior, or object sealing unless separately implemented and guarded.

@@ -119,6 +119,6 @@ sh scripts/test-latticra-seal-effect-decision.sh
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is a runtime handoff contract.
+The next valid Latticra Seal slice is effect decision status/public-entry alignment.
 
-That future slice must be contract-first and must not be added directly to this effect decision metadata implementation.
+That future slice must not add effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, host behavior, network behavior, or object sealing unless separately implemented and guarded.

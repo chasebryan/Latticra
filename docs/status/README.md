@@ -36,6 +36,7 @@ non-claims
 - [`NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md`](NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md) - Nadia Stage-11 runtime-invocation contract status before runtime process spawning, model session creation, model loading, token generation, inference, or tool execution.
 - [`NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md`](NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md) - Nadia Stage-12 model-load contract status before model file opening, weight mapping, weight loading, token generation, inference, or tool execution.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
+- [`SEAL_CAPABILITY_GATE_STATUS.md`](SEAL_CAPABILITY_GATE_STATUS.md) — Latticra Seal capability gate metadata status and public-entry checkpoint.
 - [`SEAL_VERIFICATION_RECEIPT_STATUS.md`](SEAL_VERIFICATION_RECEIPT_STATUS.md) — Latticra Seal verification receipt metadata status and public-entry checkpoint.
 - [`SEAL_VERIFICATION_POLICY_STATUS.md`](SEAL_VERIFICATION_POLICY_STATUS.md) — Latticra Seal verification policy metadata status and public-entry checkpoint.
 - [`SEAL_KEY_PARSING_STATUS.md`](SEAL_KEY_PARSING_STATUS.md) — Latticra Seal key parsing metadata status and public-entry checkpoint.
@@ -128,6 +129,8 @@ seal_verification_policy_metadata_present=1
 seal_verification_policy_status_present=1
 seal_verification_receipt_metadata_present=1
 seal_verification_receipt_status_present=1
+seal_capability_gate_metadata_present=1
+seal_capability_gate_status_present=1
 operator_visible_status_surface=1
 deterministic_local_report_path=1
 core_blocked_case_set_complete=1
@@ -160,13 +163,13 @@ core_blocked_case_set_complete=1
 The careful current public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only unverified receipt/status, and core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, and core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 The current next recommended Seal lane is:
 
 ```text
-Add Seal capability gate status/public-entry alignment for metadata-only denied capability gate visibility
+Add Seal effect decision status/public-entry alignment for metadata-only denied effect decision visibility
 ```
 
 ## Current Fedora VM CLI payload validation lane checkpoint

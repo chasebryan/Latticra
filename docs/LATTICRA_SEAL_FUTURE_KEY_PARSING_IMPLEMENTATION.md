@@ -194,6 +194,7 @@ sh scripts/test-latticra-seal-key-parsing.sh
 sh scripts/test-latticra-seal-key-parsing-status.sh
 sh scripts/test-latticra-seal-verification-policy-status.sh
 sh scripts/test-latticra-seal-verification-receipt-status.sh
+sh scripts/test-latticra-seal-capability-gate-status.sh
 sh scripts/test-latticra-seal-public-key-parsing-status.sh
 ```
 
@@ -205,11 +206,12 @@ seal key parsing invariants: ok
 seal key parsing status: ok
 seal verification policy status: ok
 seal verification receipt status: ok
+seal capability gate status: ok
 seal public-key parsing status: ok
 ```
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is capability gate status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is effect decision status/public-entry alignment or another narrow status/index alignment follow-up.
 
-That future slice must not add cryptographic verification, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.
+That future slice must not add effect execution, cryptographic verification, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.
