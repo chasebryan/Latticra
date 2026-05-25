@@ -126,6 +126,8 @@ lat_model_report_rejects_small_buffer
 
 The Lat pipeline now also calls `latticra_lat_model_normalize_module` internally. Callers that need the normalized model can use `latticra_lat_pipeline_run_source_with_model`; existing callers can continue using `latticra_lat_pipeline_run_source`.
 
+Lat-to-LIR lowering now has a model-aware entry point, `latticra_lir_lower_lat_model`, that consumes this normalized model directly. The older `latticra_lir_lower_lat_module` entry point remains available and normalizes a local model before lowering.
+
 ## Non-Claims
 
 This implementation does not provide Lat execution, Lat compilation, Lat interpretation, LIR execution, runtime behavior, command execution, mutation, file I/O, network I/O, recovery behavior, hardware behavior, sandboxing, malware prevention, ransomware prevention, certification, accreditation, or operating-system completeness.

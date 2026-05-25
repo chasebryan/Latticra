@@ -48,6 +48,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16.md`](NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16.md) — Stage-16 prompt-evaluation handoff contract for Nadia before prompt tokenization, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17.md`](NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17.md) — Stage-17 tokenization-boundary contract for Nadia before tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18.md`](NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18.md) — Stage-18 tokenizer-specification contract for Nadia before tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19.md`](NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19.md) — Stage-19 tokenizer-manifest contract for Nadia before tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`SELF_UPDATE_MODEL.md`](SELF_UPDATE_MODEL.md) — staged signed update and rollback design.
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
@@ -81,6 +82,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16_STATUS.md`](status/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16_STATUS.md) — status record for Nadia Stage-16 prompt-evaluation handoff contract before prompt tokenization, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`status/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17_STATUS.md`](status/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17_STATUS.md) — status record for Nadia Stage-17 tokenization-boundary contract before tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`status/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18_STATUS.md`](status/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18_STATUS.md) — status record for Nadia Stage-18 tokenizer-specification contract before tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19_STATUS.md`](status/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19_STATUS.md) — status record for Nadia Stage-19 tokenizer-manifest contract before tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
@@ -168,6 +170,9 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_RUNTIME_HANDOFF_CONTRACT.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_CONTRACT.md) — runtime handoff boundary after effect decision metadata.
 - [`LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md) — first no-effect inactive runtime handoff metadata implementation.
 - [`status/SEAL_RUNTIME_HANDOFF_STATUS.md`](status/SEAL_RUNTIME_HANDOFF_STATUS.md) — status/public-entry checkpoint for metadata-only Seal runtime handoff implementation.
+- [`LATTICRA_SEAL_STATUS_ROLLUP_CONTRACT.md`](LATTICRA_SEAL_STATUS_ROLLUP_CONTRACT.md) — status rollup boundary after runtime handoff metadata.
+- [`LATTICRA_SEAL_STATUS_ROLLUP_IMPLEMENTATION.md`](LATTICRA_SEAL_STATUS_ROLLUP_IMPLEMENTATION.md) — first metadata-only status rollup implementation.
+- [`status/SEAL_STATUS_ROLLUP_STATUS.md`](status/SEAL_STATUS_ROLLUP_STATUS.md) — status/public-entry checkpoint for metadata-only Seal status rollup implementation.
 - [`status/SEAL_SIGNER_INVOCATION_STATUS.md`](status/SEAL_SIGNER_INVOCATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer invocation implementation.
 - [`status/SEAL_SIGNER_HANDOFF_STATUS.md`](status/SEAL_SIGNER_HANDOFF_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer handoff implementation.
 - [`status/SEAL_SIGNING_AUTHORIZATION_STATUS.md`](status/SEAL_SIGNING_AUTHORIZATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signing authorization implementation.
@@ -270,6 +275,7 @@ Latticra Seal signing operation metadata + invariants
 Latticra Seal signing operation status/public-entry alignment + guardrails
 Latticra Seal effect decision status/public-entry alignment + guardrails
 Latticra Seal runtime handoff status/public-entry alignment + guardrails
+Latticra Seal status rollup status/public-entry alignment + guardrails
 Latticra Seal capability gate status/public-entry alignment + guardrails
 Latticra Seal verification receipt status/public-entry alignment + guardrails
 Nadia offline AI Stage-0 foundation + guardrails
@@ -291,6 +297,7 @@ Nadia awareness dialogue contract Stage-15 + guardrails
 Nadia prompt evaluation handoff contract Stage-16 + guardrails
 Nadia tokenization boundary contract Stage-17 + guardrails
 Nadia tokenizer specification contract Stage-18 + guardrails
+Nadia tokenizer manifest contract Stage-19 + guardrails
 Latticra Seal verification policy status/public-entry alignment + guardrails
 Latticra Seal key parsing status/public-entry alignment + guardrails
 Latticra Seal bounded no-effect key parsing metadata + invariants
@@ -320,7 +327,7 @@ L-UI rendering detailed report refinement + invariants
 The next status review target should be:
 
 ```text
-Seal status rollup status/public-entry alignment, with metadata-only rollup visibility and no runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, or runtime authority
+Seal agentic automation security public README/status/foundation entry-point refresh or dedicated report command surface, with report-only metadata visibility and no runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority
 ```
 
 Completion-estimate review should be skipped unless a future slice changes capability posture, implementation scope, or public readiness rather than only aligning documentation/status surfaces.

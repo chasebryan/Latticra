@@ -29,6 +29,8 @@ src/seal_status_rollup.c
 tests/seal_status_rollup_invariants.c
 scripts/test-latticra-seal-status-rollup-contract.sh
 scripts/test-latticra-seal-status-rollup.sh
+scripts/test-latticra-seal-status-rollup-status.sh
+docs/status/SEAL_STATUS_ROLLUP_STATUS.md
 docs/LATTICRA_SEAL_EFFECT_DECISION_CONTRACT.md
 docs/LATTICRA_SEAL_EFFECT_DECISION_IMPLEMENTATION.md
 docs/status/SEAL_EFFECT_DECISION_STATUS.md
@@ -55,6 +57,7 @@ seal_runtime_handoff_metadata_present=1
 seal_runtime_handoff_status_present=1
 seal_status_rollup_contract_present=1
 seal_status_rollup_implementation_present=1
+seal_status_rollup_status_present=1
 seal_effect_decision_contract_present=1
 seal_effect_decision_implementation_present=1
 seal_effect_decision_status_present=1
@@ -106,6 +109,7 @@ sh scripts/test-latticra-seal-runtime-handoff-contract.sh
 sh scripts/test-latticra-seal-runtime-handoff.sh
 sh scripts/test-latticra-seal-runtime-handoff-status.sh
 sh scripts/test-latticra-seal-status-rollup-contract.sh
+sh scripts/test-latticra-seal-status-rollup-status.sh
 sh scripts/test-latticra-seal-effect-decision-status.sh
 ```
 
@@ -116,6 +120,7 @@ seal runtime handoff contract: ok
 seal runtime handoff invariants: ok
 seal runtime handoff status: ok
 seal status rollup contract: ok
+seal status rollup status: ok
 seal effect decision status: ok
 ```
 
@@ -127,6 +132,6 @@ It does not add runtime execution, runtime authority, effect execution, capabili
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is status rollup status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is a Seal agentic automation security public README/status/foundation entry-point refresh or a dedicated report command surface.
 
-That future slice must not add runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, object sealing, or kernel behavior unless separately implemented and guarded.
+That future slice must not add runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, object sealing, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or kernel behavior unless separately implemented and guarded.

@@ -24,6 +24,18 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Lat-to-LIR model lowering integration
+```
+
+Purpose completed:
+
+```text
+make Lat-to-LIR lowering consume the normalized Lat model directly, keep the parser-plus-semantic lowering entry point as a compatibility wrapper, expose model error/count/source-index metadata in lowering reports, route the Lat pipeline through model-driven lowering, and preserve no Lat execution, no LIR execution, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
 Lat pipeline model normalization integration
 ```
 
@@ -33,7 +45,7 @@ Purpose completed:
 integrate bounded no-effect Lat model normalization into the Lat pipeline, keep the original pipeline entry point compatible, add a model-aware entry point for callers that need normalized model metadata, expand pipeline reports with model error/count/source-index fields, and preserve no Lat execution, no LIR execution, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat model normalization implementation
@@ -45,7 +57,7 @@ Purpose completed:
 implement bounded no-effect Lat model normalization after semantic validation, with typed declaration and clause index tables, transition source-state metadata, deterministic reports, source-span preservation, no source-byte reading, no Lat execution, no LIR execution, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Earlier implementation slice
+## Older implementation slice
 
 ```text
 Latticra Seal bounded no-effect key parsing implementation
@@ -60,6 +72,18 @@ implement bounded key parsing metadata for caller-provided Ed25519 public-key by
 ## Latest completed status/public-entry slice
 
 ```text
+Latticra Seal status rollup status/public-entry alignment
+```
+
+Purpose completed:
+
+```text
+publish and guard the existing metadata-only status rollup surface from public/status entry points while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, and no runtime authority
+```
+
+## Previous status/public-entry slice
+
+```text
 Latticra Seal runtime handoff status/public-entry alignment
 ```
 
@@ -69,7 +93,7 @@ Purpose completed:
 publish and guard the existing inactive metadata-only runtime handoff surface from public/status entry points while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, and no runtime authority
 ```
 
-## Previous status/public-entry slice
+## Earlier status/public-entry slice
 
 ```text
 Latticra Seal effect decision status/public-entry alignment
@@ -367,18 +391,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Seal status rollup status/public-entry alignment, with metadata-only rollup visibility and no runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, or runtime authority
+Seal agentic automation security public README/status/foundation entry-point refresh or dedicated report command surface, with report-only metadata visibility and no runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority
 ```
 
 Purpose:
 
 ```text
-publish and guard the existing metadata-only status rollup surface from public/status entry points while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+publish and guard the existing report-only Seal agentic automation security surface from README/status/foundation entry points, or add a dedicated report command surface, while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Seal status rollup status/public-entry alignment.
+1. Seal agentic automation security public README/status/foundation entry-point refresh or dedicated report command surface.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.

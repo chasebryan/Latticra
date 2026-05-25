@@ -286,7 +286,7 @@ latticra_status_t latticra_lat_pipeline_run_source_with_model(
         return model_status;
     }
 
-    lowering_status = latticra_lir_lower_lat_module(parse_result, semantic_result, module, lowering_result);
+    lowering_status = latticra_lir_lower_lat_model(model_result, module, lowering_result);
     if (lowering_status != LATTICRA_STATUS_OK) {
         pipeline_result->status = lowering_status;
         pipeline_result->error = LATTICRA_LAT_PIPELINE_INTERNAL_ERROR;

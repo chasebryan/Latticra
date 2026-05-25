@@ -1,4 +1,4 @@
-.PHONY: seal nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification
+.PHONY: seal nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest
 
 seal:
 	./scripts/latticra-seal-smoke.sh
@@ -56,6 +56,9 @@ nadia-tokenization-boundary:
 
 nadia-tokenizer-specification:
 	sh ./scripts/nadia-tokenizer-specification-contract.sh
+
+nadia-tokenizer-manifest:
+	sh ./scripts/nadia-tokenizer-manifest-contract.sh
 
 .PHONY: seal-policy-denials
 

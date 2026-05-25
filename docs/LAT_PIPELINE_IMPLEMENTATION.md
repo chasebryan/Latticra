@@ -41,11 +41,11 @@ source bytes
   -> latticra_lat_parse_source
   -> latticra_lat_validate_module
   -> latticra_lat_model_normalize_module
-  -> latticra_lir_lower_lat_module
+  -> latticra_lir_lower_lat_model
   -> latticra_lat_pipeline_result_t
 ```
 
-The wrapper entry point `latticra_lat_pipeline_run_source` preserves the original caller shape and runs normalization internally. The model-aware entry point `latticra_lat_pipeline_run_source_with_model` also returns the normalized model to callers.
+The wrapper entry point `latticra_lat_pipeline_run_source` preserves the original caller shape and runs normalization internally. The model-aware entry point `latticra_lat_pipeline_run_source_with_model` also returns the normalized model to callers. Lowering now consumes that normalized model directly.
 
 The function records parser, semantic, model, lowering, and LIR errors separately, then classifies the aggregate pipeline state.
 

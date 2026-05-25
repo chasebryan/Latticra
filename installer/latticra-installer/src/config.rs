@@ -441,7 +441,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=18-tokenizer-specification-contract");
+    let _ = writeln!(out, "stage=19-tokenizer-manifest-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -873,6 +873,46 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "requires_tokenization_boundary_contract=1");
     let _ = writeln!(out, "requires_future_tokenizer_manifest_contract=1");
     let _ = writeln!(out, "tokenizer_specification_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "tokenizer_manifest_contract_stage=19-tokenizer-manifest-contract"
+    );
+    let _ = writeln!(
+        out,
+        "tokenizer_manifest_contract_command=scripts/nadia-tokenizer-manifest-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_tokenizer_manifest_contract_command=latticra-nadia tokenizer-manifest"
+    );
+    let _ = writeln!(out, "tokenizer_manifest_stage=contract-only");
+    let _ = writeln!(out, "tokenizer_manifest_contract_status=contract_only");
+    let _ = writeln!(out, "tokenizer_manifest_authority=0");
+    let _ = writeln!(out, "tokenizer_manifest_allowed=0");
+    let _ = writeln!(out, "tokenizer_manifest_performed=0");
+    let _ = writeln!(out, "tokenizer_manifest_metadata_present=1");
+    let _ = writeln!(
+        out,
+        "tokenizer_manifest_family=operator-reviewed-tokenizer-manifest"
+    );
+    let _ = writeln!(
+        out,
+        "tokenizer_manifest_format=contract-only-offline-manifest"
+    );
+    let _ = writeln!(out, "tokenizer_manifest_decision=blocked_contract_only");
+    let _ = writeln!(out, "tokenizer_manifest_path_recorded=0");
+    let _ = writeln!(out, "tokenizer_manifest_schema_planned=1");
+    let _ = writeln!(out, "tokenizer_manifest_opened=0");
+    let _ = writeln!(out, "tokenizer_manifest_read=0");
+    let _ = writeln!(out, "tokenizer_manifest_parsed=0");
+    let _ = writeln!(out, "tokenizer_manifest_validated=0");
+    let _ = writeln!(out, "tokenizer_manifest_loaded=0");
+    let _ = writeln!(out, "requires_tokenizer_specification_contract=1");
+    let _ = writeln!(
+        out,
+        "requires_future_tokenizer_artifact_inventory_contract=1"
+    );
+    let _ = writeln!(out, "tokenizer_manifest_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

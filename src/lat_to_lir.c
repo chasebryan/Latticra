@@ -1,7 +1,6 @@
 #include "latticra/lat_to_lir.h"
 
 #include <stdio.h>
-#include <string.h>
 
 #define LATTICRA_LAT_TO_LIR_ROOT_PARENT 0u
 #define LATTICRA_LAT_TO_LIR_MODULE_INDEX 0u
@@ -47,10 +46,14 @@ static void result_default(latticra_lat_to_lir_result_t *result) {
     if (result == 0) return;
     result->status = LATTICRA_STATUS_OK;
     result->error = LATTICRA_LAT_TO_LIR_OK;
+    result->model_error = LATTICRA_LAT_MODEL_OK;
     lat_span_default(&result->span);
     result->module_name[0] = '\0';
     result->declaration_count = 0u;
     result->clause_count = 0u;
+    result->model_declaration_count = 0u;
+    result->model_clause_count = 0u;
+    result->first_transition_source_index = LATTICRA_LAT_MODEL_NO_INDEX;
     result->node_count = 0u;
     result->edge_count = 0u;
     result->no_effect = 1;
@@ -131,7 +134,8 @@ const char *latticra_lat_to_lir_error_label(latticra_lat_to_lir_error_t error) {
     case LATTICRA_LAT_TO_LIR_NO_EFFECT_VIOLATION: return "no_effect_violation";
     case LATTICRA_LAT_TO_LIR_CAPACITY_EXCEEDED: return "capacity_exceeded";
     case LATTICRA_LAT_TO_LIR_UNSUPPORTED_EFFECT: return "unsupported_effect";
-    case LATTICRA_LAT_TO_LIR_INTERNAL_ERROR:
+    case LATTICRA_LAT_TO_LIR_INTERNAL_ERROR: return "internal_error";
+    case LATTICRA_LAT_TO_LIR_MODEL_NOT_OK: return "model_not_ok";
     default: return "internal_error";
     }
 }
@@ -211,35 +215,40 @@ static void finalize_lir_report_refinement(latticra_lir_module_t *module) {
     module->evidence_level = module->no_effect_chain_ok ? 2u : 1u;
 }
 
-static void copy_summary(
-    const latticra_lat_parse_result_t *parse_result,
-    latticra_lat_to_lir_result_t *result) {
-    if (parse_result == 0 || result == 0) return;
-    result->span = parse_result->module.span;
-    copy_text(result->module_name, sizeof(result->module_name), parse_result->module.module_name);
-    result->declaration_count = parse_result->declaration_count;
-    result->clause_count = parse_result->clause_count;
-    result->no_effect = parse_result->no_effect;
-    result->execution_allowed = parse_result->execution_allowed;
-    result->mutation_allowed = parse_result->mutation_allowed;
+static size_t first_transition_source_index(const latticra_lat_model_t *model) {
+    size_t transition_index;
+    if (model == 0 || model->first_transition_index == LATTICRA_LAT_MODEL_NO_INDEX) return LATTICRA_LAT_MODEL_NO_INDEX;
+    transition_index = model->first_transition_index;
+    if (transition_index >= model->declaration_count || transition_index >= LATTICRA_LAT_DECLARATION_MAX) return LATTICRA_LAT_MODEL_NO_INDEX;
+    return model->declarations[transition_index].source_declaration_index;
 }
 
-static int no_effect_ok(
-    const latticra_lat_parse_result_t *parse_result,
-    const latticra_lat_semantic_result_t *semantic_result) {
-    return parse_result != 0 && semantic_result != 0 &&
-           parse_result->no_effect == 1 &&
-           parse_result->execution_allowed == 0 &&
-           parse_result->mutation_allowed == 0 &&
-           parse_result->server_allowed == 0 &&
-           parse_result->recovery_allowed == 0 &&
-           parse_result->hardware_allowed == 0 &&
-           semantic_result->no_effect == 1 &&
-           semantic_result->execution_allowed == 0 &&
-           semantic_result->mutation_allowed == 0 &&
-           semantic_result->server_allowed == 0 &&
-           semantic_result->recovery_allowed == 0 &&
-           semantic_result->hardware_allowed == 0;
+static void copy_model_summary(
+    const latticra_lat_model_t *model,
+    latticra_lat_to_lir_result_t *result) {
+    if (model == 0 || result == 0) return;
+    result->status = model->status;
+    result->model_error = model->error;
+    result->span = model->span;
+    copy_text(result->module_name, sizeof(result->module_name), model->module_name);
+    result->declaration_count = model->declaration_count;
+    result->clause_count = model->clause_count;
+    result->model_declaration_count = model->declaration_count;
+    result->model_clause_count = model->clause_count;
+    result->first_transition_source_index = first_transition_source_index(model);
+    result->no_effect = model->no_effect;
+    result->execution_allowed = model->execution_allowed;
+    result->mutation_allowed = model->mutation_allowed;
+}
+
+static int model_no_effect_ok(const latticra_lat_model_t *model) {
+    return model != 0 &&
+           model->no_effect == 1 &&
+           model->execution_allowed == 0 &&
+           model->mutation_allowed == 0 &&
+           model->server_allowed == 0 &&
+           model->recovery_allowed == 0 &&
+           model->hardware_allowed == 0;
 }
 
 static latticra_lir_node_kind_t declaration_node_kind(latticra_lat_declaration_kind_t kind) {
@@ -254,13 +263,15 @@ static latticra_lir_node_kind_t declaration_node_kind(latticra_lat_declaration_k
     }
 }
 
-static latticra_lir_node_kind_t clause_node_kind(const char *keyword) {
-    if (keyword == 0) return LATTICRA_LIR_NODE_UNKNOWN;
-    if (strcmp(keyword, "field") == 0) return LATTICRA_LIR_NODE_FIELD;
-    if (strcmp(keyword, "require") == 0) return LATTICRA_LIR_NODE_LAT_REQUIREMENT;
-    if (strcmp(keyword, "ensure") == 0) return LATTICRA_LIR_NODE_LAT_REQUIREMENT;
-    if (strcmp(keyword, "effect") == 0) return LATTICRA_LIR_NODE_EFFECT;
-    return LATTICRA_LIR_NODE_UNKNOWN;
+static latticra_lir_node_kind_t clause_node_kind(latticra_lat_model_clause_role_t role) {
+    switch (role) {
+    case LATTICRA_LAT_MODEL_CLAUSE_FIELD: return LATTICRA_LIR_NODE_FIELD;
+    case LATTICRA_LAT_MODEL_CLAUSE_REQUIRE: return LATTICRA_LIR_NODE_LAT_REQUIREMENT;
+    case LATTICRA_LAT_MODEL_CLAUSE_ENSURE: return LATTICRA_LIR_NODE_LAT_REQUIREMENT;
+    case LATTICRA_LAT_MODEL_CLAUSE_EFFECT: return LATTICRA_LIR_NODE_EFFECT;
+    case LATTICRA_LAT_MODEL_CLAUSE_UNKNOWN:
+    default: return LATTICRA_LIR_NODE_UNKNOWN;
+    }
 }
 
 static void set_node(
@@ -304,55 +315,70 @@ static size_t declaration_node_index(size_t declaration_index) {
     return LATTICRA_LAT_TO_LIR_FIRST_DECL_INDEX + declaration_index;
 }
 
-static size_t clause_node_index(const latticra_lat_parse_result_t *parse_result, size_t clause_index) {
-    return LATTICRA_LAT_TO_LIR_FIRST_DECL_INDEX + parse_result->declaration_count + clause_index;
+static size_t model_clause_node_index(const latticra_lat_model_t *model, size_t clause_index) {
+    return LATTICRA_LAT_TO_LIR_FIRST_DECL_INDEX + model->declaration_count + clause_index;
 }
 
-static size_t find_state_declaration_index(const latticra_lat_parse_result_t *parse_result, const char *name) {
-    size_t index;
-    if (parse_result == 0 || name == 0) return LATTICRA_LAT_DECLARATION_MAX;
-    for (index = 0u; index < parse_result->declaration_count; index++) {
-        if (parse_result->declarations[index].kind == LATTICRA_LAT_DECLARATION_STATE && strcmp(parse_result->declarations[index].name, name) == 0) return index;
+static latticra_lat_to_lir_error_t lowering_error_from_model_error(latticra_lat_model_error_t error) {
+    switch (error) {
+    case LATTICRA_LAT_MODEL_OK: return LATTICRA_LAT_TO_LIR_OK;
+    case LATTICRA_LAT_MODEL_PARSE_NOT_OK: return LATTICRA_LAT_TO_LIR_PARSE_NOT_OK;
+    case LATTICRA_LAT_MODEL_SEMANTIC_NOT_OK: return LATTICRA_LAT_TO_LIR_SEMANTIC_NOT_OK;
+    case LATTICRA_LAT_MODEL_SEMANTIC_NOT_VALID: return LATTICRA_LAT_TO_LIR_SEMANTIC_NOT_VALID;
+    case LATTICRA_LAT_MODEL_NO_EFFECT_VIOLATION: return LATTICRA_LAT_TO_LIR_NO_EFFECT_VIOLATION;
+    case LATTICRA_LAT_MODEL_CAPACITY_EXCEEDED: return LATTICRA_LAT_TO_LIR_CAPACITY_EXCEEDED;
+    case LATTICRA_LAT_MODEL_NULL_ARGUMENT:
+    case LATTICRA_LAT_MODEL_UNSUPPORTED_DECLARATION:
+    case LATTICRA_LAT_MODEL_UNSUPPORTED_CLAUSE:
+    case LATTICRA_LAT_MODEL_INTERNAL_ERROR:
+    default: return LATTICRA_LAT_TO_LIR_MODEL_NOT_OK;
     }
-    return LATTICRA_LAT_DECLARATION_MAX;
 }
 
-latticra_status_t latticra_lir_lower_lat_module(
-    const latticra_lat_parse_result_t *parse_result,
-    const latticra_lat_semantic_result_t *semantic_result,
+static latticra_lir_error_t lir_error_from_lowering_error(latticra_lat_to_lir_error_t error) {
+    switch (error) {
+    case LATTICRA_LAT_TO_LIR_OK: return LATTICRA_LIR_OK;
+    case LATTICRA_LAT_TO_LIR_CAPACITY_EXCEEDED: return LATTICRA_LIR_CAPACITY_EXCEEDED;
+    case LATTICRA_LAT_TO_LIR_UNSUPPORTED_EFFECT: return LATTICRA_LIR_UNSUPPORTED_EFFECT;
+    case LATTICRA_LAT_TO_LIR_NULL_ARGUMENT: return LATTICRA_LIR_NULL_ARGUMENT;
+    case LATTICRA_LAT_TO_LIR_MODEL_NOT_OK: return LATTICRA_LIR_UNSUPPORTED_NODE_KIND;
+    case LATTICRA_LAT_TO_LIR_PARSE_NOT_OK:
+    case LATTICRA_LAT_TO_LIR_SEMANTIC_NOT_OK:
+    case LATTICRA_LAT_TO_LIR_SEMANTIC_NOT_VALID:
+    case LATTICRA_LAT_TO_LIR_NO_EFFECT_VIOLATION:
+    case LATTICRA_LAT_TO_LIR_INTERNAL_ERROR:
+    default: return LATTICRA_LIR_SEMANTIC_FAILED;
+    }
+}
+
+latticra_status_t latticra_lir_lower_lat_model(
+    const latticra_lat_model_t *model,
     latticra_lir_module_t *module,
     latticra_lat_to_lir_result_t *result) {
     size_t index;
     size_t required_nodes;
     size_t required_edges;
 
-    if (parse_result == 0 || semantic_result == 0 || module == 0 || result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (model == 0 || module == 0 || result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     result_default(result);
     module_default(module);
-    copy_summary(parse_result, result);
+    copy_model_summary(model, result);
 
-    if (parse_result->error != LATTICRA_LAT_PARSE_OK) {
-        result->error = LATTICRA_LAT_TO_LIR_PARSE_NOT_OK;
+    if (model->status != LATTICRA_STATUS_OK && model->error == LATTICRA_LAT_MODEL_OK) {
+        result->error = LATTICRA_LAT_TO_LIR_MODEL_NOT_OK;
         module->error = LATTICRA_LIR_SEMANTIC_FAILED;
         module->source_kind = LATTICRA_LIR_SOURCE_LAT_MODULE;
         finalize_lir_report_refinement(module);
         return LATTICRA_STATUS_OK;
     }
-    if (semantic_result->error != LATTICRA_LAT_SEMANTIC_OK) {
-        result->error = LATTICRA_LAT_TO_LIR_SEMANTIC_NOT_OK;
-        module->error = LATTICRA_LIR_SEMANTIC_FAILED;
+    if (model->error != LATTICRA_LAT_MODEL_OK) {
+        result->error = lowering_error_from_model_error(model->error);
+        module->error = lir_error_from_lowering_error(result->error);
         module->source_kind = LATTICRA_LIR_SOURCE_LAT_MODULE;
         finalize_lir_report_refinement(module);
         return LATTICRA_STATUS_OK;
     }
-    if (semantic_result->semantic_valid != 1) {
-        result->error = LATTICRA_LAT_TO_LIR_SEMANTIC_NOT_VALID;
-        module->error = LATTICRA_LIR_SEMANTIC_FAILED;
-        module->source_kind = LATTICRA_LIR_SOURCE_LAT_MODULE;
-        finalize_lir_report_refinement(module);
-        return LATTICRA_STATUS_OK;
-    }
-    if (!no_effect_ok(parse_result, semantic_result)) {
+    if (!model_no_effect_ok(model)) {
         result->error = LATTICRA_LAT_TO_LIR_NO_EFFECT_VIOLATION;
         module->error = LATTICRA_LIR_SEMANTIC_FAILED;
         module->source_kind = LATTICRA_LIR_SOURCE_LAT_MODULE;
@@ -360,8 +386,15 @@ latticra_status_t latticra_lir_lower_lat_module(
         return LATTICRA_STATUS_OK;
     }
 
-    required_nodes = 1u + parse_result->declaration_count + parse_result->clause_count;
-    required_edges = parse_result->declaration_count + parse_result->clause_count + parse_result->module.transition_count;
+    if (model->declaration_count > LATTICRA_LAT_DECLARATION_MAX || model->clause_count > LATTICRA_LAT_CLAUSE_MAX) {
+        result->error = LATTICRA_LAT_TO_LIR_CAPACITY_EXCEEDED;
+        module->error = LATTICRA_LIR_CAPACITY_EXCEEDED;
+        module->source_kind = LATTICRA_LIR_SOURCE_LAT_MODULE;
+        finalize_lir_report_refinement(module);
+        return LATTICRA_STATUS_OK;
+    }
+    required_nodes = 1u + model->declaration_count + model->clause_count;
+    required_edges = model->declaration_count + model->clause_count + model->transition_count;
     if (required_nodes > LATTICRA_LIR_NODE_MAX || required_edges > LATTICRA_LIR_EDGE_MAX) {
         result->error = LATTICRA_LAT_TO_LIR_CAPACITY_EXCEEDED;
         module->error = LATTICRA_LIR_CAPACITY_EXCEEDED;
@@ -373,59 +406,77 @@ latticra_status_t latticra_lir_lower_lat_module(
     module->status = LATTICRA_STATUS_OK;
     module->error = LATTICRA_LIR_OK;
     module->source_kind = LATTICRA_LIR_SOURCE_LAT_MODULE;
-    copy_text(module->module_name, sizeof(module->module_name), parse_result->module.module_name);
+    copy_text(module->module_name, sizeof(module->module_name), model->module_name);
     copy_text(module->card_name, sizeof(module->card_name), "");
     copy_text(module->effect, sizeof(module->effect), "none");
     copy_text(module->boundary, sizeof(module->boundary), "lat_semantic_only");
-    module->source_span = convert_span(parse_result->module.span);
+    module->source_span = convert_span(model->span);
     module->node_count = required_nodes;
     module->binding_count = 0u;
     module->text_count = 0u;
-    module->no_effect = 1;
-    module->execution_allowed = 0;
-    module->mutation_allowed = 0;
-    module->server_allowed = 0;
-    module->recovery_allowed = 0;
-    module->hardware_allowed = 0;
+    module->no_effect = model->no_effect;
+    module->execution_allowed = model->execution_allowed;
+    module->mutation_allowed = model->mutation_allowed;
+    module->server_allowed = model->server_allowed;
+    module->recovery_allowed = model->recovery_allowed;
+    module->hardware_allowed = model->hardware_allowed;
 
-    set_node(&module->nodes[LATTICRA_LAT_TO_LIR_MODULE_INDEX], LATTICRA_LIR_NODE_MODULE, parse_result->module.module_name, "lat_module", "", parse_result->module.span, LATTICRA_LAT_TO_LIR_ROOT_PARENT, LATTICRA_LAT_TO_LIR_FIRST_DECL_INDEX, parse_result->declaration_count);
+    set_node(&module->nodes[LATTICRA_LAT_TO_LIR_MODULE_INDEX], LATTICRA_LIR_NODE_MODULE, model->module_name, "lat_module", "", model->span, LATTICRA_LAT_TO_LIR_ROOT_PARENT, LATTICRA_LAT_TO_LIR_FIRST_DECL_INDEX, model->declaration_count);
 
-    for (index = 0u; index < parse_result->declaration_count; index++) {
-        const latticra_lat_ast_declaration_t *declaration = &parse_result->declarations[index];
+    for (index = 0u; index < model->declaration_count; index++) {
+        const latticra_lat_model_declaration_t *declaration = &model->declarations[index];
         size_t node_index = declaration_node_index(index);
         const char *kind_label = latticra_lat_declaration_kind_label(declaration->kind);
-        set_node(&module->nodes[node_index], declaration_node_kind(declaration->kind), declaration->name, kind_label, declaration->source_name, declaration->span, LATTICRA_LAT_TO_LIR_MODULE_INDEX, clause_node_index(parse_result, declaration->first_clause_index), declaration->clause_count);
-        if (!append_edge(module, LATTICRA_LAT_TO_LIR_MODULE_INDEX, node_index, LATTICRA_LIR_EDGE_CONTAINS, declaration->span)) goto capacity_failed;
-    }
-
-    for (index = 0u; index < parse_result->clause_count; index++) {
-        const latticra_lat_ast_clause_t *clause = &parse_result->clauses[index];
-        size_t owner = 0u;
-        size_t decl_index;
-        latticra_lir_node_kind_t kind = clause_node_kind(clause->keyword);
-        if (kind == LATTICRA_LIR_NODE_UNKNOWN) {
-            result->error = LATTICRA_LAT_TO_LIR_UNSUPPORTED_EFFECT;
+        size_t first_child_index = 0u;
+        if (declaration_node_kind(declaration->kind) == LATTICRA_LIR_NODE_UNKNOWN) {
+            result->error = LATTICRA_LAT_TO_LIR_MODEL_NOT_OK;
             module->error = LATTICRA_LIR_UNSUPPORTED_NODE_KIND;
             finalize_lir_report_refinement(module);
             return LATTICRA_STATUS_OK;
         }
-        for (decl_index = 0u; decl_index < parse_result->declaration_count; decl_index++) {
-            size_t first = parse_result->declarations[decl_index].first_clause_index;
-            size_t last = first + parse_result->declarations[decl_index].clause_count;
-            if (index >= first && index < last) {
-                owner = declaration_node_index(decl_index);
-                break;
+        if (declaration->clause_count > 0u) {
+            if (declaration->first_clause_index == LATTICRA_LAT_MODEL_NO_INDEX ||
+                declaration->first_clause_index > model->clause_count ||
+                declaration->clause_count > model->clause_count - declaration->first_clause_index) {
+                result->error = LATTICRA_LAT_TO_LIR_MODEL_NOT_OK;
+                module->error = LATTICRA_LIR_SEMANTIC_FAILED;
+                finalize_lir_report_refinement(module);
+                return LATTICRA_STATUS_OK;
             }
+            first_child_index = model_clause_node_index(model, declaration->first_clause_index);
         }
-        set_node(&module->nodes[clause_node_index(parse_result, index)], kind, clause->left, clause->right, clause->keyword, clause->span, owner, 0u, 0u);
-        if (!append_edge(module, owner, clause_node_index(parse_result, index), LATTICRA_LIR_EDGE_CONTAINS, clause->span)) goto capacity_failed;
+        set_node(&module->nodes[node_index], declaration_node_kind(declaration->kind), declaration->name, kind_label, declaration->source_name, declaration->span, LATTICRA_LAT_TO_LIR_MODULE_INDEX, first_child_index, declaration->clause_count);
+        if (!append_edge(module, LATTICRA_LAT_TO_LIR_MODULE_INDEX, node_index, LATTICRA_LIR_EDGE_CONTAINS, declaration->span)) goto capacity_failed;
     }
 
-    for (index = 0u; index < parse_result->declaration_count; index++) {
-        const latticra_lat_ast_declaration_t *declaration = &parse_result->declarations[index];
+    for (index = 0u; index < model->clause_count; index++) {
+        const latticra_lat_model_clause_t *clause = &model->clauses[index];
+        size_t owner = clause->owner_declaration_index;
+        latticra_lir_node_kind_t kind = clause_node_kind(clause->role);
+        size_t node_index = model_clause_node_index(model, index);
+        if (kind == LATTICRA_LIR_NODE_UNKNOWN) {
+            result->error = LATTICRA_LAT_TO_LIR_MODEL_NOT_OK;
+            module->error = LATTICRA_LIR_UNSUPPORTED_NODE_KIND;
+            finalize_lir_report_refinement(module);
+            return LATTICRA_STATUS_OK;
+        }
+        if (owner == LATTICRA_LAT_MODEL_NO_INDEX || owner >= model->declaration_count) {
+            result->error = LATTICRA_LAT_TO_LIR_MODEL_NOT_OK;
+            module->error = LATTICRA_LIR_SEMANTIC_FAILED;
+            finalize_lir_report_refinement(module);
+            return LATTICRA_STATUS_OK;
+        }
+        set_node(&module->nodes[node_index], kind, clause->name, clause->value, latticra_lat_model_clause_role_label(clause->role), clause->span, declaration_node_index(owner), 0u, 0u);
+        if (!append_edge(module, declaration_node_index(owner), node_index, LATTICRA_LIR_EDGE_CONTAINS, clause->span)) goto capacity_failed;
+    }
+
+    for (index = 0u; index < model->declaration_count; index++) {
+        const latticra_lat_model_declaration_t *declaration = &model->declarations[index];
         if (declaration->kind == LATTICRA_LAT_DECLARATION_TRANSITION) {
-            size_t state_index = find_state_declaration_index(parse_result, declaration->source_name);
-            if (state_index >= LATTICRA_LAT_DECLARATION_MAX) {
+            size_t state_index = declaration->source_declaration_index;
+            if (state_index == LATTICRA_LAT_MODEL_NO_INDEX ||
+                state_index >= model->declaration_count ||
+                model->declarations[state_index].kind != LATTICRA_LAT_DECLARATION_STATE) {
                 result->error = LATTICRA_LAT_TO_LIR_SEMANTIC_NOT_VALID;
                 module->error = LATTICRA_LIR_SEMANTIC_FAILED;
                 finalize_lir_report_refinement(module);
@@ -438,9 +489,9 @@ latticra_status_t latticra_lir_lower_lat_module(
     result->error = LATTICRA_LAT_TO_LIR_OK;
     result->node_count = module->node_count;
     result->edge_count = module->edge_count;
-    result->no_effect = 1;
-    result->execution_allowed = 0;
-    result->mutation_allowed = 0;
+    result->no_effect = model->no_effect;
+    result->execution_allowed = model->execution_allowed;
+    result->mutation_allowed = model->mutation_allowed;
     finalize_lir_report_refinement(module);
     return LATTICRA_STATUS_OK;
 
@@ -455,6 +506,32 @@ capacity_failed:
     return LATTICRA_STATUS_OK;
 }
 
+latticra_status_t latticra_lir_lower_lat_module(
+    const latticra_lat_parse_result_t *parse_result,
+    const latticra_lat_semantic_result_t *semantic_result,
+    latticra_lir_module_t *module,
+    latticra_lat_to_lir_result_t *result) {
+    latticra_lat_model_t model;
+    latticra_status_t model_status;
+
+    if (parse_result == 0 || semantic_result == 0 || module == 0 || result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+
+    model_status = latticra_lat_model_normalize_module(parse_result, semantic_result, &model);
+    if (model_status != LATTICRA_STATUS_OK) {
+        result_default(result);
+        module_default(module);
+        result->status = model_status;
+        result->error = LATTICRA_LAT_TO_LIR_MODEL_NOT_OK;
+        module->status = model_status;
+        module->error = LATTICRA_LIR_SEMANTIC_FAILED;
+        module->source_kind = LATTICRA_LIR_SOURCE_LAT_MODULE;
+        finalize_lir_report_refinement(module);
+        return model_status;
+    }
+
+    return latticra_lir_lower_lat_model(&model, module, result);
+}
+
 latticra_status_t latticra_lat_to_lir_report(
     const latticra_lat_to_lir_result_t *result,
     char *buffer,
@@ -467,9 +544,13 @@ latticra_status_t latticra_lat_to_lir_report(
         "LAT TO LIR LOWERING REPORT\n"
         "status=%d\n"
         "error=%s\n"
+        "model_error=%s\n"
         "module=%s\n"
         "declaration_count=%zu\n"
         "clause_count=%zu\n"
+        "model_declaration_count=%zu\n"
+        "model_clause_count=%zu\n"
+        "first_transition_source_index=%zu\n"
         "node_count=%zu\n"
         "edge_count=%zu\n"
         "no_effect=%d\n"
@@ -483,9 +564,13 @@ latticra_status_t latticra_lat_to_lir_report(
         "span_end_column=%zu\n",
         (int)result->status,
         latticra_lat_to_lir_error_label(result->error),
+        latticra_lat_model_error_label(result->model_error),
         result->module_name,
         result->declaration_count,
         result->clause_count,
+        result->model_declaration_count,
+        result->model_clause_count,
+        result->first_transition_source_index,
         result->node_count,
         result->edge_count,
         result->no_effect,

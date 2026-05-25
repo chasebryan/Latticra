@@ -1,17 +1,16 @@
 # Latticra Lat-to-LIR Lowering Implementation
 
-Status: initial implementation record
-Scope: first bounded no-effect Lat-to-LIR lowering implementation, public API, test runner, workflow, report surface, fixture path, and invariants.
+Status: model-aware implementation record
+Scope: bounded no-effect Lat-to-LIR lowering implementation, normalized model entry point, compatibility wrapper, public API, test runner, workflow, report surface, fixture path, and invariants.
 
 ## Purpose
 
-This implementation adds the first Lat-to-LIR lowering surface for semantically valid Lat / Latticra Language metadata.
+This implementation adds the bounded Lat-to-LIR lowering surface for semantically valid Lat / Latticra Language metadata.
 
-The implementation consumes:
+The primary lowering implementation consumes:
 
 ```text
-latticra_lat_parse_result_t
-latticra_lat_semantic_result_t
+latticra_lat_model_t
 ```
 
 and fills:
@@ -20,6 +19,8 @@ and fills:
 latticra_lir_module_t
 latticra_lat_to_lir_result_t
 ```
+
+The compatibility wrapper `latticra_lir_lower_lat_module` still accepts parser and semantic results, normalizes a local Lat model, and delegates to the model-aware lowerer.
 
 The lowering surface is metadata-only. It does not execute Lat, interpret transitions, mutate state, render L-UI, invoke Nucleus behavior, perform runtime behavior, write files, read files, open network connections, call update code, call recovery code, touch hardware, or provide an operating-system surface.
 
@@ -51,11 +52,12 @@ The public API adds:
 latticra_lat_to_lir_error_t
 latticra_lat_to_lir_result_t
 latticra_lat_to_lir_error_label
+latticra_lir_lower_lat_model
 latticra_lir_lower_lat_module
 latticra_lat_to_lir_report
 ```
 
-The lowering function accepts parser and semantic metadata, writes a LIR module, and writes a lowering-specific summary result.
+The model-aware lowering function accepts normalized Lat model metadata, writes a LIR module, and writes a lowering-specific summary result. The wrapper accepts parser and semantic metadata for existing callers.
 
 ## Accepted input
 
@@ -65,6 +67,7 @@ The lowering implementation accepts only input that satisfies:
 parse_result->error == LATTICRA_LAT_PARSE_OK
 semantic_result->error == LATTICRA_LAT_SEMANTIC_OK
 semantic_result->semantic_valid == 1
+model->error == LATTICRA_LAT_MODEL_OK
 no_effect == 1
 execution_allowed == 0
 mutation_allowed == 0
@@ -94,20 +97,20 @@ recovery_allowed=0
 hardware_allowed=0
 ```
 
-The first implementation reuses existing LIR node and edge kinds rather than adding new enum variants.
+The implementation uses the Lat-specific LIR declaration node kinds and transition source edge kind while preserving the same no-effect metadata boundary.
 
 ## Mapping summary
 
 ```text
 Lat module      -> LIR module node
-state           -> LIR field node with declaration role metadata
-policy          -> LIR field node with declaration role metadata
-transition      -> LIR field node with source-state metadata
-assertion       -> LIR field node with assertion role metadata
-effect          -> LIR effect node
+state           -> LIR lat_state node
+policy          -> LIR lat_policy node
+transition      -> LIR lat_transition node with source-state metadata
+assertion       -> LIR lat_assertion node
+effect          -> LIR lat_effect_declaration node
 field clause    -> LIR field node
-require clause  -> LIR binding node metadata
-ensure clause   -> LIR binding node metadata
+require clause  -> LIR lat_requirement node metadata
+ensure clause   -> LIR lat_requirement node metadata
 effect clause   -> LIR effect node metadata
 ```
 
@@ -116,7 +119,7 @@ Edges use:
 ```text
 module contains declaration
 declaration contains clause
-transition binds source state
+transition transitions_from source state
 ```
 
 ## Source-span behavior
@@ -142,7 +145,7 @@ The implementation does not invent byte offsets.
 LAT TO LIR LOWERING REPORT
 ```
 
-The report records status, error label, module name, declaration count, clause count, node count, edge count, no-effect flags, and source-span fields.
+The report records status, lowering error label, model error label, module name, declaration counts, model counts, clause counts, first transition source index, node count, edge count, no-effect flags, and source-span fields.
 
 Small output buffers return:
 
@@ -171,6 +174,7 @@ and includes:
 ```text
 src/lat_parser.c
 src/lat_semantic.c
+src/lat_model.c
 src/lir.c
 src/lat_to_lir.c
 tests/lat_to_lir_lowering_invariants.c
@@ -182,8 +186,10 @@ The invariant suite checks:
 
 ```text
 foundation model lowers successfully
+normalized model lowers through the model-aware entry point
 source kind is lat_module
 declaration and clause counts are preserved
+model counts and first transition source index are preserved
 node and edge counts are deterministic
 module metadata is preserved
 transition source metadata is preserved
@@ -210,10 +216,10 @@ It is not a compiler, interpreter, runtime, package system, command surface, or 
 The next candidate is:
 
 ```text
-Lat-to-LIR lowering implementation documentation and status integration
+Lat model-driven lowering diagnostics and status integration
 ```
 
-After status integration, a later refinement may broaden Lat-specific LIR node kinds only through a separate contract or plan.
+After this model-driven lowering integration, a later refinement may broaden clause operator/value metadata or add focused diagnostics only through a separate bounded contract or plan.
 
 ## Non-claims
 

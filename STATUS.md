@@ -3,6 +3,7 @@
 Status: public status shortcut
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal status rollup status/public-entry note: 2026-05-25 CDT
 Latest Seal runtime handoff status/public-entry note: 2026-05-25 CDT
 Latest Seal effect decision status/public-entry note: 2026-05-25 CDT
 Latest Seal capability gate status/public-entry note: 2026-05-25 CDT
@@ -26,6 +27,7 @@ Latest Nadia awareness dialogue contract Stage-15 note: 2026-05-25 CDT
 Latest Nadia prompt evaluation handoff contract Stage-16 note: 2026-05-25 CDT
 Latest Nadia tokenization boundary contract Stage-17 note: 2026-05-25 CDT
 Latest Nadia tokenizer specification contract Stage-18 note: 2026-05-25 CDT
+Latest Nadia tokenizer manifest contract Stage-19 note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -61,6 +63,7 @@ Latest Seal core evidence index alignment note: 2026-05-22 02:37 CDT
 Latest Seal core evidence public entrypoint alignment note: 2026-05-22 02:45 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
 Latest Lat pipeline model normalization integration note: 2026-05-25 CDT
+Latest Lat-to-LIR model lowering integration note: 2026-05-25 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
 Latest Lat pipeline diagnostic integration note: 2026-05-19 14:20 CDT
@@ -138,7 +141,7 @@ docs/strategy/README.md
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 48% |
+| Nadia offline AI foundation | 50% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |
@@ -170,6 +173,7 @@ Latticra is the contract.
 Seal capability gate status/public-entry alignment
 Seal effect decision status/public-entry alignment
 Seal runtime handoff status/public-entry alignment
+Seal status rollup status/public-entry alignment
 Seal verification receipt status/public-entry alignment
 Nadia offline AI Stage-0 foundation
 Nadia local context engine Stage-1
@@ -190,6 +194,7 @@ Nadia awareness dialogue contract Stage-15
 Nadia prompt evaluation handoff contract Stage-16
 Nadia tokenization boundary contract Stage-17
 Nadia tokenizer specification contract Stage-18
+Nadia tokenizer manifest contract Stage-19
 Seal verification policy status/public-entry alignment
 Seal key parsing status/public-entry alignment
 Seal bounded no-effect key parsing implementation
@@ -235,6 +240,7 @@ Lat pipeline contract
 Lat pipeline implementation plan
 Lat pipeline implementation
 Lat pipeline model normalization integration
+Lat-to-LIR model lowering integration
 Lat pipeline report refinement
 Lat pipeline diagnostic integration refinement
 Lat pipeline diagnostic integration main test audit
@@ -300,14 +306,14 @@ Completion percentage review
 ## Current next step
 
 ```text
-Seal status rollup status/public-entry alignment, with metadata-only rollup visibility and no runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, or runtime authority
+Seal agentic automation security public README/status/foundation entry-point refresh or dedicated report command surface, with report-only metadata visibility and no runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority
 ```
 
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
 
-It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal status slice makes inactive metadata-only runtime handoff posture visible from public status surfaces while preserving no runtime execution, effect execution, capability enforcement, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, host behavior, network behavior, or runtime authority.
+It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal status slice makes the metadata-only status rollup posture visible from public status surfaces while preserving no runtime execution, effect execution, capability enforcement, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, host behavior, network behavior, or runtime authority.
 
 Current status fields:
 
@@ -353,6 +359,8 @@ seal_effect_decision_metadata_present=1
 seal_effect_decision_status_present=1
 seal_runtime_handoff_metadata_present=1
 seal_runtime_handoff_status_present=1
+seal_status_rollup_metadata_present=1
+seal_status_rollup_status_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1
@@ -434,9 +442,9 @@ Lat-to-LIR lowering now emits explicit Lat declaration nodes and an explicit tra
 
 ## Current Lat-to-LIR lowering boundary
 
-Lat now has a bounded no-effect path from parser metadata through semantic validation into LIR metadata.
+Lat now has a bounded no-effect path from parser metadata through semantic validation and model normalization into LIR metadata.
 
-The current lowering implementation consumes parser and semantic results, creates a `lat_module` LIR module shape, preserves source spans and no-effect flags, and emits deterministic lowering reports.
+The current lowering implementation consumes normalized Lat model metadata directly, creates a `lat_module` LIR module shape, preserves source spans, no-effect flags, model counts, and transition source indices, and emits deterministic lowering reports. The parser-plus-semantic entry point remains available as a compatibility wrapper.
 
 Boundary terms tracked by the project status guard:
 

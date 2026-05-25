@@ -91,7 +91,7 @@ The authoritative status files are [`STATUS.md`](STATUS.md) and [`docs/status/CU
 | Latticra Seal | Report-only tool-boundary, runtime dry-run, guarded allowlist, report-envelope metadata, signature-request metadata, signing authorization metadata, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, future key parsing implementation contract/plan, and bounded key parsing metadata/status surfaces exist; no production enforcement |
 | Fedora integration | Local-only package and validation lanes exist; not Fedora-approved or distribution-ready |
 | Latticra Panel | GUI-first local installer/control workbench exists; user-local and guarded |
-| Nadia offline AI | Stage-18 tokenizer-specification contract, Stage-17 tokenization-boundary contract, Stage-16 prompt-evaluation handoff contract, Stage-15 awareness-dialogue contract, Stage-14 prompt-materialization contract, Stage-13 prompt-receipt contract, Stage-12 model-load contract, Stage-11 runtime-invocation contract, Stage-10 inference-readiness contract, Stage-9 local model-registry contract, Stage-8 prompt-evaluation contract, Stage-7 report-only tool preflight, Stage-6 protective safety boundary, Stage-5 productivity ledger, Stage-4 systems-engineering mode validator, Stage-3 prompt-plan workbench, Stage-2 runtime-profile boundary, and Stage-1 context-pack generator exist; optional Panel component and metadata-only Console surface; future survivor-centered Q&A scope planned for official Nadia Initiative awareness topics; no dialogue generation, prompt text receipt, prompt buffer allocation, prompt tokenization, prompt materialization, tokenizer file access, tokenizer vocabulary loading, model file opening, weight mapping, model loading, token generation, prompt evaluation, inference, or tool execution |
+| Nadia offline AI | Stage-19 tokenizer-manifest contract, Stage-18 tokenizer-specification contract, Stage-17 tokenization-boundary contract, Stage-16 prompt-evaluation handoff contract, Stage-15 awareness-dialogue contract, Stage-14 prompt-materialization contract, Stage-13 prompt-receipt contract, Stage-12 model-load contract, Stage-11 runtime-invocation contract, Stage-10 inference-readiness contract, Stage-9 local model-registry contract, Stage-8 prompt-evaluation contract, Stage-7 report-only tool preflight, Stage-6 protective safety boundary, Stage-5 productivity ledger, Stage-4 systems-engineering mode validator, Stage-3 prompt-plan workbench, Stage-2 runtime-profile boundary, and Stage-1 context-pack generator exist; optional Panel component and metadata-only Console surface; future survivor-centered Q&A scope planned for official Nadia Initiative awareness topics; no dialogue generation, prompt text receipt, prompt buffer allocation, prompt tokenization, prompt materialization, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, model file opening, weight mapping, model loading, token generation, prompt evaluation, inference, or tool execution |
 | Security hardening | Early; no production security boundary claimed |
 | Product readiness | Early; no production platform claimed |
 
@@ -152,7 +152,7 @@ Latticra Panel
 
 Nadia Offline AI
   Future local AI companion for Latticra software development, systems engineering, and AI development workflows.
-  Current posture: Stage-18 tokenizer-specification contract, Stage-17 tokenization-boundary contract, Stage-16 prompt-evaluation handoff contract, Stage-15 awareness-dialogue contract, Stage-14 prompt-materialization contract, Stage-13 prompt-receipt contract, Stage-12 model-load contract, Stage-11 runtime-invocation contract, Stage-10 inference-readiness contract, Stage-9 local model-registry contract, Stage-8 prompt-evaluation contract, Stage-7 report-only guarded tool-authority preflight, Stage-6 protective safety boundary, Stage-5 operator-reviewed productivity ledger, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan workbench, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, Panel component, Console metadata, local config, and productivity-ledger path; future survivor-centered Q&A scope planned for official Nadia Initiative awareness topics; no sexual user functionality, dialogue generation, prompt text receipt, prompt source reading, prompt buffer allocation, prompt tokenization, prompt materialization, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, model file opening, weight mapping, model loading, runtime process spawning, runtime session creation, model selection, model installation, token generation, prompt evaluation, inference, tool execution, training, distillation, source mutation, or network authority.
+  Current posture: Stage-19 tokenizer-manifest contract, Stage-18 tokenizer-specification contract, Stage-17 tokenization-boundary contract, Stage-16 prompt-evaluation handoff contract, Stage-15 awareness-dialogue contract, Stage-14 prompt-materialization contract, Stage-13 prompt-receipt contract, Stage-12 model-load contract, Stage-11 runtime-invocation contract, Stage-10 inference-readiness contract, Stage-9 local model-registry contract, Stage-8 prompt-evaluation contract, Stage-7 report-only guarded tool-authority preflight, Stage-6 protective safety boundary, Stage-5 operator-reviewed productivity ledger, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan workbench, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, Panel component, Console metadata, local config, and productivity-ledger path; future survivor-centered Q&A scope planned for official Nadia Initiative awareness topics; no sexual user functionality, dialogue generation, prompt text receipt, prompt source reading, prompt buffer allocation, prompt tokenization, prompt materialization, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, model file opening, weight mapping, model loading, runtime process spawning, runtime session creation, model selection, model installation, token generation, prompt evaluation, inference, tool execution, training, distillation, source mutation, or network authority.
 
 Fedora/Linux substrate
   Current host-facing validation lane and integration target.
@@ -221,6 +221,8 @@ latticra_seal_effect_decision_metadata_present=1
 latticra_seal_effect_decision_status_present=1
 latticra_seal_runtime_handoff_metadata_present=1
 latticra_seal_runtime_handoff_status_present=1
+latticra_seal_status_rollup_metadata_present=1
+latticra_seal_status_rollup_status_present=1
 latticra_panel_gui_workbench_present=1
 nadia_offline_ai_stage_0_foundation_present=1
 nadia_stage_1_local_context_engine_present=1
@@ -449,6 +451,7 @@ nadia awareness-dialogue
 nadia prompt-evaluation-handoff
 nadia tokenization-boundary
 nadia tokenizer-specification
+nadia tokenizer-manifest
 profile guided
 profile seal
 profile fedora
@@ -578,7 +581,7 @@ Nadia's protective boundary explicitly forbids sexual user functionality, sexual
 
 Documentation and code identify the solemn implementation identity as `Nadia Witness Foundation`; the human-facing interactive name remains `Nadia`.
 
-Current Nadia status is Stage-18 tokenizer-specification contract plus the Stage-17, Stage-16, Stage-15, Stage-14, Stage-13, Stage-12, Stage-11, Stage-10, Stage-9, Stage-8, Stage-7, Stage-6, Stage-5, Stage-4, Stage-3, Stage-2, Stage-1, and Stage-0 foundations:
+Current Nadia status is Stage-19 tokenizer-manifest contract plus the Stage-18, Stage-17, Stage-16, Stage-15, Stage-14, Stage-13, Stage-12, Stage-11, Stage-10, Stage-9, Stage-8, Stage-7, Stage-6, Stage-5, Stage-4, Stage-3, Stage-2, Stage-1, and Stage-0 foundations:
 
 ```text
 component_key=nadia_offline_ai
@@ -799,6 +802,28 @@ tokenizer_manifest_loaded=0
 requires_tokenization_boundary_contract=1
 requires_future_tokenizer_manifest_contract=1
 tokenizer_specification_promotion_allowed=0
+nadia_stage_19_tokenizer_manifest_contract_present=1
+tokenizer_manifest_contract_command=scripts/nadia-tokenizer-manifest-contract.sh
+installed_tokenizer_manifest_contract_command=latticra-nadia tokenizer-manifest
+tokenizer_manifest_stage=contract-only
+tokenizer_manifest_contract_status=contract_only
+tokenizer_manifest_authority=0
+tokenizer_manifest_allowed=0
+tokenizer_manifest_performed=0
+tokenizer_manifest_metadata_present=1
+tokenizer_manifest_family=operator-reviewed-tokenizer-manifest
+tokenizer_manifest_format=contract-only-offline-manifest
+tokenizer_manifest_decision=blocked_contract_only
+tokenizer_manifest_path_recorded=0
+tokenizer_manifest_schema_planned=1
+tokenizer_manifest_opened=0
+tokenizer_manifest_read=0
+tokenizer_manifest_parsed=0
+tokenizer_manifest_validated=0
+tokenizer_manifest_loaded=0
+requires_tokenizer_specification_contract=1
+requires_future_tokenizer_artifact_inventory_contract=1
+tokenizer_manifest_promotion_allowed=0
 local_file_read_for_indexing=operator_invoked
 offline_by_default=1
 panel_install_surface_present=1
@@ -846,9 +871,10 @@ latticra-nadia awareness-dialogue
 latticra-nadia prompt-evaluation-handoff
 latticra-nadia tokenization-boundary
 latticra-nadia tokenizer-specification
+latticra-nadia tokenizer-manifest
 ```
 
-See [`docs/NADIA_OFFLINE_AI_FOUNDATION.md`](docs/NADIA_OFFLINE_AI_FOUNDATION.md), [`docs/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](docs/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md), [`docs/NADIA_RUNTIME_PROFILE_STAGE_2.md`](docs/NADIA_RUNTIME_PROFILE_STAGE_2.md), [`docs/NADIA_DEVELOPER_WORKBENCH_STAGE_3.md`](docs/NADIA_DEVELOPER_WORKBENCH_STAGE_3.md), [`docs/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md`](docs/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md), [`docs/NADIA_PRODUCTIVITY_LOOP_STAGE_5.md`](docs/NADIA_PRODUCTIVITY_LOOP_STAGE_5.md), [`docs/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md`](docs/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md), [`docs/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md`](docs/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md), [`docs/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md`](docs/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md), [`docs/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md`](docs/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md), [`docs/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md`](docs/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md), [`docs/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md`](docs/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md), [`docs/NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md`](docs/NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md), [`docs/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md`](docs/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md), [`docs/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md`](docs/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md), [`docs/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15.md`](docs/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15.md), [`docs/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16.md`](docs/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16.md), [`docs/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17.md`](docs/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17.md), [`docs/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18.md`](docs/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18.md), [`docs/status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](docs/status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md), [`docs/status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](docs/status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md), [`docs/status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md`](docs/status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md), [`docs/status/NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md`](docs/status/NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md), [`docs/status/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4_STATUS.md`](docs/status/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4_STATUS.md), [`docs/status/NADIA_PRODUCTIVITY_LOOP_STAGE_5_STATUS.md`](docs/status/NADIA_PRODUCTIVITY_LOOP_STAGE_5_STATUS.md), [`docs/status/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md`](docs/status/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md), [`docs/status/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7_STATUS.md`](docs/status/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8_STATUS.md), [`docs/status/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md`](docs/status/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md), [`docs/status/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10_STATUS.md`](docs/status/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10_STATUS.md), [`docs/status/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md`](docs/status/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md), [`docs/status/NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md`](docs/status/NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md), [`docs/status/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13_STATUS.md`](docs/status/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13_STATUS.md), [`docs/status/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md`](docs/status/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md), [`docs/status/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15_STATUS.md`](docs/status/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16_STATUS.md), [`docs/status/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17_STATUS.md`](docs/status/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17_STATUS.md), and [`docs/status/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18_STATUS.md`](docs/status/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18_STATUS.md).
+See [`docs/NADIA_OFFLINE_AI_FOUNDATION.md`](docs/NADIA_OFFLINE_AI_FOUNDATION.md), [`docs/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](docs/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md), [`docs/NADIA_RUNTIME_PROFILE_STAGE_2.md`](docs/NADIA_RUNTIME_PROFILE_STAGE_2.md), [`docs/NADIA_DEVELOPER_WORKBENCH_STAGE_3.md`](docs/NADIA_DEVELOPER_WORKBENCH_STAGE_3.md), [`docs/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md`](docs/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md), [`docs/NADIA_PRODUCTIVITY_LOOP_STAGE_5.md`](docs/NADIA_PRODUCTIVITY_LOOP_STAGE_5.md), [`docs/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md`](docs/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md), [`docs/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md`](docs/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md), [`docs/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md`](docs/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md), [`docs/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md`](docs/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md), [`docs/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md`](docs/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md), [`docs/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md`](docs/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md), [`docs/NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md`](docs/NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md), [`docs/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md`](docs/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md), [`docs/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md`](docs/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md), [`docs/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15.md`](docs/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15.md), [`docs/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16.md`](docs/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16.md), [`docs/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17.md`](docs/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17.md), [`docs/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18.md`](docs/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18.md), [`docs/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19.md`](docs/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19.md), [`docs/status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](docs/status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md), [`docs/status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](docs/status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md), [`docs/status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md`](docs/status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md), [`docs/status/NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md`](docs/status/NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md), [`docs/status/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4_STATUS.md`](docs/status/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4_STATUS.md), [`docs/status/NADIA_PRODUCTIVITY_LOOP_STAGE_5_STATUS.md`](docs/status/NADIA_PRODUCTIVITY_LOOP_STAGE_5_STATUS.md), [`docs/status/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md`](docs/status/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md), [`docs/status/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7_STATUS.md`](docs/status/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8_STATUS.md), [`docs/status/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md`](docs/status/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md), [`docs/status/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10_STATUS.md`](docs/status/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10_STATUS.md), [`docs/status/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md`](docs/status/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md), [`docs/status/NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md`](docs/status/NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md), [`docs/status/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13_STATUS.md`](docs/status/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13_STATUS.md), [`docs/status/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md`](docs/status/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md), [`docs/status/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15_STATUS.md`](docs/status/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16_STATUS.md), [`docs/status/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17_STATUS.md`](docs/status/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17_STATUS.md), [`docs/status/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18_STATUS.md`](docs/status/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18_STATUS.md), and [`docs/status/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19_STATUS.md`](docs/status/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19_STATUS.md).
 
 ---
 
@@ -1032,6 +1058,8 @@ seal_effect_decision_metadata_present=1
 seal_effect_decision_status_present=1
 seal_runtime_handoff_metadata_present=1
 seal_runtime_handoff_status_present=1
+seal_status_rollup_metadata_present=1
+seal_status_rollup_status_present=1
 runtime_gate_report_only=1
 policy_decision_state=report-only
 runtime_gate_state=report-only
@@ -1139,6 +1167,10 @@ The runtime handoff metadata implementation records inactive runtime handoff pos
 
 The runtime handoff status record makes that inactive metadata-only checkpoint visible from the public entry points without changing implementation behavior.
 
+The status rollup metadata implementation summarizes the implemented Seal chain after inactive runtime handoff metadata. It does not verify signatures, enforce capabilities, perform effects, touch host or network behavior, or grant runtime authority.
+
+The status rollup status record makes that metadata-only rollup checkpoint visible from the public entry points without changing implementation behavior.
+
 That claim is intentionally limited. It does not mean Latticra Seal currently implements production runtime enforcement, policy enforcement, cryptographic key authority, MCP protocol behavior, MCP server behavior, MCP client behavior, AI-agent execution control, host behavior, network behavior, object sealing, key storage, or revocation lookup.
 
 Relevant Seal records:
@@ -1195,6 +1227,9 @@ Relevant Seal records:
 - [`docs/LATTICRA_SEAL_RUNTIME_HANDOFF_CONTRACT.md`](docs/LATTICRA_SEAL_RUNTIME_HANDOFF_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md)
 - [`docs/status/SEAL_RUNTIME_HANDOFF_STATUS.md`](docs/status/SEAL_RUNTIME_HANDOFF_STATUS.md)
+- [`docs/LATTICRA_SEAL_STATUS_ROLLUP_CONTRACT.md`](docs/LATTICRA_SEAL_STATUS_ROLLUP_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_STATUS_ROLLUP_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_STATUS_ROLLUP_IMPLEMENTATION.md)
+- [`docs/status/SEAL_STATUS_ROLLUP_STATUS.md`](docs/status/SEAL_STATUS_ROLLUP_STATUS.md)
 - [`docs/status/SEAL_SIGNER_INVOCATION_STATUS.md`](docs/status/SEAL_SIGNER_INVOCATION_STATUS.md)
 - [`docs/status/SEAL_SIGNER_HANDOFF_STATUS.md`](docs/status/SEAL_SIGNER_HANDOFF_STATUS.md)
 - [`docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md`](docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md)

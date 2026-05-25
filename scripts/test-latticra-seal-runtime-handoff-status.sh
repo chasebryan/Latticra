@@ -35,6 +35,8 @@ require_file src/seal_status_rollup.c
 require_file tests/seal_status_rollup_invariants.c
 require_file scripts/test-latticra-seal-status-rollup-contract.sh
 require_file scripts/test-latticra-seal-status-rollup.sh
+require_file scripts/test-latticra-seal-status-rollup-status.sh
+require_file docs/status/SEAL_STATUS_ROLLUP_STATUS.md
 require_file docs/LATTICRA_SEAL_EFFECT_DECISION_CONTRACT.md
 require_file docs/LATTICRA_SEAL_EFFECT_DECISION_IMPLEMENTATION.md
 require_file docs/status/SEAL_EFFECT_DECISION_STATUS.md
@@ -65,6 +67,7 @@ require_contains 'seal_runtime_handoff_metadata_present=1' "$status_file"
 require_contains 'seal_runtime_handoff_status_present=1' "$status_file"
 require_contains 'seal_status_rollup_contract_present=1' "$status_file"
 require_contains 'seal_status_rollup_implementation_present=1' "$status_file"
+require_contains 'seal_status_rollup_status_present=1' "$status_file"
 require_contains 'seal_effect_decision_contract_present=1' "$status_file"
 require_contains 'seal_effect_decision_implementation_present=1' "$status_file"
 require_contains 'seal_effect_decision_status_present=1' "$status_file"
@@ -109,29 +112,43 @@ require_contains 'seal runtime handoff contract: ok' "$status_file"
 require_contains 'seal runtime handoff invariants: ok' "$status_file"
 require_contains 'seal runtime handoff status: ok' "$status_file"
 require_contains 'seal status rollup contract: ok' "$status_file"
+require_contains 'seal status rollup status: ok' "$status_file"
 require_contains 'seal effect decision status: ok' "$status_file"
-require_contains 'status rollup status/public-entry alignment' "$status_file"
+require_contains 'Seal agentic automation security public README/status/foundation entry-point refresh' "$status_file"
 
 require_contains 'SEAL_RUNTIME_HANDOFF_STATUS.md' README.md
+require_contains 'SEAL_STATUS_ROLLUP_STATUS.md' README.md
 require_contains 'LATTICRA_SEAL_RUNTIME_HANDOFF_CONTRACT.md' README.md
 require_contains 'LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md' README.md
 require_contains 'latticra_seal_runtime_handoff_metadata_present=1' README.md
 require_contains 'latticra_seal_runtime_handoff_status_present=1' README.md
+require_contains 'latticra_seal_status_rollup_status_present=1' README.md
 require_contains 'seal_runtime_handoff_metadata_present=1' README.md
 require_contains 'seal_runtime_handoff_status_present=1' README.md
+require_contains 'seal_status_rollup_status_present=1' README.md
 require_contains 'Seal runtime handoff status/public-entry alignment' STATUS.md
+require_contains 'Seal status rollup status/public-entry alignment' STATUS.md
 require_contains 'seal_runtime_handoff_metadata_present=1' STATUS.md
 require_contains 'seal_runtime_handoff_status_present=1' STATUS.md
+require_contains 'seal_status_rollup_status_present=1' STATUS.md
 require_contains 'SEAL_RUNTIME_HANDOFF_STATUS.md' docs/status/README.md
+require_contains 'SEAL_STATUS_ROLLUP_STATUS.md' docs/status/README.md
 require_contains 'seal_runtime_handoff_metadata_present=1' docs/status/README.md
 require_contains 'seal_runtime_handoff_status_present=1' docs/status/README.md
+require_contains 'seal_status_rollup_status_present=1' docs/status/README.md
 require_contains 'Latticra Seal runtime handoff status/public-entry alignment' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal status rollup status/public-entry alignment' docs/status/CURRENT_STATUS.md
 require_contains 'SEAL_RUNTIME_HANDOFF_STATUS.md' docs/FOUNDATION_INDEX.md
+require_contains 'SEAL_STATUS_ROLLUP_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
+require_contains 'LATTICRA_SEAL_STATUS_ROLLUP_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal runtime handoff status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Seal status rollup status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Seal agentic automation security public README/status/foundation entry-point refresh' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal runtime handoff status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Seal status rollup status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Seal agentic automation security public README/status/foundation entry-point refresh' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/status/SEAL_RUNTIME_HANDOFF_STATUS.md' docs/project_notes/README.md
+require_contains 'docs/status/SEAL_STATUS_ROLLUP_STATUS.md' docs/project_notes/README.md
 
 printf 'seal runtime handoff status: ok\n'

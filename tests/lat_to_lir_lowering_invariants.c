@@ -80,6 +80,26 @@ static int lat_to_lir_accepts_foundation_model(void) {
     return 0;
 }
 
+static int lat_to_lir_accepts_normalized_model(void) {
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lat_model_t model;
+    latticra_lir_module_t module;
+    latticra_lat_to_lir_result_t lowering;
+    EXPECT_TRUE(latticra_lat_parse_source(FOUNDATION_MODEL, strlen(FOUNDATION_MODEL), &parse) == LATTICRA_STATUS_OK, "model parse status OK");
+    EXPECT_TRUE(latticra_lat_validate_module(&parse, &semantic) == LATTICRA_STATUS_OK, "model semantic status OK");
+    EXPECT_TRUE(latticra_lat_model_normalize_module(&parse, &semantic, &model) == LATTICRA_STATUS_OK, "model normalization status OK");
+    EXPECT_TRUE(latticra_lir_lower_lat_model(&model, &module, &lowering) == LATTICRA_STATUS_OK, "model lowering status OK");
+    EXPECT_TRUE(model.error == LATTICRA_LAT_MODEL_OK, "normalized model ok");
+    EXPECT_TRUE(lowering.error == LATTICRA_LAT_TO_LIR_OK, "normalized lowering ok");
+    EXPECT_TRUE(lowering.model_error == LATTICRA_LAT_MODEL_OK, "lowering model ok");
+    EXPECT_TRUE(lowering.model_declaration_count == 5u, "lowering model declaration count");
+    EXPECT_TRUE(lowering.model_clause_count == 23u, "lowering model clause count");
+    EXPECT_TRUE(lowering.first_transition_source_index == 0u, "lowering transition source index");
+    EXPECT_TRUE(module.edges[module.edge_count - 1u].edge_kind == LATTICRA_LIR_EDGE_TRANSITIONS_FROM, "model transition edge");
+    return 0;
+}
+
 static int lat_to_lir_sets_source_kind_lat_module(void) {
     latticra_lat_parse_result_t parse;
     latticra_lat_semantic_result_t semantic;
@@ -99,6 +119,9 @@ static int lat_to_lir_preserves_counts(void) {
     EXPECT_TRUE(lower_foundation(&parse, &semantic, &module, &lowering) == 0, "count source lowered");
     EXPECT_TRUE(lowering.declaration_count == 5u, "declaration count");
     EXPECT_TRUE(lowering.clause_count == 23u, "clause count");
+    EXPECT_TRUE(lowering.model_declaration_count == 5u, "model declaration count");
+    EXPECT_TRUE(lowering.model_clause_count == 23u, "model clause count");
+    EXPECT_TRUE(lowering.first_transition_source_index == 0u, "first transition source index");
     EXPECT_TRUE(module.node_count == 29u, "node count");
     EXPECT_TRUE(module.edge_count == 29u, "edge count");
     return 0;
@@ -184,6 +207,9 @@ static int lat_to_lir_report_is_deterministic(void) {
     EXPECT_STR_EQ(one, two, "report deterministic");
     EXPECT_TRUE(strstr(one, "LAT TO LIR LOWERING REPORT\n") != 0, "report header");
     EXPECT_TRUE(strstr(one, "error=ok\n") != 0, "report ok");
+    EXPECT_TRUE(strstr(one, "model_error=ok\n") != 0, "report model ok");
+    EXPECT_TRUE(strstr(one, "model_declaration_count=5\n") != 0, "report model count");
+    EXPECT_TRUE(strstr(one, "first_transition_source_index=0\n") != 0, "report transition source");
     return 0;
 }
 
@@ -206,11 +232,13 @@ static int lat_to_lir_error_labels_are_stable(void) {
     EXPECT_STR_EQ(latticra_lat_to_lir_error_label(LATTICRA_LAT_TO_LIR_SEMANTIC_NOT_OK), "semantic_not_ok", "semantic label");
     EXPECT_STR_EQ(latticra_lat_to_lir_error_label(LATTICRA_LAT_TO_LIR_NO_EFFECT_VIOLATION), "no_effect_violation", "flag label");
     EXPECT_STR_EQ(latticra_lat_to_lir_error_label(LATTICRA_LAT_TO_LIR_CAPACITY_EXCEEDED), "capacity_exceeded", "capacity label");
+    EXPECT_STR_EQ(latticra_lat_to_lir_error_label(LATTICRA_LAT_TO_LIR_MODEL_NOT_OK), "model_not_ok", "model label");
     return 0;
 }
 
 int main(void) {
     if (lat_to_lir_accepts_foundation_model() != 0) return 1;
+    if (lat_to_lir_accepts_normalized_model() != 0) return 1;
     if (lat_to_lir_sets_source_kind_lat_module() != 0) return 1;
     if (lat_to_lir_preserves_counts() != 0) return 1;
     if (lat_to_lir_preserves_metadata() != 0) return 1;

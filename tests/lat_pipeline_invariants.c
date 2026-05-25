@@ -96,6 +96,10 @@ static int lat_pipeline_exposes_normalized_model(void) {
     EXPECT_TRUE(model.declaration_count == 5u, "model declaration count");
     EXPECT_TRUE(model.clause_count == 23u, "model clause count");
     EXPECT_TRUE(model.declarations[model.transition_indices[0]].source_declaration_index == 0u, "model transition source resolved");
+    EXPECT_TRUE(lowering.model_error == LATTICRA_LAT_MODEL_OK, "lowering model ok");
+    EXPECT_TRUE(lowering.model_declaration_count == 5u, "lowering model declaration count");
+    EXPECT_TRUE(lowering.model_clause_count == 23u, "lowering model clause count");
+    EXPECT_TRUE(lowering.first_transition_source_index == 0u, "lowering transition source index");
     EXPECT_TRUE(pipeline.model_declaration_count == 5u, "pipeline model declaration count");
     EXPECT_TRUE(pipeline.model_clause_count == 23u, "pipeline model clause count");
     EXPECT_TRUE(pipeline.first_transition_source_index == 0u, "pipeline transition source index");

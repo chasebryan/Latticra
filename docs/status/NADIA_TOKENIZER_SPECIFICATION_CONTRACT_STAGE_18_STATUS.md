@@ -124,4 +124,4 @@ nadia_tokenizer_specification_contract_stage_18: ok
 
 ## Next Stage
 
-Stage-19 should define a tokenizer manifest contract only after tokenizer-specification metadata, tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, model-registry metadata, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.
+Stage-19 now defines a tokenizer manifest contract only after tokenizer-specification metadata, tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, model-registry metadata, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.
