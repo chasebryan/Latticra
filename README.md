@@ -191,6 +191,7 @@ latticra_seal_signer_invocation_status_present=1
 latticra_seal_signing_operation_contract_present=1
 latticra_seal_signing_operation_metadata_present=1
 latticra_seal_signing_operation_status_present=1
+latticra_seal_key_handling_contract_present=1
 latticra_panel_gui_workbench_present=1
 fedora_local_rpm_draft_present=1
 visual_theorem_engines_present=1
@@ -633,6 +634,7 @@ seal_signer_invocation_status_present=1
 seal_signing_operation_contract_present=1
 seal_signing_operation_metadata_present=1
 seal_signing_operation_status_present=1
+seal_key_handling_contract_present=1
 runtime_gate_report_only=1
 policy_decision_state=report-only
 runtime_gate_state=report-only
@@ -696,6 +698,8 @@ The signing operation metadata implementation classifies ready signer invocation
 
 The signing operation status record makes that metadata-only checkpoint visible from the public entry points without changing implementation behavior.
 
+The key-handling boundary contract defines the next metadata-only classification boundary after signing operation readiness. It does not add public-key parsing, key material loading, private-key handling, key generation, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority.
+
 That claim is intentionally limited. It does not mean Latticra Seal currently implements production runtime enforcement, policy enforcement, cryptographic key authority, MCP protocol behavior, MCP server behavior, MCP client behavior, AI-agent execution control, host behavior, network behavior, object sealing, key storage, or revocation lookup.
 
 Relevant Seal records:
@@ -724,6 +728,7 @@ Relevant Seal records:
 - [`docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md`](docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md)
 - [`docs/status/SEAL_SIGNING_OPERATION_STATUS.md`](docs/status/SEAL_SIGNING_OPERATION_STATUS.md)
+- [`docs/LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md`](docs/LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md)
 - [`docs/status/SEAL_SIGNER_INVOCATION_STATUS.md`](docs/status/SEAL_SIGNER_INVOCATION_STATUS.md)
 - [`docs/status/SEAL_SIGNER_HANDOFF_STATUS.md`](docs/status/SEAL_SIGNER_HANDOFF_STATUS.md)
 - [`docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md`](docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md)

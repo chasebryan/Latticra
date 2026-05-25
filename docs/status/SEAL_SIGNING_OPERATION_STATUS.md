@@ -15,6 +15,7 @@ It records that the implementation is bounded, deterministic, metadata-only, uns
 ```text
 docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
+docs/LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md
 docs/status/SEAL_SIGNING_OPERATION_STATUS.md
 include/latticra/seal_signing_operation.h
 src/seal_signing_operation.c
@@ -22,6 +23,7 @@ tests/seal_signing_operation_invariants.c
 scripts/test-latticra-seal-signing-operation-contract.sh
 scripts/test-latticra-seal-signing-operation.sh
 scripts/test-latticra-seal-signing-operation-status.sh
+scripts/test-latticra-seal-key-handling-contract.sh
 docs/LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
 docs/status/SEAL_SIGNER_INVOCATION_STATUS.md
@@ -46,6 +48,7 @@ seal_signing_operation_invariant_test_present=1
 seal_signing_operation_runner_present=1
 seal_signing_operation_metadata_present=1
 seal_signing_operation_status_present=1
+seal_key_handling_contract_present=1
 seal_signer_invocation_contract_present=1
 seal_signer_invocation_implementation_present=1
 seal_signer_invocation_status_present=1
@@ -92,6 +95,7 @@ The implementation and status surface are covered by:
 sh scripts/test-latticra-seal-signing-operation-contract.sh
 sh scripts/test-latticra-seal-signing-operation.sh
 sh scripts/test-latticra-seal-signing-operation-status.sh
+sh scripts/test-latticra-seal-key-handling-contract.sh
 ```
 
 The predecessor signer invocation implementation remains covered by:
@@ -108,6 +112,7 @@ Expected output:
 seal signing operation contract: ok
 seal signing operation invariants: ok
 seal signing operation status: ok
+seal key-handling contract: ok
 seal signer invocation contract: ok
 seal signer invocation invariants: ok
 seal signer invocation status: ok
@@ -121,6 +126,6 @@ It does not add signing, verification, signer invocation behavior, signer proces
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is a key-handling boundary contract or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is key-handling metadata implementation or another narrow status/index alignment follow-up.
 
-That future slice must not add signing, verification, signer invocation behavior, private-key handling, key material, key generation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.
+That future slice must not add signing, verification, signer invocation behavior, public-key parsing, private-key handling, key material loading, key generation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.
