@@ -24,11 +24,13 @@ scripts/test-latticra-seal-verification-policy.sh
 scripts/test-latticra-seal-verification-policy-status.sh
 docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md
 docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md
+docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md
 include/latticra/seal_verification_receipt.h
 src/seal_verification_receipt.c
 tests/seal_verification_receipt_invariants.c
 scripts/test-latticra-seal-verification-receipt-contract.sh
 scripts/test-latticra-seal-verification-receipt.sh
+scripts/test-latticra-seal-verification-receipt-status.sh
 docs/LATTICRA_SEAL_SIGNATURE_IMPLEMENTATION.md
 include/latticra/seal_signature.h
 src/seal_signature.c
@@ -52,6 +54,7 @@ seal_verification_policy_metadata_present=1
 seal_verification_policy_status_present=1
 seal_verification_receipt_contract_present=1
 seal_verification_receipt_implementation_present=1
+seal_verification_receipt_status_present=1
 seal_key_parsing_status_present=1
 seal_signature_metadata_present=1
 verification_policy_profile=latticra-seal-verification-policy/0.1
@@ -101,6 +104,7 @@ sh scripts/test-latticra-seal-verification-policy-contract.sh
 sh scripts/test-latticra-seal-verification-policy.sh
 sh scripts/test-latticra-seal-verification-policy-status.sh
 sh scripts/test-latticra-seal-verification-receipt-contract.sh
+sh scripts/test-latticra-seal-verification-receipt-status.sh
 sh scripts/test-latticra-seal-key-parsing-status.sh
 ```
 
@@ -111,6 +115,7 @@ seal verification policy contract: ok
 seal verification policy invariants: ok
 seal verification policy status: ok
 seal verification receipt contract: ok
+seal verification receipt status: ok
 seal key parsing status: ok
 ```
 
@@ -122,6 +127,6 @@ It does not add cryptographic verification, signing, public-key byte verificatio
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is verification receipt status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is capability gate status/public-entry alignment or another narrow status/index alignment follow-up.
 
-That future slice must not add cryptographic verification, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.
+That future slice must not add capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, object sealing, or kernel behavior unless separately implemented and guarded.

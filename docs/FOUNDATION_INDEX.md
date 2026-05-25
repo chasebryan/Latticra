@@ -118,6 +118,9 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_VERIFICATION_POLICY_CONTRACT.md`](LATTICRA_SEAL_VERIFICATION_POLICY_CONTRACT.md) — verification policy boundary after signature metadata.
 - [`LATTICRA_SEAL_VERIFICATION_POLICY_IMPLEMENTATION.md`](LATTICRA_SEAL_VERIFICATION_POLICY_IMPLEMENTATION.md) — first no-effect verification policy metadata implementation.
 - [`status/SEAL_VERIFICATION_POLICY_STATUS.md`](status/SEAL_VERIFICATION_POLICY_STATUS.md) — status/public-entry checkpoint for metadata-only Seal verification policy implementation.
+- [`LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md`](LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md) — verification receipt boundary after verification policy metadata.
+- [`LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md`](LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md) — first no-effect verification receipt metadata implementation.
+- [`status/SEAL_VERIFICATION_RECEIPT_STATUS.md`](status/SEAL_VERIFICATION_RECEIPT_STATUS.md) — status/public-entry checkpoint for metadata-only Seal verification receipt implementation.
 - [`status/SEAL_SIGNER_INVOCATION_STATUS.md`](status/SEAL_SIGNER_INVOCATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer invocation implementation.
 - [`status/SEAL_SIGNER_HANDOFF_STATUS.md`](status/SEAL_SIGNER_HANDOFF_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer handoff implementation.
 - [`status/SEAL_SIGNING_AUTHORIZATION_STATUS.md`](status/SEAL_SIGNING_AUTHORIZATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signing authorization implementation.
@@ -218,6 +221,7 @@ Latticra Seal signer invocation status/public-entry alignment + guardrails
 Latticra Seal signing operation contract + guardrails
 Latticra Seal signing operation metadata + invariants
 Latticra Seal signing operation status/public-entry alignment + guardrails
+Latticra Seal verification receipt status/public-entry alignment + guardrails
 Latticra Seal verification policy status/public-entry alignment + guardrails
 Latticra Seal key parsing status/public-entry alignment + guardrails
 Latticra Seal bounded no-effect key parsing metadata + invariants
@@ -247,7 +251,7 @@ L-UI rendering detailed report refinement + invariants
 The next status review target should be:
 
 ```text
-Seal verification receipt status/public-entry alignment, with metadata-only verification receipt visibility and no cryptographic verification, signing, key material loading, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority
+Seal capability gate status/public-entry alignment, with metadata-only denied capability gate visibility and no capability enforcement, cryptographic verification, signing, key material loading, private-key handling, host behavior, network behavior, or runtime authority
 ```
 
 Completion-estimate review should be skipped unless a future slice changes capability posture, implementation scope, or public readiness rather than only aligning documentation/status surfaces.

@@ -3,6 +3,7 @@
 Status: public status record
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal verification receipt status/public-entry note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -129,6 +130,7 @@ The repository currently emphasizes:
 - Runtime boundary policy matrix refinement;
 - Runtime boundary domain matrix refinement;
 - Runtime boundary domain matrix report integration;
+- Latticra Seal verification receipt status/public-entry alignment;
 - Latticra Seal verification policy status/public-entry alignment;
 - Latticra Seal key parsing status/public-entry alignment;
 - Latticra Seal bounded no-effect key parsing implementation;
@@ -317,6 +319,8 @@ The Latticra Seal key parsing status record makes the bounded public-key byte me
 
 The Latticra Seal verification policy status record makes the existing metadata-only verification policy implementation visible from public entry points while preserving no cryptographic verification, no signing, no public-key byte verification, no key material loading, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
 
+The Latticra Seal verification receipt status record makes the existing metadata-only, unverified verification receipt implementation visible from public entry points while preserving no cryptographic verification, no verified receipt authority, no signing, no key material loading, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
+
 The project notes are now aligned across current direction, upcoming work, and project-notes index surfaces.
 
 The current status and announcement consistency review confirms the public status and announcement surfaces now point to the same next review lane.
@@ -393,6 +397,7 @@ Runtime boundary domain matrix report integration
 Latticra Seal signing operation status/public-entry alignment
 Latticra Seal signing operation metadata implementation
 Latticra Seal signing operation contract
+Latticra Seal verification receipt status/public-entry alignment
 Latticra Seal verification policy status/public-entry alignment
 Latticra Seal key parsing status/public-entry alignment
 Latticra Seal bounded no-effect key parsing implementation
@@ -514,7 +519,7 @@ Latticra Seal future key parsing implementation contract
 Latest completed status/public-entry slice:
 
 ```text
-Latticra Seal verification policy status/public-entry alignment
+Latticra Seal verification receipt status/public-entry alignment
 ```
 
 ## Previous status/public-entry slice
@@ -522,7 +527,7 @@ Latticra Seal verification policy status/public-entry alignment
 Previous status/public-entry slice:
 
 ```text
-Latticra Seal key parsing status/public-entry alignment
+Latticra Seal verification policy status/public-entry alignment
 ```
 
 ## Latest completed implementation slice
@@ -634,7 +639,7 @@ Latticra Seal signer handoff metadata implementation
 Recommended next work:
 
 ```text
-Seal verification receipt status/public-entry alignment, with metadata-only verification receipt visibility and no cryptographic verification, signing, key material loading, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority
+Seal capability gate status/public-entry alignment, with metadata-only denied capability gate visibility and no capability enforcement, cryptographic verification, signing, key material loading, private-key handling, host behavior, network behavior, or runtime authority
 ```
 
 After that:
