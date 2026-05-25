@@ -101,6 +101,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md`](LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md) — first no-effect signer invocation metadata implementation.
 - [`LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md`](LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md) — metadata-only signing operation boundary after signer invocation readiness.
 - [`LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md`](LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md) — first no-effect signing operation metadata implementation.
+- [`status/SEAL_SIGNING_OPERATION_STATUS.md`](status/SEAL_SIGNING_OPERATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signing operation implementation.
 - [`status/SEAL_SIGNER_INVOCATION_STATUS.md`](status/SEAL_SIGNER_INVOCATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer invocation implementation.
 - [`status/SEAL_SIGNER_HANDOFF_STATUS.md`](status/SEAL_SIGNER_HANDOFF_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer handoff implementation.
 - [`status/SEAL_SIGNING_AUTHORIZATION_STATUS.md`](status/SEAL_SIGNING_AUTHORIZATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signing authorization implementation.
@@ -200,6 +201,7 @@ Latticra Seal signer invocation metadata + invariants
 Latticra Seal signer invocation status/public-entry alignment + guardrails
 Latticra Seal signing operation contract + guardrails
 Latticra Seal signing operation metadata + invariants
+Latticra Seal signing operation status/public-entry alignment + guardrails
 L-UI static report fixture + rail invariants
 L-UI source grammar draft + fixture guardrails
 L-UI parser design contract + guardrails
@@ -223,7 +225,7 @@ L-UI rendering detailed report refinement + invariants
 The next status review target should be:
 
 ```text
-Seal signing operation status/public-entry alignment, with completion estimate review only if capability posture changes
+Seal key-handling boundary contract, with no signing, private-key material, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 Completion-estimate review should be skipped unless a future slice changes capability posture, implementation scope, or public readiness rather than only aligning documentation/status surfaces.

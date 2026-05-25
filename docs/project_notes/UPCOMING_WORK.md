@@ -21,16 +21,22 @@ Purpose completed:
 define exact public API, namespace, file paths, C++ standard, compiler flags, exception policy, RTTI policy, allocation policy, ownership/lifetime rules, result labels, C ABI boundaries, validators, audit reports, and tests before any C++ authority-layer code
 ```
 
-## Latest completed implementation slice
+## Latest completed status/public-entry slice
 
 ```text
-Latticra Seal signing operation metadata implementation
+Latticra Seal signing operation status/public-entry alignment
 ```
 
 Purpose completed:
 
 ```text
-classify ready signer invocation metadata into metadata-only signing operation readiness while preserving no signing, no verification, no signer invocation behavior, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority
+make the completed signing operation metadata implementation visible from public entry points while preserving no signing, no verification, no signer invocation behavior, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
+Latticra Seal signing operation metadata implementation
 ```
 
 ## Previous contract slices retained for continuity
@@ -157,18 +163,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Seal signing operation status/public-entry alignment, with completion estimate review only if capability posture changes
+Seal key-handling boundary contract, with no signing, private-key material, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 Purpose:
 
 ```text
-make the completed Seal signing operation metadata implementation visible as a dedicated status/public-entry checkpoint while preserving no signing, no verification, no signer invocation behavior, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+define the next Seal key-handling boundary before any key material, private-key handling, signing, verification, signer invocation behavior, host behavior, network behavior, capability enforcement, or runtime authority is allowed; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Seal signing operation status/public-entry alignment.
+1. Seal key-handling boundary contract.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.

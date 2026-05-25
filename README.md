@@ -190,6 +190,7 @@ latticra_seal_signer_invocation_metadata_present=1
 latticra_seal_signer_invocation_status_present=1
 latticra_seal_signing_operation_contract_present=1
 latticra_seal_signing_operation_metadata_present=1
+latticra_seal_signing_operation_status_present=1
 latticra_panel_gui_workbench_present=1
 fedora_local_rpm_draft_present=1
 visual_theorem_engines_present=1
@@ -631,6 +632,7 @@ seal_signer_invocation_metadata_present=1
 seal_signer_invocation_status_present=1
 seal_signing_operation_contract_present=1
 seal_signing_operation_metadata_present=1
+seal_signing_operation_status_present=1
 runtime_gate_report_only=1
 policy_decision_state=report-only
 runtime_gate_state=report-only
@@ -692,6 +694,8 @@ The signer invocation status record makes that metadata-only checkpoint visible 
 
 The signing operation metadata implementation classifies ready signer invocation metadata into a metadata-only signing-operation eligibility record. It does not add signing, verification, signer invocation behavior, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority.
 
+The signing operation status record makes that metadata-only checkpoint visible from the public entry points without changing implementation behavior.
+
 That claim is intentionally limited. It does not mean Latticra Seal currently implements production runtime enforcement, policy enforcement, cryptographic key authority, MCP protocol behavior, MCP server behavior, MCP client behavior, AI-agent execution control, host behavior, network behavior, object sealing, key storage, or revocation lookup.
 
 Relevant Seal records:
@@ -719,6 +723,7 @@ Relevant Seal records:
 - [`docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md)
 - [`docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md`](docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md)
+- [`docs/status/SEAL_SIGNING_OPERATION_STATUS.md`](docs/status/SEAL_SIGNING_OPERATION_STATUS.md)
 - [`docs/status/SEAL_SIGNER_INVOCATION_STATUS.md`](docs/status/SEAL_SIGNER_INVOCATION_STATUS.md)
 - [`docs/status/SEAL_SIGNER_HANDOFF_STATUS.md`](docs/status/SEAL_SIGNER_HANDOFF_STATUS.md)
 - [`docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md`](docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md)

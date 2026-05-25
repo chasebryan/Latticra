@@ -22,6 +22,7 @@ contract="docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md"
 
 require_file "$contract"
 require_file docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
+require_file docs/status/SEAL_SIGNING_OPERATION_STATUS.md
 require_file docs/LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md
 require_file docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
 require_file docs/status/SEAL_SIGNER_INVOCATION_STATUS.md
@@ -32,6 +33,7 @@ require_file src/seal_signer_invocation.c
 require_file tests/seal_signing_operation_invariants.c
 require_file tests/seal_signer_invocation_invariants.c
 require_file scripts/test-latticra-seal-signing-operation.sh
+require_file scripts/test-latticra-seal-signing-operation-status.sh
 require_file scripts/test-latticra-seal-signer-invocation-contract.sh
 require_file scripts/test-latticra-seal-signer-invocation.sh
 require_file scripts/test-latticra-seal-signer-invocation-status.sh
@@ -86,16 +88,22 @@ require_contains 'seal_signing_operation_contract_present=1' README.md
 require_contains 'seal_signing_operation_metadata_present=1' README.md
 require_contains 'Seal signing operation contract' STATUS.md
 require_contains 'Seal signing operation metadata implementation' STATUS.md
+require_contains 'Seal signing operation status/public-entry alignment' STATUS.md
 require_contains 'seal_signing_operation_contract_present=1' STATUS.md
 require_contains 'seal_signing_operation_metadata_present=1' STATUS.md
+require_contains 'seal_signing_operation_status_present=1' STATUS.md
 require_contains 'seal_signing_operation_contract_present=1' docs/status/README.md
 require_contains 'seal_signing_operation_metadata_present=1' docs/status/README.md
+require_contains 'seal_signing_operation_status_present=1' docs/status/README.md
 require_contains 'Latticra Seal signing operation contract' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal signing operation metadata implementation' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal signing operation status/public-entry alignment' docs/status/CURRENT_STATUS.md
 require_contains 'LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
+require_contains 'SEAL_SIGNING_OPERATION_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal signing operation contract' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal signing operation metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal signing operation status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Latticra Seal signing operation status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Seal key-handling boundary contract' docs/project_notes/UPCOMING_WORK.md
 
 printf 'seal signing operation contract: ok\n'
