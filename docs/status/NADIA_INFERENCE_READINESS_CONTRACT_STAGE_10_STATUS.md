@@ -92,4 +92,4 @@ nadia_inference_readiness_contract_stage_10: ok
 
 ## Next Stage
 
-Stage-11 should define a runtime invocation contract only after inference-readiness metadata, model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.
+Stage-11 now defines a runtime-invocation contract after inference-readiness metadata, model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.

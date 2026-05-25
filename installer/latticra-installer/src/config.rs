@@ -407,8 +407,12 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(out);
     let _ = writeln!(out, "[nadia]");
-    let _ = writeln!(out, "system_name=Latticra Nadia");
-    let _ = writeln!(out, "stage=10-inference-readiness-contract");
+    let _ = writeln!(out, "system_name=Latticra Nadiav0.0.1");
+    let _ = writeln!(out, "public_name=Nadia");
+    let _ = writeln!(out, "interactive_name=Nadia");
+    let _ = writeln!(out, "implementation_name=Nadiav0.0.1");
+    let _ = writeln!(out, "documentation_code_name=Nadiav0.0.1");
+    let _ = writeln!(out, "stage=11-runtime-invocation-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -586,6 +590,33 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "runtime_invocation_authority=0");
     let _ = writeln!(out, "token_generation_authority=0");
     let _ = writeln!(out, "model_session_authority=0");
+    let _ = writeln!(
+        out,
+        "runtime_invocation_contract_stage=11-runtime-invocation-contract"
+    );
+    let _ = writeln!(
+        out,
+        "runtime_invocation_contract_command=scripts/nadia-runtime-invocation-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_runtime_invocation_contract_command=latticra-nadia runtime-invocation"
+    );
+    let _ = writeln!(out, "runtime_invocation_stage=contract-only");
+    let _ = writeln!(out, "runtime_invocation_contract_status=contract_only");
+    let _ = writeln!(out, "runtime_invocation_allowed=0");
+    let _ = writeln!(out, "invocation_decision=blocked_contract_only");
+    let _ = writeln!(out, "invocation_evidence_present=1");
+    let _ = writeln!(out, "requires_inference_readiness_contract=1");
+    let _ = writeln!(out, "requires_future_model_load_contract=1");
+    let _ = writeln!(out, "invocation_promotion_allowed=0");
+    let _ = writeln!(out, "runtime_process_spawn_authority=0");
+    let _ = writeln!(out, "runtime_binary_execution_authority=0");
+    let _ = writeln!(out, "runtime_session_authority=0");
+    let _ = writeln!(out, "runtime_process_spawned=0");
+    let _ = writeln!(out, "runtime_binary_executed=0");
+    let _ = writeln!(out, "runtime_session_created=0");
+    let _ = writeln!(out, "token_generation_performed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

@@ -16,7 +16,10 @@ Nadia's Latticra component identity is:
 
 ```text
 public_name=Nadia
-system_name=Latticra Nadia
+system_name=Latticra Nadiav0.0.1
+interactive_name=Nadia
+implementation_name=Nadiav0.0.1
+documentation_code_name=Nadiav0.0.1
 command_name=latticra-nadia
 component_key=nadia_offline_ai
 ```
@@ -83,6 +86,7 @@ share/latticra/nadia/README.md
 share/latticra/nadia/context-packs/
 share/latticra/nadia/model-registry/
 share/latticra/nadia/productivity-ledger/
+share/latticra/nadia/runtime-invocation/
 share/latticra/components/nadia-offline-ai.installed
 bin/latticra-nadia
 ```
@@ -422,11 +426,63 @@ See [`NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md`](NADIA_INFERENCE_READINESS
 
 ### Stage-11: Runtime Invocation Contract
 
-Only after inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a runtime invocation contract. The default remains no model weights installed, no model weights loaded, no inference, no prompt evaluation, no tool execution, no source mutation, no network authority, and no sexual user functionality.
+Record runtime-invocation metadata after inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-11 can verify prerequisite evidence and record a blocked invocation decision, but it cannot spawn a runtime process, execute a runtime binary, create a runtime session, load model weights, generate tokens, materialize or evaluate prompts, or run inference.
+
+```text
+nadia_stage_11_runtime_invocation_contract_present=1
+runtime_invocation_contract_command=scripts/nadia-runtime-invocation-contract.sh
+installed_runtime_invocation_contract_command=latticra-nadia runtime-invocation
+requires_inference_readiness_contract=1
+runtime_invocation_stage=contract-only
+runtime_invocation_contract_status=contract_only
+runtime_invocation_authority=0
+runtime_invocation_allowed=0
+runtime_invoked=0
+invocation_decision=blocked_contract_only
+invocation_evidence_present=1
+requires_model_registry_contract=1
+requires_prompt_contract=1
+requires_runtime_profile=1
+requires_protective_safety_boundary=1
+requires_tool_preflight=1
+requires_operator_review=1
+requires_future_model_load_contract=1
+invocation_promotion_allowed=0
+runtime_process_spawn_authority=0
+runtime_binary_execution_authority=0
+runtime_session_authority=0
+model_session_authority=0
+token_generation_authority=0
+model_runtime_present=0
+model_runtime_invoked=0
+runtime_process_spawned=0
+runtime_binary_executed=0
+runtime_session_created=0
+model_weights_loaded=0
+model_weights_downloaded=0
+prompt_materialized=0
+prompt_evaluation_authority=0
+prompt_evaluated=0
+token_generation_performed=0
+inference_authority=0
+inference_performed=0
+tool_execution_authority=0
+source_mutation_authority=0
+network_authority=0
+sexual_content_generation=0
+sexual_request_refusal=always
+manipulation_resistance=required
+```
+
+See [`NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md`](NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md).
+
+### Stage-12: Model Load Contract
+
+Only after runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a model-load contract. The default remains no model weights installed, no model weights loaded, no inference, no prompt evaluation, no tool execution, no source mutation, no network authority, and no sexual user functionality.
 
 ## Non-Claims
 
-Stage-0 Nadia is not:
+The current Nadia foundation is not:
 
 - a production AI assistant;
 - an autonomous coding agent;
@@ -441,7 +497,7 @@ Stage-0 Nadia is not:
 
 ## Promotion Gate
 
-Before Stage-11 starts, Latticra should keep these guards passing:
+Before Stage-12 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -455,6 +511,7 @@ sh scripts/test-nadia-guarded-tool-authority-stage-7.sh
 sh scripts/test-nadia-prompt-evaluation-contract-stage-8.sh
 sh scripts/test-nadia-local-model-registry-contract-stage-9.sh
 sh scripts/test-nadia-inference-readiness-contract-stage-10.sh
+sh scripts/test-nadia-runtime-invocation-contract-stage-11.sh
 ```
 
-Before runtime invocation starts, a separate runtime-invocation contract must exist and name model-load boundaries, prompt receipt fields, refusal boundary inheritance, operator review gates, runtime invocation denial fields, and non-claims.
+Before model loading starts, a separate model-load contract must exist and name model-weight provenance, weight-loading denial fields, prompt receipt fields, refusal boundary inheritance, operator review gates, and non-claims.

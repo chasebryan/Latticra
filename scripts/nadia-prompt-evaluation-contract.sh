@@ -141,7 +141,11 @@ cat > "$REPORT" <<REPORT
 NADIA PROMPT EVALUATION CONTRACT
 
 timestamp_utc=$TS
-system_name=Latticra Nadia
+system_name=Latticra Nadiav0.0.1
+public_name=Nadia
+interactive_name=Nadia
+implementation_name=Nadiav0.0.1
+documentation_code_name=Nadiav0.0.1
 stage=8-prompt-evaluation-contract
 output_dir=$OUT_DIR
 request_class=$REQUEST_CLASS

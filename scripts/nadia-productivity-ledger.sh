@@ -129,7 +129,11 @@ cat > "$ENTRY" <<ENTRY
 NADIA PRODUCTIVITY LEDGER ENTRY
 
 timestamp_utc=$TS
-system_name=Latticra Nadia
+system_name=Latticra Nadiav0.0.1
+public_name=Nadia
+interactive_name=Nadia
+implementation_name=Nadiav0.0.1
+documentation_code_name=Nadiav0.0.1
 stage=5-productivity-ledger-loop
 output_dir=$OUT_DIR
 learning_scope=operator-reviewed-local-productivity

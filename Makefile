@@ -1,4 +1,4 @@
-.PHONY: seal nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness
+.PHONY: seal nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation
 
 seal:
 	./scripts/latticra-seal-smoke.sh
@@ -32,6 +32,9 @@ nadia-model-registry:
 
 nadia-inference-readiness:
 	sh ./scripts/nadia-inference-readiness-contract.sh
+
+nadia-runtime-invocation:
+	sh ./scripts/nadia-runtime-invocation-contract.sh
 
 .PHONY: seal-policy-denials
 

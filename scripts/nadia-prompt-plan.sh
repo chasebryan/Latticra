@@ -126,7 +126,11 @@ cat > "$PLAN" <<PLAN
 NADIA PROMPT PLAN
 
 timestamp_utc=$TS
-system_name=Latticra Nadia
+system_name=Latticra Nadiav0.0.1
+public_name=Nadia
+interactive_name=Nadia
+implementation_name=Nadiav0.0.1
+documentation_code_name=Nadiav0.0.1
 stage=3-developer-workbench-planning
 output_dir=$OUT_DIR
 task=$TASK

@@ -131,7 +131,11 @@ cat > "$REPORT" <<REPORT
 NADIA PROTECTIVE SAFETY BOUNDARY
 
 timestamp_utc=$TS
-system_name=Latticra Nadia
+system_name=Latticra Nadiav0.0.1
+public_name=Nadia
+interactive_name=Nadia
+implementation_name=Nadiav0.0.1
+documentation_code_name=Nadiav0.0.1
 stage=6-protective-safety-boundary
 output_dir=$OUT_DIR
 request_class=$REQUEST_CLASS

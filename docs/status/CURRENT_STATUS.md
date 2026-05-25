@@ -15,6 +15,7 @@ Latest Nadia guarded tool authority Stage-7 note: 2026-05-25 CDT
 Latest Nadia prompt evaluation contract Stage-8 note: 2026-05-25 CDT
 Latest Nadia local model registry contract Stage-9 note: 2026-05-25 CDT
 Latest Nadia inference readiness contract Stage-10 note: 2026-05-25 CDT
+Latest Nadia runtime invocation contract Stage-11 note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -131,6 +132,7 @@ The repository currently emphasizes:
 - Nadia prompt evaluation contract Stage-8 before prompt materialization, prompt evaluation, inference, or tool execution;
 - Nadia local model registry contract Stage-9 before model selection, model installation, prompt evaluation, inference, or tool execution;
 - Nadia inference readiness contract Stage-10 before runtime invocation, model loading, prompt evaluation, inference, or tool execution;
+- Nadia runtime invocation contract Stage-11 before runtime process spawning, model session creation, model loading, token generation, inference, or tool execution;
 - L-UI rendering implementation;
 - L-UI rendering detailed report refinement;
 - L-UI rendering README/status alignment;
@@ -370,7 +372,7 @@ These percentages are planning estimates only.
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 31% |
+| Nadia offline AI foundation | 34% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |

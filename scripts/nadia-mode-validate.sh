@@ -171,7 +171,11 @@ cat > "$REPORT" <<REPORT
 NADIA MODE VALIDATION
 
 timestamp_utc=$TS
-system_name=Latticra Nadia
+system_name=Latticra Nadiav0.0.1
+public_name=Nadia
+interactive_name=Nadia
+implementation_name=Nadiav0.0.1
+documentation_code_name=Nadiav0.0.1
 stage=4-systems-engineering-mode-validation
 output_dir=$OUT_DIR
 mode=$MODE
