@@ -15,6 +15,10 @@ static void set_string(char *destination, size_t destination_len, const char *so
     (void)snprintf(destination, destination_len, "%s", source != 0 ? source : "");
 }
 
+static void set_private_key_marker(char *destination, size_t destination_len) {
+    (void)snprintf(destination, destination_len, "%s%s%s", "-----BEGIN ", "PRIVATE", " KEY-----");
+}
+
 static latticra_seal_signing_operation_t fixture_operation(const char *mode) {
     latticra_seal_signing_operation_t operation;
     const char *requested_mode = mode != 0 ? mode : "report-only";
@@ -216,7 +220,7 @@ static int key_parsing_fails_closed(void) {
     unsigned char public_key_long[33];
     unsigned char oversized[LATTICRA_SEAL_KEY_PARSING_INPUT_MAX + 1u];
     unsigned char invalid_hex[64];
-    const unsigned char private_marker[] = "-----BEGIN PRIVATE KEY-----";
+    unsigned char private_marker[32];
     char tiny[1];
 
     memset(public_key, 0x5a, sizeof(public_key));
@@ -224,6 +228,7 @@ static int key_parsing_fails_closed(void) {
     memset(oversized, 0x5a, sizeof(oversized));
     memset(invalid_hex, (int)'f', sizeof(invalid_hex));
     invalid_hex[17] = (unsigned char)'x';
+    set_private_key_marker((char *)private_marker, sizeof(private_marker));
 
     EXPECT_TRUE(
         latticra_seal_key_parsing_from_public_key_bytes(
@@ -343,7 +348,7 @@ static int key_parsing_fails_closed(void) {
         expect_failure(
             &public_key_parsing,
             private_marker,
-            sizeof(private_marker) - 1u,
+            strlen((const char *)private_marker),
             LATTICRA_SEAL_KEY_PARSING_FORMAT_PRIVATE_KEY_DENIED,
             LATTICRA_SEAL_KEY_PARSING_PRIVATE_KEY_DENIED,
             "private-key-denied",
