@@ -20,6 +20,7 @@ macos_app_bundle_writer_phase_report_present=1
 macos_app_bundle_writer_path_guard_present=1
 macos_app_bundle_writer_marker_inspection_present=1
 macos_app_bundle_writer_missing_candidate_detection_present=1
+macos_local_candidate_asset_probe_present=1
 macos_app_bundle_writer_commit_disabled=1
 ```
 
@@ -120,5 +121,5 @@ This alignment is not macOS installation, macOS app bundle evidence, signed app 
 ## Next Recommended Lane
 
 ```text
-Add no-effect integration between the local candidate asset probe and the app bundle writer dry-run so supplied candidates can move the dry-run decision to ready-for-future-commit-gate while still keeping commit_user_local_managed_artifacts=0.
+Add a macOS commit gate contract that keeps commit_user_local_managed_artifacts=0 until managed-write implementation and verification-transcript evidence exist.
 ```

@@ -30,6 +30,7 @@ non-claims
 - [`MACOS_APP_BUNDLE_WRITER_DRY_RUN_STATUS.md`](MACOS_APP_BUNDLE_WRITER_DRY_RUN_STATUS.md) - macOS app bundle writer dry-run status for phase-report output, unsafe-path validation, marker inspection, and disabled commit behavior.
 - [`MACOS_APP_BUNDLE_WRITER_ALIGNMENT_STATUS.md`](MACOS_APP_BUNDLE_WRITER_ALIGNMENT_STATUS.md) - macOS app bundle writer alignment status separating the no-effect dry-run writer prototype from any future commit-capable writer.
 - [`MACOS_LOCAL_CANDIDATE_ASSET_PROBE_STATUS.md`](MACOS_LOCAL_CANDIDATE_ASSET_PROBE_STATUS.md) - macOS local candidate asset probe status for caller-supplied Panel executable and icon readiness checks without build, copy, signing, notarization, or writes.
+- [`MACOS_DRY_RUN_WRITER_CANDIDATE_INTEGRATION_STATUS.md`](MACOS_DRY_RUN_WRITER_CANDIDATE_INTEGRATION_STATUS.md) - macOS dry-run writer candidate integration status for proving accepted local candidates can move the writer dry-run to its future commit-gate decision without writes.
 - [`NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](NADIA_OFFLINE_AI_STAGE_0_STATUS.md) - Nadia offline AI Stage-0 foundation status for Panel installability, Console interoperability, and awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) - Nadia Stage-1 local context-engine status for no-network context-pack generation.
 - [`NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md`](NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md) - Nadia Stage-2 runtime-profile status for offline model-readiness metadata before inference.

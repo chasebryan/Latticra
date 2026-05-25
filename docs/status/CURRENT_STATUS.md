@@ -476,6 +476,7 @@ Alignment record:
 
 ```text
 docs/status/SEAL_README_STATUS_ROW_ALIGNMENT.md
+seal_readme_status_row_alignment_present=1
 ```
 
 The defensive threat model validation refinement records the current evidence-mapping, external-source checkpoint, manual-review requirement, and next-gap triage while preserving no security controls, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, no production protection claim, and no runtime authority.

@@ -71,7 +71,7 @@ macos_app_bundle_writer_dry_run: ok
 ## Next Recommended Lane
 
 ```text
-Add no-effect integration between the local candidate asset probe and the app bundle writer dry-run so supplied candidates can move the dry-run decision to ready-for-future-commit-gate while still keeping commit_user_local_managed_artifacts=0.
+Add a macOS commit gate contract that keeps commit_user_local_managed_artifacts=0 until managed-write implementation and verification-transcript evidence exist.
 ```
 
 ## Non-Claims

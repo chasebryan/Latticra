@@ -220,6 +220,7 @@ uninstall receipt outside removed prefix
 macos_user_local_app_bundle_implementation_plan_present=1
 macos_app_bundle_writer_present=0
 macos_app_bundle_writer_dry_run_present=1
+macos_local_candidate_asset_probe_present=1
 macos_app_bundle_created=0
 macos_install_verified=0
 macos_reset_uninstall_implemented=0
@@ -238,5 +239,5 @@ This plan is not macOS installation, macOS app bundle evidence, signed app evide
 ## Next Recommended Lane
 
 ```text
-Add no-effect integration between the local candidate asset probe and the app bundle writer dry-run so supplied candidates can move the dry-run decision to ready-for-future-commit-gate while still keeping commit_user_local_managed_artifacts=0.
+Add a macOS commit gate contract that keeps commit_user_local_managed_artifacts=0 until managed-write implementation and verification-transcript evidence exist.
 ```

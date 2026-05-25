@@ -306,6 +306,18 @@ publish and guard the existing report-only Seal policy decision metadata and det
 ## Earlier status/public-entry slice
 
 ```text
+Latticra Seal signed request status/public-entry alignment
+```
+
+Purpose completed:
+
+```text
+publish and guard the existing report-only Seal signed request metadata from README/status/foundation entry points while preserving no signature generation, no signature verification, no public-key parsing, no trust-store loading, no private-key handling, no key generation, no hardware-key use, no revocation lookup, no network trust lookup, no signed request enforcement, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority
+```
+
+## Older status/public-entry slice
+
+```text
 Latticra Seal request freshness status/public-entry alignment
 ```
 

@@ -1,0 +1,39 @@
+name: Quality
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Linux GUI build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            make \
+            pkg-config \
+            desktop-file-utils \
+            libx11-dev \
+            libxcb1-dev \
+            libxcursor-dev \
+            libxrandr-dev \
+            libxi-dev \
+            libxkbcommon-dev \
+            libgl1-mesa-dev \
+            libwayland-dev
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Run quality aggregate
+        run: make quality
