@@ -337,7 +337,7 @@ developer_cli_helpers=$DEVELOPER_CLI_HELPERS
 
 [nadia]
 system_name=Latticra Nadia
-stage=4-systems-engineering-mode-validation
+stage=5-productivity-ledger-loop
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -355,6 +355,11 @@ systems_engineering_mode_stage=4-systems-engineering-mode-validation
 mode_validation_command=scripts/nadia-mode-validate.sh
 installed_mode_validation_command=latticra-nadia mode-validate
 mode_taxonomy_present=1
+productivity_loop_stage=5-productivity-ledger-loop
+productivity_ledger_command=scripts/nadia-productivity-ledger.sh
+installed_productivity_ledger_command=latticra-nadia productivity-ledger
+learning_scope=operator-reviewed-local-productivity
+ledger_append_only=1
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -553,8 +558,8 @@ if bool_true "$NADIA_OFFLINE_AI"; then
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia"
-stage = "4-systems-engineering-mode-validation"
-mode = "offline-systems-engineering"
+stage = "5-productivity-ledger-loop"
+mode = "offline-productivity-loop"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -569,6 +574,10 @@ prompt_plan_command = "scripts/nadia-prompt-plan.sh"
 systems_engineering_mode_stage = "4-systems-engineering-mode-validation"
 mode_validation_command = "scripts/nadia-mode-validate.sh"
 mode_taxonomy_present = true
+productivity_loop_stage = "5-productivity-ledger-loop"
+productivity_ledger_command = "scripts/nadia-productivity-ledger.sh"
+learning_scope = "operator-reviewed-local-productivity"
+ledger_append_only = true
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -583,11 +592,11 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-4 metadata lane.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-5 metadata lane.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, model-registry, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, and mode-validation metadata when the operator runs latticra-nadia mode-validate. It does not evaluate prompts, install model weights, run inference, use the network, train a model, or mutate source.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, model-registry, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, and productivity-ledger entries when the operator runs latticra-nadia productivity-ledger. It does not evaluate prompts, install model weights, run inference, use the network, train or distill a model, or mutate source.
 NADIAREADME
 fi
 
@@ -735,8 +744,8 @@ case "\${1:-status}" in
     echo
     echo "name=Nadia"
     echo "system_name=Latticra Nadia"
-    echo "stage=4-systems-engineering-mode-validation"
-    echo "mode=offline-systems-engineering"
+    echo "stage=5-productivity-ledger-loop"
+    echo "mode=offline-productivity-loop"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "context_packs=\$NADIA_DIR/context-packs"
@@ -751,6 +760,10 @@ case "\${1:-status}" in
     echo "systems_engineering_mode_stage=4-systems-engineering-mode-validation"
     echo "mode_validation_command=latticra-nadia mode-validate"
     echo "mode_taxonomy_present=1"
+    echo "productivity_loop_stage=5-productivity-ledger-loop"
+    echo "productivity_ledger_command=latticra-nadia productivity-ledger"
+    echo "learning_scope=operator-reviewed-local-productivity"
+    echo "ledger_append_only=1"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -765,6 +778,8 @@ case "\${1:-status}" in
     echo "network_authority=0"
     echo "tool_execution_authority=0"
     echo "source_mutation_authority=0"
+    echo "training_performed=0"
+    echo "distillation_performed=0"
     echo "self_modification_authority=0"
     echo "production_ai_claimed=0"
     ;;
@@ -821,11 +836,25 @@ case "\${1:-status}" in
       --prompt-plan "\$NADIA_DIR/prompt-plans/latest-prompt-plan.txt" \
       --output "\$NADIA_DIR/mode-validations"
     ;;
+  productivity-ledger|ledger|productivity)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-productivity-ledger.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia productivity-ledger script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --mode-validation "\$NADIA_DIR/mode-validations/latest-mode-validation.txt" \
+      --output "\$NADIA_DIR/productivity-ledger"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|path}" >&2
     exit 64
     ;;
 esac

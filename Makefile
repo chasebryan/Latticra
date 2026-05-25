@@ -1,4 +1,4 @@
-.PHONY: seal nadia-context nadia-runtime nadia-plan nadia-mode
+.PHONY: seal nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger
 
 seal:
 	./scripts/latticra-seal-smoke.sh
@@ -14,6 +14,9 @@ nadia-plan:
 
 nadia-mode:
 	sh ./scripts/nadia-mode-validate.sh
+
+nadia-ledger:
+	sh ./scripts/nadia-productivity-ledger.sh
 
 .PHONY: seal-policy-denials
 

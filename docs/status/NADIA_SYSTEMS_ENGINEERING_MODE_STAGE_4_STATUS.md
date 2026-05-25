@@ -57,4 +57,4 @@ nadia_systems_engineering_mode_stage_4: ok
 
 ## Next Stage
 
-Stage-5 should add a local productivity-ledger loop for improving retrieval, ranking, plan templates, and test recommendations without model training or autonomous source mutation.
+Stage-5 now adds a local productivity-ledger loop for improving retrieval, ranking, plan templates, and test recommendations without model training or autonomous source mutation.

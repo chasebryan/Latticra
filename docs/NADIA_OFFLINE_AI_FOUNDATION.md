@@ -214,6 +214,24 @@ See [`NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md`](NADIA_SYSTEMS_ENGINEERING_MODE
 
 Use the local productivity ledger to improve retrieval, ranking, plan templates, test recommendations, and project-specific memory. Any model training or distillation remains a separate future contract.
 
+```text
+nadia_stage_5_productivity_loop_present=1
+productivity_ledger_command=scripts/nadia-productivity-ledger.sh
+installed_productivity_ledger_command=latticra-nadia productivity-ledger
+requires_mode_validation=1
+learning_scope=operator-reviewed-local-productivity
+ledger_append_only=1
+project_memory_scope=local-metadata-only
+model_runtime_invoked=0
+inference_performed=0
+prompt_evaluated=0
+training_performed=0
+distillation_performed=0
+source_mutation_authority=0
+```
+
+See [`NADIA_PRODUCTIVITY_LOOP_STAGE_5.md`](NADIA_PRODUCTIVITY_LOOP_STAGE_5.md).
+
 ### Stage-6: Guarded Tool Authority
 
 Only after Nucleus, Runtime Boundary, and Seal gates mature, consider bounded tool execution. The default remains deny-by-default, receipt-bound, and operator-visible.
@@ -234,7 +252,7 @@ Stage-0 Nadia is not:
 
 ## Promotion Gate
 
-Before Stage-5 starts, Latticra should keep these guards passing:
+Before Stage-6 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -242,6 +260,7 @@ sh scripts/test-nadia-local-context-engine-stage-1.sh
 sh scripts/test-nadia-runtime-profile-stage-2.sh
 sh scripts/test-nadia-developer-workbench-stage-3.sh
 sh scripts/test-nadia-systems-engineering-mode-stage-4.sh
+sh scripts/test-nadia-productivity-loop-stage-5.sh
 ```
 
-Before the productivity loop starts, a separate productivity-ledger contract must exist and name local learning inputs, review gates, ranking behavior, retention behavior, receipt fields, and non-claims.
+Before guarded tool authority starts, a separate authority contract must exist and name deny-by-default tool scopes, execution constraints, operator review gates, receipts, failure behavior, and non-claims.

@@ -9,6 +9,7 @@ Latest Nadia local context engine Stage-1 note: 2026-05-25 CDT
 Latest Nadia runtime profile Stage-2 note: 2026-05-25 CDT
 Latest Nadia developer workbench Stage-3 note: 2026-05-25 CDT
 Latest Nadia systems engineering mode Stage-4 note: 2026-05-25 CDT
+Latest Nadia productivity loop Stage-5 note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -119,6 +120,7 @@ The repository currently emphasizes:
 - Nadia runtime profile Stage-2 for offline model-readiness metadata before inference;
 - Nadia developer workbench Stage-3 for prompt-plan generation without prompt evaluation;
 - Nadia systems engineering mode Stage-4 for prompt-plan mode validation before prompt evaluation;
+- Nadia productivity loop Stage-5 for operator-reviewed local productivity ledger entries before training or tool authority;
 - L-UI rendering implementation;
 - L-UI rendering detailed report refinement;
 - L-UI rendering README/status alignment;
@@ -358,7 +360,7 @@ These percentages are planning estimates only.
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 13% |
+| Nadia offline AI foundation | 16% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |

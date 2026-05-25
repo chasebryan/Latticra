@@ -34,6 +34,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NADIA_RUNTIME_PROFILE_STAGE_2.md`](NADIA_RUNTIME_PROFILE_STAGE_2.md) — Stage-2 offline runtime-profile boundary for Nadia before inference.
 - [`NADIA_DEVELOPER_WORKBENCH_STAGE_3.md`](NADIA_DEVELOPER_WORKBENCH_STAGE_3.md) — Stage-3 developer-workbench prompt-plan generation for Nadia before prompt evaluation.
 - [`NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md`](NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md) — Stage-4 systems-engineering mode validation for Nadia prompt plans before prompt evaluation.
+- [`NADIA_PRODUCTIVITY_LOOP_STAGE_5.md`](NADIA_PRODUCTIVITY_LOOP_STAGE_5.md) — Stage-5 operator-reviewed productivity ledger for Nadia local learning evidence before training or tool authority.
 - [`SELF_UPDATE_MODEL.md`](SELF_UPDATE_MODEL.md) — staged signed update and rollback design.
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
@@ -53,6 +54,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md`](status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md) — status record for Nadia Stage-2 runtime-profile metadata before inference.
 - [`status/NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md`](status/NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md) — status record for Nadia Stage-3 prompt-plan generation before prompt evaluation.
 - [`status/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4_STATUS.md`](status/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4_STATUS.md) — status record for Nadia Stage-4 systems-engineering mode validation before prompt evaluation.
+- [`status/NADIA_PRODUCTIVITY_LOOP_STAGE_5_STATUS.md`](status/NADIA_PRODUCTIVITY_LOOP_STAGE_5_STATUS.md) — status record for Nadia Stage-5 productivity ledger before training or tool authority.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
@@ -237,6 +239,7 @@ Nadia local context engine Stage-1 + guardrails
 Nadia runtime profile Stage-2 + guardrails
 Nadia developer workbench Stage-3 + guardrails
 Nadia systems engineering mode Stage-4 + guardrails
+Nadia productivity loop Stage-5 + guardrails
 Latticra Seal verification policy status/public-entry alignment + guardrails
 Latticra Seal key parsing status/public-entry alignment + guardrails
 Latticra Seal bounded no-effect key parsing metadata + invariants

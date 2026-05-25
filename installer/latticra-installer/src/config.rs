@@ -408,7 +408,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out);
     let _ = writeln!(out, "[nadia]");
     let _ = writeln!(out, "system_name=Latticra Nadia");
-    let _ = writeln!(out, "stage=4-systems-engineering-mode-validation");
+    let _ = writeln!(out, "stage=5-productivity-ledger-loop");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -454,6 +454,17 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "installed_mode_validation_command=latticra-nadia mode-validate"
     );
     let _ = writeln!(out, "mode_taxonomy_present=1");
+    let _ = writeln!(out, "productivity_loop_stage=5-productivity-ledger-loop");
+    let _ = writeln!(
+        out,
+        "productivity_ledger_command=scripts/nadia-productivity-ledger.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_productivity_ledger_command=latticra-nadia productivity-ledger"
+    );
+    let _ = writeln!(out, "learning_scope=operator-reviewed-local-productivity");
+    let _ = writeln!(out, "ledger_append_only=1");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");
