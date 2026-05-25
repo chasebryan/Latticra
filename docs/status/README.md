@@ -23,6 +23,7 @@ non-claims
 - [`CURRENT_STATUS.md`](CURRENT_STATUS.md) — current project status, completion estimates, and next priorities.
 - [`CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](CURRENT_ESTIMATE_REFRESH_2026_05_24.md) - current planning-estimate refresh after Panel, Seal, documentation, and local evidence work.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
+- [`SEAL_KEY_PARSING_STATUS.md`](SEAL_KEY_PARSING_STATUS.md) — Latticra Seal key parsing metadata status and public-entry checkpoint.
 - [`SEAL_PUBLIC_KEY_PARSING_STATUS.md`](SEAL_PUBLIC_KEY_PARSING_STATUS.md) — Latticra Seal public-key parsing metadata status and public-entry checkpoint.
 - [`SEAL_KEY_MATERIAL_STATUS.md`](SEAL_KEY_MATERIAL_STATUS.md) — Latticra Seal key-material metadata status and public-entry checkpoint.
 - [`SEAL_KEY_HANDLING_STATUS.md`](SEAL_KEY_HANDLING_STATUS.md) — Latticra Seal key-handling metadata status and public-entry checkpoint.
@@ -107,6 +108,7 @@ seal_public_key_parsing_status_present=1
 seal_future_key_parsing_implementation_contract_present=1
 seal_future_key_parsing_implementation_plan_present=1
 seal_key_parsing_metadata_present=1
+seal_key_parsing_status_present=1
 operator_visible_status_surface=1
 deterministic_local_report_path=1
 core_blocked_case_set_complete=1
@@ -139,13 +141,13 @@ core_blocked_case_set_complete=1
 The careful current public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata for caller-provided public-key bytes, and core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, and core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 The current next recommended Seal lane is:
 
 ```text
-Add Seal key parsing status/public-entry alignment for the bounded public-key byte metadata implementation
+Add Seal verification policy status/public-entry alignment for metadata-only verification policy visibility
 ```
 
 ## Current Fedora VM CLI payload validation lane checkpoint

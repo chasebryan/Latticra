@@ -191,6 +191,7 @@ The implementation is covered by:
 ```sh
 sh scripts/test-latticra-seal-future-key-parsing-implementation-plan.sh
 sh scripts/test-latticra-seal-key-parsing.sh
+sh scripts/test-latticra-seal-key-parsing-status.sh
 sh scripts/test-latticra-seal-public-key-parsing-status.sh
 ```
 
@@ -199,11 +200,12 @@ Expected output:
 ```text
 seal future key parsing implementation plan: ok
 seal key parsing invariants: ok
+seal key parsing status: ok
 seal public-key parsing status: ok
 ```
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is key parsing status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is verification policy status/public-entry alignment or another narrow status/index alignment follow-up.
 
-That future slice must not add key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.
+That future slice must not add cryptographic verification, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

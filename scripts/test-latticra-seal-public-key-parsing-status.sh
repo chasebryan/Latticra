@@ -26,6 +26,7 @@ require_file docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md
 require_file docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_CONTRACT.md
 require_file docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md
 require_file docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md
+require_file docs/status/SEAL_KEY_PARSING_STATUS.md
 require_file include/latticra/seal_public_key_parsing.h
 require_file include/latticra/seal_key_parsing.h
 require_file src/seal_public_key_parsing.c
@@ -37,6 +38,7 @@ require_file scripts/test-latticra-seal-public-key-parsing.sh
 require_file scripts/test-latticra-seal-future-key-parsing-implementation-contract.sh
 require_file scripts/test-latticra-seal-future-key-parsing-implementation-plan.sh
 require_file scripts/test-latticra-seal-key-parsing.sh
+require_file scripts/test-latticra-seal-key-parsing-status.sh
 require_file docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md
 require_file docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
 require_file docs/status/SEAL_KEY_MATERIAL_STATUS.md
@@ -67,6 +69,7 @@ require_contains 'seal_public_key_parsing_status_present=1' "$status_file"
 require_contains 'seal_future_key_parsing_implementation_contract_present=1' "$status_file"
 require_contains 'seal_future_key_parsing_implementation_plan_present=1' "$status_file"
 require_contains 'seal_key_parsing_metadata_present=1' "$status_file"
+require_contains 'seal_key_parsing_status_present=1' "$status_file"
 require_contains 'seal_key_material_contract_present=1' "$status_file"
 require_contains 'seal_key_material_implementation_present=1' "$status_file"
 require_contains 'seal_key_material_status_present=1' "$status_file"
@@ -113,17 +116,21 @@ require_contains 'status=public-key-parsing-metadata' "$status_file"
 require_contains 'seal future key parsing implementation contract: ok' "$status_file"
 require_contains 'seal future key parsing implementation plan: ok' "$status_file"
 require_contains 'seal key parsing invariants: ok' "$status_file"
-require_contains 'key parsing status/public-entry alignment' "$status_file"
+require_contains 'seal key parsing status: ok' "$status_file"
+require_contains 'verification policy status/public-entry alignment' "$status_file"
 
 require_contains 'SEAL_PUBLIC_KEY_PARSING_STATUS.md' README.md
 require_contains 'LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md' README.md
 require_contains 'LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md' README.md
+require_contains 'SEAL_KEY_PARSING_STATUS.md' README.md
 require_contains 'latticra_seal_public_key_parsing_status_present=1' README.md
 require_contains 'latticra_seal_public_key_parsing_metadata_present=1' README.md
 require_contains 'latticra_seal_key_parsing_metadata_present=1' README.md
+require_contains 'latticra_seal_key_parsing_status_present=1' README.md
 require_contains 'seal_public_key_parsing_status_present=1' README.md
 require_contains 'seal_public_key_parsing_metadata_present=1' README.md
 require_contains 'seal_key_parsing_metadata_present=1' README.md
+require_contains 'seal_key_parsing_status_present=1' README.md
 require_contains 'Seal public-key parsing status/public-entry alignment' STATUS.md
 require_contains 'Seal public-key parsing metadata implementation' STATUS.md
 require_contains 'Seal bounded no-effect key parsing implementation' STATUS.md
@@ -131,19 +138,25 @@ require_contains 'Seal key parsing status/public-entry alignment' STATUS.md
 require_contains 'seal_public_key_parsing_status_present=1' STATUS.md
 require_contains 'seal_public_key_parsing_metadata_present=1' STATUS.md
 require_contains 'seal_key_parsing_metadata_present=1' STATUS.md
+require_contains 'seal_key_parsing_status_present=1' STATUS.md
 require_contains 'seal_public_key_parsing_status_present=1' docs/status/README.md
 require_contains 'seal_public_key_parsing_metadata_present=1' docs/status/README.md
 require_contains 'seal_key_parsing_metadata_present=1' docs/status/README.md
+require_contains 'seal_key_parsing_status_present=1' docs/status/README.md
+require_contains 'SEAL_KEY_PARSING_STATUS.md' docs/status/README.md
 require_contains 'SEAL_PUBLIC_KEY_PARSING_STATUS.md' docs/status/README.md
 require_contains 'Latticra Seal public-key parsing status/public-entry alignment' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal public-key parsing metadata implementation' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal key parsing status/public-entry alignment' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal bounded no-effect key parsing implementation' docs/status/CURRENT_STATUS.md
 require_contains 'SEAL_PUBLIC_KEY_PARSING_STATUS.md' docs/FOUNDATION_INDEX.md
+require_contains 'SEAL_KEY_PARSING_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal public-key parsing status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal public-key parsing metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Latticra Seal key parsing status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal bounded key parsing metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal key parsing status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Seal verification policy status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 
 printf 'seal public-key parsing status: ok\n'

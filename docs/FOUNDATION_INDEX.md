@@ -114,6 +114,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_CONTRACT.md`](LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_CONTRACT.md) — future key parsing implementation contract after public-key parsing status readiness.
 - [`LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md`](LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md) — exact future bounded no-effect key parsing implementation plan.
 - [`LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md`](LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md) — first bounded key parsing metadata implementation for caller-provided public-key bytes.
+- [`status/SEAL_KEY_PARSING_STATUS.md`](status/SEAL_KEY_PARSING_STATUS.md) — status/public-entry checkpoint for bounded Seal key parsing metadata.
 - [`status/SEAL_SIGNER_INVOCATION_STATUS.md`](status/SEAL_SIGNER_INVOCATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer invocation implementation.
 - [`status/SEAL_SIGNER_HANDOFF_STATUS.md`](status/SEAL_SIGNER_HANDOFF_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer handoff implementation.
 - [`status/SEAL_SIGNING_AUTHORIZATION_STATUS.md`](status/SEAL_SIGNING_AUTHORIZATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signing authorization implementation.
@@ -214,6 +215,7 @@ Latticra Seal signer invocation status/public-entry alignment + guardrails
 Latticra Seal signing operation contract + guardrails
 Latticra Seal signing operation metadata + invariants
 Latticra Seal signing operation status/public-entry alignment + guardrails
+Latticra Seal key parsing status/public-entry alignment + guardrails
 Latticra Seal bounded no-effect key parsing metadata + invariants
 Latticra Seal future key parsing implementation plan + guardrails
 Latticra Seal future key parsing implementation contract + guardrails
@@ -241,7 +243,7 @@ L-UI rendering detailed report refinement + invariants
 The next status review target should be:
 
 ```text
-Seal key parsing status/public-entry alignment, with bounded public-key byte metadata visible from public status surfaces and no key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
+Seal verification policy status/public-entry alignment, with metadata-only verification policy visibility and no cryptographic verification, signing, key material loading, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 Completion-estimate review should be skipped unless a future slice changes capability posture, implementation scope, or public readiness rather than only aligning documentation/status surfaces.

@@ -86,7 +86,7 @@ The authoritative status files are [`STATUS.md`](STATUS.md) and [`docs/status/CU
 | L-UI | Parser, validation, and report/rendering foundations exist; no interactive terminal-control renderer |
 | Nucleus | Report-only task-boundary and classification work exists; no effect-performing execution |
 | Runtime Boundary | Denied-by-default classification and reporting exists; no runtime authority |
-| Latticra Seal | Report-only tool-boundary, runtime dry-run, guarded allowlist, report-envelope metadata, signature-request metadata, signing authorization metadata, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, future key parsing implementation contract/plan, and bounded key parsing metadata surfaces exist; no production enforcement |
+| Latticra Seal | Report-only tool-boundary, runtime dry-run, guarded allowlist, report-envelope metadata, signature-request metadata, signing authorization metadata, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, future key parsing implementation contract/plan, and bounded key parsing metadata/status surfaces exist; no production enforcement |
 | Fedora integration | Local-only package and validation lanes exist; not Fedora-approved or distribution-ready |
 | Latticra Panel | GUI-first local installer/control workbench exists; user-local and guarded |
 | Security hardening | Early; no production security boundary claimed |
@@ -141,7 +141,7 @@ Runtime Boundary
 
 Latticra Seal
   Trust-boundary, request-boundary, policy-boundary, tool-boundary, and crypto-profile planning.
-  Current posture: report-only runtime dry-run, guarded allowlist candidate-denial, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status paths, a future key parsing implementation contract/plan, and bounded key parsing metadata for caller-provided public-key bytes.
+  Current posture: report-only runtime dry-run, guarded allowlist candidate-denial, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status paths, a future key parsing implementation contract/plan, and bounded key parsing metadata/status for caller-provided public-key bytes.
 
 Latticra Panel
   GUI-first local workbench for guided first-run configuration, evidence review, dry-run, and guarded local-prefix install.
@@ -203,6 +203,7 @@ latticra_seal_public_key_parsing_status_present=1
 latticra_seal_future_key_parsing_implementation_contract_present=1
 latticra_seal_future_key_parsing_implementation_plan_present=1
 latticra_seal_key_parsing_metadata_present=1
+latticra_seal_key_parsing_status_present=1
 latticra_panel_gui_workbench_present=1
 fedora_local_rpm_draft_present=1
 visual_theorem_engines_present=1
@@ -657,6 +658,7 @@ seal_public_key_parsing_status_present=1
 seal_future_key_parsing_implementation_contract_present=1
 seal_future_key_parsing_implementation_plan_present=1
 seal_key_parsing_metadata_present=1
+seal_key_parsing_status_present=1
 runtime_gate_report_only=1
 policy_decision_state=report-only
 runtime_gate_state=report-only
@@ -742,6 +744,8 @@ The future key parsing implementation plan names a later bounded no-effect key p
 
 The bounded key parsing metadata implementation now accepts caller-provided Ed25519 public-key bytes in raw 32-byte or ASCII hex 64-byte form, records deterministic metadata with `public_key_parsed=1`, and keeps key material loading, private-key handling, signing, verification, trust-store behavior, host behavior, network behavior, capability enforcement, and runtime authority at zero.
 
+The key parsing status record makes that bounded public-key byte metadata checkpoint visible from the public entry points without changing implementation behavior.
+
 That claim is intentionally limited. It does not mean Latticra Seal currently implements production runtime enforcement, policy enforcement, cryptographic key authority, MCP protocol behavior, MCP server behavior, MCP client behavior, AI-agent execution control, host behavior, network behavior, object sealing, key storage, or revocation lookup.
 
 Relevant Seal records:
@@ -782,6 +786,7 @@ Relevant Seal records:
 - [`docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_CONTRACT.md`](docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md`](docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md)
 - [`docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md)
+- [`docs/status/SEAL_KEY_PARSING_STATUS.md`](docs/status/SEAL_KEY_PARSING_STATUS.md)
 - [`docs/status/SEAL_SIGNER_INVOCATION_STATUS.md`](docs/status/SEAL_SIGNER_INVOCATION_STATUS.md)
 - [`docs/status/SEAL_SIGNER_HANDOFF_STATUS.md`](docs/status/SEAL_SIGNER_HANDOFF_STATUS.md)
 - [`docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md`](docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md)
