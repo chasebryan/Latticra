@@ -106,4 +106,4 @@ nadia_model_load_contract_stage_12: ok
 
 ## Next Stage
 
-Stage-13 should define a prompt-receipt contract only after model-load metadata, runtime-invocation metadata, inference-readiness metadata, model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.
+Stage-13 now defines a prompt-receipt contract after model-load metadata, runtime-invocation metadata, inference-readiness metadata, model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.

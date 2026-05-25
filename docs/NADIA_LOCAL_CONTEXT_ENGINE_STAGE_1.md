@@ -65,11 +65,11 @@ latest-file-index.tsv
 The pack includes:
 
 ```text
-system_name=Latticra Nadiav0.0.1
+system_name=Latticra Nadia Witness Foundation
 public_name=Nadia
 interactive_name=Nadia
-implementation_name=Nadiav0.0.1
-documentation_code_name=Nadiav0.0.1
+implementation_name=Nadia Witness Foundation
+documentation_code_name=Nadia Witness Foundation
 stage=1-local-context-engine
 network_authority=0
 model_runtime_present=0

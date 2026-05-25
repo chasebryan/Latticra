@@ -17,11 +17,11 @@ Stage-0 creates the bounded foundation only: component identity, Panel install m
 ```text
 nadia_name_selected=1
 nadia_namesake=Nadia Murad
-nadia_system_name=Latticra Nadiav0.0.1
+nadia_system_name=Latticra Nadia Witness Foundation
 public_name=Nadia
 interactive_name=Nadia
-implementation_name=Nadiav0.0.1
-documentation_code_name=Nadiav0.0.1
+implementation_name=Nadia Witness Foundation
+documentation_code_name=Nadia Witness Foundation
 nadia_command_name=latticra-nadia
 nadia_component_key=nadia_offline_ai
 nadia_stage_0_foundation_present=1

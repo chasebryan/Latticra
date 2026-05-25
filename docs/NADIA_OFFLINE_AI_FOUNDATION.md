@@ -16,10 +16,10 @@ Nadia's Latticra component identity is:
 
 ```text
 public_name=Nadia
-system_name=Latticra Nadiav0.0.1
+system_name=Latticra Nadia Witness Foundation
 interactive_name=Nadia
-implementation_name=Nadiav0.0.1
-documentation_code_name=Nadiav0.0.1
+implementation_name=Nadia Witness Foundation
+documentation_code_name=Nadia Witness Foundation
 command_name=latticra-nadia
 component_key=nadia_offline_ai
 ```
@@ -88,6 +88,7 @@ share/latticra/nadia/model-registry/
 share/latticra/nadia/productivity-ledger/
 share/latticra/nadia/runtime-invocation/
 share/latticra/nadia/model-load/
+share/latticra/nadia/prompt-receipt/
 share/latticra/components/nadia-offline-ai.installed
 bin/latticra-nadia
 ```
@@ -541,7 +542,67 @@ See [`NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md`](NADIA_MODEL_LOAD_CONTRACT_STAGE_12
 
 ### Stage-13: Prompt Receipt Contract
 
-Only after model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a prompt-receipt contract. The default remains no prompt text materialized, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
+Record prompt-receipt metadata after model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-13 can verify prerequisite evidence and record a blocked prompt-receipt decision, but it cannot receive prompt text, read prompt sources, store prompt content, hash prompt content, classify prompt content, materialize prompts, evaluate prompts, generate tokens, or run inference.
+
+```text
+nadia_stage_13_prompt_receipt_contract_present=1
+prompt_receipt_contract_command=scripts/nadia-prompt-receipt-contract.sh
+installed_prompt_receipt_contract_command=latticra-nadia prompt-receipt
+requires_model_load_contract=1
+prompt_receipt_stage=contract-only
+prompt_receipt_contract_status=contract_only
+prompt_receipt_authority=0
+prompt_receipt_allowed=0
+prompt_received=0
+receipt_decision=blocked_contract_only
+receipt_evidence_present=1
+requires_runtime_invocation_contract=1
+requires_inference_readiness_contract=1
+requires_model_registry_contract=1
+requires_prompt_contract=1
+requires_runtime_profile=1
+requires_protective_safety_boundary=1
+requires_tool_preflight=1
+requires_operator_review=1
+requires_prompt_source_boundary=1
+requires_future_prompt_materialization_contract=1
+prompt_receipt_promotion_allowed=0
+prompt_source_open_authority=0
+prompt_source_read_authority=0
+prompt_text_materialization_authority=0
+prompt_content_storage_authority=0
+prompt_hash_authority=0
+prompt_classification_authority=0
+prompt_source_opened=0
+prompt_source_read=0
+prompt_bytes_read=0
+prompt_text_received=0
+prompt_text_materialized=0
+prompt_content_stored=0
+prompt_hash_computed=0
+prompt_classified=0
+prompt_materialized=0
+prompt_evaluation_authority=0
+prompt_evaluated=0
+model_loaded=0
+model_weights_loaded=0
+token_generation_authority=0
+token_generation_performed=0
+inference_authority=0
+inference_performed=0
+tool_execution_authority=0
+source_mutation_authority=0
+network_authority=0
+sexual_content_generation=0
+sexual_request_refusal=always
+manipulation_resistance=required
+```
+
+See [`NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md`](NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md).
+
+### Stage-14: Prompt Materialization Contract
+
+Only after prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a prompt-materialization contract. The default remains no prompt text materialized, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
 
 ## Non-Claims
 
@@ -560,7 +621,7 @@ The current Nadia foundation is not:
 
 ## Promotion Gate
 
-Before Stage-13 starts, Latticra should keep these guards passing:
+Before Stage-14 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -576,6 +637,7 @@ sh scripts/test-nadia-local-model-registry-contract-stage-9.sh
 sh scripts/test-nadia-inference-readiness-contract-stage-10.sh
 sh scripts/test-nadia-runtime-invocation-contract-stage-11.sh
 sh scripts/test-nadia-model-load-contract-stage-12.sh
+sh scripts/test-nadia-prompt-receipt-contract-stage-13.sh
 ```
 
-Before prompt receipt starts, a separate prompt-receipt contract must exist and name prompt-source boundaries, prompt-text materialization denial fields, refusal boundary inheritance, operator review gates, and non-claims.
+Before prompt materialization starts, a separate prompt-materialization contract must exist and name prompt-text materialization denial fields, refusal boundary inheritance, operator review gates, and non-claims.

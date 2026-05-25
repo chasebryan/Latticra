@@ -336,12 +336,12 @@ docs_and_examples=$DOCS_AND_EXAMPLES
 developer_cli_helpers=$DEVELOPER_CLI_HELPERS
 
 [nadia]
-system_name=Latticra Nadiav0.0.1
+system_name=Latticra Nadia Witness Foundation
 public_name=Nadia
 interactive_name=Nadia
-implementation_name=Nadiav0.0.1
-documentation_code_name=Nadiav0.0.1
-stage=12-model-load-contract
+implementation_name=Nadia Witness Foundation
+documentation_code_name=Nadia Witness Foundation
+stage=13-prompt-receipt-contract
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -488,6 +488,34 @@ model_weights_attached=0
 model_weight_measurement_performed=0
 model_weight_verification_performed=0
 model_load_performed=0
+prompt_receipt_contract_stage=13-prompt-receipt-contract
+prompt_receipt_contract_command=scripts/nadia-prompt-receipt-contract.sh
+installed_prompt_receipt_contract_command=latticra-nadia prompt-receipt
+prompt_receipt_stage=contract-only
+prompt_receipt_contract_status=contract_only
+prompt_receipt_authority=0
+prompt_receipt_allowed=0
+prompt_received=0
+receipt_decision=blocked_contract_only
+receipt_evidence_present=1
+requires_model_load_contract=1
+requires_prompt_source_boundary=1
+requires_future_prompt_materialization_contract=1
+prompt_receipt_promotion_allowed=0
+prompt_source_open_authority=0
+prompt_source_read_authority=0
+prompt_text_materialization_authority=0
+prompt_content_storage_authority=0
+prompt_hash_authority=0
+prompt_classification_authority=0
+prompt_source_opened=0
+prompt_source_read=0
+prompt_bytes_read=0
+prompt_text_received=0
+prompt_text_materialized=0
+prompt_content_stored=0
+prompt_hash_computed=0
+prompt_classified=0
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -694,16 +722,17 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/prompt-contracts" \
     "$PREFIX/share/latticra/nadia/inference-readiness" \
     "$PREFIX/share/latticra/nadia/runtime-invocation" \
-    "$PREFIX/share/latticra/nadia/model-load"
+    "$PREFIX/share/latticra/nadia/model-load" \
+    "$PREFIX/share/latticra/nadia/prompt-receipt"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
-system_name = "Latticra Nadiav0.0.1"
+system_name = "Latticra Nadia Witness Foundation"
 public_name = "Nadia"
 interactive_name = "Nadia"
-implementation_name = "Nadiav0.0.1"
-documentation_code_name = "Nadiav0.0.1"
-stage = "12-model-load-contract"
-mode = "offline-model-load-contract"
+implementation_name = "Nadia Witness Foundation"
+documentation_code_name = "Nadia Witness Foundation"
+stage = "13-prompt-receipt-contract"
+mode = "offline-prompt-receipt-contract"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -839,6 +868,34 @@ model_weights_attached = false
 model_weight_measurement_performed = false
 model_weight_verification_performed = false
 model_load_performed = false
+prompt_receipt_contract_stage = "13-prompt-receipt-contract"
+prompt_receipt_contract_command = "scripts/nadia-prompt-receipt-contract.sh"
+installed_prompt_receipt_contract_command = "latticra-nadia prompt-receipt"
+prompt_receipt_stage = "contract-only"
+prompt_receipt_contract_status = "contract_only"
+prompt_receipt_authority = false
+prompt_receipt_allowed = false
+prompt_received = false
+receipt_decision = "blocked_contract_only"
+receipt_evidence_present = true
+requires_model_load_contract = true
+requires_prompt_source_boundary = true
+requires_future_prompt_materialization_contract = true
+prompt_receipt_promotion_allowed = false
+prompt_source_open_authority = false
+prompt_source_read_authority = false
+prompt_text_materialization_authority = false
+prompt_content_storage_authority = false
+prompt_hash_authority = false
+prompt_classification_authority = false
+prompt_source_opened = false
+prompt_source_read = false
+prompt_bytes_read = false
+prompt_text_received = false
+prompt_text_materialized = false
+prompt_content_stored = false
+prompt_hash_computed = false
+prompt_classified = false
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -859,11 +916,11 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-12 model-load contract metadata lane. Documentation and code identify this implementation as Nadiav0.0.1 while the human-facing interactive name remains Nadia.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-13 prompt-receipt contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract, local model-registry contract metadata when the operator runs latticra-nadia model-registry, inference-readiness contract metadata when the operator runs latticra-nadia inference-readiness, runtime-invocation contract metadata when the operator runs latticra-nadia runtime-invocation, and model-load contract metadata when the operator runs latticra-nadia model-load. It does not provide sexual user functionality, materialize or evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn a runtime process, create a runtime session, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract, local model-registry contract metadata when the operator runs latticra-nadia model-registry, inference-readiness contract metadata when the operator runs latticra-nadia inference-readiness, runtime-invocation contract metadata when the operator runs latticra-nadia runtime-invocation, model-load contract metadata when the operator runs latticra-nadia model-load, and prompt-receipt contract metadata when the operator runs latticra-nadia prompt-receipt. It does not provide sexual user functionality, receive prompt text, read prompt sources, materialize or evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn a runtime process, create a runtime session, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source.
 NADIAREADME
 fi
 
@@ -1010,13 +1067,13 @@ case "\${1:-status}" in
     echo "NADIA OFFLINE AI FOUNDATION"
     echo
     echo "name=Nadia"
-    echo "system_name=Latticra Nadiav0.0.1"
+    echo "system_name=Latticra Nadia Witness Foundation"
     echo "public_name=Nadia"
     echo "interactive_name=Nadia"
-    echo "implementation_name=Nadiav0.0.1"
-    echo "documentation_code_name=Nadiav0.0.1"
-    echo "stage=12-model-load-contract"
-    echo "mode=offline-model-load-contract"
+    echo "implementation_name=Nadia Witness Foundation"
+    echo "documentation_code_name=Nadia Witness Foundation"
+    echo "stage=13-prompt-receipt-contract"
+    echo "mode=offline-prompt-receipt-contract"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "context_packs=\$NADIA_DIR/context-packs"
@@ -1032,6 +1089,7 @@ case "\${1:-status}" in
     echo "inference_readiness_contracts=\$NADIA_DIR/inference-readiness"
     echo "runtime_invocation_contracts=\$NADIA_DIR/runtime-invocation"
     echo "model_load_contracts=\$NADIA_DIR/model-load"
+    echo "prompt_receipt_contracts=\$NADIA_DIR/prompt-receipt"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "prompt_plan_command=latticra-nadia prompt-plan"
@@ -1159,6 +1217,34 @@ case "\${1:-status}" in
     echo "model_weight_measurement_performed=0"
     echo "model_weight_verification_performed=0"
     echo "model_load_performed=0"
+    echo "prompt_receipt_contract_stage=13-prompt-receipt-contract"
+    echo "prompt_receipt_contract_command=latticra-nadia prompt-receipt"
+    echo "installed_prompt_receipt_contract_command=latticra-nadia prompt-receipt"
+    echo "prompt_receipt_stage=contract-only"
+    echo "prompt_receipt_contract_status=contract_only"
+    echo "prompt_receipt_authority=0"
+    echo "prompt_receipt_allowed=0"
+    echo "prompt_received=0"
+    echo "receipt_decision=blocked_contract_only"
+    echo "receipt_evidence_present=1"
+    echo "requires_model_load_contract=1"
+    echo "requires_prompt_source_boundary=1"
+    echo "requires_future_prompt_materialization_contract=1"
+    echo "prompt_receipt_promotion_allowed=0"
+    echo "prompt_source_open_authority=0"
+    echo "prompt_source_read_authority=0"
+    echo "prompt_text_materialization_authority=0"
+    echo "prompt_content_storage_authority=0"
+    echo "prompt_hash_authority=0"
+    echo "prompt_classification_authority=0"
+    echo "prompt_source_opened=0"
+    echo "prompt_source_read=0"
+    echo "prompt_bytes_read=0"
+    echo "prompt_text_received=0"
+    echo "prompt_text_materialized=0"
+    echo "prompt_content_stored=0"
+    echo "prompt_hash_computed=0"
+    echo "prompt_classified=0"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -1350,11 +1436,25 @@ case "\${1:-status}" in
       --runtime-invocation "\$NADIA_DIR/runtime-invocation/latest-runtime-invocation-contract.txt" \
       --output "\$NADIA_DIR/model-load"
     ;;
+  prompt-receipt|receipt|prompt-receipt-contract)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-prompt-receipt-contract.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia prompt-receipt contract script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --model-load "\$NADIA_DIR/model-load/latest-model-load-contract.txt" \
+      --output "\$NADIA_DIR/prompt-receipt"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|path}" >&2
     exit 64
     ;;
 esac

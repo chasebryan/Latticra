@@ -275,11 +275,11 @@ cat > "$REPORT" <<REPORT
 NADIA LOCAL MODEL REGISTRY CONTRACT
 
 timestamp_utc=$TS
-system_name=Latticra Nadiav0.0.1
+system_name=Latticra Nadia Witness Foundation
 public_name=Nadia
 interactive_name=Nadia
-implementation_name=Nadiav0.0.1
-documentation_code_name=Nadiav0.0.1
+implementation_name=Nadia Witness Foundation
+documentation_code_name=Nadia Witness Foundation
 stage=9-local-model-registry-contract
 output_dir=$OUT_DIR
 registry_contract_status=metadata_only

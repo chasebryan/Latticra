@@ -194,11 +194,11 @@ cat > "$REPORT" <<REPORT
 NADIA INFERENCE READINESS CONTRACT
 
 timestamp_utc=$TS
-system_name=Latticra Nadiav0.0.1
+system_name=Latticra Nadia Witness Foundation
 public_name=Nadia
 interactive_name=Nadia
-implementation_name=Nadiav0.0.1
-documentation_code_name=Nadiav0.0.1
+implementation_name=Nadia Witness Foundation
+documentation_code_name=Nadia Witness Foundation
 stage=10-inference-readiness-contract
 output_dir=$OUT_DIR
 request_class=$REQUEST_CLASS

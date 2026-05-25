@@ -290,7 +290,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load",
+                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -314,11 +314,11 @@ impl LatticraInstallerApp {
             }
             ["nadia"] | ["nadia", "status"] => {
                 self.push_console("name=Nadia");
-                self.push_console("system_name=Latticra Nadiav0.0.1");
+                self.push_console("system_name=Latticra Nadia Witness Foundation");
                 self.push_console("public_name=Nadia");
                 self.push_console("interactive_name=Nadia");
-                self.push_console("implementation_name=Nadiav0.0.1");
-                self.push_console("documentation_code_name=Nadiav0.0.1");
+                self.push_console("implementation_name=Nadia Witness Foundation");
+                self.push_console("documentation_code_name=Nadia Witness Foundation");
                 self.push_console(format!(
                     "component_selected={}",
                     self.config.components.nadia_offline_ai
@@ -344,8 +344,9 @@ impl LatticraInstallerApp {
                     "runtime_invocation_contract_stage=11-runtime-invocation-contract",
                 );
                 self.push_console("model_load_contract_stage=12-model-load-contract");
+                self.push_console("prompt_receipt_contract_stage=13-prompt-receipt-contract");
                 self.push_console(
-                    "stage=12 model-load-contract; model_loaded=0 inference_performed=0",
+                    "stage=13 prompt-receipt-contract; prompt_received=0 inference_performed=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -394,6 +395,20 @@ impl LatticraInstallerApp {
                 );
                 self.push_console(
                     "model_file_opened=0 model_weights_mapped=0 model_weights_loaded=0",
+                );
+            }
+            ["nadia", "prompt-receipt"]
+            | ["nadia", "receipt"]
+            | ["nadia", "prompt-receipt-contract"] => {
+                self.push_console("nadia_prompt_receipt=stage-13-prompt-receipt-contract");
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia prompt-receipt");
+                self.push_console("prompt_receipt_contract_status=contract_only prompt_received=0");
+                self.push_console(
+                    "prompt_source_open_authority=0 prompt_source_read_authority=0 prompt_text_materialization_authority=0",
+                );
+                self.push_console(
+                    "prompt_text_received=0 prompt_text_materialized=0 prompt_evaluated=0",
                 );
             }
             ["nadia", "inference-readiness"]
@@ -812,7 +827,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-12 model-load contract with metadata-only Console surfaces.",
+            "Stage-13 prompt-receipt contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,

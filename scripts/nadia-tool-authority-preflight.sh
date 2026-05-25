@@ -150,11 +150,11 @@ cat > "$REPORT" <<REPORT
 NADIA GUARDED TOOL AUTHORITY PREFLIGHT
 
 timestamp_utc=$TS
-system_name=Latticra Nadiav0.0.1
+system_name=Latticra Nadia Witness Foundation
 public_name=Nadia
 interactive_name=Nadia
-implementation_name=Nadiav0.0.1
-documentation_code_name=Nadiav0.0.1
+implementation_name=Nadia Witness Foundation
+documentation_code_name=Nadia Witness Foundation
 stage=7-guarded-tool-authority-preflight
 output_dir=$OUT_DIR
 tool_class=$TOOL_CLASS

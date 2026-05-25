@@ -407,12 +407,12 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(out);
     let _ = writeln!(out, "[nadia]");
-    let _ = writeln!(out, "system_name=Latticra Nadiav0.0.1");
+    let _ = writeln!(out, "system_name=Latticra Nadia Witness Foundation");
     let _ = writeln!(out, "public_name=Nadia");
     let _ = writeln!(out, "interactive_name=Nadia");
-    let _ = writeln!(out, "implementation_name=Nadiav0.0.1");
-    let _ = writeln!(out, "documentation_code_name=Nadiav0.0.1");
-    let _ = writeln!(out, "stage=12-model-load-contract");
+    let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
+    let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
+    let _ = writeln!(out, "stage=13-prompt-receipt-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -650,6 +650,43 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "model_weight_measurement_performed=0");
     let _ = writeln!(out, "model_weight_verification_performed=0");
     let _ = writeln!(out, "model_load_performed=0");
+    let _ = writeln!(
+        out,
+        "prompt_receipt_contract_stage=13-prompt-receipt-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_receipt_contract_command=scripts/nadia-prompt-receipt-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_receipt_contract_command=latticra-nadia prompt-receipt"
+    );
+    let _ = writeln!(out, "prompt_receipt_stage=contract-only");
+    let _ = writeln!(out, "prompt_receipt_contract_status=contract_only");
+    let _ = writeln!(out, "prompt_receipt_authority=0");
+    let _ = writeln!(out, "prompt_receipt_allowed=0");
+    let _ = writeln!(out, "prompt_received=0");
+    let _ = writeln!(out, "receipt_decision=blocked_contract_only");
+    let _ = writeln!(out, "receipt_evidence_present=1");
+    let _ = writeln!(out, "requires_model_load_contract=1");
+    let _ = writeln!(out, "requires_prompt_source_boundary=1");
+    let _ = writeln!(out, "requires_future_prompt_materialization_contract=1");
+    let _ = writeln!(out, "prompt_receipt_promotion_allowed=0");
+    let _ = writeln!(out, "prompt_source_open_authority=0");
+    let _ = writeln!(out, "prompt_source_read_authority=0");
+    let _ = writeln!(out, "prompt_text_materialization_authority=0");
+    let _ = writeln!(out, "prompt_content_storage_authority=0");
+    let _ = writeln!(out, "prompt_hash_authority=0");
+    let _ = writeln!(out, "prompt_classification_authority=0");
+    let _ = writeln!(out, "prompt_source_opened=0");
+    let _ = writeln!(out, "prompt_source_read=0");
+    let _ = writeln!(out, "prompt_bytes_read=0");
+    let _ = writeln!(out, "prompt_text_received=0");
+    let _ = writeln!(out, "prompt_text_materialized=0");
+    let _ = writeln!(out, "prompt_content_stored=0");
+    let _ = writeln!(out, "prompt_hash_computed=0");
+    let _ = writeln!(out, "prompt_classified=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");
