@@ -23,6 +23,7 @@ non-claims
 - [`CURRENT_STATUS.md`](CURRENT_STATUS.md) — current project status, completion estimates, and next priorities.
 - [`CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](CURRENT_ESTIMATE_REFRESH_2026_05_24.md) - current planning-estimate refresh after Panel, Seal, documentation, and local evidence work.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
+- [`SEAL_SIGNATURE_REQUEST_STATUS.md`](SEAL_SIGNATURE_REQUEST_STATUS.md) — Latticra Seal signature request metadata status and public-entry checkpoint.
 - [`SEAL_CORE_EVIDENCE_STATUS.md`](SEAL_CORE_EVIDENCE_STATUS.md) — Latticra Seal core evidence status surface after the completed report-only runtime gate evidence milestone.
 - [`SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md`](SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md) — Latticra Seal core evidence index alignment after the status surface.
 - [`KERNEL_LIFECYCLE_EVIDENCE_STATUS.md`](KERNEL_LIFECYCLE_EVIDENCE_STATUS.md) — status alignment after the kernel lifecycle report runner, subsystem summary, and rollback plan.
@@ -74,6 +75,7 @@ seal_report_envelope_metadata_present=1
 seal_report_envelope_ready_metadata_present=1
 seal_signature_request_contract_present=1
 seal_signature_request_metadata_present=1
+seal_signature_request_status_present=1
 operator_visible_status_surface=1
 deterministic_local_report_path=1
 core_blocked_case_set_complete=1
@@ -112,7 +114,7 @@ Latticra Seal now has a report-only runtime gate path, sealed report-envelope me
 The current next recommended Seal lane is:
 
 ```text
-Add signature request status/public-entry alignment or a signing authorization contract that still performs no signing
+Add signing authorization contract planning that still performs no signing
 ```
 
 ## Current Fedora VM CLI payload validation lane checkpoint

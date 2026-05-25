@@ -3,6 +3,7 @@
 Status: public status shortcut
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal signature request status/public-entry note: 2026-05-25 CDT
 Latest Seal signature request implementation note: 2026-05-25 CDT
 Latest Seal signature request contract note: 2026-05-25 CDT
 Latest Seal report envelope implementation note: 2026-05-25 CDT
@@ -114,6 +115,7 @@ Latticra is the contract.
 ## Current milestone ledger
 
 ```text
+Seal signature request status/public-entry alignment
 Seal signature request metadata implementation
 Seal signature request contract
 Seal report envelope metadata implementation
@@ -195,7 +197,7 @@ Completion percentage review
 ## Current next step
 
 ```text
-Seal signature request status/public-entry alignment or signing authorization contract planning, with completion estimate review only if capability posture changes
+Signing authorization contract planning, with completion estimate review only if capability posture changes
 ```
 
 ## Current Seal core evidence boundary
@@ -212,6 +214,7 @@ seal_report_envelope_metadata_present=1
 seal_report_envelope_ready_metadata_present=1
 seal_signature_request_contract_present=1
 seal_signature_request_metadata_present=1
+seal_signature_request_status_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1

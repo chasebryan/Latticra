@@ -3,6 +3,7 @@
 Status: public status record
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal signature request status/public-entry note: 2026-05-25 CDT
 Latest Seal signature request implementation note: 2026-05-25 CDT
 Latest Seal signature request contract note: 2026-05-25 CDT
 Latest Seal report envelope implementation note: 2026-05-25 CDT
@@ -102,6 +103,7 @@ The repository currently emphasizes:
 - Runtime boundary policy matrix refinement;
 - Runtime boundary domain matrix refinement;
 - Runtime boundary domain matrix report integration;
+- Latticra Seal signature request status/public-entry alignment;
 - Latticra Seal signature request metadata implementation;
 - Latticra Seal signature request contract;
 - Latticra Seal report envelope metadata implementation;
@@ -209,6 +211,8 @@ The Latticra Seal signature request contract defines the next metadata-only requ
 
 The Latticra Seal signature request implementation adds bounded C metadata for classifying allowed future signing requests after sealed report-envelope metadata while preserving no signing, no verification, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
 
+The Latticra Seal signature request status record makes the metadata-only implementation visible from public entry points while preserving no signing, no verification, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
+
 The project notes are now aligned across current direction, upcoming work, and project-notes index surfaces.
 
 The current status and announcement consistency review confirms the public status and announcement surfaces now point to the same next review lane.
@@ -282,6 +286,7 @@ Runtime boundary report refinement
 Runtime boundary policy matrix refinement
 Runtime boundary domain matrix refinement
 Runtime boundary domain matrix report integration
+Latticra Seal signature request status/public-entry alignment
 Latticra Seal signature request metadata implementation
 Latticra Seal signature request contract
 Latticra Seal report envelope metadata implementation
@@ -420,7 +425,7 @@ Nucleus report-only announcement README alignment
 Recommended next work:
 
 ```text
-Seal signature request status/public-entry alignment or signing authorization contract planning, with no signing, verification, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority
+Signing authorization contract planning, with no signing, verification, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 After that:
