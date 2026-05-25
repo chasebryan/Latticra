@@ -32,6 +32,11 @@ require_file tests/seal_public_key_parsing_invariants.c
 require_file scripts/test-latticra-seal-public-key-parsing-contract.sh
 require_file scripts/test-latticra-seal-public-key-parsing.sh
 require_file scripts/test-latticra-seal-public-key-parsing-status.sh
+require_file docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md
+require_file include/latticra/seal_key_parsing.h
+require_file src/seal_key_parsing.c
+require_file tests/seal_key_parsing_invariants.c
+require_file scripts/test-latticra-seal-key-parsing.sh
 require_file README.md
 require_file STATUS.md
 require_file docs/status/README.md
@@ -79,6 +84,7 @@ require_contains 'runtime_authority_granted=0' "$plan"
 require_contains 'host_read_performed=0' "$plan"
 require_contains 'host_write_performed=0' "$plan"
 require_contains 'network_performed=0' "$plan"
+require_contains 'Plan-Time Checkpoint' "$plan"
 require_contains 'future_key_parsing_implementation_plan_present=1' "$plan"
 require_contains 'future_key_parsing_implementation_present=0' "$plan"
 require_contains 'public_key_parser_implementation_present=0' "$plan"
@@ -87,23 +93,32 @@ require_contains 'LATTICRA SEAL KEY PARSING' "$plan"
 require_contains 'small report buffers fail closed' "$plan"
 require_contains 'private key marker fails closed' "$plan"
 require_contains 'Bounded no-effect key parsing implementation code may be added only after this plan is merged.' "$plan"
-require_contains 'The next valid Latticra Seal slice is bounded no-effect key parsing implementation.' "$plan"
+require_contains 'The next valid Latticra Seal slice after the implementation is key parsing status/public-entry alignment.' "$plan"
 
 require_contains 'LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md' README.md
+require_contains 'LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md' README.md
 require_contains 'latticra_seal_future_key_parsing_implementation_plan_present=1' README.md
+require_contains 'latticra_seal_key_parsing_metadata_present=1' README.md
 require_contains 'seal_future_key_parsing_implementation_plan_present=1' README.md
+require_contains 'seal_key_parsing_metadata_present=1' README.md
 require_contains 'Seal future key parsing implementation plan' STATUS.md
-require_contains 'Seal bounded no-effect key parsing implementation' STATUS.md
+require_contains 'Seal key parsing status/public-entry alignment' STATUS.md
+require_contains 'seal_key_parsing_metadata_present=1' STATUS.md
 require_contains 'seal_future_key_parsing_implementation_plan_present=1' STATUS.md
+require_contains 'seal_key_parsing_metadata_present=1' docs/status/README.md
 require_contains 'seal_future_key_parsing_implementation_plan_present=1' docs/status/README.md
+require_contains 'LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal future key parsing implementation plan' docs/status/CURRENT_STATUS.md
-require_contains 'Seal bounded no-effect key parsing implementation' docs/status/CURRENT_STATUS.md
+require_contains 'Seal key parsing status/public-entry alignment' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal future key parsing implementation plan' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal bounded no-effect key parsing implementation' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Latticra Seal bounded key parsing metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Seal key parsing status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal future key parsing implementation plan' docs/project_notes/UPCOMING_WORK.md
-require_contains 'Seal bounded no-effect key parsing implementation' docs/project_notes/UPCOMING_WORK.md
-require_contains 'bounded no-effect key parsing implementation' docs/status/SEAL_PUBLIC_KEY_PARSING_STATUS.md
+require_contains 'Latticra Seal bounded no-effect key parsing implementation' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Seal key parsing status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'seal_key_parsing_metadata_present=1' docs/status/SEAL_PUBLIC_KEY_PARSING_STATUS.md
+require_contains 'seal key parsing invariants: ok' docs/status/SEAL_PUBLIC_KEY_PARSING_STATUS.md
 require_contains 'seal future key parsing implementation plan: ok' docs/status/SEAL_PUBLIC_KEY_PARSING_STATUS.md
 
 printf 'seal future key parsing implementation plan: ok\n'

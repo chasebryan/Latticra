@@ -183,9 +183,9 @@ status
 error
 ```
 
-## Current Plan Checkpoint
+## Plan-Time Checkpoint
 
-This planning slice must keep the repository in a no-parser state:
+This planning slice kept the repository in a no-parser state before the implementation slice was added:
 
 ```text
 future_key_parsing_contract_present=1
@@ -382,6 +382,6 @@ seal future key parsing implementation plan: ok
 
 ## Next Valid Slice
 
-The next valid Latticra Seal slice is bounded no-effect key parsing implementation.
+The next valid Latticra Seal slice after the implementation is key parsing status/public-entry alignment.
 
-That future implementation slice may add guarded public-key byte parsing metadata only. It must not add key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, verification, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior.
+That future status slice may publish guarded public-key byte parsing metadata only. It must not add key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, verification, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior.

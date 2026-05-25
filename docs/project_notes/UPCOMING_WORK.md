@@ -21,6 +21,18 @@ Purpose completed:
 define the exact future bounded no-effect key parsing API, file paths, record fields, accepted public-key byte formats, failure behavior, report shape, and tests while preserving no parser code in this slice, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority
 ```
 
+## Latest completed implementation slice
+
+```text
+Latticra Seal bounded no-effect key parsing implementation
+```
+
+Purpose completed:
+
+```text
+implement bounded key parsing metadata for caller-provided Ed25519 public-key bytes only while preserving no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority
+```
+
 ## Earlier planning slice
 
 ```text
@@ -57,7 +69,7 @@ Purpose completed:
 publish and guard the public-key parsing metadata implementation in the status and public-entry surfaces while preserving no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority
 ```
 
-## Latest completed implementation slice
+## Previous implementation slice
 
 ```text
 Latticra Seal public-key parsing metadata implementation
@@ -183,7 +195,7 @@ Runtime boundary implementation plan
 Nucleus task execution implementation plan
 ```
 
-## Latest completed implementation slice
+## Earlier completed status/public-entry slice
 
 ```text
 Latticra Seal signer invocation status/public-entry alignment
@@ -271,18 +283,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Seal bounded no-effect key parsing implementation, with public-key byte parsing metadata only, no key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
+Seal key parsing status/public-entry alignment, with bounded public-key byte metadata visible from public status surfaces and no key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 Purpose:
 
 ```text
-implement the bounded no-effect key parsing surface from the completed plan for caller-provided public-key bytes only while preserving no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+publish and guard the bounded key parsing metadata implementation from public/status entry points while preserving no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Seal bounded no-effect key parsing implementation.
+1. Seal key parsing status/public-entry alignment.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.
