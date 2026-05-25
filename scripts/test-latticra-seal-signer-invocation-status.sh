@@ -94,7 +94,7 @@ require_contains 'host_write_performed=0' "$status_file"
 require_contains 'network_performed=0' "$status_file"
 require_contains 'mode=metadata-only' "$status_file"
 require_contains 'status=signer-invocation-metadata' "$status_file"
-require_contains 'key-material boundary contract' "$status_file"
+require_contains 'key-material metadata implementation' "$status_file"
 
 require_contains 'SEAL_SIGNER_INVOCATION_STATUS.md' README.md
 require_contains 'LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md' README.md
@@ -125,6 +125,6 @@ require_contains 'LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md' docs/FOUNDA
 require_contains 'Latticra Seal signer invocation status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal signing operation contract' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal signing operation metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal key-material boundary contract' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Seal key-material metadata implementation' docs/project_notes/UPCOMING_WORK.md
 
 printf 'seal signer invocation status: ok\n'

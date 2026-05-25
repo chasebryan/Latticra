@@ -23,11 +23,13 @@ contract="docs/LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md"
 require_file "$contract"
 require_file docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
 require_file docs/status/SEAL_KEY_HANDLING_STATUS.md
+require_file docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md
 require_file include/latticra/seal_key_handling.h
 require_file src/seal_key_handling.c
 require_file tests/seal_key_handling_invariants.c
 require_file scripts/test-latticra-seal-key-handling.sh
 require_file scripts/test-latticra-seal-key-handling-status.sh
+require_file scripts/test-latticra-seal-key-material-contract.sh
 require_file docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md
 require_file docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
 require_file docs/status/SEAL_SIGNING_OPERATION_STATUS.md
@@ -87,34 +89,44 @@ require_contains 'latticra_seal_key_handling_from_operation' src/seal_key_handli
 require_contains 'seal key-handling invariants: ok' tests/seal_key_handling_invariants.c
 require_contains 'Status: status record for Latticra Seal key-handling metadata' docs/status/SEAL_KEY_HANDLING_STATUS.md
 require_contains 'seal_key_handling_status_present=1' docs/status/SEAL_KEY_HANDLING_STATUS.md
+require_contains 'Status: Latticra Seal key-material boundary contract' docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md
 
 require_contains 'LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md' README.md
 require_contains 'LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md' README.md
 require_contains 'SEAL_KEY_HANDLING_STATUS.md' README.md
+require_contains 'LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md' README.md
 require_contains 'latticra_seal_key_handling_contract_present=1' README.md
 require_contains 'latticra_seal_key_handling_metadata_present=1' README.md
 require_contains 'latticra_seal_key_handling_status_present=1' README.md
+require_contains 'latticra_seal_key_material_contract_present=1' README.md
 require_contains 'seal_key_handling_contract_present=1' README.md
 require_contains 'seal_key_handling_metadata_present=1' README.md
 require_contains 'seal_key_handling_status_present=1' README.md
+require_contains 'seal_key_material_contract_present=1' README.md
 require_contains 'Seal key-handling boundary contract' STATUS.md
 require_contains 'Seal key-handling metadata implementation' STATUS.md
 require_contains 'Seal key-handling status/public-entry alignment' STATUS.md
+require_contains 'Seal key-material boundary contract' STATUS.md
 require_contains 'seal_key_handling_contract_present=1' STATUS.md
 require_contains 'seal_key_handling_metadata_present=1' STATUS.md
 require_contains 'seal_key_handling_status_present=1' STATUS.md
+require_contains 'seal_key_material_contract_present=1' STATUS.md
 require_contains 'seal_key_handling_contract_present=1' docs/status/README.md
 require_contains 'seal_key_handling_metadata_present=1' docs/status/README.md
 require_contains 'seal_key_handling_status_present=1' docs/status/README.md
+require_contains 'seal_key_material_contract_present=1' docs/status/README.md
 require_contains 'Latticra Seal key-handling boundary contract' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal key-handling metadata implementation' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal key-handling status/public-entry alignment' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal key-material boundary contract' docs/status/CURRENT_STATUS.md
 require_contains 'LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'SEAL_KEY_HANDLING_STATUS.md' docs/FOUNDATION_INDEX.md
+require_contains 'LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal key-handling boundary contract' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal key-handling metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal key-handling status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal key-material boundary contract' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Latticra Seal key-material boundary contract' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Seal key-material metadata implementation' docs/project_notes/UPCOMING_WORK.md
 
 printf 'seal key-handling contract: ok\n'

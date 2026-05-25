@@ -3,6 +3,7 @@
 Status: public status shortcut
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal key-material contract note: 2026-05-25 CDT
 Latest Seal key-handling status/public-entry note: 2026-05-25 CDT
 Latest Seal key-handling implementation note: 2026-05-25 CDT
 Latest Seal key-handling contract note: 2026-05-25 CDT
@@ -130,6 +131,7 @@ Latticra is the contract.
 ## Current milestone ledger
 
 ```text
+Seal key-material boundary contract
 Seal key-handling status/public-entry alignment
 Seal key-handling metadata implementation
 Seal key-handling boundary contract
@@ -227,14 +229,14 @@ Completion percentage review
 ## Current next step
 
 ```text
-Seal key-material boundary contract, with no public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
+Seal key-material metadata implementation, with no public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
 
-It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal status slice makes the metadata-only key-handling checkpoint visible from public entry points without public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, capability enforcement, or runtime authority.
+It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal contract slice defines a metadata-only key-material boundary after key-handling readiness without public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, capability enforcement, or runtime authority.
 
 Current status fields:
 
@@ -260,6 +262,7 @@ seal_signing_operation_status_present=1
 seal_key_handling_contract_present=1
 seal_key_handling_metadata_present=1
 seal_key_handling_status_present=1
+seal_key_material_contract_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1
