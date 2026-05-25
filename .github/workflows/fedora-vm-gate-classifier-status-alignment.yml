@@ -13,6 +13,6 @@ jobs:
   fedora-vm-gate-classifier-status-alignment:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
       - name: Run Fedora VM gate classifier status alignment guard
         run: sh scripts/test-fedora-vm-gate-classifier-status-alignment.sh

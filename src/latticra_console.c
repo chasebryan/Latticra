@@ -138,6 +138,18 @@ static const latticra_console_command_t lc_commands[] = {
         0
     },
     {
+        "lc receipts",
+        "lc receipts",
+        "Inspect LC profile and contract receipt requirements without signing.",
+        "lc.receipts.inspect",
+        LATTICRA_CONSOLE_COMMAND_CORE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
         "lc substrate",
         "lc substrate",
         "Inspect the metadata bridge to Lat, LIR, Nucleus, Runtime Boundary, and Seal.",
@@ -475,6 +487,8 @@ static void lc_seed_result(
         "metadata-only-contract");
     lc_copy(result->host_inventory_contract_status, sizeof(result->host_inventory_contract_status),
         "metadata-only-contract");
+    lc_copy(result->receipt_contract_status, sizeof(result->receipt_contract_status),
+        "metadata-only-contract");
     lc_copy(result->os_base_status, sizeof(result->os_base_status), "planned-no-boot-authority");
     result->source_span = lc_default_span();
     result->no_effect = 1;
@@ -485,6 +499,7 @@ static void lc_seed_result(
     result->host_embeddable = 1;
     result->host_embedding_contract_present = 1;
     result->host_inventory_contract_present = 1;
+    result->receipt_contract_present = 1;
     result->host_embedded_now = 0;
     result->operator_shell_present = 1;
     result->command_count = (unsigned int)latticra_console_command_count();
@@ -545,6 +560,8 @@ static void lc_finalize(latticra_console_result_t *result) {
     lc_copy(result->host_embedding_contract_status, sizeof(result->host_embedding_contract_status),
         "metadata-only-contract-ready");
     lc_copy(result->host_inventory_contract_status, sizeof(result->host_inventory_contract_status),
+        "metadata-only-contract-ready");
+    lc_copy(result->receipt_contract_status, sizeof(result->receipt_contract_status),
         "metadata-only-contract-ready");
     lc_copy(result->panel_install_status, sizeof(result->panel_install_status),
         result->panel_installable ? "panel-installable" : "panel-disabled");
@@ -688,6 +705,7 @@ latticra_status_t latticra_console_manpage_report(
         "  latticra-lc help\n"
         "  latticra-lc commands\n"
         "  latticra-lc profiles\n"
+        "  latticra-lc receipts\n"
         "  latticra-lc substrate\n"
         "  latticra-lc host\n"
         "  latticra-lc host-contract\n"
@@ -868,6 +886,49 @@ latticra_status_t latticra_console_host_inventory_report(
     return status;
 }
 
+latticra_status_t latticra_console_receipt_report(
+    char *buffer,
+    size_t buffer_len) {
+    size_t used = 0u;
+    latticra_status_t status;
+
+    if (buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    buffer[0] = '\0';
+
+    status = lc_appendf(buffer, buffer_len, &used,
+        "LATTICRA CONSOLE RECEIPT CONTRACT\n"
+        "receipt_profile=lc-receipts-v0\n"
+        "receipt_contract_status=metadata-only\n"
+        "receipt_contract_present=1\n"
+        "profile_receipt_required=1\n"
+        "host_embedding_contract_receipt_required=1\n"
+        "host_inventory_contract_receipt_required=1\n"
+        "runtime_boundary_receipt_required=1\n"
+        "seal_capability_labels_required=1\n"
+        "seal_signature_planned=1\n"
+        "seal_signature_present=0\n"
+        "seal_signing_authority_present=0\n"
+        "receipt_written=0\n"
+        "receipt_signed=0\n"
+        "receipt_hash_recorded=0\n"
+        "receipt_path_recorded=0\n"
+        "receipt_format=metadata-only-contract\n"
+        "receipt_surfaces=profile,host-contract,host-inventory,runtime-boundary\n"
+        "promotion_gate=lc_receipts_before_host_adapter_or_os_base\n"
+        "command_surface=lc receipts\n"
+        "no_effect=1\n"
+        "file_write_allowed=0\n"
+        "host_process_launch_allowed=0\n"
+        "host_file_read_allowed=0\n"
+        "host_file_write_allowed=0\n"
+        "host_mutation_allowed=0\n"
+        "network_allowed=0\n"
+        "runtime_enforcement_allowed=0\n"
+        "boot_allowed=0\n");
+    return status;
+}
+
 latticra_status_t latticra_console_report(
     const latticra_console_result_t *result,
     char *buffer,
@@ -892,6 +953,7 @@ latticra_status_t latticra_console_report(
         "host_embedding_status=%s\n"
         "host_embedding_contract_status=%s\n"
         "host_inventory_contract_status=%s\n"
+        "receipt_contract_status=%s\n"
         "os_base_status=%s\n"
         "configurable=%d\n"
         "panel_installable=%d\n"
@@ -901,6 +963,7 @@ latticra_status_t latticra_console_report(
         "host_embeddable=%d\n"
         "host_embedding_contract_present=%d\n"
         "host_inventory_contract_present=%d\n"
+        "receipt_contract_present=%d\n"
         "host_embedded_now=%d\n"
         "command_count=%u\n"
         "command_registry_source=c-static-table\n"
@@ -934,6 +997,7 @@ latticra_status_t latticra_console_report(
         result->host_embedding_status,
         result->host_embedding_contract_status,
         result->host_inventory_contract_status,
+        result->receipt_contract_status,
         result->os_base_status,
         result->configurable,
         result->panel_installable,
@@ -943,6 +1007,7 @@ latticra_status_t latticra_console_report(
         result->host_embeddable,
         result->host_embedding_contract_present,
         result->host_inventory_contract_present,
+        result->receipt_contract_present,
         result->host_embedded_now,
         result->command_count,
         result->kernel.kernel_status,

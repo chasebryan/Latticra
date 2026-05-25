@@ -24,6 +24,13 @@ latticra_status_t latticra_lat_pipeline_diagnostics_report(
         "lowering_error=%s\n"
         "model_error=%s\n"
         "lir_error=%s\n"
+        "comment_count=%zu\n"
+        "first_comment_start_offset=%zu\n"
+        "first_comment_end_offset=%zu\n"
+        "first_comment_start_line=%zu\n"
+        "first_comment_start_column=%zu\n"
+        "first_comment_end_line=%zu\n"
+        "first_comment_end_column=%zu\n"
         "semantic_diagnostic_count=%zu\n"
         "first_diagnostic_declaration_index=%zu\n"
         "first_diagnostic_clause_index=%zu\n"
@@ -61,6 +68,13 @@ latticra_status_t latticra_lat_pipeline_diagnostics_report(
         latticra_lat_to_lir_error_label(result->lowering_error),
         latticra_lat_model_error_label(result->model_error),
         latticra_lir_error_label(result->lir_error),
+        result->comment_count,
+        result->first_comment_span.start_offset,
+        result->first_comment_span.end_offset,
+        result->first_comment_span.start_line,
+        result->first_comment_span.start_column,
+        result->first_comment_span.end_line,
+        result->first_comment_span.end_column,
         result->semantic_diagnostic_count,
         result->first_diagnostic_declaration_index,
         result->first_diagnostic_clause_index,

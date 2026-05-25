@@ -8,7 +8,7 @@ Scope: status checkpoint after adding the closed macOS commit gate contract.
 
 Latticra now has a no-effect macOS commit gate contract.
 
-The contract keeps `commit_user_local_managed_artifacts=0` even when local candidates and the writer dry-run reach the future commit-gate decision. It records the missing future prerequisites before a commit-capable macOS user-local app bundle writer may exist.
+The contract keeps `commit_user_local_managed_artifacts=0` even when local candidates and the writer dry-run reach the future commit-gate decision. The macOS verification transcript contract and reset/uninstall dry-run contract are now present, but the gate still records the missing managed-write, reset/uninstall evidence, and transcript-evidence prerequisites before a commit-capable macOS user-local app bundle writer may exist.
 
 ## Status Fields
 
@@ -16,14 +16,18 @@ The contract keeps `commit_user_local_managed_artifacts=0` even when local candi
 macos_commit_gate_contract_present=1
 macos_commit_gate_contract_guard_present=1
 macos_dry_run_writer_candidate_integration_present=1
+macos_readme_installer_usage_present=1
 commit_gate_state=closed
 commit_gate_decision=blocked-missing-managed-write-implementation
 commit_user_local_managed_artifacts=0
 macos_app_bundle_commit_capable_writer_present=0
 managed_write_implementation_present=0
 reset_uninstall_implementation_present=0
-verification_transcript_contract_present=0
+macos_verification_transcript_contract_present=1
+verification_transcript_contract_present=1
 verification_transcript_evidence_present=0
+macos_reset_uninstall_dry_run_contract_present=1
+reset_uninstall_dry_run_evidence_present=0
 candidate_integration_required=1
 candidate_flow_ready_required=1
 operator_explicit_commit_intent_required=1
@@ -79,7 +83,7 @@ macos_commit_gate_contract: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS verification transcript contract that defines exact post-write evidence before any user-local install can be called verified.
+Add a macOS reset/uninstall live-target classifier that reports present, managed, and unmanaged targets without deleting files.
 ```
 
 ## Non-Claims

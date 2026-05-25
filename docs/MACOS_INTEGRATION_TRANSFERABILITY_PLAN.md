@@ -86,8 +86,12 @@ stage_3_user_local_app_bundle_writer_alignment=present
 stage_3_local_candidate_asset_probe=present
 stage_3_dry_run_writer_candidate_integration=present
 stage_3_macos_commit_gate_contract=present
+stage_3_macos_readme_installer_usage=present
 stage_3_user_local_app_bundle=future
+stage_4_user_local_verification_transcript_contract=present
+stage_4_user_local_verification_transcript_evidence=future
 stage_4_user_local_verification_transcript=future
+stage_4_macos_reset_uninstall_dry_run_contract=present
 stage_5_codesigning_notarization_plan=future
 stage_6_controlled_os_integration_contracts=future
 ```
@@ -175,6 +179,30 @@ The Stage 3 macOS commit gate contract is implemented by:
 docs/MACOS_COMMIT_GATE_CONTRACT.md
 scripts/macos-commit-gate-contract.sh
 docs/status/MACOS_COMMIT_GATE_CONTRACT_STATUS.md
+```
+
+The Stage 3 macOS README installer usage alignment is implemented by:
+
+```text
+README.md
+docs/status/MACOS_README_INSTALLER_USAGE_STATUS.md
+scripts/test-macos-readme-installer-usage.sh
+```
+
+The Stage 4 macOS verification transcript contract is implemented by:
+
+```text
+docs/MACOS_VERIFICATION_TRANSCRIPT_CONTRACT.md
+scripts/macos-verification-transcript-contract.sh
+docs/status/MACOS_VERIFICATION_TRANSCRIPT_CONTRACT_STATUS.md
+```
+
+The Stage 4 macOS reset/uninstall dry-run contract is implemented by:
+
+```text
+docs/MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT.md
+scripts/macos-reset-uninstall-dry-run-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT_STATUS.md
 ```
 
 ## App Bundle Direction
@@ -297,5 +325,5 @@ macos_production_ready=0
 ## Next Recommended Lane
 
 ```text
-Add a macOS verification transcript contract that defines exact post-write evidence before any user-local install can be called verified.
+Add a macOS reset/uninstall live-target classifier that reports present, managed, and unmanaged targets without deleting files.
 ```

@@ -19,6 +19,7 @@ extern "C" {
 #define LATTICRA_CONSOLE_BOUNDARY_REPORT_MAX 20000u
 #define LATTICRA_CONSOLE_HOST_CONTRACT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_HOST_INVENTORY_REPORT_MAX 12000u
+#define LATTICRA_CONSOLE_RECEIPT_REPORT_MAX 12000u
 
 typedef enum {
     LATTICRA_CONSOLE_PROFILE_HOSTED_REFERENCE = 0,
@@ -98,6 +99,7 @@ typedef struct {
     char host_embedding_status[LATTICRA_CONSOLE_LABEL_MAX];
     char host_embedding_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
     char host_inventory_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
+    char receipt_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
     char os_base_status[LATTICRA_CONSOLE_LABEL_MAX];
     char source_identity[LATTICRA_CONSOLE_SOURCE_IDENTITY_MAX];
     latticra_l_ui_source_span_t source_span;
@@ -110,6 +112,7 @@ typedef struct {
     int host_embeddable;
     int host_embedding_contract_present;
     int host_inventory_contract_present;
+    int receipt_contract_present;
     int host_embedded_now;
     int operator_shell_present;
     int execution_allowed;
@@ -164,6 +167,10 @@ latticra_status_t latticra_console_host_contract_report(
     size_t buffer_len);
 
 latticra_status_t latticra_console_host_inventory_report(
+    char *buffer,
+    size_t buffer_len);
+
+latticra_status_t latticra_console_receipt_report(
     char *buffer,
     size_t buffer_len);
 

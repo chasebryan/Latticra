@@ -16,6 +16,7 @@ The integration runs the local candidate asset probe and the app bundle writer d
 macos_dry_run_writer_candidate_integration_present=1
 macos_dry_run_writer_candidate_integration_guard_present=1
 macos_commit_gate_contract_present=1
+macos_verification_transcript_contract_present=1
 macos_local_candidate_asset_probe_present=1
 macos_app_bundle_writer_dry_run_present=1
 asset_probe_to_writer_candidate_flow_recorded=1
@@ -70,7 +71,7 @@ macos_dry_run_writer_candidate_integration: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS verification transcript contract that defines exact post-write evidence before any user-local install can be called verified.
+Add a macOS reset/uninstall live-target classifier that reports present, managed, and unmanaged targets without deleting files.
 ```
 
 ## Non-Claims

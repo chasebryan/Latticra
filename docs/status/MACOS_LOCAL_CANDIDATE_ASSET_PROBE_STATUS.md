@@ -17,6 +17,7 @@ macos_local_candidate_asset_probe_present=1
 macos_local_candidate_asset_probe_guard_present=1
 macos_dry_run_writer_candidate_integration_present=1
 macos_commit_gate_contract_present=1
+macos_verification_transcript_contract_present=1
 local_panel_executable_candidate_probe=1
 local_icon_candidate_probe=1
 panel_candidate_executable_check_present=1
@@ -76,7 +77,7 @@ macos_local_candidate_asset_probe: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS verification transcript contract that defines exact post-write evidence before any user-local install can be called verified.
+Add a macOS reset/uninstall live-target classifier that reports present, managed, and unmanaged targets without deleting files.
 ```
 
 ## Non-Claims

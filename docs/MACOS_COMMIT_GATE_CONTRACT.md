@@ -14,7 +14,7 @@ The macOS dry-run writer candidate integration can report:
 integration_decision=ready-for-future-commit-gate-no-effect
 ```
 
-That does not open the commit gate. The current and only allowed commit posture remains:
+The macOS verification transcript contract and reset/uninstall dry-run contract now define future evidence shapes, but they do not provide write, reset, uninstall, or transcript evidence. That does not open the commit gate. The current and only allowed commit posture remains:
 
 ```text
 commit_gate_state=closed
@@ -43,8 +43,11 @@ The gate stays closed because these future pieces do not exist yet:
 ```text
 managed_write_implementation_present=0
 reset_uninstall_implementation_present=0
-verification_transcript_contract_present=0
+macos_verification_transcript_contract_present=1
+verification_transcript_contract_present=1
 verification_transcript_evidence_present=0
+macos_reset_uninstall_dry_run_contract_present=1
+reset_uninstall_dry_run_evidence_present=0
 ```
 
 ## Opening Preconditions
@@ -121,5 +124,5 @@ This contract is not macOS installation, macOS app bundle evidence, signed app e
 ## Next Recommended Lane
 
 ```text
-Add a macOS verification transcript contract that defines exact post-write evidence before any user-local install can be called verified.
+Add a macOS reset/uninstall live-target classifier that reports present, managed, and unmanaged targets without deleting files.
 ```

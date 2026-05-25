@@ -2,13 +2,16 @@
 
 Status: active project note
 Last updated: 2026-05-25 CDT
+Latest current estimate table source alignment note: 2026-05-25 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
 Latest completion estimate review after runtime-boundary abuse-case fixtures note: 2026-05-25 CDT
 Latest runtime boundary abuse-case fixture expansion note: 2026-05-25 CDT
 Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
+Latest runtime boundary Lat pipeline comment evidence note: 2026-05-25 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
 Latest Lat pipeline comment metadata integration note: 2026-05-25 CDT
+Latest Lat pipeline diagnostic comment metadata integration note: 2026-05-25 CDT
 
 ## Purpose
 
@@ -31,6 +34,30 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Runtime boundary Lat pipeline comment evidence integration
+```
+
+Purpose completed:
+
+```text
+copy Lat pipeline line-comment count and first-comment span metadata into deterministic runtime-boundary records and reports while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
+Lat pipeline diagnostic comment metadata integration
+```
+
+Purpose completed:
+
+```text
+copy parser line-comment count and first-comment span metadata into deterministic Lat pipeline diagnostic reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Earlier implementation slice
+
+```text
 Lat pipeline comment metadata integration
 ```
 
@@ -40,7 +67,7 @@ Purpose completed:
 copy parser line-comment count and first-comment span metadata into deterministic Lat pipeline reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat grammar unsupported block-comment rejection refinement
@@ -712,8 +739,10 @@ Runtime boundary policy expansion after threat-model validation
 Current runtime boundary abuse-case fixture fields:
 
 ```text
+current_estimate_table_source_alignment_present=1
 seal_readme_status_row_alignment_present=1
 completion_estimate_review_readme_status_alignment_present=1
+source_alignment_estimate_changed=0
 runtime_boundary_abuse_case_fixture_expansion_present=1
 runtime_boundary_abuse_case_fixture_guard_present=1
 runtime_boundary_abuse_case_c_fixtures_present=1
@@ -723,6 +752,8 @@ effect_execution_added=0
 runtime_authority_granted=0
 completion_estimate_review_required=0
 ```
+
+Current estimate table source alignment is the latest source-map cleanup for the public estimate table. It changes no estimates, implementation behavior, security posture, public readiness, product readiness, or runtime authority.
 
 Recommended next slice:
 

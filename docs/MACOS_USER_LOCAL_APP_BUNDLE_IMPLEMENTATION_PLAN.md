@@ -98,7 +98,7 @@ NSHighResolutionCapable=true
 
 Phase 5 must require a local Panel executable candidate and icon candidate before real writes. The macOS dry-run writer candidate integration proves this phase can become ready in dry-run only when the local candidate asset probe and writer dry-run agree. It must not download, build, sign, notarize, or generate network-dependent assets.
 
-The macOS commit gate contract keeps Phase 8 closed until a future managed-write implementation, reset/uninstall implementation, and verification transcript evidence exist.
+The macOS commit gate contract keeps Phase 8 closed until a future managed-write implementation, reset/uninstall implementation, and verification transcript evidence exist. The macOS verification transcript contract now defines the required evidence shape, but no verification transcript evidence exists yet.
 
 Phase 6 must stage:
 
@@ -225,6 +225,7 @@ macos_app_bundle_writer_dry_run_present=1
 macos_local_candidate_asset_probe_present=1
 macos_dry_run_writer_candidate_integration_present=1
 macos_commit_gate_contract_present=1
+macos_verification_transcript_contract_present=1
 macos_app_bundle_created=0
 macos_install_verified=0
 macos_reset_uninstall_implemented=0
@@ -243,5 +244,5 @@ This plan is not macOS installation, macOS app bundle evidence, signed app evide
 ## Next Recommended Lane
 
 ```text
-Add a macOS verification transcript contract that defines exact post-write evidence before any user-local install can be called verified.
+Add a macOS reset/uninstall live-target classifier that reports present, managed, and unmanaged targets without deleting files.
 ```

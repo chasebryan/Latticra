@@ -270,6 +270,29 @@ p:last-child {
   background: rgba(255, 255, 255, 0.14);
 }
 
+.button-dark {
+  border-color: var(--border-strong);
+  color: var(--ink);
+  background: #fff;
+}
+
+.button-dark:hover {
+  color: var(--ink);
+  border-color: var(--muted);
+  background: var(--surface-soft);
+}
+
+.button-outline {
+  border-color: var(--border-strong);
+  color: var(--ink);
+}
+
+.button-outline:hover {
+  color: var(--ink);
+  border-color: var(--muted);
+  background: var(--surface-soft);
+}
+
 .hero-facts {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -360,6 +383,230 @@ p:last-child {
   max-width: 780px;
   color: var(--muted);
   font-size: 1.03rem;
+}
+
+.page-hero {
+  padding: 70px 0 58px;
+  border-bottom: 1px solid var(--border);
+  background: #111827;
+  color: #fff;
+}
+
+.status-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.96) 0%, rgba(17, 24, 39, 0.86) 58%, rgba(17, 24, 39, 0.7) 100%),
+    url("latticra-seal-runtime-dry-run-native-demo.png");
+  background-position: center right;
+  background-size: cover;
+}
+
+.page-hero h1,
+.not-found h1 {
+  max-width: 860px;
+  font-size: 3.3rem;
+}
+
+.page-lede {
+  max-width: 760px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 1.18rem;
+}
+
+.breadcrumb {
+  margin-bottom: 28px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.86rem;
+}
+
+.breadcrumb a {
+  color: #fff;
+}
+
+.map-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: 32px;
+  align-items: end;
+  margin-bottom: 28px;
+}
+
+.map-intro p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 1.03rem;
+}
+
+.map-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.map-card {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.map-number {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--ochre);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.map-card h3 {
+  font-size: 1.08rem;
+}
+
+.status-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: 28px;
+  align-items: center;
+}
+
+.status-summary p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 1.03rem;
+}
+
+.status-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.status-actions .button {
+  justify-content: flex-start;
+}
+
+.posture-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.posture-card {
+  min-width: 0;
+  min-height: 228px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.posture-card h3 {
+  margin-top: 18px;
+}
+
+.posture-card p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.posture-present {
+  border-top: 4px solid var(--green);
+}
+
+.posture-guarded {
+  border-top: 4px solid var(--ochre);
+}
+
+.posture-blocked {
+  border-top: 4px solid var(--red);
+}
+
+.status-lane-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.status-lane {
+  min-width: 0;
+  min-height: 204px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.status-lane p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.status-lane a {
+  display: inline-flex;
+  margin-top: 8px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.status-lane a:hover {
+  text-decoration: underline;
+}
+
+.map-list {
+  display: grid;
+  gap: 11px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.map-list li {
+  display: grid;
+  gap: 2px;
+  padding-top: 11px;
+  border-top: 1px solid var(--border);
+}
+
+.map-list a {
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.map-list a:hover {
+  text-decoration: underline;
+}
+
+.map-list span {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.claim-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: 32px;
+  align-items: center;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.claim-strip p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 1.03rem;
+}
+
+.not-found {
+  min-height: calc(100vh - 67px);
+  padding: 90px 0;
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.94) 0%, rgba(17, 24, 39, 0.86) 56%, rgba(17, 24, 39, 0.62) 100%),
+    url("latticra-seal-runtime-dry-run-native-demo.png");
+  background-position: center right;
+  background-size: cover;
+  color: #fff;
+}
+
+.not-found-inner {
+  max-width: 1120px;
 }
 
 .orientation-grid {
@@ -599,7 +846,7 @@ p:last-child {
 
 .resource-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -677,7 +924,12 @@ p:last-child {
 
   .evidence-layout,
   .showcase,
-  .command-grid {
+  .command-grid,
+  .map-intro,
+  .claim-strip,
+  .status-summary,
+  .posture-grid,
+  .status-lane-grid {
     grid-template-columns: 1fr;
   }
 
@@ -720,8 +972,28 @@ p:last-child {
   .lane-grid,
   .evidence-steps,
   .command-grid,
-  .resource-grid {
+  .resource-grid,
+  .map-grid,
+  .posture-grid,
+  .status-lane-grid {
     grid-template-columns: 1fr;
+  }
+
+  .page-hero {
+    padding: 46px 0 42px;
+  }
+
+  .page-hero h1,
+  .not-found h1 {
+    font-size: 2.45rem;
+  }
+
+  .page-lede {
+    font-size: 1.02rem;
+  }
+
+  .claim-strip {
+    padding: 20px;
   }
 
   .section-band {

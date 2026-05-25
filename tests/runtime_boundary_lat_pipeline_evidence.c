@@ -32,6 +32,13 @@ static latticra_lat_pipeline_result_t ok_pipeline(void) {
     pipeline.source_len = 256u;
     pipeline.declaration_count = 5u;
     pipeline.clause_count = 23u;
+    pipeline.comment_count = 2u;
+    pipeline.first_comment_span.start_offset = 0u;
+    pipeline.first_comment_span.end_offset = 24u;
+    pipeline.first_comment_span.start_line = 1u;
+    pipeline.first_comment_span.start_column = 1u;
+    pipeline.first_comment_span.end_line = 1u;
+    pipeline.first_comment_span.end_column = 25u;
     pipeline.node_count = 29u;
     pipeline.edge_count = 29u;
     pipeline.semantic_valid = 1;
@@ -87,6 +94,9 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(result.record.lat_pipeline_source_len == 256u, "pipeline source length copied");
     EXPECT_TRUE(result.record.lat_pipeline_node_count == 29u, "pipeline node count copied");
     EXPECT_TRUE(result.record.lat_pipeline_edge_count == 29u, "pipeline edge count copied");
+    EXPECT_TRUE(result.record.lat_pipeline_comment_count == 2u, "pipeline comment count copied");
+    EXPECT_TRUE(result.record.lat_pipeline_first_comment_span.start_line == 1u, "pipeline comment line copied");
+    EXPECT_TRUE(result.record.lat_pipeline_first_comment_span.start_column == 1u, "pipeline comment column copied");
     EXPECT_TRUE(result.record.lat_lir_source_kind == LATTICRA_LIR_SOURCE_LAT_MODULE, "lat lir source kind copied");
     EXPECT_TRUE(result.record.lat_lir_module_node_count == 4u, "lat lir node count copied");
     EXPECT_TRUE(result.record.lat_lir_transition_edge_count == 1u, "transition edge count copied");
@@ -149,6 +159,9 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_pipeline_source_len=256\n") != 0, "pipeline source length report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_node_count=29\n") != 0, "pipeline node count report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_edge_count=29\n") != 0, "pipeline edge count report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_comment_count=2\n") != 0, "pipeline comment count report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_first_comment_start_line=1\n") != 0, "pipeline comment line report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_first_comment_start_column=1\n") != 0, "pipeline comment column report present");
     EXPECT_TRUE(strstr(report, "lat_lir_source_kind=lat_module\n") != 0, "lat lir source kind report present");
     EXPECT_TRUE(strstr(report, "lat_lir_module_node_count=4\n") != 0, "lat lir node count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_transition_edge_count=1\n") != 0, "lat lir transition edge count report present");

@@ -13,6 +13,6 @@ jobs:
   fedora-vm-rpm-readme-alignment:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
       - name: Check Fedora VM RPM README alignment
         run: sh scripts/test-fedora-disposable-vm-rpm-readme-alignment.sh

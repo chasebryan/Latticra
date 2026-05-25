@@ -37,10 +37,14 @@ substrate_bridge_profile=metadata-bound
 host_embedding_profile=panel-contained
 host_embedding_contract_profile=lc-host-embedding-v0
 host_inventory_contract_profile=lc-host-inventory-v0
+receipt_contract_profile=lc-receipts-v0
 os_base_profile=planned-no-boot-authority
 report_only=true
 host_embedding_contract_required=true
 read_only_host_inventory_contract_required=true
+profile_receipt_required=true
+host_contract_receipt_required=true
+host_inventory_receipt_required=true
 runtime_boundary_binding_required=true
 seal_capability_labels_required=true
 ```
@@ -58,6 +62,7 @@ share/latticra/lc/profiles/os-base-planning.toml
 share/latticra/lc/substrate
 share/latticra/lc/host-embedding/contract.toml
 share/latticra/lc/host-inventory/contract.toml
+share/latticra/lc/receipts/contract.toml
 share/latticra/components/latticra-console.installed
 ```
 
@@ -87,6 +92,7 @@ clear
 lc status
 lc commands
 lc profiles
+lc receipts
 lc substrate
 lc host
 lc host-contract
@@ -124,11 +130,15 @@ substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "panel-contained"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
+receipt_contract_profile = "lc-receipts-v0"
 os_base_profile = "planned-no-boot-authority"
 panel_bridge = "panel-aware"
 report_only = true
 require_host_embedding_contract = true
 require_read_only_host_inventory_contract = true
+require_profile_receipt = true
+require_host_contract_receipt = true
+require_host_inventory_receipt = true
 require_runtime_boundary_binding = true
 require_seal_capability_labels = true
 ```
@@ -242,6 +252,42 @@ runtime_enforcement_allowed=0
 boot_allowed=0
 ```
 
+## Receipt Contract
+
+LC now installs and reports a receipt contract for its profile and host-side planning metadata:
+
+```text
+receipt_profile=lc-receipts-v0
+receipt_contract_status=metadata-only
+profile_receipt_required=1
+host_embedding_contract_receipt_required=1
+host_inventory_contract_receipt_required=1
+runtime_boundary_receipt_required=1
+seal_capability_labels_required=1
+receipt_surfaces=profile,host-contract,host-inventory,runtime-boundary
+promotion_gate=lc_receipts_before_host_adapter_or_os_base
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report receipts
+latticra-lc receipts
+```
+
+The contract reserves a future Seal-signed receipt path without claiming signing authority now:
+
+```text
+seal_signature_planned=1
+seal_signature_present=0
+seal_signing_authority_present=0
+receipt_written=0
+receipt_signed=0
+receipt_hash_recorded=0
+receipt_path_recorded=0
+file_write_allowed=0
+```
+
 ## Help And Manpage Rendering
 
 LC now has registry-backed renderers for:
@@ -280,6 +326,7 @@ Stage-0 command bindings use these rules:
 
 ```text
 core, panel, and substrate inspection -> authority-check / validation-only
+lc receipts -> authority-check / validation-only
 lc host-contract -> authority-check / validation-only
 lc host-inventory -> authority-check / validation-only
 lc host -> future-gated command-execute planning
@@ -356,6 +403,6 @@ LC Stage-0 does not:
 
 ## Next Slices
 
-1. Add LC profile, host-contract, and host-inventory receipts so Panel saves selections as signed evidence when Seal signing authority exists.
-2. Add boot-adjacent planning only after read-only host and VM evidence exists.
-3. Add a future host adapter contract only after the read-only inventory receipt path exists.
+1. Add boot-adjacent planning only after read-only host and VM evidence exists.
+2. Add a future host adapter contract only after the read-only inventory receipt path exists.
+3. Add the first Seal-signed LC receipt path only after signing authority is implemented and gated.

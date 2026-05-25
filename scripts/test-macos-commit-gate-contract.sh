@@ -36,6 +36,9 @@ transfer_plan='docs/MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md'
 transfer_status='docs/status/MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md'
 integration_doc='docs/MACOS_DRY_RUN_WRITER_CANDIDATE_INTEGRATION.md'
 integration_status='docs/status/MACOS_DRY_RUN_WRITER_CANDIDATE_INTEGRATION_STATUS.md'
+verification_doc='docs/MACOS_VERIFICATION_TRANSCRIPT_CONTRACT.md'
+verification_status='docs/status/MACOS_VERIFICATION_TRANSCRIPT_CONTRACT_STATUS.md'
+reset_status='docs/status/MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT_STATUS.md'
 alignment_doc='docs/MACOS_APP_BUNDLE_WRITER_ALIGNMENT.md'
 alignment_status='docs/status/MACOS_APP_BUNDLE_WRITER_ALIGNMENT_STATUS.md'
 writer_status='docs/status/MACOS_APP_BUNDLE_WRITER_DRY_RUN_STATUS.md'
@@ -50,6 +53,9 @@ require_file "$transfer_plan"
 require_file "$transfer_status"
 require_file "$integration_doc"
 require_file "$integration_status"
+require_file "$verification_doc"
+require_file "$verification_status"
+require_file "$reset_status"
 require_file "$alignment_doc"
 require_file "$alignment_status"
 require_file "$writer_status"
@@ -64,26 +70,32 @@ require_contains 'commit_user_local_managed_artifacts=0' "$doc"
 require_contains 'macos_app_bundle_commit_capable_writer_present=0' "$doc"
 require_contains 'managed_write_implementation_present=0' "$doc"
 require_contains 'reset_uninstall_implementation_present=0' "$doc"
-require_contains 'verification_transcript_contract_present=0' "$doc"
+require_contains 'macos_verification_transcript_contract_present=1' "$doc"
+require_contains 'verification_transcript_contract_present=1' "$doc"
 require_contains 'verification_transcript_evidence_present=0' "$doc"
+require_contains 'macos_reset_uninstall_dry_run_contract_present=1' "$doc"
+require_contains 'reset_uninstall_dry_run_evidence_present=0' "$doc"
 require_contains 'candidate_flow_ready_required=1' "$doc"
 require_contains 'operator_explicit_commit_intent_required=1' "$doc"
 require_contains 'receipt_completeness_tests_required=1' "$doc"
 require_contains 'app_bundle_write_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
-require_contains 'macOS verification transcript contract' "$doc"
+require_contains 'reset/uninstall dry-run contract' "$doc"
 
 require_contains 'Status: no-effect commit gate contract status' "$status"
 require_contains 'macos_commit_gate_contract_present=1' "$status"
 require_contains 'macos_commit_gate_contract_guard_present=1' "$status"
 require_contains 'macos_dry_run_writer_candidate_integration_present=1' "$status"
+require_contains 'macos_verification_transcript_contract_present=1' "$status"
+require_contains 'macos_reset_uninstall_dry_run_contract_present=1' "$status"
 require_contains 'commit_gate_state=closed' "$status"
 require_contains 'commit_gate_decision=blocked-missing-managed-write-implementation' "$status"
 require_contains 'commit_user_local_managed_artifacts=0' "$status"
 require_contains 'managed_write_implementation_present=0' "$status"
-require_contains 'verification_transcript_contract_present=0' "$status"
+require_contains 'verification_transcript_contract_present=1' "$status"
 require_contains 'verification_transcript_evidence_present=0' "$status"
+require_contains 'reset_uninstall_dry_run_evidence_present=0' "$status"
 require_contains 'operator_explicit_commit_intent_required=1' "$status"
 require_contains 'host_mutation_performed=0' "$status"
 require_contains 'network_performed=0' "$status"
@@ -92,17 +104,27 @@ require_contains 'not macOS install evidence' "$status"
 require_contains 'MACOS_COMMIT_GATE_CONTRACT_STATUS.md' "$index"
 require_contains 'macOS commit gate contract status' "$index"
 require_contains 'stage_3_macos_commit_gate_contract=present' "$transfer_plan"
+require_contains 'stage_4_user_local_verification_transcript_contract=present' "$transfer_plan"
+require_contains 'stage_4_macos_reset_uninstall_dry_run_contract=present' "$transfer_plan"
 require_contains 'docs/MACOS_COMMIT_GATE_CONTRACT.md' "$transfer_plan"
 require_contains 'scripts/macos-commit-gate-contract.sh' "$transfer_plan"
+require_contains 'docs/MACOS_VERIFICATION_TRANSCRIPT_CONTRACT.md' "$transfer_plan"
+require_contains 'docs/MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT.md' "$transfer_plan"
 require_contains 'macos_commit_gate_contract_present=1' "$transfer_status"
+require_contains 'macos_verification_transcript_contract_present=1' "$transfer_status"
+require_contains 'macos_reset_uninstall_dry_run_contract_present=1' "$transfer_status"
 require_contains 'macos_commit_gate_contract_present=1' "$integration_status"
+require_contains 'macos_verification_transcript_contract_present=1' "$integration_status"
 require_contains 'macos_commit_gate_contract_present=1' "$alignment_status"
 require_contains 'macos_commit_gate_contract_present=1' "$writer_status"
 require_contains 'macos_commit_gate_contract_present=1' "$implementation_status"
+require_contains 'macos_verification_transcript_contract_present=1' "$verification_status"
+require_contains 'macos_reset_uninstall_dry_run_contract_present=1' "$reset_status"
 require_contains 'macOS commit gate contract' "$integration_doc"
+require_contains 'macOS verification transcript contract' "$verification_doc"
 require_contains 'macOS commit gate contract' "$alignment_doc"
-require_contains 'Add a macOS verification transcript contract' "$transfer_plan"
-require_contains 'Add a macOS verification transcript contract' "$transfer_status"
+require_contains 'Add a macOS reset/uninstall live-target classifier' "$transfer_plan"
+require_contains 'Add a macOS reset/uninstall live-target classifier' "$transfer_status"
 require_contains 'sh scripts/test-macos-commit-gate-contract.sh' "$workflow"
 
 require_contains 'MACOS COMMIT GATE CONTRACT' "$script"
@@ -110,11 +132,14 @@ require_contains 'commit_gate_state=closed' "$script"
 require_contains 'commit_gate_decision=blocked-missing-managed-write-implementation' "$script"
 require_contains 'commit_user_local_managed_artifacts=0' "$script"
 require_contains 'managed_write_implementation_present=0' "$script"
-require_contains 'verification_transcript_contract_present=0' "$script"
+require_contains 'macos_verification_transcript_contract_present=1' "$script"
+require_contains 'verification_transcript_contract_present=1' "$script"
+require_contains 'macos_reset_uninstall_dry_run_contract_present=1' "$script"
+require_contains 'reset_uninstall_dry_run_evidence_present=0' "$script"
 require_contains 'app_bundle_write_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-verification-transcript-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-target-classifier' "$script"
 
 output=$(sh "$script")
 require_output_contains "$output" 'MACOS COMMIT GATE CONTRACT'
@@ -125,7 +150,11 @@ require_output_contains "$output" 'commit_gate_decision=blocked-missing-managed-
 require_output_contains "$output" 'commit_user_local_managed_artifacts=0'
 require_output_contains "$output" 'macos_app_bundle_commit_capable_writer_present=0'
 require_output_contains "$output" 'managed_write_implementation_present=0'
+require_output_contains "$output" 'macos_verification_transcript_contract_present=1'
+require_output_contains "$output" 'verification_transcript_contract_present=1'
 require_output_contains "$output" 'verification_transcript_evidence_present=0'
+require_output_contains "$output" 'macos_reset_uninstall_dry_run_contract_present=1'
+require_output_contains "$output" 'reset_uninstall_dry_run_evidence_present=0'
 require_output_contains "$output" 'operator_explicit_commit_intent_observed=0'
 require_output_contains "$output" 'app_bundle_write_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
@@ -133,5 +162,6 @@ require_output_contains "$output" 'network_performed=0'
 require_output_contains "$output" 'production_installer_ready=0'
 
 sh scripts/test-macos-dry-run-writer-candidate-integration.sh
+sh scripts/test-macos-verification-transcript-contract.sh
 
 printf 'macos_commit_gate_contract: ok\n'

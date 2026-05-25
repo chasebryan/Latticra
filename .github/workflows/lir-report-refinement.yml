@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
       - name: Run LIR report refinement guard
         run: sh scripts/test-lir-report-refinement.sh
       - name: Run LIR shape tests

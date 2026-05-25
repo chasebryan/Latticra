@@ -51,6 +51,39 @@ static const char VALID_SOURCE[] =
     "  }\n"
     "}\n";
 
+static const char COMMENTED_VALID_SOURCE[] =
+    "// diagnostic comment one\n"
+    "lat module FoundationModule { // module comment\n"
+    "  state RootCell {\n"
+    "    origin = \"0/0\" // origin comment\n"
+    "    route = \"ROOT\"\n"
+    "    axis = \"ROOT\"\n"
+    "    path = \"/\"\n"
+    "    health = \"ok\"\n"
+    "    risk = \"low\"\n"
+    "    lock = \"open\"\n"
+    "    host_effect = none\n"
+    "    external_effect = none\n"
+    "  }\n"
+    "  effect PreviewOnly {\n"
+    "    host = none\n"
+    "    external = none\n"
+    "    network = none\n"
+    "    hardware = none\n"
+    "  }\n"
+    "  policy SafePreview {\n"
+    "    require risk != \"high\"\n"
+    "    require lock == \"open\"\n"
+    "    ensure host_effect == none\n"
+    "    ensure external_effect == none\n"
+    "  }\n"
+    "  transition MoveRight from RootCell {\n"
+    "    require lock == \"open\"\n"
+    "    effect host = none\n"
+    "    effect external = none\n"
+    "  }\n"
+    "}\n";
+
 static int run_pipeline(const char *source,
                         latticra_lat_parse_result_t *parse,
                         latticra_lat_semantic_result_t *semantic,
@@ -90,6 +123,9 @@ static int lat_pipeline_diagnostic_integration_reports_valid_pipeline(void) {
     EXPECT_TRUE(diagnostic.lowering_error == LATTICRA_LAT_TO_LIR_OK, "valid lowering error");
     EXPECT_TRUE(diagnostic.model_error == LATTICRA_LAT_MODEL_OK, "valid model error");
     EXPECT_TRUE(diagnostic.lir_error == LATTICRA_LIR_OK, "valid lir error");
+    EXPECT_TRUE(diagnostic.comment_count == 0u, "valid comment count");
+    EXPECT_TRUE(diagnostic.first_comment_span.start_line == 1u, "valid first comment default line");
+    EXPECT_TRUE(diagnostic.first_comment_span.start_column == 1u, "valid first comment default column");
     EXPECT_TRUE(diagnostic.lowering_model_declaration_count == 4u, "valid lowering model declaration count");
     EXPECT_TRUE(diagnostic.lowering_model_clause_count == 20u, "valid lowering model clause count");
     EXPECT_TRUE(diagnostic.lowering_first_declaration_node_index == 1u, "valid lowering first declaration node");
@@ -118,6 +154,9 @@ static int lat_pipeline_diagnostic_integration_reports_valid_pipeline(void) {
     EXPECT_TRUE(strstr(report, "diagnostic_class=valid\n") != 0, "valid report class");
     EXPECT_TRUE(strstr(report, "semantic_class=valid\n") != 0, "valid semantic report class");
     EXPECT_TRUE(strstr(report, "lowering_class=valid\n") != 0, "valid lowering report class");
+    EXPECT_TRUE(strstr(report, "comment_count=0\n") != 0, "valid comment count report");
+    EXPECT_TRUE(strstr(report, "first_comment_start_line=1\n") != 0, "valid first comment line report");
+    EXPECT_TRUE(strstr(report, "first_comment_start_column=1\n") != 0, "valid first comment column report");
     EXPECT_TRUE(strstr(report, "lowering_model_declaration_count=4\n") != 0, "valid lowering count report");
     EXPECT_TRUE(strstr(report, "lowering_first_declaration_node_index=1\n") != 0, "valid first declaration node report");
     EXPECT_TRUE(strstr(report, "lowering_first_declaration_kind=state\n") != 0, "valid first declaration kind report");
@@ -135,6 +174,31 @@ static int lat_pipeline_diagnostic_integration_reports_valid_pipeline(void) {
     EXPECT_TRUE(strstr(report, "lowering_first_clause_operator==\n") != 0, "valid first clause operator report");
     EXPECT_TRUE(strstr(report, "lowering_first_clause_value=0/0\n") != 0, "valid first clause value report");
     EXPECT_TRUE(strstr(report, "evidence_level=2\n") != 0, "valid evidence report");
+    return 0;
+}
+
+static int lat_pipeline_diagnostic_integration_reports_comment_metadata(void) {
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lir_module_t module;
+    latticra_lat_to_lir_result_t lowering;
+    latticra_lat_pipeline_result_t pipeline;
+    latticra_lat_pipeline_diagnostic_result_t diagnostic;
+    char report[LATTICRA_LAT_PIPELINE_DIAGNOSTIC_REPORT_MAX];
+
+    EXPECT_TRUE(run_pipeline(COMMENTED_VALID_SOURCE, &parse, &semantic, &module, &lowering, &pipeline) == 0, "commented pipeline run");
+    EXPECT_TRUE(latticra_lat_pipeline_diagnostics_evaluate_with_lowering(&pipeline, &semantic, &lowering, &module, &diagnostic) == LATTICRA_STATUS_OK, "comment diagnostic evaluate");
+    EXPECT_TRUE(diagnostic.diagnostic_class == LATTICRA_LAT_PIPELINE_DIAGNOSTIC_VALID, "comment diagnostic valid");
+    EXPECT_TRUE(diagnostic.comment_count == 3u, "comment diagnostic count");
+    EXPECT_TRUE(diagnostic.first_comment_span.start_line == 1u, "comment diagnostic first line");
+    EXPECT_TRUE(diagnostic.first_comment_span.start_column == 1u, "comment diagnostic first column");
+    EXPECT_TRUE(diagnostic.no_effect_issue == 0, "comment diagnostic no effect issue false");
+
+    EXPECT_TRUE(latticra_lat_pipeline_diagnostics_report(&diagnostic, report, sizeof(report)) == LATTICRA_STATUS_OK, "comment diagnostic report");
+    EXPECT_TRUE(strstr(report, "diagnostic_class=valid\n") != 0, "comment report valid");
+    EXPECT_TRUE(strstr(report, "comment_count=3\n") != 0, "comment report count");
+    EXPECT_TRUE(strstr(report, "first_comment_start_line=1\n") != 0, "comment report first line");
+    EXPECT_TRUE(strstr(report, "first_comment_start_column=1\n") != 0, "comment report first column");
     return 0;
 }
 
@@ -247,6 +311,7 @@ static int lat_pipeline_diagnostic_integration_reports_null_pipeline(void) {
 int main(void) {
     if (lat_pipeline_diagnostic_integration_labels_are_stable() != 0) return 1;
     if (lat_pipeline_diagnostic_integration_reports_valid_pipeline() != 0) return 1;
+    if (lat_pipeline_diagnostic_integration_reports_comment_metadata() != 0) return 1;
     if (lat_pipeline_diagnostic_integration_reports_parse_failure() != 0) return 1;
     if (lat_pipeline_diagnostic_integration_reports_semantic_failure() != 0) return 1;
     if (lat_pipeline_diagnostic_integration_reports_model_failure() != 0) return 1;

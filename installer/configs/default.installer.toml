@@ -18,11 +18,15 @@ substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "panel-contained"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
+receipt_contract_profile = "lc-receipts-v0"
 os_base_profile = "planned-no-boot-authority"
 panel_bridge = "panel-aware"
 report_only = true
 require_host_embedding_contract = true
 require_read_only_host_inventory_contract = true
+require_profile_receipt = true
+require_host_contract_receipt = true
+require_host_inventory_receipt = true
 require_runtime_boundary_binding = true
 require_seal_capability_labels = true
 

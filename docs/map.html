@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Latticra Documentation Map</title>
+  <meta name="description" content="A guided documentation map for Latticra status records, contracts, architecture lanes, subsystem records, and local validation paths.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Documentation Map">
+  <meta property="og:description" content="Guided entry points through the Latticra evidence-bound systems architecture records.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="status.html">Status</a>
+        <a href="map.html">Map</a>
+        <a href="FOUNDATION_INDEX.md">Foundation</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Documentation map</p>
+        <p class="eyebrow">Public Records</p>
+        <h1>Documentation map</h1>
+        <p class="page-lede">
+          A reader-first route through Latticra’s current claims, contracts, architecture lanes, subsystem records, and local validation paths.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell map-intro">
+        <div>
+          <p class="eyebrow">How to Read</p>
+          <h2>Start with status, then follow the boundary.</h2>
+        </div>
+        <p>
+          Latticra documentation is intentionally evidence-heavy. The best reading order is current status, foundation rules, subsystem contracts, implementation records, then guard scripts and local validation lanes.
+        </p>
+      </div>
+
+      <div class="content-shell map-grid">
+        <article class="map-card">
+          <span class="map-number">01</span>
+          <h3>Start Here</h3>
+          <ul class="map-list">
+            <li><a href="status.html">Public Status Dashboard</a><span>Scannable status, estimates, posture, and next reading paths.</span></li>
+            <li><a href="https://github.com/Bryforge/Latticra/blob/main/README.md">Root README</a><span>Project overview, quick start, and public non-claims.</span></li>
+            <li><a href="https://github.com/Bryforge/Latticra/blob/main/STATUS.md">Status</a><span>High-level posture and planning estimates.</span></li>
+            <li><a href="status/CURRENT_STATUS.md">Current Status</a><span>Detailed rollup and latest status notes.</span></li>
+          </ul>
+        </article>
+
+        <article class="map-card">
+          <span class="map-number">02</span>
+          <h3>Evidence and Claim Boundaries</h3>
+          <ul class="map-list">
+            <li><a href="FOUNDATION_INDEX.md">Foundation Index</a><span>Main index for contracts, status records, and guards.</span></li>
+            <li><a href="REAL_SYSTEM_CONTRACT.md">Real System Contract</a><span>Rules for evidence, identity, and real-system claims.</span></li>
+            <li><a href="EVIDENCE_LADDER.md">Evidence Ladder</a><span>Promotion levels from idea to supported capability.</span></li>
+            <li><a href="NON_CLAIMS.md">Non-Claims</a><span>Explicit boundaries for what Latticra does not yet provide.</span></li>
+          </ul>
+        </article>
+
+        <article class="map-card">
+          <span class="map-number">03</span>
+          <h3>Architecture Foundation</h3>
+          <ul class="map-list">
+            <li><a href="ARCHITECTURE_SEED.md">Architecture Seed</a><span>Initial state-lattice and software-universe vocabulary.</span></li>
+            <li><a href="C_CPP_FOUNDATION_DIRECTION.md">C/C++ Foundation</a><span>Substrate and constrained authority direction.</span></li>
+            <li><a href="LANGUAGE_STRATEGY.md">Language Strategy</a><span>Roles for C, constrained C++, Lat, L-UI, and LIR.</span></li>
+            <li><a href="EFFECT_GATES.md">Effect Gates</a><span>Effect categories, gating rules, and visibility requirements.</span></li>
+          </ul>
+        </article>
+
+        <article class="map-card">
+          <span class="map-number">04</span>
+          <h3>Language and Representation</h3>
+          <ul class="map-list">
+            <li><a href="LAT_LANGUAGE_GRAMMAR_CONTRACT.md">Lat Grammar Contract</a><span>Current language grammar boundary.</span></li>
+            <li><a href="LAT_PIPELINE_CONTRACT.md">Lat Pipeline Contract</a><span>Parse, validate, diagnose, and lower posture.</span></li>
+            <li><a href="LAT_TO_LIR_LOWERING_CONTRACT.md">Lat to LIR Lowering</a><span>Lowering boundary and metadata expectations.</span></li>
+            <li><a href="L_UI_PARSER.md">L-UI Parser</a><span>Operator-facing declaration parsing and reporting.</span></li>
+          </ul>
+        </article>
+
+        <article class="map-card">
+          <span class="map-number">05</span>
+          <h3>Nucleus and Runtime Boundary</h3>
+          <ul class="map-list">
+            <li><a href="NUCLEUS_TASK_EXECUTION_CONTRACT.md">Nucleus Task Contract</a><span>Task-boundary prerequisites and non-claims.</span></li>
+            <li><a href="NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md">Nucleus Implementation</a><span>Report-only task classification records.</span></li>
+            <li><a href="RUNTIME_BOUNDARY_CONTRACT.md">Runtime Boundary Contract</a><span>Disabled-by-default boundary before runtime behavior.</span></li>
+            <li><a href="RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md">Runtime Abuse Fixtures</a><span>Deterministic blocked-case fixture expansion.</span></li>
+          </ul>
+        </article>
+
+        <article class="map-card">
+          <span class="map-number">06</span>
+          <h3>Latticra Seal</h3>
+          <ul class="map-list">
+            <li><a href="latticra-seal/README.md">Seal Documentation</a><span>Subsystem landing page and documentation map.</span></li>
+            <li><a href="LATTICRA_SEAL_CONTRACT.md">Seal Contract</a><span>Evidence, capability, and promotion boundary.</span></li>
+            <li><a href="LATTICRA_SEAL_RUNTIME_DRY_RUN_CONTRACT.md">Runtime Dry-Run Contract</a><span>Report-only dry-run posture and limits.</span></li>
+            <li><a href="LATTICRA_SEAL_POLICY_DECISION_CONTRACT.md">Policy Decision Contract</a><span>Default-deny policy-decision metadata boundary.</span></li>
+          </ul>
+        </article>
+
+        <article class="map-card">
+          <span class="map-number">07</span>
+          <h3>Panel, Nadia, and Local Workflows</h3>
+          <ul class="map-list">
+            <li><a href="https://github.com/Bryforge/Latticra/blob/main/installer/README.md">Installer README</a><span>Local Panel and installer workflow orientation.</span></li>
+            <li><a href="LATTICRA_CONSOLE_FOUNDATION.md">Latticra Console</a><span>Console foundation and profile presets.</span></li>
+            <li><a href="NADIA_OFFLINE_AI_FOUNDATION.md">Nadia Offline AI</a><span>No-effect offline AI foundation and boundaries.</span></li>
+            <li><a href="MACOS_USER_LOCAL_APP_BUNDLE_CONTRACT.md">macOS User-Local App Bundle</a><span>User-local bundle contract and limits.</span></li>
+          </ul>
+        </article>
+
+        <article class="map-card">
+          <span class="map-number">08</span>
+          <h3>Security, Packaging, and Roadmap</h3>
+          <ul class="map-list">
+            <li><a href="https://github.com/Bryforge/Latticra/blob/main/SECURITY.md">Security Policy</a><span>Safe testing, vulnerability reporting, and security non-claims.</span></li>
+            <li><a href="FEDORA_READINESS_PLAN.md">Fedora Readiness Plan</a><span>Fedora validation direction and constraints.</span></li>
+            <li><a href="FEDORA_LOCAL_RPM_VALIDATION_PLAN.md">Local RPM Validation</a><span>Local package validation lane.</span></li>
+            <li><a href="ROADMAP.md">Roadmap</a><span>Design-first roadmap before deeper implementation claims.</span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell claim-strip">
+        <div>
+          <p class="eyebrow">Reading Rule</p>
+          <h2>Trust the narrowest current claim.</h2>
+        </div>
+        <p>
+          If a contract, implementation note, and status record disagree, treat the narrower status posture as authoritative until the broader claim has reproducible evidence and public-entry alignment.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra documentation map.</span>
+      <span><a href="./">Return home</a></span>
+    </div>
+  </footer>
+</body>
+</html>

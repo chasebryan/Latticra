@@ -13,7 +13,7 @@ jobs:
   fedora-rpm-gate-classifier:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
       - name: Run Fedora RPM gate classifier guard
         run: sh scripts/test-fedora-rpm-gate-classifier.sh
       - name: Run Fedora RPM gate classifier docs guard

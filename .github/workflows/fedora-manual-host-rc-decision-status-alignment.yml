@@ -13,6 +13,6 @@ jobs:
   fedora-manual-host-rc-decision-status-alignment:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
       - name: Run Fedora manual host RC decision status alignment guard
         run: sh scripts/test-fedora-manual-host-rc-decision-status-alignment.sh

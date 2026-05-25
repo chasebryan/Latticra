@@ -1,0 +1,116 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+require_file() {
+  file="$1"
+  if [ ! -f "$file" ]; then
+    printf 'macos readme installer usage: missing file: %s\n' "$file" >&2
+    exit 1
+  fi
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  if ! grep -Fq -- "$pattern" "$file"; then
+    printf 'macos readme installer usage: missing required pattern in %s: %s\n' "$file" "$pattern" >&2
+    exit 1
+  fi
+}
+
+readme='README.md'
+status='docs/status/MACOS_README_INSTALLER_USAGE_STATUS.md'
+index='docs/status/README.md'
+transfer_plan='docs/MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md'
+transfer_status='docs/status/MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md'
+commit_gate='docs/MACOS_COMMIT_GATE_CONTRACT.md'
+commit_status='docs/status/MACOS_COMMIT_GATE_CONTRACT_STATUS.md'
+workflow='.github/workflows/macos-readme-installer-usage.yml'
+
+require_file "$readme"
+require_file "$status"
+require_file "$index"
+require_file "$transfer_plan"
+require_file "$transfer_status"
+require_file "$commit_gate"
+require_file "$commit_status"
+require_file "$workflow"
+
+require_contains '- [macOS installer lane](#macos-installer-lane)' "$readme"
+require_contains '| macOS installer lane | Mac-specific no-effect installer path exists' "$readme"
+require_contains 'macos_readme_installer_usage_present=1' "$readme"
+require_contains '## macOS installer lane' "$readme"
+require_contains 'The macOS installer lane targets macOS infrastructure specifically' "$readme"
+require_contains 'app_support_prefix=$HOME/Library/Application Support/Latticra' "$readme"
+require_contains 'app_bundle=$HOME/Applications/Latticra Panel.app' "$readme"
+require_contains 'logs_dir=$HOME/Library/Logs/Latticra' "$readme"
+require_contains 'caches_dir=$HOME/Library/Caches/Latticra' "$readme"
+require_contains 'preferences_dir=$HOME/Library/Preferences' "$readme"
+require_contains 'optional_cli_bin=$HOME/.local/bin' "$readme"
+require_contains 'Latticra Panel.app/' "$readme"
+require_contains 'Contents/Info.plist' "$readme"
+require_contains 'Contents/MacOS/latticra-panel' "$readme"
+require_contains 'Contents/Resources/latticra-panel.icns' "$readme"
+require_contains 'sh scripts/macos-build-platform-probe.sh' "$readme"
+require_contains 'sh scripts/macos-dry-run-plan-adapter.sh' "$readme"
+require_contains 'sh scripts/macos-local-candidate-asset-probe.sh' "$readme"
+require_contains 'sh scripts/macos-app-bundle-writer-dry-run.sh' "$readme"
+require_contains 'sh scripts/macos-dry-run-writer-candidate-integration.sh' "$readme"
+require_contains 'sh scripts/macos-commit-gate-contract.sh' "$readme"
+require_contains 'sh scripts/macos-reset-uninstall-dry-run-contract.sh' "$readme"
+require_contains 'commit_gate_state=closed' "$readme"
+require_contains 'commit_gate_decision=blocked-missing-managed-write-implementation' "$readme"
+require_contains 'commit_user_local_managed_artifacts=0' "$readme"
+require_contains 'macos_app_bundle_commit_capable_writer_present=0' "$readme"
+require_contains 'macos_build_platform_probe_present=1' "$readme"
+require_contains 'macos_dry_run_plan_adapter_present=1' "$readme"
+require_contains 'macos_app_bundle_writer_dry_run_present=1' "$readme"
+require_contains 'macos_commit_gate_contract_present=1' "$readme"
+require_contains 'macos_reset_uninstall_dry_run_contract_present=1' "$readme"
+require_contains 'app_bundle_write_performed=0' "$readme"
+require_contains 'file_delete_performed=0' "$readme"
+require_contains 'directory_delete_performed=0' "$readme"
+require_contains 'host_mutation_performed=0' "$readme"
+require_contains 'network_performed=0' "$readme"
+require_contains 'It cannot yet create, install, sign, notarize, open, verify, reset, or uninstall a real macOS `.app`.' "$readme"
+require_contains 'a commit-capable macOS installer' "$readme"
+require_contains 'a signed or notarized macOS app' "$readme"
+require_contains 'macOS app bundle install evidence' "$readme"
+require_contains 'Installer, macOS, and Fedora direction' "$readme"
+require_contains 'docs/MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md' "$readme"
+require_contains 'docs/MACOS_APP_BUNDLE_WRITER_DRY_RUN.md' "$readme"
+require_contains 'docs/MACOS_COMMIT_GATE_CONTRACT.md' "$readme"
+require_contains 'docs/MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT.md' "$readme"
+
+require_contains 'Status: README installer usage alignment status' "$status"
+require_contains 'macos_readme_installer_usage_present=1' "$status"
+require_contains 'macos_installer_targets_macos_infrastructure=1' "$status"
+require_contains 'macos_user_local_paths_documented=1' "$status"
+require_contains 'macos_app_bundle_shape_documented=1' "$status"
+require_contains 'macos_probe_commands_documented=1' "$status"
+require_contains 'macos_candidate_commands_documented=1' "$status"
+require_contains 'macos_commit_gate_command_documented=1' "$status"
+require_contains 'macos_reset_uninstall_dry_run_command_documented=1' "$status"
+require_contains 'macos_commit_gate_closed_documented=1' "$status"
+require_contains 'commit_user_local_managed_artifacts=0' "$status"
+require_contains 'app_bundle_write_performed=0' "$status"
+require_contains 'file_delete_performed=0' "$status"
+require_contains 'directory_delete_performed=0' "$status"
+require_contains 'host_mutation_performed=0' "$status"
+require_contains 'network_performed=0' "$status"
+require_contains 'not macOS install evidence' "$status"
+
+require_contains 'MACOS_README_INSTALLER_USAGE_STATUS.md' "$index"
+require_contains 'macOS README installer usage status' "$index"
+require_contains 'stage_3_macos_readme_installer_usage=present' "$transfer_plan"
+require_contains 'README.md' "$transfer_plan"
+require_contains 'docs/status/MACOS_README_INSTALLER_USAGE_STATUS.md' "$transfer_plan"
+require_contains 'macos_readme_installer_usage_present=1' "$transfer_status"
+require_contains 'macos_readme_installer_usage_present=1' "$commit_status"
+require_contains 'macOS verification transcript contract' "$commit_gate"
+require_contains 'sh scripts/test-macos-readme-installer-usage.sh' "$workflow"
+
+sh scripts/test-macos-commit-gate-contract.sh
+
+printf 'macos_readme_installer_usage: ok\n'

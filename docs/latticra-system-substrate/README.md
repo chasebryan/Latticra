@@ -1,8 +1,8 @@
 # The Latticra System Substrate
 
 **Title:** *The Latticra System Substrate: An Effect at Modern Security*<br>
-**Edition:** Working Draft 0.4 — 2026-05-25<br>
-**Role:** Project-level technical handbook for Latticra, Latticra Seal, Latticra Console, Panel, Lat/LIR contract surfaces, receipts, reports, and future runtime-boundary research.
+**Edition:** Working Draft 0.5 — 2026-05-25<br>
+**Role:** Project-level technical handbook for Latticra, Latticra Seal, Latticra Console, Nucleus, Nadia offline AI contracts, Panel, Lat/LIR contract surfaces, receipts, reports, and future runtime-boundary research.
 
 This handbook supersedes the former standalone **Latticra Seal Documentation Handbook** as the main reader-facing book for the project.
 
@@ -51,6 +51,8 @@ The new System Substrate handbook places Seal in the full project architecture a
 
 - Latticra Panel
 - Latticra Console
+- Nucleus report-only task boundaries
+- Nadia offline AI contract metadata
 - guarded local-prefix installation
 - receipts and reports
 - command contracts

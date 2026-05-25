@@ -226,6 +226,8 @@ typedef struct {
     size_t lat_pipeline_source_len;
     size_t lat_pipeline_node_count;
     size_t lat_pipeline_edge_count;
+    size_t lat_pipeline_comment_count;
+    latticra_lat_source_span_t lat_pipeline_first_comment_span;
     latticra_lir_source_kind_t lat_lir_source_kind;
     size_t lat_lir_module_node_count;
     size_t lat_lir_transition_edge_count;

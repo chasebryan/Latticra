@@ -1,8 +1,8 @@
 # Lat Pipeline Diagnostic Integration Refinement
 
-Status: lowering-aware implementation with first-declaration and first-clause metadata
+Status: lowering-aware implementation with comment, first-declaration, and first-clause metadata
 
-This slice adds a companion Lat pipeline diagnostics API that combines pipeline stage/error state with Lat semantic diagnostic class, count, first-diagnostic indices, model-stage classification, and optional Lat-to-LIR lowering diagnostic metadata.
+This slice adds a companion Lat pipeline diagnostics API that combines pipeline stage/error state with parser line-comment metadata, Lat semantic diagnostic class, count, first-diagnostic indices, model-stage classification, and optional Lat-to-LIR lowering diagnostic metadata.
 
 Files:
 
@@ -48,6 +48,13 @@ lowering_class
 lowering_error
 model_error
 lir_error
+comment_count
+first_comment_start_offset
+first_comment_end_offset
+first_comment_start_line
+first_comment_start_column
+first_comment_end_line
+first_comment_end_column
 lowering_model_declaration_count
 lowering_model_clause_count
 lowering_first_declaration_node_index
@@ -69,6 +76,8 @@ lowering_failed
 model_failed
 lir_failed
 ```
+
+Comment metadata is copied from the Lat pipeline result. It records the parser line-comment count and first-comment span for diagnostic/report audit use only.
 
 First-declaration metadata is copied from the Lat-to-LIR diagnostic result. It records the first lowered declaration node index, declaration kind, name, source name, parse declaration index, first-clause index, clause count, and source declaration index for report/audit use only.
 

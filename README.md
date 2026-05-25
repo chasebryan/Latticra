@@ -27,6 +27,7 @@ This repository is foundational engineering work. It is not a deployed platform,
 - [What Latticra does not claim](#what-latticra-does-not-claim)
 - [Quick start](#quick-start)
 - [Latticra Panel](#latticra-panel)
+- [macOS installer lane](#macos-installer-lane)
 - [Nadia Offline AI](#nadia-offline-ai)
 - [Lat, LIR, and L-UI](#lat-lir-and-l-ui)
 - [Nucleus and Runtime Boundary](#nucleus-and-runtime-boundary)
@@ -89,10 +90,11 @@ The authoritative status files are [`STATUS.md`](STATUS.md) and [`docs/status/CU
 | L-UI | Parser, validation, and report/rendering foundations exist; no interactive terminal-control renderer |
 | Nucleus | Report-only task-boundary and classification work exists; no effect-performing execution |
 | Runtime Boundary | Denied-by-default classification and reporting exists; no runtime authority |
-| Latticra Seal | Report-only runtime gate path, sealed report-envelope metadata, signature/signing/key/public-key/bounded-key parsing metadata/status, metadata-only verification policy/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only freshness/signed-request/policy-decision metadata/status/report surfaces, and core negative-test evidence for AI-era tool-boundary planning; no production enforcement |
+| Latticra Seal | Report-only runtime gate path, sealed report-envelope metadata, signature/signing/key/public-key/bounded-key parsing metadata/status, metadata-only verification policy/status, metadata-only crypto verify backend/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only freshness/signed-request/policy-decision metadata/status/report surfaces, and core negative-test evidence for AI-era tool-boundary planning; no production enforcement |
 | Fedora integration | Local-only package and validation lanes exist; not Fedora-approved or distribution-ready |
 | Latticra Panel | GUI-first local installer/control workbench exists; user-local and guarded |
-| Nadia offline AI | Stage-26 prompt-token-sequence contract, Stage-25 prompt-tokenization contract, Stage-24 tokenizer-runtime-attachment contract, Stage-23 tokenizer-artifact-binding contract, Stage-22 tokenizer-artifact-verification contract, Stage-21 tokenizer-artifact-measurement contract, Stage-20 tokenizer-artifact-inventory contract, Stage-19 tokenizer-manifest contract, Stage-18 tokenizer-specification contract, Stage-17 tokenization-boundary contract, Stage-16 prompt-evaluation handoff contract, Stage-15 awareness-dialogue contract, Stage-14 prompt-materialization contract, Stage-13 prompt-receipt contract, Stage-12 model-load contract, Stage-11 runtime-invocation contract, Stage-10 inference-readiness contract, Stage-9 local model-registry contract, Stage-8 prompt-evaluation contract, Stage-7 report-only tool preflight, Stage-6 protective safety boundary, Stage-5 productivity ledger, Stage-4 systems-engineering mode validator, Stage-3 prompt-plan workbench, Stage-2 runtime-profile boundary, and Stage-1 context-pack generator exist; optional Panel component and metadata-only Console surface; future survivor-centered Q&A scope planned for official Nadia Initiative awareness topics; no dialogue generation, prompt text receipt, prompt text reading, prompt buffer allocation, prompt tokenization, prompt token creation, prompt token sequence recording, prompt token ID recording, prompt token order recording, prompt token offset recording, context window assembly, prompt materialization, tokenizer artifact path resolution, tokenizer artifact opening, tokenizer artifact reading, tokenizer artifact scanning, tokenizer artifact hashing, tokenizer artifact measurement, tokenizer artifact verification, tokenizer artifact digest comparison, tokenizer artifact size comparison, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer artifact digest recording, tokenizer artifact size recording, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, model file opening, weight mapping, model loading, token generation, prompt evaluation, inference, or tool execution |
+| macOS installer lane | Mac-specific no-effect installer path exists for probes, path planning, app-bundle dry-run, candidate checks, and a closed commit gate; no `.app` is written yet |
+| Nadia offline AI | Stage-27 context-window assembly contract, Stage-26 prompt-token-sequence contract, Stage-25 prompt-tokenization contract, Stage-24 tokenizer-runtime-attachment contract, Stage-23 tokenizer-artifact-binding contract, Stage-22 tokenizer-artifact-verification contract, Stage-21 tokenizer-artifact-measurement contract, Stage-20 tokenizer-artifact-inventory contract, Stage-19 tokenizer-manifest contract, Stage-18 tokenizer-specification contract, Stage-17 tokenization-boundary contract, Stage-16 prompt-evaluation handoff contract, Stage-15 awareness-dialogue contract, Stage-14 prompt-materialization contract, Stage-13 prompt-receipt contract, Stage-12 model-load contract, Stage-11 runtime-invocation contract, Stage-10 inference-readiness contract, Stage-9 local model-registry contract, Stage-8 prompt-evaluation contract, Stage-7 report-only tool preflight, Stage-6 protective safety boundary, Stage-5 productivity ledger, Stage-4 systems-engineering mode validator, Stage-3 prompt-plan workbench, Stage-2 runtime-profile boundary, and Stage-1 context-pack generator exist; optional Panel component and metadata-only Console surface; future survivor-centered Q&A scope planned for official Nadia Initiative awareness topics; no dialogue generation, prompt text receipt, prompt text reading, prompt buffer allocation, prompt tokenization, prompt token creation, prompt token sequence recording, prompt token ID recording, prompt token order recording, prompt token offset recording, context window assembly, prompt evaluation input creation, prompt materialization, tokenizer artifact path resolution, tokenizer artifact opening, tokenizer artifact reading, tokenizer artifact scanning, tokenizer artifact hashing, tokenizer artifact measurement, tokenizer artifact verification, tokenizer artifact digest comparison, tokenizer artifact size comparison, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer artifact digest recording, tokenizer artifact size recording, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, model file opening, weight mapping, model loading, token generation, prompt evaluation, inference, or tool execution |
 | Security hardening | Early; no production security boundary claimed |
 | Product readiness | Early; no production platform claimed |
 
@@ -119,7 +121,7 @@ Current public estimate table, as summarized by [`STATUS.md`](STATUS.md) and [`d
 | Security-hardening implementation | 7% |
 | Public product readiness | 8% |
 
-The latest estimate refresh record is [`docs/status/CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](docs/status/CURRENT_ESTIMATE_REFRESH_2026_05_24.md). The latest estimate hold review is [`docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md); it keeps estimates unchanged after runtime-boundary abuse-case fixtures because capability posture did not change.
+The current estimate table source alignment is [`docs/status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](docs/status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md). The latest estimate refresh record is [`docs/status/CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](docs/status/CURRENT_ESTIMATE_REFRESH_2026_05_24.md). The latest estimate hold review is [`docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md); it keeps the runtime-boundary fixture-slice estimate decision unchanged because capability posture did not change. The live public estimate table above, mirrored from [`STATUS.md`](STATUS.md) and [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md), is the current reader-facing estimate source.
 
 ---
 
@@ -168,15 +170,19 @@ Runtime Boundary
 
 Latticra Seal
   Trust-boundary, request-boundary, policy-boundary, tool-boundary, and crypto-profile planning.
-  Current posture: report-only runtime gate path, sealed report-envelope metadata, signature-request metadata/status, signing authorization metadata/status, signer handoff/invocation/operation metadata/status, key-handling and key-material metadata/status, public-key parsing metadata/status, future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning; no production enforcement.
+  Current posture: report-only runtime gate path, sealed report-envelope metadata, signature-request metadata/status, signing authorization metadata/status, signer handoff/invocation/operation metadata/status, key-handling and key-material metadata/status, public-key parsing metadata/status, future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only crypto verify backend/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning; no production enforcement.
 
 Latticra Panel
   GUI-first local workbench for guided first-run configuration, evidence review, dry-run, and guarded local-prefix install.
   Current posture: user-local, no root, no network authority.
 
+macOS installer lane
+  Mac-specific app-bundle infrastructure path for user-local Application Support, ~/Applications, Logs, Caches, Preferences, and optional CLI-wrapper planning.
+  Current posture: no-effect probes, dry-run writer report, local candidate checks, and closed commit gate; no app bundle creation.
+
 Nadia Offline AI
   Future local AI companion for Latticra software development, systems engineering, and AI development workflows.
-  Current posture: Stage-26 prompt-token-sequence contract, Stage-25 prompt-tokenization contract, Stage-24 tokenizer-runtime-attachment contract, Stage-23 tokenizer-artifact-binding contract, Stage-22 tokenizer-artifact-verification contract, Stage-21 tokenizer-artifact-measurement contract, Stage-20 tokenizer-artifact-inventory contract, Stage-19 tokenizer-manifest contract, Stage-18 tokenizer-specification contract, Stage-17 tokenization-boundary contract, Stage-16 prompt-evaluation handoff contract, Stage-15 awareness-dialogue contract, Stage-14 prompt-materialization contract, Stage-13 prompt-receipt contract, Stage-12 model-load contract, Stage-11 runtime-invocation contract, Stage-10 inference-readiness contract, Stage-9 local model-registry contract, Stage-8 prompt-evaluation contract, Stage-7 report-only guarded tool-authority preflight, Stage-6 protective safety boundary, Stage-5 operator-reviewed productivity ledger, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan workbench, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, Panel component, Console metadata, local config, and productivity-ledger path; future survivor-centered Q&A scope planned for official Nadia Initiative awareness topics; no sexual user functionality, dialogue generation, prompt text receipt, prompt text reading, prompt source reading, prompt buffer allocation, prompt tokenization, prompt token creation, prompt token sequence recording, prompt token ID recording, prompt token order recording, prompt token offset recording, context window assembly, prompt materialization, tokenizer artifact path resolution, tokenizer artifact opening, tokenizer artifact reading, tokenizer artifact scanning, tokenizer artifact hashing, tokenizer artifact measurement, tokenizer artifact verification, tokenizer artifact digest comparison, tokenizer artifact size comparison, tokenizer artifact binding, tokenizer runtime attachment, tokenizer artifact digest recording, tokenizer artifact size recording, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, model file opening, weight mapping, model loading, runtime process spawning, runtime session creation, model selection, model installation, token generation, prompt evaluation, inference, tool execution, training, distillation, source mutation, or network authority.
+  Current posture: Stage-27 context-window assembly contract, Stage-26 prompt-token-sequence contract, Stage-25 prompt-tokenization contract, Stage-24 tokenizer-runtime-attachment contract, Stage-23 tokenizer-artifact-binding contract, Stage-22 tokenizer-artifact-verification contract, Stage-21 tokenizer-artifact-measurement contract, Stage-20 tokenizer-artifact-inventory contract, Stage-19 tokenizer-manifest contract, Stage-18 tokenizer-specification contract, Stage-17 tokenization-boundary contract, Stage-16 prompt-evaluation handoff contract, Stage-15 awareness-dialogue contract, Stage-14 prompt-materialization contract, Stage-13 prompt-receipt contract, Stage-12 model-load contract, Stage-11 runtime-invocation contract, Stage-10 inference-readiness contract, Stage-9 local model-registry contract, Stage-8 prompt-evaluation contract, Stage-7 report-only guarded tool-authority preflight, Stage-6 protective safety boundary, Stage-5 operator-reviewed productivity ledger, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan workbench, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, Panel component, Console metadata, local config, and productivity-ledger path; future survivor-centered Q&A scope planned for official Nadia Initiative awareness topics; no sexual user functionality, dialogue generation, prompt text receipt, prompt text reading, prompt source reading, prompt buffer allocation, prompt tokenization, prompt token creation, prompt token sequence recording, prompt token ID recording, prompt token order recording, prompt token offset recording, context window assembly, prompt evaluation input creation, prompt materialization, tokenizer artifact path resolution, tokenizer artifact opening, tokenizer artifact reading, tokenizer artifact scanning, tokenizer artifact hashing, tokenizer artifact measurement, tokenizer artifact verification, tokenizer artifact digest comparison, tokenizer artifact size comparison, tokenizer artifact binding, tokenizer runtime attachment, tokenizer artifact digest recording, tokenizer artifact size recording, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, model file opening, weight mapping, model loading, runtime process spawning, runtime session creation, model selection, model installation, token generation, prompt evaluation, inference, tool execution, training, distillation, source mutation, or network authority.
 
 Fedora/Linux substrate
   Current host-facing validation lane and integration target.
@@ -333,6 +339,16 @@ nadia_panel_install_surface_present=1
 nadia_console_status_surface_present=1
 nadia_model_runtime_present=0
 fedora_local_rpm_draft_present=1
+macos_integration_transferability_map_present=1
+macos_build_platform_probe_present=1
+macos_dry_run_plan_adapter_present=1
+macos_app_bundle_writer_dry_run_present=1
+macos_local_candidate_asset_probe_present=1
+macos_dry_run_writer_candidate_integration_present=1
+macos_commit_gate_contract_present=1
+macos_readme_installer_usage_present=1
+macos_app_bundle_created=0
+macos_install_verified=0
 visual_theorem_engines_present=1
 production_runtime_present=0
 ```
@@ -348,6 +364,9 @@ Latticra does **not** currently provide:
 - a kernel;
 - a bootable image;
 - a production installer;
+- a commit-capable macOS installer;
+- a signed or notarized macOS app;
+- macOS app bundle install evidence;
 - a Fedora-approved package;
 - a Fedora distribution-ready package;
 - a daily-driver installer;
@@ -442,6 +461,16 @@ Run selected Fedora/local packaging status guards when working on Fedora validat
 sh scripts/test-fedora-build-lane.sh
 sh scripts/test-fedora-developer-workflow.sh
 sh scripts/test-fedora-local-rpm-spec-skeleton.sh
+```
+
+Run selected macOS installer-lane guards when working on Mac integration:
+
+```sh
+sh scripts/test-macos-build-platform-probe.sh
+sh scripts/test-macos-dry-run-plan-adapter.sh
+sh scripts/test-macos-app-bundle-writer-dry-run.sh
+sh scripts/test-macos-dry-run-writer-candidate-integration.sh
+sh scripts/test-macos-commit-gate-contract.sh
 ```
 
 ---
@@ -545,6 +574,7 @@ nadia tokenizer-artifact-binding
 nadia tokenizer-runtime-attachment
 nadia prompt-tokenization
 nadia prompt-token-sequence
+nadia context-window-assembly
 profile guided
 profile seal
 profile fedora
@@ -668,6 +698,141 @@ Full installer notes are in [`installer/README.md`](installer/README.md).
 
 ---
 
+## macOS installer lane
+
+The macOS installer lane targets macOS infrastructure specifically, but it is still no-effect. It is meant to adapt the current Latticra Panel and installer model to a Mac user-local app-bundle path without claiming a production installer, signed app, notarized app, LaunchAgent integration, Keychain integration, TCC bypass, Endpoint Security, System Extension, Network Extension, or privileged helper.
+
+### Current Mac target paths
+
+The planned macOS lane is user-local:
+
+```text
+app_support_prefix=$HOME/Library/Application Support/Latticra
+app_bundle=$HOME/Applications/Latticra Panel.app
+logs_dir=$HOME/Library/Logs/Latticra
+caches_dir=$HOME/Library/Caches/Latticra
+preferences_dir=$HOME/Library/Preferences
+optional_cli_bin=$HOME/.local/bin
+receipts_dir=$HOME/Library/Application Support/Latticra/receipts
+```
+
+The first app-bundle shape is:
+
+```text
+Latticra Panel.app/
+  Contents/
+    Info.plist
+    MacOS/latticra-panel
+    Resources/latticra-panel.icns
+    Resources/latticra/
+```
+
+Key planned bundle files are:
+
+```text
+Contents/Info.plist
+Contents/MacOS/latticra-panel
+Contents/Resources/latticra-panel.icns
+Contents/Resources/latticra/MANAGED_BY_LATTICRA
+```
+
+The current lane does not write that bundle yet.
+
+### Run the macOS lane today
+
+Probe the Mac host and toolchain without installing anything:
+
+```sh
+sh scripts/macos-build-platform-probe.sh
+```
+
+Render the macOS dry-run path plan:
+
+```sh
+sh scripts/macos-dry-run-plan-adapter.sh
+```
+
+Check caller-supplied local Panel executable and icon candidates:
+
+```sh
+sh scripts/macos-local-candidate-asset-probe.sh \
+  --panel-executable <local-latticra-panel-executable> \
+  --icon installer/latticra-installer/assets/latticra-panel.png
+```
+
+Render the app-bundle writer dry-run with those same local candidates:
+
+```sh
+sh scripts/macos-app-bundle-writer-dry-run.sh \
+  --panel-executable <local-latticra-panel-executable> \
+  --icon installer/latticra-installer/assets/latticra-panel.png
+```
+
+Bridge the candidate probe to the writer dry-run:
+
+```sh
+sh scripts/macos-dry-run-writer-candidate-integration.sh \
+  --panel-executable <local-latticra-panel-executable> \
+  --icon installer/latticra-installer/assets/latticra-panel.png
+```
+
+Confirm the commit gate is still closed:
+
+```sh
+sh scripts/macos-commit-gate-contract.sh
+```
+
+Review the reset/uninstall dry-run contract:
+
+```sh
+sh scripts/macos-reset-uninstall-dry-run-contract.sh
+```
+
+Expected commit posture:
+
+```text
+commit_gate_state=closed
+commit_gate_decision=blocked-missing-managed-write-implementation
+commit_user_local_managed_artifacts=0
+macos_app_bundle_commit_capable_writer_present=0
+```
+
+The guard suite uses a harmless local executable placeholder to exercise the no-effect path. For real operator review, pass the actual locally built Latticra Panel executable when one is available.
+
+### What is possible on macOS now
+
+```text
+macos_build_platform_probe_present=1
+macos_dry_run_plan_adapter_present=1
+macos_user_local_app_bundle_contract_present=1
+macos_app_bundle_writer_dry_run_present=1
+macos_local_candidate_asset_probe_present=1
+macos_dry_run_writer_candidate_integration_present=1
+macos_commit_gate_contract_present=1
+macos_reset_uninstall_dry_run_contract_present=1
+commit_user_local_managed_artifacts=0
+app_bundle_write_performed=0
+file_delete_performed=0
+directory_delete_performed=0
+host_mutation_performed=0
+network_performed=0
+```
+
+This means Latticra can currently document, probe, and dry-run the Mac-specific app-bundle path. It cannot yet create, install, sign, notarize, open, verify, reset, or uninstall a real macOS `.app`.
+
+### macOS documentation
+
+- [`docs/MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md`](docs/MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md)
+- [`docs/MACOS_BUILD_PLATFORM_PROBE.md`](docs/MACOS_BUILD_PLATFORM_PROBE.md)
+- [`docs/MACOS_DRY_RUN_PLAN_ADAPTER.md`](docs/MACOS_DRY_RUN_PLAN_ADAPTER.md)
+- [`docs/MACOS_USER_LOCAL_APP_BUNDLE_CONTRACT.md`](docs/MACOS_USER_LOCAL_APP_BUNDLE_CONTRACT.md)
+- [`docs/MACOS_APP_BUNDLE_WRITER_DRY_RUN.md`](docs/MACOS_APP_BUNDLE_WRITER_DRY_RUN.md)
+- [`docs/MACOS_DRY_RUN_WRITER_CANDIDATE_INTEGRATION.md`](docs/MACOS_DRY_RUN_WRITER_CANDIDATE_INTEGRATION.md)
+- [`docs/MACOS_COMMIT_GATE_CONTRACT.md`](docs/MACOS_COMMIT_GATE_CONTRACT.md)
+- [`docs/MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT.md`](docs/MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT.md)
+
+---
+
 ## Nadia Offline AI
 
 Nadia is the selected name for Latticra's future offline AI companion. The name honors Nobel Peace Prize laureate Nadia Murad, whose testimony and advocacy have helped bring public attention to the enslavement and abuse of thousands of women in Iraq and Syria.
@@ -678,7 +843,7 @@ Nadia's protective boundary explicitly forbids sexual user functionality, sexual
 
 Documentation and code identify the solemn implementation identity as `Nadia Witness Foundation`; the human-facing interactive name remains `Nadia`.
 
-Current Nadia status is Stage-26 prompt-token-sequence contract plus the Stage-25, Stage-24, Stage-23, Stage-22, Stage-21, Stage-20, Stage-19, Stage-18, Stage-17, Stage-16, Stage-15, Stage-14, Stage-13, Stage-12, Stage-11, Stage-10, Stage-9, Stage-8, Stage-7, Stage-6, Stage-5, Stage-4, Stage-3, Stage-2, Stage-1, and Stage-0 foundations:
+Current Nadia status is Stage-27 context-window assembly contract plus the Stage-26, Stage-25, Stage-24, Stage-23, Stage-22, Stage-21, Stage-20, Stage-19, Stage-18, Stage-17, Stage-16, Stage-15, Stage-14, Stage-13, Stage-12, Stage-11, Stage-10, Stage-9, Stage-8, Stage-7, Stage-6, Stage-5, Stage-4, Stage-3, Stage-2, Stage-1, and Stage-0 foundations:
 
 ```text
 component_key=nadia_offline_ai
@@ -1083,6 +1248,27 @@ prompt_token_sequence_runtime_invoked=0
 requires_prompt_tokenization_contract=1
 requires_future_context_window_assembly_contract=1
 prompt_token_sequence_promotion_allowed=0
+nadia_stage_27_context_window_assembly_contract_present=1
+context_window_assembly_contract_command=scripts/nadia-context-window-assembly-contract.sh
+installed_context_window_assembly_contract_command=latticra-nadia context-window-assembly
+context_window_assembly_stage=contract-only
+context_window_assembly_contract_status=contract_only
+context_window_assembly_authority=0
+context_window_assembly_allowed=0
+context_window_assembly_performed=0
+context_window_assembly_metadata_present=1
+context_window_family=operator-reviewed-context-window-assembly
+context_window_format=contract-only-offline-context-window
+context_window_assembly_decision=blocked_contract_only
+context_window_assembly_plan_recorded=1
+context_window_assembly_result_recorded=0
+context_window_assembly_runtime_invoked=0
+context_window_assembled=0
+context_window_token_budget_recorded=0
+prompt_evaluation_input_created=0
+requires_prompt_token_sequence_contract=1
+requires_future_prompt_evaluation_input_contract=1
+context_window_assembly_promotion_allowed=0
 local_file_read_for_indexing=operator_invoked
 offline_by_default=1
 panel_install_surface_present=1
@@ -1138,11 +1324,12 @@ latticra-nadia tokenizer-artifact-binding
 latticra-nadia tokenizer-runtime-attachment
 latticra-nadia prompt-tokenization
 latticra-nadia prompt-token-sequence
+latticra-nadia context-window-assembly
 ```
 
 See [`docs/NADIA_OFFLINE_AI_FOUNDATION.md`](docs/NADIA_OFFLINE_AI_FOUNDATION.md), [`docs/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](docs/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md), [`docs/NADIA_RUNTIME_PROFILE_STAGE_2.md`](docs/NADIA_RUNTIME_PROFILE_STAGE_2.md), [`docs/NADIA_DEVELOPER_WORKBENCH_STAGE_3.md`](docs/NADIA_DEVELOPER_WORKBENCH_STAGE_3.md), [`docs/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md`](docs/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md), [`docs/NADIA_PRODUCTIVITY_LOOP_STAGE_5.md`](docs/NADIA_PRODUCTIVITY_LOOP_STAGE_5.md), [`docs/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md`](docs/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md), [`docs/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md`](docs/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md), [`docs/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md`](docs/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md), [`docs/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md`](docs/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md), [`docs/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md`](docs/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md), [`docs/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md`](docs/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md), [`docs/NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md`](docs/NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md), [`docs/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md`](docs/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md), [`docs/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md`](docs/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md), [`docs/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15.md`](docs/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15.md), [`docs/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16.md`](docs/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16.md), [`docs/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17.md`](docs/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17.md), [`docs/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18.md`](docs/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18.md), [`docs/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19.md`](docs/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19.md), [`docs/NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20.md`](docs/NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20.md), [`docs/NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21.md`](docs/NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21.md), [`docs/NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22.md`](docs/NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22.md), [`docs/NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23.md`](docs/NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23.md), [`docs/status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](docs/status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md), [`docs/status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](docs/status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md), [`docs/status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md`](docs/status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md), [`docs/status/NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md`](docs/status/NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md), [`docs/status/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4_STATUS.md`](docs/status/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4_STATUS.md), [`docs/status/NADIA_PRODUCTIVITY_LOOP_STAGE_5_STATUS.md`](docs/status/NADIA_PRODUCTIVITY_LOOP_STAGE_5_STATUS.md), [`docs/status/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md`](docs/status/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md), [`docs/status/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7_STATUS.md`](docs/status/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8_STATUS.md), [`docs/status/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md`](docs/status/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md), [`docs/status/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10_STATUS.md`](docs/status/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10_STATUS.md), [`docs/status/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md`](docs/status/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md), [`docs/status/NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md`](docs/status/NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md), [`docs/status/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13_STATUS.md`](docs/status/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13_STATUS.md), [`docs/status/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md`](docs/status/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md), [`docs/status/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15_STATUS.md`](docs/status/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16_STATUS.md), [`docs/status/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17_STATUS.md`](docs/status/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17_STATUS.md), [`docs/status/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18_STATUS.md`](docs/status/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18_STATUS.md), [`docs/status/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19_STATUS.md`](docs/status/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19_STATUS.md), [`docs/status/NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20_STATUS.md`](docs/status/NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20_STATUS.md), [`docs/status/NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21_STATUS.md`](docs/status/NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21_STATUS.md), [`docs/status/NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22_STATUS.md`](docs/status/NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22_STATUS.md), and [`docs/status/NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23_STATUS.md`](docs/status/NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23_STATUS.md).
 
-Current Nadia continuation docs: [`docs/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md`](docs/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md), [`docs/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md`](docs/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md), [`docs/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26.md`](docs/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26.md), [`docs/status/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md`](docs/status/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md), [`docs/status/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md`](docs/status/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md), and [`docs/status/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26_STATUS.md`](docs/status/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26_STATUS.md).
+Current Nadia continuation docs: [`docs/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md`](docs/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md), [`docs/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md`](docs/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md), [`docs/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26.md`](docs/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26.md), [`docs/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md`](docs/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md), [`docs/status/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md`](docs/status/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md), [`docs/status/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md`](docs/status/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md), [`docs/status/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26_STATUS.md`](docs/status/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26_STATUS.md), and [`docs/status/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md`](docs/status/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md).
 
 ---
 
@@ -1341,6 +1528,15 @@ seal_key_parsing_metadata_present=1
 seal_key_parsing_status_present=1
 seal_verification_policy_metadata_present=1
 seal_verification_policy_status_present=1
+seal_crypto_verify_backend_contract_present=1
+seal_crypto_verify_backend_metadata_present=1
+seal_crypto_verify_backend_status_present=1
+crypto_verify_state=unsupported
+cryptographic_verification_supported=0
+cryptographic_verification_performed=0
+verified=0
+authority_usable=0
+capability_gate_allowed=0
 seal_verification_receipt_metadata_present=1
 seal_verification_receipt_status_present=1
 seal_capability_gate_metadata_present=1
@@ -1441,6 +1637,10 @@ The key parsing status record makes that bounded public-key byte metadata checkp
 The verification policy metadata implementation records unsupported verification-policy posture from existing signature metadata and a caller-provided public-key identity label. It does not perform cryptographic verification, consume public-key bytes, load key material, handle private keys, query trust stores or revocation sources, touch host or network behavior, enforce capabilities, or grant runtime authority.
 
 The verification policy status record makes that metadata-only checkpoint visible from the public entry points without changing implementation behavior.
+
+The crypto verify backend metadata implementation records an unsupported backend posture from verification policy metadata. It does not perform cryptographic verification, parse public keys, load key material, handle private keys, query trust stores or revocation sources, touch host or network behavior, enforce capabilities, or grant runtime authority.
+
+The crypto verify backend status record makes that metadata-only checkpoint visible from the public entry points without changing implementation behavior.
 
 The verification receipt metadata implementation records unverified receipt metadata from the verification policy posture. It does not perform cryptographic verification, assert verified receipt authority, authorize capability gates, load key material, handle private keys, query trust stores or revocation sources, touch host or network behavior, enforce capabilities, or grant runtime authority.
 
@@ -1545,6 +1745,9 @@ Relevant Seal records:
 - [`docs/LATTICRA_SEAL_VERIFICATION_POLICY_CONTRACT.md`](docs/LATTICRA_SEAL_VERIFICATION_POLICY_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_VERIFICATION_POLICY_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_VERIFICATION_POLICY_IMPLEMENTATION.md)
 - [`docs/status/SEAL_VERIFICATION_POLICY_STATUS.md`](docs/status/SEAL_VERIFICATION_POLICY_STATUS.md)
+- [`docs/LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_CONTRACT.md`](docs/LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_IMPLEMENTATION.md)
+- [`docs/status/SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md`](docs/status/SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md)
 - [`docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md`](docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md)
 - [`docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md`](docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md)
@@ -1773,10 +1976,14 @@ Runtime, Nucleus, and boundary direction:
 - [`docs/DEFENSIVE_THREAT_MODEL_VALIDATION.md`](docs/DEFENSIVE_THREAT_MODEL_VALIDATION.md)
 - [`docs/DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md`](docs/DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md)
 
-Installer and Fedora direction:
+Installer, macOS, and Fedora direction:
 
 - [`installer/README.md`](installer/README.md)
 - [`installer/docs/UI_CONFIGURATION_MODEL.md`](installer/docs/UI_CONFIGURATION_MODEL.md)
+- [`docs/MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md`](docs/MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md)
+- [`docs/MACOS_USER_LOCAL_APP_BUNDLE_CONTRACT.md`](docs/MACOS_USER_LOCAL_APP_BUNDLE_CONTRACT.md)
+- [`docs/MACOS_APP_BUNDLE_WRITER_DRY_RUN.md`](docs/MACOS_APP_BUNDLE_WRITER_DRY_RUN.md)
+- [`docs/MACOS_COMMIT_GATE_CONTRACT.md`](docs/MACOS_COMMIT_GATE_CONTRACT.md)
 - [`docs/FEDORA_DEVELOPER_WORKFLOW.md`](docs/FEDORA_DEVELOPER_WORKFLOW.md)
 - [`packaging/fedora/latticra.spec`](packaging/fedora/latticra.spec)
 

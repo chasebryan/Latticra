@@ -189,11 +189,15 @@ pub struct LatticraConsoleConfig {
     pub host_embedding_profile: String,
     pub host_embedding_contract_profile: String,
     pub host_inventory_contract_profile: String,
+    pub receipt_contract_profile: String,
     pub os_base_profile: String,
     pub panel_bridge: String,
     pub report_only: bool,
     pub require_host_embedding_contract: bool,
     pub require_read_only_host_inventory_contract: bool,
+    pub require_profile_receipt: bool,
+    pub require_host_contract_receipt: bool,
+    pub require_host_inventory_receipt: bool,
     pub require_runtime_boundary_binding: bool,
     pub require_seal_capability_labels: bool,
 }
@@ -207,11 +211,15 @@ impl Default for LatticraConsoleConfig {
             host_embedding_profile: "panel-contained".to_owned(),
             host_embedding_contract_profile: "lc-host-embedding-v0".to_owned(),
             host_inventory_contract_profile: "lc-host-inventory-v0".to_owned(),
+            receipt_contract_profile: "lc-receipts-v0".to_owned(),
             os_base_profile: "planned-no-boot-authority".to_owned(),
             panel_bridge: "panel-aware".to_owned(),
             report_only: true,
             require_host_embedding_contract: true,
             require_read_only_host_inventory_contract: true,
+            require_profile_receipt: true,
+            require_host_contract_receipt: true,
+            require_host_inventory_receipt: true,
             require_runtime_boundary_binding: true,
             require_seal_capability_labels: true,
         };
@@ -250,9 +258,13 @@ impl LatticraConsoleConfig {
         self.substrate_bridge_profile = "metadata-bound".to_owned();
         self.host_embedding_contract_profile = "lc-host-embedding-v0".to_owned();
         self.host_inventory_contract_profile = "lc-host-inventory-v0".to_owned();
+        self.receipt_contract_profile = "lc-receipts-v0".to_owned();
         self.report_only = true;
         self.require_host_embedding_contract = true;
         self.require_read_only_host_inventory_contract = true;
+        self.require_profile_receipt = true;
+        self.require_host_contract_receipt = true;
+        self.require_host_inventory_receipt = true;
         self.require_runtime_boundary_binding = true;
         self.require_seal_capability_labels = true;
     }
@@ -679,6 +691,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "host_inventory_contract_profile={}",
         config.lc.host_inventory_contract_profile
     );
+    let _ = writeln!(
+        out,
+        "receipt_contract_profile={}",
+        config.lc.receipt_contract_profile
+    );
     let _ = writeln!(out, "os_base_profile={}", config.lc.os_base_profile);
     let _ = writeln!(out, "report_only={}", config.lc.report_only);
     let _ = writeln!(
@@ -690,6 +707,21 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         out,
         "read_only_host_inventory_contract_required={}",
         config.lc.require_read_only_host_inventory_contract
+    );
+    let _ = writeln!(
+        out,
+        "profile_receipt_required={}",
+        config.lc.require_profile_receipt
+    );
+    let _ = writeln!(
+        out,
+        "host_contract_receipt_required={}",
+        config.lc.require_host_contract_receipt
+    );
+    let _ = writeln!(
+        out,
+        "host_inventory_receipt_required={}",
+        config.lc.require_host_inventory_receipt
     );
     let _ = writeln!(
         out,
@@ -714,6 +746,9 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(out, "host_embedding_contract_status=metadata-only-contract");
     let _ = writeln!(out, "host_inventory_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "receipt_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "seal_signature_present=0");
+    let _ = writeln!(out, "receipt_signed=0");
     let _ = writeln!(out, "os_base_status={}", config.lc.os_base_profile);
     let _ = writeln!(out, "operator_shell_present=1");
     let _ = writeln!(out, "execution_allowed=0");
@@ -728,7 +763,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=26-prompt-token-sequence-contract");
+    let _ = writeln!(out, "stage=27-context-window-assembly-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -1515,6 +1550,46 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "requires_prompt_tokenization_contract=1");
     let _ = writeln!(out, "requires_future_context_window_assembly_contract=1");
     let _ = writeln!(out, "prompt_token_sequence_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "context_window_assembly_contract_stage=27-context-window-assembly-contract"
+    );
+    let _ = writeln!(
+        out,
+        "context_window_assembly_contract_command=scripts/nadia-context-window-assembly-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_context_window_assembly_contract_command=latticra-nadia context-window-assembly"
+    );
+    let _ = writeln!(out, "context_window_assembly_stage=contract-only");
+    let _ = writeln!(out, "context_window_assembly_contract_status=contract_only");
+    let _ = writeln!(out, "context_window_assembly_authority=0");
+    let _ = writeln!(out, "context_window_assembly_allowed=0");
+    let _ = writeln!(out, "context_window_assembly_performed=0");
+    let _ = writeln!(out, "context_window_assembly_metadata_present=1");
+    let _ = writeln!(
+        out,
+        "context_window_family=operator-reviewed-context-window-assembly"
+    );
+    let _ = writeln!(
+        out,
+        "context_window_format=contract-only-offline-context-window"
+    );
+    let _ = writeln!(
+        out,
+        "context_window_assembly_decision=blocked_contract_only"
+    );
+    let _ = writeln!(out, "context_window_assembly_plan_recorded=1");
+    let _ = writeln!(out, "context_window_assembly_result_recorded=0");
+    let _ = writeln!(out, "context_window_assembly_runtime_invoked=0");
+    let _ = writeln!(out, "context_window_token_budget_recorded=0");
+    let _ = writeln!(out, "context_window_truncation_applied=0");
+    let _ = writeln!(out, "context_window_serialized=0");
+    let _ = writeln!(out, "requires_prompt_token_sequence_contract=1");
+    let _ = writeln!(out, "requires_future_prompt_evaluation_input_contract=1");
+    let _ = writeln!(out, "prompt_evaluation_input_created=0");
+    let _ = writeln!(out, "context_window_assembly_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

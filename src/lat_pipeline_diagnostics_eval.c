@@ -8,6 +8,16 @@ static void copy_text(char *destination, size_t destination_len, const char *sou
     (void)snprintf(destination, destination_len, "%s", source == 0 ? "" : source);
 }
 
+static void diagnostic_span_default(latticra_lat_source_span_t *span) {
+    if (span == 0) return;
+    span->start_offset = 0u;
+    span->end_offset = 0u;
+    span->start_line = 1u;
+    span->start_column = 1u;
+    span->end_line = 1u;
+    span->end_column = 1u;
+}
+
 static void diagnostic_default(latticra_lat_pipeline_diagnostic_result_t *result) {
     if (result == 0) return;
     memset(result, 0, sizeof(*result));
@@ -21,6 +31,7 @@ static void diagnostic_default(latticra_lat_pipeline_diagnostic_result_t *result
     result->lowering_error = LATTICRA_LAT_TO_LIR_OK;
     result->model_error = LATTICRA_LAT_MODEL_OK;
     result->lir_error = LATTICRA_LIR_OK;
+    diagnostic_span_default(&result->first_comment_span);
     result->lowering_first_declaration_node_index = LATTICRA_LAT_MODEL_NO_INDEX;
     result->lowering_first_declaration_kind = LATTICRA_LAT_DECLARATION_UNKNOWN;
     result->lowering_first_declaration_parse_index = LATTICRA_LAT_MODEL_NO_INDEX;
@@ -109,6 +120,8 @@ latticra_status_t latticra_lat_pipeline_diagnostics_evaluate_with_lowering(
     result->lowering_error = pipeline->lowering_error;
     result->model_error = pipeline->model_error;
     result->lir_error = pipeline->lir_error;
+    result->comment_count = pipeline->comment_count;
+    result->first_comment_span = pipeline->first_comment_span;
     result->lowering_class = lowering_class_from_error(pipeline->lowering_error, pipeline->lir_error);
     result->lowering_model_declaration_count = pipeline->model_declaration_count;
     result->lowering_model_clause_count = pipeline->model_clause_count;

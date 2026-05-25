@@ -1,8 +1,11 @@
-.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence
+.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly
 
-.PHONY: quality quality-safety-guards quality-defensive-threat-model quality-rust-installer quality-panel-installer quality-c-foundation
+.PHONY: quality quality-worktree quality-safety-guards quality-defensive-threat-model quality-rust-installer quality-panel-installer quality-c-foundation
 
-quality: quality-safety-guards quality-defensive-threat-model seal-policy-denials quality-rust-installer quality-panel-installer quality-c-foundation
+quality: quality-worktree quality-safety-guards quality-defensive-threat-model seal-policy-denials quality-rust-installer quality-panel-installer quality-c-foundation
+
+quality-worktree:
+	git diff --check
 
 quality-safety-guards:
 	sh ./scripts/test-quality-safety-guards.sh
@@ -109,6 +112,9 @@ nadia-prompt-tokenization:
 
 nadia-prompt-token-sequence:
 	sh ./scripts/nadia-prompt-token-sequence-contract.sh
+
+nadia-context-window-assembly:
+	sh ./scripts/nadia-context-window-assembly-contract.sh
 
 .PHONY: seal-policy-denials
 

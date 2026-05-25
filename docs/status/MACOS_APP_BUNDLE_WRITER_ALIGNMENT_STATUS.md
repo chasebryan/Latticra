@@ -17,6 +17,7 @@ macos_app_bundle_writer_alignment_present=1
 macos_local_candidate_asset_probe_present=1
 macos_dry_run_writer_candidate_integration_present=1
 macos_commit_gate_contract_present=1
+macos_verification_transcript_contract_present=1
 macos_dry_run_writer_public_meaning_recorded=1
 macos_commit_capable_writer_nonclaim_recorded=1
 macos_future_commit_gate_requirements_recorded=1
@@ -73,7 +74,7 @@ macos_app_bundle_writer_alignment: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS verification transcript contract that defines exact post-write evidence before any user-local install can be called verified.
+Add a macOS reset/uninstall live-target classifier that reports present, managed, and unmanaged targets without deleting files.
 ```
 
 ## Non-Claims

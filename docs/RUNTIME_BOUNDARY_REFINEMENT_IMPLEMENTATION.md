@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Refinement Implementation
 
-Status: initial runtime boundary refinement implementation
-Scope: no-effect runtime-boundary evidence reporting for Lat pipeline and Lat-specific LIR metadata.
+Status: runtime boundary refinement implementation with Lat pipeline comment evidence
+Scope: no-effect runtime-boundary evidence reporting for Lat pipeline metadata, Lat pipeline line-comment metadata, and Lat-specific LIR metadata.
 
 ## Purpose
 
@@ -51,6 +51,13 @@ lat_pipeline_semantic_valid
 lat_pipeline_source_len
 lat_pipeline_node_count
 lat_pipeline_edge_count
+lat_pipeline_comment_count
+lat_pipeline_first_comment_start_offset
+lat_pipeline_first_comment_end_offset
+lat_pipeline_first_comment_start_line
+lat_pipeline_first_comment_start_column
+lat_pipeline_first_comment_end_line
+lat_pipeline_first_comment_end_column
 lat_lir_source_kind
 lat_lir_module_node_count
 lat_lir_transition_edge_count
@@ -85,7 +92,7 @@ Lat execution and LIR execution remain future-gated.
 
 ## Report surface
 
-`latticra_runtime_boundary_report` now includes deterministic report fields for Lat pipeline and Lat-specific LIR evidence.
+`latticra_runtime_boundary_report` now includes deterministic report fields for Lat pipeline evidence, Lat pipeline line-comment evidence, and Lat-specific LIR evidence.
 
 The runtime boundary report capacity is increased to preserve bounded output with the expanded report surface.
 
@@ -106,6 +113,8 @@ runtime_boundary_reports_lat_pipeline_evidence
 runtime_boundary_keeps_lat_lir_execution_future_gated
 ```
 
+The Lat pipeline evidence invariants also verify that parser line-comment count and first-comment span metadata are copied into runtime-boundary records and reports.
+
 ## Compatibility
 
 This refinement preserves existing runtime boundary behavior for:
@@ -124,6 +133,7 @@ unknown request denial
 unknown effect denial
 operator confirmation non-override behavior
 small-buffer behavior
+Lat pipeline line-comment evidence reporting
 ```
 
 ## Boundary

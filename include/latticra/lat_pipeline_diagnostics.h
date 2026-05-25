@@ -32,6 +32,8 @@ typedef struct {
     latticra_lat_to_lir_error_t lowering_error;
     latticra_lat_model_error_t model_error;
     latticra_lir_error_t lir_error;
+    size_t comment_count;
+    latticra_lat_source_span_t first_comment_span;
     size_t semantic_diagnostic_count;
     size_t first_diagnostic_declaration_index;
     size_t first_diagnostic_clause_index;

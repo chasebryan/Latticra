@@ -10,7 +10,35 @@ fail() {
 require_flag() {
   name="$1"
   want="$2"
-  eval "actual=\${$name:-}"
+  case "$name" in
+    LATTICRA_ALLOW_DISPOSABLE_VM_RPM_VALIDATION)
+      actual="${LATTICRA_ALLOW_DISPOSABLE_VM_RPM_VALIDATION:-}"
+      ;;
+    LATTICRA_TARGET_IS_DISPOSABLE_FEDORA_VM)
+      actual="${LATTICRA_TARGET_IS_DISPOSABLE_FEDORA_VM:-}"
+      ;;
+    LATTICRA_TARGET_IS_DAILY_DRIVER)
+      actual="${LATTICRA_TARGET_IS_DAILY_DRIVER:-}"
+      ;;
+    LATTICRA_TARGET_IS_PRODUCTION_HOST)
+      actual="${LATTICRA_TARGET_IS_PRODUCTION_HOST:-}"
+      ;;
+    LATTICRA_TARGET_IS_IMMUTABLE_FEDORA)
+      actual="${LATTICRA_TARGET_IS_IMMUTABLE_FEDORA:-}"
+      ;;
+    LATTICRA_TARGET_HAS_CLEAN_SNAPSHOT)
+      actual="${LATTICRA_TARGET_HAS_CLEAN_SNAPSHOT:-}"
+      ;;
+    LATTICRA_TARGET_HAS_RECOVERY_PATH)
+      actual="${LATTICRA_TARGET_HAS_RECOVERY_PATH:-}"
+      ;;
+    LATTICRA_OPERATOR_CONSENT_RECORDED)
+      actual="${LATTICRA_OPERATOR_CONSENT_RECORDED:-}"
+      ;;
+    *)
+      fail "unsupported validation flag: $name"
+      ;;
+  esac
   [ "$actual" = "$want" ] || fail "refusing validation unless $name=$want"
 }
 

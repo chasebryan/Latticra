@@ -45,8 +45,16 @@ check_workflow() {
   grep -q '^  contents: read' "$workflow" ||
     fail "$workflow must keep repository token permissions read-only"
 
+  if grep -Eq '^[[:space:]]*[A-Za-z0-9_-]+:[[:space:]]*write([[:space:]]|$)' "$workflow"; then
+    fail "$workflow must not request write-scoped token permissions"
+  fi
+
   if grep -Eq 'pull_request_target:' "$workflow"; then
     fail "$workflow must not use pull_request_target"
+  fi
+
+  if grep -Eq 'continue-on-error:' "$workflow"; then
+    fail "$workflow must not use continue-on-error"
   fi
 
   if grep -Eq 'secrets\.' "$workflow"; then
@@ -64,13 +72,26 @@ check_workflow() {
   action_refs="$(sed -nE 's/^[[:space:]]*uses:[[:space:]]*([^[:space:]]+).*/\1/p' "$workflow")"
   for action_ref in $action_refs; do
     case "$action_ref" in
+      ./*|../*)
+        continue
+        ;;
+    esac
+
+    case "$action_ref" in
       *@*) ;;
       *) fail "$workflow uses an unpinned action reference: $action_ref" ;;
     esac
 
+    action_pin="${action_ref##*@}"
+    printf '%s\n' "$action_pin" | grep -Eq '^[0-9a-f]{40}$' ||
+      fail "$workflow must pin external action refs to a 40-character commit SHA: $action_ref"
+
     case "$action_ref" in
-      *@main | *@master)
-        fail "$workflow uses a moving action branch: $action_ref"
+      actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 | \
+        dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8)
+        ;;
+      *)
+        fail "$workflow uses an unapproved external action ref: $action_ref"
         ;;
     esac
   done
@@ -90,6 +111,18 @@ check_shell_script() {
 
   if ! sed -n '1,6p' "$script" | grep -Eq '^set -e'; then
     fail "$script must enable fail-fast shell behavior near the top"
+  fi
+
+  if grep -Eq 'eval[[:space:]]' "$script"; then
+    fail "$script must not use eval"
+  fi
+
+  if grep -Eq 'curl[^|]*\|[[:space:]]*(sh|bash)|wget[^|]*\|[[:space:]]*(sh|bash)|bash[[:space:]]+<|sh[[:space:]]+<' "$script"; then
+    fail "$script must not pipe remote content into a shell"
+  fi
+
+  if grep -Eq 'mktemp[[:space:]]+-u|chmod[[:space:]]+-R[[:space:]]+777|rm[[:space:]]+-rf[[:space:]]+/' "$script"; then
+    fail "$script contains an unsafe broad mutation command"
   fi
 
   if grep -q 'CFLAGS:=' "$script"; then
@@ -134,7 +167,8 @@ done
   fail "no GitHub workflow files found"
 
 require_contains "quality-safety-guards:" "Makefile"
-require_contains "quality: quality-safety-guards quality-defensive-threat-model seal-policy-denials quality-rust-installer quality-panel-installer quality-c-foundation" "Makefile"
+require_contains "quality: quality-worktree quality-safety-guards quality-defensive-threat-model seal-policy-denials quality-rust-installer quality-panel-installer quality-c-foundation" "Makefile"
+require_contains "git diff --check" "Makefile"
 require_contains "sh ./scripts/test-quality-safety-guards.sh" "Makefile"
 require_contains "sh ./scripts/test-defensive-threat-model-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-defensive-threat-model-implementation-plan.sh" "Makefile"
@@ -148,12 +182,16 @@ require_contains "sh ./scripts/test-latticra-panel-local-uninstall-reset.sh" "Ma
 require_contains "sh ./scripts/test-latticra-console-foundation.sh" "Makefile"
 require_contains "sh ./scripts/test-cpp-authority-layer.sh" "Makefile"
 require_contains "make quality" ".github/workflows/quality.yml"
-require_contains 'gcc \' ".github/workflows/quality.yml"
-require_contains 'g++ \' ".github/workflows/quality.yml"
+require_contains "uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" ".github/workflows/quality.yml"
+require_contains "uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8" ".github/workflows/quality.yml"
+require_contains "gcc \\" ".github/workflows/quality.yml"
+require_contains "g++ \\" ".github/workflows/quality.yml"
 require_contains "timeout-minutes: 20" ".github/workflows/quality.yml"
 require_contains "make quality-safety-guards" ".github/workflows/quality-safety-guards.yml"
+require_contains "uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" ".github/workflows/quality-safety-guards.yml"
 require_contains "timeout-minutes: 10" ".github/workflows/quality-safety-guards.yml"
 require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" ".github/workflows/latticra-panel-installer.yml"
+require_contains "uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8" ".github/workflows/latticra-panel-installer.yml"
 require_line "make quality" "README.md"
 require_line "make quality-safety-guards" "README.md"
 require_line "make quality" "CONTRIBUTING.md"

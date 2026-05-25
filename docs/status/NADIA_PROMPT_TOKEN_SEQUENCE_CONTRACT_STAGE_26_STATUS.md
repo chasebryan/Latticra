@@ -94,6 +94,8 @@ The Latticra Panel and installed `latticra-nadia` wrapper expose `prompt-token-s
 
 Nadia can now produce a prompt-token-sequence contract that packages Stage-25 prompt-tokenization evidence and records review requirements for a future context-window assembly contract.
 
+Stage-27 now defines a context-window assembly contract that keeps context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, and inference blocked.
+
 Context-window assembly remains blocked until a later contract explicitly names the context window format, prompt evaluation input shape, truncation policy, safety inheritance, runtime-denial fields, operator review gates, and non-claims.
 
 That later context window assembly contract is the next boundary; Stage-26 only records the prerequisite metadata.
