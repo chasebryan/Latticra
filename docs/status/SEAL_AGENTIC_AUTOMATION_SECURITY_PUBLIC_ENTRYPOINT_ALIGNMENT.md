@@ -135,6 +135,6 @@ It does not add MCP protocol behavior, MCP server behavior, MCP client behavior,
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is parameter schema status/public-entry alignment.
+The next valid Latticra Seal slice is request freshness status/public-entry alignment.
 
-That future slice must not implement schema parsing, schema validation, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, or authority grants.
+That future slice must not implement timestamp parsing, trusted clock behavior, nonce storage, replay-cache storage, context hashing, parameter hashing, freshness validation, replay detection, schema parsing, schema validation, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, or authority grants.

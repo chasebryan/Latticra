@@ -49,6 +49,7 @@ cc $CFLAGS \
   src/lat_model.c \
   src/lir.c \
   src/lat_to_lir.c \
+  src/lat_to_lir_diagnostics.c \
   src/lat_pipeline.c \
   src/lat_pipeline_diagnostics.c \
   src/lat_pipeline_diagnostics_eval.c \

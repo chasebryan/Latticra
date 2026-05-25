@@ -49,6 +49,8 @@ The wrapper entry point `latticra_lat_pipeline_run_source` preserves the origina
 
 The function records parser, semantic, model, lowering, and LIR errors separately, then classifies the aggregate pipeline state.
 
+The companion pipeline diagnostic surface can now evaluate with optional Lat-to-LIR lowering diagnostics so pipeline reports can expose lowering class, model error, LIR error, model counts, transition source index, and failure flags without changing pipeline execution behavior.
+
 ## Report surface
 
 `latticra_lat_pipeline_report` emits:

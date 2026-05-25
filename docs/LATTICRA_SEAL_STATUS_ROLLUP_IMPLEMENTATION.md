@@ -126,6 +126,6 @@ sh scripts/test-latticra-seal-agentic-automation-security-status.sh
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is parameter schema status/public-entry alignment.
+The next valid Latticra Seal slice is request freshness status/public-entry alignment.
 
-That future slice must not change runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, schema parsing, schema validation, capability enforcement, cryptographic verification, or authority posture.
+That future slice must not change timestamp parsing, trusted clock behavior, nonce storage, replay-cache storage, context hashing, parameter hashing, freshness validation, replay detection, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, schema parsing, schema validation, capability enforcement, cryptographic verification, or authority posture.

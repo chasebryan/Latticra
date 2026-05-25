@@ -48,6 +48,8 @@ internal
 
 It copies lowering error, model error, optional LIR error, model counts, first transition source index, node and edge counts, no-effect flags, failure flags, no-effect issue flag, and evidence level into a bounded result record.
 
+The Lat pipeline diagnostic integration can consume this result through `latticra_lat_pipeline_diagnostics_evaluate_with_lowering`, preserving the older pipeline diagnostic evaluator for existing callers.
+
 ## Report Format
 
 `latticra_lat_to_lir_diagnostics_report` emits a deterministic bounded report beginning with:

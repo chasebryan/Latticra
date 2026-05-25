@@ -30,6 +30,7 @@ What it verifies:
 main Lat pipeline runner links src/lat_pipeline_diagnostics.c
 main Lat pipeline runner links src/lat_pipeline_diagnostics_eval.c
 main Lat pipeline runner links src/lat_pipeline_diagnostics_report.c
+main Lat pipeline runner links src/lat_to_lir_diagnostics.c
 main Lat pipeline runner compiles tests/lat_pipeline_diagnostic_integration_refinement.c
 Lat Pipeline workflow runs scripts/test-lat-pipeline.sh
 ```

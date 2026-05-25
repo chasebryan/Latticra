@@ -114,7 +114,7 @@ require_contains 'seal runtime handoff status: ok' "$status_file"
 require_contains 'seal status rollup contract: ok' "$status_file"
 require_contains 'seal status rollup status: ok' "$status_file"
 require_contains 'seal effect decision status: ok' "$status_file"
-require_contains 'parameter schema status/public-entry alignment' "$status_file"
+require_contains 'request freshness status/public-entry alignment' "$status_file"
 
 require_contains 'SEAL_RUNTIME_HANDOFF_STATUS.md' README.md
 require_contains 'SEAL_STATUS_ROLLUP_STATUS.md' README.md
@@ -144,10 +144,10 @@ require_contains 'LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md' docs/FOUNDATI
 require_contains 'LATTICRA_SEAL_STATUS_ROLLUP_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal runtime handoff status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Seal status rollup status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal parameter schema status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Seal request freshness status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal runtime handoff status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Seal status rollup status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
-require_contains 'Seal parameter schema status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Seal request freshness status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/status/SEAL_RUNTIME_HANDOFF_STATUS.md' docs/project_notes/README.md
 require_contains 'docs/status/SEAL_STATUS_ROLLUP_STATUS.md' docs/project_notes/README.md
 

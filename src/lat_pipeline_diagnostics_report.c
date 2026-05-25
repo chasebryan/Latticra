@@ -20,11 +20,21 @@ latticra_status_t latticra_lat_pipeline_diagnostics_report(
         "failed_stage=%s\n"
         "semantic_class=%s\n"
         "semantic_error=%s\n"
+        "lowering_class=%s\n"
+        "lowering_error=%s\n"
+        "model_error=%s\n"
+        "lir_error=%s\n"
         "semantic_diagnostic_count=%zu\n"
         "first_diagnostic_declaration_index=%zu\n"
         "first_diagnostic_clause_index=%zu\n"
+        "lowering_model_declaration_count=%zu\n"
+        "lowering_model_clause_count=%zu\n"
+        "lowering_first_transition_source_index=%zu\n"
         "pipeline_failed=%d\n"
         "semantic_failed=%d\n"
+        "lowering_failed=%d\n"
+        "model_failed=%d\n"
+        "lir_failed=%d\n"
         "no_effect_issue=%d\n"
         "evidence_level=%u\n",
         (int)result->status,
@@ -33,11 +43,21 @@ latticra_status_t latticra_lat_pipeline_diagnostics_report(
         latticra_lat_pipeline_stage_label(result->failed_stage),
         latticra_lat_semantic_diagnostic_class_label(result->semantic_class),
         latticra_lat_semantic_error_label(result->semantic_error),
+        latticra_lat_to_lir_diagnostic_class_label(result->lowering_class),
+        latticra_lat_to_lir_error_label(result->lowering_error),
+        latticra_lat_model_error_label(result->model_error),
+        latticra_lir_error_label(result->lir_error),
         result->semantic_diagnostic_count,
         result->first_diagnostic_declaration_index,
         result->first_diagnostic_clause_index,
+        result->lowering_model_declaration_count,
+        result->lowering_model_clause_count,
+        result->lowering_first_transition_source_index,
         result->pipeline_failed,
         result->semantic_failed,
+        result->lowering_failed,
+        result->model_failed,
+        result->lir_failed,
         result->no_effect_issue,
         result->evidence_level);
     if (written < 0 || (size_t)written >= buffer_len) {

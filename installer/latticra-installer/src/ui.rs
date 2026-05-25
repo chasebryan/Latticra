@@ -315,7 +315,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, plan, save, dry-run, reset, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory",
+                    "panel: help, status, plan, save, dry-run, reset, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -392,7 +392,10 @@ impl LatticraInstallerApp {
                     "tokenizer_artifact_inventory_contract_stage=20-tokenizer-artifact-inventory-contract",
                 );
                 self.push_console(
-                    "stage=20 tokenizer-artifact-inventory-contract; tokenizer_artifact_file_opened=0 prompt_tokenized=0",
+                    "tokenizer_artifact_measurement_contract_stage=21-tokenizer-artifact-measurement-contract",
+                );
+                self.push_console(
+                    "stage=21 tokenizer-artifact-measurement-contract; tokenizer_artifact_measurement_performed=0 prompt_tokenized=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -575,6 +578,24 @@ impl LatticraInstallerApp {
                 );
                 self.push_console(
                     "prompt_tokenized=0 requires_tokenizer_manifest_contract=1 requires_future_tokenizer_artifact_measurement_contract=1",
+                );
+            }
+            ["nadia", "tokenizer-artifact-measurement"]
+            | ["nadia", "tokenizer-measurement"]
+            | ["nadia", "artifact-measurement"] => {
+                self.push_console(
+                    "nadia_tokenizer_artifact_measurement=stage-21-tokenizer-artifact-measurement-contract",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia tokenizer-artifact-measurement");
+                self.push_console(
+                    "tokenizer_artifact_measurement_contract_status=contract_only tokenizer_artifact_measurement_performed=0",
+                );
+                self.push_console(
+                    "tokenizer_artifact_file_opened=0 tokenizer_artifact_hash_computed=0 tokenizer_artifact_measurement_hash_computed=0",
+                );
+                self.push_console(
+                    "prompt_tokenized=0 requires_tokenizer_artifact_inventory_contract=1 requires_future_tokenizer_artifact_verification_contract=1",
                 );
             }
             ["nadia", "inference-readiness"]
@@ -1053,7 +1074,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-20 tokenizer-artifact-inventory contract with metadata-only Console surfaces.",
+            "Stage-21 tokenizer-artifact-measurement contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,

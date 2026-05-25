@@ -441,7 +441,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=20-tokenizer-artifact-inventory-contract");
+    let _ = writeln!(out, "stage=21-tokenizer-artifact-measurement-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -963,6 +963,50 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "requires_future_tokenizer_artifact_measurement_contract=1"
     );
     let _ = writeln!(out, "tokenizer_artifact_inventory_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_measurement_contract_stage=21-tokenizer-artifact-measurement-contract"
+    );
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_measurement_contract_command=scripts/nadia-tokenizer-artifact-measurement-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_tokenizer_artifact_measurement_contract_command=latticra-nadia tokenizer-artifact-measurement"
+    );
+    let _ = writeln!(out, "tokenizer_artifact_measurement_stage=contract-only");
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_measurement_contract_status=contract_only"
+    );
+    let _ = writeln!(out, "tokenizer_artifact_measurement_authority=0");
+    let _ = writeln!(out, "tokenizer_artifact_measurement_allowed=0");
+    let _ = writeln!(out, "tokenizer_artifact_measurement_performed=0");
+    let _ = writeln!(out, "tokenizer_artifact_measurement_metadata_present=1");
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_measurement_family=operator-reviewed-tokenizer-artifact-measurement"
+    );
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_measurement_format=contract-only-offline-measurement"
+    );
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_measurement_decision=blocked_contract_only"
+    );
+    let _ = writeln!(out, "tokenizer_artifact_measurement_plan_recorded=1");
+    let _ = writeln!(out, "tokenizer_artifact_measurement_result_recorded=0");
+    let _ = writeln!(out, "tokenizer_artifact_measurement_digest_recorded=0");
+    let _ = writeln!(out, "tokenizer_artifact_measurement_size_recorded=0");
+    let _ = writeln!(out, "tokenizer_artifact_measurement_hash_computed=0");
+    let _ = writeln!(out, "requires_tokenizer_artifact_inventory_contract=1");
+    let _ = writeln!(
+        out,
+        "requires_future_tokenizer_artifact_verification_contract=1"
+    );
+    let _ = writeln!(out, "tokenizer_artifact_measurement_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

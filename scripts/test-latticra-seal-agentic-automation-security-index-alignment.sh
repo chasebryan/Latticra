@@ -51,6 +51,6 @@ require_contains 'tool_execution_added=0' "$record"
 require_contains 'shell_execution_added=0' "$record"
 require_contains 'cryptographic_enforcement_added=0' "$record"
 require_contains 'capability_enforcement_added=0' "$record"
-require_contains 'parameter schema status/public-entry alignment' "$record"
+require_contains 'request freshness status/public-entry alignment' "$record"
 
 printf 'seal agentic automation security index alignment: ok\n'
