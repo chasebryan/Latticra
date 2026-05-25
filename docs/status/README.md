@@ -23,6 +23,7 @@ non-claims
 - [`CURRENT_STATUS.md`](CURRENT_STATUS.md) — current project status, completion estimates, and next priorities.
 - [`CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](CURRENT_ESTIMATE_REFRESH_2026_05_24.md) - current planning-estimate refresh after Panel, Seal, documentation, and local evidence work.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
+- [`SEAL_SIGNING_AUTHORIZATION_STATUS.md`](SEAL_SIGNING_AUTHORIZATION_STATUS.md) — Latticra Seal signing authorization metadata status and public-entry checkpoint.
 - [`SEAL_SIGNATURE_REQUEST_STATUS.md`](SEAL_SIGNATURE_REQUEST_STATUS.md) — Latticra Seal signature request metadata status and public-entry checkpoint.
 - [`SEAL_CORE_EVIDENCE_STATUS.md`](SEAL_CORE_EVIDENCE_STATUS.md) — Latticra Seal core evidence status surface after the completed report-only runtime gate evidence milestone.
 - [`SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md`](SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md) — Latticra Seal core evidence index alignment after the status surface.
@@ -78,6 +79,7 @@ seal_signature_request_metadata_present=1
 seal_signature_request_status_present=1
 seal_signing_authorization_contract_present=1
 seal_signing_authorization_metadata_present=1
+seal_signing_authorization_status_present=1
 operator_visible_status_surface=1
 deterministic_local_report_path=1
 core_blocked_case_set_complete=1
@@ -110,13 +112,13 @@ core_blocked_case_set_complete=1
 The careful current public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, and core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 The current next recommended Seal lane is:
 
 ```text
-Add signing authorization status/public-entry alignment that still performs no signing
+Add signer-handoff contract planning that still performs no signing
 ```
 
 ## Current Fedora VM CLI payload validation lane checkpoint

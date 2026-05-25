@@ -146,6 +146,6 @@ seal signing authorization invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is signing authorization status/public-entry alignment or a future signer-handoff contract.
+The next valid Latticra Seal planning slice is signer-handoff contract planning or a narrow status-index alignment follow-up.
 
 That future slice must not add private-key handling, signing, verification, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately contracted, implemented, and guarded.

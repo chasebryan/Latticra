@@ -95,6 +95,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md`](LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md) — first no-effect signature request metadata implementation.
 - [`LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md`](LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md) — metadata-only signing authorization boundary after signature request readiness.
 - [`LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md`](LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md) — first no-effect signing authorization metadata implementation.
+- [`status/SEAL_SIGNING_AUTHORIZATION_STATUS.md`](status/SEAL_SIGNING_AUTHORIZATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signing authorization implementation.
 - [`status/SEAL_SIGNATURE_REQUEST_STATUS.md`](status/SEAL_SIGNATURE_REQUEST_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signature request implementation.
 - [`L_UI_STATIC_REPORT.md`](L_UI_STATIC_REPORT.md) — terminal-facing L-UI static report fixture for Nucleus/state rails.
 - [`L_UI_SOURCE_GRAMMAR.md`](L_UI_SOURCE_GRAMMAR.md) — L-UI source grammar draft and `.lui` fixture guardrails.
@@ -182,6 +183,7 @@ Latticra Seal signature request metadata + invariants
 Latticra Seal signature request status/public-entry alignment + guardrails
 Latticra Seal signing authorization contract + guardrails
 Latticra Seal signing authorization metadata + invariants
+Latticra Seal signing authorization status/public-entry alignment + guardrails
 L-UI static report fixture + rail invariants
 L-UI source grammar draft + fixture guardrails
 L-UI parser design contract + guardrails
@@ -205,7 +207,7 @@ L-UI rendering detailed report refinement + invariants
 The next status review target should be:
 
 ```text
-Signing authorization status/public-entry alignment, with completion estimate review only if capability posture changes
+Signer-handoff contract planning, with completion estimate review only if capability posture changes
 ```
 
 Completion-estimate review should be skipped unless a future slice changes capability posture, implementation scope, or public readiness rather than only aligning documentation/status surfaces.

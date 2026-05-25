@@ -3,6 +3,7 @@
 Status: public status record
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal signing authorization status/public-entry note: 2026-05-25 CDT
 Latest Seal signing authorization implementation note: 2026-05-25 CDT
 Latest Seal signing authorization contract note: 2026-05-25 CDT
 Latest Seal signature request status/public-entry note: 2026-05-25 CDT
@@ -105,6 +106,7 @@ The repository currently emphasizes:
 - Runtime boundary policy matrix refinement;
 - Runtime boundary domain matrix refinement;
 - Runtime boundary domain matrix report integration;
+- Latticra Seal signing authorization status/public-entry alignment;
 - Latticra Seal signing authorization metadata implementation;
 - Latticra Seal signing authorization contract;
 - Latticra Seal signature request status/public-entry alignment;
@@ -221,6 +223,8 @@ The Latticra Seal signing authorization contract defines the next metadata-only 
 
 The Latticra Seal signing authorization implementation adds bounded C metadata for classifying ready signature requests as authorized-metadata-only for a future signing path while preserving no signing, no verification, no private-key handling, no key generation, no trust-store loading, no revocation lookup, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
 
+The Latticra Seal signing authorization status record makes the metadata-only implementation visible from public entry points while preserving no signing, no verification, no private-key handling, no key generation, no trust-store loading, no revocation lookup, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
+
 The project notes are now aligned across current direction, upcoming work, and project-notes index surfaces.
 
 The current status and announcement consistency review confirms the public status and announcement surfaces now point to the same next review lane.
@@ -294,6 +298,7 @@ Runtime boundary report refinement
 Runtime boundary policy matrix refinement
 Runtime boundary domain matrix refinement
 Runtime boundary domain matrix report integration
+Latticra Seal signing authorization status/public-entry alignment
 Latticra Seal signing authorization metadata implementation
 Latticra Seal signing authorization contract
 Latticra Seal signature request status/public-entry alignment
@@ -435,7 +440,7 @@ Latticra Seal report envelope metadata implementation
 Recommended next work:
 
 ```text
-Signing authorization status/public-entry alignment, with no signing, verification, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority
+Signer-handoff contract planning, with no signing, verification, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 After that:
