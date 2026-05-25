@@ -72,6 +72,8 @@ seal_core_evidence_public_status_present=1
 seal_core_evidence_status_surface_present=1
 seal_report_envelope_metadata_present=1
 seal_report_envelope_ready_metadata_present=1
+seal_signature_request_contract_present=1
+seal_signature_request_metadata_implemented=0
 operator_visible_status_surface=1
 deterministic_local_report_path=1
 core_blocked_case_set_complete=1
@@ -104,13 +106,13 @@ core_blocked_case_set_complete=1
 The careful current public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, and core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, a signature-request contract, and core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 The current next recommended Seal lane is:
 
 ```text
-Add a Seal signature request contract that still performs no signing
+Add Seal signature request metadata that still performs no signing
 ```
 
 ## Current Fedora VM CLI payload validation lane checkpoint

@@ -145,18 +145,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Seal signature request contract planning, with completion estimate review only if capability posture changes
+Seal signature request metadata implementation, with completion estimate review only if capability posture changes
 ```
 
 Purpose:
 
 ```text
-define the next Seal signature-request boundary after sealed report-envelope metadata while preserving no signing, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+implement the metadata-only Seal signature-request boundary after sealed report-envelope metadata while preserving no signing, no verification, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Seal signature request contract planning.
+1. Seal signature request metadata implementation.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.
@@ -195,7 +195,7 @@ consistent with no-new-announcement decisions unless capability posture changes
 - Keep Lat-specific LIR refinement no-effect and metadata-only.
 - Keep Lat pipeline diagnostic integration no-effect and metadata-only.
 - Keep Runtime boundary domain matrix report integration report-only and no-effect.
-- Keep Seal report envelope metadata no-effect and unsigned until a separate signature-request contract exists.
+- Keep Seal signature request metadata no-effect and unsigned until a separate signing authorization contract exists.
 - Do not update completion estimates after documentation/status-only alignment.
 - Do not add public announcement entries for documentation/status-only alignment.
 - Maintain professional public docs.

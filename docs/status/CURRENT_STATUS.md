@@ -3,6 +3,7 @@
 Status: public status record
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal signature request contract note: 2026-05-25 CDT
 Latest Seal report envelope implementation note: 2026-05-25 CDT
 Latest Lat-to-LIR lowering note: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
@@ -100,6 +101,7 @@ The repository currently emphasizes:
 - Runtime boundary policy matrix refinement;
 - Runtime boundary domain matrix refinement;
 - Runtime boundary domain matrix report integration;
+- Latticra Seal signature request contract;
 - Latticra Seal report envelope metadata implementation;
 - deterministic diagnostics;
 - source-span metadata;
@@ -201,6 +203,8 @@ The Runtime boundary domain matrix report integration adds deterministic report 
 
 The Latticra Seal report envelope implementation adds bounded C metadata for classifying ready runtime handoff report metadata into sealed-report-only or sealed-evaluate-only envelope states while preserving no signing, no runtime handoff, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
 
+The Latticra Seal signature request contract defines the next metadata-only request boundary after sealed report-envelope metadata. It permits only a future signature request metadata implementation and does not add signing, verification, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority.
+
 The project notes are now aligned across current direction, upcoming work, and project-notes index surfaces.
 
 The current status and announcement consistency review confirms the public status and announcement surfaces now point to the same next review lane.
@@ -274,6 +278,7 @@ Runtime boundary report refinement
 Runtime boundary policy matrix refinement
 Runtime boundary domain matrix refinement
 Runtime boundary domain matrix report integration
+Latticra Seal signature request contract
 Latticra Seal report envelope metadata implementation
 Defensive threat model contract
 L-UI parser implementation
@@ -370,7 +375,7 @@ This is a mission direction, not a current security guarantee.
 Latest completed contract slice:
 
 ```text
-Lat-specific LIR refinement contract
+Latticra Seal signature request contract
 ```
 
 ## Latest completed planning slice
@@ -410,7 +415,7 @@ Nucleus report-only announcement README alignment
 Recommended next work:
 
 ```text
-Seal signature request contract planning, with no signing, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority
+Seal signature request metadata implementation, with no signing, verification, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 After that:
