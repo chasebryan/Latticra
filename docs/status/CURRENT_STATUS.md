@@ -5,6 +5,7 @@ Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
+Latest runtime boundary abuse-case fixture expansion note: 2026-05-25 CDT
 Latest Seal policy decision status/public-entry note: 2026-05-25 CDT
 Latest Seal signed request status/public-entry note: 2026-05-25 CDT
 Latest Seal request freshness status/public-entry note: 2026-05-25 CDT
@@ -214,6 +215,7 @@ The repository currently emphasizes:
 - Latticra Seal signed request status/public-entry alignment;
 - Latticra Seal policy decision status/public-entry alignment;
 - Defensive threat model validation refinement;
+- Runtime boundary abuse-case fixture expansion after policy expansion;
 - Latticra Seal verification receipt status/public-entry alignment;
 - Latticra Seal verification policy status/public-entry alignment;
 - Latticra Seal key parsing status/public-entry alignment;
@@ -553,6 +555,7 @@ Latticra Seal report envelope metadata implementation
 Defensive threat model contract
 Defensive threat model validation refinement
 Runtime boundary policy expansion after threat-model validation
+Runtime boundary abuse-case fixture expansion after policy expansion
 L-UI parser implementation
 semantic validation contract
 semantic validation implementation plan
@@ -651,7 +654,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat grammar report metadata integration, Lat model normalization, Lat model report declaration metadata integration, Lat model report clause metadata integration, Lat-to-LIR metadata lowering, Lat-to-LIR diagnostic refinement, LIR report refinement, Lat pipeline reporting, Lat pipeline lowering diagnostic integration, Lat pipeline diagnostic clause metadata integration, Lat pipeline report clause metadata integration, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic main test audit, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
+The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat grammar report metadata integration, Lat model normalization, Lat model report declaration metadata integration, Lat model report clause metadata integration, Lat-to-LIR declaration metadata refinement, Lat-to-LIR metadata lowering, Lat-to-LIR diagnostic refinement, LIR report refinement, Lat pipeline reporting, Lat pipeline lowering diagnostic integration, Lat pipeline diagnostic clause metadata integration, Lat pipeline report clause metadata integration, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic main test audit, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
 
 This is a mission direction, not a current security guarantee.
 
@@ -692,7 +695,7 @@ Latticra Seal request freshness status/public-entry alignment
 Latest completed implementation slice:
 
 ```text
-Lat model report declaration metadata integration
+Lat-to-LIR declaration metadata refinement
 ```
 
 ## Previous implementation slice
@@ -700,7 +703,7 @@ Lat model report declaration metadata integration
 Previous implementation slice:
 
 ```text
-Lat grammar report metadata integration
+Lat model report declaration metadata integration
 ```
 
 ## Previous contract slice
@@ -796,20 +799,24 @@ Latticra Seal signer handoff metadata implementation
 Latest completed policy/evidence slice:
 
 ```text
-Runtime boundary policy expansion after threat-model validation
+Runtime boundary abuse-case fixture expansion after policy expansion
 ```
 
-Current runtime boundary policy expansion fields:
+Current runtime boundary abuse-case fixture fields:
 
 ```text
-runtime_boundary_policy_expansion_after_threat_model_present=1
-runtime_boundary_policy_expansion_after_threat_model_guard_present=1
-request_family_policy_map_present=1
-effect_policy_map_present=1
-authority_prerequisite_map_present=1
-future_gate_policy_map_present=1
-abuse_case_runtime_policy_map_present=1
-evidence_gap_map_present=1
+runtime_boundary_abuse_case_fixture_expansion_present=1
+runtime_boundary_abuse_case_fixture_guard_present=1
+runtime_boundary_abuse_case_c_fixtures_present=1
+runtime_boundary_abuse_case_fixture_count=8
+unknown_request_abuse_fixture_present=1
+unknown_effect_abuse_fixture_present=1
+future_gated_execution_abuse_fixture_present=1
+operator_confirmation_non_override_fixture_present=1
+denial_reason_report_fixture_present=1
+authority_failure_abuse_fixture_present=1
+invalid_lir_prerequisite_fixture_present=1
+blocked_effect_abuse_fixture_present=1
 runtime_execution_added=0
 effect_execution_added=0
 capability_enforcement_added=0
@@ -820,13 +827,13 @@ completion_estimate_review_required=0
 Recommended next work:
 
 ```text
-Abuse-case fixture expansion after runtime-boundary policy expansion, while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, or runtime authority
+Completion estimate review only if capability posture changes; otherwise continue small guarded report/status alignment only when drift appears
 ```
 
 After that:
 
 ```text
-Completion estimate review only if capability posture changes; otherwise continue small guarded report/status alignment only when drift appears
+Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review
 ```
 
 ## Update rule

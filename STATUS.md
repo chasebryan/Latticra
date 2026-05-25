@@ -5,6 +5,7 @@ Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
+Latest runtime boundary abuse-case fixture expansion note: 2026-05-25 CDT
 Latest Seal policy decision status/public-entry note: 2026-05-25 CDT
 Latest Seal signed request status/public-entry note: 2026-05-25 CDT
 Latest Seal request freshness status/public-entry note: 2026-05-25 CDT
@@ -203,6 +204,7 @@ Seal signed request status/public-entry alignment
 Seal policy decision status/public-entry alignment
 Defensive threat model validation refinement
 Runtime boundary policy expansion after threat-model validation
+Runtime boundary abuse-case fixture expansion after policy expansion
 Seal verification receipt status/public-entry alignment
 Nadia offline AI Stage-0 foundation
 Nadia local context engine Stage-1
@@ -350,7 +352,7 @@ Completion percentage review
 ## Current next step
 
 ```text
-Abuse-case fixture expansion after runtime-boundary policy expansion, while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, or runtime authority
+Completion estimate review only if capability posture changes; otherwise continue small guarded report/status alignment only when drift appears
 ```
 
 ## Current Seal core evidence boundary
@@ -461,6 +463,7 @@ external_source_refresh_checkpoint_present=1
 manual_source_review_required=1
 runtime_boundary_policy_expansion_next=1
 runtime_boundary_policy_expansion_after_threat_model_present=1
+runtime_boundary_abuse_case_fixture_expansion_present=1
 security_controls_added=0
 runtime_execution_added=0
 effect_execution_added=0
@@ -495,6 +498,39 @@ authority_prerequisite_map_present=1
 future_gate_policy_map_present=1
 abuse_case_runtime_policy_map_present=1
 evidence_gap_map_present=1
+implementation_behavior_changed=0
+runtime_execution_added=0
+effect_execution_added=0
+capability_enforcement_added=0
+host_behavior_changed=0
+network_behavior_changed=0
+mcp_behavior_changed=0
+runtime_authority_granted=0
+completion_estimate_review_required=0
+```
+
+## Current runtime boundary abuse-case fixture boundary
+
+Runtime boundary abuse-case fixture expansion after policy expansion is now documented and guarded with deterministic C fixtures for unknown request, unknown effect, future-gated execution, operator-confirmation non-override, denial reason reporting, authority failure, invalid LIR prerequisite, and blocked effect cases.
+
+Current runtime boundary abuse-case fixture fields:
+
+```text
+runtime_boundary_abuse_case_fixture_expansion_present=1
+runtime_boundary_abuse_case_fixture_guard_present=1
+runtime_boundary_abuse_case_c_fixtures_present=1
+runtime_boundary_abuse_case_fixture_count=8
+unknown_request_abuse_fixture_present=1
+unknown_effect_abuse_fixture_present=1
+future_gated_execution_abuse_fixture_present=1
+operator_confirmation_non_override_fixture_present=1
+denial_reason_report_fixture_present=1
+authority_failure_abuse_fixture_present=1
+invalid_lir_prerequisite_fixture_present=1
+blocked_effect_abuse_fixture_present=1
+report_reason_assertions_present=1
+policy_matrix_assertions_present=1
+domain_matrix_assertions_present=1
 implementation_behavior_changed=0
 runtime_execution_added=0
 effect_execution_added=0

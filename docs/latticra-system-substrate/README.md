@@ -12,6 +12,15 @@ The Seal handbook was useful as a subsystem reference. This new handbook expands
 
 - [PDF edition](the-latticra-system-substrate.pdf)
 - [Editable DOCX edition](the-latticra-system-substrate.docx)
+- [Public repository folder](https://github.com/Bryforge/Latticra/tree/main/docs/latticra-system-substrate)
+
+## Living handbook cadence
+
+Treat this handbook as a live project artifact, not a finished release.
+
+As Latticra work progresses, material decisions, capability changes, boundary refinements, validation lanes, public wording, and evidence updates should be folded back into the handbook alongside the nearer-term project notes and status records.
+
+Handbook updates should stay evidence-bound: describe what is implemented, tested, measured, planned, or explicitly out of scope, and avoid promoting future runtime, enforcement, host-protection, packaging, or production claims ahead of reproducible evidence.
 
 ## Correct interpretation
 

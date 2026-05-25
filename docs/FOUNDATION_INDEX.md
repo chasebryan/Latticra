@@ -141,6 +141,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`RUNTIME_BOUNDARY_REPORT_REFINEMENT.md`](RUNTIME_BOUNDARY_REPORT_REFINEMENT.md) — runtime-boundary report refinement implementation.
 - [`RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md`](RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md) — runtime-boundary policy matrix refinement implementation.
 - [`RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`](RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md) — runtime-boundary policy expansion after defensive threat-model validation.
+- [`RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md`](RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md) — deterministic runtime-boundary abuse-case fixtures after policy expansion.
 - [`RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md`](RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md) — runtime-boundary domain matrix refinement record.
 - [`RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md`](RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md) — runtime-boundary domain matrix report integration record.
 - [`LATTICRA_SEAL_CONTRACT.md`](LATTICRA_SEAL_CONTRACT.md) — Latticra Seal evidence-boundary, capability-boundary, promotion-gate, and non-claim contract.
@@ -239,7 +240,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LAT_MODEL_NORMALIZATION_IMPLEMENTATION.md`](LAT_MODEL_NORMALIZATION_IMPLEMENTATION.md) — Lat model normalization tables and first-declaration/first-clause report metadata.
 - [`LAT_TO_LIR_LOWERING_CONTRACT.md`](LAT_TO_LIR_LOWERING_CONTRACT.md) — Lat-to-LIR lowering contract.
 - [`LAT_TO_LIR_LOWERING_IMPLEMENTATION_PLAN.md`](LAT_TO_LIR_LOWERING_IMPLEMENTATION_PLAN.md) — Lat-to-LIR lowering implementation plan.
-- [`LAT_TO_LIR_LOWERING_IMPLEMENTATION.md`](LAT_TO_LIR_LOWERING_IMPLEMENTATION.md) — Lat-to-LIR lowering implementation.
+- [`LAT_TO_LIR_LOWERING_IMPLEMENTATION.md`](LAT_TO_LIR_LOWERING_IMPLEMENTATION.md) — Lat-to-LIR lowering implementation with first-declaration report metadata.
 - [`LAT_TO_LIR_CLAUSE_METADATA_REFINEMENT.md`](LAT_TO_LIR_CLAUSE_METADATA_REFINEMENT.md) — Lat-to-LIR clause operator/value metadata refinement.
 - [`LAT_TO_LIR_DIAGNOSTIC_REFINEMENT.md`](LAT_TO_LIR_DIAGNOSTIC_REFINEMENT.md) — Lat-to-LIR diagnostic classification and first-clause metadata report surface.
 - [`LAT_PIPELINE_CONTRACT.md`](LAT_PIPELINE_CONTRACT.md) — bounded no-effect Lat pipeline contract after parser, semantic validation, and Lat-to-LIR lowering.
@@ -327,6 +328,7 @@ Latticra Seal signed request status/public-entry alignment + guardrails
 Latticra Seal policy decision status/public-entry alignment + guardrails
 Defensive threat model validation refinement + guardrails
 Runtime boundary policy expansion after threat-model validation + guardrails
+Runtime boundary abuse-case fixture expansion after policy expansion + guardrails
 Latticra Seal capability gate status/public-entry alignment + guardrails
 Latticra Seal verification receipt status/public-entry alignment + guardrails
 Nadia offline AI Stage-0 foundation + guardrails
@@ -375,6 +377,7 @@ Lat model normalization implementation + invariants
 Lat model report declaration metadata integration + invariants
 Lat model report clause metadata integration + invariants
 Lat-to-LIR lowering implementation + invariants
+Lat-to-LIR declaration metadata refinement + invariants
 Lat-to-LIR clause metadata refinement + invariants
 Lat-to-LIR diagnostic clause metadata integration + invariants
 Lat pipeline diagnostic clause metadata integration + invariants
@@ -391,13 +394,14 @@ L-UI rendering detailed report refinement + invariants
 The next status review target should be:
 
 ```text
-Abuse-case fixture expansion after runtime-boundary policy expansion, while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, or runtime authority
+Completion estimate review only if capability posture changes; otherwise continue small guarded report/status alignment only when drift appears
 ```
 
 Current runtime boundary policy expansion status:
 
 ```text
 runtime_boundary_policy_expansion_after_threat_model_present=1
+runtime_boundary_abuse_case_fixture_expansion_present=1
 request_family_policy_map_present=1
 effect_policy_map_present=1
 authority_prerequisite_map_present=1

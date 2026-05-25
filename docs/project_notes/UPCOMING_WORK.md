@@ -2,6 +2,7 @@
 
 Status: active project note
 Last updated: 2026-05-25 CDT
+Latest runtime boundary abuse-case fixture expansion note: 2026-05-25 CDT
 Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 
@@ -26,6 +27,18 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Lat-to-LIR declaration metadata refinement
+```
+
+Purpose completed:
+
+```text
+copy first lowered declaration node index, kind, name, source name, parse index, first-clause index, clause count, and source declaration index from normalized Lat model metadata into deterministic Lat-to-LIR lowering reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
 Lat model report declaration metadata integration
 ```
 
@@ -35,7 +48,7 @@ Purpose completed:
 copy first normalized declaration index, kind, name, source name, parse index, first-clause index, clause count, and source declaration index from the normalized Lat model table into deterministic Lat model normalization reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat grammar report metadata integration
@@ -584,21 +597,42 @@ L-UI rendering implementation
 
 ## Recommended next slice
 
+Latest completed fixture/evidence slice:
+
 ```text
-Abuse-case fixture expansion after runtime-boundary policy expansion, while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, or runtime authority
+Runtime boundary abuse-case fixture expansion after policy expansion
+```
+
+Current runtime boundary abuse-case fixture fields:
+
+```text
+runtime_boundary_abuse_case_fixture_expansion_present=1
+runtime_boundary_abuse_case_fixture_guard_present=1
+runtime_boundary_abuse_case_c_fixtures_present=1
+runtime_boundary_abuse_case_fixture_count=8
+runtime_execution_added=0
+effect_execution_added=0
+runtime_authority_granted=0
+completion_estimate_review_required=0
+```
+
+Recommended next slice:
+
+```text
+Completion estimate review only if capability posture changes; otherwise continue small guarded report/status alignment only when drift appears
 ```
 
 Purpose:
 
 ```text
-expand guarded abuse-case fixtures after runtime-boundary policy expansion while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+avoid percentage or readiness churn unless capability posture, public readiness, or evidence level changes; otherwise continue small guarded report/status alignment only when drift appears while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, and no runtime authority
 ```
 
 ## Near-term queue
 
-1. Abuse-case fixture expansion after runtime-boundary policy expansion.
-2. Completion estimate review only if capability posture changes.
-3. Continue small guarded report/status alignment only when drift appears.
+1. Completion estimate review only if capability posture changes.
+2. Continue small guarded report/status alignment only when drift appears.
+3. Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review.
 4. Authority status announcement only if public messaging changes.
 5. C++ authority expansion contract only if new authority behavior is proposed.
 6. Nucleus task execution refinement only after the next language representation review and a separate effect contract.

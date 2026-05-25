@@ -115,6 +115,7 @@ non-claims
 - [`LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — Lat pipeline diagnostic integration status.
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — Lat pipeline diagnostic main-test audit status.
 - [`RBDM_REPORT_INTEGRATION_STATUS.md`](RBDM_REPORT_INTEGRATION_STATUS.md) — runtime-boundary domain matrix report integration status.
+- [`../RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md`](../RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md) — runtime-boundary abuse-case fixture expansion after policy expansion.
 
 ## Current Latticra Seal core evidence checkpoint
 
@@ -191,6 +192,7 @@ seal_policy_decision_public_entrypoint_alignment_present=1
 defensive_threat_model_validation_refinement_present=1
 runtime_boundary_policy_expansion_next=1
 runtime_boundary_policy_expansion_after_threat_model_present=1
+runtime_boundary_abuse_case_fixture_expansion_present=1
 operator_visible_status_surface=1
 deterministic_local_report_path=1
 core_blocked_case_set_complete=1

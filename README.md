@@ -178,6 +178,7 @@ defensive_threat_model_contract_present=1
 defensive_threat_model_validation_present=1
 defensive_threat_model_validation_refinement_present=1
 runtime_boundary_policy_expansion_after_threat_model_present=1
+runtime_boundary_abuse_case_fixture_expansion_present=1
 lat_parse_validate_lower_pipeline_present=1
 lir_metadata_reporting_present=1
 l_ui_parser_validation_reporting_present=1
@@ -1122,6 +1123,7 @@ runtime_boundary_classification_present=1
 runtime_boundary_report_refinement_present=1
 runtime_boundary_policy_matrix_present=1
 runtime_boundary_policy_expansion_after_threat_model_present=1
+runtime_boundary_abuse_case_fixture_expansion_present=1
 runtime_boundary_domain_matrix_present=1
 runtime_behavior=0
 effect_authority=denied
@@ -1139,6 +1141,7 @@ Relevant documents:
 - [`docs/RUNTIME_BOUNDARY_REPORT_REFINEMENT.md`](docs/RUNTIME_BOUNDARY_REPORT_REFINEMENT.md)
 - [`docs/RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md`](docs/RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md)
 - [`docs/RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`](docs/RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md)
+- [`docs/RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md`](docs/RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md)
 - [`docs/RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md`](docs/RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md)
 
 ---

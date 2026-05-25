@@ -21,6 +21,8 @@ CURRENT_DIRECTION.md is the narrative direction note.
 UPCOMING_WORK.md is the queue and priority note.
 ```
 
+The project-level handbook in `docs/latticra-system-substrate/` should be kept current as these notes evolve. When a slice changes the durable project story, architecture, evidence posture, public wording, or non-claim boundary, reflect that change in the handbook path as part of the same working rhythm.
+
 Both notes should remain:
 
 ```text
