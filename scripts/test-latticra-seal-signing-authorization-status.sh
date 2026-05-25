@@ -25,6 +25,7 @@ require_file docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md
 require_file docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md
 require_file docs/LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md
 require_file docs/LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md
+require_file docs/status/SEAL_SIGNER_HANDOFF_STATUS.md
 require_file include/latticra/seal_signing_authorization.h
 require_file include/latticra/seal_signer_handoff.h
 require_file src/seal_signing_authorization.c
@@ -35,6 +36,7 @@ require_file scripts/test-latticra-seal-signing-authorization-contract.sh
 require_file scripts/test-latticra-seal-signing-authorization.sh
 require_file scripts/test-latticra-seal-signer-handoff-contract.sh
 require_file scripts/test-latticra-seal-signer-handoff.sh
+require_file scripts/test-latticra-seal-signer-handoff-status.sh
 require_file docs/LATTICRA_SEAL_SIGNATURE_REQUEST_CONTRACT.md
 require_file docs/LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md
 require_file docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md
@@ -62,6 +64,7 @@ require_contains 'seal_signer_handoff_source_present=1' "$status_file"
 require_contains 'seal_signer_handoff_invariant_test_present=1' "$status_file"
 require_contains 'seal_signer_handoff_runner_present=1' "$status_file"
 require_contains 'seal_signer_handoff_metadata_present=1' "$status_file"
+require_contains 'seal_signer_handoff_status_present=1' "$status_file"
 require_contains 'seal_signature_request_contract_present=1' "$status_file"
 require_contains 'seal_signature_request_implementation_present=1' "$status_file"
 require_contains 'seal_signature_request_status_present=1' "$status_file"
@@ -85,7 +88,7 @@ require_contains 'host_write_performed=0' "$status_file"
 require_contains 'network_performed=0' "$status_file"
 require_contains 'mode=metadata-only' "$status_file"
 require_contains 'status=signing-authorization-metadata' "$status_file"
-require_contains 'signer handoff status/public-entry alignment' "$status_file"
+require_contains 'signer invocation contract planning' "$status_file"
 
 require_contains 'SEAL_SIGNING_AUTHORIZATION_STATUS.md' README.md
 require_contains 'latticra_seal_signing_authorization_status_present=1' README.md
@@ -100,21 +103,27 @@ require_contains 'Seal signing authorization status/public-entry alignment' STAT
 require_contains 'seal_signing_authorization_status_present=1' STATUS.md
 require_contains 'Seal signer handoff contract' STATUS.md
 require_contains 'Seal signer handoff metadata implementation' STATUS.md
+require_contains 'Seal signer handoff status/public-entry alignment' STATUS.md
 require_contains 'seal_signer_handoff_contract_present=1' STATUS.md
 require_contains 'seal_signer_handoff_metadata_present=1' STATUS.md
+require_contains 'seal_signer_handoff_status_present=1' STATUS.md
 require_contains 'SEAL_SIGNING_AUTHORIZATION_STATUS.md' docs/status/README.md
 require_contains 'seal_signing_authorization_status_present=1' docs/status/README.md
 require_contains 'seal_signer_handoff_contract_present=1' docs/status/README.md
 require_contains 'seal_signer_handoff_metadata_present=1' docs/status/README.md
+require_contains 'seal_signer_handoff_status_present=1' docs/status/README.md
 require_contains 'Latticra Seal signing authorization status/public-entry alignment' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal signer handoff contract' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal signer handoff metadata implementation' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal signer handoff status/public-entry alignment' docs/status/CURRENT_STATUS.md
 require_contains 'SEAL_SIGNING_AUTHORIZATION_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
+require_contains 'SEAL_SIGNER_HANDOFF_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal signing authorization status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal signer handoff contract' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal signer handoff metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Signer handoff status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Latticra Seal signer handoff status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Signer invocation contract planning' docs/project_notes/UPCOMING_WORK.md
 
 printf 'seal signing authorization status: ok\n'
