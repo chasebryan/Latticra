@@ -46,9 +46,22 @@ lir
 internal
 ```
 
-It copies lowering error, model error, optional LIR error, model counts, first transition source index, node and edge counts, no-effect flags, failure flags, no-effect issue flag, and evidence level into a bounded result record.
+It copies lowering error, model error, optional LIR error, model counts, first transition source index, first-clause metadata, node and edge counts, no-effect flags, failure flags, no-effect issue flag, and evidence level into a bounded result record.
 
-The Lat pipeline diagnostic integration can consume this result through `latticra_lat_pipeline_diagnostics_evaluate_with_lowering`, preserving the older pipeline diagnostic evaluator for existing callers.
+The diagnostic result preserves the first lowered clause:
+
+```text
+first_clause_node_index
+first_clause_role
+first_clause_effect
+first_clause_name
+first_clause_operator
+first_clause_value
+```
+
+These fields are copied from lowering metadata only. Operators are not evaluated.
+
+The Lat pipeline diagnostic integration can consume this result through `latticra_lat_pipeline_diagnostics_evaluate_with_lowering`, preserving the older pipeline diagnostic evaluator for existing callers. Pipeline diagnostics copy the first-clause metadata with `lowering_` prefixes so aggregate reports can retain the first lowered clause role, effect, name, operator, value, and node index.
 
 ## Report Format
 
@@ -68,7 +81,7 @@ Run:
 sh scripts/test-lat-to-lir-diagnostic-refinement.sh
 ```
 
-The invariant suite checks stable labels, valid lowering diagnostics, parse failure diagnostics, model failure diagnostics, no-effect issue diagnostics, null lowering handling, deterministic report fields, and small-buffer rejection.
+The invariant suite checks stable labels, valid lowering diagnostics, first-clause diagnostic metadata, parse failure diagnostics, model failure diagnostics, no-effect issue diagnostics, null lowering handling, deterministic report fields, and small-buffer rejection.
 
 ## Non-Claims
 

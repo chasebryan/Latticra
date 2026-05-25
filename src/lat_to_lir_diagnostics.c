@@ -2,6 +2,11 @@
 
 #include <stdio.h>
 
+static void copy_text(char *destination, size_t destination_len, const char *source) {
+    if (destination == 0 || destination_len == 0u) return;
+    (void)snprintf(destination, destination_len, "%s", source == 0 ? "" : source);
+}
+
 static void diagnostic_default(latticra_lat_to_lir_diagnostic_result_t *result) {
     if (result == 0) return;
     result->status = LATTICRA_STATUS_OK;
@@ -12,6 +17,12 @@ static void diagnostic_default(latticra_lat_to_lir_diagnostic_result_t *result) 
     result->model_declaration_count = 0u;
     result->model_clause_count = 0u;
     result->first_transition_source_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_clause_node_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_clause_role = LATTICRA_LAT_MODEL_CLAUSE_UNKNOWN;
+    result->first_clause_effect = LATTICRA_LAT_EFFECT_UNKNOWN;
+    result->first_clause_name[0] = '\0';
+    result->first_clause_operator[0] = '\0';
+    result->first_clause_value[0] = '\0';
     result->node_count = 0u;
     result->edge_count = 0u;
     result->lowering_failed = 0;
@@ -88,6 +99,12 @@ latticra_status_t latticra_lat_to_lir_diagnostics_evaluate(
     result->model_declaration_count = lowering->model_declaration_count;
     result->model_clause_count = lowering->model_clause_count;
     result->first_transition_source_index = lowering->first_transition_source_index;
+    result->first_clause_node_index = lowering->first_clause_node_index;
+    result->first_clause_role = lowering->first_clause_role;
+    result->first_clause_effect = lowering->first_clause_effect;
+    copy_text(result->first_clause_name, sizeof(result->first_clause_name), lowering->first_clause_name);
+    copy_text(result->first_clause_operator, sizeof(result->first_clause_operator), lowering->first_clause_operator);
+    copy_text(result->first_clause_value, sizeof(result->first_clause_value), lowering->first_clause_value);
     result->node_count = lowering->node_count;
     result->edge_count = lowering->edge_count;
     result->lowering_failed = lowering->error != LATTICRA_LAT_TO_LIR_OK;
@@ -134,6 +151,12 @@ latticra_status_t latticra_lat_to_lir_diagnostics_report(
         "model_declaration_count=%zu\n"
         "model_clause_count=%zu\n"
         "first_transition_source_index=%zu\n"
+        "first_clause_node_index=%zu\n"
+        "first_clause_role=%s\n"
+        "first_clause_effect=%s\n"
+        "first_clause_name=%s\n"
+        "first_clause_operator=%s\n"
+        "first_clause_value=%s\n"
         "node_count=%zu\n"
         "edge_count=%zu\n"
         "lowering_failed=%d\n"
@@ -152,6 +175,12 @@ latticra_status_t latticra_lat_to_lir_diagnostics_report(
         result->model_declaration_count,
         result->model_clause_count,
         result->first_transition_source_index,
+        result->first_clause_node_index,
+        latticra_lat_model_clause_role_label(result->first_clause_role),
+        latticra_lat_effect_label(result->first_clause_effect),
+        result->first_clause_name,
+        result->first_clause_operator,
+        result->first_clause_value,
         result->node_count,
         result->edge_count,
         result->lowering_failed,

@@ -40,8 +40,10 @@ scripts/test-latticra-seal-request-freshness-report-surface.sh
 scripts/test-latticra-seal-request-freshness-status.sh
 docs/LATTICRA_SEAL_SIGNED_REQUEST_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNED_REQUEST_IMPLEMENTATION.md
+docs/status/SEAL_SIGNED_REQUEST_STATUS.md
 scripts/test-latticra-seal-signed-request-contract.sh
 scripts/test-latticra-seal-signed-request.sh
+scripts/test-latticra-seal-signed-request-status.sh
 ```
 
 ## Current checkpoint
@@ -69,7 +71,7 @@ readme_links_request_freshness_status=1
 root_status_mentions_request_freshness_status=1
 status_index_links_request_freshness_status=1
 foundation_index_links_request_freshness_status=1
-project_notes_point_to_signed_request_status=1
+project_notes_point_to_policy_decision_status=1
 freshness_profile=latticra-seal-request-freshness/0.1
 request_freshness_supported=0
 request_freshness_validation_supported=0
@@ -177,6 +179,6 @@ It does not add timestamp parsing, trusted clock behavior, nonce storage, replay
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is signed request status/public-entry alignment.
+The next valid Latticra Seal slice is policy decision status/public-entry alignment.
 
-That future slice must preserve the no-effect posture and must not implement signature generation, signature verification, public-key parsing, trust-store loading, private-key handling, key generation, hardware-key use, revocation lookup, network trust lookup, signed request enforcement, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, signing, or authority grants.
+That future slice must preserve the no-effect posture and must not implement real policy evaluation, policy enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signature verification, freshness validation, replay detection, authority grants, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, or shell execution.

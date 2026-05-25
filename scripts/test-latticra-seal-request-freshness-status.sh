@@ -46,8 +46,10 @@ require_file scripts/latticra-seal-request-freshness-report.sh
 require_file scripts/test-latticra-seal-request-freshness-report-surface.sh
 require_file docs/LATTICRA_SEAL_SIGNED_REQUEST_CONTRACT.md
 require_file docs/LATTICRA_SEAL_SIGNED_REQUEST_IMPLEMENTATION.md
+require_file docs/status/SEAL_SIGNED_REQUEST_STATUS.md
 require_file scripts/test-latticra-seal-signed-request-contract.sh
 require_file scripts/test-latticra-seal-signed-request.sh
+require_file scripts/test-latticra-seal-signed-request-status.sh
 
 require_contains 'Status: status record for Latticra Seal request freshness metadata' "$status_file"
 require_contains 'Source: local follow-up slice' "$status_file"
@@ -71,7 +73,7 @@ require_contains 'readme_links_request_freshness_status=1' "$status_file"
 require_contains 'root_status_mentions_request_freshness_status=1' "$status_file"
 require_contains 'status_index_links_request_freshness_status=1' "$status_file"
 require_contains 'foundation_index_links_request_freshness_status=1' "$status_file"
-require_contains 'project_notes_point_to_signed_request_status=1' "$status_file"
+require_contains 'project_notes_point_to_policy_decision_status=1' "$status_file"
 require_contains 'freshness_profile=latticra-seal-request-freshness/0.1' "$status_file"
 require_contains 'request_freshness_supported=0' "$status_file"
 require_contains 'request_freshness_validation_supported=0' "$status_file"
@@ -110,7 +112,7 @@ require_contains 'cryptographic_enforcement_added=0' "$status_file"
 require_contains 'capability_enforcement_added=0' "$status_file"
 require_contains 'production_readiness_claimed=0' "$status_file"
 require_contains 'external_endorsement_claimed=0' "$status_file"
-require_contains 'signed request status/public-entry alignment' "$status_file"
+require_contains 'policy decision status/public-entry alignment' "$status_file"
 
 require_contains 'latticra_seal_request_freshness_contract_present=1' README.md
 require_contains 'latticra_seal_request_freshness_metadata_present=1' README.md
@@ -128,7 +130,7 @@ require_contains 'docs/LATTICRA_SEAL_REQUEST_FRESHNESS_REPORT_SURFACE.md' README
 require_contains 'docs/status/SEAL_REQUEST_FRESHNESS_STATUS.md' README.md
 
 require_contains 'Seal request freshness status/public-entry alignment' STATUS.md
-require_contains 'Seal signed request status/public-entry alignment' STATUS.md
+require_contains 'Seal policy decision status/public-entry alignment' STATUS.md
 require_contains 'seal_request_freshness_status_present=1' STATUS.md
 require_contains 'SEAL_REQUEST_FRESHNESS_STATUS.md' docs/status/README.md
 require_contains 'seal_request_freshness_status_present=1' docs/status/README.md
@@ -136,9 +138,9 @@ require_contains 'Latticra Seal request freshness status/public-entry alignment'
 require_contains 'SEAL_REQUEST_FRESHNESS_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal request freshness status/public-entry alignment' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal request freshness status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal signed request status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Seal policy decision status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal request freshness status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
-require_contains 'Seal signed request status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Seal policy decision status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/status/SEAL_REQUEST_FRESHNESS_STATUS.md' docs/project_notes/README.md
 
 printf 'seal request freshness status: ok\n'

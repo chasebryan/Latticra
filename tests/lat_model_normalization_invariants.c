@@ -141,6 +141,9 @@ static int lat_model_builds_clause_roles_and_owners(void) {
     EXPECT_TRUE(model.clauses[state_clause_index].role == LATTICRA_LAT_MODEL_CLAUSE_FIELD, "state field role");
     EXPECT_TRUE(model.clauses[state_clause_index].owner_declaration_index == state_index, "state field owner");
     EXPECT_STR_EQ(model.clauses[state_clause_index].name, "origin", "state field name");
+    EXPECT_STR_EQ(model.clauses[state_clause_index].operator_text, "=", "state field operator");
+    EXPECT_STR_EQ(model.clauses[state_clause_index].value, "0/0", "state field value");
+    EXPECT_TRUE(model.clauses[state_clause_index].effect == LATTICRA_LAT_EFFECT_UNKNOWN, "state field effect unknown");
     EXPECT_TRUE(model.clauses[policy_clause_index].role == LATTICRA_LAT_MODEL_CLAUSE_REQUIRE, "policy require role");
     EXPECT_TRUE(model.clauses[policy_clause_index + 2u].role == LATTICRA_LAT_MODEL_CLAUSE_ENSURE, "policy ensure role");
     EXPECT_TRUE(model.clauses[transition_effect_index].role == LATTICRA_LAT_MODEL_CLAUSE_EFFECT, "transition effect role");
@@ -210,6 +213,12 @@ static int lat_model_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(one, "LAT MODEL NORMALIZATION REPORT\n") != 0, "model report header");
     EXPECT_TRUE(strstr(one, "error=ok\n") != 0, "model report ok");
     EXPECT_TRUE(strstr(one, "first_transition_source_index=0\n") != 0, "model transition source report");
+    EXPECT_TRUE(strstr(one, "first_clause_index=0\n") != 0, "model first clause index report");
+    EXPECT_TRUE(strstr(one, "first_clause_role=field\n") != 0, "model first clause role report");
+    EXPECT_TRUE(strstr(one, "first_clause_effect=unknown\n") != 0, "model first clause effect report");
+    EXPECT_TRUE(strstr(one, "first_clause_name=origin\n") != 0, "model first clause name report");
+    EXPECT_TRUE(strstr(one, "first_clause_operator==\n") != 0, "model first clause operator report");
+    EXPECT_TRUE(strstr(one, "first_clause_value=0/0\n") != 0, "model first clause value report");
     return 0;
 }
 

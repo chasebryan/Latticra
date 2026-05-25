@@ -103,7 +103,7 @@ require_contains 'cryptographic_enforcement_added=0' "$record"
 require_contains 'capability_enforcement_added=0' "$record"
 require_contains 'production_readiness_claimed=0' "$record"
 require_contains 'external_endorsement_claimed=0' "$record"
-require_contains 'signed request status/public-entry alignment' "$record"
+require_contains 'policy decision status/public-entry alignment' "$record"
 
 require_contains 'latticra_seal_agentic_automation_security_metadata_present=1' README.md
 require_contains 'latticra_seal_agentic_automation_security_status_present=1' README.md
@@ -125,7 +125,7 @@ require_contains 'docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_REPORT_SURFACE_ST
 require_contains 'docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md' README.md
 
 require_contains 'Seal agentic automation security public-entrypoint alignment' STATUS.md
-require_contains 'Seal signed request status/public-entry alignment' STATUS.md
+require_contains 'Seal policy decision status/public-entry alignment' STATUS.md
 require_contains 'seal_agentic_automation_security_public_entrypoint_alignment_present=1' STATUS.md
 require_contains 'SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md' docs/status/README.md
 require_contains 'seal_agentic_automation_security_public_entrypoint_alignment_present=1' docs/status/README.md
@@ -133,9 +133,9 @@ require_contains 'Latticra Seal agentic automation security public-entrypoint al
 require_contains 'SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal agentic automation security public-entrypoint alignment' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal agentic automation security public-entrypoint alignment' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal signed request status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Seal policy decision status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal agentic automation security public-entrypoint alignment' docs/project_notes/UPCOMING_WORK.md
-require_contains 'Seal signed request status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Seal policy decision status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md' docs/project_notes/README.md
 
 printf 'seal agentic automation security public entrypoint alignment: ok\n'

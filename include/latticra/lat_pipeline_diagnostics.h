@@ -38,6 +38,12 @@ typedef struct {
     size_t lowering_model_declaration_count;
     size_t lowering_model_clause_count;
     size_t lowering_first_transition_source_index;
+    size_t lowering_first_clause_node_index;
+    latticra_lat_model_clause_role_t lowering_first_clause_role;
+    latticra_lat_effect_t lowering_first_clause_effect;
+    char lowering_first_clause_name[LATTICRA_LAT_NAME_MAX];
+    char lowering_first_clause_operator[LATTICRA_LAT_NAME_MAX];
+    char lowering_first_clause_value[LATTICRA_LAT_VALUE_MAX];
     int pipeline_failed;
     int semantic_failed;
     int lowering_failed;

@@ -321,10 +321,31 @@ latticra_status_t latticra_lat_model_report(
     size_t buffer_len) {
     int written;
     size_t first_transition_source;
+    size_t first_clause_index;
+    latticra_lat_model_clause_role_t first_clause_role;
+    latticra_lat_effect_t first_clause_effect;
+    const char *first_clause_name;
+    const char *first_clause_operator;
+    const char *first_clause_value;
     if (model == 0 || buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     first_transition_source = model->first_transition_index == LATTICRA_LAT_MODEL_NO_INDEX ?
         LATTICRA_LAT_MODEL_NO_INDEX :
         model->declarations[model->first_transition_index].source_declaration_index;
+    first_clause_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    first_clause_role = LATTICRA_LAT_MODEL_CLAUSE_UNKNOWN;
+    first_clause_effect = LATTICRA_LAT_EFFECT_UNKNOWN;
+    first_clause_name = "";
+    first_clause_operator = "";
+    first_clause_value = "";
+    if (model->error == LATTICRA_LAT_MODEL_OK && model->clause_count > 0u) {
+        const latticra_lat_model_clause_t *clause = &model->clauses[0];
+        first_clause_index = 0u;
+        first_clause_role = clause->role;
+        first_clause_effect = clause->effect;
+        first_clause_name = clause->name;
+        first_clause_operator = clause->operator_text;
+        first_clause_value = clause->value;
+    }
     written = snprintf(
         buffer,
         buffer_len,
@@ -343,6 +364,12 @@ latticra_status_t latticra_lat_model_report(
         "first_policy_index=%zu\n"
         "first_transition_index=%zu\n"
         "first_transition_source_index=%zu\n"
+        "first_clause_index=%zu\n"
+        "first_clause_role=%s\n"
+        "first_clause_effect=%s\n"
+        "first_clause_name=%s\n"
+        "first_clause_operator=%s\n"
+        "first_clause_value=%s\n"
         "first_assertion_index=%zu\n"
         "first_effect_index=%zu\n"
         "no_effect=%d\n"
@@ -371,6 +398,12 @@ latticra_status_t latticra_lat_model_report(
         model->first_policy_index,
         model->first_transition_index,
         first_transition_source,
+        first_clause_index,
+        latticra_lat_model_clause_role_label(first_clause_role),
+        latticra_lat_effect_label(first_clause_effect),
+        first_clause_name,
+        first_clause_operator,
+        first_clause_value,
         model->first_assertion_index,
         model->first_effect_index,
         model->no_effect,

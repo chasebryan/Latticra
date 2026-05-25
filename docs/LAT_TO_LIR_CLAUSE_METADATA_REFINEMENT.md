@@ -75,6 +75,8 @@ sh scripts/test-lat-to-lir-lowering.sh
 
 The focused guard verifies field, requirement, and effect clause operator metadata plus first-clause report fields.
 
+The Lat-to-LIR diagnostic refinement also copies these first-clause fields into its diagnostic result/report so operator metadata remains visible from the diagnostic layer.
+
 ## Boundary
 
 This is metadata-only. It does not execute Lat, interpret requirements, evaluate operators, execute LIR, perform effects, mutate state, perform file I/O, perform network I/O, call runtime behavior, or grant authority.

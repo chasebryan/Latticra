@@ -93,6 +93,12 @@ static int lat_pipeline_diagnostic_integration_reports_valid_pipeline(void) {
     EXPECT_TRUE(diagnostic.lowering_model_declaration_count == 4u, "valid lowering model declaration count");
     EXPECT_TRUE(diagnostic.lowering_model_clause_count == 20u, "valid lowering model clause count");
     EXPECT_TRUE(diagnostic.lowering_first_transition_source_index == 0u, "valid lowering transition source");
+    EXPECT_TRUE(diagnostic.lowering_first_clause_node_index == 5u, "valid lowering first clause node");
+    EXPECT_TRUE(diagnostic.lowering_first_clause_role == LATTICRA_LAT_MODEL_CLAUSE_FIELD, "valid lowering first clause role");
+    EXPECT_TRUE(diagnostic.lowering_first_clause_effect == LATTICRA_LAT_EFFECT_UNKNOWN, "valid lowering first clause effect");
+    EXPECT_STR_EQ(diagnostic.lowering_first_clause_name, "origin", "valid lowering first clause name");
+    EXPECT_STR_EQ(diagnostic.lowering_first_clause_operator, "=", "valid lowering first clause operator");
+    EXPECT_STR_EQ(diagnostic.lowering_first_clause_value, "0/0", "valid lowering first clause value");
     EXPECT_TRUE(diagnostic.pipeline_failed == 0, "valid pipeline not failed");
     EXPECT_TRUE(diagnostic.semantic_failed == 0, "valid semantic not failed");
     EXPECT_TRUE(diagnostic.lowering_failed == 0, "valid lowering not failed");
@@ -106,6 +112,12 @@ static int lat_pipeline_diagnostic_integration_reports_valid_pipeline(void) {
     EXPECT_TRUE(strstr(report, "lowering_class=valid\n") != 0, "valid lowering report class");
     EXPECT_TRUE(strstr(report, "lowering_model_declaration_count=4\n") != 0, "valid lowering count report");
     EXPECT_TRUE(strstr(report, "lowering_first_transition_source_index=0\n") != 0, "valid transition report");
+    EXPECT_TRUE(strstr(report, "lowering_first_clause_node_index=5\n") != 0, "valid first clause node report");
+    EXPECT_TRUE(strstr(report, "lowering_first_clause_role=field\n") != 0, "valid first clause role report");
+    EXPECT_TRUE(strstr(report, "lowering_first_clause_effect=unknown\n") != 0, "valid first clause effect report");
+    EXPECT_TRUE(strstr(report, "lowering_first_clause_name=origin\n") != 0, "valid first clause name report");
+    EXPECT_TRUE(strstr(report, "lowering_first_clause_operator==\n") != 0, "valid first clause operator report");
+    EXPECT_TRUE(strstr(report, "lowering_first_clause_value=0/0\n") != 0, "valid first clause value report");
     EXPECT_TRUE(strstr(report, "evidence_level=2\n") != 0, "valid evidence report");
     return 0;
 }
@@ -187,6 +199,9 @@ static int lat_pipeline_diagnostic_integration_reports_model_failure(void) {
     lowering.error = LATTICRA_LAT_TO_LIR_MODEL_NOT_OK;
     lowering.model_error = LATTICRA_LAT_MODEL_UNSUPPORTED_DECLARATION;
     lowering.first_transition_source_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    lowering.first_clause_node_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    lowering.first_clause_role = LATTICRA_LAT_MODEL_CLAUSE_UNKNOWN;
+    lowering.first_clause_effect = LATTICRA_LAT_EFFECT_UNKNOWN;
     lowering.no_effect = 1;
     module.error = LATTICRA_LIR_UNSUPPORTED_NODE_KIND;
 

@@ -30,6 +30,12 @@ latticra_status_t latticra_lat_pipeline_diagnostics_report(
         "lowering_model_declaration_count=%zu\n"
         "lowering_model_clause_count=%zu\n"
         "lowering_first_transition_source_index=%zu\n"
+        "lowering_first_clause_node_index=%zu\n"
+        "lowering_first_clause_role=%s\n"
+        "lowering_first_clause_effect=%s\n"
+        "lowering_first_clause_name=%s\n"
+        "lowering_first_clause_operator=%s\n"
+        "lowering_first_clause_value=%s\n"
         "pipeline_failed=%d\n"
         "semantic_failed=%d\n"
         "lowering_failed=%d\n"
@@ -53,6 +59,12 @@ latticra_status_t latticra_lat_pipeline_diagnostics_report(
         result->lowering_model_declaration_count,
         result->lowering_model_clause_count,
         result->lowering_first_transition_source_index,
+        result->lowering_first_clause_node_index,
+        latticra_lat_model_clause_role_label(result->lowering_first_clause_role),
+        latticra_lat_effect_label(result->lowering_first_clause_effect),
+        result->lowering_first_clause_name,
+        result->lowering_first_clause_operator,
+        result->lowering_first_clause_value,
         result->pipeline_failed,
         result->semantic_failed,
         result->lowering_failed,

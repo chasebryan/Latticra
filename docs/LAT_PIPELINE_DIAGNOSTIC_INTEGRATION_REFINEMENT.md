@@ -1,6 +1,6 @@
 # Lat Pipeline Diagnostic Integration Refinement
 
-Status: lowering-aware implementation
+Status: lowering-aware implementation with first-clause metadata
 
 This slice adds a companion Lat pipeline diagnostics API that combines pipeline stage/error state with Lat semantic diagnostic class, count, first-diagnostic indices, model-stage classification, and optional Lat-to-LIR lowering diagnostic metadata.
 
@@ -51,10 +51,18 @@ lir_error
 lowering_model_declaration_count
 lowering_model_clause_count
 lowering_first_transition_source_index
+lowering_first_clause_node_index
+lowering_first_clause_role
+lowering_first_clause_effect
+lowering_first_clause_name
+lowering_first_clause_operator
+lowering_first_clause_value
 lowering_failed
 model_failed
 lir_failed
 ```
+
+First-clause metadata is copied from the Lat-to-LIR diagnostic result. It records the first lowered clause node index, normalized clause role, effect label, name, operator text, and value text for report/audit use only.
 
 Validation:
 

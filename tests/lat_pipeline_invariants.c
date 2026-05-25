@@ -103,6 +103,12 @@ static int lat_pipeline_exposes_normalized_model(void) {
     EXPECT_TRUE(pipeline.model_declaration_count == 5u, "pipeline model declaration count");
     EXPECT_TRUE(pipeline.model_clause_count == 23u, "pipeline model clause count");
     EXPECT_TRUE(pipeline.first_transition_source_index == 0u, "pipeline transition source index");
+    EXPECT_TRUE(pipeline.first_clause_node_index == 6u, "pipeline first clause node index");
+    EXPECT_TRUE(pipeline.first_clause_role == LATTICRA_LAT_MODEL_CLAUSE_FIELD, "pipeline first clause role");
+    EXPECT_TRUE(pipeline.first_clause_effect == LATTICRA_LAT_EFFECT_UNKNOWN, "pipeline first clause effect");
+    EXPECT_STR_EQ(pipeline.first_clause_name, "origin", "pipeline first clause name");
+    EXPECT_STR_EQ(pipeline.first_clause_operator, "=", "pipeline first clause operator");
+    EXPECT_STR_EQ(pipeline.first_clause_value, "0/0", "pipeline first clause value");
     return 0;
 }
 
@@ -192,6 +198,12 @@ static int lat_pipeline_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(one, "error=ok\n") != 0, "report ok");
     EXPECT_TRUE(strstr(one, "model_error=ok\n") != 0, "model ok in report");
     EXPECT_TRUE(strstr(one, "model_declaration_count=5\n") != 0, "model count in report");
+    EXPECT_TRUE(strstr(one, "first_clause_node_index=6\n") != 0, "first clause node in report");
+    EXPECT_TRUE(strstr(one, "first_clause_role=field\n") != 0, "first clause role in report");
+    EXPECT_TRUE(strstr(one, "first_clause_effect=unknown\n") != 0, "first clause effect in report");
+    EXPECT_TRUE(strstr(one, "first_clause_name=origin\n") != 0, "first clause name in report");
+    EXPECT_TRUE(strstr(one, "first_clause_operator==\n") != 0, "first clause operator in report");
+    EXPECT_TRUE(strstr(one, "first_clause_value=0/0\n") != 0, "first clause value in report");
     EXPECT_TRUE(strstr(one, "lowering_error=ok\n") != 0, "lowering ok in report");
     return 0;
 }

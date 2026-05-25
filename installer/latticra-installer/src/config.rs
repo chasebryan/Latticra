@@ -433,7 +433,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=22-tokenizer-artifact-verification-contract");
+    let _ = writeln!(out, "stage=23-tokenizer-artifact-binding-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -1047,6 +1047,57 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "requires_tokenizer_artifact_measurement_contract=1");
     let _ = writeln!(out, "requires_future_tokenizer_artifact_binding_contract=1");
     let _ = writeln!(out, "tokenizer_artifact_verification_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_binding_contract_stage=23-tokenizer-artifact-binding-contract"
+    );
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_binding_contract_command=scripts/nadia-tokenizer-artifact-binding-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_tokenizer_artifact_binding_contract_command=latticra-nadia tokenizer-artifact-binding"
+    );
+    let _ = writeln!(out, "tokenizer_artifact_binding_stage=contract-only");
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_binding_contract_status=contract_only"
+    );
+    let _ = writeln!(out, "tokenizer_artifact_binding_authority=0");
+    let _ = writeln!(out, "tokenizer_artifact_binding_allowed=0");
+    let _ = writeln!(out, "tokenizer_artifact_binding_performed=0");
+    let _ = writeln!(out, "tokenizer_artifact_binding_metadata_present=1");
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_binding_family=operator-reviewed-tokenizer-artifact-binding"
+    );
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_binding_format=contract-only-offline-binding"
+    );
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_binding_decision=blocked_contract_only"
+    );
+    let _ = writeln!(out, "tokenizer_artifact_binding_plan_recorded=1");
+    let _ = writeln!(out, "tokenizer_artifact_binding_result_recorded=0");
+    let _ = writeln!(out, "tokenizer_artifact_binding_record_created=0");
+    let _ = writeln!(out, "tokenizer_artifact_binding_hash_computed=0");
+    let _ = writeln!(out, "tokenizer_artifact_binding_bound=0");
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_binding_runtime_attachment_performed=0"
+    );
+    let _ = writeln!(out, "tokenizer_artifact_bound_to_manifest=0");
+    let _ = writeln!(out, "tokenizer_artifact_bound_to_tokenizer=0");
+    let _ = writeln!(out, "tokenizer_attached_to_runtime=0");
+    let _ = writeln!(out, "requires_tokenizer_artifact_verification_contract=1");
+    let _ = writeln!(
+        out,
+        "requires_future_tokenizer_runtime_attachment_contract=1"
+    );
+    let _ = writeln!(out, "tokenizer_artifact_binding_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

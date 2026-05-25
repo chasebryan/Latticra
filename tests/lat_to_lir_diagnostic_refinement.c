@@ -93,6 +93,12 @@ static int lat_to_lir_diagnostic_reports_valid_lowering(void) {
     EXPECT_TRUE(diagnostic.model_declaration_count == 4u, "valid declaration count");
     EXPECT_TRUE(diagnostic.model_clause_count == 20u, "valid clause count");
     EXPECT_TRUE(diagnostic.first_transition_source_index == 0u, "valid transition source index");
+    EXPECT_TRUE(diagnostic.first_clause_node_index == 5u, "valid first clause node index");
+    EXPECT_TRUE(diagnostic.first_clause_role == LATTICRA_LAT_MODEL_CLAUSE_FIELD, "valid first clause role");
+    EXPECT_TRUE(diagnostic.first_clause_effect == LATTICRA_LAT_EFFECT_UNKNOWN, "valid first clause effect");
+    EXPECT_STR_EQ(diagnostic.first_clause_name, "origin", "valid first clause name");
+    EXPECT_STR_EQ(diagnostic.first_clause_operator, "=", "valid first clause operator");
+    EXPECT_STR_EQ(diagnostic.first_clause_value, "0/0", "valid first clause value");
     EXPECT_TRUE(diagnostic.evidence_level == 2u, "valid evidence level");
 
     EXPECT_TRUE(latticra_lat_to_lir_diagnostics_report(&diagnostic, report, sizeof(report)) == LATTICRA_STATUS_OK, "valid diagnostic report");
@@ -100,6 +106,12 @@ static int lat_to_lir_diagnostic_reports_valid_lowering(void) {
     EXPECT_TRUE(strstr(report, "diagnostic_class=valid\n") != 0, "report class");
     EXPECT_TRUE(strstr(report, "model_declaration_count=4\n") != 0, "report model count");
     EXPECT_TRUE(strstr(report, "first_transition_source_index=0\n") != 0, "report transition source");
+    EXPECT_TRUE(strstr(report, "first_clause_node_index=5\n") != 0, "report first clause node");
+    EXPECT_TRUE(strstr(report, "first_clause_role=field\n") != 0, "report first clause role");
+    EXPECT_TRUE(strstr(report, "first_clause_effect=unknown\n") != 0, "report first clause effect");
+    EXPECT_TRUE(strstr(report, "first_clause_name=origin\n") != 0, "report first clause name");
+    EXPECT_TRUE(strstr(report, "first_clause_operator==\n") != 0, "report first clause operator");
+    EXPECT_TRUE(strstr(report, "first_clause_value=0/0\n") != 0, "report first clause value");
     EXPECT_TRUE(strstr(report, "evidence_level=2\n") != 0, "report evidence");
     return 0;
 }

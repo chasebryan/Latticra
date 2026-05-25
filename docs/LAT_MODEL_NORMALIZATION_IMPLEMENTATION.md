@@ -1,6 +1,6 @@
 # Lat Model Normalization Implementation
 
-Status: initial no-effect implementation
+Status: no-effect implementation with first-clause report metadata
 
 Scope: bounded Lat / Latticra Language model normalization after grammar parsing and semantic validation, before LIR lowering, execution, runtime behavior, or operating-system behavior.
 
@@ -88,6 +88,12 @@ first_state_index
 first_policy_index
 first_transition_index
 first_transition_source_index
+first_clause_index
+first_clause_role
+first_clause_effect
+first_clause_name
+first_clause_operator
+first_clause_value
 first_assertion_index
 first_effect_index
 no_effect
@@ -98,6 +104,8 @@ recovery_allowed
 hardware_allowed
 source span fields
 ```
+
+The first-clause fields are copied from the normalized clause table for audit visibility only. Operators are not evaluated.
 
 Small output buffers return `LATTICRA_STATUS_BUFFER_TOO_SMALL` and clear the output buffer when possible.
 

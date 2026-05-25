@@ -112,7 +112,7 @@ require_contains 'seal status rollup invariants: ok' "$status_file"
 require_contains 'seal status rollup status: ok' "$status_file"
 require_contains 'seal runtime handoff status: ok' "$status_file"
 require_contains 'seal agentic automation security status: ok' "$status_file"
-require_contains 'signed request status/public-entry alignment' "$status_file"
+require_contains 'policy decision status/public-entry alignment' "$status_file"
 
 require_contains 'SEAL_STATUS_ROLLUP_STATUS.md' README.md
 require_contains 'LATTICRA_SEAL_STATUS_ROLLUP_CONTRACT.md' README.md
@@ -131,9 +131,9 @@ require_contains 'Latticra Seal status rollup status/public-entry alignment' doc
 require_contains 'SEAL_STATUS_ROLLUP_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_STATUS_ROLLUP_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal status rollup status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal signed request status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Seal policy decision status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal status rollup status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
-require_contains 'Seal signed request status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Seal policy decision status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/status/SEAL_STATUS_ROLLUP_STATUS.md' docs/project_notes/README.md
 
 printf 'seal status rollup status: ok\n'

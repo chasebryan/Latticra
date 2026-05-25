@@ -26,10 +26,11 @@ require_file tests/lat_pipeline_report_refinement.c
 require_file scripts/test-lat-pipeline.sh
 require_file .github/workflows/lat-pipeline-report-refinement.yml
 
-require_contains 'Status: initial Lat pipeline report refinement implementation' docs/LAT_PIPELINE_REPORT_REFINEMENT.md
+require_contains 'Status: Lat pipeline report refinement implementation with first-clause metadata' docs/LAT_PIPELINE_REPORT_REFINEMENT.md
 require_contains 'last_completed_stage' docs/LAT_PIPELINE_REPORT_REFINEMENT.md
 require_contains 'failed_stage' docs/LAT_PIPELINE_REPORT_REFINEMENT.md
 require_contains 'model_ok' docs/LAT_PIPELINE_REPORT_REFINEMENT.md
+require_contains 'first_clause_node_index' docs/LAT_PIPELINE_REPORT_REFINEMENT.md
 require_contains 'no_effect_chain_ok' docs/LAT_PIPELINE_REPORT_REFINEMENT.md
 require_contains 'evidence_level' docs/LAT_PIPELINE_REPORT_REFINEMENT.md
 require_contains 'does not provide' docs/LAT_PIPELINE_REPORT_REFINEMENT.md
@@ -41,6 +42,8 @@ require_contains 'LATTICRA_LAT_PIPELINE_STAGE_REPORT' include/latticra/lat_pipel
 require_contains 'last_completed_stage' include/latticra/lat_pipeline.h
 require_contains 'failed_stage' include/latticra/lat_pipeline.h
 require_contains 'model_ok' include/latticra/lat_pipeline.h
+require_contains 'first_clause_node_index' include/latticra/lat_pipeline.h
+require_contains 'first_clause_value' include/latticra/lat_pipeline.h
 require_contains 'no_effect_chain_ok' include/latticra/lat_pipeline.h
 require_contains 'evidence_level' include/latticra/lat_pipeline.h
 require_contains 'latticra_lat_pipeline_stage_label' include/latticra/lat_pipeline.h
@@ -50,6 +53,7 @@ require_contains 'finalize_pipeline_report_refinement' src/lat_pipeline.c
 require_contains 'last_completed_stage=' src/lat_pipeline.c
 require_contains 'failed_stage=' src/lat_pipeline.c
 require_contains 'model_ok=' src/lat_pipeline.c
+require_contains 'first_clause_operator=' src/lat_pipeline.c
 require_contains 'no_effect_chain_ok=' src/lat_pipeline.c
 require_contains 'evidence_level=' src/lat_pipeline.c
 

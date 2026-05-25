@@ -165,7 +165,7 @@ LAT TO LIR LOWERING REPORT
 
 The report records status, lowering error label, model error label, module name, declaration counts, model counts, clause counts, first transition source index, node count, edge count, no-effect flags, and source-span fields.
 
-The companion diagnostic refinement can classify those lowering records as valid, parse, semantic, model, effect-check, capacity, LIR, or internal without changing lowering behavior.
+The companion diagnostic refinement can classify those lowering records as valid, parse, semantic, model, effect-check, capacity, LIR, or internal without changing lowering behavior. It also copies first-clause metadata from the lowering result for diagnostic report visibility.
 
 The clause metadata refinement also reports first-clause node index, role, effect label, name, operator, and value so callers can confirm that lowered clause operators remain inspectable.
 

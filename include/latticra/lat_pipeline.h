@@ -50,6 +50,12 @@ typedef struct {
     size_t model_declaration_count;
     size_t model_clause_count;
     size_t first_transition_source_index;
+    size_t first_clause_node_index;
+    latticra_lat_model_clause_role_t first_clause_role;
+    latticra_lat_effect_t first_clause_effect;
+    char first_clause_name[LATTICRA_LAT_NAME_MAX];
+    char first_clause_operator[LATTICRA_LAT_NAME_MAX];
+    char first_clause_value[LATTICRA_LAT_VALUE_MAX];
     size_t node_count;
     size_t edge_count;
     latticra_lat_pipeline_stage_t last_completed_stage;

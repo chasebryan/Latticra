@@ -46,6 +46,6 @@ require_contains 'mcp_alignment_declared=1' "$status_file"
 require_contains 'mode=report-only' "$status_file"
 require_contains 'decision=report-only' "$status_file"
 require_contains 'status=agentic-automation-security-metadata' "$status_file"
-require_contains 'signed request status/public-entry alignment' "$status_file"
+require_contains 'policy decision status/public-entry alignment' "$status_file"
 
 printf 'seal agentic automation security status: ok\n'

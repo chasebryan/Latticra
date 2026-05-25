@@ -24,6 +24,54 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Lat model report clause metadata integration
+```
+
+Purpose completed:
+
+```text
+copy first normalized clause index, role, effect, name, operator, and value from the normalized Lat model table into deterministic Lat model normalization reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
+Lat pipeline report clause metadata integration
+```
+
+Purpose completed:
+
+```text
+copy first lowered clause node index, role, effect, name, operator, and value from Lat-to-LIR lowering results into deterministic Lat pipeline reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Earlier implementation slice
+
+```text
+Lat pipeline diagnostic clause metadata integration
+```
+
+Purpose completed:
+
+```text
+copy first lowered clause node index, role, effect, name, operator, and value from Lat-to-LIR diagnostics into deterministic Lat pipeline diagnostic reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Earlier implementation slice
+
+```text
+Lat-to-LIR diagnostic clause metadata integration
+```
+
+Purpose completed:
+
+```text
+copy first lowered clause node index, role, effect, name, operator, and value from Lat-to-LIR lowering results into deterministic Lat-to-LIR diagnostic reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Earlier implementation slice
+
+```text
 Lat-to-LIR clause metadata refinement
 ```
 
@@ -33,7 +81,7 @@ Purpose completed:
 preserve Lat clause operators in LIR node metadata, expose first lowered clause role, effect, name, operator, value, and node index in deterministic Lat-to-LIR reports, add focused and aggregate guards, and preserve no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat pipeline lowering diagnostic integration
@@ -45,7 +93,7 @@ Purpose completed:
 extend the Lat pipeline diagnostic evaluator with optional Lat-to-LIR lowering diagnostics, copy lowering class, lowering error, model error, LIR error, model counts, transition source metadata, and failure flags into deterministic pipeline diagnostic reports, keep the older evaluator compatible, and preserve no Lat execution, no LIR execution, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Earlier implementation slice
+## Older implementation slice
 
 ```text
 Lat-to-LIR diagnostic refinement
@@ -108,6 +156,30 @@ implement bounded key parsing metadata for caller-provided Ed25519 public-key by
 ## Latest completed status/public-entry slice
 
 ```text
+Latticra Seal policy decision status/public-entry alignment
+```
+
+Purpose completed:
+
+```text
+publish and guard the existing report-only Seal policy decision metadata and deterministic report surface from README/status/foundation entry points while preserving no real policy evaluation, no policy enforcement, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signature verification, no freshness validation, no replay detection, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority
+```
+
+## Previous status/public-entry slice
+
+```text
+Latticra Seal signed request status/public-entry alignment
+```
+
+Purpose completed:
+
+```text
+publish and guard the existing report-only Seal signed request metadata from README/status/foundation entry points while preserving no signature generation, no signature verification, no public-key parsing, no trust-store loading, no private-key handling, no key generation, no hardware-key use, no revocation lookup, no network trust lookup, no signed request enforcement, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority
+```
+
+## Earlier status/public-entry slice
+
+```text
 Latticra Seal request freshness status/public-entry alignment
 ```
 
@@ -117,7 +189,7 @@ Purpose completed:
 publish and guard the existing report-only Seal request freshness metadata and report surface from README/status/foundation entry points while preserving no timestamp parsing, no trusted clock behavior, no nonce storage, no replay-cache storage, no context hashing, no parameter hashing, no freshness validation, no replay detection, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority
 ```
 
-## Previous status/public-entry slice
+## Older status/public-entry slice
 
 ```text
 Latticra Seal parameter schema status/public-entry alignment
@@ -129,7 +201,7 @@ Purpose completed:
 publish and guard the existing report-only Seal parameter schema metadata and report surface from README/status/foundation entry points while preserving no schema parsing, no schema validation, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority
 ```
 
-## Earlier status/public-entry slice
+## Older status/public-entry slice
 
 ```text
 Latticra Seal agentic automation security public-entrypoint alignment
@@ -463,24 +535,23 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Seal signed request status/public-entry alignment, with report-only signed request metadata visibility and no signature generation, signature verification, public-key parsing, trust-store loading, private-key handling, key generation, hardware-key use, revocation lookup, network trust lookup, signed request enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority
+Defensive threat model validation refinement, while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, or runtime authority
 ```
 
 Purpose:
 
 ```text
-publish and guard the existing report-only Seal signed request metadata from status/public entry points while preserving no signature generation, no signature verification, no public-key parsing, no trust-store loading, no private-key handling, no key generation, no hardware-key use, no revocation lookup, no network trust lookup, no signed request enforcement, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+refine the defensive threat model validation surface while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Seal signed request status/public-entry alignment.
+1. Defensive threat model validation refinement.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.
 5. C++ authority expansion contract only if new authority behavior is proposed.
 6. Nucleus task execution refinement only after the next language representation review and a separate effect contract.
-7. Defensive threat model validation refinement.
 8. Runtime boundary domain matrix report status audit only if new status drift appears.
 9. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
 10. Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review.

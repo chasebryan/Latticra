@@ -35,6 +35,12 @@ static void pipeline_result_default(latticra_lat_pipeline_result_t *result) {
     result->model_declaration_count = 0u;
     result->model_clause_count = 0u;
     result->first_transition_source_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_clause_node_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_clause_role = LATTICRA_LAT_MODEL_CLAUSE_UNKNOWN;
+    result->first_clause_effect = LATTICRA_LAT_EFFECT_UNKNOWN;
+    result->first_clause_name[0] = '\0';
+    result->first_clause_operator[0] = '\0';
+    result->first_clause_value[0] = '\0';
     result->node_count = 0u;
     result->edge_count = 0u;
     result->last_completed_stage = LATTICRA_LAT_PIPELINE_STAGE_NONE;
@@ -167,6 +173,12 @@ static void summarize_pipeline(
         model_result->declarations[model_result->first_transition_index].source_declaration_index;
     pipeline_result->lowering_error = lowering_result->error;
     pipeline_result->lir_error = module->error;
+    pipeline_result->first_clause_node_index = lowering_result->first_clause_node_index;
+    pipeline_result->first_clause_role = lowering_result->first_clause_role;
+    pipeline_result->first_clause_effect = lowering_result->first_clause_effect;
+    copy_text(pipeline_result->first_clause_name, sizeof(pipeline_result->first_clause_name), lowering_result->first_clause_name);
+    copy_text(pipeline_result->first_clause_operator, sizeof(pipeline_result->first_clause_operator), lowering_result->first_clause_operator);
+    copy_text(pipeline_result->first_clause_value, sizeof(pipeline_result->first_clause_value), lowering_result->first_clause_value);
     pipeline_result->node_count = lowering_result->node_count;
     pipeline_result->edge_count = lowering_result->edge_count;
     pipeline_result->lowering_ok = lowering_result->error == LATTICRA_LAT_TO_LIR_OK;
@@ -388,6 +400,12 @@ latticra_status_t latticra_lat_pipeline_report(
         "model_declaration_count=%zu\n"
         "model_clause_count=%zu\n"
         "first_transition_source_index=%zu\n"
+        "first_clause_node_index=%zu\n"
+        "first_clause_role=%s\n"
+        "first_clause_effect=%s\n"
+        "first_clause_name=%s\n"
+        "first_clause_operator=%s\n"
+        "first_clause_value=%s\n"
         "node_count=%zu\n"
         "edge_count=%zu\n"
         "last_completed_stage=%s\n"
@@ -426,6 +444,12 @@ latticra_status_t latticra_lat_pipeline_report(
         result->model_declaration_count,
         result->model_clause_count,
         result->first_transition_source_index,
+        result->first_clause_node_index,
+        latticra_lat_model_clause_role_label(result->first_clause_role),
+        latticra_lat_effect_label(result->first_clause_effect),
+        result->first_clause_name,
+        result->first_clause_operator,
+        result->first_clause_value,
         result->node_count,
         result->edge_count,
         latticra_lat_pipeline_stage_label(result->last_completed_stage),

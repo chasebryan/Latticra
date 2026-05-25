@@ -154,6 +154,6 @@ It moves the project closer by adding report-only default-deny policy decision m
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is a policy decision report surface or runtime enforcement gate contract.
+The next valid Latticra Seal slice is defensive threat model validation refinement or another small guarded status alignment if drift appears.
 
 That future slice must not implement runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, signature verification, freshness validation, replay detection, policy enforcement, or authority grants unless a specific contract and validation path justify it.

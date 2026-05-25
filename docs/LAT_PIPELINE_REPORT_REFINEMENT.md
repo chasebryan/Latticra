@@ -1,7 +1,7 @@
 # Latticra Lat Pipeline Report Refinement
 
-Status: initial Lat pipeline report refinement implementation
-Scope: deterministic Lat pipeline stage-summary metadata, report fields, invariant tests, guard coverage, and workflow wiring.
+Status: Lat pipeline report refinement implementation with first-clause metadata
+Scope: deterministic Lat pipeline stage-summary metadata, first-clause report fields, invariant tests, guard coverage, and workflow wiring.
 
 ## Purpose
 
@@ -25,9 +25,15 @@ lowering_ok
 lir_ok
 no_effect_chain_ok
 evidence_level
+first_clause_node_index
+first_clause_role
+first_clause_effect
+first_clause_name
+first_clause_operator
+first_clause_value
 ```
 
-The deterministic `LAT PIPELINE REPORT` now emits these fields as labels and integers.
+The deterministic `LAT PIPELINE REPORT` now emits these fields as labels and integers. First-clause metadata is copied from the Lat-to-LIR lowering result for audit visibility only.
 
 ## Stage labels
 
@@ -71,6 +77,12 @@ lowering_ok=1
 lir_ok=1
 no_effect_chain_ok=1
 evidence_level=2
+first_clause_node_index=<first lowered clause node index>
+first_clause_role=<first lowered clause role>
+first_clause_effect=<first lowered clause effect>
+first_clause_name=<first lowered clause name>
+first_clause_operator=<first lowered clause operator text>
+first_clause_value=<first lowered clause value text>
 ```
 
 ## Failure report path

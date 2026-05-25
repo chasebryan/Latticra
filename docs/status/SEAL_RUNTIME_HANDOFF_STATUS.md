@@ -132,6 +132,6 @@ It does not add runtime execution, runtime authority, effect execution, capabili
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is signed request status/public-entry alignment.
+The next valid Latticra Seal slice is policy decision status/public-entry alignment.
 
-That future slice must not add signature generation, signature verification, public-key parsing, trust-store loading, private-key handling, key generation, hardware-key use, revocation lookup, network trust lookup, signed request enforcement, timestamp parsing, trusted clock behavior, nonce storage, replay-cache storage, context hashing, parameter hashing, freshness validation, replay detection, schema parsing, schema validation, runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, key material loading, trust-store behavior, signer invocation behavior, host behavior, network behavior, object sealing, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or kernel behavior unless separately implemented and guarded.
+That future slice must preserve the no-effect posture and must not implement real policy evaluation, policy enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signature verification, freshness validation, replay detection, authority grants, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, or shell execution.

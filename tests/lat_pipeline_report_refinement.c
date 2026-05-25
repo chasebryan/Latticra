@@ -97,6 +97,12 @@ static int lat_pipeline_report_refinement_reports_success_stage_summary(void) {
     EXPECT_TRUE(pipeline.model_ok == 1, "model ok flag");
     EXPECT_TRUE(pipeline.lowering_ok == 1, "lowering ok flag");
     EXPECT_TRUE(pipeline.lir_ok == 1, "lir ok flag");
+    EXPECT_TRUE(pipeline.first_clause_node_index == 6u, "first clause node index");
+    EXPECT_TRUE(pipeline.first_clause_role == LATTICRA_LAT_MODEL_CLAUSE_FIELD, "first clause role");
+    EXPECT_TRUE(pipeline.first_clause_effect == LATTICRA_LAT_EFFECT_UNKNOWN, "first clause effect");
+    EXPECT_STR_EQ(pipeline.first_clause_name, "origin", "first clause name");
+    EXPECT_STR_EQ(pipeline.first_clause_operator, "=", "first clause operator");
+    EXPECT_STR_EQ(pipeline.first_clause_value, "0/0", "first clause value");
     EXPECT_TRUE(pipeline.no_effect_chain_ok == 1, "no-effect chain ok");
     EXPECT_TRUE(pipeline.evidence_level == 2u, "success evidence level two");
 
@@ -108,6 +114,12 @@ static int lat_pipeline_report_refinement_reports_success_stage_summary(void) {
     EXPECT_TRUE(strstr(report, "model_ok=1\n") != 0, "model ok report field");
     EXPECT_TRUE(strstr(report, "model_error=ok\n") != 0, "model error report field");
     EXPECT_TRUE(strstr(report, "first_transition_source_index=0\n") != 0, "transition source report field");
+    EXPECT_TRUE(strstr(report, "first_clause_node_index=6\n") != 0, "first clause node report field");
+    EXPECT_TRUE(strstr(report, "first_clause_role=field\n") != 0, "first clause role report field");
+    EXPECT_TRUE(strstr(report, "first_clause_effect=unknown\n") != 0, "first clause effect report field");
+    EXPECT_TRUE(strstr(report, "first_clause_name=origin\n") != 0, "first clause name report field");
+    EXPECT_TRUE(strstr(report, "first_clause_operator==\n") != 0, "first clause operator report field");
+    EXPECT_TRUE(strstr(report, "first_clause_value=0/0\n") != 0, "first clause value report field");
     EXPECT_TRUE(strstr(report, "lowering_ok=1\n") != 0, "lowering ok report field");
     EXPECT_TRUE(strstr(report, "lir_ok=1\n") != 0, "lir ok report field");
     EXPECT_TRUE(strstr(report, "no_effect_chain_ok=1\n") != 0, "no-effect chain report field");

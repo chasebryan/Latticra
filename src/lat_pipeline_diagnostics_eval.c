@@ -1,6 +1,12 @@
 #include "latticra/lat_pipeline_diagnostics.h"
 
+#include <stdio.h>
 #include <string.h>
+
+static void copy_text(char *destination, size_t destination_len, const char *source) {
+    if (destination == 0 || destination_len == 0u) return;
+    (void)snprintf(destination, destination_len, "%s", source == 0 ? "" : source);
+}
 
 static void diagnostic_default(latticra_lat_pipeline_diagnostic_result_t *result) {
     if (result == 0) return;
@@ -16,6 +22,9 @@ static void diagnostic_default(latticra_lat_pipeline_diagnostic_result_t *result
     result->model_error = LATTICRA_LAT_MODEL_OK;
     result->lir_error = LATTICRA_LIR_OK;
     result->lowering_first_transition_source_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->lowering_first_clause_node_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->lowering_first_clause_role = LATTICRA_LAT_MODEL_CLAUSE_UNKNOWN;
+    result->lowering_first_clause_effect = LATTICRA_LAT_EFFECT_UNKNOWN;
     result->evidence_level = 0u;
 }
 
@@ -122,6 +131,12 @@ latticra_status_t latticra_lat_pipeline_diagnostics_evaluate_with_lowering(
         result->lowering_model_declaration_count = lowering_diagnostic.model_declaration_count;
         result->lowering_model_clause_count = lowering_diagnostic.model_clause_count;
         result->lowering_first_transition_source_index = lowering_diagnostic.first_transition_source_index;
+        result->lowering_first_clause_node_index = lowering_diagnostic.first_clause_node_index;
+        result->lowering_first_clause_role = lowering_diagnostic.first_clause_role;
+        result->lowering_first_clause_effect = lowering_diagnostic.first_clause_effect;
+        copy_text(result->lowering_first_clause_name, sizeof(result->lowering_first_clause_name), lowering_diagnostic.first_clause_name);
+        copy_text(result->lowering_first_clause_operator, sizeof(result->lowering_first_clause_operator), lowering_diagnostic.first_clause_operator);
+        copy_text(result->lowering_first_clause_value, sizeof(result->lowering_first_clause_value), lowering_diagnostic.first_clause_value);
         result->lowering_failed = lowering_diagnostic.lowering_failed;
         result->model_failed = lowering_diagnostic.model_failed;
         result->lir_failed = lowering_diagnostic.lir_failed;

@@ -135,6 +135,6 @@ It does not add MCP protocol behavior, MCP server behavior, MCP client behavior,
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is signed request status/public-entry alignment.
+The next valid Latticra Seal slice is policy decision status/public-entry alignment.
 
-That future slice must not implement signature generation, signature verification, public-key parsing, trust-store loading, private-key handling, key generation, hardware-key use, revocation lookup, network trust lookup, signed request enforcement, timestamp parsing, trusted clock behavior, nonce storage, replay-cache storage, context hashing, parameter hashing, freshness validation, replay detection, schema parsing, schema validation, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, or authority grants.
+That future slice must preserve the no-effect posture and must not implement real policy evaluation, policy enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signature verification, freshness validation, replay detection, authority grants, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, or shell execution.
