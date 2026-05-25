@@ -158,6 +158,6 @@ seal signer handoff invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is signer invocation metadata implementation or a narrow status-index alignment follow-up.
+The next valid Latticra Seal planning slice is signer invocation status/public-entry alignment or a narrow status-index alignment follow-up.
 
-That future slice must not add private-key handling, signing, verification, signer invocation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately contracted, implemented, and guarded.
+The signer invocation metadata implementation now exists as a guarded metadata-only classifier. The future status/public-entry slice must not add private-key handling, signing, verification, signer invocation behavior, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately contracted, implemented, and guarded.

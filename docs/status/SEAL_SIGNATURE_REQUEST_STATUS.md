@@ -22,15 +22,19 @@ docs/LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md
 docs/status/SEAL_SIGNER_HANDOFF_STATUS.md
 docs/LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md
+docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
 include/latticra/seal_signature_request.h
 include/latticra/seal_signing_authorization.h
 include/latticra/seal_signer_handoff.h
+include/latticra/seal_signer_invocation.h
 src/seal_signature_request.c
 src/seal_signing_authorization.c
 src/seal_signer_handoff.c
+src/seal_signer_invocation.c
 tests/seal_signature_request_invariants.c
 tests/seal_signing_authorization_invariants.c
 tests/seal_signer_handoff_invariants.c
+tests/seal_signer_invocation_invariants.c
 scripts/test-latticra-seal-signature-request-contract.sh
 scripts/test-latticra-seal-signature-request.sh
 scripts/test-latticra-seal-signing-authorization-contract.sh
@@ -40,6 +44,7 @@ scripts/test-latticra-seal-signer-handoff-contract.sh
 scripts/test-latticra-seal-signer-handoff.sh
 scripts/test-latticra-seal-signer-handoff-status.sh
 scripts/test-latticra-seal-signer-invocation-contract.sh
+scripts/test-latticra-seal-signer-invocation.sh
 docs/LATTICRA_SEAL_REPORT_ENVELOPE_IMPLEMENTATION.md
 scripts/test-latticra-seal-report-envelope.sh
 ```
@@ -71,6 +76,8 @@ seal_signer_handoff_runner_present=1
 seal_signer_handoff_metadata_present=1
 seal_signer_handoff_status_present=1
 seal_signer_invocation_contract_present=1
+seal_signer_invocation_implementation_present=1
+seal_signer_invocation_metadata_present=1
 seal_report_envelope_implementation_present=1
 seal_report_envelope_runner_present=1
 signature_request_profile=latticra-seal-signature-request/0.1
@@ -104,6 +111,7 @@ sh scripts/test-latticra-seal-signer-handoff-contract.sh
 sh scripts/test-latticra-seal-signer-handoff.sh
 sh scripts/test-latticra-seal-signer-handoff-status.sh
 sh scripts/test-latticra-seal-signer-invocation-contract.sh
+sh scripts/test-latticra-seal-signer-invocation.sh
 ```
 
 The predecessor report-envelope implementation remains covered by:
@@ -124,6 +132,7 @@ seal signer handoff contract: ok
 seal signer handoff invariants: ok
 seal signer handoff status: ok
 seal signer invocation contract: ok
+seal signer invocation invariants: ok
 seal report envelope invariants: ok
 ```
 
@@ -135,6 +144,6 @@ It does not add signing, verification, private-key handling, key generation, tru
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is signer invocation metadata implementation or a narrow status-index alignment follow-up.
+The next valid Latticra Seal slice is signer invocation status/public-entry alignment or a narrow status-index alignment follow-up.
 
 That future slice must not add signing, verification, private-key handling, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

@@ -151,6 +151,6 @@ seal signature request invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is signer invocation metadata implementation or a narrow status-index alignment follow-up.
+The next valid Latticra Seal slice is signer invocation status/public-entry alignment or a narrow status-index alignment follow-up.
 
 That future slice must not add private-key handling, signing, verification, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately contracted, implemented, and guarded.
