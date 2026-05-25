@@ -2,6 +2,7 @@
 
 Status: active project note
 Last updated: 2026-05-25 CDT
+Latest completion estimate review after runtime-boundary abuse-case fixtures note: 2026-05-25 CDT
 Latest runtime boundary abuse-case fixture expansion note: 2026-05-25 CDT
 Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
@@ -27,6 +28,18 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Lat pipeline diagnostic declaration metadata integration
+```
+
+Purpose completed:
+
+```text
+copy first lowered declaration node index, kind, name, source name, parse index, first-clause index, clause count, and source declaration index from Lat-to-LIR diagnostics into deterministic Lat pipeline diagnostic reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
 Lat-to-LIR diagnostic declaration metadata integration
 ```
 
@@ -36,7 +49,7 @@ Purpose completed:
 copy first lowered declaration node index, kind, name, source name, parse index, first-clause index, clause count, and source declaration index from Lat-to-LIR lowering results into deterministic Lat-to-LIR diagnostic reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat-to-LIR declaration metadata refinement
@@ -609,6 +622,12 @@ L-UI rendering implementation
 
 ## Recommended next slice
 
+Latest completed review slice:
+
+```text
+Completion estimate review after runtime-boundary abuse-case fixtures
+```
+
 Latest completed fixture/evidence slice:
 
 ```text
@@ -637,25 +656,26 @@ completion_estimate_review_required=0
 Recommended next slice:
 
 ```text
-Completion estimate review only if capability posture changes; otherwise continue small guarded report/status alignment only when drift appears
+Continue small guarded report/status alignment only when drift appears
 ```
+
+Completion estimate review only if capability posture changes remains the estimate rule after this non-change review.
 
 Purpose:
 
 ```text
-avoid percentage or readiness churn unless capability posture, public readiness, or evidence level changes; otherwise continue small guarded report/status alignment only when drift appears while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, and no runtime authority
+continue small guarded report/status alignment only when drift appears while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, and no runtime authority
 ```
 
 ## Near-term queue
 
-1. Completion estimate review only if capability posture changes.
-2. Continue small guarded report/status alignment only when drift appears.
-3. Authority status announcement only if public messaging changes.
-4. C++ authority expansion contract only if new authority behavior is proposed.
-5. Nucleus task execution refinement only after the next language representation review and a separate effect contract.
-6. Runtime boundary domain matrix report status audit only if new status drift appears.
-7. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
-8. Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review.
+1. Continue small guarded report/status alignment only when drift appears.
+2. Authority status announcement only if public messaging changes.
+3. C++ authority expansion contract only if new authority behavior is proposed.
+4. Nucleus task execution refinement only after the next language representation review and a separate effect contract.
+5. Runtime boundary domain matrix report status audit only if new status drift appears.
+6. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
+7. Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review.
 
 ## Quality rules
 

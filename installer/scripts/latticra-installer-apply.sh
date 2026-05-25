@@ -1655,6 +1655,110 @@ LATWRAP
 # LATTICRA_INSTALLER_MANAGED=1
 PREFIX="\${LATTICRA_PREFIX:-$PREFIX}"
 LC_DIR="\$PREFIX/share/latticra/lc"
+render_lc_help() {
+  REGISTRY="\$LC_DIR/commands/seed-registry.txt"
+  echo "LATTICRA CONSOLE HELP"
+  echo "short_name=LC"
+  echo "registry_source=installed-seed-registry"
+  echo "host_process_launch_allowed=0"
+  echo
+  echo "Commands:"
+  if [ ! -f "\$REGISTRY" ]; then
+    echo "LC seed registry not found: \$REGISTRY" >&2
+    return 66
+  fi
+  while IFS= read -r line; do
+    name="\${line#name=}"
+    name="\${name%% category=*}"
+    category="\${line#* category=}"
+    category="\${category%% effect=*}"
+    effect="\${line#* effect=}"
+    effect="\${effect%% capability=*}"
+    capability="\${line##* capability=}"
+    printf '  %-14s category=%s effect=%s capability=%s\n' "\$name" "\$category" "\$effect" "\$capability"
+  done < "\$REGISTRY"
+  echo
+  echo "Authority:"
+  echo "  execution_allowed=0"
+  echo "  host_mutation_allowed=0"
+  echo "  network_allowed=0"
+  echo "  runtime_enforcement_allowed=0"
+  echo "  boot_allowed=0"
+}
+render_lc_man() {
+  echo "LATTICRA-CONSOLE(1)"
+  echo
+  echo "NAME"
+  echo "  latticra-lc - Latticra Console metadata and operator-base surface"
+  echo
+  echo "SYNOPSIS"
+  echo "  latticra-lc status"
+  echo "  latticra-lc help"
+  echo "  latticra-lc commands"
+  echo "  latticra-lc substrate"
+  echo "  latticra-lc host"
+  echo "  latticra-lc os"
+  echo
+  render_lc_help || return \$?
+  echo
+  echo "AUTHORITY"
+  echo "  shell_execution_authority=0"
+  echo "  external_host_process_launch=0"
+  echo "  host_mutation_authority=0"
+  echo "  network_authority=0"
+  echo "  runtime_enforcement_authority=0"
+  echo "  boot_authority=0"
+  echo "  production_os_claim=0"
+}
+render_lc_boundary() {
+  REGISTRY="\$LC_DIR/commands/seed-registry.txt"
+  echo "LATTICRA CONSOLE COMMAND BOUNDARY REPORT"
+  echo "registry_source=installed-seed-registry"
+  echo "runtime_boundary_bound=1"
+  echo "seal_capability_labels_bound=1"
+  echo "no_effect_registry=1"
+  echo "host_process_launch_allowed=0"
+  if [ ! -f "\$REGISTRY" ]; then
+    echo "LC seed registry not found: \$REGISTRY" >&2
+    return 66
+  fi
+  while IFS= read -r line; do
+    name="\${line#name=}"
+    name="\${name%% category=*}"
+    capability="\${line##* capability=}"
+    runtime_request=authority-check
+    runtime_mode=validation-only
+    runtime_policy=allow-validation
+    policy_matrix_cell=no-effect-validation
+    requires_future_gate=0
+    seal_capability=seal.capability.report
+    case "\$name" in
+      dry-run|save|reset|uninstall)
+        seal_capability=seal.capability.dry_run
+        ;;
+      "lc substrate")
+        seal_capability=seal.capability.inspect
+        ;;
+      "lc host")
+        seal_capability=seal.capability.inspect
+        runtime_request=future-gated
+        runtime_mode=future-gated
+        runtime_policy=future-gated
+        policy_matrix_cell=future-gated-operation
+        requires_future_gate=1
+        ;;
+      "lc os")
+        seal_capability=seal.capability.inspect
+        runtime_request=future-gated
+        runtime_mode=future-gated
+        runtime_policy=future-gated
+        policy_matrix_cell=future-gated-operation
+        requires_future_gate=1
+        ;;
+    esac
+    echo "command=\$name capability=\$capability seal_capability=\$seal_capability runtime_request=\$runtime_request runtime_effect=none runtime_mode=\$runtime_mode runtime_policy=\$runtime_policy policy_matrix_cell=\$policy_matrix_cell requires_future_gate=\$requires_future_gate no_effect=1 execution_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 seal_capability_grants_authority=0"
+  done < "\$REGISTRY"
+}
 case "\${1:-status}" in
   status)
     echo "LATTICRA CONSOLE"
@@ -1681,6 +1785,15 @@ case "\${1:-status}" in
     echo "network_allowed=0"
     echo "runtime_enforcement_allowed=0"
     echo "boot_allowed=0"
+    ;;
+  help)
+    render_lc_help
+    ;;
+  man|manual)
+    render_lc_man
+    ;;
+  boundary)
+    render_lc_boundary
     ;;
   commands|registry)
     if [ -f "\$LC_DIR/commands/seed-registry.txt" ]; then
@@ -1714,7 +1827,7 @@ case "\${1:-status}" in
     echo "\$LC_DIR"
     ;;
   *)
-    echo "usage: latticra-lc {status|commands|substrate|host|os|path}" >&2
+    echo "usage: latticra-lc {status|help|man|boundary|commands|substrate|host|os|path}" >&2
     exit 64
     ;;
 esac
@@ -2580,7 +2693,7 @@ case "\${1:-status}" in
       --tokenizer-artifact-binding "\$NADIA_DIR/tokenizer-artifact-binding/latest-tokenizer-artifact-binding-contract.txt" \
       --output "\$NADIA_DIR/tokenizer-runtime-attachment"
     ;;
-  prompt-tokenization|tokenization-contract|prompt-tokenizer)
+  prompt-tokenization|prompt-tokenization-contract|prompt-tokenizer)
     shift || true
     SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-prompt-tokenization-contract.sh"
     if [ ! -f "\$SCRIPT" ]; then

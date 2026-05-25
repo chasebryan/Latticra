@@ -20,6 +20,15 @@ command_registry_status=seed-registry
 command_registry_source=c-static-table
 command_registry_no_effect=1
 command_registry_host_process_launch_allowed=0
+help_renderer_present=1
+manpage_renderer_present=1
+installed_help_reads_seed_registry=1
+runtime_boundary_bound=1
+seal_capability_labels_bound=1
+boundary_report_present=1
+future_host_command_requires_future_gate=1
+future_os_command_requires_future_gate=1
+seal_capability_grants_authority=0
 host_embedding_status=planned
 os_base_status=planned-no-boot-authority
 ```

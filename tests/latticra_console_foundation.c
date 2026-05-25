@@ -31,9 +31,13 @@ int main(void) {
     latticra_console_request_t request;
     latticra_console_result_t result;
     const latticra_console_command_t *command;
+    latticra_console_command_boundary_t boundary;
     size_t i;
     char report[LATTICRA_CONSOLE_REPORT_MAX];
     char registry_report[LATTICRA_CONSOLE_COMMAND_REGISTRY_REPORT_MAX];
+    char help_report[LATTICRA_CONSOLE_HELP_REPORT_MAX];
+    char manpage_report[LATTICRA_CONSOLE_MANPAGE_REPORT_MAX];
+    char boundary_report[LATTICRA_CONSOLE_BOUNDARY_REPORT_MAX];
     int failures = 0;
 
     failures += require_int(
@@ -121,6 +125,8 @@ int main(void) {
     failures += require_contains("report", report, "phase1_reference_lessons=registry_help_guarded_boundary_os_track");
     failures += require_contains("report", report, "command_registry_source=c-static-table");
     failures += require_contains("report", report, "command_registry_no_effect=1");
+    failures += require_contains("report", report, "runtime_boundary_bound=1");
+    failures += require_contains("report", report, "seal_capability_labels_bound=1");
     failures += require_contains("report", report, "network_allowed=0");
     failures += require_contains("report", report, "boot_allowed=0");
 
@@ -136,6 +142,76 @@ int main(void) {
     failures += require_contains("registry_report", registry_report, "capability=lc.substrate.inspect");
     failures += require_contains("registry_report", registry_report, "launches_host_process=0");
     failures += require_contains("registry_report", registry_report, "requires_future_gate=1");
+
+    failures += require_int(
+        "help_report",
+        latticra_console_help_report(help_report, sizeof(help_report)),
+        LATTICRA_STATUS_OK);
+    failures += require_contains("help_report", help_report, "LATTICRA CONSOLE HELP");
+    failures += require_contains("help_report", help_report, "registry_source=c-static-table");
+    failures += require_contains("help_report", help_report, "lc substrate");
+    failures += require_contains("help_report", help_report, "capability=lc.substrate.inspect");
+    failures += require_contains("help_report", help_report, "host_process_launch_allowed=0");
+
+    failures += require_int(
+        "manpage_report",
+        latticra_console_manpage_report(manpage_report, sizeof(manpage_report)),
+        LATTICRA_STATUS_OK);
+    failures += require_contains("manpage_report", manpage_report, "LATTICRA-CONSOLE(1)");
+    failures += require_contains("manpage_report", manpage_report, "latticra-lc - Latticra Console");
+    failures += require_contains("manpage_report", manpage_report, "lc os");
+    failures += require_contains("manpage_report", manpage_report, "production_os_claim=0");
+
+    command = latticra_console_find_command("lc substrate");
+    failures += require_int(
+        "lc substrate boundary",
+        latticra_console_command_boundary_classify(command, &boundary),
+        LATTICRA_STATUS_OK);
+    failures += require_text(
+        "lc substrate seal capability",
+        boundary.seal_capability_label,
+        "seal.capability.inspect");
+    failures += require_int(
+        "lc substrate runtime kind",
+        boundary.runtime_request_kind,
+        LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK);
+    failures += require_int("lc substrate boundary future gate", boundary.requires_future_gate, 0);
+    failures += require_int("lc substrate boundary no effect", boundary.no_effect, 1);
+
+    command = latticra_console_find_command("lc os");
+    failures += require_int(
+        "lc os boundary",
+        latticra_console_command_boundary_classify(command, &boundary),
+        LATTICRA_STATUS_OK);
+    failures += require_text(
+        "lc os seal capability",
+        boundary.seal_capability_label,
+        "seal.capability.inspect");
+    failures += require_int(
+        "lc os runtime kind",
+        boundary.runtime_request_kind,
+        LATTICRA_RUNTIME_BOUNDARY_BOOT_ACTION);
+    failures += require_int("lc os boundary future gate", boundary.requires_future_gate, 1);
+    failures += require_int("lc os boundary no effect", boundary.no_effect, 1);
+    failures += require_int("lc os boundary boot allowed", boundary.boot_allowed, 0);
+
+    failures += require_int(
+        "boundary_report",
+        latticra_console_command_boundary_report(boundary_report, sizeof(boundary_report)),
+        LATTICRA_STATUS_OK);
+    failures += require_contains(
+        "boundary_report",
+        boundary_report,
+        "LATTICRA CONSOLE COMMAND BOUNDARY REPORT");
+    failures += require_contains("boundary_report", boundary_report, "runtime_boundary_bound=1");
+    failures += require_contains("boundary_report", boundary_report, "seal_capability_labels_bound=1");
+    failures += require_contains("boundary_report", boundary_report, "command=lc substrate");
+    failures += require_contains("boundary_report", boundary_report, "runtime_request=authority-check");
+    failures += require_contains("boundary_report", boundary_report, "command=lc os");
+    failures += require_contains("boundary_report", boundary_report, "runtime_request=future-gated");
+    failures += require_contains("boundary_report", boundary_report, "policy_matrix_cell=future-gated-operation");
+    failures += require_contains("boundary_report", boundary_report, "seal_capability=seal.capability.inspect");
+    failures += require_contains("boundary_report", boundary_report, "boot_allowed=0");
 
     if (failures != 0) return 1;
     puts("latticra_console_foundation: ok");

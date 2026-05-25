@@ -29,6 +29,14 @@ latticra_status_t latticra_lat_pipeline_diagnostics_report(
         "first_diagnostic_clause_index=%zu\n"
         "lowering_model_declaration_count=%zu\n"
         "lowering_model_clause_count=%zu\n"
+        "lowering_first_declaration_node_index=%zu\n"
+        "lowering_first_declaration_kind=%s\n"
+        "lowering_first_declaration_name=%s\n"
+        "lowering_first_declaration_source=%s\n"
+        "lowering_first_declaration_parse_index=%zu\n"
+        "lowering_first_declaration_first_clause_index=%zu\n"
+        "lowering_first_declaration_clause_count=%zu\n"
+        "lowering_first_declaration_source_index=%zu\n"
         "lowering_first_transition_source_index=%zu\n"
         "lowering_first_clause_node_index=%zu\n"
         "lowering_first_clause_role=%s\n"
@@ -58,6 +66,14 @@ latticra_status_t latticra_lat_pipeline_diagnostics_report(
         result->first_diagnostic_clause_index,
         result->lowering_model_declaration_count,
         result->lowering_model_clause_count,
+        result->lowering_first_declaration_node_index,
+        latticra_lat_declaration_kind_label(result->lowering_first_declaration_kind),
+        result->lowering_first_declaration_name,
+        result->lowering_first_declaration_source,
+        result->lowering_first_declaration_parse_index,
+        result->lowering_first_declaration_first_clause_index,
+        result->lowering_first_declaration_clause_count,
+        result->lowering_first_declaration_source_index,
         result->lowering_first_transition_source_index,
         result->lowering_first_clause_node_index,
         latticra_lat_model_clause_role_label(result->lowering_first_clause_role),

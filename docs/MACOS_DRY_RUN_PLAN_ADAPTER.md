@@ -123,5 +123,5 @@ This adapter is not macOS installation, macOS app bundle evidence, signed app ev
 ## Next Recommended Lane
 
 ```text
-Add a macOS user-local app bundle contract that defines the exact files, managed markers, rollback/reset behavior, and verification transcript required before any app bundle writer exists.
+Add a macOS user-local app bundle implementation plan that remains no-effect and defines writer phases, failure behavior, reset/uninstall sequencing, verification commands, and guard tests before implementation.
 ```

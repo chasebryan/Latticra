@@ -79,6 +79,8 @@ The first implementation lane should be deliberately small:
 stage_0_transferability_plan=present
 stage_1_macos_build_probe=present
 stage_2_macos_dry_run_plan=present
+stage_3_user_local_app_bundle_contract=present
+stage_3_user_local_app_bundle_implementation_plan=present
 stage_3_user_local_app_bundle=future
 stage_4_user_local_verification_transcript=future
 stage_5_codesigning_notarization_plan=future
@@ -115,6 +117,20 @@ Stage 2 is implemented by:
 docs/MACOS_DRY_RUN_PLAN_ADAPTER.md
 scripts/macos-dry-run-plan-adapter.sh
 docs/status/MACOS_DRY_RUN_PLAN_ADAPTER_STATUS.md
+```
+
+The Stage 3 app bundle contract is implemented by:
+
+```text
+docs/MACOS_USER_LOCAL_APP_BUNDLE_CONTRACT.md
+docs/status/MACOS_USER_LOCAL_APP_BUNDLE_CONTRACT_STATUS.md
+```
+
+The Stage 3 app bundle implementation plan is implemented by:
+
+```text
+docs/MACOS_USER_LOCAL_APP_BUNDLE_IMPLEMENTATION_PLAN.md
+docs/status/MACOS_USER_LOCAL_APP_BUNDLE_IMPLEMENTATION_PLAN_STATUS.md
 ```
 
 ## App Bundle Direction
@@ -237,5 +253,5 @@ macos_production_ready=0
 ## Next Recommended Lane
 
 ```text
-Add a macOS user-local app bundle contract that defines the exact files, managed markers, rollback/reset behavior, and verification transcript required before any app bundle writer exists.
+Add a no-effect macOS app bundle writer dry-run prototype that emits the planned phase report, validates unsafe paths, and keeps commit_user_local_managed_artifacts=0.
 ```

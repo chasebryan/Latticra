@@ -720,17 +720,17 @@ impl LatticraInstallerApp {
                 );
             }
             ["nadia", "prompt-tokenization"]
-            | ["nadia", "tokenization-contract"]
+            | ["nadia", "prompt-tokenization-contract"]
             | ["nadia", "prompt-tokenizer"] => {
-                self.push_console("nadia_prompt_tokenization=stage-25-prompt-tokenization-contract");
+                self.push_console(
+                    "nadia_prompt_tokenization=stage-25-prompt-tokenization-contract",
+                );
                 self.push_console("panel_action=metadata-only");
                 self.push_console("installed_cli=latticra-nadia prompt-tokenization");
                 self.push_console(
                     "prompt_tokenization_contract_status=contract_only prompt_tokenization_performed=0",
                 );
-                self.push_console(
-                    "prompt_tokens_created=0 prompt_tokenized=0 runtime_invoked=0",
-                );
+                self.push_console("prompt_tokens_created=0 prompt_tokenized=0 runtime_invoked=0");
                 self.push_console(
                     "requires_tokenizer_runtime_attachment_contract=1 requires_future_prompt_token_sequence_contract=1",
                 );

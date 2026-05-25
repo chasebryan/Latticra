@@ -30,6 +30,9 @@ cc $CFLAGS \
   -o /tmp/latticra-console-report
 
 /tmp/latticra-console-report > /tmp/latticra-console-report.txt
+/tmp/latticra-console-report help > /tmp/latticra-console-help.txt
+/tmp/latticra-console-report man > /tmp/latticra-console-man.txt
+/tmp/latticra-console-report boundary > /tmp/latticra-console-boundary.txt
 
 grep -Fq 'LATTICRA CONSOLE REPORT' /tmp/latticra-console-report.txt
 grep -Fq 'console_id=latticra-console' /tmp/latticra-console-report.txt
@@ -39,6 +42,8 @@ grep -Fq 'console_status=ready-report-only' /tmp/latticra-console-report.txt
 grep -Fq 'command_registry_status=seed-registry-ready' /tmp/latticra-console-report.txt
 grep -Fq 'command_registry_source=c-static-table' /tmp/latticra-console-report.txt
 grep -Fq 'command_registry_no_effect=1' /tmp/latticra-console-report.txt
+grep -Fq 'runtime_boundary_bound=1' /tmp/latticra-console-report.txt
+grep -Fq 'seal_capability_labels_bound=1' /tmp/latticra-console-report.txt
 grep -Fq 'LATTICRA CONSOLE COMMAND REGISTRY' /tmp/latticra-console-report.txt
 grep -Fq 'command=lc substrate' /tmp/latticra-console-report.txt
 grep -Fq 'capability=lc.substrate.inspect' /tmp/latticra-console-report.txt
@@ -49,6 +54,23 @@ grep -Fq 'future_os_base_claim=planned_not_claimed' /tmp/latticra-console-report
 grep -Fq 'execution_allowed=0' /tmp/latticra-console-report.txt
 grep -Fq 'network_allowed=0' /tmp/latticra-console-report.txt
 grep -Fq 'boot_allowed=0' /tmp/latticra-console-report.txt
+grep -Fq 'LATTICRA CONSOLE HELP' /tmp/latticra-console-help.txt
+grep -Fq 'registry_source=c-static-table' /tmp/latticra-console-help.txt
+grep -Fq 'lc substrate' /tmp/latticra-console-help.txt
+grep -Fq 'capability=lc.substrate.inspect' /tmp/latticra-console-help.txt
+grep -Fq 'host_process_launch_allowed=0' /tmp/latticra-console-help.txt
+grep -Fq 'LATTICRA-CONSOLE(1)' /tmp/latticra-console-man.txt
+grep -Fq 'COMMANDS' /tmp/latticra-console-man.txt
+grep -Fq 'production_os_claim=0' /tmp/latticra-console-man.txt
+grep -Fq 'LATTICRA CONSOLE COMMAND BOUNDARY REPORT' /tmp/latticra-console-boundary.txt
+grep -Fq 'runtime_boundary_bound=1' /tmp/latticra-console-boundary.txt
+grep -Fq 'seal_capability_labels_bound=1' /tmp/latticra-console-boundary.txt
+grep -Fq 'command=lc substrate' /tmp/latticra-console-boundary.txt
+grep -Fq 'runtime_request=authority-check' /tmp/latticra-console-boundary.txt
+grep -Fq 'command=lc os' /tmp/latticra-console-boundary.txt
+grep -Fq 'policy_matrix_cell=future-gated-operation' /tmp/latticra-console-boundary.txt
+grep -Fq 'seal_capability=seal.capability.inspect' /tmp/latticra-console-boundary.txt
+grep -Fq 'boot_allowed=0' /tmp/latticra-console-boundary.txt
 
 grep -Fq '[components.latticra_console]' installer/manifests/components.toml
 grep -Fq 'latticra_console = true' installer/configs/default.installer.toml
@@ -57,6 +79,11 @@ grep -Fq 'pub latticra_console: bool' installer/latticra-installer/src/config.rs
 grep -Fq 'Latticra Console (LC)' installer/latticra-installer/src/ui.rs
 grep -Fq 'LATTICRA_CONSOLE=$(cfg latticra_console true)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'latticra-lc' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'render_lc_help()' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'render_lc_man()' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'render_lc_boundary()' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'Latticra Console Foundation' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'Help And Manpage Rendering' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'Runtime Boundary Binding' docs/LATTICRA_CONSOLE_FOUNDATION.md
 
 printf 'latticra_console_foundation: ok\n'

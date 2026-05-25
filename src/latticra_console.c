@@ -1,5 +1,6 @@
 #include "latticra/latticra_console.h"
 
+#include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -273,6 +274,137 @@ const latticra_console_command_t *latticra_console_find_command(const char *name
     return 0;
 }
 
+static const char *lc_seal_capability_label_for_command(
+    const latticra_console_command_t *command) {
+    if (command == 0) return "seal.capability.report";
+    if (strcmp(command->name, "dry-run") == 0 ||
+        strcmp(command->name, "save") == 0 ||
+        strcmp(command->name, "reset") == 0 ||
+        strcmp(command->name, "uninstall") == 0) {
+        return "seal.capability.dry_run";
+    }
+    if (command->category == LATTICRA_CONSOLE_COMMAND_SUBSTRATE ||
+        command->category == LATTICRA_CONSOLE_COMMAND_HOST ||
+        command->category == LATTICRA_CONSOLE_COMMAND_OS_BASE) {
+        return "seal.capability.inspect";
+    }
+    return "seal.capability.report";
+}
+
+static latticra_runtime_boundary_request_kind_t lc_runtime_kind_for_command(
+    const latticra_console_command_t *command) {
+    if (command == 0) return LATTICRA_RUNTIME_BOUNDARY_UNKNOWN;
+    if (command->category == LATTICRA_CONSOLE_COMMAND_OS_BASE &&
+        command->requires_future_gate) {
+        return LATTICRA_RUNTIME_BOUNDARY_BOOT_ACTION;
+    }
+    if ((command->category == LATTICRA_CONSOLE_COMMAND_HOST ||
+         command->effect == LATTICRA_CONSOLE_COMMAND_EFFECT_FUTURE_GATED) &&
+        command->requires_future_gate) {
+        return LATTICRA_RUNTIME_BOUNDARY_COMMAND_EXECUTE;
+    }
+    return LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK;
+}
+
+static latticra_runtime_boundary_mode_t lc_runtime_mode_for_command(
+    const latticra_console_command_t *command) {
+    if (command != 0 && command->requires_future_gate) {
+        return LATTICRA_RUNTIME_BOUNDARY_MODE_REQUIRES_FUTURE_GATE;
+    }
+    return LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;
+}
+
+static void lc_boundary_authority(
+    const latticra_console_command_t *command,
+    latticra_runtime_boundary_authority_summary_t *authority) {
+    memset(authority, 0, sizeof(*authority));
+    authority->status = LATTICRA_STATUS_OK;
+    lc_copy(authority->status_label, sizeof(authority->status_label), "ok");
+    lc_copy(authority->validator_label, sizeof(authority->validator_label), "latticra-console");
+    lc_copy(authority->requested_effect_label, sizeof(authority->requested_effect_label),
+        command != 0 ? command->capability_label : "unknown");
+    lc_copy(authority->denial_reason, sizeof(authority->denial_reason), "ok");
+    authority->no_effect = 1;
+    authority->execution_allowed = 0;
+    authority->mutation_allowed = 0;
+    authority->server_allowed = 0;
+    authority->recovery_allowed = 0;
+    authority->hardware_allowed = 0;
+}
+
+static latticra_status_t lc_appendf(
+    char *buffer,
+    size_t buffer_len,
+    size_t *used,
+    const char *fmt,
+    ...) {
+    int written;
+    va_list args;
+
+    if (buffer == 0 || used == 0 || fmt == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (*used >= buffer_len) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+
+    va_start(args, fmt);
+    written = vsnprintf(buffer + *used, buffer_len - *used, fmt, args);
+    va_end(args);
+
+    if (written < 0 || (size_t)written >= buffer_len - *used) {
+        buffer[0] = '\0';
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+
+    *used += (size_t)written;
+    return LATTICRA_STATUS_OK;
+}
+
+latticra_status_t latticra_console_command_boundary_classify(
+    const latticra_console_command_t *command,
+    latticra_console_command_boundary_t *boundary) {
+    latticra_runtime_boundary_authority_summary_t authority;
+    latticra_runtime_boundary_request_t request;
+    latticra_runtime_boundary_result_t result;
+    latticra_status_t status;
+
+    if (command == 0 || boundary == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+
+    memset(boundary, 0, sizeof(*boundary));
+    lc_copy(boundary->command_name, sizeof(boundary->command_name), command->name);
+    lc_copy(boundary->capability_label, sizeof(boundary->capability_label), command->capability_label);
+    lc_copy(boundary->seal_capability_label, sizeof(boundary->seal_capability_label),
+        lc_seal_capability_label_for_command(command));
+
+    lc_boundary_authority(command, &authority);
+    memset(&request, 0, sizeof(request));
+    lc_copy(request.runtime_id, sizeof(request.runtime_id), command->capability_label);
+    request.request_kind = lc_runtime_kind_for_command(command);
+    request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
+    request.mode = lc_runtime_mode_for_command(command);
+    request.operator_confirmation = LATTICRA_RUNTIME_BOUNDARY_OPERATOR_NOT_APPLICABLE;
+    request.authority = &authority;
+    request.source_identity = command->name;
+    request.source_identity_len = strlen(command->name);
+    request.source_span = lc_default_span();
+
+    status = latticra_runtime_boundary_classify(&request, &result);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    boundary->runtime_request_kind = result.record.request_kind;
+    boundary->runtime_requested_effect = result.record.requested_effect;
+    boundary->runtime_mode = result.record.mode;
+    boundary->runtime_policy = result.record.policy;
+    boundary->runtime_denial = result.record.denial;
+    boundary->runtime_policy_matrix_cell = result.record.policy_matrix_cell;
+    boundary->no_effect = result.no_effect;
+    boundary->execution_allowed = result.execution_allowed;
+    boundary->host_mutation_allowed = result.mutation_allowed;
+    boundary->network_allowed = result.network_allowed;
+    boundary->runtime_enforcement_allowed = result.server_allowed;
+    boundary->boot_allowed = result.boot_allowed;
+    boundary->requires_future_gate = result.record.matrix_requires_future_gate;
+    boundary->seal_capability_grants_authority = 0;
+    return LATTICRA_STATUS_OK;
+}
+
 latticra_status_t latticra_console_default_request(
     latticra_console_request_t *request) {
     if (request == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
@@ -444,6 +576,169 @@ latticra_status_t latticra_console_command_registry_report(
     return LATTICRA_STATUS_OK;
 }
 
+latticra_status_t latticra_console_help_report(
+    char *buffer,
+    size_t buffer_len) {
+    size_t i;
+    size_t used = 0u;
+    latticra_status_t status;
+
+    if (buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    buffer[0] = '\0';
+
+    status = lc_appendf(buffer, buffer_len, &used,
+        "LATTICRA CONSOLE HELP\n"
+        "short_name=LC\n"
+        "registry_source=c-static-table\n"
+        "command_count=%u\n"
+        "host_process_launch_allowed=0\n"
+        "\n"
+        "Commands:\n",
+        (unsigned int)latticra_console_command_count());
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    for (i = 0u; i < latticra_console_command_count(); ++i) {
+        const latticra_console_command_t *command = &lc_commands[i];
+        status = lc_appendf(buffer, buffer_len, &used,
+            "  %-14s category=%s effect=%s capability=%s\n",
+            command->usage,
+            latticra_console_command_category_label(command->category),
+            latticra_console_command_effect_label(command->effect),
+            command->capability_label);
+        if (status != LATTICRA_STATUS_OK) return status;
+    }
+
+    status = lc_appendf(buffer, buffer_len, &used,
+        "\n"
+        "Authority:\n"
+        "  execution_allowed=0\n"
+        "  host_mutation_allowed=0\n"
+        "  network_allowed=0\n"
+        "  runtime_enforcement_allowed=0\n"
+        "  boot_allowed=0\n");
+    return status;
+}
+
+latticra_status_t latticra_console_manpage_report(
+    char *buffer,
+    size_t buffer_len) {
+    size_t i;
+    size_t used = 0u;
+    latticra_status_t status;
+
+    if (buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    buffer[0] = '\0';
+
+    status = lc_appendf(buffer, buffer_len, &used,
+        "LATTICRA-CONSOLE(1)\n"
+        "\n"
+        "NAME\n"
+        "  latticra-lc - Latticra Console metadata and operator-base surface\n"
+        "\n"
+        "SYNOPSIS\n"
+        "  latticra-lc status\n"
+        "  latticra-lc help\n"
+        "  latticra-lc commands\n"
+        "  latticra-lc substrate\n"
+        "  latticra-lc host\n"
+        "  latticra-lc os\n"
+        "\n"
+        "DESCRIPTION\n"
+        "  LC is the configurable Panel-installable console foundation for\n"
+        "  Latticra substrate interaction, host embedding planning, and future\n"
+        "  OS-base work. This Stage-0 manpage is rendered from the C command\n"
+        "  registry and is metadata-only.\n"
+        "\n"
+        "COMMANDS\n");
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    for (i = 0u; i < latticra_console_command_count(); ++i) {
+        const latticra_console_command_t *command = &lc_commands[i];
+        status = lc_appendf(buffer, buffer_len, &used,
+            "  %s\n"
+            "    category=%s effect=%s capability=%s future_gate=%d\n"
+            "    %s\n",
+            command->usage,
+            latticra_console_command_category_label(command->category),
+            latticra_console_command_effect_label(command->effect),
+            command->capability_label,
+            command->requires_future_gate,
+            command->description);
+        if (status != LATTICRA_STATUS_OK) return status;
+    }
+
+    status = lc_appendf(buffer, buffer_len, &used,
+        "\n"
+        "AUTHORITY\n"
+        "  shell_execution_authority=0\n"
+        "  external_host_process_launch=0\n"
+        "  host_mutation_authority=0\n"
+        "  network_authority=0\n"
+        "  runtime_enforcement_authority=0\n"
+        "  boot_authority=0\n"
+        "  production_os_claim=0\n"
+        "\n"
+        "SEE ALSO\n"
+        "  LATTICRA_CONSOLE_FOUNDATION.md\n");
+    return status;
+}
+
+latticra_status_t latticra_console_command_boundary_report(
+    char *buffer,
+    size_t buffer_len) {
+    size_t i;
+    size_t used = 0u;
+    latticra_status_t status;
+
+    if (buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    buffer[0] = '\0';
+
+    status = lc_appendf(buffer, buffer_len, &used,
+        "LATTICRA CONSOLE COMMAND BOUNDARY REPORT\n"
+        "registry_source=c-static-table\n"
+        "runtime_boundary_bound=1\n"
+        "seal_capability_labels_bound=1\n"
+        "command_count=%u\n"
+        "no_effect_registry=1\n"
+        "host_process_launch_allowed=0\n",
+        (unsigned int)latticra_console_command_count());
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    for (i = 0u; i < latticra_console_command_count(); ++i) {
+        const latticra_console_command_t *command = &lc_commands[i];
+        latticra_console_command_boundary_t boundary;
+
+        status = latticra_console_command_boundary_classify(command, &boundary);
+        if (status != LATTICRA_STATUS_OK) return status;
+
+        status = lc_appendf(buffer, buffer_len, &used,
+            "command=%s capability=%s seal_capability=%s runtime_request=%s runtime_effect=%s runtime_mode=%s runtime_policy=%s runtime_reason=%s policy_matrix_cell=%s requires_future_gate=%d no_effect=%d execution_allowed=%d host_mutation_allowed=%d network_allowed=%d runtime_enforcement_allowed=%d boot_allowed=%d seal_capability_grants_authority=%d\n",
+            boundary.command_name,
+            boundary.capability_label,
+            boundary.seal_capability_label,
+            latticra_runtime_boundary_request_kind_label(boundary.runtime_request_kind),
+            latticra_runtime_boundary_effect_label(boundary.runtime_requested_effect),
+            latticra_runtime_boundary_mode_label(boundary.runtime_mode),
+            latticra_runtime_boundary_policy_label(boundary.runtime_policy),
+            latticra_runtime_boundary_denial_label(boundary.runtime_denial),
+            latticra_runtime_boundary_policy_matrix_cell_label(boundary.runtime_policy_matrix_cell),
+            boundary.requires_future_gate,
+            boundary.no_effect,
+            boundary.execution_allowed,
+            boundary.host_mutation_allowed,
+            boundary.network_allowed,
+            boundary.runtime_enforcement_allowed,
+            boundary.boot_allowed,
+            boundary.seal_capability_grants_authority);
+        if (status != LATTICRA_STATUS_OK) return status;
+    }
+
+    return LATTICRA_STATUS_OK;
+}
+
 latticra_status_t latticra_console_report(
     const latticra_console_result_t *result,
     char *buffer,
@@ -478,6 +773,8 @@ latticra_status_t latticra_console_report(
         "command_registry_source=c-static-table\n"
         "command_registry_no_effect=1\n"
         "command_registry_host_process_launch_allowed=0\n"
+        "runtime_boundary_bound=1\n"
+        "seal_capability_labels_bound=1\n"
         "kernel_status=%s\n"
         "kernel_runtime_status=%s\n"
         "kernel_boot_status=%s\n"

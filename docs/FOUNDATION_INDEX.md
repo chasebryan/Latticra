@@ -115,6 +115,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — status record for the Lat pipeline diagnostic integration slice.
 - [`status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — status record for the Lat pipeline diagnostic main test audit slice.
 - [`status/RBDM_REPORT_INTEGRATION_STATUS.md`](status/RBDM_REPORT_INTEGRATION_STATUS.md) — status record for the runtime-boundary domain matrix report integration slice.
+- [`status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md) — completion-estimate hold review after runtime-boundary abuse-case fixtures.
 - [`status/COMPLETION_PERCENTAGE_REVIEW.md`](status/COMPLETION_PERCENTAGE_REVIEW.md) — completion-percentage planning review.
 - [`status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`](status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md) — public entry-point consistency scan.
 - [`status/PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md`](status/PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md) — project-notes follow-up status/index check.
@@ -249,7 +250,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LAT_PIPELINE_IMPLEMENTATION_PLAN.md`](LAT_PIPELINE_IMPLEMENTATION_PLAN.md) — exact Lat pipeline API, result struct, report, tests, workflow, compatibility expectations, and non-claims.
 - [`LAT_PIPELINE_IMPLEMENTATION.md`](LAT_PIPELINE_IMPLEMENTATION.md) — first bounded no-effect Lat pipeline implementation.
 - [`LAT_PIPELINE_REPORT_REFINEMENT.md`](LAT_PIPELINE_REPORT_REFINEMENT.md) — Lat pipeline stage-summary, first-clause metadata, and report refinement.
-- [`LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md`](LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md) — companion Lat pipeline diagnostic integration API, first-clause metadata, and report.
+- [`LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md`](LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md) — companion Lat pipeline diagnostic integration API, first-declaration/first-clause metadata, and report.
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_INTEGRATION_AUDIT.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_INTEGRATION_AUDIT.md) — main Lat pipeline runner audit for diagnostic integration coverage.
 - [`LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md`](LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md) — explicit Lat declaration node and transition-source edge refinement contract.
 - [`LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION_PLAN.md`](LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION_PLAN.md) — exact Lat-specific LIR enum, label, lowering, test, workflow, and compatibility plan.
@@ -331,6 +332,7 @@ Latticra Seal policy decision status/public-entry alignment + guardrails
 Defensive threat model validation refinement + guardrails
 Runtime boundary policy expansion after threat-model validation + guardrails
 Runtime boundary abuse-case fixture expansion after policy expansion + guardrails
+Completion estimate review after runtime-boundary abuse-case fixtures + guardrails
 Latticra Seal capability gate status/public-entry alignment + guardrails
 Latticra Seal verification receipt status/public-entry alignment + guardrails
 Nadia offline AI Stage-0 foundation + guardrails
@@ -384,6 +386,7 @@ Lat-to-LIR declaration metadata refinement + invariants
 Lat-to-LIR clause metadata refinement + invariants
 Lat-to-LIR diagnostic declaration metadata integration + invariants
 Lat-to-LIR diagnostic clause metadata integration + invariants
+Lat pipeline diagnostic declaration metadata integration + invariants
 Lat pipeline diagnostic clause metadata integration + invariants
 Lat pipeline report clause metadata integration + invariants
 Lat pipeline implementation + invariants
@@ -398,7 +401,7 @@ L-UI rendering detailed report refinement + invariants
 The next status review target should be:
 
 ```text
-Completion estimate review only if capability posture changes; otherwise continue small guarded report/status alignment only when drift appears
+Continue small guarded report/status alignment only when drift appears
 ```
 
 Current runtime boundary policy expansion status:
@@ -406,6 +409,8 @@ Current runtime boundary policy expansion status:
 ```text
 runtime_boundary_policy_expansion_after_threat_model_present=1
 runtime_boundary_abuse_case_fixture_expansion_present=1
+completion_estimate_after_runtime_boundary_abuse_case_fixtures_present=1
+estimate_adjustment_required=0
 request_family_policy_map_present=1
 effect_policy_map_present=1
 authority_prerequisite_map_present=1

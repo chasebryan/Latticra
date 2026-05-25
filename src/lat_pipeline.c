@@ -34,6 +34,14 @@ static void pipeline_result_default(latticra_lat_pipeline_result_t *result) {
     result->clause_count = 0u;
     result->model_declaration_count = 0u;
     result->model_clause_count = 0u;
+    result->first_declaration_node_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_declaration_kind = LATTICRA_LAT_DECLARATION_UNKNOWN;
+    result->first_declaration_name[0] = '\0';
+    result->first_declaration_source[0] = '\0';
+    result->first_declaration_parse_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_declaration_first_clause_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_declaration_clause_count = 0u;
+    result->first_declaration_source_index = LATTICRA_LAT_MODEL_NO_INDEX;
     result->first_transition_source_index = LATTICRA_LAT_MODEL_NO_INDEX;
     result->first_clause_node_index = LATTICRA_LAT_MODEL_NO_INDEX;
     result->first_clause_role = LATTICRA_LAT_MODEL_CLAUSE_UNKNOWN;
@@ -173,6 +181,14 @@ static void summarize_pipeline(
         model_result->declarations[model_result->first_transition_index].source_declaration_index;
     pipeline_result->lowering_error = lowering_result->error;
     pipeline_result->lir_error = module->error;
+    pipeline_result->first_declaration_node_index = lowering_result->first_declaration_node_index;
+    pipeline_result->first_declaration_kind = lowering_result->first_declaration_kind;
+    copy_text(pipeline_result->first_declaration_name, sizeof(pipeline_result->first_declaration_name), lowering_result->first_declaration_name);
+    copy_text(pipeline_result->first_declaration_source, sizeof(pipeline_result->first_declaration_source), lowering_result->first_declaration_source);
+    pipeline_result->first_declaration_parse_index = lowering_result->first_declaration_parse_index;
+    pipeline_result->first_declaration_first_clause_index = lowering_result->first_declaration_first_clause_index;
+    pipeline_result->first_declaration_clause_count = lowering_result->first_declaration_clause_count;
+    pipeline_result->first_declaration_source_index = lowering_result->first_declaration_source_index;
     pipeline_result->first_clause_node_index = lowering_result->first_clause_node_index;
     pipeline_result->first_clause_role = lowering_result->first_clause_role;
     pipeline_result->first_clause_effect = lowering_result->first_clause_effect;
@@ -399,6 +415,14 @@ latticra_status_t latticra_lat_pipeline_report(
         "clause_count=%zu\n"
         "model_declaration_count=%zu\n"
         "model_clause_count=%zu\n"
+        "first_declaration_node_index=%zu\n"
+        "first_declaration_kind=%s\n"
+        "first_declaration_name=%s\n"
+        "first_declaration_source=%s\n"
+        "first_declaration_parse_index=%zu\n"
+        "first_declaration_first_clause_index=%zu\n"
+        "first_declaration_clause_count=%zu\n"
+        "first_declaration_source_index=%zu\n"
         "first_transition_source_index=%zu\n"
         "first_clause_node_index=%zu\n"
         "first_clause_role=%s\n"
@@ -443,6 +467,14 @@ latticra_status_t latticra_lat_pipeline_report(
         result->clause_count,
         result->model_declaration_count,
         result->model_clause_count,
+        result->first_declaration_node_index,
+        latticra_lat_declaration_kind_label(result->first_declaration_kind),
+        result->first_declaration_name,
+        result->first_declaration_source,
+        result->first_declaration_parse_index,
+        result->first_declaration_first_clause_index,
+        result->first_declaration_clause_count,
+        result->first_declaration_source_index,
         result->first_transition_source_index,
         result->first_clause_node_index,
         latticra_lat_model_clause_role_label(result->first_clause_role),

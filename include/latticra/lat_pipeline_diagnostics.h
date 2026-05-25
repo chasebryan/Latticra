@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-#define LATTICRA_LAT_PIPELINE_DIAGNOSTIC_REPORT_MAX 2048u
+#define LATTICRA_LAT_PIPELINE_DIAGNOSTIC_REPORT_MAX 4096u
 
 typedef enum {
     LATTICRA_LAT_PIPELINE_DIAGNOSTIC_VALID = 0,
@@ -37,6 +37,14 @@ typedef struct {
     size_t first_diagnostic_clause_index;
     size_t lowering_model_declaration_count;
     size_t lowering_model_clause_count;
+    size_t lowering_first_declaration_node_index;
+    latticra_lat_declaration_kind_t lowering_first_declaration_kind;
+    char lowering_first_declaration_name[LATTICRA_LAT_NAME_MAX];
+    char lowering_first_declaration_source[LATTICRA_LAT_NAME_MAX];
+    size_t lowering_first_declaration_parse_index;
+    size_t lowering_first_declaration_first_clause_index;
+    size_t lowering_first_declaration_clause_count;
+    size_t lowering_first_declaration_source_index;
     size_t lowering_first_transition_source_index;
     size_t lowering_first_clause_node_index;
     latticra_lat_model_clause_role_t lowering_first_clause_role;

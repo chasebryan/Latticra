@@ -15,6 +15,8 @@ The probe records macOS host detection, architecture, `sw_vers` availability, cl
 ```text
 macos_build_platform_probe_present=1
 macos_dry_run_plan_adapter_present=1
+macos_user_local_app_bundle_contract_present=1
+macos_user_local_app_bundle_implementation_plan_present=1
 macos_probe_script_present=1
 macos_probe_guard_present=1
 macos_host_detection_recorded=1
@@ -68,7 +70,7 @@ macos_build_platform_probe: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS user-local app bundle contract that defines the exact files, managed markers, rollback/reset behavior, and verification transcript required before any app bundle writer exists.
+Add a macOS user-local app bundle implementation plan that remains no-effect and defines writer phases, failure behavior, reset/uninstall sequencing, verification commands, and guard tests before implementation.
 ```
 
 ## Non-Claims

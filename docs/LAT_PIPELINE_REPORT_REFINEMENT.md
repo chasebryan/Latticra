@@ -1,7 +1,7 @@
 # Latticra Lat Pipeline Report Refinement
 
-Status: Lat pipeline report refinement implementation with first-clause metadata
-Scope: deterministic Lat pipeline stage-summary metadata, first-clause report fields, invariant tests, guard coverage, and workflow wiring.
+Status: Lat pipeline report refinement implementation with first-declaration and first-clause metadata
+Scope: deterministic Lat pipeline stage-summary metadata, first-declaration report fields, first-clause report fields, invariant tests, guard coverage, and workflow wiring.
 
 ## Purpose
 
@@ -25,6 +25,14 @@ lowering_ok
 lir_ok
 no_effect_chain_ok
 evidence_level
+first_declaration_node_index
+first_declaration_kind
+first_declaration_name
+first_declaration_source
+first_declaration_parse_index
+first_declaration_first_clause_index
+first_declaration_clause_count
+first_declaration_source_index
 first_clause_node_index
 first_clause_role
 first_clause_effect
@@ -33,7 +41,7 @@ first_clause_operator
 first_clause_value
 ```
 
-The deterministic `LAT PIPELINE REPORT` now emits these fields as labels and integers. First-clause metadata is copied from the Lat-to-LIR lowering result for audit visibility only.
+The deterministic `LAT PIPELINE REPORT` now emits these fields as labels and integers. First-declaration and first-clause metadata is copied from the Lat-to-LIR lowering result for audit visibility only.
 
 ## Stage labels
 
@@ -77,6 +85,14 @@ lowering_ok=1
 lir_ok=1
 no_effect_chain_ok=1
 evidence_level=2
+first_declaration_node_index=<first lowered declaration node index>
+first_declaration_kind=<first lowered declaration kind>
+first_declaration_name=<first lowered declaration name>
+first_declaration_source=<first lowered declaration source name>
+first_declaration_parse_index=<first lowered declaration parse index>
+first_declaration_first_clause_index=<first lowered declaration first clause index>
+first_declaration_clause_count=<first lowered declaration clause count>
+first_declaration_source_index=<first lowered declaration source index>
 first_clause_node_index=<first lowered clause node index>
 first_clause_role=<first lowered clause role>
 first_clause_effect=<first lowered clause effect>

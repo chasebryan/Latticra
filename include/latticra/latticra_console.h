@@ -14,6 +14,9 @@ extern "C" {
 #define LATTICRA_CONSOLE_SOURCE_IDENTITY_MAX 128u
 #define LATTICRA_CONSOLE_REPORT_MAX 20000u
 #define LATTICRA_CONSOLE_COMMAND_REGISTRY_REPORT_MAX 12000u
+#define LATTICRA_CONSOLE_HELP_REPORT_MAX 12000u
+#define LATTICRA_CONSOLE_MANPAGE_REPORT_MAX 20000u
+#define LATTICRA_CONSOLE_BOUNDARY_REPORT_MAX 20000u
 
 typedef enum {
     LATTICRA_CONSOLE_PROFILE_HOSTED_REFERENCE = 0,
@@ -58,6 +61,26 @@ typedef struct {
     size_t source_identity_len;
     latticra_l_ui_source_span_t source_span;
 } latticra_console_request_t;
+
+typedef struct {
+    char command_name[LATTICRA_CONSOLE_LABEL_MAX];
+    char capability_label[LATTICRA_CONSOLE_LABEL_MAX];
+    char seal_capability_label[LATTICRA_CONSOLE_COMMAND_USAGE_MAX];
+    latticra_runtime_boundary_request_kind_t runtime_request_kind;
+    latticra_runtime_boundary_effect_t runtime_requested_effect;
+    latticra_runtime_boundary_mode_t runtime_mode;
+    latticra_runtime_boundary_policy_t runtime_policy;
+    latticra_runtime_boundary_denial_t runtime_denial;
+    latticra_runtime_boundary_policy_matrix_cell_t runtime_policy_matrix_cell;
+    int no_effect;
+    int execution_allowed;
+    int host_mutation_allowed;
+    int network_allowed;
+    int runtime_enforcement_allowed;
+    int boot_allowed;
+    int requires_future_gate;
+    int seal_capability_grants_authority;
+} latticra_console_command_boundary_t;
 
 typedef struct {
     latticra_status_t status;
@@ -111,6 +134,22 @@ const latticra_console_command_t *latticra_console_command_at(size_t index);
 const latticra_console_command_t *latticra_console_find_command(const char *name);
 
 latticra_status_t latticra_console_command_registry_report(
+    char *buffer,
+    size_t buffer_len);
+
+latticra_status_t latticra_console_help_report(
+    char *buffer,
+    size_t buffer_len);
+
+latticra_status_t latticra_console_manpage_report(
+    char *buffer,
+    size_t buffer_len);
+
+latticra_status_t latticra_console_command_boundary_classify(
+    const latticra_console_command_t *command,
+    latticra_console_command_boundary_t *boundary);
+
+latticra_status_t latticra_console_command_boundary_report(
     char *buffer,
     size_t buffer_len);
 

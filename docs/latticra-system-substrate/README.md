@@ -1,7 +1,7 @@
 # The Latticra System Substrate
 
 **Title:** *The Latticra System Substrate: An Effect at Modern Security*  
-**Edition:** Working Draft 0.2 — 2026-05-25  
+**Edition:** Working Draft 0.3 — 2026-05-25  
 **Role:** Project-level technical handbook for Latticra, Latticra Seal, Panel, Lat/LIR contract surfaces, receipts, reports, and future runtime-boundary research.
 
 This handbook supersedes the former standalone **Latticra Seal Documentation Handbook** as the main reader-facing book for the project.

@@ -25,6 +25,8 @@ non-claims
 - [`MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md`](MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md) - macOS integration transferability status for adapting current no-effect, receipt-first, user-local Latticra surfaces into a future macOS lane.
 - [`MACOS_BUILD_PLATFORM_PROBE_STATUS.md`](MACOS_BUILD_PLATFORM_PROBE_STATUS.md) - macOS build/platform probe status for no-effect toolchain, architecture, Panel-readiness, and C-test-readiness reporting.
 - [`MACOS_DRY_RUN_PLAN_ADAPTER_STATUS.md`](MACOS_DRY_RUN_PLAN_ADAPTER_STATUS.md) - macOS dry-run plan adapter status for rendering user-local Application Support, app bundle, CLI-wrapper, receipt, and verification intent without writing artifacts.
+- [`MACOS_USER_LOCAL_APP_BUNDLE_CONTRACT_STATUS.md`](MACOS_USER_LOCAL_APP_BUNDLE_CONTRACT_STATUS.md) - macOS user-local app bundle contract status for exact files, managed markers, reset/uninstall behavior, and verification transcript requirements.
+- [`MACOS_USER_LOCAL_APP_BUNDLE_IMPLEMENTATION_PLAN_STATUS.md`](MACOS_USER_LOCAL_APP_BUNDLE_IMPLEMENTATION_PLAN_STATUS.md) - macOS user-local app bundle implementation plan status for no-effect writer phases, failure behavior, reset/uninstall sequencing, and guard tests.
 - [`NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](NADIA_OFFLINE_AI_STAGE_0_STATUS.md) - Nadia offline AI Stage-0 foundation status for Panel installability, Console interoperability, and awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) - Nadia Stage-1 local context-engine status for no-network context-pack generation.
 - [`NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md`](NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md) - Nadia Stage-2 runtime-profile status for offline model-readiness metadata before inference.
@@ -96,6 +98,7 @@ non-claims
 - [`FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md) — status record for the manually gated disposable Fedora VM CLI payload validation lane runner.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md`](COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md) — completion-estimate review after the L-UI detailed report refinement.
+- [`COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md) — completion-estimate hold review after runtime-boundary abuse-case fixtures.
 - [`COMPLETION_PERCENTAGE_REVIEW.md`](COMPLETION_PERCENTAGE_REVIEW.md) — latest completion-percentage planning review.
 - [`CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
 - [`CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md`](CPP_AUTHORITY_IMPLEMENTATION_REVIEW_STATUS.md) — constrained C++ authority implementation review status.
@@ -231,6 +234,8 @@ evidence_gap_map_present=1
 runtime_execution_added=0
 effect_execution_added=0
 runtime_authority_granted=0
+completion_estimate_after_runtime_boundary_abuse_case_fixtures_present=1
+estimate_adjustment_required=0
 completion_estimate_review_required=0
 ```
 

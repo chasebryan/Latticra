@@ -93,6 +93,67 @@ requires_future_gate
 
 The Stage-0 registry is still metadata-only. It reports identity, seed command metadata, substrate bridge, host-embedding plan, and future OS-base posture. It does not launch host commands.
 
+## Help And Manpage Rendering
+
+LC now has registry-backed renderers for:
+
+```text
+LATTICRA CONSOLE HELP
+LATTICRA-CONSOLE(1)
+```
+
+The source runner can emit them directly:
+
+```sh
+tools/latticra_console_report.c -> help
+tools/latticra_console_report.c -> man
+```
+
+Installed local-prefix wrappers expose the same operator shapes:
+
+```sh
+latticra-lc help
+latticra-lc man
+```
+
+The installed wrapper reads `share/latticra/lc/commands/seed-registry.txt` for help rows, keeping command names, categories, effects, and capability labels attached to the component metadata.
+
+## Runtime Boundary Binding
+
+LC command metadata is now bound to Runtime Boundary classification and Seal capability labels:
+
+```text
+runtime_boundary_bound=1
+seal_capability_labels_bound=1
+```
+
+Stage-0 command bindings use these rules:
+
+```text
+core, panel, and substrate inspection -> authority-check / validation-only
+lc host -> future-gated command-execute planning
+lc os -> future-gated boot-action planning
+```
+
+The boundary report keeps all authority outputs denied:
+
+```text
+no_effect=1
+execution_allowed=0
+host_mutation_allowed=0
+network_allowed=0
+runtime_enforcement_allowed=0
+boot_allowed=0
+seal_capability_grants_authority=0
+```
+
+Source and installed surfaces expose:
+
+```sh
+latticra_console_report boundary
+latticra-lc boundary
+```
+
 ## C Foundation
 
 The C foundation is intentionally deterministic:
@@ -115,6 +176,8 @@ command_registry_status=seed-registry-ready
 command_registry_source=c-static-table
 command_registry_no_effect=1
 command_registry_host_process_launch_allowed=0
+runtime_boundary_bound=1
+seal_capability_labels_bound=1
 substrate_bridge_status=metadata-bound-ready
 panel_installable=1
 future_os_base_claim=planned_not_claimed
@@ -142,8 +205,6 @@ LC Stage-0 does not:
 
 ## Next Slices
 
-1. Add a generated help/man surface backed by the registry.
-2. Bind LC command metadata to Runtime Boundary and Seal capability labels.
-3. Add Panel profile presets for LC hosted, LC embedded, and LC OS-base planning.
-4. Add host-embedding contracts before any host integration behavior.
-5. Add boot-adjacent planning only after read-only host and VM evidence exists.
+1. Add Panel profile presets for LC hosted, LC embedded, and LC OS-base planning.
+2. Add host-embedding contracts before any host integration behavior.
+3. Add boot-adjacent planning only after read-only host and VM evidence exists.

@@ -18,6 +18,8 @@ This is planning/status work only. It does not implement macOS installation, app
 macos_integration_transferability_map_present=1
 macos_build_platform_probe_present=1
 macos_dry_run_plan_adapter_present=1
+macos_user_local_app_bundle_contract_present=1
+macos_user_local_app_bundle_implementation_plan_present=1
 macos_transferable_surfaces_classified=1
 macos_adapter_requirements_recorded=1
 macos_user_local_paths_proposed=1
@@ -85,7 +87,7 @@ macos_integration_transferability: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS user-local app bundle contract that defines the exact files, managed markers, rollback/reset behavior, and verification transcript required before any app bundle writer exists.
+Add a no-effect macOS app bundle writer dry-run prototype that emits the planned phase report, validates unsafe paths, and keeps commit_user_local_managed_artifacts=0.
 ```
 
 ## Non-Claims
