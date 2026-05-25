@@ -70,18 +70,19 @@ Nucleus task execution implementation plan
 ## Latest completed implementation slice
 
 ```text
-Latticra Seal signer invocation metadata implementation
+Latticra Seal signer invocation status/public-entry alignment
 ```
 
 Purpose completed:
 
 ```text
-implement the Seal signer invocation metadata boundary while preserving no signing, no verification, no signer invocation behavior, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority
+make the Seal signer invocation metadata implementation visible from public/status entry points while preserving no signing, no verification, no signer invocation behavior, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority
 ```
 
 ## Previous implementation slices
 
 ```text
+Latticra Seal signer invocation metadata implementation
 Latticra Seal signer handoff status/public-entry alignment
 Latticra Seal signer handoff metadata implementation
 Latticra Seal signing authorization metadata implementation
@@ -154,18 +155,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Signer invocation status/public-entry alignment, with completion estimate review only if capability posture changes
+Signing operation contract, with completion estimate review only if capability posture changes
 ```
 
 Purpose:
 
 ```text
-make the Seal signer invocation metadata implementation visible from public/status entry points while preserving no signing, no verification, no signer invocation behavior, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+define the next future signing operation boundary while preserving no signing implementation, no verification implementation, no signer invocation behavior, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority until separately implemented and guarded; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Signer invocation status/public-entry alignment.
+1. Signing operation contract.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.

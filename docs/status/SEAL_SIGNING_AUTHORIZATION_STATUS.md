@@ -20,6 +20,7 @@ docs/LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md
 docs/status/SEAL_SIGNER_HANDOFF_STATUS.md
 docs/LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
+docs/status/SEAL_SIGNER_INVOCATION_STATUS.md
 include/latticra/seal_signing_authorization.h
 include/latticra/seal_signer_handoff.h
 include/latticra/seal_signer_invocation.h
@@ -36,6 +37,7 @@ scripts/test-latticra-seal-signer-handoff.sh
 scripts/test-latticra-seal-signer-handoff-status.sh
 scripts/test-latticra-seal-signer-invocation-contract.sh
 scripts/test-latticra-seal-signer-invocation.sh
+scripts/test-latticra-seal-signer-invocation-status.sh
 docs/LATTICRA_SEAL_SIGNATURE_REQUEST_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md
 docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md
@@ -64,6 +66,7 @@ seal_signer_handoff_status_present=1
 seal_signer_invocation_contract_present=1
 seal_signer_invocation_implementation_present=1
 seal_signer_invocation_metadata_present=1
+seal_signer_invocation_status_present=1
 seal_signature_request_contract_present=1
 seal_signature_request_implementation_present=1
 seal_signature_request_status_present=1
@@ -103,6 +106,7 @@ sh scripts/test-latticra-seal-signer-handoff.sh
 sh scripts/test-latticra-seal-signer-handoff-status.sh
 sh scripts/test-latticra-seal-signer-invocation-contract.sh
 sh scripts/test-latticra-seal-signer-invocation.sh
+sh scripts/test-latticra-seal-signer-invocation-status.sh
 ```
 
 The predecessor signature-request implementation remains covered by:
@@ -123,6 +127,7 @@ seal signer handoff invariants: ok
 seal signer handoff status: ok
 seal signer invocation contract: ok
 seal signer invocation invariants: ok
+seal signer invocation status: ok
 seal signature request contract: ok
 seal signature request invariants: ok
 seal signature request status: ok
@@ -136,6 +141,6 @@ It does not add signing, verification, private-key handling, key generation, tru
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is signer invocation status/public-entry alignment or a narrow status-index alignment follow-up.
+The next valid Latticra Seal slice is a future signing operation contract or a narrow status-index alignment follow-up.
 
 That future slice must not add signing, verification, private-key handling, key generation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

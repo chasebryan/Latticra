@@ -3,6 +3,7 @@
 Status: public status shortcut
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal signer invocation status/public-entry note: 2026-05-25 CDT
 Latest Seal signer invocation implementation note: 2026-05-25 CDT
 Latest Seal signer invocation contract note: 2026-05-25 CDT
 Latest Seal signer handoff status/public-entry note: 2026-05-25 CDT
@@ -123,6 +124,7 @@ Latticra is the contract.
 ## Current milestone ledger
 
 ```text
+Seal signer invocation status/public-entry alignment
 Seal signer invocation metadata implementation
 Seal signer invocation contract
 Seal signer handoff status/public-entry alignment
@@ -213,14 +215,14 @@ Completion percentage review
 ## Current next step
 
 ```text
-Signer invocation status/public-entry alignment, with completion estimate review only if capability posture changes
+Signing operation contract, with completion estimate review only if capability posture changes
 ```
 
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
 
-It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal metadata slice implements signer invocation classification after signer handoff readiness without signing, verification, signer invocation behavior, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority.
+It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal status slice makes signer invocation metadata visible from public/status entry points without signing, verification, signer invocation behavior, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority.
 
 Current status fields:
 
@@ -239,6 +241,7 @@ seal_signer_handoff_metadata_present=1
 seal_signer_handoff_status_present=1
 seal_signer_invocation_contract_present=1
 seal_signer_invocation_metadata_present=1
+seal_signer_invocation_status_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1

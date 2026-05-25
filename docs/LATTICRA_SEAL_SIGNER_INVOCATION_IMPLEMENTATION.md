@@ -156,6 +156,7 @@ Run:
 ```sh
 sh scripts/test-latticra-seal-signer-invocation-contract.sh
 sh scripts/test-latticra-seal-signer-invocation.sh
+sh scripts/test-latticra-seal-signer-invocation-status.sh
 ```
 
 Expected output:
@@ -163,10 +164,11 @@ Expected output:
 ```text
 seal signer invocation contract: ok
 seal signer invocation invariants: ok
+seal signer invocation status: ok
 ```
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is signer invocation status/public-entry alignment or a narrow status-index alignment follow-up.
+The next valid Latticra Seal planning slice is a future signing operation contract or a narrow status-index alignment follow-up.
 
-That future slice must not add private-key handling, signing, verification, signer invocation behavior, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately contracted, implemented, and guarded.
+The signer invocation status/public-entry alignment now exists as a guarded documentation/status checkpoint. The future signing operation contract must not add private-key handling, signing, verification, signer invocation behavior, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately contracted, implemented, and guarded.
