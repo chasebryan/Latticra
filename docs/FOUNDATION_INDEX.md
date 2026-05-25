@@ -28,7 +28,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`SUPERVISOR_ARCHITECTURE.md`](SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor model and orchestration responsibilities.
 - [`EFFECT_GATES.md`](EFFECT_GATES.md) — effect categories, gating rules, and visibility requirements.
 - [`UI_TERMINAL_LANGUAGE.md`](UI_TERMINAL_LANGUAGE.md) — L-UI terminal/operator interface language direction.
-- [`LATTICRA_CONSOLE_FOUNDATION.md`](LATTICRA_CONSOLE_FOUNDATION.md) — Latticra Console Stage-0 foundation, Panel installability, profile presets, command registry, Runtime Boundary binding, and future host/OS-base posture.
+- [`LATTICRA_CONSOLE_FOUNDATION.md`](LATTICRA_CONSOLE_FOUNDATION.md) — Latticra Console Stage-0 foundation, Panel installability, profile presets, host-embedding contract, command registry, Runtime Boundary binding, and future host/OS-base posture.
 - [`SERVER_INTERACTION_MODEL.md`](SERVER_INTERACTION_MODEL.md) — signed, optional, inspectable server interaction model.
 - [`NADIA_OFFLINE_AI_FOUNDATION.md`](NADIA_OFFLINE_AI_FOUNDATION.md) — Stage-0 foundation contract for Latticra Nadia Witness Foundation, the planned offline AI companion for Latticra software development, systems engineering, AI development, and community-awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md) — Stage-1 no-network local context-pack engine for Nadia.
@@ -221,6 +221,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/SEAL_POLICY_DECISION_STATUS.md`](status/SEAL_POLICY_DECISION_STATUS.md) — status/public-entry checkpoint for report-only Seal policy decision metadata.
 - [`status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md`](status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md) — status checkpoint for the Seal policy decision report surface.
 - [`status/SEAL_POLICY_DECISION_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](status/SEAL_POLICY_DECISION_PUBLIC_ENTRYPOINT_ALIGNMENT.md) — public-entrypoint alignment for report-only Seal policy decision metadata.
+- [`status/SEAL_README_STATUS_ROW_ALIGNMENT.md`](status/SEAL_README_STATUS_ROW_ALIGNMENT.md) — README status row alignment with the current Latticra Seal public status checkpoint.
 - [`status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md`](status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md) — status checkpoint for the Seal policy decision report surface.
 - [`status/SEAL_SIGNER_INVOCATION_STATUS.md`](status/SEAL_SIGNER_INVOCATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer invocation implementation.
 - [`status/SEAL_SIGNER_HANDOFF_STATUS.md`](status/SEAL_SIGNER_HANDOFF_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer handoff implementation.
@@ -240,7 +241,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LIR_REPORT_REFINEMENT.md`](LIR_REPORT_REFINEMENT.md) — LIR report classification, graph shape, edge summary, no-effect-chain, and evidence fields.
 - [`LAT_LANGUAGE_GRAMMAR_CONTRACT.md`](LAT_LANGUAGE_GRAMMAR_CONTRACT.md) — first Lat / Latticra Language grammar contract for Lat-Core before parser implementation.
 - [`LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md`](LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md) — exact public API, parser result structs, AST structs, capacities, error labels, reports, fixture paths, string handling, source-span mapping, and tests before Lat parser code.
-- [`LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md`](LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md) — bounded no-effect Lat / Latticra Language grammar parser, AST metadata, line-comment metadata, first declaration/clause report metadata, fixture, and invariants.
+- [`LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md`](LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md) — bounded no-effect Lat / Latticra Language grammar parser, AST metadata, line-comment metadata, unsupported block-comment rejection, first declaration/clause report metadata, fixture, and invariants.
 - [`LAT_SEMANTIC_VALIDATION_CONTRACT.md`](LAT_SEMANTIC_VALIDATION_CONTRACT.md) — Lat semantic validation contract.
 - [`LAT_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md`](LAT_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md) — Lat semantic validation implementation plan.
 - [`LAT_SEMANTIC_DIAGNOSTICS_REFINEMENT.md`](LAT_SEMANTIC_DIAGNOSTICS_REFINEMENT.md) — Lat semantic diagnostic classes, counters, first-diagnostic indices, and report fields.
@@ -325,6 +326,7 @@ Latticra Seal signer invocation status/public-entry alignment + guardrails
 Latticra Seal signing operation contract + guardrails
 Latticra Seal signing operation metadata + invariants
 Latticra Seal signing operation status/public-entry alignment + guardrails
+Latticra Seal README status row alignment + guardrails
 Latticra Seal effect decision status/public-entry alignment + guardrails
 Latticra Seal runtime handoff status/public-entry alignment + guardrails
 Latticra Seal status rollup status/public-entry alignment + guardrails
@@ -384,6 +386,7 @@ LIR report refinement + invariants
 Lat language grammar implementation + invariants
 Lat grammar report metadata integration + invariants
 Lat grammar line-comment metadata refinement + invariants
+Lat grammar unsupported block-comment rejection refinement + invariants
 Lat semantic diagnostics refinement + invariants
 Lat model normalization implementation + invariants
 Lat model report declaration metadata integration + invariants
@@ -417,6 +420,7 @@ Current runtime boundary policy expansion status:
 ```text
 runtime_boundary_policy_expansion_after_threat_model_present=1
 runtime_boundary_abuse_case_fixture_expansion_present=1
+seal_readme_status_row_alignment_present=1
 completion_estimate_review_readme_status_alignment_present=1
 completion_estimate_after_runtime_boundary_abuse_case_fixtures_present=1
 estimate_adjustment_required=0

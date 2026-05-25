@@ -184,6 +184,47 @@ static int lat_grammar_accepts_line_comments(void) {
     return 0;
 }
 
+static int lat_grammar_rejects_block_comments(void) {
+    static const char source[] =
+        "// line comment before unsupported block\n"
+        "lat module BadBlock {\n"
+        "  /* block comments are not accepted in Lat-Core */\n"
+        "  state RootCell {\n"
+        "    origin = \"0/0\"\n"
+        "  }\n"
+        "}\n";
+    latticra_lat_parse_result_t result;
+    char report[LATTICRA_LAT_REPORT_MAX];
+
+    EXPECT_TRUE(parse_source(source, strlen(source), &result) == 0, "block comment source parses to error");
+    EXPECT_TRUE(result.error == LATTICRA_LAT_PARSE_UNSUPPORTED_BLOCK_COMMENT, "block comment rejected");
+    EXPECT_TRUE(result.comment_count == 1u, "line comment before block counted");
+    EXPECT_TRUE(result.span.start_line == 3u, "block comment error line");
+    EXPECT_TRUE(result.execution_allowed == 0, "block comments do not allow execution");
+    EXPECT_TRUE(result.no_effect == 1, "block comments preserve no-effect");
+
+    EXPECT_TRUE(latticra_lat_parse_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "block comment report builds");
+    EXPECT_TRUE(strstr(report, "error=unsupported_block_comment\n") != 0, "block comment error report");
+    EXPECT_TRUE(strstr(report, "comment_count=1\n") != 0, "block comment line comment count report");
+    return 0;
+}
+
+static int lat_grammar_preserves_block_comment_markers_in_strings(void) {
+    static const char source[] =
+        "lat module StringBlockMarker {\n"
+        "  state RootCell {\n"
+        "    route = \"/*not-comment*/\"\n"
+        "  }\n"
+        "}\n";
+    latticra_lat_parse_result_t result;
+
+    EXPECT_TRUE(parse_source(source, strlen(source), &result) == 0, "string block marker source parses");
+    EXPECT_TRUE(result.error == LATTICRA_LAT_PARSE_OK, "string block marker OK");
+    EXPECT_STR_EQ(result.clauses[0].right, "/*not-comment*/", "block marker string preserved");
+    EXPECT_TRUE(result.comment_count == 0u, "string block marker not counted as comment");
+    return 0;
+}
+
 static int lat_grammar_rejects_plain_l_extension_claim(void) {
     static const char source[] = "l module RootModule { }\n";
     latticra_lat_parse_result_t result;
@@ -276,6 +317,7 @@ static int lat_grammar_error_labels_are_stable(void) {
     EXPECT_STR_EQ(latticra_lat_parse_error_label(LATTICRA_LAT_PARSE_MISSING_MODULE), "missing_module", "module label");
     EXPECT_STR_EQ(latticra_lat_parse_error_label(LATTICRA_LAT_PARSE_INVALID_STRING_ESCAPE), "invalid_string_escape", "escape label");
     EXPECT_STR_EQ(latticra_lat_parse_error_label(LATTICRA_LAT_PARSE_LITERAL_NUL_IN_STRING), "literal_nul_in_string", "nul label");
+    EXPECT_STR_EQ(latticra_lat_parse_error_label(LATTICRA_LAT_PARSE_UNSUPPORTED_BLOCK_COMMENT), "unsupported_block_comment", "block comment label");
     EXPECT_STR_EQ(latticra_lat_parse_error_label(LATTICRA_LAT_PARSE_INTERNAL_ERROR), "internal_error", "internal label");
     return 0;
 }
@@ -331,6 +373,8 @@ int main(void) {
     if (lat_grammar_accepts_assertion_declaration() != 0) return 1;
     if (lat_grammar_accepts_effect_declaration() != 0) return 1;
     if (lat_grammar_accepts_line_comments() != 0) return 1;
+    if (lat_grammar_rejects_block_comments() != 0) return 1;
+    if (lat_grammar_preserves_block_comment_markers_in_strings() != 0) return 1;
     if (lat_grammar_rejects_plain_l_extension_claim() != 0) return 1;
     if (lat_grammar_rejects_unknown_keyword() != 0) return 1;
     if (lat_grammar_rejects_unterminated_string() != 0) return 1;

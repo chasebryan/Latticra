@@ -65,7 +65,7 @@ require_contains 'macos_app_bundle_writer_dry_run_present=1' "$doc"
 require_contains 'macos_app_bundle_created=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
-require_contains 'no-effect macOS local candidate asset probe' "$doc"
+require_contains 'no-effect integration between the local candidate asset probe and the app bundle writer dry-run' "$doc"
 
 require_contains 'Status: implementation plan status' "$status"
 require_contains 'macos_user_local_app_bundle_implementation_plan_present=1' "$status"

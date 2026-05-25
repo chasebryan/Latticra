@@ -83,6 +83,7 @@ stage_3_user_local_app_bundle_contract=present
 stage_3_user_local_app_bundle_implementation_plan=present
 stage_3_user_local_app_bundle_writer_dry_run=present
 stage_3_user_local_app_bundle_writer_alignment=present
+stage_3_local_candidate_asset_probe=present
 stage_3_user_local_app_bundle=future
 stage_4_user_local_verification_transcript=future
 stage_5_codesigning_notarization_plan=future
@@ -148,6 +149,14 @@ The Stage 3 app bundle writer alignment is implemented by:
 ```text
 docs/MACOS_APP_BUNDLE_WRITER_ALIGNMENT.md
 docs/status/MACOS_APP_BUNDLE_WRITER_ALIGNMENT_STATUS.md
+```
+
+The Stage 3 local candidate asset probe is implemented by:
+
+```text
+docs/MACOS_LOCAL_CANDIDATE_ASSET_PROBE.md
+scripts/macos-local-candidate-asset-probe.sh
+docs/status/MACOS_LOCAL_CANDIDATE_ASSET_PROBE_STATUS.md
 ```
 
 ## App Bundle Direction
@@ -270,5 +279,5 @@ macos_production_ready=0
 ## Next Recommended Lane
 
 ```text
-Add a no-effect macOS local candidate asset probe that checks a caller-supplied Panel executable and icon candidate without building, downloading, signing, notarizing, copying, or writing artifacts.
+Add no-effect integration between the local candidate asset probe and the app bundle writer dry-run so supplied candidates can move the dry-run decision to ready-for-future-commit-gate while still keeping commit_user_local_managed_artifacts=0.
 ```

@@ -70,7 +70,7 @@ macos_user_local_app_bundle_implementation_plan: ok
 ## Next Recommended Lane
 
 ```text
-Add a no-effect macOS local candidate asset probe that checks a caller-supplied Panel executable and icon candidate without building, downloading, signing, notarizing, copying, or writing artifacts.
+Add no-effect integration between the local candidate asset probe and the app bundle writer dry-run so supplied candidates can move the dry-run decision to ready-for-future-commit-gate while still keeping commit_user_local_managed_artifacts=0.
 ```
 
 ## Non-Claims

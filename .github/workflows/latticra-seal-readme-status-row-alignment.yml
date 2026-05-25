@@ -1,0 +1,17 @@
+name: Latticra Seal README Status Row Alignment
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sh scripts/test-latticra-seal-readme-status-row-alignment.sh

@@ -309,9 +309,11 @@ LC_PROFILE=$(cfg_section lc profile panel_embedded)
 LC_COMMAND_REGISTRY_PROFILE=$(cfg_section lc command_registry_profile c-static-table)
 LC_SUBSTRATE_BRIDGE_PROFILE=$(cfg_section lc substrate_bridge_profile metadata-bound)
 LC_HOST_EMBEDDING_PROFILE=$(cfg_section lc host_embedding_profile panel-contained)
+LC_HOST_EMBEDDING_CONTRACT_PROFILE=$(cfg_section lc host_embedding_contract_profile lc-host-embedding-v0)
 LC_OS_BASE_PROFILE=$(cfg_section lc os_base_profile planned-no-boot-authority)
 LC_PANEL_BRIDGE=$(cfg_section lc panel_bridge panel-aware)
 LC_REPORT_ONLY=$(cfg_section lc report_only true)
+LC_REQUIRE_HOST_EMBEDDING_CONTRACT=$(cfg_section lc require_host_embedding_contract true)
 LC_REQUIRE_RUNTIME_BOUNDARY_BINDING=$(cfg_section lc require_runtime_boundary_binding true)
 LC_REQUIRE_SEAL_CAPABILITY_LABELS=$(cfg_section lc require_seal_capability_labels true)
 
@@ -400,13 +402,16 @@ panel_console_bridge=$LC_PANEL_BRIDGE
 command_registry_profile=$LC_COMMAND_REGISTRY_PROFILE
 substrate_bridge_profile=$LC_SUBSTRATE_BRIDGE_PROFILE
 host_embedding_profile=$LC_HOST_EMBEDDING_PROFILE
+host_embedding_contract_profile=$LC_HOST_EMBEDDING_CONTRACT_PROFILE
 os_base_profile=$LC_OS_BASE_PROFILE
 report_only=$LC_REPORT_ONLY
+host_embedding_contract_required=$LC_REQUIRE_HOST_EMBEDDING_CONTRACT
 runtime_boundary_binding_required=$LC_REQUIRE_RUNTIME_BOUNDARY_BINDING
 seal_capability_labels_required=$LC_REQUIRE_SEAL_CAPABILITY_LABELS
 command_registry_status=seed-registry
 substrate_bridge_status=$LC_SUBSTRATE_BRIDGE_PROFILE
 host_embedding_status=$LC_HOST_EMBEDDING_PROFILE
+host_embedding_contract_status=metadata-only-contract
 os_base_status=$LC_OS_BASE_PROFILE
 operator_shell_present=1
 execution_allowed=0
@@ -1079,13 +1084,16 @@ panel_console_bridge = "$LC_PANEL_BRIDGE"
 command_registry_profile = "$LC_COMMAND_REGISTRY_PROFILE"
 substrate_bridge_profile = "$LC_SUBSTRATE_BRIDGE_PROFILE"
 host_embedding_profile = "$LC_HOST_EMBEDDING_PROFILE"
+host_embedding_contract_profile = "$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
 os_base_profile = "$LC_OS_BASE_PROFILE"
 report_only = $LC_REPORT_ONLY
+host_embedding_contract_required = $LC_REQUIRE_HOST_EMBEDDING_CONTRACT
 runtime_boundary_binding_required = $LC_REQUIRE_RUNTIME_BOUNDARY_BINDING
 seal_capability_labels_required = $LC_REQUIRE_SEAL_CAPABILITY_LABELS
 command_registry_status = "seed-registry"
 substrate_bridge_status = "$LC_SUBSTRATE_BRIDGE_PROFILE"
 host_embedding_status = "$LC_HOST_EMBEDDING_PROFILE"
+host_embedding_contract_status = "metadata-only-contract"
 os_base_status = "$LC_OS_BASE_PROFILE"
 configurable = true
 panel_installable = true
@@ -1105,8 +1113,10 @@ panel_console_bridge = "hosted-reference"
 command_registry_profile = "c-static-table"
 substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "not-embedded"
+host_embedding_contract_profile = "lc-host-embedding-v0"
 os_base_profile = "planned-no-boot-authority"
 report_only = true
+host_embedding_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1122,8 +1132,10 @@ panel_console_bridge = "panel-aware"
 command_registry_profile = "c-static-table"
 substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "panel-contained"
+host_embedding_contract_profile = "lc-host-embedding-v0"
 os_base_profile = "planned-no-boot-authority"
 report_only = true
+host_embedding_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1139,8 +1151,10 @@ panel_console_bridge = "panel-aware"
 command_registry_profile = "c-static-table"
 substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "host-embedded-planning"
+host_embedding_contract_profile = "lc-host-embedding-v0"
 os_base_profile = "planned-no-boot-authority"
 report_only = true
+host_embedding_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1156,8 +1170,10 @@ panel_console_bridge = "panel-aware"
 command_registry_profile = "c-static-table"
 substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "host-embedded-planning"
+host_embedding_contract_profile = "lc-host-embedding-v0"
 os_base_profile = "os-base-planning-no-boot-authority"
 report_only = true
+host_embedding_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1166,6 +1182,31 @@ network_allowed = false
 runtime_enforcement_allowed = false
 boot_allowed = false
 LCPROFILE
+  write_file "$PREFIX/share/latticra/lc/host-embedding/contract.toml" 0644 <<LC_HOST_CONTRACT
+contract_name = "Latticra Console Host Embedding Contract"
+contract_profile = "$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
+contract_status = "metadata-only"
+host_embedding_profile = "$LC_HOST_EMBEDDING_PROFILE"
+host_adapter_required = true
+panel_install_required = true
+runtime_boundary_required = true
+seal_capability_labels_required = true
+operator_consent_required = true
+read_only_host_inventory_required_before_embedding = true
+receipt_required_before_embedding = true
+promotion_gate = "contract_receipt_and_read_only_host_inventory"
+command_surface = "lc host-contract"
+future_embedding_command = "lc host"
+no_effect = true
+host_embedded_now = false
+host_process_launch_allowed = false
+host_file_read_allowed = false
+host_file_write_allowed = false
+host_mutation_allowed = false
+network_allowed = false
+runtime_enforcement_allowed = false
+boot_allowed = false
+LC_HOST_CONTRACT
   write_file "$PREFIX/share/latticra/lc/README.md" 0644 <<'LCREADME'
 # Latticra Console (LC)
 
@@ -1176,6 +1217,11 @@ seed command registry, substrate bridge, host-embedding plan, and future OS-base
 direction without launching external host commands, mutating the host, using the
 network, granting runtime enforcement authority, booting hardware, or claiming a
 production operating system.
+
+The host-embedding lane includes a contract file at
+share/latticra/lc/host-embedding/contract.toml. That contract is an evidence
+gate only; it does not grant host adapter, file, process, network, runtime, or
+boot authority.
 LCREADME
   write_file "$PREFIX/share/latticra/lc/commands/seed-registry.txt" 0644 <<'LCCOMMANDS'
 name=help category=core effect=none capability=lc.core.help
@@ -1191,6 +1237,7 @@ name=lc commands category=core effect=none capability=lc.core.registry
 name=lc profiles category=core effect=none capability=lc.core.profiles
 name=lc substrate category=substrate effect=none capability=lc.substrate.inspect
 name=lc host category=host effect=future-gated capability=lc.host.inspect
+name=lc host-contract category=host effect=none capability=lc.host.contract
 name=lc os category=os-base effect=future-gated capability=lc.os.inspect
 name=pwd category=panel effect=none capability=lc.panel.navigation
 name=cd category=panel effect=none capability=lc.panel.navigation
@@ -1881,6 +1928,7 @@ render_lc_man() {
   echo "  latticra-lc profiles"
   echo "  latticra-lc substrate"
   echo "  latticra-lc host"
+  echo "  latticra-lc host-contract"
   echo "  latticra-lc os"
   echo
   render_lc_help || return \$?
@@ -1923,6 +1971,9 @@ render_lc_boundary() {
       "lc substrate")
         seal_capability=seal.capability.inspect
         ;;
+      "lc host-contract")
+        seal_capability=seal.capability.inspect
+        ;;
       "lc host")
         seal_capability=seal.capability.inspect
         runtime_request=future-gated
@@ -1961,13 +2012,16 @@ case "\${1:-status}" in
     echo "command_registry_profile=$LC_COMMAND_REGISTRY_PROFILE"
     echo "substrate_bridge_profile=$LC_SUBSTRATE_BRIDGE_PROFILE"
     echo "host_embedding_profile=$LC_HOST_EMBEDDING_PROFILE"
+    echo "host_embedding_contract_profile=$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
     echo "os_base_profile=$LC_OS_BASE_PROFILE"
     echo "report_only=$LC_REPORT_ONLY"
+    echo "host_embedding_contract_required=$LC_REQUIRE_HOST_EMBEDDING_CONTRACT"
     echo "runtime_boundary_binding_required=$LC_REQUIRE_RUNTIME_BOUNDARY_BINDING"
     echo "seal_capability_labels_required=$LC_REQUIRE_SEAL_CAPABILITY_LABELS"
     echo "command_registry_status=seed-registry"
     echo "substrate_bridge_status=$LC_SUBSTRATE_BRIDGE_PROFILE"
     echo "host_embedding_status=$LC_HOST_EMBEDDING_PROFILE"
+    echo "host_embedding_contract_status=metadata-only-contract"
     echo "os_base_status=$LC_OS_BASE_PROFILE"
     echo "operator_shell_present=1"
     echo "future_os_base_claim=planned_not_claimed"
@@ -2014,10 +2068,38 @@ case "\${1:-status}" in
     ;;
   host)
     echo "lc_host_embedding=$LC_HOST_EMBEDDING_PROFILE"
+    echo "host_embedding_contract=$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
+    echo "host_embedding_contract_required=$LC_REQUIRE_HOST_EMBEDDING_CONTRACT"
     echo "host_embedded_now=0"
     echo "host_mutation_allowed=0"
     echo "file_io_allowed=0"
     echo "future_host_role=embed-within-host-after-gates"
+    ;;
+  host-contract|contract)
+    echo "LATTICRA CONSOLE HOST EMBEDDING CONTRACT"
+    echo "contract_profile=$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
+    echo "contract_status=metadata-only"
+    echo "contract_file=\$LC_DIR/host-embedding/contract.toml"
+    echo "host_embedding_profile=$LC_HOST_EMBEDDING_PROFILE"
+    echo "host_adapter_required=1"
+    echo "panel_install_required=1"
+    echo "runtime_boundary_required=1"
+    echo "seal_capability_labels_required=1"
+    echo "operator_consent_required=1"
+    echo "read_only_host_inventory_required_before_embedding=1"
+    echo "receipt_required_before_embedding=1"
+    echo "promotion_gate=contract_receipt_and_read_only_host_inventory"
+    echo "command_surface=lc host-contract"
+    echo "future_embedding_command=lc host"
+    echo "no_effect=1"
+    echo "host_embedded_now=0"
+    echo "host_process_launch_allowed=0"
+    echo "host_file_read_allowed=0"
+    echo "host_file_write_allowed=0"
+    echo "host_mutation_allowed=0"
+    echo "network_allowed=0"
+    echo "runtime_enforcement_allowed=0"
+    echo "boot_allowed=0"
     ;;
   os|base)
     echo "lc_os_base_status=$LC_OS_BASE_PROFILE"

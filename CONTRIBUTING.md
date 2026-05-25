@@ -61,6 +61,12 @@ Before changing safety guards, CI workflows, shell checks, or quality gates, run
 make quality-safety-guards
 ```
 
+Before submitting broader code or installer changes, run:
+
+```sh
+make quality
+```
+
 ## Security-sensitive changes
 
 Changes that affect runtime behavior, state mutation, external effects, command behavior, file behavior, network behavior, hardware behavior, boot behavior, recovery behavior, or security claims require explicit tests and documentation.

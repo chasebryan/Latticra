@@ -8,6 +8,7 @@ Latest completion estimate review after runtime-boundary abuse-case fixtures not
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
 Latest runtime boundary abuse-case fixture expansion note: 2026-05-25 CDT
+Latest Seal README status row alignment note: 2026-05-25 CDT
 Latest Seal policy decision status/public-entry note: 2026-05-25 CDT
 Latest Seal signed request status/public-entry note: 2026-05-25 CDT
 Latest Seal request freshness status/public-entry note: 2026-05-25 CDT
@@ -46,6 +47,7 @@ Latest Nadia tokenizer runtime attachment contract Stage-24 note: 2026-05-25 CDT
 Latest Nadia prompt tokenization contract Stage-25 note: 2026-05-25 CDT
 Latest Nadia prompt token sequence contract Stage-26 note: 2026-05-25 CDT
 Latest Latticra Console profile preset note: 2026-05-25 CDT
+Latest Latticra Console host-embedding contract note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -81,6 +83,7 @@ Latest Seal core evidence index alignment note: 2026-05-22 02:37 CDT
 Latest Seal core evidence public entrypoint alignment note: 2026-05-22 02:45 CDT
 Latest Lat grammar report metadata integration note: 2026-05-25 CDT
 Latest Lat grammar line-comment metadata refinement note: 2026-05-25 CDT
+Latest Lat grammar unsupported block-comment rejection refinement note: 2026-05-25 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
 Latest Lat model report declaration metadata integration note: 2026-05-25 CDT
 Latest Lat model report clause metadata integration note: 2026-05-25 CDT
@@ -202,6 +205,7 @@ Latticra is the contract.
 ## Current milestone ledger
 
 ```text
+Seal README status row alignment
 Seal capability gate status/public-entry alignment
 Seal effect decision status/public-entry alignment
 Seal runtime handoff status/public-entry alignment
@@ -245,6 +249,7 @@ Nadia tokenizer runtime attachment contract Stage-24
 Nadia prompt tokenization contract Stage-25
 Nadia prompt token sequence contract Stage-26
 Latticra Console profile presets
+Latticra Console host-embedding contract
 Seal verification policy status/public-entry alignment
 Seal key parsing status/public-entry alignment
 Seal bounded no-effect key parsing implementation
@@ -283,6 +288,7 @@ Lat semantic validation implementation plan
 Lat semantic validation foundation
 Lat grammar report metadata integration
 Lat grammar line-comment metadata refinement
+Lat grammar unsupported block-comment rejection refinement
 Lat semantic diagnostics refinement
 Lat model normalization implementation
 Lat model report declaration metadata integration
@@ -381,9 +387,12 @@ The Seal core evidence status surface is now public-entrypoint visible.
 
 It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal status/public-entry slice makes the report-only policy decision metadata and deterministic policy decision report surface visible from public status surfaces while preserving no real policy evaluation, no policy enforcement, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signature verification, no freshness validation, no replay detection, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, or runtime authority.
 
+The Seal README status row alignment now keeps the compact README Seal row and Seal current-posture summary aligned with the current status checkpoint without changing implementation behavior, production enforcement, public readiness, security hardening, completion estimates, or runtime authority.
+
 Current status fields:
 
 ```text
+seal_readme_status_row_alignment_present=1
 seal_core_evidence_status_surface_present=1
 seal_report_envelope_metadata_present=1
 seal_report_envelope_ready_metadata_present=1
@@ -608,7 +617,7 @@ Lat semantic validation now reports deterministic diagnostic classes, diagnostic
 
 ## Current Lat grammar boundary
 
-Lat grammar parsing now reports deterministic first declaration, first clause, and line-comment metadata from successful AST parses while preserving no-effect parsing behavior and avoiding operator evaluation. Line comments remain metadata-only, may contain otherwise forbidden behavior-marker words, and do not grant execution authority.
+Lat grammar parsing now reports deterministic first declaration, first clause, and line-comment metadata from successful AST parses while preserving no-effect parsing behavior and avoiding operator evaluation. Line comments remain metadata-only, may contain otherwise forbidden behavior-marker words, and do not grant execution authority. Block-comment openers outside strings and line comments now fail deterministically with `unsupported_block_comment`.
 
 ## Current Lat model normalization boundary
 

@@ -1,7 +1,7 @@
 # Latticra Lat Language Grammar Implementation
 
-Status: implementation with line-comment metadata refinement
-Scope: bounded no-effect Lat / Latticra Language grammar parser, parse result model, AST metadata, line-comment metadata, report surface, fixture, and invariants.
+Status: implementation with line-comment metadata and unsupported block-comment rejection
+Scope: bounded no-effect Lat / Latticra Language grammar parser, parse result model, AST metadata, line-comment metadata, unsupported block-comment rejection, report surface, fixture, and invariants.
 
 ## Purpose
 
@@ -10,6 +10,8 @@ This implementation adds the first bounded parser for the Lat / Latticra Languag
 The parser accepts the first Lat-Core declaration grammar shape and records module, declaration, clause, effect, source-span, and no-effect metadata.
 
 The parser also records deterministic line-comment metadata for audit visibility. Line comments are skipped by the grammar, may contain otherwise forbidden behavior marker words, and do not change no-effect flags or clause/operator behavior.
+
+Block comments are rejected with a deterministic `unsupported_block_comment` parse error outside strings and line comments. `/*` and `*/` text inside string literals remains ordinary string content.
 
 This implementation does not execute Lat, compile Lat, interpret Lat, lower Lat to LIR, render L-UI, call Nucleus task behavior, read files, write files, open network connections, mutate state, or touch hardware.
 
@@ -130,6 +132,7 @@ invalid_hex_escape
 literal_nul_in_string
 capacity_exceeded
 forbidden_behavior_marker
+unsupported_block_comment
 internal_error
 ```
 

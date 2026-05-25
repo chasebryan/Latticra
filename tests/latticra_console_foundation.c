@@ -38,6 +38,7 @@ int main(void) {
     char help_report[LATTICRA_CONSOLE_HELP_REPORT_MAX];
     char manpage_report[LATTICRA_CONSOLE_MANPAGE_REPORT_MAX];
     char boundary_report[LATTICRA_CONSOLE_BOUNDARY_REPORT_MAX];
+    char host_contract_report[LATTICRA_CONSOLE_HOST_CONTRACT_REPORT_MAX];
     int failures = 0;
 
     failures += require_int(
@@ -64,6 +65,10 @@ int main(void) {
         result.substrate_bridge_status,
         "metadata-bound-ready");
     failures += require_text(
+        "result.host_embedding_contract_status",
+        result.host_embedding_contract_status,
+        "metadata-only-contract-ready");
+    failures += require_text(
         "result.os_base_status",
         result.os_base_status,
         "planned-no-boot-authority");
@@ -72,6 +77,10 @@ int main(void) {
     failures += require_int("result.panel_installable", result.panel_installable, 1);
     failures += require_int("result.command_registry_present", result.command_registry_present, 1);
     failures += require_int("result.substrate_bridge_present", result.substrate_bridge_present, 1);
+    failures += require_int(
+        "result.host_embedding_contract_present",
+        result.host_embedding_contract_present,
+        1);
     failures += require_int("result.operator_shell_present", result.operator_shell_present, 1);
     failures += require_int("result.execution_allowed", result.execution_allowed, 0);
     failures += require_int("result.host_mutation_allowed", result.host_mutation_allowed, 0);
@@ -113,6 +122,17 @@ int main(void) {
         failures += require_int("lc os host launch", command->launches_host_process, 0);
     }
 
+    command = latticra_console_find_command("lc host-contract");
+    failures += require_int("find lc host-contract", command != 0, 1);
+    if (command != 0) {
+        failures += require_text(
+            "lc host-contract capability",
+            command->capability_label,
+            "lc.host.contract");
+        failures += require_int("lc host-contract future gate", command->requires_future_gate, 0);
+        failures += require_int("lc host-contract host launch", command->launches_host_process, 0);
+    }
+
     for (i = 0u; i < latticra_console_command_count(); ++i) {
         command = latticra_console_command_at(i);
         failures += require_int("command_at", command != 0, 1);
@@ -131,6 +151,11 @@ int main(void) {
     failures += require_contains("report", report, "component_key=latticra_console");
     failures += require_contains("report", report, "panel_installable=1");
     failures += require_contains("report", report, "substrate_bridge_present=1");
+    failures += require_contains("report", report, "host_embedding_contract_present=1");
+    failures += require_contains(
+        "report",
+        report,
+        "host_embedding_contract_status=metadata-only-contract-ready");
     failures += require_contains("report", report, "future_os_base_claim=planned_not_claimed");
     failures += require_contains("report", report, "phase1_reference_lessons=registry_help_guarded_boundary_os_track");
     failures += require_contains("report", report, "command_registry_source=c-static-table");
@@ -149,6 +174,8 @@ int main(void) {
         registry_report,
         "LATTICRA CONSOLE COMMAND REGISTRY");
     failures += require_contains("registry_report", registry_report, "command=lc substrate");
+    failures += require_contains("registry_report", registry_report, "command=lc host-contract");
+    failures += require_contains("registry_report", registry_report, "capability=lc.host.contract");
     failures += require_contains("registry_report", registry_report, "command=lc profiles");
     failures += require_contains("registry_report", registry_report, "capability=lc.core.profiles");
     failures += require_contains("registry_report", registry_report, "capability=lc.substrate.inspect");
@@ -162,6 +189,7 @@ int main(void) {
     failures += require_contains("help_report", help_report, "LATTICRA CONSOLE HELP");
     failures += require_contains("help_report", help_report, "registry_source=c-static-table");
     failures += require_contains("help_report", help_report, "lc substrate");
+    failures += require_contains("help_report", help_report, "lc host-contract");
     failures += require_contains("help_report", help_report, "capability=lc.substrate.inspect");
     failures += require_contains("help_report", help_report, "host_process_launch_allowed=0");
 
@@ -171,6 +199,7 @@ int main(void) {
         LATTICRA_STATUS_OK);
     failures += require_contains("manpage_report", manpage_report, "LATTICRA-CONSOLE(1)");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc - Latticra Console");
+    failures += require_contains("manpage_report", manpage_report, "latticra-lc host-contract");
     failures += require_contains("manpage_report", manpage_report, "lc os");
     failures += require_contains("manpage_report", manpage_report, "production_os_claim=0");
 
@@ -189,6 +218,26 @@ int main(void) {
         LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK);
     failures += require_int("lc substrate boundary future gate", boundary.requires_future_gate, 0);
     failures += require_int("lc substrate boundary no effect", boundary.no_effect, 1);
+
+    command = latticra_console_find_command("lc host-contract");
+    failures += require_int(
+        "lc host-contract boundary",
+        latticra_console_command_boundary_classify(command, &boundary),
+        LATTICRA_STATUS_OK);
+    failures += require_text(
+        "lc host-contract seal capability",
+        boundary.seal_capability_label,
+        "seal.capability.inspect");
+    failures += require_int(
+        "lc host-contract runtime kind",
+        boundary.runtime_request_kind,
+        LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK);
+    failures += require_int(
+        "lc host-contract boundary future gate",
+        boundary.requires_future_gate,
+        0);
+    failures += require_int("lc host-contract boundary no effect", boundary.no_effect, 1);
+    failures += require_int("lc host-contract boundary host mutation allowed", boundary.host_mutation_allowed, 0);
 
     command = latticra_console_find_command("lc os");
     failures += require_int(
@@ -218,12 +267,38 @@ int main(void) {
     failures += require_contains("boundary_report", boundary_report, "runtime_boundary_bound=1");
     failures += require_contains("boundary_report", boundary_report, "seal_capability_labels_bound=1");
     failures += require_contains("boundary_report", boundary_report, "command=lc substrate");
+    failures += require_contains("boundary_report", boundary_report, "command=lc host-contract");
     failures += require_contains("boundary_report", boundary_report, "runtime_request=authority-check");
     failures += require_contains("boundary_report", boundary_report, "command=lc os");
     failures += require_contains("boundary_report", boundary_report, "runtime_request=future-gated");
     failures += require_contains("boundary_report", boundary_report, "policy_matrix_cell=future-gated-operation");
     failures += require_contains("boundary_report", boundary_report, "seal_capability=seal.capability.inspect");
     failures += require_contains("boundary_report", boundary_report, "boot_allowed=0");
+
+    failures += require_int(
+        "host_contract_report",
+        latticra_console_host_contract_report(host_contract_report, sizeof(host_contract_report)),
+        LATTICRA_STATUS_OK);
+    failures += require_contains(
+        "host_contract_report",
+        host_contract_report,
+        "LATTICRA CONSOLE HOST EMBEDDING CONTRACT");
+    failures += require_contains(
+        "host_contract_report",
+        host_contract_report,
+        "contract_profile=lc-host-embedding-v0");
+    failures += require_contains(
+        "host_contract_report",
+        host_contract_report,
+        "host_process_launch_allowed=0");
+    failures += require_contains(
+        "host_contract_report",
+        host_contract_report,
+        "host_file_read_allowed=0");
+    failures += require_contains(
+        "host_contract_report",
+        host_contract_report,
+        "promotion_gate=contract_receipt_and_read_only_host_inventory");
 
     if (failures != 0) return 1;
     puts("latticra_console_foundation: ok");

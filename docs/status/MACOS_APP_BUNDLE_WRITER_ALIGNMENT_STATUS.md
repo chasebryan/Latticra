@@ -14,6 +14,7 @@ The alignment makes the current capability explicit: a no-effect dry-run writer 
 
 ```text
 macos_app_bundle_writer_alignment_present=1
+macos_local_candidate_asset_probe_present=1
 macos_dry_run_writer_public_meaning_recorded=1
 macos_commit_capable_writer_nonclaim_recorded=1
 macos_future_commit_gate_requirements_recorded=1
@@ -70,7 +71,7 @@ macos_app_bundle_writer_alignment: ok
 ## Next Recommended Lane
 
 ```text
-Add a no-effect macOS local candidate asset probe that checks a caller-supplied Panel executable and icon candidate without building, downloading, signing, notarizing, copying, or writing artifacts.
+Add no-effect integration between the local candidate asset probe and the app bundle writer dry-run so supplied candidates can move the dry-run decision to ready-for-future-commit-gate while still keeping commit_user_local_managed_artifacts=0.
 ```
 
 ## Non-Claims

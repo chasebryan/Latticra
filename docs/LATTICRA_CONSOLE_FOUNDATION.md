@@ -35,8 +35,10 @@ panel_console_bridge=panel-aware
 command_registry_profile=c-static-table
 substrate_bridge_profile=metadata-bound
 host_embedding_profile=panel-contained
+host_embedding_contract_profile=lc-host-embedding-v0
 os_base_profile=planned-no-boot-authority
 report_only=true
+host_embedding_contract_required=true
 runtime_boundary_binding_required=true
 seal_capability_labels_required=true
 ```
@@ -52,7 +54,7 @@ share/latticra/lc/profiles/panel-embedded.toml
 share/latticra/lc/profiles/host-embedded-planning.toml
 share/latticra/lc/profiles/os-base-planning.toml
 share/latticra/lc/substrate
-share/latticra/lc/host-embedding
+share/latticra/lc/host-embedding/contract.toml
 share/latticra/components/latticra-console.installed
 ```
 
@@ -84,6 +86,7 @@ lc commands
 lc profiles
 lc substrate
 lc host
+lc host-contract
 lc os
 pwd
 cd
@@ -115,9 +118,11 @@ profile = "panel_embedded"
 command_registry_profile = "c-static-table"
 substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "panel-contained"
+host_embedding_contract_profile = "lc-host-embedding-v0"
 os_base_profile = "planned-no-boot-authority"
 panel_bridge = "panel-aware"
 report_only = true
+require_host_embedding_contract = true
 require_runtime_boundary_binding = true
 require_seal_capability_labels = true
 ```
@@ -144,6 +149,45 @@ lc profile custom
 ```
 
 The install engine writes the selected profile into `etc/latticra/lc.toml` and installs the preset files under `share/latticra/lc/profiles/`. These profiles remain configuration metadata only.
+
+## Host Embedding Contract
+
+LC now installs and reports a host-embedding contract before any host integration behavior exists:
+
+```text
+contract_profile=lc-host-embedding-v0
+contract_status=metadata-only
+host_adapter_required=1
+panel_install_required=1
+runtime_boundary_required=1
+seal_capability_labels_required=1
+operator_consent_required=1
+read_only_host_inventory_required_before_embedding=1
+receipt_required_before_embedding=1
+promotion_gate=contract_receipt_and_read_only_host_inventory
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report host-contract
+latticra-lc host-contract
+```
+
+The contract explicitly denies host authority:
+
+```text
+host_embedded_now=0
+host_process_launch_allowed=0
+host_file_read_allowed=0
+host_file_write_allowed=0
+host_mutation_allowed=0
+network_allowed=0
+runtime_enforcement_allowed=0
+boot_allowed=0
+```
+
+`lc host-contract` is an inspectable contract command. `lc host` remains the future-gated embedding lane.
 
 ## Help And Manpage Rendering
 
@@ -183,6 +227,7 @@ Stage-0 command bindings use these rules:
 
 ```text
 core, panel, and substrate inspection -> authority-check / validation-only
+lc host-contract -> authority-check / validation-only
 lc host -> future-gated command-execute planning
 lc os -> future-gated boot-action planning
 ```
@@ -257,6 +302,6 @@ LC Stage-0 does not:
 
 ## Next Slices
 
-1. Add host-embedding contracts before any host integration behavior.
+1. Add read-only host inventory contracts before any host adapter exists.
 2. Add boot-adjacent planning only after read-only host and VM evidence exists.
-3. Add LC profile receipts so Panel saves profile selection as signed evidence when Seal signing authority exists.
+3. Add LC profile and host-contract receipts so Panel saves selections as signed evidence when Seal signing authority exists.

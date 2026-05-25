@@ -10,6 +10,8 @@ This prototype emits the writer-shaped phase report from the macOS user-local ap
 
 It validates planned user-local paths, inspects existing targets for Latticra managed markers, checks whether optional local Panel executable and icon candidates are present, and reports the phase decision. It does not create an app bundle, write Application Support files, install wrappers, mutate shell profiles, build the Panel, use launchd, access Keychain, request TCC permissions, use Endpoint Security, use System Extensions, use Network Extensions, open the network, or grant runtime authority.
 
+The macOS local candidate asset probe is the no-effect readiness check that can supply those optional executable and icon candidates.
+
 ## Command
 
 ```sh
@@ -152,5 +154,5 @@ This prototype is not macOS installation, macOS app bundle evidence, signed app 
 ## Next Recommended Lane
 
 ```text
-Add a no-effect macOS local candidate asset probe that checks a caller-supplied Panel executable and icon candidate without building, downloading, signing, notarizing, copying, or writing artifacts.
+Add no-effect integration between the local candidate asset probe and the app bundle writer dry-run so supplied candidates can move the dry-run decision to ready-for-future-commit-gate while still keeping commit_user_local_managed_artifacts=0.
 ```

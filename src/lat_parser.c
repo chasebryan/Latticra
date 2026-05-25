@@ -79,6 +79,7 @@ const char *latticra_lat_parse_error_label(latticra_lat_parse_error_t error) {
     case LATTICRA_LAT_PARSE_LITERAL_NUL_IN_STRING: return "literal_nul_in_string";
     case LATTICRA_LAT_PARSE_CAPACITY_EXCEEDED: return "capacity_exceeded";
     case LATTICRA_LAT_PARSE_FORBIDDEN_BEHAVIOR_MARKER: return "forbidden_behavior_marker";
+    case LATTICRA_LAT_PARSE_UNSUPPORTED_BLOCK_COMMENT: return "unsupported_block_comment";
     case LATTICRA_LAT_PARSE_INTERNAL_ERROR:
     default: return "internal_error";
     }
@@ -167,6 +168,69 @@ static void span_finish(latticra_lat_source_span_t *span, const lat_cursor_t *cu
     span->end_column = cursor->column;
 }
 
+static void cursor_record_line_comment(lat_cursor_t *cursor, latticra_lat_source_span_t comment_span) {
+    if (cursor == 0) return;
+    if (cursor->comment_count == 0u) cursor->first_comment_span = comment_span;
+    cursor->comment_count += 1u;
+}
+
+static int find_unsupported_block_comment(
+    const char *source,
+    size_t source_len,
+    lat_cursor_t *block_cursor) {
+    lat_cursor_t cursor;
+    int in_string = 0;
+    int escaped = 0;
+    int in_line_comment = 0;
+
+    if (source == 0 || block_cursor == 0) return 0;
+    cursor.source = source;
+    cursor.source_len = source_len;
+    cursor.offset = 0u;
+    cursor.line = 1u;
+    cursor.column = 1u;
+    cursor.comment_count = 0u;
+    span_default(&cursor.first_comment_span);
+
+    while (!cursor_at_end(&cursor)) {
+        char ch = cursor_peek(&cursor);
+        char next = cursor_peek_next(&cursor);
+
+        if (in_line_comment) {
+            if (ch == '\n') in_line_comment = 0;
+            cursor_advance(&cursor);
+            continue;
+        }
+        if (in_string) {
+            if (escaped) {
+                escaped = 0;
+            } else if (ch == '\\') {
+                escaped = 1;
+            } else if (ch == '"') {
+                in_string = 0;
+            }
+            cursor_advance(&cursor);
+            continue;
+        }
+
+        if (ch == '/' && next == '/') {
+            latticra_lat_source_span_t comment_span = span_start(&cursor);
+            while (!cursor_at_end(&cursor) && cursor_peek(&cursor) != '\n') cursor_advance(&cursor);
+            span_finish(&comment_span, &cursor);
+            cursor_record_line_comment(&cursor, comment_span);
+            in_line_comment = 1;
+            continue;
+        }
+        if (ch == '/' && next == '*') {
+            *block_cursor = cursor;
+            return 1;
+        }
+        if (ch == '"') in_string = 1;
+        cursor_advance(&cursor);
+    }
+    return 0;
+}
+
 static int is_ident_start(char ch) {
     return isalpha((unsigned char)ch) || ch == '_';
 }
@@ -184,8 +248,7 @@ static void skip_ws_and_comments(lat_cursor_t *cursor) {
             latticra_lat_source_span_t comment_span = span_start(cursor);
             while (!cursor_at_end(cursor) && cursor_peek(cursor) != '\n') cursor_advance(cursor);
             span_finish(&comment_span, cursor);
-            if (cursor->comment_count == 0u) cursor->first_comment_span = comment_span;
-            cursor->comment_count += 1u;
+            cursor_record_line_comment(cursor, comment_span);
             again = 1;
         }
     }
@@ -533,6 +596,7 @@ latticra_status_t latticra_lat_parse_source(
     size_t source_len,
     latticra_lat_parse_result_t *result) {
     lat_cursor_t cursor;
+    lat_cursor_t block_cursor;
     latticra_lat_parse_error_t error;
     latticra_lat_source_span_t module_span;
 
@@ -550,10 +614,6 @@ latticra_status_t latticra_lat_parse_source(
         result->error = LATTICRA_LAT_PARSE_LITERAL_NUL_IN_STRING;
         return LATTICRA_STATUS_OK;
     }
-    if (contains_forbidden_marker_outside_comment(source, source_len)) {
-        result->error = LATTICRA_LAT_PARSE_FORBIDDEN_BEHAVIOR_MARKER;
-        return LATTICRA_STATUS_OK;
-    }
 
     cursor.source = source;
     cursor.source_len = source_len;
@@ -563,6 +623,15 @@ latticra_status_t latticra_lat_parse_source(
     cursor.comment_count = 0u;
     span_default(&cursor.first_comment_span);
     module_span = span_start(&cursor);
+
+    if (find_unsupported_block_comment(source, source_len, &block_cursor)) {
+        set_error(result, LATTICRA_LAT_PARSE_UNSUPPORTED_BLOCK_COMMENT, &block_cursor);
+        return LATTICRA_STATUS_OK;
+    }
+    if (contains_forbidden_marker_outside_comment(source, source_len)) {
+        result->error = LATTICRA_LAT_PARSE_FORBIDDEN_BEHAVIOR_MARKER;
+        return LATTICRA_STATUS_OK;
+    }
 
     if (match_keyword(&cursor, "l")) {
         set_error(result, LATTICRA_LAT_PARSE_UNSUPPORTED_EXTENSION_CLAIM, &cursor);

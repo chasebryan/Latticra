@@ -47,6 +47,7 @@ installer_readme='installer/README.md'
 ui_model='installer/docs/UI_CONFIGURATION_MODEL.md'
 components_manifest='installer/manifests/components.toml'
 makefile='Makefile'
+workflow='.github/workflows/nadia-prompt-token-sequence-contract-stage-26.yml'
 
 require_file "$stage26_doc"
 require_file "$stage26_status"
@@ -67,6 +68,7 @@ require_file "$installer_readme"
 require_file "$ui_model"
 require_file "$components_manifest"
 require_file "$makefile"
+require_file "$workflow"
 
 require_contains 'Status: Stage-26 implementation contract' "$stage26_doc"
 require_contains 'prompt_token_sequence_contract_command=scripts/nadia-prompt-token-sequence-contract.sh' "$stage26_doc"
@@ -143,6 +145,7 @@ require_contains 'latticra-nadia prompt-token-sequence' "$installer_readme"
 require_contains 'nadia prompt-token-sequence' "$ui_model"
 require_contains 'prompt-token-sequence' "$components_manifest"
 require_contains 'nadia-prompt-token-sequence' "$makefile"
+require_contains 'sh scripts/test-nadia-prompt-token-sequence-contract-stage-26.sh' "$workflow"
 
 sh "$stage25_guard" >/tmp/latticra-nadia-stage26-prereq-stage25-test.out
 

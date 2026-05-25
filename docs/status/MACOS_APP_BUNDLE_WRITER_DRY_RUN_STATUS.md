@@ -15,6 +15,7 @@ The prototype emits the planned writer phase report, validates unsafe paths, ins
 ```text
 macos_app_bundle_writer_dry_run_present=1
 macos_app_bundle_writer_alignment_present=1
+macos_local_candidate_asset_probe_present=1
 macos_app_bundle_writer_phase_report_present=1
 macos_app_bundle_writer_path_guard_present=1
 macos_app_bundle_writer_marker_inspection_present=1
@@ -70,7 +71,7 @@ macos_app_bundle_writer_dry_run: ok
 ## Next Recommended Lane
 
 ```text
-Add a no-effect macOS local candidate asset probe that checks a caller-supplied Panel executable and icon candidate without building, downloading, signing, notarizing, copying, or writing artifacts.
+Add no-effect integration between the local candidate asset probe and the app bundle writer dry-run so supplied candidates can move the dry-run decision to ready-for-future-commit-gate while still keeping commit_user_local_managed_artifacts=0.
 ```
 
 ## Non-Claims

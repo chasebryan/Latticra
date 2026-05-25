@@ -11,9 +11,10 @@ int main(int argc, char **argv) {
     char help_report[LATTICRA_CONSOLE_HELP_REPORT_MAX];
     char manpage_report[LATTICRA_CONSOLE_MANPAGE_REPORT_MAX];
     char boundary_report[LATTICRA_CONSOLE_BOUNDARY_REPORT_MAX];
+    char host_contract_report[LATTICRA_CONSOLE_HOST_CONTRACT_REPORT_MAX];
 
     if (argc > 2) {
-        fputs("usage: latticra_console_report [report|registry|help|man|boundary]\n", stderr);
+        fputs("usage: latticra_console_report [report|registry|help|man|boundary|host-contract]\n", stderr);
         return 64;
     }
 
@@ -63,8 +64,17 @@ int main(int argc, char **argv) {
         return 0;
     }
 
+    if (argc == 2 && strcmp(argv[1], "host-contract") == 0) {
+        if (latticra_console_host_contract_report(host_contract_report, sizeof(host_contract_report)) != LATTICRA_STATUS_OK) {
+            fputs("latticra_console_report: host contract report render failed\n", stderr);
+            return 1;
+        }
+        fputs(host_contract_report, stdout);
+        return 0;
+    }
+
     if (argc == 2 && strcmp(argv[1], "report") != 0) {
-        fputs("usage: latticra_console_report [report|registry|help|man|boundary]\n", stderr);
+        fputs("usage: latticra_console_report [report|registry|help|man|boundary|host-contract]\n", stderr);
         return 64;
     }
 
@@ -98,5 +108,13 @@ int main(int argc, char **argv) {
     }
 
     fputs(boundary_report, stdout);
+    fputc('\n', stdout);
+
+    if (latticra_console_host_contract_report(host_contract_report, sizeof(host_contract_report)) != LATTICRA_STATUS_OK) {
+        fputs("latticra_console_report: host contract report render failed\n", stderr);
+        return 1;
+    }
+
+    fputs(host_contract_report, stdout);
     return 0;
 }

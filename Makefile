@@ -1,11 +1,29 @@
 .PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence
 
-.PHONY: quality quality-safety-guards
+.PHONY: quality quality-safety-guards quality-defensive-threat-model quality-rust-installer quality-panel-installer quality-c-foundation
 
-quality: quality-safety-guards
+quality: quality-safety-guards quality-defensive-threat-model seal-policy-denials quality-rust-installer quality-panel-installer quality-c-foundation
 
 quality-safety-guards:
 	sh ./scripts/test-quality-safety-guards.sh
+
+quality-defensive-threat-model:
+	sh ./scripts/test-defensive-threat-model-contract.sh
+	sh ./scripts/test-defensive-threat-model-implementation-plan.sh
+	sh ./scripts/test-defensive-threat-model-validation.sh
+
+quality-rust-installer:
+	cargo fmt --manifest-path installer/latticra-installer/Cargo.toml -- --check
+	cargo check --manifest-path installer/latticra-installer/Cargo.toml
+
+quality-panel-installer:
+	python3 scripts/check_latticra_panel_ui_design.py
+	sh ./scripts/test-latticra-panel-local-install-evidence-status.sh
+	sh ./scripts/test-latticra-panel-local-install-public-entrypoint-alignment.sh
+
+quality-c-foundation:
+	sh ./scripts/test-latticra-console-foundation.sh
+	sh ./scripts/test-cpp-authority-layer.sh
 
 seal:
 	./scripts/latticra-seal-smoke.sh

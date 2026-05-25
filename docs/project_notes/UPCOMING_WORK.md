@@ -7,6 +7,7 @@ Latest completion estimate review after runtime-boundary abuse-case fixtures not
 Latest runtime boundary abuse-case fixture expansion note: 2026-05-25 CDT
 Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
+Latest Seal README status row alignment note: 2026-05-25 CDT
 
 ## Purpose
 
@@ -29,6 +30,18 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Lat grammar unsupported block-comment rejection refinement
+```
+
+Purpose completed:
+
+```text
+reject Lat block-comment openers outside strings and line comments with a deterministic unsupported_block_comment parse error while preserving no Lat execution, no operator evaluation, no state mutation, no file I/O, no network I/O, no runtime authority, and normal string handling for block-comment marker text
+```
+
+## Previous implementation slice
+
+```text
 Lat grammar line-comment metadata refinement
 ```
 
@@ -38,7 +51,7 @@ Purpose completed:
 record deterministic Lat line-comment count and first-comment span metadata in parse results and grammar reports while preserving no Lat execution, no operator evaluation, no state mutation, no file I/O, no network I/O, no runtime authority, and no effect authority from comments
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat pipeline report declaration metadata integration
@@ -269,6 +282,18 @@ map runtime-boundary request families, effect families, authority prerequisites,
 ## Latest completed status/public-entry slice
 
 ```text
+Latticra Seal README status row alignment
+```
+
+Purpose completed:
+
+```text
+align the compact README Seal row and Seal current-posture summary with the current public status checkpoint while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, no production enforcement, no public-readiness promotion, no security-hardening implementation, and no runtime authority
+```
+
+## Previous status/public-entry slice
+
+```text
 Latticra Seal policy decision status/public-entry alignment
 ```
 
@@ -276,18 +301,6 @@ Purpose completed:
 
 ```text
 publish and guard the existing report-only Seal policy decision metadata and deterministic report surface from README/status/foundation entry points while preserving no real policy evaluation, no policy enforcement, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signature verification, no freshness validation, no replay detection, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority
-```
-
-## Previous status/public-entry slice
-
-```text
-Latticra Seal signed request status/public-entry alignment
-```
-
-Purpose completed:
-
-```text
-publish and guard the existing report-only Seal signed request metadata from README/status/foundation entry points while preserving no signature generation, no signature verification, no public-key parsing, no trust-store loading, no private-key handling, no key generation, no hardware-key use, no revocation lookup, no network trust lookup, no signed request enforcement, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority
 ```
 
 ## Earlier status/public-entry slice
@@ -674,6 +687,7 @@ Runtime boundary policy expansion after threat-model validation
 Current runtime boundary abuse-case fixture fields:
 
 ```text
+seal_readme_status_row_alignment_present=1
 completion_estimate_review_readme_status_alignment_present=1
 runtime_boundary_abuse_case_fixture_expansion_present=1
 runtime_boundary_abuse_case_fixture_guard_present=1

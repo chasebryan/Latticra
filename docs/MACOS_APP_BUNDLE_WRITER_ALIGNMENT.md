@@ -10,6 +10,8 @@ This alignment separates the current no-effect writer-shaped dry-run prototype f
 
 The current prototype can render phases, validate user-local paths, inspect existing managed markers, report missing local executable/icon candidates, and block unsafe paths. It cannot create an app bundle, write Application Support files, install wrappers, write receipts, mutate shell profiles, or verify a real install.
 
+The macOS local candidate asset probe remains a no-effect readiness check for caller-supplied Panel executable and icon candidates.
+
 ## Current Capability
 
 ```text
@@ -118,5 +120,5 @@ This alignment is not macOS installation, macOS app bundle evidence, signed app 
 ## Next Recommended Lane
 
 ```text
-Add a no-effect macOS local candidate asset probe that checks a caller-supplied Panel executable and icon candidate without building, downloading, signing, notarizing, copying, or writing artifacts.
+Add no-effect integration between the local candidate asset probe and the app bundle writer dry-run so supplied candidates can move the dry-run decision to ready-for-future-commit-gate while still keeping commit_user_local_managed_artifacts=0.
 ```

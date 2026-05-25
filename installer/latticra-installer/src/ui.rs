@@ -335,7 +335,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, lc status, lc profiles, lc profile hosted|panel|host|os|custom, lc commands, lc substrate, lc host, lc os, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding, nadia tokenizer-runtime-attachment, nadia prompt-tokenization, nadia prompt-token-sequence",
+                    "panel: help, status, lc status, lc profiles, lc profile hosted|panel|host|os|custom, lc commands, lc substrate, lc host, lc host-contract, lc os, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding, nadia tokenizer-runtime-attachment, nadia prompt-tokenization, nadia prompt-token-sequence",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -393,10 +393,19 @@ impl LatticraInstallerApp {
                     self.config.lc.host_embedding_profile
                 ));
                 self.push_console(format!(
+                    "host_embedding_contract_profile={}",
+                    self.config.lc.host_embedding_contract_profile
+                ));
+                self.push_console("host_embedding_contract_status=metadata-only-contract");
+                self.push_console(format!(
                     "os_base_profile={}",
                     self.config.lc.os_base_profile
                 ));
                 self.push_console(format!("report_only={}", self.config.lc.report_only));
+                self.push_console(format!(
+                    "host_embedding_contract_required={}",
+                    self.config.lc.require_host_embedding_contract
+                ));
                 self.push_console(format!(
                     "runtime_boundary_binding_required={}",
                     self.config.lc.require_runtime_boundary_binding
@@ -430,7 +439,7 @@ impl LatticraInstallerApp {
                 self.apply_lc_profile(LatticraConsoleProfile::Custom);
             }
             ["lc", "commands"] | ["console", "commands"] => {
-                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc profiles,lc substrate,lc host,lc os");
+                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc profiles,lc substrate,lc host,lc host-contract,lc os");
                 self.push_console("registry_authority=metadata-only external_host_processes=0");
             }
             ["lc", "substrate"] | ["console", "substrate"] => {
@@ -447,6 +456,27 @@ impl LatticraInstallerApp {
                 ));
                 self.push_console("host_embedded_now=0 host_mutation_allowed=0 file_io_allowed=0");
                 self.push_console("future_host_role=embed-within-host-after-gates");
+            }
+            ["lc", "host-contract"]
+            | ["console", "host-contract"]
+            | ["lc", "host", "contract"]
+            | ["console", "host", "contract"] => {
+                self.push_console(
+                    "lc.host_embedding_contract=Latticra Console host embedding contract",
+                );
+                self.push_console(format!(
+                    "contract_profile={}",
+                    self.config.lc.host_embedding_contract_profile
+                ));
+                self.push_console(format!(
+                    "contract_required={}",
+                    self.config.lc.require_host_embedding_contract
+                ));
+                self.push_console("contract_status=metadata-only host_embedded_now=0");
+                self.push_console("host_process_launch_allowed=0 host_file_read_allowed=0 host_file_write_allowed=0");
+                self.push_console(
+                    "host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0",
+                );
             }
             ["lc", "os"] | ["console", "os"] | ["lc", "base"] | ["console", "base"] => {
                 self.push_console(format!(
@@ -1428,6 +1458,11 @@ impl LatticraInstallerApp {
             "Host embedding",
             &mut self.config.lc.host_embedding_profile,
         );
+        labeled_text_field(
+            ui,
+            "Host contract",
+            &mut self.config.lc.host_embedding_contract_profile,
+        );
         labeled_text_field(ui, "OS base", &mut self.config.lc.os_base_profile);
         labeled_text_field(ui, "Panel bridge", &mut self.config.lc.panel_bridge);
         checkbox_note(
@@ -1435,6 +1470,12 @@ impl LatticraInstallerApp {
             &mut self.config.lc.report_only,
             "LC remains report-only",
             "Current LC profiles emit configuration and evidence only.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.require_host_embedding_contract,
+            "Require host-embedding contract",
+            "LC host embedding cannot advance until this contract is present and reviewed.",
         );
         checkbox_note(
             ui,

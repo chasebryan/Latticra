@@ -13,6 +13,22 @@ pass() {
   printf 'PASS: %s\n' "$1"
 }
 
+require_contains() {
+  pattern="$1"
+  file="$2"
+
+  grep -Fq "$pattern" "$file" ||
+    fail "$file must contain: $pattern"
+}
+
+require_line() {
+  pattern="$1"
+  file="$2"
+
+  grep -Fxq "$pattern" "$file" ||
+    fail "$file must contain line: $pattern"
+}
+
 check_workflow() {
   workflow="$1"
 
@@ -59,7 +75,7 @@ check_workflow() {
     esac
   done
 
-  script_refs="$(grep -Eo 'scripts/[A-Za-z0-9._/-]+\.sh' "$workflow" || :)"
+  script_refs="$(grep -Eo '(scripts|installer/scripts)/[A-Za-z0-9._/-]+\.sh' "$workflow" || :)"
   for script_ref in $script_refs; do
     [ -f "$script_ref" ] ||
       fail "$workflow references missing guard script $script_ref"
@@ -75,6 +91,20 @@ check_shell_script() {
   if ! sed -n '1,6p' "$script" | grep -Eq '^set -e'; then
     fail "$script must enable fail-fast shell behavior near the top"
   fi
+
+  if grep -q 'CFLAGS:=' "$script"; then
+    for flag in -Wall -Wextra -Werror; do
+      grep -q -- "$flag" "$script" ||
+        fail "$script CFLAGS must include $flag"
+    done
+  fi
+
+  if grep -q 'CXXFLAGS:=' "$script"; then
+    for flag in -Wall -Wextra -Werror; do
+      grep -q -- "$flag" "$script" ||
+        fail "$script CXXFLAGS must include $flag"
+    done
+  fi
 }
 
 workflow_count=0
@@ -86,6 +116,15 @@ done
 
 [ "$workflow_count" -gt 0 ] ||
   fail "no GitHub workflow files found"
+
+require_contains "quality-safety-guards:" "Makefile"
+require_contains "quality: quality-safety-guards" "Makefile"
+require_contains "sh ./scripts/test-quality-safety-guards.sh" "Makefile"
+require_contains "make quality-safety-guards" ".github/workflows/quality-safety-guards.yml"
+require_line "make quality" "README.md"
+require_line "make quality-safety-guards" "README.md"
+require_line "make quality" "CONTRIBUTING.md"
+require_line "make quality-safety-guards" "CONTRIBUTING.md"
 
 script_count=0
 for script in scripts/*.sh installer/scripts/*.sh; do

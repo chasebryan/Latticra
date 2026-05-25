@@ -16,9 +16,11 @@ profile = "panel_embedded"
 command_registry_profile = "c-static-table"
 substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "panel-contained"
+host_embedding_contract_profile = "lc-host-embedding-v0"
 os_base_profile = "planned-no-boot-authority"
 panel_bridge = "panel-aware"
 report_only = true
+require_host_embedding_contract = true
 require_runtime_boundary_binding = true
 require_seal_capability_labels = true
 

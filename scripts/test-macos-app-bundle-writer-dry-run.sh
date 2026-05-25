@@ -67,7 +67,7 @@ require_contains 'dry_run_decision=blocked-unmanaged-existing-target' "$doc"
 require_contains 'app_bundle_write_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
-require_contains 'no-effect macOS local candidate asset probe' "$doc"
+require_contains 'no-effect integration between the local candidate asset probe and the app bundle writer dry-run' "$doc"
 
 require_contains 'Status: no-effect writer dry-run status' "$status"
 require_contains 'macos_app_bundle_writer_dry_run_present=1' "$status"
@@ -93,7 +93,7 @@ require_contains 'macos_app_bundle_writer_dry_run_present=1' "$implementation_st
 require_contains 'macos_app_bundle_writer_dry_run_present=1' "$contract_status"
 require_contains 'macos_app_bundle_writer_dry_run_present=1' "$dry_status"
 require_contains 'macos_app_bundle_writer_dry_run_present=1' "$probe_status"
-require_contains 'no-effect macOS local candidate asset probe' "$implementation_plan"
+require_contains 'no-effect integration between the local candidate asset probe and the app bundle writer dry-run' "$implementation_plan"
 require_contains 'sh scripts/test-macos-app-bundle-writer-dry-run.sh' "$workflow"
 
 require_contains 'MACOS APP BUNDLE WRITER DRY RUN' "$script"
