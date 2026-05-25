@@ -91,6 +91,7 @@ share/latticra/nadia/model-load/
 share/latticra/nadia/prompt-receipt/
 share/latticra/nadia/prompt-materialization/
 share/latticra/nadia/awareness-dialogue/
+share/latticra/nadia/prompt-evaluation-handoff/
 share/latticra/components/nadia-offline-ai.installed
 bin/latticra-nadia
 ```
@@ -728,7 +729,51 @@ See [`NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15.md`](NADIA_AWARENESS_DIALOGUE_C
 
 ### Stage-16: Prompt Evaluation Handoff Contract
 
-Only after awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a prompt-evaluation handoff contract. The default remains no prompt text materialized, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
+Record prompt-evaluation handoff metadata after awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-16 can verify awareness-dialogue evidence and package a blocked prompt-evaluation handoff, but it cannot tokenize prompts, evaluate prompts, generate dialogue, generate tokens, run inference, or use the network.
+
+```text
+nadia_stage_16_prompt_evaluation_handoff_contract_present=1
+prompt_evaluation_handoff_contract_command=scripts/nadia-prompt-evaluation-handoff-contract.sh
+installed_prompt_evaluation_handoff_contract_command=latticra-nadia prompt-evaluation-handoff
+prompt_evaluation_handoff_contract_status=contract_only
+prompt_evaluation_handoff_stage=contract-only
+prompt_evaluation_handoff_authority=0
+prompt_evaluation_handoff_allowed=0
+prompt_evaluation_handoff_performed=0
+prompt_evaluation_authority=0
+prompt_evaluated=0
+evaluation_handoff_decision=blocked_contract_only
+evaluation_handoff_evidence_present=1
+requires_awareness_dialogue_contract=1
+requires_prompt_materialization_contract=1
+requires_prompt_receipt_contract=1
+requires_protective_safety_boundary=1
+requires_operator_review=1
+requires_official_source_snapshot=1
+requires_future_tokenization_contract=1
+prompt_evaluation_handoff_promotion_allowed=0
+future_qa_dialogue_capability_planned=1
+qa_dialogue_generated=0
+question_generated=0
+answer_generated=0
+answer_text_generated=0
+dialogue_scope=official-nadia-initiative-awareness-work
+q_and_a_format_required=1
+survivor_centered_dialogue_required=1
+official_source_grounding_required=1
+sexualized_dialogue_generation=0
+graphic_sexual_detail_allowed=0
+victim_blaming_allowed=0
+genocide_denial_allowed=0
+sexual_request_refusal=always
+manipulation_resistance=required
+```
+
+See [`NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16.md`](NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16.md).
+
+### Stage-17: Tokenization Boundary Contract
+
+Only after prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a tokenization boundary contract. The default remains no prompt tokenization, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
 
 ## Non-Claims
 
@@ -747,7 +792,7 @@ The current Nadia foundation is not:
 
 ## Promotion Gate
 
-Before Stage-16 starts, Latticra should keep these guards passing:
+Before Stage-17 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -766,6 +811,7 @@ sh scripts/test-nadia-model-load-contract-stage-12.sh
 sh scripts/test-nadia-prompt-receipt-contract-stage-13.sh
 sh scripts/test-nadia-prompt-materialization-contract-stage-14.sh
 sh scripts/test-nadia-awareness-dialogue-contract-stage-15.sh
+sh scripts/test-nadia-prompt-evaluation-handoff-contract-stage-16.sh
 ```
 
-Before prompt evaluation handoff starts, a separate prompt-evaluation handoff contract must exist and name prompt-evaluation denial fields, refusal boundary inheritance, operator review gates, and non-claims.
+Before tokenization boundary starts, a separate tokenization boundary contract must exist and name tokenization denial fields, prompt-evaluation denial fields, refusal boundary inheritance, operator review gates, and non-claims.

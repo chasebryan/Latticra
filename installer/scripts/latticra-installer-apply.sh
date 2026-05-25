@@ -341,7 +341,7 @@ public_name=Nadia
 interactive_name=Nadia
 implementation_name=Nadia Witness Foundation
 documentation_code_name=Nadia Witness Foundation
-stage=15-awareness-dialogue-contract
+stage=16-prompt-evaluation-handoff-contract
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -567,6 +567,18 @@ sexualized_dialogue_generation=0
 graphic_sexual_detail_allowed=0
 victim_blaming_allowed=0
 genocide_denial_allowed=0
+prompt_evaluation_handoff_contract_stage=16-prompt-evaluation-handoff-contract
+prompt_evaluation_handoff_contract_command=scripts/nadia-prompt-evaluation-handoff-contract.sh
+installed_prompt_evaluation_handoff_contract_command=latticra-nadia prompt-evaluation-handoff
+prompt_evaluation_handoff_stage=contract-only
+prompt_evaluation_handoff_contract_status=contract_only
+prompt_evaluation_handoff_authority=0
+prompt_evaluation_handoff_allowed=0
+prompt_evaluation_handoff_performed=0
+evaluation_handoff_decision=blocked_contract_only
+requires_awareness_dialogue_contract=1
+requires_future_tokenization_contract=1
+prompt_evaluation_handoff_promotion_allowed=0
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -776,7 +788,8 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/model-load" \
     "$PREFIX/share/latticra/nadia/prompt-receipt" \
     "$PREFIX/share/latticra/nadia/prompt-materialization" \
-    "$PREFIX/share/latticra/nadia/awareness-dialogue"
+    "$PREFIX/share/latticra/nadia/awareness-dialogue" \
+    "$PREFIX/share/latticra/nadia/prompt-evaluation-handoff"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia Witness Foundation"
@@ -784,8 +797,8 @@ public_name = "Nadia"
 interactive_name = "Nadia"
 implementation_name = "Nadia Witness Foundation"
 documentation_code_name = "Nadia Witness Foundation"
-stage = "15-awareness-dialogue-contract"
-mode = "offline-awareness-dialogue-contract"
+stage = "16-prompt-evaluation-handoff-contract"
+mode = "offline-prompt-evaluation-handoff-contract"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -1000,6 +1013,18 @@ sexualized_dialogue_generation = false
 graphic_sexual_detail_allowed = false
 victim_blaming_allowed = false
 genocide_denial_allowed = false
+prompt_evaluation_handoff_contract_stage = "16-prompt-evaluation-handoff-contract"
+prompt_evaluation_handoff_contract_command = "scripts/nadia-prompt-evaluation-handoff-contract.sh"
+installed_prompt_evaluation_handoff_contract_command = "latticra-nadia prompt-evaluation-handoff"
+prompt_evaluation_handoff_stage = "contract-only"
+prompt_evaluation_handoff_contract_status = "contract_only"
+prompt_evaluation_handoff_authority = false
+prompt_evaluation_handoff_allowed = false
+prompt_evaluation_handoff_performed = false
+evaluation_handoff_decision = "blocked_contract_only"
+requires_awareness_dialogue_contract = true
+requires_future_tokenization_contract = true
+prompt_evaluation_handoff_promotion_allowed = false
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -1020,11 +1045,11 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-15 awareness-dialogue contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-16 prompt-evaluation handoff contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract, local model-registry contract metadata when the operator runs latticra-nadia model-registry, inference-readiness contract metadata when the operator runs latticra-nadia inference-readiness, runtime-invocation contract metadata when the operator runs latticra-nadia runtime-invocation, model-load contract metadata when the operator runs latticra-nadia model-load, prompt-receipt contract metadata when the operator runs latticra-nadia prompt-receipt, prompt-materialization contract metadata when the operator runs latticra-nadia prompt-materialization, and awareness-dialogue contract metadata when the operator runs latticra-nadia awareness-dialogue. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, materialize or evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn a runtime process, create a runtime session, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract, local model-registry contract metadata when the operator runs latticra-nadia model-registry, inference-readiness contract metadata when the operator runs latticra-nadia inference-readiness, runtime-invocation contract metadata when the operator runs latticra-nadia runtime-invocation, model-load contract metadata when the operator runs latticra-nadia model-load, prompt-receipt contract metadata when the operator runs latticra-nadia prompt-receipt, prompt-materialization contract metadata when the operator runs latticra-nadia prompt-materialization, awareness-dialogue contract metadata when the operator runs latticra-nadia awareness-dialogue, and prompt-evaluation handoff contract metadata when the operator runs latticra-nadia prompt-evaluation-handoff. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn a runtime process, create a runtime session, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source.
 NADIAREADME
 fi
 
@@ -1176,8 +1201,8 @@ case "\${1:-status}" in
     echo "interactive_name=Nadia"
     echo "implementation_name=Nadia Witness Foundation"
     echo "documentation_code_name=Nadia Witness Foundation"
-    echo "stage=15-awareness-dialogue-contract"
-    echo "mode=offline-awareness-dialogue-contract"
+    echo "stage=16-prompt-evaluation-handoff-contract"
+    echo "mode=offline-prompt-evaluation-handoff-contract"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "context_packs=\$NADIA_DIR/context-packs"
@@ -1196,6 +1221,7 @@ case "\${1:-status}" in
     echo "prompt_receipt_contracts=\$NADIA_DIR/prompt-receipt"
     echo "prompt_materialization_contracts=\$NADIA_DIR/prompt-materialization"
     echo "awareness_dialogue_contracts=\$NADIA_DIR/awareness-dialogue"
+    echo "prompt_evaluation_handoff_contracts=\$NADIA_DIR/prompt-evaluation-handoff"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "prompt_plan_command=latticra-nadia prompt-plan"
@@ -1402,6 +1428,18 @@ case "\${1:-status}" in
     echo "graphic_sexual_detail_allowed=0"
     echo "victim_blaming_allowed=0"
     echo "genocide_denial_allowed=0"
+    echo "prompt_evaluation_handoff_contract_stage=16-prompt-evaluation-handoff-contract"
+    echo "prompt_evaluation_handoff_contract_command=latticra-nadia prompt-evaluation-handoff"
+    echo "installed_prompt_evaluation_handoff_contract_command=latticra-nadia prompt-evaluation-handoff"
+    echo "prompt_evaluation_handoff_stage=contract-only"
+    echo "prompt_evaluation_handoff_contract_status=contract_only"
+    echo "prompt_evaluation_handoff_authority=0"
+    echo "prompt_evaluation_handoff_allowed=0"
+    echo "prompt_evaluation_handoff_performed=0"
+    echo "evaluation_handoff_decision=blocked_contract_only"
+    echo "requires_awareness_dialogue_contract=1"
+    echo "requires_future_tokenization_contract=1"
+    echo "prompt_evaluation_handoff_promotion_allowed=0"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -1635,11 +1673,25 @@ case "\${1:-status}" in
       --prompt-materialization "\$NADIA_DIR/prompt-materialization/latest-prompt-materialization-contract.txt" \
       --output "\$NADIA_DIR/awareness-dialogue"
     ;;
+  prompt-evaluation-handoff|evaluation-handoff|prompt-eval-handoff)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-prompt-evaluation-handoff-contract.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia prompt-evaluation handoff contract script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --awareness-dialogue "\$NADIA_DIR/awareness-dialogue/latest-awareness-dialogue-contract.txt" \
+      --output "\$NADIA_DIR/prompt-evaluation-handoff"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|path}" >&2
     exit 64
     ;;
 esac

@@ -290,7 +290,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue",
+                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -352,7 +352,10 @@ impl LatticraInstallerApp {
                     "awareness_dialogue_contract_stage=15-awareness-dialogue-contract",
                 );
                 self.push_console(
-                    "stage=15 awareness-dialogue-contract; qa_dialogue_generated=0 inference_performed=0",
+                    "prompt_evaluation_handoff_contract_stage=16-prompt-evaluation-handoff-contract",
+                );
+                self.push_console(
+                    "stage=16 prompt-evaluation-handoff-contract; prompt_evaluated=0 inference_performed=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -447,6 +450,24 @@ impl LatticraInstallerApp {
                 );
                 self.push_console(
                     "sexualized_dialogue_generation=0 graphic_sexual_detail_allowed=0 inference_performed=0",
+                );
+            }
+            ["nadia", "prompt-evaluation-handoff"]
+            | ["nadia", "evaluation-handoff"]
+            | ["nadia", "prompt-eval-handoff"] => {
+                self.push_console(
+                    "nadia_prompt_evaluation_handoff=stage-16-prompt-evaluation-handoff-contract",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia prompt-evaluation-handoff");
+                self.push_console(
+                    "prompt_evaluation_handoff_contract_status=contract_only prompt_evaluated=0",
+                );
+                self.push_console(
+                    "requires_awareness_dialogue_contract=1 requires_future_tokenization_contract=1",
+                );
+                self.push_console(
+                    "qa_dialogue_generated=0 token_generation_performed=0 inference_performed=0",
                 );
             }
             ["nadia", "inference-readiness"]
@@ -865,7 +886,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-15 awareness-dialogue contract with metadata-only Console surfaces.",
+            "Stage-16 prompt-evaluation handoff contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,
