@@ -33,6 +33,14 @@ typedef struct {
     size_t clause_count;
     size_t model_declaration_count;
     size_t model_clause_count;
+    size_t first_declaration_node_index;
+    latticra_lat_declaration_kind_t first_declaration_kind;
+    char first_declaration_name[LATTICRA_LAT_NAME_MAX];
+    char first_declaration_source[LATTICRA_LAT_NAME_MAX];
+    size_t first_declaration_parse_index;
+    size_t first_declaration_first_clause_index;
+    size_t first_declaration_clause_count;
+    size_t first_declaration_source_index;
     size_t first_transition_source_index;
     size_t first_clause_node_index;
     latticra_lat_model_clause_role_t first_clause_role;

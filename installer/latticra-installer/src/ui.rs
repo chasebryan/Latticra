@@ -63,7 +63,7 @@ impl Default for LatticraInstallerApp {
             console_lines: vec![
                 format!("Latticra Panel v{PANEL_VERSION} bounded operator console online."),
                 "Authority baseline: root=0 network=0 runtime_enforcement=0.".to_owned(),
-                "Panel commands: help, status, plan, save, dry-run, reset, uninstall, profile seal, profile fedora."
+                "Panel commands: help, status, lc status, plan, save, dry-run, reset, uninstall, profile seal, profile fedora."
                     .to_owned(),
                 "Navigation commands: pwd, cd <dir>. External host commands are denied.".to_owned(),
             ],
@@ -324,7 +324,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding",
+                    "panel: help, status, lc status, lc commands, lc substrate, lc host, lc os, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding, nadia tokenizer-runtime-attachment",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -338,12 +338,58 @@ impl LatticraInstallerApp {
                     self.config.seal.crypto_profile.label()
                 ));
                 self.push_console(format!(
+                    "latticra_console={}",
+                    self.config.components.latticra_console
+                ));
+                self.push_console(format!(
                     "nadia_offline_ai={}",
                     self.config.components.nadia_offline_ai
                 ));
                 self.push_console(format!("install_prefix={}", self.config.install_prefix));
                 self.push_console(
                     "root_authority=0 network_authority=0 runtime_enforcement_authority=0",
+                );
+            }
+            ["lc"] | ["lc", "status"] | ["console"] | ["console", "status"] => {
+                self.push_console("console_name=Latticra Console");
+                self.push_console("short_name=LC");
+                self.push_console("component_key=latticra_console");
+                self.push_console(format!(
+                    "component_selected={}",
+                    self.config.components.latticra_console
+                ));
+                self.push_console(
+                    "configurable=1 panel_installable=1 panel_console_bridge=panel-aware",
+                );
+                self.push_console("command_registry_status=seed-registry");
+                self.push_console("substrate_bridge_status=metadata-bound");
+                self.push_console("host_embedding_status=planned");
+                self.push_console("os_base_status=planned-no-boot-authority");
+                self.push_console(
+                    "execution_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0",
+                );
+            }
+            ["lc", "commands"] | ["console", "commands"] => {
+                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc substrate,lc host,lc os");
+                self.push_console("registry_authority=metadata-only external_host_processes=0");
+            }
+            ["lc", "substrate"] | ["console", "substrate"] => {
+                self.push_console("lc.substrate_bridge=Latticra substrate metadata bridge");
+                self.push_console(
+                    "linked_surfaces=Lat,LIR,Nucleus,Runtime Boundary,Seal,Panel,Nadia",
+                );
+                self.push_console("effect_boundary=no-effect runtime_enforcement_authority=0");
+            }
+            ["lc", "host"] | ["console", "host"] => {
+                self.push_console("lc.host_embedding=planned");
+                self.push_console("host_embedded_now=0 host_mutation_allowed=0 file_io_allowed=0");
+                self.push_console("future_host_role=embed-within-host-after-gates");
+            }
+            ["lc", "os"] | ["console", "os"] | ["lc", "base"] | ["console", "base"] => {
+                self.push_console("lc.os_base_status=planned-no-boot-authority");
+                self.push_console("future_os_base_claim=planned_not_claimed");
+                self.push_console(
+                    "boot_allowed=0 kernel_enforcement_authority=0 production_os_claim=0",
                 );
             }
             ["nadia"] | ["nadia", "status"] => {
@@ -410,7 +456,10 @@ impl LatticraInstallerApp {
                     "tokenizer_artifact_binding_contract_stage=23-tokenizer-artifact-binding-contract",
                 );
                 self.push_console(
-                    "stage=23 tokenizer-artifact-binding-contract; tokenizer_artifact_binding_performed=0 prompt_tokenized=0",
+                    "tokenizer_runtime_attachment_contract_stage=24-tokenizer-runtime-attachment-contract",
+                );
+                self.push_console(
+                    "stage=24 tokenizer-runtime-attachment-contract; tokenizer_runtime_attachment_performed=0 prompt_tokenized=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -647,6 +696,24 @@ impl LatticraInstallerApp {
                 );
                 self.push_console(
                     "prompt_tokenized=0 tokenizer_attached_to_runtime=0 requires_tokenizer_artifact_verification_contract=1 requires_future_tokenizer_runtime_attachment_contract=1",
+                );
+            }
+            ["nadia", "tokenizer-runtime-attachment"]
+            | ["nadia", "runtime-attachment"]
+            | ["nadia", "tokenizer-attachment"] => {
+                self.push_console(
+                    "nadia_tokenizer_runtime_attachment=stage-24-tokenizer-runtime-attachment-contract",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia tokenizer-runtime-attachment");
+                self.push_console(
+                    "tokenizer_runtime_attachment_contract_status=contract_only tokenizer_runtime_attachment_performed=0",
+                );
+                self.push_console(
+                    "tokenizer_attached_to_runtime=0 runtime_invoked=0 runtime_session_created=0",
+                );
+                self.push_console(
+                    "prompt_tokenized=0 requires_tokenizer_artifact_binding_contract=1 requires_future_prompt_tokenization_contract=1",
                 );
             }
             ["nadia", "inference-readiness"]
@@ -1106,6 +1173,12 @@ impl LatticraInstallerApp {
         ui.add_space(6.0);
         checkbox_note(
             ui,
+            &mut self.config.components.latticra_console,
+            "Latticra Console (LC)",
+            "Configurable Panel-installable operator base for substrate, host, and future OS-console workflows.",
+        );
+        checkbox_note(
+            ui,
             &mut self.config.components.lat_tooling,
             "Lat language tooling",
             "Language and contract declaration tooling surface.",
@@ -1126,7 +1199,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-23 tokenizer-artifact-binding contract with metadata-only Console surfaces.",
+            "Stage-24 tokenizer-runtime-attachment contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,

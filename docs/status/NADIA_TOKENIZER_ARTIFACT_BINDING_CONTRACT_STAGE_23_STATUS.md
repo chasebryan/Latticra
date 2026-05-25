@@ -143,3 +143,7 @@ Expected:
 ```text
 nadia_tokenizer_artifact_binding_contract_stage_23: ok
 ```
+
+## Next Gate
+
+Stage-24 now defines a tokenizer runtime attachment contract after tokenizer-artifact-binding metadata, tokenizer-artifact-verification metadata, tokenizer-artifact-measurement metadata, tokenizer-artifact-inventory metadata, tokenizer-manifest metadata, tokenizer-specification metadata, tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, model-registry metadata, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.

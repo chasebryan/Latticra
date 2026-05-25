@@ -94,6 +94,13 @@ static int lat_model_normalizes_foundation_counts(void) {
     EXPECT_TRUE(model.transition_count == 1u, "model transition count");
     EXPECT_TRUE(model.assertion_count == 1u, "model assertion count");
     EXPECT_TRUE(model.effect_count == 1u, "model effect count");
+    EXPECT_TRUE(model.declarations[0].kind == LATTICRA_LAT_DECLARATION_STATE, "first declaration kind normalized");
+    EXPECT_STR_EQ(model.declarations[0].name, "RootCell", "first declaration name normalized");
+    EXPECT_STR_EQ(model.declarations[0].source_name, "", "first declaration source empty");
+    EXPECT_TRUE(model.declarations[0].parse_declaration_index == 0u, "first declaration parse index normalized");
+    EXPECT_TRUE(model.declarations[0].first_clause_index == 0u, "first declaration clause start normalized");
+    EXPECT_TRUE(model.declarations[0].clause_count == 9u, "first declaration clause count normalized");
+    EXPECT_TRUE(model.declarations[0].source_declaration_index == LATTICRA_LAT_MODEL_NO_INDEX, "first declaration source index absent");
     return 0;
 }
 
@@ -212,6 +219,14 @@ static int lat_model_report_is_deterministic(void) {
     EXPECT_STR_EQ(one, two, "model report deterministic");
     EXPECT_TRUE(strstr(one, "LAT MODEL NORMALIZATION REPORT\n") != 0, "model report header");
     EXPECT_TRUE(strstr(one, "error=ok\n") != 0, "model report ok");
+    EXPECT_TRUE(strstr(one, "first_declaration_index=0\n") != 0, "model first declaration index report");
+    EXPECT_TRUE(strstr(one, "first_declaration_kind=state\n") != 0, "model first declaration kind report");
+    EXPECT_TRUE(strstr(one, "first_declaration_name=RootCell\n") != 0, "model first declaration name report");
+    EXPECT_TRUE(strstr(one, "first_declaration_source=\n") != 0, "model first declaration source report");
+    EXPECT_TRUE(strstr(one, "first_declaration_parse_index=0\n") != 0, "model first declaration parse index report");
+    EXPECT_TRUE(strstr(one, "first_declaration_first_clause_index=0\n") != 0, "model first declaration clause start report");
+    EXPECT_TRUE(strstr(one, "first_declaration_clause_count=9\n") != 0, "model first declaration clause count report");
+    EXPECT_TRUE(strstr(one, "first_declaration_source_index=") != 0, "model first declaration source index report");
     EXPECT_TRUE(strstr(one, "first_transition_source_index=0\n") != 0, "model transition source report");
     EXPECT_TRUE(strstr(one, "first_clause_index=0\n") != 0, "model first clause index report");
     EXPECT_TRUE(strstr(one, "first_clause_role=field\n") != 0, "model first clause role report");

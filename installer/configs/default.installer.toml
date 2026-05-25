@@ -2,6 +2,7 @@ profile = "seal_report_only"
 install_prefix = "~/.local/share/latticra"
 
 [components]
+latticra_console = true
 lat_tooling = false
 lir_contracts = true
 seal_report_only = true

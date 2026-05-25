@@ -1,7 +1,10 @@
-.PHONY: seal nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding
+.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment
 
 seal:
 	./scripts/latticra-seal-smoke.sh
+
+latticra-console:
+	sh ./scripts/test-latticra-console-foundation.sh
 
 nadia-context:
 	sh ./scripts/nadia-context-pack.sh --repo .
@@ -71,6 +74,9 @@ nadia-tokenizer-artifact-verification:
 
 nadia-tokenizer-artifact-binding:
 	sh ./scripts/nadia-tokenizer-artifact-binding-contract.sh
+
+nadia-tokenizer-runtime-attachment:
+	sh ./scripts/nadia-tokenizer-runtime-attachment-contract.sh
 
 .PHONY: seal-policy-denials
 

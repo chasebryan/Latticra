@@ -163,7 +163,7 @@ require_contains 'Latticra Seal policy decision status/public-entry alignment' d
 require_contains 'SEAL_POLICY_DECISION_PUBLIC_ENTRYPOINT_ALIGNMENT.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal policy decision status/public-entry alignment' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal policy decision status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Defensive threat model validation refinement' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'defensive threat model validation refinement' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal policy decision status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Defensive threat model validation refinement' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/status/SEAL_POLICY_DECISION_PUBLIC_ENTRYPOINT_ALIGNMENT.md' docs/project_notes/README.md

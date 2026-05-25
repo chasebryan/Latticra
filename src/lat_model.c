@@ -321,6 +321,14 @@ latticra_status_t latticra_lat_model_report(
     size_t buffer_len) {
     int written;
     size_t first_transition_source;
+    size_t first_declaration_index;
+    latticra_lat_declaration_kind_t first_declaration_kind;
+    const char *first_declaration_name;
+    const char *first_declaration_source;
+    size_t first_declaration_parse_index;
+    size_t first_declaration_first_clause_index;
+    size_t first_declaration_clause_count;
+    size_t first_declaration_source_index;
     size_t first_clause_index;
     latticra_lat_model_clause_role_t first_clause_role;
     latticra_lat_effect_t first_clause_effect;
@@ -331,12 +339,31 @@ latticra_status_t latticra_lat_model_report(
     first_transition_source = model->first_transition_index == LATTICRA_LAT_MODEL_NO_INDEX ?
         LATTICRA_LAT_MODEL_NO_INDEX :
         model->declarations[model->first_transition_index].source_declaration_index;
+    first_declaration_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    first_declaration_kind = LATTICRA_LAT_DECLARATION_UNKNOWN;
+    first_declaration_name = "";
+    first_declaration_source = "";
+    first_declaration_parse_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    first_declaration_first_clause_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    first_declaration_clause_count = 0u;
+    first_declaration_source_index = LATTICRA_LAT_MODEL_NO_INDEX;
     first_clause_index = LATTICRA_LAT_MODEL_NO_INDEX;
     first_clause_role = LATTICRA_LAT_MODEL_CLAUSE_UNKNOWN;
     first_clause_effect = LATTICRA_LAT_EFFECT_UNKNOWN;
     first_clause_name = "";
     first_clause_operator = "";
     first_clause_value = "";
+    if (model->error == LATTICRA_LAT_MODEL_OK && model->declaration_count > 0u) {
+        const latticra_lat_model_declaration_t *declaration = &model->declarations[0];
+        first_declaration_index = 0u;
+        first_declaration_kind = declaration->kind;
+        first_declaration_name = declaration->name;
+        first_declaration_source = declaration->source_name;
+        first_declaration_parse_index = declaration->parse_declaration_index;
+        first_declaration_first_clause_index = declaration->first_clause_index;
+        first_declaration_clause_count = declaration->clause_count;
+        first_declaration_source_index = declaration->source_declaration_index;
+    }
     if (model->error == LATTICRA_LAT_MODEL_OK && model->clause_count > 0u) {
         const latticra_lat_model_clause_t *clause = &model->clauses[0];
         first_clause_index = 0u;
@@ -360,6 +387,14 @@ latticra_status_t latticra_lat_model_report(
         "assertion_count=%zu\n"
         "effect_count=%zu\n"
         "clause_count=%zu\n"
+        "first_declaration_index=%zu\n"
+        "first_declaration_kind=%s\n"
+        "first_declaration_name=%s\n"
+        "first_declaration_source=%s\n"
+        "first_declaration_parse_index=%zu\n"
+        "first_declaration_first_clause_index=%zu\n"
+        "first_declaration_clause_count=%zu\n"
+        "first_declaration_source_index=%zu\n"
         "first_state_index=%zu\n"
         "first_policy_index=%zu\n"
         "first_transition_index=%zu\n"
@@ -394,6 +429,14 @@ latticra_status_t latticra_lat_model_report(
         model->assertion_count,
         model->effect_count,
         model->clause_count,
+        first_declaration_index,
+        latticra_lat_declaration_kind_label(first_declaration_kind),
+        first_declaration_name,
+        first_declaration_source,
+        first_declaration_parse_index,
+        first_declaration_first_clause_index,
+        first_declaration_clause_count,
+        first_declaration_source_index,
         model->first_state_index,
         model->first_policy_index,
         model->first_transition_index,

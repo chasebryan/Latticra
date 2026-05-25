@@ -1,6 +1,6 @@
 # Latticra Lat-to-LIR Lowering Implementation
 
-Status: model-aware implementation record
+Status: model-aware implementation record with first-declaration report metadata
 Scope: bounded no-effect Lat-to-LIR lowering implementation, normalized model entry point, compatibility wrapper, public API, test runner, workflow, report surface, fixture path, and invariants.
 
 ## Purpose
@@ -163,7 +163,20 @@ The implementation does not invent byte offsets.
 LAT TO LIR LOWERING REPORT
 ```
 
-The report records status, lowering error label, model error label, module name, declaration counts, model counts, clause counts, first transition source index, node count, edge count, no-effect flags, and source-span fields.
+The report records status, lowering error label, model error label, module name, declaration counts, model counts, clause counts, first lowered declaration metadata, first transition source index, node count, edge count, no-effect flags, and source-span fields.
+
+The first lowered declaration metadata includes:
+
+```text
+first_declaration_node_index
+first_declaration_kind
+first_declaration_name
+first_declaration_source
+first_declaration_parse_index
+first_declaration_first_clause_index
+first_declaration_clause_count
+first_declaration_source_index
+```
 
 The companion diagnostic refinement can classify those lowering records as valid, parse, semantic, model, effect-check, capacity, LIR, or internal without changing lowering behavior. It also copies first-clause metadata from the lowering result for diagnostic report visibility.
 
@@ -212,7 +225,7 @@ foundation model lowers successfully
 normalized model lowers through the model-aware entry point
 source kind is lat_module
 declaration and clause counts are preserved
-model counts and first transition source index are preserved
+model counts, first declaration metadata, and first transition source index are preserved
 first clause role, operator, value, effect, and node index are preserved
 node and edge counts are deterministic
 module metadata is preserved

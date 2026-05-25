@@ -1,0 +1,150 @@
+# Nadia Tokenizer Runtime Attachment Contract Stage-24 Status
+
+Status: implementation status record
+
+Date: 2026-05-25 CDT
+
+Scope: tokenizer-runtime-attachment metadata before tokenizer artifact opening, artifact reading, artifact hashing, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+
+## Summary
+
+Nadia Stage-24 adds a tokenizer-runtime-attachment contract generator.
+
+The contract consumes Stage-23 tokenizer-artifact-binding metadata, verifies inherited protective, prompt, tokenizer, artifact, model, runtime, dialogue, and tool-denial boundaries, then records the requirements that a future prompt tokenization contract must satisfy. It remains contract-only and does not attach tokenizers to a runtime, create runtime sessions, tokenize prompts, load tokenizer manifests, open tokenizer files, load vocabularies, or run inference.
+
+```text
+nadia_stage_24_tokenizer_runtime_attachment_contract_present=1
+nadia_tokenizer_runtime_attachment_contract_generator_present=1
+nadia_tokenizer_runtime_attachment_contract_guard_present=1
+nadia_installed_tokenizer_runtime_attachment_contract_command_planned=1
+tokenizer_runtime_attachment_contract_command=scripts/nadia-tokenizer-runtime-attachment-contract.sh
+installed_tokenizer_runtime_attachment_contract_command=latticra-nadia tokenizer-runtime-attachment
+tokenizer_runtime_attachment_contract_status=contract_only
+tokenizer_runtime_attachment_stage=contract-only
+tokenizer_runtime_attachment_authority=0
+tokenizer_runtime_attachment_allowed=0
+tokenizer_runtime_attachment_performed=0
+tokenizer_runtime_attachment_metadata_present=1
+tokenizer_runtime_attachment_family=operator-reviewed-tokenizer-runtime-attachment
+tokenizer_runtime_attachment_format=contract-only-offline-attachment
+tokenizer_runtime_attachment_decision=blocked_contract_only
+tokenizer_runtime_attachment_evidence_present=1
+tokenizer_runtime_attachment_source_policy=operator-reviewed-offline
+tokenizer_runtime_attachment_plan_recorded=1
+tokenizer_runtime_attachment_method_planned=offline-runtime-tokenizer-attachment-review
+tokenizer_runtime_attachment_result_recorded=0
+tokenizer_runtime_attachment_record_created=0
+tokenizer_runtime_attachment_runtime_reference_recorded=0
+tokenizer_runtime_attachment_tokenizer_reference_recorded=0
+tokenizer_runtime_attachment_session_created=0
+requires_tokenizer_artifact_binding_contract=1
+requires_tokenizer_artifact_verification_contract=1
+requires_tokenizer_artifact_measurement_contract=1
+requires_tokenizer_artifact_inventory_contract=1
+requires_tokenizer_manifest_contract=1
+requires_tokenizer_specification_contract=1
+requires_tokenization_boundary_contract=1
+requires_runtime_profile_contract=1
+requires_runtime_invocation_contract=1
+requires_model_load_contract=1
+requires_future_prompt_tokenization_contract=1
+tokenizer_runtime_attachment_promotion_allowed=0
+```
+
+## Denials Preserved
+
+```text
+tokenizer_runtime_attachment_open_authority=0
+tokenizer_runtime_attachment_read_authority=0
+tokenizer_runtime_attachment_write_authority=0
+tokenizer_runtime_attachment_validation_authority=0
+tokenizer_runtime_attachment_load_authority=0
+tokenizer_runtime_attachment_attach_authority=0
+tokenizer_runtime_attachment_runtime_invoke_authority=0
+tokenizer_runtime_attachment_session_authority=0
+tokenizer_runtime_attachment_tokenizer_bind_authority=0
+tokenizer_runtime_attachment_opened=0
+tokenizer_runtime_attachment_read=0
+tokenizer_runtime_attachment_validated=0
+tokenizer_runtime_attachment_loaded=0
+tokenizer_runtime_attachment_bytes_read=0
+tokenizer_runtime_attachment_hash_computed=0
+tokenizer_runtime_attachment_entries_loaded=0
+tokenizer_runtime_attachment_attached=0
+tokenizer_runtime_attachment_record_created=0
+tokenizer_runtime_attachment_runtime_reference_loaded=0
+tokenizer_runtime_attachment_tokenizer_reference_loaded=0
+tokenizer_runtime_attachment_runtime_reference_recorded=0
+tokenizer_runtime_attachment_tokenizer_reference_recorded=0
+tokenizer_runtime_attachment_runtime_invoked=0
+tokenizer_runtime_attachment_session_created=0
+tokenizer_runtime_attachment_result_recorded=0
+tokenizer_runtime_attachment_file_written=0
+tokenizer_attached_to_runtime=0
+tokenizer_runtime_attachment_performed=0
+runtime_tokenizer_attachment_performed=0
+runtime_session_created=0
+runtime_invoked=0
+runtime_process_spawned=0
+runtime_binary_executed=0
+tokenizer_artifact_binding_performed=0
+tokenizer_artifact_binding_hash_computed=0
+tokenizer_artifact_file_opened=0
+tokenizer_artifact_file_read=0
+tokenizer_artifact_hash_computed=0
+tokenizer_manifest_loaded=0
+tokenizer_manifest_parsed=0
+tokenizer_file_opened=0
+tokenizer_file_read=0
+tokenizer_vocab_loaded=0
+prompt_tokenized=0
+prompt_evaluated=0
+token_generation_performed=0
+inference_performed=0
+tool_execution_performed=0
+network_authority=0
+```
+
+Stage-24 inherits all Nadia protective-safety and awareness-dialogue restrictions:
+
+```text
+future_qa_dialogue_capability_planned=1
+dialogue_scope=official-nadia-initiative-awareness-work
+q_and_a_format_required=1
+survivor_centered_dialogue_required=1
+official_source_grounding_required=1
+live_web_lookup_authority=0
+sexual_user_request_authority=0
+sexual_content_generation=0
+sexualized_dialogue_generation=0
+graphic_sexual_detail_allowed=0
+erotic_content_allowed=0
+roleplay_allowed=0
+victim_blaming_allowed=0
+genocide_denial_allowed=0
+medical_advice_authority=0
+legal_advice_authority=0
+trauma_counseling_authority=0
+sexual_request_refusal=always
+manipulation_resistance=required
+prompt_injection_override_authority=0
+policy_bypass_authority=0
+```
+
+## Operational Meaning
+
+Nadia can now produce a tokenizer-runtime-attachment contract that packages Stage-23 tokenizer-artifact-binding evidence and records review requirements for a future prompt tokenization contract.
+
+This is not tokenizer runtime attachment authority. It does not attach tokenizers to a runtime, create runtime sessions, tokenize prompts, run inference, or execute tools.
+
+## Guard
+
+```sh
+sh scripts/test-nadia-tokenizer-runtime-attachment-contract-stage-24.sh
+```
+
+Expected:
+
+```text
+nadia_tokenizer_runtime_attachment_contract_stage_24: ok
+```

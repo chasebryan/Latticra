@@ -2,6 +2,7 @@ profile = "developer_local"
 install_prefix = "~/.local/share/latticra"
 
 [components]
+latticra_console = true
 lat_tooling = true
 lir_contracts = true
 seal_report_only = true

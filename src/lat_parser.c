@@ -597,7 +597,49 @@ latticra_status_t latticra_lat_parse_report(
     char *buffer,
     size_t buffer_len) {
     int written;
+    size_t first_declaration_index;
+    latticra_lat_declaration_kind_t first_declaration_kind;
+    const char *first_declaration_name;
+    const char *first_declaration_source;
+    size_t first_declaration_first_clause_index;
+    size_t first_declaration_clause_count;
+    size_t first_clause_index;
+    const char *first_clause_keyword;
+    const char *first_clause_left;
+    const char *first_clause_operator;
+    const char *first_clause_right;
+    latticra_lat_effect_t first_clause_effect;
     if (result == 0 || buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    first_declaration_index = (size_t)-1;
+    first_declaration_kind = LATTICRA_LAT_DECLARATION_UNKNOWN;
+    first_declaration_name = "";
+    first_declaration_source = "";
+    first_declaration_first_clause_index = (size_t)-1;
+    first_declaration_clause_count = 0u;
+    first_clause_index = (size_t)-1;
+    first_clause_keyword = "";
+    first_clause_left = "";
+    first_clause_operator = "";
+    first_clause_right = "";
+    first_clause_effect = LATTICRA_LAT_EFFECT_UNKNOWN;
+    if (result->error == LATTICRA_LAT_PARSE_OK && result->declaration_count > 0u) {
+        const latticra_lat_ast_declaration_t *declaration = &result->declarations[0];
+        first_declaration_index = 0u;
+        first_declaration_kind = declaration->kind;
+        first_declaration_name = declaration->name;
+        first_declaration_source = declaration->source_name;
+        first_declaration_first_clause_index = declaration->first_clause_index;
+        first_declaration_clause_count = declaration->clause_count;
+    }
+    if (result->error == LATTICRA_LAT_PARSE_OK && result->clause_count > 0u) {
+        const latticra_lat_ast_clause_t *clause = &result->clauses[0];
+        first_clause_index = 0u;
+        first_clause_keyword = clause->keyword;
+        first_clause_left = clause->left;
+        first_clause_operator = clause->operator_text;
+        first_clause_right = clause->right;
+        first_clause_effect = clause->effect;
+    }
     written = snprintf(
         buffer,
         buffer_len,
@@ -612,6 +654,18 @@ latticra_status_t latticra_lat_parse_report(
         "assertion_count=%zu\n"
         "effect_count=%zu\n"
         "clause_count=%zu\n"
+        "first_declaration_index=%zu\n"
+        "first_declaration_kind=%s\n"
+        "first_declaration_name=%s\n"
+        "first_declaration_source=%s\n"
+        "first_declaration_first_clause_index=%zu\n"
+        "first_declaration_clause_count=%zu\n"
+        "first_clause_index=%zu\n"
+        "first_clause_keyword=%s\n"
+        "first_clause_left=%s\n"
+        "first_clause_operator=%s\n"
+        "first_clause_right=%s\n"
+        "first_clause_effect=%s\n"
         "no_effect=%d\n"
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
@@ -634,6 +688,18 @@ latticra_status_t latticra_lat_parse_report(
         result->module.assertion_count,
         result->module.effect_count,
         result->clause_count,
+        first_declaration_index,
+        latticra_lat_declaration_kind_label(first_declaration_kind),
+        first_declaration_name,
+        first_declaration_source,
+        first_declaration_first_clause_index,
+        first_declaration_clause_count,
+        first_clause_index,
+        first_clause_keyword,
+        first_clause_left,
+        first_clause_operator,
+        first_clause_right,
+        latticra_lat_effect_label(first_clause_effect),
         result->no_effect,
         result->execution_allowed,
         result->mutation_allowed,

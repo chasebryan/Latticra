@@ -99,6 +99,7 @@ share/latticra/nadia/tokenizer-artifact-inventory/
 share/latticra/nadia/tokenizer-artifact-measurement/
 share/latticra/nadia/tokenizer-artifact-verification/
 share/latticra/nadia/tokenizer-artifact-binding/
+share/latticra/nadia/tokenizer-runtime-attachment/
 share/latticra/components/nadia-offline-ai.installed
 bin/latticra-nadia
 ```
@@ -1119,7 +1120,68 @@ See [`NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23.md`](NADIA_TOKENIZER_AR
 
 ### Stage-24: Tokenizer Runtime Attachment Contract
 
-Only after tokenizer-artifact-binding metadata, tokenizer-artifact-verification metadata, tokenizer-artifact-measurement metadata, tokenizer-artifact-inventory metadata, tokenizer-manifest metadata, tokenizer-specification metadata, tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a tokenizer runtime attachment contract. The default remains no tokenizer artifact opening, no tokenizer artifact hashing, no tokenizer artifact verification, no tokenizer artifact binding, no tokenizer runtime attachment, no tokenizer manifest loading, no tokenizer file opening, no tokenizer vocabulary loading, no prompt tokenization, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
+Record tokenizer-runtime-attachment metadata after tokenizer-artifact-binding metadata, tokenizer-artifact-verification metadata, tokenizer-artifact-measurement metadata, tokenizer-artifact-inventory metadata, tokenizer-manifest metadata, tokenizer-specification metadata, tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-24 can define future tokenizer runtime attachment review requirements, but it cannot open tokenizer artifacts, read tokenizer artifacts, hash tokenizer artifacts, bind artifacts, attach tokenizers to a runtime, create runtime sessions, load tokenizer manifests, open tokenizer files, load vocabularies, tokenize prompts, evaluate prompts, generate dialogue, generate tokens, run inference, or use the network.
+
+```text
+nadia_stage_24_tokenizer_runtime_attachment_contract_present=1
+tokenizer_runtime_attachment_contract_command=scripts/nadia-tokenizer-runtime-attachment-contract.sh
+installed_tokenizer_runtime_attachment_contract_command=latticra-nadia tokenizer-runtime-attachment
+tokenizer_runtime_attachment_contract_status=contract_only
+tokenizer_runtime_attachment_stage=contract-only
+tokenizer_runtime_attachment_authority=0
+tokenizer_runtime_attachment_allowed=0
+tokenizer_runtime_attachment_performed=0
+tokenizer_runtime_attachment_metadata_present=1
+tokenizer_runtime_attachment_family=operator-reviewed-tokenizer-runtime-attachment
+tokenizer_runtime_attachment_format=contract-only-offline-attachment
+tokenizer_runtime_attachment_decision=blocked_contract_only
+tokenizer_runtime_attachment_evidence_present=1
+tokenizer_runtime_attachment_source_policy=operator-reviewed-offline
+tokenizer_runtime_attachment_plan_recorded=1
+tokenizer_runtime_attachment_method_planned=offline-runtime-tokenizer-attachment-review
+tokenizer_runtime_attachment_result_recorded=0
+tokenizer_runtime_attachment_record_created=0
+tokenizer_runtime_attachment_runtime_reference_recorded=0
+tokenizer_runtime_attachment_tokenizer_reference_recorded=0
+tokenizer_runtime_attachment_session_created=0
+requires_tokenizer_artifact_binding_contract=1
+requires_tokenizer_artifact_verification_contract=1
+requires_tokenizer_artifact_measurement_contract=1
+requires_tokenizer_artifact_inventory_contract=1
+requires_tokenizer_manifest_contract=1
+requires_tokenizer_specification_contract=1
+requires_tokenization_boundary_contract=1
+requires_runtime_profile_contract=1
+requires_runtime_invocation_contract=1
+requires_model_load_contract=1
+requires_future_prompt_tokenization_contract=1
+tokenizer_runtime_attachment_promotion_allowed=0
+tokenizer_runtime_attachment_attached=0
+tokenizer_attached_to_runtime=0
+runtime_session_created=0
+runtime_invoked=0
+runtime_process_spawned=0
+runtime_binary_executed=0
+tokenizer_artifact_binding_performed=0
+tokenizer_artifact_file_opened=0
+tokenizer_artifact_file_read=0
+tokenizer_manifest_loaded=0
+tokenizer_manifest_parsed=0
+tokenizer_file_opened=0
+tokenizer_file_read=0
+tokenizer_vocab_loaded=0
+prompt_tokenized=0
+prompt_evaluated=0
+qa_dialogue_generated=0
+sexual_request_refusal=always
+manipulation_resistance=required
+```
+
+See [`NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md`](NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md).
+
+### Stage-25: Prompt Tokenization Contract
+
+Only after tokenizer-runtime-attachment metadata, tokenizer-artifact-binding metadata, tokenizer-artifact-verification metadata, tokenizer-artifact-measurement metadata, tokenizer-artifact-inventory metadata, tokenizer-manifest metadata, tokenizer-specification metadata, tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a prompt tokenization contract. The default remains no tokenizer artifact opening, no tokenizer artifact hashing, no tokenizer artifact binding, no tokenizer runtime attachment, no runtime session creation, no tokenizer manifest loading, no tokenizer file opening, no tokenizer vocabulary loading, no prompt tokenization, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
 
 ## Non-Claims
 
@@ -1138,7 +1200,7 @@ The current Nadia foundation is not:
 
 ## Promotion Gate
 
-Before Stage-24 starts, Latticra should keep these guards passing:
+Before Stage-25 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -1165,6 +1227,7 @@ sh scripts/test-nadia-tokenizer-artifact-inventory-contract-stage-20.sh
 sh scripts/test-nadia-tokenizer-artifact-measurement-contract-stage-21.sh
 sh scripts/test-nadia-tokenizer-artifact-verification-contract-stage-22.sh
 sh scripts/test-nadia-tokenizer-artifact-binding-contract-stage-23.sh
+sh scripts/test-nadia-tokenizer-runtime-attachment-contract-stage-24.sh
 ```
 
-Before tokenizer runtime attachment starts, a separate tokenizer runtime attachment contract must exist and name tokenizer runtime attachment metadata, tokenizer-artifact-binding denial fields, tokenizer-artifact-verification denial fields, tokenizer-artifact-measurement denial fields, tokenizer-artifact-inventory denial fields, tokenizer-manifest denial fields, tokenizer-file denial fields, prompt-tokenization denial fields, refusal boundary inheritance, operator review gates, and non-claims.
+Before prompt tokenization starts, a separate prompt tokenization contract must exist and name prompt tokenization metadata, tokenizer-runtime-attachment denial fields, tokenizer-artifact-binding denial fields, tokenizer-artifact-verification denial fields, tokenizer-artifact-measurement denial fields, tokenizer-artifact-inventory denial fields, tokenizer-manifest denial fields, tokenizer-file denial fields, prompt-materialization denial fields, refusal boundary inheritance, operator review gates, and non-claims.

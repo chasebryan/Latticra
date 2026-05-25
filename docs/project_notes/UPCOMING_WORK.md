@@ -2,6 +2,8 @@
 
 Status: active project note
 Last updated: 2026-05-25 CDT
+Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
+Latest defensive threat model validation refinement note: 2026-05-25 CDT
 
 ## Purpose
 
@@ -24,6 +26,30 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Lat model report declaration metadata integration
+```
+
+Purpose completed:
+
+```text
+copy first normalized declaration index, kind, name, source name, parse index, first-clause index, clause count, and source declaration index from the normalized Lat model table into deterministic Lat model normalization reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
+Lat grammar report metadata integration
+```
+
+Purpose completed:
+
+```text
+copy first parsed declaration and first parsed clause metadata from successful Lat AST parses into deterministic Lat grammar reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Earlier implementation slice
+
+```text
 Lat model report clause metadata integration
 ```
 
@@ -33,7 +59,7 @@ Purpose completed:
 copy first normalized clause index, role, effect, name, operator, and value from the normalized Lat model table into deterministic Lat model normalization reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat pipeline report clause metadata integration
@@ -151,6 +177,30 @@ Purpose completed:
 
 ```text
 implement bounded key parsing metadata for caller-provided Ed25519 public-key bytes only while preserving no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority
+```
+
+## Latest completed validation slice
+
+```text
+Defensive threat model validation refinement
+```
+
+Purpose completed:
+
+```text
+refine the defensive threat model validation surface, external-source checkpoint posture, and next-gap triage while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, or runtime authority
+```
+
+## Latest completed policy/evidence slice
+
+```text
+Runtime boundary policy expansion after threat-model validation
+```
+
+Purpose completed:
+
+```text
+map runtime-boundary request families, effect families, authority prerequisites, future gates, defensive-threat-model abuse cases, and remaining evidence gaps while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, and no runtime authority
 ```
 
 ## Latest completed status/public-entry slice
@@ -535,18 +585,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Defensive threat model validation refinement, while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, or runtime authority
+Abuse-case fixture expansion after runtime-boundary policy expansion, while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, or runtime authority
 ```
 
 Purpose:
 
 ```text
-refine the defensive threat model validation surface while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+expand guarded abuse-case fixtures after runtime-boundary policy expansion while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Defensive threat model validation refinement.
+1. Abuse-case fixture expansion after runtime-boundary policy expansion.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.

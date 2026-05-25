@@ -1,0 +1,233 @@
+# macOS Integration Transferability Plan
+
+Status: macOS integration transferability plan
+Date: 2026-05-25 CDT
+Current posture: planning and transferability mapping only
+Scope: macOS integration paths that can be transferred from current Latticra work without widening authority claims.
+
+## Summary
+
+This document maps the current Latticra repository to a macOS integration lane.
+
+The goal is to reuse the strongest existing parts of Latticra: no-effect reporting, denied-by-default authority, receipt-first installation, guarded local-prefix layout, Panel-driven operator review, Lat/LIR metadata paths, Latticra Seal boundary reports, Runtime Boundary classification, Nucleus task-boundary records, and Nadia offline AI contract surfaces.
+
+This is not a macOS implementation, app bundle, notarized release, launch service, sandbox, Keychain integration, Endpoint Security integration, system extension, kernel extension, package installer, or production security claim.
+
+## Transferable Now
+
+The following areas are mostly transferable to macOS because they are already no-effect, metadata-oriented, or user-local:
+
+```text
+lat_parse_validate_lower_pipeline=transferable
+lir_metadata_reporting=transferable
+l_ui_parser_validation_reporting=transferable
+nucleus_report_only_task_boundary=transferable
+runtime_boundary_classification_reports=transferable
+latticra_seal_report_only_metadata=transferable
+latticra_seal_request_boundary_metadata=transferable
+latticra_seal_policy_decision_metadata=transferable
+latticra_seal_verification_receipt_metadata=transferable
+nadia_offline_ai_contract_surfaces=transferable
+panel_guided_operator_review_model=transferable
+receipt_first_install_evidence=transferable
+deny_by_default_authority_vocabulary=transferable
+deterministic_shell_guards=partially_transferable
+c_invariant_tests=transferable_after_build_probe
+rust_egui_panel=transferable_after_macos_build_probe
+```
+
+The current Rust Panel is a practical transfer point because it is not bound to GTK or GNOME at the application architecture level. The current shell installer is also useful because its authority model is already user-local and receipt-oriented.
+
+## Needs A macOS Adapter
+
+These areas should not be copied directly from the Fedora/Linux lane:
+
+```text
+xdg_desktop_entry=replace_with_app_bundle
+hicolor_icon_cache=replace_with_app_resources
+update_desktop_database=not_applicable
+gtk_icon_cache=not_applicable
+fedora_validation_profile=keep_separate
+rpm_validation_lanes=not_transferable_to_macos
+systemd_nonclaim_wording=replace_with_launchd_nonclaim_wording
+selinux_nonclaim_wording=replace_with_macos_privacy_security_nonclaim_wording
+dnf_prerequisites=replace_with_xcode_clt_and_rust_probe
+linux_desktop_launcher_verification=replace_with_app_bundle_verification
+```
+
+A macOS installer lane should introduce a platform adapter instead of widening the existing Linux path. The adapter should keep dry-run first, then write only user-local managed artifacts.
+
+Recommended macOS paths:
+
+```text
+app_support_prefix=$HOME/Library/Application Support/Latticra
+app_bundle=$HOME/Applications/Latticra Panel.app
+logs_dir=$HOME/Library/Logs/Latticra
+caches_dir=$HOME/Library/Caches/Latticra
+preferences_dir=$HOME/Library/Preferences
+optional_cli_bin=$HOME/.local/bin
+receipts_dir=$HOME/Library/Application Support/Latticra/receipts
+```
+
+The default macOS lane should not write `/Applications`, `/Library`, `/System`, `/usr/local`, `/opt/homebrew`, LaunchDaemons, system LaunchAgents, kernel extension paths, system extension paths, network extension paths, or privileged helper tools.
+
+## First macOS Lane
+
+The first implementation lane should be deliberately small:
+
+```text
+stage_0_transferability_plan=present
+stage_1_macos_build_probe=present
+stage_2_macos_dry_run_plan=future
+stage_3_user_local_app_bundle=future
+stage_4_user_local_verification_transcript=future
+stage_5_codesigning_notarization_plan=future
+stage_6_controlled_os_integration_contracts=future
+```
+
+Stage 1 records compiler, Rust, architecture, and dependency evidence without installing anything:
+
+```text
+uname_s_recorded=1
+sw_vers_recorded=1
+arch_recorded=1
+clang_probe_recorded=1
+rust_probe_recorded=1
+panel_build_probe_recorded=1
+c_test_probe_recorded=1
+host_mutation_performed=0
+network_performed=0
+```
+
+Stage 2 should adapt the existing installer plan to macOS and still remain dry-run. Stage 3 may write a managed app bundle under the user's home directory only after Stage 2 evidence exists.
+
+Stage 1 is implemented by:
+
+```text
+docs/MACOS_BUILD_PLATFORM_PROBE.md
+scripts/macos-build-platform-probe.sh
+docs/status/MACOS_BUILD_PLATFORM_PROBE_STATUS.md
+```
+
+## App Bundle Direction
+
+The macOS Panel should be represented as a managed user-local app bundle:
+
+```text
+Latticra Panel.app/
+  Contents/
+    Info.plist
+    MacOS/latticra-panel
+    Resources/latticra-panel.icns
+    Resources/latticra/
+```
+
+The first bundle should be local and unsigned or ad-hoc signed only if the build environment requires it. Developer ID signing, hardened runtime, and notarization belong to a later evidence lane.
+
+The app bundle must preserve these limits:
+
+```text
+root_authority=0
+network_authority=0
+runtime_enforcement_authority=0
+launchagent_authority=0
+keychain_authority=0
+tcc_bypass_authority=0
+system_extension_authority=0
+endpoint_security_authority=0
+```
+
+## CLI Direction
+
+The current command wrappers can transfer with adjustment. On macOS, the safest first path is:
+
+```text
+managed_cli_wrappers=$HOME/.local/bin
+operator_path_setup=manual_or_panel_report_only
+homebrew_prefix_mutation=0
+usr_local_mutation=0
+opt_homebrew_mutation=0
+```
+
+If the operator does not already use `~/.local/bin`, the Panel can report the needed shell profile line, but should not mutate shell startup files in the first macOS lane.
+
+## macOS Security Interfaces
+
+These macOS-specific interfaces are future-gated and should not be treated as current capability:
+
+```text
+Keychain=future_contract_only
+Secure_Enclave=future_contract_only
+TCC_Privacy=future_contract_only
+App_Sandbox=future_contract_only
+Hardened_Runtime=future_contract_only
+Developer_ID_Signing=future_contract_only
+Notarization=future_contract_only
+LaunchAgent=future_contract_only
+Endpoint_Security=future_contract_only
+System_Extension=future_contract_only
+Network_Extension=future_contract_only
+Privileged_Helper=future_contract_only
+```
+
+The first macOS work should avoid prompts for Full Disk Access, Contacts, Photos, Screen Recording, Accessibility, Automation, or Developer Tools permissions unless a separate contract and verification lane exists.
+
+## Component Mapping
+
+| Latticra area | macOS transferability | Required adaptation |
+| --- | --- | --- |
+| Lat | High | Build/test probe on clang and macOS filesystem paths |
+| LIR | High | Build/test probe only |
+| L-UI | High | Terminal-control renderer remains future-gated |
+| Nucleus | High | Keep report-only task boundary |
+| Runtime Boundary | High | Add macOS domain labels later; no enforcement |
+| Latticra Seal | High | Keep report-only; Keychain and Secure Enclave future-gated |
+| Latticra Panel | Medium-high | App bundle, icon, verification, path adapter |
+| Nadia offline AI | Medium-high | Keep contract-only; no model loading, TCC bypass, or network |
+| Fedora/RPM lanes | Low | Keep as Linux-specific evidence, not macOS input |
+| Installer scripts | Medium | Add platform adapter, app bundle writer, macOS verification |
+| Documentation/status | High | Add macOS-specific non-claims and validation records |
+
+## Evidence Rules
+
+Any macOS public claim should be backed by a dedicated status record and guard script. The claim must say exactly which host, architecture, command, bundle, receipt, and verification path were observed.
+
+Required evidence before saying "macOS user-local install verified":
+
+```text
+host_os_macos_recorded=1
+architecture_recorded=1
+panel_build_completed=1
+managed_app_bundle_present=1
+managed_cli_wrappers_present=1
+receipts_present=1
+seal_report_only_output_recorded=1
+lat_or_lir_no_effect_probe_recorded=1
+uninstall_or_reset_dry_run_recorded=1
+root_authority=0
+network_authority=0
+system_extension_authority=0
+endpoint_security_authority=0
+production_installer_ready=0
+```
+
+## Non-Claims
+
+This plan does not implement macOS runtime behavior, host mutation, app bundle generation, installer writes, Keychain access, Secure Enclave access, TCC handling, sandboxing, hardened runtime, notarization, LaunchAgent behavior, Endpoint Security behavior, System Extension behavior, Network Extension behavior, privileged helper behavior, malware prevention, ransomware prevention, production readiness, or Apple platform approval.
+
+Current tracking flags:
+
+```text
+macos_integration_transferability_map_present=1
+macos_runtime_behavior_added=0
+macos_host_mutation_added=0
+macos_app_bundle_created=0
+macos_install_verified=0
+macos_production_ready=0
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS dry-run plan adapter that renders user-local Application Support, user-local app bundle, CLI-wrapper, receipt, and verification intent without writing those artifacts.
+```

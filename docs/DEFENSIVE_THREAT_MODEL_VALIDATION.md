@@ -168,6 +168,32 @@ semantic validation prerequisites
 operator confirmation non-override policy
 ```
 
+## Validation refinement checkpoint
+
+The current validation refinement is recorded in:
+
+```text
+docs/DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md
+```
+
+Current refinement posture:
+
+```text
+defensive_threat_model_validation_refinement_present=1
+external_source_refresh_checkpoint_present=1
+external_source_refresh_date=2026-05-25
+manual_source_review_required=1
+runtime_boundary_policy_expansion_next=1
+abuse_case_fixture_expansion_next=1
+certification_from_external_alignment=0
+compliance_from_external_alignment=0
+protection_from_external_alignment=0
+security_controls_added=0
+runtime_authority_granted=0
+```
+
+The refinement keeps the external standards alignment ledger source-tracking-only and does not close the runtime boundary or abuse-case fixture gaps.
+
 ## Current gaps
 
 ```text

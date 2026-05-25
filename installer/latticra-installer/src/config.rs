@@ -96,6 +96,7 @@ impl SealCryptoProfile {
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(default)]
 pub struct Components {
+    pub latticra_console: bool,
     pub lat_tooling: bool,
     pub lir_contracts: bool,
     pub seal_report_only: bool,
@@ -108,6 +109,7 @@ pub struct Components {
 impl Default for Components {
     fn default() -> Self {
         Self {
+            latticra_console: true,
             lat_tooling: true,
             lir_contracts: true,
             seal_report_only: true,
@@ -287,6 +289,7 @@ impl InstallerConfig {
             InstallProfile::SealReportOnly => {
                 self.install_prefix = "~/.local/share/latticra".to_owned();
                 self.components = Components {
+                    latticra_console: true,
                     lat_tooling: false,
                     lir_contracts: true,
                     seal_report_only: true,
@@ -304,6 +307,7 @@ impl InstallerConfig {
             InstallProfile::FedoraValidationVm => {
                 self.install_prefix = "~/.local/share/latticra-validation".to_owned();
                 self.components = Components {
+                    latticra_console: true,
                     lat_tooling: true,
                     lir_contracts: true,
                     seal_report_only: true,
@@ -399,6 +403,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "runtime_enforcement_authority=0");
     let _ = writeln!(out);
     let _ = writeln!(out, "[components]");
+    let _ = writeln!(
+        out,
+        "latticra_console={}",
+        config.components.latticra_console
+    );
     let _ = writeln!(out, "lat_tooling={}", config.components.lat_tooling);
     let _ = writeln!(out, "lir_contracts={}", config.components.lir_contracts);
     let _ = writeln!(
@@ -427,13 +436,36 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         config.components.developer_cli_helpers
     );
     let _ = writeln!(out);
+    let _ = writeln!(out, "[lc]");
+    let _ = writeln!(out, "component_key=latticra_console");
+    let _ = writeln!(out, "console_name=Latticra Console");
+    let _ = writeln!(out, "short_name=LC");
+    let _ = writeln!(
+        out,
+        "component_selected={}",
+        config.components.latticra_console
+    );
+    let _ = writeln!(out, "configurable=1");
+    let _ = writeln!(out, "panel_installable=1");
+    let _ = writeln!(out, "panel_console_bridge=panel-aware");
+    let _ = writeln!(out, "command_registry_status=seed-registry");
+    let _ = writeln!(out, "substrate_bridge_status=metadata-bound");
+    let _ = writeln!(out, "host_embedding_status=planned");
+    let _ = writeln!(out, "os_base_status=planned-no-boot-authority");
+    let _ = writeln!(out, "operator_shell_present=1");
+    let _ = writeln!(out, "execution_allowed=0");
+    let _ = writeln!(out, "host_mutation_allowed=0");
+    let _ = writeln!(out, "network_allowed=0");
+    let _ = writeln!(out, "runtime_enforcement_allowed=0");
+    let _ = writeln!(out, "boot_allowed=0");
+    let _ = writeln!(out);
     let _ = writeln!(out, "[nadia]");
     let _ = writeln!(out, "system_name=Latticra Nadia Witness Foundation");
     let _ = writeln!(out, "public_name=Nadia");
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=23-tokenizer-artifact-binding-contract");
+    let _ = writeln!(out, "stage=24-tokenizer-runtime-attachment-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -1098,6 +1130,50 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "requires_future_tokenizer_runtime_attachment_contract=1"
     );
     let _ = writeln!(out, "tokenizer_artifact_binding_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "tokenizer_runtime_attachment_contract_stage=24-tokenizer-runtime-attachment-contract"
+    );
+    let _ = writeln!(
+        out,
+        "tokenizer_runtime_attachment_contract_command=scripts/nadia-tokenizer-runtime-attachment-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_tokenizer_runtime_attachment_contract_command=latticra-nadia tokenizer-runtime-attachment"
+    );
+    let _ = writeln!(out, "tokenizer_runtime_attachment_stage=contract-only");
+    let _ = writeln!(
+        out,
+        "tokenizer_runtime_attachment_contract_status=contract_only"
+    );
+    let _ = writeln!(out, "tokenizer_runtime_attachment_authority=0");
+    let _ = writeln!(out, "tokenizer_runtime_attachment_allowed=0");
+    let _ = writeln!(out, "tokenizer_runtime_attachment_performed=0");
+    let _ = writeln!(out, "tokenizer_runtime_attachment_metadata_present=1");
+    let _ = writeln!(
+        out,
+        "tokenizer_runtime_attachment_family=operator-reviewed-tokenizer-runtime-attachment"
+    );
+    let _ = writeln!(
+        out,
+        "tokenizer_runtime_attachment_format=contract-only-offline-attachment"
+    );
+    let _ = writeln!(
+        out,
+        "tokenizer_runtime_attachment_decision=blocked_contract_only"
+    );
+    let _ = writeln!(out, "tokenizer_runtime_attachment_plan_recorded=1");
+    let _ = writeln!(out, "tokenizer_runtime_attachment_result_recorded=0");
+    let _ = writeln!(out, "tokenizer_runtime_attachment_record_created=0");
+    let _ = writeln!(out, "tokenizer_runtime_attachment_attached=0");
+    let _ = writeln!(out, "tokenizer_runtime_attachment_runtime_invoked=0");
+    let _ = writeln!(out, "tokenizer_runtime_attachment_session_created=0");
+    let _ = writeln!(out, "runtime_session_created=0");
+    let _ = writeln!(out, "runtime_invoked=0");
+    let _ = writeln!(out, "requires_tokenizer_artifact_binding_contract=1");
+    let _ = writeln!(out, "requires_future_prompt_tokenization_contract=1");
+    let _ = writeln!(out, "tokenizer_runtime_attachment_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

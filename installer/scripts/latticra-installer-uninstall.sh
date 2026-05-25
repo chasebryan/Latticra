@@ -218,7 +218,7 @@ log "mode=$MODE"
 log "prefix=$PREFIX"
 
 phase 1 "remove managed command wrappers"
-for command in latticra lat latticra-seal latticra-nadia latticra-panel latticra-installer; do
+for command in latticra latticra-lc lat latticra-seal latticra-nadia latticra-panel latticra-installer; do
   remove_managed_file "$USER_BIN/$command" "command wrapper"
 done
 

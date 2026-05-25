@@ -1,0 +1,92 @@
+# macOS Integration Transferability Status
+
+Status: transferability status record
+Date: 2026-05-25 CDT
+Scope: status checkpoint for the first macOS integration transferability map.
+
+## Summary
+
+Latticra now has a dedicated macOS integration transferability plan.
+
+The plan maps current Latticra surfaces into a cautious macOS lane: preserve no-effect reports, Panel-guided operator review, receipt-first installation, user-local artifacts, denied-by-default authority, and future-gated platform integrations.
+
+This is planning/status work only. It does not implement macOS installation, app bundle creation, launchd behavior, Keychain behavior, Secure Enclave behavior, sandboxing, notarization, Endpoint Security behavior, System Extension behavior, Network Extension behavior, privileged helper behavior, or production macOS readiness.
+
+## Status Fields
+
+```text
+macos_integration_transferability_map_present=1
+macos_build_platform_probe_present=1
+macos_transferable_surfaces_classified=1
+macos_adapter_requirements_recorded=1
+macos_user_local_paths_proposed=1
+macos_app_bundle_proposed=1
+macos_cli_wrapper_direction_recorded=1
+macos_security_interfaces_future_gated=1
+macos_evidence_rules_recorded=1
+macos_runtime_behavior_added=0
+macos_host_mutation_added=0
+macos_app_bundle_created=0
+macos_install_verified=0
+macos_keychain_authority=0
+macos_secure_enclave_authority=0
+macos_tcc_bypass_authority=0
+macos_launchagent_authority=0
+macos_endpoint_security_authority=0
+macos_system_extension_authority=0
+macos_network_extension_authority=0
+macos_privileged_helper_authority=0
+macos_production_ready=0
+```
+
+## Transferability Classification
+
+The status checkpoint records these transferability conclusions:
+
+```text
+Lat=high_transferability
+LIR=high_transferability
+L_UI=high_transferability
+Nucleus=high_transferability
+Runtime_Boundary=high_transferability
+Latticra_Seal=high_transferability_report_only
+Latticra_Panel=medium_high_transferability_with_app_bundle_adapter
+Nadia_offline_AI=medium_high_transferability_contract_only
+Fedora_RPM_lanes=not_transferable_keep_linux_specific
+installer_scripts=medium_transferability_with_platform_adapter
+documentation_status=high_transferability
+```
+
+## Public Meaning
+
+The careful public meaning is:
+
+```text
+Latticra has a macOS transferability map for adapting the current no-effect, receipt-first, user-local Panel and metadata surfaces into a future macOS lane.
+```
+
+That statement must not be expanded into a claim that Latticra already has a macOS installer, notarized app, sandbox, Keychain integration, endpoint security layer, system extension, package installer, or production security product.
+
+## Guard Validation
+
+This status record is guarded by:
+
+```sh
+sh scripts/test-macos-integration-transferability.sh
+```
+
+Expected output:
+
+```text
+macos_integration_transferability: ok
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS dry-run plan adapter that renders user-local Application Support, user-local app bundle, CLI-wrapper, receipt, and verification intent without writing those artifacts.
+```
+
+## Non-Claims
+
+This status record is not macOS install evidence, app bundle evidence, signed app evidence, notarization evidence, launchd evidence, Keychain evidence, Secure Enclave evidence, sandbox evidence, TCC approval evidence, Endpoint Security evidence, System Extension evidence, Network Extension evidence, privileged helper evidence, malware prevention, ransomware prevention, production readiness, or Apple platform approval.

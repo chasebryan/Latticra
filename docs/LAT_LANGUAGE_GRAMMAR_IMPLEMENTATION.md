@@ -191,6 +191,18 @@ transition_count
 assertion_count
 effect_count
 clause_count
+first_declaration_index
+first_declaration_kind
+first_declaration_name
+first_declaration_source
+first_declaration_first_clause_index
+first_declaration_clause_count
+first_clause_index
+first_clause_keyword
+first_clause_left
+first_clause_operator
+first_clause_right
+first_clause_effect
 no_effect
 execution_allowed
 mutation_allowed
@@ -204,6 +216,8 @@ span_start_column
 span_end_line
 span_end_column
 ```
+
+The first declaration and first clause fields are copied from the parsed AST only when parsing succeeds. They are report metadata only; clause operators are not evaluated.
 
 Small output buffers return:
 

@@ -48,6 +48,17 @@ static int lat_grammar_accepts_minimal_module(void) {
     EXPECT_TRUE(latticra_lat_parse_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "minimal report builds");
     EXPECT_TRUE(strstr(report, "LAT GRAMMAR REPORT\n") != 0, "minimal report header");
     EXPECT_TRUE(strstr(report, "error=ok\n") != 0, "minimal report OK");
+    EXPECT_TRUE(strstr(report, "first_declaration_index=0\n") != 0, "minimal first declaration index report");
+    EXPECT_TRUE(strstr(report, "first_declaration_kind=state\n") != 0, "minimal first declaration kind report");
+    EXPECT_TRUE(strstr(report, "first_declaration_name=RootCell\n") != 0, "minimal first declaration name report");
+    EXPECT_TRUE(strstr(report, "first_declaration_first_clause_index=0\n") != 0, "minimal first declaration first clause report");
+    EXPECT_TRUE(strstr(report, "first_declaration_clause_count=6\n") != 0, "minimal first declaration clause count report");
+    EXPECT_TRUE(strstr(report, "first_clause_index=0\n") != 0, "minimal first clause index report");
+    EXPECT_TRUE(strstr(report, "first_clause_keyword=field\n") != 0, "minimal first clause keyword report");
+    EXPECT_TRUE(strstr(report, "first_clause_left=origin\n") != 0, "minimal first clause left report");
+    EXPECT_TRUE(strstr(report, "first_clause_operator==\n") != 0, "minimal first clause operator report");
+    EXPECT_TRUE(strstr(report, "first_clause_right=0/0\n") != 0, "minimal first clause right report");
+    EXPECT_TRUE(strstr(report, "first_clause_effect=unknown\n") != 0, "minimal first clause effect report");
     return 0;
 }
 

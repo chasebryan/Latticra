@@ -28,12 +28,14 @@ require_contains 'External standards alignment ledger' "$doc"
 require_contains 'Validation matrix' "$doc"
 require_contains 'Non-goal matrix' "$doc"
 require_contains 'Compatibility expectations' "$doc"
+require_contains 'Validation refinement checkpoint' "$doc"
 require_contains 'Current gaps' "$doc"
 require_contains 'Non-claims' "$doc"
 
 for source_doc in \
   docs/DEFENSIVE_THREAT_MODEL_CONTRACT.md \
-  docs/DEFENSIVE_THREAT_MODEL_IMPLEMENTATION_PLAN.md
+  docs/DEFENSIVE_THREAT_MODEL_IMPLEMENTATION_PLAN.md \
+  docs/DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md
 do
   require_contains "$source_doc" "$doc"
 done
@@ -168,6 +170,17 @@ do
 done
 
 for gap in \
+  'defensive_threat_model_validation_refinement_present=1' \
+  'external_source_refresh_checkpoint_present=1' \
+  'external_source_refresh_date=2026-05-25' \
+  'manual_source_review_required=1' \
+  'runtime_boundary_policy_expansion_next=1' \
+  'abuse_case_fixture_expansion_next=1' \
+  'certification_from_external_alignment=0' \
+  'compliance_from_external_alignment=0' \
+  'protection_from_external_alignment=0' \
+  'security_controls_added=0' \
+  'runtime_authority_granted=0' \
   'external standards ledger needs recurring manual review' \
   'runtime boundary source needs fuller policy expansion' \
   'abuse-case mapping needs broader fixture coverage' \

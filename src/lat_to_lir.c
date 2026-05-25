@@ -53,6 +53,14 @@ static void result_default(latticra_lat_to_lir_result_t *result) {
     result->clause_count = 0u;
     result->model_declaration_count = 0u;
     result->model_clause_count = 0u;
+    result->first_declaration_node_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_declaration_kind = LATTICRA_LAT_DECLARATION_UNKNOWN;
+    result->first_declaration_name[0] = '\0';
+    result->first_declaration_source[0] = '\0';
+    result->first_declaration_parse_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_declaration_first_clause_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_declaration_clause_count = 0u;
+    result->first_declaration_source_index = LATTICRA_LAT_MODEL_NO_INDEX;
     result->first_transition_source_index = LATTICRA_LAT_MODEL_NO_INDEX;
     result->first_clause_node_index = LATTICRA_LAT_MODEL_NO_INDEX;
     result->first_clause_role = LATTICRA_LAT_MODEL_CLAUSE_UNKNOWN;
@@ -328,6 +336,22 @@ static size_t model_clause_node_index(const latticra_lat_model_t *model, size_t 
     return LATTICRA_LAT_TO_LIR_FIRST_DECL_INDEX + model->declaration_count + clause_index;
 }
 
+static void copy_first_declaration_summary(
+    const latticra_lat_model_t *model,
+    latticra_lat_to_lir_result_t *result) {
+    const latticra_lat_model_declaration_t *declaration;
+    if (model == 0 || result == 0 || model->declaration_count == 0u) return;
+    declaration = &model->declarations[0];
+    result->first_declaration_node_index = declaration_node_index(0u);
+    result->first_declaration_kind = declaration->kind;
+    copy_text(result->first_declaration_name, sizeof(result->first_declaration_name), declaration->name);
+    copy_text(result->first_declaration_source, sizeof(result->first_declaration_source), declaration->source_name);
+    result->first_declaration_parse_index = declaration->parse_declaration_index;
+    result->first_declaration_first_clause_index = declaration->first_clause_index;
+    result->first_declaration_clause_count = declaration->clause_count;
+    result->first_declaration_source_index = declaration->source_declaration_index;
+}
+
 static void copy_first_clause_summary(
     const latticra_lat_model_t *model,
     latticra_lat_to_lir_result_t *result) {
@@ -512,6 +536,7 @@ latticra_status_t latticra_lir_lower_lat_model(
     result->error = LATTICRA_LAT_TO_LIR_OK;
     result->node_count = module->node_count;
     result->edge_count = module->edge_count;
+    copy_first_declaration_summary(model, result);
     copy_first_clause_summary(model, result);
     result->no_effect = model->no_effect;
     result->execution_allowed = model->execution_allowed;
@@ -574,6 +599,14 @@ latticra_status_t latticra_lat_to_lir_report(
         "clause_count=%zu\n"
         "model_declaration_count=%zu\n"
         "model_clause_count=%zu\n"
+        "first_declaration_node_index=%zu\n"
+        "first_declaration_kind=%s\n"
+        "first_declaration_name=%s\n"
+        "first_declaration_source=%s\n"
+        "first_declaration_parse_index=%zu\n"
+        "first_declaration_first_clause_index=%zu\n"
+        "first_declaration_clause_count=%zu\n"
+        "first_declaration_source_index=%zu\n"
         "first_transition_source_index=%zu\n"
         "first_clause_node_index=%zu\n"
         "first_clause_role=%s\n"
@@ -600,6 +633,14 @@ latticra_status_t latticra_lat_to_lir_report(
         result->clause_count,
         result->model_declaration_count,
         result->model_clause_count,
+        result->first_declaration_node_index,
+        latticra_lat_declaration_kind_label(result->first_declaration_kind),
+        result->first_declaration_name,
+        result->first_declaration_source,
+        result->first_declaration_parse_index,
+        result->first_declaration_first_clause_index,
+        result->first_declaration_clause_count,
+        result->first_declaration_source_index,
         result->first_transition_source_index,
         result->first_clause_node_index,
         latticra_lat_model_clause_role_label(result->first_clause_role),

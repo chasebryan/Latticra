@@ -95,6 +95,14 @@ static int lat_to_lir_accepts_normalized_model(void) {
     EXPECT_TRUE(lowering.model_error == LATTICRA_LAT_MODEL_OK, "lowering model ok");
     EXPECT_TRUE(lowering.model_declaration_count == 5u, "lowering model declaration count");
     EXPECT_TRUE(lowering.model_clause_count == 23u, "lowering model clause count");
+    EXPECT_TRUE(lowering.first_declaration_node_index == 1u, "lowering first declaration node index");
+    EXPECT_TRUE(lowering.first_declaration_kind == LATTICRA_LAT_DECLARATION_STATE, "lowering first declaration kind");
+    EXPECT_STR_EQ(lowering.first_declaration_name, "RootCell", "lowering first declaration name");
+    EXPECT_STR_EQ(lowering.first_declaration_source, "", "lowering first declaration source");
+    EXPECT_TRUE(lowering.first_declaration_parse_index == 0u, "lowering first declaration parse index");
+    EXPECT_TRUE(lowering.first_declaration_first_clause_index == 0u, "lowering first declaration clause start");
+    EXPECT_TRUE(lowering.first_declaration_clause_count == 9u, "lowering first declaration clause count");
+    EXPECT_TRUE(lowering.first_declaration_source_index == LATTICRA_LAT_MODEL_NO_INDEX, "lowering first declaration source index");
     EXPECT_TRUE(lowering.first_transition_source_index == 0u, "lowering transition source index");
     EXPECT_TRUE(module.edges[module.edge_count - 1u].edge_kind == LATTICRA_LIR_EDGE_TRANSITIONS_FROM, "model transition edge");
     return 0;
@@ -209,6 +217,14 @@ static int lat_to_lir_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(one, "error=ok\n") != 0, "report ok");
     EXPECT_TRUE(strstr(one, "model_error=ok\n") != 0, "report model ok");
     EXPECT_TRUE(strstr(one, "model_declaration_count=5\n") != 0, "report model count");
+    EXPECT_TRUE(strstr(one, "first_declaration_node_index=1\n") != 0, "report first declaration node");
+    EXPECT_TRUE(strstr(one, "first_declaration_kind=state\n") != 0, "report first declaration kind");
+    EXPECT_TRUE(strstr(one, "first_declaration_name=RootCell\n") != 0, "report first declaration name");
+    EXPECT_TRUE(strstr(one, "first_declaration_source=\n") != 0, "report first declaration source");
+    EXPECT_TRUE(strstr(one, "first_declaration_parse_index=0\n") != 0, "report first declaration parse index");
+    EXPECT_TRUE(strstr(one, "first_declaration_first_clause_index=0\n") != 0, "report first declaration clause start");
+    EXPECT_TRUE(strstr(one, "first_declaration_clause_count=9\n") != 0, "report first declaration clause count");
+    EXPECT_TRUE(strstr(one, "first_declaration_source_index=") != 0, "report first declaration source index");
     EXPECT_TRUE(strstr(one, "first_transition_source_index=0\n") != 0, "report transition source");
     return 0;
 }

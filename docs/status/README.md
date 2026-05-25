@@ -22,6 +22,8 @@ non-claims
 
 - [`CURRENT_STATUS.md`](CURRENT_STATUS.md) — current project status, completion estimates, and next priorities.
 - [`CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](CURRENT_ESTIMATE_REFRESH_2026_05_24.md) - current planning-estimate refresh after Panel, Seal, documentation, and local evidence work.
+- [`MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md`](MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md) - macOS integration transferability status for adapting current no-effect, receipt-first, user-local Latticra surfaces into a future macOS lane.
+- [`MACOS_BUILD_PLATFORM_PROBE_STATUS.md`](MACOS_BUILD_PLATFORM_PROBE_STATUS.md) - macOS build/platform probe status for no-effect toolchain, architecture, Panel-readiness, and C-test-readiness reporting.
 - [`NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](NADIA_OFFLINE_AI_STAGE_0_STATUS.md) - Nadia offline AI Stage-0 foundation status for Panel installability, Console interoperability, and awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) - Nadia Stage-1 local context-engine status for no-network context-pack generation.
 - [`NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md`](NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md) - Nadia Stage-2 runtime-profile status for offline model-readiness metadata before inference.
@@ -46,7 +48,10 @@ non-claims
 - [`NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21_STATUS.md`](NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21_STATUS.md) - Nadia Stage-21 tokenizer-artifact-measurement contract status before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest recording, artifact size recording, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22_STATUS.md`](NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22_STATUS.md) - Nadia Stage-22 tokenizer-artifact-verification contract status before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest comparison, artifact size comparison, artifact verification, artifact binding, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23_STATUS.md`](NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23_STATUS.md) - Nadia Stage-23 tokenizer-artifact-binding contract status before tokenizer artifact opening, artifact reading, artifact hashing, artifact verification, artifact binding, tokenizer runtime attachment, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md`](NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md) - Nadia Stage-24 tokenizer-runtime-attachment contract status before tokenizer artifact opening, artifact reading, artifact hashing, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
+- [`../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md`](../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md) — defensive threat model validation refinement.
+- [`../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`](../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md) — runtime boundary policy expansion after threat-model validation.
 - [`SEAL_POLICY_DECISION_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](SEAL_POLICY_DECISION_PUBLIC_ENTRYPOINT_ALIGNMENT.md) — Latticra Seal policy decision public-entrypoint alignment.
 - [`SEAL_POLICY_DECISION_STATUS.md`](SEAL_POLICY_DECISION_STATUS.md) — Latticra Seal policy decision status/public-entry alignment.
 - [`SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md`](SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md) — Latticra Seal policy decision report surface status.
@@ -183,6 +188,9 @@ seal_policy_decision_report_surface_present=1
 seal_policy_decision_report_surface_status_present=1
 seal_policy_decision_status_present=1
 seal_policy_decision_public_entrypoint_alignment_present=1
+defensive_threat_model_validation_refinement_present=1
+runtime_boundary_policy_expansion_next=1
+runtime_boundary_policy_expansion_after_threat_model_present=1
 operator_visible_status_surface=1
 deterministic_local_report_path=1
 core_blocked_case_set_complete=1
@@ -200,6 +208,26 @@ tool_execution_implemented=0
 ai_agent_security_claimed=0
 production_readiness_claimed=0
 external_endorsement_claimed=0
+```
+
+## Current runtime boundary policy expansion checkpoint
+
+The runtime boundary policy expansion after threat-model validation is documentation/status/guard work only.
+
+It records:
+
+```text
+runtime_boundary_policy_expansion_after_threat_model_present=1
+request_family_policy_map_present=1
+effect_policy_map_present=1
+authority_prerequisite_map_present=1
+future_gate_policy_map_present=1
+abuse_case_runtime_policy_map_present=1
+evidence_gap_map_present=1
+runtime_execution_added=0
+effect_execution_added=0
+runtime_authority_granted=0
+completion_estimate_review_required=0
 ```
 
 Current Seal core case evidence:

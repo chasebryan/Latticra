@@ -2,11 +2,15 @@
 
 Status: active project note
 Last updated: 2026-05-25 CDT
+Latest defensive threat model validation refinement note: 2026-05-25 CDT
+Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
 Latest Seal policy decision status/public-entry note: 2026-05-25 CDT
 Latest Seal signed request status/public-entry note: 2026-05-25 CDT
 Latest Seal request freshness status/public-entry note: 2026-05-25 CDT
 Latest Seal parameter schema status/public-entry note: 2026-05-25 CDT
+Latest Lat grammar report metadata integration note: 2026-05-25 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
+Latest Lat model report declaration metadata integration note: 2026-05-25 CDT
 Latest Lat model report clause metadata integration note: 2026-05-25 CDT
 Latest Lat pipeline model normalization integration note: 2026-05-25 CDT
 Latest Lat-to-LIR model lowering integration note: 2026-05-25 CDT
@@ -93,8 +97,10 @@ The Lat lane now has:
 
 ```text
 bounded grammar parser
+bounded no-effect Lat grammar report metadata integration
 bounded no-effect semantic validation
 bounded no-effect Lat model normalization
+bounded no-effect Lat model report declaration metadata integration
 bounded no-effect Lat model report clause metadata integration
 bounded no-effect Lat pipeline model normalization integration
 bounded no-effect Lat-to-LIR model lowering integration
@@ -111,7 +117,11 @@ bounded no-effect Lat pipeline diagnostic main test audit
 bounded no-effect Lat-specific LIR refinement
 ```
 
+The current Lat grammar report metadata integration copies the first parsed declaration kind/name/source/first-clause metadata and first parsed clause keyword/name/operator/value/effect into deterministic grammar reports when parsing succeeds.
+
 The current Lat model normalization implementation consumes parser and semantic metadata, builds typed declaration and clause index tables for states, policies, transitions, assertions, and effect declarations, resolves transition source-state metadata, preserves source spans and no-effect flags, and emits deterministic normalization reports.
+
+The current Lat model report declaration metadata integration copies the first normalized declaration index, kind, name, source name, parse index, first-clause index, clause count, and source declaration index into deterministic model normalization reports.
 
 The current Lat model report clause metadata integration copies the first normalized clause role, effect, name, operator, value, and index into deterministic model normalization reports without evaluating operators or changing normalization behavior.
 
@@ -197,7 +207,7 @@ It does not implement effect-performing Nucleus task execution, command behavior
 
 ## Current runtime boundary
 
-The runtime boundary lane now has a contract, implementation plan, initial no-effect C API/report surface, no-effect Lat evidence refinement, runtime boundary report refinement, runtime boundary policy matrix refinement, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, and main-test audit coverage.
+The runtime boundary lane now has a contract, implementation plan, initial no-effect C API/report surface, no-effect Lat evidence refinement, runtime boundary report refinement, runtime boundary policy matrix refinement, runtime boundary policy expansion after threat-model validation, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, and main-test audit coverage.
 
 Planning milestone preserved:
 
@@ -210,6 +220,8 @@ The current implementation adds the public runtime boundary header, source file,
 The current runtime boundary domain matrix evaluator classifies resolved boundary domains as declarative, operational, future-gated, blocked, invalid, or unknown.
 
 The current runtime boundary domain matrix report integration renders deterministic report fields for matrix cell, domain label, domain flags, effect-allowed state, authority-available state, and evidence level.
+
+The current runtime boundary policy expansion after threat-model validation maps request families, effect families, authority prerequisites, future gates, threat-model abuse cases, and remaining evidence gaps while preserving no-effect behavior.
 
 It does not implement effect-performing runtime behavior, command execution, Lat execution, LIR execution, task effect execution, mutation, file I/O, network I/O, recovery behavior, rollback, hardware behavior, boot behavior, terminal control, sandboxing, or production runtime claims.
 
@@ -239,12 +251,14 @@ Primary target users include:
 
 ## Current technical lane
 
-The current technical lane has moved through L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape, LIR report refinement, Lat parser foundation, Lat semantic validation, Lat semantic diagnostics, Lat model normalization, Lat model report clause metadata integration, Lat-to-LIR lowering, Lat pipeline, Lat pipeline model normalization integration, Lat-to-LIR model lowering integration, Lat-to-LIR diagnostic refinement, Lat pipeline lowering diagnostic integration, Lat-to-LIR clause metadata refinement, Lat-to-LIR diagnostic clause metadata integration, Lat pipeline diagnostic clause metadata integration, Lat pipeline report clause metadata integration, Lat pipeline report refinement, Lat pipeline diagnostic integration, Lat pipeline diagnostic main-test audit, Lat-specific LIR refinement, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, authority implementation review, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, L-UI rendering detailed report refinement, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, Nucleus task report-only execution README/status alignment, project-notes Nucleus report-only alignment, project-notes Nucleus report-only status/index check, Nucleus report-only announcement review, Nucleus report-only announcement README alignment, runtime boundary contract, runtime boundary implementation plan, initial runtime boundary API/smoke implementation, runtime boundary refinement implementation, runtime boundary report refinement, runtime boundary policy matrix refinement, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, authority/status/foundation index alignment, status announcement review, public entry-point consistency scan, Latticra Seal report envelope metadata implementation, Latticra Seal signature request contract, Latticra Seal signature request metadata implementation, Latticra Seal signature request status/public-entry alignment, Latticra Seal signing authorization contract, Latticra Seal signing authorization metadata implementation, Latticra Seal signing authorization status/public-entry alignment, Latticra Seal signer handoff contract, Latticra Seal signer handoff metadata implementation, Latticra Seal signer handoff status/public-entry alignment, Latticra Seal signer invocation contract, Latticra Seal signer invocation metadata implementation, Latticra Seal signer invocation status/public-entry alignment, Latticra Seal signing operation contract, Latticra Seal signing operation metadata implementation, Latticra Seal signing operation status/public-entry alignment, Latticra Seal key-handling boundary contract, Latticra Seal key-handling metadata implementation, Latticra Seal key-handling status/public-entry alignment, Latticra Seal key-material boundary contract, Latticra Seal key-material metadata implementation, Latticra Seal key-material status/public-entry alignment, Latticra Seal public-key parsing boundary contract, Latticra Seal public-key parsing metadata implementation, Latticra Seal public-key parsing status/public-entry alignment, Latticra Seal future key parsing implementation contract, Latticra Seal future key parsing implementation plan, Latticra Seal bounded key parsing metadata implementation, Latticra Seal key parsing status/public-entry alignment, Latticra Seal verification policy status/public-entry alignment, Latticra Seal verification receipt status/public-entry alignment, Latticra Seal capability gate status/public-entry alignment, Latticra Seal effect decision status/public-entry alignment, Latticra Seal runtime handoff status/public-entry alignment, Latticra Seal status rollup status/public-entry alignment, Latticra Seal agentic automation security public-entrypoint alignment, Latticra Seal parameter schema status/public-entry alignment, Latticra Seal request freshness status/public-entry alignment, Latticra Seal signed request status/public-entry alignment, and Latticra Seal policy decision status/public-entry alignment.
+The current technical lane has moved through L-UI parser, AST, source-policy, diagnostic, semantic validation, LIR shape, LIR report refinement, Lat parser foundation, Lat grammar report metadata integration, Lat semantic validation, Lat semantic diagnostics, Lat model normalization, Lat model report declaration metadata integration, Lat model report clause metadata integration, Lat-to-LIR lowering, Lat pipeline, Lat pipeline model normalization integration, Lat-to-LIR model lowering integration, Lat-to-LIR diagnostic refinement, Lat pipeline lowering diagnostic integration, Lat-to-LIR clause metadata refinement, Lat-to-LIR diagnostic clause metadata integration, Lat pipeline diagnostic clause metadata integration, Lat pipeline report clause metadata integration, Lat pipeline report refinement, Lat pipeline diagnostic integration, Lat pipeline diagnostic main-test audit, Lat-specific LIR refinement, C/C++ foundation direction, constrained C++ authority-layer contract, constrained C++ authority-layer implementation plan, first no-effect C++ authority implementation, authority implementation review, L-UI rendering contract, L-UI rendering implementation plan, first no-effect L-UI renderer implementation, L-UI rendering detailed report refinement, Nucleus task execution contract, Nucleus task execution implementation plan, first no-effect Nucleus task classification/report implementation, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, Nucleus task report-only execution README/status alignment, project-notes Nucleus report-only alignment, project-notes Nucleus report-only status/index check, Nucleus report-only announcement review, Nucleus report-only announcement README alignment, runtime boundary contract, runtime boundary implementation plan, initial runtime boundary API/smoke implementation, runtime boundary refinement implementation, runtime boundary report refinement, runtime boundary policy matrix refinement, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, authority/status/foundation index alignment, status announcement review, public entry-point consistency scan, Latticra Seal report envelope metadata implementation, Latticra Seal signature request contract, Latticra Seal signature request metadata implementation, Latticra Seal signature request status/public-entry alignment, Latticra Seal signing authorization contract, Latticra Seal signing authorization metadata implementation, Latticra Seal signing authorization status/public-entry alignment, Latticra Seal signer handoff contract, Latticra Seal signer handoff metadata implementation, Latticra Seal signer handoff status/public-entry alignment, Latticra Seal signer invocation contract, Latticra Seal signer invocation metadata implementation, Latticra Seal signer invocation status/public-entry alignment, Latticra Seal signing operation contract, Latticra Seal signing operation metadata implementation, Latticra Seal signing operation status/public-entry alignment, Latticra Seal key-handling boundary contract, Latticra Seal key-handling metadata implementation, Latticra Seal key-handling status/public-entry alignment, Latticra Seal key-material boundary contract, Latticra Seal key-material metadata implementation, Latticra Seal key-material status/public-entry alignment, Latticra Seal public-key parsing boundary contract, Latticra Seal public-key parsing metadata implementation, Latticra Seal public-key parsing status/public-entry alignment, Latticra Seal future key parsing implementation contract, Latticra Seal future key parsing implementation plan, Latticra Seal bounded key parsing metadata implementation, Latticra Seal key parsing status/public-entry alignment, Latticra Seal verification policy status/public-entry alignment, Latticra Seal verification receipt status/public-entry alignment, Latticra Seal capability gate status/public-entry alignment, Latticra Seal effect decision status/public-entry alignment, Latticra Seal runtime handoff status/public-entry alignment, Latticra Seal status rollup status/public-entry alignment, Latticra Seal agentic automation security public-entrypoint alignment, Latticra Seal parameter schema status/public-entry alignment, Latticra Seal request freshness status/public-entry alignment, Latticra Seal signed request status/public-entry alignment, Latticra Seal policy decision status/public-entry alignment, and defensive threat model validation refinement.
 
-The next recommended review lane is:
+Runtime boundary policy expansion after threat-model validation is now the latest no-effect policy/evidence mapping slice.
+
+The current recommended review lane is:
 
 ```text
-Defensive threat model validation refinement, while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, or runtime authority
+Abuse-case fixture expansion after runtime-boundary policy expansion, while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, or runtime authority
 ```
 
 If capability posture does not change, the project should continue with small guarded report/status alignment only when drift appears.

@@ -3,6 +3,8 @@
 Status: public status record
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest defensive threat model validation refinement note: 2026-05-25 CDT
+Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
 Latest Seal policy decision status/public-entry note: 2026-05-25 CDT
 Latest Seal signed request status/public-entry note: 2026-05-25 CDT
 Latest Seal request freshness status/public-entry note: 2026-05-25 CDT
@@ -37,6 +39,7 @@ Latest Nadia tokenizer artifact inventory contract Stage-20 note: 2026-05-25 CDT
 Latest Nadia tokenizer artifact measurement contract Stage-21 note: 2026-05-25 CDT
 Latest Nadia tokenizer artifact verification contract Stage-22 note: 2026-05-25 CDT
 Latest Nadia tokenizer artifact binding contract Stage-23 note: 2026-05-25 CDT
+Latest Nadia tokenizer runtime attachment contract Stage-24 note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -67,10 +70,13 @@ Latest Seal signature request status/public-entry note: 2026-05-25 CDT
 Latest Seal signature request implementation note: 2026-05-25 CDT
 Latest Seal signature request contract note: 2026-05-25 CDT
 Latest Seal report envelope implementation note: 2026-05-25 CDT
+Latest Lat grammar report metadata integration note: 2026-05-25 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
+Latest Lat model report declaration metadata integration note: 2026-05-25 CDT
 Latest Lat model report clause metadata integration note: 2026-05-25 CDT
 Latest Lat pipeline model normalization integration note: 2026-05-25 CDT
 Latest Lat-to-LIR model lowering integration note: 2026-05-25 CDT
+Latest Lat-to-LIR declaration metadata refinement note: 2026-05-25 CDT
 Latest Lat-to-LIR diagnostic refinement note: 2026-05-25 CDT
 Latest Lat pipeline lowering diagnostic integration note: 2026-05-25 CDT
 Latest Lat-to-LIR clause metadata refinement note: 2026-05-25 CDT
@@ -176,6 +182,7 @@ The repository currently emphasizes:
 - Nadia tokenizer artifact measurement contract Stage-21 before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest recording, artifact size recording, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution;
 - Nadia tokenizer artifact verification contract Stage-22 before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest comparison, artifact size comparison, artifact verification, artifact binding, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution;
 - Nadia tokenizer artifact binding contract Stage-23 before tokenizer artifact opening, artifact reading, artifact hashing, artifact verification, artifact binding, tokenizer runtime attachment, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution;
+- Nadia tokenizer runtime attachment contract Stage-24 before tokenizer artifact opening, artifact reading, artifact hashing, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution;
 - L-UI rendering implementation;
 - L-UI rendering detailed report refinement;
 - L-UI rendering README/status alignment;
@@ -206,6 +213,7 @@ The repository currently emphasizes:
 - Latticra Seal request freshness status/public-entry alignment;
 - Latticra Seal signed request status/public-entry alignment;
 - Latticra Seal policy decision status/public-entry alignment;
+- Defensive threat model validation refinement;
 - Latticra Seal verification receipt status/public-entry alignment;
 - Latticra Seal verification policy status/public-entry alignment;
 - Latticra Seal key parsing status/public-entry alignment;
@@ -244,8 +252,10 @@ The repository currently emphasizes:
 - LIR shape implementation;
 - LIR report refinement;
 - Lat grammar implementation;
+- Lat grammar report metadata integration;
 - Lat semantic validation foundation;
 - Lat model normalization implementation;
+- Lat model report declaration metadata integration;
 - Lat model report clause metadata integration;
 - Lat-to-LIR lowering contract;
 - Lat-to-LIR lowering implementation plan;
@@ -275,9 +285,9 @@ The repository currently emphasizes:
 - strategy estimate review;
 - no-effect preview boundaries.
 
-Lat now has a bounded no-effect path from grammar parsing to semantic validation to model normalization to LIR metadata lowering. The current lowering implementation consumes normalized Lat model metadata directly, creates a `lat_module` LIR module shape, preserves source spans, no-effect flags, model counts, and transition source indices, and emits deterministic lowering reports. The older parser-plus-semantic lowering entry point remains available as a compatibility wrapper.
+Lat now has a bounded no-effect path from grammar parsing to semantic validation to model normalization to LIR metadata lowering. The grammar report preserves first declaration and first clause metadata from successful AST parses; the current lowering implementation consumes normalized Lat model metadata directly, creates a `lat_module` LIR module shape, preserves source spans, no-effect flags, model counts, first lowered declaration metadata, and transition source indices, and emits deterministic lowering reports. The older parser-plus-semantic lowering entry point remains available as a compatibility wrapper.
 
-The Lat model normalization implementation builds typed declaration and clause index tables for states, policies, transitions, assertions, and effect declarations after semantic validation. It preserves first normalized clause role/effect/name/operator/value report metadata, source spans, and no-effect flags without reading source bytes, executing Lat, or changing lowering behavior.
+The Lat model normalization implementation builds typed declaration and clause index tables for states, policies, transitions, assertions, and effect declarations after semantic validation. It preserves first normalized declaration metadata, first normalized clause role/effect/name/operator/value report metadata, source spans, and no-effect flags without reading source bytes, executing Lat, or changing lowering behavior.
 
 The Lat-to-LIR diagnostic refinement classifies lowering outcomes as valid, parse, semantic, model, effect-check, capacity, LIR, or internal. It copies model errors, lowering errors, optional LIR errors, model counts, transition source metadata, first-clause metadata, no-effect flags, and evidence level into deterministic diagnostic reports without changing lowering behavior.
 
@@ -433,6 +443,8 @@ The Latticra Seal signed request status record makes the existing report-only si
 
 The Latticra Seal policy decision status record makes the existing report-only policy decision contract, metadata implementation, and deterministic report surface visible from public entry points while preserving no real policy evaluation, no policy enforcement, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signature verification, no freshness validation, no replay detection, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority.
 
+The defensive threat model validation refinement records the current evidence-mapping, external-source checkpoint, manual-review requirement, and next-gap triage while preserving no security controls, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, no production protection claim, and no runtime authority.
+
 The project notes are now aligned across current direction, upcoming work, and project-notes index surfaces.
 
 The current status and announcement consistency review confirms the public status and announcement surfaces now point to the same next review lane.
@@ -460,7 +472,7 @@ These percentages are planning estimates only.
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 57% |
+| Nadia offline AI foundation | 58% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |
@@ -539,12 +551,16 @@ Latticra Seal signature request metadata implementation
 Latticra Seal signature request contract
 Latticra Seal report envelope metadata implementation
 Defensive threat model contract
+Defensive threat model validation refinement
+Runtime boundary policy expansion after threat-model validation
 L-UI parser implementation
 semantic validation contract
 semantic validation implementation plan
 semantic validation implementation
 Lat semantic diagnostics refinement
+Lat grammar report metadata integration
 Lat model normalization implementation
+Lat model report declaration metadata integration
 Lat model report clause metadata integration
 LIR shape contract
 LIR shape implementation plan
@@ -562,6 +578,7 @@ Lat pipeline implementation plan
 Lat pipeline implementation
 Lat pipeline model normalization integration
 Lat-to-LIR model lowering integration
+Lat-to-LIR declaration metadata refinement
 Lat-to-LIR diagnostic refinement
 Lat pipeline lowering diagnostic integration
 Lat-to-LIR clause metadata refinement
@@ -634,7 +651,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat model normalization, Lat model report clause metadata integration, Lat-to-LIR metadata lowering, Lat-to-LIR diagnostic refinement, LIR report refinement, Lat pipeline reporting, Lat pipeline lowering diagnostic integration, Lat pipeline diagnostic clause metadata integration, Lat pipeline report clause metadata integration, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic main test audit, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
+The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat grammar report metadata integration, Lat model normalization, Lat model report declaration metadata integration, Lat model report clause metadata integration, Lat-to-LIR metadata lowering, Lat-to-LIR diagnostic refinement, LIR report refinement, Lat pipeline reporting, Lat pipeline lowering diagnostic integration, Lat pipeline diagnostic clause metadata integration, Lat pipeline report clause metadata integration, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic main test audit, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
 
 This is a mission direction, not a current security guarantee.
 
@@ -651,7 +668,7 @@ Latticra Seal future key parsing implementation contract
 Latest completed status/public-entry slice:
 
 ```text
-Latticra Seal policy decision status/public-entry alignment
+Defensive threat model validation refinement
 ```
 
 ## Previous status/public-entry slice
@@ -659,7 +676,7 @@ Latticra Seal policy decision status/public-entry alignment
 Previous status/public-entry slice:
 
 ```text
-Latticra Seal signed request status/public-entry alignment
+Latticra Seal policy decision status/public-entry alignment
 ```
 
 ## Earlier status/public-entry slice
@@ -675,7 +692,7 @@ Latticra Seal request freshness status/public-entry alignment
 Latest completed implementation slice:
 
 ```text
-Latticra Seal bounded no-effect key parsing implementation
+Lat model report declaration metadata integration
 ```
 
 ## Previous implementation slice
@@ -683,7 +700,7 @@ Latticra Seal bounded no-effect key parsing implementation
 Previous implementation slice:
 
 ```text
-Latticra Seal public-key parsing metadata implementation
+Lat grammar report metadata integration
 ```
 
 ## Previous contract slice
@@ -776,10 +793,34 @@ Latticra Seal signer handoff metadata implementation
 
 ## Next recommended work
 
+Latest completed policy/evidence slice:
+
+```text
+Runtime boundary policy expansion after threat-model validation
+```
+
+Current runtime boundary policy expansion fields:
+
+```text
+runtime_boundary_policy_expansion_after_threat_model_present=1
+runtime_boundary_policy_expansion_after_threat_model_guard_present=1
+request_family_policy_map_present=1
+effect_policy_map_present=1
+authority_prerequisite_map_present=1
+future_gate_policy_map_present=1
+abuse_case_runtime_policy_map_present=1
+evidence_gap_map_present=1
+runtime_execution_added=0
+effect_execution_added=0
+capability_enforcement_added=0
+runtime_authority_granted=0
+completion_estimate_review_required=0
+```
+
 Recommended next work:
 
 ```text
-Defensive threat model validation refinement, while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, or runtime authority
+Abuse-case fixture expansion after runtime-boundary policy expansion, while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, or runtime authority
 ```
 
 After that:
