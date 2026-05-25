@@ -441,7 +441,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=19-tokenizer-manifest-contract");
+    let _ = writeln!(out, "stage=20-tokenizer-artifact-inventory-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -913,6 +913,56 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "requires_future_tokenizer_artifact_inventory_contract=1"
     );
     let _ = writeln!(out, "tokenizer_manifest_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_inventory_contract_stage=20-tokenizer-artifact-inventory-contract"
+    );
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_inventory_contract_command=scripts/nadia-tokenizer-artifact-inventory-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_tokenizer_artifact_inventory_contract_command=latticra-nadia tokenizer-artifact-inventory"
+    );
+    let _ = writeln!(out, "tokenizer_artifact_inventory_stage=contract-only");
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_inventory_contract_status=contract_only"
+    );
+    let _ = writeln!(out, "tokenizer_artifact_inventory_authority=0");
+    let _ = writeln!(out, "tokenizer_artifact_inventory_allowed=0");
+    let _ = writeln!(out, "tokenizer_artifact_inventory_performed=0");
+    let _ = writeln!(out, "tokenizer_artifact_inventory_metadata_present=1");
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_inventory_family=operator-reviewed-tokenizer-artifact-inventory"
+    );
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_inventory_format=contract-only-offline-inventory"
+    );
+    let _ = writeln!(
+        out,
+        "tokenizer_artifact_inventory_decision=blocked_contract_only"
+    );
+    let _ = writeln!(out, "tokenizer_artifact_inventory_path_recorded=0");
+    let _ = writeln!(out, "tokenizer_artifact_inventory_schema_planned=1");
+    let _ = writeln!(out, "tokenizer_artifact_inventory_entry_count=0");
+    let _ = writeln!(out, "tokenizer_artifact_inventory_file_count=0");
+    let _ = writeln!(out, "tokenizer_artifact_path_resolved=0");
+    let _ = writeln!(out, "tokenizer_artifact_scan_performed=0");
+    let _ = writeln!(out, "tokenizer_artifact_stat_performed=0");
+    let _ = writeln!(out, "tokenizer_artifact_file_opened=0");
+    let _ = writeln!(out, "tokenizer_artifact_file_read=0");
+    let _ = writeln!(out, "tokenizer_artifact_hash_computed=0");
+    let _ = writeln!(out, "tokenizer_artifact_measurement_performed=0");
+    let _ = writeln!(out, "requires_tokenizer_manifest_contract=1");
+    let _ = writeln!(
+        out,
+        "requires_future_tokenizer_artifact_measurement_contract=1"
+    );
+    let _ = writeln!(out, "tokenizer_artifact_inventory_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

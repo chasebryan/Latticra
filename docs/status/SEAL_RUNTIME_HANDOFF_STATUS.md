@@ -132,6 +132,6 @@ It does not add runtime execution, runtime authority, effect execution, capabili
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is a Seal agentic automation security public README/status/foundation entry-point refresh or a dedicated report command surface.
+The next valid Latticra Seal slice is parameter schema status/public-entry alignment.
 
-That future slice must not add runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, object sealing, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or kernel behavior unless separately implemented and guarded.
+That future slice must not add schema parsing, schema validation, runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, object sealing, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or kernel behavior unless separately implemented and guarded.

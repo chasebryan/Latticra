@@ -17,6 +17,8 @@ docs/LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_REPORT_SURFACE.md
 tests/seal_agentic_automation_security_report_surface.c
 scripts/latticra-seal-agentic-automation-security-report.sh
 scripts/test-latticra-seal-agentic-automation-security-report-surface.sh
+scripts/test-latticra-seal-agentic-automation-security-public-entrypoint-alignment.sh
+docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md
 ```
 
 ## Current checkpoint
@@ -31,6 +33,7 @@ seal_agentic_report_surface_guard_present=1
 renders_agentic_report=1
 uses_local_deterministic_fixture=1
 operator_visible_report_surface=1
+seal_agentic_public_entrypoint_alignment_present=1
 implementation_behavior_changed=0
 runtime_behavior_added=0
 host_behavior_added=0
@@ -79,6 +82,6 @@ The report surface compiles and runs a local deterministic fixture only. It does
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is public entry-point alignment for the report surface, or a future contract for parameter schema metadata.
+The next valid Latticra Seal slice is parameter schema status/public-entry alignment.
 
-That future slice must preserve the no-effect posture until a specific contract, implementation, and validation path justify changing it.
+That future slice must preserve the no-effect posture and must not implement schema parsing, schema validation, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, or authority grants.

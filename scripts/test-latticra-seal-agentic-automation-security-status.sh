@@ -30,6 +30,8 @@ require_file tests/seal_agentic_automation_security_invariants.c
 require_file scripts/test-latticra-seal-agentic-automation-security-contract.sh
 require_file scripts/test-latticra-seal-mcp-alignment-plan.sh
 require_file scripts/test-latticra-seal-agentic-automation-security.sh
+require_file scripts/test-latticra-seal-agentic-automation-security-public-entrypoint-alignment.sh
+require_file docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md
 
 require_contains 'Status: status record for report-only Latticra Seal agentic automation security metadata' "$status_file"
 require_contains 'Source: PR #267' "$status_file"
@@ -44,6 +46,6 @@ require_contains 'mcp_alignment_declared=1' "$status_file"
 require_contains 'mode=report-only' "$status_file"
 require_contains 'decision=report-only' "$status_file"
 require_contains 'status=agentic-automation-security-metadata' "$status_file"
-require_contains 'public entry-point index alignment' "$status_file"
+require_contains 'parameter schema status/public-entry alignment' "$status_file"
 
 printf 'seal agentic automation security status: ok\n'

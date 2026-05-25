@@ -22,6 +22,8 @@ tests/seal_agentic_automation_security_invariants.c
 scripts/test-latticra-seal-agentic-automation-security-contract.sh
 scripts/test-latticra-seal-mcp-alignment-plan.sh
 scripts/test-latticra-seal-agentic-automation-security.sh
+scripts/test-latticra-seal-agentic-automation-security-public-entrypoint-alignment.sh
+docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md
 ```
 
 ## Current checkpoint
@@ -71,6 +73,7 @@ The implementation is covered by:
 sh scripts/test-latticra-seal-agentic-automation-security-contract.sh
 sh scripts/test-latticra-seal-mcp-alignment-plan.sh
 sh scripts/test-latticra-seal-agentic-automation-security.sh
+sh scripts/test-latticra-seal-agentic-automation-security-public-entrypoint-alignment.sh
 ```
 
 Observed local Fedora validation for PR #267:
@@ -89,8 +92,6 @@ It does not add MCP protocol behavior, MCP server behavior, MCP client behavior,
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is public entry-point index alignment for the Seal agentic automation security checkpoint.
+The next valid Latticra Seal slice is parameter schema status/public-entry alignment.
 
-That future slice may update README, root status, foundation index, and status index references.
-
-It must not change implementation behavior, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, or authority grants.
+That future slice must not change implementation behavior, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, schema parsing, schema validation, capability enforcement, cryptographic verification, or authority grants.

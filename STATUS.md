@@ -3,6 +3,7 @@
 Status: public status shortcut
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal agentic automation security public-entrypoint note: 2026-05-25 CDT
 Latest Seal status rollup status/public-entry note: 2026-05-25 CDT
 Latest Seal runtime handoff status/public-entry note: 2026-05-25 CDT
 Latest Seal effect decision status/public-entry note: 2026-05-25 CDT
@@ -28,6 +29,7 @@ Latest Nadia prompt evaluation handoff contract Stage-16 note: 2026-05-25 CDT
 Latest Nadia tokenization boundary contract Stage-17 note: 2026-05-25 CDT
 Latest Nadia tokenizer specification contract Stage-18 note: 2026-05-25 CDT
 Latest Nadia tokenizer manifest contract Stage-19 note: 2026-05-25 CDT
+Latest Nadia tokenizer artifact inventory contract Stage-20 note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -64,6 +66,7 @@ Latest Seal core evidence public entrypoint alignment note: 2026-05-22 02:45 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
 Latest Lat pipeline model normalization integration note: 2026-05-25 CDT
 Latest Lat-to-LIR model lowering integration note: 2026-05-25 CDT
+Latest Lat-to-LIR diagnostic refinement note: 2026-05-25 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
 Latest Lat pipeline diagnostic integration note: 2026-05-19 14:20 CDT
@@ -141,7 +144,7 @@ docs/strategy/README.md
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 50% |
+| Nadia offline AI foundation | 52% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |
@@ -174,6 +177,7 @@ Seal capability gate status/public-entry alignment
 Seal effect decision status/public-entry alignment
 Seal runtime handoff status/public-entry alignment
 Seal status rollup status/public-entry alignment
+Seal agentic automation security public-entrypoint alignment
 Seal verification receipt status/public-entry alignment
 Nadia offline AI Stage-0 foundation
 Nadia local context engine Stage-1
@@ -195,6 +199,7 @@ Nadia prompt evaluation handoff contract Stage-16
 Nadia tokenization boundary contract Stage-17
 Nadia tokenizer specification contract Stage-18
 Nadia tokenizer manifest contract Stage-19
+Nadia tokenizer artifact inventory contract Stage-20
 Seal verification policy status/public-entry alignment
 Seal key parsing status/public-entry alignment
 Seal bounded no-effect key parsing implementation
@@ -241,6 +246,7 @@ Lat pipeline implementation plan
 Lat pipeline implementation
 Lat pipeline model normalization integration
 Lat-to-LIR model lowering integration
+Lat-to-LIR diagnostic refinement
 Lat pipeline report refinement
 Lat pipeline diagnostic integration refinement
 Lat pipeline diagnostic integration main test audit
@@ -306,14 +312,14 @@ Completion percentage review
 ## Current next step
 
 ```text
-Seal agentic automation security public README/status/foundation entry-point refresh or dedicated report command surface, with report-only metadata visibility and no runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority
+Seal parameter schema status/public-entry alignment, with report-only parameter schema metadata visibility and no schema parsing, schema validation, runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority
 ```
 
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
 
-It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal status slice makes the metadata-only status rollup posture visible from public status surfaces while preserving no runtime execution, effect execution, capability enforcement, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, host behavior, network behavior, or runtime authority.
+It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal public-entrypoint slice makes the report-only agentic automation security metadata and report surface visible from public status surfaces while preserving no runtime execution, effect execution, capability enforcement, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, or runtime authority.
 
 Current status fields:
 
@@ -361,6 +367,11 @@ seal_runtime_handoff_metadata_present=1
 seal_runtime_handoff_status_present=1
 seal_status_rollup_metadata_present=1
 seal_status_rollup_status_present=1
+seal_agentic_automation_security_metadata_present=1
+seal_agentic_automation_security_status_present=1
+seal_agentic_automation_security_index_alignment_present=1
+seal_agentic_automation_security_report_surface_present=1
+seal_agentic_automation_security_public_entrypoint_alignment_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1
@@ -445,6 +456,8 @@ Lat-to-LIR lowering now emits explicit Lat declaration nodes and an explicit tra
 Lat now has a bounded no-effect path from parser metadata through semantic validation and model normalization into LIR metadata.
 
 The current lowering implementation consumes normalized Lat model metadata directly, creates a `lat_module` LIR module shape, preserves source spans, no-effect flags, model counts, and transition source indices, and emits deterministic lowering reports. The parser-plus-semantic entry point remains available as a compatibility wrapper.
+
+The Lat-to-LIR diagnostic refinement classifies lowering outcomes as valid, parse, semantic, model, effect-check, capacity, LIR, or internal, and emits deterministic diagnostic reports without changing lowering behavior.
 
 Boundary terms tracked by the project status guard:
 

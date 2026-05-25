@@ -78,6 +78,6 @@ It compiles and runs a local deterministic fixture only.
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is README/status/foundation entry-point refresh for the report surface, or a future contract for parameter schema metadata.
+The next valid Latticra Seal slice is parameter schema status/public-entry alignment.
 
-That future slice must not change runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, or authority grants.
+That future slice must not implement schema parsing, schema validation, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, or authority grants.

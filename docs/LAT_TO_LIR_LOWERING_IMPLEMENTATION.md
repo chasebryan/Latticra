@@ -34,6 +34,16 @@ scripts/test-lat-to-lir-lowering.sh
 .github/workflows/lat-to-lir-lowering.yml
 ```
 
+Related diagnostic refinement:
+
+```text
+include/latticra/lat_to_lir_diagnostics.h
+src/lat_to_lir_diagnostics.c
+tests/lat_to_lir_diagnostic_refinement.c
+scripts/test-lat-to-lir-diagnostic-refinement.sh
+docs/LAT_TO_LIR_DIAGNOSTIC_REFINEMENT.md
+```
+
 Related contract and plan files:
 
 ```text
@@ -147,6 +157,8 @@ LAT TO LIR LOWERING REPORT
 
 The report records status, lowering error label, model error label, module name, declaration counts, model counts, clause counts, first transition source index, node count, edge count, no-effect flags, and source-span fields.
 
+The companion diagnostic refinement can classify those lowering records as valid, parse, semantic, model, effect-check, capacity, LIR, or internal without changing lowering behavior.
+
 Small output buffers return:
 
 ```text
@@ -161,6 +173,7 @@ Run:
 
 ```sh
 sh scripts/test-lat-to-lir-lowering.sh
+sh scripts/test-lat-to-lir-diagnostic-refinement.sh
 ```
 
 The runner compiles with:

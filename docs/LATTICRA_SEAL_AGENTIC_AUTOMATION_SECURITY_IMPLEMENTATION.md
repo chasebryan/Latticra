@@ -155,6 +155,6 @@ sh scripts/test-latticra-seal-agentic-automation-security.sh
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is agentic automation status rollup/index alignment or a dedicated report command surface.
+The next valid Latticra Seal slice is parameter schema status/public-entry alignment.
 
-That future slice must not implement runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, or authority grants.
+That future slice must not implement schema parsing, schema validation, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, or authority grants.
