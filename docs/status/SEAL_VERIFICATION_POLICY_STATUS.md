@@ -33,6 +33,8 @@ scripts/test-latticra-seal-verification-receipt.sh
 scripts/test-latticra-seal-verification-receipt-status.sh
 docs/status/SEAL_CAPABILITY_GATE_STATUS.md
 scripts/test-latticra-seal-capability-gate-status.sh
+docs/status/SEAL_EFFECT_DECISION_STATUS.md
+scripts/test-latticra-seal-effect-decision-status.sh
 docs/LATTICRA_SEAL_SIGNATURE_IMPLEMENTATION.md
 include/latticra/seal_signature.h
 src/seal_signature.c
@@ -58,6 +60,7 @@ seal_verification_receipt_contract_present=1
 seal_verification_receipt_implementation_present=1
 seal_verification_receipt_status_present=1
 seal_capability_gate_status_present=1
+seal_effect_decision_status_present=1
 seal_key_parsing_status_present=1
 seal_signature_metadata_present=1
 verification_policy_profile=latticra-seal-verification-policy/0.1
@@ -109,6 +112,7 @@ sh scripts/test-latticra-seal-verification-policy-status.sh
 sh scripts/test-latticra-seal-verification-receipt-contract.sh
 sh scripts/test-latticra-seal-verification-receipt-status.sh
 sh scripts/test-latticra-seal-capability-gate-status.sh
+sh scripts/test-latticra-seal-effect-decision-status.sh
 sh scripts/test-latticra-seal-key-parsing-status.sh
 ```
 
@@ -121,6 +125,7 @@ seal verification policy status: ok
 seal verification receipt contract: ok
 seal verification receipt status: ok
 seal capability gate status: ok
+seal effect decision status: ok
 seal key parsing status: ok
 ```
 
@@ -132,6 +137,6 @@ It does not add cryptographic verification, signing, public-key byte verificatio
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is effect decision status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is runtime handoff status/public-entry alignment or another narrow status/index alignment follow-up.
 
-That future slice must not add effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, object sealing, or kernel behavior unless separately implemented and guarded.
+That future slice must not add runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, object sealing, or kernel behavior unless separately implemented and guarded.

@@ -115,10 +115,19 @@ Run:
 ```sh
 sh scripts/test-latticra-seal-effect-decision-contract.sh
 sh scripts/test-latticra-seal-effect-decision.sh
+sh scripts/test-latticra-seal-effect-decision-status.sh
+```
+
+Expected output:
+
+```text
+seal effect decision contract: ok
+seal effect decision invariants: ok
+seal effect decision status: ok
 ```
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is effect decision status/public-entry alignment.
+The next valid Latticra Seal slice is runtime handoff status/public-entry alignment.
 
-That future slice must not add effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, host behavior, network behavior, or object sealing unless separately implemented and guarded.
+That future slice must not add runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, host behavior, network behavior, or object sealing unless separately implemented and guarded.

@@ -3,6 +3,7 @@
 Status: public status shortcut
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal effect decision status/public-entry note: 2026-05-25 CDT
 Latest Seal capability gate status/public-entry note: 2026-05-25 CDT
 Latest Seal verification receipt status/public-entry note: 2026-05-25 CDT
 Latest Nadia offline AI Stage-0 foundation note: 2026-05-25 CDT
@@ -22,6 +23,7 @@ Latest Nadia prompt receipt contract Stage-13 note: 2026-05-25 CDT
 Latest Nadia prompt materialization contract Stage-14 note: 2026-05-25 CDT
 Latest Nadia awareness dialogue contract Stage-15 note: 2026-05-25 CDT
 Latest Nadia prompt evaluation handoff contract Stage-16 note: 2026-05-25 CDT
+Latest Nadia tokenization boundary contract Stage-17 note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -55,6 +57,7 @@ Latest Seal report envelope implementation note: 2026-05-25 CDT
 Latest Seal core evidence status surface note: 2026-05-22 02:24 CDT
 Latest Seal core evidence index alignment note: 2026-05-22 02:37 CDT
 Latest Seal core evidence public entrypoint alignment note: 2026-05-22 02:45 CDT
+Latest Lat model normalization note: 2026-05-25 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
 Latest Lat pipeline diagnostic integration note: 2026-05-19 14:20 CDT
@@ -132,7 +135,7 @@ docs/strategy/README.md
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 44% |
+| Nadia offline AI foundation | 46% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |
@@ -162,6 +165,7 @@ Latticra is the contract.
 
 ```text
 Seal capability gate status/public-entry alignment
+Seal effect decision status/public-entry alignment
 Seal verification receipt status/public-entry alignment
 Nadia offline AI Stage-0 foundation
 Nadia local context engine Stage-1
@@ -180,6 +184,7 @@ Nadia prompt receipt contract Stage-13
 Nadia prompt materialization contract Stage-14
 Nadia awareness dialogue contract Stage-15
 Nadia prompt evaluation handoff contract Stage-16
+Nadia tokenization boundary contract Stage-17
 Seal verification policy status/public-entry alignment
 Seal key parsing status/public-entry alignment
 Seal bounded no-effect key parsing implementation
@@ -217,6 +222,7 @@ Lat semantic validation contract
 Lat semantic validation implementation plan
 Lat semantic validation foundation
 Lat semantic diagnostics refinement
+Lat model normalization implementation
 Lat-to-LIR lowering contract
 Lat-to-LIR lowering implementation plan
 Lat-to-LIR lowering implementation
@@ -288,14 +294,14 @@ Completion percentage review
 ## Current next step
 
 ```text
-Seal effect decision status/public-entry alignment, with metadata-only denied effect decision visibility and no effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, or runtime authority
+Seal runtime handoff status/public-entry alignment, with inactive metadata-only runtime handoff visibility and no runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, or runtime authority
 ```
 
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
 
-It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal status slice makes metadata-only denied capability gate posture visible from public status surfaces while preserving no capability enforcement, effect execution, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, host behavior, network behavior, or runtime authority.
+It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal status slice makes metadata-only denied effect decision posture visible from public status surfaces while preserving no effect execution, capability enforcement, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, host behavior, network behavior, or runtime authority.
 
 Current status fields:
 
@@ -337,6 +343,8 @@ seal_verification_receipt_metadata_present=1
 seal_verification_receipt_status_present=1
 seal_capability_gate_metadata_present=1
 seal_capability_gate_status_present=1
+seal_effect_decision_metadata_present=1
+seal_effect_decision_status_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1
@@ -376,6 +384,10 @@ The LIR layer now reports deterministic report classification, graph-shape label
 
 Lat semantic validation now reports deterministic diagnostic classes, diagnostic category counters, first-diagnostic declaration and clause indices, and expanded report fields while preserving validation outcomes and no-effect behavior.
 
+## Current Lat model normalization boundary
+
+Lat now has a bounded no-effect normalized model layer after semantic validation. It builds typed declaration and clause index tables for states, policies, transitions, assertions, and effect declarations, resolves transition source-state metadata, preserves source spans and no-effect flags, and emits deterministic reports without reading source bytes or adding execution.
+
 ## Current Nucleus task boundary
 
 The Nucleus task layer remains no-effect and denied-by-default. It now reports explicit task report classification, task-domain labels, authorization-state labels, prerequisite status, no-effect-chain status, report-alignment status, no-effect-policy status, representation-gate status, execution status, effect status, and runtime status while preserving non-execution behavior.
@@ -402,7 +414,7 @@ The runtime boundary now carries no-effect Lat pipeline evidence and Lat-specifi
 
 ## Current Lat pipeline boundary
 
-Lat now has a bounded no-effect path from source bytes through grammar parsing, semantic validation, Lat-to-LIR lowering, and deterministic pipeline reporting.
+Lat now has a bounded no-effect path from source bytes through grammar parsing, semantic validation, model normalization, Lat-to-LIR lowering, and deterministic pipeline reporting.
 
 The current pipeline implementation composes existing parser, semantic, lowering, and LIR metadata outputs. It preserves no-effect flags and produces a `LAT PIPELINE REPORT` without executing Lat or LIR.
 

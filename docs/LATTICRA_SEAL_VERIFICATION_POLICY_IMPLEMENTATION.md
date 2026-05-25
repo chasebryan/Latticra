@@ -121,6 +121,7 @@ sh scripts/test-latticra-seal-verification-policy.sh
 sh scripts/test-latticra-seal-verification-policy-status.sh
 sh scripts/test-latticra-seal-verification-receipt-status.sh
 sh scripts/test-latticra-seal-capability-gate-status.sh
+sh scripts/test-latticra-seal-effect-decision-status.sh
 ```
 
 Expected output:
@@ -131,10 +132,11 @@ seal verification policy invariants: ok
 seal verification policy status: ok
 seal verification receipt status: ok
 seal capability gate status: ok
+seal effect decision status: ok
 ```
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is effect decision status/public-entry alignment.
+The next valid Latticra Seal slice is runtime handoff status/public-entry alignment.
 
-That future slice must not add effect execution, capability enforcement, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, host behavior, network behavior, or runtime authority unless separately implemented and guarded.
+That future slice must not add runtime execution, effect execution, capability enforcement, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, host behavior, network behavior, or runtime authority unless separately implemented and guarded.

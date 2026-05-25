@@ -24,11 +24,13 @@ scripts/test-latticra-seal-capability-gate.sh
 scripts/test-latticra-seal-capability-gate-status.sh
 docs/LATTICRA_SEAL_EFFECT_DECISION_CONTRACT.md
 docs/LATTICRA_SEAL_EFFECT_DECISION_IMPLEMENTATION.md
+docs/status/SEAL_EFFECT_DECISION_STATUS.md
 include/latticra/seal_effect_decision.h
 src/seal_effect_decision.c
 tests/seal_effect_decision_invariants.c
 scripts/test-latticra-seal-effect-decision-contract.sh
 scripts/test-latticra-seal-effect-decision.sh
+scripts/test-latticra-seal-effect-decision-status.sh
 docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md
 docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md
 docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md
@@ -55,6 +57,7 @@ seal_capability_gate_metadata_present=1
 seal_capability_gate_status_present=1
 seal_effect_decision_contract_present=1
 seal_effect_decision_implementation_present=1
+seal_effect_decision_status_present=1
 seal_verification_receipt_contract_present=1
 seal_verification_receipt_implementation_present=1
 seal_verification_receipt_status_present=1
@@ -111,6 +114,7 @@ sh scripts/test-latticra-seal-capability-gate-contract.sh
 sh scripts/test-latticra-seal-capability-gate.sh
 sh scripts/test-latticra-seal-capability-gate-status.sh
 sh scripts/test-latticra-seal-effect-decision-contract.sh
+sh scripts/test-latticra-seal-effect-decision-status.sh
 sh scripts/test-latticra-seal-verification-receipt-status.sh
 ```
 
@@ -121,6 +125,7 @@ seal capability gate contract: ok
 seal capability gate invariants: ok
 seal capability gate status: ok
 seal effect decision contract: ok
+seal effect decision status: ok
 seal verification receipt status: ok
 ```
 
@@ -132,6 +137,6 @@ It does not add capability enforcement, runtime authority, effect execution, cry
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is effect decision status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is runtime handoff status/public-entry alignment or another narrow status/index alignment follow-up.
 
-That future slice must not add effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, object sealing, or kernel behavior unless separately implemented and guarded.
+That future slice must not add runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, object sealing, or kernel behavior unless separately implemented and guarded.

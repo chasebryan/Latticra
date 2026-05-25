@@ -25,6 +25,17 @@ pub fn launch(config: InstallerConfig) -> Receiver<InstallEvent> {
     rx
 }
 
+pub fn launch_reset(config: InstallerConfig) -> Receiver<InstallEvent> {
+    let (tx, rx) = channel();
+    thread::spawn(move || {
+        let _ = tx.send(InstallEvent::Started);
+        if let Err(err) = run_reset_engine(config, &tx) {
+            let _ = tx.send(InstallEvent::Failed(err));
+        }
+    });
+    rx
+}
+
 fn run_engine(config: InstallerConfig, tx: &Sender<InstallEvent>) -> Result<(), String> {
     config.can_execute()?;
 
@@ -58,7 +69,7 @@ fn run_engine(config: InstallerConfig, tx: &Sender<InstallEvent>) -> Result<(), 
         script.display()
     )));
 
-    let mut child = Command::new("sh")
+    let child = Command::new("sh")
         .arg(&script)
         .arg("--config")
         .arg(&config_path)
@@ -71,6 +82,49 @@ fn run_engine(config: InstallerConfig, tx: &Sender<InstallEvent>) -> Result<(), 
         .spawn()
         .map_err(|err| format!("could not launch install engine: {err}"))?;
 
+    stream_child(child, tx)
+}
+
+fn run_reset_engine(config: InstallerConfig, tx: &Sender<InstallEvent>) -> Result<(), String> {
+    config.can_reset()?;
+
+    let script = find_uninstall_script().ok_or_else(|| {
+        "could not find scripts/latticra-installer-uninstall.sh from current working directory or executable path".to_owned()
+    })?;
+
+    let _ = tx.send(InstallEvent::Log(format!(
+        "ENGINE: reset_script={}",
+        script.display()
+    )));
+    let _ = tx.send(InstallEvent::Log(format!(
+        "ENGINE: reset_mode={}",
+        config.reset_mode_label()
+    )));
+    let _ = tx.send(InstallEvent::Log(format!(
+        "ENGINE: reset_prefix={}",
+        config.install_prefix
+    )));
+
+    let mut command = Command::new("sh");
+    command
+        .arg(&script)
+        .arg("--prefix")
+        .arg(&config.install_prefix);
+
+    if config.safety.dry_run {
+        command.arg("--dry-run");
+    }
+
+    let child = command
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .map_err(|err| format!("could not launch reset engine: {err}"))?;
+
+    stream_child(child, tx)
+}
+
+fn stream_child(mut child: std::process::Child, tx: &Sender<InstallEvent>) -> Result<(), String> {
     let stdout_handle = child.stdout.take().map(|stdout| {
         let tx = tx.clone();
         thread::spawn(move || {
@@ -168,6 +222,30 @@ fn find_apply_script() -> Option<PathBuf> {
             candidates.push(dir.join("../../../scripts/latticra-installer-apply.sh"));
             candidates.push(dir.join("../../scripts/latticra-installer-apply.sh"));
             candidates.push(dir.join("../scripts/latticra-installer-apply.sh"));
+        }
+    }
+
+    candidates.into_iter().find(|path| path.is_file())
+}
+
+fn find_uninstall_script() -> Option<PathBuf> {
+    let mut candidates = Vec::new();
+
+    if let Some(root) = find_installer_root() {
+        candidates.push(root.join("scripts/latticra-installer-uninstall.sh"));
+    }
+
+    if let Ok(cwd) = std::env::current_dir() {
+        candidates.push(cwd.join("../scripts/latticra-installer-uninstall.sh"));
+        candidates.push(cwd.join("scripts/latticra-installer-uninstall.sh"));
+        candidates.push(cwd.join("installer/scripts/latticra-installer-uninstall.sh"));
+    }
+
+    if let Ok(exe) = std::env::current_exe() {
+        if let Some(dir) = exe.parent() {
+            candidates.push(dir.join("../../../scripts/latticra-installer-uninstall.sh"));
+            candidates.push(dir.join("../../scripts/latticra-installer-uninstall.sh"));
+            candidates.push(dir.join("../scripts/latticra-installer-uninstall.sh"));
         }
     }
 

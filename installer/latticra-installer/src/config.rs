@@ -332,6 +332,14 @@ impl InstallerConfig {
         }
     }
 
+    pub fn reset_mode_label(&self) -> &'static str {
+        if self.safety.dry_run {
+            "dry-reset"
+        } else {
+            "local-prefix-reset"
+        }
+    }
+
     pub fn can_execute(&self) -> Result<(), String> {
         if self.safety.dry_run {
             return Ok(());
@@ -347,6 +355,27 @@ impl InstallerConfig {
             return Err(
                 "Network authority is not implemented in this installer. Disable allow_network_effect."
                     .to_owned(),
+            );
+        }
+
+        Ok(())
+    }
+
+    pub fn can_reset(&self) -> Result<(), String> {
+        if self.safety.allow_network_effect {
+            return Err(
+                "Network authority is not implemented in this installer. Disable allow_network_effect."
+                    .to_owned(),
+            );
+        }
+
+        if self.safety.dry_run {
+            return Ok(());
+        }
+
+        if !self.safety.allow_host_mutation {
+            return Err(
+                "Real reset requires allow_host_mutation=true. Keep dry-run enabled to preview reset or explicitly authorize guarded local-prefix writes.".to_owned(),
             );
         }
 
@@ -412,7 +441,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=16-prompt-evaluation-handoff-contract");
+    let _ = writeln!(out, "stage=17-tokenization-boundary-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -786,6 +815,32 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "requires_awareness_dialogue_contract=1");
     let _ = writeln!(out, "requires_future_tokenization_contract=1");
     let _ = writeln!(out, "prompt_evaluation_handoff_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "tokenization_boundary_contract_stage=17-tokenization-boundary-contract"
+    );
+    let _ = writeln!(
+        out,
+        "tokenization_boundary_contract_command=scripts/nadia-tokenization-boundary-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_tokenization_boundary_contract_command=latticra-nadia tokenization-boundary"
+    );
+    let _ = writeln!(out, "tokenization_boundary_stage=contract-only");
+    let _ = writeln!(out, "tokenization_boundary_contract_status=contract_only");
+    let _ = writeln!(out, "tokenization_boundary_authority=0");
+    let _ = writeln!(out, "tokenization_boundary_allowed=0");
+    let _ = writeln!(out, "tokenization_boundary_performed=0");
+    let _ = writeln!(out, "prompt_tokenization_allowed=0");
+    let _ = writeln!(out, "prompt_tokenized=0");
+    let _ = writeln!(out, "prompt_tokens_created=0");
+    let _ = writeln!(out, "tokenizer_file_opened=0");
+    let _ = writeln!(out, "tokenizer_vocab_loaded=0");
+    let _ = writeln!(out, "tokenization_decision=blocked_contract_only");
+    let _ = writeln!(out, "requires_prompt_evaluation_handoff_contract=1");
+    let _ = writeln!(out, "requires_future_tokenizer_specification_contract=1");
+    let _ = writeln!(out, "tokenization_boundary_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

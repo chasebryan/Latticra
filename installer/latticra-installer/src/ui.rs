@@ -61,7 +61,7 @@ impl Default for LatticraInstallerApp {
             console_lines: vec![
                 format!("Latticra Panel v{PANEL_VERSION} bounded operator console online."),
                 "Authority baseline: root=0 network=0 runtime_enforcement=0.".to_owned(),
-                "Panel commands: help, status, plan, save, dry-run, profile seal, profile fedora."
+                "Panel commands: help, status, plan, save, dry-run, reset, profile seal, profile fedora."
                     .to_owned(),
                 "Navigation commands: pwd, cd <dir>. External host commands are denied.".to_owned(),
             ],
@@ -204,6 +204,29 @@ impl LatticraInstallerApp {
         }
     }
 
+    fn start_reset(&mut self) {
+        self.config.safety.allow_network_effect = false;
+        match self.config.can_reset() {
+            Ok(()) => {
+                self.logs.clear();
+                self.phase_index = 0;
+                self.phase_total = 5;
+                self.phase_title = "starting reset".to_owned();
+                self.install_state = InstallState::Running;
+                self.status = format!("Starting {}...", self.config.reset_mode_label());
+                self.push_console(format!("launching {}", self.config.reset_mode_label()));
+                self.rx = Some(engine::launch_reset(self.config.clone()));
+                self.active_tab = WorkspaceTab::Evidence;
+                self.show_plan_over_log = false;
+            }
+            Err(err) => {
+                self.install_state = InstallState::Failed;
+                self.status = err.clone();
+                self.push_console(format!("blocked: {err}"));
+            }
+        }
+    }
+
     fn drain_events(&mut self) {
         let mut events = Vec::new();
         let mut clear_rx = false;
@@ -218,7 +241,7 @@ impl LatticraInstallerApp {
             match event {
                 InstallEvent::Started => {
                     self.install_state = InstallState::Running;
-                    self.status = "Install engine started.".to_owned();
+                    self.status = "Engine started.".to_owned();
                     self.push_console("engine: started");
                 }
                 InstallEvent::Log(line) => {
@@ -240,12 +263,12 @@ impl LatticraInstallerApp {
                     self.phase_index = self.phase_total;
                     if success {
                         self.install_state = InstallState::Complete;
-                        self.status = "Install engine completed successfully.".to_owned();
+                        self.status = "Engine completed successfully.".to_owned();
                         self.push_console("engine: completed successfully");
                     } else {
                         self.install_state = InstallState::Failed;
                         self.status = format!(
-                            "Install engine exited unsuccessfully{}.",
+                            "Engine exited unsuccessfully{}.",
                             code.map(|code| format!(" with code {code}"))
                                 .unwrap_or_default()
                         );
@@ -290,7 +313,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff",
+                    "panel: help, status, plan, save, dry-run, reset, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -355,7 +378,10 @@ impl LatticraInstallerApp {
                     "prompt_evaluation_handoff_contract_stage=16-prompt-evaluation-handoff-contract",
                 );
                 self.push_console(
-                    "stage=16 prompt-evaluation-handoff-contract; prompt_evaluated=0 inference_performed=0",
+                    "tokenization_boundary_contract_stage=17-tokenization-boundary-contract",
+                );
+                self.push_console(
+                    "stage=17 tokenization-boundary-contract; prompt_tokenized=0 prompt_evaluated=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -470,6 +496,24 @@ impl LatticraInstallerApp {
                     "qa_dialogue_generated=0 token_generation_performed=0 inference_performed=0",
                 );
             }
+            ["nadia", "tokenization-boundary"]
+            | ["nadia", "tokenization"]
+            | ["nadia", "tokenization-contract"] => {
+                self.push_console(
+                    "nadia_tokenization_boundary=stage-17-tokenization-boundary-contract",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia tokenization-boundary");
+                self.push_console(
+                    "tokenization_boundary_contract_status=contract_only prompt_tokenized=0",
+                );
+                self.push_console(
+                    "tokenizer_file_opened=0 tokenizer_vocab_loaded=0 prompt_evaluated=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_handoff_contract=1 requires_future_tokenizer_specification_contract=1",
+                );
+            }
             ["nadia", "inference-readiness"]
             | ["nadia", "readiness"]
             | ["nadia", "inference-contract"] => {
@@ -576,6 +620,7 @@ impl LatticraInstallerApp {
             }
             ["save"] => self.save_config(),
             ["dry-run"] | ["run"] => self.start_install(),
+            ["reset"] | ["reset-local"] | ["uninstall"] => self.start_reset(),
             ["clear"] => self.console_lines.clear(),
             ["mode", "dry"] => self.set_mode_dry(),
             ["mode", "local"] => self.set_mode_local(),
@@ -644,7 +689,9 @@ impl LatticraInstallerApp {
         self.push_console(format!(
             "blocked: command outside panel allowlist: {command}"
         ));
-        self.push_console("allowed panel commands: help, status, plan, save, dry-run, clear");
+        self.push_console(
+            "allowed panel commands: help, status, plan, save, dry-run, reset, clear",
+        );
         self.push_console("allowed navigation commands: pwd, cd <path>");
     }
 
@@ -886,7 +933,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-16 prompt-evaluation handoff contract with metadata-only Console surfaces.",
+            "Stage-17 tokenization-boundary contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,
@@ -1212,6 +1259,12 @@ impl LatticraInstallerApp {
             "Enable local install",
             "Only then enable guarded local-prefix writes.",
         );
+        procedure_row(
+            ui,
+            "08",
+            "Reset when specifications change",
+            "Use the guarded reset path to remove the managed prefix, wrappers, desktop entry, and icons before reinstalling.",
+        );
     }
 
     fn show_action_buttons(&mut self, ui: &mut egui::Ui) {
@@ -1231,9 +1284,14 @@ impl LatticraInstallerApp {
 
         ui.add_space(10.0);
         self.show_fluid_install_button(ui);
+        ui.add_space(8.0);
+        self.show_reset_button(ui);
 
         if let Err(err) = self.config.can_execute() {
             ui.colored_label(egui::Color32::from_rgb(255, 160, 130), err);
+        }
+        if let Err(err) = self.config.can_reset() {
+            ui.colored_label(egui::Color32::from_rgb(255, 190, 130), err);
         }
     }
 
@@ -1282,6 +1340,29 @@ impl LatticraInstallerApp {
         }
     }
 
+    fn show_reset_button(&mut self, ui: &mut egui::Ui) {
+        let running = self.install_state == InstallState::Running;
+        let can_reset = self.config.can_reset().is_ok() && !running;
+        let label = if self.config.safety.dry_run {
+            "Preview local reset"
+        } else {
+            "Reset installed local prefix"
+        };
+
+        let button = egui::Button::new(egui::RichText::new(label).size(16.0).strong())
+            .min_size(egui::vec2(340.0, 44.0))
+            .fill(egui::Color32::from_rgb(96, 70, 38))
+            .stroke(egui::Stroke::new(
+                1.0,
+                egui::Color32::from_rgb(230, 185, 120),
+            ));
+
+        let response = ui.add_enabled(can_reset, button);
+        if response.clicked() {
+            self.start_reset();
+        }
+    }
+
     fn show_console_panel(&mut self, ui: &mut egui::Ui) {
         ui.group(|ui| {
             ui.horizontal(|ui| {
@@ -1318,8 +1399,8 @@ impl LatticraInstallerApp {
                         ui.label(egui::RichText::new("$").monospace());
                         let response = ui.add(
                             egui::TextEdit::singleline(&mut self.console_input)
-                                .font(egui::TextStyle::Monospace)
-                                .hint_text("panel command: help | status | pwd | cd | plan | dry-run"),
+                .font(egui::TextStyle::Monospace)
+                                .hint_text("panel command: help | status | pwd | cd | plan | dry-run | reset"),
                         );
                         let enter_pressed = response.lost_focus()
                             && ui.input(|input| input.key_pressed(egui::Key::Enter));
@@ -1340,6 +1421,7 @@ impl LatticraInstallerApp {
                     "pwd",
                     "plan",
                     "dry-run",
+                    "reset",
                     "mode dry",
                     "mode local",
                     "clear",

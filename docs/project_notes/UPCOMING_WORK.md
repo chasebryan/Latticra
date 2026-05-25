@@ -36,13 +36,13 @@ implement bounded key parsing metadata for caller-provided Ed25519 public-key by
 ## Latest completed status/public-entry slice
 
 ```text
-Latticra Seal capability gate status/public-entry alignment
+Latticra Seal effect decision status/public-entry alignment
 ```
 
 Purpose completed:
 
 ```text
-publish and guard the existing metadata-only denied capability gate surface from public/status entry points while preserving no capability enforcement, no effect execution, no cryptographic verification, no verified receipt authority, no signing, no key material loading, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, and no runtime authority
+publish and guard the existing metadata-only denied effect decision surface from public/status entry points while preserving no effect execution, no capability enforcement, no runtime handoff execution, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, and no runtime authority
 ```
 
 ## Earlier planning slice
@@ -70,6 +70,18 @@ define the next future key parsing implementation contract after public-key pars
 ```
 
 ## Previous status/public-entry slice
+
+```text
+Latticra Seal capability gate status/public-entry alignment
+```
+
+Purpose completed:
+
+```text
+publish and guard the existing metadata-only denied capability gate surface from public/status entry points while preserving no capability enforcement, no effect execution, no cryptographic verification, no verified receipt authority, no signing, no key material loading, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, and no runtime authority
+```
+
+## Earlier status/public-entry slice
 
 ```text
 Latticra Seal verification receipt status/public-entry alignment
@@ -319,18 +331,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Seal effect decision status/public-entry alignment, with metadata-only denied effect decision visibility and no effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, or runtime authority
+Seal runtime handoff status/public-entry alignment, with inactive metadata-only runtime handoff visibility and no runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, or runtime authority
 ```
 
 Purpose:
 
 ```text
-publish and guard the existing metadata-only denied effect decision surface from public/status entry points while preserving no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+publish and guard the existing inactive metadata-only runtime handoff surface from public/status entry points while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Seal effect decision status/public-entry alignment.
+1. Seal runtime handoff status/public-entry alignment.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.

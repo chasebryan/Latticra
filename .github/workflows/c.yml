@@ -37,6 +37,8 @@ jobs:
         run: sh scripts/test-lat-language-grammar.sh
       - name: Run Lat semantic validation tests
         run: sh scripts/test-lat-semantic-validation.sh
+      - name: Run Lat model normalization tests
+        run: sh scripts/test-lat-model-normalization.sh
       - name: Run state lattice tests
         run: sh scripts/test-state-lattice.sh
       - name: Run tri-plane transition tests

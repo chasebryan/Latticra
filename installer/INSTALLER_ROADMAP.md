@@ -12,6 +12,7 @@ It currently installs:
 - LIR contract workspace
 - Latticra Seal report-only configuration
 - receipts and measurements
+- reset receipts for managed local uninstall
 - `latticra`, `lat`, and `latticra-seal` command wrappers
 - optional graphical installer binary when Cargo is available
 
@@ -31,7 +32,7 @@ The installer does not currently claim:
 
 1. Add signed release artifact ingestion.
 2. Add stronger manifest validation.
-3. Add uninstall receipts.
-4. Add Fedora package integration plan.
-5. Add VM validation mode.
+3. Add Fedora package integration plan.
+4. Add VM validation mode.
+5. Add failed-install recovery receipts.
 6. Add system-level installer only after explicit design review.

@@ -341,7 +341,7 @@ public_name=Nadia
 interactive_name=Nadia
 implementation_name=Nadia Witness Foundation
 documentation_code_name=Nadia Witness Foundation
-stage=16-prompt-evaluation-handoff-contract
+stage=17-tokenization-boundary-contract
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -579,6 +579,23 @@ evaluation_handoff_decision=blocked_contract_only
 requires_awareness_dialogue_contract=1
 requires_future_tokenization_contract=1
 prompt_evaluation_handoff_promotion_allowed=0
+tokenization_boundary_contract_stage=17-tokenization-boundary-contract
+tokenization_boundary_contract_command=scripts/nadia-tokenization-boundary-contract.sh
+installed_tokenization_boundary_contract_command=latticra-nadia tokenization-boundary
+tokenization_boundary_stage=contract-only
+tokenization_boundary_contract_status=contract_only
+tokenization_boundary_authority=0
+tokenization_boundary_allowed=0
+tokenization_boundary_performed=0
+prompt_tokenization_allowed=0
+prompt_tokenized=0
+prompt_tokens_created=0
+tokenizer_file_opened=0
+tokenizer_vocab_loaded=0
+tokenization_decision=blocked_contract_only
+requires_prompt_evaluation_handoff_contract=1
+requires_future_tokenizer_specification_contract=1
+tokenization_boundary_promotion_allowed=0
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -789,7 +806,8 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/prompt-receipt" \
     "$PREFIX/share/latticra/nadia/prompt-materialization" \
     "$PREFIX/share/latticra/nadia/awareness-dialogue" \
-    "$PREFIX/share/latticra/nadia/prompt-evaluation-handoff"
+    "$PREFIX/share/latticra/nadia/prompt-evaluation-handoff" \
+    "$PREFIX/share/latticra/nadia/tokenization-boundary"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia Witness Foundation"
@@ -797,8 +815,8 @@ public_name = "Nadia"
 interactive_name = "Nadia"
 implementation_name = "Nadia Witness Foundation"
 documentation_code_name = "Nadia Witness Foundation"
-stage = "16-prompt-evaluation-handoff-contract"
-mode = "offline-prompt-evaluation-handoff-contract"
+stage = "17-tokenization-boundary-contract"
+mode = "offline-tokenization-boundary-contract"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -1025,6 +1043,23 @@ evaluation_handoff_decision = "blocked_contract_only"
 requires_awareness_dialogue_contract = true
 requires_future_tokenization_contract = true
 prompt_evaluation_handoff_promotion_allowed = false
+tokenization_boundary_contract_stage = "17-tokenization-boundary-contract"
+tokenization_boundary_contract_command = "scripts/nadia-tokenization-boundary-contract.sh"
+installed_tokenization_boundary_contract_command = "latticra-nadia tokenization-boundary"
+tokenization_boundary_stage = "contract-only"
+tokenization_boundary_contract_status = "contract_only"
+tokenization_boundary_authority = false
+tokenization_boundary_allowed = false
+tokenization_boundary_performed = false
+prompt_tokenization_allowed = false
+prompt_tokenized = false
+prompt_tokens_created = false
+tokenizer_file_opened = false
+tokenizer_vocab_loaded = false
+tokenization_decision = "blocked_contract_only"
+requires_prompt_evaluation_handoff_contract = true
+requires_future_tokenizer_specification_contract = true
+tokenization_boundary_promotion_allowed = false
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -1045,11 +1080,11 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-16 prompt-evaluation handoff contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-17 tokenization-boundary contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract, local model-registry contract metadata when the operator runs latticra-nadia model-registry, inference-readiness contract metadata when the operator runs latticra-nadia inference-readiness, runtime-invocation contract metadata when the operator runs latticra-nadia runtime-invocation, model-load contract metadata when the operator runs latticra-nadia model-load, prompt-receipt contract metadata when the operator runs latticra-nadia prompt-receipt, prompt-materialization contract metadata when the operator runs latticra-nadia prompt-materialization, awareness-dialogue contract metadata when the operator runs latticra-nadia awareness-dialogue, and prompt-evaluation handoff contract metadata when the operator runs latticra-nadia prompt-evaluation-handoff. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn a runtime process, create a runtime session, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, tokenization-boundary, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract, local model-registry contract metadata when the operator runs latticra-nadia model-registry, inference-readiness contract metadata when the operator runs latticra-nadia inference-readiness, runtime-invocation contract metadata when the operator runs latticra-nadia runtime-invocation, model-load contract metadata when the operator runs latticra-nadia model-load, prompt-receipt contract metadata when the operator runs latticra-nadia prompt-receipt, prompt-materialization contract metadata when the operator runs latticra-nadia prompt-materialization, awareness-dialogue contract metadata when the operator runs latticra-nadia awareness-dialogue, prompt-evaluation handoff contract metadata when the operator runs latticra-nadia prompt-evaluation-handoff, and tokenization-boundary contract metadata when the operator runs latticra-nadia tokenization-boundary. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, open tokenizer files, load tokenizer vocabularies, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn a runtime process, create a runtime session, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source.
 NADIAREADME
 fi
 
@@ -1098,6 +1133,15 @@ case "\${1:-status}" in
   docs)
     echo "\$PREFIX/share/doc/latticra"
     ;;
+  reset|uninstall)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/installer/scripts/latticra-installer-uninstall.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Latticra reset script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    exec sh "\$SCRIPT" --prefix "\$PREFIX" "\$@"
+    ;;
   seal)
     shift
     exec "\$HOME/.local/bin/latticra-seal" "\$@"
@@ -1124,7 +1168,7 @@ case "\${1:-status}" in
     if [ -x "\$PREFIX/bin/latticra" ]; then
       exec "\$PREFIX/bin/latticra" "\$@"
     fi
-    echo "usage: latticra {status|path|gui|receipts|docs|seal|nadia|run}" >&2
+    echo "usage: latticra {status|path|gui|receipts|docs|reset|seal|nadia|run}" >&2
     exit 64
     ;;
 esac
@@ -1201,8 +1245,8 @@ case "\${1:-status}" in
     echo "interactive_name=Nadia"
     echo "implementation_name=Nadia Witness Foundation"
     echo "documentation_code_name=Nadia Witness Foundation"
-    echo "stage=16-prompt-evaluation-handoff-contract"
-    echo "mode=offline-prompt-evaluation-handoff-contract"
+    echo "stage=17-tokenization-boundary-contract"
+    echo "mode=offline-tokenization-boundary-contract"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "context_packs=\$NADIA_DIR/context-packs"
@@ -1222,6 +1266,7 @@ case "\${1:-status}" in
     echo "prompt_materialization_contracts=\$NADIA_DIR/prompt-materialization"
     echo "awareness_dialogue_contracts=\$NADIA_DIR/awareness-dialogue"
     echo "prompt_evaluation_handoff_contracts=\$NADIA_DIR/prompt-evaluation-handoff"
+    echo "tokenization_boundary_contracts=\$NADIA_DIR/tokenization-boundary"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "prompt_plan_command=latticra-nadia prompt-plan"
@@ -1440,6 +1485,23 @@ case "\${1:-status}" in
     echo "requires_awareness_dialogue_contract=1"
     echo "requires_future_tokenization_contract=1"
     echo "prompt_evaluation_handoff_promotion_allowed=0"
+    echo "tokenization_boundary_contract_stage=17-tokenization-boundary-contract"
+    echo "tokenization_boundary_contract_command=latticra-nadia tokenization-boundary"
+    echo "installed_tokenization_boundary_contract_command=latticra-nadia tokenization-boundary"
+    echo "tokenization_boundary_stage=contract-only"
+    echo "tokenization_boundary_contract_status=contract_only"
+    echo "tokenization_boundary_authority=0"
+    echo "tokenization_boundary_allowed=0"
+    echo "tokenization_boundary_performed=0"
+    echo "prompt_tokenization_allowed=0"
+    echo "prompt_tokenized=0"
+    echo "prompt_tokens_created=0"
+    echo "tokenizer_file_opened=0"
+    echo "tokenizer_vocab_loaded=0"
+    echo "tokenization_decision=blocked_contract_only"
+    echo "requires_prompt_evaluation_handoff_contract=1"
+    echo "requires_future_tokenizer_specification_contract=1"
+    echo "tokenization_boundary_promotion_allowed=0"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -1687,11 +1749,25 @@ case "\${1:-status}" in
       --awareness-dialogue "\$NADIA_DIR/awareness-dialogue/latest-awareness-dialogue-contract.txt" \
       --output "\$NADIA_DIR/prompt-evaluation-handoff"
     ;;
+  tokenization-boundary|tokenization|tokenization-contract)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-tokenization-boundary-contract.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia tokenization-boundary contract script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --prompt-evaluation-handoff "\$NADIA_DIR/prompt-evaluation-handoff/latest-prompt-evaluation-handoff-contract.txt" \
+      --output "\$NADIA_DIR/tokenization-boundary"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|path}" >&2
     exit 64
     ;;
 esac

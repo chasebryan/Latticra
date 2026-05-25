@@ -39,7 +39,9 @@ non-claims
 - [`NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md`](NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md) - Nadia Stage-14 prompt-materialization contract status before prompt buffer allocation, prompt text materialization, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15_STATUS.md`](NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15_STATUS.md) - Nadia Stage-15 awareness-dialogue contract status for Nadia Initiative Q&A scope before dialogue generation, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16_STATUS.md`](NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16_STATUS.md) - Nadia Stage-16 prompt-evaluation handoff contract status before prompt tokenization, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17_STATUS.md`](NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17_STATUS.md) - Nadia Stage-17 tokenization-boundary contract status before tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
+- [`SEAL_EFFECT_DECISION_STATUS.md`](SEAL_EFFECT_DECISION_STATUS.md) — Latticra Seal effect decision metadata status and public-entry checkpoint.
 - [`SEAL_CAPABILITY_GATE_STATUS.md`](SEAL_CAPABILITY_GATE_STATUS.md) — Latticra Seal capability gate metadata status and public-entry checkpoint.
 - [`SEAL_VERIFICATION_RECEIPT_STATUS.md`](SEAL_VERIFICATION_RECEIPT_STATUS.md) — Latticra Seal verification receipt metadata status and public-entry checkpoint.
 - [`SEAL_VERIFICATION_POLICY_STATUS.md`](SEAL_VERIFICATION_POLICY_STATUS.md) — Latticra Seal verification policy metadata status and public-entry checkpoint.
@@ -135,6 +137,8 @@ seal_verification_receipt_metadata_present=1
 seal_verification_receipt_status_present=1
 seal_capability_gate_metadata_present=1
 seal_capability_gate_status_present=1
+seal_effect_decision_metadata_present=1
+seal_effect_decision_status_present=1
 operator_visible_status_surface=1
 deterministic_local_report_path=1
 core_blocked_case_set_complete=1
@@ -167,13 +171,13 @@ core_blocked_case_set_complete=1
 The careful current public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, and core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, and core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 The current next recommended Seal lane is:
 
 ```text
-Add Seal effect decision status/public-entry alignment for metadata-only denied effect decision visibility
+Add Seal runtime handoff status/public-entry alignment for inactive metadata-only runtime handoff visibility
 ```
 
 ## Current Fedora VM CLI payload validation lane checkpoint

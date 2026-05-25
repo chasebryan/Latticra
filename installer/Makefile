@@ -1,5 +1,5 @@
 .RECIPEPREFIX := >
-.PHONY: help gui panel build-gui build-panel dry-run local-example install-local verify-local uninstall-local fmt tree clean refresh-desktop
+.PHONY: help gui panel build-gui build-panel dry-run local-example install-local verify-local uninstall-local reset-local uninstall-dry-run reset-dry-run fmt tree clean refresh-desktop
 
 INSTALLER_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 GUI_DIR := $(INSTALLER_DIR)latticra-installer
@@ -19,7 +19,9 @@ help:
 >  "  make -C installer local-example   Run actual guarded user-local install" \
 >  "  make -C installer install-local   Same as local-example" \
 >  "  make -C installer verify-local    Verify the local install" \
->  "  make -C installer uninstall-local Remove managed local install" \
+>  "  make -C installer uninstall-local Reset/remove managed local install" \
+>  "  make -C installer reset-local     Same as uninstall-local" \
+>  "  make -C installer uninstall-dry-run Preview managed local reset" \
 >  "  make -C installer refresh-desktop Refresh user-local desktop metadata" \
 >  "  make -C installer fmt             Format Rust panel code" \
 >  "  make -C installer tree            Show installer tree" \
@@ -47,9 +49,16 @@ verify-local:
 >sh "$(SCRIPT_DIR)/latticra-installer-verify.sh" \
 >  --prefix "$(HOME)/.local/share/latticra"
 
-uninstall-local:
+uninstall-local reset-local:
 >sh "$(SCRIPT_DIR)/latticra-installer-uninstall.sh" \
->  --prefix "$(HOME)/.local/share/latticra"
+>  --prefix "$(HOME)/.local/share/latticra" \
+>  --receipt-dir "$(RECEIPTS)"
+
+uninstall-dry-run reset-dry-run:
+>sh "$(SCRIPT_DIR)/latticra-installer-uninstall.sh" \
+>  --prefix "$(HOME)/.local/share/latticra" \
+>  --receipt-dir "$(RECEIPTS)" \
+>  --dry-run
 
 refresh-desktop:
 >@if command -v update-desktop-database >/dev/null 2>&1; then update-desktop-database "$(HOME)/.local/share/applications" >/dev/null 2>&1 || true; fi
