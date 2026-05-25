@@ -22,7 +22,7 @@ Only when all three stay true does the integration report:
 integration_decision=ready-for-future-commit-gate-no-effect
 ```
 
-That result is still not a real commit gate opening. It means the no-effect checks agree that the supplied local candidates can be carried to the next contract lane.
+That result is still not a real commit gate opening. It means the no-effect checks agree that the supplied local candidates can be carried to the macOS commit gate contract, which remains closed.
 
 ## Command
 
@@ -132,5 +132,5 @@ This integration is not macOS installation, macOS app bundle evidence, signed ap
 ## Next Recommended Lane
 
 ```text
-Add a macOS commit gate contract that keeps commit_user_local_managed_artifacts=0 until managed-write implementation and verification-transcript evidence exist.
+Add a macOS verification transcript contract that defines exact post-write evidence before any user-local install can be called verified.
 ```

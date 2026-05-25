@@ -10,7 +10,7 @@ This alignment separates the current no-effect writer-shaped dry-run prototype f
 
 The current prototype can render phases, validate user-local paths, inspect existing managed markers, report missing local executable/icon candidates, and block unsafe paths. It cannot create an app bundle, write Application Support files, install wrappers, write receipts, mutate shell profiles, or verify a real install.
 
-The macOS local candidate asset probe remains a no-effect readiness check for caller-supplied Panel executable and icon candidates. The macOS dry-run writer candidate integration joins that probe to the dry-run writer and only reports readiness when both agree while all commit and write flags remain disabled.
+The macOS local candidate asset probe remains a no-effect readiness check for caller-supplied Panel executable and icon candidates. The macOS dry-run writer candidate integration joins that probe to the dry-run writer and only reports readiness when both agree while all commit and write flags remain disabled. The macOS commit gate contract keeps that readiness from becoming write authority.
 
 ## Current Capability
 
@@ -22,6 +22,7 @@ macos_app_bundle_writer_marker_inspection_present=1
 macos_app_bundle_writer_missing_candidate_detection_present=1
 macos_local_candidate_asset_probe_present=1
 macos_dry_run_writer_candidate_integration_present=1
+macos_commit_gate_contract_present=1
 macos_app_bundle_writer_commit_disabled=1
 ```
 
@@ -129,5 +130,5 @@ This alignment is not macOS installation, macOS app bundle evidence, signed app 
 ## Next Recommended Lane
 
 ```text
-Add a macOS commit gate contract that keeps commit_user_local_managed_artifacts=0 until managed-write implementation and verification-transcript evidence exist.
+Add a macOS verification transcript contract that defines exact post-write evidence before any user-local install can be called verified.
 ```

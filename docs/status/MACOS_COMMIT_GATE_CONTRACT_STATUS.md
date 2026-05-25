@@ -1,28 +1,37 @@
-# macOS Dry-Run Writer Candidate Integration Status
+# macOS Commit Gate Contract Status
 
-Status: no-effect dry-run writer candidate integration status
+Status: no-effect commit gate contract status
 Date: 2026-05-25 CDT
-Scope: status checkpoint after bridging the macOS local candidate asset probe to the app bundle writer dry-run.
+Scope: status checkpoint after adding the closed macOS commit gate contract.
 
 ## Summary
 
-Latticra now has a no-effect macOS dry-run writer candidate integration.
+Latticra now has a no-effect macOS commit gate contract.
 
-The integration runs the local candidate asset probe and the app bundle writer dry-run with the same caller-supplied inputs. It reports readiness only when the probe accepts the inputs, the writer dry-run reaches `ready-for-future-commit-gate`, and all write and authority flags remain disabled.
+The contract keeps `commit_user_local_managed_artifacts=0` even when local candidates and the writer dry-run reach the future commit-gate decision. It records the missing future prerequisites before a commit-capable macOS user-local app bundle writer may exist.
 
 ## Status Fields
 
 ```text
-macos_dry_run_writer_candidate_integration_present=1
-macos_dry_run_writer_candidate_integration_guard_present=1
 macos_commit_gate_contract_present=1
-macos_local_candidate_asset_probe_present=1
-macos_app_bundle_writer_dry_run_present=1
-asset_probe_to_writer_candidate_flow_recorded=1
-asset_probe_ready_decision_required=1
-writer_ready_decision_required=1
-authority_boundary_preserved_required=1
+macos_commit_gate_contract_guard_present=1
+macos_dry_run_writer_candidate_integration_present=1
+commit_gate_state=closed
+commit_gate_decision=blocked-missing-managed-write-implementation
 commit_user_local_managed_artifacts=0
+macos_app_bundle_commit_capable_writer_present=0
+managed_write_implementation_present=0
+reset_uninstall_implementation_present=0
+verification_transcript_contract_present=0
+verification_transcript_evidence_present=0
+candidate_integration_required=1
+candidate_flow_ready_required=1
+operator_explicit_commit_intent_required=1
+unsafe_path_negative_tests_required=1
+unmanaged_target_preservation_tests_required=1
+receipt_completeness_tests_required=1
+reset_uninstall_dry_run_required=1
+verification_transcript_required=1
 application_support_write_performed=0
 app_bundle_write_performed=0
 info_plist_write_performed=0
@@ -48,7 +57,7 @@ production_installer_ready=0
 The careful public meaning is:
 
 ```text
-Latticra can prove, without writing anything, that accepted local executable/icon candidates can move the macOS writer dry-run to its future commit-gate decision.
+Latticra has a closed macOS commit-gate contract for future user-local managed app bundle writes.
 ```
 
 That does not mean Latticra has a macOS installer, commit-capable app bundle writer, app bundle, signed build, notarized build, launchd integration, Keychain integration, Endpoint Security integration, System Extension integration, privileged helper, or production security capability.
@@ -58,13 +67,13 @@ That does not mean Latticra has a macOS installer, commit-capable app bundle wri
 This status record is guarded by:
 
 ```sh
-sh scripts/test-macos-dry-run-writer-candidate-integration.sh
+sh scripts/test-macos-commit-gate-contract.sh
 ```
 
 Expected output:
 
 ```text
-macos_dry_run_writer_candidate_integration: ok
+macos_commit_gate_contract: ok
 ```
 
 ## Next Recommended Lane

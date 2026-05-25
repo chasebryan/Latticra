@@ -40,6 +40,8 @@ writer_doc='docs/MACOS_APP_BUNDLE_WRITER_DRY_RUN.md'
 writer_status='docs/status/MACOS_APP_BUNDLE_WRITER_DRY_RUN_STATUS.md'
 alignment_doc='docs/MACOS_APP_BUNDLE_WRITER_ALIGNMENT.md'
 alignment_status='docs/status/MACOS_APP_BUNDLE_WRITER_ALIGNMENT_STATUS.md'
+commit_gate_doc='docs/MACOS_COMMIT_GATE_CONTRACT.md'
+commit_gate_status='docs/status/MACOS_COMMIT_GATE_CONTRACT_STATUS.md'
 workflow='.github/workflows/macos-dry-run-writer-candidate-integration.yml'
 
 require_file "$doc"
@@ -54,6 +56,8 @@ require_file "$writer_doc"
 require_file "$writer_status"
 require_file "$alignment_doc"
 require_file "$alignment_status"
+require_file "$commit_gate_doc"
+require_file "$commit_gate_status"
 require_file "$workflow"
 require_file installer/latticra-installer/assets/latticra-panel.png
 
@@ -68,10 +72,12 @@ require_contains 'app_bundle_write_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
 require_contains 'macOS commit gate contract' "$doc"
+require_contains 'macOS verification transcript contract' "$doc"
 
 require_contains 'Status: no-effect dry-run writer candidate integration status' "$status"
 require_contains 'macos_dry_run_writer_candidate_integration_present=1' "$status"
 require_contains 'macos_dry_run_writer_candidate_integration_guard_present=1' "$status"
+require_contains 'macos_commit_gate_contract_present=1' "$status"
 require_contains 'macos_local_candidate_asset_probe_present=1' "$status"
 require_contains 'macos_app_bundle_writer_dry_run_present=1' "$status"
 require_contains 'asset_probe_to_writer_candidate_flow_recorded=1' "$status"
@@ -87,14 +93,19 @@ require_contains 'not macOS install evidence' "$status"
 require_contains 'MACOS_DRY_RUN_WRITER_CANDIDATE_INTEGRATION_STATUS.md' "$index"
 require_contains 'macOS dry-run writer candidate integration status' "$index"
 require_contains 'stage_3_dry_run_writer_candidate_integration=present' "$transfer_plan"
+require_contains 'stage_3_macos_commit_gate_contract=present' "$transfer_plan"
 require_contains 'docs/MACOS_DRY_RUN_WRITER_CANDIDATE_INTEGRATION.md' "$transfer_plan"
+require_contains 'docs/MACOS_COMMIT_GATE_CONTRACT.md' "$transfer_plan"
 require_contains 'macos_dry_run_writer_candidate_integration_present=1' "$transfer_status"
+require_contains 'macos_commit_gate_contract_present=1' "$transfer_status"
 require_contains 'macos_dry_run_writer_candidate_integration_present=1' "$probe_status"
 require_contains 'macos_dry_run_writer_candidate_integration_present=1' "$writer_status"
 require_contains 'macos_dry_run_writer_candidate_integration_present=1' "$alignment_status"
+require_contains 'macos_commit_gate_contract_present=1' "$commit_gate_status"
 require_contains 'macOS dry-run writer candidate integration' "$probe_doc"
 require_contains 'macOS dry-run writer candidate integration' "$writer_doc"
 require_contains 'macOS dry-run writer candidate integration' "$alignment_doc"
+require_contains 'macOS commit gate contract' "$commit_gate_doc"
 require_contains 'sh scripts/test-macos-dry-run-writer-candidate-integration.sh' "$workflow"
 
 require_contains 'MACOS DRY RUN WRITER CANDIDATE INTEGRATION' "$script"
@@ -105,6 +116,7 @@ require_contains 'commit_user_local_managed_artifacts=$COMMIT_FLAG' "$script"
 require_contains 'app_bundle_write_performed=$APP_BUNDLE_WRITE' "$script"
 require_contains 'host_mutation_performed=$HOST_MUTATION' "$script"
 require_contains 'network_performed=$NETWORK' "$script"
+require_contains 'next_lane=macos-verification-transcript-contract' "$script"
 
 missing_output=$(sh "$script")
 require_output_contains "$missing_output" 'MACOS DRY RUN WRITER CANDIDATE INTEGRATION'

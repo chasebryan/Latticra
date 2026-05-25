@@ -8,7 +8,7 @@ Scope: status checkpoint after adding the macOS local Panel executable and icon 
 
 Latticra now has a no-effect macOS local candidate asset probe.
 
-The probe checks caller-supplied local Panel executable and icon candidates for dry-run writer input readiness. It is now linked to the macOS dry-run writer candidate integration, which compares the probe decision with the writer dry-run decision while keeping all writes disabled. The probe reports missing files, disallowed paths, non-executable Panel candidates, unsupported icon formats, and ready dry-run inputs without building, downloading, signing, notarizing, copying, writing app bundle files, mutating the host, or granting authority.
+The probe checks caller-supplied local Panel executable and icon candidates for dry-run writer input readiness. It is now linked to the macOS dry-run writer candidate integration and closed macOS commit gate contract, which compare the probe decision with the writer dry-run decision while keeping all writes disabled. The probe reports missing files, disallowed paths, non-executable Panel candidates, unsupported icon formats, and ready dry-run inputs without building, downloading, signing, notarizing, copying, writing app bundle files, mutating the host, or granting authority.
 
 ## Status Fields
 
@@ -16,6 +16,7 @@ The probe checks caller-supplied local Panel executable and icon candidates for 
 macos_local_candidate_asset_probe_present=1
 macos_local_candidate_asset_probe_guard_present=1
 macos_dry_run_writer_candidate_integration_present=1
+macos_commit_gate_contract_present=1
 local_panel_executable_candidate_probe=1
 local_icon_candidate_probe=1
 panel_candidate_executable_check_present=1
@@ -75,7 +76,7 @@ macos_local_candidate_asset_probe: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS commit gate contract that keeps commit_user_local_managed_artifacts=0 until managed-write implementation and verification-transcript evidence exist.
+Add a macOS verification transcript contract that defines exact post-write evidence before any user-local install can be called verified.
 ```
 
 ## Non-Claims

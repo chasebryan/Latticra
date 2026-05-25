@@ -1182,7 +1182,7 @@ impl LatticraInstallerApp {
     fn show_main_workbench(&mut self, ui: &mut egui::Ui, compact: bool) {
         self.refresh_plan();
         egui::ScrollArea::vertical()
-            .id_source("latticra_main_workbench")
+            .id_salt("latticra_main_workbench")
             .auto_shrink([false, false])
             .show(ui, |ui| {
                 self.show_hero_strip(ui);
@@ -1789,7 +1789,7 @@ impl LatticraInstallerApp {
         });
 
         egui::ScrollArea::vertical()
-            .id_source("latticra_evidence_panel")
+            .id_salt("latticra_evidence_panel")
             .max_height(ui.available_height().max(260.0))
             .stick_to_bottom(!self.show_plan_over_log)
             .show(ui, |ui| {
@@ -1991,13 +1991,13 @@ impl LatticraInstallerApp {
             ui.small("Panel commands and local navigation only. No external host process is launched by the console.");
             ui.add_space(6.0);
 
-            egui::Frame::none()
+            egui::Frame::NONE
                 .fill(egui::Color32::from_rgb(6, 10, 18))
                 .stroke(egui::Stroke::new(1.0, egui::Color32::from_rgb(45, 90, 130)))
-                .inner_margin(egui::Margin::same(8.0))
+                .inner_margin(egui::Margin::same(8))
                 .show(ui, |ui| {
                     egui::ScrollArea::vertical()
-                        .id_source("latticra_embedded_console")
+                        .id_salt("latticra_embedded_console")
                         .max_height(520.0)
                         .stick_to_bottom(true)
                         .show(ui, |ui| {
@@ -2078,7 +2078,7 @@ impl LatticraInstallerApp {
             });
 
             egui::ScrollArea::vertical()
-                .id_source("latticra_right_evidence")
+                .id_salt("latticra_right_evidence")
                 .max_height(220.0)
                 .stick_to_bottom(!self.show_plan_over_log)
                 .show(ui, |ui| {
@@ -2111,10 +2111,11 @@ impl LatticraInstallerApp {
 }
 
 impl eframe::App for LatticraInstallerApp {
-    fn update(&mut self, ctx: &egui::Context, _: &mut eframe::Frame) {
-        self.ensure_texture(ctx);
+    fn ui(&mut self, root_ui: &mut egui::Ui, _: &mut eframe::Frame) {
+        let ctx = root_ui.ctx().clone();
+        self.ensure_texture(&ctx);
         self.drain_events();
-        let screen_width = ctx.screen_rect().width();
+        let screen_width = ctx.content_rect().width();
         let compact = screen_width < COMPACT_LAYOUT_WIDTH;
         let narrow = screen_width < NARROW_LAYOUT_WIDTH;
 
@@ -2122,33 +2123,33 @@ impl eframe::App for LatticraInstallerApp {
             ctx.request_repaint_after(Duration::from_millis(33));
         }
 
-        egui::TopBottomPanel::top("top_header").show(ctx, |ui| {
+        egui::Panel::top("top_header").show_inside(root_ui, |ui| {
             self.show_header(ui, compact);
         });
 
-        egui::TopBottomPanel::bottom("bottom_status").show(ctx, |ui| {
+        egui::Panel::bottom("bottom_status").show_inside(root_ui, |ui| {
             self.show_status_bar(ui);
         });
 
-        egui::SidePanel::left("left_workbench_nav")
+        egui::Panel::left("left_workbench_nav")
             .resizable(true)
-            .default_width(if narrow { 170.0 } else { 230.0 })
-            .min_width(if narrow { 150.0 } else { 180.0 })
-            .show(ctx, |ui| {
+            .default_size(if narrow { 170.0 } else { 230.0 })
+            .min_size(if narrow { 150.0 } else { 180.0 })
+            .show_inside(root_ui, |ui| {
                 egui::ScrollArea::vertical()
-                    .id_source("left_workbench_nav_scroll")
+                    .id_salt("left_workbench_nav_scroll")
                     .auto_shrink([false, false])
                     .show(ui, |ui| self.show_sidebar(ui, compact));
             });
 
         if !compact {
-            egui::SidePanel::right("right_console")
+            egui::Panel::right("right_console")
                 .resizable(true)
-                .default_width(560.0)
-                .min_width(360.0)
-                .show(ctx, |ui| {
+                .default_size(560.0)
+                .min_size(360.0)
+                .show_inside(root_ui, |ui| {
                     egui::ScrollArea::vertical()
-                        .id_source("right_console_scroll")
+                        .id_salt("right_console_scroll")
                         .auto_shrink([false, false])
                         .show(ui, |ui| {
                             self.show_console_panel(ui);
@@ -2158,7 +2159,7 @@ impl eframe::App for LatticraInstallerApp {
                 });
         }
 
-        egui::CentralPanel::default().show(ctx, |ui| {
+        egui::CentralPanel::default().show_inside(root_ui, |ui| {
             self.show_main_workbench(ui, compact);
         });
     }

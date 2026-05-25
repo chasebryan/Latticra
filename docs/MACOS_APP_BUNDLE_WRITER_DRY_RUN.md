@@ -10,7 +10,7 @@ This prototype emits the writer-shaped phase report from the macOS user-local ap
 
 It validates planned user-local paths, inspects existing targets for Latticra managed markers, checks whether optional local Panel executable and icon candidates are present, and reports the phase decision. It does not create an app bundle, write Application Support files, install wrappers, mutate shell profiles, build the Panel, use launchd, access Keychain, request TCC permissions, use Endpoint Security, use System Extensions, use Network Extensions, open the network, or grant runtime authority.
 
-The macOS local candidate asset probe is the no-effect readiness check that can supply those optional executable and icon candidates. The macOS dry-run writer candidate integration then runs the probe and this writer dry-run together to prove that accepted inputs can move the writer decision to `ready-for-future-commit-gate` while `commit_user_local_managed_artifacts=0`.
+The macOS local candidate asset probe is the no-effect readiness check that can supply those optional executable and icon candidates. The macOS dry-run writer candidate integration then runs the probe and this writer dry-run together to prove that accepted inputs can move the writer decision to `ready-for-future-commit-gate` while `commit_user_local_managed_artifacts=0`. The macOS commit gate contract keeps that future gate closed until managed-write implementation and verification evidence exist.
 
 ## Command
 
@@ -173,5 +173,5 @@ This prototype is not macOS installation, macOS app bundle evidence, signed app 
 ## Next Recommended Lane
 
 ```text
-Add a macOS commit gate contract that keeps commit_user_local_managed_artifacts=0 until managed-write implementation and verification-transcript evidence exist.
+Add a macOS verification transcript contract that defines exact post-write evidence before any user-local install can be called verified.
 ```

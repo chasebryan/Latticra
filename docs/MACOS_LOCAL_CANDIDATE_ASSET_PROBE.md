@@ -17,7 +17,7 @@ local_icon_candidate_probe=1
 
 The probe does not build, download, sign, notarize, copy, write app bundle files, mutate host state, open the network, or grant authority.
 
-The macOS dry-run writer candidate integration consumes this probe's ready decision and compares it with the app bundle writer dry-run decision. The integration remains no-effect and keeps `commit_user_local_managed_artifacts=0`.
+The macOS dry-run writer candidate integration consumes this probe's ready decision and compares it with the app bundle writer dry-run decision. The integration remains no-effect and keeps `commit_user_local_managed_artifacts=0`. The macOS commit gate contract then keeps the writer path closed until future implementation and verification evidence exist.
 
 ## Command
 
@@ -139,5 +139,5 @@ This probe is not macOS installation, macOS app bundle evidence, signed app evid
 ## Next Recommended Lane
 
 ```text
-Add a macOS commit gate contract that keeps commit_user_local_managed_artifacts=0 until managed-write implementation and verification-transcript evidence exist.
+Add a macOS verification transcript contract that defines exact post-write evidence before any user-local install can be called verified.
 ```

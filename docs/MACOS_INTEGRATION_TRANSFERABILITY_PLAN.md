@@ -85,6 +85,7 @@ stage_3_user_local_app_bundle_writer_dry_run=present
 stage_3_user_local_app_bundle_writer_alignment=present
 stage_3_local_candidate_asset_probe=present
 stage_3_dry_run_writer_candidate_integration=present
+stage_3_macos_commit_gate_contract=present
 stage_3_user_local_app_bundle=future
 stage_4_user_local_verification_transcript=future
 stage_5_codesigning_notarization_plan=future
@@ -166,6 +167,14 @@ The Stage 3 dry-run writer candidate integration is implemented by:
 docs/MACOS_DRY_RUN_WRITER_CANDIDATE_INTEGRATION.md
 scripts/macos-dry-run-writer-candidate-integration.sh
 docs/status/MACOS_DRY_RUN_WRITER_CANDIDATE_INTEGRATION_STATUS.md
+```
+
+The Stage 3 macOS commit gate contract is implemented by:
+
+```text
+docs/MACOS_COMMIT_GATE_CONTRACT.md
+scripts/macos-commit-gate-contract.sh
+docs/status/MACOS_COMMIT_GATE_CONTRACT_STATUS.md
 ```
 
 ## App Bundle Direction
@@ -288,5 +297,5 @@ macos_production_ready=0
 ## Next Recommended Lane
 
 ```text
-Add a macOS commit gate contract that keeps commit_user_local_managed_artifacts=0 until managed-write implementation and verification-transcript evidence exist.
+Add a macOS verification transcript contract that defines exact post-write evidence before any user-local install can be called verified.
 ```

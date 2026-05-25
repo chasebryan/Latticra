@@ -6,8 +6,8 @@ description = "Latticra Panel graphical first-run control workbench"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
-eframe = "0.28"
-egui = "0.28"
+eframe = "0.34.2"
+egui = "0.34.2"
 image = { version = "0.25", default-features = false, features = ["png"] }
 serde = { version = "1", features = ["derive"] }
 toml = "0.8"
