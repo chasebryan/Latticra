@@ -408,7 +408,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out);
     let _ = writeln!(out, "[nadia]");
     let _ = writeln!(out, "system_name=Latticra Nadia");
-    let _ = writeln!(out, "stage=5-productivity-ledger-loop");
+    let _ = writeln!(out, "stage=6-protective-safety-boundary");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -465,6 +465,26 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(out, "learning_scope=operator-reviewed-local-productivity");
     let _ = writeln!(out, "ledger_append_only=1");
+    let _ = writeln!(out, "protective_safety_stage=6-protective-safety-boundary");
+    let _ = writeln!(
+        out,
+        "protective_safety_command=scripts/nadia-protective-safety-boundary.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_protective_safety_command=latticra-nadia protective-safety"
+    );
+    let _ = writeln!(out, "absolute_protective_boundary=1");
+    let _ = writeln!(out, "sexual_user_request_authority=0");
+    let _ = writeln!(out, "sexual_content_generation=0");
+    let _ = writeln!(out, "sexual_roleplay_authority=0");
+    let _ = writeln!(out, "sexualized_namesake_or_survivor_content=0");
+    let _ = writeln!(out, "sexual_request_refusal=always");
+    let _ = writeln!(out, "user_override_authority=0");
+    let _ = writeln!(out, "prompt_injection_override_authority=0");
+    let _ = writeln!(out, "manipulation_resistance=required");
+    let _ = writeln!(out, "policy_bypass_authority=0");
+    let _ = writeln!(out, "namesake_cause_awareness=1");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

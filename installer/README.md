@@ -58,6 +58,7 @@ nadia runtime
 nadia plan
 nadia mode
 nadia ledger
+nadia safety
 profile guided
 profile seal
 profile fedora
@@ -111,9 +112,9 @@ Or from the desktop app grid, open **Latticra Panel**.
 
 ## Nadia offline AI foundation
 
-Nadia is Latticra's planned offline AI companion for software development, systems engineering, and AI development work. The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
+Nadia is Latticra's planned offline AI companion for software development, systems engineering, and AI development work. The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, harm-aware development, and an absolute non-sexual-use boundary visible in the system direction.
 
-In the current installer lane, Nadia includes Stage-5 productivity-ledger metadata, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan metadata, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, config, Console status, component marker, and productivity-ledger space. No inference, prompt evaluation, model installation, training, distillation, source mutation, or network authority are installed.
+In the current installer lane, Nadia includes Stage-6 protective-safety metadata, Stage-5 productivity-ledger metadata, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan metadata, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, config, Console status, component marker, and productivity-ledger space. No sexual user functionality, inference, prompt evaluation, model installation, training, distillation, source mutation, or network authority are installed.
 
 After a guarded local install with Nadia enabled:
 
@@ -123,6 +124,7 @@ latticra-nadia runtime-profile
 latticra-nadia prompt-plan
 latticra-nadia mode-validate
 latticra-nadia productivity-ledger
+latticra-nadia protective-safety
 ```
 
 ## Uninstall managed local install

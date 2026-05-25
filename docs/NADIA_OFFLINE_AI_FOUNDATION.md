@@ -232,9 +232,40 @@ source_mutation_authority=0
 
 See [`NADIA_PRODUCTIVITY_LOOP_STAGE_5.md`](NADIA_PRODUCTIVITY_LOOP_STAGE_5.md).
 
-### Stage-6: Guarded Tool Authority
+### Stage-6: Protective Safety Boundary
 
-Only after Nucleus, Runtime Boundary, and Seal gates mature, consider bounded tool execution. The default remains deny-by-default, receipt-bound, and operator-visible.
+Make Nadia's absolute protective boundary explicit before any prompt evaluation, model runtime, retrieval, or tool authority is considered.
+
+```text
+nadia_stage_6_protective_safety_boundary_present=1
+protective_safety_command=scripts/nadia-protective-safety-boundary.sh
+installed_protective_safety_command=latticra-nadia protective-safety
+requires_productivity_entry=1
+absolute_protective_boundary=1
+sexual_user_request_authority=0
+sexual_content_generation=0
+sexual_roleplay_authority=0
+sexualized_namesake_or_survivor_content=0
+sexual_request_refusal=always
+user_override_authority=0
+prompt_injection_override_authority=0
+manipulation_resistance=required
+policy_bypass_authority=0
+namesake_cause_awareness=1
+awareness_context=non_sensational_human_rights
+model_runtime_invoked=0
+inference_performed=0
+prompt_evaluated=0
+training_performed=0
+distillation_performed=0
+source_mutation_authority=0
+```
+
+See [`NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md`](NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md).
+
+### Stage-7: Guarded Tool Authority
+
+Only after Nucleus, Runtime Boundary, Seal, Nadia ledger, and Nadia protective-safety gates mature, consider bounded tool execution. The default remains deny-by-default, receipt-bound, refusal-bound, and operator-visible.
 
 ## Non-Claims
 
@@ -242,6 +273,7 @@ Stage-0 Nadia is not:
 
 - a production AI assistant;
 - an autonomous coding agent;
+- a sexual assistant, roleplay surface, or adult-content generator;
 - a model runtime;
 - a model distribution channel;
 - a training system;
@@ -252,7 +284,7 @@ Stage-0 Nadia is not:
 
 ## Promotion Gate
 
-Before Stage-6 starts, Latticra should keep these guards passing:
+Before Stage-7 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -261,6 +293,7 @@ sh scripts/test-nadia-runtime-profile-stage-2.sh
 sh scripts/test-nadia-developer-workbench-stage-3.sh
 sh scripts/test-nadia-systems-engineering-mode-stage-4.sh
 sh scripts/test-nadia-productivity-loop-stage-5.sh
+sh scripts/test-nadia-protective-safety-boundary-stage-6.sh
 ```
 
 Before guarded tool authority starts, a separate authority contract must exist and name deny-by-default tool scopes, execution constraints, operator review gates, receipts, failure behavior, and non-claims.

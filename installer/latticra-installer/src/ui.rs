@@ -290,7 +290,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger",
+                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -327,8 +327,9 @@ impl LatticraInstallerApp {
                     "systems_engineering_mode_stage=4-systems-engineering-mode-validation",
                 );
                 self.push_console("productivity_loop_stage=5-productivity-ledger-loop");
+                self.push_console("protective_safety_stage=6-protective-safety-boundary");
                 self.push_console(
-                    "stage=5 productivity-ledger-loop; model_runtime_invoked=0 inference_performed=0",
+                    "stage=6 protective-safety-boundary; model_runtime_invoked=0 inference_performed=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -382,6 +383,17 @@ impl LatticraInstallerApp {
                 );
                 self.push_console(
                     "training_performed=0 distillation_performed=0 source_mutation_authority=0",
+                );
+            }
+            ["nadia", "safety"] | ["nadia", "protective-safety"] => {
+                self.push_console("nadia_protective_safety=stage-6-protective-safety-boundary");
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia protective-safety");
+                self.push_console(
+                    "absolute_protective_boundary=1 sexual_content_generation=0 sexual_request_refusal=always",
+                );
+                self.push_console(
+                    "manipulation_resistance=required prompt_injection_override_authority=0 policy_bypass_authority=0",
                 );
             }
             ["plan"] => {
@@ -702,7 +714,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-5 local productivity ledger with metadata-only Console surfaces.",
+            "Stage-6 protective safety boundary with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,

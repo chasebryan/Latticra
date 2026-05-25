@@ -28,6 +28,7 @@ non-claims
 - [`NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md`](NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md) - Nadia Stage-3 developer-workbench status for prompt-plan generation without prompt evaluation.
 - [`NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4_STATUS.md`](NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4_STATUS.md) - Nadia Stage-4 systems-engineering mode status for prompt-plan validation before prompt evaluation.
 - [`NADIA_PRODUCTIVITY_LOOP_STAGE_5_STATUS.md`](NADIA_PRODUCTIVITY_LOOP_STAGE_5_STATUS.md) - Nadia Stage-5 productivity-loop status for operator-reviewed local productivity ledger entries.
+- [`NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md`](NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md) - Nadia Stage-6 protective-safety boundary status for non-sexual-use and anti-manipulation restrictions.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
 - [`SEAL_VERIFICATION_RECEIPT_STATUS.md`](SEAL_VERIFICATION_RECEIPT_STATUS.md) — Latticra Seal verification receipt metadata status and public-entry checkpoint.
 - [`SEAL_VERIFICATION_POLICY_STATUS.md`](SEAL_VERIFICATION_POLICY_STATUS.md) — Latticra Seal verification policy metadata status and public-entry checkpoint.

@@ -59,4 +59,4 @@ nadia_productivity_loop_stage_5: ok
 
 ## Next Stage
 
-Stage-6 should consider guarded tool authority only after Nucleus, Runtime Boundary, Seal, and Nadia ledger gates define deny-by-default execution constraints, receipts, and operator review.
+Stage-6 now adds a protective-safety boundary before any guarded tool authority is considered.

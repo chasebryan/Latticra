@@ -30,8 +30,8 @@ notes = "Report-only subsystem. No enforcement authority in this early installer
 label = "Nadia offline AI foundation"
 default_enabled = false
 authority = "local-prefix"
-generated_paths = ["bin/latticra-nadia", "etc/latticra/nadia.toml", "share/latticra/nadia/README.md", "share/latticra/nadia/context-packs", "share/latticra/nadia/runtime-profiles", "share/latticra/nadia/prompt-plans", "share/latticra/nadia/mode-validations", "share/latticra/nadia/productivity-ledger", "components/nadia-offline-ai.installed"]
-notes = "Stage-5 productivity ledger, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan workbench, Stage-2 runtime-profile, and Stage-1 local context-pack foundation with awareness principles. No prompt evaluation, inference, model installation, training, distillation, source mutation, or network authority."
+generated_paths = ["bin/latticra-nadia", "etc/latticra/nadia.toml", "share/latticra/nadia/README.md", "share/latticra/nadia/context-packs", "share/latticra/nadia/runtime-profiles", "share/latticra/nadia/prompt-plans", "share/latticra/nadia/mode-validations", "share/latticra/nadia/productivity-ledger", "share/latticra/nadia/protective-safety", "components/nadia-offline-ai.installed"]
+notes = "Stage-6 protective safety boundary, Stage-5 productivity ledger, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan workbench, Stage-2 runtime-profile, and Stage-1 local context-pack foundation with awareness principles. No sexual user functionality, prompt evaluation, inference, model installation, training, distillation, source mutation, or network authority."
 
 [components.fedora_validation]
 label = "Fedora validation files"

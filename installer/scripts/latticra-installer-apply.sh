@@ -337,7 +337,7 @@ developer_cli_helpers=$DEVELOPER_CLI_HELPERS
 
 [nadia]
 system_name=Latticra Nadia
-stage=5-productivity-ledger-loop
+stage=6-protective-safety-boundary
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -360,6 +360,20 @@ productivity_ledger_command=scripts/nadia-productivity-ledger.sh
 installed_productivity_ledger_command=latticra-nadia productivity-ledger
 learning_scope=operator-reviewed-local-productivity
 ledger_append_only=1
+protective_safety_stage=6-protective-safety-boundary
+protective_safety_command=scripts/nadia-protective-safety-boundary.sh
+installed_protective_safety_command=latticra-nadia protective-safety
+absolute_protective_boundary=1
+sexual_user_request_authority=0
+sexual_content_generation=0
+sexual_roleplay_authority=0
+sexualized_namesake_or_survivor_content=0
+sexual_request_refusal=always
+user_override_authority=0
+prompt_injection_override_authority=0
+manipulation_resistance=required
+policy_bypass_authority=0
+namesake_cause_awareness=1
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -554,12 +568,13 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/productivity-ledger" \
     "$PREFIX/share/latticra/nadia/runtime-profiles" \
     "$PREFIX/share/latticra/nadia/prompt-plans" \
-    "$PREFIX/share/latticra/nadia/mode-validations"
+    "$PREFIX/share/latticra/nadia/mode-validations" \
+    "$PREFIX/share/latticra/nadia/protective-safety"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia"
-stage = "5-productivity-ledger-loop"
-mode = "offline-productivity-loop"
+stage = "6-protective-safety-boundary"
+mode = "offline-protective-safety"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -578,6 +593,19 @@ productivity_loop_stage = "5-productivity-ledger-loop"
 productivity_ledger_command = "scripts/nadia-productivity-ledger.sh"
 learning_scope = "operator-reviewed-local-productivity"
 ledger_append_only = true
+protective_safety_stage = "6-protective-safety-boundary"
+protective_safety_command = "scripts/nadia-protective-safety-boundary.sh"
+absolute_protective_boundary = true
+sexual_user_request_authority = false
+sexual_content_generation = false
+sexual_roleplay_authority = false
+sexualized_namesake_or_survivor_content = false
+sexual_request_refusal = "always"
+user_override_authority = false
+prompt_injection_override_authority = false
+manipulation_resistance = "required"
+policy_bypass_authority = false
+namesake_cause_awareness = true
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -592,11 +620,11 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-5 metadata lane.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-6 protective-safety metadata lane.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, model-registry, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, and productivity-ledger entries when the operator runs latticra-nadia productivity-ledger. It does not evaluate prompts, install model weights, run inference, use the network, train or distill a model, or mutate source.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, model-registry, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, and protective-safety metadata when the operator runs latticra-nadia protective-safety. It does not provide sexual user functionality, evaluate prompts, install model weights, run inference, use the network, train or distill a model, or mutate source.
 NADIAREADME
 fi
 
@@ -744,8 +772,8 @@ case "\${1:-status}" in
     echo
     echo "name=Nadia"
     echo "system_name=Latticra Nadia"
-    echo "stage=5-productivity-ledger-loop"
-    echo "mode=offline-productivity-loop"
+    echo "stage=6-protective-safety-boundary"
+    echo "mode=offline-protective-safety"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "context_packs=\$NADIA_DIR/context-packs"
@@ -754,6 +782,7 @@ case "\${1:-status}" in
     echo "runtime_profiles=\$NADIA_DIR/runtime-profiles"
     echo "prompt_plans=\$NADIA_DIR/prompt-plans"
     echo "mode_validations=\$NADIA_DIR/mode-validations"
+    echo "protective_safety=\$NADIA_DIR/protective-safety"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "prompt_plan_command=latticra-nadia prompt-plan"
@@ -764,6 +793,19 @@ case "\${1:-status}" in
     echo "productivity_ledger_command=latticra-nadia productivity-ledger"
     echo "learning_scope=operator-reviewed-local-productivity"
     echo "ledger_append_only=1"
+    echo "protective_safety_stage=6-protective-safety-boundary"
+    echo "protective_safety_command=latticra-nadia protective-safety"
+    echo "absolute_protective_boundary=1"
+    echo "sexual_user_request_authority=0"
+    echo "sexual_content_generation=0"
+    echo "sexual_roleplay_authority=0"
+    echo "sexualized_namesake_or_survivor_content=0"
+    echo "sexual_request_refusal=always"
+    echo "user_override_authority=0"
+    echo "prompt_injection_override_authority=0"
+    echo "manipulation_resistance=required"
+    echo "policy_bypass_authority=0"
+    echo "namesake_cause_awareness=1"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -850,11 +892,25 @@ case "\${1:-status}" in
       --mode-validation "\$NADIA_DIR/mode-validations/latest-mode-validation.txt" \
       --output "\$NADIA_DIR/productivity-ledger"
     ;;
+  protective-safety|safety|safety-boundary)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-protective-safety-boundary.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia protective-safety script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --productivity-entry "\$NADIA_DIR/productivity-ledger/latest-productivity-entry.txt" \
+      --output "\$NADIA_DIR/protective-safety"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|path}" >&2
     exit 64
     ;;
 esac
