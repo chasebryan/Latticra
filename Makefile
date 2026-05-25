@@ -1,4 +1,4 @@
-.PHONY: seal nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool
+.PHONY: seal nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract
 
 seal:
 	./scripts/latticra-seal-smoke.sh
@@ -23,6 +23,9 @@ nadia-safety:
 
 nadia-tool:
 	sh ./scripts/nadia-tool-authority-preflight.sh
+
+nadia-prompt-contract:
+	sh ./scripts/nadia-prompt-evaluation-contract.sh
 
 .PHONY: seal-policy-denials
 

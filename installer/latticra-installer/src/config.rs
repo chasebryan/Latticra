@@ -408,7 +408,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out);
     let _ = writeln!(out, "[nadia]");
     let _ = writeln!(out, "system_name=Latticra Nadia");
-    let _ = writeln!(out, "stage=7-guarded-tool-authority-preflight");
+    let _ = writeln!(out, "stage=8-prompt-evaluation-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -510,6 +510,31 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "requires_seal_receipt=1");
     let _ = writeln!(out, "requires_protective_safety_boundary=1");
     let _ = writeln!(out, "authority_transition_allowed=0");
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_contract_stage=8-prompt-evaluation-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_contract_command=scripts/nadia-prompt-evaluation-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_contract_command=latticra-nadia prompt-contract"
+    );
+    let _ = writeln!(out, "prompt_contract_status=contract_only");
+    let _ = writeln!(out, "prompt_evaluation_stage=contract-only");
+    let _ = writeln!(out, "prompt_materialized=0");
+    let _ = writeln!(out, "prompt_text_materialized=0");
+    let _ = writeln!(out, "prompt_evaluation_authority=0");
+    let _ = writeln!(out, "prompt_receipt_required=1");
+    let _ = writeln!(out, "refusal_policy_required=1");
+    let _ = writeln!(out, "protective_safety_required=1");
+    let _ = writeln!(out, "tool_preflight_required=1");
+    let _ = writeln!(out, "runtime_profile_required=1");
+    let _ = writeln!(out, "model_registry_review_required=1");
+    let _ = writeln!(out, "operator_review_required=1");
+    let _ = writeln!(out, "contract_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

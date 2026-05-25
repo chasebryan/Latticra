@@ -337,7 +337,7 @@ developer_cli_helpers=$DEVELOPER_CLI_HELPERS
 
 [nadia]
 system_name=Latticra Nadia
-stage=7-guarded-tool-authority-preflight
+stage=8-prompt-evaluation-contract
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -390,6 +390,22 @@ requires_runtime_boundary_gate=1
 requires_seal_receipt=1
 requires_protective_safety_boundary=1
 authority_transition_allowed=0
+prompt_evaluation_contract_stage=8-prompt-evaluation-contract
+prompt_evaluation_contract_command=scripts/nadia-prompt-evaluation-contract.sh
+installed_prompt_evaluation_contract_command=latticra-nadia prompt-contract
+prompt_contract_status=contract_only
+prompt_evaluation_stage=contract-only
+prompt_materialized=0
+prompt_text_materialized=0
+prompt_evaluation_authority=0
+prompt_receipt_required=1
+refusal_policy_required=1
+protective_safety_required=1
+tool_preflight_required=1
+runtime_profile_required=1
+model_registry_review_required=1
+operator_review_required=1
+contract_promotion_allowed=0
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -586,12 +602,13 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/prompt-plans" \
     "$PREFIX/share/latticra/nadia/mode-validations" \
     "$PREFIX/share/latticra/nadia/protective-safety" \
-    "$PREFIX/share/latticra/nadia/tool-preflights"
+    "$PREFIX/share/latticra/nadia/tool-preflights" \
+    "$PREFIX/share/latticra/nadia/prompt-contracts"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia"
-stage = "7-guarded-tool-authority-preflight"
-mode = "offline-tool-preflight"
+stage = "8-prompt-evaluation-contract"
+mode = "offline-prompt-contract"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -638,6 +655,21 @@ requires_runtime_boundary_gate = true
 requires_seal_receipt = true
 requires_protective_safety_boundary = true
 authority_transition_allowed = false
+prompt_evaluation_contract_stage = "8-prompt-evaluation-contract"
+prompt_evaluation_contract_command = "scripts/nadia-prompt-evaluation-contract.sh"
+prompt_contract_status = "contract_only"
+prompt_evaluation_stage = "contract-only"
+prompt_materialized = false
+prompt_text_materialized = false
+prompt_evaluation_authority = false
+prompt_receipt_required = true
+refusal_policy_required = true
+protective_safety_required = true
+tool_preflight_required = true
+runtime_profile_required = true
+model_registry_review_required = true
+operator_review_required = true
+contract_promotion_allowed = false
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -652,11 +684,11 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-7 report-only tool-preflight metadata lane.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-8 prompt-evaluation contract metadata lane.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, model-registry, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, and report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight. It does not provide sexual user functionality, evaluate prompts, install model weights, run inference, execute tools, use the network, train or distill a model, or mutate source.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, and prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract. It does not provide sexual user functionality, materialize or evaluate prompts, install model weights, run inference, execute tools, use the network, train or distill a model, or mutate source.
 NADIAREADME
 fi
 
@@ -804,8 +836,8 @@ case "\${1:-status}" in
     echo
     echo "name=Nadia"
     echo "system_name=Latticra Nadia"
-    echo "stage=7-guarded-tool-authority-preflight"
-    echo "mode=offline-tool-preflight"
+    echo "stage=8-prompt-evaluation-contract"
+    echo "mode=offline-prompt-contract"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "context_packs=\$NADIA_DIR/context-packs"
@@ -816,6 +848,7 @@ case "\${1:-status}" in
     echo "mode_validations=\$NADIA_DIR/mode-validations"
     echo "protective_safety=\$NADIA_DIR/protective-safety"
     echo "tool_preflights=\$NADIA_DIR/tool-preflights"
+    echo "prompt_contracts=\$NADIA_DIR/prompt-contracts"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "prompt_plan_command=latticra-nadia prompt-plan"
@@ -854,6 +887,21 @@ case "\${1:-status}" in
     echo "requires_seal_receipt=1"
     echo "requires_protective_safety_boundary=1"
     echo "authority_transition_allowed=0"
+    echo "prompt_evaluation_contract_stage=8-prompt-evaluation-contract"
+    echo "prompt_evaluation_contract_command=latticra-nadia prompt-contract"
+    echo "prompt_contract_status=contract_only"
+    echo "prompt_evaluation_stage=contract-only"
+    echo "prompt_materialized=0"
+    echo "prompt_text_materialized=0"
+    echo "prompt_evaluation_authority=0"
+    echo "prompt_receipt_required=1"
+    echo "refusal_policy_required=1"
+    echo "protective_safety_required=1"
+    echo "tool_preflight_required=1"
+    echo "runtime_profile_required=1"
+    echo "model_registry_review_required=1"
+    echo "operator_review_required=1"
+    echo "contract_promotion_allowed=0"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -968,11 +1016,25 @@ case "\${1:-status}" in
       --protective-safety "\$NADIA_DIR/protective-safety/latest-protective-safety.txt" \
       --output "\$NADIA_DIR/tool-preflights"
     ;;
+  prompt-contract|prompt-evaluation-contract|evaluation-contract)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-prompt-evaluation-contract.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia prompt-evaluation contract script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --tool-preflight "\$NADIA_DIR/tool-preflights/latest-tool-preflight.txt" \
+      --output "\$NADIA_DIR/prompt-contracts"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|path}" >&2
     exit 64
     ;;
 esac

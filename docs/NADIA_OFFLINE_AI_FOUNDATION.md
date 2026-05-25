@@ -297,7 +297,42 @@ See [`NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md`](NADIA_GUARDED_TOOL_AUTHORITY_STA
 
 ### Stage-8: Prompt Evaluation Contract
 
-Only after the context, runtime profile, prompt plan, mode validation, productivity ledger, protective safety boundary, and tool preflight gates mature, consider a prompt-evaluation contract. The default remains no prompt evaluation, no inference, no tool execution, no source mutation, and no sexual user functionality.
+Define the contract required before any future prompt evaluation. Stage-8 can verify Stage-7 tool preflight evidence and write receipt fields, but it cannot materialize or evaluate prompts.
+
+```text
+nadia_stage_8_prompt_evaluation_contract_present=1
+prompt_evaluation_contract_command=scripts/nadia-prompt-evaluation-contract.sh
+installed_prompt_evaluation_contract_command=latticra-nadia prompt-contract
+requires_tool_preflight=1
+prompt_evaluation_stage=contract-only
+prompt_contract_status=contract_only
+prompt_materialized=0
+prompt_text_materialized=0
+prompt_evaluation_authority=0
+prompt_evaluated=0
+prompt_receipt_required=1
+refusal_policy_required=1
+protective_safety_required=1
+tool_preflight_required=1
+runtime_profile_required=1
+model_registry_review_required=1
+operator_review_required=1
+contract_promotion_allowed=0
+sexual_content_generation=0
+sexual_request_refusal=always
+manipulation_resistance=required
+tool_execution_authority=0
+tool_execution_performed=0
+model_runtime_invoked=0
+inference_performed=0
+source_mutation_authority=0
+```
+
+See [`NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md`](NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md).
+
+### Stage-9: Local Model Registry Contract
+
+Only after prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a local model-registry contract. The default remains no model weights installed, no inference, no prompt evaluation, no tool execution, no source mutation, and no sexual user functionality.
 
 ## Non-Claims
 
@@ -316,7 +351,7 @@ Stage-0 Nadia is not:
 
 ## Promotion Gate
 
-Before Stage-8 starts, Latticra should keep these guards passing:
+Before Stage-9 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -327,6 +362,7 @@ sh scripts/test-nadia-systems-engineering-mode-stage-4.sh
 sh scripts/test-nadia-productivity-loop-stage-5.sh
 sh scripts/test-nadia-protective-safety-boundary-stage-6.sh
 sh scripts/test-nadia-guarded-tool-authority-stage-7.sh
+sh scripts/test-nadia-prompt-evaluation-contract-stage-8.sh
 ```
 
-Before prompt evaluation starts, a separate prompt-evaluation contract must exist and name refusal behavior, model-runtime invocation boundaries, prompt materialization, tool-denial behavior, receipt fields, and non-claims.
+Before a local model registry starts, a separate model-registry contract must exist and name local model metadata, provenance fields, review gates, refusal boundary inheritance, runtime invocation boundaries, and non-claims.

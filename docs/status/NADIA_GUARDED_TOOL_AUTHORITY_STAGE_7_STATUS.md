@@ -73,4 +73,4 @@ nadia_guarded_tool_authority_stage_7: ok
 
 ## Next Stage
 
-Stage-8 should define prompt-evaluation contracts only after the tool preflight, protective-safety boundary, runtime-profile boundary, and local context evidence are all present and explicitly non-executing.
+Stage-8 now defines prompt-evaluation contracts after the tool preflight, protective-safety boundary, runtime-profile boundary, and local context evidence are all present and explicitly non-executing.
