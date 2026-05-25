@@ -26,6 +26,7 @@ require_file docs/LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md
 require_file docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md
 require_file docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md
 require_file docs/status/SEAL_SIGNING_AUTHORIZATION_STATUS.md
+require_file docs/LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md
 require_file include/latticra/seal_signature_request.h
 require_file include/latticra/seal_signing_authorization.h
 require_file src/seal_signature_request.c
@@ -37,6 +38,7 @@ require_file scripts/test-latticra-seal-signature-request.sh
 require_file scripts/test-latticra-seal-signing-authorization-contract.sh
 require_file scripts/test-latticra-seal-signing-authorization.sh
 require_file scripts/test-latticra-seal-signing-authorization-status.sh
+require_file scripts/test-latticra-seal-signer-handoff-contract.sh
 require_file docs/LATTICRA_SEAL_REPORT_ENVELOPE_IMPLEMENTATION.md
 require_file scripts/test-latticra-seal-report-envelope.sh
 require_file README.md
@@ -60,6 +62,7 @@ require_contains 'seal_signing_authorization_source_present=1' "$status_file"
 require_contains 'seal_signing_authorization_invariant_test_present=1' "$status_file"
 require_contains 'seal_signing_authorization_runner_present=1' "$status_file"
 require_contains 'seal_signing_authorization_status_present=1' "$status_file"
+require_contains 'seal_signer_handoff_contract_present=1' "$status_file"
 require_contains 'seal_report_envelope_implementation_present=1' "$status_file"
 require_contains 'seal_report_envelope_runner_present=1' "$status_file"
 require_contains 'signature_request_profile=latticra-seal-signature-request/0.1' "$status_file"
@@ -75,7 +78,7 @@ require_contains 'host_write_performed=0' "$status_file"
 require_contains 'network_performed=0' "$status_file"
 require_contains 'mode=metadata-only' "$status_file"
 require_contains 'status=signature-request-metadata' "$status_file"
-require_contains 'signer-handoff contract planning' "$status_file"
+require_contains 'signer handoff metadata implementation' "$status_file"
 
 require_contains 'SEAL_SIGNATURE_REQUEST_STATUS.md' README.md
 require_contains 'seal_signature_request_status_present=1' README.md

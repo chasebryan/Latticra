@@ -260,7 +260,7 @@ signing authorization metadata implementation
 
 It does not permit cryptographic signing, signature verification, private-key handling, key generation, trust-store behavior, revocation lookup, runtime handoff execution, effect execution, capability enforcement, runtime authority, host behavior, network behavior, object sealing, or kernel behavior.
 
-After signing authorization metadata and its status/public-entry checkpoint exist, the next valid planning slice is a signer-handoff contract that still must not add signing without a separate implementation contract, key-handling contract, and guards.
+After signing authorization metadata, its status/public-entry checkpoint, and the signer handoff contract exist, the next valid slice is signer handoff metadata implementation. That future slice still must not add signing without a separate implementation contract, key-handling contract, and guards.
 
 ## Validation
 
