@@ -72,4 +72,4 @@ nadia_prompt_evaluation_contract_stage_8: ok
 
 ## Next Stage
 
-Stage-9 should define a local model-registry contract only after prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are all present and explicitly non-executing.
+Stage-9 now defines a local model-registry contract after prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are all present and explicitly non-executing.

@@ -332,7 +332,49 @@ See [`NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md`](NADIA_PROMPT_EVALUATION_CONT
 
 ### Stage-9: Local Model Registry Contract
 
-Only after prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a local model-registry contract. The default remains no model weights installed, no inference, no prompt evaluation, no tool execution, no source mutation, and no sexual user functionality.
+Record local model-candidate metadata after prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-9 can record candidate labels, runtime/profile linkage, provenance labels, license review labels, context budget, and quantization metadata, but it cannot select, install, load, inspect, benchmark, or run a model.
+
+```text
+nadia_stage_9_local_model_registry_contract_present=1
+model_registry_contract_command=scripts/nadia-local-model-registry-contract.sh
+installed_model_registry_contract_command=latticra-nadia model-registry
+requires_prompt_contract=1
+requires_runtime_profile=1
+local_model_registry_stage=contract-only
+registry_contract_status=metadata_only
+model_registry_authority=0
+candidate_recorded=1
+candidate_review_status=operator_review_required
+candidate_usable_for_inference=0
+candidate_selected_for_runtime=0
+model_selection_authority=0
+model_install_authority=0
+model_download_authority=0
+model_copy_authority=0
+model_load_authority=0
+model_weight_inspection_authority=0
+registry_promotion_allowed=0
+prompt_materialized=0
+prompt_evaluation_authority=0
+prompt_evaluated=0
+model_runtime_invoked=0
+inference_performed=0
+model_weights_installed=0
+model_weights_loaded=0
+model_weights_downloaded=0
+tool_execution_authority=0
+source_mutation_authority=0
+network_authority=0
+sexual_content_generation=0
+sexual_request_refusal=always
+manipulation_resistance=required
+```
+
+See [`NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md`](NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md).
+
+### Stage-10: Inference Readiness Contract
+
+Only after local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider an inference readiness contract. The default remains no model weights installed, no model weights loaded, no inference, no prompt evaluation, no tool execution, no source mutation, no network authority, and no sexual user functionality.
 
 ## Non-Claims
 
@@ -351,7 +393,7 @@ Stage-0 Nadia is not:
 
 ## Promotion Gate
 
-Before Stage-9 starts, Latticra should keep these guards passing:
+Before Stage-10 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -363,6 +405,7 @@ sh scripts/test-nadia-productivity-loop-stage-5.sh
 sh scripts/test-nadia-protective-safety-boundary-stage-6.sh
 sh scripts/test-nadia-guarded-tool-authority-stage-7.sh
 sh scripts/test-nadia-prompt-evaluation-contract-stage-8.sh
+sh scripts/test-nadia-local-model-registry-contract-stage-9.sh
 ```
 
-Before a local model registry starts, a separate model-registry contract must exist and name local model metadata, provenance fields, review gates, refusal boundary inheritance, runtime invocation boundaries, and non-claims.
+Before inference readiness starts, a separate inference-readiness contract must exist and name prompt receipt fields, model-registry evidence, runtime invocation boundaries, refusal boundary inheritance, operator review gates, and non-claims.

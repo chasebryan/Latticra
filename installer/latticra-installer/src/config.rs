@@ -408,7 +408,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out);
     let _ = writeln!(out, "[nadia]");
     let _ = writeln!(out, "system_name=Latticra Nadia");
-    let _ = writeln!(out, "stage=8-prompt-evaluation-contract");
+    let _ = writeln!(out, "stage=9-local-model-registry-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -535,6 +535,33 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "model_registry_review_required=1");
     let _ = writeln!(out, "operator_review_required=1");
     let _ = writeln!(out, "contract_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "local_model_registry_contract_stage=9-local-model-registry-contract"
+    );
+    let _ = writeln!(
+        out,
+        "model_registry_contract_command=scripts/nadia-local-model-registry-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_model_registry_contract_command=latticra-nadia model-registry"
+    );
+    let _ = writeln!(out, "local_model_registry_stage=contract-only");
+    let _ = writeln!(out, "registry_contract_status=metadata_only");
+    let _ = writeln!(out, "model_registry_authority=0");
+    let _ = writeln!(out, "requires_prompt_contract=1");
+    let _ = writeln!(out, "candidate_review_status=operator_review_required");
+    let _ = writeln!(out, "candidate_usable_for_inference=0");
+    let _ = writeln!(out, "candidate_selected_for_runtime=0");
+    let _ = writeln!(out, "model_selection_authority=0");
+    let _ = writeln!(out, "model_install_authority=0");
+    let _ = writeln!(out, "model_download_authority=0");
+    let _ = writeln!(out, "model_copy_authority=0");
+    let _ = writeln!(out, "model_load_authority=0");
+    let _ = writeln!(out, "model_benchmark_authority=0");
+    let _ = writeln!(out, "model_weight_inspection_authority=0");
+    let _ = writeln!(out, "registry_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");
@@ -546,6 +573,10 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "inference_performed=0");
     let _ = writeln!(out, "prompt_evaluated=0");
     let _ = writeln!(out, "model_weights_installed=0");
+    let _ = writeln!(out, "model_weights_loaded=0");
+    let _ = writeln!(out, "model_weights_copied=0");
+    let _ = writeln!(out, "model_weights_downloaded=0");
+    let _ = writeln!(out, "model_weights_inspected=0");
     let _ = writeln!(out, "tool_execution_authority=0");
     let _ = writeln!(out, "source_mutation_authority=0");
     let _ = writeln!(out);

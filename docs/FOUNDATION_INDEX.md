@@ -38,6 +38,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md`](NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md) — Stage-6 protective-safety boundary for Nadia non-sexual-use, anti-manipulation, and namesake-cause awareness restrictions.
 - [`NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md`](NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md) — Stage-7 report-only guarded tool-authority preflight for Nadia before any tool execution.
 - [`NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md`](NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md) — Stage-8 prompt-evaluation contract for Nadia before prompt materialization, prompt evaluation, inference, or tool execution.
+- [`NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md`](NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md) — Stage-9 local model-registry contract for Nadia before model selection, model installation, prompt evaluation, inference, or tool execution.
 - [`SELF_UPDATE_MODEL.md`](SELF_UPDATE_MODEL.md) — staged signed update and rollback design.
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
@@ -61,6 +62,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md`](status/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md) — status record for Nadia Stage-6 protective-safety boundary before prompt evaluation, model runtime, or tool authority.
 - [`status/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7_STATUS.md`](status/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7_STATUS.md) — status record for Nadia Stage-7 guarded tool-authority preflight before any tool execution.
 - [`status/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8_STATUS.md`](status/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8_STATUS.md) — status record for Nadia Stage-8 prompt-evaluation contract before prompt materialization, prompt evaluation, inference, or tool execution.
+- [`status/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md`](status/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md) — status record for Nadia Stage-9 local model-registry contract before model selection, model installation, prompt evaluation, inference, or tool execution.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
@@ -249,6 +251,7 @@ Nadia productivity loop Stage-5 + guardrails
 Nadia protective safety boundary Stage-6 + guardrails
 Nadia guarded tool authority Stage-7 + guardrails
 Nadia prompt evaluation contract Stage-8 + guardrails
+Nadia local model registry contract Stage-9 + guardrails
 Latticra Seal verification policy status/public-entry alignment + guardrails
 Latticra Seal key parsing status/public-entry alignment + guardrails
 Latticra Seal bounded no-effect key parsing metadata + invariants

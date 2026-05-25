@@ -31,6 +31,7 @@ non-claims
 - [`NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md`](NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md) - Nadia Stage-6 protective-safety boundary status for non-sexual-use and anti-manipulation restrictions.
 - [`NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7_STATUS.md`](NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7_STATUS.md) - Nadia Stage-7 guarded tool-authority status for report-only preflight after protective-safety validation.
 - [`NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8_STATUS.md`](NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8_STATUS.md) - Nadia Stage-8 prompt-evaluation contract status before prompt materialization, prompt evaluation, inference, or tool execution.
+- [`NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md`](NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md) - Nadia Stage-9 local model-registry contract status before model selection, model installation, prompt evaluation, inference, or tool execution.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
 - [`SEAL_VERIFICATION_RECEIPT_STATUS.md`](SEAL_VERIFICATION_RECEIPT_STATUS.md) — Latticra Seal verification receipt metadata status and public-entry checkpoint.
 - [`SEAL_VERIFICATION_POLICY_STATUS.md`](SEAL_VERIFICATION_POLICY_STATUS.md) — Latticra Seal verification policy metadata status and public-entry checkpoint.
