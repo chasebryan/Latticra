@@ -37,6 +37,8 @@ require_file tests/seal_capability_gate_invariants.c
 require_file scripts/test-latticra-seal-capability-gate-contract.sh
 require_file scripts/test-latticra-seal-capability-gate.sh
 require_file scripts/test-latticra-seal-capability-gate-status.sh
+require_file docs/status/SEAL_EFFECT_DECISION_STATUS.md
+require_file scripts/test-latticra-seal-effect-decision-status.sh
 require_file docs/LATTICRA_SEAL_VERIFICATION_POLICY_CONTRACT.md
 require_file docs/LATTICRA_SEAL_VERIFICATION_POLICY_IMPLEMENTATION.md
 require_file docs/status/SEAL_VERIFICATION_POLICY_STATUS.md
@@ -68,6 +70,7 @@ require_contains 'seal_verification_receipt_status_present=1' "$status_file"
 require_contains 'seal_capability_gate_contract_present=1' "$status_file"
 require_contains 'seal_capability_gate_implementation_present=1' "$status_file"
 require_contains 'seal_capability_gate_status_present=1' "$status_file"
+require_contains 'seal_effect_decision_status_present=1' "$status_file"
 require_contains 'seal_verification_policy_contract_present=1' "$status_file"
 require_contains 'seal_verification_policy_implementation_present=1' "$status_file"
 require_contains 'seal_verification_policy_status_present=1' "$status_file"
@@ -114,7 +117,8 @@ require_contains 'seal verification receipt contract: ok' "$status_file"
 require_contains 'seal verification receipt invariants: ok' "$status_file"
 require_contains 'seal verification receipt status: ok' "$status_file"
 require_contains 'seal capability gate status: ok' "$status_file"
-require_contains 'effect decision status/public-entry alignment' "$status_file"
+require_contains 'seal effect decision status: ok' "$status_file"
+require_contains 'runtime handoff status/public-entry alignment' "$status_file"
 
 require_contains 'SEAL_VERIFICATION_RECEIPT_STATUS.md' README.md
 require_contains 'LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md' README.md
@@ -124,30 +128,42 @@ require_contains 'latticra_seal_verification_receipt_status_present=1' README.md
 require_contains 'seal_verification_receipt_metadata_present=1' README.md
 require_contains 'seal_verification_receipt_status_present=1' README.md
 require_contains 'SEAL_CAPABILITY_GATE_STATUS.md' README.md
+require_contains 'SEAL_EFFECT_DECISION_STATUS.md' README.md
 require_contains 'seal_capability_gate_status_present=1' README.md
+require_contains 'seal_effect_decision_status_present=1' README.md
 require_contains 'Seal verification receipt status/public-entry alignment' STATUS.md
 require_contains 'seal_verification_receipt_metadata_present=1' STATUS.md
 require_contains 'seal_verification_receipt_status_present=1' STATUS.md
 require_contains 'Seal capability gate status/public-entry alignment' STATUS.md
+require_contains 'Seal effect decision status/public-entry alignment' STATUS.md
 require_contains 'seal_capability_gate_status_present=1' STATUS.md
+require_contains 'seal_effect_decision_status_present=1' STATUS.md
 require_contains 'SEAL_VERIFICATION_RECEIPT_STATUS.md' docs/status/README.md
 require_contains 'seal_verification_receipt_metadata_present=1' docs/status/README.md
 require_contains 'seal_verification_receipt_status_present=1' docs/status/README.md
 require_contains 'SEAL_CAPABILITY_GATE_STATUS.md' docs/status/README.md
+require_contains 'SEAL_EFFECT_DECISION_STATUS.md' docs/status/README.md
 require_contains 'seal_capability_gate_status_present=1' docs/status/README.md
+require_contains 'seal_effect_decision_status_present=1' docs/status/README.md
 require_contains 'Latticra Seal verification receipt status/public-entry alignment' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal capability gate status/public-entry alignment' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal effect decision status/public-entry alignment' docs/status/CURRENT_STATUS.md
 require_contains 'SEAL_VERIFICATION_RECEIPT_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'SEAL_CAPABILITY_GATE_STATUS.md' docs/FOUNDATION_INDEX.md
+require_contains 'SEAL_EFFECT_DECISION_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_CAPABILITY_GATE_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
+require_contains 'LATTICRA_SEAL_EFFECT_DECISION_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal verification receipt status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Seal capability gate status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Seal effect decision status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Seal runtime handoff status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal verification receipt status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Seal capability gate status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Seal effect decision status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Seal runtime handoff status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md' docs/project_notes/README.md
 require_contains 'docs/status/SEAL_CAPABILITY_GATE_STATUS.md' docs/project_notes/README.md
+require_contains 'docs/status/SEAL_EFFECT_DECISION_STATUS.md' docs/project_notes/README.md
 
 printf 'seal verification receipt status: ok\n'

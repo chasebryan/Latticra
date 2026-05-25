@@ -10,10 +10,10 @@ Lat should mature as a contract and declaration language, not as an accidental e
 This analysis defines the next foundation layer:
 
 ```text
-Lat source -> bounded parser -> Lat AST metadata -> semantic validation -> future Lat model -> future LIR lowering
+Lat source -> bounded parser -> Lat AST metadata -> semantic validation -> normalized Lat model -> LIR metadata lowering
 ```
 
-Only the first three phases currently exist in code. This proposal adds the semantic validation phase while preserving the no-effect boundary.
+The parser, semantic validation, normalized model, and Lat-to-LIR metadata lowering phases now exist in bounded no-effect form. This analysis remains the foundation record for the semantic and normalization direction.
 
 ## Current foundation summary
 
@@ -108,23 +108,23 @@ It owns:
 
 ### Phase 3: Lat model normalization
 
-Future role:
+Current role:
 
 ```text
-semantic result -> normalized Lat module model
+parse result + semantic result -> normalized Lat module model
 ```
 
-The normalized model should eventually carry explicit tables for states, policies, transitions, assertions, and effect declarations. It should remain no-effect.
+The normalized model carries explicit declaration and clause index tables for states, policies, transitions, assertions, and effect declarations. It remains no-effect and does not read source bytes.
 
 ### Phase 4: Lat-to-LIR lowering
 
-Future role:
+Current role:
 
 ```text
-semantic Lat module -> bounded LIR shape
+semantic Lat module metadata -> bounded LIR shape
 ```
 
-This must wait for a separate Lat-to-LIR lowering contract.
+The current implementation remains metadata-only and no-effect. It does not execute Lat or LIR.
 
 ### Phase 5: Effect-gated runtime interpretation
 
