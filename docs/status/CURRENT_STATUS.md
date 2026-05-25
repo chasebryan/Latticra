@@ -3,6 +3,7 @@
 Status: public status record
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal future key parsing implementation contract note: 2026-05-25 CDT
 Latest Seal public-key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal public-key parsing implementation note: 2026-05-25 CDT
 Latest Seal public-key parsing contract note: 2026-05-25 CDT
@@ -124,6 +125,7 @@ The repository currently emphasizes:
 - Runtime boundary policy matrix refinement;
 - Runtime boundary domain matrix refinement;
 - Runtime boundary domain matrix report integration;
+- Latticra Seal future key parsing implementation contract;
 - Latticra Seal public-key parsing status/public-entry alignment;
 - Latticra Seal public-key parsing metadata implementation;
 - Latticra Seal public-key parsing boundary contract;
@@ -297,6 +299,8 @@ The Latticra Seal public-key parsing implementation adds bounded C metadata for 
 
 The Latticra Seal public-key parsing status record makes the metadata-only implementation visible from public entry points while preserving no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store loading, no revocation lookup, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
 
+The Latticra Seal future key parsing implementation contract defines the next planning boundary after public-key parsing status readiness while preserving no public-key parsing implementation, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store loading, no revocation lookup, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
+
 The project notes are now aligned across current direction, upcoming work, and project-notes index surfaces.
 
 The current status and announcement consistency review confirms the public status and announcement surfaces now point to the same next review lane.
@@ -373,6 +377,7 @@ Runtime boundary domain matrix report integration
 Latticra Seal signing operation status/public-entry alignment
 Latticra Seal signing operation metadata implementation
 Latticra Seal signing operation contract
+Latticra Seal future key parsing implementation contract
 Latticra Seal signer invocation status/public-entry alignment
 Latticra Seal signer invocation metadata implementation
 Latticra Seal signer invocation contract
@@ -481,7 +486,7 @@ This is a mission direction, not a current security guarantee.
 Latest completed contract slice:
 
 ```text
-Latticra Seal public-key parsing boundary contract
+Latticra Seal future key parsing implementation contract
 ```
 
 ## Latest completed status/public-entry slice
@@ -513,7 +518,7 @@ Latticra Seal key-material metadata implementation
 Previous contract slice:
 
 ```text
-Latticra Seal key-material boundary contract
+Latticra Seal public-key parsing boundary contract
 ```
 
 ## Previous status/public-entry slice
@@ -521,7 +526,7 @@ Latticra Seal key-material boundary contract
 Previous status/public-entry slice:
 
 ```text
-Latticra Seal key-handling status/public-entry alignment
+Latticra Seal key-material status/public-entry alignment
 ```
 
 ## Previous implementation slice
@@ -593,7 +598,7 @@ Latticra Seal signer handoff metadata implementation
 Recommended next work:
 
 ```text
-Seal future key parsing implementation contract, with no public-key parsing implementation, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
+Seal future key parsing implementation plan, with no public-key parsing implementation, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 After that:

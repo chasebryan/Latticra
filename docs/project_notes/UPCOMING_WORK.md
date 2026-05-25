@@ -21,6 +21,18 @@ Purpose completed:
 define exact public API, namespace, file paths, C++ standard, compiler flags, exception policy, RTTI policy, allocation policy, ownership/lifetime rules, result labels, C ABI boundaries, validators, audit reports, and tests before any C++ authority-layer code
 ```
 
+## Latest completed contract slice
+
+```text
+Latticra Seal future key parsing implementation contract
+```
+
+Purpose completed:
+
+```text
+define the next future key parsing implementation contract after public-key parsing status readiness while preserving no public-key parsing implementation, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority
+```
+
 ## Latest completed status/public-entry slice
 
 ```text
@@ -45,7 +57,7 @@ Purpose completed:
 implement metadata-only public-key parsing classification after key-material status readiness while preserving no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store loading, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority
 ```
 
-## Latest completed contract slice
+## Previous contract slice
 
 ```text
 Latticra Seal public-key parsing boundary contract
@@ -247,18 +259,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Seal future key parsing implementation contract, with no public-key parsing implementation, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
+Seal future key parsing implementation plan, with no public-key parsing implementation, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 Purpose:
 
 ```text
-define the next future key parsing implementation contract after public-key parsing status readiness while preserving no public-key parsing implementation, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+define the next future key parsing implementation plan after the future key parsing implementation contract while preserving no public-key parsing implementation, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Seal future key parsing implementation contract.
+1. Seal future key parsing implementation plan.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.

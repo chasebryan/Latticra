@@ -93,7 +93,7 @@ require_contains 'host_write_performed=0' "$status_file"
 require_contains 'network_performed=0' "$status_file"
 require_contains 'mode=metadata-only' "$status_file"
 require_contains 'status=key-handling-metadata' "$status_file"
-require_contains 'future key parsing implementation contract' "$status_file"
+require_contains 'future key parsing implementation plan' "$status_file"
 
 require_contains 'SEAL_KEY_HANDLING_STATUS.md' README.md
 require_contains 'LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md' README.md
@@ -117,6 +117,6 @@ require_contains 'SEAL_KEY_HANDLING_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal key-handling status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal key-material boundary contract' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal future key parsing implementation contract' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Seal future key parsing implementation plan' docs/project_notes/UPCOMING_WORK.md
 
 printf 'seal key-handling status: ok\n'

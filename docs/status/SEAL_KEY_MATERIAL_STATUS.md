@@ -137,6 +137,6 @@ It does not add public-key parsing, key material loading, private-key handling, 
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is future key parsing implementation contract or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is future key parsing implementation plan or another narrow status/index alignment follow-up.
 
 That future slice must not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

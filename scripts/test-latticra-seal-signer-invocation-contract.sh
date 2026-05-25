@@ -117,6 +117,6 @@ require_contains 'Latticra Seal signer invocation contract' docs/project_notes/C
 require_contains 'Latticra Seal signer invocation metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal signer invocation status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal signing operation contract' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal future key parsing implementation contract' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Seal future key parsing implementation plan' docs/project_notes/UPCOMING_WORK.md
 
 printf 'seal signer invocation contract: ok\n'

@@ -314,7 +314,7 @@ key-handling metadata implementation
 
 It does not permit cryptographic signing, signature verification, signer invocation behavior, public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, runtime handoff execution, effect execution, capability enforcement, runtime authority, host behavior, network behavior, object sealing, or kernel behavior.
 
-After key-handling metadata, its status/public-entry checkpoint, the key-material boundary contract, and key-material metadata implementation exist and are guarded, the next valid planning slice is future key parsing implementation contract that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
+After key-handling metadata, its status/public-entry checkpoint, the key-material boundary contract, and key-material metadata implementation exist and are guarded, the next valid planning slice is future key parsing implementation plan that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
 
 ## Validation
 

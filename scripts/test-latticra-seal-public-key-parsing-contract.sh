@@ -76,7 +76,7 @@ require_contains 'runtime_authority_granted=0' "$contract"
 require_contains 'host_read_performed=0' "$contract"
 require_contains 'host_write_performed=0' "$contract"
 require_contains 'network_performed=0' "$contract"
-require_contains 'future key parsing implementation contract' "$contract"
+require_contains 'future key parsing implementation plan' "$contract"
 require_contains 'Status: initial public-key parsing metadata implementation' docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md
 require_contains 'latticra_seal_public_key_parsing_t' docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md
 require_contains 'latticra_seal_public_key_parsing_from_key_material' docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md
@@ -127,6 +127,6 @@ require_contains 'SEAL_PUBLIC_KEY_PARSING_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal public-key parsing boundary contract' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal public-key parsing metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal public-key parsing status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal future key parsing implementation contract' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Seal future key parsing implementation plan' docs/project_notes/UPCOMING_WORK.md
 
 printf 'seal public-key parsing contract: ok\n'

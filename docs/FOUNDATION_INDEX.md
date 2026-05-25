@@ -111,6 +111,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_PUBLIC_KEY_PARSING_CONTRACT.md`](LATTICRA_SEAL_PUBLIC_KEY_PARSING_CONTRACT.md) — metadata-only public-key parsing boundary after key-material status readiness.
 - [`LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md`](LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md) — first no-effect public-key parsing metadata implementation.
 - [`status/SEAL_PUBLIC_KEY_PARSING_STATUS.md`](status/SEAL_PUBLIC_KEY_PARSING_STATUS.md) — status/public-entry checkpoint for metadata-only Seal public-key parsing implementation.
+- [`LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_CONTRACT.md`](LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_CONTRACT.md) — future key parsing implementation contract after public-key parsing status readiness.
 - [`status/SEAL_SIGNER_INVOCATION_STATUS.md`](status/SEAL_SIGNER_INVOCATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer invocation implementation.
 - [`status/SEAL_SIGNER_HANDOFF_STATUS.md`](status/SEAL_SIGNER_HANDOFF_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer handoff implementation.
 - [`status/SEAL_SIGNING_AUTHORIZATION_STATUS.md`](status/SEAL_SIGNING_AUTHORIZATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signing authorization implementation.
@@ -211,6 +212,7 @@ Latticra Seal signer invocation status/public-entry alignment + guardrails
 Latticra Seal signing operation contract + guardrails
 Latticra Seal signing operation metadata + invariants
 Latticra Seal signing operation status/public-entry alignment + guardrails
+Latticra Seal future key parsing implementation contract + guardrails
 Latticra Seal public-key parsing status/public-entry alignment + guardrails
 L-UI static report fixture + rail invariants
 L-UI source grammar draft + fixture guardrails
@@ -235,7 +237,7 @@ L-UI rendering detailed report refinement + invariants
 The next status review target should be:
 
 ```text
-Seal future key parsing implementation contract, with no public-key parsing implementation, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
+Seal future key parsing implementation plan, with no public-key parsing implementation, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 Completion-estimate review should be skipped unless a future slice changes capability posture, implementation scope, or public readiness rather than only aligning documentation/status surfaces.
