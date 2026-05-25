@@ -88,6 +88,9 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md`](RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md) — runtime-boundary policy matrix refinement implementation.
 - [`RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md`](RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md) — runtime-boundary domain matrix refinement record.
 - [`RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md`](RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md) — runtime-boundary domain matrix report integration record.
+- [`LATTICRA_SEAL_CONTRACT.md`](LATTICRA_SEAL_CONTRACT.md) — Latticra Seal evidence-boundary, capability-boundary, promotion-gate, and non-claim contract.
+- [`LATTICRA_SEAL_REPORT_ENVELOPE_CONTRACT.md`](LATTICRA_SEAL_REPORT_ENVELOPE_CONTRACT.md) — report envelope boundary after ready runtime handoff report metadata.
+- [`LATTICRA_SEAL_REPORT_ENVELOPE_IMPLEMENTATION.md`](LATTICRA_SEAL_REPORT_ENVELOPE_IMPLEMENTATION.md) — first no-effect sealed report-envelope metadata implementation.
 - [`L_UI_STATIC_REPORT.md`](L_UI_STATIC_REPORT.md) — terminal-facing L-UI static report fixture for Nucleus/state rails.
 - [`L_UI_SOURCE_GRAMMAR.md`](L_UI_SOURCE_GRAMMAR.md) — L-UI source grammar draft and `.lui` fixture guardrails.
 - [`L_UI_PARSER_DESIGN.md`](L_UI_PARSER_DESIGN.md) — parser design contract, error categories, no-effect constraints, and implementation gate.
@@ -168,6 +171,7 @@ Runtime boundary report refinement + invariants
 Runtime boundary policy matrix refinement + invariants
 Runtime boundary domain matrix refinement + invariants
 Runtime boundary domain matrix report integration + invariants
+Latticra Seal report envelope metadata + invariants
 L-UI static report fixture + rail invariants
 L-UI source grammar draft + fixture guardrails
 L-UI parser design contract + guardrails
@@ -191,7 +195,7 @@ L-UI rendering detailed report refinement + invariants
 The next status review target should be:
 
 ```text
-Completion estimate review only if capability posture changes
+Seal signature request contract planning, with completion estimate review only if capability posture changes
 ```
 
-That target should be skipped unless a future slice changes capability posture, implementation scope, or public readiness rather than only aligning documentation/status surfaces.
+Completion-estimate review should be skipped unless a future slice changes capability posture, implementation scope, or public readiness rather than only aligning documentation/status surfaces.

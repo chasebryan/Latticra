@@ -1,8 +1,9 @@
 # Latticra Status
 
 Status: public status shortcut
-Last updated: 2026-05-24 CDT
+Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal report envelope implementation note: 2026-05-25 CDT
 Latest Seal core evidence status surface note: 2026-05-22 02:24 CDT
 Latest Seal core evidence index alignment note: 2026-05-22 02:37 CDT
 Latest Seal core evidence public entrypoint alignment note: 2026-05-22 02:45 CDT
@@ -111,6 +112,7 @@ Latticra is the contract.
 ## Current milestone ledger
 
 ```text
+Seal report envelope metadata implementation
 Seal core evidence status surface
 Seal core evidence index alignment
 Seal core evidence public entrypoint alignment
@@ -189,22 +191,25 @@ Completion percentage review
 ## Current next step
 
 ```text
-Panel, Seal, and estimate review only when capability posture changes
+Seal signature request contract planning, with completion estimate review only if capability posture changes
 ```
 
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
 
-It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning.
+It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal metadata slice adds sealed report-envelope classification for ready runtime handoff reports without signing, handoff execution, host behavior, network behavior, or runtime authority.
 
 Current status fields:
 
 ```text
 seal_core_evidence_status_surface_present=1
+seal_report_envelope_metadata_present=1
+seal_report_envelope_ready_metadata_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1
+signature_performed=0
 runtime_authority_granted=0
 effect_performed=0
 host_read_performed=0

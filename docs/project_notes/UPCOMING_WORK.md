@@ -145,26 +145,27 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Completion estimate review only if capability posture changes
+Seal signature request contract planning, with completion estimate review only if capability posture changes
 ```
 
 Purpose:
 
 ```text
-review completion estimates only after a future slice changes capability posture, implementation scope, public readiness, or evidence level; skip if the change is documentation/status alignment only
+define the next Seal signature-request boundary after sealed report-envelope metadata while preserving no signing, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Completion estimate review only if capability posture changes.
-2. Continue small guarded report/status alignment only when drift appears.
-3. Authority status announcement only if public messaging changes.
-4. C++ authority expansion contract only if new authority behavior is proposed.
-5. Nucleus task execution refinement only after the next language representation review and a separate effect contract.
-6. Defensive threat model validation refinement.
-7. Runtime boundary domain matrix report status audit only if new status drift appears.
-8. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
-9. Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review.
+1. Seal signature request contract planning.
+2. Completion estimate review only if capability posture changes.
+3. Continue small guarded report/status alignment only when drift appears.
+4. Authority status announcement only if public messaging changes.
+5. C++ authority expansion contract only if new authority behavior is proposed.
+6. Nucleus task execution refinement only after the next language representation review and a separate effect contract.
+7. Defensive threat model validation refinement.
+8. Runtime boundary domain matrix report status audit only if new status drift appears.
+9. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
+10. Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review.
 
 ## Quality rules
 
@@ -194,6 +195,7 @@ consistent with no-new-announcement decisions unless capability posture changes
 - Keep Lat-specific LIR refinement no-effect and metadata-only.
 - Keep Lat pipeline diagnostic integration no-effect and metadata-only.
 - Keep Runtime boundary domain matrix report integration report-only and no-effect.
+- Keep Seal report envelope metadata no-effect and unsigned until a separate signature-request contract exists.
 - Do not update completion estimates after documentation/status-only alignment.
 - Do not add public announcement entries for documentation/status-only alignment.
 - Maintain professional public docs.

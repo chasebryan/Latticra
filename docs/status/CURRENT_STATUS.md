@@ -1,8 +1,9 @@
 # Latticra Current Status
 
 Status: public status record
-Last updated: 2026-05-24 CDT
+Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal report envelope implementation note: 2026-05-25 CDT
 Latest Lat-to-LIR lowering note: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
@@ -99,6 +100,7 @@ The repository currently emphasizes:
 - Runtime boundary policy matrix refinement;
 - Runtime boundary domain matrix refinement;
 - Runtime boundary domain matrix report integration;
+- Latticra Seal report envelope metadata implementation;
 - deterministic diagnostics;
 - source-span metadata;
 - semantic validation implementation;
@@ -197,6 +199,8 @@ The Runtime boundary domain matrix refinement adds a companion domain matrix eva
 
 The Runtime boundary domain matrix report integration adds deterministic report rendering for domain-matrix cell, domain label, domain flags, effect-allowed state, authority-available state, and evidence level.
 
+The Latticra Seal report envelope implementation adds bounded C metadata for classifying ready runtime handoff report metadata into sealed-report-only or sealed-evaluate-only envelope states while preserving no signing, no runtime handoff, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
+
 The project notes are now aligned across current direction, upcoming work, and project-notes index surfaces.
 
 The current status and announcement consistency review confirms the public status and announcement surfaces now point to the same next review lane.
@@ -270,6 +274,7 @@ Runtime boundary report refinement
 Runtime boundary policy matrix refinement
 Runtime boundary domain matrix refinement
 Runtime boundary domain matrix report integration
+Latticra Seal report envelope metadata implementation
 Defensive threat model contract
 L-UI parser implementation
 semantic validation contract
@@ -336,7 +341,7 @@ Latticra does not currently provide:
 
 - a kernel;
 - a bootable image;
-- an installer;
+- a production or daily-driver installer;
 - a production language runtime;
 - effect-performing runtime behavior;
 - command execution;
@@ -381,7 +386,7 @@ Runtime boundary refinement plan
 Latest completed implementation slice:
 
 ```text
-Project notes Nucleus announcement README status/index check
+Latticra Seal report envelope metadata implementation
 ```
 
 ## Previous implementation slice
@@ -389,7 +394,7 @@ Project notes Nucleus announcement README status/index check
 Previous implementation slice:
 
 ```text
-Nucleus report-only announcement README alignment
+Project notes Nucleus announcement README status/index check
 ```
 
 ## Earlier implementation slice
@@ -397,7 +402,7 @@ Nucleus report-only announcement README alignment
 Earlier implementation slice:
 
 ```text
-Nucleus report-only announcement review
+Nucleus report-only announcement README alignment
 ```
 
 ## Next recommended work
@@ -405,13 +410,13 @@ Nucleus report-only announcement review
 Recommended next work:
 
 ```text
-Panel, Seal, and estimate review only when capability posture changes
+Seal signature request contract planning, with no signing, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 After that:
 
 ```text
-Continue small guarded report/status alignment only when drift appears
+Completion estimate review only if capability posture changes; otherwise continue small guarded report/status alignment only when drift appears
 ```
 
 ## Update rule

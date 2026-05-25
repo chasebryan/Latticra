@@ -1,7 +1,7 @@
 # Latticra Status Index
 
 Status: active status index
-Last updated: 2026-05-24
+Last updated: 2026-05-25
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
 ## Purpose
@@ -70,11 +70,14 @@ The latest Latticra Seal core evidence status surface records:
 seal_core_evidence_report_present=1
 seal_core_evidence_public_status_present=1
 seal_core_evidence_status_surface_present=1
+seal_report_envelope_metadata_present=1
+seal_report_envelope_ready_metadata_present=1
 operator_visible_status_surface=1
 deterministic_local_report_path=1
 core_blocked_case_set_complete=1
 mcp_alignment_context=ai-era-tool-boundary-planning
 runtime_gate_report_only=1
+signature_performed=0
 runtime_authority_granted=0
 effect_performed=0
 host_read_performed=0
@@ -101,13 +104,13 @@ core_blocked_case_set_complete=1
 The careful current public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, and core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 The current next recommended Seal lane is:
 
 ```text
-Add public entry-point refresh for the completed Seal core evidence milestone
+Add a Seal signature request contract that still performs no signing
 ```
 
 ## Current Fedora VM CLI payload validation lane checkpoint
