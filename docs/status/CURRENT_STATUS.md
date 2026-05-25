@@ -3,6 +3,7 @@
 Status: public status record
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal signing operation implementation note: 2026-05-25 CDT
 Latest Seal signing operation contract note: 2026-05-25 CDT
 Latest Seal signer invocation status/public-entry note: 2026-05-25 CDT
 Latest Seal signer invocation implementation note: 2026-05-25 CDT
@@ -113,6 +114,7 @@ The repository currently emphasizes:
 - Runtime boundary policy matrix refinement;
 - Runtime boundary domain matrix refinement;
 - Runtime boundary domain matrix report integration;
+- Latticra Seal signing operation metadata implementation;
 - Latticra Seal signing operation contract;
 - Latticra Seal signer invocation status/public-entry alignment;
 - Latticra Seal signer invocation metadata implementation;
@@ -253,6 +255,8 @@ The Latticra Seal signer invocation status record makes the metadata-only implem
 
 The Latticra Seal signing operation contract defines the next metadata-only classification boundary after signer invocation readiness while preserving no signing, no verification, no signer invocation behavior, no private-key handling, no key generation, no trust-store loading, no revocation lookup, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
 
+The Latticra Seal signing operation implementation adds bounded C metadata for classifying ready signer invocation metadata as operation-metadata-only for a future signing operation path while preserving no signing, no verification, no signer invocation behavior, no private-key handling, no key generation, no trust-store loading, no revocation lookup, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
+
 The project notes are now aligned across current direction, upcoming work, and project-notes index surfaces.
 
 The current status and announcement consistency review confirms the public status and announcement surfaces now point to the same next review lane.
@@ -326,6 +330,7 @@ Runtime boundary report refinement
 Runtime boundary policy matrix refinement
 Runtime boundary domain matrix refinement
 Runtime boundary domain matrix report integration
+Latticra Seal signing operation metadata implementation
 Latticra Seal signing operation contract
 Latticra Seal signer invocation status/public-entry alignment
 Latticra Seal signer invocation metadata implementation
@@ -430,12 +435,12 @@ The long-term goal is to make unsafe behavior harder to hide and easier to inspe
 
 This is a mission direction, not a current security guarantee.
 
-## Latest completed contract slice
+## Latest completed implementation slice
 
-Latest completed contract slice:
+Latest completed implementation slice:
 
 ```text
-Latticra Seal signing operation contract
+Latticra Seal signing operation metadata implementation
 ```
 
 ## Latest completed planning slice
@@ -475,7 +480,7 @@ Latticra Seal signer handoff metadata implementation
 Recommended next work:
 
 ```text
-Signing operation metadata implementation, with no signing, verification, signer invocation behavior, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority
+Seal signing operation status/public-entry alignment, with no signing, verification, signer invocation behavior, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 After that:

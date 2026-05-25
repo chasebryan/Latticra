@@ -21,12 +21,17 @@ require_contains() {
 contract="docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md"
 
 require_file "$contract"
+require_file docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
 require_file docs/LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md
 require_file docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
 require_file docs/status/SEAL_SIGNER_INVOCATION_STATUS.md
+require_file include/latticra/seal_signing_operation.h
 require_file include/latticra/seal_signer_invocation.h
+require_file src/seal_signing_operation.c
 require_file src/seal_signer_invocation.c
+require_file tests/seal_signing_operation_invariants.c
 require_file tests/seal_signer_invocation_invariants.c
+require_file scripts/test-latticra-seal-signing-operation.sh
 require_file scripts/test-latticra-seal-signer-invocation-contract.sh
 require_file scripts/test-latticra-seal-signer-invocation.sh
 require_file scripts/test-latticra-seal-signer-invocation-status.sh
@@ -63,16 +68,34 @@ require_contains 'host_read_performed=0' "$contract"
 require_contains 'host_write_performed=0' "$contract"
 require_contains 'network_performed=0' "$contract"
 require_contains 'signing operation metadata implementation' "$contract"
+require_contains 'Status: initial signing operation metadata implementation' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
+require_contains 'latticra_seal_signing_operation_t' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
+require_contains 'latticra_seal_signing_operation_from_invocation' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
+require_contains 'signing_operation_state=operation-metadata-only' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
+require_contains 'signing_operation_ready=1' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
+require_contains 'signer_invoked=0' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
+require_contains 'latticra_seal_signing_operation_t' include/latticra/seal_signing_operation.h
+require_contains 'latticra_seal_signing_operation_from_invocation' src/seal_signing_operation.c
+require_contains 'seal signing operation invariants: ok' tests/seal_signing_operation_invariants.c
 
 require_contains 'LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md' README.md
+require_contains 'LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md' README.md
 require_contains 'latticra_seal_signing_operation_contract_present=1' README.md
+require_contains 'latticra_seal_signing_operation_metadata_present=1' README.md
 require_contains 'seal_signing_operation_contract_present=1' README.md
+require_contains 'seal_signing_operation_metadata_present=1' README.md
 require_contains 'Seal signing operation contract' STATUS.md
+require_contains 'Seal signing operation metadata implementation' STATUS.md
 require_contains 'seal_signing_operation_contract_present=1' STATUS.md
+require_contains 'seal_signing_operation_metadata_present=1' STATUS.md
 require_contains 'seal_signing_operation_contract_present=1' docs/status/README.md
+require_contains 'seal_signing_operation_metadata_present=1' docs/status/README.md
 require_contains 'Latticra Seal signing operation contract' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal signing operation metadata implementation' docs/status/CURRENT_STATUS.md
 require_contains 'LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md' docs/FOUNDATION_INDEX.md
+require_contains 'LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal signing operation contract' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Signing operation metadata implementation' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Latticra Seal signing operation metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Seal signing operation status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 
 printf 'seal signing operation contract: ok\n'

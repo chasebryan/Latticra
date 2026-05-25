@@ -275,7 +275,7 @@ signer handoff metadata implementation
 
 It does not permit cryptographic signing, signature verification, signer invocation, private-key handling, key generation, trust-store behavior, revocation lookup, runtime handoff execution, effect execution, capability enforcement, runtime authority, host behavior, network behavior, object sealing, or kernel behavior.
 
-After signer handoff metadata, its status/public-entry checkpoint, the signer invocation contract, the signer invocation metadata implementation, signer invocation status/public-entry alignment, and the signing operation contract exist and are guarded, the next valid planning slice is signing operation metadata implementation that still must not add signing without a separate implementation contract, key-handling contract, and guards.
+After signer handoff metadata, its status/public-entry checkpoint, the signer invocation contract, the signer invocation metadata implementation, signer invocation status/public-entry alignment, the signing operation contract, and signing operation metadata implementation exist and are guarded, the next valid planning slice is signing operation status/public-entry alignment or a future key-handling contract that still must not add signing without separate implementation, key-handling, and guard contracts.
 
 ## Validation
 

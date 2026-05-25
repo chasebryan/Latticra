@@ -16,12 +16,17 @@ It records that the implementation is bounded, deterministic, metadata-only, uns
 docs/LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
 docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md
+docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
 include/latticra/seal_signer_invocation.h
+include/latticra/seal_signing_operation.h
 src/seal_signer_invocation.c
+src/seal_signing_operation.c
 tests/seal_signer_invocation_invariants.c
+tests/seal_signing_operation_invariants.c
 scripts/test-latticra-seal-signer-invocation-contract.sh
 scripts/test-latticra-seal-signer-invocation.sh
 scripts/test-latticra-seal-signing-operation-contract.sh
+scripts/test-latticra-seal-signing-operation.sh
 docs/LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md
 docs/status/SEAL_SIGNER_HANDOFF_STATUS.md
@@ -47,6 +52,7 @@ seal_signer_invocation_runner_present=1
 seal_signer_invocation_metadata_present=1
 seal_signer_invocation_status_present=1
 seal_signing_operation_contract_present=1
+seal_signing_operation_metadata_present=1
 seal_signer_handoff_contract_present=1
 seal_signer_handoff_implementation_present=1
 seal_signer_handoff_status_present=1
@@ -89,6 +95,7 @@ The implementation is covered by:
 sh scripts/test-latticra-seal-signer-invocation-contract.sh
 sh scripts/test-latticra-seal-signer-invocation.sh
 sh scripts/test-latticra-seal-signing-operation-contract.sh
+sh scripts/test-latticra-seal-signing-operation.sh
 ```
 
 The predecessor signer handoff implementation remains covered by:
@@ -105,6 +112,7 @@ Expected output:
 seal signer invocation contract: ok
 seal signer invocation invariants: ok
 seal signing operation contract: ok
+seal signing operation invariants: ok
 seal signer handoff contract: ok
 seal signer handoff invariants: ok
 seal signer handoff status: ok
@@ -118,6 +126,6 @@ It does not add signing, verification, signer invocation behavior, signer proces
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is signing operation metadata implementation or a narrow status-index alignment follow-up.
+The next valid Latticra Seal slice is signing operation status/public-entry alignment or a future key-handling contract that still must not add signing without separate implementation, key-handling, and guard contracts.
 
 That future slice must not add signing, verification, signer invocation behavior, private-key handling, key generation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.
