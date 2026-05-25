@@ -32,6 +32,8 @@ static void pipeline_result_default(latticra_lat_pipeline_result_t *result) {
     result->source_len = 0u;
     result->declaration_count = 0u;
     result->clause_count = 0u;
+    result->comment_count = 0u;
+    lat_span_default(&result->first_comment_span);
     result->model_declaration_count = 0u;
     result->model_clause_count = 0u;
     result->first_declaration_node_index = LATTICRA_LAT_MODEL_NO_INDEX;
@@ -149,6 +151,8 @@ static void summarize_parse_semantic(
     copy_text(pipeline_result->module_name, sizeof(pipeline_result->module_name), parse_result->module.module_name);
     pipeline_result->declaration_count = parse_result->declaration_count;
     pipeline_result->clause_count = parse_result->clause_count;
+    pipeline_result->comment_count = parse_result->comment_count;
+    pipeline_result->first_comment_span = parse_result->first_comment_span;
     pipeline_result->semantic_valid = semantic_result->semantic_valid;
     pipeline_result->parse_ok = parse_result->error == LATTICRA_LAT_PARSE_OK;
     pipeline_result->semantic_ok = semantic_result->error == LATTICRA_LAT_SEMANTIC_OK && semantic_result->semantic_valid == 1;
@@ -413,6 +417,13 @@ latticra_status_t latticra_lat_pipeline_report(
         "semantic_valid=%d\n"
         "declaration_count=%zu\n"
         "clause_count=%zu\n"
+        "comment_count=%zu\n"
+        "first_comment_start_offset=%zu\n"
+        "first_comment_end_offset=%zu\n"
+        "first_comment_start_line=%zu\n"
+        "first_comment_start_column=%zu\n"
+        "first_comment_end_line=%zu\n"
+        "first_comment_end_column=%zu\n"
         "model_declaration_count=%zu\n"
         "model_clause_count=%zu\n"
         "first_declaration_node_index=%zu\n"
@@ -465,6 +476,13 @@ latticra_status_t latticra_lat_pipeline_report(
         result->semantic_valid,
         result->declaration_count,
         result->clause_count,
+        result->comment_count,
+        result->first_comment_span.start_offset,
+        result->first_comment_span.end_offset,
+        result->first_comment_span.start_line,
+        result->first_comment_span.start_column,
+        result->first_comment_span.end_line,
+        result->first_comment_span.end_column,
         result->model_declaration_count,
         result->model_clause_count,
         result->first_declaration_node_index,

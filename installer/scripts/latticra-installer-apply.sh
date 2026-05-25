@@ -181,9 +181,46 @@ measure_file() {
   fi
 }
 
+path_has_parent_reference() {
+  case "$1" in
+    ..|../*|*/..|*/../*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+prefix_is_allowed_user_local() {
+  candidate="$1"
+  home_real=$(canonical_existing_path "$HOME")
+
+  case "$candidate" in
+    "$HOME"/.local/share/latticra|"$HOME"/.local/share/latticra/*|"$HOME"/.local/share/latticra-validation|"$HOME"/.local/share/latticra-validation/*)
+      return 0
+      ;;
+    "$home_real"/.local/share/latticra|"$home_real"/.local/share/latticra/*|"$home_real"/.local/share/latticra-validation|"$home_real"/.local/share/latticra-validation/*)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
 safe_prefix_guard() {
   prefix="$1"
   [ -n "$prefix" ] || fail "resolved install prefix is empty" 73
+
+  case "$prefix" in
+    /*) ;;
+    *) fail "resolved install prefix must be absolute: $prefix" 73 ;;
+  esac
+
+  if path_has_parent_reference "$prefix"; then
+    fail "refusing install prefix with parent-directory traversal: $prefix" 73
+  fi
+
+  if [ -L "$prefix" ]; then
+    fail "refusing symlink install prefix: $prefix" 73
+  fi
 
   case "$prefix" in
     /|/usr|/usr/*|/bin|/bin/*|/sbin|/sbin/*|/etc|/etc/*|/boot|/boot/*|/var|/var/lib|/var/lib/*|/System|/System/*|/Library|/Library/*)
@@ -191,20 +228,29 @@ safe_prefix_guard() {
       ;;
   esac
 
-  case "$prefix" in
-    "$HOME"/.local/share/latticra|"$HOME"/.local/share/latticra/*|"$HOME"/.local/share/latticra-validation|"$HOME"/.local/share/latticra-validation/*)
-      :
-      ;;
-    *)
-      fail "installer only allows Latticra user-local prefixes under $HOME/.local/share/latticra* : $prefix" 73
+  prefix_real=$(canonical_existing_path "$prefix")
+  if path_has_parent_reference "$prefix_real"; then
+    fail "refusing install prefix with parent-directory traversal: $prefix" 73
+  fi
+
+  case "$prefix_real" in
+    /|/usr|/usr/*|/bin|/bin/*|/sbin|/sbin/*|/etc|/etc/*|/boot|/boot/*|/var|/var/lib|/var/lib/*|/System|/System/*|/Library|/Library/*)
+      fail "refusing unsafe system prefix: $prefix" 73
       ;;
   esac
+
+  prefix_is_allowed_user_local "$prefix" &&
+    prefix_is_allowed_user_local "$prefix_real" ||
+    fail "installer only allows Latticra user-local prefixes under $HOME/.local/share/latticra* : $prefix" 73
 }
 
 write_file() {
   target="$1"
   mode="$2"
   mkdir -p "$(dirname -- "$target")"
+  if [ -L "$target" ]; then
+    fail "refusing to overwrite symlink file: $target" 74
+  fi
   cat > "$target"
   chmod "$mode" "$target"
   log "[write] $target"
@@ -213,9 +259,14 @@ write_file() {
 write_managed_file() {
   target="$1"
   mode="$2"
-  tmp="$target.tmp.$$"
   mkdir -p "$(dirname -- "$target")"
+  tmp=$(mktemp "$(dirname -- "$target")/.latticra-installer.$(basename -- "$target").XXXXXX") ||
+    fail "could not create temporary managed file for: $target" 74
   cat > "$tmp"
+  if [ -L "$target" ]; then
+    rm -f "$tmp"
+    fail "refusing to overwrite symlink managed file: $target" 74
+  fi
   if [ -e "$target" ] && ! grep -q 'LATTICRA_INSTALLER_MANAGED=1' "$target" 2>/dev/null; then
     rm -f "$tmp"
     fail "refusing to overwrite unmanaged file: $target" 74
@@ -310,10 +361,12 @@ LC_COMMAND_REGISTRY_PROFILE=$(cfg_section lc command_registry_profile c-static-t
 LC_SUBSTRATE_BRIDGE_PROFILE=$(cfg_section lc substrate_bridge_profile metadata-bound)
 LC_HOST_EMBEDDING_PROFILE=$(cfg_section lc host_embedding_profile panel-contained)
 LC_HOST_EMBEDDING_CONTRACT_PROFILE=$(cfg_section lc host_embedding_contract_profile lc-host-embedding-v0)
+LC_HOST_INVENTORY_CONTRACT_PROFILE=$(cfg_section lc host_inventory_contract_profile lc-host-inventory-v0)
 LC_OS_BASE_PROFILE=$(cfg_section lc os_base_profile planned-no-boot-authority)
 LC_PANEL_BRIDGE=$(cfg_section lc panel_bridge panel-aware)
 LC_REPORT_ONLY=$(cfg_section lc report_only true)
 LC_REQUIRE_HOST_EMBEDDING_CONTRACT=$(cfg_section lc require_host_embedding_contract true)
+LC_REQUIRE_READ_ONLY_HOST_INVENTORY_CONTRACT=$(cfg_section lc require_read_only_host_inventory_contract true)
 LC_REQUIRE_RUNTIME_BOUNDARY_BINDING=$(cfg_section lc require_runtime_boundary_binding true)
 LC_REQUIRE_SEAL_CAPABILITY_LABELS=$(cfg_section lc require_seal_capability_labels true)
 
@@ -403,15 +456,18 @@ command_registry_profile=$LC_COMMAND_REGISTRY_PROFILE
 substrate_bridge_profile=$LC_SUBSTRATE_BRIDGE_PROFILE
 host_embedding_profile=$LC_HOST_EMBEDDING_PROFILE
 host_embedding_contract_profile=$LC_HOST_EMBEDDING_CONTRACT_PROFILE
+host_inventory_contract_profile=$LC_HOST_INVENTORY_CONTRACT_PROFILE
 os_base_profile=$LC_OS_BASE_PROFILE
 report_only=$LC_REPORT_ONLY
 host_embedding_contract_required=$LC_REQUIRE_HOST_EMBEDDING_CONTRACT
+read_only_host_inventory_contract_required=$LC_REQUIRE_READ_ONLY_HOST_INVENTORY_CONTRACT
 runtime_boundary_binding_required=$LC_REQUIRE_RUNTIME_BOUNDARY_BINDING
 seal_capability_labels_required=$LC_REQUIRE_SEAL_CAPABILITY_LABELS
 command_registry_status=seed-registry
 substrate_bridge_status=$LC_SUBSTRATE_BRIDGE_PROFILE
 host_embedding_status=$LC_HOST_EMBEDDING_PROFILE
 host_embedding_contract_status=metadata-only-contract
+host_inventory_contract_status=metadata-only-contract
 os_base_status=$LC_OS_BASE_PROFILE
 operator_shell_present=1
 execution_allowed=0
@@ -1002,8 +1058,8 @@ phase 7 "build available binaries"
 
 if bool_true "$BUILD_GUI_INSTALLER" && [ -f "$INSTALLER_ROOT/latticra-installer/Cargo.toml" ]; then
   if command -v cargo >/dev/null 2>&1; then
-    log "[cargo] building graphical installer release binary"
-    (cd "$INSTALLER_ROOT/latticra-installer" && cargo build --release)
+    log "[cargo] building graphical installer release binary with locked offline dependencies"
+    (cd "$INSTALLER_ROOT/latticra-installer" && cargo build --release --locked --offline)
     if [ -x "$INSTALLER_ROOT/latticra-installer/target/release/latticra-panel" ]; then
       cp "$INSTALLER_ROOT/latticra-installer/target/release/latticra-panel" "$PREFIX/bin/latticra-panel"
       chmod 0755 "$PREFIX/bin/latticra-panel"
@@ -1017,7 +1073,7 @@ fi
 if bool_true "$BUILD_LATTICRA_FROM_SOURCE"; then
   if [ -f "$REPO_ROOT/Cargo.toml" ] && command -v cargo >/dev/null 2>&1; then
     log "[cargo] building repo root release binaries"
-    (cd "$REPO_ROOT" && cargo build --release)
+    (cd "$REPO_ROOT" && cargo build --release --locked --offline)
     install_built_executables_from_dir "$REPO_ROOT/target/release"
   elif [ -f "$REPO_ROOT/CMakeLists.txt" ] && command -v cmake >/dev/null 2>&1; then
     log "[cmake] building repo root"
@@ -1072,6 +1128,7 @@ if bool_true "$LATTICRA_CONSOLE"; then
   mkdir -p \
     "$PREFIX/share/latticra/lc/commands" \
     "$PREFIX/share/latticra/lc/host-embedding" \
+    "$PREFIX/share/latticra/lc/host-inventory" \
     "$PREFIX/share/latticra/lc/profiles" \
     "$PREFIX/share/latticra/lc/substrate"
   write_file "$PREFIX/etc/latticra/lc.toml" 0644 <<LCCONF
@@ -1085,15 +1142,18 @@ command_registry_profile = "$LC_COMMAND_REGISTRY_PROFILE"
 substrate_bridge_profile = "$LC_SUBSTRATE_BRIDGE_PROFILE"
 host_embedding_profile = "$LC_HOST_EMBEDDING_PROFILE"
 host_embedding_contract_profile = "$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
+host_inventory_contract_profile = "$LC_HOST_INVENTORY_CONTRACT_PROFILE"
 os_base_profile = "$LC_OS_BASE_PROFILE"
 report_only = $LC_REPORT_ONLY
 host_embedding_contract_required = $LC_REQUIRE_HOST_EMBEDDING_CONTRACT
+read_only_host_inventory_contract_required = $LC_REQUIRE_READ_ONLY_HOST_INVENTORY_CONTRACT
 runtime_boundary_binding_required = $LC_REQUIRE_RUNTIME_BOUNDARY_BINDING
 seal_capability_labels_required = $LC_REQUIRE_SEAL_CAPABILITY_LABELS
 command_registry_status = "seed-registry"
 substrate_bridge_status = "$LC_SUBSTRATE_BRIDGE_PROFILE"
 host_embedding_status = "$LC_HOST_EMBEDDING_PROFILE"
 host_embedding_contract_status = "metadata-only-contract"
+host_inventory_contract_status = "metadata-only-contract"
 os_base_status = "$LC_OS_BASE_PROFILE"
 configurable = true
 panel_installable = true
@@ -1114,9 +1174,11 @@ command_registry_profile = "c-static-table"
 substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "not-embedded"
 host_embedding_contract_profile = "lc-host-embedding-v0"
+host_inventory_contract_profile = "lc-host-inventory-v0"
 os_base_profile = "planned-no-boot-authority"
 report_only = true
 host_embedding_contract_required = true
+read_only_host_inventory_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1133,9 +1195,11 @@ command_registry_profile = "c-static-table"
 substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "panel-contained"
 host_embedding_contract_profile = "lc-host-embedding-v0"
+host_inventory_contract_profile = "lc-host-inventory-v0"
 os_base_profile = "planned-no-boot-authority"
 report_only = true
 host_embedding_contract_required = true
+read_only_host_inventory_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1152,9 +1216,11 @@ command_registry_profile = "c-static-table"
 substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "host-embedded-planning"
 host_embedding_contract_profile = "lc-host-embedding-v0"
+host_inventory_contract_profile = "lc-host-inventory-v0"
 os_base_profile = "planned-no-boot-authority"
 report_only = true
 host_embedding_contract_required = true
+read_only_host_inventory_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1171,9 +1237,11 @@ command_registry_profile = "c-static-table"
 substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "host-embedded-planning"
 host_embedding_contract_profile = "lc-host-embedding-v0"
+host_inventory_contract_profile = "lc-host-inventory-v0"
 os_base_profile = "os-base-planning-no-boot-authority"
 report_only = true
 host_embedding_contract_required = true
+read_only_host_inventory_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1207,6 +1275,35 @@ network_allowed = false
 runtime_enforcement_allowed = false
 boot_allowed = false
 LC_HOST_CONTRACT
+  write_file "$PREFIX/share/latticra/lc/host-inventory/contract.toml" 0644 <<LC_HOST_INVENTORY
+contract_name = "Latticra Console Read-Only Host Inventory Contract"
+contract_profile = "$LC_HOST_INVENTORY_CONTRACT_PROFILE"
+contract_status = "metadata-only"
+required_before_host_embedding = true
+host_adapter_present = false
+inventory_schema_status = "planned"
+inventory_performed = false
+inventory_artifact_present = false
+inventory_receipt_required = true
+operator_consent_required = true
+runtime_boundary_required = true
+seal_capability_labels_required = true
+allowed_future_scope = "os_family,kernel_version,cpu_arch,memory_class,filesystem_roots,user_scope,prefix_scope"
+excluded_future_scope = "secrets,private_files,network_scan,process_launch,kernel_change,system_mutation"
+promotion_gate = "host_inventory_contract_receipt_before_host_adapter"
+command_surface = "lc host-inventory"
+future_embedding_command = "lc host"
+no_effect = true
+host_embedded_now = false
+host_process_launch_allowed = false
+host_probe_allowed = false
+host_file_read_allowed = false
+host_file_write_allowed = false
+host_mutation_allowed = false
+network_allowed = false
+runtime_enforcement_allowed = false
+boot_allowed = false
+LC_HOST_INVENTORY
   write_file "$PREFIX/share/latticra/lc/README.md" 0644 <<'LCREADME'
 # Latticra Console (LC)
 
@@ -1222,6 +1319,11 @@ The host-embedding lane includes a contract file at
 share/latticra/lc/host-embedding/contract.toml. That contract is an evidence
 gate only; it does not grant host adapter, file, process, network, runtime, or
 boot authority.
+
+The host-inventory lane includes a contract file at
+share/latticra/lc/host-inventory/contract.toml. It defines future read-only
+inventory evidence but does not read the host, probe the host, or launch host
+commands.
 LCREADME
   write_file "$PREFIX/share/latticra/lc/commands/seed-registry.txt" 0644 <<'LCCOMMANDS'
 name=help category=core effect=none capability=lc.core.help
@@ -1238,6 +1340,7 @@ name=lc profiles category=core effect=none capability=lc.core.profiles
 name=lc substrate category=substrate effect=none capability=lc.substrate.inspect
 name=lc host category=host effect=future-gated capability=lc.host.inspect
 name=lc host-contract category=host effect=none capability=lc.host.contract
+name=lc host-inventory category=host effect=none capability=lc.host.inventory
 name=lc os category=os-base effect=future-gated capability=lc.os.inspect
 name=pwd category=panel effect=none capability=lc.panel.navigation
 name=cd category=panel effect=none capability=lc.panel.navigation
@@ -1929,6 +2032,7 @@ render_lc_man() {
   echo "  latticra-lc substrate"
   echo "  latticra-lc host"
   echo "  latticra-lc host-contract"
+  echo "  latticra-lc host-inventory"
   echo "  latticra-lc os"
   echo
   render_lc_help || return \$?
@@ -1974,6 +2078,9 @@ render_lc_boundary() {
       "lc host-contract")
         seal_capability=seal.capability.inspect
         ;;
+      "lc host-inventory")
+        seal_capability=seal.capability.inspect
+        ;;
       "lc host")
         seal_capability=seal.capability.inspect
         runtime_request=future-gated
@@ -2013,15 +2120,18 @@ case "\${1:-status}" in
     echo "substrate_bridge_profile=$LC_SUBSTRATE_BRIDGE_PROFILE"
     echo "host_embedding_profile=$LC_HOST_EMBEDDING_PROFILE"
     echo "host_embedding_contract_profile=$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
+    echo "host_inventory_contract_profile=$LC_HOST_INVENTORY_CONTRACT_PROFILE"
     echo "os_base_profile=$LC_OS_BASE_PROFILE"
     echo "report_only=$LC_REPORT_ONLY"
     echo "host_embedding_contract_required=$LC_REQUIRE_HOST_EMBEDDING_CONTRACT"
+    echo "read_only_host_inventory_contract_required=$LC_REQUIRE_READ_ONLY_HOST_INVENTORY_CONTRACT"
     echo "runtime_boundary_binding_required=$LC_REQUIRE_RUNTIME_BOUNDARY_BINDING"
     echo "seal_capability_labels_required=$LC_REQUIRE_SEAL_CAPABILITY_LABELS"
     echo "command_registry_status=seed-registry"
     echo "substrate_bridge_status=$LC_SUBSTRATE_BRIDGE_PROFILE"
     echo "host_embedding_status=$LC_HOST_EMBEDDING_PROFILE"
     echo "host_embedding_contract_status=metadata-only-contract"
+    echo "host_inventory_contract_status=metadata-only-contract"
     echo "os_base_status=$LC_OS_BASE_PROFILE"
     echo "operator_shell_present=1"
     echo "future_os_base_claim=planned_not_claimed"
@@ -2069,7 +2179,9 @@ case "\${1:-status}" in
   host)
     echo "lc_host_embedding=$LC_HOST_EMBEDDING_PROFILE"
     echo "host_embedding_contract=$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
+    echo "host_inventory_contract=$LC_HOST_INVENTORY_CONTRACT_PROFILE"
     echo "host_embedding_contract_required=$LC_REQUIRE_HOST_EMBEDDING_CONTRACT"
+    echo "read_only_host_inventory_contract_required=$LC_REQUIRE_READ_ONLY_HOST_INVENTORY_CONTRACT"
     echo "host_embedded_now=0"
     echo "host_mutation_allowed=0"
     echo "file_io_allowed=0"
@@ -2094,6 +2206,36 @@ case "\${1:-status}" in
     echo "no_effect=1"
     echo "host_embedded_now=0"
     echo "host_process_launch_allowed=0"
+    echo "host_file_read_allowed=0"
+    echo "host_file_write_allowed=0"
+    echo "host_mutation_allowed=0"
+    echo "network_allowed=0"
+    echo "runtime_enforcement_allowed=0"
+    echo "boot_allowed=0"
+    ;;
+  host-inventory|inventory)
+    echo "LATTICRA CONSOLE READ-ONLY HOST INVENTORY CONTRACT"
+    echo "contract_profile=$LC_HOST_INVENTORY_CONTRACT_PROFILE"
+    echo "contract_status=metadata-only"
+    echo "contract_file=\$LC_DIR/host-inventory/contract.toml"
+    echo "required_before_host_embedding=1"
+    echo "host_adapter_present=0"
+    echo "inventory_schema_status=planned"
+    echo "inventory_performed=0"
+    echo "inventory_artifact_present=0"
+    echo "inventory_receipt_required=1"
+    echo "operator_consent_required=1"
+    echo "runtime_boundary_required=1"
+    echo "seal_capability_labels_required=1"
+    echo "allowed_future_scope=os_family,kernel_version,cpu_arch,memory_class,filesystem_roots,user_scope,prefix_scope"
+    echo "excluded_future_scope=secrets,private_files,network_scan,process_launch,kernel_change,system_mutation"
+    echo "promotion_gate=host_inventory_contract_receipt_before_host_adapter"
+    echo "command_surface=lc host-inventory"
+    echo "future_embedding_command=lc host"
+    echo "no_effect=1"
+    echo "host_embedded_now=0"
+    echo "host_process_launch_allowed=0"
+    echo "host_probe_allowed=0"
     echo "host_file_read_allowed=0"
     echo "host_file_write_allowed=0"
     echo "host_mutation_allowed=0"

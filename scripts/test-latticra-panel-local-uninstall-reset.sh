@@ -53,7 +53,7 @@ APPLY_SCRIPT="installer/scripts/latticra-installer-apply.sh"
 
 require_contains 'reset|uninstall)' "$APPLY_SCRIPT"
 require_contains 'latticra-installer-uninstall.sh' "$APPLY_SCRIPT"
-require_contains 'usage: latticra {status|path|gui|receipts|docs|reset|seal|nadia|run}' "$APPLY_SCRIPT"
+require_contains 'usage: latticra {status|path|gui|receipts|docs|lc|reset|seal|nadia|run}' "$APPLY_SCRIPT"
 
 mkdir -p "$PREFIX/share/latticra/components" "$USER_BIN" "$APP_DIR" "$ICON_DIR"
 printf '%s\n' 'payload' > "$PREFIX/payload.txt"
@@ -113,9 +113,57 @@ if HOME="$HOME_DIR" sh "$SCRIPT" --prefix "$HOME_DIR/not-latticra" --receipt-dir
 fi
 require_contains 'refusing to reset unsafe prefix' "$TMP_DIR/unsafe.out"
 
+mkdir -p "$HOME_DIR/.local/share/escape"
+if HOME="$HOME_DIR" sh "$SCRIPT" --prefix "$PREFIX/../escape" --receipt-dir "$RECEIPTS" > "$TMP_DIR/traversal.out" 2>&1; then
+  fail "parent-directory traversal prefix should have been refused"
+fi
+require_contains 'parent-directory traversal' "$TMP_DIR/traversal.out"
+require_exists "$HOME_DIR/.local/share/escape"
+
 if HOME="$HOME_DIR" sh "$SCRIPT" --prefix "$PREFIX" --receipt-dir "$PREFIX/share/latticra/receipts" > "$TMP_DIR/unsafe-receipt.out" 2>&1; then
   fail "receipt inside removed prefix should have been refused"
 fi
 require_contains 'refusing to write reset receipt inside prefix being removed' "$TMP_DIR/unsafe-receipt.out"
+
+SYMLINK_TARGET="$TMP_DIR/uninstall-symlink-target"
+mkdir -p "$SYMLINK_TARGET" "$(dirname "$PREFIX")"
+ln -s "$SYMLINK_TARGET" "$PREFIX"
+if HOME="$HOME_DIR" sh "$SCRIPT" --prefix "$PREFIX" --receipt-dir "$RECEIPTS" > "$TMP_DIR/symlink.out" 2>&1; then
+  fail "symlink prefix should have been refused"
+fi
+require_contains 'refusing to reset symlink prefix' "$TMP_DIR/symlink.out"
+require_exists "$SYMLINK_TARGET"
+rm -f "$PREFIX"
+
+APPLY_HOME="$TMP_DIR/apply-home"
+APPLY_PREFIX="$APPLY_HOME/.local/share/latticra"
+APPLY_RECEIPTS="$TMP_DIR/apply-receipts"
+APPLY_PLAN="$TMP_DIR/apply-plan.txt"
+APPLY_BAD_CONFIG="$TMP_DIR/apply-bad-prefix.toml"
+mkdir -p "$APPLY_HOME/.local/share" "$APPLY_RECEIPTS"
+{
+  printf '%s\n' 'dry_run = true'
+  printf 'install_prefix = "%s"\n' "$APPLY_PREFIX/../escape"
+} > "$APPLY_BAD_CONFIG"
+if HOME="$APPLY_HOME" sh "$APPLY_SCRIPT" --config "$APPLY_BAD_CONFIG" --plan "$APPLY_PLAN" --receipt-dir "$APPLY_RECEIPTS" > "$TMP_DIR/apply-traversal.out" 2>&1; then
+  fail "installer apply traversal prefix should have been refused"
+fi
+require_contains 'refusing install prefix with parent-directory traversal' "$TMP_DIR/apply-traversal.out"
+
+APPLY_SYMLINK_HOME="$TMP_DIR/apply-symlink-home"
+APPLY_SYMLINK_PREFIX="$APPLY_SYMLINK_HOME/.local/share/latticra"
+APPLY_SYMLINK_TARGET="$TMP_DIR/apply-symlink-target"
+APPLY_SYMLINK_CONFIG="$TMP_DIR/apply-symlink-prefix.toml"
+mkdir -p "$APPLY_SYMLINK_HOME/.local/share" "$APPLY_SYMLINK_TARGET"
+ln -s "$APPLY_SYMLINK_TARGET" "$APPLY_SYMLINK_PREFIX"
+{
+  printf '%s\n' 'dry_run = true'
+  printf 'install_prefix = "%s"\n' "$APPLY_SYMLINK_PREFIX"
+} > "$APPLY_SYMLINK_CONFIG"
+if HOME="$APPLY_SYMLINK_HOME" sh "$APPLY_SCRIPT" --config "$APPLY_SYMLINK_CONFIG" --plan "$TMP_DIR/apply-symlink-plan.txt" --receipt-dir "$TMP_DIR/apply-symlink-receipts" > "$TMP_DIR/apply-symlink.out" 2>&1; then
+  fail "installer apply symlink prefix should have been refused"
+fi
+require_contains 'refusing symlink install prefix' "$TMP_DIR/apply-symlink.out"
+require_exists "$APPLY_SYMLINK_TARGET"
 
 printf 'latticra_panel_local_uninstall_reset: ok\n'

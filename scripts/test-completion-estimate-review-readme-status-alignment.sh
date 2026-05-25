@@ -61,7 +61,7 @@ require_contains '[`docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDAR
 require_contains '| Current public estimate | Roughly 39% overall system planning estimate |' README.md
 require_contains '| Foundation documents and contracts | Mature relative to implementation; around 92% planning estimate |' README.md
 require_contains '| Public documentation posture | Strong but still evolving; around 88% planning estimate |' README.md
-require_contains '| Latticra Seal | Report-only tool-boundary' README.md
+require_contains '| Latticra Seal | Report-only runtime gate path' README.md
 require_contains '| Product readiness | Early; no production platform claimed |' README.md
 require_contains 'Planning estimates are not release promises, product-readiness metrics, or security guarantees.' README.md
 

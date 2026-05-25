@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 use std::fmt::Write as _;
+use std::path::{Component, Path, PathBuf};
 
 #[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]
@@ -413,6 +414,64 @@ impl Default for InstallerConfig {
     }
 }
 
+fn expand_install_prefix(raw_prefix: &str, home: &Path) -> PathBuf {
+    if raw_prefix == "~" {
+        return home.to_path_buf();
+    }
+
+    if let Some(rest) = raw_prefix.strip_prefix("~/") {
+        return home.join(rest);
+    }
+
+    PathBuf::from(raw_prefix)
+}
+
+fn path_has_parent_reference(path: &Path) -> bool {
+    path.components()
+        .any(|component| matches!(component, Component::ParentDir))
+}
+
+fn validate_user_local_install_prefix(raw_prefix: &str) -> Result<(), String> {
+    if raw_prefix.trim().is_empty() {
+        return Err("Install prefix must not be empty.".to_owned());
+    }
+
+    let home = std::env::var("HOME")
+        .map(PathBuf::from)
+        .map_err(|_| "HOME must be set before validating the install prefix.".to_owned())?;
+    let prefix = expand_install_prefix(raw_prefix, &home);
+
+    if !prefix.is_absolute() {
+        return Err("Install prefix must resolve to an absolute path.".to_owned());
+    }
+
+    if path_has_parent_reference(&prefix) {
+        return Err("Install prefix must not contain parent-directory traversal.".to_owned());
+    }
+
+    if std::fs::symlink_metadata(&prefix)
+        .map(|metadata| metadata.file_type().is_symlink())
+        .unwrap_or(false)
+    {
+        return Err("Install prefix must not be a symlink.".to_owned());
+    }
+
+    let latticra_prefix = home.join(".local/share/latticra");
+    let validation_prefix = home.join(".local/share/latticra-validation");
+    if prefix == latticra_prefix
+        || prefix.starts_with(&latticra_prefix)
+        || prefix == validation_prefix
+        || prefix.starts_with(&validation_prefix)
+    {
+        return Ok(());
+    }
+
+    Err(format!(
+        "Installer only allows user-local prefixes under {}/.local/share/latticra*.",
+        home.display()
+    ))
+}
+
 impl InstallerConfig {
     pub fn apply_profile_defaults(&mut self) {
         match self.profile {
@@ -478,6 +537,8 @@ impl InstallerConfig {
     }
 
     pub fn can_execute(&self) -> Result<(), String> {
+        validate_user_local_install_prefix(&self.install_prefix)?;
+
         if self.safety.dry_run {
             return Ok(());
         }
@@ -499,6 +560,8 @@ impl InstallerConfig {
     }
 
     pub fn can_reset(&self) -> Result<(), String> {
+        validate_user_local_install_prefix(&self.install_prefix)?;
+
         if self.safety.allow_network_effect {
             return Err(
                 "Network authority is not implemented in this installer. Disable allow_network_effect."

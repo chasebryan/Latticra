@@ -31,6 +31,41 @@ expand_path() {
   esac
 }
 
+canonical_existing_path() {
+  path="$1"
+  dir=$(dirname -- "$path")
+  base=$(basename -- "$path")
+  if cd -- "$dir" 2>/dev/null; then
+    printf '%s/%s\n' "$(pwd -P)" "$base"
+  else
+    printf '%s\n' "$path"
+  fi
+}
+
+path_has_parent_reference() {
+  case "$1" in
+    ..|../*|*/..|*/../*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+prefix_is_allowed_user_local() {
+  candidate="$1"
+  home_real=$(canonical_existing_path "$HOME")
+
+  case "$candidate" in
+    "$HOME"/.local/share/latticra|"$HOME"/.local/share/latticra/*|"$HOME"/.local/share/latticra-validation|"$HOME"/.local/share/latticra-validation/*)
+      return 0
+      ;;
+    "$home_real"/.local/share/latticra|"$home_real"/.local/share/latticra/*|"$home_real"/.local/share/latticra-validation|"$home_real"/.local/share/latticra-validation/*)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
 PREFIX_RAW="$HOME/.local/share/latticra"
 RECEIPT_DIR_RAW="$HOME/.local/share/latticra-reset-receipts"
 OPERATION=reset
@@ -102,12 +137,26 @@ if [ "$DRY_RUN" = true ]; then
 fi
 
 case "$PREFIX" in
-  "$HOME"/.local/share/latticra|"$HOME"/.local/share/latticra/*|"$HOME"/.local/share/latticra-validation|"$HOME"/.local/share/latticra-validation/*)
-    ;;
-  *)
-    fail "refusing to reset unsafe prefix: $PREFIX"
-    ;;
+  /*) ;;
+  *) fail "refusing to reset unsafe prefix: $PREFIX" ;;
 esac
+
+if path_has_parent_reference "$PREFIX"; then
+  fail "refusing to reset unsafe prefix with parent-directory traversal: $PREFIX"
+fi
+
+if [ -L "$PREFIX" ]; then
+  fail "refusing to reset symlink prefix: $PREFIX"
+fi
+
+PREFIX_REAL=$(canonical_existing_path "$PREFIX")
+if path_has_parent_reference "$PREFIX_REAL"; then
+  fail "refusing to reset unsafe prefix with parent-directory traversal: $PREFIX"
+fi
+
+prefix_is_allowed_user_local "$PREFIX" &&
+  prefix_is_allowed_user_local "$PREFIX_REAL" ||
+  fail "refusing to reset unsafe prefix: $PREFIX"
 
 if [ "$WRITE_RECEIPT" = true ] && [ "$DRY_RUN" != true ]; then
   case "$RECEIPT_DIR" in

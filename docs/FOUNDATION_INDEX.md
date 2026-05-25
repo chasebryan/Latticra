@@ -28,7 +28,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`SUPERVISOR_ARCHITECTURE.md`](SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor model and orchestration responsibilities.
 - [`EFFECT_GATES.md`](EFFECT_GATES.md) — effect categories, gating rules, and visibility requirements.
 - [`UI_TERMINAL_LANGUAGE.md`](UI_TERMINAL_LANGUAGE.md) — L-UI terminal/operator interface language direction.
-- [`LATTICRA_CONSOLE_FOUNDATION.md`](LATTICRA_CONSOLE_FOUNDATION.md) — Latticra Console Stage-0 foundation, Panel installability, profile presets, host-embedding contract, command registry, Runtime Boundary binding, and future host/OS-base posture.
+- [`LATTICRA_CONSOLE_FOUNDATION.md`](LATTICRA_CONSOLE_FOUNDATION.md) — Latticra Console Stage-0 foundation, Panel installability, profile presets, host-embedding contract, read-only host inventory contract, command registry, Runtime Boundary binding, and future host/OS-base posture.
 - [`SERVER_INTERACTION_MODEL.md`](SERVER_INTERACTION_MODEL.md) — signed, optional, inspectable server interaction model.
 - [`NADIA_OFFLINE_AI_FOUNDATION.md`](NADIA_OFFLINE_AI_FOUNDATION.md) — Stage-0 foundation contract for Latticra Nadia Witness Foundation, the planned offline AI companion for Latticra software development, systems engineering, AI development, and community-awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md) — Stage-1 no-network local context-pack engine for Nadia.
@@ -254,7 +254,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LAT_PIPELINE_CONTRACT.md`](LAT_PIPELINE_CONTRACT.md) — bounded no-effect Lat pipeline contract after parser, semantic validation, and Lat-to-LIR lowering.
 - [`LAT_PIPELINE_IMPLEMENTATION_PLAN.md`](LAT_PIPELINE_IMPLEMENTATION_PLAN.md) — exact Lat pipeline API, result struct, report, tests, workflow, compatibility expectations, and non-claims.
 - [`LAT_PIPELINE_IMPLEMENTATION.md`](LAT_PIPELINE_IMPLEMENTATION.md) — first bounded no-effect Lat pipeline implementation.
-- [`LAT_PIPELINE_REPORT_REFINEMENT.md`](LAT_PIPELINE_REPORT_REFINEMENT.md) — Lat pipeline stage-summary, first-declaration/first-clause metadata, and report refinement.
+- [`LAT_PIPELINE_REPORT_REFINEMENT.md`](LAT_PIPELINE_REPORT_REFINEMENT.md) — Lat pipeline stage-summary, parser line-comment metadata, first-declaration/first-clause metadata, and report refinement.
 - [`LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md`](LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md) — companion Lat pipeline diagnostic integration API, first-declaration/first-clause metadata, and report.
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_INTEGRATION_AUDIT.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_INTEGRATION_AUDIT.md) — main Lat pipeline runner audit for diagnostic integration coverage.
 - [`LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md`](LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md) — explicit Lat declaration node and transition-source edge refinement contract.
@@ -400,6 +400,7 @@ Lat pipeline diagnostic declaration metadata integration + invariants
 Lat pipeline diagnostic clause metadata integration + invariants
 Lat pipeline report declaration metadata integration + invariants
 Lat pipeline report clause metadata integration + invariants
+Lat pipeline comment metadata integration + invariants
 Lat pipeline implementation + invariants
 Lat pipeline report refinement + invariants
 Lat pipeline diagnostic integration refinement + invariants

@@ -8,6 +8,7 @@ Latest runtime boundary abuse-case fixture expansion note: 2026-05-25 CDT
 Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
+Latest Lat pipeline comment metadata integration note: 2026-05-25 CDT
 
 ## Purpose
 
@@ -30,6 +31,18 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Lat pipeline comment metadata integration
+```
+
+Purpose completed:
+
+```text
+copy parser line-comment count and first-comment span metadata into deterministic Lat pipeline reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
 Lat grammar unsupported block-comment rejection refinement
 ```
 
@@ -39,7 +52,7 @@ Purpose completed:
 reject Lat block-comment openers outside strings and line comments with a deterministic unsupported_block_comment parse error while preserving no Lat execution, no operator evaluation, no state mutation, no file I/O, no network I/O, no runtime authority, and normal string handling for block-comment marker text
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat grammar line-comment metadata refinement

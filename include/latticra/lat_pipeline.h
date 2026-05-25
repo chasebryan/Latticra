@@ -47,6 +47,8 @@ typedef struct {
     size_t source_len;
     size_t declaration_count;
     size_t clause_count;
+    size_t comment_count;
+    latticra_lat_source_span_t first_comment_span;
     size_t model_declaration_count;
     size_t model_clause_count;
     size_t first_declaration_node_index;

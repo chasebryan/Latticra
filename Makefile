@@ -14,12 +14,13 @@ quality-defensive-threat-model:
 
 quality-rust-installer:
 	cargo fmt --manifest-path installer/latticra-installer/Cargo.toml -- --check
-	cargo check --manifest-path installer/latticra-installer/Cargo.toml
+	cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml
 
 quality-panel-installer:
 	python3 scripts/check_latticra_panel_ui_design.py
 	sh ./scripts/test-latticra-panel-local-install-evidence-status.sh
 	sh ./scripts/test-latticra-panel-local-install-public-entrypoint-alignment.sh
+	sh ./scripts/test-latticra-panel-local-uninstall-reset.sh
 
 quality-c-foundation:
 	sh ./scripts/test-latticra-console-foundation.sh

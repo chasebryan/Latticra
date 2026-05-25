@@ -36,9 +36,11 @@ command_registry_profile=c-static-table
 substrate_bridge_profile=metadata-bound
 host_embedding_profile=panel-contained
 host_embedding_contract_profile=lc-host-embedding-v0
+host_inventory_contract_profile=lc-host-inventory-v0
 os_base_profile=planned-no-boot-authority
 report_only=true
 host_embedding_contract_required=true
+read_only_host_inventory_contract_required=true
 runtime_boundary_binding_required=true
 seal_capability_labels_required=true
 ```
@@ -55,6 +57,7 @@ share/latticra/lc/profiles/host-embedded-planning.toml
 share/latticra/lc/profiles/os-base-planning.toml
 share/latticra/lc/substrate
 share/latticra/lc/host-embedding/contract.toml
+share/latticra/lc/host-inventory/contract.toml
 share/latticra/components/latticra-console.installed
 ```
 
@@ -87,6 +90,7 @@ lc profiles
 lc substrate
 lc host
 lc host-contract
+lc host-inventory
 lc os
 pwd
 cd
@@ -119,10 +123,12 @@ command_registry_profile = "c-static-table"
 substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "panel-contained"
 host_embedding_contract_profile = "lc-host-embedding-v0"
+host_inventory_contract_profile = "lc-host-inventory-v0"
 os_base_profile = "planned-no-boot-authority"
 panel_bridge = "panel-aware"
 report_only = true
 require_host_embedding_contract = true
+require_read_only_host_inventory_contract = true
 require_runtime_boundary_binding = true
 require_seal_capability_labels = true
 ```
@@ -189,6 +195,53 @@ boot_allowed=0
 
 `lc host-contract` is an inspectable contract command. `lc host` remains the future-gated embedding lane.
 
+## Read-Only Host Inventory Contract
+
+LC also installs and reports a read-only host inventory contract before any host adapter exists:
+
+```text
+contract_profile=lc-host-inventory-v0
+contract_status=metadata-only
+required_before_host_embedding=1
+host_adapter_present=0
+inventory_schema_status=planned
+inventory_performed=0
+inventory_artifact_present=0
+inventory_receipt_required=1
+operator_consent_required=1
+runtime_boundary_required=1
+seal_capability_labels_required=1
+promotion_gate=host_inventory_contract_receipt_before_host_adapter
+```
+
+The intended future inventory scope is narrow and reviewable:
+
+```text
+allowed_future_scope=os_family,kernel_version,cpu_arch,memory_class,filesystem_roots,user_scope,prefix_scope
+excluded_future_scope=secrets,private_files,network_scan,process_launch,kernel_change,system_mutation
+```
+
+The current command surfaces are:
+
+```sh
+latticra_console_report host-inventory
+latticra-lc host-inventory
+```
+
+This command does not inventory the host. It reports the contract and denial posture:
+
+```text
+inventory_performed=0
+host_probe_allowed=0
+host_process_launch_allowed=0
+host_file_read_allowed=0
+host_file_write_allowed=0
+host_mutation_allowed=0
+network_allowed=0
+runtime_enforcement_allowed=0
+boot_allowed=0
+```
+
 ## Help And Manpage Rendering
 
 LC now has registry-backed renderers for:
@@ -228,6 +281,7 @@ Stage-0 command bindings use these rules:
 ```text
 core, panel, and substrate inspection -> authority-check / validation-only
 lc host-contract -> authority-check / validation-only
+lc host-inventory -> authority-check / validation-only
 lc host -> future-gated command-execute planning
 lc os -> future-gated boot-action planning
 ```
@@ -302,6 +356,6 @@ LC Stage-0 does not:
 
 ## Next Slices
 
-1. Add read-only host inventory contracts before any host adapter exists.
+1. Add LC profile, host-contract, and host-inventory receipts so Panel saves selections as signed evidence when Seal signing authority exists.
 2. Add boot-adjacent planning only after read-only host and VM evidence exists.
-3. Add LC profile and host-contract receipts so Panel saves selections as signed evidence when Seal signing authority exists.
+3. Add a future host adapter contract only after the read-only inventory receipt path exists.

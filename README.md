@@ -1,7 +1,7 @@
 # Latticra
 
 **Status:** early-stage, evidence-bound systems architecture repository  
-**README review snapshot:** 2026-05-24 CDT  
+**README review snapshot:** 2026-05-25 CDT  
 **Default branch:** `main`
 
 > “The simulacrum is never what hides the truth.” — Jean Baudrillard
@@ -81,6 +81,7 @@ The authoritative status files are [`STATUS.md`](STATUS.md) and [`docs/status/CU
 | --- | --- |
 | Overall system | Early-stage, evidence-bound foundation |
 | Current public estimate | Roughly 39% overall system planning estimate |
+| Estimate source | Current public estimate table below, mirrored from `STATUS.md` and `docs/status/CURRENT_STATUS.md` |
 | Foundation documents and contracts | Mature relative to implementation; around 92% planning estimate |
 | Public documentation posture | Strong but still evolving; around 88% planning estimate |
 | Lat / Latticra Language | No-effect parse / validate / lower path exists; no execution |
@@ -97,7 +98,28 @@ The authoritative status files are [`STATUS.md`](STATUS.md) and [`docs/status/CU
 
 Planning estimates are not release promises, product-readiness metrics, or security guarantees.
 
-The latest estimate hold review is [`docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md); it keeps estimates unchanged after runtime-boundary abuse-case fixtures because capability posture did not change.
+Current public estimate table, as summarized by [`STATUS.md`](STATUS.md) and [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md):
+
+| Area | Estimated completion |
+| --- | ---: |
+| Overall Latticra system | 39% |
+| Latticra Seal / local evidence layer | 34% |
+| Latticra Panel / local control surface | 28% |
+| Nadia offline AI foundation | 60% |
+| L-UI parser / AST / string foundation | 87% |
+| Foundation documents and contracts | 92% |
+| Public documentation posture | 88% |
+| Strategy/status/funding framework | 60% |
+| Lat / Latticra Programming Language | 25% |
+| LIR / Intermediate Representation | 22% |
+| C/C++ foundation direction | 18% |
+| Constrained C++ authority layer | 4% |
+| Nucleus real task execution | 11% |
+| Runtime / operating-system-universe direction | 19% |
+| Security-hardening implementation | 7% |
+| Public product readiness | 8% |
+
+The latest estimate refresh record is [`docs/status/CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](docs/status/CURRENT_ESTIMATE_REFRESH_2026_05_24.md). The latest estimate hold review is [`docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md); it keeps estimates unchanged after runtime-boundary abuse-case fixtures because capability posture did not change.
 
 ---
 
@@ -275,6 +297,38 @@ nadia_stage_9_local_model_registry_contract_present=1
 nadia_model_registry_contract_generator_present=1
 nadia_stage_10_inference_readiness_contract_present=1
 nadia_inference_readiness_contract_generator_present=1
+nadia_stage_11_runtime_invocation_contract_present=1
+nadia_runtime_invocation_contract_generator_present=1
+nadia_stage_12_model_load_contract_present=1
+nadia_model_load_contract_generator_present=1
+nadia_stage_13_prompt_receipt_contract_present=1
+nadia_prompt_receipt_contract_generator_present=1
+nadia_stage_14_prompt_materialization_contract_present=1
+nadia_prompt_materialization_contract_generator_present=1
+nadia_stage_15_awareness_dialogue_contract_present=1
+nadia_awareness_dialogue_contract_generator_present=1
+nadia_stage_16_prompt_evaluation_handoff_contract_present=1
+nadia_prompt_evaluation_handoff_contract_generator_present=1
+nadia_stage_17_tokenization_boundary_contract_present=1
+nadia_tokenization_boundary_contract_generator_present=1
+nadia_stage_18_tokenizer_specification_contract_present=1
+nadia_tokenizer_specification_contract_generator_present=1
+nadia_stage_19_tokenizer_manifest_contract_present=1
+nadia_tokenizer_manifest_contract_generator_present=1
+nadia_stage_20_tokenizer_artifact_inventory_contract_present=1
+nadia_tokenizer_artifact_inventory_contract_generator_present=1
+nadia_stage_21_tokenizer_artifact_measurement_contract_present=1
+nadia_tokenizer_artifact_measurement_contract_generator_present=1
+nadia_stage_22_tokenizer_artifact_verification_contract_present=1
+nadia_tokenizer_artifact_verification_contract_generator_present=1
+nadia_stage_23_tokenizer_artifact_binding_contract_present=1
+nadia_tokenizer_artifact_binding_contract_generator_present=1
+nadia_stage_24_tokenizer_runtime_attachment_contract_present=1
+nadia_tokenizer_runtime_attachment_contract_generator_present=1
+nadia_stage_25_prompt_tokenization_contract_present=1
+nadia_prompt_tokenization_contract_generator_present=1
+nadia_stage_26_prompt_token_sequence_contract_present=1
+nadia_prompt_token_sequence_contract_generator_present=1
 nadia_panel_install_surface_present=1
 nadia_console_status_surface_present=1
 nadia_model_runtime_present=0

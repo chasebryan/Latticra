@@ -105,6 +105,22 @@ check_shell_script() {
         fail "$script CXXFLAGS must include $flag"
     done
   fi
+
+  if [ "$script" = "installer/scripts/latticra-installer-apply.sh" ]; then
+    bad_cargo_builds=$(grep -n 'cargo build' "$script" | grep -Ev -- '--locked.*--offline|--offline.*--locked' || :)
+    [ -z "$bad_cargo_builds" ] ||
+      fail "$script cargo builds must use locked offline dependencies"
+
+    require_contains "path_has_parent_reference()" "$script"
+    require_contains "refusing install prefix with parent-directory traversal" "$script"
+    require_contains "refusing symlink install prefix" "$script"
+  fi
+
+  if [ "$script" = "installer/scripts/latticra-installer-uninstall.sh" ]; then
+    require_contains "path_has_parent_reference()" "$script"
+    require_contains "parent-directory traversal" "$script"
+    require_contains "refusing to reset symlink prefix" "$script"
+  fi
 }
 
 workflow_count=0
@@ -124,14 +140,20 @@ require_contains "sh ./scripts/test-defensive-threat-model-contract.sh" "Makefil
 require_contains "sh ./scripts/test-defensive-threat-model-implementation-plan.sh" "Makefile"
 require_contains "sh ./scripts/test-defensive-threat-model-validation.sh" "Makefile"
 require_contains "cargo fmt --manifest-path installer/latticra-installer/Cargo.toml -- --check" "Makefile"
-require_contains "cargo check --manifest-path installer/latticra-installer/Cargo.toml" "Makefile"
+require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" "Makefile"
 require_contains "python3 scripts/check_latticra_panel_ui_design.py" "Makefile"
 require_contains "sh ./scripts/test-latticra-panel-local-install-evidence-status.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-panel-local-install-public-entrypoint-alignment.sh" "Makefile"
+require_contains "sh ./scripts/test-latticra-panel-local-uninstall-reset.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-console-foundation.sh" "Makefile"
 require_contains "sh ./scripts/test-cpp-authority-layer.sh" "Makefile"
 require_contains "make quality" ".github/workflows/quality.yml"
+require_contains 'gcc \' ".github/workflows/quality.yml"
+require_contains 'g++ \' ".github/workflows/quality.yml"
+require_contains "timeout-minutes: 20" ".github/workflows/quality.yml"
 require_contains "make quality-safety-guards" ".github/workflows/quality-safety-guards.yml"
+require_contains "timeout-minutes: 10" ".github/workflows/quality-safety-guards.yml"
+require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" ".github/workflows/latticra-panel-installer.yml"
 require_line "make quality" "README.md"
 require_line "make quality-safety-guards" "README.md"
 require_line "make quality" "CONTRIBUTING.md"

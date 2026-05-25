@@ -121,6 +121,9 @@ static int lat_pipeline_report_refinement_reports_success_stage_summary(void) {
     EXPECT_TRUE(strstr(report, "semantic_ok=1\n") != 0, "semantic ok report field");
     EXPECT_TRUE(strstr(report, "model_ok=1\n") != 0, "model ok report field");
     EXPECT_TRUE(strstr(report, "model_error=ok\n") != 0, "model error report field");
+    EXPECT_TRUE(strstr(report, "comment_count=0\n") != 0, "comment count report field");
+    EXPECT_TRUE(strstr(report, "first_comment_start_line=1\n") != 0, "comment start line report field");
+    EXPECT_TRUE(strstr(report, "first_comment_start_column=1\n") != 0, "comment start column report field");
     EXPECT_TRUE(strstr(report, "first_declaration_node_index=1\n") != 0, "first declaration node report field");
     EXPECT_TRUE(strstr(report, "first_declaration_kind=state\n") != 0, "first declaration kind report field");
     EXPECT_TRUE(strstr(report, "first_declaration_name=RootCell\n") != 0, "first declaration name report field");

@@ -8,13 +8,14 @@ Scope: status checkpoint after aligning dry-run writer public meaning against fu
 
 Latticra now has a macOS app bundle writer alignment record.
 
-The alignment makes the current capability explicit: a no-effect dry-run writer prototype exists, but a commit-capable writer, app bundle install, reset/uninstall implementation, and install verification transcript do not exist.
+The alignment makes the current capability explicit: a no-effect dry-run writer prototype exists, and the macOS dry-run writer candidate integration can prove candidate inputs reach the no-effect future commit-gate decision, but a commit-capable writer, app bundle install, reset/uninstall implementation, and install verification transcript do not exist.
 
 ## Status Fields
 
 ```text
 macos_app_bundle_writer_alignment_present=1
 macos_local_candidate_asset_probe_present=1
+macos_dry_run_writer_candidate_integration_present=1
 macos_dry_run_writer_public_meaning_recorded=1
 macos_commit_capable_writer_nonclaim_recorded=1
 macos_future_commit_gate_requirements_recorded=1

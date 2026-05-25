@@ -57,7 +57,7 @@ jobs:
         run: cargo fmt --manifest-path installer/latticra-installer/Cargo.toml -- --check
 
       - name: Check Rust installer crate
-        run: cargo check --manifest-path installer/latticra-installer/Cargo.toml
+        run: cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml
 
       - name: Validate Panel UI design checkpoint
         run: python3 scripts/check_latticra_panel_ui_design.py

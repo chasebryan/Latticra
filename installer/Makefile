@@ -29,10 +29,10 @@ help:
 >  "  make -C installer clean           Remove generated local installer receipts/plans"
 
 gui panel:
->cd "$(GUI_DIR)" && LATTICRA_INSTALLER_ROOT="$(INSTALLER_DIR)" cargo run
+>cd "$(GUI_DIR)" && LATTICRA_INSTALLER_ROOT="$(INSTALLER_DIR)" cargo run --locked
 
 build-gui build-panel:
->cd "$(GUI_DIR)" && cargo build --release
+>cd "$(GUI_DIR)" && cargo build --release --locked
 
 dry-run:
 >sh "$(SCRIPT_DIR)/latticra-installer-apply.sh" \

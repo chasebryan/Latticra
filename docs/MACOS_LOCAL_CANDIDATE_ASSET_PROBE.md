@@ -17,6 +17,8 @@ local_icon_candidate_probe=1
 
 The probe does not build, download, sign, notarize, copy, write app bundle files, mutate host state, open the network, or grant authority.
 
+The macOS dry-run writer candidate integration consumes this probe's ready decision and compares it with the app bundle writer dry-run decision. The integration remains no-effect and keeps `commit_user_local_managed_artifacts=0`.
+
 ## Command
 
 ```sh
@@ -122,6 +124,12 @@ Expected output:
 
 ```text
 macos_local_candidate_asset_probe: ok
+```
+
+The bridge to the writer dry-run is guarded by:
+
+```sh
+sh scripts/test-macos-dry-run-writer-candidate-integration.sh
 ```
 
 ## Non-Claims

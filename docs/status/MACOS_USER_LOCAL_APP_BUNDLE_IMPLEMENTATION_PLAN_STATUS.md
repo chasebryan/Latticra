@@ -8,7 +8,7 @@ Scope: status checkpoint after adding the no-effect macOS user-local app bundle 
 
 Latticra now has a no-effect implementation plan for a future macOS user-local app bundle writer.
 
-The plan defines writer phases, failure behavior, reset/uninstall sequencing, verification commands, and required future guard tests. It keeps the writer absent and records that no app bundle, wrapper, Application Support file, receipt, or verification transcript has been created.
+The plan defines writer phases, failure behavior, reset/uninstall sequencing, verification commands, and required future guard tests. It now records the macOS dry-run writer candidate integration as the no-effect bridge from local candidate inputs to the writer dry-run future commit-gate decision. It keeps the writer absent and records that no app bundle, wrapper, Application Support file, receipt, or verification transcript has been created.
 
 ## Status Fields
 
@@ -17,6 +17,7 @@ macos_user_local_app_bundle_implementation_plan_present=1
 macos_app_bundle_writer_dry_run_present=1
 macos_app_bundle_writer_alignment_present=1
 macos_local_candidate_asset_probe_present=1
+macos_dry_run_writer_candidate_integration_present=1
 macos_writer_phase_plan_recorded=1
 macos_writer_failure_behavior_recorded=1
 macos_reset_uninstall_sequence_recorded=1

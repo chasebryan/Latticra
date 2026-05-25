@@ -1,7 +1,7 @@
 # Latticra Lat Pipeline Report Refinement
 
-Status: Lat pipeline report refinement implementation with first-declaration and first-clause metadata
-Scope: deterministic Lat pipeline stage-summary metadata, first-declaration report fields, first-clause report fields, invariant tests, guard coverage, and workflow wiring.
+Status: Lat pipeline report refinement implementation with comment, first-declaration, and first-clause metadata
+Scope: deterministic Lat pipeline stage-summary metadata, line-comment report fields, first-declaration report fields, first-clause report fields, invariant tests, guard coverage, and workflow wiring.
 
 ## Purpose
 
@@ -25,6 +25,13 @@ lowering_ok
 lir_ok
 no_effect_chain_ok
 evidence_level
+comment_count
+first_comment_start_offset
+first_comment_end_offset
+first_comment_start_line
+first_comment_start_column
+first_comment_end_line
+first_comment_end_column
 first_declaration_node_index
 first_declaration_kind
 first_declaration_name
@@ -41,7 +48,7 @@ first_clause_operator
 first_clause_value
 ```
 
-The deterministic `LAT PIPELINE REPORT` now emits these fields as labels and integers. First-declaration and first-clause metadata is copied from the Lat-to-LIR lowering result for audit visibility only.
+The deterministic `LAT PIPELINE REPORT` now emits these fields as labels and integers. Line-comment metadata is copied from the parser result, and first-declaration plus first-clause metadata is copied from the Lat-to-LIR lowering result for audit visibility only.
 
 ## Stage labels
 
@@ -85,6 +92,13 @@ lowering_ok=1
 lir_ok=1
 no_effect_chain_ok=1
 evidence_level=2
+comment_count=<line comment count from parse result>
+first_comment_start_offset=<first line comment start offset>
+first_comment_end_offset=<first line comment end offset>
+first_comment_start_line=<first line comment start line>
+first_comment_start_column=<first line comment start column>
+first_comment_end_line=<first line comment end line>
+first_comment_end_column=<first line comment end column>
 first_declaration_node_index=<first lowered declaration node index>
 first_declaration_kind=<first lowered declaration kind>
 first_declaration_name=<first lowered declaration name>
@@ -122,6 +136,7 @@ This slice updates or adds:
 ```text
 include/latticra/lat_pipeline.h
 src/lat_pipeline.c
+tests/lat_pipeline_invariants.c
 tests/lat_pipeline_report_refinement.c
 docs/LAT_PIPELINE_REPORT_REFINEMENT.md
 scripts/test-lat-pipeline-report-refinement.sh
@@ -153,6 +168,8 @@ lat_pipeline_report_refinement_reports_semantic_failure_stage
 lat_pipeline_report_refinement_null_result_sets_unknown_stage
 ```
 
+The aggregate Lat pipeline invariants also verify that parser comment metadata is copied into the pipeline result and emitted in `LAT PIPELINE REPORT`.
+
 ## Compatibility
 
 This refinement preserves the existing Lat pipeline behavior for:
@@ -165,6 +182,7 @@ Lat-to-LIR lowering
 LIR metadata output
 aggregate pipeline error labels
 module/source/count/span reporting
+parser line-comment count and first-comment span reporting
 no-effect flags
 small-buffer behavior
 null-argument behavior

@@ -48,6 +48,7 @@ Latest Nadia prompt tokenization contract Stage-25 note: 2026-05-25 CDT
 Latest Nadia prompt token sequence contract Stage-26 note: 2026-05-25 CDT
 Latest Latticra Console profile preset note: 2026-05-25 CDT
 Latest Latticra Console host-embedding contract note: 2026-05-25 CDT
+Latest Latticra Console read-only host inventory contract note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -84,6 +85,7 @@ Latest Seal core evidence public entrypoint alignment note: 2026-05-22 02:45 CDT
 Latest Lat grammar report metadata integration note: 2026-05-25 CDT
 Latest Lat grammar line-comment metadata refinement note: 2026-05-25 CDT
 Latest Lat grammar unsupported block-comment rejection refinement note: 2026-05-25 CDT
+Latest Lat pipeline comment metadata integration note: 2026-05-25 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
 Latest Lat model report declaration metadata integration note: 2026-05-25 CDT
 Latest Lat model report clause metadata integration note: 2026-05-25 CDT
@@ -250,6 +252,7 @@ Nadia prompt tokenization contract Stage-25
 Nadia prompt token sequence contract Stage-26
 Latticra Console profile presets
 Latticra Console host-embedding contract
+Latticra Console read-only host inventory contract
 Seal verification policy status/public-entry alignment
 Seal key parsing status/public-entry alignment
 Seal bounded no-effect key parsing implementation
@@ -289,6 +292,7 @@ Lat semantic validation foundation
 Lat grammar report metadata integration
 Lat grammar line-comment metadata refinement
 Lat grammar unsupported block-comment rejection refinement
+Lat pipeline comment metadata integration
 Lat semantic diagnostics refinement
 Lat model normalization implementation
 Lat model report declaration metadata integration
@@ -653,7 +657,7 @@ Lat now has a bounded no-effect path from source bytes through grammar parsing, 
 
 The current pipeline implementation composes existing parser, semantic, model normalization, lowering, and LIR metadata outputs. It preserves no-effect flags and produces a `LAT PIPELINE REPORT` without executing Lat or LIR.
 
-The Lat pipeline report now includes deterministic stage-summary metadata for last completed stage, failed stage, per-stage OK flags, model normalization status, no-effect-chain status, evidence level, first lowered declaration kind/name/source/index/clause metadata, and first lowered clause role/effect/name/operator/value/node metadata.
+The Lat pipeline report now includes deterministic stage-summary metadata for last completed stage, failed stage, per-stage OK flags, model normalization status, no-effect-chain status, evidence level, parser line-comment count plus first-comment span metadata, first lowered declaration kind/name/source/index/clause metadata, and first lowered clause role/effect/name/operator/value/node metadata.
 
 ## Current Lat-specific LIR refinement boundary
 

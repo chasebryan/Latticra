@@ -8,7 +8,7 @@ Scope: status checkpoint after adding the macOS app bundle writer dry-run protot
 
 Latticra now has a no-effect macOS app bundle writer dry-run prototype.
 
-The prototype emits the planned writer phase report, validates unsafe paths, inspects existing target markers, reports missing executable/icon candidates, and keeps commit behavior disabled. It does not create an app bundle, write Application Support files, install wrappers, mutate shell profiles, use launchd, access Keychain, request TCC permissions, use the network, or grant platform authority.
+The prototype emits the planned writer phase report, validates unsafe paths, inspects existing target markers, reports missing executable/icon candidates, and keeps commit behavior disabled. It is now paired with the macOS dry-run writer candidate integration, which proves accepted local candidates can move the dry-run to `ready-for-future-commit-gate` without enabling writes. It does not create an app bundle, write Application Support files, install wrappers, mutate shell profiles, use launchd, access Keychain, request TCC permissions, use the network, or grant platform authority.
 
 ## Status Fields
 
@@ -16,6 +16,7 @@ The prototype emits the planned writer phase report, validates unsafe paths, ins
 macos_app_bundle_writer_dry_run_present=1
 macos_app_bundle_writer_alignment_present=1
 macos_local_candidate_asset_probe_present=1
+macos_dry_run_writer_candidate_integration_present=1
 macos_app_bundle_writer_phase_report_present=1
 macos_app_bundle_writer_path_guard_present=1
 macos_app_bundle_writer_marker_inspection_present=1

@@ -56,6 +56,45 @@ static const char FOUNDATION_MODEL[] =
     "  }\n"
     "}\n";
 
+static const char COMMENTED_FOUNDATION_MODEL[] =
+    "// pipeline comment one\n"
+    "lat module FoundationModule { // module comment\n"
+    "  // state comment\n"
+    "  state RootCell {\n"
+    "    origin = \"0/0\" // origin comment\n"
+    "    route = \"ROOT\"\n"
+    "    axis = \"ROOT\"\n"
+    "    path = \"/\"\n"
+    "    health = \"ok\"\n"
+    "    risk = \"low\"\n"
+    "    lock = \"open\"\n"
+    "    host_effect = none\n"
+    "    external_effect = none\n"
+    "  }\n"
+    "  effect PreviewOnly {\n"
+    "    host = none\n"
+    "    external = none\n"
+    "    network = none\n"
+    "    hardware = none\n"
+    "  }\n"
+    "  policy SafePreview {\n"
+    "    require risk != \"high\"\n"
+    "    require lock == \"open\"\n"
+    "    ensure host_effect == none\n"
+    "    ensure external_effect == none\n"
+    "  }\n"
+    "  transition MoveRight from RootCell {\n"
+    "    require lock == \"open\"\n"
+    "    effect host = none\n"
+    "    effect external = none\n"
+    "  }\n"
+    "  assertion RootCellIsSafe {\n"
+    "    require health == \"ok\"\n"
+    "    require host_effect == none\n"
+    "    require external_effect == none\n"
+    "  }\n"
+    "}\n";
+
 static int run_pipeline(
     const char *source,
     latticra_lat_parse_result_t *parse,
@@ -137,6 +176,29 @@ static int lat_pipeline_preserves_counts(void) {
     return 0;
 }
 
+static int lat_pipeline_exposes_comment_metadata(void) {
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lir_module_t module;
+    latticra_lat_to_lir_result_t lowering;
+    latticra_lat_pipeline_result_t pipeline;
+    char report[LATTICRA_LAT_PIPELINE_REPORT_MAX];
+    EXPECT_TRUE(run_pipeline(COMMENTED_FOUNDATION_MODEL, &parse, &semantic, &module, &lowering, &pipeline) == 0, "comment metadata pipeline run");
+    EXPECT_TRUE(parse.error == LATTICRA_LAT_PARSE_OK, "comment metadata parse ok");
+    EXPECT_TRUE(pipeline.error == LATTICRA_LAT_PIPELINE_OK, "comment metadata pipeline ok");
+    EXPECT_TRUE(pipeline.comment_count == 4u, "pipeline comment count");
+    EXPECT_TRUE(pipeline.first_comment_span.start_line == 1u, "pipeline first comment line");
+    EXPECT_TRUE(pipeline.first_comment_span.start_column == 1u, "pipeline first comment column");
+    EXPECT_TRUE(pipeline.no_effect == 1, "comment metadata no-effect");
+    EXPECT_TRUE(pipeline.execution_allowed == 0, "comment metadata execution denied");
+    EXPECT_TRUE(latticra_lat_pipeline_report(&pipeline, report, sizeof(report)) == LATTICRA_STATUS_OK, "comment metadata report");
+    EXPECT_TRUE(strstr(report, "error=ok\n") != 0, "comment report ok");
+    EXPECT_TRUE(strstr(report, "comment_count=4\n") != 0, "comment count in report");
+    EXPECT_TRUE(strstr(report, "first_comment_start_line=1\n") != 0, "first comment line in report");
+    EXPECT_TRUE(strstr(report, "first_comment_start_column=1\n") != 0, "first comment column in report");
+    return 0;
+}
+
 static int lat_pipeline_rejects_parse_failure(void) {
     static const char source[] = "lat module Bad { unknown Thing { } }\n";
     latticra_lat_parse_result_t parse;
@@ -205,6 +267,7 @@ static int lat_pipeline_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(one, "LAT PIPELINE REPORT\n") != 0, "report header");
     EXPECT_TRUE(strstr(one, "error=ok\n") != 0, "report ok");
     EXPECT_TRUE(strstr(one, "model_error=ok\n") != 0, "model ok in report");
+    EXPECT_TRUE(strstr(one, "comment_count=0\n") != 0, "comment count in report");
     EXPECT_TRUE(strstr(one, "model_declaration_count=5\n") != 0, "model count in report");
     EXPECT_TRUE(strstr(one, "first_declaration_node_index=1\n") != 0, "first declaration node in report");
     EXPECT_TRUE(strstr(one, "first_declaration_kind=state\n") != 0, "first declaration kind in report");
@@ -253,6 +316,7 @@ int main(void) {
     if (lat_pipeline_accepts_foundation_model() != 0) return 1;
     if (lat_pipeline_exposes_normalized_model() != 0) return 1;
     if (lat_pipeline_preserves_counts() != 0) return 1;
+    if (lat_pipeline_exposes_comment_metadata() != 0) return 1;
     if (lat_pipeline_rejects_parse_failure() != 0) return 1;
     if (lat_pipeline_rejects_semantic_failure() != 0) return 1;
     if (lat_pipeline_preserves_no_effect_flags() != 0) return 1;

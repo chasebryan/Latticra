@@ -12,6 +12,7 @@ permissions:
 jobs:
   quality:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,6 +22,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             make \
+            gcc \
+            g++ \
             pkg-config \
             desktop-file-utils \
             libx11-dev \

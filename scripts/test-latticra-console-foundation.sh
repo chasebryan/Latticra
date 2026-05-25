@@ -34,6 +34,7 @@ cc $CFLAGS \
 /tmp/latticra-console-report man > /tmp/latticra-console-man.txt
 /tmp/latticra-console-report boundary > /tmp/latticra-console-boundary.txt
 /tmp/latticra-console-report host-contract > /tmp/latticra-console-host-contract.txt
+/tmp/latticra-console-report host-inventory > /tmp/latticra-console-host-inventory.txt
 
 grep -Fq 'LATTICRA CONSOLE REPORT' /tmp/latticra-console-report.txt
 grep -Fq 'console_id=latticra-console' /tmp/latticra-console-report.txt
@@ -50,12 +51,16 @@ grep -Fq 'command=lc profiles' /tmp/latticra-console-report.txt
 grep -Fq 'capability=lc.core.profiles' /tmp/latticra-console-report.txt
 grep -Fq 'command=lc host-contract' /tmp/latticra-console-report.txt
 grep -Fq 'capability=lc.host.contract' /tmp/latticra-console-report.txt
+grep -Fq 'command=lc host-inventory' /tmp/latticra-console-report.txt
+grep -Fq 'capability=lc.host.inventory' /tmp/latticra-console-report.txt
 grep -Fq 'command=lc substrate' /tmp/latticra-console-report.txt
 grep -Fq 'capability=lc.substrate.inspect' /tmp/latticra-console-report.txt
 grep -Fq 'launches_host_process=0' /tmp/latticra-console-report.txt
 grep -Fq 'substrate_bridge_status=metadata-bound-ready' /tmp/latticra-console-report.txt
 grep -Fq 'host_embedding_contract_status=metadata-only-contract-ready' /tmp/latticra-console-report.txt
 grep -Fq 'host_embedding_contract_present=1' /tmp/latticra-console-report.txt
+grep -Fq 'host_inventory_contract_status=metadata-only-contract-ready' /tmp/latticra-console-report.txt
+grep -Fq 'host_inventory_contract_present=1' /tmp/latticra-console-report.txt
 grep -Fq 'panel_installable=1' /tmp/latticra-console-report.txt
 grep -Fq 'future_os_base_claim=planned_not_claimed' /tmp/latticra-console-report.txt
 grep -Fq 'execution_allowed=0' /tmp/latticra-console-report.txt
@@ -65,18 +70,21 @@ grep -Fq 'LATTICRA CONSOLE HELP' /tmp/latticra-console-help.txt
 grep -Fq 'registry_source=c-static-table' /tmp/latticra-console-help.txt
 grep -Fq 'lc profiles' /tmp/latticra-console-help.txt
 grep -Fq 'lc host-contract' /tmp/latticra-console-help.txt
+grep -Fq 'lc host-inventory' /tmp/latticra-console-help.txt
 grep -Fq 'lc substrate' /tmp/latticra-console-help.txt
 grep -Fq 'capability=lc.substrate.inspect' /tmp/latticra-console-help.txt
 grep -Fq 'host_process_launch_allowed=0' /tmp/latticra-console-help.txt
 grep -Fq 'LATTICRA-CONSOLE(1)' /tmp/latticra-console-man.txt
 grep -Fq 'COMMANDS' /tmp/latticra-console-man.txt
 grep -Fq 'latticra-lc host-contract' /tmp/latticra-console-man.txt
+grep -Fq 'latticra-lc host-inventory' /tmp/latticra-console-man.txt
 grep -Fq 'production_os_claim=0' /tmp/latticra-console-man.txt
 grep -Fq 'LATTICRA CONSOLE COMMAND BOUNDARY REPORT' /tmp/latticra-console-boundary.txt
 grep -Fq 'runtime_boundary_bound=1' /tmp/latticra-console-boundary.txt
 grep -Fq 'seal_capability_labels_bound=1' /tmp/latticra-console-boundary.txt
 grep -Fq 'command=lc substrate' /tmp/latticra-console-boundary.txt
 grep -Fq 'command=lc host-contract' /tmp/latticra-console-boundary.txt
+grep -Fq 'command=lc host-inventory' /tmp/latticra-console-boundary.txt
 grep -Fq 'runtime_request=authority-check' /tmp/latticra-console-boundary.txt
 grep -Fq 'command=lc os' /tmp/latticra-console-boundary.txt
 grep -Fq 'policy_matrix_cell=future-gated-operation' /tmp/latticra-console-boundary.txt
@@ -87,6 +95,12 @@ grep -Fq 'contract_profile=lc-host-embedding-v0' /tmp/latticra-console-host-cont
 grep -Fq 'host_process_launch_allowed=0' /tmp/latticra-console-host-contract.txt
 grep -Fq 'host_file_read_allowed=0' /tmp/latticra-console-host-contract.txt
 grep -Fq 'promotion_gate=contract_receipt_and_read_only_host_inventory' /tmp/latticra-console-host-contract.txt
+grep -Fq 'LATTICRA CONSOLE READ-ONLY HOST INVENTORY CONTRACT' /tmp/latticra-console-host-inventory.txt
+grep -Fq 'contract_profile=lc-host-inventory-v0' /tmp/latticra-console-host-inventory.txt
+grep -Fq 'inventory_performed=0' /tmp/latticra-console-host-inventory.txt
+grep -Fq 'host_probe_allowed=0' /tmp/latticra-console-host-inventory.txt
+grep -Fq 'host_file_read_allowed=0' /tmp/latticra-console-host-inventory.txt
+grep -Fq 'promotion_gate=host_inventory_contract_receipt_before_host_adapter' /tmp/latticra-console-host-inventory.txt
 
 grep -Fq '[components.latticra_console]' installer/manifests/components.toml
 grep -Fq 'latticra_console = true' installer/configs/default.installer.toml
@@ -99,11 +113,14 @@ grep -Fq 'WorkspaceTab::Console' installer/latticra-installer/src/ui.rs
 grep -Fq 'profile = "panel_embedded"' installer/configs/default.installer.toml
 grep -Fq 'command_registry_profile = "c-static-table"' installer/configs/default.installer.toml
 grep -Fq 'host_embedding_contract_profile = "lc-host-embedding-v0"' installer/configs/default.installer.toml
+grep -Fq 'host_inventory_contract_profile = "lc-host-inventory-v0"' installer/configs/default.installer.toml
 grep -Fq 'LATTICRA_CONSOLE=$(cfg latticra_console true)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_PROFILE=$(cfg_section lc profile panel_embedded)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_HOST_EMBEDDING_CONTRACT_PROFILE=$(cfg_section lc host_embedding_contract_profile lc-host-embedding-v0)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_HOST_INVENTORY_CONTRACT_PROFILE=$(cfg_section lc host_inventory_contract_profile lc-host-inventory-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'profiles/hosted-reference.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'host-embedding/contract.toml' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'host-inventory/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'latticra-lc' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'render_lc_help()' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'render_lc_man()' installer/scripts/latticra-installer-apply.sh
@@ -111,6 +128,7 @@ grep -Fq 'render_lc_boundary()' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'Latticra Console Foundation' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Panel Profile Presets' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Host Embedding Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'Read-Only Host Inventory Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Help And Manpage Rendering' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Runtime Boundary Binding' docs/LATTICRA_CONSOLE_FOUNDATION.md
 

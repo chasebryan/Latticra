@@ -96,7 +96,7 @@ CFBundlePackageType=APPL
 NSHighResolutionCapable=true
 ```
 
-Phase 5 must require a local Panel executable candidate and icon candidate before real writes. It must not download, build, sign, notarize, or generate network-dependent assets.
+Phase 5 must require a local Panel executable candidate and icon candidate before real writes. The macOS dry-run writer candidate integration proves this phase can become ready in dry-run only when the local candidate asset probe and writer dry-run agree. It must not download, build, sign, notarize, or generate network-dependent assets.
 
 Phase 6 must stage:
 
@@ -221,6 +221,7 @@ macos_user_local_app_bundle_implementation_plan_present=1
 macos_app_bundle_writer_present=0
 macos_app_bundle_writer_dry_run_present=1
 macos_local_candidate_asset_probe_present=1
+macos_dry_run_writer_candidate_integration_present=1
 macos_app_bundle_created=0
 macos_install_verified=0
 macos_reset_uninstall_implemented=0

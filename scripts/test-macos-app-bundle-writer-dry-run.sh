@@ -53,6 +53,7 @@ require_file "$contract_status"
 require_file "$dry_status"
 require_file "$probe_status"
 require_file "$workflow"
+require_file installer/latticra-installer/assets/latticra-panel.png
 
 require_contains 'Status: no-effect macOS app bundle writer dry-run prototype' "$doc"
 require_contains 'sh scripts/macos-app-bundle-writer-dry-run.sh' "$doc"
@@ -68,11 +69,14 @@ require_contains 'app_bundle_write_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
 require_contains 'The macOS local candidate asset probe is the no-effect readiness check' "$doc"
+require_contains 'macOS dry-run writer candidate integration' "$doc"
+require_contains 'integration_decision=ready-for-future-commit-gate-no-effect' "$doc"
 require_contains 'Add a macOS commit gate contract' "$doc"
 
 require_contains 'Status: no-effect writer dry-run status' "$status"
 require_contains 'macos_app_bundle_writer_dry_run_present=1' "$status"
 require_contains 'macos_app_bundle_writer_alignment_present=1' "$status"
+require_contains 'macos_dry_run_writer_candidate_integration_present=1' "$status"
 require_contains 'macos_app_bundle_writer_phase_report_present=1' "$status"
 require_contains 'macos_app_bundle_writer_path_guard_present=1' "$status"
 require_contains 'macos_app_bundle_writer_marker_inspection_present=1' "$status"
@@ -87,11 +91,14 @@ require_contains 'not macOS install evidence' "$status"
 require_contains 'MACOS_APP_BUNDLE_WRITER_DRY_RUN_STATUS.md' "$index"
 require_contains 'macOS app bundle writer dry-run status' "$index"
 require_contains 'stage_3_user_local_app_bundle_writer_dry_run=present' "$transfer_plan"
+require_contains 'stage_3_dry_run_writer_candidate_integration=present' "$transfer_plan"
 require_contains 'stage_3_user_local_app_bundle=future' "$transfer_plan"
 require_contains 'docs/MACOS_APP_BUNDLE_WRITER_DRY_RUN.md' "$transfer_plan"
 require_contains 'macos_app_bundle_writer_dry_run_present=1' "$transfer_status"
+require_contains 'macos_dry_run_writer_candidate_integration_present=1' "$transfer_status"
 require_contains 'macos_app_bundle_writer_dry_run_present=1' "$implementation_status"
 require_contains 'macos_local_candidate_asset_probe_present=1' "$implementation_status"
+require_contains 'macos_dry_run_writer_candidate_integration_present=1' "$implementation_status"
 require_contains 'macos_app_bundle_writer_dry_run_present=1' "$contract_status"
 require_contains 'macos_app_bundle_writer_dry_run_present=1' "$dry_status"
 require_contains 'macos_app_bundle_writer_dry_run_present=1' "$probe_status"
@@ -103,6 +110,7 @@ require_contains 'commit_user_local_managed_artifacts=0' "$script"
 require_contains 'app_bundle_write_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
+require_contains 'next_lane=macos-commit-gate-contract' "$script"
 
 default_output=$(sh "$script")
 require_output_contains "$default_output" 'MACOS APP BUNDLE WRITER DRY RUN'
@@ -124,6 +132,15 @@ require_output_contains "$blocked_output" 'dry_run_decision=blocked-unsafe-path'
 require_output_contains "$blocked_output" 'commit_user_local_managed_artifacts=0'
 require_output_contains "$blocked_output" 'app_bundle_write_performed=0'
 require_output_contains "$blocked_output" 'host_mutation_performed=0'
+
+ready_output=$(sh "$script" --panel-executable /bin/sh --icon installer/latticra-installer/assets/latticra-panel.png)
+require_output_contains "$ready_output" 'panel_executable_candidate_present=1'
+require_output_contains "$ready_output" 'icon_candidate_present=1'
+require_output_contains "$ready_output" 'phase_5_status=ok'
+require_output_contains "$ready_output" 'dry_run_decision=ready-for-future-commit-gate'
+require_output_contains "$ready_output" 'commit_user_local_managed_artifacts=0'
+require_output_contains "$ready_output" 'app_bundle_write_performed=0'
+require_output_contains "$ready_output" 'host_mutation_performed=0'
 
 sh scripts/test-macos-user-local-app-bundle-contract.sh
 sh scripts/test-macos-user-local-app-bundle-implementation-plan.sh
