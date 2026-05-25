@@ -408,12 +408,19 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out);
     let _ = writeln!(out, "[nadia]");
     let _ = writeln!(out, "system_name=Latticra Nadia");
-    let _ = writeln!(out, "stage=0-foundation");
+    let _ = writeln!(out, "stage=1-local-context-engine");
     let _ = writeln!(
         out,
         "component_selected={}",
         config.components.nadia_offline_ai
     );
+    let _ = writeln!(out, "context_engine_stage=1-local-context-engine");
+    let _ = writeln!(out, "context_pack_command=scripts/nadia-context-pack.sh");
+    let _ = writeln!(
+        out,
+        "installed_context_pack_command=latticra-nadia context-pack"
+    );
+    let _ = writeln!(out, "local_file_read_for_indexing=operator_invoked");
     let _ = writeln!(out, "human_dignity_principle=1");
     let _ = writeln!(out, "survivor_witness_respect=1");
     let _ = writeln!(out, "community_awareness_posture=1");
@@ -421,6 +428,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "model_runtime_present=0");
     let _ = writeln!(out, "model_weights_installed=0");
     let _ = writeln!(out, "tool_execution_authority=0");
+    let _ = writeln!(out, "source_mutation_authority=0");
     let _ = writeln!(out);
     let _ = writeln!(out, "[seal]");
     let _ = writeln!(out, "crypto_profile={}", config.seal.crypto_profile.label());

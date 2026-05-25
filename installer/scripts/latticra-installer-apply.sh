@@ -337,8 +337,12 @@ developer_cli_helpers=$DEVELOPER_CLI_HELPERS
 
 [nadia]
 system_name=Latticra Nadia
-stage=0-foundation
+stage=1-local-context-engine
 component_selected=$NADIA_OFFLINE_AI
+context_engine_stage=1-local-context-engine
+context_pack_command=scripts/nadia-context-pack.sh
+installed_context_pack_command=latticra-nadia context-pack
+local_file_read_for_indexing=operator_invoked
 human_dignity_principle=1
 survivor_witness_respect=1
 community_awareness_posture=1
@@ -346,6 +350,7 @@ harm_aware_development=1
 model_runtime_present=0
 model_weights_installed=0
 tool_execution_authority=0
+source_mutation_authority=0
 
 [behavior]
 create_prefix_layout=$CREATE_PREFIX_LAYOUT
@@ -370,7 +375,7 @@ if bool_true "$DRY_RUN"; then
   phase 6 "dry-run build project"
   log "[dry-run] would try Cargo/CMake/Make builds when configured"
   phase 7 "dry-run install wrappers"
-  log "[dry-run] would write latticra, lat, latticra-seal, latticra-panel commands"
+  log "[dry-run] would write latticra, lat, latticra-seal, latticra-nadia, latticra-panel commands"
   phase 8 "dry-run desktop integration"
   log "[dry-run] would write desktop entry when configured"
   phase 9 "dry-run manifest"
@@ -532,6 +537,9 @@ stage = "0-foundation"
 mode = "offline-foundation"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
+context_engine_stage = "1-local-context-engine"
+context_pack_command = "scripts/nadia-context-pack.sh"
+local_file_read_for_indexing = "operator-invoked"
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -550,7 +558,7 @@ Nadia is the Stage-0 offline AI foundation for Latticra.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, model-registry, and productivity-ledger paths. It does not install model weights, run inference, execute tools, use the network, train a model, or mutate source.
+This installed component reserves local context-pack, model-registry, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack. It does not install model weights, run inference, use the network, train a model, or mutate source.
 NADIAREADME
 fi
 
@@ -698,13 +706,14 @@ case "\${1:-status}" in
     echo
     echo "name=Nadia"
     echo "system_name=Latticra Nadia"
-    echo "stage=0-foundation"
-    echo "mode=offline-foundation"
+    echo "stage=1-local-context-engine"
+    echo "mode=offline-local-context"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "context_packs=\$NADIA_DIR/context-packs"
     echo "model_registry=\$NADIA_DIR/model-registry"
     echo "productivity_ledger=\$NADIA_DIR/productivity-ledger"
+    echo "context_pack_command=latticra-nadia context-pack"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -715,14 +724,27 @@ case "\${1:-status}" in
     echo "model_weights_installed=0"
     echo "network_authority=0"
     echo "tool_execution_authority=0"
+    echo "source_mutation_authority=0"
     echo "self_modification_authority=0"
     echo "production_ai_claimed=0"
+    ;;
+  context-pack|pack|index)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-context-pack.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia context-pack script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" --repo "\$PREFIX/lib/latticra" --output "\$NADIA_DIR/context-packs"
     ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|path}" >&2
     exit 64
     ;;
 esac

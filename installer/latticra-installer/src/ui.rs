@@ -289,7 +289,9 @@ impl LatticraInstallerApp {
 
         match parts.as_slice() {
             ["help"] | ["?"] => {
-                self.push_console("panel: help, status, plan, save, dry-run, clear, nadia status");
+                self.push_console(
+                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context",
+                );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
             }
@@ -318,11 +320,20 @@ impl LatticraInstallerApp {
                     self.config.components.nadia_offline_ai
                 ));
                 self.push_console("human_dignity_principle=1 community_awareness_posture=1");
+                self.push_console("context_engine_stage=1-local-context-engine");
                 self.push_console(
-                    "stage=0 foundation; model_runtime_present=0 model_weights_installed=0",
+                    "stage=1 local-context-engine; model_runtime_present=0 model_weights_installed=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
+                );
+            }
+            ["nadia", "context"] | ["nadia", "context-pack"] => {
+                self.push_console("nadia_context_engine=stage-1-local-context-pack");
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia context-pack");
+                self.push_console(
+                    "network_authority=0 model_runtime_present=0 source_mutation_authority=0",
                 );
             }
             ["plan"] => {

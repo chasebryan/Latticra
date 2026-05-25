@@ -1,7 +1,10 @@
-.PHONY: seal
+.PHONY: seal nadia-context
 
 seal:
 	./scripts/latticra-seal-smoke.sh
+
+nadia-context:
+	sh ./scripts/nadia-context-pack.sh --repo .
 
 .PHONY: seal-policy-denials
 

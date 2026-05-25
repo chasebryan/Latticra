@@ -53,6 +53,7 @@ plan
 save
 dry-run
 nadia status
+nadia context
 profile guided
 profile seal
 profile fedora
@@ -108,7 +109,13 @@ Or from the desktop app grid, open **Latticra Panel**.
 
 Nadia is Latticra's planned offline AI companion for software development, systems engineering, and AI development work. The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-In the current installer lane, Nadia is Stage-0 only: local identity, config, Console status, component marker, and productivity-ledger space. No model runtime, model weights, tool execution, training, or network authority are installed.
+In the current installer lane, Nadia includes Stage-1 local context-pack generation plus Stage-0 identity, config, Console status, component marker, and productivity-ledger space. No model runtime, model weights, training, source mutation, or network authority are installed.
+
+After a guarded local install with Nadia enabled:
+
+```sh
+latticra-nadia context-pack
+```
 
 ## Uninstall managed local install
 

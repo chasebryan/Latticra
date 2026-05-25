@@ -137,6 +137,20 @@ Establish name, component identity, Panel install surface, Console status surfac
 
 Build a no-network project indexer for docs, headers, sources, tests, scripts, installer configs, and status records. Produce context packs for Latticra-specific coding tasks without running inference.
 
+Current Stage-1 status:
+
+```text
+nadia_stage_1_local_context_engine_present=1
+context_pack_command=scripts/nadia-context-pack.sh
+installed_context_pack_command=latticra-nadia context-pack
+local_file_read_for_indexing=operator_invoked
+source_mutation_authority=0
+network_authority=0
+model_runtime_present=0
+```
+
+See [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md).
+
 ### Stage-2: Offline Inference Runtime
 
 Add a pluggable local runtime boundary for operator-provided models, likely GGUF-compatible first. Record model hashes, quantization, context length, hardware profile, and memory budget before use.
@@ -173,10 +187,11 @@ Stage-0 Nadia is not:
 
 ## Promotion Gate
 
-Before Stage-1 starts, Latticra should keep this guard passing:
+Before Stage-2 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
+sh scripts/test-nadia-local-context-engine-stage-1.sh
 ```
 
 Before Stage-2 starts, a separate inference-runtime contract must exist and name model format, runtime boundary, memory policy, prompt/context evidence, failure behavior, receipt fields, and non-claims.
