@@ -28,11 +28,14 @@ require_file scripts/test-lat-pipeline.sh
 require_file .github/workflows/lat-pipeline-diagnostic-integration-refinement.yml
 
 require_contains 'LATTICRA_LAT_PIPELINE_DIAGNOSTIC_SEMANTIC' include/latticra/lat_pipeline_diagnostics.h
+require_contains 'LATTICRA_LAT_PIPELINE_DIAGNOSTIC_MODEL' include/latticra/lat_pipeline_diagnostics.h
 require_contains 'latticra_lat_pipeline_diagnostics_evaluate' include/latticra/lat_pipeline_diagnostics.h
 require_contains 'latticra_lat_pipeline_diagnostic_class_label' src/lat_pipeline_diagnostics.c
 require_contains 'semantic_diagnostic_count' src/lat_pipeline_diagnostics_eval.c
+require_contains 'LATTICRA_LAT_PIPELINE_MODEL_NOT_OK' src/lat_pipeline_diagnostics_eval.c
 require_contains 'LAT PIPELINE DIAGNOSTIC REPORT' src/lat_pipeline_diagnostics_report.c
 require_contains 'lat_pipeline_diagnostic_integration_reports_semantic_failure' tests/lat_pipeline_diagnostic_integration_refinement.c
+require_contains 'lat_pipeline_diagnostic_integration_reports_model_failure' tests/lat_pipeline_diagnostic_integration_refinement.c
 require_contains 'src/lat_pipeline_diagnostics_eval.c' scripts/test-lat-pipeline.sh
 
 printf 'lat_pipeline_diagnostic_integration_refinement: ok\n'

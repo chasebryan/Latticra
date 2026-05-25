@@ -71,6 +71,7 @@ static int lat_pipeline_report_refinement_labels_are_stable(void) {
     EXPECT_STR_EQ(latticra_lat_pipeline_stage_label(LATTICRA_LAT_PIPELINE_STAGE_NONE), "none", "none stage label");
     EXPECT_STR_EQ(latticra_lat_pipeline_stage_label(LATTICRA_LAT_PIPELINE_STAGE_PARSE), "parse", "parse stage label");
     EXPECT_STR_EQ(latticra_lat_pipeline_stage_label(LATTICRA_LAT_PIPELINE_STAGE_SEMANTIC), "semantic", "semantic stage label");
+    EXPECT_STR_EQ(latticra_lat_pipeline_stage_label(LATTICRA_LAT_PIPELINE_STAGE_MODEL), "model", "model stage label");
     EXPECT_STR_EQ(latticra_lat_pipeline_stage_label(LATTICRA_LAT_PIPELINE_STAGE_LOWERING), "lowering", "lowering stage label");
     EXPECT_STR_EQ(latticra_lat_pipeline_stage_label(LATTICRA_LAT_PIPELINE_STAGE_LIR), "lir", "lir stage label");
     EXPECT_STR_EQ(latticra_lat_pipeline_stage_label(LATTICRA_LAT_PIPELINE_STAGE_EFFECT_CHECK), "effect-check", "effect-check stage label");
@@ -93,6 +94,7 @@ static int lat_pipeline_report_refinement_reports_success_stage_summary(void) {
     EXPECT_TRUE(pipeline.failed_stage == LATTICRA_LAT_PIPELINE_STAGE_NONE, "failed stage none");
     EXPECT_TRUE(pipeline.parse_ok == 1, "parse ok flag");
     EXPECT_TRUE(pipeline.semantic_ok == 1, "semantic ok flag");
+    EXPECT_TRUE(pipeline.model_ok == 1, "model ok flag");
     EXPECT_TRUE(pipeline.lowering_ok == 1, "lowering ok flag");
     EXPECT_TRUE(pipeline.lir_ok == 1, "lir ok flag");
     EXPECT_TRUE(pipeline.no_effect_chain_ok == 1, "no-effect chain ok");
@@ -103,6 +105,9 @@ static int lat_pipeline_report_refinement_reports_success_stage_summary(void) {
     EXPECT_TRUE(strstr(report, "failed_stage=none\n") != 0, "failed none report field");
     EXPECT_TRUE(strstr(report, "parse_ok=1\n") != 0, "parse ok report field");
     EXPECT_TRUE(strstr(report, "semantic_ok=1\n") != 0, "semantic ok report field");
+    EXPECT_TRUE(strstr(report, "model_ok=1\n") != 0, "model ok report field");
+    EXPECT_TRUE(strstr(report, "model_error=ok\n") != 0, "model error report field");
+    EXPECT_TRUE(strstr(report, "first_transition_source_index=0\n") != 0, "transition source report field");
     EXPECT_TRUE(strstr(report, "lowering_ok=1\n") != 0, "lowering ok report field");
     EXPECT_TRUE(strstr(report, "lir_ok=1\n") != 0, "lir ok report field");
     EXPECT_TRUE(strstr(report, "no_effect_chain_ok=1\n") != 0, "no-effect chain report field");
@@ -122,6 +127,8 @@ static int lat_pipeline_report_refinement_reports_parse_failure_stage(void) {
     EXPECT_TRUE(run_pipeline(source, &parse, &semantic, &module, &lowering, &pipeline) == 0, "parse failure pipeline run");
     EXPECT_TRUE(pipeline.error == LATTICRA_LAT_PIPELINE_PARSE_NOT_OK, "parse failure pipeline error");
     EXPECT_TRUE(pipeline.parse_ok == 0, "parse ok false");
+    EXPECT_TRUE(pipeline.model_ok == 0, "parse failure model false");
+    EXPECT_TRUE(pipeline.model_error == LATTICRA_LAT_MODEL_PARSE_NOT_OK, "parse failure model error");
     EXPECT_TRUE(pipeline.last_completed_stage == LATTICRA_LAT_PIPELINE_STAGE_NONE, "parse failure completed none");
     EXPECT_TRUE(pipeline.failed_stage == LATTICRA_LAT_PIPELINE_STAGE_PARSE, "parse failed stage");
     EXPECT_TRUE(pipeline.evidence_level == 1u, "parse failure evidence level one");
@@ -130,6 +137,8 @@ static int lat_pipeline_report_refinement_reports_parse_failure_stage(void) {
     EXPECT_TRUE(strstr(report, "last_completed_stage=none\n") != 0, "parse failure last stage report");
     EXPECT_TRUE(strstr(report, "failed_stage=parse\n") != 0, "parse failed stage report");
     EXPECT_TRUE(strstr(report, "parse_ok=0\n") != 0, "parse ok false report");
+    EXPECT_TRUE(strstr(report, "model_ok=0\n") != 0, "parse model false report");
+    EXPECT_TRUE(strstr(report, "model_error=parse_not_ok\n") != 0, "parse model error report");
     EXPECT_TRUE(strstr(report, "evidence_level=1\n") != 0, "parse evidence level report");
     return 0;
 }
@@ -153,6 +162,8 @@ static int lat_pipeline_report_refinement_reports_semantic_failure_stage(void) {
     EXPECT_TRUE(pipeline.error == LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK, "semantic failure pipeline error");
     EXPECT_TRUE(pipeline.parse_ok == 1, "semantic failure parse ok");
     EXPECT_TRUE(pipeline.semantic_ok == 0, "semantic ok false");
+    EXPECT_TRUE(pipeline.model_ok == 0, "semantic failure model false");
+    EXPECT_TRUE(pipeline.model_error == LATTICRA_LAT_MODEL_SEMANTIC_NOT_OK, "semantic failure model error");
     EXPECT_TRUE(pipeline.last_completed_stage == LATTICRA_LAT_PIPELINE_STAGE_PARSE, "semantic failure completed parse");
     EXPECT_TRUE(pipeline.failed_stage == LATTICRA_LAT_PIPELINE_STAGE_SEMANTIC, "semantic failed stage");
     EXPECT_TRUE(pipeline.evidence_level == 1u, "semantic failure evidence level one");
@@ -162,6 +173,8 @@ static int lat_pipeline_report_refinement_reports_semantic_failure_stage(void) {
     EXPECT_TRUE(strstr(report, "failed_stage=semantic\n") != 0, "semantic failed stage report");
     EXPECT_TRUE(strstr(report, "parse_ok=1\n") != 0, "semantic failure parse ok report");
     EXPECT_TRUE(strstr(report, "semantic_ok=0\n") != 0, "semantic false report");
+    EXPECT_TRUE(strstr(report, "model_ok=0\n") != 0, "semantic model false report");
+    EXPECT_TRUE(strstr(report, "model_error=semantic_not_ok\n") != 0, "semantic model error report");
     return 0;
 }
 

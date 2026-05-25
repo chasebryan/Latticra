@@ -3,6 +3,7 @@
 Status: public status record
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal runtime handoff status/public-entry note: 2026-05-25 CDT
 Latest Seal effect decision status/public-entry note: 2026-05-25 CDT
 Latest Seal capability gate status/public-entry note: 2026-05-25 CDT
 Latest Seal verification receipt status/public-entry note: 2026-05-25 CDT
@@ -24,6 +25,7 @@ Latest Nadia prompt materialization contract Stage-14 note: 2026-05-25 CDT
 Latest Nadia awareness dialogue contract Stage-15 note: 2026-05-25 CDT
 Latest Nadia prompt evaluation handoff contract Stage-16 note: 2026-05-25 CDT
 Latest Nadia tokenization boundary contract Stage-17 note: 2026-05-25 CDT
+Latest Nadia tokenizer specification contract Stage-18 note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -55,6 +57,7 @@ Latest Seal signature request implementation note: 2026-05-25 CDT
 Latest Seal signature request contract note: 2026-05-25 CDT
 Latest Seal report envelope implementation note: 2026-05-25 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
+Latest Lat pipeline model normalization integration note: 2026-05-25 CDT
 Latest Lat-to-LIR lowering note: 2026-05-18 18:15 CDT
 Latest Lat pipeline note: 2026-05-18 19:40 CDT
 Latest Lat pipeline report refinement note: 2026-05-18 23:30 CDT
@@ -148,6 +151,7 @@ The repository currently emphasizes:
 - Nadia awareness dialogue contract Stage-15 for future official Nadia Initiative Q&A scope before dialogue generation, prompt evaluation, token generation, inference, or tool execution;
 - Nadia prompt evaluation handoff contract Stage-16 before prompt evaluation, dialogue generation, token generation, inference, or tool execution;
 - Nadia tokenization boundary contract Stage-17 before tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution;
+- Nadia tokenizer specification contract Stage-18 before tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution;
 - L-UI rendering implementation;
 - L-UI rendering detailed report refinement;
 - L-UI rendering README/status alignment;
@@ -171,6 +175,7 @@ The repository currently emphasizes:
 - Runtime boundary domain matrix report integration;
 - Latticra Seal capability gate status/public-entry alignment;
 - Latticra Seal effect decision status/public-entry alignment;
+- Latticra Seal runtime handoff status/public-entry alignment;
 - Latticra Seal verification receipt status/public-entry alignment;
 - Latticra Seal verification policy status/public-entry alignment;
 - Latticra Seal key parsing status/public-entry alignment;
@@ -217,6 +222,7 @@ The repository currently emphasizes:
 - Lat pipeline contract;
 - Lat pipeline implementation plan;
 - Lat pipeline implementation;
+- Lat pipeline model normalization integration;
 - Lat pipeline report refinement;
 - Lat pipeline diagnostic integration refinement;
 - Lat pipeline diagnostic integration main test audit;
@@ -237,11 +243,11 @@ The Lat model normalization implementation builds typed declaration and clause i
 
 The Lat semantic diagnostics refinement adds deterministic diagnostic classes, category counters, first-diagnostic declaration/clause indices, and report fields. This makes semantic failures easier to audit without changing validation outcomes or adding execution.
 
-The Lat pipeline composes source parsing, semantic validation, Lat-to-LIR lowering, LIR metadata, and deterministic pipeline reporting into one no-effect integration boundary. It preserves metadata visibility without executing Lat, executing LIR, mutating state, or providing runtime behavior.
+The Lat pipeline composes source parsing, semantic validation, Lat model normalization, Lat-to-LIR lowering, LIR metadata, and deterministic pipeline reporting into one no-effect integration boundary. It preserves metadata visibility without executing Lat, executing LIR, mutating state, or providing runtime behavior.
 
-The Lat pipeline report refinement adds deterministic stage-summary metadata for last completed stage, failed stage, per-stage OK flags, no-effect-chain status, and evidence level. This makes the pipeline report easier to audit without changing no-effect behavior.
+The Lat pipeline report refinement adds deterministic stage-summary metadata for last completed stage, failed stage, per-stage OK flags, model normalization status, no-effect-chain status, and evidence level. This makes the pipeline report easier to audit without changing no-effect behavior.
 
-The Lat pipeline diagnostic integration refinement adds a companion diagnostic integration surface that combines pipeline error/stage state with Lat semantic diagnostic class, semantic error, diagnostic count, and first-diagnostic indices while preserving no-execution behavior.
+The Lat pipeline diagnostic integration refinement adds a companion diagnostic integration surface that combines pipeline error/stage state with Lat semantic diagnostic class, semantic error, diagnostic count, first-diagnostic indices, and model-stage classification while preserving no-execution behavior.
 
 The Lat pipeline diagnostic main test audit verifies that the companion diagnostic integration is covered by both the focused guard and the main Lat pipeline test runner.
 
@@ -369,6 +375,8 @@ The Latticra Seal capability gate status record makes the existing metadata-only
 
 The Latticra Seal effect decision status record makes the existing metadata-only denied effect decision implementation visible from public entry points while preserving no effect execution, no capability enforcement, no runtime handoff execution, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, and no runtime authority.
 
+The Latticra Seal runtime handoff status record makes the existing inactive metadata-only runtime handoff implementation visible from public entry points while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, and no runtime authority.
+
 The project notes are now aligned across current direction, upcoming work, and project-notes index surfaces.
 
 The current status and announcement consistency review confirms the public status and announcement surfaces now point to the same next review lane.
@@ -396,7 +404,7 @@ These percentages are planning estimates only.
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 46% |
+| Nadia offline AI foundation | 48% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |
@@ -447,6 +455,7 @@ Latticra Seal signing operation status/public-entry alignment
 Latticra Seal signing operation metadata implementation
 Latticra Seal signing operation contract
 Latticra Seal effect decision status/public-entry alignment
+Latticra Seal runtime handoff status/public-entry alignment
 Latticra Seal capability gate status/public-entry alignment
 Latticra Seal verification receipt status/public-entry alignment
 Latticra Seal verification policy status/public-entry alignment
@@ -488,6 +497,7 @@ Lat-to-LIR lowering implementation
 Lat pipeline contract
 Lat pipeline implementation plan
 Lat pipeline implementation
+Lat pipeline model normalization integration
 Lat pipeline report refinement
 Lat pipeline diagnostic integration refinement
 Lat pipeline diagnostic integration main test audit
@@ -571,7 +581,7 @@ Latticra Seal future key parsing implementation contract
 Latest completed status/public-entry slice:
 
 ```text
-Latticra Seal effect decision status/public-entry alignment
+Latticra Seal runtime handoff status/public-entry alignment
 ```
 
 ## Previous status/public-entry slice
@@ -579,7 +589,7 @@ Latticra Seal effect decision status/public-entry alignment
 Previous status/public-entry slice:
 
 ```text
-Latticra Seal capability gate status/public-entry alignment
+Latticra Seal effect decision status/public-entry alignment
 ```
 
 ## Latest completed implementation slice
@@ -691,7 +701,7 @@ Latticra Seal signer handoff metadata implementation
 Recommended next work:
 
 ```text
-Seal runtime handoff status/public-entry alignment, with inactive metadata-only runtime handoff visibility and no runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, or runtime authority
+Seal status rollup status/public-entry alignment, with metadata-only rollup visibility and no runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, or runtime authority
 ```
 
 After that:

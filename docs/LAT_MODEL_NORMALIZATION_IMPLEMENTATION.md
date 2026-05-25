@@ -107,6 +107,7 @@ Run:
 
 ```sh
 sh scripts/test-lat-model-normalization.sh
+sh scripts/test-lat-pipeline.sh
 ```
 
 The invariants verify:
@@ -122,6 +123,8 @@ lat_model_preserves_no_effect_flags
 lat_model_report_is_deterministic
 lat_model_report_rejects_small_buffer
 ```
+
+The Lat pipeline now also calls `latticra_lat_model_normalize_module` internally. Callers that need the normalized model can use `latticra_lat_pipeline_run_source_with_model`; existing callers can continue using `latticra_lat_pipeline_run_source`.
 
 ## Non-Claims
 

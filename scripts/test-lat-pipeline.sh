@@ -7,6 +7,7 @@ cc $CFLAGS \
   -Iinclude \
   src/lat_parser.c \
   src/lat_semantic.c \
+  src/lat_model.c \
   src/lir.c \
   src/lat_to_lir.c \
   src/lat_pipeline.c \
@@ -19,6 +20,7 @@ cc $CFLAGS \
   -Iinclude \
   src/lat_parser.c \
   src/lat_semantic.c \
+  src/lat_model.c \
   src/lir.c \
   src/lat_to_lir.c \
   src/lat_pipeline.c \
@@ -31,6 +33,7 @@ cc $CFLAGS \
   -Iinclude \
   src/lat_parser.c \
   src/lat_semantic.c \
+  src/lat_model.c \
   src/lir.c \
   src/lat_to_lir.c \
   src/lat_pipeline.c \
@@ -43,6 +46,7 @@ cc $CFLAGS \
   -Iinclude \
   src/lat_parser.c \
   src/lat_semantic.c \
+  src/lat_model.c \
   src/lir.c \
   src/lat_to_lir.c \
   src/lat_pipeline.c \

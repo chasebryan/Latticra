@@ -32,7 +32,9 @@ scripts/test-latticra-seal-capability-gate-contract.sh
 scripts/test-latticra-seal-capability-gate.sh
 scripts/test-latticra-seal-capability-gate-status.sh
 docs/status/SEAL_EFFECT_DECISION_STATUS.md
+docs/status/SEAL_RUNTIME_HANDOFF_STATUS.md
 scripts/test-latticra-seal-effect-decision-status.sh
+scripts/test-latticra-seal-runtime-handoff-status.sh
 docs/LATTICRA_SEAL_VERIFICATION_POLICY_CONTRACT.md
 docs/LATTICRA_SEAL_VERIFICATION_POLICY_IMPLEMENTATION.md
 docs/status/SEAL_VERIFICATION_POLICY_STATUS.md
@@ -61,6 +63,7 @@ seal_capability_gate_contract_present=1
 seal_capability_gate_implementation_present=1
 seal_capability_gate_status_present=1
 seal_effect_decision_status_present=1
+seal_runtime_handoff_status_present=1
 seal_verification_policy_contract_present=1
 seal_verification_policy_implementation_present=1
 seal_verification_policy_status_present=1
@@ -118,6 +121,7 @@ sh scripts/test-latticra-seal-verification-receipt-status.sh
 sh scripts/test-latticra-seal-capability-gate-contract.sh
 sh scripts/test-latticra-seal-capability-gate-status.sh
 sh scripts/test-latticra-seal-effect-decision-status.sh
+sh scripts/test-latticra-seal-runtime-handoff-status.sh
 sh scripts/test-latticra-seal-verification-policy-status.sh
 ```
 
@@ -130,6 +134,7 @@ seal verification receipt status: ok
 seal capability gate contract: ok
 seal capability gate status: ok
 seal effect decision status: ok
+seal runtime handoff status: ok
 seal verification policy status: ok
 ```
 
@@ -141,6 +146,6 @@ It does not add cryptographic verification, verified receipt authority, signing,
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is runtime handoff status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is status rollup status/public-entry alignment or another narrow status/index alignment follow-up.
 
 That future slice must not add runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, object sealing, or kernel behavior unless separately implemented and guarded.

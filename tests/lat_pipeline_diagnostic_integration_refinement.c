@@ -69,6 +69,7 @@ static int lat_pipeline_diagnostic_integration_labels_are_stable(void) {
     EXPECT_STR_EQ(latticra_lat_pipeline_diagnostic_class_label(LATTICRA_LAT_PIPELINE_DIAGNOSTIC_LIR), "lir", "lir label");
     EXPECT_STR_EQ(latticra_lat_pipeline_diagnostic_class_label(LATTICRA_LAT_PIPELINE_DIAGNOSTIC_EFFECT_CHECK), "effect-check", "effect check label");
     EXPECT_STR_EQ(latticra_lat_pipeline_diagnostic_class_label(LATTICRA_LAT_PIPELINE_DIAGNOSTIC_INTERNAL), "internal", "internal label");
+    EXPECT_STR_EQ(latticra_lat_pipeline_diagnostic_class_label(LATTICRA_LAT_PIPELINE_DIAGNOSTIC_MODEL), "model", "model label");
     return 0;
 }
 
@@ -145,6 +146,24 @@ static int lat_pipeline_diagnostic_integration_reports_semantic_failure(void) {
     return 0;
 }
 
+static int lat_pipeline_diagnostic_integration_reports_model_failure(void) {
+    latticra_lat_pipeline_result_t pipeline;
+    latticra_lat_pipeline_diagnostic_result_t diagnostic;
+
+    memset(&pipeline, 0, sizeof(pipeline));
+    pipeline.status = LATTICRA_STATUS_OK;
+    pipeline.error = LATTICRA_LAT_PIPELINE_MODEL_NOT_OK;
+    pipeline.failed_stage = LATTICRA_LAT_PIPELINE_STAGE_MODEL;
+    pipeline.no_effect_chain_ok = 1;
+
+    EXPECT_TRUE(latticra_lat_pipeline_diagnostics_evaluate(&pipeline, 0, &diagnostic) == LATTICRA_STATUS_OK, "model diagnostic evaluate");
+    EXPECT_TRUE(diagnostic.diagnostic_class == LATTICRA_LAT_PIPELINE_DIAGNOSTIC_MODEL, "model diagnostic class");
+    EXPECT_TRUE(diagnostic.failed_stage == LATTICRA_LAT_PIPELINE_STAGE_MODEL, "model failed stage");
+    EXPECT_TRUE(diagnostic.pipeline_failed == 1, "model pipeline failed");
+    EXPECT_TRUE(diagnostic.evidence_level == 1u, "model evidence level");
+    return 0;
+}
+
 static int lat_pipeline_diagnostic_integration_reports_null_pipeline(void) {
     latticra_lat_pipeline_diagnostic_result_t diagnostic;
 
@@ -159,6 +178,7 @@ int main(void) {
     if (lat_pipeline_diagnostic_integration_reports_valid_pipeline() != 0) return 1;
     if (lat_pipeline_diagnostic_integration_reports_parse_failure() != 0) return 1;
     if (lat_pipeline_diagnostic_integration_reports_semantic_failure() != 0) return 1;
+    if (lat_pipeline_diagnostic_integration_reports_model_failure() != 0) return 1;
     if (lat_pipeline_diagnostic_integration_reports_null_pipeline() != 0) return 1;
 
     puts("lat_pipeline_diagnostic_integration_refinement: ok");

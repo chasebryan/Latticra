@@ -20,6 +20,7 @@ last_completed_stage
 failed_stage
 parse_ok
 semantic_ok
+model_ok
 lowering_ok
 lir_ok
 no_effect_chain_ok
@@ -36,6 +37,7 @@ Initial stage labels:
 none
 parse
 semantic
+model
 lowering
 lir
 effect-check
@@ -64,6 +66,7 @@ last_completed_stage=report
 failed_stage=none
 parse_ok=1
 semantic_ok=1
+model_ok=1
 lowering_ok=1
 lir_ok=1
 no_effect_chain_ok=1
@@ -78,6 +81,7 @@ Known failure paths record the failed stage deterministically:
 parse_not_ok -> failed_stage=parse
 semantic_not_ok -> failed_stage=semantic
 semantic_not_valid -> failed_stage=semantic
+model_not_ok -> failed_stage=model
 lowering_not_ok -> failed_stage=lowering
 no_effect_violation -> failed_stage=effect-check
 null_argument / internal_error -> failed_stage=unknown
@@ -128,6 +132,7 @@ This refinement preserves the existing Lat pipeline behavior for:
 ```text
 source parsing
 semantic validation
+Lat model normalization
 Lat-to-LIR lowering
 LIR metadata output
 aggregate pipeline error labels

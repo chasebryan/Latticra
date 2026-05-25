@@ -79,6 +79,26 @@ static int lat_pipeline_accepts_foundation_model(void) {
     EXPECT_TRUE(lowering.error == LATTICRA_LAT_TO_LIR_OK, "lowering ok");
     EXPECT_TRUE(module.error == LATTICRA_LIR_OK, "lir ok");
     EXPECT_TRUE(pipeline.error == LATTICRA_LAT_PIPELINE_OK, "pipeline ok");
+    EXPECT_TRUE(pipeline.model_error == LATTICRA_LAT_MODEL_OK, "pipeline model ok");
+    EXPECT_TRUE(pipeline.model_ok == 1, "pipeline model ok flag");
+    return 0;
+}
+
+static int lat_pipeline_exposes_normalized_model(void) {
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lat_model_t model;
+    latticra_lir_module_t module;
+    latticra_lat_to_lir_result_t lowering;
+    latticra_lat_pipeline_result_t pipeline;
+    EXPECT_TRUE(latticra_lat_pipeline_run_source_with_model(FOUNDATION_MODEL, strlen(FOUNDATION_MODEL), &parse, &semantic, &model, &module, &lowering, &pipeline) == LATTICRA_STATUS_OK, "model pipeline status OK");
+    EXPECT_TRUE(model.error == LATTICRA_LAT_MODEL_OK, "model result ok");
+    EXPECT_TRUE(model.declaration_count == 5u, "model declaration count");
+    EXPECT_TRUE(model.clause_count == 23u, "model clause count");
+    EXPECT_TRUE(model.declarations[model.transition_indices[0]].source_declaration_index == 0u, "model transition source resolved");
+    EXPECT_TRUE(pipeline.model_declaration_count == 5u, "pipeline model declaration count");
+    EXPECT_TRUE(pipeline.model_clause_count == 23u, "pipeline model clause count");
+    EXPECT_TRUE(pipeline.first_transition_source_index == 0u, "pipeline transition source index");
     return 0;
 }
 
@@ -91,6 +111,8 @@ static int lat_pipeline_preserves_counts(void) {
     EXPECT_TRUE(run_pipeline(FOUNDATION_MODEL, &parse, &semantic, &module, &lowering, &pipeline) == 0, "count pipeline run");
     EXPECT_TRUE(pipeline.declaration_count == 5u, "declaration count");
     EXPECT_TRUE(pipeline.clause_count == 23u, "clause count");
+    EXPECT_TRUE(pipeline.model_declaration_count == 5u, "model declaration count");
+    EXPECT_TRUE(pipeline.model_clause_count == 23u, "model clause count");
     EXPECT_TRUE(pipeline.node_count == 29u, "node count");
     EXPECT_TRUE(pipeline.edge_count == 29u, "edge count");
     EXPECT_STR_EQ(pipeline.module_name, "FoundationModule", "module name");
@@ -107,6 +129,7 @@ static int lat_pipeline_rejects_parse_failure(void) {
     EXPECT_TRUE(run_pipeline(source, &parse, &semantic, &module, &lowering, &pipeline) == 0, "parse failure pipeline run");
     EXPECT_TRUE(parse.error != LATTICRA_LAT_PARSE_OK, "parse failed");
     EXPECT_TRUE(pipeline.error == LATTICRA_LAT_PIPELINE_PARSE_NOT_OK, "pipeline parse failure");
+    EXPECT_TRUE(pipeline.model_error == LATTICRA_LAT_MODEL_PARSE_NOT_OK, "model parse failure");
     EXPECT_TRUE(lowering.error == LATTICRA_LAT_TO_LIR_PARSE_NOT_OK, "lowering parse failure");
     return 0;
 }
@@ -128,6 +151,7 @@ static int lat_pipeline_rejects_semantic_failure(void) {
     EXPECT_TRUE(parse.error == LATTICRA_LAT_PARSE_OK, "parse ok before semantic failure");
     EXPECT_TRUE(semantic.error == LATTICRA_LAT_SEMANTIC_UNKNOWN_TRANSITION_SOURCE, "semantic failure captured");
     EXPECT_TRUE(pipeline.error == LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK, "pipeline semantic failure");
+    EXPECT_TRUE(pipeline.model_error == LATTICRA_LAT_MODEL_SEMANTIC_NOT_OK, "model semantic failure");
     EXPECT_TRUE(lowering.error == LATTICRA_LAT_TO_LIR_SEMANTIC_NOT_OK, "lowering semantic failure");
     return 0;
 }
@@ -162,6 +186,8 @@ static int lat_pipeline_report_is_deterministic(void) {
     EXPECT_STR_EQ(one, two, "report deterministic");
     EXPECT_TRUE(strstr(one, "LAT PIPELINE REPORT\n") != 0, "report header");
     EXPECT_TRUE(strstr(one, "error=ok\n") != 0, "report ok");
+    EXPECT_TRUE(strstr(one, "model_error=ok\n") != 0, "model ok in report");
+    EXPECT_TRUE(strstr(one, "model_declaration_count=5\n") != 0, "model count in report");
     EXPECT_TRUE(strstr(one, "lowering_error=ok\n") != 0, "lowering ok in report");
     return 0;
 }
@@ -185,6 +211,7 @@ static int lat_pipeline_error_labels_are_stable(void) {
     EXPECT_STR_EQ(latticra_lat_pipeline_error_label(LATTICRA_LAT_PIPELINE_PARSE_NOT_OK), "parse_not_ok", "parse label");
     EXPECT_STR_EQ(latticra_lat_pipeline_error_label(LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK), "semantic_not_ok", "semantic label");
     EXPECT_STR_EQ(latticra_lat_pipeline_error_label(LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_VALID), "semantic_not_valid", "semantic valid label");
+    EXPECT_STR_EQ(latticra_lat_pipeline_error_label(LATTICRA_LAT_PIPELINE_MODEL_NOT_OK), "model_not_ok", "model label");
     EXPECT_STR_EQ(latticra_lat_pipeline_error_label(LATTICRA_LAT_PIPELINE_LOWERING_NOT_OK), "lowering_not_ok", "lowering label");
     EXPECT_STR_EQ(latticra_lat_pipeline_error_label(LATTICRA_LAT_PIPELINE_NO_EFFECT_VIOLATION), "no_effect_violation", "flags label");
     return 0;
@@ -192,6 +219,7 @@ static int lat_pipeline_error_labels_are_stable(void) {
 
 int main(void) {
     if (lat_pipeline_accepts_foundation_model() != 0) return 1;
+    if (lat_pipeline_exposes_normalized_model() != 0) return 1;
     if (lat_pipeline_preserves_counts() != 0) return 1;
     if (lat_pipeline_rejects_parse_failure() != 0) return 1;
     if (lat_pipeline_rejects_semantic_failure() != 0) return 1;

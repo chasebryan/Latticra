@@ -107,4 +107,4 @@ nadia_tokenization_boundary_contract_stage_17: ok
 
 ## Next Stage
 
-Stage-18 should define a tokenizer specification contract only after tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, model-registry metadata, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.
+Stage-18 now defines a tokenizer specification contract only after tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, model-registry metadata, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.

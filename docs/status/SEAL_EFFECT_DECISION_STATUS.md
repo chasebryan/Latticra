@@ -24,11 +24,13 @@ scripts/test-latticra-seal-effect-decision.sh
 scripts/test-latticra-seal-effect-decision-status.sh
 docs/LATTICRA_SEAL_RUNTIME_HANDOFF_CONTRACT.md
 docs/LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md
+docs/status/SEAL_RUNTIME_HANDOFF_STATUS.md
 include/latticra/seal_runtime_handoff.h
 src/seal_runtime_handoff.c
 tests/seal_runtime_handoff_invariants.c
 scripts/test-latticra-seal-runtime-handoff-contract.sh
 scripts/test-latticra-seal-runtime-handoff.sh
+scripts/test-latticra-seal-runtime-handoff-status.sh
 docs/LATTICRA_SEAL_CAPABILITY_GATE_CONTRACT.md
 docs/LATTICRA_SEAL_CAPABILITY_GATE_IMPLEMENTATION.md
 docs/status/SEAL_CAPABILITY_GATE_STATUS.md
@@ -55,6 +57,7 @@ seal_effect_decision_metadata_present=1
 seal_effect_decision_status_present=1
 seal_runtime_handoff_contract_present=1
 seal_runtime_handoff_implementation_present=1
+seal_runtime_handoff_status_present=1
 seal_capability_gate_contract_present=1
 seal_capability_gate_implementation_present=1
 seal_capability_gate_status_present=1
@@ -105,6 +108,7 @@ sh scripts/test-latticra-seal-effect-decision-contract.sh
 sh scripts/test-latticra-seal-effect-decision.sh
 sh scripts/test-latticra-seal-effect-decision-status.sh
 sh scripts/test-latticra-seal-runtime-handoff-contract.sh
+sh scripts/test-latticra-seal-runtime-handoff-status.sh
 sh scripts/test-latticra-seal-capability-gate-status.sh
 ```
 
@@ -115,6 +119,7 @@ seal effect decision contract: ok
 seal effect decision invariants: ok
 seal effect decision status: ok
 seal runtime handoff contract: ok
+seal runtime handoff status: ok
 seal capability gate status: ok
 ```
 
@@ -126,6 +131,6 @@ It does not add effect execution, capability enforcement, runtime authority, run
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is runtime handoff status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is status rollup status/public-entry alignment or another narrow status/index alignment follow-up.
 
 That future slice must not add runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, object sealing, or kernel behavior unless separately implemented and guarded.

@@ -31,6 +31,7 @@ require_contains 'src/lat_pipeline_diagnostics_eval.c' scripts/test-lat-pipeline
 require_contains 'src/lat_pipeline_diagnostics_report.c' scripts/test-lat-pipeline.sh
 require_contains 'tests/lat_pipeline_diagnostic_integration_refinement.c' scripts/test-lat-pipeline.sh
 require_contains 'lat_pipeline_diagnostic_integration_reports_semantic_failure' tests/lat_pipeline_diagnostic_integration_refinement.c
+require_contains 'lat_pipeline_diagnostic_integration_reports_model_failure' tests/lat_pipeline_diagnostic_integration_refinement.c
 require_contains 'sh scripts/test-lat-pipeline.sh' .github/workflows/lat-pipeline.yml
 require_contains 'main Lat pipeline test runner' docs/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_INTEGRATION_AUDIT.md
 

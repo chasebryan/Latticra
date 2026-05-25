@@ -93,6 +93,7 @@ share/latticra/nadia/prompt-materialization/
 share/latticra/nadia/awareness-dialogue/
 share/latticra/nadia/prompt-evaluation-handoff/
 share/latticra/nadia/tokenization-boundary/
+share/latticra/nadia/tokenizer-specification/
 share/latticra/components/nadia-offline-ai.installed
 bin/latticra-nadia
 ```
@@ -819,7 +820,50 @@ See [`NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17.md`](NADIA_TOKENIZATION_BOUN
 
 ### Stage-18: Tokenizer Specification Contract
 
-Only after tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a tokenizer specification contract. The default remains no tokenizer file opening, no tokenizer vocabulary loading, no prompt tokenization, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
+Record tokenizer-specification metadata after tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-18 can define future tokenizer review requirements, but it cannot load tokenizer manifests, open tokenizer files, load vocabularies, tokenize prompts, evaluate prompts, generate dialogue, generate tokens, run inference, or use the network.
+
+```text
+nadia_stage_18_tokenizer_specification_contract_present=1
+tokenizer_specification_contract_command=scripts/nadia-tokenizer-specification-contract.sh
+installed_tokenizer_specification_contract_command=latticra-nadia tokenizer-specification
+tokenizer_specification_contract_status=contract_only
+tokenizer_specification_stage=contract-only
+tokenizer_specification_authority=0
+tokenizer_specification_allowed=0
+tokenizer_specification_performed=0
+tokenizer_specification_metadata_present=1
+tokenizer_family=model-compatible-tokenizer
+tokenizer_format=operator-reviewed-offline-specification
+tokenizer_specification_decision=blocked_contract_only
+tokenizer_specification_evidence_present=1
+tokenizer_source_policy=operator-reviewed-offline
+tokenizer_path_recorded=0
+tokenizer_manifest_loaded=0
+requires_tokenization_boundary_contract=1
+requires_future_tokenizer_manifest_contract=1
+tokenizer_specification_promotion_allowed=0
+requires_model_tokenizer_compatibility_review=1
+requires_unicode_policy_review=1
+requires_normalization_policy_review=1
+requires_special_token_policy_review=1
+requires_bos_eos_policy_review=1
+requires_chat_template_policy_review=1
+requires_prompt_template_boundary=1
+tokenizer_file_opened=0
+tokenizer_file_read=0
+tokenizer_vocab_loaded=0
+prompt_tokenized=0
+prompt_evaluated=0
+qa_dialogue_generated=0
+sexual_request_refusal=always
+manipulation_resistance=required
+```
+
+See [`NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18.md`](NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18.md).
+
+### Stage-19: Tokenizer Manifest Contract
+
+Only after tokenizer-specification metadata, tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a tokenizer manifest contract. The default remains no tokenizer file opening, no tokenizer vocabulary loading, no prompt tokenization, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
 
 ## Non-Claims
 
@@ -838,7 +882,7 @@ The current Nadia foundation is not:
 
 ## Promotion Gate
 
-Before Stage-18 starts, Latticra should keep these guards passing:
+Before Stage-19 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -859,6 +903,7 @@ sh scripts/test-nadia-prompt-materialization-contract-stage-14.sh
 sh scripts/test-nadia-awareness-dialogue-contract-stage-15.sh
 sh scripts/test-nadia-prompt-evaluation-handoff-contract-stage-16.sh
 sh scripts/test-nadia-tokenization-boundary-contract-stage-17.sh
+sh scripts/test-nadia-tokenizer-specification-contract-stage-18.sh
 ```
 
-Before tokenizer specification starts, a separate tokenizer specification contract must exist and name tokenizer-format metadata, tokenizer-file denial fields, prompt-tokenization denial fields, refusal boundary inheritance, operator review gates, and non-claims.
+Before tokenizer manifest starts, a separate tokenizer manifest contract must exist and name tokenizer manifest metadata, tokenizer-file denial fields, prompt-tokenization denial fields, refusal boundary inheritance, operator review gates, and non-claims.

@@ -116,6 +116,7 @@ Run:
 sh scripts/test-latticra-seal-effect-decision-contract.sh
 sh scripts/test-latticra-seal-effect-decision.sh
 sh scripts/test-latticra-seal-effect-decision-status.sh
+sh scripts/test-latticra-seal-runtime-handoff-status.sh
 ```
 
 Expected output:
@@ -124,10 +125,11 @@ Expected output:
 seal effect decision contract: ok
 seal effect decision invariants: ok
 seal effect decision status: ok
+seal runtime handoff status: ok
 ```
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is runtime handoff status/public-entry alignment.
+The next valid Latticra Seal slice is status rollup status/public-entry alignment.
 
 That future slice must not add runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, host behavior, network behavior, or object sealing unless separately implemented and guarded.

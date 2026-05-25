@@ -196,6 +196,7 @@ sh scripts/test-latticra-seal-verification-policy-status.sh
 sh scripts/test-latticra-seal-verification-receipt-status.sh
 sh scripts/test-latticra-seal-capability-gate-status.sh
 sh scripts/test-latticra-seal-effect-decision-status.sh
+sh scripts/test-latticra-seal-runtime-handoff-status.sh
 sh scripts/test-latticra-seal-public-key-parsing-status.sh
 ```
 
@@ -209,11 +210,12 @@ seal verification policy status: ok
 seal verification receipt status: ok
 seal capability gate status: ok
 seal effect decision status: ok
+seal runtime handoff status: ok
 seal public-key parsing status: ok
 ```
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is runtime handoff status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is status rollup status/public-entry alignment or another narrow status/index alignment follow-up.
 
 That future slice must not add runtime execution, effect execution, cryptographic verification, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

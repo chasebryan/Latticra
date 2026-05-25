@@ -26,6 +26,7 @@ docs/status/SEAL_VERIFICATION_POLICY_STATUS.md
 docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md
 docs/status/SEAL_CAPABILITY_GATE_STATUS.md
 docs/status/SEAL_EFFECT_DECISION_STATUS.md
+docs/status/SEAL_RUNTIME_HANDOFF_STATUS.md
 include/latticra/seal_public_key_parsing.h
 include/latticra/seal_key_parsing.h
 src/seal_public_key_parsing.c
@@ -45,6 +46,7 @@ scripts/test-latticra-seal-verification-policy-status.sh
 scripts/test-latticra-seal-verification-receipt-status.sh
 scripts/test-latticra-seal-capability-gate-status.sh
 scripts/test-latticra-seal-effect-decision-status.sh
+scripts/test-latticra-seal-runtime-handoff-status.sh
 docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md
 docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
 docs/status/SEAL_KEY_MATERIAL_STATUS.md
@@ -79,6 +81,7 @@ seal_verification_policy_status_present=1
 seal_verification_receipt_status_present=1
 seal_capability_gate_status_present=1
 seal_effect_decision_status_present=1
+seal_runtime_handoff_status_present=1
 seal_key_material_contract_present=1
 seal_key_material_implementation_present=1
 seal_key_material_status_present=1
@@ -148,6 +151,7 @@ sh scripts/test-latticra-seal-verification-policy-status.sh
 sh scripts/test-latticra-seal-verification-receipt-status.sh
 sh scripts/test-latticra-seal-capability-gate-status.sh
 sh scripts/test-latticra-seal-effect-decision-status.sh
+sh scripts/test-latticra-seal-runtime-handoff-status.sh
 ```
 
 The predecessor key-material implementation remains covered by:
@@ -172,6 +176,7 @@ seal verification policy status: ok
 seal verification receipt status: ok
 seal capability gate status: ok
 seal effect decision status: ok
+seal runtime handoff status: ok
 seal key-material contract: ok
 seal key-material invariants: ok
 seal key-material status: ok
@@ -185,6 +190,6 @@ It does not add public-key parsing, key material loading, private-key handling, 
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is runtime handoff status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is status rollup status/public-entry alignment or another narrow status/index alignment follow-up.
 
 That future slice must not add runtime execution, effect execution, cryptographic verification, signing, public-key parsing behavior, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.
