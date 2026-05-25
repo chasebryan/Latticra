@@ -10,6 +10,7 @@ Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
 Latest runtime boundary Lat pipeline comment evidence note: 2026-05-25 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
+Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
 Latest Lat pipeline comment metadata integration note: 2026-05-25 CDT
 Latest Lat pipeline diagnostic comment metadata integration note: 2026-05-25 CDT
 
@@ -18,6 +19,8 @@ Latest Lat pipeline diagnostic comment metadata integration note: 2026-05-25 CDT
 This note tracks the near-term work queue after the recent no-effect Lat, LIR, Nucleus, runtime-boundary, authority review, status, announcement-review, foundation-index, public-entry, project-notes, and Nucleus report-only announcement README alignment slices.
 
 The project remains evidence-bound and report/classification oriented. The queue should continue to prefer small, reviewable, guarded slices over broad runtime behavior.
+
+Latticra Seal crypto verify backend status/public-entry alignment is complete for the current metadata-only unsupported backend surface. It does not add real cryptographic verification, signing, key handling, host behavior, network behavior, capability enforcement, effect execution, or runtime authority.
 
 ## Latest completed planning slice
 
@@ -322,6 +325,18 @@ map runtime-boundary request families, effect families, authority prerequisites,
 ## Latest completed status/public-entry slice
 
 ```text
+Latticra Seal crypto verify backend status/public-entry alignment
+```
+
+Purpose completed:
+
+```text
+publish and guard the existing metadata-only Seal crypto verify backend implementation from README/status/foundation entry points while preserving unsupported cryptographic verification, no signing, no key material loading, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, no capability enforcement, no effect execution, and no runtime authority
+```
+
+## Previous status/public-entry slice
+
+```text
 Latticra Seal README status row alignment
 ```
 
@@ -329,18 +344,6 @@ Purpose completed:
 
 ```text
 align the compact README Seal row and Seal current-posture summary with the current public status checkpoint while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, no production enforcement, no public-readiness promotion, no security-hardening implementation, and no runtime authority
-```
-
-## Previous status/public-entry slice
-
-```text
-Latticra Seal policy decision status/public-entry alignment
-```
-
-Purpose completed:
-
-```text
-publish and guard the existing report-only Seal policy decision metadata and deterministic report surface from README/status/foundation entry points while preserving no real policy evaluation, no policy enforcement, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signature verification, no freshness validation, no replay detection, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority
 ```
 
 ## Earlier status/public-entry slice

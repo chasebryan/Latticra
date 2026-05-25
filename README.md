@@ -107,7 +107,7 @@ Current public estimate table, as summarized by [`STATUS.md`](STATUS.md) and [`d
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 60% |
+| Nadia offline AI foundation | 61% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |

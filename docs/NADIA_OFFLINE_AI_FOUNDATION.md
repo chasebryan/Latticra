@@ -1246,7 +1246,7 @@ See [`NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md`](NADIA_PROMPT_TOKENIZATION
 
 Record prompt-token-sequence metadata after prompt-tokenization metadata, tokenizer-runtime-attachment metadata, tokenizer-artifact-binding metadata, tokenizer-artifact-verification metadata, tokenizer-artifact-measurement metadata, tokenizer-artifact-inventory metadata, tokenizer-manifest metadata, tokenizer-specification metadata, tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-26 can define future context-window assembly review requirements, but it cannot read prompt text, create prompt tokens, record token IDs, record token order, record token offsets, create attention masks, create position IDs, assemble context windows, create prompt evaluation inputs, attach tokenizers to a runtime, create runtime sessions, evaluate prompts, generate dialogue, generate tokens, run inference, or use the network.
 
-Before Stage-27 starts, the prompt-token-sequence contract must remain contract-only and keep prompt token ID recording, token order recording, token offset recording, attention mask creation, position ID creation, context-window assembly, prompt-evaluation-input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, and tool execution blocked.
+Stage-27 now consumes this prompt-token-sequence contract without granting prompt token ID recording, token order recording, token offset recording, attention mask creation, position ID creation, context-window assembly, prompt-evaluation-input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution authority.
 
 ```text
 nadia_stage_26_prompt_token_sequence_contract_present=1
@@ -1304,9 +1304,9 @@ manipulation_resistance=required
 
 See [`NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26.md`](NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26.md).
 
-Before Stage-27 starts, Stage-26 must prove prompt-token-sequence recording, prompt token ID recording, token order recording, token offset recording, attention mask creation, position ID creation, context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, tool execution, source mutation, and network authority remain denied.
+Stage-27 preserves the Stage-26 proof that prompt-token-sequence recording, prompt token ID recording, token order recording, token offset recording, attention mask creation, position ID creation, context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, tool execution, source mutation, and network authority remain denied.
 
-Before context window assembly starts, a separate context-window assembly contract must exist and keep context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, and tool execution blocked.
+Before Stage-28 starts, the context-window assembly contract must remain contract-only and keep context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, and tool execution blocked.
 
 ### Stage-27: Context Window Assembly Contract
 
