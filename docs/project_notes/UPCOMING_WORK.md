@@ -24,13 +24,13 @@ define exact public API, namespace, file paths, C++ standard, compiler flags, ex
 ## Latest completed contract slice
 
 ```text
-Latticra Seal signer invocation contract
+Latticra Seal signing operation contract
 ```
 
 Purpose completed:
 
 ```text
-define the next metadata-only signer invocation boundary after signer handoff readiness while preserving no signing, no verification, no signer invocation behavior, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority
+define the next metadata-only signing operation boundary after signer invocation readiness while preserving no signing, no verification, no signer invocation behavior, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority
 ```
 
 ## Previous contract slices retained for continuity
@@ -43,6 +43,7 @@ Nucleus task execution contract
 Lat-specific LIR refinement contract
 Latticra Seal signing authorization contract
 Latticra Seal signer handoff contract
+Latticra Seal signer invocation contract
 ```
 
 ## Latest completed planning slice
@@ -155,18 +156,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Signing operation contract, with completion estimate review only if capability posture changes
+Signing operation metadata implementation, with completion estimate review only if capability posture changes
 ```
 
 Purpose:
 
 ```text
-define the next future signing operation boundary while preserving no signing implementation, no verification implementation, no signer invocation behavior, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority until separately implemented and guarded; review completion estimates only if capability posture, public readiness, or evidence level changes
+implement the future Seal signing operation metadata boundary while preserving no signing, no verification, no signer invocation behavior, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority until separately implemented and guarded; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Signing operation contract.
+1. Signing operation metadata implementation.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.

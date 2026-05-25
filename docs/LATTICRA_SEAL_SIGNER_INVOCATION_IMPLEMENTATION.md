@@ -169,6 +169,6 @@ seal signer invocation status: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is a future signing operation contract or a narrow status-index alignment follow-up.
+The next valid Latticra Seal planning slice is signing operation metadata implementation or a narrow status-index alignment follow-up.
 
-The signer invocation status/public-entry alignment now exists as a guarded documentation/status checkpoint. The future signing operation contract must not add private-key handling, signing, verification, signer invocation behavior, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately contracted, implemented, and guarded.
+The signer invocation status/public-entry alignment and signing operation contract now exist as guarded checkpoints. The future signing operation metadata implementation must not add private-key handling, signing, verification, signer invocation behavior, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

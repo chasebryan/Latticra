@@ -15,11 +15,13 @@ It records that the implementation is bounded, deterministic, metadata-only, uns
 ```text
 docs/LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
+docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md
 include/latticra/seal_signer_invocation.h
 src/seal_signer_invocation.c
 tests/seal_signer_invocation_invariants.c
 scripts/test-latticra-seal-signer-invocation-contract.sh
 scripts/test-latticra-seal-signer-invocation.sh
+scripts/test-latticra-seal-signing-operation-contract.sh
 docs/LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md
 docs/status/SEAL_SIGNER_HANDOFF_STATUS.md
@@ -44,6 +46,7 @@ seal_signer_invocation_invariant_test_present=1
 seal_signer_invocation_runner_present=1
 seal_signer_invocation_metadata_present=1
 seal_signer_invocation_status_present=1
+seal_signing_operation_contract_present=1
 seal_signer_handoff_contract_present=1
 seal_signer_handoff_implementation_present=1
 seal_signer_handoff_status_present=1
@@ -85,6 +88,7 @@ The implementation is covered by:
 ```sh
 sh scripts/test-latticra-seal-signer-invocation-contract.sh
 sh scripts/test-latticra-seal-signer-invocation.sh
+sh scripts/test-latticra-seal-signing-operation-contract.sh
 ```
 
 The predecessor signer handoff implementation remains covered by:
@@ -100,6 +104,7 @@ Expected output:
 ```text
 seal signer invocation contract: ok
 seal signer invocation invariants: ok
+seal signing operation contract: ok
 seal signer handoff contract: ok
 seal signer handoff invariants: ok
 seal signer handoff status: ok
@@ -113,6 +118,6 @@ It does not add signing, verification, signer invocation behavior, signer proces
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is a future signing operation contract or a narrow status-index alignment follow-up.
+The next valid Latticra Seal slice is signing operation metadata implementation or a narrow status-index alignment follow-up.
 
-That future slice must not add signing, verification, signer invocation behavior, private-key handling, key generation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately contracted, implemented, and guarded.
+That future slice must not add signing, verification, signer invocation behavior, private-key handling, key generation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.
