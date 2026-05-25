@@ -16,12 +16,17 @@ It records that the implementation is bounded, deterministic, metadata-only, uns
 docs/LATTICRA_SEAL_SIGNATURE_REQUEST_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md
 docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md
+docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md
 include/latticra/seal_signature_request.h
+include/latticra/seal_signing_authorization.h
 src/seal_signature_request.c
+src/seal_signing_authorization.c
 tests/seal_signature_request_invariants.c
+tests/seal_signing_authorization_invariants.c
 scripts/test-latticra-seal-signature-request-contract.sh
 scripts/test-latticra-seal-signature-request.sh
 scripts/test-latticra-seal-signing-authorization-contract.sh
+scripts/test-latticra-seal-signing-authorization.sh
 docs/LATTICRA_SEAL_REPORT_ENVELOPE_IMPLEMENTATION.md
 scripts/test-latticra-seal-report-envelope.sh
 ```
@@ -38,6 +43,11 @@ seal_signature_request_source_present=1
 seal_signature_request_invariant_test_present=1
 seal_signature_request_runner_present=1
 seal_signing_authorization_contract_present=1
+seal_signing_authorization_implementation_present=1
+seal_signing_authorization_header_present=1
+seal_signing_authorization_source_present=1
+seal_signing_authorization_invariant_test_present=1
+seal_signing_authorization_runner_present=1
 seal_report_envelope_implementation_present=1
 seal_report_envelope_runner_present=1
 signature_request_profile=latticra-seal-signature-request/0.1
@@ -65,6 +75,7 @@ The implementation is covered by:
 sh scripts/test-latticra-seal-signature-request-contract.sh
 sh scripts/test-latticra-seal-signature-request.sh
 sh scripts/test-latticra-seal-signing-authorization-contract.sh
+sh scripts/test-latticra-seal-signing-authorization.sh
 ```
 
 The predecessor report-envelope implementation remains covered by:
@@ -79,6 +90,7 @@ Expected output:
 seal signature request contract: ok
 seal signature request invariants: ok
 seal signing authorization contract: ok
+seal signing authorization invariants: ok
 seal report envelope invariants: ok
 ```
 
@@ -90,6 +102,6 @@ It does not add signing, verification, private-key handling, key generation, tru
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is signing authorization metadata implementation or a status-index alignment follow-up.
+The next valid Latticra Seal slice is signing authorization status/public-entry alignment or a future signer-handoff contract.
 
 That future slice must not add signing, verification, private-key handling, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

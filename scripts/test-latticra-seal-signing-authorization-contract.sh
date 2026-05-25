@@ -24,12 +24,17 @@ require_file "$contract"
 require_file docs/LATTICRA_SEAL_SIGNATURE_REQUEST_CONTRACT.md
 require_file docs/LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md
 require_file docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md
+require_file docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md
 require_file include/latticra/seal_signature_request.h
+require_file include/latticra/seal_signing_authorization.h
 require_file src/seal_signature_request.c
+require_file src/seal_signing_authorization.c
 require_file tests/seal_signature_request_invariants.c
+require_file tests/seal_signing_authorization_invariants.c
 require_file scripts/test-latticra-seal-signature-request-contract.sh
 require_file scripts/test-latticra-seal-signature-request.sh
 require_file scripts/test-latticra-seal-signature-request-status.sh
+require_file scripts/test-latticra-seal-signing-authorization.sh
 require_file README.md
 require_file STATUS.md
 require_file docs/status/README.md
@@ -60,14 +65,22 @@ require_contains 'network_performed=0' "$contract"
 require_contains 'signing authorization metadata implementation' "$contract"
 
 require_contains 'LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md' README.md
+require_contains 'LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md' README.md
 require_contains 'latticra_seal_signing_authorization_contract_present=1' README.md
+require_contains 'latticra_seal_signing_authorization_metadata_present=1' README.md
 require_contains 'seal_signing_authorization_contract_present=1' README.md
+require_contains 'seal_signing_authorization_metadata_present=1' README.md
 require_contains 'Seal signing authorization contract' STATUS.md
 require_contains 'seal_signing_authorization_contract_present=1' STATUS.md
+require_contains 'seal_signing_authorization_metadata_present=1' STATUS.md
 require_contains 'seal_signing_authorization_contract_present=1' docs/status/README.md
+require_contains 'seal_signing_authorization_metadata_present=1' docs/status/README.md
 require_contains 'Latticra Seal signing authorization contract' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal signing authorization metadata implementation' docs/status/CURRENT_STATUS.md
 require_contains 'LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md' docs/FOUNDATION_INDEX.md
+require_contains 'LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal signing authorization contract' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Signing authorization metadata implementation' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Latticra Seal signing authorization metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Signing authorization status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 
 printf 'seal signing authorization contract: ok\n'

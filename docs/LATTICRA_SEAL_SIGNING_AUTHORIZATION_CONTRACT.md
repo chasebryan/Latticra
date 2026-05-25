@@ -269,3 +269,9 @@ This contract is validated by:
 ```sh
 sh scripts/test-latticra-seal-signing-authorization-contract.sh
 ```
+
+The first metadata implementation is validated by:
+
+```sh
+sh scripts/test-latticra-seal-signing-authorization.sh
+```
