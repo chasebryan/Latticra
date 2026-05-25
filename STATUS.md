@@ -3,6 +3,7 @@
 Status: public status shortcut
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal signature request implementation note: 2026-05-25 CDT
 Latest Seal signature request contract note: 2026-05-25 CDT
 Latest Seal report envelope implementation note: 2026-05-25 CDT
 Latest Seal core evidence status surface note: 2026-05-22 02:24 CDT
@@ -113,6 +114,7 @@ Latticra is the contract.
 ## Current milestone ledger
 
 ```text
+Seal signature request metadata implementation
 Seal signature request contract
 Seal report envelope metadata implementation
 Seal core evidence status surface
@@ -193,14 +195,14 @@ Completion percentage review
 ## Current next step
 
 ```text
-Seal signature request metadata implementation, with completion estimate review only if capability posture changes
+Seal signature request status/public-entry alignment or signing authorization contract planning, with completion estimate review only if capability posture changes
 ```
 
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
 
-It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal contract slice defines a signature-request boundary after sealed report-envelope metadata without signing, verification, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority.
+It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal metadata slice implements signature-request classification after sealed report-envelope metadata without signing, verification, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority.
 
 Current status fields:
 
@@ -209,7 +211,7 @@ seal_core_evidence_status_surface_present=1
 seal_report_envelope_metadata_present=1
 seal_report_envelope_ready_metadata_present=1
 seal_signature_request_contract_present=1
-seal_signature_request_metadata_implemented=0
+seal_signature_request_metadata_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1

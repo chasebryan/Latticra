@@ -92,6 +92,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_REPORT_ENVELOPE_CONTRACT.md`](LATTICRA_SEAL_REPORT_ENVELOPE_CONTRACT.md) — report envelope boundary after ready runtime handoff report metadata.
 - [`LATTICRA_SEAL_REPORT_ENVELOPE_IMPLEMENTATION.md`](LATTICRA_SEAL_REPORT_ENVELOPE_IMPLEMENTATION.md) — first no-effect sealed report-envelope metadata implementation.
 - [`LATTICRA_SEAL_SIGNATURE_REQUEST_CONTRACT.md`](LATTICRA_SEAL_SIGNATURE_REQUEST_CONTRACT.md) — metadata-only signature request boundary after sealed report-envelope metadata.
+- [`LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md`](LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md) — first no-effect signature request metadata implementation.
 - [`L_UI_STATIC_REPORT.md`](L_UI_STATIC_REPORT.md) — terminal-facing L-UI static report fixture for Nucleus/state rails.
 - [`L_UI_SOURCE_GRAMMAR.md`](L_UI_SOURCE_GRAMMAR.md) — L-UI source grammar draft and `.lui` fixture guardrails.
 - [`L_UI_PARSER_DESIGN.md`](L_UI_PARSER_DESIGN.md) — parser design contract, error categories, no-effect constraints, and implementation gate.
@@ -174,6 +175,7 @@ Runtime boundary domain matrix refinement + invariants
 Runtime boundary domain matrix report integration + invariants
 Latticra Seal report envelope metadata + invariants
 Latticra Seal signature request contract + guardrails
+Latticra Seal signature request metadata + invariants
 L-UI static report fixture + rail invariants
 L-UI source grammar draft + fixture guardrails
 L-UI parser design contract + guardrails
@@ -197,7 +199,7 @@ L-UI rendering detailed report refinement + invariants
 The next status review target should be:
 
 ```text
-Seal signature request metadata implementation, with completion estimate review only if capability posture changes
+Seal signature request status/public-entry alignment or signing authorization contract planning, with completion estimate review only if capability posture changes
 ```
 
 Completion-estimate review should be skipped unless a future slice changes capability posture, implementation scope, or public readiness rather than only aligning documentation/status surfaces.

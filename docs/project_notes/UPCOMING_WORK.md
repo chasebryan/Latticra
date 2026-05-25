@@ -145,18 +145,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Seal signature request metadata implementation, with completion estimate review only if capability posture changes
+Seal signature request status/public-entry alignment or signing authorization contract planning, with completion estimate review only if capability posture changes
 ```
 
 Purpose:
 
 ```text
-implement the metadata-only Seal signature-request boundary after sealed report-envelope metadata while preserving no signing, no verification, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+align the completed metadata-only Seal signature-request boundary or plan a future signing authorization contract while preserving no signing, no verification, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority until separately implemented and guarded; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Seal signature request metadata implementation.
+1. Seal signature request status/public-entry alignment or signing authorization contract planning.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.
