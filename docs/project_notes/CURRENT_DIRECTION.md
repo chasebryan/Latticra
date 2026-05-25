@@ -46,6 +46,7 @@ Latest Seal runtime handoff status/public-entry note: 2026-05-25 CDT
 Latest Seal effect decision status/public-entry note: 2026-05-25 CDT
 Latest Seal capability gate status/public-entry note: 2026-05-25 CDT
 Latest Seal verification receipt status/public-entry note: 2026-05-25 CDT
+Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -304,6 +305,8 @@ Completion estimate review after runtime-boundary abuse-case fixtures keeps the 
 Completion estimate review README/status alignment makes that hold review discoverable from README and status surfaces without changing capability posture, public readiness, security hardening, completion estimates, or runtime authority.
 
 Current estimate table source alignment makes the live public estimate table source explicit from README, root status, detailed status, status index, foundation index, and project notes without changing estimates or runtime authority.
+
+Latticra Seal crypto verify backend status/public-entry alignment makes the existing metadata-only unsupported backend visible from public status surfaces while preserving no real cryptographic verification, signing, key handling, host behavior, network behavior, capability enforcement, effect execution, or runtime authority.
 
 The current recommended review lane is:
 
