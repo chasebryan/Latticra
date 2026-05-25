@@ -21,6 +21,18 @@ Purpose completed:
 define exact public API, namespace, file paths, C++ standard, compiler flags, exception policy, RTTI policy, allocation policy, ownership/lifetime rules, result labels, C ABI boundaries, validators, audit reports, and tests before any C++ authority-layer code
 ```
 
+## Latest completed status/public-entry slice
+
+```text
+Latticra Seal key-material status/public-entry alignment
+```
+
+Purpose completed:
+
+```text
+publish and guard the key-material metadata implementation in the status and public-entry surfaces while preserving no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority
+```
+
 ## Latest completed implementation slice
 
 ```text
@@ -199,18 +211,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Seal key-material status/public-entry alignment, with no public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
+Seal public-key parsing boundary contract, with no public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, host behavior, network behavior, capability enforcement, or runtime authority
 ```
 
 Purpose:
 
 ```text
-publish and guard the key-material metadata implementation in the status and public-entry surfaces while preserving no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
+define the next public-key parsing boundary after key-material metadata and status readiness while still adding no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Seal key-material status/public-entry alignment.
+1. Seal public-key parsing boundary contract.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.

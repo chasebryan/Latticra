@@ -22,10 +22,12 @@ contract="docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md"
 
 require_file "$contract"
 require_file docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
+require_file docs/status/SEAL_KEY_MATERIAL_STATUS.md
 require_file include/latticra/seal_key_material.h
 require_file src/seal_key_material.c
 require_file tests/seal_key_material_invariants.c
 require_file scripts/test-latticra-seal-key-material.sh
+require_file scripts/test-latticra-seal-key-material-status.sh
 require_file docs/LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md
 require_file docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
 require_file docs/status/SEAL_KEY_HANDLING_STATUS.md
@@ -90,20 +92,28 @@ require_contains 'LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md' README.md
 require_contains 'LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md' README.md
 require_contains 'latticra_seal_key_material_contract_present=1' README.md
 require_contains 'latticra_seal_key_material_metadata_present=1' README.md
+require_contains 'latticra_seal_key_material_status_present=1' README.md
 require_contains 'seal_key_material_contract_present=1' README.md
 require_contains 'seal_key_material_metadata_present=1' README.md
+require_contains 'seal_key_material_status_present=1' README.md
 require_contains 'Seal key-material boundary contract' STATUS.md
 require_contains 'Seal key-material metadata implementation' STATUS.md
+require_contains 'Seal key-material status/public-entry alignment' STATUS.md
 require_contains 'seal_key_material_contract_present=1' STATUS.md
 require_contains 'seal_key_material_metadata_present=1' STATUS.md
+require_contains 'seal_key_material_status_present=1' STATUS.md
 require_contains 'seal_key_material_contract_present=1' docs/status/README.md
 require_contains 'seal_key_material_metadata_present=1' docs/status/README.md
+require_contains 'seal_key_material_status_present=1' docs/status/README.md
 require_contains 'Latticra Seal key-material boundary contract' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal key-material metadata implementation' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal key-material status/public-entry alignment' docs/status/CURRENT_STATUS.md
 require_contains 'LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
+require_contains 'SEAL_KEY_MATERIAL_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal key-material boundary contract' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal key-material metadata implementation' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Seal key-material status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Latticra Seal key-material status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Seal public-key parsing boundary contract' docs/project_notes/UPCOMING_WORK.md
 
 printf 'seal key-material contract: ok\n'
