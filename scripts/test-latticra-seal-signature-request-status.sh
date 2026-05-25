@@ -108,7 +108,7 @@ require_contains 'host_write_performed=0' "$status_file"
 require_contains 'network_performed=0' "$status_file"
 require_contains 'mode=metadata-only' "$status_file"
 require_contains 'status=signature-request-metadata' "$status_file"
-require_contains 'public-key parsing status/public-entry alignment' "$status_file"
+require_contains 'future key parsing implementation contract' "$status_file"
 
 require_contains 'SEAL_SIGNATURE_REQUEST_STATUS.md' README.md
 require_contains 'seal_signature_request_status_present=1' README.md

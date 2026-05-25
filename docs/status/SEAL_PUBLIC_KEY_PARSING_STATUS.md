@@ -1,57 +1,55 @@
-# Latticra Seal Key-Material Status
+# Latticra Seal Public-Key Parsing Status
 
-Status: status record for Latticra Seal key-material metadata
+Status: status record for Latticra Seal public-key parsing metadata
 Source: local follow-up slice
-Scope: status and public-entry alignment after the metadata-only Seal key-material implementation. This record does not implement public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store loading, revocation lookup, signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
+Scope: status and public-entry alignment after the metadata-only Seal public-key parsing implementation. This record does not implement public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store loading, revocation lookup, signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
 
 ## Purpose
 
-This status record makes the Latticra Seal key-material metadata implementation visible as a current project checkpoint.
+This status record makes the Latticra Seal public-key parsing metadata implementation visible as a current project checkpoint.
 
-It records that the implementation is bounded, deterministic, metadata-only, unsigned, key-material-not-loaded, key-not-parsed, signer-not-invoked, and no-effect.
+It records that the implementation is bounded, deterministic, metadata-only, unsigned, public-key-not-parsed, key-material-not-loaded, signer-not-invoked, and no-effect.
 
 ## Reviewed files
 
 ```text
+docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_CONTRACT.md
+docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md
+docs/status/SEAL_PUBLIC_KEY_PARSING_STATUS.md
+include/latticra/seal_public_key_parsing.h
+src/seal_public_key_parsing.c
+tests/seal_public_key_parsing_invariants.c
+scripts/test-latticra-seal-public-key-parsing-contract.sh
+scripts/test-latticra-seal-public-key-parsing.sh
+scripts/test-latticra-seal-public-key-parsing-status.sh
 docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md
 docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
 docs/status/SEAL_KEY_MATERIAL_STATUS.md
-docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_CONTRACT.md
 include/latticra/seal_key_material.h
 src/seal_key_material.c
 tests/seal_key_material_invariants.c
 scripts/test-latticra-seal-key-material-contract.sh
 scripts/test-latticra-seal-key-material.sh
 scripts/test-latticra-seal-key-material-status.sh
-scripts/test-latticra-seal-public-key-parsing-contract.sh
-docs/LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md
-docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
-docs/status/SEAL_KEY_HANDLING_STATUS.md
-include/latticra/seal_key_handling.h
-src/seal_key_handling.c
-tests/seal_key_handling_invariants.c
-scripts/test-latticra-seal-key-handling-contract.sh
-scripts/test-latticra-seal-key-handling.sh
-scripts/test-latticra-seal-key-handling-status.sh
 ```
 
 ## Current checkpoint
 
-Current key-material metadata posture:
+Current public-key parsing metadata posture:
 
 ```text
+seal_public_key_parsing_contract_present=1
+seal_public_key_parsing_implementation_present=1
+seal_public_key_parsing_header_present=1
+seal_public_key_parsing_source_present=1
+seal_public_key_parsing_invariant_test_present=1
+seal_public_key_parsing_runner_present=1
+seal_public_key_parsing_metadata_present=1
+seal_public_key_parsing_status_present=1
 seal_key_material_contract_present=1
 seal_key_material_implementation_present=1
-seal_key_material_header_present=1
-seal_key_material_source_present=1
-seal_key_material_invariant_test_present=1
-seal_key_material_runner_present=1
-seal_key_material_metadata_present=1
 seal_key_material_status_present=1
-seal_public_key_parsing_contract_present=1
-seal_key_handling_contract_present=1
-seal_key_handling_implementation_present=1
-seal_key_handling_status_present=1
+public_key_parsing_profile=latticra-seal-public-key-parsing/0.1
 key_material_profile=latticra-seal-key-material/0.1
 key_handling_profile=latticra-seal-key-handling/0.1
 signing_operation_profile=latticra-seal-signing-operation/0.1
@@ -66,6 +64,7 @@ requested_signer_invocation=metadata-only
 requested_signing_operation=metadata-only
 requested_key_handling=metadata-only
 requested_key_material=metadata-only
+requested_public_key_parsing=metadata-only
 signing_authorization_state=authorized-metadata-only
 signing_authorization_ready=1
 signer_handoff_state=handoff-metadata-only
@@ -78,6 +77,8 @@ key_handling_state=key-handling-metadata-only
 key_handling_ready=1
 key_material_state=key-material-metadata-only
 key_material_ready=1
+public_key_parsing_state=public-key-parsing-metadata-only
+public_key_parsing_ready=1
 signature_performed=0
 verification_performed=0
 signer_invoked=0
@@ -95,7 +96,7 @@ host_read_performed=0
 host_write_performed=0
 network_performed=0
 mode=metadata-only
-status=key-material-metadata
+status=public-key-parsing-metadata
 ```
 
 ## Validation
@@ -103,30 +104,28 @@ status=key-material-metadata
 The implementation and status surface are covered by:
 
 ```sh
+sh scripts/test-latticra-seal-public-key-parsing-contract.sh
+sh scripts/test-latticra-seal-public-key-parsing.sh
+sh scripts/test-latticra-seal-public-key-parsing-status.sh
+```
+
+The predecessor key-material implementation remains covered by:
+
+```sh
 sh scripts/test-latticra-seal-key-material-contract.sh
 sh scripts/test-latticra-seal-key-material.sh
 sh scripts/test-latticra-seal-key-material-status.sh
-sh scripts/test-latticra-seal-public-key-parsing-contract.sh
-```
-
-The predecessor key-handling implementation remains covered by:
-
-```sh
-sh scripts/test-latticra-seal-key-handling-contract.sh
-sh scripts/test-latticra-seal-key-handling.sh
-sh scripts/test-latticra-seal-key-handling-status.sh
 ```
 
 Expected output:
 
 ```text
+seal public-key parsing contract: ok
+seal public-key parsing invariants: ok
+seal public-key parsing status: ok
 seal key-material contract: ok
 seal key-material invariants: ok
 seal key-material status: ok
-seal public-key parsing contract: ok
-seal key-handling contract: ok
-seal key-handling invariants: ok
-seal key-handling status: ok
 ```
 
 ## Boundary

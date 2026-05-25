@@ -210,6 +210,6 @@ seal key-material invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is public-key parsing status/public-entry alignment or another narrow status/index alignment follow-up that still must not add public-key parsing without separate key-material, public-key, and guard contracts.
+The next valid Latticra Seal planning slice is future key parsing implementation contract or another narrow status/index alignment follow-up that still must not add public-key parsing without separate key-material, public-key, and guard contracts.
 
 The key-material metadata implementation is a guarded checkpoint. Future work must not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, verification, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

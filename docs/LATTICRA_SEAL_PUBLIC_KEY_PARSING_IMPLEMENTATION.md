@@ -209,6 +209,7 @@ Run:
 ```sh
 sh scripts/test-latticra-seal-public-key-parsing-contract.sh
 sh scripts/test-latticra-seal-public-key-parsing.sh
+sh scripts/test-latticra-seal-public-key-parsing-status.sh
 ```
 
 Expected output:
@@ -216,10 +217,11 @@ Expected output:
 ```text
 seal public-key parsing contract: ok
 seal public-key parsing invariants: ok
+seal public-key parsing status: ok
 ```
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is public-key parsing status/public-entry alignment or another narrow status/index alignment follow-up that still must not add public-key parsing without separate public-key parsing, key-material, and guard contracts.
+The next valid Latticra Seal planning slice is future key parsing implementation contract or another narrow status/index alignment follow-up that still must not add public-key parsing without separate public-key parsing, key-material, and guard contracts.
 
 The public-key parsing metadata implementation is a guarded checkpoint. Future work must not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, verification, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.
