@@ -408,7 +408,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out);
     let _ = writeln!(out, "[nadia]");
     let _ = writeln!(out, "system_name=Latticra Nadia");
-    let _ = writeln!(out, "stage=9-local-model-registry-contract");
+    let _ = writeln!(out, "stage=10-inference-readiness-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -562,6 +562,30 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "model_benchmark_authority=0");
     let _ = writeln!(out, "model_weight_inspection_authority=0");
     let _ = writeln!(out, "registry_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "inference_readiness_contract_stage=10-inference-readiness-contract"
+    );
+    let _ = writeln!(
+        out,
+        "inference_readiness_contract_command=scripts/nadia-inference-readiness-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_inference_readiness_contract_command=latticra-nadia inference-readiness"
+    );
+    let _ = writeln!(out, "inference_readiness_stage=contract-only");
+    let _ = writeln!(out, "inference_readiness_contract_status=contract_only");
+    let _ = writeln!(out, "inference_readiness_authority=0");
+    let _ = writeln!(out, "inference_ready=0");
+    let _ = writeln!(out, "readiness_decision=blocked_contract_only");
+    let _ = writeln!(out, "readiness_evidence_present=1");
+    let _ = writeln!(out, "requires_model_registry_contract=1");
+    let _ = writeln!(out, "requires_future_runtime_invocation_contract=1");
+    let _ = writeln!(out, "readiness_promotion_allowed=0");
+    let _ = writeln!(out, "runtime_invocation_authority=0");
+    let _ = writeln!(out, "token_generation_authority=0");
+    let _ = writeln!(out, "model_session_authority=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");
@@ -571,6 +595,8 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "model_runtime_present=0");
     let _ = writeln!(out, "model_runtime_invoked=0");
     let _ = writeln!(out, "inference_performed=0");
+    let _ = writeln!(out, "inference_authority=0");
+    let _ = writeln!(out, "runtime_invoked=0");
     let _ = writeln!(out, "prompt_evaluated=0");
     let _ = writeln!(out, "model_weights_installed=0");
     let _ = writeln!(out, "model_weights_loaded=0");

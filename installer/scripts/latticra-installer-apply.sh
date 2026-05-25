@@ -337,7 +337,7 @@ developer_cli_helpers=$DEVELOPER_CLI_HELPERS
 
 [nadia]
 system_name=Latticra Nadia
-stage=9-local-model-registry-contract
+stage=10-inference-readiness-contract
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -424,6 +424,21 @@ model_load_authority=0
 model_benchmark_authority=0
 model_weight_inspection_authority=0
 registry_promotion_allowed=0
+inference_readiness_contract_stage=10-inference-readiness-contract
+inference_readiness_contract_command=scripts/nadia-inference-readiness-contract.sh
+installed_inference_readiness_contract_command=latticra-nadia inference-readiness
+inference_readiness_stage=contract-only
+inference_readiness_contract_status=contract_only
+inference_readiness_authority=0
+inference_ready=0
+readiness_decision=blocked_contract_only
+readiness_evidence_present=1
+requires_model_registry_contract=1
+requires_future_runtime_invocation_contract=1
+readiness_promotion_allowed=0
+runtime_invocation_authority=0
+token_generation_authority=0
+model_session_authority=0
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -433,6 +448,8 @@ harm_aware_development=1
 model_runtime_present=0
 model_runtime_invoked=0
 inference_performed=0
+inference_authority=0
+runtime_invoked=0
 prompt_evaluated=0
 model_weights_installed=0
 model_weights_loaded=0
@@ -625,12 +642,13 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/mode-validations" \
     "$PREFIX/share/latticra/nadia/protective-safety" \
     "$PREFIX/share/latticra/nadia/tool-preflights" \
-    "$PREFIX/share/latticra/nadia/prompt-contracts"
+    "$PREFIX/share/latticra/nadia/prompt-contracts" \
+    "$PREFIX/share/latticra/nadia/inference-readiness"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia"
-stage = "9-local-model-registry-contract"
-mode = "offline-model-registry-contract"
+stage = "10-inference-readiness-contract"
+mode = "offline-inference-readiness-contract"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -709,11 +727,27 @@ model_load_authority = false
 model_benchmark_authority = false
 model_weight_inspection_authority = false
 registry_promotion_allowed = false
+inference_readiness_contract_stage = "10-inference-readiness-contract"
+inference_readiness_contract_command = "scripts/nadia-inference-readiness-contract.sh"
+inference_readiness_stage = "contract-only"
+inference_readiness_contract_status = "contract_only"
+inference_readiness_authority = false
+inference_ready = false
+readiness_decision = "blocked_contract_only"
+readiness_evidence_present = true
+requires_model_registry_contract = true
+requires_future_runtime_invocation_contract = true
+readiness_promotion_allowed = false
+runtime_invocation_authority = false
+token_generation_authority = false
+model_session_authority = false
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
 harm_aware_development = true
 model_runtime_present = false
+runtime_invoked = false
+inference_authority = false
 model_weights_installed = false
 model_weights_loaded = false
 model_weights_copied = false
@@ -727,11 +761,11 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-9 local model-registry contract metadata lane.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-10 inference-readiness contract metadata lane.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract, and local model-registry contract metadata when the operator runs latticra-nadia model-registry. It does not provide sexual user functionality, materialize or evaluate prompts, select models, install model weights, load model weights, run inference, execute tools, use the network, train or distill a model, or mutate source.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract, local model-registry contract metadata when the operator runs latticra-nadia model-registry, and inference-readiness contract metadata when the operator runs latticra-nadia inference-readiness. It does not provide sexual user functionality, materialize or evaluate prompts, select models, install model weights, load model weights, invoke a runtime, run inference, execute tools, use the network, train or distill a model, or mutate source.
 NADIAREADME
 fi
 
@@ -879,8 +913,8 @@ case "\${1:-status}" in
     echo
     echo "name=Nadia"
     echo "system_name=Latticra Nadia"
-    echo "stage=9-local-model-registry-contract"
-    echo "mode=offline-model-registry-contract"
+    echo "stage=10-inference-readiness-contract"
+    echo "mode=offline-inference-readiness-contract"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "context_packs=\$NADIA_DIR/context-packs"
@@ -893,6 +927,7 @@ case "\${1:-status}" in
     echo "tool_preflights=\$NADIA_DIR/tool-preflights"
     echo "prompt_contracts=\$NADIA_DIR/prompt-contracts"
     echo "model_registry_contracts=\$NADIA_DIR/model-registry"
+    echo "inference_readiness_contracts=\$NADIA_DIR/inference-readiness"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "prompt_plan_command=latticra-nadia prompt-plan"
@@ -963,6 +998,20 @@ case "\${1:-status}" in
     echo "model_benchmark_authority=0"
     echo "model_weight_inspection_authority=0"
     echo "registry_promotion_allowed=0"
+    echo "inference_readiness_contract_stage=10-inference-readiness-contract"
+    echo "inference_readiness_contract_command=latticra-nadia inference-readiness"
+    echo "inference_readiness_stage=contract-only"
+    echo "inference_readiness_contract_status=contract_only"
+    echo "inference_readiness_authority=0"
+    echo "inference_ready=0"
+    echo "readiness_decision=blocked_contract_only"
+    echo "readiness_evidence_present=1"
+    echo "requires_model_registry_contract=1"
+    echo "requires_future_runtime_invocation_contract=1"
+    echo "readiness_promotion_allowed=0"
+    echo "runtime_invocation_authority=0"
+    echo "token_generation_authority=0"
+    echo "model_session_authority=0"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -972,6 +1021,8 @@ case "\${1:-status}" in
     echo "model_runtime_present=0"
     echo "model_runtime_invoked=0"
     echo "inference_performed=0"
+    echo "inference_authority=0"
+    echo "runtime_invoked=0"
     echo "prompt_evaluated=0"
     echo "model_weights_installed=0"
     echo "model_weights_loaded=0"
@@ -1110,11 +1161,25 @@ case "\${1:-status}" in
       --runtime-profile "\$NADIA_DIR/runtime-profiles/latest-runtime-profile.txt" \
       --output "\$NADIA_DIR/model-registry"
     ;;
+  inference-readiness|readiness|inference-contract)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-inference-readiness-contract.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia inference-readiness contract script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --model-registry "\$NADIA_DIR/model-registry/latest-model-registry-contract.txt" \
+      --output "\$NADIA_DIR/inference-readiness"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|path}" >&2
     exit 64
     ;;
 esac

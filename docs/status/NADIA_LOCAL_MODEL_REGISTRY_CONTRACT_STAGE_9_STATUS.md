@@ -90,4 +90,4 @@ nadia_local_model_registry_contract_stage_9: ok
 
 ## Next Stage
 
-Stage-10 should define an inference readiness contract only after local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are all present and explicitly non-executing.
+Stage-10 now defines an inference-readiness contract after local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are all present and explicitly non-executing.

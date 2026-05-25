@@ -374,7 +374,55 @@ See [`NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md`](NADIA_LOCAL_MODEL_REGISTR
 
 ### Stage-10: Inference Readiness Contract
 
-Only after local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider an inference readiness contract. The default remains no model weights installed, no model weights loaded, no inference, no prompt evaluation, no tool execution, no source mutation, no network authority, and no sexual user functionality.
+Record inference-readiness metadata after local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-10 can verify prerequisite evidence and record a blocked readiness decision, but it cannot load model weights, invoke a runtime, generate tokens, materialize or evaluate prompts, or run inference.
+
+```text
+nadia_stage_10_inference_readiness_contract_present=1
+inference_readiness_contract_command=scripts/nadia-inference-readiness-contract.sh
+installed_inference_readiness_contract_command=latticra-nadia inference-readiness
+requires_model_registry_contract=1
+inference_readiness_stage=contract-only
+inference_readiness_contract_status=contract_only
+inference_readiness_authority=0
+inference_ready=0
+readiness_decision=blocked_contract_only
+readiness_evidence_present=1
+requires_prompt_contract=1
+requires_runtime_profile=1
+requires_protective_safety_boundary=1
+requires_tool_preflight=1
+requires_operator_review=1
+requires_future_runtime_invocation_contract=1
+readiness_promotion_allowed=0
+runtime_invocation_authority=0
+token_generation_authority=0
+model_session_authority=0
+model_selection_authority=0
+model_load_authority=0
+prompt_materialized=0
+prompt_evaluation_authority=0
+prompt_evaluated=0
+model_runtime_present=0
+model_runtime_invoked=0
+runtime_invoked=0
+inference_authority=0
+inference_performed=0
+model_weights_loaded=0
+model_weights_downloaded=0
+model_weights_inspected=0
+tool_execution_authority=0
+source_mutation_authority=0
+network_authority=0
+sexual_content_generation=0
+sexual_request_refusal=always
+manipulation_resistance=required
+```
+
+See [`NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md`](NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md).
+
+### Stage-11: Runtime Invocation Contract
+
+Only after inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a runtime invocation contract. The default remains no model weights installed, no model weights loaded, no inference, no prompt evaluation, no tool execution, no source mutation, no network authority, and no sexual user functionality.
 
 ## Non-Claims
 
@@ -393,7 +441,7 @@ Stage-0 Nadia is not:
 
 ## Promotion Gate
 
-Before Stage-10 starts, Latticra should keep these guards passing:
+Before Stage-11 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -406,6 +454,7 @@ sh scripts/test-nadia-protective-safety-boundary-stage-6.sh
 sh scripts/test-nadia-guarded-tool-authority-stage-7.sh
 sh scripts/test-nadia-prompt-evaluation-contract-stage-8.sh
 sh scripts/test-nadia-local-model-registry-contract-stage-9.sh
+sh scripts/test-nadia-inference-readiness-contract-stage-10.sh
 ```
 
-Before inference readiness starts, a separate inference-readiness contract must exist and name prompt receipt fields, model-registry evidence, runtime invocation boundaries, refusal boundary inheritance, operator review gates, and non-claims.
+Before runtime invocation starts, a separate runtime-invocation contract must exist and name model-load boundaries, prompt receipt fields, refusal boundary inheritance, operator review gates, runtime invocation denial fields, and non-claims.
