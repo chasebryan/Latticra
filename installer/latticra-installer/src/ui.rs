@@ -887,61 +887,22 @@ impl LatticraInstallerApp {
         ui.label("The workbench starts with safe, useful defaults. Generate a plan and run a dry-install receipt before enabling any local writes.");
         ui.add_space(8.0);
 
+        let profiles = InstallProfile::all();
         if ui.available_width() < 720.0 {
-            self.profile_card(
-                ui,
-                InstallProfile::DeveloperLocal,
-                "Best first impression",
-                "Full project surface with Lat, LIR, Seal, docs, helpers, and dry-run authority.",
-            );
-            self.profile_card(
-                ui,
-                InstallProfile::SealReportOnly,
-                "Minimal safe lane",
-                "Report-only Seal and documentation lane for receipts and evidence.",
-            );
-            self.profile_card(
-                ui,
-                InstallProfile::FedoraValidationVm,
-                "Fedora validation",
-                "VM-oriented Fedora/Linux validation workspace and evidence path.",
-            );
-            self.profile_card(
-                ui,
-                InstallProfile::Custom,
-                "Manual operator",
-                "Advanced manual control after the guided defaults are understood.",
-            );
+            for profile in profiles {
+                let (badge, description) = profile_card_text(profile);
+                self.profile_card(ui, profile, badge, description);
+            }
         } else {
-            ui.columns(2, |columns| {
-                self.profile_card(
-                    &mut columns[0],
-                    InstallProfile::DeveloperLocal,
-                    "Best first impression",
-                    "Full project surface with Lat, LIR, Seal, docs, helpers, and dry-run authority.",
-                );
-                self.profile_card(
-                    &mut columns[1],
-                    InstallProfile::SealReportOnly,
-                    "Minimal safe lane",
-                    "Report-only Seal and documentation lane for receipts and evidence.",
-                );
-            });
-            ui.add_space(6.0);
-            ui.columns(2, |columns| {
-                self.profile_card(
-                    &mut columns[0],
-                    InstallProfile::FedoraValidationVm,
-                    "Fedora validation",
-                    "VM-oriented Fedora/Linux validation workspace and evidence path.",
-                );
-                self.profile_card(
-                    &mut columns[1],
-                    InstallProfile::Custom,
-                    "Manual operator",
-                    "Advanced manual control after the guided defaults are understood.",
-                );
-            });
+            for row in profiles.chunks(2) {
+                ui.columns(2, |columns| {
+                    for (column, profile) in row.iter().copied().enumerate() {
+                        let (badge, description) = profile_card_text(profile);
+                        self.profile_card(&mut columns[column], profile, badge, description);
+                    }
+                });
+                ui.add_space(6.0);
+            }
         }
 
         ui.add_space(12.0);
@@ -1681,6 +1642,27 @@ fn status_chip(ui: &mut egui::Ui, key: &str, value: &str) {
             .monospace()
             .color(egui::Color32::from_rgb(160, 220, 255)),
     );
+}
+
+fn profile_card_text(profile: InstallProfile) -> (&'static str, &'static str) {
+    match profile {
+        InstallProfile::DeveloperLocal => (
+            "Best first impression",
+            "Full project surface with Lat, LIR, Seal, docs, helpers, and dry-run authority.",
+        ),
+        InstallProfile::SealReportOnly => (
+            "Minimal safe lane",
+            "Report-only Seal and documentation lane for receipts and evidence.",
+        ),
+        InstallProfile::FedoraValidationVm => (
+            "Fedora validation",
+            "VM-oriented Fedora/Linux validation workspace and evidence path.",
+        ),
+        InstallProfile::Custom => (
+            "Manual operator",
+            "Advanced manual control after the guided defaults are understood.",
+        ),
+    }
 }
 
 fn workbench_card(ui: &mut egui::Ui, title: &str, body: &str) {
