@@ -3,6 +3,7 @@
 Status: public status shortcut
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal signer invocation contract note: 2026-05-25 CDT
 Latest Seal signer handoff status/public-entry note: 2026-05-25 CDT
 Latest Seal signer handoff implementation note: 2026-05-25 CDT
 Latest Seal signer handoff contract note: 2026-05-25 CDT
@@ -121,6 +122,7 @@ Latticra is the contract.
 ## Current milestone ledger
 
 ```text
+Seal signer invocation contract
 Seal signer handoff status/public-entry alignment
 Seal signer handoff metadata implementation
 Seal signer handoff contract
@@ -209,14 +211,14 @@ Completion percentage review
 ## Current next step
 
 ```text
-Signer invocation contract planning, with completion estimate review only if capability posture changes
+Signer invocation metadata implementation, with completion estimate review only if capability posture changes
 ```
 
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
 
-It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal metadata slice implements signer handoff classification after signing authorization readiness without signing, verification, signer invocation, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority. The latest status slice makes that checkpoint visible from public entry points without changing implementation behavior.
+It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal metadata slice implements signer handoff classification after signing authorization readiness without signing, verification, signer invocation, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority. The latest contract slice defines a metadata-only signer invocation boundary after signer handoff readiness without invoking a signer or granting signing behavior.
 
 Current status fields:
 
@@ -233,6 +235,7 @@ seal_signing_authorization_status_present=1
 seal_signer_handoff_contract_present=1
 seal_signer_handoff_metadata_present=1
 seal_signer_handoff_status_present=1
+seal_signer_invocation_contract_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1

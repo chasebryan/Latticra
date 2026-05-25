@@ -15,11 +15,13 @@ It records that the implementation is bounded, deterministic, metadata-only, uns
 ```text
 docs/LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md
+docs/LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md
 include/latticra/seal_signer_handoff.h
 src/seal_signer_handoff.c
 tests/seal_signer_handoff_invariants.c
 scripts/test-latticra-seal-signer-handoff-contract.sh
 scripts/test-latticra-seal-signer-handoff.sh
+scripts/test-latticra-seal-signer-invocation-contract.sh
 docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md
 docs/status/SEAL_SIGNING_AUTHORIZATION_STATUS.md
@@ -39,6 +41,7 @@ seal_signer_handoff_invariant_test_present=1
 seal_signer_handoff_runner_present=1
 seal_signer_handoff_metadata_present=1
 seal_signer_handoff_status_present=1
+seal_signer_invocation_contract_present=1
 seal_signing_authorization_contract_present=1
 seal_signing_authorization_implementation_present=1
 seal_signing_authorization_status_present=1
@@ -76,6 +79,7 @@ The implementation is covered by:
 ```sh
 sh scripts/test-latticra-seal-signer-handoff-contract.sh
 sh scripts/test-latticra-seal-signer-handoff.sh
+sh scripts/test-latticra-seal-signer-invocation-contract.sh
 ```
 
 The predecessor signing authorization implementation remains covered by:
@@ -91,6 +95,7 @@ Expected output:
 ```text
 seal signer handoff contract: ok
 seal signer handoff invariants: ok
+seal signer invocation contract: ok
 seal signing authorization contract: ok
 seal signing authorization invariants: ok
 seal signing authorization status: ok
@@ -104,6 +109,6 @@ It does not add signing, verification, signer invocation, private-key handling, 
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is signer invocation contract planning or a narrow status-index alignment follow-up.
+The next valid Latticra Seal slice is signer invocation metadata implementation or a narrow status-index alignment follow-up.
 
 That future slice must not add signing, verification, signer invocation behavior, private-key handling, key generation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

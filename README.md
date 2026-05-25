@@ -141,7 +141,7 @@ Runtime Boundary
 
 Latticra Seal
   Trust-boundary, request-boundary, policy-boundary, tool-boundary, and crypto-profile planning.
-  Current posture: report-only runtime dry-run, guarded allowlist candidate-denial, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, and signer handoff metadata paths.
+  Current posture: report-only runtime dry-run, guarded allowlist candidate-denial, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signer handoff metadata, and signer invocation contract paths.
 
 Latticra Panel
   GUI-first local workbench for guided first-run configuration, evidence review, dry-run, and guarded local-prefix install.
@@ -185,6 +185,7 @@ latticra_seal_signing_authorization_status_present=1
 latticra_seal_signer_handoff_contract_present=1
 latticra_seal_signer_handoff_metadata_present=1
 latticra_seal_signer_handoff_status_present=1
+latticra_seal_signer_invocation_contract_present=1
 latticra_panel_gui_workbench_present=1
 fedora_local_rpm_draft_present=1
 visual_theorem_engines_present=1
@@ -621,6 +622,7 @@ seal_signing_authorization_status_present=1
 seal_signer_handoff_contract_present=1
 seal_signer_handoff_metadata_present=1
 seal_signer_handoff_status_present=1
+seal_signer_invocation_contract_present=1
 runtime_gate_report_only=1
 policy_decision_state=report-only
 runtime_gate_state=report-only
@@ -674,6 +676,8 @@ The signer handoff metadata implementation classifies ready signing authorizatio
 
 The signer handoff status record makes that metadata-only checkpoint visible from the public entry points without changing implementation behavior.
 
+The signer invocation contract defines the next metadata-only classification boundary after signer handoff readiness. It does not add signing, verification, signer invocation behavior, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority.
+
 That claim is intentionally limited. It does not mean Latticra Seal currently implements production runtime enforcement, policy enforcement, cryptographic key authority, MCP protocol behavior, MCP server behavior, MCP client behavior, AI-agent execution control, host behavior, network behavior, object sealing, key storage, or revocation lookup.
 
 Relevant Seal records:
@@ -697,6 +701,7 @@ Relevant Seal records:
 - [`docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md)
 - [`docs/LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md`](docs/LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md)
+- [`docs/LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md`](docs/LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md)
 - [`docs/status/SEAL_SIGNER_HANDOFF_STATUS.md`](docs/status/SEAL_SIGNER_HANDOFF_STATUS.md)
 - [`docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md`](docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md)
 - [`docs/status/SEAL_SIGNING_AUTHORIZATION_STATUS.md`](docs/status/SEAL_SIGNING_AUTHORIZATION_STATUS.md)
