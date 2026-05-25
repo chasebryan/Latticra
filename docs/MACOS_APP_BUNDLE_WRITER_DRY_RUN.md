@@ -10,7 +10,7 @@ This prototype emits the writer-shaped phase report from the macOS user-local ap
 
 It validates planned user-local paths, inspects existing targets for Latticra managed markers, checks whether optional local Panel executable and icon candidates are present, and reports the phase decision. It does not create an app bundle, write Application Support files, install wrappers, mutate shell profiles, build the Panel, use launchd, access Keychain, request TCC permissions, use Endpoint Security, use System Extensions, use Network Extensions, open the network, or grant runtime authority.
 
-The macOS local candidate asset probe is the no-effect readiness check that can supply those optional executable and icon candidates.
+The macOS local candidate asset probe is the no-effect readiness check that can supply those optional executable and icon candidates. The macOS dry-run writer candidate integration then runs the probe and this writer dry-run together to prove that accepted inputs can move the writer decision to `ready-for-future-commit-gate` while `commit_user_local_managed_artifacts=0`.
 
 ## Command
 
@@ -23,7 +23,7 @@ Optional candidate inputs:
 ```sh
 sh scripts/macos-app-bundle-writer-dry-run.sh \
   --panel-executable <local-executable> \
-  --icon <local-icns-file>
+  --icon <local-icon-file>
 ```
 
 ## Report Fields
@@ -64,6 +64,25 @@ dry_run_decision=blocked-missing-panel-executable
 ```
 
 That is expected. The dry-run writer is allowed to report readiness gaps, but it must not fill them by building, downloading, generating, signing, or writing files.
+
+## Candidate Integration
+
+The writer dry-run can be paired with the candidate probe by running:
+
+```sh
+sh scripts/macos-dry-run-writer-candidate-integration.sh \
+  --panel-executable <local-executable> \
+  --icon <local-icon-file>
+```
+
+When both checks agree and all write flags remain disabled, the integration reports:
+
+```text
+asset_probe_decision=ready-for-dry-run-writer-inputs
+writer_dry_run_decision=ready-for-future-commit-gate
+integration_decision=ready-for-future-commit-gate-no-effect
+commit_user_local_managed_artifacts=0
+```
 
 ## Blocked Paths
 

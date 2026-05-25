@@ -187,10 +187,12 @@ pub struct LatticraConsoleConfig {
     pub substrate_bridge_profile: String,
     pub host_embedding_profile: String,
     pub host_embedding_contract_profile: String,
+    pub host_inventory_contract_profile: String,
     pub os_base_profile: String,
     pub panel_bridge: String,
     pub report_only: bool,
     pub require_host_embedding_contract: bool,
+    pub require_read_only_host_inventory_contract: bool,
     pub require_runtime_boundary_binding: bool,
     pub require_seal_capability_labels: bool,
 }
@@ -203,10 +205,12 @@ impl Default for LatticraConsoleConfig {
             substrate_bridge_profile: "metadata-bound".to_owned(),
             host_embedding_profile: "panel-contained".to_owned(),
             host_embedding_contract_profile: "lc-host-embedding-v0".to_owned(),
+            host_inventory_contract_profile: "lc-host-inventory-v0".to_owned(),
             os_base_profile: "planned-no-boot-authority".to_owned(),
             panel_bridge: "panel-aware".to_owned(),
             report_only: true,
             require_host_embedding_contract: true,
+            require_read_only_host_inventory_contract: true,
             require_runtime_boundary_binding: true,
             require_seal_capability_labels: true,
         };
@@ -244,8 +248,10 @@ impl LatticraConsoleConfig {
         self.command_registry_profile = "c-static-table".to_owned();
         self.substrate_bridge_profile = "metadata-bound".to_owned();
         self.host_embedding_contract_profile = "lc-host-embedding-v0".to_owned();
+        self.host_inventory_contract_profile = "lc-host-inventory-v0".to_owned();
         self.report_only = true;
         self.require_host_embedding_contract = true;
+        self.require_read_only_host_inventory_contract = true;
         self.require_runtime_boundary_binding = true;
         self.require_seal_capability_labels = true;
     }
@@ -605,12 +611,22 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "host_embedding_contract_profile={}",
         config.lc.host_embedding_contract_profile
     );
+    let _ = writeln!(
+        out,
+        "host_inventory_contract_profile={}",
+        config.lc.host_inventory_contract_profile
+    );
     let _ = writeln!(out, "os_base_profile={}", config.lc.os_base_profile);
     let _ = writeln!(out, "report_only={}", config.lc.report_only);
     let _ = writeln!(
         out,
         "host_embedding_contract_required={}",
         config.lc.require_host_embedding_contract
+    );
+    let _ = writeln!(
+        out,
+        "read_only_host_inventory_contract_required={}",
+        config.lc.require_read_only_host_inventory_contract
     );
     let _ = writeln!(
         out,
@@ -634,6 +650,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         config.lc.host_embedding_profile
     );
     let _ = writeln!(out, "host_embedding_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "host_inventory_contract_status=metadata-only-contract");
     let _ = writeln!(out, "os_base_status={}", config.lc.os_base_profile);
     let _ = writeln!(out, "operator_shell_present=1");
     let _ = writeln!(out, "execution_allowed=0");

@@ -72,6 +72,7 @@ require_contains 'notarization_performed=0' "$doc"
 require_contains 'app_bundle_write_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
+require_contains 'runtime_authority_granted=0' "$doc"
 require_contains 'macOS commit gate contract' "$doc"
 
 require_contains 'Status: no-effect local candidate asset probe status' "$status"
@@ -91,6 +92,7 @@ require_contains 'signing_performed=0' "$status"
 require_contains 'notarization_performed=0' "$status"
 require_contains 'host_mutation_performed=0' "$status"
 require_contains 'network_performed=0' "$status"
+require_contains 'runtime_authority_granted=0' "$status"
 require_contains 'not macOS install evidence' "$status"
 
 require_contains 'MACOS_LOCAL_CANDIDATE_ASSET_PROBE_STATUS.md' "$index"
@@ -119,6 +121,7 @@ require_contains 'signing_performed=0' "$script"
 require_contains 'notarization_performed=0' "$script"
 require_contains 'app_bundle_write_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
+require_contains 'runtime_authority_granted=0' "$script"
 
 missing_output=$(sh "$script")
 require_output_contains "$missing_output" 'MACOS LOCAL CANDIDATE ASSET PROBE'
