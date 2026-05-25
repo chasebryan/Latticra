@@ -16,12 +16,17 @@ It records that the implementation is bounded, deterministic, metadata-only, uns
 docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md
 docs/LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md
+docs/LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md
 include/latticra/seal_signing_authorization.h
+include/latticra/seal_signer_handoff.h
 src/seal_signing_authorization.c
+src/seal_signer_handoff.c
 tests/seal_signing_authorization_invariants.c
+tests/seal_signer_handoff_invariants.c
 scripts/test-latticra-seal-signing-authorization-contract.sh
 scripts/test-latticra-seal-signing-authorization.sh
 scripts/test-latticra-seal-signer-handoff-contract.sh
+scripts/test-latticra-seal-signer-handoff.sh
 docs/LATTICRA_SEAL_SIGNATURE_REQUEST_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md
 docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md
@@ -40,6 +45,12 @@ seal_signing_authorization_source_present=1
 seal_signing_authorization_invariant_test_present=1
 seal_signing_authorization_runner_present=1
 seal_signer_handoff_contract_present=1
+seal_signer_handoff_implementation_present=1
+seal_signer_handoff_header_present=1
+seal_signer_handoff_source_present=1
+seal_signer_handoff_invariant_test_present=1
+seal_signer_handoff_runner_present=1
+seal_signer_handoff_metadata_present=1
 seal_signature_request_contract_present=1
 seal_signature_request_implementation_present=1
 seal_signature_request_status_present=1
@@ -75,6 +86,7 @@ The implementation is covered by:
 sh scripts/test-latticra-seal-signing-authorization-contract.sh
 sh scripts/test-latticra-seal-signing-authorization.sh
 sh scripts/test-latticra-seal-signer-handoff-contract.sh
+sh scripts/test-latticra-seal-signer-handoff.sh
 ```
 
 The predecessor signature-request implementation remains covered by:
@@ -91,6 +103,7 @@ Expected output:
 seal signing authorization contract: ok
 seal signing authorization invariants: ok
 seal signer handoff contract: ok
+seal signer handoff invariants: ok
 seal signature request contract: ok
 seal signature request invariants: ok
 seal signature request status: ok
@@ -104,6 +117,6 @@ It does not add signing, verification, private-key handling, key generation, tru
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is signer handoff metadata implementation or a narrow status-index alignment follow-up.
+The next valid Latticra Seal slice is signer handoff status/public-entry alignment or a narrow status-index alignment follow-up.
 
 That future slice must not add signing, verification, private-key handling, key generation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

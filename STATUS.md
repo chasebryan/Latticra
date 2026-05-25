@@ -3,6 +3,7 @@
 Status: public status shortcut
 Last updated: 2026-05-25 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
+Latest Seal signer handoff implementation note: 2026-05-25 CDT
 Latest Seal signer handoff contract note: 2026-05-25 CDT
 Latest Seal signing authorization status/public-entry note: 2026-05-25 CDT
 Latest Seal signing authorization implementation note: 2026-05-25 CDT
@@ -119,6 +120,7 @@ Latticra is the contract.
 ## Current milestone ledger
 
 ```text
+Seal signer handoff metadata implementation
 Seal signer handoff contract
 Seal signing authorization status/public-entry alignment
 Seal signing authorization metadata implementation
@@ -205,14 +207,14 @@ Completion percentage review
 ## Current next step
 
 ```text
-Signer handoff metadata implementation, with completion estimate review only if capability posture changes
+Signer handoff status/public-entry alignment, with completion estimate review only if capability posture changes
 ```
 
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
 
-It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal metadata slice implements signing authorization classification after signature-request readiness without signing, verification, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority. The latest contract slice defines a metadata-only signer handoff boundary after signing authorization readiness without invoking a signer or granting signing behavior.
+It records a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning. The latest Seal metadata slice implements signer handoff classification after signing authorization readiness without signing, verification, signer invocation, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority.
 
 Current status fields:
 
@@ -227,6 +229,7 @@ seal_signing_authorization_contract_present=1
 seal_signing_authorization_metadata_present=1
 seal_signing_authorization_status_present=1
 seal_signer_handoff_contract_present=1
+seal_signer_handoff_metadata_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1

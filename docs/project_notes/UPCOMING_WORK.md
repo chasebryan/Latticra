@@ -69,18 +69,22 @@ Nucleus task execution implementation plan
 ## Latest completed implementation slice
 
 ```text
-Nucleus report-only announcement README alignment
+Latticra Seal signer handoff metadata implementation
 ```
 
 Purpose completed:
 
 ```text
-make the Nucleus report-only no-new-announcement review discoverable from README, project-notes index, root status, current status, status index, and foundation index while preserving the decision not to add a separate public announcement entry
+implement bounded signer handoff metadata after signing authorization readiness while preserving no signing, no verification, no signer invocation, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority
 ```
 
 ## Previous implementation slices
 
 ```text
+Latticra Seal signing authorization metadata implementation
+Latticra Seal signature request metadata implementation
+Latticra Seal report envelope metadata implementation
+Nucleus report-only announcement README alignment
 Nucleus report-only announcement review
 Project notes Nucleus report-only status/index check
 Project notes Nucleus report-only alignment
@@ -147,18 +151,18 @@ L-UI rendering implementation
 ## Recommended next slice
 
 ```text
-Signer handoff metadata implementation, with completion estimate review only if capability posture changes
+Signer handoff status/public-entry alignment, with completion estimate review only if capability posture changes
 ```
 
 Purpose:
 
 ```text
-implement the future Seal signer handoff metadata boundary while preserving no signing, no verification, no signer invocation, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority until separately implemented and guarded; review completion estimates only if capability posture, public readiness, or evidence level changes
+make the Seal signer handoff metadata implementation visible from public/status entry points while preserving no signing, no verification, no signer invocation, no private-key handling, no host behavior, no network behavior, no capability enforcement, and no runtime authority; review completion estimates only if capability posture, public readiness, or evidence level changes
 ```
 
 ## Near-term queue
 
-1. Signer handoff metadata implementation.
+1. Signer handoff status/public-entry alignment.
 2. Completion estimate review only if capability posture changes.
 3. Continue small guarded report/status alignment only when drift appears.
 4. Authority status announcement only if public messaging changes.
