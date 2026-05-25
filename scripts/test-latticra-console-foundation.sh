@@ -37,6 +37,12 @@ grep -Fq 'short_name=LC' /tmp/latticra-console-report.txt
 grep -Fq 'component_key=latticra_console' /tmp/latticra-console-report.txt
 grep -Fq 'console_status=ready-report-only' /tmp/latticra-console-report.txt
 grep -Fq 'command_registry_status=seed-registry-ready' /tmp/latticra-console-report.txt
+grep -Fq 'command_registry_source=c-static-table' /tmp/latticra-console-report.txt
+grep -Fq 'command_registry_no_effect=1' /tmp/latticra-console-report.txt
+grep -Fq 'LATTICRA CONSOLE COMMAND REGISTRY' /tmp/latticra-console-report.txt
+grep -Fq 'command=lc substrate' /tmp/latticra-console-report.txt
+grep -Fq 'capability=lc.substrate.inspect' /tmp/latticra-console-report.txt
+grep -Fq 'launches_host_process=0' /tmp/latticra-console-report.txt
 grep -Fq 'substrate_bridge_status=metadata-bound-ready' /tmp/latticra-console-report.txt
 grep -Fq 'panel_installable=1' /tmp/latticra-console-report.txt
 grep -Fq 'future_os_base_claim=planned_not_claimed' /tmp/latticra-console-report.txt

@@ -9,8 +9,11 @@ extern "C" {
 
 #define LATTICRA_CONSOLE_ID_MAX 64u
 #define LATTICRA_CONSOLE_LABEL_MAX 64u
+#define LATTICRA_CONSOLE_COMMAND_USAGE_MAX 96u
+#define LATTICRA_CONSOLE_COMMAND_DESCRIPTION_MAX 160u
 #define LATTICRA_CONSOLE_SOURCE_IDENTITY_MAX 128u
 #define LATTICRA_CONSOLE_REPORT_MAX 20000u
+#define LATTICRA_CONSOLE_COMMAND_REGISTRY_REPORT_MAX 12000u
 
 typedef enum {
     LATTICRA_CONSOLE_PROFILE_HOSTED_REFERENCE = 0,
@@ -18,6 +21,33 @@ typedef enum {
     LATTICRA_CONSOLE_PROFILE_HOST_EMBEDDED = 2,
     LATTICRA_CONSOLE_PROFILE_OS_BASE_PLANNING = 3
 } latticra_console_profile_t;
+
+typedef enum {
+    LATTICRA_CONSOLE_COMMAND_CORE = 0,
+    LATTICRA_CONSOLE_COMMAND_PANEL = 1,
+    LATTICRA_CONSOLE_COMMAND_SUBSTRATE = 2,
+    LATTICRA_CONSOLE_COMMAND_HOST = 3,
+    LATTICRA_CONSOLE_COMMAND_OS_BASE = 4
+} latticra_console_command_category_t;
+
+typedef enum {
+    LATTICRA_CONSOLE_COMMAND_EFFECT_NONE = 0,
+    LATTICRA_CONSOLE_COMMAND_EFFECT_LOCAL_METADATA = 1,
+    LATTICRA_CONSOLE_COMMAND_EFFECT_FUTURE_GATED = 2
+} latticra_console_command_effect_t;
+
+typedef struct {
+    char name[LATTICRA_CONSOLE_LABEL_MAX];
+    char usage[LATTICRA_CONSOLE_COMMAND_USAGE_MAX];
+    char description[LATTICRA_CONSOLE_COMMAND_DESCRIPTION_MAX];
+    char capability_label[LATTICRA_CONSOLE_LABEL_MAX];
+    latticra_console_command_category_t category;
+    latticra_console_command_effect_t effect;
+    int no_effect;
+    int panel_visible;
+    int launches_host_process;
+    int requires_future_gate;
+} latticra_console_command_t;
 
 typedef struct {
     char console_id[LATTICRA_CONSOLE_ID_MAX];
@@ -67,6 +97,22 @@ latticra_status_t latticra_console_default_request(
     latticra_console_request_t *request);
 
 const char *latticra_console_profile_label(latticra_console_profile_t profile);
+
+const char *latticra_console_command_category_label(
+    latticra_console_command_category_t category);
+
+const char *latticra_console_command_effect_label(
+    latticra_console_command_effect_t effect);
+
+size_t latticra_console_command_count(void);
+
+const latticra_console_command_t *latticra_console_command_at(size_t index);
+
+const latticra_console_command_t *latticra_console_find_command(const char *name);
+
+latticra_status_t latticra_console_command_registry_report(
+    char *buffer,
+    size_t buffer_len);
 
 latticra_status_t latticra_console_initialize(
     const latticra_console_request_t *request,

@@ -1,6 +1,6 @@
 # Lat-to-LIR Diagnostic Refinement
 
-Status: initial no-effect implementation
+Status: no-effect implementation with first-declaration and first-clause diagnostic metadata
 
 Scope: deterministic diagnostic classification and reporting for Lat-to-LIR lowering results after model-driven lowering integration.
 
@@ -46,7 +46,20 @@ lir
 internal
 ```
 
-It copies lowering error, model error, optional LIR error, model counts, first transition source index, first-clause metadata, node and edge counts, no-effect flags, failure flags, no-effect issue flag, and evidence level into a bounded result record.
+It copies lowering error, model error, optional LIR error, model counts, first lowered declaration metadata, first transition source index, first-clause metadata, node and edge counts, no-effect flags, failure flags, no-effect issue flag, and evidence level into a bounded result record.
+
+The diagnostic result preserves the first lowered declaration:
+
+```text
+first_declaration_node_index
+first_declaration_kind
+first_declaration_name
+first_declaration_source
+first_declaration_parse_index
+first_declaration_first_clause_index
+first_declaration_clause_count
+first_declaration_source_index
+```
 
 The diagnostic result preserves the first lowered clause:
 
@@ -81,7 +94,7 @@ Run:
 sh scripts/test-lat-to-lir-diagnostic-refinement.sh
 ```
 
-The invariant suite checks stable labels, valid lowering diagnostics, first-clause diagnostic metadata, parse failure diagnostics, model failure diagnostics, no-effect issue diagnostics, null lowering handling, deterministic report fields, and small-buffer rejection.
+The invariant suite checks stable labels, valid lowering diagnostics, first-declaration diagnostic metadata, first-clause diagnostic metadata, parse failure diagnostics, model failure diagnostics, no-effect issue diagnostics, null lowering handling, deterministic report fields, and small-buffer rejection.
 
 ## Non-Claims
 

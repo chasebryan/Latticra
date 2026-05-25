@@ -41,6 +41,7 @@ Latest Nadia tokenizer artifact measurement contract Stage-21 note: 2026-05-25 C
 Latest Nadia tokenizer artifact verification contract Stage-22 note: 2026-05-25 CDT
 Latest Nadia tokenizer artifact binding contract Stage-23 note: 2026-05-25 CDT
 Latest Nadia tokenizer runtime attachment contract Stage-24 note: 2026-05-25 CDT
+Latest Nadia prompt tokenization contract Stage-25 note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -79,6 +80,7 @@ Latest Lat pipeline model normalization integration note: 2026-05-25 CDT
 Latest Lat-to-LIR model lowering integration note: 2026-05-25 CDT
 Latest Lat-to-LIR declaration metadata refinement note: 2026-05-25 CDT
 Latest Lat-to-LIR diagnostic refinement note: 2026-05-25 CDT
+Latest Lat-to-LIR diagnostic declaration metadata integration note: 2026-05-25 CDT
 Latest Lat pipeline lowering diagnostic integration note: 2026-05-25 CDT
 Latest Lat-to-LIR clause metadata refinement note: 2026-05-25 CDT
 Latest Lat-to-LIR diagnostic clause metadata integration note: 2026-05-25 CDT
@@ -184,6 +186,7 @@ The repository currently emphasizes:
 - Nadia tokenizer artifact verification contract Stage-22 before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest comparison, artifact size comparison, artifact verification, artifact binding, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution;
 - Nadia tokenizer artifact binding contract Stage-23 before tokenizer artifact opening, artifact reading, artifact hashing, artifact verification, artifact binding, tokenizer runtime attachment, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution;
 - Nadia tokenizer runtime attachment contract Stage-24 before tokenizer artifact opening, artifact reading, artifact hashing, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution;
+- Nadia prompt tokenization contract Stage-25 before prompt text reading, prompt token creation, prompt token sequence recording, tokenizer runtime attachment, prompt evaluation, dialogue generation, token generation, inference, or tool execution;
 - L-UI rendering implementation;
 - L-UI rendering detailed report refinement;
 - L-UI rendering README/status alignment;
@@ -267,7 +270,9 @@ The repository currently emphasizes:
 - Lat pipeline implementation;
 - Lat pipeline model normalization integration;
 - Lat-to-LIR model lowering integration;
+- Lat-to-LIR declaration metadata refinement;
 - Lat-to-LIR diagnostic refinement;
+- Lat-to-LIR diagnostic declaration metadata integration;
 - Lat pipeline lowering diagnostic integration;
 - Lat-to-LIR clause metadata refinement;
 - Lat-to-LIR diagnostic clause metadata integration;
@@ -291,7 +296,7 @@ Lat now has a bounded no-effect path from grammar parsing to semantic validation
 
 The Lat model normalization implementation builds typed declaration and clause index tables for states, policies, transitions, assertions, and effect declarations after semantic validation. It preserves first normalized declaration metadata, first normalized clause role/effect/name/operator/value report metadata, source spans, and no-effect flags without reading source bytes, executing Lat, or changing lowering behavior.
 
-The Lat-to-LIR diagnostic refinement classifies lowering outcomes as valid, parse, semantic, model, effect-check, capacity, LIR, or internal. It copies model errors, lowering errors, optional LIR errors, model counts, transition source metadata, first-clause metadata, no-effect flags, and evidence level into deterministic diagnostic reports without changing lowering behavior.
+The Lat-to-LIR diagnostic refinement classifies lowering outcomes as valid, parse, semantic, model, effect-check, capacity, LIR, or internal. It copies model errors, lowering errors, optional LIR errors, model counts, transition source metadata, first lowered declaration metadata, first-clause metadata, no-effect flags, and evidence level into deterministic diagnostic reports without changing lowering behavior.
 
 The Lat-to-LIR clause metadata refinement preserves clause operators in LIR node metadata and exposes first lowered clause role, effect, name, operator, value, and node index in deterministic lowering reports without evaluating operators or adding execution.
 
@@ -474,7 +479,7 @@ These percentages are planning estimates only.
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 58% |
+| Nadia offline AI foundation | 59% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |
@@ -582,6 +587,7 @@ Lat pipeline implementation
 Lat pipeline model normalization integration
 Lat-to-LIR model lowering integration
 Lat-to-LIR declaration metadata refinement
+Lat-to-LIR diagnostic declaration metadata integration
 Lat-to-LIR diagnostic refinement
 Lat pipeline lowering diagnostic integration
 Lat-to-LIR clause metadata refinement
@@ -654,7 +660,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat grammar report metadata integration, Lat model normalization, Lat model report declaration metadata integration, Lat model report clause metadata integration, Lat-to-LIR declaration metadata refinement, Lat-to-LIR metadata lowering, Lat-to-LIR diagnostic refinement, LIR report refinement, Lat pipeline reporting, Lat pipeline lowering diagnostic integration, Lat pipeline diagnostic clause metadata integration, Lat pipeline report clause metadata integration, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic main test audit, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
+The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat grammar report metadata integration, Lat model normalization, Lat model report declaration metadata integration, Lat model report clause metadata integration, Lat-to-LIR declaration metadata refinement, Lat-to-LIR metadata lowering, Lat-to-LIR diagnostic refinement, Lat-to-LIR diagnostic declaration metadata integration, LIR report refinement, Lat pipeline reporting, Lat pipeline lowering diagnostic integration, Lat pipeline diagnostic clause metadata integration, Lat pipeline report clause metadata integration, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic main test audit, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
 
 This is a mission direction, not a current security guarantee.
 
@@ -695,7 +701,7 @@ Latticra Seal request freshness status/public-entry alignment
 Latest completed implementation slice:
 
 ```text
-Lat-to-LIR declaration metadata refinement
+Lat-to-LIR diagnostic declaration metadata integration
 ```
 
 ## Previous implementation slice
@@ -703,7 +709,7 @@ Lat-to-LIR declaration metadata refinement
 Previous implementation slice:
 
 ```text
-Lat model report declaration metadata integration
+Lat-to-LIR declaration metadata refinement
 ```
 
 ## Previous contract slice

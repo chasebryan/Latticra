@@ -6,6 +6,7 @@ int main(void) {
     latticra_console_request_t request;
     latticra_console_result_t result;
     char report[LATTICRA_CONSOLE_REPORT_MAX];
+    char registry_report[LATTICRA_CONSOLE_COMMAND_REGISTRY_REPORT_MAX];
 
     if (latticra_console_default_request(&request) != LATTICRA_STATUS_OK) {
         fputs("latticra_console_report: default request failed\n", stderr);
@@ -23,5 +24,13 @@ int main(void) {
     }
 
     fputs(report, stdout);
+    fputc('\n', stdout);
+
+    if (latticra_console_command_registry_report(registry_report, sizeof(registry_report)) != LATTICRA_STATUS_OK) {
+        fputs("latticra_console_report: registry report render failed\n", stderr);
+        return 1;
+    }
+
+    fputs(registry_report, stdout);
     return 0;
 }

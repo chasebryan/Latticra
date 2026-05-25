@@ -17,6 +17,7 @@ This is planning/status work only. It does not implement macOS installation, app
 ```text
 macos_integration_transferability_map_present=1
 macos_build_platform_probe_present=1
+macos_dry_run_plan_adapter_present=1
 macos_transferable_surfaces_classified=1
 macos_adapter_requirements_recorded=1
 macos_user_local_paths_proposed=1
@@ -84,7 +85,7 @@ macos_integration_transferability: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS dry-run plan adapter that renders user-local Application Support, user-local app bundle, CLI-wrapper, receipt, and verification intent without writing those artifacts.
+Add a macOS user-local app bundle contract that defines the exact files, managed markers, rollback/reset behavior, and verification transcript required before any app bundle writer exists.
 ```
 
 ## Non-Claims

@@ -363,7 +363,7 @@ public_name=Nadia
 interactive_name=Nadia
 implementation_name=Nadia Witness Foundation
 documentation_code_name=Nadia Witness Foundation
-stage=24-tokenizer-runtime-attachment-contract
+stage=25-prompt-tokenization-contract
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -771,6 +771,31 @@ runtime_invoked=0
 requires_tokenizer_artifact_binding_contract=1
 requires_future_prompt_tokenization_contract=1
 tokenizer_runtime_attachment_promotion_allowed=0
+prompt_tokenization_contract_stage=25-prompt-tokenization-contract
+prompt_tokenization_contract_command=scripts/nadia-prompt-tokenization-contract.sh
+installed_prompt_tokenization_contract_command=latticra-nadia prompt-tokenization
+prompt_tokenization_stage=contract-only
+prompt_tokenization_contract_status=contract_only
+prompt_tokenization_authority=0
+prompt_tokenization_allowed=0
+prompt_tokenization_performed=0
+prompt_tokenization_metadata_present=1
+prompt_tokenization_family=operator-reviewed-prompt-tokenization
+prompt_tokenization_format=contract-only-offline-tokenization
+prompt_tokenization_decision=blocked_contract_only
+prompt_tokenization_plan_recorded=1
+prompt_tokenization_result_recorded=0
+prompt_tokenization_token_count_recorded=0
+prompt_tokenization_token_sequence_recorded=0
+prompt_tokenization_runtime_invoked=0
+prompt_tokens_created=0
+prompt_token_count_recorded=0
+prompt_token_sequence_recorded=0
+prompt_token_buffer_created=0
+prompt_tokenized=0
+requires_tokenizer_runtime_attachment_contract=1
+requires_future_prompt_token_sequence_contract=1
+prompt_tokenization_promotion_allowed=0
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -995,20 +1020,21 @@ network, granting runtime enforcement authority, booting hardware, or claiming a
 production operating system.
 LCREADME
   write_file "$PREFIX/share/latticra/lc/commands/seed-registry.txt" 0644 <<'LCCOMMANDS'
-help
-status
-plan
-save
-dry-run
-reset
-uninstall
-pwd
-cd
-lc status
-lc commands
-lc substrate
-lc host
-lc os
+name=help category=core effect=none capability=lc.core.help
+name=status category=core effect=none capability=lc.core.status
+name=plan category=panel effect=local-metadata capability=lc.panel.plan
+name=save category=panel effect=local-metadata capability=lc.panel.save
+name=dry-run category=panel effect=local-metadata capability=lc.panel.dry_run
+name=reset category=panel effect=local-metadata capability=lc.panel.reset
+name=uninstall category=panel effect=local-metadata capability=lc.panel.uninstall
+name=clear category=panel effect=local-metadata capability=lc.panel.clear
+name=lc status category=core effect=none capability=lc.core.status
+name=lc commands category=core effect=none capability=lc.core.registry
+name=lc substrate category=substrate effect=none capability=lc.substrate.inspect
+name=lc host category=host effect=future-gated capability=lc.host.inspect
+name=lc os category=os-base effect=future-gated capability=lc.os.inspect
+name=pwd category=panel effect=none capability=lc.panel.navigation
+name=cd category=panel effect=none capability=lc.panel.navigation
 LCCOMMANDS
 fi
 
@@ -1053,7 +1079,8 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/tokenizer-artifact-measurement" \
     "$PREFIX/share/latticra/nadia/tokenizer-artifact-verification" \
     "$PREFIX/share/latticra/nadia/tokenizer-artifact-binding" \
-    "$PREFIX/share/latticra/nadia/tokenizer-runtime-attachment"
+    "$PREFIX/share/latticra/nadia/tokenizer-runtime-attachment" \
+    "$PREFIX/share/latticra/nadia/prompt-tokenization"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia Witness Foundation"
@@ -1061,8 +1088,8 @@ public_name = "Nadia"
 interactive_name = "Nadia"
 implementation_name = "Nadia Witness Foundation"
 documentation_code_name = "Nadia Witness Foundation"
-stage = "24-tokenizer-runtime-attachment-contract"
-mode = "offline-tokenizer-runtime-attachment-contract"
+stage = "25-prompt-tokenization-contract"
+mode = "offline-prompt-tokenization-contract"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -1457,6 +1484,31 @@ runtime_invoked = false
 requires_tokenizer_artifact_binding_contract = true
 requires_future_prompt_tokenization_contract = true
 tokenizer_runtime_attachment_promotion_allowed = false
+prompt_tokenization_contract_stage = "25-prompt-tokenization-contract"
+prompt_tokenization_contract_command = "scripts/nadia-prompt-tokenization-contract.sh"
+installed_prompt_tokenization_contract_command = "latticra-nadia prompt-tokenization"
+prompt_tokenization_stage = "contract-only"
+prompt_tokenization_contract_status = "contract_only"
+prompt_tokenization_authority = false
+prompt_tokenization_allowed = false
+prompt_tokenization_performed = false
+prompt_tokenization_metadata_present = true
+prompt_tokenization_family = "operator-reviewed-prompt-tokenization"
+prompt_tokenization_format = "contract-only-offline-tokenization"
+prompt_tokenization_decision = "blocked_contract_only"
+prompt_tokenization_plan_recorded = true
+prompt_tokenization_result_recorded = false
+prompt_tokenization_token_count_recorded = false
+prompt_tokenization_token_sequence_recorded = false
+prompt_tokenization_runtime_invoked = false
+prompt_tokens_created = false
+prompt_token_count_recorded = false
+prompt_token_sequence_recorded = false
+prompt_token_buffer_created = false
+prompt_tokenized = false
+requires_tokenizer_runtime_attachment_contract = true
+requires_future_prompt_token_sequence_contract = true
+prompt_tokenization_promotion_allowed = false
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -1477,11 +1529,11 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-24 tokenizer-runtime-attachment contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-25 prompt-tokenization contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, tokenization-boundary, tokenizer-specification, tokenizer-manifest, tokenizer-artifact-inventory, tokenizer-artifact-measurement, tokenizer-artifact-verification, tokenizer-artifact-binding, tokenizer-runtime-attachment, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract, local model-registry contract metadata when the operator runs latticra-nadia model-registry, inference-readiness contract metadata when the operator runs latticra-nadia inference-readiness, runtime-invocation contract metadata when the operator runs latticra-nadia runtime-invocation, model-load contract metadata when the operator runs latticra-nadia model-load, prompt-receipt contract metadata when the operator runs latticra-nadia prompt-receipt, prompt-materialization contract metadata when the operator runs latticra-nadia prompt-materialization, awareness-dialogue contract metadata when the operator runs latticra-nadia awareness-dialogue, prompt-evaluation handoff contract metadata when the operator runs latticra-nadia prompt-evaluation-handoff, tokenization-boundary contract metadata when the operator runs latticra-nadia tokenization-boundary, tokenizer-specification contract metadata when the operator runs latticra-nadia tokenizer-specification, tokenizer-manifest contract metadata when the operator runs latticra-nadia tokenizer-manifest, tokenizer-artifact-inventory contract metadata when the operator runs latticra-nadia tokenizer-artifact-inventory, tokenizer-artifact-measurement contract metadata when the operator runs latticra-nadia tokenizer-artifact-measurement, tokenizer-artifact-verification contract metadata when the operator runs latticra-nadia tokenizer-artifact-verification, tokenizer-artifact-binding contract metadata when the operator runs latticra-nadia tokenizer-artifact-binding, and tokenizer-runtime-attachment contract metadata when the operator runs latticra-nadia tokenizer-runtime-attachment. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, resolve tokenizer artifact paths, open tokenizer artifacts, read tokenizer artifacts, scan tokenizer artifacts, hash tokenizer artifacts, measure tokenizer artifacts, verify tokenizer artifacts, compare tokenizer artifact digests, compare tokenizer artifact sizes, bind tokenizer artifacts, attach tokenizers to a runtime, create runtime sessions, record tokenizer artifact digests, record tokenizer artifact sizes, load tokenizer manifests, parse tokenizer manifests, open tokenizer files, load tokenizer vocabularies, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn a runtime process, create a runtime session, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, tokenization-boundary, tokenizer-specification, tokenizer-manifest, tokenizer-artifact-inventory, tokenizer-artifact-measurement, tokenizer-artifact-verification, tokenizer-artifact-binding, tokenizer-runtime-attachment, prompt-tokenization, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract, local model-registry contract metadata when the operator runs latticra-nadia model-registry, inference-readiness contract metadata when the operator runs latticra-nadia inference-readiness, runtime-invocation contract metadata when the operator runs latticra-nadia runtime-invocation, model-load contract metadata when the operator runs latticra-nadia model-load, prompt-receipt contract metadata when the operator runs latticra-nadia prompt-receipt, prompt-materialization contract metadata when the operator runs latticra-nadia prompt-materialization, awareness-dialogue contract metadata when the operator runs latticra-nadia awareness-dialogue, prompt-evaluation handoff contract metadata when the operator runs latticra-nadia prompt-evaluation-handoff, tokenization-boundary contract metadata when the operator runs latticra-nadia tokenization-boundary, tokenizer-specification contract metadata when the operator runs latticra-nadia tokenizer-specification, tokenizer-manifest contract metadata when the operator runs latticra-nadia tokenizer-manifest, tokenizer-artifact-inventory contract metadata when the operator runs latticra-nadia tokenizer-artifact-inventory, tokenizer-artifact-measurement contract metadata when the operator runs latticra-nadia tokenizer-artifact-measurement, tokenizer-artifact-verification contract metadata when the operator runs latticra-nadia tokenizer-artifact-verification, tokenizer-artifact-binding contract metadata when the operator runs latticra-nadia tokenizer-artifact-binding, tokenizer-runtime-attachment contract metadata when the operator runs latticra-nadia tokenizer-runtime-attachment, and prompt-tokenization contract metadata when the operator runs latticra-nadia prompt-tokenization. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, create prompt tokens, record prompt token sequences, resolve tokenizer artifact paths, open tokenizer artifacts, read tokenizer artifacts, scan tokenizer artifacts, hash tokenizer artifacts, measure tokenizer artifacts, verify tokenizer artifacts, compare tokenizer artifact digests, compare tokenizer artifact sizes, bind tokenizer artifacts, attach tokenizers to a runtime, create runtime sessions, record tokenizer artifact digests, record tokenizer artifact sizes, load tokenizer manifests, parse tokenizer manifests, open tokenizer files, load tokenizer vocabularies, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn a runtime process, create a runtime session, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source.
 NADIAREADME
 fi
 
@@ -1724,8 +1776,8 @@ case "\${1:-status}" in
     echo "interactive_name=Nadia"
     echo "implementation_name=Nadia Witness Foundation"
     echo "documentation_code_name=Nadia Witness Foundation"
-    echo "stage=24-tokenizer-runtime-attachment-contract"
-    echo "mode=offline-tokenizer-runtime-attachment-contract"
+    echo "stage=25-prompt-tokenization-contract"
+    echo "mode=offline-prompt-tokenization-contract"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "context_packs=\$NADIA_DIR/context-packs"
@@ -1753,6 +1805,7 @@ case "\${1:-status}" in
     echo "tokenizer_artifact_verification_contracts=\$NADIA_DIR/tokenizer-artifact-verification"
     echo "tokenizer_artifact_binding_contracts=\$NADIA_DIR/tokenizer-artifact-binding"
     echo "tokenizer_runtime_attachment_contracts=\$NADIA_DIR/tokenizer-runtime-attachment"
+    echo "prompt_tokenization_contracts=\$NADIA_DIR/prompt-tokenization"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "prompt_plan_command=latticra-nadia prompt-plan"
@@ -2143,6 +2196,31 @@ case "\${1:-status}" in
     echo "requires_tokenizer_artifact_binding_contract=1"
     echo "requires_future_prompt_tokenization_contract=1"
     echo "tokenizer_runtime_attachment_promotion_allowed=0"
+    echo "prompt_tokenization_contract_stage=25-prompt-tokenization-contract"
+    echo "prompt_tokenization_contract_command=latticra-nadia prompt-tokenization"
+    echo "installed_prompt_tokenization_contract_command=latticra-nadia prompt-tokenization"
+    echo "prompt_tokenization_stage=contract-only"
+    echo "prompt_tokenization_contract_status=contract_only"
+    echo "prompt_tokenization_authority=0"
+    echo "prompt_tokenization_allowed=0"
+    echo "prompt_tokenization_performed=0"
+    echo "prompt_tokenization_metadata_present=1"
+    echo "prompt_tokenization_family=operator-reviewed-prompt-tokenization"
+    echo "prompt_tokenization_format=contract-only-offline-tokenization"
+    echo "prompt_tokenization_decision=blocked_contract_only"
+    echo "prompt_tokenization_plan_recorded=1"
+    echo "prompt_tokenization_result_recorded=0"
+    echo "prompt_tokenization_token_count_recorded=0"
+    echo "prompt_tokenization_token_sequence_recorded=0"
+    echo "prompt_tokenization_runtime_invoked=0"
+    echo "prompt_tokens_created=0"
+    echo "prompt_token_count_recorded=0"
+    echo "prompt_token_sequence_recorded=0"
+    echo "prompt_token_buffer_created=0"
+    echo "prompt_tokenized=0"
+    echo "requires_tokenizer_runtime_attachment_contract=1"
+    echo "requires_future_prompt_token_sequence_contract=1"
+    echo "prompt_tokenization_promotion_allowed=0"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -2502,11 +2580,25 @@ case "\${1:-status}" in
       --tokenizer-artifact-binding "\$NADIA_DIR/tokenizer-artifact-binding/latest-tokenizer-artifact-binding-contract.txt" \
       --output "\$NADIA_DIR/tokenizer-runtime-attachment"
     ;;
+  prompt-tokenization|tokenization-contract|prompt-tokenizer)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-prompt-tokenization-contract.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia prompt-tokenization contract script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --tokenizer-runtime-attachment "\$NADIA_DIR/tokenizer-runtime-attachment/latest-tokenizer-runtime-attachment-contract.txt" \
+      --output "\$NADIA_DIR/prompt-tokenization"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|tokenizer-specification|tokenizer-manifest|tokenizer-artifact-inventory|tokenizer-artifact-measurement|tokenizer-artifact-verification|tokenizer-artifact-binding|tokenizer-runtime-attachment|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|tokenizer-specification|tokenizer-manifest|tokenizer-artifact-inventory|tokenizer-artifact-measurement|tokenizer-artifact-verification|tokenizer-artifact-binding|tokenizer-runtime-attachment|prompt-tokenization|path}" >&2
     exit 64
     ;;
 esac

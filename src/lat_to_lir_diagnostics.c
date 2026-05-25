@@ -16,6 +16,14 @@ static void diagnostic_default(latticra_lat_to_lir_diagnostic_result_t *result) 
     result->lir_error = LATTICRA_LIR_OK;
     result->model_declaration_count = 0u;
     result->model_clause_count = 0u;
+    result->first_declaration_node_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_declaration_kind = LATTICRA_LAT_DECLARATION_UNKNOWN;
+    result->first_declaration_name[0] = '\0';
+    result->first_declaration_source[0] = '\0';
+    result->first_declaration_parse_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_declaration_first_clause_index = LATTICRA_LAT_MODEL_NO_INDEX;
+    result->first_declaration_clause_count = 0u;
+    result->first_declaration_source_index = LATTICRA_LAT_MODEL_NO_INDEX;
     result->first_transition_source_index = LATTICRA_LAT_MODEL_NO_INDEX;
     result->first_clause_node_index = LATTICRA_LAT_MODEL_NO_INDEX;
     result->first_clause_role = LATTICRA_LAT_MODEL_CLAUSE_UNKNOWN;
@@ -98,6 +106,14 @@ latticra_status_t latticra_lat_to_lir_diagnostics_evaluate(
     result->model_error = lowering->model_error;
     result->model_declaration_count = lowering->model_declaration_count;
     result->model_clause_count = lowering->model_clause_count;
+    result->first_declaration_node_index = lowering->first_declaration_node_index;
+    result->first_declaration_kind = lowering->first_declaration_kind;
+    copy_text(result->first_declaration_name, sizeof(result->first_declaration_name), lowering->first_declaration_name);
+    copy_text(result->first_declaration_source, sizeof(result->first_declaration_source), lowering->first_declaration_source);
+    result->first_declaration_parse_index = lowering->first_declaration_parse_index;
+    result->first_declaration_first_clause_index = lowering->first_declaration_first_clause_index;
+    result->first_declaration_clause_count = lowering->first_declaration_clause_count;
+    result->first_declaration_source_index = lowering->first_declaration_source_index;
     result->first_transition_source_index = lowering->first_transition_source_index;
     result->first_clause_node_index = lowering->first_clause_node_index;
     result->first_clause_role = lowering->first_clause_role;
@@ -150,6 +166,14 @@ latticra_status_t latticra_lat_to_lir_diagnostics_report(
         "lir_error=%s\n"
         "model_declaration_count=%zu\n"
         "model_clause_count=%zu\n"
+        "first_declaration_node_index=%zu\n"
+        "first_declaration_kind=%s\n"
+        "first_declaration_name=%s\n"
+        "first_declaration_source=%s\n"
+        "first_declaration_parse_index=%zu\n"
+        "first_declaration_first_clause_index=%zu\n"
+        "first_declaration_clause_count=%zu\n"
+        "first_declaration_source_index=%zu\n"
         "first_transition_source_index=%zu\n"
         "first_clause_node_index=%zu\n"
         "first_clause_role=%s\n"
@@ -174,6 +198,14 @@ latticra_status_t latticra_lat_to_lir_diagnostics_report(
         latticra_lir_error_label(result->lir_error),
         result->model_declaration_count,
         result->model_clause_count,
+        result->first_declaration_node_index,
+        latticra_lat_declaration_kind_label(result->first_declaration_kind),
+        result->first_declaration_name,
+        result->first_declaration_source,
+        result->first_declaration_parse_index,
+        result->first_declaration_first_clause_index,
+        result->first_declaration_clause_count,
+        result->first_declaration_source_index,
         result->first_transition_source_index,
         result->first_clause_node_index,
         latticra_lat_model_clause_role_label(result->first_clause_role),

@@ -27,6 +27,18 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Lat-to-LIR diagnostic declaration metadata integration
+```
+
+Purpose completed:
+
+```text
+copy first lowered declaration node index, kind, name, source name, parse index, first-clause index, clause count, and source declaration index from Lat-to-LIR lowering results into deterministic Lat-to-LIR diagnostic reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
 Lat-to-LIR declaration metadata refinement
 ```
 
@@ -36,7 +48,7 @@ Purpose completed:
 copy first lowered declaration node index, kind, name, source name, parse index, first-clause index, clause count, and source declaration index from normalized Lat model metadata into deterministic Lat-to-LIR lowering reports while preserving no Lat execution, no LIR execution, no operator evaluation, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat model report declaration metadata integration
@@ -603,6 +615,12 @@ Latest completed fixture/evidence slice:
 Runtime boundary abuse-case fixture expansion after policy expansion
 ```
 
+Previous policy/evidence slice:
+
+```text
+Runtime boundary policy expansion after threat-model validation
+```
+
 Current runtime boundary abuse-case fixture fields:
 
 ```text
@@ -632,13 +650,12 @@ avoid percentage or readiness churn unless capability posture, public readiness,
 
 1. Completion estimate review only if capability posture changes.
 2. Continue small guarded report/status alignment only when drift appears.
-3. Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review.
-4. Authority status announcement only if public messaging changes.
-5. C++ authority expansion contract only if new authority behavior is proposed.
-6. Nucleus task execution refinement only after the next language representation review and a separate effect contract.
-8. Runtime boundary domain matrix report status audit only if new status drift appears.
-9. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
-10. Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review.
+3. Authority status announcement only if public messaging changes.
+4. C++ authority expansion contract only if new authority behavior is proposed.
+5. Nucleus task execution refinement only after the next language representation review and a separate effect contract.
+6. Runtime boundary domain matrix report status audit only if new status drift appears.
+7. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
+8. Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review.
 
 ## Quality rules
 

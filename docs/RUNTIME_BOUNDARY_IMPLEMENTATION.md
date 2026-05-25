@@ -30,6 +30,7 @@ tests/runtime_boundary_effect_flag_report.c
 tests/runtime_boundary_allowed_effect_report.c
 tests/runtime_boundary_authority_flag_report.c
 tests/runtime_boundary_authority_label_report.c
+tests/runtime_boundary_abuse_case_fixtures.c
 tests/runtime_boundary_task_flag_report.c
 tests/runtime_boundary_prerequisite_status_report.c
 tests/runtime_boundary_prerequisite_denial.c
@@ -95,6 +96,7 @@ The runtime boundary tests verify:
 
 ```text
 runtime boundary classification initializes a no-effect result
+runtime boundary abuse-case fixtures deny unknown request, unknown effect, future-gated execution, operator override, missing task metadata, missing authority metadata, invalid LIR prerequisites, and blocked effects
 runtime_id is copied from request to record
 record_count is initialized
 runtime_id and record_count report fields are present

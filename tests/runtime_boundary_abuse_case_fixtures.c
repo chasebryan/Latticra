@@ -35,10 +35,10 @@ static latticra_runtime_boundary_authority_summary_t ok_authority(void) {
     latticra_runtime_boundary_authority_summary_t authority;
     memset(&authority, 0, sizeof(authority));
     authority.status = LATTICRA_STATUS_OK;
-    strcpy(authority.status_label, "ok");
-    strcpy(authority.validator_label, "abuse-case-fixture");
-    strcpy(authority.requested_effect_label, "none");
-    strcpy(authority.denial_reason, "ok");
+    (void)snprintf(authority.status_label, sizeof(authority.status_label), "%s", "ok");
+    (void)snprintf(authority.validator_label, sizeof(authority.validator_label), "%s", "abuse-case-fixture");
+    (void)snprintf(authority.requested_effect_label, sizeof(authority.requested_effect_label), "%s", "none");
+    (void)snprintf(authority.denial_reason, sizeof(authority.denial_reason), "%s", "ok");
     authority.no_effect = 1;
     return authority;
 }
@@ -169,7 +169,7 @@ static int classify_fixture(
     latticra_runtime_boundary_request_t request;
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, fixture->id);
+    (void)snprintf(request.runtime_id, sizeof(request.runtime_id), "%s", fixture->id);
     request.request_kind = fixture->request_kind;
     request.requested_effect = fixture->requested_effect;
     request.mode = fixture->mode;
@@ -182,23 +182,89 @@ static int classify_fixture(
     return 0;
 }
 
+static int runtime_boundary_abuse_case_fixture_matches_policy_map(size_t index) {
+    const runtime_boundary_abuse_case_fixture_t *fixture;
+    latticra_runtime_boundary_result_t result;
+
+    EXPECT_TRUE(index < abuse_case_fixture_count(), "fixture index in range");
+    fixture = &abuse_case_fixtures[index];
+
+    if (classify_fixture(fixture, &result) != 0) return 1;
+    EXPECT_TRUE(result.record.policy == fixture->expected_policy, "fixture policy");
+    EXPECT_TRUE(result.record.denial == fixture->expected_denial, "fixture denial");
+    EXPECT_TRUE(result.record.gate_state == fixture->expected_gate, "fixture gate state");
+    EXPECT_TRUE(result.record.report_classification == fixture->expected_report_classification, "fixture report classification");
+    EXPECT_TRUE(result.record.policy_matrix_cell == fixture->expected_policy_matrix_cell, "fixture policy matrix cell");
+    return 0;
+}
+
 static int runtime_boundary_abuse_case_fixture_table_covers_current_policy_map(void) {
     size_t index;
 
     EXPECT_TRUE(abuse_case_fixture_count() == 8u, "expected abuse-case fixture count");
 
     for (index = 0u; index < abuse_case_fixture_count(); index++) {
-        const runtime_boundary_abuse_case_fixture_t *fixture = &abuse_case_fixtures[index];
-        latticra_runtime_boundary_result_t result;
-
-        if (classify_fixture(fixture, &result) != 0) return 1;
-        EXPECT_TRUE(result.record.policy == fixture->expected_policy, "fixture policy");
-        EXPECT_TRUE(result.record.denial == fixture->expected_denial, "fixture denial");
-        EXPECT_TRUE(result.record.gate_state == fixture->expected_gate, "fixture gate state");
-        EXPECT_TRUE(result.record.report_classification == fixture->expected_report_classification, "fixture report classification");
-        EXPECT_TRUE(result.record.policy_matrix_cell == fixture->expected_policy_matrix_cell, "fixture policy matrix cell");
+        if (runtime_boundary_abuse_case_fixture_matches_policy_map(index) != 0) return 1;
     }
     return 0;
+}
+
+static int runtime_boundary_abuse_case_unknown_request_is_not_allowed(void) {
+    return runtime_boundary_abuse_case_fixture_matches_policy_map(0u);
+}
+
+static int runtime_boundary_abuse_case_unknown_effect_is_not_allowed(void) {
+    return runtime_boundary_abuse_case_fixture_matches_policy_map(1u);
+}
+
+static int runtime_boundary_abuse_case_future_gated_request_is_not_executable(void) {
+    return runtime_boundary_abuse_case_fixture_matches_policy_map(2u);
+}
+
+static int runtime_boundary_abuse_case_operator_confirmation_does_not_override(void) {
+    return runtime_boundary_abuse_case_fixture_matches_policy_map(3u);
+}
+
+static int runtime_boundary_abuse_case_render_report_preserves_lir_failure_reason(void) {
+    latticra_runtime_boundary_authority_summary_t authority = ok_authority();
+    latticra_runtime_boundary_request_t request;
+    latticra_runtime_boundary_result_t result;
+    latticra_l_ui_render_result_t render;
+    char report[LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX];
+
+    memset(&request, 0, sizeof(request));
+    memset(&render, 0, sizeof(render));
+    (void)snprintf(request.runtime_id, sizeof(request.runtime_id), "%s", "render-report-lir-failure");
+    render.status = LATTICRA_STATUS_OK;
+    render.error = LATTICRA_L_UI_RENDER_LIR_FAILED;
+    request.request_kind = LATTICRA_RUNTIME_BOUNDARY_RENDER_REPORT;
+    request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
+    request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_REPORT_ONLY;
+    request.operator_confirmation = LATTICRA_RUNTIME_BOUNDARY_OPERATOR_NOT_APPLICABLE;
+    request.authority = &authority;
+    request.render = &render;
+
+    EXPECT_TRUE(latticra_runtime_boundary_classify(&request, &result) == LATTICRA_STATUS_OK, "render failure classify");
+    EXPECT_TRUE(result.record.policy == LATTICRA_RUNTIME_BOUNDARY_POLICY_DENY, "render failure policy");
+    EXPECT_TRUE(result.record.denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_RENDER_FAILED, "render failure denial");
+    EXPECT_TRUE(result.record.policy_matrix_cell == LATTICRA_RUNTIME_BOUNDARY_MATRIX_PREREQUISITE_DENIED, "render failure matrix");
+    EXPECT_TRUE(result.record.render_error == LATTICRA_L_UI_RENDER_LIR_FAILED, "render failure error copied");
+    EXPECT_TRUE(latticra_runtime_boundary_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "render failure report");
+    EXPECT_TRUE(strstr(report, "reason=render-failed\n") != 0, "render failure report reason");
+    EXPECT_TRUE(strstr(report, "execution_allowed=0\n") != 0, "render failure execution denied");
+    return 0;
+}
+
+static int runtime_boundary_abuse_case_failed_authority_metadata_is_not_allowed(void) {
+    return runtime_boundary_abuse_case_fixture_matches_policy_map(5u);
+}
+
+static int runtime_boundary_abuse_case_invalid_lir_does_not_reach_allowed_validation(void) {
+    return runtime_boundary_abuse_case_fixture_matches_policy_map(6u);
+}
+
+static int runtime_boundary_abuse_case_blocked_effect_stays_blocked(void) {
+    return runtime_boundary_abuse_case_fixture_matches_policy_map(7u);
 }
 
 static int runtime_boundary_abuse_case_reports_include_denial_reasons(void) {
@@ -221,6 +287,7 @@ static int runtime_boundary_abuse_case_reports_include_denial_reasons(void) {
         EXPECT_TRUE(strstr(report, "no_effect=1\n") != 0, "fixture report no effect");
         EXPECT_TRUE(strstr(report, "execution_allowed=0\n") != 0, "fixture report execution denied");
         EXPECT_TRUE(strstr(report, "mutation_allowed=0\n") != 0, "fixture report mutation denied");
+        EXPECT_TRUE(strstr(report, "file_io_allowed=0\n") != 0, "fixture report file I/O denied");
         EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0, "fixture report network denied");
         EXPECT_TRUE(strstr(report, "server_allowed=0\n") != 0, "fixture report server denied");
     }
@@ -255,6 +322,14 @@ static int runtime_boundary_abuse_case_domain_matrix_preserves_no_authority(void
 
 int main(void) {
     if (runtime_boundary_abuse_case_fixture_table_covers_current_policy_map() != 0) return 1;
+    if (runtime_boundary_abuse_case_unknown_request_is_not_allowed() != 0) return 1;
+    if (runtime_boundary_abuse_case_unknown_effect_is_not_allowed() != 0) return 1;
+    if (runtime_boundary_abuse_case_future_gated_request_is_not_executable() != 0) return 1;
+    if (runtime_boundary_abuse_case_operator_confirmation_does_not_override() != 0) return 1;
+    if (runtime_boundary_abuse_case_render_report_preserves_lir_failure_reason() != 0) return 1;
+    if (runtime_boundary_abuse_case_failed_authority_metadata_is_not_allowed() != 0) return 1;
+    if (runtime_boundary_abuse_case_invalid_lir_does_not_reach_allowed_validation() != 0) return 1;
+    if (runtime_boundary_abuse_case_blocked_effect_stays_blocked() != 0) return 1;
     if (runtime_boundary_abuse_case_reports_include_denial_reasons() != 0) return 1;
     if (runtime_boundary_abuse_case_domain_matrix_preserves_no_authority() != 0) return 1;
 

@@ -78,7 +78,7 @@ The first implementation lane should be deliberately small:
 ```text
 stage_0_transferability_plan=present
 stage_1_macos_build_probe=present
-stage_2_macos_dry_run_plan=future
+stage_2_macos_dry_run_plan=present
 stage_3_user_local_app_bundle=future
 stage_4_user_local_verification_transcript=future
 stage_5_codesigning_notarization_plan=future
@@ -99,7 +99,7 @@ host_mutation_performed=0
 network_performed=0
 ```
 
-Stage 2 should adapt the existing installer plan to macOS and still remain dry-run. Stage 3 may write a managed app bundle under the user's home directory only after Stage 2 evidence exists.
+Stage 2 adapts the existing installer plan to macOS and still remains dry-run. Stage 3 may write a managed app bundle under the user's home directory only after Stage 2 evidence exists.
 
 Stage 1 is implemented by:
 
@@ -107,6 +107,14 @@ Stage 1 is implemented by:
 docs/MACOS_BUILD_PLATFORM_PROBE.md
 scripts/macos-build-platform-probe.sh
 docs/status/MACOS_BUILD_PLATFORM_PROBE_STATUS.md
+```
+
+Stage 2 is implemented by:
+
+```text
+docs/MACOS_DRY_RUN_PLAN_ADAPTER.md
+scripts/macos-dry-run-plan-adapter.sh
+docs/status/MACOS_DRY_RUN_PLAN_ADAPTER_STATUS.md
 ```
 
 ## App Bundle Direction
@@ -229,5 +237,5 @@ macos_production_ready=0
 ## Next Recommended Lane
 
 ```text
-Add a macOS dry-run plan adapter that renders user-local Application Support, user-local app bundle, CLI-wrapper, receipt, and verification intent without writing those artifacts.
+Add a macOS user-local app bundle contract that defines the exact files, managed markers, rollback/reset behavior, and verification transcript required before any app bundle writer exists.
 ```

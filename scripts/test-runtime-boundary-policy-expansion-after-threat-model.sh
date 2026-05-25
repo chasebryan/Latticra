@@ -34,11 +34,13 @@ require_file docs/RUNTIME_BOUNDARY_CONTRACT.md
 require_file docs/RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md
 require_file docs/RUNTIME_BOUNDARY_IMPLEMENTATION.md
 require_file docs/RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md
+require_file docs/RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md
 require_file docs/RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md
 require_file docs/RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md
 require_file scripts/test-defensive-threat-model-validation-refinement.sh
 require_file scripts/test-runtime-boundary.sh
 require_file scripts/test-runtime-boundary-policy-matrix-refinement.sh
+require_file scripts/test-runtime-boundary-abuse-case-fixtures.sh
 require_file scripts/test-runtime-boundary-domain-matrix-refinement.sh
 require_file scripts/test-runtime-boundary-domain-matrix-report-integration.sh
 
@@ -94,27 +96,26 @@ require_contains 'unknown request is treated as allowed' "$doc"
 require_contains 'unknown effect is treated as allowed' "$doc"
 require_contains 'future-gated request is treated as executable' "$doc"
 require_contains 'operator confirmation overrides policy' "$doc"
-require_contains 'abuse-case fixture expansion after runtime-boundary policy expansion' "$doc"
+require_contains 'docs/RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md' "$doc"
 require_contains 'sh scripts/test-runtime-boundary-policy-expansion-after-threat-model.sh' "$doc"
 
 require_contains 'runtime_boundary_policy_expansion_after_threat_model_present=1' README.md
 require_contains 'docs/RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md' README.md
 require_contains 'Runtime boundary policy expansion after threat-model validation' STATUS.md
 require_contains 'runtime_boundary_policy_expansion_after_threat_model_present=1' STATUS.md
-require_contains 'Abuse-case fixture expansion after runtime-boundary policy expansion' STATUS.md
+require_contains 'Runtime boundary abuse-case fixture expansion after policy expansion' STATUS.md
 require_contains 'RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md' docs/status/README.md
 require_contains 'runtime_boundary_policy_expansion_after_threat_model_present=1' docs/status/README.md
 require_contains 'Runtime boundary policy expansion after threat-model validation' docs/status/CURRENT_STATUS.md
-require_contains 'runtime_boundary_policy_expansion_after_threat_model_present=1' docs/status/CURRENT_STATUS.md
-require_contains 'Abuse-case fixture expansion after runtime-boundary policy expansion' docs/status/CURRENT_STATUS.md
+require_contains 'Runtime boundary abuse-case fixture expansion after policy expansion' docs/status/CURRENT_STATUS.md
 require_contains 'RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md' docs/FOUNDATION_INDEX.md
 require_contains 'Runtime boundary policy expansion after threat-model validation' docs/FOUNDATION_INDEX.md
 require_contains 'runtime_boundary_policy_expansion_after_threat_model_present=1' docs/FOUNDATION_INDEX.md
-require_contains 'Abuse-case fixture expansion after runtime-boundary policy expansion' docs/FOUNDATION_INDEX.md
+require_contains 'Runtime boundary abuse-case fixture expansion after policy expansion' docs/FOUNDATION_INDEX.md
 require_contains 'Runtime boundary policy expansion after threat-model validation' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Abuse-case fixture expansion after runtime-boundary policy expansion' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Runtime boundary abuse-case fixture expansion after policy expansion' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Runtime boundary policy expansion after threat-model validation' docs/project_notes/UPCOMING_WORK.md
-require_contains 'Abuse-case fixture expansion after runtime-boundary policy expansion' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Runtime boundary abuse-case fixture expansion after policy expansion' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md' docs/project_notes/README.md
 
 printf 'runtime_boundary_policy_expansion_after_threat_model: ok\n'

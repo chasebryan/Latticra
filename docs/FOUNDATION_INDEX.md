@@ -54,6 +54,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22.md`](NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22.md) — Stage-22 tokenizer-artifact-verification contract for Nadia before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest comparison, artifact size comparison, artifact verification, artifact binding, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23.md`](NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23.md) — Stage-23 tokenizer-artifact-binding contract for Nadia before tokenizer artifact opening, artifact reading, artifact hashing, artifact verification, artifact binding, tokenizer runtime attachment, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md`](NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md) — Stage-24 tokenizer-runtime-attachment contract for Nadia before tokenizer artifact opening, artifact reading, artifact hashing, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md`](NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md) — Stage-25 prompt-tokenization contract for Nadia before prompt text reading, prompt token creation, prompt token sequence recording, tokenizer runtime attachment, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`SELF_UPDATE_MODEL.md`](SELF_UPDATE_MODEL.md) — staged signed update and rollback design.
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
@@ -97,6 +98,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22_STATUS.md`](status/NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22_STATUS.md) — status record for Nadia Stage-22 tokenizer-artifact-verification contract before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest comparison, artifact size comparison, artifact verification, artifact binding, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`status/NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23_STATUS.md`](status/NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23_STATUS.md) — status record for Nadia Stage-23 tokenizer-artifact-binding contract before tokenizer artifact opening, artifact reading, artifact hashing, artifact verification, artifact binding, tokenizer runtime attachment, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`status/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md`](status/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md) — status record for Nadia Stage-24 tokenizer-runtime-attachment contract before tokenizer artifact opening, artifact reading, artifact hashing, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md`](status/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md) — status record for Nadia Stage-25 prompt-tokenization contract before prompt text reading, prompt token creation, prompt token sequence recording, tokenizer runtime attachment, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
@@ -242,7 +244,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LAT_TO_LIR_LOWERING_IMPLEMENTATION_PLAN.md`](LAT_TO_LIR_LOWERING_IMPLEMENTATION_PLAN.md) — Lat-to-LIR lowering implementation plan.
 - [`LAT_TO_LIR_LOWERING_IMPLEMENTATION.md`](LAT_TO_LIR_LOWERING_IMPLEMENTATION.md) — Lat-to-LIR lowering implementation with first-declaration report metadata.
 - [`LAT_TO_LIR_CLAUSE_METADATA_REFINEMENT.md`](LAT_TO_LIR_CLAUSE_METADATA_REFINEMENT.md) — Lat-to-LIR clause operator/value metadata refinement.
-- [`LAT_TO_LIR_DIAGNOSTIC_REFINEMENT.md`](LAT_TO_LIR_DIAGNOSTIC_REFINEMENT.md) — Lat-to-LIR diagnostic classification and first-clause metadata report surface.
+- [`LAT_TO_LIR_DIAGNOSTIC_REFINEMENT.md`](LAT_TO_LIR_DIAGNOSTIC_REFINEMENT.md) — Lat-to-LIR diagnostic classification and first-declaration/first-clause metadata report surface.
 - [`LAT_PIPELINE_CONTRACT.md`](LAT_PIPELINE_CONTRACT.md) — bounded no-effect Lat pipeline contract after parser, semantic validation, and Lat-to-LIR lowering.
 - [`LAT_PIPELINE_IMPLEMENTATION_PLAN.md`](LAT_PIPELINE_IMPLEMENTATION_PLAN.md) — exact Lat pipeline API, result struct, report, tests, workflow, compatibility expectations, and non-claims.
 - [`LAT_PIPELINE_IMPLEMENTATION.md`](LAT_PIPELINE_IMPLEMENTATION.md) — first bounded no-effect Lat pipeline implementation.
@@ -356,6 +358,7 @@ Nadia tokenizer artifact measurement contract Stage-21 + guardrails
 Nadia tokenizer artifact verification contract Stage-22 + guardrails
 Nadia tokenizer artifact binding contract Stage-23 + guardrails
 Nadia tokenizer runtime attachment contract Stage-24 + guardrails
+Nadia prompt tokenization contract Stage-25 + guardrails
 Latticra Seal verification policy status/public-entry alignment + guardrails
 Latticra Seal key parsing status/public-entry alignment + guardrails
 Latticra Seal bounded no-effect key parsing metadata + invariants
@@ -379,6 +382,7 @@ Lat model report clause metadata integration + invariants
 Lat-to-LIR lowering implementation + invariants
 Lat-to-LIR declaration metadata refinement + invariants
 Lat-to-LIR clause metadata refinement + invariants
+Lat-to-LIR diagnostic declaration metadata integration + invariants
 Lat-to-LIR diagnostic clause metadata integration + invariants
 Lat pipeline diagnostic clause metadata integration + invariants
 Lat pipeline report clause metadata integration + invariants

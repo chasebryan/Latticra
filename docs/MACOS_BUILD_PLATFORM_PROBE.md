@@ -120,5 +120,5 @@ This probe is not macOS installation, macOS app bundle evidence, signed app evid
 ## Next Recommended Lane
 
 ```text
-Add a macOS dry-run plan adapter that renders user-local Application Support, user-local app bundle, CLI-wrapper, receipt, and verification intent without writing those artifacts.
+Add a macOS user-local app bundle contract that defines the exact files, managed markers, rollback/reset behavior, and verification transcript required before any app bundle writer exists.
 ```

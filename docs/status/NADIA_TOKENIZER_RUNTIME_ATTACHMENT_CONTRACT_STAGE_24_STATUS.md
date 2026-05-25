@@ -137,6 +137,8 @@ Nadia can now produce a tokenizer-runtime-attachment contract that packages Stag
 
 This is not tokenizer runtime attachment authority. It does not attach tokenizers to a runtime, create runtime sessions, tokenize prompts, run inference, or execute tools.
 
+Stage-25 now defines a prompt-tokenization contract that packages Stage-24 tokenizer-runtime-attachment evidence while keeping prompt text reading, token creation, token sequence recording, runtime invocation, inference, dialogue generation, and tool execution denied.
+
 ## Guard
 
 ```sh

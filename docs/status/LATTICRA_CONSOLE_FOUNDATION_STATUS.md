@@ -17,6 +17,9 @@ latticra_console_configurable=1
 panel_installable=1
 substrate_bridge_status=metadata-bound
 command_registry_status=seed-registry
+command_registry_source=c-static-table
+command_registry_no_effect=1
+command_registry_host_process_launch_allowed=0
 host_embedding_status=planned
 os_base_status=planned-no-boot-authority
 ```

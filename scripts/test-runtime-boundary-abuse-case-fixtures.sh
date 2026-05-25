@@ -39,6 +39,7 @@ require_file src/runtime_boundary.c
 require_file src/runtime_boundary_domain_matrix_eval.c
 require_file scripts/test-runtime-boundary-policy-expansion-after-threat-model.sh
 require_file scripts/test-runtime-boundary.sh
+require_file .github/workflows/runtime-boundary-abuse-case-fixtures.yml
 
 require_contains 'Status: runtime boundary abuse-case fixture expansion after policy expansion' "$doc"
 require_contains 'abuse-case mapping needs broader fixture coverage' "$doc"
@@ -86,14 +87,14 @@ require_contains 'sh scripts/test-runtime-boundary-abuse-case-fixtures.sh' "$doc
 require_contains 'runtime_boundary_abuse_case_fixture_table_covers_current_policy_map' "$test_file"
 require_contains 'runtime_boundary_abuse_case_reports_include_denial_reasons' "$test_file"
 require_contains 'runtime_boundary_abuse_case_domain_matrix_preserves_no_authority' "$test_file"
-require_contains 'unknown-request-is-not-allowed' "$test_file"
-require_contains 'unknown-effect-is-not-allowed' "$test_file"
-require_contains 'future-gated-execution-is-not-executable' "$test_file"
-require_contains 'operator-confirmation-cannot-override-policy' "$test_file"
-require_contains 'denial-reason-stays-rendered' "$test_file"
-require_contains 'authority-failure-is-not-allowed' "$test_file"
-require_contains 'invalid-lir-prerequisite-stays-denied' "$test_file"
-require_contains 'blocked-effect-stays-blocked' "$test_file"
+require_contains 'runtime_boundary_abuse_case_unknown_request_is_not_allowed' "$test_file"
+require_contains 'runtime_boundary_abuse_case_unknown_effect_is_not_allowed' "$test_file"
+require_contains 'runtime_boundary_abuse_case_future_gated_request_is_not_executable' "$test_file"
+require_contains 'runtime_boundary_abuse_case_operator_confirmation_does_not_override' "$test_file"
+require_contains 'runtime_boundary_abuse_case_render_report_preserves_lir_failure_reason' "$test_file"
+require_contains 'runtime_boundary_abuse_case_failed_authority_metadata_is_not_allowed' "$test_file"
+require_contains 'runtime_boundary_abuse_case_invalid_lir_does_not_reach_allowed_validation' "$test_file"
+require_contains 'runtime_boundary_abuse_case_blocked_effect_stays_blocked' "$test_file"
 require_contains 'runtime_boundary_abuse_case_fixtures: ok' "$test_file"
 
 require_contains 'runtime_boundary_abuse_case_fixture_expansion_present=1' README.md
@@ -114,6 +115,7 @@ require_contains 'Completion estimate review only if capability posture changes'
 require_contains 'Runtime boundary abuse-case fixture expansion after policy expansion' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Completion estimate review only if capability posture changes' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md' docs/project_notes/README.md
+require_contains 'sh scripts/test-runtime-boundary-abuse-case-fixtures.sh' .github/workflows/runtime-boundary-abuse-case-fixtures.yml
 
 sh scripts/test-runtime-boundary.sh
 

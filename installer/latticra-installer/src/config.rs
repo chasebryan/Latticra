@@ -465,7 +465,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=24-tokenizer-runtime-attachment-contract");
+    let _ = writeln!(out, "stage=25-prompt-tokenization-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -1174,6 +1174,46 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "requires_tokenizer_artifact_binding_contract=1");
     let _ = writeln!(out, "requires_future_prompt_tokenization_contract=1");
     let _ = writeln!(out, "tokenizer_runtime_attachment_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "prompt_tokenization_contract_stage=25-prompt-tokenization-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_tokenization_contract_command=scripts/nadia-prompt-tokenization-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_tokenization_contract_command=latticra-nadia prompt-tokenization"
+    );
+    let _ = writeln!(out, "prompt_tokenization_stage=contract-only");
+    let _ = writeln!(out, "prompt_tokenization_contract_status=contract_only");
+    let _ = writeln!(out, "prompt_tokenization_authority=0");
+    let _ = writeln!(out, "prompt_tokenization_allowed=0");
+    let _ = writeln!(out, "prompt_tokenization_performed=0");
+    let _ = writeln!(out, "prompt_tokenization_metadata_present=1");
+    let _ = writeln!(
+        out,
+        "prompt_tokenization_family=operator-reviewed-prompt-tokenization"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_tokenization_format=contract-only-offline-tokenization"
+    );
+    let _ = writeln!(out, "prompt_tokenization_decision=blocked_contract_only");
+    let _ = writeln!(out, "prompt_tokenization_plan_recorded=1");
+    let _ = writeln!(out, "prompt_tokenization_result_recorded=0");
+    let _ = writeln!(out, "prompt_tokenization_token_count_recorded=0");
+    let _ = writeln!(out, "prompt_tokenization_token_sequence_recorded=0");
+    let _ = writeln!(out, "prompt_tokenization_runtime_invoked=0");
+    let _ = writeln!(out, "prompt_tokens_created=0");
+    let _ = writeln!(out, "prompt_token_count_recorded=0");
+    let _ = writeln!(out, "prompt_token_sequence_recorded=0");
+    let _ = writeln!(out, "prompt_token_buffer_created=0");
+    let _ = writeln!(out, "prompt_tokenized=0");
+    let _ = writeln!(out, "requires_tokenizer_runtime_attachment_contract=1");
+    let _ = writeln!(out, "requires_future_prompt_token_sequence_contract=1");
+    let _ = writeln!(out, "prompt_tokenization_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

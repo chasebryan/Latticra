@@ -60,14 +60,38 @@ latticra lc status
 ## Stage-0 Commands
 
 ```text
+help
+status
+plan
+save
+dry-run
+reset
+uninstall
+clear
 lc status
 lc commands
 lc substrate
 lc host
 lc os
+pwd
+cd
 ```
 
-These commands are metadata-only. They report identity, seed command registry, substrate bridge, host-embedding plan, and future OS-base posture.
+These commands are registry-backed in the C foundation. Each command carries:
+
+```text
+name
+usage
+category
+effect
+capability_label
+no_effect
+panel_visible
+launches_host_process
+requires_future_gate
+```
+
+The Stage-0 registry is still metadata-only. It reports identity, seed command metadata, substrate bridge, host-embedding plan, and future OS-base posture. It does not launch host commands.
 
 ## C Foundation
 
@@ -88,6 +112,9 @@ LATTICRA CONSOLE REPORT
 component_key=latticra_console
 console_status=ready-report-only
 command_registry_status=seed-registry-ready
+command_registry_source=c-static-table
+command_registry_no_effect=1
+command_registry_host_process_launch_allowed=0
 substrate_bridge_status=metadata-bound-ready
 panel_installable=1
 future_os_base_claim=planned_not_claimed
@@ -115,9 +142,8 @@ LC Stage-0 does not:
 
 ## Next Slices
 
-1. Promote the seed command registry into a typed LC command model.
-2. Add a generated help/man surface backed by the registry.
-3. Bind LC command metadata to Runtime Boundary and Seal capability labels.
-4. Add Panel profile presets for LC hosted, LC embedded, and LC OS-base planning.
-5. Add host-embedding contracts before any host integration behavior.
-6. Add boot-adjacent planning only after read-only host and VM evidence exists.
+1. Add a generated help/man surface backed by the registry.
+2. Bind LC command metadata to Runtime Boundary and Seal capability labels.
+3. Add Panel profile presets for LC hosted, LC embedded, and LC OS-base planning.
+4. Add host-embedding contracts before any host integration behavior.
+5. Add boot-adjacent planning only after read-only host and VM evidence exists.

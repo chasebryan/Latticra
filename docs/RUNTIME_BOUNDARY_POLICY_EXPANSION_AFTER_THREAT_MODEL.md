@@ -174,10 +174,17 @@ outdated external guidance remains marked current -> defensive threat model exte
 
 This slice closes only the policy-expansion documentation gap.
 
+The abuse-case fixture expansion gap is now addressed by:
+
+```text
+docs/RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md
+tests/runtime_boundary_abuse_case_fixtures.c
+scripts/test-runtime-boundary-abuse-case-fixtures.sh
+```
+
 Still open:
 
 ```text
-abuse-case mapping needs broader fixture coverage
 runtime boundary source code still performs no operational behavior
 no host I/O authority exists
 no network authority exists
@@ -186,7 +193,7 @@ no production protection claim exists
 no certification or compliance mapping exists
 ```
 
-The next evidence gap should be abuse-case fixture expansion after runtime-boundary policy expansion.
+The next evidence gap should remain completion-estimate review only if capability posture changes; otherwise continue small guarded report/status alignment only when drift appears.
 
 ## Validation
 
@@ -218,8 +225,8 @@ This expansion is documentation/status/guard alignment only.
 
 It does not add runtime behavior, command execution, Lat execution, LIR execution, task effect execution, state mutation, file I/O, network I/O, server interaction, self-update, recovery behavior, rollback behavior, hardware support, boot behavior, terminal control, security isolation, sandboxing, malware prevention, ransomware prevention, certification, accreditation, compliance, production protection, operating-system completeness, or runtime authority.
 
-## Current next valid slice
+## Subsequent slice
 
-The next valid Latticra slice is abuse-case fixture expansion after runtime-boundary policy expansion.
+The abuse-case fixture expansion after runtime-boundary policy expansion is now recorded separately in `docs/RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md`.
 
-That future slice must preserve the no-effect posture and must not implement runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, production protection, or runtime authority.
+That subsequent fixture slice preserves the no-effect posture and does not implement runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, production protection, or runtime authority.

@@ -41,6 +41,7 @@ Latest Nadia tokenizer artifact measurement contract Stage-21 note: 2026-05-25 C
 Latest Nadia tokenizer artifact verification contract Stage-22 note: 2026-05-25 CDT
 Latest Nadia tokenizer artifact binding contract Stage-23 note: 2026-05-25 CDT
 Latest Nadia tokenizer runtime attachment contract Stage-24 note: 2026-05-25 CDT
+Latest Nadia prompt tokenization contract Stage-25 note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -82,6 +83,7 @@ Latest Lat pipeline model normalization integration note: 2026-05-25 CDT
 Latest Lat-to-LIR model lowering integration note: 2026-05-25 CDT
 Latest Lat-to-LIR declaration metadata refinement note: 2026-05-25 CDT
 Latest Lat-to-LIR diagnostic refinement note: 2026-05-25 CDT
+Latest Lat-to-LIR diagnostic declaration metadata integration note: 2026-05-25 CDT
 Latest Lat pipeline lowering diagnostic integration note: 2026-05-25 CDT
 Latest Lat-to-LIR clause metadata refinement note: 2026-05-25 CDT
 Latest Lat-to-LIR diagnostic clause metadata integration note: 2026-05-25 CDT
@@ -164,7 +166,7 @@ docs/strategy/README.md
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 58% |
+| Nadia offline AI foundation | 59% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |
@@ -231,6 +233,7 @@ Nadia tokenizer artifact measurement contract Stage-21
 Nadia tokenizer artifact verification contract Stage-22
 Nadia tokenizer artifact binding contract Stage-23
 Nadia tokenizer runtime attachment contract Stage-24
+Nadia prompt tokenization contract Stage-25
 Seal verification policy status/public-entry alignment
 Seal key parsing status/public-entry alignment
 Seal bounded no-effect key parsing implementation
@@ -282,6 +285,7 @@ Lat pipeline model normalization integration
 Lat-to-LIR model lowering integration
 Lat-to-LIR declaration metadata refinement
 Lat-to-LIR diagnostic refinement
+Lat-to-LIR diagnostic declaration metadata integration
 Lat pipeline lowering diagnostic integration
 Lat-to-LIR clause metadata refinement
 Lat-to-LIR diagnostic clause metadata integration
@@ -613,6 +617,8 @@ Lat now has a bounded no-effect path from parser metadata through semantic valid
 The current lowering implementation consumes normalized Lat model metadata directly, creates a `lat_module` LIR module shape, preserves source spans, no-effect flags, model counts, first lowered declaration metadata, and transition source indices, and emits deterministic lowering reports. The parser-plus-semantic entry point remains available as a compatibility wrapper.
 
 The Lat-to-LIR diagnostic refinement classifies lowering outcomes as valid, parse, semantic, model, effect-check, capacity, LIR, or internal, and emits deterministic diagnostic reports without changing lowering behavior.
+
+The Lat-to-LIR diagnostic declaration metadata integration copies first lowered declaration node index, kind, name, source name, parse index, first-clause index, clause count, and source declaration index into deterministic diagnostic reports without evaluating operators.
 
 The Lat-to-LIR diagnostic clause metadata integration copies first lowered clause node index, role, effect, name, operator, and value into deterministic diagnostic reports without evaluating operators.
 

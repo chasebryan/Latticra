@@ -178,7 +178,7 @@ first_declaration_clause_count
 first_declaration_source_index
 ```
 
-The companion diagnostic refinement can classify those lowering records as valid, parse, semantic, model, effect-check, capacity, LIR, or internal without changing lowering behavior. It also copies first-clause metadata from the lowering result for diagnostic report visibility.
+The companion diagnostic refinement can classify those lowering records as valid, parse, semantic, model, effect-check, capacity, LIR, or internal without changing lowering behavior. It also copies first-declaration and first-clause metadata from the lowering result for diagnostic report visibility.
 
 The clause metadata refinement also reports first-clause node index, role, effect label, name, operator, and value so callers can confirm that lowered clause operators remain inspectable.
 

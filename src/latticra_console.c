@@ -3,6 +3,189 @@
 #include <stdio.h>
 #include <string.h>
 
+static const latticra_console_command_t lc_commands[] = {
+    {
+        "help",
+        "help",
+        "Show the registry-backed LC command map.",
+        "lc.core.help",
+        LATTICRA_CONSOLE_COMMAND_CORE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "status",
+        "status",
+        "Report LC identity, profile, and authority posture.",
+        "lc.core.status",
+        LATTICRA_CONSOLE_COMMAND_CORE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "plan",
+        "plan",
+        "Refresh the Panel install plan view.",
+        "lc.panel.plan",
+        LATTICRA_CONSOLE_COMMAND_PANEL,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_LOCAL_METADATA,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "save",
+        "save",
+        "Write Panel configuration metadata through the guarded Panel path.",
+        "lc.panel.save",
+        LATTICRA_CONSOLE_COMMAND_PANEL,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_LOCAL_METADATA,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "dry-run",
+        "dry-run",
+        "Launch the Panel dry-install engine for evidence collection.",
+        "lc.panel.dry_run",
+        LATTICRA_CONSOLE_COMMAND_PANEL,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_LOCAL_METADATA,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "reset",
+        "reset",
+        "Run the guarded Panel reset workflow.",
+        "lc.panel.reset",
+        LATTICRA_CONSOLE_COMMAND_PANEL,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_LOCAL_METADATA,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "uninstall",
+        "uninstall",
+        "Run the guarded Panel uninstall workflow.",
+        "lc.panel.uninstall",
+        LATTICRA_CONSOLE_COMMAND_PANEL,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_LOCAL_METADATA,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "clear",
+        "clear",
+        "Clear the embedded Panel console transcript.",
+        "lc.panel.clear",
+        LATTICRA_CONSOLE_COMMAND_PANEL,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_LOCAL_METADATA,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "lc status",
+        "lc status",
+        "Report LC component metadata from the Panel console.",
+        "lc.core.status",
+        LATTICRA_CONSOLE_COMMAND_CORE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "lc commands",
+        "lc commands",
+        "Show the LC seed command registry.",
+        "lc.core.registry",
+        LATTICRA_CONSOLE_COMMAND_CORE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "lc substrate",
+        "lc substrate",
+        "Inspect the metadata bridge to Lat, LIR, Nucleus, Runtime Boundary, and Seal.",
+        "lc.substrate.inspect",
+        LATTICRA_CONSOLE_COMMAND_SUBSTRATE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "lc host",
+        "lc host",
+        "Inspect future host-embedding posture without host access.",
+        "lc.host.inspect",
+        LATTICRA_CONSOLE_COMMAND_HOST,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_FUTURE_GATED,
+        1,
+        1,
+        0,
+        1
+    },
+    {
+        "lc os",
+        "lc os",
+        "Inspect future OS-base posture without boot authority.",
+        "lc.os.inspect",
+        LATTICRA_CONSOLE_COMMAND_OS_BASE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_FUTURE_GATED,
+        1,
+        1,
+        0,
+        1
+    },
+    {
+        "pwd",
+        "pwd",
+        "Show the Panel console navigation directory.",
+        "lc.panel.navigation",
+        LATTICRA_CONSOLE_COMMAND_PANEL,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "cd",
+        "cd <path>",
+        "Change Panel console navigation context only.",
+        "lc.panel.navigation",
+        LATTICRA_CONSOLE_COMMAND_PANEL,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    }
+};
+
 static void lc_copy(char *dst, size_t dst_len, const char *src) {
     size_t n;
     if (dst == 0 || dst_len == 0u) return;
@@ -38,6 +221,56 @@ const char *latticra_console_profile_label(latticra_console_profile_t profile) {
         default:
             return "unknown";
     }
+}
+
+const char *latticra_console_command_category_label(
+    latticra_console_command_category_t category) {
+    switch (category) {
+        case LATTICRA_CONSOLE_COMMAND_CORE:
+            return "core";
+        case LATTICRA_CONSOLE_COMMAND_PANEL:
+            return "panel";
+        case LATTICRA_CONSOLE_COMMAND_SUBSTRATE:
+            return "substrate";
+        case LATTICRA_CONSOLE_COMMAND_HOST:
+            return "host";
+        case LATTICRA_CONSOLE_COMMAND_OS_BASE:
+            return "os-base";
+        default:
+            return "unknown";
+    }
+}
+
+const char *latticra_console_command_effect_label(
+    latticra_console_command_effect_t effect) {
+    switch (effect) {
+        case LATTICRA_CONSOLE_COMMAND_EFFECT_NONE:
+            return "none";
+        case LATTICRA_CONSOLE_COMMAND_EFFECT_LOCAL_METADATA:
+            return "local-metadata";
+        case LATTICRA_CONSOLE_COMMAND_EFFECT_FUTURE_GATED:
+            return "future-gated";
+        default:
+            return "unknown";
+    }
+}
+
+size_t latticra_console_command_count(void) {
+    return sizeof(lc_commands) / sizeof(lc_commands[0]);
+}
+
+const latticra_console_command_t *latticra_console_command_at(size_t index) {
+    if (index >= latticra_console_command_count()) return 0;
+    return &lc_commands[index];
+}
+
+const latticra_console_command_t *latticra_console_find_command(const char *name) {
+    size_t i;
+    if (name == 0) return 0;
+    for (i = 0u; i < latticra_console_command_count(); ++i) {
+        if (strcmp(lc_commands[i].name, name) == 0) return &lc_commands[i];
+    }
+    return 0;
 }
 
 latticra_status_t latticra_console_default_request(
@@ -80,7 +313,7 @@ static void lc_seed_result(
     result->host_embeddable = 1;
     result->host_embedded_now = 0;
     result->operator_shell_present = 1;
-    result->command_count = 12u;
+    result->command_count = (unsigned int)latticra_console_command_count();
     result->evidence_level = 4u;
 
     if (request == 0) return;
@@ -164,6 +397,53 @@ latticra_status_t latticra_console_initialize(
     return result->status;
 }
 
+latticra_status_t latticra_console_command_registry_report(
+    char *buffer,
+    size_t buffer_len) {
+    size_t i;
+    size_t used;
+    int written;
+
+    if (buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    buffer[0] = '\0';
+
+    written = snprintf(buffer, buffer_len,
+        "LATTICRA CONSOLE COMMAND REGISTRY\n"
+        "registry_source=c-static-table\n"
+        "command_count=%u\n"
+        "no_effect_registry=1\n"
+        "host_process_launch_allowed=0\n",
+        (unsigned int)latticra_console_command_count());
+    if (written < 0 || (size_t)written >= buffer_len) {
+        buffer[0] = '\0';
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    used = (size_t)written;
+
+    for (i = 0u; i < latticra_console_command_count(); ++i) {
+        const latticra_console_command_t *command = &lc_commands[i];
+        written = snprintf(buffer + used, buffer_len - used,
+            "command=%s category=%s effect=%s capability=%s no_effect=%d panel_visible=%d launches_host_process=%d requires_future_gate=%d usage=\"%s\"\n",
+            command->name,
+            latticra_console_command_category_label(command->category),
+            latticra_console_command_effect_label(command->effect),
+            command->capability_label,
+            command->no_effect,
+            command->panel_visible,
+            command->launches_host_process,
+            command->requires_future_gate,
+            command->usage);
+        if (written < 0 || (size_t)written >= buffer_len - used) {
+            buffer[0] = '\0';
+            return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+        }
+        used += (size_t)written;
+    }
+
+    return LATTICRA_STATUS_OK;
+}
+
 latticra_status_t latticra_console_report(
     const latticra_console_result_t *result,
     char *buffer,
@@ -195,6 +475,9 @@ latticra_status_t latticra_console_report(
         "host_embeddable=%d\n"
         "host_embedded_now=%d\n"
         "command_count=%u\n"
+        "command_registry_source=c-static-table\n"
+        "command_registry_no_effect=1\n"
+        "command_registry_host_process_launch_allowed=0\n"
         "kernel_status=%s\n"
         "kernel_runtime_status=%s\n"
         "kernel_boot_status=%s\n"
