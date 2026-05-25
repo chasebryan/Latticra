@@ -64,6 +64,7 @@ nadia prompt-contract
 nadia model-registry
 nadia inference-readiness
 nadia runtime-invocation
+nadia model-load
 profile guided
 profile seal
 profile fedora
@@ -119,7 +120,7 @@ Or from the desktop app grid, open **Latticra Panel**.
 
 Nadia is Latticra's planned offline AI companion for software development, systems engineering, and AI development work. The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, harm-aware development, and an absolute non-sexual-use boundary visible in the system direction. Documentation and code identify the versioned implementation as Nadiav0.0.1 while the human-facing interactive name remains Nadia.
 
-In the current installer lane, Nadia includes Stage-11 runtime-invocation contract metadata, Stage-10 inference-readiness contract metadata, Stage-9 local model-registry contract metadata, Stage-8 prompt-evaluation contract metadata, Stage-7 report-only tool-preflight metadata, Stage-6 protective-safety metadata, Stage-5 productivity-ledger metadata, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan metadata, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, config, Console status, component marker, and productivity-ledger space. No sexual user functionality, prompt materialization, inference, prompt evaluation, tool execution, model installation, training, distillation, source mutation, or network authority are installed. Runtime-invocation metadata does not grant runtime process spawning, runtime binary execution, runtime session creation, token generation, model loading, model selection, model weight inspection, benchmarking, or inference authority.
+In the current installer lane, Nadia includes Stage-12 model-load contract metadata, Stage-11 runtime-invocation contract metadata, Stage-10 inference-readiness contract metadata, Stage-9 local model-registry contract metadata, Stage-8 prompt-evaluation contract metadata, Stage-7 report-only tool-preflight metadata, Stage-6 protective-safety metadata, Stage-5 productivity-ledger metadata, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan metadata, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, config, Console status, component marker, and productivity-ledger space. No sexual user functionality, prompt materialization, inference, prompt evaluation, tool execution, model installation, training, distillation, source mutation, or network authority are installed. Model-load metadata does not grant model file opening, weight mapping, weight verification, weight loading, runtime process spawning, runtime binary execution, runtime session creation, token generation, model selection, model weight inspection, benchmarking, or inference authority.
 
 After a guarded local install with Nadia enabled:
 
@@ -135,6 +136,7 @@ latticra-nadia prompt-contract
 latticra-nadia model-registry
 latticra-nadia inference-readiness
 latticra-nadia runtime-invocation
+latticra-nadia model-load
 ```
 
 ## Uninstall managed local install

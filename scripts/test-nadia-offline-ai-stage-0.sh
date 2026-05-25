@@ -125,6 +125,6 @@ require_contains 'nadia status' "$installer_readme"
 require_contains 'Nadia Murad' "$installer_readme"
 require_contains 'No sexual user functionality, prompt materialization, inference, prompt evaluation, tool execution, model installation, training, distillation, source mutation, or network authority are installed.' "$installer_readme"
 require_contains 'Nadia offline AI foundation' "$ui_model"
-require_contains "Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, and Stage-11 console surfaces are metadata-only" "$ui_model"
+require_contains "Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, Stage-11, and Stage-12 console surfaces are metadata-only" "$ui_model"
 
 printf 'nadia_offline_ai_stage_0: ok\n'

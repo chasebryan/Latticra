@@ -290,7 +290,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation",
+                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -343,8 +343,9 @@ impl LatticraInstallerApp {
                 self.push_console(
                     "runtime_invocation_contract_stage=11-runtime-invocation-contract",
                 );
+                self.push_console("model_load_contract_stage=12-model-load-contract");
                 self.push_console(
-                    "stage=11 runtime-invocation-contract; runtime_invoked=0 inference_performed=0",
+                    "stage=12 model-load-contract; model_loaded=0 inference_performed=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -381,6 +382,18 @@ impl LatticraInstallerApp {
                 );
                 self.push_console(
                     "runtime_process_spawned=0 runtime_session_created=0 inference_performed=0",
+                );
+            }
+            ["nadia", "model-load"] | ["nadia", "load"] | ["nadia", "model-load-contract"] => {
+                self.push_console("nadia_model_load=stage-12-model-load-contract");
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia model-load");
+                self.push_console("model_load_contract_status=contract_only model_loaded=0");
+                self.push_console(
+                    "model_file_open_authority=0 model_weight_mapping_authority=0 model_load_authority=0",
+                );
+                self.push_console(
+                    "model_file_opened=0 model_weights_mapped=0 model_weights_loaded=0",
                 );
             }
             ["nadia", "inference-readiness"]
@@ -799,7 +812,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-11 runtime-invocation contract with metadata-only Console surfaces.",
+            "Stage-12 model-load contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,

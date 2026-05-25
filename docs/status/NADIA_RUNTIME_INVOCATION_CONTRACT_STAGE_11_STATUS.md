@@ -95,4 +95,4 @@ nadia_runtime_invocation_contract_stage_11: ok
 
 ## Next Stage
 
-Stage-12 should define a model-load contract only after runtime-invocation metadata, inference-readiness metadata, model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.
+Stage-12 now defines a model-load contract after runtime-invocation metadata, inference-readiness metadata, model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.

@@ -412,7 +412,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadiav0.0.1");
     let _ = writeln!(out, "documentation_code_name=Nadiav0.0.1");
-    let _ = writeln!(out, "stage=11-runtime-invocation-contract");
+    let _ = writeln!(out, "stage=12-model-load-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -617,6 +617,39 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "runtime_binary_executed=0");
     let _ = writeln!(out, "runtime_session_created=0");
     let _ = writeln!(out, "token_generation_performed=0");
+    let _ = writeln!(out, "model_load_contract_stage=12-model-load-contract");
+    let _ = writeln!(
+        out,
+        "model_load_contract_command=scripts/nadia-model-load-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_model_load_contract_command=latticra-nadia model-load"
+    );
+    let _ = writeln!(out, "model_load_stage=contract-only");
+    let _ = writeln!(out, "model_load_contract_status=contract_only");
+    let _ = writeln!(out, "model_load_authority=0");
+    let _ = writeln!(out, "model_load_allowed=0");
+    let _ = writeln!(out, "model_loaded=0");
+    let _ = writeln!(out, "load_decision=blocked_contract_only");
+    let _ = writeln!(out, "load_evidence_present=1");
+    let _ = writeln!(out, "requires_runtime_invocation_contract=1");
+    let _ = writeln!(out, "requires_model_weight_measurement_contract=1");
+    let _ = writeln!(out, "requires_future_prompt_receipt_contract=1");
+    let _ = writeln!(out, "load_promotion_allowed=0");
+    let _ = writeln!(out, "model_file_open_authority=0");
+    let _ = writeln!(out, "model_weight_read_authority=0");
+    let _ = writeln!(out, "model_weight_mapping_authority=0");
+    let _ = writeln!(out, "model_weight_verification_authority=0");
+    let _ = writeln!(out, "runtime_model_attach_authority=0");
+    let _ = writeln!(out, "model_file_opened=0");
+    let _ = writeln!(out, "model_file_descriptor_opened=0");
+    let _ = writeln!(out, "model_memory_map_created=0");
+    let _ = writeln!(out, "model_weights_mapped=0");
+    let _ = writeln!(out, "model_weights_attached=0");
+    let _ = writeln!(out, "model_weight_measurement_performed=0");
+    let _ = writeln!(out, "model_weight_verification_performed=0");
+    let _ = writeln!(out, "model_load_performed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

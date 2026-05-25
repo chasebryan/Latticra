@@ -87,6 +87,7 @@ share/latticra/nadia/context-packs/
 share/latticra/nadia/model-registry/
 share/latticra/nadia/productivity-ledger/
 share/latticra/nadia/runtime-invocation/
+share/latticra/nadia/model-load/
 share/latticra/components/nadia-offline-ai.installed
 bin/latticra-nadia
 ```
@@ -478,7 +479,69 @@ See [`NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md`](NADIA_RUNTIME_INVOCATION_C
 
 ### Stage-12: Model Load Contract
 
-Only after runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a model-load contract. The default remains no model weights installed, no model weights loaded, no inference, no prompt evaluation, no tool execution, no source mutation, no network authority, and no sexual user functionality.
+Record model-load metadata after runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-12 can verify prerequisite evidence and record a blocked model-load decision, but it cannot open model files, map model weights, verify weights, load weights, attach weights to a runtime, generate tokens, materialize or evaluate prompts, or run inference.
+
+```text
+nadia_stage_12_model_load_contract_present=1
+model_load_contract_command=scripts/nadia-model-load-contract.sh
+installed_model_load_contract_command=latticra-nadia model-load
+requires_runtime_invocation_contract=1
+model_load_stage=contract-only
+model_load_contract_status=contract_only
+model_load_authority=0
+model_load_allowed=0
+model_loaded=0
+load_decision=blocked_contract_only
+load_evidence_present=1
+requires_inference_readiness_contract=1
+requires_model_registry_contract=1
+requires_prompt_contract=1
+requires_runtime_profile=1
+requires_protective_safety_boundary=1
+requires_tool_preflight=1
+requires_operator_review=1
+requires_model_weight_measurement_contract=1
+requires_future_prompt_receipt_contract=1
+load_promotion_allowed=0
+model_file_open_authority=0
+model_weight_read_authority=0
+model_weight_mapping_authority=0
+model_weight_verification_authority=0
+model_weight_inspection_authority=0
+runtime_model_attach_authority=0
+model_session_authority=0
+token_generation_authority=0
+model_file_opened=0
+model_file_descriptor_opened=0
+model_memory_map_created=0
+model_weights_mapped=0
+model_weights_loaded=0
+model_weights_attached=0
+model_weight_measurement_performed=0
+model_weight_verification_performed=0
+model_load_performed=0
+model_runtime_invoked=0
+runtime_process_spawned=0
+runtime_session_created=0
+token_generation_performed=0
+prompt_materialized=0
+prompt_evaluation_authority=0
+prompt_evaluated=0
+inference_authority=0
+inference_performed=0
+tool_execution_authority=0
+source_mutation_authority=0
+network_authority=0
+sexual_content_generation=0
+sexual_request_refusal=always
+manipulation_resistance=required
+```
+
+See [`NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md`](NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md).
+
+### Stage-13: Prompt Receipt Contract
+
+Only after model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a prompt-receipt contract. The default remains no prompt text materialized, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
 
 ## Non-Claims
 
@@ -497,7 +560,7 @@ The current Nadia foundation is not:
 
 ## Promotion Gate
 
-Before Stage-12 starts, Latticra should keep these guards passing:
+Before Stage-13 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -512,6 +575,7 @@ sh scripts/test-nadia-prompt-evaluation-contract-stage-8.sh
 sh scripts/test-nadia-local-model-registry-contract-stage-9.sh
 sh scripts/test-nadia-inference-readiness-contract-stage-10.sh
 sh scripts/test-nadia-runtime-invocation-contract-stage-11.sh
+sh scripts/test-nadia-model-load-contract-stage-12.sh
 ```
 
-Before model loading starts, a separate model-load contract must exist and name model-weight provenance, weight-loading denial fields, prompt receipt fields, refusal boundary inheritance, operator review gates, and non-claims.
+Before prompt receipt starts, a separate prompt-receipt contract must exist and name prompt-source boundaries, prompt-text materialization denial fields, refusal boundary inheritance, operator review gates, and non-claims.

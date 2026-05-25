@@ -41,6 +41,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md`](NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md) — Stage-9 local model-registry contract for Nadia before model selection, model installation, prompt evaluation, inference, or tool execution.
 - [`NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md`](NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md) — Stage-10 inference-readiness contract for Nadia before runtime invocation, model loading, prompt evaluation, inference, or tool execution.
 - [`NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md`](NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md) — Stage-11 runtime-invocation contract for Nadia before runtime process spawning, model session creation, model loading, token generation, inference, or tool execution.
+- [`NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md`](NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md) — Stage-12 model-load contract for Nadia before model file opening, weight mapping, weight loading, token generation, inference, or tool execution.
 - [`SELF_UPDATE_MODEL.md`](SELF_UPDATE_MODEL.md) — staged signed update and rollback design.
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
@@ -67,6 +68,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md`](status/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md) — status record for Nadia Stage-9 local model-registry contract before model selection, model installation, prompt evaluation, inference, or tool execution.
 - [`status/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10_STATUS.md`](status/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10_STATUS.md) — status record for Nadia Stage-10 inference-readiness contract before runtime invocation, model loading, prompt evaluation, inference, or tool execution.
 - [`status/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md`](status/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md) — status record for Nadia Stage-11 runtime-invocation contract before runtime process spawning, model session creation, model loading, token generation, inference, or tool execution.
+- [`status/NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md`](status/NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md) — status record for Nadia Stage-12 model-load contract before model file opening, weight mapping, weight loading, token generation, inference, or tool execution.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
@@ -258,6 +260,7 @@ Nadia prompt evaluation contract Stage-8 + guardrails
 Nadia local model registry contract Stage-9 + guardrails
 Nadia inference readiness contract Stage-10 + guardrails
 Nadia runtime invocation contract Stage-11 + guardrails
+Nadia model load contract Stage-12 + guardrails
 Latticra Seal verification policy status/public-entry alignment + guardrails
 Latticra Seal key parsing status/public-entry alignment + guardrails
 Latticra Seal bounded no-effect key parsing metadata + invariants
