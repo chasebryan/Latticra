@@ -28,7 +28,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`SUPERVISOR_ARCHITECTURE.md`](SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor model and orchestration responsibilities.
 - [`EFFECT_GATES.md`](EFFECT_GATES.md) — effect categories, gating rules, and visibility requirements.
 - [`UI_TERMINAL_LANGUAGE.md`](UI_TERMINAL_LANGUAGE.md) — L-UI terminal/operator interface language direction.
-- [`LATTICRA_CONSOLE_FOUNDATION.md`](LATTICRA_CONSOLE_FOUNDATION.md) — Latticra Console Stage-0 foundation, Panel installability, profile presets, host-embedding contract, read-only host inventory contract, receipt contract, command registry, Runtime Boundary binding, and future host/OS-base posture.
+- [`LATTICRA_CONSOLE_FOUNDATION.md`](LATTICRA_CONSOLE_FOUNDATION.md) — Latticra Console Stage-0 foundation, Panel installability, profile presets, host-embedding contract, read-only host inventory contract, receipt contract, OS-base planning contract, command registry, Runtime Boundary binding, and future host/OS-base posture.
 - [`SERVER_INTERACTION_MODEL.md`](SERVER_INTERACTION_MODEL.md) — signed, optional, inspectable server interaction model.
 - [`NADIA_OFFLINE_AI_FOUNDATION.md`](NADIA_OFFLINE_AI_FOUNDATION.md) — Stage-0 foundation contract for Latticra Nadia Witness Foundation, the planned offline AI companion for Latticra software development, systems engineering, AI development, and community-awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md) — Stage-1 no-network local context-pack engine for Nadia.
@@ -187,6 +187,9 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_CONTRACT.md`](LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_CONTRACT.md) — crypto verify backend boundary after verification policy metadata.
 - [`LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_IMPLEMENTATION.md`](LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_IMPLEMENTATION.md) — first metadata-only crypto verify backend implementation with unsupported verification state.
 - [`status/SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md`](status/SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md) — status/public-entry checkpoint for metadata-only Seal crypto verify backend implementation.
+- [`LATTICRA_SEAL_ED25519_VERIFY_ONLY_CONTRACT.md`](LATTICRA_SEAL_ED25519_VERIFY_ONLY_CONTRACT.md) — Ed25519 verify-only implementation contract after crypto verify backend metadata.
+- [`LATTICRA_SEAL_ED25519_VERIFY_IMPLEMENTATION.md`](LATTICRA_SEAL_ED25519_VERIFY_IMPLEMENTATION.md) — local provider-backed Ed25519 verify-only result implementation.
+- [`status/SEAL_ED25519_VERIFY_STATUS.md`](status/SEAL_ED25519_VERIFY_STATUS.md) — status/public-entry checkpoint for authority-neutral Seal Ed25519 verify-only results.
 - [`LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md`](LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md) — verification receipt boundary after verification policy metadata.
 - [`LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md`](LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md) — first no-effect verification receipt metadata implementation.
 - [`status/SEAL_VERIFICATION_RECEIPT_STATUS.md`](status/SEAL_VERIFICATION_RECEIPT_STATUS.md) — status/public-entry checkpoint for metadata-only Seal verification receipt implementation.
@@ -379,6 +382,7 @@ Nadia prompt token sequence contract Stage-26 + guardrails
 Nadia context window assembly contract Stage-27 + guardrails
 Latticra Seal verification policy status/public-entry alignment + guardrails
 Latticra Seal crypto verify backend status/public-entry alignment + guardrails
+Latticra Seal Ed25519 verify-only status/public-entry alignment + guardrails
 Latticra Seal key parsing status/public-entry alignment + guardrails
 Latticra Seal bounded no-effect key parsing metadata + invariants
 Latticra Seal future key parsing implementation plan + guardrails
@@ -411,6 +415,7 @@ Lat pipeline report declaration metadata integration + invariants
 Lat pipeline report clause metadata integration + invariants
 Lat pipeline comment metadata integration + invariants
 Lat pipeline diagnostic comment metadata integration + invariants
+Lat parse-failure comment evidence propagation + invariants
 Lat pipeline implementation + invariants
 Lat pipeline report refinement + invariants
 Lat pipeline diagnostic integration refinement + invariants

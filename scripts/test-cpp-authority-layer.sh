@@ -4,6 +4,14 @@ set -eu
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 : "${CXXFLAGS:=-std=c++20 -Wall -Wextra -Werror -pedantic -fno-exceptions -fno-rtti}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-cpp-authority-layer.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
+lat_parser_o="$tmpdir/lat-parser.o"
+lir_o="$tmpdir/lir.o"
+authority_o="$tmpdir/cpp-authority.o"
+authority_test="$tmpdir/cpp-authority-layer-invariants"
+
 if grep -E '#include <(iostream|fstream|filesystem|thread|future|regex|exception|stdexcept|vector|map|unordered_map)>' \
   include/latticra/cpp/authority.hpp src/cpp/authority.cpp; then
   printf 'cpp authority layer: forbidden standard library header used\n' >&2
@@ -25,22 +33,22 @@ fi
 cc $CFLAGS \
   -Iinclude \
   -c src/lat_parser.c \
-  -o /tmp/latticra-lat-parser.o
+  -o "$lat_parser_o"
 
 cc $CFLAGS \
   -Iinclude \
   -c src/lir.c \
-  -o /tmp/latticra-lir.o
+  -o "$lir_o"
 
 c++ $CXXFLAGS \
   -Iinclude \
   -c src/cpp/authority.cpp \
-  -o /tmp/latticra-cpp-authority.o
+  -o "$authority_o"
 
 c++ $CXXFLAGS \
   -Iinclude \
   tests/cpp_authority_layer_invariants.cpp \
-  /tmp/latticra-cpp-authority.o \
-  -o /tmp/latticra-cpp-authority-layer-invariants
+  "$authority_o" \
+  -o "$authority_test"
 
-/tmp/latticra-cpp-authority-layer-invariants
+"$authority_test"

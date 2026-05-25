@@ -12,6 +12,7 @@ permissions:
 jobs:
   fedora-rpmlint-static-spec-lane:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     container:
       image: registry.fedoraproject.org/fedora:latest
     steps:

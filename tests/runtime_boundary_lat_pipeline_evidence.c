@@ -114,6 +114,13 @@ static int runtime_boundary_denies_failed_lat_pipeline_metadata(void) {
 
     pipeline.error = LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK;
     pipeline.semantic_valid = 0;
+    pipeline.comment_count = 1u;
+    pipeline.first_comment_span.start_offset = 0u;
+    pipeline.first_comment_span.end_offset = 28u;
+    pipeline.first_comment_span.start_line = 1u;
+    pipeline.first_comment_span.start_column = 1u;
+    pipeline.first_comment_span.end_line = 1u;
+    pipeline.first_comment_span.end_column = 29u;
 
     memset(&request, 0, sizeof(request));
     strcpy(request.runtime_id, "runtime-lat-pipeline-failed");
@@ -129,6 +136,9 @@ static int runtime_boundary_denies_failed_lat_pipeline_metadata(void) {
     EXPECT_TRUE(result.record.denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_SEMANTIC_FAILED, "failed pipeline semantic reason");
     EXPECT_TRUE(result.record.lat_pipeline_error == LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK, "failed pipeline error copied");
     EXPECT_TRUE(result.record.lat_pipeline_semantic_valid == 0, "failed semantic flag copied");
+    EXPECT_TRUE(result.record.lat_pipeline_comment_count == 1u, "failed pipeline comment count copied");
+    EXPECT_TRUE(result.record.lat_pipeline_first_comment_span.start_line == 1u, "failed pipeline comment line copied");
+    EXPECT_TRUE(result.record.lat_pipeline_first_comment_span.start_column == 1u, "failed pipeline comment column copied");
     return 0;
 }
 

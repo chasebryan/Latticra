@@ -226,6 +226,40 @@ static int lat_pipeline_diagnostic_integration_reports_parse_failure(void) {
     return 0;
 }
 
+static int lat_pipeline_diagnostic_integration_reports_parse_failure_comment_metadata(void) {
+    static const char source[] =
+        "// diagnostic parse comment\n"
+        "lat module Bad {\n"
+        "  /* block comments are not supported */\n"
+        "}\n";
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lir_module_t module;
+    latticra_lat_to_lir_result_t lowering;
+    latticra_lat_pipeline_result_t pipeline;
+    latticra_lat_pipeline_diagnostic_result_t diagnostic;
+    char report[LATTICRA_LAT_PIPELINE_DIAGNOSTIC_REPORT_MAX];
+
+    EXPECT_TRUE(run_pipeline(source, &parse, &semantic, &module, &lowering, &pipeline) == 0, "parse failure comment pipeline run");
+    EXPECT_TRUE(parse.error == LATTICRA_LAT_PARSE_UNSUPPORTED_BLOCK_COMMENT, "parse failure comment parse error");
+    EXPECT_TRUE(latticra_lat_pipeline_diagnostics_evaluate_with_lowering(&pipeline, &semantic, &lowering, &module, &diagnostic) == LATTICRA_STATUS_OK, "parse failure comment diagnostic evaluate");
+    EXPECT_TRUE(diagnostic.diagnostic_class == LATTICRA_LAT_PIPELINE_DIAGNOSTIC_PARSE, "parse failure comment diagnostic class");
+    EXPECT_TRUE(diagnostic.pipeline_error == LATTICRA_LAT_PIPELINE_PARSE_NOT_OK, "parse failure comment pipeline error");
+    EXPECT_TRUE(diagnostic.comment_count == 1u, "parse failure comment diagnostic count");
+    EXPECT_TRUE(diagnostic.first_comment_span.start_line == 1u, "parse failure comment diagnostic line");
+    EXPECT_TRUE(diagnostic.first_comment_span.start_column == 1u, "parse failure comment diagnostic column");
+    EXPECT_TRUE(diagnostic.pipeline_failed == 1, "parse failure comment pipeline failed");
+    EXPECT_TRUE(diagnostic.evidence_level == 1u, "parse failure comment evidence level");
+
+    EXPECT_TRUE(latticra_lat_pipeline_diagnostics_report(&diagnostic, report, sizeof(report)) == LATTICRA_STATUS_OK, "parse failure comment diagnostic report");
+    EXPECT_TRUE(strstr(report, "diagnostic_class=parse\n") != 0, "parse failure comment report class");
+    EXPECT_TRUE(strstr(report, "pipeline_error=parse_not_ok\n") != 0, "parse failure comment report pipeline error");
+    EXPECT_TRUE(strstr(report, "comment_count=1\n") != 0, "parse failure comment report count");
+    EXPECT_TRUE(strstr(report, "first_comment_start_line=1\n") != 0, "parse failure comment report line");
+    EXPECT_TRUE(strstr(report, "first_comment_start_column=1\n") != 0, "parse failure comment report column");
+    return 0;
+}
+
 static int lat_pipeline_diagnostic_integration_reports_semantic_failure(void) {
     static const char source[] =
         "lat module BadRequirement {\n"
@@ -313,6 +347,7 @@ int main(void) {
     if (lat_pipeline_diagnostic_integration_reports_valid_pipeline() != 0) return 1;
     if (lat_pipeline_diagnostic_integration_reports_comment_metadata() != 0) return 1;
     if (lat_pipeline_diagnostic_integration_reports_parse_failure() != 0) return 1;
+    if (lat_pipeline_diagnostic_integration_reports_parse_failure_comment_metadata() != 0) return 1;
     if (lat_pipeline_diagnostic_integration_reports_semantic_failure() != 0) return 1;
     if (lat_pipeline_diagnostic_integration_reports_model_failure() != 0) return 1;
     if (lat_pipeline_diagnostic_integration_reports_null_pipeline() != 0) return 1;

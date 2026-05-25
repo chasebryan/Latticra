@@ -291,6 +291,15 @@ copy_if_exists() {
   src="$1"
   dest_dir="$2"
   if [ -e "$src" ]; then
+    if [ -L "$src" ]; then
+      fail "refusing symlink payload source: $src" 74
+    fi
+    if [ -d "$src" ]; then
+      symlink_entry=$(find "$src" -type l -print | sed -n '1p')
+      [ -z "$symlink_entry" ] ||
+        fail "refusing payload tree with symlink entry: $symlink_entry" 74
+    fi
+
     mkdir -p "$dest_dir"
     base=$(basename -- "$src")
     dest="$dest_dir/$base"
@@ -363,6 +372,7 @@ LC_HOST_EMBEDDING_PROFILE=$(cfg_section lc host_embedding_profile panel-containe
 LC_HOST_EMBEDDING_CONTRACT_PROFILE=$(cfg_section lc host_embedding_contract_profile lc-host-embedding-v0)
 LC_HOST_INVENTORY_CONTRACT_PROFILE=$(cfg_section lc host_inventory_contract_profile lc-host-inventory-v0)
 LC_RECEIPT_CONTRACT_PROFILE=$(cfg_section lc receipt_contract_profile lc-receipts-v0)
+LC_OS_BASE_CONTRACT_PROFILE=$(cfg_section lc os_base_contract_profile lc-os-base-v0)
 LC_OS_BASE_PROFILE=$(cfg_section lc os_base_profile planned-no-boot-authority)
 LC_PANEL_BRIDGE=$(cfg_section lc panel_bridge panel-aware)
 LC_REPORT_ONLY=$(cfg_section lc report_only true)
@@ -371,6 +381,7 @@ LC_REQUIRE_READ_ONLY_HOST_INVENTORY_CONTRACT=$(cfg_section lc require_read_only_
 LC_REQUIRE_PROFILE_RECEIPT=$(cfg_section lc require_profile_receipt true)
 LC_REQUIRE_HOST_CONTRACT_RECEIPT=$(cfg_section lc require_host_contract_receipt true)
 LC_REQUIRE_HOST_INVENTORY_RECEIPT=$(cfg_section lc require_host_inventory_receipt true)
+LC_REQUIRE_OS_BASE_CONTRACT=$(cfg_section lc require_os_base_contract true)
 LC_REQUIRE_RUNTIME_BOUNDARY_BINDING=$(cfg_section lc require_runtime_boundary_binding true)
 LC_REQUIRE_SEAL_CAPABILITY_LABELS=$(cfg_section lc require_seal_capability_labels true)
 
@@ -462,6 +473,7 @@ host_embedding_profile=$LC_HOST_EMBEDDING_PROFILE
 host_embedding_contract_profile=$LC_HOST_EMBEDDING_CONTRACT_PROFILE
 host_inventory_contract_profile=$LC_HOST_INVENTORY_CONTRACT_PROFILE
 receipt_contract_profile=$LC_RECEIPT_CONTRACT_PROFILE
+os_base_contract_profile=$LC_OS_BASE_CONTRACT_PROFILE
 os_base_profile=$LC_OS_BASE_PROFILE
 report_only=$LC_REPORT_ONLY
 host_embedding_contract_required=$LC_REQUIRE_HOST_EMBEDDING_CONTRACT
@@ -469,6 +481,7 @@ read_only_host_inventory_contract_required=$LC_REQUIRE_READ_ONLY_HOST_INVENTORY_
 profile_receipt_required=$LC_REQUIRE_PROFILE_RECEIPT
 host_contract_receipt_required=$LC_REQUIRE_HOST_CONTRACT_RECEIPT
 host_inventory_receipt_required=$LC_REQUIRE_HOST_INVENTORY_RECEIPT
+os_base_contract_required=$LC_REQUIRE_OS_BASE_CONTRACT
 runtime_boundary_binding_required=$LC_REQUIRE_RUNTIME_BOUNDARY_BINDING
 seal_capability_labels_required=$LC_REQUIRE_SEAL_CAPABILITY_LABELS
 command_registry_status=seed-registry
@@ -477,6 +490,7 @@ host_embedding_status=$LC_HOST_EMBEDDING_PROFILE
 host_embedding_contract_status=metadata-only-contract
 host_inventory_contract_status=metadata-only-contract
 receipt_contract_status=metadata-only-contract
+os_base_contract_status=metadata-only-contract
 seal_signature_present=0
 receipt_signed=0
 os_base_status=$LC_OS_BASE_PROFILE
@@ -486,6 +500,8 @@ host_mutation_allowed=0
 network_allowed=0
 runtime_enforcement_allowed=0
 boot_allowed=0
+os_base_enabled=0
+production_os_claim=0
 future_os_base_claim=planned_not_claimed
 
 [nadia]
@@ -1162,6 +1178,7 @@ if bool_true "$LATTICRA_CONSOLE"; then
     "$PREFIX/share/latticra/lc/commands" \
     "$PREFIX/share/latticra/lc/host-embedding" \
     "$PREFIX/share/latticra/lc/host-inventory" \
+    "$PREFIX/share/latticra/lc/os-base" \
     "$PREFIX/share/latticra/lc/profiles" \
     "$PREFIX/share/latticra/lc/receipts" \
     "$PREFIX/share/latticra/lc/substrate"
@@ -1178,6 +1195,7 @@ host_embedding_profile = "$LC_HOST_EMBEDDING_PROFILE"
 host_embedding_contract_profile = "$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
 host_inventory_contract_profile = "$LC_HOST_INVENTORY_CONTRACT_PROFILE"
 receipt_contract_profile = "$LC_RECEIPT_CONTRACT_PROFILE"
+os_base_contract_profile = "$LC_OS_BASE_CONTRACT_PROFILE"
 os_base_profile = "$LC_OS_BASE_PROFILE"
 report_only = $LC_REPORT_ONLY
 host_embedding_contract_required = $LC_REQUIRE_HOST_EMBEDDING_CONTRACT
@@ -1185,6 +1203,7 @@ read_only_host_inventory_contract_required = $LC_REQUIRE_READ_ONLY_HOST_INVENTOR
 profile_receipt_required = $LC_REQUIRE_PROFILE_RECEIPT
 host_contract_receipt_required = $LC_REQUIRE_HOST_CONTRACT_RECEIPT
 host_inventory_receipt_required = $LC_REQUIRE_HOST_INVENTORY_RECEIPT
+os_base_contract_required = $LC_REQUIRE_OS_BASE_CONTRACT
 runtime_boundary_binding_required = $LC_REQUIRE_RUNTIME_BOUNDARY_BINDING
 seal_capability_labels_required = $LC_REQUIRE_SEAL_CAPABILITY_LABELS
 command_registry_status = "seed-registry"
@@ -1193,6 +1212,7 @@ host_embedding_status = "$LC_HOST_EMBEDDING_PROFILE"
 host_embedding_contract_status = "metadata-only-contract"
 host_inventory_contract_status = "metadata-only-contract"
 receipt_contract_status = "metadata-only-contract"
+os_base_contract_status = "metadata-only-contract"
 seal_signature_present = false
 receipt_signed = false
 os_base_status = "$LC_OS_BASE_PROFILE"
@@ -1217,6 +1237,7 @@ host_embedding_profile = "not-embedded"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 receipt_contract_profile = "lc-receipts-v0"
+os_base_contract_profile = "lc-os-base-v0"
 os_base_profile = "planned-no-boot-authority"
 report_only = true
 host_embedding_contract_required = true
@@ -1224,6 +1245,7 @@ read_only_host_inventory_contract_required = true
 profile_receipt_required = true
 host_contract_receipt_required = true
 host_inventory_receipt_required = true
+os_base_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1242,6 +1264,7 @@ host_embedding_profile = "panel-contained"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 receipt_contract_profile = "lc-receipts-v0"
+os_base_contract_profile = "lc-os-base-v0"
 os_base_profile = "planned-no-boot-authority"
 report_only = true
 host_embedding_contract_required = true
@@ -1249,6 +1272,7 @@ read_only_host_inventory_contract_required = true
 profile_receipt_required = true
 host_contract_receipt_required = true
 host_inventory_receipt_required = true
+os_base_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1267,6 +1291,7 @@ host_embedding_profile = "host-embedded-planning"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 receipt_contract_profile = "lc-receipts-v0"
+os_base_contract_profile = "lc-os-base-v0"
 os_base_profile = "planned-no-boot-authority"
 report_only = true
 host_embedding_contract_required = true
@@ -1274,6 +1299,7 @@ read_only_host_inventory_contract_required = true
 profile_receipt_required = true
 host_contract_receipt_required = true
 host_inventory_receipt_required = true
+os_base_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1292,6 +1318,7 @@ host_embedding_profile = "host-embedded-planning"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 receipt_contract_profile = "lc-receipts-v0"
+os_base_contract_profile = "lc-os-base-v0"
 os_base_profile = "os-base-planning-no-boot-authority"
 report_only = true
 host_embedding_contract_required = true
@@ -1299,6 +1326,7 @@ read_only_host_inventory_contract_required = true
 profile_receipt_required = true
 host_contract_receipt_required = true
 host_inventory_receipt_required = true
+os_base_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1391,6 +1419,36 @@ network_allowed = false
 runtime_enforcement_allowed = false
 boot_allowed = false
 LC_RECEIPTS
+  write_file "$PREFIX/share/latticra/lc/os-base/contract.toml" 0644 <<LC_OS_BASE_CONTRACT
+contract_name = "Latticra Console OS-Base Planning Contract"
+contract_profile = "$LC_OS_BASE_CONTRACT_PROFILE"
+contract_status = "metadata-only"
+contract_present = true
+os_base_enabled = false
+production_os_claim = false
+boot_allowed = false
+boot_authority_present = false
+kernel_change_allowed = false
+kernel_enforcement_allowed = false
+hardware_access_allowed = false
+bootloader_write_allowed = false
+partition_mutation_allowed = false
+driver_load_allowed = false
+service_install_allowed = false
+host_mutation_allowed = false
+network_allowed = false
+runtime_enforcement_allowed = false
+read_only_host_inventory_receipt_required = true
+vm_evidence_required = true
+operator_consent_required = true
+runtime_boundary_required = true
+seal_capability_labels_required = true
+receipt_required_before_os_base = true
+promotion_gate = "os_base_contract_receipt_and_vm_evidence"
+command_surface = "lc os-contract"
+future_os_base_command = "lc os"
+no_effect = true
+LC_OS_BASE_CONTRACT
   write_file "$PREFIX/share/latticra/lc/README.md" 0644 <<'LCREADME'
 # Latticra Console (LC)
 
@@ -1416,6 +1474,12 @@ The LC receipt lane includes a contract file at
 share/latticra/lc/receipts/contract.toml. It records future evidence
 requirements for profile, host-contract, host-inventory, and Runtime Boundary
 receipts. It does not sign receipts or grant Seal signing authority.
+
+The OS-base lane includes a planning contract at
+share/latticra/lc/os-base/contract.toml. It records the evidence required before
+LC can advance toward boot-adjacent work, and it grants no boot, kernel,
+hardware, host-mutation, network, runtime enforcement, or production OS
+authority.
 LCREADME
   write_file "$PREFIX/share/latticra/lc/commands/seed-registry.txt" 0644 <<'LCCOMMANDS'
 name=help category=core effect=none capability=lc.core.help
@@ -1434,6 +1498,7 @@ name=lc substrate category=substrate effect=none capability=lc.substrate.inspect
 name=lc host category=host effect=future-gated capability=lc.host.inspect
 name=lc host-contract category=host effect=none capability=lc.host.contract
 name=lc host-inventory category=host effect=none capability=lc.host.inventory
+name=lc os-contract category=os-base effect=none capability=lc.os.contract
 name=lc os category=os-base effect=future-gated capability=lc.os.inspect
 name=pwd category=panel effect=none capability=lc.panel.navigation
 name=cd category=panel effect=none capability=lc.panel.navigation
@@ -2150,6 +2215,7 @@ render_lc_man() {
   echo "  latticra-lc host"
   echo "  latticra-lc host-contract"
   echo "  latticra-lc host-inventory"
+  echo "  latticra-lc os-contract"
   echo "  latticra-lc os"
   echo
   render_lc_help || return \$?
@@ -2198,6 +2264,9 @@ render_lc_boundary() {
       "lc host-inventory")
         seal_capability=seal.capability.inspect
         ;;
+      "lc os-contract")
+        seal_capability=seal.capability.inspect
+        ;;
       "lc host")
         seal_capability=seal.capability.inspect
         runtime_request=future-gated
@@ -2239,6 +2308,7 @@ case "\${1:-status}" in
     echo "host_embedding_contract_profile=$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
     echo "host_inventory_contract_profile=$LC_HOST_INVENTORY_CONTRACT_PROFILE"
     echo "receipt_contract_profile=$LC_RECEIPT_CONTRACT_PROFILE"
+    echo "os_base_contract_profile=$LC_OS_BASE_CONTRACT_PROFILE"
     echo "os_base_profile=$LC_OS_BASE_PROFILE"
     echo "report_only=$LC_REPORT_ONLY"
     echo "host_embedding_contract_required=$LC_REQUIRE_HOST_EMBEDDING_CONTRACT"
@@ -2246,6 +2316,7 @@ case "\${1:-status}" in
     echo "profile_receipt_required=$LC_REQUIRE_PROFILE_RECEIPT"
     echo "host_contract_receipt_required=$LC_REQUIRE_HOST_CONTRACT_RECEIPT"
     echo "host_inventory_receipt_required=$LC_REQUIRE_HOST_INVENTORY_RECEIPT"
+    echo "os_base_contract_required=$LC_REQUIRE_OS_BASE_CONTRACT"
     echo "runtime_boundary_binding_required=$LC_REQUIRE_RUNTIME_BOUNDARY_BINDING"
     echo "seal_capability_labels_required=$LC_REQUIRE_SEAL_CAPABILITY_LABELS"
     echo "command_registry_status=seed-registry"
@@ -2254,6 +2325,7 @@ case "\${1:-status}" in
     echo "host_embedding_contract_status=metadata-only-contract"
     echo "host_inventory_contract_status=metadata-only-contract"
     echo "receipt_contract_status=metadata-only-contract"
+    echo "os_base_contract_status=metadata-only-contract"
     echo "seal_signature_present=0"
     echo "receipt_signed=0"
     echo "os_base_status=$LC_OS_BASE_PROFILE"
@@ -2265,6 +2337,8 @@ case "\${1:-status}" in
     echo "network_allowed=0"
     echo "runtime_enforcement_allowed=0"
     echo "boot_allowed=0"
+    echo "os_base_enabled=0"
+    echo "production_os_claim=0"
     ;;
   help)
     render_lc_help
@@ -2398,8 +2472,41 @@ case "\${1:-status}" in
     echo "runtime_enforcement_allowed=0"
     echo "boot_allowed=0"
     ;;
+  os-contract|base-contract)
+    echo "LATTICRA CONSOLE OS-BASE PLANNING CONTRACT"
+    echo "contract_profile=$LC_OS_BASE_CONTRACT_PROFILE"
+    echo "contract_status=metadata-only"
+    echo "contract_file=\$LC_DIR/os-base/contract.toml"
+    echo "contract_present=1"
+    echo "os_base_enabled=0"
+    echo "production_os_claim=0"
+    echo "boot_allowed=0"
+    echo "boot_authority_present=0"
+    echo "kernel_change_allowed=0"
+    echo "kernel_enforcement_allowed=0"
+    echo "hardware_access_allowed=0"
+    echo "bootloader_write_allowed=0"
+    echo "partition_mutation_allowed=0"
+    echo "driver_load_allowed=0"
+    echo "service_install_allowed=0"
+    echo "host_mutation_allowed=0"
+    echo "network_allowed=0"
+    echo "runtime_enforcement_allowed=0"
+    echo "read_only_host_inventory_receipt_required=1"
+    echo "vm_evidence_required=1"
+    echo "operator_consent_required=1"
+    echo "runtime_boundary_required=1"
+    echo "seal_capability_labels_required=1"
+    echo "receipt_required_before_os_base=1"
+    echo "promotion_gate=os_base_contract_receipt_and_vm_evidence"
+    echo "command_surface=lc os-contract"
+    echo "future_os_base_command=lc os"
+    echo "no_effect=1"
+    ;;
   os|base)
     echo "lc_os_base_status=$LC_OS_BASE_PROFILE"
+    echo "os_base_contract=$LC_OS_BASE_CONTRACT_PROFILE"
+    echo "os_base_contract_required=$LC_REQUIRE_OS_BASE_CONTRACT"
     echo "future_os_base_claim=planned_not_claimed"
     echo "boot_allowed=0"
     echo "kernel_enforcement_authority=0"
@@ -2409,7 +2516,7 @@ case "\${1:-status}" in
     echo "\$LC_DIR"
     ;;
   *)
-    echo "usage: latticra-lc {status|help|man|boundary|commands|substrate|host|os|path}" >&2
+    echo "usage: latticra-lc {status|help|man|boundary|commands|substrate|host|os-contract|os|path}" >&2
     exit 64
     ;;
 esac

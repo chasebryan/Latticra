@@ -168,7 +168,7 @@ lat_pipeline_report_refinement_reports_semantic_failure_stage
 lat_pipeline_report_refinement_null_result_sets_unknown_stage
 ```
 
-The aggregate Lat pipeline invariants also verify that parser comment metadata is copied into the pipeline result and emitted in `LAT PIPELINE REPORT`.
+The aggregate Lat pipeline invariants also verify that parser comment metadata is copied into the pipeline result and emitted in `LAT PIPELINE REPORT` on both successful parses and parse failures such as unsupported block-comment rejection.
 
 ## Compatibility
 
@@ -183,6 +183,7 @@ LIR metadata output
 aggregate pipeline error labels
 module/source/count/span reporting
 parser line-comment count and first-comment span reporting
+parse-failure comment metadata reporting
 no-effect flags
 small-buffer behavior
 null-argument behavior

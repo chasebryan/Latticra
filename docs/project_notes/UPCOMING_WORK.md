@@ -8,11 +8,14 @@ Latest completion estimate review after runtime-boundary abuse-case fixtures not
 Latest runtime boundary abuse-case fixture expansion note: 2026-05-25 CDT
 Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
 Latest runtime boundary Lat pipeline comment evidence note: 2026-05-25 CDT
+Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
 Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
+Latest Seal Ed25519 verify status/public-entry note: 2026-05-25 CDT
 Latest Lat pipeline comment metadata integration note: 2026-05-25 CDT
 Latest Lat pipeline diagnostic comment metadata integration note: 2026-05-25 CDT
+Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
 
 ## Purpose
 
@@ -21,6 +24,8 @@ This note tracks the near-term work queue after the recent no-effect Lat, LIR, N
 The project remains evidence-bound and report/classification oriented. The queue should continue to prefer small, reviewable, guarded slices over broad runtime behavior.
 
 Latticra Seal crypto verify backend status/public-entry alignment is complete for the current metadata-only unsupported backend surface. It does not add real cryptographic verification, signing, key handling, host behavior, network behavior, capability enforcement, effect execution, or runtime authority.
+
+Latticra Seal Ed25519 verify-only status/public-entry alignment is complete for the existing local provider-backed verification result surface. It does not add new implementation behavior, signing, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, capability enforcement, effect execution, runtime authority, or production cryptography claims.
 
 ## Latest completed planning slice
 
@@ -37,6 +42,18 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Lat parse-failure comment evidence propagation
+```
+
+Purpose completed:
+
+```text
+verify that line-comment count and first-comment span metadata remain visible through Lat pipeline reports, Lat pipeline diagnostics, and denied runtime-boundary records when parsing fails on an unsupported block-comment opener while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
 Runtime boundary Lat pipeline comment evidence integration
 ```
 
@@ -46,7 +63,7 @@ Purpose completed:
 copy Lat pipeline line-comment count and first-comment span metadata into deterministic runtime-boundary records and reports while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat pipeline diagnostic comment metadata integration
@@ -325,6 +342,18 @@ map runtime-boundary request families, effect families, authority prerequisites,
 ## Latest completed status/public-entry slice
 
 ```text
+Latticra Seal Ed25519 verify-only status/public-entry alignment
+```
+
+Purpose completed:
+
+```text
+publish and guard the existing local provider-backed Seal Ed25519 verify-only implementation from README/status/foundation entry points while preserving no new implementation behavior, no signing, no key generation, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, no capability enforcement, no effect execution, no runtime authority, and no production cryptography claim
+```
+
+## Previous status/public-entry slice
+
+```text
 Latticra Seal crypto verify backend status/public-entry alignment
 ```
 
@@ -334,7 +363,7 @@ Purpose completed:
 publish and guard the existing metadata-only Seal crypto verify backend implementation from README/status/foundation entry points while preserving unsupported cryptographic verification, no signing, no key material loading, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, no capability enforcement, no effect execution, and no runtime authority
 ```
 
-## Previous status/public-entry slice
+## Earlier status/public-entry slice
 
 ```text
 Latticra Seal README status row alignment

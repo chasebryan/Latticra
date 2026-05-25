@@ -66,7 +66,7 @@ impl Default for LatticraInstallerApp {
             console_lines: vec![
                 format!("Latticra Panel v{PANEL_VERSION} bounded operator console online."),
                 "Authority baseline: root=0 network=0 runtime_enforcement=0.".to_owned(),
-                "Panel commands: help, status, lc status, lc receipts, lc profile <hosted|panel|host|os|custom>, plan, save, dry-run, reset, uninstall, profile seal, profile fedora."
+                "Panel commands: help, status, lc status, lc receipts, lc os-contract, lc profile <hosted|panel|host|os|custom>, plan, save, dry-run, reset, uninstall, profile seal, profile fedora."
                     .to_owned(),
                 "Navigation commands: pwd, cd <dir>. External host commands are denied.".to_owned(),
             ],
@@ -335,7 +335,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, lc status, lc profiles, lc receipts, lc profile hosted|panel|host|os|custom, lc commands, lc substrate, lc host, lc host-contract, lc host-inventory, lc os, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding, nadia tokenizer-runtime-attachment, nadia prompt-tokenization, nadia prompt-token-sequence, nadia context-window-assembly",
+                    "panel: help, status, lc status, lc profiles, lc receipts, lc profile hosted|panel|host|os|custom, lc commands, lc substrate, lc host, lc host-contract, lc host-inventory, lc os-contract, lc os, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding, nadia tokenizer-runtime-attachment, nadia prompt-tokenization, nadia prompt-token-sequence, nadia context-window-assembly",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -408,6 +408,11 @@ impl LatticraInstallerApp {
                 ));
                 self.push_console("receipt_contract_status=metadata-only-contract");
                 self.push_console(format!(
+                    "os_base_contract_profile={}",
+                    self.config.lc.os_base_contract_profile
+                ));
+                self.push_console("os_base_contract_status=metadata-only-contract");
+                self.push_console(format!(
                     "os_base_profile={}",
                     self.config.lc.os_base_profile
                 ));
@@ -431,6 +436,10 @@ impl LatticraInstallerApp {
                 self.push_console(format!(
                     "host_inventory_receipt_required={}",
                     self.config.lc.require_host_inventory_receipt
+                ));
+                self.push_console(format!(
+                    "os_base_contract_required={}",
+                    self.config.lc.require_os_base_contract
                 ));
                 self.push_console(format!(
                     "runtime_boundary_binding_required={}",
@@ -465,7 +474,7 @@ impl LatticraInstallerApp {
                 self.apply_lc_profile(LatticraConsoleProfile::Custom);
             }
             ["lc", "commands"] | ["console", "commands"] => {
-                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc profiles,lc receipts,lc substrate,lc host,lc host-contract,lc host-inventory,lc os");
+                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc profiles,lc receipts,lc substrate,lc host,lc host-contract,lc host-inventory,lc os-contract,lc os");
                 self.push_console("registry_authority=metadata-only external_host_processes=0");
             }
             ["lc", "receipts"]
@@ -554,10 +563,43 @@ impl LatticraInstallerApp {
                 );
                 self.push_console("host_process_launch_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0");
             }
+            ["lc", "os-contract"]
+            | ["console", "os-contract"]
+            | ["lc", "os", "contract"]
+            | ["console", "os", "contract"]
+            | ["lc", "base-contract"]
+            | ["console", "base-contract"] => {
+                self.push_console("lc.os_base_contract=Latticra Console OS-base planning contract");
+                self.push_console(format!(
+                    "contract_profile={}",
+                    self.config.lc.os_base_contract_profile
+                ));
+                self.push_console(format!(
+                    "contract_required={}",
+                    self.config.lc.require_os_base_contract
+                ));
+                self.push_console("contract_status=metadata-only os_base_enabled=0");
+                self.push_console(
+                    "boot_authority_present=0 kernel_change_allowed=0 hardware_access_allowed=0",
+                );
+                self.push_console(
+                    "bootloader_write_allowed=0 partition_mutation_allowed=0 driver_load_allowed=0 service_install_allowed=0",
+                );
+                self.push_console(
+                    "vm_evidence_required=1 receipt_required_before_os_base=1 promotion_gate=os_base_contract_receipt_and_vm_evidence",
+                );
+                self.push_console(
+                    "host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 production_os_claim=0",
+                );
+            }
             ["lc", "os"] | ["console", "os"] | ["lc", "base"] | ["console", "base"] => {
                 self.push_console(format!(
                     "lc.os_base_status={}",
                     self.config.lc.os_base_profile
+                ));
+                self.push_console(format!(
+                    "os_base_contract={}",
+                    self.config.lc.os_base_contract_profile
                 ));
                 self.push_console("future_os_base_claim=planned_not_claimed");
                 self.push_console(
@@ -1571,6 +1613,11 @@ impl LatticraInstallerApp {
             "Receipt contract",
             &mut self.config.lc.receipt_contract_profile,
         );
+        labeled_text_field(
+            ui,
+            "OS contract",
+            &mut self.config.lc.os_base_contract_profile,
+        );
         labeled_text_field(ui, "OS base", &mut self.config.lc.os_base_profile);
         labeled_text_field(ui, "Panel bridge", &mut self.config.lc.panel_bridge);
         checkbox_note(
@@ -1608,6 +1655,12 @@ impl LatticraInstallerApp {
             &mut self.config.lc.require_host_inventory_receipt,
             "Require host-inventory receipt",
             "Read-only inventory contract metadata must be receipted before host embedding work.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.require_os_base_contract,
+            "Require OS-base contract",
+            "Future OS-base work must prove this contract before any boot-adjacent planning advances.",
         );
         checkbox_note(
             ui,

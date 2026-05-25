@@ -10,6 +10,8 @@ Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
 Latest runtime boundary abuse-case fixture expansion note: 2026-05-25 CDT
 Latest runtime boundary Lat pipeline comment evidence note: 2026-05-25 CDT
+Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
+Latest macOS reset/uninstall live-target classifier note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
 Latest Seal policy decision status/public-entry note: 2026-05-25 CDT
 Latest Seal signed request status/public-entry note: 2026-05-25 CDT
@@ -22,6 +24,7 @@ Latest Seal effect decision status/public-entry note: 2026-05-25 CDT
 Latest Seal capability gate status/public-entry note: 2026-05-25 CDT
 Latest Seal verification receipt status/public-entry note: 2026-05-25 CDT
 Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
+Latest Seal Ed25519 verify status/public-entry note: 2026-05-25 CDT
 Latest Nadia offline AI Stage-0 foundation note: 2026-05-25 CDT
 Latest Nadia local context engine Stage-1 note: 2026-05-25 CDT
 Latest Nadia runtime profile Stage-2 note: 2026-05-25 CDT
@@ -54,8 +57,10 @@ Latest Latticra Console profile preset note: 2026-05-25 CDT
 Latest Latticra Console host-embedding contract note: 2026-05-25 CDT
 Latest Latticra Console read-only host inventory contract note: 2026-05-25 CDT
 Latest Latticra Console receipt contract note: 2026-05-25 CDT
+Latest Latticra Console OS-base planning contract note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
+Latest Seal Ed25519 verify status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
 Latest Seal future key parsing implementation plan note: 2026-05-25 CDT
@@ -90,6 +95,7 @@ Latest Lat grammar line-comment metadata refinement note: 2026-05-25 CDT
 Latest Lat grammar unsupported block-comment rejection refinement note: 2026-05-25 CDT
 Latest Lat pipeline comment metadata integration note: 2026-05-25 CDT
 Latest Lat pipeline diagnostic comment metadata integration note: 2026-05-25 CDT
+Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
 Latest Lat model report declaration metadata integration note: 2026-05-25 CDT
 Latest Lat model report clause metadata integration note: 2026-05-25 CDT
@@ -250,6 +256,7 @@ The repository currently emphasizes:
 - Completion estimate review after runtime-boundary abuse-case fixtures;
 - Latticra Seal verification receipt status/public-entry alignment;
 - Latticra Seal crypto verify backend status/public-entry alignment;
+- Latticra Seal Ed25519 verify-only status/public-entry alignment;
 - Latticra Seal verification policy status/public-entry alignment;
 - Latticra Seal key parsing status/public-entry alignment;
 - Latticra Seal bounded no-effect key parsing implementation;
@@ -292,6 +299,7 @@ The repository currently emphasizes:
 - Lat grammar unsupported block-comment rejection refinement;
 - Lat pipeline comment metadata integration;
 - Lat pipeline diagnostic comment metadata integration;
+- Lat parse-failure comment evidence propagation;
 - Runtime boundary Lat pipeline comment evidence integration;
 - Lat semantic validation foundation;
 - Lat model normalization implementation;
@@ -485,6 +493,38 @@ runtime_authority_granted=0
 real_cryptographic_verification_added=0
 ```
 
+The Latticra Seal Ed25519 verify-only status record makes the existing local provider-backed verification result surface visible from public entry points while preserving authority-neutral behavior, no signing, no key handling, no host behavior, no network behavior, no capability enforcement, no runtime authority, and no production cryptography claim.
+
+Current Ed25519 verify-only fields:
+
+```text
+seal_ed25519_verify_only_contract_present=1
+seal_ed25519_verify_implementation_present=1
+seal_ed25519_verify_status_present=1
+ed25519_verify_profile=latticra-seal-ed25519-verify/0.1
+ed25519_cryptographic_verification_performed=1
+ed25519_authority_usable=0
+crypto_verify_state=verified
+cryptographic_verification_supported=1
+cryptographic_verification_performed=1
+verified=1
+authority_usable=0
+capability_gate_allowed=0
+runtime_authority_granted=0
+implementation_behavior_changed=0
+signing_added=0
+key_generation_added=0
+private_key_handling_added=0
+trust_store_behavior_added=0
+revocation_lookup_added=0
+network_behavior_changed=0
+host_behavior_changed=0
+capability_enforcement_added=0
+effect_execution_added=0
+production_cryptography_claimed=0
+estimate_adjustment_required=0
+```
+
 The Latticra Seal verification receipt status record makes the existing metadata-only, unverified verification receipt implementation visible from public entry points while preserving no cryptographic verification, no verified receipt authority, no signing, no key material loading, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
 
 The Latticra Seal capability gate status record makes the existing metadata-only denied capability gate implementation visible from public entry points while preserving no capability enforcement, no effect execution, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, and no runtime authority.
@@ -622,6 +662,7 @@ Latticra Seal policy decision status/public-entry alignment
 Latticra Seal capability gate status/public-entry alignment
 Latticra Seal verification receipt status/public-entry alignment
 Latticra Seal crypto verify backend status/public-entry alignment
+Latticra Seal Ed25519 verify-only status/public-entry alignment
 Latticra Seal verification policy status/public-entry alignment
 Latticra Seal key parsing status/public-entry alignment
 Latticra Seal bounded no-effect key parsing implementation
@@ -751,7 +792,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat grammar report metadata integration, Lat grammar line-comment metadata refinement, Lat grammar unsupported block-comment rejection refinement, Lat model normalization, Lat model report declaration metadata integration, Lat model report clause metadata integration, Lat-to-LIR declaration metadata refinement, Lat-to-LIR metadata lowering, Lat-to-LIR diagnostic refinement, Lat-to-LIR diagnostic declaration metadata integration, LIR report refinement, Lat pipeline reporting, Lat pipeline lowering diagnostic integration, Lat pipeline diagnostic declaration metadata integration, Lat pipeline diagnostic clause metadata integration, Lat pipeline report declaration metadata integration, Lat pipeline report clause metadata integration, Lat pipeline comment metadata integration, Lat pipeline diagnostic comment metadata integration, Runtime boundary Lat pipeline comment evidence integration, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic main test audit, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
+The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat grammar report metadata integration, Lat grammar line-comment metadata refinement, Lat grammar unsupported block-comment rejection refinement, Lat model normalization, Lat model report declaration metadata integration, Lat model report clause metadata integration, Lat-to-LIR declaration metadata refinement, Lat-to-LIR metadata lowering, Lat-to-LIR diagnostic refinement, Lat-to-LIR diagnostic declaration metadata integration, LIR report refinement, Lat pipeline reporting, Lat pipeline lowering diagnostic integration, Lat pipeline diagnostic declaration metadata integration, Lat pipeline diagnostic clause metadata integration, Lat pipeline report declaration metadata integration, Lat pipeline report clause metadata integration, Lat pipeline comment metadata integration, Lat pipeline diagnostic comment metadata integration, Lat parse-failure comment evidence propagation, Runtime boundary Lat pipeline comment evidence integration, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic main test audit, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
 
 This is a mission direction, not a current security guarantee.
 
@@ -768,7 +809,7 @@ Latticra Seal future key parsing implementation contract
 Latest completed status/public-entry slice:
 
 ```text
-Latticra Seal crypto verify backend status/public-entry alignment
+Latticra Seal Ed25519 verify-only status/public-entry alignment
 ```
 
 ## Previous status/public-entry slice
@@ -792,7 +833,7 @@ Latticra Seal request freshness status/public-entry alignment
 Latest completed implementation slice:
 
 ```text
-Runtime boundary Lat pipeline comment evidence integration
+Lat parse-failure comment evidence propagation
 ```
 
 ## Previous implementation slice
@@ -800,7 +841,7 @@ Runtime boundary Lat pipeline comment evidence integration
 Previous implementation slice:
 
 ```text
-Lat pipeline diagnostic comment metadata integration
+Runtime boundary Lat pipeline comment evidence integration
 ```
 
 ## Previous contract slice

@@ -1,7 +1,19 @@
 #!/usr/bin/env sh
 set -eu
 
+require_file() {
+  file="$1"
+  if [ ! -f "$file" ]; then
+    printf 'kernel_scheduler: missing file: %s\n' "$file" >&2
+    exit 1
+  fi
+}
+
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
+
+require_file docs/KERNEL_SCHEDULER_SEED.md
+require_file .github/workflows/kernel-scheduler.yml
+require_file scripts/test-kernel-scheduler-report-runner.sh
 
 cc $CFLAGS \
   -Iinclude \

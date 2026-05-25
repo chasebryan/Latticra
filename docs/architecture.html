@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Latticra System Architecture</title>
+  <meta name="description" content="A reader-facing architecture guide for Latticra layers, authority boundaries, evidence flow, and no-effect posture.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra System Architecture">
+  <meta property="og:description" content="Layers, boundaries, evidence flow, and no-effect posture for the Latticra architecture.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="status.html">Status</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="map.html">Map</a>
+        <a href="FOUNDATION_INDEX.md">Foundation</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero architecture-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / System architecture</p>
+        <p class="eyebrow">Layered Boundary Model</p>
+        <h1>System architecture</h1>
+        <p class="page-lede">
+          Latticra is organized around explicit declarations, bounded representations, report-only coordination, runtime-boundary classification, and evidence records before any future authority is granted.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell architecture-intro">
+        <div>
+          <p class="eyebrow">System Line</p>
+          <h2>Declaration first, authority last.</h2>
+        </div>
+        <p>
+          The current architecture is best read as a sequence of gates. Each layer narrows ambiguity and records evidence. None of the current public pages should be read as a production-runtime or OS-completeness claim.
+        </p>
+      </div>
+
+      <div class="content-shell architecture-flow" aria-label="Latticra architecture flow">
+        <article class="flow-step flow-language">
+          <span>01</span>
+          <h3>Lat</h3>
+          <p>Contract declarations and source intent.</p>
+        </article>
+        <article class="flow-step flow-ir">
+          <span>02</span>
+          <h3>LIR</h3>
+          <p>Bounded intermediate metadata and graph shape.</p>
+        </article>
+        <article class="flow-step flow-ui">
+          <span>03</span>
+          <h3>L-UI</h3>
+          <p>Operator-visible parsing and report surfaces.</p>
+        </article>
+        <article class="flow-step flow-nucleus">
+          <span>04</span>
+          <h3>Nucleus</h3>
+          <p>Task records and report-only classification.</p>
+        </article>
+        <article class="flow-step flow-boundary">
+          <span>05</span>
+          <h3>Runtime Boundary</h3>
+          <p>Disabled-by-default runtime posture checks.</p>
+        </article>
+        <article class="flow-step flow-seal">
+          <span>06</span>
+          <h3>Seal</h3>
+          <p>Trust, request, policy, and tool-boundary evidence.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Core Boundaries</p>
+        <h2>The architecture separates language, authority, and evidence.</h2>
+        <p>
+          Each layer has a specific job. The separation matters because it keeps future operational claims from sneaking into current no-effect records.
+        </p>
+      </div>
+      <div class="content-shell architecture-grid">
+        <article class="architecture-card">
+          <h3>Declaration boundary</h3>
+          <p>Lat and L-UI records describe system intent and operator-facing declarations before execution exists.</p>
+          <a href="LAT_LANGUAGE_GRAMMAR_CONTRACT.md">Lat grammar contract</a>
+        </article>
+        <article class="architecture-card">
+          <h3>Representation boundary</h3>
+          <p>LIR records graph shape and metadata, but does not act as an execution engine.</p>
+          <a href="LIR_SHAPE_CONTRACT.md">LIR shape contract</a>
+        </article>
+        <article class="architecture-card">
+          <h3>Task boundary</h3>
+          <p>Nucleus records task classification and prerequisites while remaining report-only.</p>
+          <a href="NUCLEUS_TASK_EXECUTION_CONTRACT.md">Nucleus task contract</a>
+        </article>
+        <article class="architecture-card">
+          <h3>Runtime boundary</h3>
+          <p>Runtime Boundary records disabled-by-default classification before operational behavior.</p>
+          <a href="RUNTIME_BOUNDARY_CONTRACT.md">Runtime boundary contract</a>
+        </article>
+        <article class="architecture-card">
+          <h3>Trust boundary</h3>
+          <p>Latticra Seal records request, policy, capability, signature, and tool-boundary metadata.</p>
+          <a href="LATTICRA_SEAL_CONTRACT.md">Seal contract</a>
+        </article>
+        <article class="architecture-card">
+          <h3>Host boundary</h3>
+          <p>Panel, Console, Fedora, and macOS lanes stay local, guarded, and status-bound.</p>
+          <a href="HOST_ARCHITECTURE_TARGETS.md">Host architecture targets</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell architecture-split">
+        <div class="section-heading">
+          <p class="eyebrow">Authority Posture</p>
+          <h2>What the current architecture allows readers to infer.</h2>
+          <p>
+            Latticra's public records support evidence, metadata, reports, guards, and local validation. They do not support broad authority claims.
+          </p>
+        </div>
+        <div class="architecture-table" role="table" aria-label="Architecture inference boundaries">
+          <div role="row">
+            <span role="cell">Supported now</span>
+            <p role="cell">Contracts, status records, no-effect implementation slices, deterministic local checks, public non-claims, and bounded report surfaces.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Guarded research lanes</span>
+            <p role="cell">Local installer, Fedora validation, macOS user-local packaging, host-embedding plans, and offline AI planning records.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Not inferred</span>
+            <p role="cell">Production enforcement, root authority, network authority, cryptographic key authority, certified security, OS replacement, or Fedora approval.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell claim-strip">
+        <div>
+          <p class="eyebrow">Read Next</p>
+          <h2>Move from the map to the exact record.</h2>
+        </div>
+        <p>
+          Use this page for orientation, then use the documentation map and status dashboard to reach the authoritative contracts and current posture records.
+        </p>
+      </div>
+      <div class="content-shell next-grid">
+        <a href="status.html"><strong>Status dashboard</strong><span>Current posture and planning estimates.</span></a>
+        <a href="map.html"><strong>Documentation map</strong><span>Grouped links into the full record set.</span></a>
+        <a href="FOUNDATION_INDEX.md"><strong>Foundation index</strong><span>Contracts, implementation notes, guards, and status files.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra system architecture guide.</span>
+      <span><a href="status.html">Open public status</a></span>
+    </div>
+  </footer>
+</body>
+</html>

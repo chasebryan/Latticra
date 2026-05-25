@@ -10,6 +10,8 @@ Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
 Latest runtime boundary abuse-case fixture expansion note: 2026-05-25 CDT
 Latest runtime boundary Lat pipeline comment evidence note: 2026-05-25 CDT
+Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
+Latest macOS reset/uninstall live-target classifier note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
 Latest Seal policy decision status/public-entry note: 2026-05-25 CDT
 Latest Seal signed request status/public-entry note: 2026-05-25 CDT
@@ -22,6 +24,7 @@ Latest Seal effect decision status/public-entry note: 2026-05-25 CDT
 Latest Seal capability gate status/public-entry note: 2026-05-25 CDT
 Latest Seal verification receipt status/public-entry note: 2026-05-25 CDT
 Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
+Latest Seal Ed25519 verify status/public-entry note: 2026-05-25 CDT
 Latest Nadia offline AI Stage-0 foundation note: 2026-05-25 CDT
 Latest Nadia local context engine Stage-1 note: 2026-05-25 CDT
 Latest Nadia runtime profile Stage-2 note: 2026-05-25 CDT
@@ -54,8 +57,10 @@ Latest Latticra Console profile preset note: 2026-05-25 CDT
 Latest Latticra Console host-embedding contract note: 2026-05-25 CDT
 Latest Latticra Console read-only host inventory contract note: 2026-05-25 CDT
 Latest Latticra Console receipt contract note: 2026-05-25 CDT
+Latest Latticra Console OS-base planning contract note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
+Latest Seal Ed25519 verify status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
 Latest Seal future key parsing implementation plan note: 2026-05-25 CDT
@@ -93,6 +98,7 @@ Latest Lat grammar line-comment metadata refinement note: 2026-05-25 CDT
 Latest Lat grammar unsupported block-comment rejection refinement note: 2026-05-25 CDT
 Latest Lat pipeline comment metadata integration note: 2026-05-25 CDT
 Latest Lat pipeline diagnostic comment metadata integration note: 2026-05-25 CDT
+Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
 Latest Lat model report declaration metadata integration note: 2026-05-25 CDT
 Latest Lat model report clause metadata integration note: 2026-05-25 CDT
@@ -233,6 +239,7 @@ Completion estimate review README/status alignment
 Completion estimate review after runtime-boundary abuse-case fixtures
 Seal verification receipt status/public-entry alignment
 Seal crypto verify backend status/public-entry alignment
+Seal Ed25519 verify-only status/public-entry alignment
 Nadia offline AI Stage-0 foundation
 Nadia local context engine Stage-1
 Nadia runtime profile Stage-2
@@ -267,6 +274,7 @@ Latticra Console read-only host inventory contract
 Latticra Console receipt contract
 Seal verification policy status/public-entry alignment
 Seal crypto verify backend status/public-entry alignment
+Seal Ed25519 verify-only status/public-entry alignment
 Seal key parsing status/public-entry alignment
 Seal bounded no-effect key parsing implementation
 Seal future key parsing implementation plan
@@ -420,6 +428,40 @@ runtime_authority_granted=0
 real_cryptographic_verification_added=0
 ```
 
+## Current Seal Ed25519 verify-only boundary
+
+The Seal Ed25519 verify-only status record makes the existing local provider-backed verification result surface visible from public entry points while preserving authority-neutral behavior and no production cryptography claim.
+
+Current Ed25519 verify-only fields:
+
+```text
+seal_ed25519_verify_only_contract_present=1
+seal_ed25519_verify_implementation_present=1
+seal_ed25519_verify_status_present=1
+ed25519_verify_profile=latticra-seal-ed25519-verify/0.1
+ed25519_cryptographic_verification_performed=1
+ed25519_authority_usable=0
+crypto_verify_state=verified
+cryptographic_verification_supported=1
+cryptographic_verification_performed=1
+verified=1
+authority_usable=0
+capability_gate_allowed=0
+runtime_authority_granted=0
+implementation_behavior_changed=0
+signing_added=0
+key_generation_added=0
+private_key_handling_added=0
+trust_store_behavior_added=0
+revocation_lookup_added=0
+network_behavior_changed=0
+host_behavior_changed=0
+capability_enforcement_added=0
+effect_execution_added=0
+production_cryptography_claimed=0
+estimate_adjustment_required=0
+```
+
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
@@ -475,6 +517,16 @@ verified=0
 authority_usable=0
 capability_gate_allowed=0
 real_cryptographic_verification_added=0
+seal_ed25519_verify_only_contract_present=1
+seal_ed25519_verify_implementation_present=1
+seal_ed25519_verify_status_present=1
+ed25519_verify_profile=latticra-seal-ed25519-verify/0.1
+ed25519_crypto_verify_state=verified
+ed25519_cryptographic_verification_performed=1
+cryptographic_verification_performed=1
+ed25519_verified=1
+ed25519_authority_usable=0
+production_cryptography_claimed=0
 seal_verification_receipt_metadata_present=1
 seal_verification_receipt_status_present=1
 seal_capability_gate_metadata_present=1

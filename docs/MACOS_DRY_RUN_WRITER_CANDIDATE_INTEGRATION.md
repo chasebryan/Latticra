@@ -132,5 +132,5 @@ This integration is not macOS installation, macOS app bundle evidence, signed ap
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-target classifier that reports present, managed, and unmanaged targets without deleting files.
+Add a macOS reset/uninstall dry-run planner that consumes live-target classifications without deleting files.
 ```

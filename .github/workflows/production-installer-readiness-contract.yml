@@ -12,6 +12,7 @@ permissions:
 jobs:
   production-installer-readiness-contract:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
       - name: Run production installer readiness contract guard

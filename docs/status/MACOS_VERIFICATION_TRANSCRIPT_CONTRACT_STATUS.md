@@ -17,6 +17,7 @@ macos_verification_transcript_contract_present=1
 macos_verification_transcript_contract_guard_present=1
 macos_commit_gate_contract_present=1
 macos_reset_uninstall_dry_run_contract_present=1
+macos_reset_uninstall_live_target_classifier_present=1
 verification_transcript_contract_state=defined-no-effect
 verification_transcript_contract_decision=contract-defined-evidence-not-present
 verification_transcript_required=1
@@ -90,7 +91,7 @@ macos_verification_transcript_contract: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-target classifier that reports present, managed, and unmanaged targets without deleting files.
+Add a macOS reset/uninstall dry-run planner that consumes live-target classifications without deleting files.
 ```
 
 ## Non-Claims

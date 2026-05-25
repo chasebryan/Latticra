@@ -90,7 +90,7 @@ The authoritative status files are [`STATUS.md`](STATUS.md) and [`docs/status/CU
 | L-UI | Parser, validation, and report/rendering foundations exist; no interactive terminal-control renderer |
 | Nucleus | Report-only task-boundary and classification work exists; no effect-performing execution |
 | Runtime Boundary | Denied-by-default classification and reporting exists; no runtime authority |
-| Latticra Seal | Report-only runtime gate path, sealed report-envelope metadata, signature/signing/key/public-key/bounded-key parsing metadata/status, metadata-only verification policy/status, metadata-only crypto verify backend/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only freshness/signed-request/policy-decision metadata/status/report surfaces, and core negative-test evidence for AI-era tool-boundary planning; no production enforcement |
+| Latticra Seal | Report-only runtime gate path, sealed report-envelope metadata, signature/signing/key/public-key/bounded-key parsing metadata/status, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only freshness/signed-request/policy-decision metadata/status/report surfaces, and core negative-test evidence for AI-era tool-boundary planning; no production enforcement |
 | Fedora integration | Local-only package and validation lanes exist; not Fedora-approved or distribution-ready |
 | Latticra Panel | GUI-first local installer/control workbench exists; user-local and guarded |
 | macOS installer lane | Mac-specific no-effect installer path exists for probes, path planning, app-bundle dry-run, candidate checks, and a closed commit gate; no `.app` is written yet |
@@ -170,7 +170,7 @@ Runtime Boundary
 
 Latticra Seal
   Trust-boundary, request-boundary, policy-boundary, tool-boundary, and crypto-profile planning.
-  Current posture: report-only runtime gate path, sealed report-envelope metadata, signature-request metadata/status, signing authorization metadata/status, signer handoff/invocation/operation metadata/status, key-handling and key-material metadata/status, public-key parsing metadata/status, future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only crypto verify backend/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning; no production enforcement.
+  Current posture: report-only runtime gate path, sealed report-envelope metadata, signature-request metadata/status, signing authorization metadata/status, signer handoff/invocation/operation metadata/status, key-handling and key-material metadata/status, public-key parsing metadata/status, future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning; no production enforcement.
 
 Latticra Panel
   GUI-first local workbench for guided first-run configuration, evidence review, dry-run, and guarded local-prefix install.
@@ -788,6 +788,12 @@ Review the reset/uninstall dry-run contract:
 sh scripts/macos-reset-uninstall-dry-run-contract.sh
 ```
 
+Classify future reset/uninstall live targets without deleting files:
+
+```sh
+sh scripts/macos-reset-uninstall-live-target-classifier.sh
+```
+
 Expected commit posture:
 
 ```text
@@ -810,6 +816,7 @@ macos_local_candidate_asset_probe_present=1
 macos_dry_run_writer_candidate_integration_present=1
 macos_commit_gate_contract_present=1
 macos_reset_uninstall_dry_run_contract_present=1
+macos_reset_uninstall_live_target_classifier_present=1
 commit_user_local_managed_artifacts=0
 app_bundle_write_performed=0
 file_delete_performed=0
@@ -830,6 +837,7 @@ This means Latticra can currently document, probe, and dry-run the Mac-specific 
 - [`docs/MACOS_DRY_RUN_WRITER_CANDIDATE_INTEGRATION.md`](docs/MACOS_DRY_RUN_WRITER_CANDIDATE_INTEGRATION.md)
 - [`docs/MACOS_COMMIT_GATE_CONTRACT.md`](docs/MACOS_COMMIT_GATE_CONTRACT.md)
 - [`docs/MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT.md`](docs/MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT.md)
+- [`docs/MACOS_RESET_UNINSTALL_LIVE_TARGET_CLASSIFIER.md`](docs/MACOS_RESET_UNINSTALL_LIVE_TARGET_CLASSIFIER.md)
 
 ---
 
@@ -1537,6 +1545,18 @@ cryptographic_verification_performed=0
 verified=0
 authority_usable=0
 capability_gate_allowed=0
+seal_ed25519_verify_only_contract_present=1
+seal_ed25519_verify_implementation_present=1
+seal_ed25519_verify_metadata_present=1
+seal_ed25519_verify_status_present=1
+ed25519_verify_profile=latticra-seal-ed25519-verify/0.1
+ed25519_verify_state=verified
+ed25519_cryptographic_verification_supported=1
+ed25519_cryptographic_verification_performed=1
+ed25519_verified=1
+ed25519_authority_usable=0
+ed25519_capability_gate_allowed=0
+ed25519_runtime_authority_granted=0
 seal_verification_receipt_metadata_present=1
 seal_verification_receipt_status_present=1
 seal_capability_gate_metadata_present=1
@@ -1641,6 +1661,10 @@ The verification policy status record makes that metadata-only checkpoint visibl
 The crypto verify backend metadata implementation records an unsupported backend posture from verification policy metadata. It does not perform cryptographic verification, parse public keys, load key material, handle private keys, query trust stores or revocation sources, touch host or network behavior, enforce capabilities, or grant runtime authority.
 
 The crypto verify backend status record makes that metadata-only checkpoint visible from the public entry points without changing implementation behavior.
+
+The Ed25519 verify-only implementation performs local provider-backed verification over caller-supplied message bytes, public-key bytes, and signature bytes. A successful verify-only result records `crypto_verify_state=verified`, `cryptographic_verification_performed=1`, and `verified=1`, while keeping authority, capability-gate allowance, runtime authority, signing, key generation, private-key handling, host behavior, and network behavior at zero.
+
+The Ed25519 verify status record makes that local verify-only checkpoint visible from the public entry points without changing implementation behavior or claiming production cryptography.
 
 The verification receipt metadata implementation records unverified receipt metadata from the verification policy posture. It does not perform cryptographic verification, assert verified receipt authority, authorize capability gates, load key material, handle private keys, query trust stores or revocation sources, touch host or network behavior, enforce capabilities, or grant runtime authority.
 
@@ -1748,6 +1772,9 @@ Relevant Seal records:
 - [`docs/LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_CONTRACT.md`](docs/LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_IMPLEMENTATION.md)
 - [`docs/status/SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md`](docs/status/SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md)
+- [`docs/LATTICRA_SEAL_ED25519_VERIFY_ONLY_CONTRACT.md`](docs/LATTICRA_SEAL_ED25519_VERIFY_ONLY_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_ED25519_VERIFY_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_ED25519_VERIFY_IMPLEMENTATION.md)
+- [`docs/status/SEAL_ED25519_VERIFY_STATUS.md`](docs/status/SEAL_ED25519_VERIFY_STATUS.md)
 - [`docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md`](docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md)
 - [`docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md`](docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md)
@@ -1783,6 +1810,9 @@ Current local RPM package posture:
 
 ```text
 local_only_draft=1
+fedora_vm_cli_payload_validation_status=blocked-pending-real-vm-run
+disposable_vm_cli_validation_completed=0
+host_install_ready_for_cli_payload=0
 fedora_approval_claimed=0
 fedora_distribution_ready=0
 production_installer_ready=0
@@ -1805,12 +1835,16 @@ and installs:
 
 The CLI itself reports no-effect status and disabled runtime behavior.
 
+The manually gated disposable Fedora VM CLI payload validation runner exists, but no reviewed real-VM CLI validation transcript has been accepted yet. The current evidence is runner-readiness only, not host install readiness for the CLI payload.
+
 Relevant Fedora records:
 
 - [`docs/FEDORA_DEVELOPER_WORKFLOW.md`](docs/FEDORA_DEVELOPER_WORKFLOW.md)
 - [`docs/FEDORA_PACKAGE_METADATA_PLAN.md`](docs/FEDORA_PACKAGE_METADATA_PLAN.md)
 - [`docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md`](docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md)
 - [`docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_TRANSCRIPT_CONTRACT.md`](docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_TRANSCRIPT_CONTRACT.md)
+- [`docs/FEDORA_VM_CLI_PAYLOAD_VALIDATION_LANE.md`](docs/FEDORA_VM_CLI_PAYLOAD_VALIDATION_LANE.md)
+- [`docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md`](docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md)
 - [`packaging/fedora/latticra.spec`](packaging/fedora/latticra.spec)
 
 ---

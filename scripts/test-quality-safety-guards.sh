@@ -45,6 +45,12 @@ check_workflow() {
   grep -q '^  contents: read' "$workflow" ||
     fail "$workflow must keep repository token permissions read-only"
 
+  runs_on_count=$(grep -Ec '^[[:space:]]*runs-on:' "$workflow" || :)
+  timeout_count=$(grep -Ec '^[[:space:]]*timeout-minutes:[[:space:]]*[1-9][0-9]*[[:space:]]*$' "$workflow" || :)
+  [ "$runs_on_count" -eq 0 ] ||
+    [ "$timeout_count" -ge "$runs_on_count" ] ||
+    fail "$workflow must set timeout-minutes for every job"
+
   if grep -Eq '^[[:space:]]*[A-Za-z0-9_-]+:[[:space:]]*write([[:space:]]|$)' "$workflow"; then
     fail "$workflow must not request write-scoped token permissions"
   fi
@@ -147,6 +153,8 @@ check_shell_script() {
     require_contains "path_has_parent_reference()" "$script"
     require_contains "refusing install prefix with parent-directory traversal" "$script"
     require_contains "refusing symlink install prefix" "$script"
+    require_contains "refusing symlink payload source" "$script"
+    require_contains "refusing payload tree with symlink entry" "$script"
   fi
 
   if [ "$script" = "installer/scripts/latticra-installer-uninstall.sh" ]; then

@@ -1,7 +1,7 @@
 # Latticra Console Foundation
 
 Status: Stage-0 foundation
-Scope: LC identity, Panel installability, configurable metadata, substrate bridge, host-embedding plan, and future OS-base direction.
+Scope: LC identity, Panel installability, configurable metadata, substrate bridge, host-embedding plan, OS-base planning contract, and future OS-base direction.
 
 ## Purpose
 
@@ -38,6 +38,7 @@ host_embedding_profile=panel-contained
 host_embedding_contract_profile=lc-host-embedding-v0
 host_inventory_contract_profile=lc-host-inventory-v0
 receipt_contract_profile=lc-receipts-v0
+os_base_contract_profile=lc-os-base-v0
 os_base_profile=planned-no-boot-authority
 report_only=true
 host_embedding_contract_required=true
@@ -45,6 +46,7 @@ read_only_host_inventory_contract_required=true
 profile_receipt_required=true
 host_contract_receipt_required=true
 host_inventory_receipt_required=true
+os_base_contract_required=true
 runtime_boundary_binding_required=true
 seal_capability_labels_required=true
 ```
@@ -63,6 +65,7 @@ share/latticra/lc/substrate
 share/latticra/lc/host-embedding/contract.toml
 share/latticra/lc/host-inventory/contract.toml
 share/latticra/lc/receipts/contract.toml
+share/latticra/lc/os-base/contract.toml
 share/latticra/components/latticra-console.installed
 ```
 
@@ -97,6 +100,7 @@ lc substrate
 lc host
 lc host-contract
 lc host-inventory
+lc os-contract
 lc os
 pwd
 cd
@@ -131,6 +135,7 @@ host_embedding_profile = "panel-contained"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 receipt_contract_profile = "lc-receipts-v0"
+os_base_contract_profile = "lc-os-base-v0"
 os_base_profile = "planned-no-boot-authority"
 panel_bridge = "panel-aware"
 report_only = true
@@ -139,6 +144,7 @@ require_read_only_host_inventory_contract = true
 require_profile_receipt = true
 require_host_contract_receipt = true
 require_host_inventory_receipt = true
+require_os_base_contract = true
 require_runtime_boundary_binding = true
 require_seal_capability_labels = true
 ```
@@ -288,6 +294,51 @@ receipt_path_recorded=0
 file_write_allowed=0
 ```
 
+## OS-Base Planning Contract
+
+LC now installs and reports an OS-base planning contract before any boot-adjacent behavior exists:
+
+```text
+contract_profile=lc-os-base-v0
+contract_status=metadata-only
+contract_present=1
+os_base_enabled=0
+production_os_claim=0
+read_only_host_inventory_receipt_required=1
+vm_evidence_required=1
+operator_consent_required=1
+runtime_boundary_required=1
+seal_capability_labels_required=1
+receipt_required_before_os_base=1
+promotion_gate=os_base_contract_receipt_and_vm_evidence
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report os-contract
+latticra-lc os-contract
+```
+
+The contract explicitly denies OS, kernel, hardware, and host authority:
+
+```text
+boot_allowed=0
+boot_authority_present=0
+kernel_change_allowed=0
+kernel_enforcement_allowed=0
+hardware_access_allowed=0
+bootloader_write_allowed=0
+partition_mutation_allowed=0
+driver_load_allowed=0
+service_install_allowed=0
+host_mutation_allowed=0
+network_allowed=0
+runtime_enforcement_allowed=0
+```
+
+`lc os-contract` is an inspectable contract command. `lc os` remains the future-gated boot-action planning lane.
+
 ## Help And Manpage Rendering
 
 LC now has registry-backed renderers for:
@@ -329,6 +380,7 @@ core, panel, and substrate inspection -> authority-check / validation-only
 lc receipts -> authority-check / validation-only
 lc host-contract -> authority-check / validation-only
 lc host-inventory -> authority-check / validation-only
+lc os-contract -> authority-check / validation-only
 lc host -> future-gated command-execute planning
 lc os -> future-gated boot-action planning
 ```
@@ -378,6 +430,10 @@ runtime_boundary_bound=1
 seal_capability_labels_bound=1
 substrate_bridge_status=metadata-bound-ready
 panel_installable=1
+os_base_contract_status=metadata-only-contract-ready
+os_base_contract_present=1
+os_base_enabled=0
+production_os_claim=0
 future_os_base_claim=planned_not_claimed
 execution_allowed=0
 host_mutation_allowed=0
@@ -403,6 +459,6 @@ LC Stage-0 does not:
 
 ## Next Slices
 
-1. Add boot-adjacent planning only after read-only host and VM evidence exists.
-2. Add a future host adapter contract only after the read-only inventory receipt path exists.
-3. Add the first Seal-signed LC receipt path only after signing authority is implemented and gated.
+1. Add a future host adapter contract only after the read-only inventory receipt path exists.
+2. Add the first Seal-signed LC receipt path only after signing authority is implemented and gated.
+3. Add VM evidence capture metadata before any boot-adjacent implementation work.

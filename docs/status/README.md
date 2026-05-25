@@ -35,6 +35,7 @@ non-claims
 - [`MACOS_COMMIT_GATE_CONTRACT_STATUS.md`](MACOS_COMMIT_GATE_CONTRACT_STATUS.md) - macOS commit gate contract status for keeping future user-local managed app bundle writes closed until implementation and verification evidence exist.
 - [`MACOS_VERIFICATION_TRANSCRIPT_CONTRACT_STATUS.md`](MACOS_VERIFICATION_TRANSCRIPT_CONTRACT_STATUS.md) - macOS verification transcript contract status for exact post-write evidence required before any user-local install can be called verified.
 - [`MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT_STATUS.md) - macOS reset/uninstall dry-run contract status for managed-target removal order and preservation rules without deleting files.
+- [`MACOS_RESET_UNINSTALL_LIVE_TARGET_CLASSIFIER_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_TARGET_CLASSIFIER_STATUS.md) - macOS reset/uninstall live-target classifier status for read-only managed, unmanaged, and absent target reports.
 - [`MACOS_README_INSTALLER_USAGE_STATUS.md`](MACOS_README_INSTALLER_USAGE_STATUS.md) - macOS README installer usage status for documenting current Mac-specific no-effect installer commands, target paths, and closed commit-gate posture.
 - [`NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](NADIA_OFFLINE_AI_STAGE_0_STATUS.md) - Nadia offline AI Stage-0 foundation status for Panel installability, Console interoperability, and awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) - Nadia Stage-1 local context-engine status for no-network context-pack generation.
@@ -84,6 +85,7 @@ non-claims
 - [`SEAL_CAPABILITY_GATE_STATUS.md`](SEAL_CAPABILITY_GATE_STATUS.md) — Latticra Seal capability gate metadata status and public-entry checkpoint.
 - [`SEAL_VERIFICATION_RECEIPT_STATUS.md`](SEAL_VERIFICATION_RECEIPT_STATUS.md) — Latticra Seal verification receipt metadata status and public-entry checkpoint.
 - [`SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md`](SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md) — Latticra Seal crypto verify backend metadata status and public-entry checkpoint.
+- [`SEAL_ED25519_VERIFY_STATUS.md`](SEAL_ED25519_VERIFY_STATUS.md) — Latticra Seal Ed25519 verify-only result status and public-entry checkpoint.
 - [`SEAL_VERIFICATION_POLICY_STATUS.md`](SEAL_VERIFICATION_POLICY_STATUS.md) — Latticra Seal verification policy metadata status and public-entry checkpoint.
 - [`SEAL_KEY_PARSING_STATUS.md`](SEAL_KEY_PARSING_STATUS.md) — Latticra Seal key parsing metadata status and public-entry checkpoint.
 - [`SEAL_PUBLIC_KEY_PARSING_STATUS.md`](SEAL_PUBLIC_KEY_PARSING_STATUS.md) — Latticra Seal public-key parsing metadata status and public-entry checkpoint.
@@ -269,12 +271,16 @@ core_blocked_case_set_complete=1
 seal_crypto_verify_backend_status_present=1
 crypto_verify_state=unsupported
 cryptographic_verification_performed=0
+seal_ed25519_verify_status_present=1
+ed25519_crypto_verify_state=verified
+ed25519_cryptographic_verification_performed=1
+ed25519_authority_usable=0
 ```
 
 The careful current public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only crypto verify backend/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 The current next recommended Seal lane is:

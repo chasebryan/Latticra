@@ -27,6 +27,7 @@ macos_verification_transcript_contract_present=1
 verification_transcript_contract_present=1
 verification_transcript_evidence_present=0
 macos_reset_uninstall_dry_run_contract_present=1
+macos_reset_uninstall_live_target_classifier_present=1
 reset_uninstall_dry_run_evidence_present=0
 candidate_integration_required=1
 candidate_flow_ready_required=1
@@ -83,7 +84,7 @@ macos_commit_gate_contract: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-target classifier that reports present, managed, and unmanaged targets without deleting files.
+Add a macOS reset/uninstall dry-run planner that consumes live-target classifications without deleting files.
 ```
 
 ## Non-Claims

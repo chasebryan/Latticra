@@ -113,7 +113,7 @@ runtime_boundary_reports_lat_pipeline_evidence
 runtime_boundary_keeps_lat_lir_execution_future_gated
 ```
 
-The Lat pipeline evidence invariants also verify that parser line-comment count and first-comment span metadata are copied into runtime-boundary records and reports.
+The Lat pipeline evidence invariants also verify that parser line-comment count and first-comment span metadata are copied into runtime-boundary records and reports, including denied records for failed Lat pipeline metadata.
 
 ## Compatibility
 
@@ -134,6 +134,7 @@ unknown effect denial
 operator confirmation non-override behavior
 small-buffer behavior
 Lat pipeline line-comment evidence reporting
+denied Lat pipeline comment evidence recording
 ```
 
 ## Boundary

@@ -29,6 +29,7 @@ jobs:
   installer:
     name: Installer dry-run and Rust check
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Check out repository

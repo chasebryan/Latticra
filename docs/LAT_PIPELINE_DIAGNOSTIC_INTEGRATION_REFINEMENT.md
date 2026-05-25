@@ -77,7 +77,7 @@ model_failed
 lir_failed
 ```
 
-Comment metadata is copied from the Lat pipeline result. It records the parser line-comment count and first-comment span for diagnostic/report audit use only.
+Comment metadata is copied from the Lat pipeline result. It records the parser line-comment count and first-comment span for diagnostic/report audit use only, including parse-failure diagnostics where a line comment appears before an unsupported block-comment opener.
 
 First-declaration metadata is copied from the Lat-to-LIR diagnostic result. It records the first lowered declaration node index, declaration kind, name, source name, parse declaration index, first-clause index, clause count, and source declaration index for report/audit use only.
 
