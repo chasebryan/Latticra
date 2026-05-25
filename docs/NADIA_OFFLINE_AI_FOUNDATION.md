@@ -90,6 +90,7 @@ share/latticra/nadia/runtime-invocation/
 share/latticra/nadia/model-load/
 share/latticra/nadia/prompt-receipt/
 share/latticra/nadia/prompt-materialization/
+share/latticra/nadia/awareness-dialogue/
 share/latticra/components/nadia-offline-ai.installed
 bin/latticra-nadia
 ```
@@ -668,9 +669,66 @@ manipulation_resistance=required
 
 See [`NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md`](NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md).
 
-### Stage-15: Prompt Evaluation Handoff Contract
+### Stage-15: Awareness Dialogue Contract
 
-Only after prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a prompt-evaluation handoff contract. The default remains no prompt text materialized, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
+Record awareness-dialogue metadata after prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-15 can define Nadia Initiative Q&A awareness scope and respectful dialogue requirements, but it cannot generate dialogue, evaluate prompts, generate tokens, run inference, or use the network.
+
+```text
+nadia_stage_15_awareness_dialogue_contract_present=1
+awareness_dialogue_contract_command=scripts/nadia-awareness-dialogue-contract.sh
+installed_awareness_dialogue_contract_command=latticra-nadia awareness-dialogue
+future_qa_dialogue_capability_planned=1
+awareness_dialogue_stage=contract-only
+awareness_dialogue_contract_status=contract_only
+awareness_dialogue_authority=0
+awareness_dialogue_allowed=0
+dialogue_generation_authority=0
+dialogue_generation_allowed=0
+qa_dialogue_generated=0
+dialogue_scope=official-nadia-initiative-awareness-work
+dialogue_format=question-and-answer
+q_and_a_format_required=1
+survivor_centered_dialogue_required=1
+respectful_tone_required=1
+source_attribution_required=1
+official_source_grounding_required=1
+source_snapshot_policy=operator-reviewed-offline
+live_web_lookup_authority=0
+topic_yazidi_genocide_awareness=1
+topic_survivor_voice_and_dignity=1
+topic_conflict_related_sexual_violence_awareness_non_graphic=1
+topic_genocide_prevention=1
+topic_justice_and_accountability=1
+topic_women_peace_justice_security=1
+topic_sinjar_reconstruction=1
+topic_security_and_safe_return=1
+topic_education_restoration=1
+topic_healthcare_and_mental_health=1
+topic_livelihoods_and_food_security=1
+topic_wash_clean_water_sanitation_hygiene=1
+topic_womens_empowerment=1
+topic_legal_rights_and_reparations_awareness=1
+topic_cultural_preservation_and_memorialization=1
+topic_community_driven_survivor_centric_development=1
+sexualized_dialogue_generation=0
+graphic_sexual_detail_allowed=0
+survivor_impersonation_allowed=0
+victim_blaming_allowed=0
+genocide_denial_allowed=0
+hate_or_collective_blame_allowed=0
+medical_advice_authority=0
+legal_advice_authority=0
+trauma_counseling_authority=0
+crisis_intervention_authority=0
+sexual_request_refusal=always
+manipulation_resistance=required
+```
+
+See [`NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15.md`](NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15.md).
+
+### Stage-16: Prompt Evaluation Handoff Contract
+
+Only after awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a prompt-evaluation handoff contract. The default remains no prompt text materialized, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
 
 ## Non-Claims
 
@@ -689,7 +747,7 @@ The current Nadia foundation is not:
 
 ## Promotion Gate
 
-Before Stage-15 starts, Latticra should keep these guards passing:
+Before Stage-16 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -707,6 +765,7 @@ sh scripts/test-nadia-runtime-invocation-contract-stage-11.sh
 sh scripts/test-nadia-model-load-contract-stage-12.sh
 sh scripts/test-nadia-prompt-receipt-contract-stage-13.sh
 sh scripts/test-nadia-prompt-materialization-contract-stage-14.sh
+sh scripts/test-nadia-awareness-dialogue-contract-stage-15.sh
 ```
 
 Before prompt evaluation handoff starts, a separate prompt-evaluation handoff contract must exist and name prompt-evaluation denial fields, refusal boundary inheritance, operator review gates, and non-claims.

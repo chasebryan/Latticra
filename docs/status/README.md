@@ -37,6 +37,7 @@ non-claims
 - [`NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md`](NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md) - Nadia Stage-12 model-load contract status before model file opening, weight mapping, weight loading, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13_STATUS.md`](NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13_STATUS.md) - Nadia Stage-13 prompt-receipt contract status before prompt source opening, prompt text receipt, prompt materialization, prompt evaluation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md`](NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md) - Nadia Stage-14 prompt-materialization contract status before prompt buffer allocation, prompt text materialization, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15_STATUS.md`](NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15_STATUS.md) - Nadia Stage-15 awareness-dialogue contract status for Nadia Initiative Q&A scope before dialogue generation, prompt evaluation, token generation, inference, or tool execution.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
 - [`SEAL_CAPABILITY_GATE_STATUS.md`](SEAL_CAPABILITY_GATE_STATUS.md) — Latticra Seal capability gate metadata status and public-entry checkpoint.
 - [`SEAL_VERIFICATION_RECEIPT_STATUS.md`](SEAL_VERIFICATION_RECEIPT_STATUS.md) — Latticra Seal verification receipt metadata status and public-entry checkpoint.

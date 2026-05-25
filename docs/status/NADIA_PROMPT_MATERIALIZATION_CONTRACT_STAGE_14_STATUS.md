@@ -114,4 +114,4 @@ nadia_prompt_materialization_contract_stage_14: ok
 
 ## Next Stage
 
-Stage-15 should define a prompt-evaluation handoff contract only after prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, model-registry metadata, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.
+Stage-15 now defines an awareness-dialogue contract for official Nadia Initiative Q&A scope after prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, model-registry metadata, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.

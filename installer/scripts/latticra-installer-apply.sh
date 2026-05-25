@@ -341,7 +341,7 @@ public_name=Nadia
 interactive_name=Nadia
 implementation_name=Nadia Witness Foundation
 documentation_code_name=Nadia Witness Foundation
-stage=14-prompt-materialization-contract
+stage=15-awareness-dialogue-contract
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -539,6 +539,34 @@ prompt_buffer_written=0
 prompt_bytes_materialized=0
 prompt_tokens_created=0
 prompt_tokenized=0
+awareness_dialogue_contract_stage=15-awareness-dialogue-contract
+awareness_dialogue_contract_command=scripts/nadia-awareness-dialogue-contract.sh
+installed_awareness_dialogue_contract_command=latticra-nadia awareness-dialogue
+future_qa_dialogue_capability_planned=1
+awareness_dialogue_stage=contract-only
+awareness_dialogue_contract_status=contract_only
+awareness_dialogue_authority=0
+awareness_dialogue_allowed=0
+dialogue_generation_authority=0
+dialogue_generation_allowed=0
+qa_dialogue_generated=0
+dialogue_scope=official-nadia-initiative-awareness-work
+dialogue_format=question-and-answer
+q_and_a_format_required=1
+survivor_centered_dialogue_required=1
+official_source_grounding_required=1
+live_web_lookup_authority=0
+topic_yazidi_genocide_awareness=1
+topic_survivor_voice_and_dignity=1
+topic_conflict_related_sexual_violence_awareness_non_graphic=1
+topic_genocide_prevention=1
+topic_justice_and_accountability=1
+topic_sinjar_reconstruction=1
+topic_womens_empowerment=1
+sexualized_dialogue_generation=0
+graphic_sexual_detail_allowed=0
+victim_blaming_allowed=0
+genocide_denial_allowed=0
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -747,7 +775,8 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/runtime-invocation" \
     "$PREFIX/share/latticra/nadia/model-load" \
     "$PREFIX/share/latticra/nadia/prompt-receipt" \
-    "$PREFIX/share/latticra/nadia/prompt-materialization"
+    "$PREFIX/share/latticra/nadia/prompt-materialization" \
+    "$PREFIX/share/latticra/nadia/awareness-dialogue"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia Witness Foundation"
@@ -755,8 +784,8 @@ public_name = "Nadia"
 interactive_name = "Nadia"
 implementation_name = "Nadia Witness Foundation"
 documentation_code_name = "Nadia Witness Foundation"
-stage = "14-prompt-materialization-contract"
-mode = "offline-prompt-materialization-contract"
+stage = "15-awareness-dialogue-contract"
+mode = "offline-awareness-dialogue-contract"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -943,6 +972,34 @@ prompt_buffer_written = false
 prompt_bytes_materialized = false
 prompt_tokens_created = false
 prompt_tokenized = false
+awareness_dialogue_contract_stage = "15-awareness-dialogue-contract"
+awareness_dialogue_contract_command = "scripts/nadia-awareness-dialogue-contract.sh"
+installed_awareness_dialogue_contract_command = "latticra-nadia awareness-dialogue"
+future_qa_dialogue_capability_planned = true
+awareness_dialogue_stage = "contract-only"
+awareness_dialogue_contract_status = "contract_only"
+awareness_dialogue_authority = false
+awareness_dialogue_allowed = false
+dialogue_generation_authority = false
+dialogue_generation_allowed = false
+qa_dialogue_generated = false
+dialogue_scope = "official-nadia-initiative-awareness-work"
+dialogue_format = "question-and-answer"
+q_and_a_format_required = true
+survivor_centered_dialogue_required = true
+official_source_grounding_required = true
+live_web_lookup_authority = false
+topic_yazidi_genocide_awareness = true
+topic_survivor_voice_and_dignity = true
+topic_conflict_related_sexual_violence_awareness_non_graphic = true
+topic_genocide_prevention = true
+topic_justice_and_accountability = true
+topic_sinjar_reconstruction = true
+topic_womens_empowerment = true
+sexualized_dialogue_generation = false
+graphic_sexual_detail_allowed = false
+victim_blaming_allowed = false
+genocide_denial_allowed = false
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -963,11 +1020,11 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-14 prompt-materialization contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-15 awareness-dialogue contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract, local model-registry contract metadata when the operator runs latticra-nadia model-registry, inference-readiness contract metadata when the operator runs latticra-nadia inference-readiness, runtime-invocation contract metadata when the operator runs latticra-nadia runtime-invocation, model-load contract metadata when the operator runs latticra-nadia model-load, prompt-receipt contract metadata when the operator runs latticra-nadia prompt-receipt, and prompt-materialization contract metadata when the operator runs latticra-nadia prompt-materialization. It does not provide sexual user functionality, receive prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, materialize or evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn a runtime process, create a runtime session, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract, local model-registry contract metadata when the operator runs latticra-nadia model-registry, inference-readiness contract metadata when the operator runs latticra-nadia inference-readiness, runtime-invocation contract metadata when the operator runs latticra-nadia runtime-invocation, model-load contract metadata when the operator runs latticra-nadia model-load, prompt-receipt contract metadata when the operator runs latticra-nadia prompt-receipt, prompt-materialization contract metadata when the operator runs latticra-nadia prompt-materialization, and awareness-dialogue contract metadata when the operator runs latticra-nadia awareness-dialogue. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, materialize or evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn a runtime process, create a runtime session, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source.
 NADIAREADME
 fi
 
@@ -1119,8 +1176,8 @@ case "\${1:-status}" in
     echo "interactive_name=Nadia"
     echo "implementation_name=Nadia Witness Foundation"
     echo "documentation_code_name=Nadia Witness Foundation"
-    echo "stage=14-prompt-materialization-contract"
-    echo "mode=offline-prompt-materialization-contract"
+    echo "stage=15-awareness-dialogue-contract"
+    echo "mode=offline-awareness-dialogue-contract"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "context_packs=\$NADIA_DIR/context-packs"
@@ -1138,6 +1195,7 @@ case "\${1:-status}" in
     echo "model_load_contracts=\$NADIA_DIR/model-load"
     echo "prompt_receipt_contracts=\$NADIA_DIR/prompt-receipt"
     echo "prompt_materialization_contracts=\$NADIA_DIR/prompt-materialization"
+    echo "awareness_dialogue_contracts=\$NADIA_DIR/awareness-dialogue"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "prompt_plan_command=latticra-nadia prompt-plan"
@@ -1316,6 +1374,34 @@ case "\${1:-status}" in
     echo "prompt_bytes_materialized=0"
     echo "prompt_tokens_created=0"
     echo "prompt_tokenized=0"
+    echo "awareness_dialogue_contract_stage=15-awareness-dialogue-contract"
+    echo "awareness_dialogue_contract_command=latticra-nadia awareness-dialogue"
+    echo "installed_awareness_dialogue_contract_command=latticra-nadia awareness-dialogue"
+    echo "future_qa_dialogue_capability_planned=1"
+    echo "awareness_dialogue_stage=contract-only"
+    echo "awareness_dialogue_contract_status=contract_only"
+    echo "awareness_dialogue_authority=0"
+    echo "awareness_dialogue_allowed=0"
+    echo "dialogue_generation_authority=0"
+    echo "dialogue_generation_allowed=0"
+    echo "qa_dialogue_generated=0"
+    echo "dialogue_scope=official-nadia-initiative-awareness-work"
+    echo "dialogue_format=question-and-answer"
+    echo "q_and_a_format_required=1"
+    echo "survivor_centered_dialogue_required=1"
+    echo "official_source_grounding_required=1"
+    echo "live_web_lookup_authority=0"
+    echo "topic_yazidi_genocide_awareness=1"
+    echo "topic_survivor_voice_and_dignity=1"
+    echo "topic_conflict_related_sexual_violence_awareness_non_graphic=1"
+    echo "topic_genocide_prevention=1"
+    echo "topic_justice_and_accountability=1"
+    echo "topic_sinjar_reconstruction=1"
+    echo "topic_womens_empowerment=1"
+    echo "sexualized_dialogue_generation=0"
+    echo "graphic_sexual_detail_allowed=0"
+    echo "victim_blaming_allowed=0"
+    echo "genocide_denial_allowed=0"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -1535,11 +1621,25 @@ case "\${1:-status}" in
       --prompt-receipt "\$NADIA_DIR/prompt-receipt/latest-prompt-receipt-contract.txt" \
       --output "\$NADIA_DIR/prompt-materialization"
     ;;
+  awareness-dialogue|awareness|dialogue)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-awareness-dialogue-contract.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia awareness-dialogue contract script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --prompt-materialization "\$NADIA_DIR/prompt-materialization/latest-prompt-materialization-contract.txt" \
+      --output "\$NADIA_DIR/awareness-dialogue"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|path}" >&2
     exit 64
     ;;
 esac

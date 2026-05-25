@@ -412,7 +412,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=14-prompt-materialization-contract");
+    let _ = writeln!(out, "stage=15-awareness-dialogue-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -719,6 +719,49 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "prompt_bytes_materialized=0");
     let _ = writeln!(out, "prompt_tokens_created=0");
     let _ = writeln!(out, "prompt_tokenized=0");
+    let _ = writeln!(
+        out,
+        "awareness_dialogue_contract_stage=15-awareness-dialogue-contract"
+    );
+    let _ = writeln!(
+        out,
+        "awareness_dialogue_contract_command=scripts/nadia-awareness-dialogue-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_awareness_dialogue_contract_command=latticra-nadia awareness-dialogue"
+    );
+    let _ = writeln!(out, "future_qa_dialogue_capability_planned=1");
+    let _ = writeln!(out, "awareness_dialogue_stage=contract-only");
+    let _ = writeln!(out, "awareness_dialogue_contract_status=contract_only");
+    let _ = writeln!(out, "awareness_dialogue_authority=0");
+    let _ = writeln!(out, "awareness_dialogue_allowed=0");
+    let _ = writeln!(out, "dialogue_generation_authority=0");
+    let _ = writeln!(out, "dialogue_generation_allowed=0");
+    let _ = writeln!(out, "qa_dialogue_generated=0");
+    let _ = writeln!(
+        out,
+        "dialogue_scope=official-nadia-initiative-awareness-work"
+    );
+    let _ = writeln!(out, "dialogue_format=question-and-answer");
+    let _ = writeln!(out, "q_and_a_format_required=1");
+    let _ = writeln!(out, "survivor_centered_dialogue_required=1");
+    let _ = writeln!(out, "official_source_grounding_required=1");
+    let _ = writeln!(out, "live_web_lookup_authority=0");
+    let _ = writeln!(out, "topic_yazidi_genocide_awareness=1");
+    let _ = writeln!(out, "topic_survivor_voice_and_dignity=1");
+    let _ = writeln!(
+        out,
+        "topic_conflict_related_sexual_violence_awareness_non_graphic=1"
+    );
+    let _ = writeln!(out, "topic_genocide_prevention=1");
+    let _ = writeln!(out, "topic_justice_and_accountability=1");
+    let _ = writeln!(out, "topic_sinjar_reconstruction=1");
+    let _ = writeln!(out, "topic_womens_empowerment=1");
+    let _ = writeln!(out, "sexualized_dialogue_generation=0");
+    let _ = writeln!(out, "graphic_sexual_detail_allowed=0");
+    let _ = writeln!(out, "victim_blaming_allowed=0");
+    let _ = writeln!(out, "genocide_denial_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");
