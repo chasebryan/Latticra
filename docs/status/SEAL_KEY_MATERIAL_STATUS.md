@@ -16,12 +16,14 @@ It records that the implementation is bounded, deterministic, metadata-only, uns
 docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md
 docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
 docs/status/SEAL_KEY_MATERIAL_STATUS.md
+docs/LATTICRA_SEAL_PUBLIC_KEY_PARSING_CONTRACT.md
 include/latticra/seal_key_material.h
 src/seal_key_material.c
 tests/seal_key_material_invariants.c
 scripts/test-latticra-seal-key-material-contract.sh
 scripts/test-latticra-seal-key-material.sh
 scripts/test-latticra-seal-key-material-status.sh
+scripts/test-latticra-seal-public-key-parsing-contract.sh
 docs/LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md
 docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
 docs/status/SEAL_KEY_HANDLING_STATUS.md
@@ -46,6 +48,7 @@ seal_key_material_invariant_test_present=1
 seal_key_material_runner_present=1
 seal_key_material_metadata_present=1
 seal_key_material_status_present=1
+seal_public_key_parsing_contract_present=1
 seal_key_handling_contract_present=1
 seal_key_handling_implementation_present=1
 seal_key_handling_status_present=1
@@ -103,6 +106,7 @@ The implementation and status surface are covered by:
 sh scripts/test-latticra-seal-key-material-contract.sh
 sh scripts/test-latticra-seal-key-material.sh
 sh scripts/test-latticra-seal-key-material-status.sh
+sh scripts/test-latticra-seal-public-key-parsing-contract.sh
 ```
 
 The predecessor key-handling implementation remains covered by:
@@ -119,6 +123,7 @@ Expected output:
 seal key-material contract: ok
 seal key-material invariants: ok
 seal key-material status: ok
+seal public-key parsing contract: ok
 seal key-handling contract: ok
 seal key-handling invariants: ok
 seal key-handling status: ok
@@ -132,6 +137,6 @@ It does not add public-key parsing, key material loading, private-key handling, 
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is a public-key parsing boundary contract or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is public-key parsing metadata implementation or another narrow status/index alignment follow-up.
 
 That future slice must not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

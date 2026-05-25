@@ -1,15 +1,15 @@
-# Latticra Seal Key-Material Boundary Contract
+# Latticra Seal Public-Key Parsing Boundary Contract
 
-Status: Latticra Seal key-material boundary contract
-Scope: contract for a future metadata-only key-material surface after Seal key-handling metadata. This document does not implement public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store loading, revocation lookup, cryptographic signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
+Status: Latticra Seal public-key parsing boundary contract
+Scope: contract for a future metadata-only public-key parsing surface after Seal key-material metadata. This document does not implement public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store loading, revocation lookup, cryptographic signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
 
 ## Purpose
 
-This document defines the first Latticra Seal key-material boundary after ready key-handling metadata.
+This document defines the first Latticra Seal public-key parsing boundary after ready key-material metadata.
 
-The purpose of this layer is to decide whether a ready metadata-only key-handling record may be represented as eligible for a future metadata-only key-material request before any public-key parser, key material loader, private key, signer process, trust store, hardware key, runtime bridge, host authority, or signature generation exists.
+The purpose of this layer is to decide whether a ready metadata-only key-material record may be represented as eligible for a future metadata-only public-key parsing request before any public-key parser, key material loader, private key, signer process, trust store, hardware key, runtime bridge, host authority, or signature generation exists.
 
-The key-material surface is key-material path classification, not key material handling, not public-key parsing, not signing, not verification, and not trust-store behavior.
+The public-key parsing surface is public-key parsing path classification, not public-key parsing, not key material handling, not signing, not verification, and not trust-store behavior.
 
 This document does not parse public keys.
 
@@ -17,50 +17,51 @@ This document does not load key material.
 
 This document does not handle private keys.
 
-## Relationship to key handling
+## Relationship to key material
 
-Latticra Seal key-handling metadata already records a no-effect eligibility checkpoint for the future key path:
+Latticra Seal key-material metadata already records a no-effect eligibility checkpoint for the future key path:
 
 ```text
-docs/LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md
-docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
-docs/status/SEAL_KEY_HANDLING_STATUS.md
+docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md
+docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
+docs/status/SEAL_KEY_MATERIAL_STATUS.md
 ```
 
-This key-material boundary contract starts from that checkpoint. It does not replace key-handling metadata, parse public keys, load key material, handle private keys, route to runtime behavior, invoke a signer, perform signing, verify signatures, load trust stores, persist policy, or grant runtime authority.
+This public-key parsing boundary contract starts from that checkpoint. It does not replace key-material metadata, parse public keys, load key material, handle private keys, route to runtime behavior, invoke a signer, perform signing, verify signatures, load trust stores, persist policy, or grant runtime authority.
 
 ## Required predecessors
 
 This contract depends on:
 
 ```text
-docs/LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md
-docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
-docs/status/SEAL_KEY_HANDLING_STATUS.md
-include/latticra/seal_key_handling.h
-src/seal_key_handling.c
-tests/seal_key_handling_invariants.c
-scripts/test-latticra-seal-key-handling-contract.sh
-scripts/test-latticra-seal-key-handling.sh
-scripts/test-latticra-seal-key-handling-status.sh
+docs/LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md
+docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
+docs/status/SEAL_KEY_MATERIAL_STATUS.md
+include/latticra/seal_key_material.h
+src/seal_key_material.c
+tests/seal_key_material_invariants.c
+scripts/test-latticra-seal-key-material-contract.sh
+scripts/test-latticra-seal-key-material.sh
+scripts/test-latticra-seal-key-material-status.sh
 ```
 
-The key-handling metadata surface remains the source of readiness evidence for this key-material surface.
+The key-material metadata surface remains the source of readiness evidence for this public-key parsing surface.
 
-## Key-Material Boundary
+## Public-Key Parsing Boundary
 
 Allowed in the next implementation slice:
 
 ```text
-accept key-handling metadata
-require key_handling_ready=1
-require key_handling_state=key-handling-metadata-only
+accept key-material metadata
+require key_material_ready=1
+require key_material_state=key-material-metadata-only
 require requested_signature=Ed25519-development
 require requested_signing_authorization=metadata-only
 require requested_signer_handoff=metadata-only
 require requested_signer_invocation=metadata-only
 require requested_signing_operation=metadata-only
 require requested_key_handling=metadata-only
+require requested_key_material=metadata-only
 require signature_performed=0
 require verification_performed=0
 require signer_invoked=0
@@ -77,9 +78,9 @@ require runtime_authority_granted=0
 require host_read_performed=0
 require host_write_performed=0
 require network_performed=0
-accept requested_key_material=metadata-only
-classify metadata-only as key_material_state=key-material-metadata-only
-produce deterministic key-material metadata
+accept requested_public_key_parsing=metadata-only
+classify metadata-only as public_key_parsing_state=public-key-parsing-metadata-only
+produce deterministic public-key parsing metadata
 ```
 
 Forbidden in the next implementation slice:
@@ -108,18 +109,12 @@ object sealing
 kernel interaction
 ```
 
-## Initial Key-Material Policy
+## Initial Public-Key Parsing Policy
 
-Allowed key-handling state:
-
-```text
-key_handling_state=key-handling-metadata-only
-```
-
-Allowed requested key-handling label:
+Allowed key-material state:
 
 ```text
-metadata-only
+key_material_state=key-material-metadata-only
 ```
 
 Allowed requested key-material label:
@@ -128,35 +123,42 @@ Allowed requested key-material label:
 metadata-only
 ```
 
-These labels are metadata labels only. They do not mean public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust establishment, trust-store behavior, Ed25519 signing, Ed25519 verification, signer invocation, revocation lookup, runtime handoff, host behavior, network behavior, or capability enforcement exists in this path.
-
-Planned key-material states:
+Allowed requested public-key parsing label:
 
 ```text
-key_material_state=key-material-metadata-only
-key_material_state=denied-key-handling
-key_material_state=denied-signing-operation
-key_material_state=denied-signer-invocation
-key_material_state=denied-signer-handoff
-key_material_state=denied-signing-authorization
-key_material_state=denied-signature-algorithm
-key_material_state=denied-key-material
-key_material_state=denied-private-key
-key_material_state=denied-trust-store
-key_material_state=denied-runtime-authority
-key_material_state=denied-host-effect
-key_material_state=denied-network-effect
+metadata-only
+```
+
+These labels are metadata labels only. They do not mean public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust establishment, trust-store behavior, Ed25519 signing, Ed25519 verification, signer invocation, revocation lookup, runtime handoff, host behavior, network behavior, or capability enforcement exists in this path.
+
+Planned public-key parsing states:
+
+```text
+public_key_parsing_state=public-key-parsing-metadata-only
+public_key_parsing_state=denied-key-material
+public_key_parsing_state=denied-key-handling
+public_key_parsing_state=denied-signing-operation
+public_key_parsing_state=denied-signer-invocation
+public_key_parsing_state=denied-signer-handoff
+public_key_parsing_state=denied-signing-authorization
+public_key_parsing_state=denied-signature-algorithm
+public_key_parsing_state=denied-public-key-parsing
+public_key_parsing_state=denied-private-key
+public_key_parsing_state=denied-trust-store
+public_key_parsing_state=denied-runtime-authority
+public_key_parsing_state=denied-host-effect
+public_key_parsing_state=denied-network-effect
 ```
 
 The first implementation may set:
 
 ```text
-key_material_ready=1
+public_key_parsing_ready=1
 ```
 
-only for ready metadata-only key-handling metadata, the allowed development signature label, the metadata-only signing operation label, the metadata-only key-handling label, and the metadata-only key-material label.
+only for ready metadata-only key-material metadata, the allowed development signature label, the metadata-only key-handling label, the metadata-only key-material label, and the metadata-only public-key parsing label.
 
-Even when key_material_ready=1, these must remain zero:
+Even when public_key_parsing_ready=1, these must remain zero:
 
 ```text
 signature_performed=0
@@ -179,11 +181,12 @@ network_performed=0
 
 ## Planned Fields
 
-A future key-material record should be bounded and deterministic.
+A future public-key parsing record should be bounded and deterministic.
 
 Planned fields:
 
 ```text
+public_key_parsing_profile
 key_material_profile
 key_handling_profile
 signing_operation_profile
@@ -213,6 +216,7 @@ requested_signer_invocation
 requested_signing_operation
 requested_key_handling
 requested_key_material
+requested_public_key_parsing
 requested_scope
 signing_authorization_state
 signing_authorization_ready
@@ -226,6 +230,8 @@ key_handling_state
 key_handling_ready
 key_material_state
 key_material_ready
+public_key_parsing_state
+public_key_parsing_ready
 signature_performed
 verification_performed
 signer_invoked
@@ -249,15 +255,16 @@ status
 Expected values for an allowed first implementation result:
 
 ```text
+public_key_parsing_profile=latticra-seal-public-key-parsing/0.1
 key_material_profile=latticra-seal-key-material/0.1
 key_handling_profile=latticra-seal-key-handling/0.1
-signing_operation_profile=latticra-seal-signing-operation/0.1
 requested_key_handling=metadata-only
 requested_key_material=metadata-only
-key_handling_state=key-handling-metadata-only
-key_handling_ready=1
+requested_public_key_parsing=metadata-only
 key_material_state=key-material-metadata-only
 key_material_ready=1
+public_key_parsing_state=public-key-parsing-metadata-only
+public_key_parsing_ready=1
 signature_performed=0
 verification_performed=0
 signer_invoked=0
@@ -270,19 +277,22 @@ trust_store_loaded=0
 revocation_lookup_performed=0
 runtime_authority_granted=0
 mode=metadata-only
-status=key-material-metadata
+status=public-key-parsing-metadata
 ```
 
 ## Failure Behavior
 
-Future key-material handling must fail closed.
+Future public-key parsing metadata handling must fail closed.
 
 Required failure states:
 
 ```text
 null output -> invalid
-null key handling -> invalid
-invalid key handling -> denied-key-handling
+null key material -> invalid
+invalid key material -> denied-key-material
+key_material_ready=0 -> denied-key-material
+key_material_state not key-material-metadata-only -> denied-key-material
+requested_key_material not metadata-only -> denied-key-material
 key_handling_ready=0 -> denied-key-handling
 key_handling_state not key-handling-metadata-only -> denied-key-handling
 requested_key_handling not metadata-only -> denied-key-handling
@@ -298,9 +308,9 @@ requested_signer_handoff not metadata-only -> denied-signer-handoff
 requested_signing_authorization not metadata-only -> denied-signing-authorization
 missing requested signature -> denied-signature-algorithm
 unknown requested signature -> denied-signature-algorithm
-missing requested key material -> denied-key-material
-unknown requested key material -> denied-key-material
-public-key parsing requested or observed -> denied-key-material
+missing requested public key parsing -> denied-public-key-parsing
+unknown requested public key parsing -> denied-public-key-parsing
+public-key parsing requested or observed -> denied-public-key-parsing
 key material loading requested or observed -> denied-key-material
 private-key handling requested or observed -> denied-private-key
 key generation requested or observed -> denied-private-key
@@ -322,30 +332,20 @@ Failures must not sign, verify signatures, invoke a signer, parse public keys, l
 
 ## Promotion Rule
 
-This contract permitted only the implementation slice:
+This contract permits only the next implementation slice:
 
 ```text
-key-material metadata implementation
-```
-
-That implementation slice now exists as:
-
-```text
-docs/LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md
-include/latticra/seal_key_material.h
-src/seal_key_material.c
-tests/seal_key_material_invariants.c
-scripts/test-latticra-seal-key-material.sh
+public-key parsing metadata implementation
 ```
 
 It does not permit public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, cryptographic signing, signature verification, signer invocation behavior, runtime handoff execution, effect execution, capability enforcement, runtime authority, host behavior, network behavior, object sealing, or kernel behavior.
 
-After key-material metadata, its status/public-entry checkpoint, and the public-key parsing boundary contract exist and are guarded, the next valid planning slice is public-key parsing metadata implementation that still must not add public-key parsing without separate implementation, key-material, public-key, and guard contracts.
+After public-key parsing metadata exists and is guarded, the next valid planning slice is public-key parsing status/public-entry alignment or a future key parsing implementation contract that still must not add public-key parsing without separate implementation, public-key, key-material, and guard contracts.
 
 ## Validation
 
 This contract is validated by:
 
 ```sh
-sh scripts/test-latticra-seal-key-material-contract.sh
+sh scripts/test-latticra-seal-public-key-parsing-contract.sh
 ```
