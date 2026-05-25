@@ -43,6 +43,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md`](NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md) — Stage-11 runtime-invocation contract for Nadia before runtime process spawning, model session creation, model loading, token generation, inference, or tool execution.
 - [`NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md`](NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md) — Stage-12 model-load contract for Nadia before model file opening, weight mapping, weight loading, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md`](NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md) — Stage-13 prompt-receipt contract for Nadia before prompt source opening, prompt text receipt, prompt materialization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md`](NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md) — Stage-14 prompt-materialization contract for Nadia before prompt buffer allocation, prompt text materialization, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`SELF_UPDATE_MODEL.md`](SELF_UPDATE_MODEL.md) — staged signed update and rollback design.
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
@@ -71,6 +72,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md`](status/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md) — status record for Nadia Stage-11 runtime-invocation contract before runtime process spawning, model session creation, model loading, token generation, inference, or tool execution.
 - [`status/NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md`](status/NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md) — status record for Nadia Stage-12 model-load contract before model file opening, weight mapping, weight loading, token generation, inference, or tool execution.
 - [`status/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13_STATUS.md`](status/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13_STATUS.md) — status record for Nadia Stage-13 prompt-receipt contract before prompt source opening, prompt text receipt, prompt materialization, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md`](status/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md) — status record for Nadia Stage-14 prompt-materialization contract before prompt buffer allocation, prompt text materialization, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
@@ -268,6 +270,7 @@ Nadia inference readiness contract Stage-10 + guardrails
 Nadia runtime invocation contract Stage-11 + guardrails
 Nadia model load contract Stage-12 + guardrails
 Nadia prompt receipt contract Stage-13 + guardrails
+Nadia prompt materialization contract Stage-14 + guardrails
 Latticra Seal verification policy status/public-entry alignment + guardrails
 Latticra Seal key parsing status/public-entry alignment + guardrails
 Latticra Seal bounded no-effect key parsing metadata + invariants

@@ -104,4 +104,4 @@ nadia_prompt_receipt_contract_stage_13: ok
 
 ## Next Stage
 
-Stage-14 should define a prompt-materialization contract only after prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, model-registry metadata, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.
+Stage-14 now defines a prompt-materialization contract after prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, model-registry metadata, protective-safety refusal behavior, and tool-denial behavior are all present and explicitly non-executing.

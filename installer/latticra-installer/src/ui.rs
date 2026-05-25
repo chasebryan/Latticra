@@ -290,7 +290,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt",
+                    "panel: help, status, plan, save, dry-run, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -346,7 +346,10 @@ impl LatticraInstallerApp {
                 self.push_console("model_load_contract_stage=12-model-load-contract");
                 self.push_console("prompt_receipt_contract_stage=13-prompt-receipt-contract");
                 self.push_console(
-                    "stage=13 prompt-receipt-contract; prompt_received=0 inference_performed=0",
+                    "prompt_materialization_contract_stage=14-prompt-materialization-contract",
+                );
+                self.push_console(
+                    "stage=14 prompt-materialization-contract; prompt_materialized=0 inference_performed=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -409,6 +412,24 @@ impl LatticraInstallerApp {
                 );
                 self.push_console(
                     "prompt_text_received=0 prompt_text_materialized=0 prompt_evaluated=0",
+                );
+            }
+            ["nadia", "prompt-materialization"]
+            | ["nadia", "materialization"]
+            | ["nadia", "prompt-materialization-contract"] => {
+                self.push_console(
+                    "nadia_prompt_materialization=stage-14-prompt-materialization-contract",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia prompt-materialization");
+                self.push_console(
+                    "prompt_materialization_contract_status=contract_only prompt_materialized=0",
+                );
+                self.push_console(
+                    "prompt_buffer_allocation_authority=0 prompt_buffer_write_authority=0 prompt_tokenization_authority=0",
+                );
+                self.push_console(
+                    "prompt_buffer_allocated=0 prompt_tokenized=0 inference_performed=0",
                 );
             }
             ["nadia", "inference-readiness"]
@@ -827,7 +848,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-13 prompt-receipt contract with metadata-only Console surfaces.",
+            "Stage-14 prompt-materialization contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,

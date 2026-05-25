@@ -412,7 +412,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=13-prompt-receipt-contract");
+    let _ = writeln!(out, "stage=14-prompt-materialization-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -687,6 +687,38 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "prompt_content_stored=0");
     let _ = writeln!(out, "prompt_hash_computed=0");
     let _ = writeln!(out, "prompt_classified=0");
+    let _ = writeln!(
+        out,
+        "prompt_materialization_contract_stage=14-prompt-materialization-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_materialization_contract_command=scripts/nadia-prompt-materialization-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_materialization_contract_command=latticra-nadia prompt-materialization"
+    );
+    let _ = writeln!(out, "prompt_materialization_stage=contract-only");
+    let _ = writeln!(out, "prompt_materialization_contract_status=contract_only");
+    let _ = writeln!(out, "prompt_materialization_authority=0");
+    let _ = writeln!(out, "prompt_materialization_allowed=0");
+    let _ = writeln!(out, "prompt_materialized=0");
+    let _ = writeln!(out, "materialization_decision=blocked_contract_only");
+    let _ = writeln!(out, "materialization_evidence_present=1");
+    let _ = writeln!(out, "requires_prompt_receipt_contract=1");
+    let _ = writeln!(out, "requires_prompt_buffer_boundary=1");
+    let _ = writeln!(out, "requires_future_prompt_evaluation_handoff_contract=1");
+    let _ = writeln!(out, "prompt_materialization_promotion_allowed=0");
+    let _ = writeln!(out, "prompt_buffer_allocation_authority=0");
+    let _ = writeln!(out, "prompt_buffer_write_authority=0");
+    let _ = writeln!(out, "prompt_tokenization_authority=0");
+    let _ = writeln!(out, "prompt_materialization_performed=0");
+    let _ = writeln!(out, "prompt_buffer_allocated=0");
+    let _ = writeln!(out, "prompt_buffer_written=0");
+    let _ = writeln!(out, "prompt_bytes_materialized=0");
+    let _ = writeln!(out, "prompt_tokens_created=0");
+    let _ = writeln!(out, "prompt_tokenized=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

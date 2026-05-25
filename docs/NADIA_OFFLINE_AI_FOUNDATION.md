@@ -89,6 +89,7 @@ share/latticra/nadia/productivity-ledger/
 share/latticra/nadia/runtime-invocation/
 share/latticra/nadia/model-load/
 share/latticra/nadia/prompt-receipt/
+share/latticra/nadia/prompt-materialization/
 share/latticra/components/nadia-offline-ai.installed
 bin/latticra-nadia
 ```
@@ -602,7 +603,74 @@ See [`NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md`](NADIA_PROMPT_RECEIPT_CONTRACT_
 
 ### Stage-14: Prompt Materialization Contract
 
-Only after prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a prompt-materialization contract. The default remains no prompt text materialized, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
+Record prompt-materialization metadata after prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-14 can verify prerequisite evidence and record a blocked prompt-materialization decision, but it cannot allocate prompt buffers, materialize prompt text, tokenize prompts, evaluate prompts, generate tokens, or run inference.
+
+```text
+nadia_stage_14_prompt_materialization_contract_present=1
+prompt_materialization_contract_command=scripts/nadia-prompt-materialization-contract.sh
+installed_prompt_materialization_contract_command=latticra-nadia prompt-materialization
+requires_prompt_receipt_contract=1
+prompt_materialization_stage=contract-only
+prompt_materialization_contract_status=contract_only
+prompt_materialization_authority=0
+prompt_materialization_allowed=0
+prompt_materialized=0
+prompt_text_materialized=0
+materialization_decision=blocked_contract_only
+materialization_evidence_present=1
+requires_model_load_contract=1
+requires_runtime_invocation_contract=1
+requires_inference_readiness_contract=1
+requires_model_registry_contract=1
+requires_prompt_contract=1
+requires_runtime_profile=1
+requires_protective_safety_boundary=1
+requires_tool_preflight=1
+requires_operator_review=1
+requires_prompt_source_boundary=1
+requires_prompt_buffer_boundary=1
+requires_future_prompt_evaluation_handoff_contract=1
+prompt_materialization_promotion_allowed=0
+prompt_source_open_authority=0
+prompt_source_read_authority=0
+prompt_text_materialization_authority=0
+prompt_buffer_allocation_authority=0
+prompt_buffer_write_authority=0
+prompt_tokenization_authority=0
+prompt_source_opened=0
+prompt_source_read=0
+prompt_bytes_read=0
+prompt_text_received=0
+prompt_materialization_performed=0
+prompt_buffer_allocated=0
+prompt_buffer_written=0
+prompt_bytes_materialized=0
+prompt_tokens_created=0
+prompt_tokenized=0
+prompt_content_stored=0
+prompt_hash_computed=0
+prompt_classified=0
+prompt_evaluation_authority=0
+prompt_evaluated=0
+model_loaded=0
+model_weights_loaded=0
+token_generation_authority=0
+token_generation_performed=0
+inference_authority=0
+inference_performed=0
+tool_execution_authority=0
+source_mutation_authority=0
+network_authority=0
+sexual_content_generation=0
+sexual_request_refusal=always
+manipulation_resistance=required
+```
+
+See [`NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md`](NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md).
+
+### Stage-15: Prompt Evaluation Handoff Contract
+
+Only after prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a prompt-evaluation handoff contract. The default remains no prompt text materialized, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
 
 ## Non-Claims
 
@@ -621,7 +689,7 @@ The current Nadia foundation is not:
 
 ## Promotion Gate
 
-Before Stage-14 starts, Latticra should keep these guards passing:
+Before Stage-15 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -638,6 +706,7 @@ sh scripts/test-nadia-inference-readiness-contract-stage-10.sh
 sh scripts/test-nadia-runtime-invocation-contract-stage-11.sh
 sh scripts/test-nadia-model-load-contract-stage-12.sh
 sh scripts/test-nadia-prompt-receipt-contract-stage-13.sh
+sh scripts/test-nadia-prompt-materialization-contract-stage-14.sh
 ```
 
-Before prompt materialization starts, a separate prompt-materialization contract must exist and name prompt-text materialization denial fields, refusal boundary inheritance, operator review gates, and non-claims.
+Before prompt evaluation handoff starts, a separate prompt-evaluation handoff contract must exist and name prompt-evaluation denial fields, refusal boundary inheritance, operator review gates, and non-claims.
