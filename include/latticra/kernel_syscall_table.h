@@ -27,6 +27,7 @@ typedef struct {
     int implemented;
     int dispatch_allowed;
     int host_effect_allowed;
+    int network_allowed;
     int no_effect;
     unsigned int evidence_level;
 } latticra_kernel_syscall_table_entry_t;

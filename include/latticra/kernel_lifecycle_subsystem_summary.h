@@ -63,7 +63,11 @@ typedef struct {
     int device_open_allowed;
     int device_read_allowed;
     int device_write_allowed;
+    int driver_probe_allowed;
+    int driver_load_allowed;
     int driver_bind_allowed;
+    int interrupt_allowed;
+    int dma_allowed;
     int hardware_effect_allowed;
     int no_external_effect_chain;
     unsigned int evidence_level;

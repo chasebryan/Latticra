@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage7.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -107,40 +110,48 @@ require_contains 'nadia tool' "$ui_model"
 require_contains 'tool-preflights' "$components_manifest"
 require_contains 'nadia-tool' "$makefile"
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage7-tool-test"
-context_out="${TMPDIR:-/tmp}/latticra-nadia-stage7-context-test"
-runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage7-runtime-test"
-plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage7-plan-test"
-mode_out="${TMPDIR:-/tmp}/latticra-nadia-stage7-mode-test"
-ledger_out="${TMPDIR:-/tmp}/latticra-nadia-stage7-ledger-test"
-safety_out="${TMPDIR:-/tmp}/latticra-nadia-stage7-safety-test"
-rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out"
+out="$tmpdir/latticra-nadia-stage7-tool-test"
+context_out="$tmpdir/latticra-nadia-stage7-context-test"
+runtime_out="$tmpdir/latticra-nadia-stage7-runtime-test"
+plan_out="$tmpdir/latticra-nadia-stage7-plan-test"
+mode_out="$tmpdir/latticra-nadia-stage7-mode-test"
+ledger_out="$tmpdir/latticra-nadia-stage7-ledger-test"
+safety_out="$tmpdir/latticra-nadia-stage7-safety-test"
+context_stdout="$tmpdir/latticra-nadia-stage7-context-test.out"
+runtime_stdout="$tmpdir/latticra-nadia-stage7-runtime-test.out"
+plan_stdout="$tmpdir/latticra-nadia-stage7-plan-test.out"
+mode_stdout="$tmpdir/latticra-nadia-stage7-mode-test.out"
+ledger_stdout="$tmpdir/latticra-nadia-stage7-ledger-test.out"
+safety_stdout="$tmpdir/latticra-nadia-stage7-safety-test.out"
+tool_stdout="$tmpdir/latticra-nadia-stage7-tool-test.out"
+reject_stdout="$tmpdir/latticra-nadia-stage7-reject-test.out"
+reject_stderr="$tmpdir/latticra-nadia-stage7-reject-test.err"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out"
-NADIA_CONTEXT_PACK_TIMESTAMP=stage7-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage7-context-test.out
-NADIA_RUNTIME_PROFILE_TIMESTAMP=stage7-test sh scripts/nadia-runtime-profile.sh --output "$runtime_out" >/tmp/latticra-nadia-stage7-runtime-test.out
+NADIA_CONTEXT_PACK_TIMESTAMP=stage7-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >"$context_stdout"
+NADIA_RUNTIME_PROFILE_TIMESTAMP=stage7-test sh scripts/nadia-runtime-profile.sh --output "$runtime_out" >"$runtime_stdout"
 NADIA_PROMPT_PLAN_TIMESTAMP=stage7-test sh scripts/nadia-prompt-plan.sh \
   --context-pack "$context_out/nadia-context-pack-stage7-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage7-test.txt" \
   --task "guarded tool authority planning" \
-  --output "$plan_out" >/tmp/latticra-nadia-stage7-plan-test.out
+  --output "$plan_out" >"$plan_stdout"
 NADIA_MODE_VALIDATION_TIMESTAMP=stage7-test sh scripts/nadia-mode-validate.sh \
   --prompt-plan "$plan_out/nadia-prompt-plan-stage7-test.txt" \
   --mode systems-engineering \
-  --output "$mode_out" >/tmp/latticra-nadia-stage7-mode-test.out
+  --output "$mode_out" >"$mode_stdout"
 NADIA_PRODUCTIVITY_LEDGER_TIMESTAMP=stage7-test sh scripts/nadia-productivity-ledger.sh \
   --mode-validation "$mode_out/nadia-mode-validation-stage7-test.txt" \
   --outcome "accepted tool preflight boundary" \
   --recommendation "keep report-only preflight" \
-  --output "$ledger_out" >/tmp/latticra-nadia-stage7-ledger-test.out
+  --output "$ledger_out" >"$ledger_stdout"
 NADIA_PROTECTIVE_SAFETY_TIMESTAMP=stage7-test sh scripts/nadia-protective-safety-boundary.sh \
   --productivity-entry "$ledger_out/nadia-productivity-entry-stage7-test.txt" \
   --request-class software-development \
-  --output "$safety_out" >/tmp/latticra-nadia-stage7-safety-test.out
+  --output "$safety_out" >"$safety_stdout"
 NADIA_TOOL_PREFLIGHT_TIMESTAMP=stage7-test sh "$tool_script" \
   --protective-safety "$safety_out/nadia-protective-safety-stage7-test.txt" \
   --tool-class local-evidence-review \
   --action "review generated receipts" \
-  --output "$out" >/tmp/latticra-nadia-stage7-tool-test.out
+  --output "$out" >"$tool_stdout"
 report="$out/nadia-tool-preflight-stage7-test.txt"
 
 require_file "$report"
@@ -174,10 +185,10 @@ if NADIA_TOOL_PREFLIGHT_TIMESTAMP=stage7-reject sh "$tool_script" \
   --protective-safety "$safety_out/nadia-protective-safety-stage7-test.txt" \
   --tool-class shell-exec \
   --action "run shell command" \
-  --output "$out" >/tmp/latticra-nadia-stage7-reject-test.out 2>/tmp/latticra-nadia-stage7-reject-test.err; then
+  --output "$out" >"$reject_stdout" 2>"$reject_stderr"; then
   printf 'nadia guarded tool authority stage 7: shell tool class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Stage-7 report-only preflight boundary' /tmp/latticra-nadia-stage7-reject-test.err
+require_contains 'outside Stage-7 report-only preflight boundary' "$reject_stderr"
 
 printf 'nadia_guarded_tool_authority_stage_7: ok\n'

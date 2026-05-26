@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage12.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -121,52 +124,65 @@ require_contains 'nadia model-load' "$ui_model"
 require_contains 'model-load' "$components_manifest"
 require_contains 'nadia-model-load' "$makefile"
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage12-load-test"
-context_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-context-test"
-runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-runtime-test"
-plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-plan-test"
-mode_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-mode-test"
-ledger_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-ledger-test"
-safety_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-safety-test"
-tool_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-tool-test"
-contract_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-contract-test"
-registry_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-registry-test"
-readiness_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-readiness-test"
-invocation_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-invocation-test"
-rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out" "$registry_out" "$readiness_out" "$invocation_out"
+out="$tmpdir/latticra-nadia-stage12-load-test"
+context_out="$tmpdir/latticra-nadia-stage12-context-test"
+runtime_out="$tmpdir/latticra-nadia-stage12-runtime-test"
+plan_out="$tmpdir/latticra-nadia-stage12-plan-test"
+mode_out="$tmpdir/latticra-nadia-stage12-mode-test"
+ledger_out="$tmpdir/latticra-nadia-stage12-ledger-test"
+safety_out="$tmpdir/latticra-nadia-stage12-safety-test"
+tool_out="$tmpdir/latticra-nadia-stage12-tool-test"
+contract_out="$tmpdir/latticra-nadia-stage12-contract-test"
+registry_out="$tmpdir/latticra-nadia-stage12-registry-test"
+readiness_out="$tmpdir/latticra-nadia-stage12-readiness-test"
+invocation_out="$tmpdir/latticra-nadia-stage12-invocation-test"
+context_stdout="$tmpdir/latticra-nadia-stage12-context-test.out"
+runtime_stdout="$tmpdir/latticra-nadia-stage12-runtime-test.out"
+plan_stdout="$tmpdir/latticra-nadia-stage12-plan-test.out"
+mode_stdout="$tmpdir/latticra-nadia-stage12-mode-test.out"
+ledger_stdout="$tmpdir/latticra-nadia-stage12-ledger-test.out"
+safety_stdout="$tmpdir/latticra-nadia-stage12-safety-test.out"
+tool_stdout="$tmpdir/latticra-nadia-stage12-tool-test.out"
+contract_stdout="$tmpdir/latticra-nadia-stage12-contract-test.out"
+registry_stdout="$tmpdir/latticra-nadia-stage12-registry-test.out"
+readiness_stdout="$tmpdir/latticra-nadia-stage12-readiness-test.out"
+invocation_stdout="$tmpdir/latticra-nadia-stage12-invocation-test.out"
+load_stdout="$tmpdir/latticra-nadia-stage12-load-test.out"
+reject_stdout="$tmpdir/latticra-nadia-stage12-reject-test.out"
+reject_stderr="$tmpdir/latticra-nadia-stage12-reject-test.err"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out" "$registry_out" "$readiness_out" "$invocation_out"
-NADIA_CONTEXT_PACK_TIMESTAMP=stage12-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage12-context-test.out
+NADIA_CONTEXT_PACK_TIMESTAMP=stage12-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >"$context_stdout"
 NADIA_RUNTIME_PROFILE_TIMESTAMP=stage12-test sh scripts/nadia-runtime-profile.sh \
   --context-tokens 8192 \
   --memory-mib 16384 \
-  --output "$runtime_out" >/tmp/latticra-nadia-stage12-runtime-test.out
+  --output "$runtime_out" >"$runtime_stdout"
 NADIA_PROMPT_PLAN_TIMESTAMP=stage12-test sh scripts/nadia-prompt-plan.sh \
   --context-pack "$context_out/nadia-context-pack-stage12-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage12-test.txt" \
   --task "model load contract planning" \
-  --output "$plan_out" >/tmp/latticra-nadia-stage12-plan-test.out
+  --output "$plan_out" >"$plan_stdout"
 NADIA_MODE_VALIDATION_TIMESTAMP=stage12-test sh scripts/nadia-mode-validate.sh \
   --prompt-plan "$plan_out/nadia-prompt-plan-stage12-test.txt" \
   --mode ai-development \
-  --output "$mode_out" >/tmp/latticra-nadia-stage12-mode-test.out
+  --output "$mode_out" >"$mode_stdout"
 NADIA_PRODUCTIVITY_LEDGER_TIMESTAMP=stage12-test sh scripts/nadia-productivity-ledger.sh \
   --mode-validation "$mode_out/nadia-mode-validation-stage12-test.txt" \
   --outcome "accepted model load boundary" \
   --recommendation "keep model load contract-only" \
-  --output "$ledger_out" >/tmp/latticra-nadia-stage12-ledger-test.out
+  --output "$ledger_out" >"$ledger_stdout"
 NADIA_PROTECTIVE_SAFETY_TIMESTAMP=stage12-test sh scripts/nadia-protective-safety-boundary.sh \
   --productivity-entry "$ledger_out/nadia-productivity-entry-stage12-test.txt" \
   --request-class software-development \
-  --output "$safety_out" >/tmp/latticra-nadia-stage12-safety-test.out
+  --output "$safety_out" >"$safety_stdout"
 NADIA_TOOL_PREFLIGHT_TIMESTAMP=stage12-test sh scripts/nadia-tool-authority-preflight.sh \
   --protective-safety "$safety_out/nadia-protective-safety-stage12-test.txt" \
   --tool-class metadata-read \
   --action "prepare model load contract evidence" \
-  --output "$tool_out" >/tmp/latticra-nadia-stage12-tool-test.out
+  --output "$tool_out" >"$tool_stdout"
 NADIA_PROMPT_CONTRACT_TIMESTAMP=stage12-test sh scripts/nadia-prompt-evaluation-contract.sh \
   --tool-preflight "$tool_out/nadia-tool-preflight-stage12-test.txt" \
   --request-class software-development \
-  --output "$contract_out" >/tmp/latticra-nadia-stage12-contract-test.out
+  --output "$contract_out" >"$contract_stdout"
 NADIA_MODEL_REGISTRY_TIMESTAMP=stage12-test sh scripts/nadia-local-model-registry-contract.sh \
   --prompt-contract "$contract_out/nadia-prompt-contract-stage12-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage12-test.txt" \
@@ -174,19 +190,19 @@ NADIA_MODEL_REGISTRY_TIMESTAMP=stage12-test sh scripts/nadia-local-model-registr
   --quantization q4_k_m \
   --source operator-provided-local \
   --license operator-review-required \
-  --output "$registry_out" >/tmp/latticra-nadia-stage12-registry-test.out
+  --output "$registry_out" >"$registry_stdout"
 NADIA_INFERENCE_READINESS_TIMESTAMP=stage12-test sh scripts/nadia-inference-readiness-contract.sh \
   --model-registry "$registry_out/nadia-model-registry-contract-stage12-test.txt" \
   --request-class software-development \
-  --output "$readiness_out" >/tmp/latticra-nadia-stage12-readiness-test.out
+  --output "$readiness_out" >"$readiness_stdout"
 NADIA_RUNTIME_INVOCATION_TIMESTAMP=stage12-test sh scripts/nadia-runtime-invocation-contract.sh \
   --inference-readiness "$readiness_out/nadia-inference-readiness-contract-stage12-test.txt" \
   --request-class software-development \
-  --output "$invocation_out" >/tmp/latticra-nadia-stage12-invocation-test.out
+  --output "$invocation_out" >"$invocation_stdout"
 NADIA_MODEL_LOAD_TIMESTAMP=stage12-test sh "$model_load_script" \
   --runtime-invocation "$invocation_out/nadia-runtime-invocation-contract-stage12-test.txt" \
   --request-class software-development \
-  --output "$out" >/tmp/latticra-nadia-stage12-load-test.out
+  --output "$out" >"$load_stdout"
 load="$out/nadia-model-load-contract-stage12-test.txt"
 
 require_file "$load"
@@ -245,10 +261,10 @@ require_contains 'network_authority=0' "$load"
 if NADIA_MODEL_LOAD_TIMESTAMP=stage12-reject sh "$model_load_script" \
   --runtime-invocation "$invocation_out/nadia-runtime-invocation-contract-stage12-test.txt" \
   --request-class sexual \
-  --output "$out" >/tmp/latticra-nadia-stage12-reject-test.out 2>/tmp/latticra-nadia-stage12-reject-test.err; then
+  --output "$out" >"$reject_stdout" 2>"$reject_stderr"; then
   printf 'nadia model load contract stage 12: sexual request class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia model-load boundary' /tmp/latticra-nadia-stage12-reject-test.err
+require_contains 'outside Nadia model-load boundary' "$reject_stderr"
 
 printf 'nadia_model_load_contract_stage_12: ok\n'

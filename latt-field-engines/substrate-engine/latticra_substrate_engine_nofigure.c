@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <string.h>
 #include <math.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 #define W 1280
 #define H 720
@@ -14,6 +16,78 @@
 #define SCENES 8
 
 static unsigned char *fb;
+
+typedef struct {
+    FILE *stream;
+    pid_t pid;
+} FfmpegPipe;
+
+static int start_ffmpeg_pipe(FfmpegPipe *state, const char *out) {
+    char size_arg[32];
+    char fps_arg[16];
+    int fds[2];
+
+    snprintf(size_arg, sizeof(size_arg), "%dx%d", W, H);
+    snprintf(fps_arg, sizeof(fps_arg), "%d", FPS);
+
+    if (pipe(fds) != 0) {
+        return -1;
+    }
+
+    pid_t pid = fork();
+    if (pid < 0) {
+        close(fds[0]);
+        close(fds[1]);
+        return -1;
+    }
+
+    if (pid == 0) {
+        close(fds[1]);
+        if (dup2(fds[0], STDIN_FILENO) < 0) {
+            _exit(127);
+        }
+        close(fds[0]);
+        execlp("ffmpeg", "ffmpeg",
+            "-y", "-f", "rawvideo", "-pix_fmt", "rgb24",
+            "-s", size_arg, "-r", fps_arg, "-i", "-",
+            "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
+            "-shortest", "-c:v", "libx264", "-profile:v", "high", "-level:v", "4.0",
+            "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p",
+            "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", out,
+            (char *)NULL);
+        _exit(127);
+    }
+
+    close(fds[0]);
+    state->stream = fdopen(fds[1], "w");
+    state->pid = pid;
+    if (!state->stream) {
+        close(fds[1]);
+        (void)waitpid(pid, NULL, 0);
+        return -1;
+    }
+
+    return 0;
+}
+
+static int finish_ffmpeg_pipe(FfmpegPipe *state) {
+    int status = 0;
+    int close_rc = fclose(state->stream);
+
+    if (waitpid(state->pid, &status, 0) < 0) {
+        return -1;
+    }
+    if (close_rc != 0) {
+        return -1;
+    }
+    if (WIFEXITED(status)) {
+        return WEXITSTATUS(status);
+    }
+    if (WIFSIGNALED(status)) {
+        return 128 + WTERMSIG(status);
+    }
+    return -1;
+}
 
 typedef struct { float r, g, b; } Color;
 static const Color C_RED    = {255,  35,  65};
@@ -102,30 +176,6 @@ static void disc_add(float cx, float cy, float rad, Color c, float power) {
                 f = f*f;
                 add_px(x, y, c.r, c.g, c.b, power * f);
             }
-        }
-    }
-}
-
-static void disc_blend(float cx, float cy, float rad, Color c, float alpha) {
-    int x0 = (int)floorf(cx - rad), x1 = (int)ceilf(cx + rad);
-    int y0 = (int)floorf(cy - rad), y1 = (int)ceilf(cy + rad);
-    float rr = rad * rad;
-    for (int y = y0; y <= y1; ++y) {
-        for (int x = x0; x <= x1; ++x) {
-            float dx = x + 0.5f - cx, dy = y + 0.5f - cy;
-            float d2 = dx*dx + dy*dy;
-            if (d2 <= rr) blend_px(x, y, c.r, c.g, c.b, alpha);
-        }
-    }
-}
-
-static void ellipse_blend(float cx, float cy, float rx, float ry, Color c, float alpha) {
-    int x0 = (int)floorf(cx - rx), x1 = (int)ceilf(cx + rx);
-    int y0 = (int)floorf(cy - ry), y1 = (int)ceilf(cy + ry);
-    for (int y = y0; y <= y1; ++y) {
-        for (int x = x0; x <= x1; ++x) {
-            float dx = (x + 0.5f - cx) / rx, dy = (y + 0.5f - cy) / ry;
-            if (dx*dx + dy*dy <= 1.0f) blend_px(x, y, c.r, c.g, c.b, alpha);
         }
     }
 }
@@ -646,17 +696,8 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    char cmd[2048];
-    snprintf(cmd, sizeof(cmd),
-        "ffmpeg -y -f rawvideo -pix_fmt rgb24 -s %dx%d -r %d -i - "
-        "-f lavfi -i anullsrc=channel_layout=stereo:sample_rate=44100 "
-        "-shortest -c:v libx264 -profile:v high -level:v 4.0 "
-        "-preset veryfast -crf 20 -pix_fmt yuv420p "
-        "-c:a aac -b:a 128k -movflags +faststart \"%s\"",
-        W, H, FPS, out);
-
-    FILE *pipe = popen(cmd, "w");
-    if (!pipe) {
+    FfmpegPipe ffmpeg = {0};
+    if (start_ffmpeg_pipe(&ffmpeg, out) != 0) {
         fprintf(stderr, "Could not open ffmpeg pipe. Is ffmpeg installed?\n");
         free(fb);
         return 1;
@@ -664,7 +705,7 @@ int main(int argc, char **argv) {
 
     for (int f = 0; f < total; ++f) {
         render_frame(f, total, seconds);
-        size_t wrote = fwrite(fb, 1, (size_t)W * H * 3, pipe);
+        size_t wrote = fwrite(fb, 1, (size_t)W * H * 3, ffmpeg.stream);
         if (wrote != (size_t)W * H * 3) {
             fprintf(stderr, "Short write to ffmpeg.\n");
             break;
@@ -672,7 +713,7 @@ int main(int argc, char **argv) {
         if (f % FPS == 0) fprintf(stderr, "rendering %02d/%02d seconds\r", f/FPS, seconds);
     }
     fprintf(stderr, "\nfinalizing mp4...\n");
-    int rc = pclose(pipe);
+    int rc = finish_ffmpeg_pipe(&ffmpeg);
     free(fb);
     if (rc != 0) {
         fprintf(stderr, "ffmpeg exited with code %d. If libx264 is missing, install full ffmpeg or change -c:v libx264 to -c:v mpeg4 in the command string.\n", rc);

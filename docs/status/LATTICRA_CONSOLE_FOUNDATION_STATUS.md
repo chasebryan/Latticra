@@ -2,7 +2,7 @@
 
 Status: active Stage-0 foundation
 Date: 2026-05-26
-Scope: LC C report surface, Panel installability, local-prefix metadata, host-adapter contract, Seal receipt-request contract, receipt payload schema, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
+Scope: LC C report surface, Panel installability, local-prefix metadata, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
 
 ## Current Evidence
 
@@ -42,6 +42,18 @@ receipt_payload_schema_status=metadata-only-schema
 receipt_payload_schema_present=1
 receipt_payload_schema_command=lc receipt-payload
 receipt_payload_schema_profile=lc-receipt-payload-schema-v0
+receipt_payload_artifact_draft_status=metadata-only-draft
+receipt_payload_artifact_draft_present=1
+receipt_payload_artifact_draft_command=lc receipt-artifact
+receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0
+receipt_payload_artifact_review_status=metadata-only-review-gate
+receipt_payload_artifact_review_present=1
+receipt_payload_artifact_review_command=lc receipt-artifact-review
+receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0
+draft_review_receipt_present=0
+materialization_allowed=0
+payload_artifact_present=0
+payload_write_allowed=0
 signature_request_binding_status=metadata-only-contract
 signature_request_binding_present=1
 signature_request_binding_command=lc signature-request

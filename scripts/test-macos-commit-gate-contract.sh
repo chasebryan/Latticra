@@ -127,8 +127,8 @@ require_contains 'macos_reset_uninstall_dry_run_contract_present=1' "$reset_stat
 require_contains 'macOS commit gate contract' "$integration_doc"
 require_contains 'macOS verification transcript contract' "$verification_doc"
 require_contains 'macOS commit gate contract' "$alignment_doc"
-require_contains 'Add a macOS reset/uninstall effect-authorization contract' "$transfer_plan"
-require_contains 'Add a macOS reset/uninstall effect-authorization contract' "$transfer_status"
+require_contains 'Add a macOS reset/uninstall evidence-bundle contract' "$transfer_plan"
+require_contains 'Add a macOS reset/uninstall evidence-bundle contract' "$transfer_status"
 require_contains 'sh scripts/test-macos-commit-gate-contract.sh' "$workflow"
 
 require_contains 'MACOS COMMIT GATE CONTRACT' "$script"
@@ -145,7 +145,7 @@ require_contains 'absence_report_evidence_present=0' "$script"
 require_contains 'app_bundle_write_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-effect-authorization-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-implementation-plan-contract' "$script"
 
 output=$(sh "$script")
 require_output_contains "$output" 'MACOS COMMIT GATE CONTRACT'

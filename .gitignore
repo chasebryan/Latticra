@@ -23,6 +23,8 @@ latticra_substrate_engine
 latticra_theorem_engine
 # Local build outputs
 /build/
+__pycache__/
+*.py[cod]
 latticra_nuclear_recursion_engine
 latticra-nuclear-recursion-engine.mp4
 # Nuclear recursion visual engine outputs

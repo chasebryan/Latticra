@@ -74,6 +74,10 @@ ubuntu_local_deb_draft_present=1
 ubuntu_lintian_availability_present=1
 ubuntu_package_license_review_contract_present=1
 ubuntu_package_license_review_status=blocked-pending-formal-review
+ubuntu_package_notice_inventory_present=1
+ubuntu_package_notice_inventory_report_present=1
+ubuntu_package_notice_review_contract_present=1
+ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 ubuntu_local_deb_build_transcript_contract_present=1
 ubuntu_local_deb_build_transcript_present=0
 deb_artifact_created=0
@@ -140,10 +144,18 @@ packaging/ubuntu/debian/source/format
 scripts/test-ubuntu-local-deb-static-validation.sh
 .github/workflows/ubuntu-local-deb-static-validation.yml
 docs/UBUNTU_LINTIAN_AVAILABILITY.md
+docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md
+docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
+scripts/ubuntu-package-notice-inventory.sh
+scripts/test-ubuntu-package-notice-inventory.sh
 scripts/test-ubuntu-package-license-review-contract.sh
+scripts/test-ubuntu-package-notice-review-contract.sh
 scripts/test-ubuntu-local-deb-build-transcript-contract.sh
+.github/workflows/ubuntu-package-notice-inventory.yml
+.github/workflows/ubuntu-package-notice-review-contract.yml
+.github/workflows/ubuntu-package-license-review-contract.yml
 .github/workflows/ubuntu-local-deb-build-transcript-contract.yml
 ```
 
@@ -171,7 +183,7 @@ claim operating-system completeness
 Recommended next slice:
 
 ```text
-Promote the Ubuntu package license expression only after documentation licensing and notice obligations are reviewed.
+Review the Ubuntu package notice inventory, then promote the Ubuntu package notice review only after documentation licensing, third-party notices, generated-artifact notices, and Debian copyright mapping are decided.
 ```
 
 That should preserve the current no-artifact, no-submission, local-only Ubuntu package posture while the local deb path matures.

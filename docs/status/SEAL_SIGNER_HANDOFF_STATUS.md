@@ -33,6 +33,9 @@ docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md
 docs/status/SEAL_SIGNING_AUTHORIZATION_STATUS.md
 scripts/test-latticra-seal-signing-authorization-status.sh
+.github/workflows/latticra-seal-signing-authorization-status.yml
+scripts/test-latticra-seal-signer-handoff-status.sh
+.github/workflows/latticra-seal-signer-handoff-status.yml
 ```
 
 ## Current checkpoint
@@ -48,6 +51,8 @@ seal_signer_handoff_invariant_test_present=1
 seal_signer_handoff_runner_present=1
 seal_signer_handoff_metadata_present=1
 seal_signer_handoff_status_present=1
+seal_signer_handoff_status_runner_present=1
+seal_signer_handoff_status_workflow_present=1
 seal_signer_invocation_contract_present=1
 seal_signer_invocation_implementation_present=1
 seal_signer_invocation_header_present=1
@@ -59,6 +64,13 @@ seal_signer_invocation_status_present=1
 seal_signing_authorization_contract_present=1
 seal_signing_authorization_implementation_present=1
 seal_signing_authorization_status_present=1
+seal_signing_authorization_status_runner_present=1
+seal_signing_authorization_status_workflow_present=1
+signer_handoff_predecessor_signing_authorization_status_present=1
+readme_links_signer_handoff_status=1
+root_status_mentions_signer_handoff_status=1
+status_index_links_signer_handoff_status=1
+foundation_index_links_signer_handoff_status=1
 signer_handoff_profile=latticra-seal-signer-handoff/0.1
 signing_authorization_profile=latticra-seal-signing-authorization/0.1
 signature_request_profile=latticra-seal-signature-request/0.1
@@ -84,6 +96,20 @@ host_write_performed=0
 network_performed=0
 mode=metadata-only
 status=signer-handoff-metadata
+signer_handoff_status_added=1
+signing_added=0
+signature_verification_added=0
+signer_invocation_behavior_added=0
+key_generation_added=0
+private_key_handling_added=0
+trust_store_behavior_added=0
+revocation_lookup_added=0
+object_sealing_added=0
+runtime_handoff_execution_added=0
+effect_execution_added=0
+capability_enforcement_added=0
+network_behavior_changed=0
+host_behavior_changed=0
 ```
 
 ## Validation
@@ -91,6 +117,7 @@ status=signer-handoff-metadata
 The implementation is covered by:
 
 ```sh
+sh scripts/test-latticra-seal-signer-handoff-status.sh
 sh scripts/test-latticra-seal-signer-handoff-contract.sh
 sh scripts/test-latticra-seal-signer-handoff.sh
 sh scripts/test-latticra-seal-signer-invocation-contract.sh
@@ -109,6 +136,7 @@ sh scripts/test-latticra-seal-signing-authorization-status.sh
 Expected output:
 
 ```text
+seal signer handoff status: ok
 seal signer handoff contract: ok
 seal signer handoff invariants: ok
 seal signer invocation contract: ok
@@ -116,6 +144,8 @@ seal signer invocation invariants: ok
 seal signer invocation status: ok
 seal signing authorization contract: ok
 seal signing authorization invariants: ok
+seal report envelope status: ok
+seal signature request status: ok
 seal signing authorization status: ok
 ```
 
@@ -123,10 +153,12 @@ seal signing authorization status: ok
 
 This status record is documentation/status alignment only.
 
+This refresh adds an explicit status guard workflow and records the signing-authorization status predecessor without changing the signer-handoff implementation.
+
 It does not add signing, verification, signer invocation, private-key handling, key generation, trust-store behavior, revocation lookup, runtime handoff execution, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, object sealing, kernel behavior, production readiness, or authority grants.
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is bounded no-effect key parsing implementation or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
+The next valid Latticra Seal slice is signer invocation status/workflow guard alignment or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
 
 The signer invocation metadata implementation, status/public-entry alignment, signing operation contract, signing operation metadata implementation, signing operation status/public-entry alignment, key-handling boundary contract, and key-handling metadata implementation now exist as guarded checkpoints. Future work must not add signing, verification, signer invocation behavior, private-key handling, key generation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

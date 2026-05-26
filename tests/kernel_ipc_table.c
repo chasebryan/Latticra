@@ -56,6 +56,8 @@ static int ipc_table_seed_is_metadata_only(void) {
         "endpoint bind denied");
     EXPECT_TRUE(result.host_effect_allowed == 0,
         "host effect denied");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "network denied");
 
     EXPECT_TRUE(strcmp(result.ports[0].label, "kernel-control-port-metadata") == 0,
         "control port label");
@@ -67,6 +69,8 @@ static int ipc_table_seed_is_metadata_only(void) {
         "endpoint authority denied");
     EXPECT_TRUE(strcmp(result.ports[4].domain, "network") == 0,
         "network port domain");
+    EXPECT_TRUE(result.ports[4].network_allowed == 0,
+        "network port denied");
     EXPECT_TRUE(result.ports[0].declared == 1,
         "port declared");
     EXPECT_TRUE(result.ports[0].bound == 0,
@@ -79,6 +83,8 @@ static int ipc_table_seed_is_metadata_only(void) {
         "port queue mutation denied");
     EXPECT_TRUE(result.ports[0].host_effect_allowed == 0,
         "port host effect denied");
+    EXPECT_TRUE(result.ports[0].network_allowed == 0,
+        "port network denied");
     EXPECT_TRUE(result.ports[0].no_effect == 1,
         "port no-effect");
     return 0;
@@ -135,12 +141,16 @@ static int ipc_table_report_is_deterministic(void) {
         "queue flag emitted");
     EXPECT_TRUE(strstr(report, "endpoint_bind_allowed=0\n") != 0,
         "endpoint flag emitted");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0,
+        "network flag emitted");
     EXPECT_TRUE(strstr(report, "port[0].label=kernel-control-port-metadata\n") != 0,
         "control port emitted");
     EXPECT_TRUE(strstr(report, "port[2].authority_status=ipc-queue-denied\n") != 0,
         "queue denial emitted");
     EXPECT_TRUE(strstr(report, "port[4].domain=network\n") != 0,
         "network port emitted");
+    EXPECT_TRUE(strstr(report, "port[4].network_allowed=0\n") != 0,
+        "network port flag emitted");
     EXPECT_TRUE(strstr(report, "port[0].bound=0\n") != 0,
         "bound flag emitted");
     EXPECT_TRUE(strstr(report, "port[0].no_effect=1\n") != 0,

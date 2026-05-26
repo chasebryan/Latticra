@@ -3,6 +3,9 @@
 #include <assert.h>
 #include <string.h>
 
+#define LOCAL_RPM_FIXTURE "fixtures/latticra.rpm"
+#define LOCAL_RPM_FIXTURE_LEN (sizeof(LOCAL_RPM_FIXTURE) - 1u)
+
 static void mutable_fedora_snapshot_reaches_classifier_candidate(void)
 {
     const char os_release[] = "NAME=Fedora Linux\nID=fedora\nID_LIKE=\"rhel fedora\"\n";
@@ -18,8 +21,8 @@ static void mutable_fedora_snapshot_reaches_classifier_candidate(void)
         1,
         1,
         0,
-        "/tmp/latticra.rpm",
-        17u,
+        LOCAL_RPM_FIXTURE,
+        LOCAL_RPM_FIXTURE_LEN,
         1,
         1,
         0,
@@ -34,7 +37,7 @@ static void mutable_fedora_snapshot_reaches_classifier_candidate(void)
     assert(strcmp(result.capture_status_label, "captured") == 0);
     assert(strcmp(result.os_id, "fedora") == 0);
     assert(strcmp(result.os_id_like, "rhel fedora") == 0);
-    assert(strcmp(result.local_rpm_path, "/tmp/latticra.rpm") == 0);
+    assert(strcmp(result.local_rpm_path, LOCAL_RPM_FIXTURE) == 0);
     assert(result.snapshot_forwarded_to_classifier == 1);
     assert(result.no_effect == 1);
     assert(result.sudo_validation_allowed == 0);
@@ -78,8 +81,8 @@ static void immutable_fedora_snapshot_is_future_gated(void)
         1,
         0,
         0,
-        "/tmp/latticra.rpm",
-        17u,
+        LOCAL_RPM_FIXTURE,
+        LOCAL_RPM_FIXTURE_LEN,
         1,
         1,
         0,
@@ -112,8 +115,8 @@ static void partial_unreadable_os_release_blocks_as_non_fedora(void)
         1,
         0,
         0,
-        "/tmp/latticra.rpm",
-        17u,
+        LOCAL_RPM_FIXTURE,
+        LOCAL_RPM_FIXTURE_LEN,
         1,
         1,
         0,
@@ -147,8 +150,8 @@ static void doc_only_package_blocks_runtime_command_expectation(void)
         1,
         1,
         1,
-        "/tmp/latticra.rpm",
-        17u,
+        LOCAL_RPM_FIXTURE,
+        LOCAL_RPM_FIXTURE_LEN,
         1,
         1,
         0,
@@ -182,8 +185,8 @@ static void network_requirement_is_forwarded_and_blocked(void)
         1,
         1,
         1,
-        "/tmp/latticra.rpm",
-        17u,
+        LOCAL_RPM_FIXTURE,
+        LOCAL_RPM_FIXTURE_LEN,
         1,
         1,
         0,

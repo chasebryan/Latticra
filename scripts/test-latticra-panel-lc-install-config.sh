@@ -35,6 +35,8 @@ config='installer/latticra-installer/src/config.rs'
 apply='installer/scripts/latticra-installer-apply.sh'
 default_config='installer/configs/default.installer.toml'
 local_config='installer/configs/local-prefix-example.installer.toml'
+manifest='installer/manifests/components.toml'
+foundation_doc='docs/LATTICRA_CONSOLE_FOUNDATION.md'
 workflow='.github/workflows/latticra-panel-installer.yml'
 
 for file in \
@@ -43,6 +45,8 @@ for file in \
   "$apply" \
   "$default_config" \
   "$local_config" \
+  "$manifest" \
+  "$foundation_doc" \
   "$workflow" \
   Makefile
 do
@@ -67,11 +71,15 @@ require_contains 'LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS=$(cfg_section lc.insta
 require_contains 'fail "LC install configuration cannot enable external host commands from the Panel" 78' "$apply"
 require_contains 'write_file "$PREFIX/share/latticra/lc/install/config.toml"' "$apply"
 require_contains 'if bool_true "$LATTICRA_CONSOLE" && bool_true "$LC_INSTALL_USER_WRAPPER"; then' "$apply"
+require_contains 'bin/<lc.install.command_wrapper>' "$manifest"
+require_contains 'share/latticra/lc/install/config.toml' "$manifest"
+require_contains 'LC install metadata records config/share paths and the command wrapper' "$manifest"
+require_contains 'share/latticra/lc/install/config.toml' "$foundation_doc"
+require_contains 'lc.install.command_wrapper' "$foundation_doc"
 require_contains 'sh ./scripts/test-latticra-panel-lc-install-config.sh' Makefile
 require_contains 'Validate Latticra Panel LC install configuration' "$workflow"
 
-tmp="${TMPDIR:-/tmp}/latticra-panel-lc-install-config-test-$$"
-rm -rf "$tmp"
+tmp="$(mktemp -d "${TMPDIR:-/tmp}/latticra-panel-lc-install-config-test.XXXXXX")"
 mkdir -p "$tmp/home" "$tmp/receipts"
 trap 'rm -rf "$tmp"' EXIT HUP INT TERM
 

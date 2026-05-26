@@ -139,5 +139,5 @@ This probe is not macOS installation, macOS app bundle evidence, signed app evid
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall effect-authorization contract that keeps live execution disabled until implementation-gate and operator-intent evidence are both present.
+Add a macOS reset/uninstall live-implementation plan contract that maps future effect-authorized execution phases while deletion remains disabled.
 ```

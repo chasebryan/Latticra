@@ -33,6 +33,9 @@ Architecture-specific work must declare:
 x86_64-hosted
 x86_64-qemu
 x86_64-uefi-preview
+x86_64-seabios-grub-preview
+x86_64-grub2-bios-preview
+x86_64-grub2-uefi-preview
 aarch64-hosted
 aarch64-qemu
 aarch64-device-readonly
@@ -45,6 +48,9 @@ aarch64-device-readonly
 | `x86_64-hosted` | Runs as a hosted process on an x86_64 OS. | Planning target. |
 | `x86_64-qemu` | Runs or validates in QEMU for x86_64. | Planning target. |
 | `x86_64-uefi-preview` | Boot-adjacent preview profile. | Future target. |
+| `x86_64-seabios-grub-preview` | Future SeaBIOS plus GRUB compatibility evidence profile. | Contract-only target. |
+| `x86_64-grub2-bios-preview` | Future GRUB 2 BIOS boot evidence profile. | Contract-only target. |
+| `x86_64-grub2-uefi-preview` | Future GRUB 2 UEFI boot evidence profile. | Contract-only target. |
 | `aarch64-hosted` | Runs as a hosted process on an ARM64 OS. | Planning target. |
 | `aarch64-qemu` | Runs or validates in QEMU for ARM64. | Planning target. |
 | `aarch64-device-readonly` | Real-device read-only evidence profile. | Future target. |

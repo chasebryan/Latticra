@@ -24,6 +24,8 @@ status='docs/status/UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md'
 
 require_file "$contract"
 require_file "$status"
+require_file docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md
+require_file docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 require_file LICENSE
 require_file docs/LICENSE_POLICY.md
 require_file docs/LICENSE_MIGRATION_PLAN.md
@@ -47,6 +49,11 @@ require_contains 'candidate_expression_applied_to_packaging=0' "$contract"
 require_contains 'candidate_expression_accepted=1' "$contract"
 require_contains 'packaging_license_expression_updated=1' "$contract"
 require_contains 'ubuntu_package_license_review_status=blocked-pending-formal-review' "$contract"
+require_contains 'ubuntu_package_notice_inventory_present=1' "$contract"
+require_contains 'ubuntu_package_notice_inventory_report_present=1' "$contract"
+require_contains 'ubuntu_package_notice_review_contract_present=1' "$contract"
+require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' "$contract"
+require_contains 'ubuntu_package_license_review_unblocked=0' "$contract"
 require_contains 'license_expression_reviewed=0' "$contract"
 require_contains 'license_expression_unresolved=1' "$contract"
 require_contains 'ubuntu_lintian_static_metadata_unblocked=0' "$contract"
@@ -63,7 +70,12 @@ require_contains 'LicenseRef-Latticra-TBD' packaging/ubuntu/debian/copyright
 
 require_contains 'ubuntu_package_license_review_contract_present=1' "$status"
 require_contains 'ubuntu_package_license_review_status=blocked-pending-formal-review' "$status"
+require_contains 'ubuntu_package_notice_inventory_present=1' "$status"
+require_contains 'ubuntu_package_notice_inventory_report_present=1' "$status"
+require_contains 'ubuntu_package_notice_review_contract_present=1' "$status"
+require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' "$status"
 require_contains 'license_expression_candidate_recorded=1' "$status"
+require_contains 'ubuntu_package_license_review_unblocked=0' "$status"
 require_contains 'packaging_license_expression_updated=0' "$status"
 require_contains 'ubuntu_lintian_static_metadata_unblocked=0' "$status"
 require_contains 'ubuntu_local_deb_build_transcript_unblocked=0' "$status"

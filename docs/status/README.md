@@ -23,7 +23,12 @@ non-claims
 - [`CURRENT_STATUS.md`](CURRENT_STATUS.md) — current project status, completion estimates, and next priorities.
 - [`CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](CURRENT_ESTIMATE_REFRESH_2026_05_24.md) - current planning-estimate refresh after Panel, Seal, documentation, and local evidence work.
 - [`CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) - current public estimate table source alignment for README, root status, detailed status, foundation index, and project notes.
-- [`LATTICRA_CONSOLE_FOUNDATION_STATUS.md`](LATTICRA_CONSOLE_FOUNDATION_STATUS.md) - Latticra Console foundation status for the LC C report surface, Panel installability, metadata-only host/OS/VM contracts, and no-effect authority baseline.
+- [`LATTICRA_CONSOLE_FOUNDATION_STATUS.md`](LATTICRA_CONSOLE_FOUNDATION_STATUS.md) - Latticra Console foundation status for the LC C report surface, Panel installability, metadata-only host/OS/VM contracts, receipt payload artifact draft, receipt payload artifact review gate, and no-effect authority baseline.
+- [`LATTICRA_SEAL_FOUNDATION_STATUS.md`](LATTICRA_SEAL_FOUNDATION_STATUS.md) - Latticra Seal foundation status for the first Seal contract and implementation plan.
+- [`LATTICRA_NO_EFFECT_CLI_RPM_SPEC_UPDATE_STATUS.md`](LATTICRA_NO_EFFECT_CLI_RPM_SPEC_UPDATE_STATUS.md) - Latticra no-effect CLI RPM spec update status for adding the CLI payload to the local Fedora RPM spec.
+- [`LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md`](LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md) - Latticra Panel local install evidence status for the Fedora Workstation user-local install verification transcript.
+- [`LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md) - Latticra Panel local install public-entrypoint alignment after the Fedora Workstation user-local install evidence milestone.
+- [`LATTICRA_PANEL_UI_DESIGN_CHECKPOINT.md`](LATTICRA_PANEL_UI_DESIGN_CHECKPOINT.md) - Latticra Panel UI design checkpoint for the current product surface review.
 - [`MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md`](MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md) - macOS integration transferability status for adapting current no-effect, receipt-first, user-local Latticra surfaces into a future macOS lane.
 - [`MACOS_BUILD_PLATFORM_PROBE_STATUS.md`](MACOS_BUILD_PLATFORM_PROBE_STATUS.md) - macOS build/platform probe status for no-effect toolchain, architecture, Panel-readiness, and C-test-readiness reporting.
 - [`MACOS_DRY_RUN_PLAN_ADAPTER_STATUS.md`](MACOS_DRY_RUN_PLAN_ADAPTER_STATUS.md) - macOS dry-run plan adapter status for rendering user-local Application Support, app bundle, CLI-wrapper, receipt, and verification intent without writing artifacts.
@@ -42,6 +47,8 @@ non-claims
 - [`MACOS_RESET_UNINSTALL_RECEIPT_SCHEMA_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_RECEIPT_SCHEMA_CONTRACT_STATUS.md) - macOS reset/uninstall receipt-schema contract status for future reset/uninstall receipt fields and path constraints.
 - [`MACOS_RESET_UNINSTALL_IMPLEMENTATION_GATE_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_IMPLEMENTATION_GATE_CONTRACT_STATUS.md) - macOS reset/uninstall implementation-gate contract status for keeping live reset/uninstall execution closed until required evidence exists.
 - [`MACOS_RESET_UNINSTALL_OPERATOR_INTENT_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_OPERATOR_INTENT_CONTRACT_STATUS.md) - macOS reset/uninstall operator-intent contract status for future explicit live reset/uninstall approval evidence.
+- [`MACOS_RESET_UNINSTALL_EFFECT_AUTHORIZATION_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_EFFECT_AUTHORIZATION_CONTRACT_STATUS.md) - macOS reset/uninstall effect-authorization contract status for keeping live reset/uninstall effects gated by explicit authorization evidence.
+- [`MACOS_RESET_UNINSTALL_EVIDENCE_BUNDLE_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_EVIDENCE_BUNDLE_CONTRACT_STATUS.md) - macOS reset/uninstall evidence-bundle contract status for binding required reset/uninstall evidence before any live implementation can be considered.
 - [`MACOS_README_INSTALLER_USAGE_STATUS.md`](MACOS_README_INSTALLER_USAGE_STATUS.md) - macOS README installer usage status for documenting current Mac-specific no-effect installer commands, target paths, and closed commit-gate posture.
 - [`NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](NADIA_OFFLINE_AI_STAGE_0_STATUS.md) - Nadia offline AI Stage-0 foundation status for Panel installability, Console interoperability, and awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) - Nadia Stage-1 local context-engine status for no-network context-pack generation.
@@ -75,6 +82,8 @@ non-claims
 - [`NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md`](NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md) - Nadia Stage-29 prompt-evaluation runtime handoff contract status before runtime handoff, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md`](NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md) - Nadia Stage-30 prompt-evaluation invocation contract status before invocation requests, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31_STATUS.md) - Nadia Stage-31 prompt-evaluation result contract status before result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32_STATUS.md) - Nadia Stage-32 prompt-evaluation result review contract status before result-review records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33_STATUS.md) - Nadia Stage-33 prompt-evaluation result disposition contract status before disposition records, release records, result-review records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
 - [`../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md`](../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md) — defensive threat model validation refinement.
 - [`../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`](../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md) — runtime boundary policy expansion after threat-model validation.
@@ -114,6 +123,15 @@ non-claims
 - [`SEAL_SIGNATURE_REQUEST_STATUS.md`](SEAL_SIGNATURE_REQUEST_STATUS.md) — Latticra Seal signature request metadata status and public-entry checkpoint.
 - [`SEAL_CORE_EVIDENCE_STATUS.md`](SEAL_CORE_EVIDENCE_STATUS.md) — Latticra Seal core evidence status surface after the completed report-only runtime gate evidence milestone.
 - [`SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md`](SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md) — Latticra Seal core evidence index alignment after the status surface.
+- [`SEAL_CORE_BLOCKED_CASES_STATUS.md`](SEAL_CORE_BLOCKED_CASES_STATUS.md) — Latticra Seal core blocked cases status after the unknown-tool, unsigned-request, stale-request, and replayed-request fixtures.
+- [`SEAL_CORE_EVIDENCE_PUBLIC_STATUS_UPDATE.md`](SEAL_CORE_EVIDENCE_PUBLIC_STATUS_UPDATE.md) — Latticra Seal core evidence public status update language for the report-only runtime gate milestone.
+- [`SEAL_CORE_EVIDENCE_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](SEAL_CORE_EVIDENCE_PUBLIC_ENTRYPOINT_ALIGNMENT.md) — Latticra Seal core evidence public-entrypoint alignment after the core evidence status surface.
+- [`SEAL_GUARDED_ALLOWLIST_REPORT_SURFACE_STATUS.md`](SEAL_GUARDED_ALLOWLIST_REPORT_SURFACE_STATUS.md) — Latticra Seal guarded allowlist report surface status.
+- [`SEAL_GUARDED_ALLOWLIST_STATUS_INDEX_ALIGNMENT.md`](SEAL_GUARDED_ALLOWLIST_STATUS_INDEX_ALIGNMENT.md) — Latticra Seal guarded allowlist status-index alignment.
+- [`SEAL_GUARDED_ALLOWLIST_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](SEAL_GUARDED_ALLOWLIST_PUBLIC_ENTRYPOINT_ALIGNMENT.md) — Latticra Seal guarded allowlist public-entrypoint alignment.
+- [`SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE_STATUS.md`](SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE_STATUS.md) — Latticra Seal runtime dry-run report surface status.
+- [`SEAL_RUNTIME_DRY_RUN_STATUS_INDEX_ALIGNMENT.md`](SEAL_RUNTIME_DRY_RUN_STATUS_INDEX_ALIGNMENT.md) — Latticra Seal runtime dry-run status-index alignment.
+- [`SEAL_RUNTIME_DRY_RUN_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](SEAL_RUNTIME_DRY_RUN_PUBLIC_ENTRYPOINT_ALIGNMENT.md) — Latticra Seal runtime dry-run public-entrypoint alignment.
 - [`KERNEL_LIFECYCLE_EVIDENCE_STATUS.md`](KERNEL_LIFECYCLE_EVIDENCE_STATUS.md) — status alignment after the kernel IPC, VFS namespace, process table, and syscall table guards plus the lifecycle report runner, subsystem summary, and rollback plan.
 - [`FEDORA_HOST_INSTALL_PREFLIGHT_STATUS.md`](FEDORA_HOST_INSTALL_PREFLIGHT_STATUS.md) — status record for the no-effect Fedora host install preflight classifier.
 - [`FEDORA_INSTALL_PREFLIGHT_SNAPSHOT_CAPTURE_STATUS.md`](FEDORA_INSTALL_PREFLIGHT_SNAPSHOT_CAPTURE_STATUS.md) — status record for the no-effect Fedora install preflight snapshot capture implementation.
@@ -127,6 +145,8 @@ non-claims
 - [`FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md`](FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md) — evidence status record for the successful disposable Fedora VM local RPM validation transcript.
 - [`FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md`](FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md) — Fedora disposable VM RPM README alignment.
 - [`FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md) — status record for the manually gated disposable Fedora VM CLI payload validation lane runner.
+- [`FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md) — evidence status record after a disposable Fedora VM CLI payload validation transcript reached the expected validation report.
+- [`FEDORA_VM_RPM_VALIDATION_ANNOUNCEMENT_STATUS.md`](FEDORA_VM_RPM_VALIDATION_ANNOUNCEMENT_STATUS.md) — announcement/status alignment for the disposable Fedora VM local RPM validation milestone.
 - [`UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md`](UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the Ubuntu build lane, Panel apt prerequisites, and local-only deb packaging draft.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) — current public estimate table source alignment across README, root status, and detailed current status.
@@ -185,9 +205,11 @@ signature_request_predecessor_report_envelope_status_present=1
 seal_signing_authorization_contract_present=1
 seal_signing_authorization_metadata_present=1
 seal_signing_authorization_status_present=1
+signing_authorization_predecessor_signature_request_status_present=1
 seal_signer_handoff_contract_present=1
 seal_signer_handoff_metadata_present=1
 seal_signer_handoff_status_present=1
+signer_handoff_predecessor_signing_authorization_status_present=1
 seal_signer_invocation_contract_present=1
 seal_signer_invocation_metadata_present=1
 seal_signer_invocation_status_present=1
@@ -334,7 +356,7 @@ runtime_handoff_report_runtime_authority_granted=0
 The careful current public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata/status, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, verified receipt promotion metadata/status, verified capability gate metadata/status, verified effect decision metadata/status, runtime handoff evaluation metadata/status, runtime handoff report metadata/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata/status, signature-request metadata/status, signing authorization metadata/status, signer handoff/invocation/operation metadata/status, key-handling and key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, verified receipt promotion metadata/status, verified capability gate metadata/status, verified effect decision metadata/status, runtime handoff evaluation metadata/status, runtime handoff report metadata/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 The current next recommended Seal lane is:
@@ -642,7 +664,7 @@ Add manual Fedora host dry-run transcript contract
 
 ## Previous Fedora manual host RC checklist checkpoint
 
-The previous Fedora manual host RC checklist status alignment records:
+The previous Fedora manual host RC checklist status alignment records the Current Fedora manual host RC checklist checkpoint:
 
 ```text
 Fedora manual host RC checklist
@@ -752,13 +774,15 @@ kernel VFS namespace guard
 kernel VFS namespace report runner
 kernel device registry guard
 kernel device registry report runner
+kernel driver catalog guard
+kernel driver catalog report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
 kernel syscall table report runner
 kernel lifecycle subsystem summary
 kernel lifecycle rollback plan
-final_state=device-registry-ready
+final_state=driver-catalog-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
@@ -775,7 +799,11 @@ namespace_mutation_allowed=0
 device_open_allowed=0
 device_read_allowed=0
 device_write_allowed=0
+driver_probe_allowed=0
+driver_load_allowed=0
 driver_bind_allowed=0
+interrupt_allowed=0
+dma_allowed=0
 hardware_effect_allowed=0
 ```
 

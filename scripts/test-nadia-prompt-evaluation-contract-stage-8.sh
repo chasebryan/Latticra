@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage8.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -108,45 +111,54 @@ require_contains 'nadia prompt-contract' "$ui_model"
 require_contains 'prompt-contracts' "$components_manifest"
 require_contains 'nadia-prompt-contract' "$makefile"
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage8-contract-test"
-context_out="${TMPDIR:-/tmp}/latticra-nadia-stage8-context-test"
-runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage8-runtime-test"
-plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage8-plan-test"
-mode_out="${TMPDIR:-/tmp}/latticra-nadia-stage8-mode-test"
-ledger_out="${TMPDIR:-/tmp}/latticra-nadia-stage8-ledger-test"
-safety_out="${TMPDIR:-/tmp}/latticra-nadia-stage8-safety-test"
-tool_out="${TMPDIR:-/tmp}/latticra-nadia-stage8-tool-test"
-rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out"
+out="$tmpdir/latticra-nadia-stage8-contract-test"
+context_out="$tmpdir/latticra-nadia-stage8-context-test"
+runtime_out="$tmpdir/latticra-nadia-stage8-runtime-test"
+plan_out="$tmpdir/latticra-nadia-stage8-plan-test"
+mode_out="$tmpdir/latticra-nadia-stage8-mode-test"
+ledger_out="$tmpdir/latticra-nadia-stage8-ledger-test"
+safety_out="$tmpdir/latticra-nadia-stage8-safety-test"
+tool_out="$tmpdir/latticra-nadia-stage8-tool-test"
+context_stdout="$tmpdir/latticra-nadia-stage8-context-test.out"
+runtime_stdout="$tmpdir/latticra-nadia-stage8-runtime-test.out"
+plan_stdout="$tmpdir/latticra-nadia-stage8-plan-test.out"
+mode_stdout="$tmpdir/latticra-nadia-stage8-mode-test.out"
+ledger_stdout="$tmpdir/latticra-nadia-stage8-ledger-test.out"
+safety_stdout="$tmpdir/latticra-nadia-stage8-safety-test.out"
+tool_stdout="$tmpdir/latticra-nadia-stage8-tool-test.out"
+contract_stdout="$tmpdir/latticra-nadia-stage8-contract-test.out"
+reject_stdout="$tmpdir/latticra-nadia-stage8-reject-test.out"
+reject_stderr="$tmpdir/latticra-nadia-stage8-reject-test.err"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out"
-NADIA_CONTEXT_PACK_TIMESTAMP=stage8-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage8-context-test.out
-NADIA_RUNTIME_PROFILE_TIMESTAMP=stage8-test sh scripts/nadia-runtime-profile.sh --output "$runtime_out" >/tmp/latticra-nadia-stage8-runtime-test.out
+NADIA_CONTEXT_PACK_TIMESTAMP=stage8-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >"$context_stdout"
+NADIA_RUNTIME_PROFILE_TIMESTAMP=stage8-test sh scripts/nadia-runtime-profile.sh --output "$runtime_out" >"$runtime_stdout"
 NADIA_PROMPT_PLAN_TIMESTAMP=stage8-test sh scripts/nadia-prompt-plan.sh \
   --context-pack "$context_out/nadia-context-pack-stage8-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage8-test.txt" \
   --task "prompt evaluation contract planning" \
-  --output "$plan_out" >/tmp/latticra-nadia-stage8-plan-test.out
+  --output "$plan_out" >"$plan_stdout"
 NADIA_MODE_VALIDATION_TIMESTAMP=stage8-test sh scripts/nadia-mode-validate.sh \
   --prompt-plan "$plan_out/nadia-prompt-plan-stage8-test.txt" \
   --mode ai-development \
-  --output "$mode_out" >/tmp/latticra-nadia-stage8-mode-test.out
+  --output "$mode_out" >"$mode_stdout"
 NADIA_PRODUCTIVITY_LEDGER_TIMESTAMP=stage8-test sh scripts/nadia-productivity-ledger.sh \
   --mode-validation "$mode_out/nadia-mode-validation-stage8-test.txt" \
   --outcome "accepted prompt contract boundary" \
   --recommendation "keep prompt evaluation contract-only" \
-  --output "$ledger_out" >/tmp/latticra-nadia-stage8-ledger-test.out
+  --output "$ledger_out" >"$ledger_stdout"
 NADIA_PROTECTIVE_SAFETY_TIMESTAMP=stage8-test sh scripts/nadia-protective-safety-boundary.sh \
   --productivity-entry "$ledger_out/nadia-productivity-entry-stage8-test.txt" \
   --request-class software-development \
-  --output "$safety_out" >/tmp/latticra-nadia-stage8-safety-test.out
+  --output "$safety_out" >"$safety_stdout"
 NADIA_TOOL_PREFLIGHT_TIMESTAMP=stage8-test sh scripts/nadia-tool-authority-preflight.sh \
   --protective-safety "$safety_out/nadia-protective-safety-stage8-test.txt" \
   --tool-class metadata-read \
   --action "prepare prompt contract evidence" \
-  --output "$tool_out" >/tmp/latticra-nadia-stage8-tool-test.out
+  --output "$tool_out" >"$tool_stdout"
 NADIA_PROMPT_CONTRACT_TIMESTAMP=stage8-test sh "$contract_script" \
   --tool-preflight "$tool_out/nadia-tool-preflight-stage8-test.txt" \
   --request-class software-development \
-  --output "$out" >/tmp/latticra-nadia-stage8-contract-test.out
+  --output "$out" >"$contract_stdout"
 contract="$out/nadia-prompt-contract-stage8-test.txt"
 
 require_file "$contract"
@@ -179,10 +191,10 @@ require_contains 'inference_performed=0' "$contract"
 if NADIA_PROMPT_CONTRACT_TIMESTAMP=stage8-reject sh "$contract_script" \
   --tool-preflight "$tool_out/nadia-tool-preflight-stage8-test.txt" \
   --request-class sexual \
-  --output "$out" >/tmp/latticra-nadia-stage8-reject-test.out 2>/tmp/latticra-nadia-stage8-reject-test.err; then
+  --output "$out" >"$reject_stdout" 2>"$reject_stderr"; then
   printf 'nadia prompt evaluation contract stage 8: sexual request class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia prompt-evaluation contract boundary' /tmp/latticra-nadia-stage8-reject-test.err
+require_contains 'outside Nadia prompt-evaluation contract boundary' "$reject_stderr"
 
 printf 'nadia_prompt_evaluation_contract_stage_8: ok\n'

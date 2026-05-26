@@ -54,6 +54,10 @@ latticra_status_t latticra_kernel_state_machine_default_step_request(
             LATTICRA_STATUS_OK) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
+    if (latticra_kernel_driver_catalog_default_request(&request->driver_catalog_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
     request->target_state = LATTICRA_KERNEL_STATE_INITIALIZED;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
     return LATTICRA_STATUS_OK;
@@ -110,6 +114,7 @@ latticra_status_t latticra_kernel_state_machine_step(
     transition_request.ipc_table_request = request->ipc_table_request;
     transition_request.vfs_namespace_request = request->vfs_namespace_request;
     transition_request.device_registry_request = request->device_registry_request;
+    transition_request.driver_catalog_request = request->driver_catalog_request;
     transition_request.current_state = machine->current_state;
     transition_request.target_state = request->target_state;
     transition_request.gate = request->gate;

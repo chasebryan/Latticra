@@ -26,6 +26,8 @@ require_file "$contract"
 require_file "$status"
 require_file docs/UBUNTU_LINTIAN_AVAILABILITY.md
 require_file docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md
+require_file docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_file packaging/ubuntu/README.md
 require_file scripts/test-ubuntu-local-deb-static-validation.sh
@@ -41,6 +43,7 @@ require_contains 'license_expression_reviewed=1' "$contract"
 require_contains 'license_expression_unresolved=0' "$contract"
 require_contains 'license_expression_reviewed=0' "$contract"
 require_contains 'license_expression_unresolved=1' "$contract"
+require_contains 'ubuntu_package_notice_inventory_present=1' "$contract"
 require_contains 'dpkg_buildpackage_command_recorded=1' "$contract"
 require_contains 'deb_artifact_digest_recorded=1' "$contract"
 require_contains 'lintian_output_digest_recorded=1' "$contract"
@@ -66,6 +69,9 @@ require_contains 'license_expression_reviewed=0' "$status"
 require_contains 'license_expression_unresolved=1' "$status"
 require_contains 'ubuntu_package_license_review_contract_present=1' "$status"
 require_contains 'ubuntu_package_license_review_status=blocked-pending-formal-review' "$status"
+require_contains 'ubuntu_package_notice_inventory_present=1' "$status"
+require_contains 'ubuntu_package_notice_review_contract_present=1' "$status"
+require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' "$status"
 require_contains 'packaging_license_expression_updated=0' "$status"
 
 printf 'ubuntu_local_deb_build_transcript_contract: ok\n'

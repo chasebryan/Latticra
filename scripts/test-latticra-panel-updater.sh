@@ -84,8 +84,7 @@ require_contains 'updater function' "$design_check"
 require_contains 'sh ./scripts/test-latticra-panel-updater.sh' Makefile
 require_contains 'Validate Latticra Panel updater surface' "$workflow"
 
-tmp="${TMPDIR:-/tmp}/latticra-panel-updater-test-$$"
-rm -rf "$tmp"
+tmp="$(mktemp -d "${TMPDIR:-/tmp}/latticra-panel-updater-test.XXXXXX")"
 mkdir -p "$tmp/home" "$tmp/receipts"
 trap 'rm -rf "$tmp"' EXIT HUP INT TERM
 

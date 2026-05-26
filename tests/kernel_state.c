@@ -78,7 +78,7 @@ static int allowed_transition_changes_state(void) {
     return 0;
 }
 
-static int allowed_process_syscall_ipc_vfs_and_device_transitions_are_metadata_only(void) {
+static int allowed_process_syscall_ipc_vfs_device_and_driver_transitions_are_metadata_only(void) {
     latticra_kernel_state_request_t request;
     latticra_kernel_state_result_t result;
 
@@ -204,6 +204,38 @@ static int allowed_process_syscall_ipc_vfs_and_device_transitions_are_metadata_o
         "device transition no external effect");
     EXPECT_TRUE(result.denied == 0,
         "device transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "driver catalog transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY,
+        "next driver-catalog-ready");
+    EXPECT_TRUE(strcmp(result.driver_catalog.catalog_status, "driver-catalog-seed-ready") == 0,
+        "driver catalog ready");
+    EXPECT_TRUE(strcmp(result.device_registry.registry_status, "device-registry-seed-ready") == 0,
+        "driver transition keeps device registry ready");
+    EXPECT_TRUE(strcmp(result.vfs_namespace.namespace_status, "vfs-namespace-seed-ready") == 0,
+        "driver transition keeps vfs namespace ready");
+    EXPECT_TRUE(result.driver_catalog.driver_probe_allowed == 0,
+        "driver probe denied");
+    EXPECT_TRUE(result.driver_catalog.driver_load_allowed == 0,
+        "driver load denied");
+    EXPECT_TRUE(result.driver_catalog.driver_bind_allowed == 0,
+        "driver bind denied");
+    EXPECT_TRUE(result.driver_catalog.interrupt_allowed == 0,
+        "interrupt denied");
+    EXPECT_TRUE(result.driver_catalog.dma_allowed == 0,
+        "dma denied");
+    EXPECT_TRUE(result.driver_catalog.hardware_effect_allowed == 0,
+        "driver hardware effect denied");
+    EXPECT_TRUE(result.driver_catalog.host_effect_allowed == 0,
+        "driver host effect denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "driver transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "driver transition not denied");
     return 0;
 }
 
@@ -296,7 +328,7 @@ static int report_records_state_change(void) {
     return 0;
 }
 
-static int report_records_process_syscall_ipc_vfs_and_device_readiness(void) {
+static int report_records_process_syscall_ipc_vfs_device_and_driver_readiness(void) {
     latticra_kernel_state_request_t request;
     latticra_kernel_state_result_t result;
     char report[LATTICRA_KERNEL_STATE_REPORT_MAX];
@@ -375,6 +407,23 @@ static int report_records_process_syscall_ipc_vfs_and_device_readiness(void) {
         "device report vfs namespace emitted");
     EXPECT_TRUE(strstr(report, "device_registry_status=device-registry-seed-ready\n") != 0,
         "device registry emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "driver transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "driver report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=device-registry-ready\n") != 0,
+        "device previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=driver-catalog-ready\n") != 0,
+        "driver next emitted");
+    EXPECT_TRUE(strstr(report, "device_registry_status=device-registry-seed-ready\n") != 0,
+        "driver report device registry emitted");
+    EXPECT_TRUE(strstr(report, "driver_catalog_status=driver-catalog-seed-ready\n") != 0,
+        "driver catalog emitted");
     return 0;
 }
 
@@ -400,11 +449,11 @@ static int null_guards_are_safe(void) {
 int main(void) {
     if (default_request_denies_state_change() != 0) return 1;
     if (allowed_transition_changes_state() != 0) return 1;
-    if (allowed_process_syscall_ipc_vfs_and_device_transitions_are_metadata_only() != 0) return 1;
+    if (allowed_process_syscall_ipc_vfs_device_and_driver_transitions_are_metadata_only() != 0) return 1;
     if (denied_transition_does_not_change_state() != 0) return 1;
     if (allowed_noop_is_stable() != 0) return 1;
     if (report_records_state_change() != 0) return 1;
-    if (report_records_process_syscall_ipc_vfs_and_device_readiness() != 0) return 1;
+    if (report_records_process_syscall_ipc_vfs_device_and_driver_readiness() != 0) return 1;
     if (null_guards_are_safe() != 0) return 1;
 
     puts("kernel_state: ok");

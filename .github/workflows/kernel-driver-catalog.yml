@@ -1,0 +1,26 @@
+name: Kernel driver catalog
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  kernel-driver-catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - name: Run kernel driver catalog guard
+        run: sh scripts/test-kernel-driver-catalog.sh
+
+      - name: Run kernel driver catalog report runner
+        run: sh scripts/test-kernel-driver-catalog-report-runner.sh

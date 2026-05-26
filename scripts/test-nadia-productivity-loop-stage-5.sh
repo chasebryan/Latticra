@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage5.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -106,29 +109,33 @@ require_contains 'nadia ledger' "$ui_model"
 require_contains 'productivity-ledger' "$components_manifest"
 require_contains 'nadia-ledger' "$makefile"
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage5-ledger-test"
-context_out="${TMPDIR:-/tmp}/latticra-nadia-stage5-context-test"
-runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage5-runtime-test"
-plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage5-plan-test"
-mode_out="${TMPDIR:-/tmp}/latticra-nadia-stage5-mode-test"
-rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out"
+out="$tmpdir/latticra-nadia-stage5-ledger-test"
+context_out="$tmpdir/latticra-nadia-stage5-context-test"
+runtime_out="$tmpdir/latticra-nadia-stage5-runtime-test"
+plan_out="$tmpdir/latticra-nadia-stage5-plan-test"
+mode_out="$tmpdir/latticra-nadia-stage5-mode-test"
+context_stdout="$tmpdir/latticra-nadia-stage5-context-test.out"
+runtime_stdout="$tmpdir/latticra-nadia-stage5-runtime-test.out"
+plan_stdout="$tmpdir/latticra-nadia-stage5-plan-test.out"
+mode_stdout="$tmpdir/latticra-nadia-stage5-mode-test.out"
+ledger_stdout="$tmpdir/latticra-nadia-stage5-ledger-test.out"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out"
-NADIA_CONTEXT_PACK_TIMESTAMP=stage5-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage5-context-test.out
-NADIA_RUNTIME_PROFILE_TIMESTAMP=stage5-test sh scripts/nadia-runtime-profile.sh --output "$runtime_out" >/tmp/latticra-nadia-stage5-runtime-test.out
+NADIA_CONTEXT_PACK_TIMESTAMP=stage5-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >"$context_stdout"
+NADIA_RUNTIME_PROFILE_TIMESTAMP=stage5-test sh scripts/nadia-runtime-profile.sh --output "$runtime_out" >"$runtime_stdout"
 NADIA_PROMPT_PLAN_TIMESTAMP=stage5-test sh scripts/nadia-prompt-plan.sh \
   --context-pack "$context_out/nadia-context-pack-stage5-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage5-test.txt" \
   --task "productivity loop planning" \
-  --output "$plan_out" >/tmp/latticra-nadia-stage5-plan-test.out
+  --output "$plan_out" >"$plan_stdout"
 NADIA_MODE_VALIDATION_TIMESTAMP=stage5-test sh scripts/nadia-mode-validate.sh \
   --prompt-plan "$plan_out/nadia-prompt-plan-stage5-test.txt" \
   --mode ai-development \
-  --output "$mode_out" >/tmp/latticra-nadia-stage5-mode-test.out
+  --output "$mode_out" >"$mode_stdout"
 NADIA_PRODUCTIVITY_LEDGER_TIMESTAMP=stage5-test sh "$ledger_script" \
   --mode-validation "$mode_out/nadia-mode-validation-stage5-test.txt" \
   --outcome "accepted planning surface" \
   --recommendation "run stage guards" \
-  --output "$out" >/tmp/latticra-nadia-stage5-ledger-test.out
+  --output "$out" >"$ledger_stdout"
 entry="$out/nadia-productivity-entry-stage5-test.txt"
 
 require_file "$entry"

@@ -31,6 +31,7 @@ require_absent() {
 require_file docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_file docs/UBUNTU_READINESS_PLAN.md
 require_file docs/status/UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md
+require_file docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md
 require_file packaging/ubuntu/README.md
 require_file packaging/ubuntu/debian/control
 require_file packaging/ubuntu/debian/rules
@@ -44,6 +45,8 @@ require_file src/latticra_cli.c
 require_contains 'Status: active static validation lane' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'static checks for the local-only Ubuntu deb packaging draft' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'does not run `dpkg-buildpackage`, `debuild`, `lintian`, `sbuild`, or `pbuilder`' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'package_notice_inventory_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'package_notice_inventory_report_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'deb_artifact_created=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'ubuntu_archive_ready=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'ubuntu_local_deb_static_validation: ok' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
@@ -52,6 +55,8 @@ require_contains 'Status: local-only packaging draft' packaging/ubuntu/README.md
 require_contains 'not an Ubuntu archive package' packaging/ubuntu/README.md
 require_contains 'not a PPA package' packaging/ubuntu/README.md
 require_contains 'deb_artifact_created=0' packaging/ubuntu/README.md
+require_contains 'package_notice_inventory_present=1' packaging/ubuntu/README.md
+require_contains 'package_notice_inventory_report_present=1' packaging/ubuntu/README.md
 require_contains 'ppa_claimed=0' packaging/ubuntu/README.md
 require_contains 'ubuntu_archive_ready=0' packaging/ubuntu/README.md
 

@@ -14,6 +14,14 @@ The contract defines the explicit future approval evidence required before a liv
 
 ```text
 macos_reset_uninstall_operator_intent_contract_present=1
+macos_reset_uninstall_effect_authorization_contract_present=1
+macos_reset_uninstall_evidence_bundle_contract_present=1
+evidence_bundle_contract_state=defined-no-effect
+evidence_bundle_complete=0
+reset_uninstall_evidence_bundle_complete=0
+effect_authorization_contract_state=closed-no-effect
+effect_authorization_open=0
+reset_uninstall_effect_authorized=0
 macos_reset_uninstall_operator_intent_contract_guard_present=1
 operator_intent_contract_state=defined-no-effect
 operator_intent_contract_decision=contract-defined-intent-not-observed
@@ -36,6 +44,13 @@ managed_target_deletion_enabled=0
 reset_uninstall_receipt_write_enabled=0
 macos_reset_uninstall_implementation_gate_contract_present=1
 macos_reset_uninstall_operator_intent_contract_present=1
+macos_reset_uninstall_effect_authorization_contract_present=1
+macos_reset_uninstall_evidence_bundle_contract_present=1
+evidence_bundle_contract_state=defined-no-effect
+evidence_bundle_complete=0
+reset_uninstall_evidence_bundle_complete=0
+effect_authorization_contract_state=closed-no-effect
+reset_uninstall_effect_authorized=0
 implementation_gate_contract_state=closed-no-effect
 implementation_gate_decision=blocked-missing-reset-uninstall-evidence
 macos_reset_uninstall_receipt_schema_contract_present=1
@@ -136,10 +151,16 @@ Expected output:
 macos_reset_uninstall_operator_intent_contract: ok
 ```
 
+## Previous Recommended Lane
+
+```text
+Add a macOS reset/uninstall evidence-bundle contract that groups implementation-gate, operator-intent, receipt, absence, planner, and classifier evidence before any live execution.
+```
+
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall effect-authorization contract that keeps live execution disabled until implementation-gate and operator-intent evidence are both present.
+Add a macOS reset/uninstall live-implementation plan contract that maps future effect-authorized execution phases while deletion remains disabled.
 ```
 
 ## Non-Claims

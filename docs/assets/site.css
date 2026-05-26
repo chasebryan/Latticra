@@ -448,6 +448,24 @@ p:last-child {
   background-size: cover;
 }
 
+.workbench-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.97) 0%, rgba(17, 24, 39, 0.88) 56%, rgba(17, 24, 39, 0.58) 100%),
+    url("latticra-panel.png");
+  background-color: #111827;
+  background-position: right 40px center;
+  background-repeat: no-repeat;
+  background-size: 540px auto;
+}
+
+.security-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.97) 0%, rgba(17, 24, 39, 0.88) 58%, rgba(17, 24, 39, 0.64) 100%),
+    url("latticra-seal-runtime-dry-run-native-demo.png");
+  background-position: center right;
+  background-size: cover;
+}
+
 .evidence-hero {
   background:
     linear-gradient(90deg, rgba(17, 24, 39, 0.97) 0%, rgba(17, 24, 39, 0.88) 58%, rgba(17, 24, 39, 0.66) 100%),
@@ -559,7 +577,9 @@ p:last-child {
 .language-intro,
 .examples-intro,
 .seal-intro,
-.roadmap-intro {
+.roadmap-intro,
+.workbench-intro,
+.security-intro {
   display: grid;
   grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
   gap: 32px;
@@ -570,7 +590,9 @@ p:last-child {
 .language-intro p:not(.eyebrow),
 .examples-intro p:not(.eyebrow),
 .seal-intro p:not(.eyebrow),
-.roadmap-intro p:not(.eyebrow) {
+.roadmap-intro p:not(.eyebrow),
+.workbench-intro p:not(.eyebrow),
+.security-intro p:not(.eyebrow) {
   color: var(--muted);
   font-size: 1.03rem;
 }
@@ -978,6 +1000,219 @@ p:last-child {
 }
 
 .roadmap-table p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.workbench-flow,
+.workbench-surface-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.workbench-flow {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.workbench-flow article {
+  min-width: 0;
+  min-height: 198px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--violet);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.workbench-flow span,
+.workbench-surface-grid span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--ochre);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.workbench-flow p,
+.workbench-surface-grid p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.workbench-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(300px, 1.18fr);
+  gap: 30px;
+  align-items: center;
+}
+
+.workbench-figure img {
+  width: min(420px, 100%);
+  margin-inline: auto;
+  object-fit: contain;
+}
+
+.workbench-surface-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.workbench-surface-grid article {
+  min-width: 0;
+  min-height: 220px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.workbench-surface-grid article:nth-child(1) {
+  border-top: 4px solid var(--green);
+}
+
+.workbench-surface-grid article:nth-child(2) {
+  border-top: 4px solid var(--blue);
+}
+
+.workbench-surface-grid article:nth-child(3) {
+  border-top: 4px solid var(--violet);
+}
+
+.workbench-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.workbench-table {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.workbench-table div {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.workbench-table div:last-child {
+  border-bottom: 0;
+}
+
+.workbench-table span {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.workbench-table p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.security-rule-grid,
+.security-scope-grid,
+.security-effect-grid,
+.security-nonclaim-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.security-rule-grid,
+.security-effect-grid,
+.security-nonclaim-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.security-scope-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.security-rule-grid article,
+.security-scope-grid article,
+.security-effect-grid article,
+.security-nonclaim-grid article {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.security-rule-grid article,
+.security-scope-grid article,
+.security-effect-grid article,
+.security-nonclaim-grid article {
+  min-height: 186px;
+}
+
+.security-rule-grid span,
+.security-effect-grid span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--ochre);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.security-rule-grid p,
+.security-scope-grid p,
+.security-effect-grid p,
+.security-nonclaim-grid p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.security-scope-grid article {
+  border-top: 4px solid var(--teal);
+}
+
+.effect-open {
+  border-top: 4px solid var(--green) !important;
+}
+
+.effect-guarded {
+  border-top: 4px solid var(--ochre) !important;
+}
+
+.effect-blocked,
+.security-nonclaim-grid article {
+  border-top: 4px solid var(--red) !important;
+}
+
+.security-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.security-table {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.security-table div {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.security-table div:last-child {
+  border-bottom: 0;
+}
+
+.security-table span {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.security-table p {
   color: var(--muted);
   font-size: 0.94rem;
 }
@@ -1832,7 +2067,18 @@ p:last-child {
   .roadmap-estimate-grid,
   .roadmap-lane-grid,
   .roadmap-stage-grid,
-  .roadmap-split {
+  .roadmap-split,
+  .workbench-intro,
+  .workbench-flow,
+  .workbench-showcase,
+  .workbench-surface-grid,
+  .workbench-split,
+  .security-intro,
+  .security-rule-grid,
+  .security-scope-grid,
+  .security-effect-grid,
+  .security-split,
+  .security-nonclaim-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1902,7 +2148,9 @@ p:last-child {
   .language-table div,
   .example-table div,
   .seal-table div,
-  .roadmap-table div {
+  .roadmap-table div,
+  .workbench-table div,
+  .security-table div {
     grid-template-columns: 1fr;
     gap: 8px;
   }

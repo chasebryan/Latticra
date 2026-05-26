@@ -51,7 +51,7 @@ require_contains 'Fedora endorsement' docs/FEDORA_READINESS_PLAN.md
 require_contains 'Fedora allowed license posture' docs/FEDORA_READINESS_PLAN.md
 require_contains 'BuildRequires completeness' docs/FEDORA_READINESS_PLAN.md
 require_contains 'mock build readiness' docs/FEDORA_READINESS_PLAN.md
-require_contains 'final_state=device-registry-ready' docs/FEDORA_READINESS_PLAN.md
+require_contains 'final_state=driver-catalog-ready' docs/FEDORA_READINESS_PLAN.md
 require_contains 'external_effect_performed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'scheduler_execution_allowed=0' docs/FEDORA_READINESS_PLAN.md
@@ -68,7 +68,11 @@ require_contains 'namespace_mutation_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'device_open_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'device_read_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'device_write_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'driver_probe_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'driver_load_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'driver_bind_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'interrupt_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'dma_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'hardware_effect_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'not bootable' docs/FEDORA_READINESS_PLAN.md
 require_contains 'not a Fedora derivative' docs/FEDORA_READINESS_PLAN.md

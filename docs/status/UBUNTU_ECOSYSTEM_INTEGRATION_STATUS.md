@@ -25,10 +25,24 @@ deb_artifact_created=0
 deb_installed_on_host=0
 ubuntu_package_license_review_contract_present=1
 ubuntu_package_license_review_status=blocked-pending-formal-review
+ubuntu_package_notice_inventory_present=1
+ubuntu_package_notice_inventory_report_present=1
+ubuntu_package_notice_review_contract_present=1
+ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 license_expression_candidate_recorded=1
 license_expression_reviewed=0
 license_expression_unresolved=1
+doc_payload_license_reviewed=0
+doc_payload_license_unresolved=1
+third_party_material_inventory_recorded=1
+third_party_material_inventory_reviewed=0
+generated_artifact_notice_reviewed=0
+third_party_notice_reviewed=0
+notice_file_decision_recorded=0
+debian_copyright_notice_mapping_reviewed=0
+ubuntu_package_notice_review_unblocked=0
 packaging_license_expression_updated=0
+ubuntu_package_license_review_unblocked=0
 ubuntu_lintian_static_metadata_unblocked=0
 ubuntu_local_deb_build_transcript_unblocked=0
 ppa_claimed=0
@@ -45,6 +59,8 @@ docs/UBUNTU_READINESS_PLAN.md
 docs/UBUNTU_DEVELOPER_WORKFLOW.md
 docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 docs/UBUNTU_LINTIAN_AVAILABILITY.md
+docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md
+docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
 packaging/ubuntu/README.md
@@ -58,8 +74,13 @@ scripts/test-ubuntu-build-lane.sh
 scripts/test-ubuntu-developer-workflow.sh
 scripts/test-ubuntu-local-deb-static-validation.sh
 scripts/test-ubuntu-lintian-availability.sh
+scripts/ubuntu-package-notice-inventory.sh
+scripts/test-ubuntu-package-notice-inventory.sh
+scripts/test-ubuntu-package-notice-review-contract.sh
 scripts/test-ubuntu-package-license-review-contract.sh
 scripts/test-ubuntu-local-deb-build-transcript-contract.sh
+.github/workflows/ubuntu-package-notice-inventory.yml
+.github/workflows/ubuntu-package-notice-review-contract.yml
 ```
 
 ## Public Entry Points
@@ -81,8 +102,10 @@ The local deb build transcript contract is intentionally blocked from evidence p
 
 The Ubuntu package license review contract now records the current source facts and candidate expression, but it keeps packaging metadata at `LicenseRef-Latticra-TBD` until formal review accepts the source and documentation scope.
 
+The Ubuntu package notice inventory records the current local-deb draft payload facts without promoting the review. The Ubuntu package notice review contract records the unresolved documentation-license and notice obligations that must be settled before the package license review can be promoted.
+
 ## Next Recommended Lane
 
 ```text
-Promote the Ubuntu package license expression only after documentation licensing and notice obligations are reviewed.
+Review the Ubuntu package notice inventory, then promote the Ubuntu package notice review only after documentation licensing, third-party notices, generated-artifact notices, and Debian copyright mapping are decided.
 ```

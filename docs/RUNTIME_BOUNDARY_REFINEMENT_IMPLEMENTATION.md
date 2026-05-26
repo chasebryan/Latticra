@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Refinement Implementation
 
-Status: runtime boundary refinement implementation with Lat pipeline stage-summary, parse-error, semantic-error, downstream-stage-error, span, and comment evidence
-Scope: no-effect runtime-boundary evidence reporting for Lat pipeline metadata, Lat pipeline stage-summary metadata, Lat pipeline parse-error metadata, Lat pipeline semantic-error metadata, Lat pipeline downstream stage-error metadata, Lat pipeline span metadata, Lat pipeline line-comment metadata, and Lat-specific LIR metadata.
+Status: runtime boundary refinement implementation with Lat pipeline declaration, module/count, stage-summary, parse-error, semantic-error, downstream-stage-error, span, and comment evidence
+Scope: no-effect runtime-boundary evidence reporting for Lat pipeline metadata, Lat pipeline first-declaration metadata, Lat pipeline module/count metadata, Lat pipeline stage-summary metadata, Lat pipeline parse-error metadata, Lat pipeline semantic-error metadata, Lat pipeline downstream stage-error metadata, Lat pipeline span metadata, Lat pipeline line-comment metadata, and Lat-specific LIR metadata.
 
 ## Purpose
 
@@ -68,7 +68,21 @@ lat_pipeline_lir_ok
 lat_pipeline_no_effect_chain_ok
 lat_pipeline_evidence_level
 lat_pipeline_semantic_valid
+lat_pipeline_module_name
 lat_pipeline_source_len
+lat_pipeline_declaration_count
+lat_pipeline_clause_count
+lat_pipeline_model_declaration_count
+lat_pipeline_model_clause_count
+lat_pipeline_first_declaration_node_index
+lat_pipeline_first_declaration_kind
+lat_pipeline_first_declaration_name
+lat_pipeline_first_declaration_source
+lat_pipeline_first_declaration_parse_index
+lat_pipeline_first_declaration_first_clause_index
+lat_pipeline_first_declaration_clause_count
+lat_pipeline_first_declaration_source_index
+lat_pipeline_first_transition_source_index
 lat_pipeline_node_count
 lat_pipeline_edge_count
 lat_pipeline_comment_count
@@ -112,7 +126,7 @@ Lat execution and LIR execution remain future-gated.
 
 ## Report surface
 
-`latticra_runtime_boundary_report` now includes deterministic report fields for Lat pipeline evidence, Lat pipeline stage-summary evidence, Lat pipeline parse-error evidence, Lat pipeline semantic-error evidence, Lat pipeline downstream stage-error evidence, Lat pipeline span evidence, Lat pipeline line-comment evidence, and Lat-specific LIR evidence.
+`latticra_runtime_boundary_report` now includes deterministic report fields for Lat pipeline evidence, Lat pipeline first-declaration evidence, Lat pipeline module/count evidence, Lat pipeline stage-summary evidence, Lat pipeline parse-error evidence, Lat pipeline semantic-error evidence, Lat pipeline downstream stage-error evidence, Lat pipeline span evidence, Lat pipeline line-comment evidence, and Lat-specific LIR evidence.
 
 The runtime boundary report capacity is increased to preserve bounded output with the expanded report surface.
 
@@ -135,7 +149,7 @@ runtime_boundary_reports_lat_pipeline_evidence
 runtime_boundary_keeps_lat_lir_execution_future_gated
 ```
 
-The Lat pipeline evidence invariants also verify that parser error metadata, semantic error metadata, downstream model/lowering/LIR error metadata, stage-summary metadata, parser diagnostic/module span metadata, line-comment count, and first-comment span metadata are copied into runtime-boundary records and reports, including denied records for failed Lat pipeline metadata.
+The Lat pipeline evidence invariants also verify that parser error metadata, semantic error metadata, downstream model/lowering/LIR error metadata, first-declaration metadata, module/count metadata, stage-summary metadata, parser diagnostic/module span metadata, line-comment count, and first-comment span metadata are copied into runtime-boundary records and reports, including denied records for failed Lat pipeline metadata.
 
 ## Compatibility
 
@@ -158,6 +172,8 @@ small-buffer behavior
 Lat pipeline parse-error evidence reporting
 Lat pipeline semantic-error evidence reporting
 Lat pipeline downstream stage-error evidence reporting
+Lat pipeline first-declaration evidence reporting
+Lat pipeline module/count evidence reporting
 Lat pipeline stage-summary evidence reporting
 Lat pipeline diagnostic/module span evidence reporting
 Lat pipeline line-comment evidence reporting

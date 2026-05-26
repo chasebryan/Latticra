@@ -21,6 +21,7 @@ docs/status/SEAL_SIGNER_HANDOFF_STATUS.md
 docs/LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
 docs/status/SEAL_SIGNER_INVOCATION_STATUS.md
+docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md
 include/latticra/seal_signing_authorization.h
 include/latticra/seal_signer_handoff.h
 include/latticra/seal_signer_invocation.h
@@ -42,6 +43,9 @@ docs/LATTICRA_SEAL_SIGNATURE_REQUEST_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md
 docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md
 scripts/test-latticra-seal-signature-request-status.sh
+scripts/test-latticra-seal-signing-authorization-status.sh
+.github/workflows/latticra-seal-signature-request-status.yml
+.github/workflows/latticra-seal-signing-authorization-status.yml
 ```
 
 ## Current checkpoint
@@ -55,6 +59,9 @@ seal_signing_authorization_header_present=1
 seal_signing_authorization_source_present=1
 seal_signing_authorization_invariant_test_present=1
 seal_signing_authorization_runner_present=1
+seal_signing_authorization_status_present=1
+seal_signing_authorization_status_runner_present=1
+seal_signing_authorization_status_workflow_present=1
 seal_signer_handoff_contract_present=1
 seal_signer_handoff_implementation_present=1
 seal_signer_handoff_header_present=1
@@ -70,6 +77,13 @@ seal_signer_invocation_status_present=1
 seal_signature_request_contract_present=1
 seal_signature_request_implementation_present=1
 seal_signature_request_status_present=1
+seal_signature_request_status_runner_present=1
+seal_signature_request_status_workflow_present=1
+signing_authorization_predecessor_signature_request_status_present=1
+readme_links_signing_authorization_status=1
+root_status_mentions_signing_authorization_status=1
+status_index_links_signing_authorization_status=1
+foundation_index_links_signing_authorization_status=1
 signing_authorization_profile=latticra-seal-signing-authorization/0.1
 signature_request_profile=latticra-seal-signature-request/0.1
 requested_signature=Ed25519-development
@@ -92,6 +106,19 @@ host_write_performed=0
 network_performed=0
 mode=metadata-only
 status=signing-authorization-metadata
+signing_authorization_status_added=1
+signing_added=0
+signature_verification_added=0
+key_generation_added=0
+private_key_handling_added=0
+trust_store_behavior_added=0
+revocation_lookup_added=0
+object_sealing_added=0
+runtime_handoff_execution_added=0
+effect_execution_added=0
+capability_enforcement_added=0
+network_behavior_changed=0
+host_behavior_changed=0
 ```
 
 ## Validation
@@ -99,6 +126,7 @@ status=signing-authorization-metadata
 The implementation is covered by:
 
 ```sh
+sh scripts/test-latticra-seal-signing-authorization-status.sh
 sh scripts/test-latticra-seal-signing-authorization-contract.sh
 sh scripts/test-latticra-seal-signing-authorization.sh
 sh scripts/test-latticra-seal-signer-handoff-contract.sh
@@ -120,6 +148,7 @@ sh scripts/test-latticra-seal-signature-request-status.sh
 Expected output:
 
 ```text
+seal signing authorization status: ok
 seal signing authorization contract: ok
 seal signing authorization invariants: ok
 seal signer handoff contract: ok
@@ -130,6 +159,7 @@ seal signer invocation invariants: ok
 seal signer invocation status: ok
 seal signature request contract: ok
 seal signature request invariants: ok
+seal report envelope status: ok
 seal signature request status: ok
 ```
 
@@ -137,10 +167,12 @@ seal signature request status: ok
 
 This status record is documentation/status alignment only.
 
+This refresh adds an explicit status guard workflow and records the signature-request status predecessor without changing the signing-authorization implementation.
+
 It does not add signing, verification, private-key handling, key generation, trust-store behavior, revocation lookup, runtime handoff execution, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, object sealing, kernel behavior, production readiness, or authority grants.
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is bounded no-effect key parsing implementation or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
+The next valid Latticra Seal slice is signer handoff status/workflow guard alignment or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
 
 That future slice must not add signing, verification, private-key handling, key generation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

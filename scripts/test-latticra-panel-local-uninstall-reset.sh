@@ -168,6 +168,8 @@ APPLY_SCRIPT="installer/scripts/latticra-installer-apply.sh"
 require_contains 'reset|uninstall)' "$APPLY_SCRIPT"
 require_contains 'latticra-installer-uninstall.sh' "$APPLY_SCRIPT"
 require_contains 'usage: latticra {status|path|gui|receipts|docs|lc|reset|seal|nadia|run}' "$APPLY_SCRIPT"
+require_contains 'LC_COMMAND_WRAPPER=$(detect_lc_command_wrapper)' "$SCRIPT"
+require_contains 'for command in $COMMAND_WRAPPERS; do' "$SCRIPT"
 
 mkdir -p "$PREFIX/share/latticra/components" "$USER_BIN" "$APP_DIR" "$ICON_DIR"
 printf '%s\n' 'payload' > "$PREFIX/payload.txt"
@@ -254,6 +256,31 @@ for command in latticra lat latticra-lc latticra-seal latticra-nadia latticra-pa
 done
 require_absent "$RESET_LEGACY_APP_DIR/latticra-installer.desktop"
 require_absent "$RESET_LEGACY_APP_DIR/latticra-panel.desktop"
+
+CUSTOM_LC_HOME="$TMP_DIR/custom-lc-home"
+CUSTOM_LC_PREFIX="$CUSTOM_LC_HOME/.local/share/latticra"
+CUSTOM_LC_RECEIPTS="$TMP_DIR/custom-lc-receipts"
+CUSTOM_LC_USER_BIN="$CUSTOM_LC_HOME/.local/bin"
+CUSTOM_LC_WRAPPER="latticra-console-custom"
+mkdir -p "$CUSTOM_LC_PREFIX/share/latticra/lc/install" "$CUSTOM_LC_USER_BIN"
+cat > "$CUSTOM_LC_PREFIX/share/latticra/lc/install/config.toml" <<CUSTOM_LC_CONFIG
+install_profile = "lc-panel-install-v0"
+command_wrapper = "$CUSTOM_LC_WRAPPER"
+allow_external_host_commands = false
+CUSTOM_LC_CONFIG
+printf '%s\n' 'custom lc payload' > "$CUSTOM_LC_PREFIX/payload.txt"
+write_managed "$CUSTOM_LC_USER_BIN/$CUSTOM_LC_WRAPPER"
+
+HOME="$CUSTOM_LC_HOME" sh "$SCRIPT" \
+  --prefix "$CUSTOM_LC_PREFIX" \
+  --receipt-dir "$CUSTOM_LC_RECEIPTS" \
+  > "$TMP_DIR/custom-lc-reset.out"
+
+require_contains "[removed] command wrapper: $CUSTOM_LC_USER_BIN/$CUSTOM_LC_WRAPPER" "$TMP_DIR/custom-lc-reset.out"
+require_contains "lc_command_wrapper=$CUSTOM_LC_WRAPPER" "$CUSTOM_LC_RECEIPTS/latest-reset-receipt.txt"
+require_contains 'RESET_RESULT: success mode=local-prefix-reset' "$TMP_DIR/custom-lc-reset.out"
+require_absent "$CUSTOM_LC_PREFIX"
+require_absent "$CUSTOM_LC_USER_BIN/$CUSTOM_LC_WRAPPER"
 
 HOME="$HOME_DIR" sh "$SCRIPT" --prefix "$PREFIX" --receipt-dir "$RECEIPTS" --operation uninstall --dry-run > "$TMP_DIR/uninstall-dry-run.out"
 

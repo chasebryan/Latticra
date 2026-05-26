@@ -1,7 +1,7 @@
 # Latticra Console Foundation
 
 Status: Stage-0 foundation
-Scope: LC identity, Panel installability, configurable metadata, substrate bridge, host-embedding plan, host-adapter contract, Seal receipt-request contract, receipt payload schema, signature-request binding contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
+Scope: LC identity, Panel installability, configurable metadata, substrate bridge, host-embedding plan, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, signature-request binding contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
 
 ## Purpose
 
@@ -40,6 +40,8 @@ host_inventory_contract_profile=lc-host-inventory-v0
 host_adapter_contract_profile=lc-host-adapter-v0
 receipt_request_contract_profile=lc-receipt-request-v0
 receipt_payload_schema_profile=lc-receipt-payload-schema-v0
+receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0
+receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0
 signature_request_binding_profile=lc-signature-request-binding-v0
 receipt_contract_profile=lc-receipts-v0
 os_base_contract_profile=lc-os-base-v0
@@ -54,6 +56,8 @@ host_inventory_receipt_required=true
 host_adapter_contract_required=true
 receipt_request_contract_required=true
 receipt_payload_schema_required=true
+receipt_payload_artifact_draft_required=true
+receipt_payload_artifact_review_required=true
 signature_request_binding_required=true
 os_base_contract_required=true
 vm_evidence_contract_required=true
@@ -65,6 +69,7 @@ The Panel component creates:
 
 ```text
 etc/latticra/lc.toml
+share/latticra/lc/install/config.toml
 share/latticra/lc/README.md
 share/latticra/lc/commands/seed-registry.txt
 share/latticra/lc/profiles/hosted-reference.toml
@@ -77,6 +82,8 @@ share/latticra/lc/host-inventory/contract.toml
 share/latticra/lc/host-adapter/contract.toml
 share/latticra/lc/receipt-request/contract.toml
 share/latticra/lc/receipt-request/payload-schema.toml
+share/latticra/lc/receipt-request/payload-artifact-draft.toml
+share/latticra/lc/receipt-request/payload-artifact-review.toml
 share/latticra/lc/receipt-request/signature-request-binding.toml
 share/latticra/lc/receipts/contract.toml
 share/latticra/lc/os-base/contract.toml
@@ -113,6 +120,8 @@ lc profiles
 lc receipts
 lc receipt-request
 lc receipt-payload
+lc receipt-artifact
+lc receipt-artifact-review
 lc signature-request
 lc substrate
 lc host
@@ -157,6 +166,8 @@ host_inventory_contract_profile = "lc-host-inventory-v0"
 host_adapter_contract_profile = "lc-host-adapter-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
+receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
+receipt_payload_artifact_review_profile = "lc-receipt-payload-artifact-review-v0"
 signature_request_binding_profile = "lc-signature-request-binding-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
@@ -172,6 +183,8 @@ require_host_inventory_receipt = true
 require_host_adapter_contract = true
 require_receipt_request_contract = true
 require_receipt_payload_schema = true
+require_receipt_payload_artifact_draft = true
+require_receipt_payload_artifact_review = true
 require_signature_request_binding = true
 require_os_base_contract = true
 require_vm_evidence_contract = true
@@ -200,7 +213,7 @@ lc profile os
 lc profile custom
 ```
 
-The install engine writes the selected profile into `etc/latticra/lc.toml` and installs the preset files under `share/latticra/lc/profiles/`. These profiles remain configuration metadata only.
+The install engine writes the selected profile into `etc/latticra/lc.toml`, writes install metadata into `share/latticra/lc/install/config.toml`, and installs the preset files under `share/latticra/lc/profiles/`. The command wrapper comes from `lc.install.command_wrapper` and defaults to `latticra-lc`. These profiles and install records remain configuration metadata only, and external host commands stay disabled from the Panel.
 
 ## Host Embedding Contract
 
@@ -350,6 +363,10 @@ receipt_request_contract_required=1
 receipt_request_contract_present=1
 receipt_payload_schema_required=1
 receipt_payload_schema_present=1
+receipt_payload_artifact_draft_required=1
+receipt_payload_artifact_draft_present=1
+receipt_payload_artifact_review_required=1
+receipt_payload_artifact_review_present=1
 signature_request_binding_required=1
 signature_request_binding_contract_present=1
 runtime_boundary_receipt_required=1
@@ -357,6 +374,8 @@ seal_capability_labels_required=1
 signature_request_profile=latticra-seal-signature-request/0.1
 receipt_request_command=lc receipt-request
 receipt_payload_schema_command=lc receipt-payload
+receipt_payload_artifact_draft_command=lc receipt-artifact
+receipt_payload_artifact_review_command=lc receipt-artifact-review
 signature_request_binding_command=lc signature-request
 receipt_surfaces=profile,host-contract,host-inventory,host-adapter,runtime-boundary
 promotion_gate=lc_receipts_before_host_adapter_or_os_base
@@ -399,6 +418,18 @@ receipt_payload_schema_profile=lc-receipt-payload-schema-v0
 receipt_payload_schema_required=1
 receipt_payload_schema_present=1
 receipt_payload_schema_command=lc receipt-payload
+receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0
+receipt_payload_artifact_draft_required=1
+receipt_payload_artifact_draft_present=1
+receipt_payload_artifact_draft_command=lc receipt-artifact
+receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0
+receipt_payload_artifact_review_required=1
+receipt_payload_artifact_review_present=1
+receipt_payload_artifact_review_command=lc receipt-artifact-review
+draft_review_receipt_present=0
+materialization_allowed=0
+payload_artifact_present=0
+payload_materialized=0
 signature_request_binding_profile=lc-signature-request-binding-v0
 signature_request_binding_required=1
 signature_request_binding_contract_present=1
@@ -454,6 +485,13 @@ required_authority_fields=no_effect,execution_allowed,host_mutation_allowed,netw
 payload_artifact_present=0
 payload_hash_computed=0
 payload_path_recorded=0
+receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0
+receipt_payload_artifact_draft_present=1
+receipt_payload_artifact_draft_command=lc receipt-artifact
+receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0
+receipt_payload_artifact_review_present=1
+receipt_payload_artifact_review_command=lc receipt-artifact-review
+materialization_allowed=0
 signature_request_binding_present=0
 signature_request_binding_allowed=0
 signature_request_binding_contract_present=1
@@ -470,6 +508,102 @@ latticra-lc receipt-payload
 
 This schema does not create a payload, hash a payload, write a payload path, bind a signature request, or grant signing authority.
 
+## Receipt Payload Artifact Draft
+
+LC now installs and reports a no-write draft contract for the future receipt payload artifact:
+
+```text
+draft_profile=lc-receipt-payload-artifact-draft-v0
+draft_status=metadata-only
+draft_contract_present=1
+receipt_request_profile=lc-receipt-request-v0
+receipt_payload_schema_profile=lc-receipt-payload-schema-v0
+receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0
+receipt_payload_artifact_review_present=1
+receipt_payload_artifact_review_command=lc receipt-artifact-review
+signature_request_binding_profile=lc-signature-request-binding-v0
+receipt_contract_profile=lc-receipts-v0
+signature_request_profile=latticra-seal-signature-request/0.1
+signing_authorization_profile=latticra-seal-signing-authorization/0.1
+canonicalization_profile=lc-receipt-payload-canonical-text-v0
+artifact_fields=console_id,profile,command_registry,host_contract,host_inventory,host_adapter,runtime_boundary,seal_capability_labels,authority_denials
+required_prior_contracts=receipt-request,receipt-payload-schema,signature-request-binding,receipt-contract
+receipt_payload_artifact_draft_present=1
+draft_review_required=1
+draft_review_present=0
+draft_review_receipt_required=1
+draft_review_receipt_present=0
+draft_review_approval_recorded=0
+materialization_allowed=0
+payload_artifact_present=0
+payload_materialized=0
+payload_write_allowed=0
+payload_hash_computed=0
+payload_hash_recorded=0
+payload_path_recorded=0
+signature_request_binding_artifact_present=0
+signature_request_binding_allowed=0
+seal_signature_request_ready=0
+receipt_write_allowed=0
+receipt_signed=0
+promotion_gate=lc_receipt_payload_artifact_draft_before_materialization_and_signature_request
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report receipt-artifact
+latticra-lc receipt-artifact
+```
+
+This draft does not create or write a payload artifact, compute or record a payload hash, record a payload path, bind a Seal signature request, invoke signing, or write a receipt.
+
+## Receipt Payload Artifact Review Gate
+
+LC now installs and reports a metadata-only review gate between the payload artifact draft and any future payload materialization:
+
+```text
+review_profile=lc-receipt-payload-artifact-review-v0
+review_status=metadata-only
+review_gate_present=1
+receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0
+receipt_payload_artifact_draft_required=1
+receipt_payload_artifact_draft_present=1
+receipt_payload_artifact_draft_command=lc receipt-artifact
+draft_review_required=1
+draft_review_present=0
+draft_review_receipt_required=1
+draft_review_receipt_present=0
+draft_review_approval_recorded=0
+draft_reviewer_identity_recorded=0
+draft_review_timestamp_recorded=0
+materialization_allowed=0
+payload_artifact_present=0
+payload_materialized=0
+payload_write_allowed=0
+payload_hash_computed=0
+payload_hash_recorded=0
+payload_path_recorded=0
+signature_request_binding_allowed=0
+signature_request_binding_artifact_present=0
+seal_signature_request_ready=0
+seal_signature_request_present=0
+seal_signing_authority_present=0
+receipt_write_allowed=0
+receipt_signed=0
+promotion_gate=lc_receipt_payload_artifact_review_before_materialization
+command_surface=lc receipt-artifact-review
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report receipt-artifact-review
+latticra-lc receipt-artifact-review
+```
+
+This gate records that the draft still needs review and a review receipt. It does not materialize the payload artifact, write payload bytes, compute or record a payload hash, record a payload path, bind a Seal signature request, invoke signing, or write a receipt.
+
 ## Signature Request Binding Contract
 
 LC now installs and reports a metadata-only binding contract for a future Seal signature-request artifact:
@@ -480,11 +614,23 @@ binding_status=metadata-only
 binding_contract_present=1
 receipt_request_profile=lc-receipt-request-v0
 receipt_payload_schema_profile=lc-receipt-payload-schema-v0
+receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0
+receipt_payload_artifact_draft_required=1
+receipt_payload_artifact_draft_present=1
+receipt_payload_artifact_draft_command=lc receipt-artifact
+receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0
+receipt_payload_artifact_review_required=1
+receipt_payload_artifact_review_present=1
+receipt_payload_artifact_review_command=lc receipt-artifact-review
+draft_review_receipt_present=0
+materialization_allowed=0
 receipt_contract_profile=lc-receipts-v0
 signature_request_profile=latticra-seal-signature-request/0.1
 signing_authorization_profile=latticra-seal-signing-authorization/0.1
 requested_signature=Ed25519-development
 requested_signing_authorization=metadata-only
+required_surfaces=receipt-request,receipt-payload-schema,receipt-payload-artifact-draft,receipt-payload-artifact-review,receipt-contract,runtime-boundary,seal-capability-labels
+payload_artifact_present=0
 signature_request_binding_allowed=0
 signature_request_binding_artifact_present=0
 seal_signature_request_ready=0
@@ -639,6 +785,8 @@ core, panel, and substrate inspection -> authority-check / validation-only
 lc receipts -> authority-check / validation-only
 lc receipt-request -> authority-check / validation-only
 lc receipt-payload -> authority-check / validation-only
+lc receipt-artifact -> authority-check / validation-only
+lc receipt-artifact-review -> authority-check / validation-only
 lc signature-request -> authority-check / validation-only
 lc host-contract -> authority-check / validation-only
 lc host-inventory -> authority-check / validation-only
@@ -700,6 +848,10 @@ receipt_request_contract_status=metadata-only-contract-ready
 receipt_request_contract_present=1
 receipt_payload_schema_status=metadata-only-schema-ready
 receipt_payload_schema_present=1
+receipt_payload_artifact_draft_status=metadata-only-draft-ready
+receipt_payload_artifact_draft_present=1
+receipt_payload_artifact_review_status=metadata-only-review-gate-ready
+receipt_payload_artifact_review_present=1
 signature_request_binding_status=metadata-only-contract-ready
 signature_request_binding_present=1
 os_base_contract_status=metadata-only-contract-ready
@@ -733,8 +885,9 @@ LC Stage-0 does not:
 
 ## Next Slices
 
-1. Add a no-write LC receipt payload artifact draft only after the schema, binding contract, and receipt request are reviewed.
-2. Bind the LC receipt payload artifact to a Seal signature-request artifact only after signing authority is implemented and gated.
-3. Add the first Seal-signed LC receipt path only after the receipt request is reviewed and receipted.
-4. Add a host-adapter artifact schema only after the host-adapter contract is receipted.
-5. Add a VM evidence artifact schema only after the VM evidence contract is receipted.
+1. Add a metadata-only LC receipt payload materialization plan only after the review gate is receipted.
+2. Materialize the LC receipt payload artifact only after the draft is reviewed and receipted.
+3. Bind the LC receipt payload artifact to a Seal signature-request artifact only after signing authority is implemented and gated.
+4. Add the first Seal-signed LC receipt path only after the receipt request is reviewed and receipted.
+5. Add a host-adapter artifact schema only after the host-adapter contract is receipted.
+6. Add a VM evidence artifact schema only after the VM evidence contract is receipted.
