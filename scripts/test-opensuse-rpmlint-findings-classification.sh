@@ -85,7 +85,7 @@ require_contains 'docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md' README.
 require_contains 'docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md' README.md
 
 require_contains 'LOCAL-ONLY openSUSE DRAFT' packaging/opensuse/latticra.spec
-require_contains 'LicenseRef-Latticra-TBD' packaging/opensuse/latticra.spec
+require_contains 'License:        AGPL-3.0-or-later AND CC-BY-4.0' packaging/opensuse/latticra.spec
 require_contains 'Open Build Service publication' packaging/opensuse/latticra.changes
 
 printf 'opensuse_rpmlint_findings_classification: ok\n'

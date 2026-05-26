@@ -59,7 +59,7 @@ require_contains 'DISTNAME=' packaging/openbsd/Makefile
 require_contains 'CATEGORIES=' packaging/openbsd/Makefile
 require_contains 'HOMEPAGE=' packaging/openbsd/Makefile
 require_contains 'MAINTAINER=' packaging/openbsd/Makefile
-require_contains 'LicenseRef-Latticra-TBD' packaging/openbsd/Makefile
+require_contains 'PERMIT_PACKAGE=	No' packaging/openbsd/Makefile
 require_contains 'PERMIT_PACKAGE=' packaging/openbsd/Makefile
 require_contains 'PERMIT_PACKAGE=	No' packaging/openbsd/Makefile
 require_contains 'WANTLIB += c' packaging/openbsd/Makefile
@@ -76,7 +76,7 @@ require_contains 'share/doc/latticra/README.md' packaging/openbsd/pkg/PLIST
 require_contains 'openbsd_port_draft_present=1' docs/status/OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md
 require_contains 'openbsd_port_static_validation_present=1' docs/status/OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md
 require_contains 'permit_package_enabled=0' docs/status/OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md
-require_contains 'LicenseRef-Latticra-TBD' docs/status/OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'AGPL-3.0-or-later' docs/status/OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md
 
 require_contains 'LATTICRA STATUS REPORT' src/latticra_cli.c
 require_contains 'mode=no-effect' src/latticra_cli.c

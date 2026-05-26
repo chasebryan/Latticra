@@ -62,7 +62,7 @@ packaging_metadata_third_party_material_reviewed=0
 third_party_notice_reviewed=0
 third_party_notice_requirements_recorded=0
 ubuntu_package_notice_review_unblocked=0
-ubuntu_package_license_review_unblocked=0
+ubuntu_package_license_review_unblocked=1
 ubuntu_lintian_static_metadata_unblocked=0
 ubuntu_local_deb_build_transcript_unblocked=0
 ```

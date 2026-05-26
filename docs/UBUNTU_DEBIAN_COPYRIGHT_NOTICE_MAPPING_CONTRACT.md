@@ -7,7 +7,7 @@ Scope: define Debian copyright notice-mapping evidence required before the Ubunt
 
 This contract turns the Ubuntu local deb `packaging/ubuntu/debian/copyright` notice-mapping blocker into a concrete review checklist.
 
-It does not update `packaging/ubuntu/debian/copyright`, replace `LicenseRef-Latticra-TBD`, create a `NOTICE` file, decide the documentation license, build a package, publish a package, submit to Ubuntu, or provide legal advice.
+It records the updated `packaging/ubuntu/debian/copyright` license mapping, but it does not create a `NOTICE` file, build a package, publish a package, submit to Ubuntu, or provide legal advice.
 
 ## Current Inputs
 
@@ -16,7 +16,8 @@ package_scope=local-deb-draft
 debian_copyright_file=packaging/ubuntu/debian/copyright
 debian_copyright_present=1
 debian_copyright_format_url_present=1
-debian_copyright_license_ref_tbd=1
+debian_copyright_agpl_mapping_present=1
+debian_copyright_cc_by_mapping_present=1
 binary_payload=usr/bin/latticra
 binary_payload_source=src/latticra_cli.c
 doc_payload=usr/share/doc/latticra/README.md
@@ -32,7 +33,7 @@ ubuntu_release_artifact_notice_requirements_contract_present=1
 ubuntu_package_notice_review_contract_present=1
 ```
 
-The current Debian copyright file is a local-only draft. It intentionally keeps `LicenseRef-Latticra-TBD` until package source scope, documentation scope, third-party material, generated-artifact notices, NOTICE-file requirements, and notice mappings are formally reviewed.
+The current Debian copyright file is a local-only draft. It records Apache-2.0 as the existing-code default, AGPL-3.0-or-later for the no-effect CLI payload, and CC-BY-4.0 for documentation while third-party material, generated-artifact notices, NOTICE-file requirements, and broader notice mappings remain under review.
 
 ## Required Mapping Before Promotion
 
@@ -55,15 +56,15 @@ ubuntu_debian_copyright_notice_mapping_contract_present=1
 ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping
 debian_copyright_notice_mapping_reviewed=0
 debian_copyright_binary_payload_mapping_reviewed=0
-debian_copyright_doc_payload_mapping_reviewed=0
+debian_copyright_doc_payload_mapping_reviewed=1
 debian_copyright_third_party_notice_mapping_reviewed=0
 debian_copyright_generated_artifact_notice_mapping_reviewed=0
 debian_copyright_notice_file_mapping_reviewed=0
 debian_copyright_trademark_notice_boundary_reviewed=0
-debian_copyright_license_ref_replaced_or_justified=0
+debian_copyright_license_ref_replaced_or_justified=1
 debian_copyright_missing_notice_entries=0
 ubuntu_package_notice_review_unblocked=0
-ubuntu_package_license_review_unblocked=0
+ubuntu_package_license_review_unblocked=1
 ubuntu_lintian_static_metadata_unblocked=0
 ubuntu_local_deb_build_transcript_unblocked=0
 ```

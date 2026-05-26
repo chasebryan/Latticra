@@ -102,7 +102,7 @@ scripts/test-debian-freebsd-openbsd-package-payload-inspection-contract.sh
 
 The Debian lane does not publish a package, upload to mentors.debian.net, submit to Debian, claim Debian archive readiness, claim Debian sponsorship, claim ftp-master acceptance, install a root service, change init/systemd state, change the kernel, add a privileged helper, grant network authority, or claim production readiness.
 
-The local deb metadata keeps `LicenseRef-Latticra-TBD` until license, documentation, source archive, and notice obligations are reviewed.
+The local deb metadata now records Apache-2.0 for existing-code defaults, AGPL-3.0-or-later for the no-effect CLI payload, and CC-BY-4.0 for documentation while source archive and notice obligations remain under review.
 
 The source archive contract records the expected `latticra_0.0.0.orig.tar.gz` boundary while keeping archive creation, checksum acceptance, source package creation, and build transcript promotion blocked.
 

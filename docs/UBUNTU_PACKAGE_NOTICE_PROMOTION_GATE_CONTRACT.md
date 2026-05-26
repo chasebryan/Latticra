@@ -41,7 +41,7 @@ ubuntu_package_license_review_unblocked=1
 ```text
 ubuntu_package_notice_promotion_gate_contract_present=1
 ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
-doc_payload_license_decision_recorded=0
+doc_payload_license_decision_recorded=1
 third_party_material_inventory_reviewed=0
 generated_artifact_notice_reviewed=0
 notice_file_decision_recorded=0
@@ -49,7 +49,7 @@ debian_copyright_notice_mapping_reviewed=0
 trademark_notice_boundary_recorded=0
 release_artifact_notice_requirements_recorded=0
 ubuntu_package_notice_review_unblocked=0
-ubuntu_package_license_review_unblocked=0
+ubuntu_package_license_review_unblocked=1
 ubuntu_lintian_static_metadata_unblocked=0
 ubuntu_local_deb_build_transcript_unblocked=0
 ```

@@ -5,9 +5,9 @@ Scope: define the review evidence required before `README.md` can be treated as 
 
 ## Purpose
 
-This contract turns the Ubuntu local deb documentation-license blocker into a concrete review checklist.
+This contract records the Ubuntu local deb documentation-license decision and its package mapping checklist.
 
-It does not decide the documentation license, relicense `README.md`, update `packaging/ubuntu/debian/copyright`, publish a package, create a PPA, submit to Ubuntu, or provide legal advice.
+It does not publish a package, create a PPA, submit to Ubuntu, or provide legal advice.
 
 ## Current Inputs
 
@@ -16,10 +16,10 @@ doc_payload=usr/share/doc/latticra/README.md
 doc_payload_source=README.md
 doc_payload_source_present=1
 root_license_file=LICENSE
-root_license_current=Apache-2.0
+root_license_current=hybrid-license-overview
 license_policy_present=1
 license_migration_plan_present=1
-documentation_license_decision_present=0
+documentation_license_decision_present=1
 ubuntu_package_notice_inventory_present=1
 ubuntu_third_party_material_review_contract_present=1
 ubuntu_generated_artifact_notice_review_contract_present=1
@@ -30,13 +30,13 @@ ubuntu_release_artifact_notice_requirements_contract_present=1
 ubuntu_package_notice_review_contract_present=1
 ```
 
-The current license migration plan records documentation licensing as undecided.
+The current license migration plan records documentation licensing as decided.
 
-Current candidate language remains:
+Current package documentation license:
 
 ```text
-candidate_doc_payload_license=Apache-2.0-or-docs-decision-pending
-candidate_doc_payload_license_applied_to_packaging=0
+candidate_doc_payload_license=CC-BY-4.0
+candidate_doc_payload_license_applied_to_packaging=1
 ```
 
 ## Required Review Before Promotion
@@ -56,15 +56,15 @@ debian_copyright_doc_payload_mapping_reviewed=1
 
 ```text
 ubuntu_doc_payload_license_review_contract_present=1
-ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
-doc_payload_license_reviewed=0
-doc_payload_license_unresolved=1
-documentation_license_decision_present=0
-doc_payload_license_decision_recorded=0
-doc_payload_license_compatible_with_package=0
-debian_copyright_doc_payload_mapping_reviewed=0
+ubuntu_doc_payload_license_review_status=resolved-cc-by-4.0
+doc_payload_license_reviewed=1
+doc_payload_license_unresolved=0
+documentation_license_decision_present=1
+doc_payload_license_decision_recorded=1
+doc_payload_license_compatible_with_package=1
+debian_copyright_doc_payload_mapping_reviewed=1
 ubuntu_package_notice_review_unblocked=0
-ubuntu_package_license_review_unblocked=0
+ubuntu_package_license_review_unblocked=1
 ubuntu_lintian_static_metadata_unblocked=0
 ubuntu_local_deb_build_transcript_unblocked=0
 ```

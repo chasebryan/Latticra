@@ -127,7 +127,7 @@ require_contains 'Name:           latticra' packaging/opensuse/latticra.spec
 require_contains 'Version:        0.0.0' packaging/opensuse/latticra.spec
 require_contains 'Release:        0.local' packaging/opensuse/latticra.spec
 require_contains 'Summary:        Contract-first systems architecture and language project' packaging/opensuse/latticra.spec
-require_contains 'License:        LicenseRef-Latticra-TBD' packaging/opensuse/latticra.spec
+require_contains 'License:        AGPL-3.0-or-later AND CC-BY-4.0' packaging/opensuse/latticra.spec
 require_contains 'URL:            https://github.com/Bryforge/Latticra' packaging/opensuse/latticra.spec
 require_contains 'Source0:        %{name}-%{version}.tar.gz' packaging/opensuse/latticra.spec
 require_contains 'BuildRequires:  gcc' packaging/opensuse/latticra.spec

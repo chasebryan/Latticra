@@ -105,7 +105,7 @@ require_contains 'operator_authorization_reference' "$contract"
 require_contains 'source_archive_accepted_for_build=0' "$contract"
 require_contains 'accepted_rpmlint_transcript_present=0' "$contract"
 require_contains 'unexpected_findings_count_recorded=0' "$contract"
-require_contains 'license_expression_reviewed=0' "$contract"
+require_contains 'license_expression_reviewed=1' "$contract"
 require_contains 'package_notice_obligations_reviewed=0' "$contract"
 require_contains 'buildrequires_reviewed=0' "$contract"
 require_contains 'rpm_artifact_naming_contract_present=1' "$contract"
@@ -148,7 +148,7 @@ require_contains 'osc_build_environment_provisioned=0' packaging/opensuse/README
 require_contains 'explicit_operator_build_authorization=0' packaging/opensuse/README.md
 require_contains 'environment_transcript_present=0' packaging/opensuse/README.md
 
-require_contains 'License:        LicenseRef-Latticra-TBD' packaging/opensuse/latticra.spec
+require_contains 'License:        AGPL-3.0-or-later AND CC-BY-4.0' packaging/opensuse/latticra.spec
 require_contains 'BuildRequires:  gcc' packaging/opensuse/latticra.spec
 require_contains 'BuildRequires:  make' packaging/opensuse/latticra.spec
 require_contains 'Open Build Service publication' packaging/opensuse/latticra.changes

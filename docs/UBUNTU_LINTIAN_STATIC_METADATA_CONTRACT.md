@@ -15,7 +15,7 @@ It does not run `lintian`, `dpkg-buildpackage`, `debuild`, `sbuild`, or `pbuilde
 ubuntu_lintian_availability_present=1
 ubuntu_local_deb_static_validation_present=1
 ubuntu_package_license_promotion_gate_contract_present=1
-ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
+ubuntu_package_license_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ```
 
 ## Required Evidence Before Promotion
@@ -46,15 +46,15 @@ ubuntu_lintian_static_metadata_status=blocked-pending-package-license-promotion
 ubuntu_lintian_availability_present=1
 ubuntu_local_deb_static_validation_present=1
 ubuntu_package_license_promotion_gate_contract_present=1
-ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
+ubuntu_package_license_promotion_gate_status=blocked-pending-package-notice-prerequisites
 lintian_static_metadata_run=0
 lintian_command_recorded=0
 lintian_static_metadata_findings_classified=0
 lintian_expected_draft_findings_classified=0
 lintian_unexpected_findings_classified=0
-license_expression_reviewed=0
-license_expression_unresolved=1
-packaging_license_expression_updated=0
+license_expression_reviewed=1
+license_expression_unresolved=0
+packaging_license_expression_updated=1
 deb_artifact_created=0
 ubuntu_lintian_static_metadata_unblocked=0
 ubuntu_local_deb_build_transcript_unblocked=0

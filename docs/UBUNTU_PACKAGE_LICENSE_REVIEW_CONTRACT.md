@@ -1,24 +1,24 @@
 # Ubuntu Package License Review Contract
 
 Status: no-effect package license review contract
-Scope: define the exact license-review evidence required before the Ubuntu local deb draft can replace `LicenseRef-Latticra-TBD`.
+Scope: record the license-review evidence for the Ubuntu local deb draft package payload.
 
 ## Purpose
 
-This contract turns the Ubuntu package license blocker into a concrete review checklist.
+This contract records the Ubuntu package license expression decision and the remaining promotion blockers.
 
-It does not change the repository license, relicense files, update `packaging/ubuntu/debian/copyright`, publish a package, create a PPA, submit to Ubuntu, or provide legal advice.
+It does not publish a package, create a PPA, submit to Ubuntu, or provide legal advice.
 
 ## Current Inputs
 
 ```text
 root_license_file=LICENSE
-root_license_current=Apache-2.0
+root_license_current=hybrid-license-overview
 license_policy_present=1
 license_migration_plan_present=1
 new_software_direction=AGPL-3.0-or-later
 no_silent_relicensing=1
-documentation_license_decision_present=0
+documentation_license_decision_present=1
 ```
 
 The current no-effect CLI payload input is:
@@ -33,8 +33,8 @@ The current local deb draft also records README documentation as an intended pac
 
 ```text
 doc_payload_source=README.md
-doc_payload_license_reviewed=0
-doc_payload_license_unresolved=1
+doc_payload_license_reviewed=1
+doc_payload_license_unresolved=0
 ```
 
 ## Candidate Expressions
@@ -43,13 +43,13 @@ These are review candidates, not release claims:
 
 ```text
 candidate_binary_payload_license=AGPL-3.0-or-later
-candidate_doc_payload_license=Apache-2.0-or-docs-decision-pending
-candidate_source_package_license=AGPL-3.0-or-later AND Apache-2.0
+candidate_doc_payload_license=CC-BY-4.0
+candidate_source_package_license=AGPL-3.0-or-later AND Apache-2.0 AND CC-BY-4.0
 candidate_expression_recorded=1
-candidate_expression_applied_to_packaging=0
+candidate_expression_applied_to_packaging=1
 ```
 
-The candidate expression must not be applied to Ubuntu packaging metadata until a reviewed decision accepts the package source scope, documentation scope, and notice obligations.
+The candidate expression is applied to the local Ubuntu packaging metadata for the current no-effect CLI plus README payload. Broader notice obligations remain blocked until the package notice review is promoted.
 
 The current notice-review dependency is:
 
@@ -57,7 +57,7 @@ The current notice-review dependency is:
 ubuntu_package_notice_inventory_present=1
 ubuntu_package_notice_inventory_report_present=1
 ubuntu_doc_payload_license_review_contract_present=1
-ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
+ubuntu_doc_payload_license_review_status=resolved-cc-by-4.0
 ubuntu_third_party_material_review_contract_present=1
 ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review
 ubuntu_generated_artifact_notice_review_contract_present=1
@@ -73,10 +73,10 @@ ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artif
 ubuntu_package_notice_promotion_gate_contract_present=1
 ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_package_license_promotion_gate_contract_present=1
-ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
+ubuntu_package_license_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_package_notice_review_contract_present=1
-ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
-ubuntu_package_license_review_unblocked=0
+ubuntu_package_notice_review_status=blocked-pending-notice-review
+ubuntu_package_license_review_unblocked=1
 ```
 
 ## Required Review Before Promotion
@@ -96,9 +96,9 @@ packaging_license_expression_updated=1
 
 ```text
 ubuntu_package_license_review_contract_present=1
-ubuntu_package_license_review_status=blocked-pending-formal-review
+ubuntu_package_license_review_status=resolved-license-expression-recorded
 ubuntu_doc_payload_license_review_contract_present=1
-ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
+ubuntu_doc_payload_license_review_status=resolved-cc-by-4.0
 ubuntu_third_party_material_review_contract_present=1
 ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review
 ubuntu_generated_artifact_notice_review_contract_present=1
@@ -114,13 +114,13 @@ ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artif
 ubuntu_package_notice_promotion_gate_contract_present=1
 ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_package_license_promotion_gate_contract_present=1
-ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
+ubuntu_package_license_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_package_notice_review_contract_present=1
-ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
+ubuntu_package_notice_review_status=blocked-pending-notice-review
 license_expression_candidate_recorded=1
-license_expression_reviewed=0
-license_expression_unresolved=1
-packaging_license_expression_updated=0
+license_expression_reviewed=1
+license_expression_unresolved=0
+packaging_license_expression_updated=1
 ubuntu_lintian_static_metadata_unblocked=0
 ubuntu_local_deb_build_transcript_unblocked=0
 ```
@@ -129,7 +129,7 @@ ubuntu_local_deb_build_transcript_unblocked=0
 
 The Ubuntu lintian availability lane may run because it only proves tool availability.
 
-The Ubuntu static metadata lint lane and local deb build transcript evidence remain blocked until this contract is promoted by a reviewed packaging-license decision.
+The Ubuntu static metadata lint lane and local deb build transcript evidence remain blocked until the package notice review and promotion gates are satisfied.
 
 The Ubuntu package license promotion gate aggregates this contract with the package notice promotion gate before static lint or build transcript evidence can advance.
 

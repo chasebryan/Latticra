@@ -69,7 +69,7 @@ require_contains 'mode=no-effect' src/latticra_cli.c
 require_contains 'runtime_behavior=disabled' src/latticra_cli.c
 
 require_contains 'LOCAL-ONLY DRAFT' packaging/fedora/latticra.spec
-require_contains 'License:        LicenseRef-Latticra-TBD' packaging/fedora/latticra.spec
+require_contains 'License:        AGPL-3.0-or-later AND CC-BY-4.0' packaging/fedora/latticra.spec
 require_contains 'Release:        0.1.local%{?dist}' packaging/fedora/latticra.spec
 require_contains '%description' packaging/fedora/latticra.spec
 require_contains '%prep' packaging/fedora/latticra.spec

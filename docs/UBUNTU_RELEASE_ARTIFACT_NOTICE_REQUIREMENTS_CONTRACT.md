@@ -61,7 +61,7 @@ installed_payload_notice_requirements_recorded=0
 release_notes_notice_requirements_recorded=0
 release_artifact_missing_notice_entries=0
 ubuntu_package_notice_review_unblocked=0
-ubuntu_package_license_review_unblocked=0
+ubuntu_package_license_review_unblocked=1
 ubuntu_lintian_static_metadata_unblocked=0
 ubuntu_local_deb_build_transcript_unblocked=0
 ```

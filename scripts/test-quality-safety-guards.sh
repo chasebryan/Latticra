@@ -116,10 +116,12 @@ check_workflow_make_refs() {
 }
 
 check_no_conflict_markers() {
+  conflict_marker_pattern='^(<<<<<<<([[:space:]].*)?|=======$|>>>>>>>[[:space:]].*|>>>>>>>$|\|\|\|\|\|\|\|([[:space:]].*)?)$'
+
   if command -v rg >/dev/null 2>&1; then
-    conflict_markers="$(rg --hidden -n -S '^(<<<<<<<|=======|>>>>>>>)' --glob '!.git' . || :)"
+    conflict_markers="$(rg --hidden -n -S "$conflict_marker_pattern" --glob '!.git' . || :)"
   else
-    conflict_markers="$(git grep -n -E '^(<<<<<<<|=======|>>>>>>>)' -- . || :)"
+    conflict_markers="$(git grep -n -E "$conflict_marker_pattern" -- . || :)"
   fi
 
   [ -z "$conflict_markers" ] ||

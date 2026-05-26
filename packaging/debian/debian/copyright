@@ -3,12 +3,31 @@ Upstream-Name: Latticra
 Source: https://github.com/Bryforge/Latticra
 Comment:
  LOCAL-ONLY DEBIAN DRAFT. This copyright metadata mirrors the current
- repository license-review posture and is not Debian archive readiness
+ repository hybrid license posture and is not Debian archive readiness
  evidence.
 
 Files: *
 Copyright: 2026 Bryforge
-License: LicenseRef-Latticra-TBD
- The license expression must be reviewed before any Debian archive,
- mentors upload, sponsorship, distribution, or production package claim is
- made.
+License: Apache-2.0
+ Existing repository code remains Apache-2.0 unless a file-level SPDX
+ identifier, path-level notice, or reviewed migration explicitly marks it
+ otherwise.
+
+Files: src/latticra_cli.c
+Copyright: 2026 Bryforge
+License: AGPL-3.0-or-later
+ The no-effect CLI payload is AGPL-3.0-or-later.
+
+Files: README.md docs/* installer/docs/* packaging/*/README.md
+Copyright: 2026 Bryforge
+License: CC-BY-4.0
+ Documentation and handbooks are CC-BY-4.0 unless otherwise marked.
+
+License: Apache-2.0
+ See LICENSES/Apache-2.0.txt.
+
+License: AGPL-3.0-or-later
+ See LICENSES/AGPL-3.0-or-later.txt.
+
+License: CC-BY-4.0
+ See LICENSES/CC-BY-4.0.txt.

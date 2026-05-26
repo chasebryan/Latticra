@@ -162,7 +162,7 @@ require_contains 'portcheck_run=0' packaging/openbsd/README.md
 require_contains 'openbsd_bulk_build_run=0' packaging/openbsd/README.md
 
 require_contains 'Rules-Requires-Root: no' packaging/debian/debian/control
-require_contains 'LICENSE=	LicenseRef-Latticra-TBD' packaging/freebsd/Makefile
+require_contains 'LICENSE=	AGPL-3.0-or-later CC-BY-4.0' packaging/freebsd/Makefile
 require_contains 'PERMIT_PACKAGE=	No' packaging/openbsd/Makefile
 
 require_absent_file packaging/freebsd/distinfo

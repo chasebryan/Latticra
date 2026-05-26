@@ -21,6 +21,7 @@ require_contains() {
 require_file docs/LICENSE_MIGRATION_PLAN.md
 require_file docs/OPEN_ECOSYSTEM_POLICY.md
 require_file docs/LICENSE_POLICY.md
+require_file docs/DOCUMENTATION_LICENSE.md
 require_file CONTRIBUTING.md
 require_file TRADEMARK_POLICY.md
 require_file LICENSES/README.md
@@ -35,13 +36,15 @@ require_contains 'src/kernel*.c' docs/LICENSE_MIGRATION_PLAN.md
 require_contains 'tests/kernel*.c' docs/LICENSE_MIGRATION_PLAN.md
 require_contains 'tools/kernel*.c' docs/LICENSE_MIGRATION_PLAN.md
 require_contains 'SPDX-License-Identifier' docs/LICENSE_MIGRATION_PLAN.md
-require_contains 'Documentation license remains undecided' docs/LICENSE_MIGRATION_PLAN.md
+require_contains 'Documentation license is decided' docs/LICENSE_MIGRATION_PLAN.md
+require_contains 'CC-BY-4.0' docs/LICENSE_MIGRATION_PLAN.md
 require_contains 'qualified legal review' docs/LICENSE_MIGRATION_PLAN.md
 
 require_contains 'AGPL-3.0-or-later' docs/OPEN_ECOSYSTEM_POLICY.md
+require_contains 'CC-BY-4.0' docs/DOCUMENTATION_LICENSE.md
 require_contains 'No silent relicensing' docs/LICENSE_POLICY.md
 require_contains 'No proprietary relicensing CLA' CONTRIBUTING.md
-require_contains 'Software and documentation licenses do not grant trademark' TRADEMARK_POLICY.md
+require_contains 'Software and documentation licenses, including AGPL-3.0-or-later, Apache-2.0, and CC-BY-4.0, do not grant trademark' TRADEMARK_POLICY.md
 require_contains 'AGPL-3.0-or-later' LICENSES/README.md
 
 printf 'license_migration_plan: ok\n'

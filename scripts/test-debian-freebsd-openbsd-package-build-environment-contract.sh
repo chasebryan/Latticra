@@ -126,7 +126,7 @@ require_contains 'openbsd_bulk_build_run=0' "$contract"
 require_contains 'environment_identifier' "$contract"
 require_contains 'operator_authorization_reference' "$contract"
 require_contains 'source_archive_accepted_for_build=0' "$contract"
-require_contains 'license_expression_reviewed=0' "$contract"
+require_contains 'license_expression_reviewed=1' "$contract"
 require_contains 'package_notice_obligations_reviewed=0' "$contract"
 require_contains 'artifact_naming_contract_present=1' "$contract"
 require_contains 'install_remove_transcript_contract_present=0' "$contract"
@@ -185,7 +185,7 @@ require_contains 'openbsd_build_environment_provisioned=0' packaging/openbsd/REA
 require_contains 'explicit_operator_build_authorization=0' packaging/openbsd/README.md
 
 require_contains 'Rules-Requires-Root: no' packaging/debian/debian/control
-require_contains 'LICENSE=	LicenseRef-Latticra-TBD' packaging/freebsd/Makefile
+require_contains 'LICENSE=	AGPL-3.0-or-later CC-BY-4.0' packaging/freebsd/Makefile
 require_contains 'PERMIT_PACKAGE=	No' packaging/openbsd/Makefile
 
 require_absent_file packaging/freebsd/distinfo

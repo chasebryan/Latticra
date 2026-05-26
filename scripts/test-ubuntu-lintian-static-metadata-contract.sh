@@ -52,7 +52,7 @@ require_contains 'Status: no-effect lintian static metadata contract' "$contract
 require_contains 'ubuntu_lintian_availability_present=1' "$contract"
 require_contains 'ubuntu_local_deb_static_validation_present=1' "$contract"
 require_contains 'ubuntu_package_license_promotion_gate_contract_present=1' "$contract"
-require_contains 'ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites' "$contract"
+require_contains 'ubuntu_package_license_promotion_gate_status=blocked-pending-package-notice-prerequisites' "$contract"
 require_contains 'debian_control_present=1' "$contract"
 require_contains 'debian_rules_present=1' "$contract"
 require_contains 'debian_changelog_present=1' "$contract"
@@ -75,9 +75,9 @@ require_contains 'lintian_command_recorded=0' "$contract"
 require_contains 'lintian_static_metadata_findings_classified=0' "$contract"
 require_contains 'lintian_expected_draft_findings_classified=0' "$contract"
 require_contains 'lintian_unexpected_findings_classified=0' "$contract"
-require_contains 'license_expression_reviewed=0' "$contract"
-require_contains 'license_expression_unresolved=1' "$contract"
-require_contains 'packaging_license_expression_updated=0' "$contract"
+require_contains 'license_expression_reviewed=1' "$contract"
+require_contains 'license_expression_unresolved=0' "$contract"
+require_contains 'packaging_license_expression_updated=1' "$contract"
 require_contains 'deb_artifact_created=0' "$contract"
 require_contains 'ubuntu_lintian_static_metadata_unblocked=0' "$contract"
 require_contains 'ubuntu_local_deb_build_transcript_unblocked=0' "$contract"
@@ -87,7 +87,7 @@ require_contains 'Status: active tool availability lane' "$availability"
 require_contains 'does not lint the Latticra deb draft yet' "$availability"
 require_contains 'Status: active static validation lane' "$static_validation"
 require_contains 'ubuntu_package_license_promotion_gate_contract_present=1' "$license_gate"
-require_contains 'LicenseRef-Latticra-TBD' packaging/ubuntu/debian/copyright
+require_contains 'License: AGPL-3.0-or-later' packaging/ubuntu/debian/copyright
 require_contains 'Rules-Requires-Root: no' packaging/ubuntu/debian/control
 require_contains 'build/latticra usr/bin' packaging/ubuntu/debian/install
 require_contains '3.0 (quilt)' packaging/ubuntu/debian/source/format

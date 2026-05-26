@@ -1,13 +1,13 @@
 # Ubuntu Package Notice Review Contract
 
-Status: no-effect notice and documentation-license review contract
-Scope: define notice, attribution, and documentation-license evidence required before Ubuntu package license promotion.
+Status: no-effect notice review contract
+Scope: define notice, attribution, and package evidence required before Ubuntu package license promotion.
 
 ## Purpose
 
-This contract defines the missing notice and documentation-license review layer for the Ubuntu local deb draft.
+This contract defines the remaining notice review layer for the Ubuntu local deb draft.
 
-It does not create a `NOTICE` file, decide the documentation license, change `packaging/ubuntu/debian/copyright`, publish a package, create a PPA, submit to Ubuntu, or provide legal advice.
+It does not create a `NOTICE` file, publish a package, create a PPA, submit to Ubuntu, or provide legal advice.
 
 ## Current Inputs
 
@@ -19,7 +19,7 @@ generated_artifact_notice_policy_present=1
 ubuntu_package_notice_inventory_present=1
 ubuntu_package_notice_inventory_report_present=1
 ubuntu_doc_payload_license_review_contract_present=1
-ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
+ubuntu_doc_payload_license_review_status=resolved-cc-by-4.0
 ubuntu_third_party_material_review_contract_present=1
 ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review
 ubuntu_generated_artifact_notice_review_contract_present=1
@@ -34,7 +34,7 @@ ubuntu_release_artifact_notice_requirements_contract_present=1
 ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements
 third_party_material_inventory_recorded=1
 notice_file_present=0
-documentation_license_decision_present=0
+documentation_license_decision_present=1
 ```
 
 The current Ubuntu package draft intends to include:
@@ -80,11 +80,11 @@ release_notes_notice_requirements_recorded=1
 
 ```text
 ubuntu_package_notice_review_contract_present=1
-ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
+ubuntu_package_notice_review_status=blocked-pending-notice-review
 ubuntu_package_notice_inventory_present=1
 ubuntu_package_notice_inventory_report_present=1
 ubuntu_doc_payload_license_review_contract_present=1
-ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
+ubuntu_doc_payload_license_review_status=resolved-cc-by-4.0
 ubuntu_third_party_material_review_contract_present=1
 ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review
 ubuntu_generated_artifact_notice_review_contract_present=1
@@ -97,9 +97,9 @@ ubuntu_trademark_notice_boundary_contract_present=1
 ubuntu_trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary
 ubuntu_release_artifact_notice_requirements_contract_present=1
 ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements
-doc_payload_license_reviewed=0
-doc_payload_license_unresolved=1
-doc_payload_license_decision_recorded=0
+doc_payload_license_reviewed=1
+doc_payload_license_unresolved=0
+doc_payload_license_decision_recorded=1
 third_party_material_inventory_recorded=1
 third_party_material_inventory_reviewed=0
 third_party_notice_requirements_recorded=0
@@ -112,12 +112,12 @@ notice_file_required_decision_recorded=0
 notice_file_content_requirements_recorded=0
 debian_copyright_notice_mapping_reviewed=0
 debian_copyright_binary_payload_mapping_reviewed=0
-debian_copyright_doc_payload_mapping_reviewed=0
+debian_copyright_doc_payload_mapping_reviewed=1
 debian_copyright_third_party_notice_mapping_reviewed=0
 debian_copyright_generated_artifact_notice_mapping_reviewed=0
 debian_copyright_notice_file_mapping_reviewed=0
 debian_copyright_trademark_notice_boundary_reviewed=0
-debian_copyright_license_ref_replaced_or_justified=0
+debian_copyright_license_ref_replaced_or_justified=1
 trademark_notice_boundary_recorded=0
 trademark_policy_applied_to_package_notice=0
 package_description_endorsement_boundary_reviewed=0
@@ -127,18 +127,18 @@ project_identity_downstream_use_boundary_recorded=0
 release_artifact_notice_requirements_recorded=0
 source_package_notice_requirements_recorded=0
 release_notes_notice_requirements_recorded=0
-ubuntu_package_license_review_unblocked=0
+ubuntu_package_license_review_unblocked=1
 ubuntu_lintian_static_metadata_unblocked=0
 ubuntu_local_deb_build_transcript_unblocked=0
 ```
 
 ## Relationship To License Review
 
-The Ubuntu package license review contract may record candidate expressions, but it must remain blocked until this notice review contract is promoted by a reviewed documentation-license and notice decision.
+The Ubuntu package license review contract records the accepted package expression. Package promotion remains blocked until this notice review contract is promoted by a reviewed notice decision.
 
 The Ubuntu package notice inventory report records current payload facts and open notice obligations, but it does not unblock this review by itself.
 
-The Ubuntu doc payload license review contract records the unresolved `README.md` documentation-license decision required before this notice review can be promoted.
+The Ubuntu doc payload license review contract records the resolved `README.md` CC-BY-4.0 documentation-license decision required before this notice review can be promoted.
 
 The Ubuntu third-party material review contract records the source, license, compatibility, and notice-requirement evidence required before this notice review can be promoted.
 

@@ -96,7 +96,7 @@ RPM artifact creation remains blocked because the current repository still has:
 ```text
 source_archive_accepted_for_build=0
 accepted_rpmlint_transcript_present=0
-license_expression_reviewed=0
+license_expression_reviewed=1
 package_notice_obligations_reviewed=0
 buildrequires_reviewed=0
 explicit_operator_build_authorization=0

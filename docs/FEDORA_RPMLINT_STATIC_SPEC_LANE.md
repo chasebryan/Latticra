@@ -9,7 +9,7 @@ This lane advances the Fedora local RPM validation stack from tool availability 
 
 The current goal is conservative: prove that `rpmlint` can inspect the local draft spec file in a Fedora environment and produce a reportable result.
 
-This lane does not require a clean rpmlint result yet because the spec remains a local-only draft and still carries intentionally unresolved package metadata.
+This lane does not require a clean rpmlint result yet because the spec remains a local-only draft and still has source-archive and package-readiness metadata to review.
 
 ## Files
 
@@ -41,7 +41,7 @@ The current local-only spec may still report findings related to draft metadata,
 ```text
 local-only release marker
 placeholder version
-LicenseRef-Latticra-TBD
+AGPL-3.0-or-later AND CC-BY-4.0 package license expression
 missing source archive for a real package build
 limited installed file set
 ```

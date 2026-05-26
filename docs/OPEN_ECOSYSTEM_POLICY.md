@@ -1,7 +1,7 @@
 # Latticra Open Ecosystem Policy
 
 Status: active governance policy
-Scope: project openness, auditability, transparency, contribution posture, and license transition planning.
+Scope: project openness, auditability, transparency, contribution posture, hybrid licensing, and license transition planning.
 
 ## Purpose
 
@@ -14,8 +14,10 @@ The project should preserve the ability of users, researchers, maintainers, and 
 The intended direction is:
 
 ```text
-software license direction: AGPL-3.0-or-later for new software work
-legacy repository default: Apache-2.0 until files are intentionally migrated
+core software direction: AGPL-3.0-or-later
+adoption-facing helper direction: Apache-2.0
+documentation direction: CC-BY-4.0
+legacy code default: Apache-2.0 until files are intentionally migrated or otherwise marked
 kernel/core direction: reciprocal open license coverage
 branding: separate trademark and identity policy
 ```
@@ -30,13 +32,33 @@ New software source files should declare their license with an SPDX header.
 
 ## New source file rule
 
-New software source files should use:
+New core software source files should use:
 
 ```text
 SPDX-License-Identifier: AGPL-3.0-or-later
 ```
 
+New SDK, example, packaging-helper, installer-glue, and integration-helper source files should use:
+
+```text
+SPDX-License-Identifier: Apache-2.0
+```
+
 unless a documented exception exists.
+
+## Documentation rule
+
+Documentation and handbooks are licensed under:
+
+```text
+CC-BY-4.0
+```
+
+See:
+
+```text
+docs/DOCUMENTATION_LICENSE.md
+```
 
 ## Contribution rule
 
@@ -63,7 +85,7 @@ Recommended follow-up slices:
 ```text
 1. Add SPDX headers to new kernel and core source files.
 2. Add a license guard for new source files.
-3. Decide documentation license.
+3. Add documentation SPDX headers where path-level notices are not enough.
 4. Add or update NOTICE and copyright ownership policy.
 5. Review path-by-path migration from Apache-2.0 to AGPL-3.0-or-later.
 6. Add a release checklist for license obligations.

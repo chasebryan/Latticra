@@ -24,11 +24,11 @@ ubuntu_local_deb_build_transcript_present=0
 deb_artifact_created=0
 deb_installed_on_host=0
 ubuntu_package_license_review_contract_present=1
-ubuntu_package_license_review_status=blocked-pending-formal-review
+ubuntu_package_license_review_status=resolved-license-expression-recorded
 ubuntu_package_notice_inventory_present=1
 ubuntu_package_notice_inventory_report_present=1
 ubuntu_doc_payload_license_review_contract_present=1
-ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
+ubuntu_doc_payload_license_review_status=resolved-cc-by-4.0
 ubuntu_third_party_material_review_contract_present=1
 ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review
 ubuntu_generated_artifact_notice_review_contract_present=1
@@ -44,7 +44,7 @@ ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artif
 ubuntu_package_notice_promotion_gate_contract_present=1
 ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_package_license_promotion_gate_contract_present=1
-ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
+ubuntu_package_license_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_lintian_static_metadata_contract_present=1
 ubuntu_lintian_static_metadata_status=blocked-pending-package-license-promotion
 ubuntu_local_deb_build_transcript_acceptance_gate_contract_present=1
@@ -52,21 +52,21 @@ ubuntu_local_deb_build_transcript_acceptance_gate_status=blocked-pending-lintian
 ubuntu_local_deb_install_remove_evidence_contract_present=1
 ubuntu_local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript
 ubuntu_package_notice_review_contract_present=1
-ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
+ubuntu_package_notice_review_status=blocked-pending-notice-review
 license_expression_candidate_recorded=1
-license_expression_reviewed=0
-license_expression_unresolved=1
-documentation_license_decision_present=0
-doc_payload_license_reviewed=0
-doc_payload_license_unresolved=1
-doc_payload_license_decision_recorded=0
-debian_copyright_doc_payload_mapping_reviewed=0
+license_expression_reviewed=1
+license_expression_unresolved=0
+documentation_license_decision_present=1
+doc_payload_license_reviewed=1
+doc_payload_license_unresolved=0
+doc_payload_license_decision_recorded=1
+debian_copyright_doc_payload_mapping_reviewed=1
 debian_copyright_binary_payload_mapping_reviewed=0
 debian_copyright_third_party_notice_mapping_reviewed=0
 debian_copyright_generated_artifact_notice_mapping_reviewed=0
 debian_copyright_notice_file_mapping_reviewed=0
 debian_copyright_trademark_notice_boundary_reviewed=0
-debian_copyright_license_ref_replaced_or_justified=0
+debian_copyright_license_ref_replaced_or_justified=1
 trademark_notice_boundary_recorded=0
 trademark_policy_applied_to_package_notice=0
 package_description_endorsement_boundary_reviewed=0
@@ -127,8 +127,8 @@ notice_file_packaging_mapping_reviewed=0
 notice_file_absence_justification_recorded=0
 debian_copyright_notice_mapping_reviewed=0
 ubuntu_package_notice_review_unblocked=0
-packaging_license_expression_updated=0
-ubuntu_package_license_review_unblocked=0
+packaging_license_expression_updated=1
+ubuntu_package_license_review_unblocked=1
 ubuntu_lintian_static_metadata_unblocked=0
 ubuntu_local_deb_build_transcript_unblocked=0
 ppa_claimed=0
@@ -220,11 +220,11 @@ docs/status/README.md
 
 The Ubuntu lane does not publish a package, create a PPA, claim Ubuntu archive readiness, install a root service, change systemd, change the kernel, add a privileged helper, grant network authority, or claim production readiness.
 
-The local deb build transcript contract is intentionally blocked from evidence promotion until the package license expression is reviewed.
+The local deb build transcript contract is intentionally blocked from evidence promotion until notice, lintian, build, and install/remove evidence gates are satisfied.
 
-The Ubuntu package license review contract now records the current source facts and candidate expression, but it keeps packaging metadata at `LicenseRef-Latticra-TBD` until formal review accepts the source and documentation scope.
+The Ubuntu package license review contract now records the current source facts, accepts the AGPL-3.0-or-later plus CC-BY-4.0 payload expression, and maps it into the local Debian copyright draft while broader notice review remains blocked.
 
-The Ubuntu doc payload license review contract records that `README.md` is included in the local deb documentation payload while the repository documentation-license decision remains unresolved.
+The Ubuntu doc payload license review contract records that `README.md` is included in the local deb documentation payload under CC-BY-4.0.
 
 The Ubuntu third-party material review contract records that source, license, compatibility, and notice-requirement records still need formal review before package notice promotion.
 
@@ -248,7 +248,7 @@ The Ubuntu local deb build transcript acceptance gate records that no future loc
 
 The Ubuntu local deb install/remove evidence contract records the future install/remove evidence shape while keeping package install commands, package remove commands, host mutation, and install/remove evidence promotion blocked.
 
-The Ubuntu package notice inventory records the current local-deb draft payload facts without promoting the review. The Ubuntu package notice review contract records the unresolved documentation-license and notice obligations that must be settled before the package license review can be promoted.
+The Ubuntu package notice inventory records the current local-deb draft payload facts without promoting the review. The Ubuntu package notice review contract records the remaining notice obligations that must be settled before package promotion can proceed.
 
 ## Next Recommended Lane
 

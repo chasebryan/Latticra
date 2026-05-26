@@ -21,11 +21,30 @@ community-improvable
 
 Contributions are accepted under the license declared by the files being modified.
 
-New software source files should follow the current project license direction documented in:
+New core software source files should use:
+
+```text
+SPDX-License-Identifier: AGPL-3.0-or-later
+```
+
+New SDK, example, packaging-helper, installer-glue, and integration-helper source files should use:
+
+```text
+SPDX-License-Identifier: Apache-2.0
+```
+
+New documentation files may use:
+
+```text
+SPDX-License-Identifier: CC-BY-4.0
+```
+
+These expectations are documented in:
 
 ```text
 docs/OPEN_ECOSYSTEM_POLICY.md
 docs/LICENSE_POLICY.md
+docs/DOCUMENTATION_LICENSE.md
 ```
 
 New software source files should include an SPDX license identifier unless a documented exception exists.

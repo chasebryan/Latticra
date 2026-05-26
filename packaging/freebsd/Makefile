@@ -1,6 +1,6 @@
 # LOCAL-ONLY FreeBSD PORT DRAFT
 # Upstream packaging experiment for Latticra.
-# Source archive, license, portlint, poudriere, and ports-tree review are unresolved.
+# Source archive, portlint, poudriere, and ports-tree review are unresolved.
 
 PORTNAME=	latticra
 DISTVERSION=	0.0.0
@@ -10,7 +10,8 @@ MAINTAINER=	noreply@example.invalid
 COMMENT=	Contract-first systems architecture and language project
 WWW=		https://github.com/Bryforge/Latticra
 
-LICENSE=	LicenseRef-Latticra-TBD
+# SPDX package payload expression: AGPL-3.0-or-later AND CC-BY-4.0
+LICENSE=	AGPL-3.0-or-later CC-BY-4.0
 
 USES=		compiler:c11
 

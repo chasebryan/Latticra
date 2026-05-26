@@ -151,7 +151,7 @@ require_contains 'osc_build_run=0' packaging/opensuse/README.md
 require_contains 'source_rpm_artifact_created=0' packaging/opensuse/README.md
 require_contains 'binary_rpm_artifact_created=0' packaging/opensuse/README.md
 
-require_contains 'License:        LicenseRef-Latticra-TBD' packaging/opensuse/latticra.spec
+require_contains 'License:        AGPL-3.0-or-later AND CC-BY-4.0' packaging/opensuse/latticra.spec
 require_contains 'BuildRequires:  gcc' packaging/opensuse/latticra.spec
 require_contains 'BuildRequires:  make' packaging/opensuse/latticra.spec
 require_contains 'Open Build Service publication' packaging/opensuse/latticra.changes

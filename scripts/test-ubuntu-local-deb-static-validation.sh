@@ -60,8 +60,8 @@ require_contains 'does not run `dpkg-buildpackage`, `debuild`, `lintian`, `sbuil
 require_contains 'package_notice_inventory_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'package_notice_inventory_report_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'doc_payload_license_review_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
-require_contains 'doc_payload_license_review_status=blocked-pending-formal-doc-license-decision' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
-require_contains 'documentation_license_decision_present=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'doc_payload_license_review_status=resolved-cc-by-4.0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'documentation_license_decision_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'third_party_material_review_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'third_party_material_review_status=blocked-pending-third-party-material-review' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'third_party_notice_requirements_recorded=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
@@ -84,7 +84,7 @@ require_contains 'package_notice_promotion_gate_contract_present=1' docs/UBUNTU_
 require_contains 'package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'package_notice_promotion_gate_unblocked=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'package_license_promotion_gate_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
-require_contains 'package_license_promotion_gate_status=blocked-pending-package-license-prerequisites' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'package_license_promotion_gate_status=blocked-pending-package-notice-prerequisites' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'package_license_promotion_gate_unblocked=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'lintian_static_metadata_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'lintian_static_metadata_status=blocked-pending-package-license-promotion' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
@@ -108,7 +108,7 @@ require_contains 'deb_artifact_created=0' packaging/ubuntu/README.md
 require_contains 'package_notice_inventory_present=1' packaging/ubuntu/README.md
 require_contains 'package_notice_inventory_report_present=1' packaging/ubuntu/README.md
 require_contains 'doc_payload_license_review_contract_present=1' packaging/ubuntu/README.md
-require_contains 'doc_payload_license_review_status=blocked-pending-formal-doc-license-decision' packaging/ubuntu/README.md
+require_contains 'doc_payload_license_review_status=resolved-cc-by-4.0' packaging/ubuntu/README.md
 require_contains 'third_party_material_review_contract_present=1' packaging/ubuntu/README.md
 require_contains 'third_party_material_review_status=blocked-pending-third-party-material-review' packaging/ubuntu/README.md
 require_contains 'generated_artifact_notice_review_contract_present=1' packaging/ubuntu/README.md
@@ -124,7 +124,7 @@ require_contains 'release_artifact_notice_requirements_status=blocked-pending-re
 require_contains 'package_notice_promotion_gate_contract_present=1' packaging/ubuntu/README.md
 require_contains 'package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites' packaging/ubuntu/README.md
 require_contains 'package_license_promotion_gate_contract_present=1' packaging/ubuntu/README.md
-require_contains 'package_license_promotion_gate_status=blocked-pending-package-license-prerequisites' packaging/ubuntu/README.md
+require_contains 'package_license_promotion_gate_status=blocked-pending-package-notice-prerequisites' packaging/ubuntu/README.md
 require_contains 'package_license_promotion_gate_unblocked=0' packaging/ubuntu/README.md
 require_contains 'lintian_static_metadata_contract_present=1' packaging/ubuntu/README.md
 require_contains 'lintian_static_metadata_status=blocked-pending-package-license-promotion' packaging/ubuntu/README.md
@@ -159,7 +159,7 @@ require_contains 'cc $(CFLAGS) $(CPPFLAGS) -std=c99 -Wall -Wextra -Werror -pedan
 
 require_contains 'latticra (0.0.0-0ubuntu0.1local1) UNRELEASED' packaging/ubuntu/debian/changelog
 require_contains 'LOCAL-ONLY DRAFT' packaging/ubuntu/debian/copyright
-require_contains 'LicenseRef-Latticra-TBD' packaging/ubuntu/debian/copyright
+require_contains 'License: AGPL-3.0-or-later' packaging/ubuntu/debian/copyright
 require_contains 'build/latticra usr/bin' packaging/ubuntu/debian/install
 require_contains 'README.md usr/share/doc/latticra' packaging/ubuntu/debian/install
 require_contains '3.0 (quilt)' packaging/ubuntu/debian/source/format

@@ -3313,7 +3313,7 @@ ubuntu_lintian_availability_present=1
 ubuntu_package_notice_inventory_present=1
 ubuntu_package_notice_inventory_report_present=1
 ubuntu_doc_payload_license_review_contract_present=1
-ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
+ubuntu_doc_payload_license_review_status=resolved-cc-by-4.0
 ubuntu_third_party_material_review_contract_present=1
 ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review
 ubuntu_generated_artifact_notice_review_contract_present=1
@@ -3329,7 +3329,7 @@ ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artif
 ubuntu_package_notice_promotion_gate_contract_present=1
 ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_package_license_promotion_gate_contract_present=1
-ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
+ubuntu_package_license_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_lintian_static_metadata_contract_present=1
 ubuntu_lintian_static_metadata_status=blocked-pending-package-license-promotion
 ubuntu_local_deb_build_transcript_acceptance_gate_contract_present=1
@@ -3337,9 +3337,9 @@ ubuntu_local_deb_build_transcript_acceptance_gate_status=blocked-pending-lintian
 ubuntu_local_deb_install_remove_evidence_contract_present=1
 ubuntu_local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript
 ubuntu_package_notice_review_contract_present=1
-ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
+ubuntu_package_notice_review_status=blocked-pending-notice-review
 ubuntu_package_license_review_contract_present=1
-ubuntu_package_license_review_status=blocked-pending-formal-review
+ubuntu_package_license_review_status=resolved-license-expression-recorded
 ubuntu_local_deb_build_transcript_contract_present=1
 ubuntu_local_deb_build_transcript_present=0
 local_deb_build_transcript_accepted=0
@@ -3347,20 +3347,20 @@ deb_artifact_created=0
 deb_installed_on_host=0
 deb_removed_from_host=0
 license_expression_candidate_recorded=1
-license_expression_reviewed=0
-license_expression_unresolved=1
-documentation_license_decision_present=0
-doc_payload_license_reviewed=0
-doc_payload_license_unresolved=1
-doc_payload_license_decision_recorded=0
-debian_copyright_doc_payload_mapping_reviewed=0
+license_expression_reviewed=1
+license_expression_unresolved=0
+documentation_license_decision_present=1
+doc_payload_license_reviewed=1
+doc_payload_license_unresolved=0
+doc_payload_license_decision_recorded=1
+debian_copyright_doc_payload_mapping_reviewed=1
 debian_copyright_notice_mapping_reviewed=0
 debian_copyright_binary_payload_mapping_reviewed=0
 debian_copyright_third_party_notice_mapping_reviewed=0
 debian_copyright_generated_artifact_notice_mapping_reviewed=0
 debian_copyright_notice_file_mapping_reviewed=0
 debian_copyright_trademark_notice_boundary_reviewed=0
-debian_copyright_license_ref_replaced_or_justified=0
+debian_copyright_license_ref_replaced_or_justified=1
 trademark_notice_boundary_recorded=0
 trademark_policy_applied_to_package_notice=0
 package_description_endorsement_boundary_reviewed=0
@@ -3417,7 +3417,7 @@ notice_file_content_requirements_recorded=0
 notice_file_install_path_reviewed=0
 notice_file_packaging_mapping_reviewed=0
 notice_file_absence_justification_recorded=0
-packaging_license_expression_updated=0
+packaging_license_expression_updated=1
 ppa_claimed=0
 ubuntu_archive_ready=0
 production_installer_ready=0
@@ -4081,19 +4081,24 @@ Changes that affect runtime behavior, state mutation, external effects, command 
 
 ## License posture
 
-The current canonical repository license file is [`LICENSE`](LICENSE), which contains Apache-2.0.
+Latticra uses a transition-aware hybrid open licensing model.
 
-The project also maintains an active license transition policy in [`docs/LICENSE_POLICY.md`](docs/LICENSE_POLICY.md). That policy states that new software work is intended to move toward:
+The root license overview is [`LICENSE`](LICENSE), with local license texts under [`LICENSES/`](LICENSES/).
+
+The project licensing posture is:
 
 ```text
-AGPL-3.0-or-later
+Core/runtime/security substrate: AGPL-3.0-or-later
+SDKs, examples, packaging helpers, installer glue, and integration helpers: Apache-2.0
+Documentation, handbooks, architecture notes, and policy notes: CC-BY-4.0
+Latticra/Bryforge names, logos, marks, and identity: TRADEMARK_POLICY.md
 ```
 
-There is no silent relicensing. Existing files remain under their current license state unless a future migration PR updates them clearly and intentionally.
+There is no silent relicensing. Existing repository code remains Apache-2.0 unless a file-level SPDX identifier, path-level notice, or reviewed migration explicitly marks it otherwise.
 
 File-level SPDX identifiers and path-level notices should be respected.
 
-Branding, names, logos, marks, and Bryforge/Latticra identity are handled separately from software and documentation licenses.
+The active policy records are [`docs/LICENSE_POLICY.md`](docs/LICENSE_POLICY.md), [`docs/OPEN_ECOSYSTEM_POLICY.md`](docs/OPEN_ECOSYSTEM_POLICY.md), [`docs/DOCUMENTATION_LICENSE.md`](docs/DOCUMENTATION_LICENSE.md), and [`TRADEMARK_POLICY.md`](TRADEMARK_POLICY.md).
 
 This section is project guidance, not legal advice.
 

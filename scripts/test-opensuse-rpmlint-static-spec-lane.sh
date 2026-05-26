@@ -50,7 +50,7 @@ require_contains 'Add openSUSE RPM payload inspection contract' docs/OPENSUSE_RP
 require_contains 'opensuse_rpmlint_static_spec_lane: ok' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 
 require_contains 'LOCAL-ONLY openSUSE DRAFT' packaging/opensuse/latticra.spec
-require_contains 'LicenseRef-Latticra-TBD' packaging/opensuse/latticra.spec
+require_contains 'License:        AGPL-3.0-or-later AND CC-BY-4.0' packaging/opensuse/latticra.spec
 require_contains '0.local' packaging/opensuse/latticra.spec
 require_contains 'Open Build Service publication' packaging/opensuse/latticra.changes
 

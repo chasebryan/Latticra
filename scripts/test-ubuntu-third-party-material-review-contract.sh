@@ -86,7 +86,7 @@ require_contains 'ubuntu_package_notice_review_unblocked=0' "$contract"
 require_contains 'ubuntu_third_party_material_review_contract: ok' "$contract"
 
 require_contains 'Third-party material must include source, license, and compatibility notes before being added.' docs/LICENSE_POLICY.md
-require_contains 'LicenseRef-Latticra-TBD' packaging/ubuntu/debian/copyright
+require_contains 'License: AGPL-3.0-or-later' packaging/ubuntu/debian/copyright
 
 require_contains 'ubuntu_third_party_material_review_contract_present=1' "$status"
 require_contains 'ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review' "$status"

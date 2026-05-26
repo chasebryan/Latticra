@@ -1,50 +1,73 @@
 # Latticra License References
 
-Status: license reference index
+Status: active license reference index
 
 ## Purpose
 
-This directory records license identifiers and policy references used by Latticra.
+This directory records license identifiers, local license texts, and policy references used by Latticra.
 
-The current root `LICENSE` file remains the canonical text for the repository's existing Apache-2.0 license state.
+The root `LICENSE` file records the project hybrid licensing overview.
 
-The project direction for new software work is documented in:
+The detailed policy records are:
 
 ```text
 docs/OPEN_ECOSYSTEM_POLICY.md
 docs/LICENSE_POLICY.md
+docs/DOCUMENTATION_LICENSE.md
 CONTRIBUTING.md
+TRADEMARK_POLICY.md
 ```
 
 ## Current identifiers
 
-Current and planned identifiers:
+Current identifiers:
 
 ```text
-Apache-2.0
 AGPL-3.0-or-later
+Apache-2.0
+CC-BY-4.0
 ```
 
-## Current repository license text
+## Local license texts
 
-The current repository license text is stored at:
+Local copies of referenced license texts are stored at:
 
 ```text
-LICENSE
+LICENSES/AGPL-3.0-or-later.txt
+LICENSES/Apache-2.0.txt
+LICENSES/CC-BY-4.0.txt
 ```
 
 ## SPDX usage
 
 New source files should include an SPDX license identifier.
 
-Preferred new software source identifier:
+Preferred new core software source identifier:
 
 ```text
 SPDX-License-Identifier: AGPL-3.0-or-later
 ```
 
+Preferred new adoption-facing helper source identifier:
+
+```text
+SPDX-License-Identifier: Apache-2.0
+```
+
+Preferred new documentation identifier:
+
+```text
+SPDX-License-Identifier: CC-BY-4.0
+```
+
 Existing files should not be silently re-tagged. Path-by-path migration should happen through reviewed PRs.
 
-## License text follow-up
+## Trademark boundary
 
-A later PR may add full license texts under this directory if the project decides to maintain local copies of all referenced license texts.
+Software and documentation licenses do not grant rights to use Latticra or Bryforge names, logos, marks, slogans, or identity in a confusing way.
+
+See:
+
+```text
+TRADEMARK_POLICY.md
+```

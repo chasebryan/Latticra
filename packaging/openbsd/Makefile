@@ -1,6 +1,6 @@
 # LOCAL-ONLY OpenBSD PORT DRAFT
 # Upstream packaging experiment for Latticra.
-# Source archive, license, portcheck, bulk build, and ports-tree review are unresolved.
+# Source archive, portcheck, bulk build, and ports-tree review are unresolved.
 
 COMMENT=	contract-first systems architecture and language project
 DISTNAME=	latticra-0.0.0
@@ -9,7 +9,8 @@ CATEGORIES=	devel
 HOMEPAGE=	https://github.com/Bryforge/Latticra
 MAINTAINER=	Bryforge <noreply@example.invalid>
 
-# LicenseRef-Latticra-TBD pending formal package license review.
+# Package payload license: AGPL-3.0-or-later AND CC-BY-4.0.
+# Redistribution remains closed until source, checksum, notice, and port review evidence exists.
 PERMIT_PACKAGE=	No
 
 WANTLIB += c

@@ -77,7 +77,7 @@ require_contains 'cc $(CFLAGS) $(CPPFLAGS) -std=c99 -Wall -Wextra -Werror -pedan
 
 require_contains 'latticra (0.0.0-1local1) UNRELEASED' packaging/debian/debian/changelog
 require_contains 'LOCAL-ONLY DEBIAN DRAFT' packaging/debian/debian/copyright
-require_contains 'LicenseRef-Latticra-TBD' packaging/debian/debian/copyright
+require_contains 'License: AGPL-3.0-or-later' packaging/debian/debian/copyright
 require_contains 'build/latticra usr/bin' packaging/debian/debian/install
 require_contains 'README.md usr/share/doc/latticra' packaging/debian/debian/install
 require_contains '3.0 (quilt)' packaging/debian/debian/source/format
@@ -85,7 +85,7 @@ require_contains '3.0 (quilt)' packaging/debian/debian/source/format
 require_contains 'debian_local_deb_draft_present=1' docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md
 require_contains 'debian_static_deb_validation_present=1' docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md
 require_contains 'debian_archive_ready=0' docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md
-require_contains 'LicenseRef-Latticra-TBD' docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'AGPL-3.0-or-later' docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md
 
 require_contains 'LATTICRA STATUS REPORT' src/latticra_cli.c
 require_contains 'mode=no-effect' src/latticra_cli.c

@@ -180,7 +180,7 @@ require_contains 'openbsd_package_name=latticra-0.0.0.tgz' packaging/openbsd/REA
 require_contains 'openbsd_package_artifact_created=0' packaging/openbsd/README.md
 
 require_contains 'Rules-Requires-Root: no' packaging/debian/debian/control
-require_contains 'LICENSE=	LicenseRef-Latticra-TBD' packaging/freebsd/Makefile
+require_contains 'LICENSE=	AGPL-3.0-or-later CC-BY-4.0' packaging/freebsd/Makefile
 require_contains 'PERMIT_PACKAGE=	No' packaging/openbsd/Makefile
 
 require_absent_file packaging/freebsd/distinfo

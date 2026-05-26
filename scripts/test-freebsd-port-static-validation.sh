@@ -60,7 +60,7 @@ require_contains 'CATEGORIES=' packaging/freebsd/Makefile
 require_contains 'MAINTAINER=' packaging/freebsd/Makefile
 require_contains 'COMMENT=' packaging/freebsd/Makefile
 require_contains 'WWW=' packaging/freebsd/Makefile
-require_contains 'LicenseRef-Latticra-TBD' packaging/freebsd/Makefile
+require_contains 'LICENSE=	AGPL-3.0-or-later CC-BY-4.0' packaging/freebsd/Makefile
 require_contains 'USES=' packaging/freebsd/Makefile
 require_contains 'compiler:c11' packaging/freebsd/Makefile
 require_contains 'do-build:' packaging/freebsd/Makefile
@@ -76,7 +76,7 @@ require_contains '%%DOCSDIR%%/README.md' packaging/freebsd/pkg-plist
 require_contains 'freebsd_port_draft_present=1' docs/status/FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md
 require_contains 'freebsd_port_static_validation_present=1' docs/status/FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md
 require_contains 'freebsd_official_port_claimed=0' docs/status/FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md
-require_contains 'LicenseRef-Latticra-TBD' docs/status/FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'AGPL-3.0-or-later' docs/status/FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md
 
 require_contains 'LATTICRA STATUS REPORT' src/latticra_cli.c
 require_contains 'mode=no-effect' src/latticra_cli.c

@@ -48,16 +48,16 @@ license_expression_reviewed=1
 license_expression_unresolved=0
 ```
 
-The current repository state intentionally does not satisfy `license_expression_reviewed=1`, so this contract remains future evidence only.
+The current repository state satisfies the package license-expression review, but this contract remains future evidence only because lintian, build, artifact, notice, and install/remove evidence are still blocked.
 
 The current package license review checkpoint is:
 
 ```text
 ubuntu_package_license_review_contract_present=1
-ubuntu_package_license_review_status=blocked-pending-formal-review
+ubuntu_package_license_review_status=resolved-license-expression-recorded
 ubuntu_package_notice_inventory_present=1
 ubuntu_doc_payload_license_review_contract_present=1
-ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
+ubuntu_doc_payload_license_review_status=resolved-cc-by-4.0
 ubuntu_third_party_material_review_contract_present=1
 ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review
 ubuntu_generated_artifact_notice_review_contract_present=1
@@ -73,7 +73,7 @@ ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artif
 ubuntu_package_notice_promotion_gate_contract_present=1
 ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_package_license_promotion_gate_contract_present=1
-ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
+ubuntu_package_license_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_lintian_static_metadata_contract_present=1
 ubuntu_lintian_static_metadata_status=blocked-pending-package-license-promotion
 ubuntu_local_deb_build_transcript_acceptance_gate_contract_present=1
@@ -81,9 +81,9 @@ ubuntu_local_deb_build_transcript_acceptance_gate_status=blocked-pending-lintian
 ubuntu_local_deb_install_remove_evidence_contract_present=1
 ubuntu_local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript
 ubuntu_package_notice_review_contract_present=1
-ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
+ubuntu_package_notice_review_status=blocked-pending-notice-review
 license_expression_candidate_recorded=1
-packaging_license_expression_updated=0
+packaging_license_expression_updated=1
 ```
 
 ## Required Build Evidence
@@ -138,8 +138,8 @@ build_transcript_acceptance_gate_unblocked=0
 deb_artifact_created=0
 deb_artifact_installed=0
 deb_removed_from_host=0
-license_expression_reviewed=0
-license_expression_unresolved=1
+license_expression_reviewed=1
+license_expression_unresolved=0
 ubuntu_lintian_static_metadata_unblocked=0
 ```
 

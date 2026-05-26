@@ -140,7 +140,7 @@ Package builds remain blocked because the current repository still has:
 
 ```text
 source_archive_accepted_for_build=0
-license_expression_reviewed=0
+license_expression_reviewed=1
 package_notice_obligations_reviewed=0
 explicit_operator_build_authorization=0
 artifact_naming_contract_present=1

@@ -59,7 +59,7 @@ notice_file_packaging_mapping_reviewed=0
 notice_file_absence_justification_recorded=0
 notice_file_missing_required_entries=0
 ubuntu_package_notice_review_unblocked=0
-ubuntu_package_license_review_unblocked=0
+ubuntu_package_license_review_unblocked=1
 ubuntu_lintian_static_metadata_unblocked=0
 ubuntu_local_deb_build_transcript_unblocked=0
 ```

@@ -35,7 +35,7 @@ require_contains 'Add rpmlint findings classification report' docs/FEDORA_RPMLIN
 require_contains 'fedora_rpmlint_static_spec_lane: ok' docs/FEDORA_RPMLINT_STATIC_SPEC_LANE.md
 
 require_contains 'LOCAL-ONLY DRAFT' packaging/fedora/latticra.spec
-require_contains 'LicenseRef-Latticra-TBD' packaging/fedora/latticra.spec
+require_contains 'License:        AGPL-3.0-or-later AND CC-BY-4.0' packaging/fedora/latticra.spec
 require_contains '0.1.local' packaging/fedora/latticra.spec
 
 if [ ! -r /etc/fedora-release ]; then

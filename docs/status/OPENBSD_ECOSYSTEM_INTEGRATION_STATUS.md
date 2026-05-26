@@ -97,7 +97,7 @@ scripts/test-debian-freebsd-openbsd-package-payload-inspection-contract.sh
 
 The OpenBSD lane does not publish a package, submit to the OpenBSD ports tree, claim ports@ review evidence, claim maintainer acceptance, claim bulk build success, claim portcheck success, enable package redistribution, install an rc.d script, change the kernel, add a privileged helper, grant network authority, or claim production readiness.
 
-The local ports metadata keeps `PERMIT_PACKAGE=No` and `LicenseRef-Latticra-TBD` until license, documentation, source archive, checksum, redistribution, and notice obligations are reviewed.
+The local ports metadata now records the AGPL-3.0-or-later plus CC-BY-4.0 local payload license expression while `PERMIT_PACKAGE=No` remains closed until source archive, checksum, redistribution, and notice obligations are reviewed.
 
 The source archive contract records the expected `latticra-0.0.0.tar.gz` distfile and distinfo boundary while keeping archive creation, checksum acceptance, `distinfo`, `PERMIT_PACKAGE=Yes`, package artifacts, and build transcript promotion blocked.
 

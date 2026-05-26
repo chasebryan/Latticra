@@ -60,7 +60,7 @@ canonical_endorsement_boundary_reviewed=0
 project_identity_downstream_use_boundary_recorded=0
 trademark_notice_missing_required_entries=0
 ubuntu_package_notice_review_unblocked=0
-ubuntu_package_license_review_unblocked=0
+ubuntu_package_license_review_unblocked=1
 ubuntu_lintian_static_metadata_unblocked=0
 ubuntu_local_deb_build_transcript_unblocked=0
 ```

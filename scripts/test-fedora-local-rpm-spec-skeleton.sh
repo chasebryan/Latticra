@@ -29,7 +29,7 @@ require_contains 'Name:           latticra' packaging/fedora/latticra.spec
 require_contains 'Version:        0.0.0' packaging/fedora/latticra.spec
 require_contains 'Release:        0.1.local%{?dist}' packaging/fedora/latticra.spec
 require_contains 'Summary:        Contract-first systems architecture and language project' packaging/fedora/latticra.spec
-require_contains 'License:        LicenseRef-Latticra-TBD' packaging/fedora/latticra.spec
+require_contains 'License:        AGPL-3.0-or-later AND CC-BY-4.0' packaging/fedora/latticra.spec
 require_contains 'URL:            https://github.com/Bryforge/Latticra' packaging/fedora/latticra.spec
 require_contains 'Source0:        %{name}-%{version}.tar.gz' packaging/fedora/latticra.spec
 require_contains 'BuildRequires:  gcc' packaging/fedora/latticra.spec
