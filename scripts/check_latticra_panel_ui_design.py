@@ -18,8 +18,10 @@ checks = [
     (ui, 'fn show_console_panel(&mut self, ui: &mut egui::Ui)', 'console function'),
     (ui, 'fn show_right_evidence_panel(&mut self, ui: &mut egui::Ui)', 'right evidence'),
     (ui, 'fn show_install_run_monitor(&mut self, ui: &mut egui::Ui, compact: bool)', 'install run monitor'),
+    (ui, 'fn show_bounded_install_progress(&self, ui: &mut egui::Ui, max_width: f32)', 'bounded install progress'),
     (ui, 'RUNNING_EVIDENCE_MAX_HEIGHT', 'running evidence priority'),
     (ui, 'RUNNING_CONSOLE_MAX_HEIGHT', 'running console restraint'),
+    (ui, 'RUNNING_PROGRESS_MAX_WIDTH', 'running progress restraint'),
     (ui, 'self.show_plan_over_log = false;', 'engine log focus'),
     (ui, 'fn blend(a: egui::Color32, b: egui::Color32, t: f32) -> egui::Color32', 'blend helper'),
     (ui, 'WorkspaceTab::Dashboard', 'dashboard tab'),
@@ -53,6 +55,11 @@ for path, needle, label in checks:
     if needle not in content:
         raise SystemExit(f"FAIL: missing {label}: {needle}")
     print(f"PASS: {label}")
+
+ui_content = ui.read_text()
+if 'self.push_console(line);' in ui_content:
+    raise SystemExit("FAIL: engine log lines must remain in live evidence instead of mirroring into the console")
+print("PASS: engine logs stay in live evidence")
 
 print("STATUS: PASS")
 print("Latticra Panel UI design checkpoint preserved.")

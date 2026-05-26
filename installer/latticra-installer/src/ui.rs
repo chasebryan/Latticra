@@ -17,6 +17,7 @@ const RUNNING_CONSOLE_MAX_HEIGHT: f32 = 300.0;
 const IDLE_CONSOLE_MAX_HEIGHT: f32 = 520.0;
 const RUNNING_EVIDENCE_MAX_HEIGHT: f32 = 360.0;
 const IDLE_EVIDENCE_MAX_HEIGHT: f32 = 220.0;
+const RUNNING_PROGRESS_MAX_WIDTH: f32 = 520.0;
 const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
     ("status", "Stage-38 status and authority summary"),
     ("context", "Stage-1 local context-pack metadata"),
@@ -510,7 +511,6 @@ impl LatticraInstallerApp {
                         self.status = format!("{title}...");
                     }
                     self.logs.push(line.clone());
-                    self.push_console(line);
                     if self.logs.len() > 500 {
                         let drain_count = self.logs.len() - 500;
                         self.logs.drain(0..drain_count);
@@ -2969,15 +2969,13 @@ impl LatticraInstallerApp {
                 ui.add_space(6.0);
                 ui.horizontal_wrapped(|ui| {
                     status_chip(ui, "next", self.next_action_label());
+                    if self.install_state == InstallState::Running {
+                        status_chip(ui, "phase", &self.phase_title);
+                    }
                     status_chip(ui, "root", "0");
                     status_chip(ui, "network", "0");
                     status_chip(ui, "runtime", "0");
                 });
-                if self.install_state == InstallState::Running {
-                    ui.add_space(8.0);
-                    ui.add(egui::ProgressBar::new(self.progress()).show_percentage());
-                    ui.small(format!("Current phase: {}", self.phase_title));
-                }
                 return;
             }
 
@@ -3007,9 +3005,6 @@ impl LatticraInstallerApp {
                         status_chip(ui, "next", self.next_action_label());
                         status_chip(ui, "phase", &self.phase_title);
                     });
-                    if self.install_state == InstallState::Running {
-                        ui.add(egui::ProgressBar::new(self.progress()).show_percentage());
-                    }
                 });
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::TOP), |ui| {
                     ui.vertical(|ui| {
@@ -4096,47 +4091,37 @@ impl LatticraInstallerApp {
 
     fn show_install_run_monitor(&mut self, ui: &mut egui::Ui, compact: bool) {
         panel_card_with_stroke(blue()).show(ui, |ui| {
-            if compact {
-                ui.vertical(|ui| {
-                    self.show_install_run_summary(ui);
-                    ui.add_space(6.0);
-                    ui.add(egui::ProgressBar::new(self.progress()).show_percentage());
-                    ui.add_space(4.0);
-                    ui.add(
-                        egui::Label::new(
-                            egui::RichText::new(self.latest_log_line())
-                                .monospace()
-                                .small()
-                                .color(muted()),
-                        )
-                        .wrap(),
-                    );
-                    self.show_install_run_monitor_actions(ui);
-                });
-                return;
-            }
-
-            ui.horizontal_top(|ui| {
-                ui.vertical(|ui| {
-                    self.show_install_run_summary(ui);
-                    ui.add_space(6.0);
-                    ui.add(egui::ProgressBar::new(self.progress()).show_percentage());
-                    ui.add_space(4.0);
-                    ui.add(
-                        egui::Label::new(
-                            egui::RichText::new(self.latest_log_line())
-                                .monospace()
-                                .small()
-                                .color(muted()),
-                        )
-                        .wrap(),
-                    );
-                });
-                ui.with_layout(egui::Layout::right_to_left(egui::Align::TOP), |ui| {
-                    self.show_install_run_monitor_actions(ui);
-                });
+            ui.vertical(|ui| {
+                self.show_install_run_summary(ui);
+                ui.add_space(6.0);
+                let max_width = if compact {
+                    ui.available_width()
+                } else {
+                    RUNNING_PROGRESS_MAX_WIDTH
+                };
+                self.show_bounded_install_progress(ui, max_width);
+                ui.add_space(4.0);
+                ui.add(
+                    egui::Label::new(
+                        egui::RichText::new(self.latest_log_line())
+                            .monospace()
+                            .small()
+                            .color(muted()),
+                    )
+                    .truncate(),
+                );
+                ui.add_space(6.0);
+                self.show_install_run_monitor_actions(ui);
             });
         });
+    }
+
+    fn show_bounded_install_progress(&self, ui: &mut egui::Ui, max_width: f32) {
+        let width = ui.available_width().min(max_width).max(180.0);
+        ui.add_sized(
+            [width, 16.0],
+            egui::ProgressBar::new(self.progress()).show_percentage(),
+        );
     }
 
     fn show_install_run_summary(&self, ui: &mut egui::Ui) {
