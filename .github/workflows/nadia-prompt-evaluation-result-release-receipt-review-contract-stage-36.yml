@@ -1,0 +1,23 @@
+name: Nadia Prompt Evaluation Result Release Receipt Review Contract Stage 36
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - name: Validate Nadia prompt evaluation result release receipt review contract Stage 36
+        run: sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh

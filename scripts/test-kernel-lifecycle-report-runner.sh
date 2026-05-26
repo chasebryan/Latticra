@@ -30,6 +30,7 @@ cc $CFLAGS \
   src/kernel_driver_catalog.c \
   src/kernel_interrupt_table.c \
   src/kernel_timer_source.c \
+  src/kernel_scheduler_tick.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -41,12 +42,12 @@ cc $CFLAGS \
 grep -Fq 'LATTICRA KERNEL LIFECYCLE REPORT' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'policy_status=gate-allowed' "$report_txt"
-grep -Fq 'final_state=timer-source-ready' "$report_txt"
-grep -Fq 'step_count=12' "$report_txt"
-grep -Fq 'state_change_count=12' "$report_txt"
+grep -Fq 'final_state=scheduler-tick-ready' "$report_txt"
+grep -Fq 'step_count=13' "$report_txt"
+grep -Fq 'state_change_count=13' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
-grep -Fq 'machine_log_count=12' "$report_txt"
+grep -Fq 'machine_log_count=13' "$report_txt"
 grep -Fq 'evidence_level=10' "$report_txt"
 grep -Fq 'log[0].from=created' "$report_txt"
 grep -Fq 'log[0].to=initialized' "$report_txt"
@@ -77,5 +78,9 @@ grep -Fq 'log[11].from=interrupt-table-ready' "$report_txt"
 grep -Fq 'log[11].to=timer-source-ready' "$report_txt"
 grep -Fq 'log[11].state_change_performed=1' "$report_txt"
 grep -Fq 'log[11].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[12].from=timer-source-ready' "$report_txt"
+grep -Fq 'log[12].to=scheduler-tick-ready' "$report_txt"
+grep -Fq 'log[12].state_change_performed=1' "$report_txt"
+grep -Fq 'log[12].external_effect_performed=0' "$report_txt"
 
 printf 'kernel_lifecycle_report_runner: ok\n'

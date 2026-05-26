@@ -274,6 +274,7 @@ static int ast_string_storage_still_rejects_literal_nul_until_acceptance_contrac
     result.execution_allowed = 0;
     result.mutation_allowed = 0;
     result.server_allowed = 0;
+    result.network_allowed = 0;
     result.recovery_allowed = 0;
     result.hardware_allowed = 0;
     EXPECT_TRUE(result.error == LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING, "literal NUL diagnostic remains available");
@@ -313,6 +314,7 @@ static int ast_string_storage_preserves_no_effect_flags(void) {
     EXPECT_TRUE(ast.execution_allowed == 0, "execution flag preserved");
     EXPECT_TRUE(ast.mutation_allowed == 0, "mutation flag preserved");
     EXPECT_TRUE(ast.server_allowed == 0, "server flag preserved");
+    EXPECT_TRUE(ast.network_allowed == 0, "network flag preserved");
     EXPECT_TRUE(ast.recovery_allowed == 0, "recovery flag preserved");
     EXPECT_TRUE(ast.hardware_allowed == 0, "hardware flag preserved");
     (void)source_len;

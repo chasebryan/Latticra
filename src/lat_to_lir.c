@@ -103,6 +103,7 @@ static void module_default(latticra_lir_module_t *module) {
     module->execution_allowed = 0;
     module->mutation_allowed = 0;
     module->server_allowed = 0;
+    module->network_allowed = 0;
     module->recovery_allowed = 0;
     module->hardware_allowed = 0;
     for (index = 0u; index < LATTICRA_LIR_NODE_MAX; index++) {
@@ -161,6 +162,7 @@ static int lir_no_effect_chain_ok(const latticra_lir_module_t *module) {
            module->execution_allowed == 0 &&
            module->mutation_allowed == 0 &&
            module->server_allowed == 0 &&
+           module->network_allowed == 0 &&
            module->recovery_allowed == 0 &&
            module->hardware_allowed == 0;
 }
@@ -465,6 +467,7 @@ latticra_status_t latticra_lir_lower_lat_model(
     module->execution_allowed = model->execution_allowed;
     module->mutation_allowed = model->mutation_allowed;
     module->server_allowed = model->server_allowed;
+    module->network_allowed = 0;
     module->recovery_allowed = model->recovery_allowed;
     module->hardware_allowed = model->hardware_allowed;
 

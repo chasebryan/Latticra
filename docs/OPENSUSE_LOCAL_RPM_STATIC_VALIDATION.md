@@ -49,13 +49,21 @@ It does not create package artifacts, publish to Open Build Service, submit to o
 
 ## Next Slice
 
+Completed follow-on availability lane:
+
+```text
+docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+scripts/test-opensuse-rpmlint-osc-availability.sh
+.github/workflows/opensuse-rpmlint-osc-availability.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE rpmlint and osc availability records without running package builds or publishing artifacts.
+Add openSUSE rpmlint static spec lane for packaging/opensuse/latticra.spec with expected local-only draft findings classified separately.
 ```
 
-That future lane should only check tool availability and review posture before any local build transcript is accepted.
+That future lane should inspect the spec without creating package artifacts, running `osc build`, publishing to Open Build Service, or claiming package readiness.
 
 ## Validation
 

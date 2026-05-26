@@ -34,6 +34,8 @@ kernel interrupt table guard
 kernel interrupt table report runner
 kernel timer source guard
 kernel timer source report runner
+kernel scheduler tick guard
+kernel scheduler tick report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
@@ -46,7 +48,7 @@ kernel lifecycle rollback plan
 The lifecycle evidence can report a bounded in-memory path ending at:
 
 ```text
-final_state=timer-source-ready
+final_state=scheduler-tick-ready
 ```
 
 The lifecycle report runner and subsystem summary keep the external-effect posture explicit:
@@ -88,8 +90,12 @@ timer_tick_allowed=0
 timer_arm_allowed=0
 timer_disarm_allowed=0
 scheduler_tick_allowed=0
+run_queue_mutation_allowed=0
+context_switch_allowed=0
 preemption_allowed=0
+time_accounting_allowed=0
 time_read_allowed=0
+process_wake_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0
 ```
@@ -165,6 +171,7 @@ Dedicated workflow lanes keep the kernel table guards visible:
 .github/workflows/kernel-driver-catalog.yml
 .github/workflows/kernel-interrupt-table.yml
 .github/workflows/kernel-timer-source.yml
+.github/workflows/kernel-scheduler-tick.yml
 .github/workflows/kernel-process-table.yml
 .github/workflows/kernel-syscall-table.yml
 ```

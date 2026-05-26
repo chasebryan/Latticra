@@ -125,6 +125,8 @@ Runtime invocation, prompt evaluation, token generation, inference, receipt reco
 
 That later prompt-evaluation result release receipt review contract is the next boundary; Stage-35 only records the prerequisite metadata.
 
+Stage-36 now defines a prompt-evaluation result release receipt review contract that keeps review recording, review decision recording, review findings recording, receipt recording, receipt signing, receipt publication, release recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, and inference blocked.
+
 ## Validation
 
 ```sh

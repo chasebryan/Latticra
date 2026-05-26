@@ -33,6 +33,7 @@ require_output_contains() {
 ui='installer/latticra-installer/src/ui.rs'
 config='installer/latticra-installer/src/config.rs'
 apply='installer/scripts/latticra-installer-apply.sh'
+verify='installer/scripts/latticra-installer-verify.sh'
 default_config='installer/configs/default.installer.toml'
 local_config='installer/configs/local-prefix-example.installer.toml'
 installer_readme='installer/README.md'
@@ -45,6 +46,7 @@ for file in \
   "$ui" \
   "$config" \
   "$apply" \
+  "$verify" \
   "$default_config" \
   "$local_config" \
   "$installer_readme" \
@@ -77,6 +79,13 @@ require_contains 'fail "updater network fetch authority is not implemented in th
 require_contains 'write_file "$PREFIX/etc/latticra/updater.toml"' "$apply"
 require_contains 'write_file "$PREFIX/share/latticra/updater/policy.toml"' "$apply"
 require_contains 'update|updater)' "$apply"
+require_contains 'LATTICRA PANEL UPDATER' "$apply"
+require_contains 'UPDATER_ACTION="\${2:-open}"' "$apply"
+require_contains 'usage: latticra updater {status|open|dry-run|apply}' "$apply"
+require_contains 'UPDATER_CONFIG="$PREFIX/etc/latticra/updater.toml"' "$verify"
+require_contains 'check "updater config" "$UPDATER_CONFIG"' "$verify"
+require_contains 'if "$USER_BIN/latticra" updater status' "$verify"
+require_contains 'updater status report' "$verify"
 require_contains 'Use the **Updater** workspace in Latticra Panel' "$installer_readme"
 require_contains 'Use the **Updater** workspace in Latticra Panel' "$quick_start"
 require_contains 'updater tab' "$checkpoint"

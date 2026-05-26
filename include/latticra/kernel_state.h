@@ -1,7 +1,7 @@
 #ifndef LATTICRA_KERNEL_STATE_H
 #define LATTICRA_KERNEL_STATE_H
 
-#include "latticra/kernel_timer_source.h"
+#include "latticra/kernel_scheduler_tick.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,7 +23,8 @@ typedef enum {
     LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY = 9,
     LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY = 10,
     LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY = 11,
-    LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY = 12
+    LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY = 12,
+    LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY = 13
 } latticra_kernel_state_kind_t;
 
 typedef enum {
@@ -41,6 +42,7 @@ typedef struct {
     latticra_kernel_driver_catalog_request_t driver_catalog_request;
     latticra_kernel_interrupt_table_request_t interrupt_table_request;
     latticra_kernel_timer_source_request_t timer_source_request;
+    latticra_kernel_scheduler_tick_request_t scheduler_tick_request;
     latticra_kernel_state_kind_t current_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
@@ -61,6 +63,7 @@ typedef struct {
     latticra_kernel_driver_catalog_result_t driver_catalog;
     latticra_kernel_interrupt_table_result_t interrupt_table;
     latticra_kernel_timer_source_result_t timer_source;
+    latticra_kernel_scheduler_tick_result_t scheduler_tick;
     latticra_kernel_state_kind_t previous_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_kind_t next_state;

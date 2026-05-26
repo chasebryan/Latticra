@@ -349,6 +349,7 @@ static void ast_default(latticra_l_ui_ast_result_t *ast) {
     ast->parse_result.execution_allowed = 0;
     ast->parse_result.mutation_allowed = 0;
     ast->parse_result.server_allowed = 0;
+    ast->parse_result.network_allowed = 0;
     ast->parse_result.recovery_allowed = 0;
     ast->parse_result.hardware_allowed = 0;
 
@@ -388,6 +389,7 @@ static void ast_default(latticra_l_ui_ast_result_t *ast) {
     ast->execution_allowed = 0;
     ast->mutation_allowed = 0;
     ast->server_allowed = 0;
+    ast->network_allowed = 0;
     ast->recovery_allowed = 0;
     ast->hardware_allowed = 0;
 }
@@ -537,6 +539,7 @@ latticra_status_t latticra_l_ui_parse_ast(
     ast->execution_allowed = 0;
     ast->mutation_allowed = 0;
     ast->server_allowed = 0;
+    ast->network_allowed = 0;
     ast->recovery_allowed = 0;
     ast->hardware_allowed = 0;
     (void)purpose_span;
@@ -563,6 +566,7 @@ latticra_status_t latticra_l_ui_ast_report(
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
         "server_allowed=%d\n"
+        "network_allowed=%d\n"
         "recovery_allowed=%d\n"
         "hardware_allowed=%d\n",
         ast->card.name,
@@ -575,6 +579,7 @@ latticra_status_t latticra_l_ui_ast_report(
         ast->execution_allowed,
         ast->mutation_allowed,
         ast->server_allowed,
+        ast->network_allowed,
         ast->recovery_allowed,
         ast->hardware_allowed);
     if (written < 0 || (size_t)written >= buffer_len) {
@@ -697,11 +702,12 @@ static latticra_status_t append_failed_parse_report(
         buffer,
         buffer_len,
         used,
-        "no_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nhardware_allowed=%d\n",
+        "no_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nserver_allowed=%d\nnetwork_allowed=%d\nrecovery_allowed=%d\nhardware_allowed=%d\n",
         ast->no_effect,
         ast->execution_allowed,
         ast->mutation_allowed,
         ast->server_allowed,
+        ast->network_allowed,
         ast->recovery_allowed,
         ast->hardware_allowed);
 }
@@ -806,7 +812,7 @@ latticra_status_t latticra_l_ui_ast_detailed_report(
         buffer,
         buffer_len,
         &used,
-        "L-UI AST DETAILED REPORT\ncard=%s\npurpose=%s\neffect=%s\nboundary=%s\nrail_count=%zu\nfield_count=%zu\ntext_count=%zu\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nhardware_allowed=%d\n",
+        "L-UI AST DETAILED REPORT\ncard=%s\npurpose=%s\neffect=%s\nboundary=%s\nrail_count=%zu\nfield_count=%zu\ntext_count=%zu\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nserver_allowed=%d\nnetwork_allowed=%d\nrecovery_allowed=%d\nhardware_allowed=%d\n",
         ast->card.name,
         ast->card.purpose,
         ast->card.effect,
@@ -818,6 +824,7 @@ latticra_status_t latticra_l_ui_ast_detailed_report(
         ast->execution_allowed,
         ast->mutation_allowed,
         ast->server_allowed,
+        ast->network_allowed,
         ast->recovery_allowed,
         ast->hardware_allowed);
     if (status != LATTICRA_STATUS_OK) return status;

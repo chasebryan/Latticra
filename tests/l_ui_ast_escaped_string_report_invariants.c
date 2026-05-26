@@ -211,6 +211,7 @@ static int detailed_report_escape_preserves_no_effect_flags(void) {
     EXPECT_TRUE(strstr(report, "execution_allowed=0\n") != 0, "execution remains denied");
     EXPECT_TRUE(strstr(report, "mutation_allowed=0\n") != 0, "mutation remains denied");
     EXPECT_TRUE(strstr(report, "server_allowed=0\n") != 0, "server remains denied");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0, "network remains denied");
     EXPECT_TRUE(strstr(report, "recovery_allowed=0\n") != 0, "recovery remains denied");
     EXPECT_TRUE(strstr(report, "hardware_allowed=0\n") != 0, "hardware remains denied");
     return 0;

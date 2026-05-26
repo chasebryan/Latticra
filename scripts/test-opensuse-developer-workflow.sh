@@ -22,6 +22,7 @@ require_contains() {
 require_file docs/OPENSUSE_DEVELOPER_WORKFLOW.md
 require_file docs/OPENSUSE_READINESS_PLAN.md
 require_file docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_file docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_file docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 require_file docs/QUICK_START_CHEATSHEET.md
 require_file README.md
@@ -29,7 +30,9 @@ require_file installer/README.md
 require_file packaging/opensuse/README.md
 require_file packaging/opensuse/latticra.spec
 require_file packaging/opensuse/latticra.changes
+require_file scripts/test-opensuse-rpmlint-osc-availability.sh
 require_file .github/workflows/opensuse-developer-workflow.yml
+require_file .github/workflows/opensuse-rpmlint-osc-availability.yml
 
 require_contains 'Status: developer workflow record' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
 require_contains 'local openSUSE Linux commands for productive Latticra development' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
@@ -48,18 +51,24 @@ require_contains 'opensuse_panel_prerequisites_documented=1' docs/OPENSUSE_READI
 require_contains 'opensuse_local_rpm_draft_present=1' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_local_rpm_static_validation_present=1' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_changes_file_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpmlint_osc_availability_lane_present=1' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_obs_publication_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_official_package_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'suse_endorsement_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'Status: active tool availability lane' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_contains 'rpmlint installs' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_contains 'osc installs' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 
 require_contains 'openSUSE prerequisites' README.md
 require_contains '## openSUSE integration and maintenance' README.md
 require_contains 'docs/OPENSUSE_DEVELOPER_WORKFLOW.md' README.md
 require_contains 'docs/OPENSUSE_READINESS_PLAN.md' README.md
 require_contains 'docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md' README.md
+require_contains 'docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md' README.md
 require_contains 'packaging/opensuse/README.md' README.md
 require_contains 'sh scripts/test-opensuse-developer-workflow.sh' README.md
 require_contains 'sh scripts/test-opensuse-local-rpm-static-validation.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpmlint-osc-availability.sh' README.md
 
 require_contains 'openSUSE prerequisites:' docs/QUICK_START_CHEATSHEET.md
 require_contains 'sudo zypper install -y rust cargo make gcc pkgconf' docs/QUICK_START_CHEATSHEET.md

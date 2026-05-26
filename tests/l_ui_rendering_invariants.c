@@ -123,6 +123,7 @@ static void authority_ok(latticra_l_ui_render_authority_summary_t *authority) {
     authority->execution_allowed = 0;
     authority->mutation_allowed = 0;
     authority->server_allowed = 0;
+    authority->network_allowed = 0;
     authority->recovery_allowed = 0;
     authority->hardware_allowed = 0;
 }
@@ -246,6 +247,44 @@ static int l_ui_rendering_rejects_non_no_effect_flags(void) {
     return 0;
 }
 
+static int l_ui_rendering_rejects_network_authority_flag(void) {
+    latticra_l_ui_ast_result_t ast;
+    latticra_l_ui_semantic_result_t semantic;
+    latticra_lir_module_t lir;
+    latticra_l_ui_render_authority_summary_t authority;
+    latticra_l_ui_render_result_t render;
+    latticra_l_ui_render_request_t request;
+    EXPECT_TRUE(build_render_from_source(VALID_SOURCE, LATTICRA_L_UI_RENDER_MODE_SUMMARY, &ast, &semantic, &lir, &authority, &render) == 0, "base render builds");
+    authority.network_allowed = 1;
+    request.mode = LATTICRA_L_UI_RENDER_MODE_SUMMARY;
+    request.ast = &ast;
+    request.semantic = &semantic;
+    request.lir = &lir;
+    request.authority = &authority;
+    EXPECT_TRUE(latticra_l_ui_render(&request, &render) == LATTICRA_STATUS_OK, "network authority render returns status ok");
+    EXPECT_TRUE(render.error == LATTICRA_L_UI_RENDER_AUTHORITY_FAILED, "network authority rejected");
+    return 0;
+}
+
+static int l_ui_rendering_rejects_lir_network_flag(void) {
+    latticra_l_ui_ast_result_t ast;
+    latticra_l_ui_semantic_result_t semantic;
+    latticra_lir_module_t lir;
+    latticra_l_ui_render_authority_summary_t authority;
+    latticra_l_ui_render_result_t render;
+    latticra_l_ui_render_request_t request;
+    EXPECT_TRUE(build_render_from_source(VALID_SOURCE, LATTICRA_L_UI_RENDER_MODE_SUMMARY, &ast, &semantic, &lir, &authority, &render) == 0, "base render builds");
+    lir.network_allowed = 1;
+    request.mode = LATTICRA_L_UI_RENDER_MODE_SUMMARY;
+    request.ast = &ast;
+    request.semantic = &semantic;
+    request.lir = &lir;
+    request.authority = &authority;
+    EXPECT_TRUE(latticra_l_ui_render(&request, &render) == LATTICRA_STATUS_OK, "network LIR render returns status ok");
+    EXPECT_TRUE(render.error == LATTICRA_L_UI_RENDER_AUTHORITY_FAILED, "network LIR rejected");
+    return 0;
+}
+
 static int l_ui_rendering_preserves_card_metadata(void) {
     latticra_l_ui_ast_result_t ast;
     latticra_l_ui_semantic_result_t semantic;
@@ -343,6 +382,7 @@ static int l_ui_rendering_preserves_no_effect_flags(void) {
     EXPECT_TRUE(render.execution_allowed == 0, "render execution denied");
     EXPECT_TRUE(render.mutation_allowed == 0, "render mutation denied");
     EXPECT_TRUE(render.server_allowed == 0, "render server denied");
+    EXPECT_TRUE(render.network_allowed == 0, "render network denied");
     EXPECT_TRUE(render.recovery_allowed == 0, "render recovery denied");
     EXPECT_TRUE(render.hardware_allowed == 0, "render hardware denied");
     return 0;
@@ -474,6 +514,8 @@ int main(void) {
     if (l_ui_rendering_requires_lir_success() != 0) return 1;
     if (l_ui_rendering_requires_authority_success() != 0) return 1;
     if (l_ui_rendering_rejects_non_no_effect_flags() != 0) return 1;
+    if (l_ui_rendering_rejects_network_authority_flag() != 0) return 1;
+    if (l_ui_rendering_rejects_lir_network_flag() != 0) return 1;
     if (l_ui_rendering_preserves_card_metadata() != 0) return 1;
     if (l_ui_rendering_preserves_rail_order() != 0) return 1;
     if (l_ui_rendering_preserves_field_bindings() != 0) return 1;

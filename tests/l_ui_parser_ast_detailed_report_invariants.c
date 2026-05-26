@@ -241,6 +241,7 @@ static int detailed_report_preserves_no_effect_flags(void) {
     EXPECT_TRUE(strstr(report, "execution_allowed=0\n") != 0, "execution flag in report");
     EXPECT_TRUE(strstr(report, "mutation_allowed=0\n") != 0, "mutation flag in report");
     EXPECT_TRUE(strstr(report, "server_allowed=0\n") != 0, "server flag in report");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0, "network flag in report");
     EXPECT_TRUE(strstr(report, "recovery_allowed=0\n") != 0, "recovery flag in report");
     EXPECT_TRUE(strstr(report, "hardware_allowed=0\n") != 0, "hardware flag in report");
     return 0;

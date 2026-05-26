@@ -281,5 +281,5 @@ system_extension_authority=0
 network_extension_authority=0
 privileged_helper_authority=0
 production_installer_ready=0
-next_lane=macos-reset-uninstall-live-runner-interface-contract
+next_lane=macos-reset-uninstall-live-runner-noop-prototype-contract
 REPORT

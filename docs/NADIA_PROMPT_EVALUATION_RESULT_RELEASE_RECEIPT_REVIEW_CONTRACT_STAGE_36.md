@@ -1,0 +1,170 @@
+# Nadia Prompt Evaluation Result Release Receipt Review Contract Stage-36
+
+Status: Stage-36 implementation contract
+
+Scope: prompt-evaluation result release receipt review metadata before review recording, review decisions, review findings, receipt recording, receipt signing, receipt publication, release recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+
+## Purpose
+
+Stage-36 gives Nadia a prompt-evaluation result release receipt review contract after the prompt-evaluation result release receipt contract is present.
+
+The contract records how a future receipt-review disposition lane must reference the Stage-35 prompt-evaluation result release receipt contract, Stage-34 prompt-evaluation result release contract, Stage-33 prompt-evaluation result disposition contract, Stage-32 prompt-evaluation result review contract, Stage-31 prompt-evaluation result contract, Stage-30 prompt-evaluation invocation contract, Stage-29 prompt-evaluation runtime handoff contract, Stage-28 prompt-evaluation-input contract, context-window assembly boundary, prompt-token-sequence boundary, prompt-tokenization boundary, runtime-invocation contract, model-load contract, inference-readiness contract, model-registry contract, generated-text denial policy, runtime-denial policy, token-generation denial policy, and survivor-centered safety policy. It preserves the absolute rule that Nadia cannot yet create review records, record review decisions, approve receipts, reject receipts, create release receipts, sign receipts, emit receipts, publish receipts, create release records, read or record model output, record generated text, invoke a runtime, evaluate prompts, generate dialogue, generate tokens, or run inference.
+
+## Contract Fields
+
+Stage-36 adds:
+
+```text
+nadia_stage_36_prompt_evaluation_result_release_receipt_review_contract_present=1
+nadia_prompt_evaluation_result_release_receipt_review_contract_generator_present=1
+prompt_evaluation_result_release_receipt_review_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-contract.sh
+installed_prompt_evaluation_result_release_receipt_review_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review
+prompt_evaluation_result_release_receipt_review_contract_status=contract_only
+prompt_evaluation_result_release_receipt_review_stage=contract-only
+prompt_evaluation_result_release_receipt_review_authority=0
+prompt_evaluation_result_release_receipt_review_allowed=0
+prompt_evaluation_result_release_receipt_review_recorded=0
+prompt_evaluation_result_release_receipt_review_created=0
+prompt_evaluation_result_release_receipt_review_performed=0
+prompt_evaluation_result_release_receipt_review_metadata_present=1
+prompt_evaluation_result_release_receipt_review_family=operator-reviewed-prompt-evaluation-result-release-receipt-review
+prompt_evaluation_result_release_receipt_review_format=contract-only-offline-evaluation-result-release-receipt-review
+prompt_evaluation_result_release_receipt_review_decision=blocked_contract_only
+prompt_evaluation_result_release_receipt_review_evidence_present=1
+prompt_evaluation_result_release_receipt_review_source_policy=operator-reviewed-offline
+prompt_evaluation_result_release_receipt_review_plan_recorded=1
+prompt_evaluation_result_release_receipt_review_method_planned=offline-prompt-evaluation-result-release-receipt-review-policy-review
+prompt_evaluation_result_release_receipt_review_result_recorded=0
+prompt_evaluation_result_release_receipt_review_runtime_invoked=0
+requires_prompt_evaluation_result_release_receipt_contract=1
+requires_prompt_evaluation_result_release_contract=1
+requires_prompt_evaluation_result_disposition_contract=1
+requires_prompt_evaluation_result_review_contract=1
+requires_prompt_evaluation_result_contract=1
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_contract=1
+prompt_evaluation_result_release_receipt_review_promotion_allowed=0
+prompt_evaluation_result_release_receipt_review_record_created=0
+prompt_evaluation_result_release_receipt_review_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_approval_recorded=0
+prompt_evaluation_result_release_receipt_review_rejection_recorded=0
+prompt_evaluation_result_release_receipt_review_findings_recorded=0
+prompt_evaluation_result_release_receipt_review_applied=0
+prompt_evaluation_result_release_receipt_record_created=0
+prompt_evaluation_result_release_receipt_signed=0
+prompt_evaluation_result_release_receipt_published=0
+prompt_evaluation_result_model_output_recorded=0
+prompt_evaluation_result_output_text_recorded=0
+answer_text_generated=0
+```
+
+Stage-36 does not generate dialogue, receive prompt text, read prompt sources, allocate prompt buffers, materialize prompt text, create prompt tokens, record prompt token IDs, assemble context windows, create prompt evaluation inputs, perform runtime handoff, create prompt-evaluation invocation requests, invoke a runtime, evaluate prompts, create prompt-evaluation result records, create prompt-evaluation result review records, create prompt-evaluation result disposition records, create release records, publish releases, package releases, create release receipts, sign receipts, emit receipts, publish receipts, create release-receipt review records, approve release receipts, reject release receipts, read model output, record model output, record generated answer text, score model output, load model weights, generate tokens, run inference, execute tools, mutate source, train, distill, download, or use the network.
+
+## Review Requirements
+
+The prompt-evaluation result release receipt review contract names future review-disposition requirements:
+
+```text
+requires_prompt_evaluation_result_release_receipt_reference=1
+requires_prompt_evaluation_result_release_reference=1
+requires_prompt_evaluation_result_disposition_reference=1
+requires_prompt_evaluation_result_review_reference=1
+requires_prompt_evaluation_result_reference=1
+requires_prompt_evaluation_invocation_reference=1
+requires_prompt_evaluation_runtime_handoff_reference=1
+requires_prompt_evaluation_input_reference=1
+requires_context_window_assembly_reference=1
+requires_prompt_token_sequence_reference=1
+requires_prompt_tokenization_reference=1
+requires_prompt_evaluation_result_release_receipt_review_schema_policy=1
+requires_prompt_evaluation_result_release_receipt_review_denial_policy=1
+requires_prompt_evaluation_result_release_receipt_review_disposition_policy=1
+requires_generated_text_denial_policy=1
+requires_token_generation_denial_policy=1
+requires_operator_approval_record=1
+requires_official_source_snapshot=1
+requires_no_prompt_evaluation_result_release_receipt_review=1
+requires_no_prompt_evaluation_result_release_receipt_review_disposition=1
+requires_no_prompt_evaluation_result_release_receipt=1
+requires_no_prompt_evaluation_result_release=1
+requires_no_model_output_read=1
+requires_no_model_output_recording=1
+requires_no_generated_answer=1
+requires_no_runtime_invocation=1
+requires_no_prompt_evaluation=1
+requires_no_dialogue_generation=1
+requires_no_token_generation=1
+requires_no_inference=1
+requires_refusal_policy_link=1
+requires_survivor_centered_language_review=1
+```
+
+## Denial Boundary
+
+Stage-36 preserves explicit prompt-evaluation result release receipt review denial fields:
+
+```text
+prompt_evaluation_result_release_receipt_review_authority=0
+prompt_evaluation_result_release_receipt_review_allowed=0
+prompt_evaluation_result_release_receipt_review_open_authority=0
+prompt_evaluation_result_release_receipt_review_read_authority=0
+prompt_evaluation_result_release_receipt_review_write_authority=0
+prompt_evaluation_result_release_receipt_review_execute_authority=0
+prompt_evaluation_result_release_receipt_review_runtime_authority=0
+prompt_evaluation_result_release_receipt_review_prompt_evaluation_authority=0
+prompt_evaluation_result_release_receipt_review_token_generation_authority=0
+prompt_evaluation_result_release_receipt_review_inference_authority=0
+prompt_evaluation_result_release_receipt_review_generation_authority=0
+prompt_evaluation_result_release_receipt_review_recording_authority=0
+prompt_evaluation_result_release_receipt_review_record_created=0
+prompt_evaluation_result_release_receipt_review_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_approval_recorded=0
+prompt_evaluation_result_release_receipt_review_rejection_recorded=0
+prompt_evaluation_result_release_receipt_review_findings_recorded=0
+prompt_evaluation_result_release_receipt_review_applied=0
+prompt_evaluation_result_release_receipt_record_created=0
+prompt_evaluation_result_release_receipt_signed=0
+prompt_evaluation_result_release_receipt_published=0
+prompt_evaluation_result_release_record_created=0
+prompt_evaluation_result_release_decision_recorded=0
+prompt_evaluation_result_model_output_recorded=0
+runtime_invoked=0
+prompt_evaluated=0
+token_generation_performed=0
+inference_performed=0
+qa_dialogue_generated=0
+answer_text_generated=0
+```
+
+## Commands
+
+Repository command:
+
+```sh
+sh scripts/nadia-prompt-evaluation-result-release-receipt-review-contract.sh \
+  --prompt-evaluation-result-release-receipt reports/nadia/prompt-evaluation-result-release-receipt/latest-prompt-evaluation-result-release-receipt-contract.txt \
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-prompt-evaluation-result-release-receipt-review.XXXXXX")"
+```
+
+Installed command:
+
+```sh
+latticra-nadia prompt-evaluation-result-release-receipt-review
+```
+
+## Non-Claims
+
+Stage-36 Nadia is not yet a Q&A assistant, dialogue generator, prompt evaluator, prompt reader, prompt materializer, tokenizer, context-window assembler, prompt-evaluation-input creator, prompt-evaluation runtime handoff layer, prompt-evaluation invocation layer, prompt-evaluation result layer, prompt-evaluation result reviewer, prompt-evaluation result disposition recorder, prompt-evaluation result release recorder, prompt-evaluation result release publisher, prompt-evaluation result release packager, prompt-evaluation result release receipt creator, receipt signer, receipt publisher, release receipt reviewer, receipt review disposition layer, model-output reader, model-output recorder, answer generator, model loader, inference runtime, runtime process launcher, token generator, model selector, tool executor, shell runner, network client, source mutator, training system, distillation system, security product, sexual assistant, roleplay surface, adult-content generator, legal adviser, medical adviser, trauma counselor, crisis intervention service, or production AI assistant.
+
+## Validation
+
+Run:
+
+```sh
+sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh
+```
+
+Expected output:
+
+```text
+nadia_prompt_evaluation_result_release_receipt_review_contract_stage_36: ok
+```

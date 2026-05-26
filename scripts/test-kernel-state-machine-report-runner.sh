@@ -29,6 +29,7 @@ cc $CFLAGS \
   src/kernel_driver_catalog.c \
   src/kernel_interrupt_table.c \
   src/kernel_timer_source.c \
+  src/kernel_scheduler_tick.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   tools/kernel_state_machine_report.c \

@@ -434,6 +434,7 @@ LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE=$(cfg_section lc receipt_payload_schema_profil
 LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE=$(cfg_section lc receipt_payload_artifact_draft_profile lc-receipt-payload-artifact-draft-v0)
 LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_PROFILE=$(cfg_section lc receipt_payload_artifact_review_profile lc-receipt-payload-artifact-review-v0)
 LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_PROFILE=$(cfg_section lc receipt_payload_artifact_review_receipt_profile lc-receipt-payload-artifact-review-receipt-v0)
+LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE=$(cfg_section lc receipt_payload_artifact_review_receipt_draft_profile lc-receipt-payload-artifact-review-receipt-draft-v0)
 LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE=$(cfg_section lc receipt_payload_materialization_plan_profile lc-receipt-payload-materialization-plan-v0)
 LC_SIGNATURE_REQUEST_BINDING_PROFILE=$(cfg_section lc signature_request_binding_profile lc-signature-request-binding-v0)
 LC_RECEIPT_CONTRACT_PROFILE=$(cfg_section lc receipt_contract_profile lc-receipts-v0)
@@ -453,6 +454,7 @@ LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA=$(cfg_section lc require_receipt_payload_schem
 LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT=$(cfg_section lc require_receipt_payload_artifact_draft true)
 LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW=$(cfg_section lc require_receipt_payload_artifact_review true)
 LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT=$(cfg_section lc require_receipt_payload_artifact_review_receipt true)
+LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT=$(cfg_section lc require_receipt_payload_artifact_review_receipt_draft true)
 LC_REQUIRE_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN=$(cfg_section lc require_receipt_payload_materialization_plan true)
 LC_REQUIRE_SIGNATURE_REQUEST_BINDING=$(cfg_section lc require_signature_request_binding true)
 LC_REQUIRE_OS_BASE_CONTRACT=$(cfg_section lc require_os_base_contract true)
@@ -623,6 +625,7 @@ receipt_payload_schema_profile=$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE
 receipt_payload_artifact_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE
 receipt_payload_artifact_review_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_PROFILE
 receipt_payload_artifact_review_receipt_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_PROFILE
+receipt_payload_artifact_review_receipt_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE
 receipt_payload_materialization_plan_profile=$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE
 signature_request_binding_profile=$LC_SIGNATURE_REQUEST_BINDING_PROFILE
 receipt_contract_profile=$LC_RECEIPT_CONTRACT_PROFILE
@@ -641,6 +644,7 @@ receipt_payload_schema_required=$LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA
 receipt_payload_artifact_draft_required=$LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT
 receipt_payload_artifact_review_required=$LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW
 receipt_payload_artifact_review_receipt_required=$LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT
+receipt_payload_artifact_review_receipt_draft_required=$LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT
 receipt_payload_materialization_plan_required=$LC_REQUIRE_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN
 signature_request_binding_required=$LC_REQUIRE_SIGNATURE_REQUEST_BINDING
 os_base_contract_required=$LC_REQUIRE_OS_BASE_CONTRACT
@@ -658,6 +662,7 @@ receipt_payload_schema_status=metadata-only-schema
 receipt_payload_artifact_draft_status=metadata-only-draft
 receipt_payload_artifact_review_status=metadata-only-review-gate
 receipt_payload_artifact_review_receipt_status=metadata-only-receipt-contract
+receipt_payload_artifact_review_receipt_draft_status=metadata-only-review-receipt-draft
 receipt_payload_materialization_plan_status=metadata-only-plan
 materialization_preconditions_met=0
 draft_review_receipt_present=0
@@ -691,8 +696,8 @@ public_name=Nadia
 interactive_name=Nadia
 implementation_name=Nadia Witness Foundation
 documentation_code_name=Nadia Witness Foundation
-stage=35-prompt-evaluation-result-release-receipt-contract
-previous_stage=34-prompt-evaluation-result-release-contract
+stage=36-prompt-evaluation-result-release-receipt-review-contract
+previous_stage=35-prompt-evaluation-result-release-receipt-contract
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -1364,6 +1369,32 @@ prompt_evaluation_result_release_receipt_packaged=0
 requires_prompt_evaluation_result_release_contract=1
 requires_future_prompt_evaluation_result_release_receipt_review_contract=1
 prompt_evaluation_result_release_receipt_promotion_allowed=0
+prompt_evaluation_result_release_receipt_review_contract_stage=36-prompt-evaluation-result-release-receipt-review-contract
+prompt_evaluation_result_release_receipt_review_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-contract.sh
+installed_prompt_evaluation_result_release_receipt_review_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review
+prompt_evaluation_result_release_receipt_review_stage=contract-only
+prompt_evaluation_result_release_receipt_review_contract_status=contract_only
+prompt_evaluation_result_release_receipt_review_authority=0
+prompt_evaluation_result_release_receipt_review_allowed=0
+prompt_evaluation_result_release_receipt_review_recorded=0
+prompt_evaluation_result_release_receipt_review_created=0
+prompt_evaluation_result_release_receipt_review_performed=0
+prompt_evaluation_result_release_receipt_review_metadata_present=1
+prompt_evaluation_result_release_receipt_review_family=operator-reviewed-prompt-evaluation-result-release-receipt-review
+prompt_evaluation_result_release_receipt_review_format=contract-only-offline-evaluation-result-release-receipt-review
+prompt_evaluation_result_release_receipt_review_decision=blocked_contract_only
+prompt_evaluation_result_release_receipt_review_plan_recorded=1
+prompt_evaluation_result_release_receipt_review_result_recorded=0
+prompt_evaluation_result_release_receipt_review_runtime_invoked=0
+prompt_evaluation_result_release_receipt_review_record_created=0
+prompt_evaluation_result_release_receipt_review_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_approval_recorded=0
+prompt_evaluation_result_release_receipt_review_rejection_recorded=0
+prompt_evaluation_result_release_receipt_review_findings_recorded=0
+prompt_evaluation_result_release_receipt_review_applied=0
+requires_prompt_evaluation_result_release_receipt_contract=1
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_contract=1
+prompt_evaluation_result_release_receipt_review_promotion_allowed=0
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -1624,6 +1655,7 @@ receipt_payload_schema_profile = "$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
 receipt_payload_artifact_draft_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE"
 receipt_payload_artifact_review_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_PROFILE"
 receipt_payload_artifact_review_receipt_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_PROFILE"
+receipt_payload_artifact_review_receipt_draft_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
 receipt_payload_materialization_plan_profile = "$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
 signature_request_binding_profile = "$LC_SIGNATURE_REQUEST_BINDING_PROFILE"
 receipt_contract_profile = "$LC_RECEIPT_CONTRACT_PROFILE"
@@ -1642,6 +1674,7 @@ receipt_payload_schema_required = $LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA
 receipt_payload_artifact_draft_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT
 receipt_payload_artifact_review_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW
 receipt_payload_artifact_review_receipt_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT
+receipt_payload_artifact_review_receipt_draft_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT
 receipt_payload_materialization_plan_required = $LC_REQUIRE_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN
 signature_request_binding_required = $LC_REQUIRE_SIGNATURE_REQUEST_BINDING
 os_base_contract_required = $LC_REQUIRE_OS_BASE_CONTRACT
@@ -1659,6 +1692,7 @@ receipt_payload_schema_status = "metadata-only-schema"
 receipt_payload_artifact_draft_status = "metadata-only-draft"
 receipt_payload_artifact_review_status = "metadata-only-review-gate"
 receipt_payload_artifact_review_receipt_status = "metadata-only-receipt-contract"
+receipt_payload_artifact_review_receipt_draft_status = "metadata-only-review-receipt-draft"
 receipt_payload_materialization_plan_status = "metadata-only-plan"
 materialization_preconditions_met = false
 draft_review_receipt_present = false
@@ -1734,6 +1768,7 @@ receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
 receipt_payload_artifact_review_profile = "lc-receipt-payload-artifact-review-v0"
 receipt_payload_artifact_review_receipt_profile = "lc-receipt-payload-artifact-review-receipt-v0"
+receipt_payload_artifact_review_receipt_draft_profile = "lc-receipt-payload-artifact-review-receipt-draft-v0"
 receipt_payload_materialization_plan_profile = "lc-receipt-payload-materialization-plan-v0"
 signature_request_binding_profile = "lc-signature-request-binding-v0"
 receipt_contract_profile = "lc-receipts-v0"
@@ -1752,6 +1787,7 @@ receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
 receipt_payload_artifact_review_required = true
 receipt_payload_artifact_review_receipt_required = true
+receipt_payload_artifact_review_receipt_draft_required = true
 receipt_payload_materialization_plan_required = true
 signature_request_binding_required = true
 os_base_contract_required = true
@@ -1779,6 +1815,7 @@ receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
 receipt_payload_artifact_review_profile = "lc-receipt-payload-artifact-review-v0"
 receipt_payload_artifact_review_receipt_profile = "lc-receipt-payload-artifact-review-receipt-v0"
+receipt_payload_artifact_review_receipt_draft_profile = "lc-receipt-payload-artifact-review-receipt-draft-v0"
 receipt_payload_materialization_plan_profile = "lc-receipt-payload-materialization-plan-v0"
 signature_request_binding_profile = "lc-signature-request-binding-v0"
 receipt_contract_profile = "lc-receipts-v0"
@@ -1797,6 +1834,7 @@ receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
 receipt_payload_artifact_review_required = true
 receipt_payload_artifact_review_receipt_required = true
+receipt_payload_artifact_review_receipt_draft_required = true
 receipt_payload_materialization_plan_required = true
 signature_request_binding_required = true
 os_base_contract_required = true
@@ -1824,6 +1862,7 @@ receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
 receipt_payload_artifact_review_profile = "lc-receipt-payload-artifact-review-v0"
 receipt_payload_artifact_review_receipt_profile = "lc-receipt-payload-artifact-review-receipt-v0"
+receipt_payload_artifact_review_receipt_draft_profile = "lc-receipt-payload-artifact-review-receipt-draft-v0"
 receipt_payload_materialization_plan_profile = "lc-receipt-payload-materialization-plan-v0"
 signature_request_binding_profile = "lc-signature-request-binding-v0"
 receipt_contract_profile = "lc-receipts-v0"
@@ -1842,6 +1881,7 @@ receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
 receipt_payload_artifact_review_required = true
 receipt_payload_artifact_review_receipt_required = true
+receipt_payload_artifact_review_receipt_draft_required = true
 receipt_payload_materialization_plan_required = true
 signature_request_binding_required = true
 os_base_contract_required = true
@@ -1869,6 +1909,7 @@ receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
 receipt_payload_artifact_review_profile = "lc-receipt-payload-artifact-review-v0"
 receipt_payload_artifact_review_receipt_profile = "lc-receipt-payload-artifact-review-receipt-v0"
+receipt_payload_artifact_review_receipt_draft_profile = "lc-receipt-payload-artifact-review-receipt-draft-v0"
 receipt_payload_materialization_plan_profile = "lc-receipt-payload-materialization-plan-v0"
 signature_request_binding_profile = "lc-signature-request-binding-v0"
 receipt_contract_profile = "lc-receipts-v0"
@@ -1887,6 +1928,7 @@ receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
 receipt_payload_artifact_review_required = true
 receipt_payload_artifact_review_receipt_required = true
+receipt_payload_artifact_review_receipt_draft_required = true
 receipt_payload_materialization_plan_required = true
 signature_request_binding_required = true
 os_base_contract_required = true
@@ -2011,6 +2053,10 @@ receipt_payload_artifact_review_receipt_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_
 receipt_payload_artifact_review_receipt_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT
 receipt_payload_artifact_review_receipt_present = true
 receipt_payload_artifact_review_receipt_command = "lc receipt-review-receipt"
+receipt_payload_artifact_review_receipt_draft_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+receipt_payload_artifact_review_receipt_draft_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT
+receipt_payload_artifact_review_receipt_draft_present = true
+receipt_payload_artifact_review_receipt_draft_command = "lc receipt-review-draft"
 receipt_payload_materialization_plan_profile = "$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
 receipt_payload_materialization_plan_required = $LC_REQUIRE_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN
 receipt_payload_materialization_plan_present = true
@@ -2074,6 +2120,9 @@ receipt_payload_artifact_review_command = "lc receipt-artifact-review"
 receipt_payload_artifact_review_receipt_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_PROFILE"
 receipt_payload_artifact_review_receipt_present = true
 receipt_payload_artifact_review_receipt_command = "lc receipt-review-receipt"
+receipt_payload_artifact_review_receipt_draft_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+receipt_payload_artifact_review_receipt_draft_present = true
+receipt_payload_artifact_review_receipt_draft_command = "lc receipt-review-draft"
 receipt_payload_materialization_plan_profile = "$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
 receipt_payload_materialization_plan_present = true
 receipt_payload_materialization_plan_command = "lc receipt-materialization-plan"
@@ -2123,6 +2172,9 @@ receipt_payload_artifact_review_command = "lc receipt-artifact-review"
 receipt_payload_artifact_review_receipt_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_PROFILE"
 receipt_payload_artifact_review_receipt_present = true
 receipt_payload_artifact_review_receipt_command = "lc receipt-review-receipt"
+receipt_payload_artifact_review_receipt_draft_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+receipt_payload_artifact_review_receipt_draft_present = true
+receipt_payload_artifact_review_receipt_draft_command = "lc receipt-review-draft"
 receipt_payload_materialization_plan_profile = "$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
 receipt_payload_materialization_plan_present = true
 receipt_payload_materialization_plan_command = "lc receipt-materialization-plan"
@@ -2178,6 +2230,10 @@ receipt_payload_artifact_review_receipt_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_
 receipt_payload_artifact_review_receipt_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT
 receipt_payload_artifact_review_receipt_present = true
 receipt_payload_artifact_review_receipt_command = "lc receipt-review-receipt"
+receipt_payload_artifact_review_receipt_draft_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+receipt_payload_artifact_review_receipt_draft_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT
+receipt_payload_artifact_review_receipt_draft_present = true
+receipt_payload_artifact_review_receipt_draft_command = "lc receipt-review-draft"
 receipt_payload_materialization_plan_profile = "$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
 receipt_payload_materialization_plan_present = true
 receipt_payload_materialization_plan_command = "lc receipt-materialization-plan"
@@ -2229,6 +2285,10 @@ contract_name = "Latticra Console Receipt Payload Artifact Review Receipt Contra
 review_receipt_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_PROFILE"
 review_receipt_status = "metadata-only-contract"
 review_receipt_contract_present = true
+review_receipt_draft_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+review_receipt_draft_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT
+review_receipt_draft_contract_present = true
+review_receipt_draft_command = "lc receipt-review-draft"
 receipt_request_profile = "$LC_RECEIPT_REQUEST_CONTRACT_PROFILE"
 receipt_payload_schema_profile = "$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
 receipt_payload_artifact_draft_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE"
@@ -2273,6 +2333,7 @@ receipt_write_allowed = false
 receipt_signed = false
 promotion_gate = "lc_receipt_payload_artifact_review_receipt_before_materialization_preconditions"
 command_surface = "lc receipt-review-receipt"
+related_review_receipt_draft_command = "lc receipt-review-draft"
 related_review_command = "lc receipt-artifact-review"
 related_materialization_plan_command = "lc receipt-materialization-plan"
 related_artifact_command = "lc receipt-artifact"
@@ -2289,6 +2350,71 @@ network_allowed = false
 runtime_enforcement_allowed = false
 boot_allowed = false
 LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT
+  write_file "$PREFIX/share/latticra/lc/receipt-request/payload-artifact-review-receipt-draft.toml" 0644 <<LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT
+contract_name = "Latticra Console Receipt Payload Artifact Review Receipt Draft Contract"
+review_receipt_draft_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+review_receipt_draft_status = "metadata-only-draft-contract"
+review_receipt_draft_contract_present = true
+receipt_request_profile = "$LC_RECEIPT_REQUEST_CONTRACT_PROFILE"
+receipt_payload_artifact_review_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_PROFILE"
+receipt_payload_artifact_review_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW
+receipt_payload_artifact_review_present = true
+receipt_payload_artifact_review_command = "lc receipt-artifact-review"
+receipt_payload_artifact_review_receipt_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_PROFILE"
+receipt_payload_artifact_review_receipt_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT
+receipt_payload_artifact_review_receipt_present = true
+receipt_payload_artifact_review_receipt_command = "lc receipt-review-receipt"
+receipt_payload_materialization_plan_profile = "$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
+receipt_payload_materialization_plan_required = $LC_REQUIRE_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN
+receipt_payload_materialization_plan_present = true
+receipt_payload_materialization_plan_command = "lc receipt-materialization-plan"
+receipt_contract_profile = "$LC_RECEIPT_CONTRACT_PROFILE"
+signature_request_binding_profile = "$LC_SIGNATURE_REQUEST_BINDING_PROFILE"
+draft_review_required = true
+draft_review_present = false
+draft_review_receipt_required = true
+draft_review_receipt_present = false
+draft_review_receipt_artifact_present = false
+draft_review_receipt_write_allowed = false
+draft_review_receipt_signed = false
+draft_review_receipt_hash_recorded = false
+draft_review_receipt_path_recorded = false
+draft_review_approval_recorded = false
+draft_reviewer_identity_recorded = false
+draft_review_timestamp_recorded = false
+review_receipt_materialization_allowed = false
+review_receipt_signing_allowed = false
+materialization_preconditions_met = false
+materialization_allowed = false
+payload_artifact_present = false
+payload_materialized = false
+payload_write_allowed = false
+signature_request_binding_allowed = false
+signature_request_binding_artifact_present = false
+seal_signature_request_ready = false
+seal_signature_request_present = false
+seal_signing_authority_present = false
+receipt_write_allowed = false
+receipt_signed = false
+promotion_gate = "lc_receipt_payload_artifact_review_receipt_draft_before_review_receipt_creation"
+command_surface = "lc receipt-review-draft"
+related_review_receipt_command = "lc receipt-review-receipt"
+related_review_command = "lc receipt-artifact-review"
+related_materialization_plan_command = "lc receipt-materialization-plan"
+related_artifact_command = "lc receipt-artifact"
+related_schema_command = "lc receipt-payload"
+related_binding_command = "lc signature-request"
+related_request_command = "lc receipt-request"
+no_effect = true
+file_write_allowed = false
+host_process_launch_allowed = false
+host_file_read_allowed = false
+host_file_write_allowed = false
+host_mutation_allowed = false
+network_allowed = false
+runtime_enforcement_allowed = false
+boot_allowed = false
+LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT
   write_file "$PREFIX/share/latticra/lc/receipt-request/payload-materialization-plan.toml" 0644 <<LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN
 plan_name = "Latticra Console Receipt Payload Materialization Plan"
 materialization_plan_profile = "$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
@@ -2307,6 +2433,10 @@ receipt_payload_artifact_review_receipt_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_
 receipt_payload_artifact_review_receipt_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT
 receipt_payload_artifact_review_receipt_present = true
 receipt_payload_artifact_review_receipt_command = "lc receipt-review-receipt"
+receipt_payload_artifact_review_receipt_draft_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+receipt_payload_artifact_review_receipt_draft_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT
+receipt_payload_artifact_review_receipt_draft_present = true
+receipt_payload_artifact_review_receipt_draft_command = "lc receipt-review-draft"
 receipt_contract_profile = "$LC_RECEIPT_CONTRACT_PROFILE"
 signature_request_binding_profile = "$LC_SIGNATURE_REQUEST_BINDING_PROFILE"
 draft_review_receipt_required = true
@@ -2365,6 +2495,10 @@ receipt_payload_artifact_review_receipt_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_
 receipt_payload_artifact_review_receipt_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT
 receipt_payload_artifact_review_receipt_present = true
 receipt_payload_artifact_review_receipt_command = "lc receipt-review-receipt"
+receipt_payload_artifact_review_receipt_draft_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+receipt_payload_artifact_review_receipt_draft_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT
+receipt_payload_artifact_review_receipt_draft_present = true
+receipt_payload_artifact_review_receipt_draft_command = "lc receipt-review-draft"
 receipt_payload_materialization_plan_profile = "$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
 receipt_payload_materialization_plan_required = $LC_REQUIRE_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN
 receipt_payload_materialization_plan_present = true
@@ -2379,7 +2513,7 @@ requested_signature = "Ed25519-development"
 requested_signing_authorization = "metadata-only"
 requested_receipt_profile = "latticra-seal-verified-receipt/0.1"
 requested_capability = "verified-receipt-report"
-required_surfaces = "receipt-request,receipt-payload-schema,receipt-payload-artifact-draft,receipt-payload-artifact-review,receipt-payload-artifact-review-receipt,receipt-payload-materialization-plan,receipt-contract,runtime-boundary,seal-capability-labels"
+required_surfaces = "receipt-request,receipt-payload-schema,receipt-payload-artifact-draft,receipt-payload-artifact-review,receipt-payload-artifact-review-receipt,receipt-payload-artifact-review-receipt-draft,receipt-payload-materialization-plan,receipt-contract,runtime-boundary,seal-capability-labels"
 payload_artifact_present = false
 required_payload_state = "payload_artifact_present=0,payload_hash_computed=0,payload_path_recorded=0"
 signature_request_binding_artifact_present = false
@@ -2428,6 +2562,8 @@ receipt_payload_artifact_review_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_
 receipt_payload_artifact_review_present = true
 receipt_payload_artifact_review_receipt_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT
 receipt_payload_artifact_review_receipt_present = true
+receipt_payload_artifact_review_receipt_draft_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT
+receipt_payload_artifact_review_receipt_draft_present = true
 receipt_payload_materialization_plan_required = $LC_REQUIRE_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN
 receipt_payload_materialization_plan_present = true
 draft_review_receipt_present = false
@@ -2441,6 +2577,7 @@ receipt_payload_schema_command = "lc receipt-payload"
 receipt_payload_artifact_draft_command = "lc receipt-artifact"
 receipt_payload_artifact_review_command = "lc receipt-artifact-review"
 receipt_payload_artifact_review_receipt_command = "lc receipt-review-receipt"
+receipt_payload_artifact_review_receipt_draft_command = "lc receipt-review-draft"
 receipt_payload_materialization_plan_command = "lc receipt-materialization-plan"
 signature_request_binding_command = "lc signature-request"
 seal_signature_planned = true
@@ -2589,6 +2726,12 @@ defines the future review receipt evidence while keeping the actual review
 receipt, review approval, payload materialization, signing, and receipt writes
 absent.
 
+The LC receipt payload artifact review receipt draft contract is installed at
+share/latticra/lc/receipt-request/payload-artifact-review-receipt-draft.toml.
+It defines the future review receipt draft surface while keeping draft receipt
+creation, hashing, path recording, signing, payload materialization, and receipt
+writes absent.
+
 The LC receipt payload materialization plan is installed at
 share/latticra/lc/receipt-request/payload-materialization-plan.toml. It records
 the preconditions for a future payload artifact while keeping materialization,
@@ -2631,6 +2774,7 @@ name=lc receipt-payload category=core effect=none capability=lc.receipt.payload
 name=lc receipt-artifact category=core effect=none capability=lc.receipt.artifact
 name=lc receipt-artifact-review category=core effect=none capability=lc.receipt.artifact.review
 name=lc receipt-review-receipt category=core effect=none capability=lc.receipt.review.receipt
+name=lc receipt-review-draft category=core effect=none capability=lc.receipt.review.receipt.draft
 name=lc receipt-materialization-plan category=core effect=none capability=lc.receipt.materialization.plan
 name=lc signature-request category=core effect=none capability=lc.signature.request
 name=lc substrate category=substrate effect=none capability=lc.substrate.inspect
@@ -2698,7 +2842,8 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/prompt-evaluation-result-review" \
     "$PREFIX/share/latticra/nadia/prompt-evaluation-result-disposition" \
     "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release" \
-    "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt"
+    "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt" \
+    "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt-review"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia Witness Foundation"
@@ -2706,9 +2851,9 @@ public_name = "Nadia"
 interactive_name = "Nadia"
 implementation_name = "Nadia Witness Foundation"
 documentation_code_name = "Nadia Witness Foundation"
-stage = "35-prompt-evaluation-result-release-receipt-contract"
-previous_stage = "34-prompt-evaluation-result-release-contract"
-mode = "offline-prompt-evaluation-result-release-receipt-contract"
+stage = "36-prompt-evaluation-result-release-receipt-review-contract"
+previous_stage = "35-prompt-evaluation-result-release-receipt-contract"
+mode = "offline-prompt-evaluation-result-release-receipt-review-contract"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -3365,6 +3510,32 @@ prompt_evaluation_result_release_receipt_packaged = false
 requires_prompt_evaluation_result_release_contract = true
 requires_future_prompt_evaluation_result_release_receipt_review_contract = true
 prompt_evaluation_result_release_receipt_promotion_allowed = false
+prompt_evaluation_result_release_receipt_review_contract_stage = "36-prompt-evaluation-result-release-receipt-review-contract"
+prompt_evaluation_result_release_receipt_review_contract_command = "scripts/nadia-prompt-evaluation-result-release-receipt-review-contract.sh"
+installed_prompt_evaluation_result_release_receipt_review_contract_command = "latticra-nadia prompt-evaluation-result-release-receipt-review"
+prompt_evaluation_result_release_receipt_review_stage = "contract-only"
+prompt_evaluation_result_release_receipt_review_contract_status = "contract_only"
+prompt_evaluation_result_release_receipt_review_authority = false
+prompt_evaluation_result_release_receipt_review_allowed = false
+prompt_evaluation_result_release_receipt_review_recorded = false
+prompt_evaluation_result_release_receipt_review_created = false
+prompt_evaluation_result_release_receipt_review_performed = false
+prompt_evaluation_result_release_receipt_review_metadata_present = true
+prompt_evaluation_result_release_receipt_review_family = "operator-reviewed-prompt-evaluation-result-release-receipt-review"
+prompt_evaluation_result_release_receipt_review_format = "contract-only-offline-evaluation-result-release-receipt-review"
+prompt_evaluation_result_release_receipt_review_decision = "blocked_contract_only"
+prompt_evaluation_result_release_receipt_review_plan_recorded = true
+prompt_evaluation_result_release_receipt_review_result_recorded = false
+prompt_evaluation_result_release_receipt_review_runtime_invoked = false
+prompt_evaluation_result_release_receipt_review_record_created = false
+prompt_evaluation_result_release_receipt_review_decision_recorded = false
+prompt_evaluation_result_release_receipt_review_approval_recorded = false
+prompt_evaluation_result_release_receipt_review_rejection_recorded = false
+prompt_evaluation_result_release_receipt_review_findings_recorded = false
+prompt_evaluation_result_release_receipt_review_applied = false
+requires_prompt_evaluation_result_release_receipt_contract = true
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_contract = true
+prompt_evaluation_result_release_receipt_review_promotion_allowed = false
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -3385,13 +3556,13 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-35 prompt-evaluation result release receipt contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-36 prompt-evaluation result release receipt review contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, tokenization-boundary, tokenizer-specification, tokenizer-manifest, tokenizer-artifact-inventory, tokenizer-artifact-measurement, tokenizer-artifact-verification, tokenizer-artifact-binding, tokenizer-runtime-attachment, prompt-tokenization, prompt-token-sequence, context-window-assembly, prompt-evaluation-input, prompt-evaluation-runtime-handoff, prompt-evaluation-invocation, prompt-evaluation-result, prompt-evaluation-result-review, prompt-evaluation-result-disposition, prompt-evaluation-result-release, prompt-evaluation-result-release-receipt, and productivity-ledger paths.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, tokenization-boundary, tokenizer-specification, tokenizer-manifest, tokenizer-artifact-inventory, tokenizer-artifact-measurement, tokenizer-artifact-verification, tokenizer-artifact-binding, tokenizer-runtime-attachment, prompt-tokenization, prompt-token-sequence, context-window-assembly, prompt-evaluation-input, prompt-evaluation-runtime-handoff, prompt-evaluation-invocation, prompt-evaluation-result, prompt-evaluation-result-review, prompt-evaluation-result-disposition, prompt-evaluation-result-release, prompt-evaluation-result-release-receipt, prompt-evaluation-result-release-receipt-review, and productivity-ledger paths.
 
-It can generate local context packs when the operator runs latticra-nadia context-pack and contract metadata when the operator runs latticra-nadia prompt-evaluation-result-release-receipt. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, create prompt tokens, record prompt token sequences, record prompt token IDs, record prompt token order, record prompt token offsets, assemble context windows, create prompt evaluation inputs, create prompt evaluation runtime handoff requests, create prompt evaluation invocation requests, create prompt evaluation result records, create prompt evaluation result review records, create prompt evaluation result disposition records, create release records, record review decisions, record disposition decisions, record release decisions, publish releases, package releases, create release receipts, record release receipts, sign receipts, publish receipts, record model output, perform runtime handoff, invoke runtimes, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn runtime processes, create runtime sessions, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source. Prompt-evaluation-input metadata records future prompt evaluation runtime handoff requirements, prompt-evaluation-runtime-handoff metadata records future prompt evaluation invocation requirements, prompt-evaluation-invocation metadata records future prompt evaluation result requirements, prompt-evaluation-result metadata records future prompt evaluation result review requirements, prompt-evaluation-result-review metadata records future prompt evaluation result disposition requirements, prompt-evaluation-result-disposition metadata records future prompt evaluation result release requirements, prompt-evaluation-result-release metadata records future prompt evaluation result release receipt requirements, and prompt-evaluation-result-release-receipt metadata records future prompt evaluation result release receipt review requirements; none grants prompt evaluation, dialogue generation, inference, runtime handoff, runtime invocation, or tool execution authority.
+It can generate local context packs when the operator runs latticra-nadia context-pack and contract metadata when the operator runs latticra-nadia prompt-evaluation-result-release-receipt-review. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, create prompt tokens, record prompt token sequences, record prompt token IDs, record prompt token order, record prompt token offsets, assemble context windows, create prompt evaluation inputs, create prompt evaluation runtime handoff requests, create prompt evaluation invocation requests, create prompt evaluation result records, create prompt evaluation result review records, create prompt evaluation result disposition records, create release records, record review decisions, record review findings, record disposition decisions, record release decisions, publish releases, package releases, create release receipts, record release receipts, record release receipt reviews, sign receipts, publish receipts, record model output, perform runtime handoff, invoke runtimes, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn runtime processes, create runtime sessions, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source. Prompt-evaluation-input metadata records future prompt evaluation runtime handoff requirements, prompt-evaluation-runtime-handoff metadata records future prompt evaluation invocation requirements, prompt-evaluation-invocation metadata records future prompt evaluation result requirements, prompt-evaluation-result metadata records future prompt evaluation result review requirements, prompt-evaluation-result-review metadata records future prompt evaluation result disposition requirements, prompt-evaluation-result-disposition metadata records future prompt evaluation result release requirements, prompt-evaluation-result-release metadata records future prompt evaluation result release receipt requirements, prompt-evaluation-result-release-receipt metadata records future prompt evaluation result release receipt review requirements, and prompt-evaluation-result-release-receipt-review metadata records future prompt evaluation result release receipt review disposition requirements; none grants prompt evaluation, dialogue generation, inference, runtime handoff, runtime invocation, or tool execution authority.
 NADIAREADME
 fi
 
@@ -3435,12 +3606,44 @@ case "\${1:-status}" in
     exec "\$HOME/.local/bin/latticra-panel"
     ;;
   update|updater)
-    echo "Latticra updates are handled inside Latticra Panel."
-    echo "Open Latticra Panel and use the Updater workspace."
-    echo "updater_source_strategy=$UPDATER_SOURCE_STRATEGY"
-    echo "updater_update_channel=$UPDATER_UPDATE_CHANNEL"
-    echo "network_authority=0"
-    exec "\$HOME/.local/bin/latticra-panel"
+    UPDATER_ACTION="\${2:-open}"
+    case "\$UPDATER_ACTION" in
+      status|policy)
+        echo "LATTICRA PANEL UPDATER"
+        echo "panel_owned=1"
+        echo "config=\$PREFIX/etc/latticra/updater.toml"
+        echo "policy=\$PREFIX/share/latticra/updater/policy.toml"
+        echo "source_strategy=$UPDATER_SOURCE_STRATEGY"
+        echo "update_channel=$UPDATER_UPDATE_CHANNEL"
+        echo "allow_network_fetch=$UPDATER_ALLOW_NETWORK_FETCH"
+        echo "require_dry_run_before_apply=$UPDATER_REQUIRE_DRY_RUN_BEFORE_APPLY"
+        echo "reuse_installer_engine=$UPDATER_REUSE_INSTALLER_ENGINE"
+        echo "write_update_receipt=$UPDATER_WRITE_UPDATE_RECEIPT"
+        echo "update_apply_mode=guarded-local-prefix-reinstall"
+        echo "network_authority=0"
+        echo "root_authority=0"
+        echo "system_mutation_authority=0"
+        ;;
+      open|gui|panel|"")
+        echo "Latticra updates are handled inside Latticra Panel."
+        echo "Open Latticra Panel and use the Updater workspace."
+        echo "updater_source_strategy=$UPDATER_SOURCE_STRATEGY"
+        echo "updater_update_channel=$UPDATER_UPDATE_CHANNEL"
+        echo "network_authority=0"
+        exec "\$HOME/.local/bin/latticra-panel"
+        ;;
+      dry-run|preview|apply)
+        echo "Latticra updater action is handled inside Latticra Panel."
+        echo "requested_action=\$UPDATER_ACTION"
+        echo "Open Latticra Panel and use the Updater workspace."
+        echo "network_authority=0"
+        exec "\$HOME/.local/bin/latticra-panel"
+        ;;
+      *)
+        echo "usage: latticra updater {status|open|dry-run|apply}" >&2
+        exit 64
+        ;;
+    esac
     ;;
   receipts)
     ls -la "\$PREFIX/share/latticra/receipts"
@@ -3571,6 +3774,7 @@ render_lc_man() {
   echo "  \$LC_COMMAND_WRAPPER receipt-artifact"
   echo "  \$LC_COMMAND_WRAPPER receipt-artifact-review"
   echo "  \$LC_COMMAND_WRAPPER receipt-review-receipt"
+  echo "  \$LC_COMMAND_WRAPPER receipt-review-draft"
   echo "  \$LC_COMMAND_WRAPPER receipt-materialization-plan"
   echo "  \$LC_COMMAND_WRAPPER signature-request"
   echo "  \$LC_COMMAND_WRAPPER substrate"
@@ -3695,6 +3899,7 @@ case "\${1:-status}" in
     echo "receipt_payload_artifact_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE"
     echo "receipt_payload_artifact_review_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_PROFILE"
     echo "receipt_payload_artifact_review_receipt_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_PROFILE"
+    echo "receipt_payload_artifact_review_receipt_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
     echo "receipt_payload_materialization_plan_profile=$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
     echo "signature_request_binding_profile=$LC_SIGNATURE_REQUEST_BINDING_PROFILE"
     echo "receipt_contract_profile=$LC_RECEIPT_CONTRACT_PROFILE"
@@ -3713,6 +3918,7 @@ case "\${1:-status}" in
     echo "receipt_payload_artifact_draft_required=$LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT"
     echo "receipt_payload_artifact_review_required=$LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW"
     echo "receipt_payload_artifact_review_receipt_required=$LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT"
+    echo "receipt_payload_artifact_review_receipt_draft_required=$LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT"
     echo "receipt_payload_materialization_plan_required=$LC_REQUIRE_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN"
     echo "signature_request_binding_required=$LC_REQUIRE_SIGNATURE_REQUEST_BINDING"
     echo "os_base_contract_required=$LC_REQUIRE_OS_BASE_CONTRACT"
@@ -3730,6 +3936,7 @@ case "\${1:-status}" in
     echo "receipt_payload_artifact_draft_status=metadata-only-draft"
     echo "receipt_payload_artifact_review_status=metadata-only-review-gate"
     echo "receipt_payload_artifact_review_receipt_status=metadata-only-receipt-contract"
+    echo "receipt_payload_artifact_review_receipt_draft_status=metadata-only-review-receipt-draft"
     echo "receipt_payload_materialization_plan_status=metadata-only-plan"
     echo "materialization_preconditions_met=0"
     echo "draft_review_receipt_present=0"
@@ -3825,6 +4032,8 @@ case "\${1:-status}" in
     echo "receipt_payload_artifact_review_present=1"
     echo "receipt_payload_artifact_review_receipt_required=1"
     echo "receipt_payload_artifact_review_receipt_present=1"
+    echo "receipt_payload_artifact_review_receipt_draft_required=1"
+    echo "receipt_payload_artifact_review_receipt_draft_present=1"
     echo "receipt_payload_materialization_plan_required=1"
     echo "receipt_payload_materialization_plan_present=1"
     echo "draft_review_receipt_present=0"
@@ -3838,6 +4047,7 @@ case "\${1:-status}" in
     echo "receipt_payload_artifact_draft_command=lc receipt-artifact"
     echo "receipt_payload_artifact_review_command=lc receipt-artifact-review"
     echo "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt"
+    echo "receipt_payload_artifact_review_receipt_draft_command=lc receipt-review-draft"
     echo "receipt_payload_materialization_plan_command=lc receipt-materialization-plan"
     echo "signature_request_binding_command=lc signature-request"
     echo "seal_signature_planned=1"
@@ -3888,6 +4098,10 @@ case "\${1:-status}" in
     echo "receipt_payload_artifact_review_receipt_required=1"
     echo "receipt_payload_artifact_review_receipt_present=1"
     echo "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt"
+    echo "receipt_payload_artifact_review_receipt_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+    echo "receipt_payload_artifact_review_receipt_draft_required=1"
+    echo "receipt_payload_artifact_review_receipt_draft_present=1"
+    echo "receipt_payload_artifact_review_receipt_draft_command=lc receipt-review-draft"
     echo "receipt_payload_materialization_plan_profile=$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
     echo "receipt_payload_materialization_plan_required=1"
     echo "receipt_payload_materialization_plan_present=1"
@@ -3952,6 +4166,9 @@ case "\${1:-status}" in
     echo "receipt_payload_artifact_review_receipt_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_PROFILE"
     echo "receipt_payload_artifact_review_receipt_present=1"
     echo "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt"
+    echo "receipt_payload_artifact_review_receipt_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+    echo "receipt_payload_artifact_review_receipt_draft_present=1"
+    echo "receipt_payload_artifact_review_receipt_draft_command=lc receipt-review-draft"
     echo "receipt_payload_materialization_plan_profile=$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
     echo "receipt_payload_materialization_plan_present=1"
     echo "receipt_payload_materialization_plan_command=lc receipt-materialization-plan"
@@ -4002,6 +4219,9 @@ case "\${1:-status}" in
     echo "receipt_payload_artifact_review_receipt_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_PROFILE"
     echo "receipt_payload_artifact_review_receipt_present=1"
     echo "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt"
+    echo "receipt_payload_artifact_review_receipt_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+    echo "receipt_payload_artifact_review_receipt_draft_present=1"
+    echo "receipt_payload_artifact_review_receipt_draft_command=lc receipt-review-draft"
     echo "receipt_payload_materialization_plan_profile=$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
     echo "receipt_payload_materialization_plan_present=1"
     echo "receipt_payload_materialization_plan_command=lc receipt-materialization-plan"
@@ -4058,6 +4278,10 @@ case "\${1:-status}" in
     echo "receipt_payload_artifact_review_receipt_required=1"
     echo "receipt_payload_artifact_review_receipt_present=1"
     echo "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt"
+    echo "receipt_payload_artifact_review_receipt_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+    echo "receipt_payload_artifact_review_receipt_draft_required=1"
+    echo "receipt_payload_artifact_review_receipt_draft_present=1"
+    echo "receipt_payload_artifact_review_receipt_draft_command=lc receipt-review-draft"
     echo "receipt_payload_materialization_plan_profile=$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
     echo "receipt_payload_materialization_plan_present=1"
     echo "receipt_payload_materialization_plan_command=lc receipt-materialization-plan"
@@ -4110,6 +4334,10 @@ case "\${1:-status}" in
     echo "review_receipt_status=metadata-only-contract"
     echo "review_receipt_file=\$LC_DIR/receipt-request/payload-artifact-review-receipt.toml"
     echo "review_receipt_contract_present=1"
+    echo "review_receipt_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+    echo "review_receipt_draft_required=1"
+    echo "review_receipt_draft_contract_present=1"
+    echo "review_receipt_draft_command=lc receipt-review-draft"
     echo "receipt_request_profile=$LC_RECEIPT_REQUEST_CONTRACT_PROFILE"
     echo "receipt_payload_schema_profile=$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
     echo "receipt_payload_artifact_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE"
@@ -4158,6 +4386,73 @@ case "\${1:-status}" in
     echo "receipt_signed=0"
     echo "promotion_gate=lc_receipt_payload_artifact_review_receipt_before_materialization_preconditions"
     echo "command_surface=lc receipt-review-receipt"
+    echo "related_review_receipt_draft_command=lc receipt-review-draft"
+    echo "related_review_command=lc receipt-artifact-review"
+    echo "related_materialization_plan_command=lc receipt-materialization-plan"
+    echo "related_artifact_command=lc receipt-artifact"
+    echo "related_schema_command=lc receipt-payload"
+    echo "related_binding_command=lc signature-request"
+    echo "related_request_command=lc receipt-request"
+    echo "no_effect=1"
+    echo "file_write_allowed=0"
+    echo "host_process_launch_allowed=0"
+    echo "host_file_read_allowed=0"
+    echo "host_file_write_allowed=0"
+    echo "host_mutation_allowed=0"
+    echo "network_allowed=0"
+    echo "runtime_enforcement_allowed=0"
+    echo "boot_allowed=0"
+    ;;
+  receipt-review-draft|review-receipt-draft|artifact-review-receipt-draft|payload-artifact-review-receipt-draft|receipt-payload-artifact-review-receipt-draft)
+    echo "LATTICRA CONSOLE RECEIPT PAYLOAD ARTIFACT REVIEW RECEIPT DRAFT CONTRACT"
+    echo "review_receipt_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+    echo "review_receipt_draft_status=metadata-only-draft-contract"
+    echo "review_receipt_draft_file=\$LC_DIR/receipt-request/payload-artifact-review-receipt-draft.toml"
+    echo "review_receipt_draft_contract_present=1"
+    echo "receipt_request_profile=$LC_RECEIPT_REQUEST_CONTRACT_PROFILE"
+    echo "receipt_payload_artifact_review_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_PROFILE"
+    echo "receipt_payload_artifact_review_required=1"
+    echo "receipt_payload_artifact_review_present=1"
+    echo "receipt_payload_artifact_review_command=lc receipt-artifact-review"
+    echo "receipt_payload_artifact_review_receipt_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_PROFILE"
+    echo "receipt_payload_artifact_review_receipt_required=1"
+    echo "receipt_payload_artifact_review_receipt_present=1"
+    echo "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt"
+    echo "receipt_payload_materialization_plan_profile=$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
+    echo "receipt_payload_materialization_plan_required=1"
+    echo "receipt_payload_materialization_plan_present=1"
+    echo "receipt_payload_materialization_plan_command=lc receipt-materialization-plan"
+    echo "receipt_contract_profile=$LC_RECEIPT_CONTRACT_PROFILE"
+    echo "signature_request_binding_profile=$LC_SIGNATURE_REQUEST_BINDING_PROFILE"
+    echo "draft_review_required=1"
+    echo "draft_review_present=0"
+    echo "draft_review_receipt_required=1"
+    echo "draft_review_receipt_present=0"
+    echo "draft_review_receipt_artifact_present=0"
+    echo "draft_review_receipt_write_allowed=0"
+    echo "draft_review_receipt_signed=0"
+    echo "draft_review_receipt_hash_recorded=0"
+    echo "draft_review_receipt_path_recorded=0"
+    echo "draft_review_approval_recorded=0"
+    echo "draft_reviewer_identity_recorded=0"
+    echo "draft_review_timestamp_recorded=0"
+    echo "review_receipt_materialization_allowed=0"
+    echo "review_receipt_signing_allowed=0"
+    echo "materialization_preconditions_met=0"
+    echo "materialization_allowed=0"
+    echo "payload_artifact_present=0"
+    echo "payload_materialized=0"
+    echo "payload_write_allowed=0"
+    echo "signature_request_binding_allowed=0"
+    echo "signature_request_binding_artifact_present=0"
+    echo "seal_signature_request_ready=0"
+    echo "seal_signature_request_present=0"
+    echo "seal_signing_authority_present=0"
+    echo "receipt_write_allowed=0"
+    echo "receipt_signed=0"
+    echo "promotion_gate=lc_receipt_payload_artifact_review_receipt_draft_before_review_receipt_creation"
+    echo "command_surface=lc receipt-review-draft"
+    echo "related_review_receipt_command=lc receipt-review-receipt"
     echo "related_review_command=lc receipt-artifact-review"
     echo "related_materialization_plan_command=lc receipt-materialization-plan"
     echo "related_artifact_command=lc receipt-artifact"
@@ -4193,6 +4488,10 @@ case "\${1:-status}" in
     echo "receipt_payload_artifact_review_receipt_required=1"
     echo "receipt_payload_artifact_review_receipt_present=1"
     echo "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt"
+    echo "receipt_payload_artifact_review_receipt_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+    echo "receipt_payload_artifact_review_receipt_draft_required=1"
+    echo "receipt_payload_artifact_review_receipt_draft_present=1"
+    echo "receipt_payload_artifact_review_receipt_draft_command=lc receipt-review-draft"
     echo "receipt_contract_profile=$LC_RECEIPT_CONTRACT_PROFILE"
     echo "signature_request_binding_profile=$LC_SIGNATURE_REQUEST_BINDING_PROFILE"
     echo "draft_review_receipt_required=1"
@@ -4248,6 +4547,14 @@ case "\${1:-status}" in
     echo "receipt_payload_artifact_review_required=1"
     echo "receipt_payload_artifact_review_present=1"
     echo "receipt_payload_artifact_review_command=lc receipt-artifact-review"
+    echo "receipt_payload_artifact_review_receipt_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_PROFILE"
+    echo "receipt_payload_artifact_review_receipt_required=1"
+    echo "receipt_payload_artifact_review_receipt_present=1"
+    echo "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt"
+    echo "receipt_payload_artifact_review_receipt_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_PROFILE"
+    echo "receipt_payload_artifact_review_receipt_draft_required=1"
+    echo "receipt_payload_artifact_review_receipt_draft_present=1"
+    echo "receipt_payload_artifact_review_receipt_draft_command=lc receipt-review-draft"
     echo "receipt_payload_materialization_plan_profile=$LC_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_PROFILE"
     echo "receipt_payload_materialization_plan_required=1"
     echo "receipt_payload_materialization_plan_present=1"
@@ -4262,7 +4569,7 @@ case "\${1:-status}" in
     echo "requested_signing_authorization=metadata-only"
     echo "requested_receipt_profile=latticra-seal-verified-receipt/0.1"
     echo "requested_capability=verified-receipt-report"
-    echo "required_surfaces=receipt-request,receipt-payload-schema,receipt-payload-artifact-draft,receipt-payload-artifact-review,receipt-payload-artifact-review-receipt,receipt-payload-materialization-plan,receipt-contract,runtime-boundary,seal-capability-labels"
+    echo "required_surfaces=receipt-request,receipt-payload-schema,receipt-payload-artifact-draft,receipt-payload-artifact-review,receipt-payload-artifact-review-receipt,receipt-payload-artifact-review-receipt-draft,receipt-payload-materialization-plan,receipt-contract,runtime-boundary,seal-capability-labels"
     echo "payload_artifact_present=0"
     echo "required_payload_state=payload_artifact_present=0,payload_hash_computed=0,payload_path_recorded=0"
     echo "signature_request_binding_artifact_present=0"
@@ -4483,7 +4790,7 @@ case "\${1:-status}" in
     echo "\$LC_DIR"
     ;;
   *)
-    echo "usage: \$LC_COMMAND_WRAPPER {status|help|man|boundary|commands|install-config|substrate|host|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence|os|path}" >&2
+    echo "usage: \$LC_COMMAND_WRAPPER {status|help|man|boundary|commands|install-config|substrate|host|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence|os|path}" >&2
     exit 64
     ;;
 esac
@@ -4539,7 +4846,7 @@ render_nadia_commands() {
   echo "NADIA COMMAND SURFACE"
   echo "wrapper=latticra-nadia"
   echo "component=Nadia offline AI foundation"
-  echo "command=status stage=35 output=stdout authority=metadata-only-status"
+  echo "command=status stage=36 output=stdout authority=metadata-only-status"
   echo "command=context-pack stage=1 output=\$NADIA_DIR/context-packs authority=local-context-metadata"
   echo "command=runtime-profile stage=2 output=\$NADIA_DIR/runtime-profiles authority=runtime-profile-metadata"
   echo "command=prompt-plan stage=3 output=\$NADIA_DIR/prompt-plans authority=prompt-plan-metadata"
@@ -4575,6 +4882,7 @@ render_nadia_commands() {
   echo "command=prompt-evaluation-result-disposition stage=33 output=\$NADIA_DIR/prompt-evaluation-result-disposition authority=prompt-evaluation-result-disposition-contract-metadata"
   echo "command=prompt-evaluation-result-release stage=34 output=\$NADIA_DIR/prompt-evaluation-result-release authority=prompt-evaluation-result-release-contract-metadata"
   echo "command=prompt-evaluation-result-release-receipt stage=35 output=\$NADIA_DIR/prompt-evaluation-result-release-receipt authority=prompt-evaluation-result-release-receipt-contract-metadata"
+  echo "command=prompt-evaluation-result-release-receipt-review stage=36 output=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review authority=prompt-evaluation-result-release-receipt-review-contract-metadata"
   echo "command=path stage=0 output=\$NADIA_DIR authority=path-report"
   echo "network_authority=0"
   echo "tool_execution_authority=0"
@@ -4597,9 +4905,9 @@ case "\${1:-status}" in
     echo "interactive_name=Nadia"
     echo "implementation_name=Nadia Witness Foundation"
     echo "documentation_code_name=Nadia Witness Foundation"
-    echo "stage=35-prompt-evaluation-result-release-receipt-contract"
-    echo "previous_stage=34-prompt-evaluation-result-release-contract"
-    echo "mode=offline-prompt-evaluation-result-release-receipt-contract"
+    echo "stage=36-prompt-evaluation-result-release-receipt-review-contract"
+    echo "previous_stage=35-prompt-evaluation-result-release-receipt-contract"
+    echo "mode=offline-prompt-evaluation-result-release-receipt-review-contract"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "commands_command=latticra-nadia commands"
@@ -4639,6 +4947,7 @@ case "\${1:-status}" in
     echo "prompt_evaluation_result_disposition_contracts=\$NADIA_DIR/prompt-evaluation-result-disposition"
     echo "prompt_evaluation_result_release_contracts=\$NADIA_DIR/prompt-evaluation-result-release"
     echo "prompt_evaluation_result_release_receipt_contracts=\$NADIA_DIR/prompt-evaluation-result-release-receipt"
+    echo "prompt_evaluation_result_release_receipt_review_contracts=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "prompt_plan_command=latticra-nadia prompt-plan"
@@ -5293,6 +5602,32 @@ case "\${1:-status}" in
     echo "requires_prompt_evaluation_result_release_contract=1"
     echo "requires_future_prompt_evaluation_result_release_receipt_review_contract=1"
     echo "prompt_evaluation_result_release_receipt_promotion_allowed=0"
+    echo "prompt_evaluation_result_release_receipt_review_contract_stage=36-prompt-evaluation-result-release-receipt-review-contract"
+    echo "prompt_evaluation_result_release_receipt_review_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review"
+    echo "installed_prompt_evaluation_result_release_receipt_review_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review"
+    echo "prompt_evaluation_result_release_receipt_review_stage=contract-only"
+    echo "prompt_evaluation_result_release_receipt_review_contract_status=contract_only"
+    echo "prompt_evaluation_result_release_receipt_review_authority=0"
+    echo "prompt_evaluation_result_release_receipt_review_allowed=0"
+    echo "prompt_evaluation_result_release_receipt_review_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_created=0"
+    echo "prompt_evaluation_result_release_receipt_review_performed=0"
+    echo "prompt_evaluation_result_release_receipt_review_metadata_present=1"
+    echo "prompt_evaluation_result_release_receipt_review_family=operator-reviewed-prompt-evaluation-result-release-receipt-review"
+    echo "prompt_evaluation_result_release_receipt_review_format=contract-only-offline-evaluation-result-release-receipt-review"
+    echo "prompt_evaluation_result_release_receipt_review_decision=blocked_contract_only"
+    echo "prompt_evaluation_result_release_receipt_review_plan_recorded=1"
+    echo "prompt_evaluation_result_release_receipt_review_result_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_runtime_invoked=0"
+    echo "prompt_evaluation_result_release_receipt_review_record_created=0"
+    echo "prompt_evaluation_result_release_receipt_review_decision_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_approval_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_rejection_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_findings_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_applied=0"
+    echo "requires_prompt_evaluation_result_release_receipt_contract=1"
+    echo "requires_future_prompt_evaluation_result_release_receipt_review_disposition_contract=1"
+    echo "prompt_evaluation_result_release_receipt_review_promotion_allowed=0"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -5806,11 +6141,25 @@ case "\${1:-status}" in
       --prompt-evaluation-result-release "\$NADIA_DIR/prompt-evaluation-result-release/latest-prompt-evaluation-result-release-contract.txt" \
       --output "\$NADIA_DIR/prompt-evaluation-result-release-receipt"
     ;;
+  prompt-evaluation-result-release-receipt-review|evaluation-result-release-receipt-review|result-release-receipt-review|prompt-evaluation-result-release-receipt-review-contract)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-prompt-evaluation-result-release-receipt-review-contract.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia prompt-evaluation result release receipt review contract script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --prompt-evaluation-result-release-receipt "\$NADIA_DIR/prompt-evaluation-result-release-receipt/latest-prompt-evaluation-result-release-receipt-contract.txt" \
+      --output "\$NADIA_DIR/prompt-evaluation-result-release-receipt-review"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|commands|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|tokenizer-specification|tokenizer-manifest|tokenizer-artifact-inventory|tokenizer-artifact-measurement|tokenizer-artifact-verification|tokenizer-artifact-binding|tokenizer-runtime-attachment|prompt-tokenization|prompt-token-sequence|context-window-assembly|prompt-evaluation-input|prompt-evaluation-runtime-handoff|prompt-evaluation-invocation|prompt-evaluation-result|prompt-evaluation-result-review|prompt-evaluation-result-disposition|prompt-evaluation-result-release|prompt-evaluation-result-release-receipt|path}" >&2
+    echo "usage: latticra-nadia {status|commands|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|tokenizer-specification|tokenizer-manifest|tokenizer-artifact-inventory|tokenizer-artifact-measurement|tokenizer-artifact-verification|tokenizer-artifact-binding|tokenizer-runtime-attachment|prompt-tokenization|prompt-token-sequence|context-window-assembly|prompt-evaluation-input|prompt-evaluation-runtime-handoff|prompt-evaluation-invocation|prompt-evaluation-result|prompt-evaluation-result-review|prompt-evaluation-result-disposition|prompt-evaluation-result-release|prompt-evaluation-result-release-receipt|prompt-evaluation-result-release-receipt-review|path}" >&2
     exit 64
     ;;
 esac

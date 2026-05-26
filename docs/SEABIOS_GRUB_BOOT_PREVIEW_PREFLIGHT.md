@@ -55,6 +55,12 @@ The evidence capture template for the next non-executing step is:
 sh scripts/seabios-grub-boot-preview-evidence-template.sh
 ```
 
+The QEMU argv template for future profile-specific command records is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-qemu-argv-template.sh
+```
+
 ## Required Non-Effects
 
 The preflight must always report:

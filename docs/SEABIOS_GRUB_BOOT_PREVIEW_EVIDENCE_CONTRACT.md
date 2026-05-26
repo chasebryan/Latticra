@@ -144,6 +144,26 @@ qemu_boot_execution_attempted=0
 bootable_os_ready=0
 ```
 
+## QEMU argv template
+
+The no-effect QEMU argv template is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-qemu-argv-template.sh
+```
+
+It records the future profile-specific argv shape without running QEMU or creating boot evidence.
+
+```text
+seabios_grub_boot_preview_qemu_argv_template_present=1
+qemu_argv_template_mode=no-effect-template
+qemu_argv_template_decision=blocked-template-only-no-qemu-execution
+qemu_argv_record_ready=0
+qemu_run_performed=0
+qemu_boot_execution_attempted=0
+bootable_os_ready=0
+```
+
 ## Guard validation
 
 This preview lane is guarded by:
@@ -152,6 +172,7 @@ This preview lane is guarded by:
 sh scripts/test-seabios-grub-boot-preview-evidence-contract.sh
 sh scripts/test-seabios-grub-boot-preview-preflight.sh
 sh scripts/test-seabios-grub-boot-preview-evidence-template.sh
+sh scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh
 ```
 
 Expected output:

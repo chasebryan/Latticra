@@ -26,6 +26,7 @@ The current live-implementation plan posture is:
 macos_reset_uninstall_live_implementation_plan_contract_present=1
 macos_reset_uninstall_live_execution_preflight_contract_present=1
 macos_reset_uninstall_live_denial_transcript_contract_present=1
+macos_reset_uninstall_live_runner_interface_contract_present=1
 live_execution_preflight_contract_state=closed-no-effect
 live_execution_preflight_passed=0
 live_execution_preflight_blocking=1
@@ -34,6 +35,11 @@ live_denial_transcript_contract_state=recorded-no-effect
 live_denial_transcript_recorded=1
 live_denial_transcript_stdout_only=1
 live_denial_transcript_file_write_enabled=0
+live_runner_interface_contract_state=defined-no-effect
+live_runner_interface_current_preflight_passed=0
+live_runner_interface_current_decision=deny
+live_runner_interface_dispatch_enabled=0
+live_runner_interface_runner_handoff_enabled=0
 live_implementation_plan_contract_state=defined-no-effect
 live_implementation_plan_contract_decision=blocked-deletion-disabled-and-evidence-incomplete
 live_implementation_plan_required=1
@@ -235,5 +241,5 @@ Add a macOS reset/uninstall live-implementation plan contract that maps future e
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner interface contract that accepts only a passed preflight and keeps deletion disabled otherwise.
+Add a macOS reset/uninstall live-runner no-op prototype contract that exercises the denied interface path without deleting files.
 ```

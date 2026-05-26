@@ -29,7 +29,7 @@ docs/KERNEL_LIFECYCLE_SEED.md
 The default lifecycle target is:
 
 ```text
-timer-source-ready
+scheduler-tick-ready
 ```
 
 The approved sequence is:
@@ -47,6 +47,7 @@ vfs-namespace-ready -> device-registry-ready
 device-registry-ready -> driver-catalog-ready
 driver-catalog-ready -> interrupt-table-ready
 interrupt-table-ready -> timer-source-ready
+timer-source-ready -> scheduler-tick-ready
 ```
 
 ## Controlled effect boundary
@@ -56,7 +57,7 @@ This slice allows internal state-machine mutation only.
 The result may report:
 
 ```text
-state_change_count=12
+state_change_count=13
 lifecycle_complete=1
 ```
 
@@ -90,12 +91,12 @@ The guard verifies:
 LATTICRA KERNEL LIFECYCLE REPORT
 lifecycle_status=lifecycle-complete
 policy_status=gate-allowed
-final_state=timer-source-ready
-step_count=12
-state_change_count=12
+final_state=scheduler-tick-ready
+step_count=13
+state_change_count=13
 lifecycle_complete=1
 external_effect_performed=0
-machine_log_count=12
+machine_log_count=13
 evidence_level=10
 ```
 
@@ -121,7 +122,7 @@ The guards verify:
 
 ```text
 default request is denied
-allowed lifecycle reaches timer-source-ready
+allowed lifecycle reaches scheduler-tick-ready
 intermediate target stops correctly
 step limit is respected
 report includes lifecycle completion and transition log
@@ -141,6 +142,10 @@ runtime entry
 hardware behavior
 device operation
 scheduler tick
+run queue mutation
+context switching
+time accounting
+process wakeups
 timer arming
 preemption
 time reads

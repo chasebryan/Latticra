@@ -38,6 +38,7 @@ MACOS RESET UNINSTALL LIVE EXECUTION PREFLIGHT CONTRACT
 reset_uninstall_live_execution_preflight_contract_status=ok
 macos_reset_uninstall_live_execution_preflight_contract_present=1
 macos_reset_uninstall_live_denial_transcript_contract_present=1
+macos_reset_uninstall_live_runner_interface_contract_present=1
 repo_root=$ROOT
 host_kernel_name=$UNAME_S
 host_arch=$UNAME_M
@@ -179,5 +180,5 @@ network_extension_authority=0
 privileged_helper_authority=0
 runtime_authority_granted=0
 production_installer_ready=0
-next_lane=macos-reset-uninstall-live-runner-interface-contract
+next_lane=macos-reset-uninstall-live-runner-noop-prototype-contract
 REPORT

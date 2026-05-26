@@ -26,6 +26,7 @@ require_file docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md
 require_file docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md
 require_file docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
@@ -59,6 +60,8 @@ require_contains 'ubuntu_third_party_material_review_contract_present=1' docs/UB
 require_contains 'ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_notice_file_decision_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_notice_file_decision_status=blocked-pending-notice-file-decision' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_package_notice_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_package_license_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
@@ -77,6 +80,7 @@ require_contains 'docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md' README.md
 require_contains 'docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md' README.md

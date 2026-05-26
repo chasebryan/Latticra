@@ -19,6 +19,7 @@ Latest Lat pipeline first-declaration evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline first-clause evidence propagation note: 2026-05-25 CDT
 Latest Lat LIR edge-kind evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR no-effect evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR module-summary evidence propagation note: 2026-05-26 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
 Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
@@ -35,6 +36,7 @@ Latest Seal signer handoff predecessor status alignment note: 2026-05-25 CDT
 Latest Seal signer invocation predecessor status alignment note: 2026-05-25 CDT
 Latest Seal signing operation predecessor status alignment note: 2026-05-26 CDT
 Latest Seal key-handling predecessor status alignment note: 2026-05-26 CDT
+Latest Seal key-material predecessor status alignment note: 2026-05-26 CDT
 Latest Lat pipeline comment metadata integration note: 2026-05-25 CDT
 Latest Lat pipeline diagnostic comment metadata integration note: 2026-05-25 CDT
 Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
@@ -48,6 +50,7 @@ Latest Lat pipeline first-declaration evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline first-clause evidence propagation note: 2026-05-25 CDT
 Latest Lat LIR edge-kind evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR no-effect evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR module-summary evidence propagation note: 2026-05-26 CDT
 
 ## Purpose
 
@@ -85,6 +88,8 @@ Latticra Seal signing operation predecessor status alignment is complete for the
 
 Latticra Seal key-handling predecessor status alignment is complete for the existing metadata-only key-handling status surface. It does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, capability enforcement, runtime authority, host behavior, network behavior, or production cryptography claims.
 
+Latticra Seal key-material predecessor status alignment is complete for the existing metadata-only key-material status surface. It does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, capability enforcement, runtime authority, host behavior, network behavior, or production cryptography claims.
+
 ## Latest completed planning slice
 
 ```text
@@ -100,6 +105,18 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Lat LIR module-summary evidence propagation
+```
+
+Purpose completed:
+
+```text
+copy Lat-specific LIR module name, report classification, shape kind, node count, edge count, binding count, and text count into runtime-boundary records/reports so boundary evidence keeps LIR graph identity visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
 Lat LIR no-effect evidence propagation
 ```
 
@@ -109,7 +126,7 @@ Purpose completed:
 copy Lat-specific LIR no-effect-chain status, evidence level, no-effect flag, and execution/mutation/server/recovery/hardware allowance flags into runtime-boundary records/reports so boundary evidence keeps LIR authority posture visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat LIR edge-kind evidence propagation
@@ -520,6 +537,18 @@ map runtime-boundary request families, effect families, authority prerequisites,
 ## Latest completed status/public-entry slice
 
 ```text
+Latticra Seal key-material predecessor status alignment
+```
+
+Purpose completed:
+
+```text
+tie and guard the existing metadata-only Seal key-material status to the key-handling status predecessor while preserving no new implementation behavior, no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no revocation lookup, no signing, no signature verification, no signer invocation behavior, no signer process execution, no object sealing, no runtime handoff execution, no capability enforcement, no runtime authority, no host behavior, no network behavior, and no production cryptography claim
+```
+
+## Previous status/public-entry slice
+
+```text
 Latticra Seal key-handling predecessor status alignment
 ```
 
@@ -529,7 +558,7 @@ Purpose completed:
 tie and guard the existing metadata-only Seal key-handling status to the signing-operation status predecessor while preserving no new implementation behavior, no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no revocation lookup, no signing, no signature verification, no signer invocation behavior, no signer process execution, no object sealing, no runtime handoff execution, no capability enforcement, no runtime authority, no host behavior, no network behavior, and no production cryptography claim
 ```
 
-## Previous status/public-entry slice
+## Earlier status/public-entry slice
 
 ```text
 Latticra Seal signing operation predecessor status alignment
@@ -539,18 +568,6 @@ Purpose completed:
 
 ```text
 tie and guard the existing metadata-only Seal signing operation status to the signer-invocation status predecessor while preserving no new implementation behavior, no signing, no signature verification, no signer invocation behavior, no signer process execution, no object sealing, no runtime handoff execution, no capability enforcement, no runtime authority, no key generation, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, and no production cryptography claim
-```
-
-## Earlier status/public-entry slice
-
-```text
-Latticra Seal Ed25519 verify-only status/public-entry alignment
-```
-
-Purpose completed:
-
-```text
-align the compact README Seal row and Seal current-posture summary with the current public status checkpoint while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, no production enforcement, no public-readiness promotion, no security-hardening implementation, and no runtime authority
 ```
 
 ## Earlier status/public-entry slice

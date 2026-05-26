@@ -139,5 +139,5 @@ This probe is not macOS installation, macOS app bundle evidence, signed app evid
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner interface contract that accepts only a passed preflight and keeps deletion disabled otherwise.
+Add a macOS reset/uninstall live-runner no-op prototype contract that exercises the denied interface path without deleting files.
 ```

@@ -21,6 +21,7 @@ opensuse_local_rpm_draft_present=1
 opensuse_local_rpm_static_validation_present=1
 opensuse_changes_file_present=1
 opensuse_maintenance_lane_present=1
+opensuse_rpmlint_osc_availability_lane_present=1
 rpm_artifact_created=0
 rpm_installed_on_host=0
 osc_build_run=0
@@ -47,8 +48,10 @@ packaging/opensuse/latticra.spec
 packaging/opensuse/latticra.changes
 scripts/test-opensuse-developer-workflow.sh
 scripts/test-opensuse-local-rpm-static-validation.sh
+scripts/test-opensuse-rpmlint-osc-availability.sh
 .github/workflows/opensuse-developer-workflow.yml
 .github/workflows/opensuse-local-rpm-static-validation.yml
+.github/workflows/opensuse-rpmlint-osc-availability.yml
 ```
 
 ## Public Entry Points
@@ -68,8 +71,10 @@ The openSUSE lane does not publish an RPM, create an Open Build Service project,
 
 The local openSUSE RPM draft records package shape and maintenance posture only. The `.changes` file is a local maintenance record, not accepted Open Build Service submit-request history.
 
+The openSUSE `rpmlint` and `osc` availability lane verifies tooling in an openSUSE environment only. It does not run `rpmlint` against the Latticra spec yet, run `osc build`, create package artifacts, publish to Open Build Service, or install Latticra on a host.
+
 ## Next Recommended Lane
 
 ```text
-Add openSUSE rpmlint and osc availability records without running package builds, installing artifacts, or publishing to Open Build Service.
+Add openSUSE rpmlint static spec lane for packaging/opensuse/latticra.spec with expected local-only draft findings classified separately.
 ```

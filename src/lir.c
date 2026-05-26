@@ -68,6 +68,7 @@ static void module_default(latticra_lir_module_t *module) {
     module->execution_allowed = 0;
     module->mutation_allowed = 0;
     module->server_allowed = 0;
+    module->network_allowed = 0;
     module->recovery_allowed = 0;
     module->hardware_allowed = 0;
     for (index = 0u; index < LATTICRA_LIR_NODE_MAX; index++) {
@@ -202,6 +203,7 @@ static int prerequisite_ok(
            semantic->execution_allowed == 0 &&
            semantic->mutation_allowed == 0 &&
            semantic->server_allowed == 0 &&
+           semantic->network_allowed == 0 &&
            semantic->recovery_allowed == 0 &&
            semantic->hardware_allowed == 0;
 }
@@ -212,6 +214,7 @@ static int lir_no_effect_chain_ok(const latticra_lir_module_t *module) {
            module->execution_allowed == 0 &&
            module->mutation_allowed == 0 &&
            module->server_allowed == 0 &&
+           module->network_allowed == 0 &&
            module->recovery_allowed == 0 &&
            module->hardware_allowed == 0;
 }
@@ -436,6 +439,7 @@ latticra_status_t latticra_lir_lower_l_ui_ast(
     module->execution_allowed = ast->execution_allowed;
     module->mutation_allowed = ast->mutation_allowed;
     module->server_allowed = ast->server_allowed;
+    module->network_allowed = ast->network_allowed;
     module->recovery_allowed = ast->recovery_allowed;
     module->hardware_allowed = ast->hardware_allowed;
 
@@ -544,6 +548,7 @@ latticra_status_t latticra_lir_report(
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
         "server_allowed=%d\n"
+        "network_allowed=%d\n"
         "recovery_allowed=%d\n"
         "hardware_allowed=%d\n"
         "span_start_offset=%zu\n"
@@ -576,6 +581,7 @@ latticra_status_t latticra_lir_report(
         module->execution_allowed,
         module->mutation_allowed,
         module->server_allowed,
+        module->network_allowed,
         module->recovery_allowed,
         module->hardware_allowed,
         module->source_span.start_offset,

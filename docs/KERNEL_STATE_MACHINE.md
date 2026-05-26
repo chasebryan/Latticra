@@ -42,6 +42,7 @@ device-registry-ready
 driver-catalog-ready
 interrupt-table-ready
 timer-source-ready
+scheduler-tick-ready
 ```
 
 ## Controlled effect boundary

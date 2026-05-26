@@ -78,7 +78,7 @@ static int allowed_transition_changes_state(void) {
     return 0;
 }
 
-static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_and_timer_transitions_are_metadata_only(void) {
+static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_and_tick_transitions_are_metadata_only(void) {
     latticra_kernel_state_request_t request;
     latticra_kernel_state_result_t result;
 
@@ -304,6 +304,42 @@ static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_and_timer_tra
         "timer transition no external effect");
     EXPECT_TRUE(result.denied == 0,
         "timer transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler tick transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY,
+        "next scheduler-tick-ready");
+    EXPECT_TRUE(strcmp(result.scheduler_tick.tick_status, "scheduler-tick-seed-ready") == 0,
+        "scheduler tick ready");
+    EXPECT_TRUE(strcmp(result.timer_source.timer_status, "timer-source-seed-ready") == 0,
+        "scheduler tick transition keeps timer source ready");
+    EXPECT_TRUE(strcmp(result.interrupt_table.table_status, "interrupt-table-seed-ready") == 0,
+        "scheduler tick transition keeps interrupt table ready");
+    EXPECT_TRUE(result.scheduler_tick.tick_count == 4u,
+        "scheduler tick count");
+    EXPECT_TRUE(result.scheduler_tick.timer_tick_allowed == 0,
+        "scheduler tick timer tick denied");
+    EXPECT_TRUE(result.scheduler_tick.scheduler_tick_allowed == 0,
+        "scheduler tick denied");
+    EXPECT_TRUE(result.scheduler_tick.run_queue_mutation_allowed == 0,
+        "scheduler tick run queue mutation denied");
+    EXPECT_TRUE(result.scheduler_tick.context_switch_allowed == 0,
+        "scheduler tick context switch denied");
+    EXPECT_TRUE(result.scheduler_tick.preemption_allowed == 0,
+        "scheduler tick preemption denied");
+    EXPECT_TRUE(result.scheduler_tick.time_accounting_allowed == 0,
+        "scheduler tick time accounting denied");
+    EXPECT_TRUE(result.scheduler_tick.time_read_allowed == 0,
+        "scheduler tick time read denied");
+    EXPECT_TRUE(result.scheduler_tick.process_wake_allowed == 0,
+        "scheduler tick process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "scheduler tick transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "scheduler tick transition not denied");
     return 0;
 }
 
@@ -396,7 +432,7 @@ static int report_records_state_change(void) {
     return 0;
 }
 
-static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_and_timer_readiness(void) {
+static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_and_tick_readiness(void) {
     latticra_kernel_state_request_t request;
     latticra_kernel_state_result_t result;
     char report[LATTICRA_KERNEL_STATE_REPORT_MAX];
@@ -526,6 +562,23 @@ static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_and_ti
         "timer report interrupt table emitted");
     EXPECT_TRUE(strstr(report, "timer_source_status=timer-source-seed-ready\n") != 0,
         "timer source emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler tick transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "scheduler tick report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=timer-source-ready\n") != 0,
+        "timer previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=scheduler-tick-ready\n") != 0,
+        "scheduler tick next emitted");
+    EXPECT_TRUE(strstr(report, "timer_source_status=timer-source-seed-ready\n") != 0,
+        "scheduler tick report timer source emitted");
+    EXPECT_TRUE(strstr(report, "scheduler_tick_status=scheduler-tick-seed-ready\n") != 0,
+        "scheduler tick emitted");
     return 0;
 }
 
@@ -551,11 +604,11 @@ static int null_guards_are_safe(void) {
 int main(void) {
     if (default_request_denies_state_change() != 0) return 1;
     if (allowed_transition_changes_state() != 0) return 1;
-    if (allowed_process_syscall_ipc_vfs_device_driver_interrupt_and_timer_transitions_are_metadata_only() != 0) return 1;
+    if (allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_and_tick_transitions_are_metadata_only() != 0) return 1;
     if (denied_transition_does_not_change_state() != 0) return 1;
     if (allowed_noop_is_stable() != 0) return 1;
     if (report_records_state_change() != 0) return 1;
-    if (report_records_process_syscall_ipc_vfs_device_driver_interrupt_and_timer_readiness() != 0) return 1;
+    if (report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_and_tick_readiness() != 0) return 1;
     if (null_guards_are_safe() != 0) return 1;
 
     puts("kernel_state: ok");

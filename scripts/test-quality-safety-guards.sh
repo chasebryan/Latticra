@@ -140,9 +140,29 @@ check_rust_installer_engine_shell_boundary() {
   if grep -Fq 'std::env::current_dir()' "$engine"; then
     fail "$engine must not discover installer scripts from ambient current working directory"
   fi
+  unexpected_command_new="$(grep -En 'Command::new[[:space:]]*\(' "$engine" | grep -Ev 'Command::new[[:space:]]*\([[:space:]]*SYSTEM_SHELL[[:space:]]*\)' || :)"
+  [ -z "$unexpected_command_new" ] ||
+    fail "$engine must launch installer scripts through SYSTEM_SHELL only"
 
   find installer/latticra-installer/src -type f -name '*.rs' |
     while IFS= read -r source; do
+      if grep -Eq '(^|[^A-Za-z0-9_])unsafe[[:space:]]*\{' "$source"; then
+        fail "$source must not use Rust unsafe blocks in the installer"
+      fi
+      if [ "$source" != "$engine" ] &&
+        grep -Eq '(^|[^A-Za-z0-9_])(Command::new|std::process::Command|use[[:space:]]+std::process::Command)' "$source"; then
+        fail "$source must not add installer process launch authority outside engine.rs"
+      fi
+      destructive_fs="$(awk '
+        /#\[cfg\(test\)\]/ {
+          in_tests = 1
+        }
+        !in_tests && /(fs::|std::fs::)(remove_file|remove_dir_all)[[:space:]]*\(/ {
+          print FNR
+        }
+      ' "$source")"
+      [ -z "$destructive_fs" ] ||
+        fail "$source must not remove files or directories outside Rust test fixtures"
       if grep -Eq 'Command::new\("(sh|bash)"\)' "$source"; then
         fail "$source must not invoke PATH-discovered sh/bash"
       fi
@@ -253,7 +273,7 @@ check_workflow() {
     fail "$workflow must not consume implicit GitHub token surfaces without a dedicated review guard"
   fi
 
-  package_manager_lines="$(grep -En '(^|[[:space:]])(sudo[[:space:]]+)?(apt-get|apt|dnf|yum|brew|pip[0-9]*|python[0-9]*[[:space:]]+-m[[:space:]]+pip|npm|pnpm|yarn)([[:space:]]|$)' "$workflow" || :)"
+  package_manager_lines="$(grep -En '(^|[[:space:]])(sudo[[:space:]]+)?(apt-get|apt|dnf|yum|zypper|brew|pip[0-9]*|python[0-9]*[[:space:]]+-m[[:space:]]+pip|npm|pnpm|yarn)([[:space:]]|$)' "$workflow" || :)"
   if [ -n "$package_manager_lines" ]; then
     case "$workflow" in
       .github/workflows/quality.yml|.github/workflows/latticra-panel-installer.yml)
@@ -261,6 +281,9 @@ check_workflow() {
         ;;
       .github/workflows/compat-linux.yml|.github/workflows/fedora-build-lane.yml|.github/workflows/fedora-rpmlint-availability.yml|.github/workflows/fedora-rpmlint-static-spec-lane.yml)
         unexpected_package_lines="$(printf '%s\n' "$package_manager_lines" | grep -Ev ':[[:space:]]*run:[[:space:]]*dnf[[:space:]]+-y[[:space:]]+install[[:space:]]+git[[:space:]]+tar[[:space:]]+gzip[[:space:]]*$' || :)"
+        ;;
+      .github/workflows/opensuse-rpmlint-osc-availability.yml)
+        unexpected_package_lines="$(printf '%s\n' "$package_manager_lines" | grep -Ev ':[[:space:]]*run:[[:space:]]*zypper[[:space:]]+--non-interactive[[:space:]]+install[[:space:]]+git[[:space:]]+tar[[:space:]]+gzip[[:space:]]*$' || :)"
         ;;
       *)
         fail "$workflow must not add package-manager commands outside reviewed bootstrap workflows"
@@ -310,6 +333,14 @@ check_workflow() {
   for script_ref in $script_refs; do
     [ -f "$script_ref" ] ||
       fail "$workflow references missing guard script $script_ref"
+  done
+}
+
+check_makefile_script_refs() {
+  script_refs="$(grep -Eo '(scripts|installer/scripts)/[A-Za-z0-9._/-]+\.sh' Makefile || :)"
+  for script_ref in $script_refs; do
+    [ -f "$script_ref" ] ||
+      fail "Makefile references missing guard script $script_ref"
   done
 }
 
@@ -488,6 +519,8 @@ done
 [ "$workflow_count" -gt 0 ] ||
   fail "no GitHub workflow files found"
 
+check_makefile_script_refs
+
 require_contains "quality-safety-guards:" "Makefile"
 for prereq in quality-worktree quality-safety-guards quality-defensive-threat-model seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation; do
   require_make_quality_prereq "$prereq"
@@ -510,13 +543,18 @@ require_contains "sh ./scripts/test-seabios-grub-compatibility-contract.sh" "Mak
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-evidence-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-preflight.sh" "Makefile"
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-evidence-template.sh" "Makefile"
+require_contains "sh ./scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh" "Makefile"
+require_contains "macos-reset-uninstall-live-denial-transcript:" "Makefile"
+require_contains "sh ./scripts/test-macos-reset-uninstall-live-denial-transcript-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-command-surface.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-review-contract-stage-32.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-disposition-contract-stage-33.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-contract-stage-34.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-contract-stage-35.sh" "Makefile"
+require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh" "Makefile"
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-contract.sh" "Makefile"
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-contract.sh" "Makefile"
+require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-console-foundation.sh" "Makefile"
 require_contains "sh ./scripts/test-cpp-authority-layer.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-timer-source.sh" "Makefile"
@@ -534,6 +572,7 @@ require_contains "persist-credentials: false" ".github/workflows/quality-safety-
 require_contains "timeout-minutes: 10" ".github/workflows/quality-safety-guards.yml"
 require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-contract-stage-34.sh" ".github/workflows/nadia-prompt-evaluation-result-release-contract-stage-34.yml"
 require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt-contract-stage-35.sh" ".github/workflows/nadia-prompt-evaluation-result-release-receipt-contract-stage-35.yml"
+require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh" ".github/workflows/nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.yml"
 require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" ".github/workflows/latticra-panel-installer.yml"
 require_contains "uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8" ".github/workflows/latticra-panel-installer.yml"
 require_contains "persist-credentials: false" ".github/workflows/latticra-panel-installer.yml"

@@ -310,6 +310,7 @@ static int decoded_nul_preserves_no_effect_flags(void) {
     EXPECT_TRUE(ast.execution_allowed == 0, "execution preserved");
     EXPECT_TRUE(ast.mutation_allowed == 0, "mutation preserved");
     EXPECT_TRUE(ast.server_allowed == 0, "server preserved");
+    EXPECT_TRUE(ast.network_allowed == 0, "network preserved");
     EXPECT_TRUE(ast.recovery_allowed == 0, "recovery preserved");
     EXPECT_TRUE(ast.hardware_allowed == 0, "hardware preserved");
     (void)source_len;

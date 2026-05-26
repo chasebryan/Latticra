@@ -157,6 +157,10 @@ grep -Fq 'ok: LC install config' "$verify_log"
 grep -Fq 'ok: LC install-config registry command' "$verify_log"
 grep -Fq 'ok: LC wrapper install-config report' "$verify_log"
 grep -Fq 'ok: latticra lc install-config matches LC command wrapper install-config' "$verify_log"
+grep -Fq 'ok: updater config' "$verify_log"
+grep -Fq 'ok: updater policy' "$verify_log"
+grep -Fq 'ok: updater status report' "$verify_log"
+grep -Fq 'ok: updater status apply mode' "$verify_log"
 
 sed 's/allow_external_host_commands = false/allow_external_host_commands = true/' \
   installer/configs/default.installer.toml > "$bad_config"

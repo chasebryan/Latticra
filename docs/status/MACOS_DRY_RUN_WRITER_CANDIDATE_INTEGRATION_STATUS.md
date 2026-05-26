@@ -71,7 +71,7 @@ macos_dry_run_writer_candidate_integration: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner interface contract that accepts only a passed preflight and keeps deletion disabled otherwise.
+Add a macOS reset/uninstall live-runner no-op prototype contract that exercises the denied interface path without deleting files.
 ```
 
 ## Non-Claims

@@ -201,6 +201,7 @@ static int ast_preserves_no_effect_flags(void) {
     EXPECT_TRUE(ast.execution_allowed == 0, "AST execution flag");
     EXPECT_TRUE(ast.mutation_allowed == 0, "AST mutation flag");
     EXPECT_TRUE(ast.server_allowed == 0, "AST server flag");
+    EXPECT_TRUE(ast.network_allowed == 0, "AST network flag");
     EXPECT_TRUE(ast.recovery_allowed == 0, "AST recovery flag");
     EXPECT_TRUE(ast.hardware_allowed == 0, "AST hardware flag");
     return 0;
@@ -219,6 +220,7 @@ static int ast_report_contains_required_fields(void) {
     EXPECT_TRUE(strstr(report, "effect=none") != 0, "AST report effect");
     EXPECT_TRUE(strstr(report, "boundary=preview_only") != 0, "AST report boundary");
     EXPECT_TRUE(strstr(report, "no_effect=1") != 0, "AST report no effect");
+    EXPECT_TRUE(strstr(report, "network_allowed=0") != 0, "AST report network flag");
     return 0;
 }
 

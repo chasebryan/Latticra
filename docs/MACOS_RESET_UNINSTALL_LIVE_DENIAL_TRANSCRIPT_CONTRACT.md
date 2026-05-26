@@ -24,6 +24,7 @@ The current live-denial transcript posture is:
 
 ```text
 macos_reset_uninstall_live_denial_transcript_contract_present=1
+macos_reset_uninstall_live_runner_interface_contract_present=1
 live_denial_transcript_contract_state=recorded-no-effect
 live_denial_transcript_contract_decision=denied-by-preflight-block
 live_denial_transcript_required=1
@@ -31,6 +32,11 @@ live_denial_transcript_present=1
 live_denial_transcript_recorded=1
 live_denial_transcript_stdout_only=1
 live_denial_transcript_file_write_enabled=0
+live_runner_interface_contract_state=defined-no-effect
+live_runner_interface_current_preflight_passed=0
+live_runner_interface_current_decision=deny
+live_runner_interface_dispatch_enabled=0
+live_runner_interface_runner_handoff_enabled=0
 live_denial_transcript_receipt_write_enabled=0
 live_denial_transcript_absence_report_write_enabled=0
 live_denial_transcript_preflight_present=1
@@ -252,5 +258,5 @@ Add a macOS reset/uninstall live-denial transcript contract that records the fai
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner interface contract that accepts only a passed preflight and keeps deletion disabled otherwise.
+Add a macOS reset/uninstall live-runner no-op prototype contract that exercises the denied interface path without deleting files.
 ```

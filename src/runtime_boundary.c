@@ -259,6 +259,20 @@ static const char *runtime_lir_source_kind_label(latticra_lir_source_kind_t kind
     return "unknown";
 }
 
+static const char *runtime_lir_report_classification_label(latticra_lir_report_classification_t classification) {
+    if (classification == LATTICRA_LIR_REPORT_MATERIALIZED) return "materialized";
+    if (classification == LATTICRA_LIR_REPORT_REJECTED) return "rejected";
+    if (classification == LATTICRA_LIR_REPORT_INVALID) return "invalid";
+    return "empty";
+}
+
+static const char *runtime_lir_shape_kind_label(latticra_lir_shape_kind_t shape_kind) {
+    if (shape_kind == LATTICRA_LIR_SHAPE_L_UI_CARD_GRAPH) return "l-ui-card-graph";
+    if (shape_kind == LATTICRA_LIR_SHAPE_LAT_MODULE_GRAPH) return "lat-module-graph";
+    if (shape_kind == LATTICRA_LIR_SHAPE_INTERNAL_FIXTURE_GRAPH) return "internal-fixture-graph";
+    return "unknown";
+}
+
 static int runtime_boundary_kind_is_future_gated(latticra_runtime_boundary_request_kind_t kind) {
     return (int)kind >= (int)LATTICRA_RUNTIME_BOUNDARY_RUNTIME_EXECUTE &&
            (int)kind <= (int)LATTICRA_RUNTIME_BOUNDARY_BOOT_ACTION;
@@ -534,7 +548,13 @@ static void copy_lat_lir_evidence(const latticra_lir_module_t *lir, latticra_run
     size_t index;
     if (lir == 0) return;
     result->record.lat_lir_source_kind = lir->source_kind;
+    (void)snprintf(result->record.lat_lir_module_name, sizeof(result->record.lat_lir_module_name), "%s", lir->module_name);
+    result->record.lat_lir_report_classification = lir->report_classification;
+    result->record.lat_lir_shape_kind = lir->shape_kind;
     result->record.lat_lir_module_node_count = lir->node_count;
+    result->record.lat_lir_module_edge_count = lir->edge_count;
+    result->record.lat_lir_binding_count = lir->binding_count;
+    result->record.lat_lir_text_count = lir->text_count;
     result->record.lat_lir_no_effect_chain_ok = lir->no_effect_chain_ok;
     result->record.lat_lir_evidence_level = lir->evidence_level;
     result->record.lat_lir_no_effect = lir->no_effect;
@@ -726,7 +746,7 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
     if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
     buffer[0] = '\0';
     written = snprintf(buffer, buffer_len,
-        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nallowed_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nreport_classification=%s\nboundary_domain=%s\nauthorization_state=%s\nevidence_level=%u\npolicy_matrix_cell=%s\nmatrix_effect_allowed=%d\nmatrix_mode_allowed=%d\nmatrix_requires_authority=%d\nmatrix_requires_future_gate=%d\nauthority_status=%d\nauthority_status_label=%s\nauthority_validator=%s\nauthority_requested_effect=%s\nauthority_reason=%s\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_network_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\ntask_executed=%d\ntask_mutation_allowed=%d\ntask_server_interaction_allowed=%d\ntask_network_allowed=%d\ntask_recovery_allowed=%d\ntask_hardware_allowed=%d\nrender_status=%d\nrender_error=%d\nlat_status=%d\nlat_error=%d\nlir_status=%d\nlir_error=%d\nlat_pipeline_status=%d\nlat_pipeline_error=%s\nlat_pipeline_parse_error=%s\nlat_pipeline_span_start_offset=%lu\nlat_pipeline_span_end_offset=%lu\nlat_pipeline_span_start_line=%lu\nlat_pipeline_span_start_column=%lu\nlat_pipeline_span_end_line=%lu\nlat_pipeline_span_end_column=%lu\nlat_pipeline_semantic_error=%s\nlat_pipeline_model_error=%s\nlat_pipeline_lowering_error=%s\nlat_pipeline_lir_error=%s\nlat_pipeline_last_completed_stage=%s\nlat_pipeline_failed_stage=%s\nlat_pipeline_parse_ok=%d\nlat_pipeline_semantic_ok=%d\nlat_pipeline_model_ok=%d\nlat_pipeline_lowering_ok=%d\nlat_pipeline_lir_ok=%d\nlat_pipeline_no_effect_chain_ok=%d\nlat_pipeline_evidence_level=%u\nlat_pipeline_semantic_valid=%d\nlat_pipeline_module_name=%s\nlat_pipeline_source_len=%lu\nlat_pipeline_declaration_count=%lu\nlat_pipeline_clause_count=%lu\nlat_pipeline_model_declaration_count=%lu\nlat_pipeline_model_clause_count=%lu\nlat_pipeline_first_declaration_node_index=%lu\nlat_pipeline_first_declaration_kind=%s\nlat_pipeline_first_declaration_name=%s\nlat_pipeline_first_declaration_source=%s\nlat_pipeline_first_declaration_parse_index=%lu\nlat_pipeline_first_declaration_first_clause_index=%lu\nlat_pipeline_first_declaration_clause_count=%lu\nlat_pipeline_first_declaration_source_index=%lu\nlat_pipeline_first_transition_source_index=%lu\nlat_pipeline_first_clause_node_index=%lu\nlat_pipeline_first_clause_role=%s\nlat_pipeline_first_clause_effect=%s\nlat_pipeline_first_clause_name=%s\nlat_pipeline_first_clause_operator=%s\nlat_pipeline_first_clause_value=%s\nlat_pipeline_node_count=%lu\nlat_pipeline_edge_count=%lu\nlat_pipeline_comment_count=%lu\nlat_pipeline_first_comment_start_offset=%lu\nlat_pipeline_first_comment_end_offset=%lu\nlat_pipeline_first_comment_start_line=%lu\nlat_pipeline_first_comment_start_column=%lu\nlat_pipeline_first_comment_end_line=%lu\nlat_pipeline_first_comment_end_column=%lu\nlat_lir_source_kind=%s\nlat_lir_module_node_count=%lu\nlat_lir_no_effect_chain_ok=%d\nlat_lir_evidence_level=%u\nlat_lir_no_effect=%d\nlat_lir_execution_allowed=%d\nlat_lir_mutation_allowed=%d\nlat_lir_server_allowed=%d\nlat_lir_recovery_allowed=%d\nlat_lir_hardware_allowed=%d\nlat_lir_contains_edge_count=%lu\nlat_lir_binds_edge_count=%lu\nlat_lir_annotates_edge_count=%lu\nlat_lir_orders_before_edge_count=%lu\nlat_lir_transition_edge_count=%lu\nlat_lir_has_lat_state_nodes=%d\nlat_lir_has_lat_transition_nodes=%d\nlat_lir_has_transition_source_edges=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
+        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nallowed_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nreport_classification=%s\nboundary_domain=%s\nauthorization_state=%s\nevidence_level=%u\npolicy_matrix_cell=%s\nmatrix_effect_allowed=%d\nmatrix_mode_allowed=%d\nmatrix_requires_authority=%d\nmatrix_requires_future_gate=%d\nauthority_status=%d\nauthority_status_label=%s\nauthority_validator=%s\nauthority_requested_effect=%s\nauthority_reason=%s\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_network_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\ntask_executed=%d\ntask_mutation_allowed=%d\ntask_server_interaction_allowed=%d\ntask_network_allowed=%d\ntask_recovery_allowed=%d\ntask_hardware_allowed=%d\nrender_status=%d\nrender_error=%d\nlat_status=%d\nlat_error=%d\nlir_status=%d\nlir_error=%d\nlat_pipeline_status=%d\nlat_pipeline_error=%s\nlat_pipeline_parse_error=%s\nlat_pipeline_span_start_offset=%lu\nlat_pipeline_span_end_offset=%lu\nlat_pipeline_span_start_line=%lu\nlat_pipeline_span_start_column=%lu\nlat_pipeline_span_end_line=%lu\nlat_pipeline_span_end_column=%lu\nlat_pipeline_semantic_error=%s\nlat_pipeline_model_error=%s\nlat_pipeline_lowering_error=%s\nlat_pipeline_lir_error=%s\nlat_pipeline_last_completed_stage=%s\nlat_pipeline_failed_stage=%s\nlat_pipeline_parse_ok=%d\nlat_pipeline_semantic_ok=%d\nlat_pipeline_model_ok=%d\nlat_pipeline_lowering_ok=%d\nlat_pipeline_lir_ok=%d\nlat_pipeline_no_effect_chain_ok=%d\nlat_pipeline_evidence_level=%u\nlat_pipeline_semantic_valid=%d\nlat_pipeline_module_name=%s\nlat_pipeline_source_len=%lu\nlat_pipeline_declaration_count=%lu\nlat_pipeline_clause_count=%lu\nlat_pipeline_model_declaration_count=%lu\nlat_pipeline_model_clause_count=%lu\nlat_pipeline_first_declaration_node_index=%lu\nlat_pipeline_first_declaration_kind=%s\nlat_pipeline_first_declaration_name=%s\nlat_pipeline_first_declaration_source=%s\nlat_pipeline_first_declaration_parse_index=%lu\nlat_pipeline_first_declaration_first_clause_index=%lu\nlat_pipeline_first_declaration_clause_count=%lu\nlat_pipeline_first_declaration_source_index=%lu\nlat_pipeline_first_transition_source_index=%lu\nlat_pipeline_first_clause_node_index=%lu\nlat_pipeline_first_clause_role=%s\nlat_pipeline_first_clause_effect=%s\nlat_pipeline_first_clause_name=%s\nlat_pipeline_first_clause_operator=%s\nlat_pipeline_first_clause_value=%s\nlat_pipeline_node_count=%lu\nlat_pipeline_edge_count=%lu\nlat_pipeline_comment_count=%lu\nlat_pipeline_first_comment_start_offset=%lu\nlat_pipeline_first_comment_end_offset=%lu\nlat_pipeline_first_comment_start_line=%lu\nlat_pipeline_first_comment_start_column=%lu\nlat_pipeline_first_comment_end_line=%lu\nlat_pipeline_first_comment_end_column=%lu\nlat_lir_source_kind=%s\nlat_lir_module_name=%s\nlat_lir_report_classification=%s\nlat_lir_shape_kind=%s\nlat_lir_module_node_count=%lu\nlat_lir_module_edge_count=%lu\nlat_lir_binding_count=%lu\nlat_lir_text_count=%lu\nlat_lir_no_effect_chain_ok=%d\nlat_lir_evidence_level=%u\nlat_lir_no_effect=%d\nlat_lir_execution_allowed=%d\nlat_lir_mutation_allowed=%d\nlat_lir_server_allowed=%d\nlat_lir_recovery_allowed=%d\nlat_lir_hardware_allowed=%d\nlat_lir_contains_edge_count=%lu\nlat_lir_binds_edge_count=%lu\nlat_lir_annotates_edge_count=%lu\nlat_lir_orders_before_edge_count=%lu\nlat_lir_transition_edge_count=%lu\nlat_lir_has_lat_state_nodes=%d\nlat_lir_has_lat_transition_nodes=%d\nlat_lir_has_transition_source_edges=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
         result->record.runtime_id,
         (unsigned long)result->record_count,
         latticra_runtime_boundary_request_kind_label(result->record.request_kind),
@@ -826,7 +846,13 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         (unsigned long)result->record.lat_pipeline_first_comment_span.end_line,
         (unsigned long)result->record.lat_pipeline_first_comment_span.end_column,
         runtime_lir_source_kind_label(result->record.lat_lir_source_kind),
+        result->record.lat_lir_module_name,
+        runtime_lir_report_classification_label(result->record.lat_lir_report_classification),
+        runtime_lir_shape_kind_label(result->record.lat_lir_shape_kind),
         (unsigned long)result->record.lat_lir_module_node_count,
+        (unsigned long)result->record.lat_lir_module_edge_count,
+        (unsigned long)result->record.lat_lir_binding_count,
+        (unsigned long)result->record.lat_lir_text_count,
         result->record.lat_lir_no_effect_chain_ok,
         result->record.lat_lir_evidence_level,
         result->record.lat_lir_no_effect,

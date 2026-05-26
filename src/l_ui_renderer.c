@@ -25,6 +25,7 @@ static void authority_default(latticra_l_ui_render_authority_summary_t *authorit
     authority->execution_allowed = 0;
     authority->mutation_allowed = 0;
     authority->server_allowed = 0;
+    authority->network_allowed = 0;
     authority->recovery_allowed = 0;
     authority->hardware_allowed = 0;
 }
@@ -76,6 +77,7 @@ static void result_default(latticra_l_ui_render_result_t *result) {
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
     result->server_allowed = 0;
+    result->network_allowed = 0;
     result->recovery_allowed = 0;
     result->hardware_allowed = 0;
 }
@@ -110,12 +112,14 @@ static int no_effect_flags_ok(
     int execution_allowed,
     int mutation_allowed,
     int server_allowed,
+    int network_allowed,
     int recovery_allowed,
     int hardware_allowed) {
     return no_effect == 1 &&
            execution_allowed == 0 &&
            mutation_allowed == 0 &&
            server_allowed == 0 &&
+           network_allowed == 0 &&
            recovery_allowed == 0 &&
            hardware_allowed == 0;
 }
@@ -127,6 +131,7 @@ static int authority_ok(const latticra_l_ui_render_authority_summary_t *authorit
                               authority->execution_allowed,
                               authority->mutation_allowed,
                               authority->server_allowed,
+                              authority->network_allowed,
                               authority->recovery_allowed,
                               authority->hardware_allowed);
 }
@@ -278,18 +283,21 @@ latticra_status_t latticra_l_ui_render(
                             request->ast->execution_allowed,
                             request->ast->mutation_allowed,
                             request->ast->server_allowed,
+                            request->ast->network_allowed,
                             request->ast->recovery_allowed,
                             request->ast->hardware_allowed) ||
         !no_effect_flags_ok(request->semantic->no_effect,
                             request->semantic->execution_allowed,
                             request->semantic->mutation_allowed,
                             request->semantic->server_allowed,
+                            request->semantic->network_allowed,
                             request->semantic->recovery_allowed,
                             request->semantic->hardware_allowed) ||
         !no_effect_flags_ok(request->lir->no_effect,
                             request->lir->execution_allowed,
                             request->lir->mutation_allowed,
                             request->lir->server_allowed,
+                            request->lir->network_allowed,
                             request->lir->recovery_allowed,
                             request->lir->hardware_allowed)) {
         return set_error(result, LATTICRA_L_UI_RENDER_AUTHORITY_FAILED);
@@ -341,12 +349,14 @@ latticra_status_t latticra_l_ui_render(
     result->authority.execution_allowed = request->authority->execution_allowed;
     result->authority.mutation_allowed = request->authority->mutation_allowed;
     result->authority.server_allowed = request->authority->server_allowed;
+    result->authority.network_allowed = request->authority->network_allowed;
     result->authority.recovery_allowed = request->authority->recovery_allowed;
     result->authority.hardware_allowed = request->authority->hardware_allowed;
     result->no_effect = 1;
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
     result->server_allowed = 0;
+    result->network_allowed = request->lir->network_allowed;
     result->recovery_allowed = 0;
     result->hardware_allowed = 0;
 
@@ -401,12 +411,14 @@ static int append_header(const latticra_l_ui_render_result_t *result, char *buff
            appendf(buffer, buffer_len, used, "execution_allowed=%d\n", result->execution_allowed) &&
            appendf(buffer, buffer_len, used, "mutation_allowed=%d\n", result->mutation_allowed) &&
            appendf(buffer, buffer_len, used, "server_allowed=%d\n", result->server_allowed) &&
+           appendf(buffer, buffer_len, used, "network_allowed=%d\n", result->network_allowed) &&
            appendf(buffer, buffer_len, used, "recovery_allowed=%d\n", result->recovery_allowed) &&
            appendf(buffer, buffer_len, used, "hardware_allowed=%d\n", result->hardware_allowed) &&
            appendf(buffer, buffer_len, used, "authority_status=%s\n", result->authority.status_label) &&
            appendf(buffer, buffer_len, used, "authority_validator=%s\n", result->authority.validator_label) &&
            appendf(buffer, buffer_len, used, "authority_requested_effect=%s\n", result->authority.requested_effect_label) &&
            appendf(buffer, buffer_len, used, "authority_denial_reason=%s\n", result->authority.denial_reason) &&
+           appendf(buffer, buffer_len, used, "authority_network_allowed=%d\n", result->authority.network_allowed) &&
            appendf(buffer, buffer_len, used, "span_start_offset=%lu\n", (unsigned long)result->span.start_offset) &&
            appendf(buffer, buffer_len, used, "span_end_offset=%lu\n", (unsigned long)result->span.end_offset) &&
            appendf(buffer, buffer_len, used, "span_start_line=%lu\n", (unsigned long)result->span.start_line) &&
@@ -472,6 +484,7 @@ static int append_detailed(
            appendf(buffer, buffer_len, used, "authority.status=%s\n", result->authority.status_label) &&
            appendf(buffer, buffer_len, used, "authority.validator=%s\n", result->authority.validator_label) &&
            appendf(buffer, buffer_len, used, "authority.requested_effect=%s\n", result->authority.requested_effect_label) &&
+           appendf(buffer, buffer_len, used, "authority.network_allowed=%d\n", result->authority.network_allowed) &&
            appendf(buffer, buffer_len, used, "SECTION RAILS\n") &&
            append_rails(result, buffer, buffer_len, used) &&
            appendf(buffer, buffer_len, used, "SECTION FIELDS\n") &&
@@ -491,6 +504,7 @@ static int append_detailed(
            appendf(buffer, buffer_len, used, "execution_allowed=%d\n", result->execution_allowed) &&
            appendf(buffer, buffer_len, used, "mutation_allowed=%d\n", result->mutation_allowed) &&
            appendf(buffer, buffer_len, used, "server_allowed=%d\n", result->server_allowed) &&
+           appendf(buffer, buffer_len, used, "network_allowed=%d\n", result->network_allowed) &&
            appendf(buffer, buffer_len, used, "recovery_allowed=%d\n", result->recovery_allowed) &&
            appendf(buffer, buffer_len, used, "hardware_allowed=%d\n", result->hardware_allowed);
 }

@@ -104,6 +104,7 @@ static int lir_report_refinement_reports_materialized_l_ui_shape(void) {
     EXPECT_TRUE(module.transitions_from_edge_count == 0u, "transition edge count");
     EXPECT_TRUE(module.no_effect_chain_ok == 1, "no-effect chain ok");
     EXPECT_TRUE(module.evidence_level == 2u, "materialized evidence level");
+    EXPECT_TRUE(module.network_allowed == 0, "materialized network denied");
 
     EXPECT_TRUE(latticra_lir_report(&module, report, sizeof(report)) == LATTICRA_STATUS_OK, "materialized report");
     EXPECT_TRUE(strstr(report, "report_classification=materialized\n") != 0, "classification report field");
@@ -113,6 +114,7 @@ static int lir_report_refinement_reports_materialized_l_ui_shape(void) {
     EXPECT_TRUE(strstr(report, "annotates_edge_count=2\n") != 0, "annotates count report field");
     EXPECT_TRUE(strstr(report, "no_effect_chain_ok=1\n") != 0, "no-effect chain report field");
     EXPECT_TRUE(strstr(report, "evidence_level=2\n") != 0, "evidence report field");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0, "network report field");
     return 0;
 }
 

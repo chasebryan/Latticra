@@ -299,8 +299,19 @@ static int semantic_validation_preserves_no_effect_flags(void) {
     EXPECT_TRUE(result.execution_allowed == 0, "execution denied");
     EXPECT_TRUE(result.mutation_allowed == 0, "mutation denied");
     EXPECT_TRUE(result.server_allowed == 0, "server denied");
+    EXPECT_TRUE(result.network_allowed == 0, "network denied");
     EXPECT_TRUE(result.recovery_allowed == 0, "recovery denied");
     EXPECT_TRUE(result.hardware_allowed == 0, "hardware denied");
+    return 0;
+}
+
+static int semantic_validation_rejects_network_flag(void) {
+    latticra_l_ui_ast_result_t ast;
+    latticra_l_ui_semantic_result_t result;
+    EXPECT_TRUE(parse_valid_ast(&ast) == 0, "network flag base parses");
+    ast.network_allowed = 1;
+    EXPECT_TRUE(validate_ast(&ast, &result) == 0, "network flag validates to error");
+    EXPECT_TRUE(result.error == LATTICRA_L_UI_SEMANTIC_CARD_COUNT_MISMATCH, "network flag rejected");
     return 0;
 }
 
@@ -401,6 +412,7 @@ int main(void) {
     if (semantic_validation_skips_when_parser_failed() != 0) return 1;
     if (semantic_validation_reports_source_spans() != 0) return 1;
     if (semantic_validation_preserves_no_effect_flags() != 0) return 1;
+    if (semantic_validation_rejects_network_flag() != 0) return 1;
     if (semantic_validation_does_not_change_ast_report() != 0) return 1;
     if (semantic_validation_does_not_change_escaped_x00_acceptance() != 0) return 1;
     if (semantic_validation_does_not_change_literal_nul_rejection() != 0) return 1;

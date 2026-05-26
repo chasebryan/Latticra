@@ -103,6 +103,7 @@ stage_4_macos_reset_uninstall_evidence_bundle_contract=present
 stage_4_macos_reset_uninstall_live_implementation_plan_contract=present
 stage_4_macos_reset_uninstall_live_execution_preflight_contract=present
 stage_4_macos_reset_uninstall_live_denial_transcript_contract=present
+stage_4_macos_reset_uninstall_live_runner_interface_contract=present
 stage_5_codesigning_notarization_plan=future
 stage_6_controlled_os_integration_contracts=future
 ```
@@ -304,6 +305,14 @@ scripts/macos-reset-uninstall-live-denial-transcript-contract.sh
 docs/status/MACOS_RESET_UNINSTALL_LIVE_DENIAL_TRANSCRIPT_CONTRACT_STATUS.md
 ```
 
+The Stage 4 macOS reset/uninstall live-runner interface contract is implemented by:
+
+```text
+docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_INTERFACE_CONTRACT.md
+scripts/macos-reset-uninstall-live-runner-interface-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_INTERFACE_CONTRACT_STATUS.md
+```
+
 ## App Bundle Direction
 
 The macOS Panel should be represented as a managed user-local app bundle:
@@ -445,8 +454,14 @@ Current live-denial transcript lane now present:
 Add a macOS reset/uninstall live-denial transcript contract that records the failed preflight decision without deleting files.
 ```
 
-## Next Recommended Lane
+Current live-runner interface lane now present:
 
 ```text
 Add a macOS reset/uninstall live-runner interface contract that accepts only a passed preflight and keeps deletion disabled otherwise.
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner no-op prototype contract that exercises the denied interface path without deleting files.
 ```

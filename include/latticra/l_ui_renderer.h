@@ -47,6 +47,7 @@ typedef struct {
     int execution_allowed;
     int mutation_allowed;
     int server_allowed;
+    int network_allowed;
     int recovery_allowed;
     int hardware_allowed;
 } latticra_l_ui_render_authority_summary_t;
@@ -98,6 +99,7 @@ typedef struct {
     int execution_allowed;
     int mutation_allowed;
     int server_allowed;
+    int network_allowed;
     int recovery_allowed;
     int hardware_allowed;
 } latticra_l_ui_render_result_t;

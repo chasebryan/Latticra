@@ -69,6 +69,7 @@ sh scripts/test-ubuntu-package-notice-inventory.sh
 sh scripts/test-ubuntu-doc-payload-license-review-contract.sh
 sh scripts/test-ubuntu-third-party-material-review-contract.sh
 sh scripts/test-ubuntu-generated-artifact-notice-review-contract.sh
+sh scripts/test-ubuntu-notice-file-decision-contract.sh
 ```
 
 openSUSE no-effect validation:
@@ -76,6 +77,12 @@ openSUSE no-effect validation:
 ```sh
 sh scripts/test-opensuse-developer-workflow.sh
 sh scripts/test-opensuse-local-rpm-static-validation.sh
+```
+
+openSUSE tool availability validation:
+
+```sh
+sh scripts/test-opensuse-rpmlint-osc-availability.sh
 ```
 
 ## Run
@@ -112,6 +119,10 @@ latticra-panel
 ```
 
 Use the **Updater** workspace in Latticra Panel. Preview the update first, then apply the guarded user-local update from the current checkout. The installer migrates old Latticra-owned user-local wrappers when it can prove they are legacy Latticra files. Unrelated user files are still preserved or refused.
+
+```sh
+latticra updater status
+```
 
 ## Normal Reset Or Uninstall
 
