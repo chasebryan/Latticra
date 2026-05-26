@@ -24,6 +24,7 @@ packaging/debian/debian/install
 packaging/debian/debian/source/format
 docs/DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md
 docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md
 docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md
 scripts/test-debian-local-deb-static-validation.sh
 scripts/test-debian-freebsd-openbsd-source-archive-contract.sh
@@ -36,6 +37,10 @@ The static lane preserves:
 ```text
 local_only_draft=1
 debian_local_deb_draft_present=1
+debian_freebsd_openbsd_package_input_handoff_lane_present=1
+temporary_debian_source_input_staged=1
+temporary_debian_orig_archive_staged=1
+temporary_debian_debian_dir_overlay_staged=1
 debian_static_deb_validation_present=1
 deb_artifact_created=0
 deb_installed_on_host=0

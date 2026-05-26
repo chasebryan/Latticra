@@ -6,10 +6,16 @@ on:
       - "installer/**"
       - ".github/workflows/latticra-panel-installer.yml"
       - "README.md"
+      - "docs/SELF_UPDATE_MODEL.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE_STATUS.md"
       - "scripts/test-latticra-panel-lc-install-config.sh"
+      - "scripts/test-latticra-panel-local-install-lc-install-config.sh"
       - "scripts/test-latticra-panel-updater.sh"
+      - "scripts/test-latticra-panel-signed-updater-delivery-gate.sh"
+      - "scripts/latticra-panel-signed-updater-delivery-gate.sh"
       - "scripts/test-latticra-panel-local-install-*.sh"
       - "scripts/check_latticra_panel_ui_design.py"
   push:
@@ -19,10 +25,16 @@ on:
       - "installer/**"
       - ".github/workflows/latticra-panel-installer.yml"
       - "README.md"
+      - "docs/SELF_UPDATE_MODEL.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE_STATUS.md"
       - "scripts/test-latticra-panel-lc-install-config.sh"
+      - "scripts/test-latticra-panel-local-install-lc-install-config.sh"
       - "scripts/test-latticra-panel-updater.sh"
+      - "scripts/test-latticra-panel-signed-updater-delivery-gate.sh"
+      - "scripts/latticra-panel-signed-updater-delivery-gate.sh"
       - "scripts/test-latticra-panel-local-install-*.sh"
       - "scripts/check_latticra_panel_ui_design.py"
 
@@ -72,8 +84,14 @@ jobs:
       - name: Validate Latticra Panel LC install configuration
         run: sh scripts/test-latticra-panel-lc-install-config.sh
 
+      - name: Validate standalone LC local install verifier
+        run: sh scripts/test-latticra-panel-local-install-lc-install-config.sh
+
       - name: Validate Latticra Panel updater surface
         run: sh scripts/test-latticra-panel-updater.sh
+
+      - name: Validate Latticra Panel signed updater delivery gate
+        run: sh scripts/test-latticra-panel-signed-updater-delivery-gate.sh
 
       - name: Validate installer shell scripts
         run: |

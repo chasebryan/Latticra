@@ -15,6 +15,8 @@ This is an ecosystem integration checkpoint, not a production readiness claim.
 openbsd_port_draft_present=1
 openbsd_port_static_validation_present=1
 debian_freebsd_openbsd_source_archive_contract_present=1
+debian_freebsd_openbsd_package_input_handoff_lane_present=1
+temporary_openbsd_distfile_staged=1
 source_archive_policy_recorded=1
 source_archive_created=0
 source_archive_sha256_recorded=0

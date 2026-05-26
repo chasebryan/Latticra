@@ -527,12 +527,14 @@ check_shell_script() {
   archive_extract_lines="$(grep -En 'tar[[:space:]]+-C[[:space:]]+[^|]+[[:space:]]+-xf[[:space:]]+-|^[[:space:]]*(unzip|cpio)[[:space:]]' "$script" || :)"
   if [ -n "$archive_extract_lines" ]; then
     case "$script" in
-      scripts/test-fedora-source-archive-fixture-lane.sh|scripts/test-fedora-installroot-rpm-mutation-lane.sh|scripts/run-fedora-disposable-vm-local-rpm-validation-lane.sh|scripts/run-fedora-vm-cli-payload-validation-lane.sh|scripts/test-opensuse-source-archive-fixture-lane.sh)
+      scripts/test-fedora-source-archive-fixture-lane.sh|scripts/test-fedora-installroot-rpm-mutation-lane.sh|scripts/run-fedora-disposable-vm-local-rpm-validation-lane.sh|scripts/run-fedora-vm-cli-payload-validation-lane.sh|scripts/test-opensuse-source-archive-fixture-lane.sh|scripts/test-debian-freebsd-openbsd-source-archive-fixture-lane.sh|scripts/test-debian-freebsd-openbsd-package-input-handoff-lane.sh)
         require_contains "find . -path './.git' -prune -o -type l -print" "$script"
         require_contains "refusing source archive with symlink entry" "$script"
         require_contains "--exclude='./.git'" "$script"
         require_contains "--exclude='./*.tar.gz'" "$script"
-        if [ "$script" = "scripts/test-opensuse-source-archive-fixture-lane.sh" ]; then
+        if [ "$script" = "scripts/test-opensuse-source-archive-fixture-lane.sh" ] ||
+          [ "$script" = "scripts/test-debian-freebsd-openbsd-source-archive-fixture-lane.sh" ] ||
+          [ "$script" = "scripts/test-debian-freebsd-openbsd-package-input-handoff-lane.sh" ]; then
           require_contains "COPYFILE_DISABLE=1" "$script"
           require_contains "gzip.GzipFile" "$script"
           require_contains "mtime=0" "$script"
@@ -700,7 +702,7 @@ done
 check_makefile_script_refs
 
 require_contains "quality-safety-guards:" "Makefile"
-for prereq in quality-worktree quality-safety-guards quality-defensive-threat-model quality-security-standards seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation quality-macos quality-status; do
+for prereq in quality-worktree quality-safety-guards quality-defensive-threat-model quality-security-standards seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation quality-macos quality-status; do
   require_make_quality_prereq "$prereq"
 done
 require_contains "git diff --check" "Makefile"
@@ -713,15 +715,18 @@ require_contains "sh ./scripts/test-defensive-threat-model-validation-refinement
 require_contains "sh ./scripts/test-high-assurance-security-baseline.sh" "Makefile"
 require_contains "sh ./scripts/test-memory-safety-roadmap.sh" "Makefile"
 require_contains "sh ./scripts/test-supply-chain-security-baseline.sh" "Makefile"
+require_contains "sh ./scripts/test-zero-trust-runtime-authority-baseline.sh" "Makefile"
 require_contains "high-assurance-security-baseline:" "Makefile"
 require_contains "memory-safety-roadmap:" "Makefile"
 require_contains "supply-chain-security-baseline:" "Makefile"
+require_contains "zero-trust-runtime-authority-baseline:" "Makefile"
 require_contains "cargo fmt --manifest-path installer/latticra-installer/Cargo.toml -- --check" "Makefile"
 require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" "Makefile"
 require_contains "python3 scripts/check_latticra_panel_ui_design.py" "Makefile"
 require_contains "sh ./scripts/test-latticra-panel-local-install-evidence-status.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-panel-local-install-public-entrypoint-alignment.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-panel-local-uninstall-reset.sh" "Makefile"
+require_contains "sh ./scripts/test-latticra-panel-signed-updater-delivery-gate.sh" "Makefile"
 require_contains "sh ./scripts/test-production-installer-readiness-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-local-installer-artifact-manifest-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-local-artifact-manifest-fixture.sh" "Makefile"
@@ -735,6 +740,13 @@ require_contains "sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-mani
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-validate.sh" "Makefile"
 require_contains "fedora-vm-cli-payload-readme-alignment:" "Makefile"
 require_contains "sh ./scripts/test-fedora-vm-cli-payload-readme-alignment.sh" "Makefile"
+require_contains "quality-packaging-static:" "Makefile"
+require_contains "fedora-vm-cli-payload-repeatability-runner-plan:" "Makefile"
+require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-runner-plan.sh" "Makefile"
+require_contains "fedora-vm-cli-payload-repeatability-transcript-contract:" "Makefile"
+require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-transcript-contract.sh" "Makefile"
+require_contains "debian-freebsd-openbsd-package-input-handoff-lane:" "Makefile"
+require_contains "sh ./scripts/test-debian-freebsd-openbsd-package-input-handoff-lane.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-denial-transcript:" "Makefile"
 require_contains "sh ./scripts/test-macos-reset-uninstall-live-denial-transcript-contract.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-runner-interface:" "Makefile"

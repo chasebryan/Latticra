@@ -108,6 +108,7 @@ require_contains 'seabios-grub-boot-preview-qemu-argv-template.sh' "$installer_r
 require_contains 'QEMU argv template' "$roadmap"
 require_contains 'test-seabios-grub-boot-preview-qemu-argv-template.sh' Makefile
 require_contains 'boot-qemu-argv-template:' Makefile
+require_contains 'sh ./scripts/seabios-grub-boot-preview-qemu-argv-template.sh' Makefile
 
 sh -n "$script"
 sh -n "$test_script"

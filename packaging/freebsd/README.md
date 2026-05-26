@@ -21,6 +21,7 @@ packaging/freebsd/pkg-descr
 packaging/freebsd/pkg-plist
 docs/FREEBSD_PORT_STATIC_VALIDATION.md
 docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md
 docs/status/FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md
 scripts/test-freebsd-port-static-validation.sh
 scripts/test-debian-freebsd-openbsd-source-archive-contract.sh
@@ -35,6 +36,8 @@ local_only_draft=1
 freebsd_port_draft_present=1
 freebsd_port_static_validation_present=1
 debian_freebsd_openbsd_source_archive_contract_present=1
+debian_freebsd_openbsd_package_input_handoff_lane_present=1
+temporary_freebsd_distfile_staged=1
 source_archive_policy_recorded=1
 source_archive_created=0
 source_archive_sha256_recorded=0

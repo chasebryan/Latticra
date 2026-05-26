@@ -163,6 +163,10 @@ The component-level memory-safety roadmap is recorded in `docs/MEMORY_SAFETY_ROA
 
 The supply-chain security baseline is recorded in `docs/SUPPLY_CHAIN_SECURITY_BASELINE.md`.
 
+The zero-trust runtime authority baseline is recorded in `docs/ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md`.
+
+It requires caller identity, resource identity, per-request authorization, least-privilege effect scope, policy decision visibility, denial reason visibility, and audit records before any future runtime authority is considered. Operator confirmation remains metadata-only and must not override denied effects.
+
 This posture is an allocation of required work, not a compliance claim. It does not certify Latticra, accredit Latticra, make Latticra a production security product, or create a hardened runtime boundary.
 
 ## Contact and attribution

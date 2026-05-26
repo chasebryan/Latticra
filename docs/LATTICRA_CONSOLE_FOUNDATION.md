@@ -122,6 +122,16 @@ installer/configs/lc-standalone-local.installer.toml
 
 They set `profile = "lc_standalone"`, `lc.profile = "standalone"`, `lc.install.install_profile = "lc-standalone-install-v0"`, `lc.install.install_mode = "metadata-only-standalone-console"`, `lc.install.panel_embedded_console = false`, and leave external host commands disabled. The `lc-standalone-local` preset is the guarded local-write companion for the dry-run standalone preset.
 
+LC can also be installed as a standalone local console:
+
+```text
+installer/configs/lc-standalone.installer.toml
+installer/configs/lc-standalone-local.installer.toml
+installer/scripts/latticra-installer-verify-lc-standalone.sh
+```
+
+The standalone lane uses `lc-standalone-install-v0`, writes `share/latticra/lc/standalone/contract.toml`, keeps `standalone_requires_panel = false`, disables Panel embedding, and preserves the same no-effect host/network/runtime/boot authority floor.
+
 The umbrella wrapper routes:
 
 ```text

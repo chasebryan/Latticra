@@ -28,12 +28,14 @@ non-claims
 - [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) - current mathematical planning-estimate rebase after recent guarded status, packaging, macOS, Nadia, Lat/LIR, and public-entry alignment slices.
 - [`HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md`](HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md) - High-assurance security baseline status for official-source review requirements before runtime execution, effect execution, host behavior, network behavior, cryptographic enforcement, compliance claims, certification claims, production protection claims, or runtime authority.
 - [`SUPPLY_CHAIN_SECURITY_BASELINE_STATUS.md`](SUPPLY_CHAIN_SECURITY_BASELINE_STATUS.md) - Supply-chain security baseline status for repository, CI, dependency, package, installer, artifact, SBOM, release, and update-lane posture before release publishing, signing authority, production installer claims, compliance claims, or certification claims.
+- [`ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE_STATUS.md`](ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE_STATUS.md) - zero-trust runtime authority baseline status for future runtime, tool, host I/O, network, server/MCP, update, recovery, boot, hardware, agentic automation, and authority-bearing request paths.
 - [`MEMORY_SAFETY_ROADMAP_STATUS.md`](MEMORY_SAFETY_ROADMAP_STATUS.md) - Memory-safety roadmap status for component inventory, restricted C/C++ profile requirements, fuzzing prerequisites, and no current production protection claims.
 - [`LATTICRA_CONSOLE_FOUNDATION_STATUS.md`](LATTICRA_CONSOLE_FOUNDATION_STATUS.md) - Latticra Console foundation status for the LC C report surface, standalone dry-run/local installer presets, Panel installability, metadata-only standalone/host/OS/VM contracts, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, and no-effect authority baseline.
 - [`LATTICRA_SEAL_FOUNDATION_STATUS.md`](LATTICRA_SEAL_FOUNDATION_STATUS.md) - Latticra Seal foundation status for the first Seal contract and implementation plan.
 - [`LATTICRA_NO_EFFECT_CLI_RPM_SPEC_UPDATE_STATUS.md`](LATTICRA_NO_EFFECT_CLI_RPM_SPEC_UPDATE_STATUS.md) - Latticra no-effect CLI RPM spec update status for adding the CLI payload to the local Fedora RPM spec.
 - [`LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md`](LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md) - Latticra Panel local install evidence status for the Fedora Workstation user-local install verification transcript.
 - [`LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md) - Latticra Panel local install public-entrypoint alignment after the Fedora Workstation user-local install evidence milestone.
+- [`LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE_STATUS.md`](LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE_STATUS.md) - Latticra Panel closed signed updater delivery gate status for future update delivery work without network fetch, remote repository trust, or signed update apply authority.
 - [`LATTICRA_PANEL_UI_DESIGN_CHECKPOINT.md`](LATTICRA_PANEL_UI_DESIGN_CHECKPOINT.md) - Latticra Panel UI design checkpoint for the current product surface review.
 - [`MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md`](MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md) - macOS integration transferability status for adapting current no-effect, receipt-first, user-local Latticra surfaces into a future macOS lane.
 - [`MACOS_BUILD_PLATFORM_PROBE_STATUS.md`](MACOS_BUILD_PLATFORM_PROBE_STATUS.md) - macOS build/platform probe status for no-effect toolchain, architecture, Panel-readiness, and C-test-readiness reporting.
@@ -124,6 +126,7 @@ non-claims
 - [`SEAL_RUNTIME_HANDOFF_STATUS.md`](SEAL_RUNTIME_HANDOFF_STATUS.md) — Latticra Seal runtime handoff metadata status and public-entry checkpoint.
 - [`SEAL_EFFECT_DECISION_STATUS.md`](SEAL_EFFECT_DECISION_STATUS.md) — Latticra Seal effect decision metadata status and public-entry checkpoint.
 - [`SEAL_CAPABILITY_GATE_STATUS.md`](SEAL_CAPABILITY_GATE_STATUS.md) — Latticra Seal capability gate metadata status and public-entry checkpoint.
+- [`SEAL_CAPABILITY_METADATA_REPORT_SURFACE_STATUS.md`](SEAL_CAPABILITY_METADATA_REPORT_SURFACE_STATUS.md) — Latticra Seal capability metadata report surface status for the deterministic local report-only capability metadata fixture.
 - [`SEAL_VERIFICATION_RECEIPT_STATUS.md`](SEAL_VERIFICATION_RECEIPT_STATUS.md) — Latticra Seal verification receipt metadata status and public-entry checkpoint.
 - [`SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md`](SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md) — Latticra Seal crypto verify backend metadata status and public-entry checkpoint.
 - [`SEAL_ED25519_VERIFY_STATUS.md`](SEAL_ED25519_VERIFY_STATUS.md) — Latticra Seal Ed25519 verify-only result status and public-entry checkpoint.
@@ -171,6 +174,8 @@ non-claims
 - [`FEDORA_VM_CLI_PAYLOAD_README_ALIGNMENT_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_README_ALIGNMENT_STATUS.md) — Fedora VM CLI payload README alignment.
 - [`FEDORA_VM_CLI_PAYLOAD_VALIDATION_ANNOUNCEMENT_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_VALIDATION_ANNOUNCEMENT_STATUS.md) — announcement/status alignment for the disposable Fedora VM CLI payload validation milestone.
 - [`FEDORA_VM_CLI_PAYLOAD_NEXT_VALIDATION_LANE_PLAN_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_NEXT_VALIDATION_LANE_PLAN_STATUS.md) — status record for the Fedora VM CLI payload next-validation lane plan.
+- [`FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_CONTRACT_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_CONTRACT_STATUS.md) — status record for the future second disposable Fedora VM CLI payload validation transcript contract.
+- [`FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_RUNNER_PLAN_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_RUNNER_PLAN_STATUS.md) — status record for the future manual disposable Fedora VM CLI payload repeatability runner plan.
 - [`FEDORA_VM_RPM_VALIDATION_ANNOUNCEMENT_STATUS.md`](FEDORA_VM_RPM_VALIDATION_ANNOUNCEMENT_STATUS.md) — announcement/status alignment for the disposable Fedora VM local RPM validation milestone.
 - [`UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md`](UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the Ubuntu build lane, Panel apt prerequisites, and local-only deb packaging draft.
 - [`DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md`](DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the local-only Debian deb packaging draft and static validation lane.
@@ -276,6 +281,7 @@ seal_capability_gate_metadata_present=1
 seal_capability_gate_status_present=1
 seal_effect_decision_metadata_present=1
 seal_effect_decision_status_present=1
+effect_decision_predecessor_capability_gate_status_present=1
 seal_runtime_handoff_metadata_present=1
 seal_runtime_handoff_status_present=1
 seal_runtime_handoff_report_status_present=1
@@ -309,6 +315,9 @@ source_refresh_date=2026-05-26
 memory_safety_roadmap_required=1
 memory_safety_roadmap_present=1
 supply_chain_security_baseline_present=1
+zero_trust_runtime_authority_baseline_present=1
+zero_trust_runtime_authority_guard_present=1
+per_request_authorization_required=1
 zero_trust_runtime_boundary_required=1
 runtime_boundary_policy_expansion_next=1
 runtime_boundary_policy_expansion_after_threat_model_present=1
@@ -478,6 +487,32 @@ The current next recommended Fedora CLI payload lane is:
 
 ```text
 Add Fedora VM CLI payload repeatability transcript contract
+```
+
+## Current Fedora VM CLI payload repeatability runner plan checkpoint
+
+The latest Fedora VM CLI payload repeatability runner plan records:
+
+```text
+fedora_vm_cli_payload_repeatability_transcript_contract_present=1
+fedora_vm_cli_payload_repeatability_runner_plan_present=1
+fedora_vm_cli_payload_repeatability_runner_present=0
+second_disposable_vm_cli_validation_completed=0
+cli_payload_repeatability_evidence_present=0
+host_install_ready_for_cli_payload=1
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+```
+
+The plan is no-effect and defines repeatability evidence for a future second disposable Fedora VM CLI payload validation run. It does not add a runner, run RPM tooling, mutate a host, or widen readiness claims.
+
+The current next recommended Fedora CLI payload lane is:
+
+```text
+Implement manually gated Fedora VM CLI payload repeatability runner
 ```
 
 ## Current Fedora VM CLI payload validation lane checkpoint

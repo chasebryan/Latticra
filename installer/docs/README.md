@@ -1,7 +1,7 @@
 # Latticra Installer Documentation
 
-Status: active installer documentation map  
-Last updated: 2026-05-26 CDT  
+Status: active installer documentation map
+Last updated: 2026-05-26 CDT
 Scope: Latticra Panel installer authority, UI configuration, install-button execution, receipts, evidence, and readiness boundaries.
 
 ## Purpose

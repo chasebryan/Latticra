@@ -86,6 +86,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`HIGH_ASSURANCE_SECURITY_BASELINE.md`](HIGH_ASSURANCE_SECURITY_BASELINE.md) — high-assurance security baseline for current NSA, CISA, FBI, and NIST source-tracked allocations.
 - [`MEMORY_SAFETY_ROADMAP.md`](MEMORY_SAFETY_ROADMAP.md) — memory-safety roadmap for current C/C++ component mitigation, memory-safe-language preference, and promotion blockers.
 - [`SUPPLY_CHAIN_SECURITY_BASELINE.md`](SUPPLY_CHAIN_SECURITY_BASELINE.md) — supply-chain security baseline for CI, dependency, SBOM, KEV/NVD, package, installer, release, and update-lane blockers.
+- [`ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md`](ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md) — zero-trust runtime authority baseline for per-request authorization, identity/resource visibility, policy decisions, denial reasons, audit records, and no implicit runtime trust.
 - [`DEFENSIVE_THREAT_MODEL_CONTRACT.md`](DEFENSIVE_THREAT_MODEL_CONTRACT.md) — defensive threat model contract for protected assets, trust boundaries, abuse cases, evidence expectations, and non-claims.
 - [`DEFENSIVE_THREAT_MODEL_IMPLEMENTATION_PLAN.md`](DEFENSIVE_THREAT_MODEL_IMPLEMENTATION_PLAN.md) — documentation-and-guard implementation plan for defensive threat model validation.
 - [`DEFENSIVE_THREAT_MODEL_VALIDATION.md`](DEFENSIVE_THREAT_MODEL_VALIDATION.md) — defensive threat model validation ledger.
@@ -407,6 +408,7 @@ Latticra Seal verification policy predecessor status alignment + guardrails
 Latticra Seal verification receipt predecessor status alignment + guardrails
 Latticra Seal README status row alignment + guardrails
 Latticra Seal effect decision status/public-entry alignment + guardrails
+Latticra Seal effect decision predecessor status alignment + guardrails
 Latticra Seal runtime handoff status/public-entry alignment + guardrails
 Latticra Seal status rollup status/public-entry alignment + guardrails
 Latticra Seal agentic automation security public-entrypoint alignment + guardrails

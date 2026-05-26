@@ -22,6 +22,7 @@ Known current evidence includes:
 - hash lock material in `latticra.seal.lock`
 - policy regression workflow through GitHub Actions
 - policy-denial testing through `make seal-policy-denials`
+- product-spine direction for an earned security-product path
 
 ## Current authority limits
 
@@ -33,6 +34,7 @@ kernel_modification_performed=0
 systemd_modification_performed=0
 selinux_modification_performed=0
 production_security_product=0
+next_generation_security_product_target=1
 ```
 
 ## Current readiness
@@ -41,6 +43,7 @@ production_security_product=0
 local_report_generation=1
 manifest_hash_baseline=1
 policy_regression_lane=1
+product_spine_present=1
 panel_bridge_planning=1
 runtime_enforcement=0
 network_operation=0

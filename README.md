@@ -229,6 +229,7 @@ defensive_threat_model_validation_refinement_present=1
 high_assurance_security_baseline_present=1
 memory_safety_roadmap_present=1
 supply_chain_security_baseline_present=1
+zero_trust_runtime_authority_baseline_present=1
 runtime_boundary_policy_expansion_after_threat_model_present=1
 runtime_boundary_abuse_case_fixture_expansion_present=1
 lat_parse_validate_lower_pipeline_present=1
@@ -2763,6 +2764,8 @@ The effect decision metadata implementation records denied-by-gate effect decisi
 
 The effect decision status record makes that metadata-only denied checkpoint visible from the public entry points without changing implementation behavior.
 
+The effect decision status record now ties that denied metadata checkpoint to the guarded capability gate status predecessor without changing implementation behavior.
+
 The runtime handoff metadata implementation records inactive runtime handoff posture from denied effect decision metadata. It does not execute runtime behavior, perform effects, touch host or network behavior, enforce capabilities, or grant runtime authority.
 
 The runtime handoff status record makes that inactive metadata-only checkpoint visible from the public entry points without changing implementation behavior.
@@ -2960,6 +2963,8 @@ Relevant Fedora records:
 - [`docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_TRANSCRIPT_CONTRACT.md`](docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_TRANSCRIPT_CONTRACT.md)
 - [`docs/FEDORA_VM_CLI_PAYLOAD_VALIDATION_LANE.md`](docs/FEDORA_VM_CLI_PAYLOAD_VALIDATION_LANE.md)
 - [`docs/FEDORA_VM_CLI_PAYLOAD_NEXT_VALIDATION_LANE_PLAN.md`](docs/FEDORA_VM_CLI_PAYLOAD_NEXT_VALIDATION_LANE_PLAN.md)
+- [`docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_CONTRACT.md`](docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_CONTRACT.md)
+- [`docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_RUNNER_PLAN.md`](docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_RUNNER_PLAN.md)
 - [`docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md`](docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md)
 - [`docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md`](docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md)
 - [`docs/status/FEDORA_VM_CLI_PAYLOAD_README_ALIGNMENT_STATUS.md`](docs/status/FEDORA_VM_CLI_PAYLOAD_README_ALIGNMENT_STATUS.md)
@@ -3159,6 +3164,7 @@ Relevant Debian, FreeBSD, and OpenBSD records:
 - [`docs/FREEBSD_PORT_STATIC_VALIDATION.md`](docs/FREEBSD_PORT_STATIC_VALIDATION.md)
 - [`docs/OPENBSD_PORT_STATIC_VALIDATION.md`](docs/OPENBSD_PORT_STATIC_VALIDATION.md)
 - [`docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md`](docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md)
+- [`docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md`](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md)
 - [`docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md`](docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md)
 - [`docs/status/FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md`](docs/status/FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md)
 - [`docs/status/OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md`](docs/status/OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md)
@@ -3539,13 +3545,16 @@ source_refresh_date=2026-05-26
 memory_safety_roadmap_required=1
 memory_safety_roadmap_present=1
 supply_chain_security_baseline_present=1
+zero_trust_runtime_authority_baseline_present=1
+zero_trust_runtime_authority_guard_present=1
+per_request_authorization_required=1
 zero_trust_runtime_boundary_required=1
 certification_claim_allowed=0
 compliance_claim_allowed=0
 production_protection_claim_allowed=0
 ```
 
-The defensive threat model validation refinement, [`docs/HIGH_ASSURANCE_SECURITY_BASELINE.md`](docs/HIGH_ASSURANCE_SECURITY_BASELINE.md), [`docs/MEMORY_SAFETY_ROADMAP.md`](docs/MEMORY_SAFETY_ROADMAP.md), and [`docs/SUPPLY_CHAIN_SECURITY_BASELINE.md`](docs/SUPPLY_CHAIN_SECURITY_BASELINE.md) are source-tracking, allocation, and evidence-mapping work only. They do not claim certification, compliance, runtime protection, malware prevention, ransomware prevention, sandboxing, production protection, memory-safety guarantees, release readiness, or operational security authority.
+The defensive threat model validation refinement, [`docs/HIGH_ASSURANCE_SECURITY_BASELINE.md`](docs/HIGH_ASSURANCE_SECURITY_BASELINE.md), [`docs/MEMORY_SAFETY_ROADMAP.md`](docs/MEMORY_SAFETY_ROADMAP.md), [`docs/SUPPLY_CHAIN_SECURITY_BASELINE.md`](docs/SUPPLY_CHAIN_SECURITY_BASELINE.md), and [`docs/ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md`](docs/ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md) are source-tracking, allocation, and evidence-mapping work only. They do not claim certification, compliance, runtime protection, malware prevention, ransomware prevention, sandboxing, production protection, memory-safety guarantees, release readiness, or operational security authority.
 
 Security reports should target the current `main` branch unless another branch or release line is explicitly identified as supported.
 

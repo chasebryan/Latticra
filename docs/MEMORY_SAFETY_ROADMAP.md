@@ -1,7 +1,7 @@
 # Latticra Memory-Safety Roadmap
 
-Status: memory-safety roadmap  
-Source refresh date: 2026-05-26  
+Status: memory-safety roadmap
+Source refresh date: 2026-05-26
 Scope: component-level memory-safety allocation for Latticra C, restricted C++, Rust installer, shell guards, parser surfaces, Seal metadata, runtime-boundary metadata, and future high-risk infrastructure surfaces.
 
 This roadmap responds to the NSA/CISA memory-safe-language guidance and CISA/FBI product-security bad-practice guidance tracked in `docs/HIGH_ASSURANCE_SECURITY_BASELINE.md`.

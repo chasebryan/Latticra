@@ -28,6 +28,8 @@ require_file src/seal_effect_decision.c
 require_file tests/seal_effect_decision_invariants.c
 require_file scripts/test-latticra-seal-effect-decision-contract.sh
 require_file scripts/test-latticra-seal-effect-decision.sh
+require_file scripts/test-latticra-seal-effect-decision-status.sh
+require_file .github/workflows/latticra-seal-effect-decision-status.yml
 require_file docs/LATTICRA_SEAL_RUNTIME_HANDOFF_CONTRACT.md
 require_file docs/LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md
 require_file docs/status/SEAL_RUNTIME_HANDOFF_STATUS.md
@@ -46,6 +48,7 @@ require_file tests/seal_capability_gate_invariants.c
 require_file scripts/test-latticra-seal-capability-gate-contract.sh
 require_file scripts/test-latticra-seal-capability-gate.sh
 require_file scripts/test-latticra-seal-capability-gate-status.sh
+require_file .github/workflows/latticra-seal-capability-gate-status.yml
 require_file README.md
 require_file STATUS.md
 require_file docs/status/README.md
@@ -65,12 +68,17 @@ require_contains 'seal_effect_decision_invariant_test_present=1' "$status_file"
 require_contains 'seal_effect_decision_runner_present=1' "$status_file"
 require_contains 'seal_effect_decision_metadata_present=1' "$status_file"
 require_contains 'seal_effect_decision_status_present=1' "$status_file"
+require_contains 'seal_effect_decision_status_runner_present=1' "$status_file"
+require_contains 'seal_effect_decision_status_workflow_present=1' "$status_file"
 require_contains 'seal_runtime_handoff_contract_present=1' "$status_file"
 require_contains 'seal_runtime_handoff_implementation_present=1' "$status_file"
 require_contains 'seal_runtime_handoff_status_present=1' "$status_file"
 require_contains 'seal_capability_gate_contract_present=1' "$status_file"
 require_contains 'seal_capability_gate_implementation_present=1' "$status_file"
 require_contains 'seal_capability_gate_status_present=1' "$status_file"
+require_contains 'seal_capability_gate_status_runner_present=1' "$status_file"
+require_contains 'seal_capability_gate_status_workflow_present=1' "$status_file"
+require_contains 'effect_decision_predecessor_capability_gate_status_present=1' "$status_file"
 require_contains 'decision_profile=latticra-seal-effect-decision/0.1' "$status_file"
 require_contains 'gate_profile=latticra-seal-capability-gate/0.1' "$status_file"
 require_contains 'receipt_profile=latticra-seal-verification-receipt/0.1' "$status_file"
@@ -107,15 +115,52 @@ require_contains 'signer_invoked=0' "$status_file"
 require_contains 'mode=metadata-only' "$status_file"
 require_contains 'status=effect-decision-denied-metadata' "$status_file"
 require_contains 'error=ok' "$status_file"
+require_contains 'effect_decision_status_added=1' "$status_file"
+require_contains 'effect_execution_added=0' "$status_file"
+require_contains 'capability_enforcement_added=0' "$status_file"
+require_contains 'runtime_authority_added=0' "$status_file"
+require_contains 'runtime_handoff_execution_added=0' "$status_file"
+require_contains 'cryptographic_verification_added=0' "$status_file"
+require_contains 'verified_receipt_authority_added=0' "$status_file"
+require_contains 'signature_verification_added=0' "$status_file"
+require_contains 'public_key_byte_verification_added=0' "$status_file"
+require_contains 'key_material_loading_added=0' "$status_file"
+require_contains 'private_key_handling_added=0' "$status_file"
+require_contains 'key_generation_added=0' "$status_file"
+require_contains 'hardware_key_use_added=0' "$status_file"
+require_contains 'trust_store_behavior_added=0' "$status_file"
+require_contains 'revocation_lookup_added=0' "$status_file"
+require_contains 'signing_added=0' "$status_file"
+require_contains 'signer_invocation_behavior_added=0' "$status_file"
+require_contains 'signer_process_execution_added=0' "$status_file"
+require_contains 'object_sealing_added=0' "$status_file"
+require_contains 'policy_persistence_added=0' "$status_file"
+require_contains 'network_behavior_changed=0' "$status_file"
+require_contains 'host_behavior_changed=0' "$status_file"
+require_contains 'seal report envelope status: ok' "$status_file"
+require_contains 'seal signature request status: ok' "$status_file"
+require_contains 'seal signing authorization status: ok' "$status_file"
+require_contains 'seal signer handoff status: ok' "$status_file"
+require_contains 'seal signer invocation status: ok' "$status_file"
+require_contains 'seal signing operation status: ok' "$status_file"
+require_contains 'seal key-handling status: ok' "$status_file"
+require_contains 'seal key-material status: ok' "$status_file"
+require_contains 'seal public-key parsing status: ok' "$status_file"
+require_contains 'seal key parsing status: ok' "$status_file"
+require_contains 'seal verification policy status: ok' "$status_file"
+require_contains 'seal verification receipt status: ok' "$status_file"
+require_contains 'seal capability gate status: ok' "$status_file"
 require_contains 'seal effect decision contract: ok' "$status_file"
 require_contains 'seal effect decision invariants: ok' "$status_file"
 require_contains 'seal effect decision status: ok' "$status_file"
 require_contains 'seal runtime handoff contract: ok' "$status_file"
 require_contains 'seal runtime handoff status: ok' "$status_file"
 require_contains 'seal capability gate status: ok' "$status_file"
-require_contains 'status rollup status/public-entry alignment' "$status_file"
+require_contains 'effect decision status guard workflow' "$status_file"
+require_contains 'runtime handoff status/workflow guard alignment' "$status_file"
 
 require_contains 'SEAL_EFFECT_DECISION_STATUS.md' README.md
+require_contains 'effect decision status record now ties that denied metadata checkpoint to the guarded capability gate status predecessor' README.md
 require_contains 'LATTICRA_SEAL_EFFECT_DECISION_CONTRACT.md' README.md
 require_contains 'LATTICRA_SEAL_EFFECT_DECISION_IMPLEMENTATION.md' README.md
 require_contains 'SEAL_RUNTIME_HANDOFF_STATUS.md' README.md
@@ -129,30 +174,43 @@ require_contains 'seal_effect_decision_status_present=1' README.md
 require_contains 'seal_runtime_handoff_metadata_present=1' README.md
 require_contains 'seal_runtime_handoff_status_present=1' README.md
 require_contains 'Seal effect decision status/public-entry alignment' STATUS.md
+require_contains 'Seal effect decision predecessor status alignment' STATUS.md
 require_contains 'Seal runtime handoff status/public-entry alignment' STATUS.md
 require_contains 'seal_effect_decision_metadata_present=1' STATUS.md
 require_contains 'seal_effect_decision_status_present=1' STATUS.md
+require_contains 'effect_decision_predecessor_capability_gate_status_present=1' STATUS.md
 require_contains 'seal_runtime_handoff_metadata_present=1' STATUS.md
 require_contains 'seal_runtime_handoff_status_present=1' STATUS.md
 require_contains 'SEAL_EFFECT_DECISION_STATUS.md' docs/status/README.md
 require_contains 'SEAL_RUNTIME_HANDOFF_STATUS.md' docs/status/README.md
 require_contains 'seal_effect_decision_metadata_present=1' docs/status/README.md
 require_contains 'seal_effect_decision_status_present=1' docs/status/README.md
+require_contains 'effect_decision_predecessor_capability_gate_status_present=1' docs/status/README.md
 require_contains 'seal_runtime_handoff_metadata_present=1' docs/status/README.md
 require_contains 'seal_runtime_handoff_status_present=1' docs/status/README.md
 require_contains 'Latticra Seal effect decision status/public-entry alignment' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal effect decision predecessor status alignment' docs/status/CURRENT_STATUS.md
+require_contains 'effect_decision_predecessor_capability_gate_status_present=1' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal runtime handoff status/public-entry alignment' docs/status/CURRENT_STATUS.md
 require_contains 'SEAL_EFFECT_DECISION_STATUS.md' docs/FOUNDATION_INDEX.md
+require_contains 'Latticra Seal effect decision predecessor status alignment' docs/FOUNDATION_INDEX.md
 require_contains 'SEAL_RUNTIME_HANDOFF_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_EFFECT_DECISION_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal effect decision status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Latticra Seal effect decision predecessor status alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal runtime handoff status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Seal status rollup status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal effect decision status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Latticra Seal effect decision predecessor status alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Latticra Seal runtime handoff status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Seal status rollup status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/status/SEAL_EFFECT_DECISION_STATUS.md' docs/project_notes/README.md
+require_contains 'Latticra Seal effect decision predecessor status alignment' docs/project_notes/README.md
+require_contains 'docs/status/SEAL_CAPABILITY_GATE_STATUS.md' docs/project_notes/README.md
 require_contains 'docs/status/SEAL_RUNTIME_HANDOFF_STATUS.md' docs/project_notes/README.md
+require_contains 'sh scripts/test-latticra-seal-effect-decision-status.sh' .github/workflows/latticra-seal-effect-decision-status.yml
+
+sh scripts/test-latticra-seal-capability-gate-status.sh
 
 printf 'seal effect decision status: ok\n'

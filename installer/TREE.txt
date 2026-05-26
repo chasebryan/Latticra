@@ -19,6 +19,7 @@ installer/
     latticra-installer-apply.sh
     latticra-installer-dry-run.sh
     latticra-installer-uninstall.sh
+    latticra-installer-verify-lc-standalone.sh
     latticra-installer-verify.sh
   latticra-installer/
     Cargo.toml

@@ -308,6 +308,7 @@ Seal README status row alignment
 Current estimate table source alignment
 Seal capability gate status/public-entry alignment
 Seal effect decision status/public-entry alignment
+Seal effect decision predecessor status alignment
 Seal runtime handoff status/public-entry alignment
 Seal status rollup status/public-entry alignment
 Seal agentic automation security public-entrypoint alignment
@@ -1343,6 +1344,7 @@ seal_capability_gate_metadata_present=1
 seal_capability_gate_status_present=1
 seal_effect_decision_metadata_present=1
 seal_effect_decision_status_present=1
+effect_decision_predecessor_capability_gate_status_present=1
 seal_runtime_handoff_metadata_present=1
 seal_runtime_handoff_status_present=1
 seal_runtime_handoff_report_status_present=1
@@ -1411,6 +1413,7 @@ source_refresh_date=2026-05-26
 memory_safety_roadmap_required=1
 memory_safety_roadmap_present=1
 supply_chain_security_baseline_present=1
+zero_trust_runtime_authority_baseline_present=1
 zero_trust_runtime_boundary_required=1
 runtime_boundary_policy_expansion_next=1
 runtime_boundary_policy_expansion_after_threat_model_present=1

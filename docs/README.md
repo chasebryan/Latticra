@@ -1,7 +1,7 @@
 # Latticra Documentation Hub
 
-Status: active reader-facing documentation hub  
-Last updated: 2026-05-26 CDT  
+Status: active reader-facing documentation hub
+Last updated: 2026-05-26 CDT
 Scope: public orientation, status, foundation contracts, subsystem records, installer and packaging documentation, and documentation-maintenance rules.
 
 ## Purpose

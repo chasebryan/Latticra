@@ -36,6 +36,7 @@ use the Name field from packaging/fedora/latticra.spec
 use the Version field from packaging/fedora/latticra.spec
 create a root directory named latticra-<version>/
 create an archive named latticra-<version>.tar.gz
+use Git's tracked and unignored source view
 include README.md
 include packaging/fedora/latticra.spec
 include scripts used by the current %build section
@@ -43,6 +44,8 @@ exclude .git
 exclude temporary RPM work directories
 exclude RPM artifacts
 exclude nested source archive artifacts
+refuse symlink entries
+normalize tar metadata
 remain temporary and uncommitted
 ```
 

@@ -1,8 +1,8 @@
 .PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly nadia-prompt-evaluation-input nadia-prompt-evaluation-runtime-handoff nadia-prompt-evaluation-invocation nadia-prompt-evaluation-result nadia-prompt-evaluation-result-review nadia-prompt-evaluation-result-disposition nadia-prompt-evaluation-result-release nadia-prompt-evaluation-result-release-receipt nadia-prompt-evaluation-result-release-receipt-review nadia-prompt-evaluation-result-release-receipt-review-disposition nadia-prompt-evaluation-result-release-receipt-review-disposition-release nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
 
-.PHONY: quality quality-worktree quality-safety-guards quality-defensive-threat-model quality-security-standards quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation quality-macos quality-status boot-compatibility boot-preview-preflight boot-evidence-template boot-evidence-validate boot-qemu-argv-template boot-artifact-template boot-artifact-validate fedora-vm-cli-payload-readme-alignment macos-reset-uninstall-live-denial-transcript macos-reset-uninstall-live-runner-interface macos-reset-uninstall-live-runner-noop-prototype macos-reset-uninstall-live-runner-denied-dispatch-transcript macos-reset-uninstall-live-runner-denied-dispatch-review macos-reset-uninstall-live-runner-acceptance-gate macos-reset-uninstall-live-runner-acceptance-denial-transcript nadia-commands high-assurance-security-baseline memory-safety-roadmap supply-chain-security-baseline
+.PHONY: quality quality-worktree quality-safety-guards quality-defensive-threat-model quality-security-standards quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation quality-macos quality-status boot-compatibility boot-preview-preflight boot-evidence-template boot-evidence-validate boot-qemu-argv-template boot-artifact-template boot-artifact-validate fedora-vm-cli-payload-readme-alignment fedora-vm-cli-payload-repeatability-runner-plan fedora-vm-cli-payload-repeatability-transcript-contract debian-freebsd-openbsd-package-input-handoff-lane macos-reset-uninstall-live-denial-transcript macos-reset-uninstall-live-runner-interface macos-reset-uninstall-live-runner-noop-prototype macos-reset-uninstall-live-runner-denied-dispatch-transcript macos-reset-uninstall-live-runner-denied-dispatch-review macos-reset-uninstall-live-runner-acceptance-gate macos-reset-uninstall-live-runner-acceptance-denial-transcript nadia-commands high-assurance-security-baseline memory-safety-roadmap supply-chain-security-baseline zero-trust-runtime-authority-baseline latticra-panel-signed-updater-delivery-gate
 
-quality: quality-worktree quality-safety-guards quality-defensive-threat-model quality-security-standards seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation quality-macos quality-status
+quality: quality-worktree quality-safety-guards quality-defensive-threat-model quality-security-standards seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation quality-macos quality-status
 
 quality-worktree:
 	git diff --check
@@ -23,6 +23,7 @@ quality-security-standards:
 	sh ./scripts/test-high-assurance-security-baseline.sh
 	sh ./scripts/test-memory-safety-roadmap.sh
 	sh ./scripts/test-supply-chain-security-baseline.sh
+	sh ./scripts/test-zero-trust-runtime-authority-baseline.sh
 
 quality-rust-installer:
 	cargo fmt --manifest-path installer/latticra-installer/Cargo.toml -- --check
@@ -36,6 +37,7 @@ quality-panel-installer:
 	sh ./scripts/test-latticra-panel-local-install-public-entrypoint-alignment.sh
 	sh ./scripts/test-latticra-panel-local-uninstall-reset.sh
 	sh ./scripts/test-latticra-panel-updater.sh
+	sh ./scripts/test-latticra-panel-signed-updater-delivery-gate.sh
 
 quality-installer-readiness:
 	sh ./scripts/test-production-installer-readiness-contract.sh
@@ -49,6 +51,33 @@ quality-installer-readiness:
 	sh ./scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh
 	sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-template.sh
 	sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
+
+quality-packaging-static:
+	sh ./scripts/test-fedora-readiness-plan.sh
+	sh ./scripts/test-fedora-developer-workflow.sh
+	sh ./scripts/test-fedora-local-rpm-spec-skeleton.sh
+	sh ./scripts/test-fedora-local-rpm-spec-draft-plan.sh
+	sh ./scripts/test-fedora-local-rpm-static-validation.sh
+	sh ./scripts/test-fedora-vm-cli-payload-next-validation-lane-plan.sh
+	sh ./scripts/test-fedora-source-archive-fixture-lane.sh
+	sh ./scripts/test-fedora-vm-cli-payload-repeatability-transcript-contract.sh
+	sh ./scripts/test-fedora-vm-cli-payload-repeatability-runner-plan.sh
+	sh ./scripts/test-ubuntu-developer-workflow.sh
+	sh ./scripts/test-ubuntu-local-deb-static-validation.sh
+	sh ./scripts/test-ubuntu-package-notice-inventory.sh
+	sh ./scripts/test-ubuntu-doc-payload-license-review-contract.sh
+	sh ./scripts/test-ubuntu-package-notice-review-contract.sh
+	sh ./scripts/test-ubuntu-package-license-review-contract.sh
+	sh ./scripts/test-ubuntu-debian-copyright-notice-mapping-contract.sh
+	sh ./scripts/test-ubuntu-generated-artifact-notice-review-contract.sh
+	sh ./scripts/test-ubuntu-notice-file-decision-contract.sh
+	sh ./scripts/test-ubuntu-third-party-material-review-contract.sh
+	sh ./scripts/test-ubuntu-local-deb-build-transcript-contract.sh
+	sh ./scripts/test-debian-freebsd-openbsd-source-archive-contract.sh
+	sh ./scripts/test-debian-freebsd-openbsd-source-archive-fixture-lane.sh
+	sh ./scripts/test-debian-freebsd-openbsd-package-input-handoff-lane.sh
+	sh ./scripts/test-opensuse-developer-workflow.sh
+	sh ./scripts/test-opensuse-local-rpm-static-validation.sh
 
 quality-nadia:
 	sh ./scripts/test-nadia-command-surface.sh
@@ -118,6 +147,15 @@ boot-artifact-validate:
 fedora-vm-cli-payload-readme-alignment:
 	sh ./scripts/test-fedora-vm-cli-payload-readme-alignment.sh
 
+fedora-vm-cli-payload-repeatability-runner-plan:
+	sh ./scripts/test-fedora-vm-cli-payload-repeatability-runner-plan.sh
+
+fedora-vm-cli-payload-repeatability-transcript-contract:
+	sh ./scripts/test-fedora-vm-cli-payload-repeatability-transcript-contract.sh
+
+debian-freebsd-openbsd-package-input-handoff-lane:
+	sh ./scripts/test-debian-freebsd-openbsd-package-input-handoff-lane.sh
+
 macos-reset-uninstall-live-denial-transcript:
 	sh ./scripts/test-macos-reset-uninstall-live-denial-transcript-contract.sh
 
@@ -150,6 +188,12 @@ memory-safety-roadmap:
 
 supply-chain-security-baseline:
 	sh ./scripts/test-supply-chain-security-baseline.sh
+
+zero-trust-runtime-authority-baseline:
+	sh ./scripts/test-zero-trust-runtime-authority-baseline.sh
+
+latticra-panel-signed-updater-delivery-gate:
+	sh ./scripts/test-latticra-panel-signed-updater-delivery-gate.sh
 
 seal:
 	./scripts/latticra-seal-smoke.sh

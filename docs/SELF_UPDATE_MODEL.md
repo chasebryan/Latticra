@@ -1,6 +1,6 @@
 # Latticra Self-Update Model
 
-Status: Panel-owned local-checkout updater policy active; signed self-update model still planned
+Status: Panel-owned local-checkout updater policy active; signed updater delivery gate closed
 Scope: signed staged updates, channels, rollback, operator confirmation, and non-claims.
 
 ## Purpose
@@ -14,6 +14,41 @@ Self-update is a real-system capability and therefore requires contracts, effect
 No silent self-updates.
 
 Every update path must be inspectable, signed, staged, and reversible where possible.
+
+## Current Panel-Owned Updater Surface
+
+Panel-owned local-checkout updater policy is active.
+
+The current implemented updater surface is the Latticra Panel updater. It is limited to a reviewed local checkout and a guarded local-prefix reinstall flow:
+
+```text
+updater_current_source_strategy=current-source-checkout
+updater_current_apply_mode=guarded-local-prefix-reinstall
+network_self_update_ready=0
+remote_update_repository_trust=0
+signed_update_delivery_ready=0
+```
+
+The signed delivery gate is still closed:
+
+```text
+signed_updater_delivery_gate_state=closed
+signed_update_delivery_ready=0
+network_self_update_ready=0
+remote_update_repository_trust=0
+signed_manifest_required=1
+signed_manifest_present=0
+manifest_signature_verified=0
+artifact_hash_verified=0
+artifact_signature_verified=0
+rollback_plan_required=1
+rollback_plan_present=0
+operator_confirmation_required=1
+operator_confirmation_observed=0
+signed_update_apply_allowed=0
+```
+
+This is not a signed updater, not a remote update client, not a network self-update path, and not production update readiness.
 
 ## Update channels
 
