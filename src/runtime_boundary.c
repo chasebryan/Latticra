@@ -259,6 +259,33 @@ static const char *runtime_lir_source_kind_label(latticra_lir_source_kind_t kind
     return "unknown";
 }
 
+static const char *runtime_lir_node_kind_label(latticra_lir_node_kind_t kind) {
+    if (kind == LATTICRA_LIR_NODE_MODULE) return "module";
+    if (kind == LATTICRA_LIR_NODE_CARD) return "card";
+    if (kind == LATTICRA_LIR_NODE_RAIL) return "rail";
+    if (kind == LATTICRA_LIR_NODE_FIELD) return "field";
+    if (kind == LATTICRA_LIR_NODE_TEXT) return "text";
+    if (kind == LATTICRA_LIR_NODE_BINDING) return "binding";
+    if (kind == LATTICRA_LIR_NODE_EFFECT) return "effect";
+    if (kind == LATTICRA_LIR_NODE_BOUNDARY) return "boundary";
+    if (kind == LATTICRA_LIR_NODE_LAT_STATE) return "lat_state";
+    if (kind == LATTICRA_LIR_NODE_LAT_POLICY) return "lat_policy";
+    if (kind == LATTICRA_LIR_NODE_LAT_TRANSITION) return "lat_transition";
+    if (kind == LATTICRA_LIR_NODE_LAT_ASSERTION) return "lat_assertion";
+    if (kind == LATTICRA_LIR_NODE_LAT_REQUIREMENT) return "lat_requirement";
+    if (kind == LATTICRA_LIR_NODE_LAT_EFFECT_DECLARATION) return "lat_effect_declaration";
+    return "unknown";
+}
+
+static int runtime_lir_node_kind_is_lat(latticra_lir_node_kind_t kind) {
+    return kind == LATTICRA_LIR_NODE_LAT_STATE ||
+           kind == LATTICRA_LIR_NODE_LAT_POLICY ||
+           kind == LATTICRA_LIR_NODE_LAT_TRANSITION ||
+           kind == LATTICRA_LIR_NODE_LAT_ASSERTION ||
+           kind == LATTICRA_LIR_NODE_LAT_REQUIREMENT ||
+           kind == LATTICRA_LIR_NODE_LAT_EFFECT_DECLARATION;
+}
+
 static const char *runtime_lir_report_classification_label(latticra_lir_report_classification_t classification) {
     if (classification == LATTICRA_LIR_REPORT_MATERIALIZED) return "materialized";
     if (classification == LATTICRA_LIR_REPORT_REJECTED) return "rejected";
@@ -566,6 +593,28 @@ static void copy_lat_lir_evidence(const latticra_lir_module_t *lir, latticra_run
     result->record.lat_lir_recovery_allowed = lir->recovery_allowed;
     result->record.lat_lir_hardware_allowed = lir->hardware_allowed;
     for (index = 0u; index < lir->node_count && index < LATTICRA_LIR_NODE_MAX; index++) {
+        if (runtime_lir_node_kind_is_lat(lir->nodes[index].kind) &&
+            result->record.lat_lir_has_first_lat_node == 0) {
+            result->record.lat_lir_has_first_lat_node = 1;
+            result->record.lat_lir_first_lat_node_index = index;
+            result->record.lat_lir_first_lat_node_kind = lir->nodes[index].kind;
+            (void)snprintf(result->record.lat_lir_first_lat_node_name,
+                           sizeof(result->record.lat_lir_first_lat_node_name),
+                           "%s",
+                           lir->nodes[index].name);
+            (void)snprintf(result->record.lat_lir_first_lat_node_value,
+                           sizeof(result->record.lat_lir_first_lat_node_value),
+                           "%s",
+                           lir->nodes[index].value);
+            (void)snprintf(result->record.lat_lir_first_lat_node_operator,
+                           sizeof(result->record.lat_lir_first_lat_node_operator),
+                           "%s",
+                           lir->nodes[index].operator_text);
+            (void)snprintf(result->record.lat_lir_first_lat_node_binding,
+                           sizeof(result->record.lat_lir_first_lat_node_binding),
+                           "%s",
+                           lir->nodes[index].binding);
+        }
         if (lir->nodes[index].kind == LATTICRA_LIR_NODE_LAT_STATE) {
             result->record.lat_lir_lat_state_node_count += 1u;
             result->record.lat_lir_has_lat_state_nodes = 1;
@@ -947,13 +996,20 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
     }
     used = offset + (size_t)written;
     extra = snprintf(buffer + used, buffer_len - used,
-        "lat_lir_lat_state_node_count=%lu\nlat_lir_lat_policy_node_count=%lu\nlat_lir_lat_transition_node_count=%lu\nlat_lir_lat_assertion_node_count=%lu\nlat_lir_lat_requirement_node_count=%lu\nlat_lir_lat_effect_declaration_node_count=%lu\n",
+        "lat_lir_lat_state_node_count=%lu\nlat_lir_lat_policy_node_count=%lu\nlat_lir_lat_transition_node_count=%lu\nlat_lir_lat_assertion_node_count=%lu\nlat_lir_lat_requirement_node_count=%lu\nlat_lir_lat_effect_declaration_node_count=%lu\nlat_lir_has_first_lat_node=%d\nlat_lir_first_lat_node_index=%lu\nlat_lir_first_lat_node_kind=%s\nlat_lir_first_lat_node_name=%s\nlat_lir_first_lat_node_value=%s\nlat_lir_first_lat_node_operator=%s\nlat_lir_first_lat_node_binding=%s\n",
         (unsigned long)result->record.lat_lir_lat_state_node_count,
         (unsigned long)result->record.lat_lir_lat_policy_node_count,
         (unsigned long)result->record.lat_lir_lat_transition_node_count,
         (unsigned long)result->record.lat_lir_lat_assertion_node_count,
         (unsigned long)result->record.lat_lir_lat_requirement_node_count,
-        (unsigned long)result->record.lat_lir_lat_effect_declaration_node_count);
+        (unsigned long)result->record.lat_lir_lat_effect_declaration_node_count,
+        result->record.lat_lir_has_first_lat_node,
+        (unsigned long)result->record.lat_lir_first_lat_node_index,
+        runtime_lir_node_kind_label(result->record.lat_lir_first_lat_node_kind),
+        result->record.lat_lir_first_lat_node_name,
+        result->record.lat_lir_first_lat_node_value,
+        result->record.lat_lir_first_lat_node_operator,
+        result->record.lat_lir_first_lat_node_binding);
     if (extra < 0 || used + (size_t)extra >= buffer_len) {
         buffer[0] = '\0';
         return LATTICRA_STATUS_BUFFER_TOO_SMALL;

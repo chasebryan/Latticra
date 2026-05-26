@@ -9,6 +9,9 @@ plan="$tmpdir/install-plan.txt"
 receipt_dir="$tmpdir/receipts"
 run_log="$tmpdir/run.log"
 live_config="$tmpdir/live.installer.toml"
+standalone_plan="$tmpdir/standalone-plan.txt"
+standalone_receipts="$tmpdir/standalone-receipts"
+standalone_log="$tmpdir/standalone.log"
 live_plan="$tmpdir/live-plan.txt"
 live_receipts="$tmpdir/live-receipts"
 lc_report="$tmpdir/lc-install-config.txt"
@@ -29,6 +32,11 @@ grep -Fq '[lc.install]' installer/configs/default.installer.toml
 grep -Fq 'install_profile = "lc-panel-install-v0"' installer/configs/default.installer.toml
 grep -Fq 'standalone_console = true' installer/configs/default.installer.toml
 grep -Fq 'allow_external_host_commands = false' installer/configs/default.installer.toml
+grep -Fq 'profile = "lc_standalone"' installer/configs/lc-standalone.installer.toml
+grep -Fq 'install_profile = "lc-standalone-install-v0"' installer/configs/lc-standalone.installer.toml
+grep -Fq 'install_mode = "metadata-only-standalone-console"' installer/configs/lc-standalone.installer.toml
+grep -Fq 'panel_embedded_console = false' installer/configs/lc-standalone.installer.toml
+grep -Fq 'allow_external_host_commands = false' installer/configs/lc-standalone.installer.toml
 grep -Fq 'LC_INSTALL_PROFILE=$(cfg_section lc.install install_profile lc-panel-install-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_INSTALL_STANDALONE_CONSOLE=$(cfg_section lc.install standalone_console true)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC install configuration cannot enable external host commands from the Panel' installer/scripts/latticra-installer-apply.sh
@@ -56,6 +64,25 @@ grep -Fq 'lc_install_profile=lc-panel-install-v0' "$receipt_dir/latest-receipt.t
 grep -Fq 'lc_standalone_console=true' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_allow_external_host_commands=false' "$receipt_dir/latest-receipt.txt"
 grep -Fq '[dry-run] would install LC config profile lc-panel-install-v0' "$run_log"
+
+HOME="$home" sh installer/scripts/latticra-installer-apply.sh \
+  --config installer/configs/lc-standalone.installer.toml \
+  --plan "$standalone_plan" \
+  --receipt-dir "$standalone_receipts" > "$standalone_log"
+
+grep -Fq 'profile=lc_standalone' "$standalone_plan"
+grep -Fq 'profile=standalone' "$standalone_plan"
+grep -Fq 'install_profile=lc-standalone-install-v0' "$standalone_plan"
+grep -Fq 'install_mode=metadata-only-standalone-console' "$standalone_plan"
+grep -Fq 'panel_embedded_console=false' "$standalone_plan"
+grep -Fq 'standalone_contract_present=1' "$standalone_plan"
+grep -Fq 'allow_external_host_commands=false' "$standalone_plan"
+grep -Fq 'lc_install_profile=lc-standalone-install-v0' "$standalone_receipts/latest-receipt.txt"
+grep -Fq 'lc_standalone_requires_panel=false' "$standalone_receipts/latest-receipt.txt"
+grep -Fq '[dry-run] would install LC config profile lc-standalone-install-v0' "$standalone_log"
+grep -Fq '[dry-run] Panel GUI build disabled by config' "$standalone_log"
+grep -Fq '[dry-run] source build disabled by config' "$standalone_log"
+grep -Fq '[dry-run] desktop entry disabled by config' "$standalone_log"
 
 cat > "$live_config" <<LIVECONFIG
 profile = "developer_local"

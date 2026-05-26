@@ -79,6 +79,7 @@ opensuse_changes_file_present=1
 opensuse_rpmlint_osc_availability_lane_present=1
 opensuse_rpmlint_static_spec_lane_present=1
 opensuse_rpmlint_findings_classification_present=1
+opensuse_source_archive_reproducibility_contract_present=1
 opensuse_obs_publication_claimed=0
 opensuse_official_package_claimed=0
 suse_endorsement_claimed=0
@@ -141,12 +142,15 @@ Current guarded files:
 docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 scripts/test-opensuse-rpmlint-osc-availability.sh
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
 scripts/test-opensuse-rpmlint-findings-classification.sh
+scripts/test-opensuse-source-archive-reproducibility-contract.sh
 .github/workflows/opensuse-rpmlint-osc-availability.yml
 .github/workflows/opensuse-rpmlint-static-spec-lane.yml
 .github/workflows/opensuse-rpmlint-findings-classification.yml
+.github/workflows/opensuse-source-archive-reproducibility-contract.yml
 ```
 
 Before any Open Build Service publication or submit request can be claimed, the lane needs evidence for:
@@ -183,10 +187,10 @@ claim operating-system completeness
 Recommended next slice:
 
 ```text
-Add openSUSE source archive reproducibility contract before accepting package build evidence.
+Add openSUSE source archive fixture lane that creates and inspects a temporary archive without running rpmbuild or osc build.
 ```
 
-That should keep source archive, license, and build evidence separate from `rpmlint` output so the openSUSE package path remains reviewable.
+That should prove archive shape and reproducibility in a temporary workspace while keeping package build and publication claims blocked.
 
 ## Validation
 
@@ -198,6 +202,7 @@ sh scripts/test-opensuse-local-rpm-static-validation.sh
 sh scripts/test-opensuse-rpmlint-osc-availability.sh
 sh scripts/test-opensuse-rpmlint-static-spec-lane.sh
 sh scripts/test-opensuse-rpmlint-findings-classification.sh
+sh scripts/test-opensuse-source-archive-reproducibility-contract.sh
 ```
 
 Expected output:
@@ -208,4 +213,5 @@ opensuse_local_rpm_static_validation: ok
 opensuse_rpmlint_osc_availability: ok
 opensuse_rpmlint_static_spec_lane: ok
 opensuse_rpmlint_findings_classification: ok
+opensuse_source_archive_reproducibility_contract: ok
 ```

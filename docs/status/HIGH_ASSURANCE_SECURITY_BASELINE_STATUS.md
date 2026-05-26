@@ -30,6 +30,7 @@ nist_sp_800_160_observed=1
 nist_sp_800_207_observed=1
 fips_140_3_observed=1
 memory_safety_roadmap_required=1
+memory_safety_roadmap_present=1
 zero_trust_runtime_boundary_required=1
 ssdf_secure_development_required=1
 cpg_operational_baseline_required=1

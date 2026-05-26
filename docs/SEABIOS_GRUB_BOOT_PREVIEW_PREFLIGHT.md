@@ -73,6 +73,12 @@ The boot artifact manifest validation for the current blocked fixture is:
 sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
 ```
 
+The boot-preview evidence validation for future QEMU and serial-console evidence is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-evidence-validate.sh
+```
+
 ## Required Non-Effects
 
 The preflight must always report:

@@ -114,6 +114,10 @@ static latticra_lir_module_t lat_lir_module(void) {
     lir.no_effect = 1;
     lir.nodes[0].kind = LATTICRA_LIR_NODE_MODULE;
     lir.nodes[1].kind = LATTICRA_LIR_NODE_LAT_STATE;
+    copy_text(lir.nodes[1].name, sizeof(lir.nodes[1].name), "RootCell");
+    copy_text(lir.nodes[1].value, sizeof(lir.nodes[1].value), "root");
+    copy_text(lir.nodes[1].operator_text, sizeof(lir.nodes[1].operator_text), "=");
+    copy_text(lir.nodes[1].binding, sizeof(lir.nodes[1].binding), "lat.state.root");
     lir.nodes[2].kind = LATTICRA_LIR_NODE_LAT_TRANSITION;
     lir.nodes[3].kind = LATTICRA_LIR_NODE_LAT_REQUIREMENT;
     lir.nodes[4].kind = LATTICRA_LIR_NODE_LAT_POLICY;
@@ -213,6 +217,13 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(result.record.lat_lir_lat_assertion_node_count == 1u, "lat lir assertion node count copied");
     EXPECT_TRUE(result.record.lat_lir_lat_requirement_node_count == 1u, "lat lir requirement node count copied");
     EXPECT_TRUE(result.record.lat_lir_lat_effect_declaration_node_count == 1u, "lat lir effect declaration node count copied");
+    EXPECT_TRUE(result.record.lat_lir_has_first_lat_node == 1, "lat lir first node present");
+    EXPECT_TRUE(result.record.lat_lir_first_lat_node_index == 1u, "lat lir first node index copied");
+    EXPECT_TRUE(result.record.lat_lir_first_lat_node_kind == LATTICRA_LIR_NODE_LAT_STATE, "lat lir first node kind copied");
+    EXPECT_TRUE(strcmp(result.record.lat_lir_first_lat_node_name, "RootCell") == 0, "lat lir first node name copied");
+    EXPECT_TRUE(strcmp(result.record.lat_lir_first_lat_node_value, "root") == 0, "lat lir first node value copied");
+    EXPECT_TRUE(strcmp(result.record.lat_lir_first_lat_node_operator, "=") == 0, "lat lir first node operator copied");
+    EXPECT_TRUE(strcmp(result.record.lat_lir_first_lat_node_binding, "lat.state.root") == 0, "lat lir first node binding copied");
     EXPECT_TRUE(result.record.lat_lir_no_effect_chain_ok == 1, "lat lir no-effect chain copied");
     EXPECT_TRUE(result.record.lat_lir_evidence_level == 2u, "lat lir evidence level copied");
     EXPECT_TRUE(result.record.lat_lir_no_effect == 1, "lat lir no-effect copied");
@@ -525,6 +536,13 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_lir_lat_assertion_node_count=1\n") != 0, "lat lir assertion node count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_lat_requirement_node_count=1\n") != 0, "lat lir requirement node count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_lat_effect_declaration_node_count=1\n") != 0, "lat lir effect declaration node count report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_has_first_lat_node=1\n") != 0, "lat lir first node present report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_index=1\n") != 0, "lat lir first node index report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_kind=lat_state\n") != 0, "lat lir first node kind report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_name=RootCell\n") != 0, "lat lir first node name report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_value=root\n") != 0, "lat lir first node value report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_operator==\n") != 0, "lat lir first node operator report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_binding=lat.state.root\n") != 0, "lat lir first node binding report present");
     EXPECT_TRUE(strstr(report, "lat_lir_no_effect_chain_ok=1\n") != 0, "lat lir no-effect chain report present");
     EXPECT_TRUE(strstr(report, "lat_lir_evidence_level=2\n") != 0, "lat lir evidence level report present");
     EXPECT_TRUE(strstr(report, "lat_lir_no_effect=1\n") != 0, "lat lir no-effect report present");

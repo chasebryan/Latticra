@@ -77,7 +77,7 @@ macos_local_candidate_asset_probe: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner acceptance-gate contract that requires passed preflight, complete evidence, and explicit effect authorization before dispatch.
+Add a macOS reset/uninstall live-runner acceptance-denial transcript contract that records the closed acceptance gate without dispatching effects.
 ```
 
 ## Non-Claims

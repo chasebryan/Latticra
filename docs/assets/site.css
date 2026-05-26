@@ -131,8 +131,8 @@ img {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 7px 9px;
-  font-size: 0.81rem;
+  gap: 7px 8px;
+  font-size: 0.79rem;
 }
 
 .nav-links a {
@@ -420,6 +420,14 @@ p:last-child {
   background-size: cover;
 }
 
+.boot-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.98) 0%, rgba(17, 24, 39, 0.9) 58%, rgba(17, 24, 39, 0.62) 100%),
+    url("latticra-seal-runtime-dry-run-native-demo.png");
+  background-position: center right;
+  background-size: cover;
+}
+
 .start-hero {
   background:
     linear-gradient(90deg, rgba(17, 24, 39, 0.97) 0%, rgba(17, 24, 39, 0.86) 58%, rgba(17, 24, 39, 0.66) 100%),
@@ -635,6 +643,7 @@ p:last-child {
 .seal-intro,
 .roadmap-intro,
 .kernel-intro,
+.boot-intro,
 .workbench-intro,
 .panel-intro,
 .console-intro,
@@ -654,6 +663,7 @@ p:last-child {
 .seal-intro p:not(.eyebrow),
 .roadmap-intro p:not(.eyebrow),
 .kernel-intro p:not(.eyebrow),
+.boot-intro p:not(.eyebrow),
 .workbench-intro p:not(.eyebrow),
 .panel-intro p:not(.eyebrow),
 .console-intro p:not(.eyebrow),
@@ -1161,6 +1171,98 @@ p:last-child {
 }
 
 .kernel-table p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.boot-flow,
+.boot-profile-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.boot-flow {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.boot-flow article {
+  min-width: 0;
+  min-height: 218px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--ochre);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.boot-flow span,
+.boot-profile-grid span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--ochre);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.boot-flow p,
+.boot-profile-grid p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.boot-profile-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.boot-profile-grid article {
+  min-width: 0;
+  min-height: 210px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--blue);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.boot-profile-grid article:nth-child(3) {
+  border-top-color: var(--violet);
+}
+
+.boot-profile-grid article:nth-child(4) {
+  border-top-color: var(--teal);
+}
+
+.boot-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.boot-table {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.boot-table div {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.boot-table div:last-child {
+  border-bottom: 0;
+}
+
+.boot-table span {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.boot-table p {
   color: var(--muted);
   font-size: 0.94rem;
 }
@@ -2615,6 +2717,8 @@ p:last-child {
 
 .command-panel code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 
 .resource-grid {
@@ -2742,6 +2846,10 @@ p:last-child {
   .kernel-flow,
   .kernel-ladder-grid,
   .kernel-split,
+  .boot-intro,
+  .boot-flow,
+  .boot-profile-grid,
+  .boot-split,
   .workbench-intro,
   .workbench-flow,
   .workbench-showcase,
@@ -2848,6 +2956,7 @@ p:last-child {
   .seal-table div,
   .roadmap-table div,
   .kernel-table div,
+  .boot-table div,
   .workbench-table div,
   .panel-table div,
   .console-table div,

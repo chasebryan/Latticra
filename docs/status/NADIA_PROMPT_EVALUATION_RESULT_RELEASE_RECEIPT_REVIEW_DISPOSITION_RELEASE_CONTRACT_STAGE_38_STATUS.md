@@ -121,7 +121,7 @@ Nadia can now produce a prompt-evaluation result release receipt review disposit
 
 Runtime invocation, prompt evaluation, token generation, inference, review-disposition release recording, release decision recording, release publication, release packaging, release receipt creation, review disposition recording, disposition decision recording, disposition findings recording, review recording, receipt recording, receipt signing, receipt publication, result recording, model-output recording, and dialogue generation remain blocked until a later contract explicitly names review-disposition-release receipt shape, runtime execution denial fields, safety inheritance, operator review gates, and non-claims.
 
-That later prompt-evaluation result release receipt review disposition release receipt contract is the next boundary; Stage-38 only records the prerequisite metadata.
+Stage-39 now records that later prompt-evaluation result release receipt review disposition release receipt contract; Stage-38 remains the prerequisite metadata boundary.
 
 ## Validation
 

@@ -25,6 +25,7 @@ require_file docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 require_file docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_file docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_file docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+require_file docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 require_file docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 require_file docs/QUICK_START_CHEATSHEET.md
 require_file README.md
@@ -35,10 +36,12 @@ require_file packaging/opensuse/latticra.changes
 require_file scripts/test-opensuse-rpmlint-osc-availability.sh
 require_file scripts/test-opensuse-rpmlint-static-spec-lane.sh
 require_file scripts/test-opensuse-rpmlint-findings-classification.sh
+require_file scripts/test-opensuse-source-archive-reproducibility-contract.sh
 require_file .github/workflows/opensuse-developer-workflow.yml
 require_file .github/workflows/opensuse-rpmlint-osc-availability.yml
 require_file .github/workflows/opensuse-rpmlint-static-spec-lane.yml
 require_file .github/workflows/opensuse-rpmlint-findings-classification.yml
+require_file .github/workflows/opensuse-source-archive-reproducibility-contract.yml
 
 require_contains 'Status: developer workflow record' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
 require_contains 'local openSUSE Linux commands for productive Latticra development' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
@@ -60,6 +63,7 @@ require_contains 'opensuse_changes_file_present=1' docs/OPENSUSE_READINESS_PLAN.
 require_contains 'opensuse_rpmlint_osc_availability_lane_present=1' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_rpmlint_static_spec_lane_present=1' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_rpmlint_findings_classification_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_source_archive_reproducibility_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_obs_publication_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_official_package_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'suse_endorsement_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
@@ -70,6 +74,8 @@ require_contains 'Status: active static spec lint lane' docs/OPENSUSE_RPMLINT_ST
 require_contains 'rpmlint can inspect packaging/opensuse/latticra.spec' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'Status: active findings classification record' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 require_contains 'Expected Draft Finding Classes' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+require_contains 'Status: active source archive reproducibility contract' docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+require_contains 'source_archive_name=latticra-0.0.0.tar.gz' docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 
 require_contains 'openSUSE prerequisites' README.md
 require_contains '## openSUSE integration and maintenance' README.md
@@ -79,12 +85,14 @@ require_contains 'docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md' README.md
 require_contains 'docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md' README.md
 require_contains 'docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md' README.md
 require_contains 'docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md' README.md
+require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md' README.md
 require_contains 'packaging/opensuse/README.md' README.md
 require_contains 'sh scripts/test-opensuse-developer-workflow.sh' README.md
 require_contains 'sh scripts/test-opensuse-local-rpm-static-validation.sh' README.md
 require_contains 'sh scripts/test-opensuse-rpmlint-osc-availability.sh' README.md
 require_contains 'sh scripts/test-opensuse-rpmlint-static-spec-lane.sh' README.md
 require_contains 'sh scripts/test-opensuse-rpmlint-findings-classification.sh' README.md
+require_contains 'sh scripts/test-opensuse-source-archive-reproducibility-contract.sh' README.md
 
 require_contains 'openSUSE prerequisites:' docs/QUICK_START_CHEATSHEET.md
 require_contains 'sudo zypper install -y rust cargo make gcc pkgconf' docs/QUICK_START_CHEATSHEET.md

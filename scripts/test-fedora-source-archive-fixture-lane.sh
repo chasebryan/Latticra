@@ -71,6 +71,12 @@ archive_listing="$tmpdir/archive.list"
 
 mkdir -p "$tmpdir/$root"
 
+symlink_entry=$(find . -path './.git' -prune -o -type l -print | sed -n '1p')
+if [ -n "$symlink_entry" ]; then
+  printf 'fedora source archive fixture lane: refusing source archive with symlink entry: %s\n' "$symlink_entry" >&2
+  exit 1
+fi
+
 # Copy the current checked-out tree into the expected Source0 root while excluding
 # VCS metadata and local RPM work outputs. This fixture remains temporary.
 tar \

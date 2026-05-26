@@ -30,6 +30,8 @@ ubuntu_debian_copyright_notice_mapping_contract_present=1
 ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping
 ubuntu_trademark_notice_boundary_contract_present=1
 ubuntu_trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary
+ubuntu_release_artifact_notice_requirements_contract_present=1
+ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements
 third_party_material_inventory_recorded=1
 notice_file_present=0
 documentation_license_decision_present=0
@@ -70,6 +72,8 @@ documentation_trademark_boundary_reviewed=1
 canonical_endorsement_boundary_reviewed=1
 project_identity_downstream_use_boundary_recorded=1
 release_artifact_notice_requirements_recorded=1
+source_package_notice_requirements_recorded=1
+release_notes_notice_requirements_recorded=1
 ```
 
 ## Current Decision
@@ -91,6 +95,8 @@ ubuntu_debian_copyright_notice_mapping_contract_present=1
 ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping
 ubuntu_trademark_notice_boundary_contract_present=1
 ubuntu_trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary
+ubuntu_release_artifact_notice_requirements_contract_present=1
+ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements
 doc_payload_license_reviewed=0
 doc_payload_license_unresolved=1
 doc_payload_license_decision_recorded=0
@@ -118,6 +124,9 @@ package_description_endorsement_boundary_reviewed=0
 documentation_trademark_boundary_reviewed=0
 canonical_endorsement_boundary_reviewed=0
 project_identity_downstream_use_boundary_recorded=0
+release_artifact_notice_requirements_recorded=0
+source_package_notice_requirements_recorded=0
+release_notes_notice_requirements_recorded=0
 ubuntu_package_license_review_unblocked=0
 ubuntu_lintian_static_metadata_unblocked=0
 ubuntu_local_deb_build_transcript_unblocked=0
@@ -140,6 +149,8 @@ The Ubuntu NOTICE file decision contract records the reviewed decision required 
 The Ubuntu Debian copyright notice mapping contract records the reviewed mapping required before package notice obligations can be represented in `packaging/ubuntu/debian/copyright`.
 
 The Ubuntu trademark notice boundary contract records the reviewed project-identity and endorsement boundary required before package notice obligations can be promoted.
+
+The Ubuntu release artifact notice requirements contract records the reviewed source-package, deb-artifact, changes-file, build-log, installed-payload, and release-notes notice requirements required before package notice obligations can be promoted.
 
 ## Non-Claims
 

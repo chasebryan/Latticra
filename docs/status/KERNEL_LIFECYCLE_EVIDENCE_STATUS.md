@@ -40,6 +40,8 @@ kernel run queue guard
 kernel run queue report runner
 kernel context switch guard
 kernel context switch report runner
+kernel time accounting guard
+kernel time accounting report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
@@ -52,7 +54,7 @@ kernel lifecycle rollback plan
 The lifecycle evidence can report a bounded in-memory path ending at:
 
 ```text
-final_state=context-switch-ready
+final_state=time-accounting-ready
 ```
 
 The lifecycle report runner and subsystem summary keep the external-effect posture explicit:
@@ -106,6 +108,9 @@ address_space_switch_allowed=0
 preemption_allowed=0
 time_accounting_allowed=0
 time_read_allowed=0
+cpu_usage_write_allowed=0
+quota_update_allowed=0
+scheduler_credit_update_allowed=0
 process_wake_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0
@@ -185,6 +190,7 @@ Dedicated workflow lanes keep the kernel table guards visible:
 .github/workflows/kernel-scheduler-tick.yml
 .github/workflows/kernel-run-queue.yml
 .github/workflows/kernel-context-switch.yml
+.github/workflows/kernel-time-accounting.yml
 .github/workflows/kernel-process-table.yml
 .github/workflows/kernel-syscall-table.yml
 ```

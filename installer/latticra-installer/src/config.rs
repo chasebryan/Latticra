@@ -9,6 +9,7 @@ pub enum InstallProfile {
     DeveloperLocal,
     SealReportOnly,
     FedoraValidationVm,
+    LcStandalone,
     Custom,
 }
 
@@ -18,6 +19,7 @@ impl InstallProfile {
             Self::DeveloperLocal => "Guided Workbench",
             Self::SealReportOnly => "Seal Report-Only",
             Self::FedoraValidationVm => "Fedora Validation VM",
+            Self::LcStandalone => "LC Standalone",
             Self::Custom => "Custom",
         }
     }
@@ -27,15 +29,17 @@ impl InstallProfile {
             Self::DeveloperLocal => "Safe first-run profile with Lat, LIR, Seal, docs, and helper commands enabled under dry-run authority.",
             Self::SealReportOnly => "Minimal report-only Seal layout for users who only want receipts, reports, and documentation.",
             Self::FedoraValidationVm => "Fedora/Linux validation workspace for VM testing and host-facing evidence capture.",
+            Self::LcStandalone => "Standalone Latticra Console preset with Panel runtime dependency disabled.",
             Self::Custom => "Manual operator profile. Use after the guided profiles make sense.",
         }
     }
 
-    pub fn all() -> [InstallProfile; 4] {
+    pub fn all() -> [InstallProfile; 5] {
         [
             Self::DeveloperLocal,
             Self::SealReportOnly,
             Self::FedoraValidationVm,
+            Self::LcStandalone,
             Self::Custom,
         ]
     }
@@ -736,10 +740,39 @@ impl InstallerConfig {
                 self.seal.crypto_profile = SealCryptoProfile::Blake2bEd25519;
                 self.seal.apply_crypto_profile_defaults();
             }
+            InstallProfile::LcStandalone => {
+                self.install_prefix = "~/.local/share/latticra".to_owned();
+                self.components = Components {
+                    latticra_console: true,
+                    lat_tooling: false,
+                    lir_contracts: false,
+                    seal_report_only: false,
+                    nadia_offline_ai: false,
+                    fedora_validation: false,
+                    docs_and_examples: false,
+                    developer_cli_helpers: false,
+                };
+                self.safety.dry_run = true;
+                self.safety.allow_host_mutation = false;
+                self.safety.allow_network_effect = false;
+                self.lc = LatticraConsoleConfig::default();
+                self.lc.profile = LatticraConsoleProfile::Standalone;
+                self.lc.apply_profile_defaults();
+                self.lc.install.install_profile = "lc-standalone-install-v0".to_owned();
+                self.lc.install.install_mode = "metadata-only-standalone-console".to_owned();
+                self.lc.install.panel_embedded_console = false;
+                self.seal.crypto_profile = SealCryptoProfile::ReportOnly;
+                self.seal.apply_crypto_profile_defaults();
+            }
             InstallProfile::Custom => {}
         }
 
         self.behavior = InstallBehavior::default();
+        if matches!(self.profile, InstallProfile::LcStandalone) {
+            self.behavior.build_gui_installer = false;
+            self.behavior.build_latticra_from_source = false;
+            self.behavior.install_desktop_entry = false;
+        }
     }
 
     pub fn execution_mode_label(&self) -> &'static str {
@@ -1230,11 +1263,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
     let _ = writeln!(
         out,
-        "stage=38-prompt-evaluation-result-release-receipt-review-disposition-release-contract"
+        "stage=39-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract"
     );
     let _ = writeln!(
         out,
-        "previous_stage=37-prompt-evaluation-result-release-receipt-review-disposition-contract"
+        "previous_stage=38-prompt-evaluation-result-release-receipt-review-disposition-release-contract"
     );
     let _ = writeln!(
         out,
@@ -2478,6 +2511,54 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(
         out,
         "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract_stage=39-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract_status=contract_only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_record_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_decision_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_emitted=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_signed=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_published=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_packaged=0"
+    );
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract=1"
     );
     let _ = writeln!(out, "requires_prompt_evaluation_result_contract=1");
     let _ = writeln!(

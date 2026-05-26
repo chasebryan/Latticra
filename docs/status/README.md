@@ -4,6 +4,8 @@ Status: active status index
 Last updated: 2026-05-26
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
+For reader-facing documentation navigation, start with [`../README.md`](../README.md). This file remains the detailed status index.
+
 ## Purpose
 
 This folder records public-facing Latticra status information.
@@ -25,7 +27,8 @@ non-claims
 - [`CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) - current public estimate table source alignment for README, root status, detailed status, foundation index, and project notes.
 - [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) - current mathematical planning-estimate rebase after recent guarded status, packaging, macOS, Nadia, Lat/LIR, and public-entry alignment slices.
 - [`HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md`](HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md) - High-assurance security baseline status for official-source review requirements before runtime execution, effect execution, host behavior, network behavior, cryptographic enforcement, compliance claims, certification claims, production protection claims, or runtime authority.
-- [`LATTICRA_CONSOLE_FOUNDATION_STATUS.md`](LATTICRA_CONSOLE_FOUNDATION_STATUS.md) - Latticra Console foundation status for the LC C report surface, standalone and Panel installability, metadata-only standalone/host/OS/VM contracts, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, and no-effect authority baseline.
+- [`MEMORY_SAFETY_ROADMAP_STATUS.md`](MEMORY_SAFETY_ROADMAP_STATUS.md) - Memory-safety roadmap status for component inventory, restricted C/C++ profile requirements, fuzzing prerequisites, and no current production protection claims.
+- [`LATTICRA_CONSOLE_FOUNDATION_STATUS.md`](LATTICRA_CONSOLE_FOUNDATION_STATUS.md) - Latticra Console foundation status for the LC C report surface, standalone installer preset, Panel installability, metadata-only standalone/host/OS/VM contracts, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, and no-effect authority baseline.
 - [`LATTICRA_SEAL_FOUNDATION_STATUS.md`](LATTICRA_SEAL_FOUNDATION_STATUS.md) - Latticra Seal foundation status for the first Seal contract and implementation plan.
 - [`LATTICRA_NO_EFFECT_CLI_RPM_SPEC_UPDATE_STATUS.md`](LATTICRA_NO_EFFECT_CLI_RPM_SPEC_UPDATE_STATUS.md) - Latticra no-effect CLI RPM spec update status for adding the CLI payload to the local Fedora RPM spec.
 - [`LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md`](LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md) - Latticra Panel local install evidence status for the Fedora Workstation user-local install verification transcript.
@@ -58,6 +61,7 @@ non-claims
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_NOOP_PROTOTYPE_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_NOOP_PROTOTYPE_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner no-op prototype contract status for exercising the denied interface path without dispatch or deletion.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_DENIED_DISPATCH_TRANSCRIPT_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_DENIED_DISPATCH_TRANSCRIPT_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner denied-dispatch transcript contract status for recording the denied no-op runner path without dispatch, deletion, writes, or authority.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_DENIED_DISPATCH_REVIEW_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_DENIED_DISPATCH_REVIEW_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner denied-dispatch review contract status for reviewing the denied no-op runner path while preserving zero dispatch and zero deletion.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_GATE_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_GATE_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-gate contract status for keeping dispatch closed until preflight, evidence, authorization, operator intent, and implementation evidence are present.
 - [`MACOS_README_INSTALLER_USAGE_STATUS.md`](MACOS_README_INSTALLER_USAGE_STATUS.md) - macOS README installer usage status for documenting current Mac-specific no-effect installer commands, target paths, and closed commit-gate posture.
 - [`NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](NADIA_OFFLINE_AI_STAGE_0_STATUS.md) - Nadia offline AI Stage-0 foundation status for Panel installability, Console interoperability, and awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) - Nadia Stage-1 local context-engine status for no-network context-pack generation.
@@ -98,6 +102,7 @@ non-claims
 - [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36_STATUS.md) - Nadia Stage-36 prompt-evaluation result release receipt review contract status before review recording, review decisions, review findings, receipt recording, receipt signing, receipt publication, release recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_37_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_37_STATUS.md) - Nadia Stage-37 prompt-evaluation result release receipt review disposition contract status before disposition recording, disposition decisions, disposition findings, review recording, receipt recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_38_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_38_STATUS.md) - Nadia Stage-38 prompt-evaluation result release receipt review disposition release contract status before disposition-release recording, release decisions, release publication, release receipts, disposition recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_39_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_39_STATUS.md) - Nadia Stage-39 prompt-evaluation result release receipt review disposition release receipt contract status before release-receipt recording, receipt signing, receipt publication, disposition-release recording, release publication, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
 - [`../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md`](../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md) — defensive threat model validation refinement.
 - [`../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`](../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md) — runtime boundary policy expansion after threat-model validation.
@@ -160,9 +165,14 @@ non-claims
 - [`FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md`](FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md) — Fedora disposable VM RPM README alignment.
 - [`FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md) — status record for the manually gated disposable Fedora VM CLI payload validation lane runner.
 - [`FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md) — evidence status record after a disposable Fedora VM CLI payload validation transcript reached the expected validation report.
+- [`FEDORA_VM_CLI_PAYLOAD_README_ALIGNMENT_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_README_ALIGNMENT_STATUS.md) — Fedora VM CLI payload README alignment.
+- [`FEDORA_VM_CLI_PAYLOAD_VALIDATION_ANNOUNCEMENT_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_VALIDATION_ANNOUNCEMENT_STATUS.md) — announcement/status alignment for the disposable Fedora VM CLI payload validation milestone.
 - [`FEDORA_VM_RPM_VALIDATION_ANNOUNCEMENT_STATUS.md`](FEDORA_VM_RPM_VALIDATION_ANNOUNCEMENT_STATUS.md) — announcement/status alignment for the disposable Fedora VM local RPM validation milestone.
 - [`UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md`](UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the Ubuntu build lane, Panel apt prerequisites, and local-only deb packaging draft.
-- [`OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md`](OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the openSUSE compatibility lane, Panel zypper prerequisites, local-only RPM maintenance draft, `rpmlint`/`osc` availability lane, static spec lint lane, and findings classification record.
+- [`DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md`](DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the local-only Debian deb packaging draft and static validation lane.
+- [`FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md`](FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the local-only FreeBSD ports metadata draft and static validation lane.
+- [`OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md`](OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the local-only OpenBSD ports metadata draft and static validation lane.
+- [`OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md`](OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the openSUSE compatibility lane, Panel zypper prerequisites, local-only RPM maintenance draft, `rpmlint`/`osc` availability lane, static spec lint lane, findings classification record, and source archive reproducibility contract.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) — current public estimate table source alignment across README, root status, and detailed current status.
 - [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) — current mathematical planning-estimate rebase for the live public estimate table.
@@ -253,6 +263,7 @@ seal_key_parsing_status_present=1
 key_parsing_predecessor_public_key_parsing_status_present=1
 seal_verification_policy_metadata_present=1
 seal_verification_policy_status_present=1
+verification_policy_predecessor_key_parsing_status_present=1
 seal_verification_receipt_metadata_present=1
 seal_verification_receipt_status_present=1
 seal_capability_gate_metadata_present=1
@@ -290,6 +301,7 @@ defensive_threat_model_validation_refinement_present=1
 high_assurance_security_baseline_present=1
 source_refresh_date=2026-05-26
 memory_safety_roadmap_required=1
+memory_safety_roadmap_present=1
 zero_trust_runtime_boundary_required=1
 runtime_boundary_policy_expansion_next=1
 runtime_boundary_policy_expansion_after_threat_model_present=1
@@ -391,6 +403,51 @@ The current next recommended Seal lane is:
 
 ```text
 Continue small guarded report/status alignment only when drift appears
+```
+
+## Current Fedora VM CLI payload README alignment checkpoint
+
+The latest Fedora VM CLI payload README alignment records:
+
+```text
+fedora_vm_cli_payload_validation_status=evidence-recorded
+disposable_vm_cli_validation_transcript_present=1
+disposable_vm_cli_validation_completed=1
+host_install_ready_for_cli_payload=1
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+```
+
+The README wording is limited to the no-effect CLI payload validated in a disposable Fedora VM and does not claim production, Fedora distribution, immutable Fedora, daily-driver, security, recovery, update-safety, sandboxing, or OS-replacement readiness.
+
+The current next recommended Fedora CLI payload lane is:
+
+```text
+Plan the next Fedora CLI payload validation lane without widening README or announcement claims beyond disposable Fedora VM evidence
+```
+
+## Current Fedora VM CLI payload announcement checkpoint
+
+The latest Fedora VM CLI payload announcement alignment records:
+
+```text
+disposable_vm_cli_validation_completed=1
+host_install_ready_for_cli_payload=1
+validated_package=latticra-0.0.0-0.1.local.fc44.x86_64.rpm
+validated_payload=/usr/bin/latticra
+validated_payload=/usr/share/doc/latticra/README.md
+evidence_level=9
+```
+
+The announcement wording is evidence-bound and does not claim production, Fedora distribution, immutable Fedora, daily-driver, security, recovery, update-safety, sandboxing, or OS-replacement readiness.
+
+The current next recommended Fedora CLI payload lane remains:
+
+```text
+Plan the next Fedora CLI payload validation lane without widening README or announcement claims beyond disposable Fedora VM evidence
 ```
 
 ## Current Fedora VM CLI payload validation lane checkpoint
@@ -814,13 +871,15 @@ kernel run queue guard
 kernel run queue report runner
 kernel context switch guard
 kernel context switch report runner
+kernel time accounting guard
+kernel time accounting report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
 kernel syscall table report runner
 kernel lifecycle subsystem summary
 kernel lifecycle rollback plan
-final_state=context-switch-ready
+final_state=time-accounting-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
@@ -861,6 +920,9 @@ address_space_switch_allowed=0
 preemption_allowed=0
 time_accounting_allowed=0
 time_read_allowed=0
+cpu_usage_write_allowed=0
+quota_update_allowed=0
+scheduler_credit_update_allowed=0
 process_wake_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0

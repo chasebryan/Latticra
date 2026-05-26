@@ -113,6 +113,14 @@ latticra-lc
 
 Panel installs can rename that direct wrapper with `lc.install.command_wrapper`; the wrapper also serves as the standalone LC entrypoint and does not require Panel at runtime. The umbrella route remains `latticra lc ...`.
 
+The standalone installer preset is:
+
+```text
+installer/configs/lc-standalone.installer.toml
+```
+
+It sets `profile = "lc_standalone"`, `lc.profile = "standalone"`, `lc.install.install_profile = "lc-standalone-install-v0"`, `lc.install.install_mode = "metadata-only-standalone-console"`, `lc.install.panel_embedded_console = false`, and leaves external host commands disabled.
+
 The umbrella wrapper routes:
 
 ```text

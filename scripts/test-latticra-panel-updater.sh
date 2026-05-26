@@ -38,6 +38,7 @@ default_config='installer/configs/default.installer.toml'
 local_config='installer/configs/local-prefix-example.installer.toml'
 installer_readme='installer/README.md'
 quick_start='docs/QUICK_START_CHEATSHEET.md'
+self_update_doc='docs/SELF_UPDATE_MODEL.md'
 checkpoint='docs/status/LATTICRA_PANEL_UI_DESIGN_CHECKPOINT.md'
 design_check='scripts/check_latticra_panel_ui_design.py'
 workflow='.github/workflows/latticra-panel-installer.yml'
@@ -51,6 +52,7 @@ for file in \
   "$local_config" \
   "$installer_readme" \
   "$quick_start" \
+  "$self_update_doc" \
   "$checkpoint" \
   "$design_check" \
   Makefile \
@@ -96,6 +98,13 @@ require_contains 'Use the **Updater** workspace in Latticra Panel' "$installer_r
 require_contains 'Use the **Updater** workspace in Latticra Panel' "$quick_start"
 require_contains 'latticra updater status' "$installer_readme"
 require_contains 'latticra updater status' "$quick_start"
+require_contains 'Panel-owned local-checkout updater policy active; signed self-update model still planned' "$self_update_doc"
+require_contains 'local-checkout updater policy surface, not signed or networked self-update' "$self_update_doc"
+require_contains 'etc/latticra/updater.toml' "$self_update_doc"
+require_contains 'share/latticra/updater/policy.toml' "$self_update_doc"
+require_contains 'latticra updater status' "$self_update_doc"
+require_contains 'no network fetch, root, system mutation, boot, or recovery authority' "$self_update_doc"
+require_contains 'does not implement signed or networked self-update' "$self_update_doc"
 require_contains 'updater tab' "$checkpoint"
 require_contains 'updater function' "$design_check"
 require_contains 'sh ./scripts/test-latticra-panel-updater.sh' Makefile

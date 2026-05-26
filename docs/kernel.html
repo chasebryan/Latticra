@@ -27,6 +27,7 @@
         <a href="roadmap.html">Roadmap</a>
         <a href="architecture.html">Architecture</a>
         <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
         <a href="runtime.html">Runtime</a>
         <a href="workbench.html">Workbench</a>
         <a href="panel.html">Panel</a>
@@ -123,7 +124,7 @@
         </article>
         <article>
           <span>final_state</span>
-          <strong>context-switch-ready</strong>
+          <strong>time-accounting-ready</strong>
         </article>
         <article>
           <span>lifecycle_complete</span>
@@ -145,7 +146,7 @@
         <p class="eyebrow">Lifecycle Ladder</p>
         <h2>The sequence is explicit and bounded.</h2>
         <p>
-          The lifecycle runner can advance a local in-memory state object through an approved sequence ending at context-switch-ready. That path is evidence, not scheduler execution.
+          The lifecycle runner can advance a local in-memory state object through an approved sequence ending at time-accounting-ready. That path is evidence, not scheduler execution.
         </p>
       </div>
       <div class="content-shell kernel-ladder-grid">
@@ -171,8 +172,8 @@
         </article>
         <article>
           <span>Target</span>
-          <h3>context-switch-ready</h3>
-          <p>Reports the current lifecycle target while register save, stack switch, dispatch, context switch, and preemption remain denied.</p>
+          <h3>time-accounting-ready</h3>
+          <p>Reports the current lifecycle target while time reads, CPU usage writes, quota updates, scheduler credit updates, and preemption remain denied.</p>
         </article>
       </div>
     </section>
@@ -193,7 +194,7 @@
           </div>
           <div role="row">
             <span role="cell">Controlled internal state</span>
-            <p role="cell">The lifecycle may report internal state changes such as a completed sequence to context-switch-ready while preserving external_effect_performed=0.</p>
+            <p role="cell">The lifecycle may report internal state changes such as a completed sequence to time-accounting-ready while preserving external_effect_performed=0.</p>
           </div>
           <div role="row">
             <span role="cell">Denied now</span>
@@ -243,10 +244,12 @@ sh scripts/test-kernel-lifecycle-status-alignment.sh</code></pre>
         <a href="KERNEL_IMPLEMENTATION.md"><strong>Kernel seed</strong><span>Compiled kernel identity, report fields, no-effect posture, and denied boot/runtime behavior.</span></a>
         <a href="KERNEL_SUBSYSTEM_REGISTRY.md"><strong>Subsystem registry</strong><span>Boot, runtime, scheduler, memory, process, filesystem, network, device, and security metadata.</span></a>
         <a href="KERNEL_STATE_MACHINE.md"><strong>State machine</strong><span>Bounded in-memory state object, sequential step function, transition log, and report surface.</span></a>
-        <a href="KERNEL_LIFECYCLE_SEED.md"><strong>Lifecycle seed</strong><span>Approved sequence to context-switch-ready with external effects denied.</span></a>
+        <a href="KERNEL_LIFECYCLE_SEED.md"><strong>Lifecycle seed</strong><span>Approved sequence to time-accounting-ready with external effects denied.</span></a>
+        <a href="KERNEL_TIME_ACCOUNTING_SEED.md"><strong>Time accounting seed</strong><span>Candidate CPU charge metadata with clock, quota, and scheduler credit authority denied.</span></a>
         <a href="KERNEL_CONTEXT_SWITCH_SEED.md"><strong>Context switch seed</strong><span>Candidate switch metadata with register, stack, and address-space authority denied.</span></a>
         <a href="KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md"><strong>Subsystem summary</strong><span>Lifecycle-to-registry summary and denied subsystem authority labels.</span></a>
         <a href="status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md"><strong>Kernel lifecycle status</strong><span>Status alignment, current evidence list, authority posture, rollback planning, and non-claims.</span></a>
+        <a href="boot.html"><strong>Boot preview boundary</strong><span>Why kernel lifecycle evidence is separate from SeaBIOS/GRUB boot evidence and bootable OS readiness.</span></a>
         <a href="runtime.html"><strong>Runtime boundary</strong><span>How kernel evidence stays separate from runtime execution and operational authority.</span></a>
       </div>
     </section>
