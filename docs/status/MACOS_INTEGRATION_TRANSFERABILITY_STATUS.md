@@ -43,6 +43,7 @@ macos_reset_uninstall_live_implementation_plan_contract_present=1
 macos_reset_uninstall_live_execution_preflight_contract_present=1
 macos_reset_uninstall_live_denial_transcript_contract_present=1
 macos_reset_uninstall_live_runner_interface_contract_present=1
+macos_reset_uninstall_live_runner_noop_prototype_contract_present=1
 live_execution_preflight_contract_state=closed-no-effect
 live_execution_preflight_passed=0
 live_execution_preflight_blocking=1
@@ -58,6 +59,12 @@ live_runner_interface_denial_path_active=1
 live_runner_interface_invocation_enabled=0
 live_runner_interface_handoff_enabled=0
 live_runner_interface_deletion_enabled=0
+live_runner_noop_prototype_contract_state=executed-no-effect
+live_runner_noop_prototype_invocation_simulated=1
+live_runner_noop_prototype_stdout_only=1
+live_runner_noop_prototype_denial_path_exercised=1
+live_runner_noop_prototype_dispatch_enabled=0
+live_runner_noop_prototype_deletion_enabled=0
 live_runner_interface_current_preflight_passed=0
 live_runner_interface_current_decision=deny
 live_runner_interface_dispatch_enabled=0
@@ -97,6 +104,7 @@ macos_reset_uninstall_live_implementation_plan_contract_present=1
 macos_reset_uninstall_live_execution_preflight_contract_present=1
 macos_reset_uninstall_live_denial_transcript_contract_present=1
 macos_reset_uninstall_live_runner_interface_contract_present=1
+macos_reset_uninstall_live_runner_noop_prototype_contract_present=1
 live_execution_preflight_contract_state=closed-no-effect
 live_execution_preflight_passed=0
 live_execution_preflight_blocking=1
@@ -112,6 +120,12 @@ live_runner_interface_denial_path_active=1
 live_runner_interface_invocation_enabled=0
 live_runner_interface_handoff_enabled=0
 live_runner_interface_deletion_enabled=0
+live_runner_noop_prototype_contract_state=executed-no-effect
+live_runner_noop_prototype_invocation_simulated=1
+live_runner_noop_prototype_stdout_only=1
+live_runner_noop_prototype_denial_path_exercised=1
+live_runner_noop_prototype_dispatch_enabled=0
+live_runner_noop_prototype_deletion_enabled=0
 live_runner_interface_current_preflight_passed=0
 live_runner_interface_current_decision=deny
 live_runner_interface_dispatch_enabled=0
@@ -205,6 +219,12 @@ Add a macOS reset/uninstall evidence-bundle contract that groups implementation-
 ```
 
 ## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner denied-dispatch transcript contract that records the no-op runner denial without enabling deletion.
+```
+
+Current live-runner no-op prototype lane:
 
 ```text
 Add a macOS reset/uninstall live-runner no-op prototype contract that exercises the denied interface path without deleting files.

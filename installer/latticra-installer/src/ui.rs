@@ -1949,7 +1949,10 @@ impl LatticraInstallerApp {
                     "prompt_evaluation_result_release_receipt_contract_stage=35-prompt-evaluation-result-release-receipt-contract",
                 );
                 self.push_console(
-                    "stage=35 prompt-evaluation-result-release-receipt-contract; prompt_evaluation_result_release_receipt_record_created=0 prompt_evaluation_result_release_receipt_signed=0 runtime_invoked=0",
+                    "prompt_evaluation_result_release_receipt_review_contract_stage=36-prompt-evaluation-result-release-receipt-review-contract",
+                );
+                self.push_console(
+                    "stage=36 prompt-evaluation-result-release-receipt-review-contract; prompt_evaluation_result_release_receipt_review_record_created=0 prompt_evaluation_result_release_receipt_review_decision_recorded=0 runtime_invoked=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",

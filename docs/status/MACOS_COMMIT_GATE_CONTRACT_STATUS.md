@@ -126,7 +126,7 @@ macos_commit_gate_contract: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner no-op prototype contract that exercises the denied interface path without deleting files.
+Add a macOS reset/uninstall live-runner denied-dispatch transcript contract that records the no-op runner denial without enabling deletion.
 ```
 
 ## Non-Claims

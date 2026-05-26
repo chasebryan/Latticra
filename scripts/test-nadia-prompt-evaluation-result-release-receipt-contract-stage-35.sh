@@ -31,6 +31,7 @@ status='docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_CONTRACT_STAG
 status_index='docs/status/README.md'
 foundation='docs/NADIA_OFFLINE_AI_FOUNDATION.md'
 receipt_script='scripts/nadia-prompt-evaluation-result-release-receipt-contract.sh'
+panel_ui='installer/latticra-installer/src/ui.rs'
 guard='scripts/test-nadia-prompt-evaluation-result-release-receipt-contract-stage-35.sh'
 workflow='.github/workflows/nadia-prompt-evaluation-result-release-receipt-contract-stage-35.yml'
 
@@ -39,6 +40,7 @@ require_file "$status"
 require_file "$status_index"
 require_file "$foundation"
 require_file "$receipt_script"
+require_file "$panel_ui"
 require_file "$guard"
 require_file "$workflow"
 
@@ -91,6 +93,9 @@ require_contains 'network_authority=0' "$receipt_script"
 require_contains 'tool_execution_authority=0' "$receipt_script"
 require_contains 'source_mutation_authority=0' "$receipt_script"
 require_contains 'outside Nadia prompt-evaluation-result-release-receipt boundary' "$receipt_script"
+
+require_contains 'prompt_evaluation_result_release_receipt_contract_stage=35-prompt-evaluation-result-release-receipt-contract' "$panel_ui"
+require_contains 'stage=36 prompt-evaluation-result-release-receipt-review-contract; prompt_evaluation_result_release_receipt_review_record_created=0 prompt_evaluation_result_release_receipt_review_decision_recorded=0 runtime_invoked=0' "$panel_ui"
 
 require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
 require_contains 'persist-credentials: false' "$workflow"

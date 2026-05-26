@@ -74,7 +74,7 @@ macos_app_bundle_writer_dry_run: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner no-op prototype contract that exercises the denied interface path without deleting files.
+Add a macOS reset/uninstall live-runner denied-dispatch transcript contract that records the no-op runner denial without enabling deletion.
 ```
 
 ## Non-Claims

@@ -227,5 +227,5 @@ This contract is not macOS reset evidence, macOS uninstall evidence, macOS insta
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner no-op prototype contract that exercises the denied interface path without deleting files.
+Add a macOS reset/uninstall live-runner denied-dispatch transcript contract that records the no-op runner denial without enabling deletion.
 ```

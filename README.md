@@ -375,6 +375,7 @@ macos_reset_uninstall_live_implementation_plan_contract_present=1
 macos_reset_uninstall_live_execution_preflight_contract_present=1
 macos_reset_uninstall_live_denial_transcript_contract_present=1
 macos_reset_uninstall_live_runner_interface_contract_present=1
+macos_reset_uninstall_live_runner_noop_prototype_contract_present=1
 live_execution_preflight_contract_state=closed-no-effect
 live_execution_preflight_passed=0
 live_execution_preflight_blocking=1
@@ -390,6 +391,12 @@ live_runner_interface_denial_path_active=1
 live_runner_interface_invocation_enabled=0
 live_runner_interface_handoff_enabled=0
 live_runner_interface_deletion_enabled=0
+live_runner_noop_prototype_contract_state=executed-no-effect
+live_runner_noop_prototype_invocation_simulated=1
+live_runner_noop_prototype_stdout_only=1
+live_runner_noop_prototype_denial_path_exercised=1
+live_runner_noop_prototype_dispatch_enabled=0
+live_runner_noop_prototype_deletion_enabled=0
 live_runner_interface_current_preflight_passed=0
 live_runner_interface_current_decision=deny
 live_runner_interface_dispatch_enabled=0
@@ -1109,6 +1116,12 @@ Review the reset/uninstall live-runner interface contract:
 sh scripts/macos-reset-uninstall-live-runner-interface-contract.sh
 ```
 
+Review the reset/uninstall live-runner no-op prototype contract:
+
+```sh
+sh scripts/macos-reset-uninstall-live-runner-noop-prototype-contract.sh
+```
+
 Expected commit posture:
 
 ```text
@@ -1144,6 +1157,7 @@ macos_reset_uninstall_live_implementation_plan_contract_present=1
 macos_reset_uninstall_live_execution_preflight_contract_present=1
 macos_reset_uninstall_live_denial_transcript_contract_present=1
 macos_reset_uninstall_live_runner_interface_contract_present=1
+macos_reset_uninstall_live_runner_noop_prototype_contract_present=1
 live_execution_preflight_contract_state=closed-no-effect
 live_execution_preflight_passed=0
 live_execution_preflight_blocking=1
@@ -1159,6 +1173,12 @@ live_runner_interface_denial_path_active=1
 live_runner_interface_invocation_enabled=0
 live_runner_interface_handoff_enabled=0
 live_runner_interface_deletion_enabled=0
+live_runner_noop_prototype_contract_state=executed-no-effect
+live_runner_noop_prototype_invocation_simulated=1
+live_runner_noop_prototype_stdout_only=1
+live_runner_noop_prototype_denial_path_exercised=1
+live_runner_noop_prototype_dispatch_enabled=0
+live_runner_noop_prototype_deletion_enabled=0
 live_runner_interface_current_preflight_passed=0
 live_runner_interface_current_decision=deny
 live_runner_interface_dispatch_enabled=0
@@ -1191,7 +1211,7 @@ host_mutation_performed=0
 network_performed=0
 ```
 
-This means Latticra can currently document, probe, dry-run the Mac-specific app-bundle path, classify reset/uninstall targets, render a reset/uninstall dry-run transcript, define required absence-report, reset/uninstall receipt-schema, operator-intent, effect-authorization, evidence-bundle, live-implementation plan, live-execution preflight, live-denial transcript, and live-runner interface contracts, and keep live reset/uninstall execution disabled until live approval and all required evidence exist. It cannot yet create, install, sign, notarize, open, verify, reset, or uninstall a real macOS `.app`.
+This means Latticra can currently document, probe, dry-run the Mac-specific app-bundle path, classify reset/uninstall targets, render a reset/uninstall dry-run transcript, define required absence-report, reset/uninstall receipt-schema, operator-intent, effect-authorization, evidence-bundle, live-implementation plan, live-execution preflight, live-denial transcript, live-runner interface, and live-runner no-op prototype contracts, and keep live reset/uninstall execution disabled until live approval and all required evidence exist. It cannot yet create, install, sign, notarize, open, verify, reset, or uninstall a real macOS `.app`.
 
 ### macOS documentation
 
@@ -1215,6 +1235,7 @@ This means Latticra can currently document, probe, dry-run the Mac-specific app-
 - [`docs/MACOS_RESET_UNINSTALL_LIVE_EXECUTION_PREFLIGHT_CONTRACT.md`](docs/MACOS_RESET_UNINSTALL_LIVE_EXECUTION_PREFLIGHT_CONTRACT.md)
 - [`docs/MACOS_RESET_UNINSTALL_LIVE_DENIAL_TRANSCRIPT_CONTRACT.md`](docs/MACOS_RESET_UNINSTALL_LIVE_DENIAL_TRANSCRIPT_CONTRACT.md)
 - [`docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_INTERFACE_CONTRACT.md`](docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_INTERFACE_CONTRACT.md)
+- [`docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_NOOP_PROTOTYPE_CONTRACT.md`](docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_NOOP_PROTOTYPE_CONTRACT.md)
 
 ---
 
