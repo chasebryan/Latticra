@@ -19,6 +19,9 @@ extern "C" {
 #define LATTICRA_CONSOLE_BOUNDARY_REPORT_MAX 20000u
 #define LATTICRA_CONSOLE_STANDALONE_CONTRACT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_SESSION_CONTRACT_REPORT_MAX 12000u
+#define LATTICRA_CONSOLE_WORKSPACE_CONTRACT_REPORT_MAX 12000u
+#define LATTICRA_CONSOLE_NAMESPACE_CONTRACT_REPORT_MAX 12000u
+#define LATTICRA_CONSOLE_ROOTFS_CONTRACT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_HOST_CONTRACT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_HOST_INVENTORY_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_HOST_ADAPTER_REPORT_MAX 12000u
@@ -110,6 +113,9 @@ typedef struct {
     char command_registry_status[LATTICRA_CONSOLE_LABEL_MAX];
     char standalone_console_status[LATTICRA_CONSOLE_LABEL_MAX];
     char session_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
+    char workspace_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
+    char namespace_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
+    char rootfs_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
     char substrate_bridge_status[LATTICRA_CONSOLE_LABEL_MAX];
     char panel_install_status[LATTICRA_CONSOLE_LABEL_MAX];
     char host_embedding_status[LATTICRA_CONSOLE_LABEL_MAX];
@@ -138,6 +144,9 @@ typedef struct {
     int standalone_requires_panel;
     int standalone_contract_present;
     int session_contract_present;
+    int workspace_contract_present;
+    int namespace_contract_present;
+    int rootfs_contract_present;
     int command_registry_present;
     int substrate_bridge_present;
     int host_embeddable;
@@ -209,6 +218,18 @@ latticra_status_t latticra_console_standalone_contract_report(
     size_t buffer_len);
 
 latticra_status_t latticra_console_session_contract_report(
+    char *buffer,
+    size_t buffer_len);
+
+latticra_status_t latticra_console_workspace_contract_report(
+    char *buffer,
+    size_t buffer_len);
+
+latticra_status_t latticra_console_namespace_contract_report(
+    char *buffer,
+    size_t buffer_len);
+
+latticra_status_t latticra_console_rootfs_contract_report(
     char *buffer,
     size_t buffer_len);
 

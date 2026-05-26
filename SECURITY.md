@@ -157,7 +157,7 @@ Security-relevant changes should prefer:
 
 The current high-assurance standards checkpoint is recorded in `docs/HIGH_ASSURANCE_SECURITY_BASELINE.md`.
 
-That baseline tracks current NSA, CISA, FBI, and NIST security guidance as source input for Latticra security work. It requires memory-safety roadmap discipline, zero-trust runtime-boundary prerequisites, SSDF-style secure development evidence, CPG-inspired operational readiness gates, KEV-aware release review, SBOM evidence before production installer claims, and a FIPS 140-3 cryptographic module boundary decision before any production cryptography claim.
+That baseline tracks current NSA, CISA, FBI, and NIST security guidance as source input for Latticra security work. It requires memory-safety roadmap discipline, zero-trust runtime-boundary prerequisites, SSDF-style secure development evidence, CPG-inspired operational readiness gates, KEV-aware release review, SBOM evidence before production installer claims, a FIPS 140-3 cryptographic module boundary decision before any production cryptography claim, and identity/access evidence before privileged or remote access claims.
 
 The component-level memory-safety roadmap is recorded in `docs/MEMORY_SAFETY_ROADMAP.md`.
 
@@ -170,6 +170,18 @@ It requires caller identity, resource identity, per-request authorization, least
 The cyber incident reporting and response baseline is recorded in `docs/CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md`.
 
 It documents CISA, FBI, IC3, and joint #StopRansomware reporting paths, evidence-preservation requirements, out-of-band communication expectations, and the future gates required before any incident-response or report-assistance feature exists. Latticra does not report incidents, notify customers, contact law enforcement, collect forensic evidence, or provide incident-response services.
+
+The vulnerability management release gate baseline is recorded in `docs/VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE.md`.
+
+It keeps release claims blocked until vulnerability source review, KEV/NVD review, disclosure path evidence, exception ownership, exception expiration, and non-exploitability evidence are recorded. Latticra does not publish security advisories, submit CVEs, generate SBOMs, claim vulnerability-free status, or authorize production releases.
+
+The cryptographic assurance and key management baseline is recorded in `docs/CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md`.
+
+It keeps cryptographic claims blocked until module boundaries, algorithm and parameter inventory, key lifecycle, key storage, key destruction, randomness, self-tests, sensitive-data handling, post-quantum migration planning, and FIPS/CMVP claim gates are recorded. Latticra does not implement production cryptography, signing authority, key storage, key generation, entropy collection, random-bit generation, FIPS validation, CMVP submission, CAVP testing, or post-quantum migration.
+
+The identity, credential, and access management baseline is recorded in `docs/IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md`.
+
+It keeps hosted service, remote access, privileged operator, SSO/federation, MFA, and identity-security claims blocked until human/service/machine identity inventory, phishing-resistant MFA planning, account lifecycle, privileged role mapping, break-glass policy, credential handling, identity logging, and access-exception evidence are recorded. Latticra does not implement an identity provider, MFA provider, remote login, account database, credential store, hosted administration surface, or privileged access authority.
 
 This posture is an allocation of required work, not a compliance claim. It does not certify Latticra, accredit Latticra, make Latticra a production security product, or create a hardened runtime boundary.
 

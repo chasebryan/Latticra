@@ -36,6 +36,9 @@ cc $CFLAGS \
   src/kernel_time_accounting.c \
   src/kernel_preemption.c \
   src/kernel_scheduler_credit.c \
+  src/kernel_scheduler_selection.c \
+  src/kernel_scheduler_dispatch.c \
+  src/kernel_scheduler_handoff.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -47,17 +50,20 @@ cc $CFLAGS \
 
 grep -Fq 'LATTICRA KERNEL LIFECYCLE SUBSYSTEM SUMMARY REPORT' "$report_txt"
 grep -Fq 'summary_status=summary-ready' "$report_txt"
-grep -Fq 'final_state=scheduler-credit-ready' "$report_txt"
+grep -Fq 'final_state=scheduler-handoff-ready' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'registry_status=registry-ready' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
-grep -Fq 'lifecycle_step_count=18' "$report_txt"
-grep -Fq 'lifecycle_state_change_count=18' "$report_txt"
+grep -Fq 'lifecycle_step_count=21' "$report_txt"
+grep -Fq 'lifecycle_state_change_count=21' "$report_txt"
 grep -Fq 'lifecycle_state_mutated=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
 grep -Fq 'registry_no_effect=1' "$report_txt"
 grep -Fq 'runtime_entry_allowed=0' "$report_txt"
 grep -Fq 'scheduler_execution_allowed=0' "$report_txt"
+grep -Fq 'scheduler_selection_allowed=0' "$report_txt"
+grep -Fq 'scheduler_dispatch_allowed=0' "$report_txt"
+grep -Fq 'scheduler_handoff_allowed=0' "$report_txt"
 grep -Fq 'memory_allocation_allowed=0' "$report_txt"
 grep -Fq 'process_spawn_allowed=0' "$report_txt"
 grep -Fq 'syscall_dispatch_allowed=0' "$report_txt"
@@ -107,7 +113,7 @@ grep -Fq 'subsystem[0].name=boot' "$report_txt"
 grep -Fq 'subsystem[0].lifecycle_relation=boot-sequence-seeded' "$report_txt"
 grep -Fq 'subsystem[1].name=runtime' "$report_txt"
 grep -Fq 'subsystem[1].authority_status=runtime-entry-denied' "$report_txt"
-grep -Fq 'subsystem[2].lifecycle_relation=scheduler-credit-ready' "$report_txt"
+grep -Fq 'subsystem[2].lifecycle_relation=scheduler-handoff-ready' "$report_txt"
 grep -Fq 'subsystem[2].authority_status=scheduler-execution-denied' "$report_txt"
 grep -Fq 'subsystem[3].lifecycle_relation=memory-map-ready' "$report_txt"
 grep -Fq 'subsystem[3].authority_status=memory-allocation-denied' "$report_txt"

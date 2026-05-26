@@ -144,5 +144,5 @@ network_performed=0
 root_authority=0
 runtime_authority_granted=0
 production_installer_ready=0
-next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-review-contract
+next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-contract
 REPORT

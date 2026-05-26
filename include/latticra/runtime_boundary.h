@@ -307,6 +307,13 @@ typedef struct {
     size_t lat_lir_first_edge_from_index;
     size_t lat_lir_first_edge_to_index;
     latticra_lir_edge_kind_t lat_lir_first_edge_kind;
+    latticra_l_ui_source_span_t lat_lir_first_edge_span;
+    int lat_lir_has_first_transition_source_edge;
+    size_t lat_lir_first_transition_source_edge_index;
+    size_t lat_lir_first_transition_source_edge_from_index;
+    size_t lat_lir_first_transition_source_edge_to_index;
+    latticra_lir_edge_kind_t lat_lir_first_transition_source_edge_kind;
+    latticra_l_ui_source_span_t lat_lir_first_transition_source_edge_span;
     int lat_lir_has_lat_state_nodes;
     int lat_lir_has_lat_transition_nodes;
     int lat_lir_has_transition_source_edges;

@@ -88,6 +88,9 @@ opensuse_source_archive_reproducibility_contract_present=1
 opensuse_rpmlint_findings_classification_present=1
 opensuse_source_archive_fixture_lane_present=1
 opensuse_rpm_topdir_handoff_lane_present=1
+opensuse_local_rpm_build_gate_contract_present=1
+opensuse_local_rpm_build_environment_contract_present=1
+opensuse_rpm_artifact_naming_contract_present=1
 source_archive_policy_recorded=1
 source_archive_name_expected=latticra-0.0.0.tar.gz
 source_archive_root_expected=latticra-0.0.0/
@@ -133,18 +136,27 @@ Completed follow-on fixture and handoff lanes:
 ```text
 docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
+docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
+docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
 scripts/test-opensuse-source-archive-fixture-lane.sh
 scripts/test-opensuse-rpm-topdir-handoff-lane.sh
+scripts/test-opensuse-local-rpm-build-gate-contract.sh
+scripts/test-opensuse-local-rpm-build-environment-contract.sh
+scripts/test-opensuse-rpm-artifact-naming-contract.sh
 .github/workflows/opensuse-source-archive-fixture-lane.yml
 .github/workflows/opensuse-rpm-topdir-handoff-lane.yml
+.github/workflows/opensuse-local-rpm-build-gate-contract.yml
+.github/workflows/opensuse-local-rpm-build-environment-contract.yml
+.github/workflows/opensuse-rpm-artifact-naming-contract.yml
 ```
 
-Those lanes prove archive shape, reproducibility, and temporary RPM topdir staging while keeping package build and publication claims blocked.
+Those lanes prove archive shape, reproducibility, temporary RPM topdir staging, build-gate closure, environment requirements, and future artifact naming boundaries while keeping package build and publication claims blocked.
 
 Recommended next slice:
 
 ```text
-Add openSUSE local RPM build evidence gate contract before any rpmbuild or osc build command can run.
+Add openSUSE RPM payload inspection contract before any RPM artifact can be accepted.
 ```
 
 ## Validation

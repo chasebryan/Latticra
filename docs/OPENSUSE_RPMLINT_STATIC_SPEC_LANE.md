@@ -20,16 +20,25 @@ docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
+docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
+docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
 scripts/test-opensuse-rpmlint-findings-classification.sh
 scripts/test-opensuse-source-archive-reproducibility-contract.sh
 scripts/test-opensuse-source-archive-fixture-lane.sh
 scripts/test-opensuse-rpm-topdir-handoff-lane.sh
+scripts/test-opensuse-local-rpm-build-gate-contract.sh
+scripts/test-opensuse-local-rpm-build-environment-contract.sh
+scripts/test-opensuse-rpm-artifact-naming-contract.sh
 .github/workflows/opensuse-rpmlint-static-spec-lane.yml
 .github/workflows/opensuse-rpmlint-findings-classification.yml
 .github/workflows/opensuse-source-archive-reproducibility-contract.yml
 .github/workflows/opensuse-source-archive-fixture-lane.yml
 .github/workflows/opensuse-rpm-topdir-handoff-lane.yml
+.github/workflows/opensuse-local-rpm-build-gate-contract.yml
+.github/workflows/opensuse-local-rpm-build-environment-contract.yml
+.github/workflows/opensuse-rpm-artifact-naming-contract.yml
 packaging/opensuse/latticra.spec
 ```
 
@@ -94,21 +103,30 @@ Completed follow-on source archive lanes:
 docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
+docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
+docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
 scripts/test-opensuse-source-archive-reproducibility-contract.sh
 scripts/test-opensuse-source-archive-fixture-lane.sh
 scripts/test-opensuse-rpm-topdir-handoff-lane.sh
+scripts/test-opensuse-local-rpm-build-gate-contract.sh
+scripts/test-opensuse-local-rpm-build-environment-contract.sh
+scripts/test-opensuse-rpm-artifact-naming-contract.sh
 .github/workflows/opensuse-source-archive-reproducibility-contract.yml
 .github/workflows/opensuse-source-archive-fixture-lane.yml
 .github/workflows/opensuse-rpm-topdir-handoff-lane.yml
+.github/workflows/opensuse-local-rpm-build-gate-contract.yml
+.github/workflows/opensuse-local-rpm-build-environment-contract.yml
+.github/workflows/opensuse-rpm-artifact-naming-contract.yml
 ```
 
 Recommended next slice:
 
 ```text
-Add openSUSE local RPM build evidence gate contract before any rpmbuild or osc build command can run.
+Add openSUSE RPM payload inspection contract before any RPM artifact can be accepted.
 ```
 
-That future lane should define the exact evidence required before the temporary RPM topdir can be used by `rpmbuild`, `osc build`, or Open Build Service validation.
+That future lane should define how source RPM and binary RPM payloads are inspected after creation while keeping `opensuse_rpm_build_gate_state=closed-no-effect` until the remaining prerequisites are satisfied.
 
 ## Validation
 

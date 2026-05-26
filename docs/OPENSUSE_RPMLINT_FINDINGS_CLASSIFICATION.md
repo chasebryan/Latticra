@@ -22,10 +22,16 @@ docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
+docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
+docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
 scripts/test-opensuse-source-archive-reproducibility-contract.sh
 scripts/test-opensuse-source-archive-fixture-lane.sh
 scripts/test-opensuse-rpm-topdir-handoff-lane.sh
+scripts/test-opensuse-local-rpm-build-gate-contract.sh
+scripts/test-opensuse-local-rpm-build-environment-contract.sh
+scripts/test-opensuse-rpm-artifact-naming-contract.sh
 ```
 
 ## Expected Draft Finding Classes
@@ -163,13 +169,37 @@ scripts/test-opensuse-rpm-topdir-handoff-lane.sh
 .github/workflows/opensuse-rpm-topdir-handoff-lane.yml
 ```
 
+Completed follow-on local RPM build gate contract:
+
+```text
+docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
+scripts/test-opensuse-local-rpm-build-gate-contract.sh
+.github/workflows/opensuse-local-rpm-build-gate-contract.yml
+```
+
+Completed follow-on local RPM build environment contract:
+
+```text
+docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+scripts/test-opensuse-local-rpm-build-environment-contract.sh
+.github/workflows/opensuse-local-rpm-build-environment-contract.yml
+```
+
+Completed follow-on RPM artifact naming contract:
+
+```text
+docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
+scripts/test-opensuse-rpm-artifact-naming-contract.sh
+.github/workflows/opensuse-rpm-artifact-naming-contract.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE local RPM build evidence gate contract before any rpmbuild or osc build command can run.
+Add openSUSE RPM payload inspection contract before any RPM artifact can be accepted.
 ```
 
-That future lane should define the exact evidence required before the temporary RPM topdir can be used by `rpmbuild`, `osc build`, or Open Build Service validation.
+That future lane should define how source RPM and binary RPM payloads are inspected after creation while keeping `opensuse_rpm_build_gate_state=closed-no-effect` until the remaining prerequisites are satisfied.
 
 ## Validation
 

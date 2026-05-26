@@ -1,7 +1,7 @@
 #ifndef LATTICRA_KERNEL_STATE_H
 #define LATTICRA_KERNEL_STATE_H
 
-#include "latticra/kernel_scheduler_credit.h"
+#include "latticra/kernel_scheduler_handoff.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,7 +29,10 @@ typedef enum {
     LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY = 15,
     LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY = 16,
     LATTICRA_KERNEL_STATE_PREEMPTION_READY = 17,
-    LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY = 18
+    LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY = 18,
+    LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY = 19,
+    LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY = 20,
+    LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY = 21
 } latticra_kernel_state_kind_t;
 
 typedef enum {
@@ -53,6 +56,9 @@ typedef struct {
     latticra_kernel_time_accounting_request_t time_accounting_request;
     latticra_kernel_preemption_request_t preemption_request;
     latticra_kernel_scheduler_credit_request_t scheduler_credit_request;
+    latticra_kernel_scheduler_selection_request_t scheduler_selection_request;
+    latticra_kernel_scheduler_dispatch_request_t scheduler_dispatch_request;
+    latticra_kernel_scheduler_handoff_request_t scheduler_handoff_request;
     latticra_kernel_state_kind_t current_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
@@ -79,11 +85,15 @@ typedef struct {
     latticra_kernel_time_accounting_result_t time_accounting;
     latticra_kernel_preemption_result_t preemption;
     latticra_kernel_scheduler_credit_result_t scheduler_credit;
+    latticra_kernel_scheduler_selection_result_t scheduler_selection;
+    latticra_kernel_scheduler_dispatch_result_t scheduler_dispatch;
+    latticra_kernel_scheduler_handoff_result_t scheduler_handoff;
     latticra_kernel_state_kind_t previous_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_kind_t next_state;
     int state_change_performed;
     int external_effect_performed;
+    int network_allowed;
     int denied;
     unsigned int evidence_level;
 } latticra_kernel_state_result_t;

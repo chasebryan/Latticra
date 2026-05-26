@@ -33,7 +33,10 @@ require_file docs/LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_CONTRACT.md
 require_file docs/LATTICRA_SEAL_MCP_ALIGNMENT_PLAN.md
 require_file docs/LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_IMPLEMENTATION.md
 require_file docs/LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_REPORT_SURFACE.md
+require_file docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_STATUS.md
 require_file docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md
+require_file scripts/test-latticra-seal-agentic-automation-security-status.sh
+require_file .github/workflows/latticra-seal-agentic-automation-security-status.yml
 require_file docs/LATTICRA_SEAL_PARAMETER_SCHEMA_CONTRACT.md
 require_file docs/LATTICRA_SEAL_PARAMETER_SCHEMA_IMPLEMENTATION.md
 require_file docs/LATTICRA_SEAL_PARAMETER_SCHEMA_REPORT_SURFACE.md
@@ -45,12 +48,16 @@ require_file scripts/test-latticra-seal-parameter-schema-contract.sh
 require_file scripts/test-latticra-seal-parameter-schema.sh
 require_file scripts/latticra-seal-parameter-schema-report.sh
 require_file scripts/test-latticra-seal-parameter-schema-report-surface.sh
+require_file scripts/test-latticra-seal-parameter-schema-status.sh
+require_file .github/workflows/latticra-seal-parameter-schema-status.yml
 require_file docs/LATTICRA_SEAL_REQUEST_FRESHNESS_CONTRACT.md
 require_file docs/LATTICRA_SEAL_REQUEST_FRESHNESS_IMPLEMENTATION.md
 require_file docs/LATTICRA_SEAL_REQUEST_FRESHNESS_REPORT_SURFACE.md
+require_file docs/status/SEAL_REQUEST_FRESHNESS_STATUS.md
 require_file scripts/test-latticra-seal-request-freshness-contract.sh
 require_file scripts/test-latticra-seal-request-freshness.sh
 require_file scripts/test-latticra-seal-request-freshness-report-surface.sh
+require_file scripts/test-latticra-seal-request-freshness-status.sh
 
 require_contains 'Status: status record for Latticra Seal parameter schema metadata' "$status_file"
 require_contains 'Source: local follow-up slice' "$status_file"
@@ -65,6 +72,13 @@ require_contains 'seal_parameter_schema_report_surface_present=1' "$status_file"
 require_contains 'seal_parameter_schema_report_runner_present=1' "$status_file"
 require_contains 'seal_parameter_schema_report_guard_present=1' "$status_file"
 require_contains 'seal_parameter_schema_status_present=1' "$status_file"
+require_contains 'seal_parameter_schema_status_runner_present=1' "$status_file"
+require_contains 'seal_parameter_schema_status_workflow_present=1' "$status_file"
+require_contains 'seal_agentic_automation_security_status_present=1' "$status_file"
+require_contains 'seal_agentic_automation_security_status_runner_present=1' "$status_file"
+require_contains 'seal_agentic_automation_security_status_workflow_present=1' "$status_file"
+require_contains 'agentic_automation_security_predecessor_status_rollup_status_present=1' "$status_file"
+require_contains 'parameter_schema_predecessor_agentic_automation_security_status_present=1' "$status_file"
 require_contains 'readme_mentions_parameter_schema_metadata=1' "$status_file"
 require_contains 'readme_mentions_parameter_schema_report_surface=1' "$status_file"
 require_contains 'readme_links_parameter_schema_contract=1' "$status_file"
@@ -106,12 +120,38 @@ require_contains 'cryptographic_enforcement_added=0' "$status_file"
 require_contains 'capability_enforcement_added=0' "$status_file"
 require_contains 'production_readiness_claimed=0' "$status_file"
 require_contains 'external_endorsement_claimed=0' "$status_file"
-require_contains 'policy decision status/public-entry alignment' "$status_file"
+require_contains 'parameter_schema_status_added=1' "$status_file"
+require_contains 'schema_parsing_added=0' "$status_file"
+require_contains 'schema_validation_added=0' "$status_file"
+require_contains 'policy_evaluation_added=0' "$status_file"
+require_contains 'policy_enforcement_added=0' "$status_file"
+require_contains 'seal report envelope status: ok' "$status_file"
+require_contains 'seal signature request status: ok' "$status_file"
+require_contains 'seal signing authorization status: ok' "$status_file"
+require_contains 'seal signer handoff status: ok' "$status_file"
+require_contains 'seal signer invocation status: ok' "$status_file"
+require_contains 'seal signing operation status: ok' "$status_file"
+require_contains 'seal key-handling status: ok' "$status_file"
+require_contains 'seal key-material status: ok' "$status_file"
+require_contains 'seal public-key parsing status: ok' "$status_file"
+require_contains 'seal key parsing status: ok' "$status_file"
+require_contains 'seal verification policy status: ok' "$status_file"
+require_contains 'seal verification receipt status: ok' "$status_file"
+require_contains 'seal capability gate status: ok' "$status_file"
+require_contains 'seal effect decision status: ok' "$status_file"
+require_contains 'seal runtime handoff status: ok' "$status_file"
+require_contains 'seal status rollup status: ok' "$status_file"
+require_contains 'seal agentic automation security status: ok' "$status_file"
+require_contains 'seal parameter schema status: ok' "$status_file"
+require_contains 'parameter schema status guard workflow' "$status_file"
+require_contains 'request freshness status/workflow guard alignment' "$status_file"
 
+require_contains 'parameter schema status record now ties that report-only parameter checkpoint to the guarded agentic automation security status predecessor' README.md
 require_contains 'latticra_seal_parameter_schema_contract_present=1' README.md
 require_contains 'latticra_seal_parameter_schema_metadata_present=1' README.md
 require_contains 'latticra_seal_parameter_schema_report_surface_present=1' README.md
 require_contains 'latticra_seal_parameter_schema_status_present=1' README.md
+require_contains 'parameter_schema_predecessor_agentic_automation_security_status_present=1' README.md
 require_contains 'seal_parameter_schema_contract_present=1' README.md
 require_contains 'seal_parameter_schema_metadata_present=1' README.md
 require_contains 'seal_parameter_schema_report_surface_present=1' README.md
@@ -124,17 +164,30 @@ require_contains 'docs/LATTICRA_SEAL_PARAMETER_SCHEMA_REPORT_SURFACE.md' README.
 require_contains 'docs/status/SEAL_PARAMETER_SCHEMA_STATUS.md' README.md
 
 require_contains 'Seal parameter schema status/public-entry alignment' STATUS.md
+require_contains 'Seal parameter schema predecessor status alignment' STATUS.md
 require_contains 'Seal policy decision status/public-entry alignment' STATUS.md
 require_contains 'seal_parameter_schema_status_present=1' STATUS.md
+require_contains 'parameter_schema_predecessor_agentic_automation_security_status_present=1' STATUS.md
 require_contains 'SEAL_PARAMETER_SCHEMA_STATUS.md' docs/status/README.md
 require_contains 'seal_parameter_schema_status_present=1' docs/status/README.md
+require_contains 'parameter_schema_predecessor_agentic_automation_security_status_present=1' docs/status/README.md
 require_contains 'Latticra Seal parameter schema status/public-entry alignment' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal parameter schema predecessor status alignment' docs/status/CURRENT_STATUS.md
+require_contains 'parameter_schema_predecessor_agentic_automation_security_status_present=1' docs/status/CURRENT_STATUS.md
 require_contains 'SEAL_PARAMETER_SCHEMA_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal parameter schema status/public-entry alignment' docs/FOUNDATION_INDEX.md
+require_contains 'Latticra Seal parameter schema predecessor status alignment' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal parameter schema status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Latticra Seal parameter schema predecessor status alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Seal policy decision status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal parameter schema status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Latticra Seal parameter schema predecessor status alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Seal policy decision status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/status/SEAL_PARAMETER_SCHEMA_STATUS.md' docs/project_notes/README.md
+require_contains 'Latticra Seal parameter schema predecessor status alignment' docs/project_notes/README.md
+require_contains 'docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_STATUS.md' docs/project_notes/README.md
+require_contains 'sh scripts/test-latticra-seal-parameter-schema-status.sh' .github/workflows/latticra-seal-parameter-schema-status.yml
+
+sh scripts/test-latticra-seal-agentic-automation-security-status.sh
 
 printf 'seal parameter schema status: ok\n'

@@ -217,6 +217,7 @@ for field in \
   'bool execution_allowed;' \
   'bool mutation_allowed;' \
   'bool server_allowed;' \
+  'bool network_allowed;' \
   'bool recovery_allowed;' \
   'bool hardware_allowed;' \
   'std::size_t start_offset;' \
@@ -233,6 +234,7 @@ for field in \
   'authority_status status;' \
   'authority_validator validator;' \
   'std::array<char, LATTICRA_AUTHORITY_POLICY_NAME_MAX> policy_name;' \
+  'std::array<char, LATTICRA_AUTHORITY_SOURCE_IDENTITY_MAX + 1u> source_identity;' \
   'std::array<char, LATTICRA_AUTHORITY_VALIDATOR_NAME_MAX> validator_name;' \
   'std::array<char, LATTICRA_AUTHORITY_DENIAL_REASON_MAX> denial_reason;' \
   'std::array<authority_audit_record, LATTICRA_AUTHORITY_AUDIT_RECORD_MAX> records;' \
@@ -246,6 +248,7 @@ for flag in \
   'execution_allowed=0' \
   'mutation_allowed=0' \
   'server_allowed=0' \
+  'network_allowed=0' \
   'recovery_allowed=0' \
   'hardware_allowed=0'
 do
@@ -360,6 +363,7 @@ for lat_check in \
   'Lat execution_allowed is zero' \
   'Lat mutation_allowed is zero' \
   'Lat server_allowed is zero' \
+  'Lat network_allowed is zero' \
   'Lat recovery_allowed is zero' \
   'Lat hardware_allowed is zero' \
   'Lat declaration and clause counts do not exceed declared capacity' \
@@ -374,6 +378,7 @@ for lir_check in \
   'LIR node counts do not exceed declared capacity' \
   'LIR edge counts do not exceed declared capacity' \
   'LIR source spans are ordered and bounded' \
+  'LIR network_allowed is zero' \
   'LIR binding metadata remains metadata only' \
   'LIR text references use explicit lengths' \
   'LIR report behavior remains no-effect'
@@ -400,7 +405,9 @@ for report in \
   'CPP AUTHORITY REPORT' \
   'status=<authority-status-label>' \
   'record_count=<count>' \
+  'network_allowed=<0|1>' \
   'record[0].policy=<policy-name>' \
+  'record[0].source_identity=<source-identity>' \
   'record[0].validator=<validator-label>' \
   'record[0].requested_effect=<effect-label>' \
   'record[0].result=<authority-status-label>' \
@@ -432,12 +439,21 @@ for test_name in \
   cpp_authority_layer_uses_explicit_result_labels \
   cpp_authority_layer_does_not_throw_across_c_boundary \
   cpp_authority_layer_does_not_allocate_in_report_path \
+  cpp_authority_layer_preserves_source_identity_in_audit \
+  cpp_authority_layer_rejects_oversized_source_identity \
+  cpp_authority_layer_bounds_source_identity_before_audit_copy \
+  cpp_authority_layer_rejects_nul_source_identity \
   cpp_authority_layer_validates_lat_parse_result_metadata \
   cpp_authority_layer_validates_lir_shape_metadata \
   cpp_authority_layer_audit_report_is_deterministic \
   cpp_authority_layer_rejects_small_report_buffer \
   cpp_authority_layer_is_deterministic \
   cpp_authority_layer_rejects_mutation_flags \
+  cpp_authority_layer_rejects_network_flags \
+  cpp_authority_layer_rejects_lat_network_flags \
+  cpp_authority_layer_rejects_lir_network_flags \
+  cpp_authority_layer_rejects_request_lat_network_flags \
+  cpp_authority_layer_rejects_request_lir_network_flags \
   cpp_authority_layer_classifies_effects_without_performing_them \
   cpp_authority_layer_builds_with_fno_exceptions_and_fno_rtti
 do

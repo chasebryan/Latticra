@@ -44,6 +44,8 @@ static int kernel_initialize_is_report_only(void) {
     EXPECT_TRUE(result.hardware_allowed == 0, "hardware disabled");
     EXPECT_TRUE(result.boot_allowed == 0, "boot disabled");
     EXPECT_TRUE(result.bootstrap.no_effect == 1, "bootstrap no-effect");
+    EXPECT_TRUE(result.bootstrap.network_allowed == 0, "bootstrap network disabled");
+    EXPECT_TRUE(result.bootstrap.server_allowed == 0, "bootstrap server disabled");
     return 0;
 }
 
@@ -64,7 +66,10 @@ static int kernel_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "network_status=disabled\n") != 0, "network status emitted");
     EXPECT_TRUE(strstr(report, "device_status=disabled\n") != 0, "device status emitted");
     EXPECT_TRUE(strstr(report, "bootstrap_no_effect=1\n") != 0, "bootstrap no-effect emitted");
+    EXPECT_TRUE(strstr(report, "bootstrap_network_allowed=0\n") != 0, "bootstrap network flag emitted");
+    EXPECT_TRUE(strstr(report, "bootstrap_server_allowed=0\n") != 0, "bootstrap server flag emitted");
     EXPECT_TRUE(strstr(report, "no_effect=1\n") != 0, "no-effect emitted");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0, "network flag emitted");
     return 0;
 }
 

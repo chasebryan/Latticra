@@ -122,6 +122,29 @@ bool copy_c_string(std::array<char, Size> &target, const char *source) noexcept 
     return true;
 }
 
+template <std::size_t Size>
+bool copy_string_view(std::array<char, Size> &target,
+                      const std::string_view source) noexcept {
+    clear_array(target);
+    if (source.size() >= Size) {
+        return false;
+    }
+
+    for (std::size_t index = 0u; index < source.size(); ++index) {
+        target[index] = source[index];
+    }
+    return true;
+}
+
+bool string_view_contains_nul(const std::string_view source) noexcept {
+    for (std::size_t index = 0u; index < source.size(); ++index) {
+        if (source[index] == '\0') {
+            return true;
+        }
+    }
+    return false;
+}
+
 void reset_report(authority_audit_report &report) noexcept {
     report = authority_audit_report{};
     report.status = authority_status::ok;
@@ -134,7 +157,8 @@ authority_status add_record(authority_audit_report &report,
                             const authority_validator validator,
                             const authority_effect requested_effect,
                             const char *reason,
-                            const authority_source_span span) noexcept {
+                            const authority_source_span span,
+                            const std::string_view source_identity = {}) noexcept {
     if (report.record_count >= LATTICRA_AUTHORITY_AUDIT_RECORD_MAX) {
         report.status = authority_status::capacity_exceeded;
         return authority_status::capacity_exceeded;
@@ -149,6 +173,10 @@ authority_status add_record(authority_audit_report &report,
     record.span = span;
 
     if (!copy_c_string(record.policy_name, "cpp_authority")) {
+        report.status = authority_status::capacity_exceeded;
+        return authority_status::capacity_exceeded;
+    }
+    if (!copy_string_view(record.source_identity, source_identity)) {
         report.status = authority_status::capacity_exceeded;
         return authority_status::capacity_exceeded;
     }
@@ -250,6 +278,35 @@ void clear_output(char *buffer, const std::size_t buffer_len) noexcept {
     if (buffer != nullptr && buffer_len > 0u) {
         buffer[0] = '\0';
     }
+}
+
+authority_status add_first_metadata_record(
+    authority_audit_report &report,
+    const authority_audit_report &metadata_report,
+    const authority_effect requested_effect,
+    const authority_validator fallback_validator,
+    const char *fallback_reason,
+    const std::string_view source_identity) noexcept {
+    report.flags = metadata_report.flags;
+
+    if (metadata_report.record_count == 0u) {
+        return add_record(report,
+                          metadata_report.status,
+                          fallback_validator,
+                          requested_effect,
+                          fallback_reason,
+                          authority_source_span{},
+                          source_identity);
+    }
+
+    const authority_audit_record &record = metadata_report.records[0u];
+    return add_record(report,
+                      record.status,
+                      record.validator,
+                      requested_effect,
+                      record.denial_reason.data(),
+                      record.span,
+                      source_identity);
 }
 
 }  // namespace
@@ -513,15 +570,6 @@ authority_status classify_effect_request(const authority_request &request,
     reset_report(report);
     report.flags = request.flags;
 
-    if (!flags_are_no_effect(report.flags)) {
-        return add_record(report,
-                          authority_status::policy_denied,
-                          authority_validator::no_effect,
-                          request.requested_effect,
-                          "non_no_effect_flags_denied",
-                          authority_source_span{});
-    }
-
     if (request.source_identity.size() > LATTICRA_AUTHORITY_SOURCE_IDENTITY_MAX) {
         return add_record(report,
                           authority_status::capacity_exceeded,
@@ -531,13 +579,61 @@ authority_status classify_effect_request(const authority_request &request,
                           authority_source_span{});
     }
 
+    if (string_view_contains_nul(request.source_identity)) {
+        return add_record(report,
+                          authority_status::invalid_input,
+                          authority_validator::boundary,
+                          request.requested_effect,
+                          "source_identity_contains_nul",
+                          authority_source_span{});
+    }
+
+    if (!flags_are_no_effect(report.flags)) {
+        return add_record(report,
+                          authority_status::policy_denied,
+                          authority_validator::no_effect,
+                          request.requested_effect,
+                          "non_no_effect_flags_denied",
+                          authority_source_span{},
+                          request.source_identity);
+    }
+
+    if (request.lat_result != nullptr) {
+        authority_audit_report metadata_report{};
+        const authority_status metadata_status =
+            validate_lat_parse_result(*request.lat_result, metadata_report);
+        if (metadata_status != authority_status::ok) {
+            return add_first_metadata_record(report,
+                                             metadata_report,
+                                             request.requested_effect,
+                                             authority_validator::lat_parse_result,
+                                             "lat_parse_result_not_ok",
+                                             request.source_identity);
+        }
+    }
+
+    if (request.lir_module != nullptr) {
+        authority_audit_report metadata_report{};
+        const authority_status metadata_status =
+            validate_lir_shape(*request.lir_module, metadata_report);
+        if (metadata_status != authority_status::ok) {
+            return add_first_metadata_record(report,
+                                             metadata_report,
+                                             request.requested_effect,
+                                             authority_validator::lir_shape,
+                                             "lir_shape_not_ok",
+                                             request.source_identity);
+        }
+    }
+
     if (request.requested_effect == authority_effect::none) {
         return add_record(report,
                           authority_status::ok,
                           authority_validator::effect,
                           request.requested_effect,
                           "none",
-                          authority_source_span{});
+                          authority_source_span{},
+                          request.source_identity);
     }
 
     if (request.requested_effect == authority_effect::unknown) {
@@ -546,7 +642,8 @@ authority_status classify_effect_request(const authority_request &request,
                           authority_validator::effect,
                           request.requested_effect,
                           "unsupported_effect",
-                          authority_source_span{});
+                          authority_source_span{},
+                          request.source_identity);
     }
 
     return add_record(report,
@@ -554,7 +651,8 @@ authority_status classify_effect_request(const authority_request &request,
                       authority_validator::effect,
                       request.requested_effect,
                       "effect_performance_denied",
-                      authority_source_span{});
+                      authority_source_span{},
+                      request.source_identity);
 }
 
 authority_status render_authority_audit_report(
@@ -619,6 +717,11 @@ authority_status render_authority_audit_report(
                                       "policy") &&
             append_c_string(buffer, buffer_len, offset,
                             record.policy_name.data()) &&
+            append_char(buffer, buffer_len, offset, '\n') &&
+            append_record_line_prefix(buffer, buffer_len, offset, index,
+                                      "source_identity") &&
+            append_c_string(buffer, buffer_len, offset,
+                            record.source_identity.data()) &&
             append_char(buffer, buffer_len, offset, '\n') &&
             append_record_line_prefix(buffer, buffer_len, offset, index,
                                       "validator") &&

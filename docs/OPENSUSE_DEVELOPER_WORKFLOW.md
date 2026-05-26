@@ -66,6 +66,13 @@ Before merging openSUSE-facing work, run:
 ```sh
 sh scripts/test-opensuse-developer-workflow.sh
 sh scripts/test-opensuse-local-rpm-static-validation.sh
+sh scripts/test-opensuse-rpmlint-findings-classification.sh
+sh scripts/test-opensuse-source-archive-reproducibility-contract.sh
+sh scripts/test-opensuse-source-archive-fixture-lane.sh
+sh scripts/test-opensuse-rpm-topdir-handoff-lane.sh
+sh scripts/test-opensuse-local-rpm-build-gate-contract.sh
+sh scripts/test-opensuse-local-rpm-build-environment-contract.sh
+sh scripts/test-opensuse-rpm-artifact-naming-contract.sh
 ```
 
 Expected output:
@@ -73,6 +80,13 @@ Expected output:
 ```text
 opensuse_developer_workflow: ok
 opensuse_local_rpm_static_validation: ok
+opensuse_rpmlint_findings_classification: ok
+opensuse_source_archive_reproducibility_contract: ok
+opensuse_source_archive_fixture_lane: ok
+opensuse_rpm_topdir_handoff_lane: ok
+opensuse_local_rpm_build_gate_contract: ok
+opensuse_local_rpm_build_environment_contract: ok
+opensuse_rpm_artifact_naming_contract: ok
 ```
 
 ## Panel From Source

@@ -1,0 +1,67 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+state_schema = "latticra-panel-signed-updater-state-fixture-v0"
+state_fixture = true
+state_fixture_scope = "local-no-effect"
+state_fixture_effect = "none"
+state_fixture_trusted_for_apply = false
+
+updater_component = "latticra-panel"
+update_id = "panel-local-checkout-state-fixture"
+update_channel = "lab"
+source_strategy = "current-source-checkout"
+apply_mode = "guarded-local-prefix-reinstall"
+
+state_catalog = [
+  "available",
+  "downloaded",
+  "verified",
+  "staged",
+  "armed",
+  "applied",
+  "rolled_back",
+  "failed",
+  "blocked",
+]
+
+current_update_state = "blocked"
+requested_update_state = "blocked"
+state_transition_decision = "deny-transition"
+state_transition_reason = "missing-signed-manifest-artifact-verification-rollback-and-operator-confirmation"
+state_transition_execution_allowed = false
+state_transition_execution_performed = false
+state_receipt_written = false
+
+available_state_materialized = false
+downloaded_state_materialized = false
+verified_state_materialized = false
+staged_state_materialized = false
+armed_state_materialized = false
+applied_state_materialized = false
+rolled_back_state_materialized = false
+failed_state_materialized = false
+blocked_state_recorded = true
+
+network_fetch_authority = false
+remote_update_repository_trust = false
+trusted_signed_manifest_present = false
+manifest_signature_verified = false
+artifact_hash_verified = false
+artifact_signature_verified = false
+rollback_plan_present = false
+rollback_execution_allowed = false
+post_update_validation_present = false
+operator_confirmation_observed = false
+signed_update_apply_allowed = false
+update_activation_allowed = false
+host_mutation_allowed = false
+production_update_ready = false
+production_installer_ready = false
+
+non_claims = [
+  "not-update-state-evidence",
+  "not-state-transition-execution",
+  "not-staged-update-evidence",
+  "not-signed-update-evidence",
+  "not-production-update-readiness",
+]

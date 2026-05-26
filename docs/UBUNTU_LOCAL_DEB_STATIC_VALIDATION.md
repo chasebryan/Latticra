@@ -31,9 +31,12 @@ docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
 docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_PROMOTION_GATE_CONTRACT.md
+docs/UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
+docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md
+docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
 ```
 
 ## Preserved Boundary
@@ -78,6 +81,16 @@ package_notice_promotion_gate_unblocked=0
 package_license_promotion_gate_contract_present=1
 package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
 package_license_promotion_gate_unblocked=0
+lintian_static_metadata_contract_present=1
+lintian_static_metadata_status=blocked-pending-package-license-promotion
+lintian_static_metadata_run=0
+local_deb_build_transcript_acceptance_gate_contract_present=1
+local_deb_build_transcript_acceptance_gate_status=blocked-pending-lintian-static-metadata-and-build-transcript
+local_deb_build_transcript_accepted=0
+local_deb_install_remove_evidence_contract_present=1
+local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript
+deb_installed_on_host=0
+deb_removed_from_host=0
 ppa_claimed=0
 ubuntu_archive_ready=0
 production_readiness_claimed=0
@@ -117,7 +130,7 @@ claim production readiness
 
 ## Next Recommended Lane
 
-Review the Ubuntu package license promotion gate before lintian/static metadata, build transcript evidence, or package license expression promotion advances.
+Review the Ubuntu local deb install/remove evidence contract after the build transcript acceptance gate remains closed.
 
 ## Validation
 

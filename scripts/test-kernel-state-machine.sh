@@ -33,6 +33,9 @@ cc $CFLAGS \
   src/kernel_time_accounting.c \
   src/kernel_preemption.c \
   src/kernel_scheduler_credit.c \
+  src/kernel_scheduler_selection.c \
+  src/kernel_scheduler_dispatch.c \
+  src/kernel_scheduler_handoff.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   tests/kernel_state_machine.c \

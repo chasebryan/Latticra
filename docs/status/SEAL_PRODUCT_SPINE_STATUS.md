@@ -86,6 +86,8 @@ It does not add runtime behavior, policy behavior, protocol behavior, host behav
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is a bundled operator receipt report contract tying capability metadata, policy decision, request freshness, signed request metadata, runtime dry-run, and denial reason into one local artifact.
+The bundled operator receipt report contract, implementation plan, implementation, report surface, and status record are now current follow-up checkpoints.
+
+The next valid Latticra Seal slice is a Panel-visible Seal dashboard planning checkpoint or local capability registry schema contract.
 
 That future slice must preserve the no-effect posture and must not perform effects or grant authority.

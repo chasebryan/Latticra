@@ -1,0 +1,72 @@
+# Latticra Cryptographic Assurance and Key Management Baseline Status
+
+Status: status record for cryptographic assurance and key management baseline
+Date: 2026-05-26
+
+## Scope
+
+This record tracks the cryptographic assurance and key-management baseline for cryptographic module boundaries, FIPS/CMVP claim gates, algorithm and parameter inventory, key lifecycle, key storage, key destruction, randomness, self-tests, sensitive-data handling, post-quantum migration planning, Seal metadata, signing authority, and cryptographic non-claims.
+
+It does not implement production cryptography, signing authority, key storage, key generation, entropy collection, random-bit generation, FIPS validation, CMVP submission, CAVP testing, post-quantum migration, compliance, or runtime authority.
+
+## Current fields
+
+```text
+cryptographic_assurance_key_management_baseline_present=1
+cryptographic_assurance_key_management_status_present=1
+cryptographic_assurance_key_management_guard_present=1
+seal_crypto_graduation_gate_present=1
+seal_crypto_graduation_gate_guard_present=1
+fips_140_3_boundary_required_before_production_crypto=1
+cmvp_validation_path_required_before_fips_claim=1
+validated_module_claim_requires_certificate=1
+algorithm_parameter_inventory_required=1
+approved_algorithm_transition_review_required=1
+known_insecure_crypto_forbidden=1
+ed25519_rfc8032_test_vector_required=1
+authority_neutral_crypto_graduation_required=1
+fips_186_5_signature_standard_tracked=1
+fips_180_4_digest_standard_tracked=1
+fips_204_ml_dsa_planning_tracked=1
+fips_205_slh_dsa_planning_tracked=1
+key_lifecycle_contract_required=1
+key_inventory_required=1
+key_metadata_protection_required=1
+key_storage_contract_required=1
+key_zeroization_contract_required=1
+key_compromise_response_required=1
+randomness_entropy_source_contract_required=1
+drbg_review_required=1
+self_test_failure_behavior_required=1
+side_channel_sensitive_data_review_required=1
+post_quantum_migration_inventory_required=1
+cnsa_2_pq_planning_tracked=1
+non_fips_disclosure_required_if_not_validated=1
+seal_crypto_metadata_only_current=1
+implementation_behavior_changed=0
+production_crypto_added=0
+signing_authority_granted=0
+key_storage_added=0
+key_generation_added=0
+entropy_collection_added=0
+fips_validation_claimed=0
+cmvp_submission_performed=0
+cavp_testing_claimed=0
+post_quantum_migration_performed=0
+production_crypto_claim_allowed=0
+fips_claim_allowed=0
+compliance_claim_allowed=0
+external_endorsement_claimed=0
+```
+
+## Validation
+
+```sh
+sh scripts/test-cryptographic-assurance-key-management-baseline.sh
+```
+
+Expected output:
+
+```text
+cryptographic_assurance_key_management_baseline: ok
+```

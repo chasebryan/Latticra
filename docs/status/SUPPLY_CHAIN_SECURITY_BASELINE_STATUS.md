@@ -27,6 +27,12 @@ persist_credentials_false_required=1
 pull_request_target_forbidden=1
 repository_secret_use_requires_dedicated_review=1
 implicit_github_token_use_requires_dedicated_review=1
+repository_secret_filename_scan_required=1
+repository_secret_content_marker_scan_required=1
+sensitive_local_artifact_filename_guard_required=1
+report_redaction_boundary_guard_required=1
+whole_environment_report_dump_forbidden=1
+installer_engine_log_redaction_required=1
 locked_dependency_builds_required=1
 offline_installer_builds_required=1
 ad_hoc_network_client_commands_forbidden_without_guard=1
@@ -45,6 +51,8 @@ external_endorsement_claimed=0
 
 ```sh
 sh scripts/test-supply-chain-security-baseline.sh
+sh scripts/test-secret-material-guard.sh
+sh scripts/test-report-redaction-boundary.sh
 ```
 
 Expected output:

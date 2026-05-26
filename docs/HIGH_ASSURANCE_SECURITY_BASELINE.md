@@ -19,6 +19,7 @@ memory-safety roadmap requirements
 zero-trust runtime-boundary requirements
 supply-chain and dependency requirements
 cryptographic assurance requirements
+identity, credential, and access management requirements
 incident-response and disclosure requirements
 non-claims that remain closed
 ```
@@ -30,12 +31,17 @@ Date checked: 2026-05-26
 | Source | Current guidance used | Latticra allocation |
 | --- | --- | --- |
 | NSA Zero Trust Implementation Guidelines, Primer, Discovery Phase, Phase One, and Phase Two | Zero trust work begins with visibility over data, applications, assets, services, access, and authorization activity, then advances through phased activities, requirements, precursors, and successors toward target-level maturity. | Keep runtime authority denied until request identity, asset identity, authorization state, evidence level, prerequisites, successors, and audit output are visible. |
+| NSA Advancing Zero Trust Maturity Throughout the User Pillar | ICAM capabilities are a core zero-trust maturity path for critical systems. | Require identity, credential, MFA, privileged-access, account-lifecycle, and identity-event evidence before hosted or privileged authority claims. |
+| CISA and NSA Identity and Access Management: Recommended Best Practices for Administrators | Administrators should inventory assets and identities, understand security gaps, deploy and inventory MFA, collect SSO context, and monitor privileged behavior. | Keep identity and access management as a gated baseline before remote access, hosted administration, privileged sessions, or account-management claims. |
 | NSA/CISA Memory Safe Languages CSI | Memory-safe language adoption should be considered, while existing code can be improved through interoperability and mitigations where migration is not practical. | Publish and guard a memory-safety roadmap for C/C++ substrate code; prefer memory-safe implementation for new high-risk infrastructure surfaces. |
 | CISA Secure by Design | Manufacturers should take ownership of customer security outcomes, practice transparency/accountability, and lead from the top. | Require evidence-bound public claims, vulnerability reporting, no hidden security costs, deterministic reports, and leadership-owned security gates. |
 | CISA/FBI Product Security Bad Practices | Avoid exceptionally risky practices, including absent memory-safety roadmaps, injection classes, known-insecure crypto, weak defaults, and unmanaged dependencies. | Guard against unsafe APIs, shell injection surfaces, default-secret patterns, unbounded buffers, path traversal, and production crypto claims without a module boundary. |
 | CISA Cross-Sector Cybersecurity Performance Goals | Establish baseline practices for asset inventory, vulnerability management, logging, account security, incident response, recovery, and third-party validation. | Maintain source and dependency inventory, KEV-aware release checks, explicit logs/reports, incident plan, recovery contracts before mutation, and third-party review before security release. |
 | CISA Zero Trust Maturity Model v2 | Mature zero trust uses identity, devices, networks, applications/workloads, and data pillars with visibility, analytics, automation, orchestration, and governance. | Treat each Latticra request as a per-request policy decision; preserve deny-by-default behavior for network, host, recovery, boot, and tool authority. |
+| NIST SP 800-63-4 Digital Identity Guidelines | Current digital identity guidance covers identity proofing, authentication, authenticator management, federation, and assertions. | Use SP 800-63-4 vocabulary for future operator identity, account lifecycle, MFA, SSO/federation, and authentication non-claims. |
+| CISA/NSA/FBI/MS-ISAC Phishing Guidance | Phishing-resistant MFA and social-engineering-resistant account processes reduce account-compromise risk. | Require phishing-resistant MFA planning and help-desk identity verification before privileged or remote access claims. |
 | CISA Known Exploited Vulnerabilities Catalog | Internet-facing exploited vulnerabilities need timely mitigation or compensating controls. | Before any internet-facing asset exists, create a KEV review gate; current project has no internet-facing runtime authority. |
+| NIST National Vulnerability Database and CVSS metrics | CVE and CVSS records provide vulnerability enrichment and severity context, while CVSS is not a complete risk score by itself. | Require KEV/NVD review, component inventory, mitigation or exception records, and public non-claim review before release. |
 | FBI Cyber | The active threat environment includes ransomware, nation-state targeting, critical infrastructure risk, rapidly changing IOCs/TTPs, and reporting through FBI/IC3 paths. | Keep the threat model defensive, keep reports private, add incident-reporting paths, and avoid offensive payload, persistence, exfiltration, and evasion content. |
 | CISA/FBI/NSA/MS-ISAC #StopRansomware Guide | Ransomware and data-extortion preparation, prevention, response, evidence preservation, out-of-band communications, and federal contact paths must be planned before incidents. | Keep incident-response authority denied, document reporting paths, preserve evidence requirements, and require operator/legal review before notification or reporting assistance. |
 | NIST Cybersecurity Framework 2.0 | Govern, Identify, Protect, Detect, Respond, and Recover provide current cybersecurity risk-management functions. | Map future infrastructure readiness to CSF 2.0 functions before production claims. |
@@ -44,6 +50,8 @@ Date checked: 2026-05-26
 | NIST SP 800-160 Vol. 2 Rev. 1 | Cyber-resilient systems should anticipate, withstand, recover from, and adapt to adverse conditions and attacks. | Keep rollback, recovery, degraded-mode, auditability, and no-hidden-effect requirements ahead of any mutating infrastructure behavior. |
 | NIST SP 800-207 Zero Trust Architecture | Zero trust removes implicit trust and makes access decisions resource-focused and least-privilege. | Runtime and agentic automation authority must remain per-request, least-privilege, auditable, and denied unless prerequisites pass. |
 | FIPS 140-3 | Federal cryptographic module security requirements define validated module expectations and security levels. | No production cryptography or FIPS claim is allowed until a cryptographic module boundary, validation path, key lifecycle, and dependency review exist. |
+| NIST SP 800-57 Part 1 Rev. 5, SP 800-131A Rev. 2, and SP 800-90 series | Key management, algorithm transition, and random-bit generation guidance define required cryptographic planning vocabulary. | Require a cryptographic assurance and key-management baseline before signing authority, key storage, entropy use, FIPS, or production crypto claims. |
+| NSA/CISA/NIST post-quantum guidance and NSA CNSA 2.0 | High-assurance systems should inventory cryptography and plan migration toward quantum-resistant algorithms without premature deployment claims. | Require post-quantum inventory and migration planning before long-lived confidentiality or national-security-oriented cryptographic claims. |
 
 Authoritative URLs for this checkpoint are preserved in `docs/DEFENSIVE_THREAT_MODEL_VALIDATION.md`.
 
@@ -69,8 +77,12 @@ ssdf_secure_development_required=1
 cpg_operational_baseline_required=1
 supply_chain_security_baseline_present=1
 cyber_incident_reporting_response_baseline_present=1
+vulnerability_management_release_gate_baseline_present=1
+cryptographic_assurance_key_management_baseline_present=1
+identity_credential_access_management_baseline_present=1
 kev_release_review_required=1
 fips_crypto_boundary_required_before_production_crypto=1
+phishing_resistant_mfa_required_before_remote_privileged_access=1
 sbom_required_before_production_installer=1
 third_party_security_validation_required_before_security_release=1
 incident_response_plan_required_before_production_service=1
@@ -146,6 +158,7 @@ Before a production installer, production package, internet-facing service, or p
 - SBOM evidence for shipped artifacts;
 - dependency inventory with license and security review;
 - KEV/NVD review or documented offline exception before release;
+- vulnerability-management release gate before production release or supported-version claims;
 - pinned CI actions and read-only workflow permissions;
 - locked dependency builds where the package manager supports it;
 - no ad hoc network client commands in workflows without a dedicated review guard;
@@ -167,7 +180,25 @@ Production cryptography requires:
 - side-channel and sensitive-data handling review;
 - FIPS 140-3 applicability decision;
 - explicit non-FIPS disclosure if FIPS validation is not pursued;
+- post-quantum inventory and migration planning before long-lived secrecy claims;
+- cryptographic assurance and key-management baseline before production cryptography claims;
+- authority-neutral crypto graduation gate before any verified receipt can influence future authority-bearing policy;
 - test fixtures for malformed keys, unsupported algorithms, stale requests, replayed requests, and denied verification paths.
+
+## Identity, Credential, and Access Management Requirements
+
+No future hosted service, hosted administration surface, privileged operator role, remote access path, service-account runtime authority, SSO/federation claim, MFA claim, or identity-security claim may be promoted until Latticra has:
+
+- human, service, machine, and local identity inventories;
+- privileged role and role-to-effect mapping;
+- phishing-resistant MFA path for privileged and remote access;
+- account lifecycle and deprovisioning contract;
+- break-glass access policy and monitoring;
+- credential storage, recovery, rotation, and reuse review;
+- help-desk identity verification process for access changes;
+- identity event logging and privileged behavior review;
+- owner and expiration for every access exception;
+- operator-visible identity and access non-claims.
 
 ## Operational Security Requirements
 
@@ -176,6 +207,8 @@ Before any production service, hosted system, or critical infrastructure deploym
 - assign a named cybersecurity owner;
 - maintain asset inventory and data-flow inventory;
 - require MFA/SSO for privileged accounts;
+- require phishing-resistant MFA planning for remote and privileged access;
+- prohibit shared administrative accounts and default credentials;
 - collect security-relevant logs without leaking secrets;
 - define incident response and vulnerability disclosure procedures;
 - publish a cyber incident reporting and response baseline before any incident-response feature;
@@ -195,6 +228,10 @@ docs/RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md
 docs/MEMORY_SAFETY_ROADMAP.md
 docs/SUPPLY_CHAIN_SECURITY_BASELINE.md
 docs/CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md
+docs/VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE.md
+docs/CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md
+docs/LATTICRA_SEAL_CRYPTO_GRADUATION_GATE_IMPLEMENTATION.md
+docs/IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md
 docs/security/C_CPP_SECURITY_PROFILE.md
 docs/security/C_ABI_BOUNDARY_POLICY.md
 scripts/test-quality-safety-guards.sh
@@ -204,6 +241,10 @@ scripts/test-high-assurance-security-baseline.sh
 scripts/test-memory-safety-roadmap.sh
 scripts/test-supply-chain-security-baseline.sh
 scripts/test-cyber-incident-reporting-response-baseline.sh
+scripts/test-vulnerability-management-release-gate-baseline.sh
+scripts/test-cryptographic-assurance-key-management-baseline.sh
+scripts/test-latticra-seal-crypto-graduation-gate.sh
+scripts/test-identity-credential-access-management-baseline.sh
 ```
 
 ## Non-Claims

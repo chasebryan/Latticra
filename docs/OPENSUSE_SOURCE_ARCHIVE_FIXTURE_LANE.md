@@ -102,6 +102,9 @@ source_archive_symlink_policy_checked=1
 source_archive_path_safety_checked=1
 source_archive_accepted_for_build=0
 opensuse_rpm_topdir_handoff_lane_present=1
+opensuse_local_rpm_build_gate_contract_present=1
+opensuse_local_rpm_build_environment_contract_present=1
+opensuse_rpm_artifact_naming_contract_present=1
 rpmbuild_run=0
 osc_build_run=0
 rpm_artifact_created=0
@@ -161,13 +164,37 @@ scripts/test-opensuse-rpm-topdir-handoff-lane.sh
 .github/workflows/opensuse-rpm-topdir-handoff-lane.yml
 ```
 
+Completed follow-on local RPM build gate contract:
+
+```text
+docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
+scripts/test-opensuse-local-rpm-build-gate-contract.sh
+.github/workflows/opensuse-local-rpm-build-gate-contract.yml
+```
+
+Completed follow-on local RPM build environment contract:
+
+```text
+docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+scripts/test-opensuse-local-rpm-build-environment-contract.sh
+.github/workflows/opensuse-local-rpm-build-environment-contract.yml
+```
+
+Completed follow-on RPM artifact naming contract:
+
+```text
+docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
+scripts/test-opensuse-rpm-artifact-naming-contract.sh
+.github/workflows/opensuse-rpm-artifact-naming-contract.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE local RPM build evidence gate contract before any rpmbuild or osc build command can run.
+Add openSUSE RPM payload inspection contract before any RPM artifact can be accepted.
 ```
 
-That future lane should define the exact evidence required before the temporary RPM topdir can be used by `rpmbuild`, `osc build`, or Open Build Service validation.
+That future lane should define how source RPM and binary RPM payloads are inspected after creation while keeping `opensuse_rpm_build_gate_state=closed-no-effect` until the remaining prerequisites are satisfied.
 
 ## Validation
 

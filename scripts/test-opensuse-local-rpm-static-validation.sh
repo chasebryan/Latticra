@@ -45,12 +45,21 @@ require_file docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 require_file docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 require_file docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_file docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
+require_file docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
+require_file docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+require_file docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
 require_file docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 require_file packaging/opensuse/README.md
 require_file packaging/opensuse/latticra.spec
 require_file packaging/opensuse/latticra.changes
+require_file scripts/test-opensuse-local-rpm-build-gate-contract.sh
+require_file scripts/test-opensuse-local-rpm-build-environment-contract.sh
+require_file scripts/test-opensuse-rpm-artifact-naming-contract.sh
 require_file scripts/test-latticra-no-effect-cli-status-surface.sh
 require_file src/latticra_cli.c
+require_file .github/workflows/opensuse-local-rpm-build-gate-contract.yml
+require_file .github/workflows/opensuse-local-rpm-build-environment-contract.yml
+require_file .github/workflows/opensuse-rpm-artifact-naming-contract.yml
 
 require_contains 'Status: active static validation lane' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'static checks for the local-only openSUSE RPM packaging draft' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
@@ -62,7 +71,16 @@ require_contains 'docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md' docs/OPENSUS
 require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
-require_contains 'Add openSUSE local RPM build evidence gate contract' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_contains 'docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_contains 'docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_contains 'docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_contains 'scripts/test-opensuse-local-rpm-build-gate-contract.sh' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_contains 'scripts/test-opensuse-local-rpm-build-environment-contract.sh' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_contains 'scripts/test-opensuse-rpm-artifact-naming-contract.sh' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_contains '.github/workflows/opensuse-local-rpm-build-gate-contract.yml' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_contains '.github/workflows/opensuse-local-rpm-build-environment-contract.yml' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_contains '.github/workflows/opensuse-rpm-artifact-naming-contract.yml' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_contains 'Add openSUSE RPM payload inspection contract' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'opensuse_local_rpm_static_validation: ok' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 
 require_contains 'Status: local-only packaging draft' packaging/opensuse/README.md
@@ -75,8 +93,29 @@ require_contains 'opensuse_rpmlint_findings_classification_present=1' packaging/
 require_contains 'opensuse_source_archive_reproducibility_contract_present=1' packaging/opensuse/README.md
 require_contains 'opensuse_source_archive_fixture_lane_present=1' packaging/opensuse/README.md
 require_contains 'opensuse_rpm_topdir_handoff_lane_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_local_rpm_build_gate_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_local_rpm_build_environment_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_artifact_naming_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_gate_state=closed-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_environment_contract_state=specified-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_artifact_naming_contract_state=specified-no-effect' packaging/opensuse/README.md
+require_contains 'rpm_artifact_naming_contract_present=1' packaging/opensuse/README.md
+require_contains 'rpm_source_package_name=latticra-0.0.0-0.local.src.rpm' packaging/opensuse/README.md
+require_contains 'rpm_binary_package_name_pattern=latticra-0.0.0-0.local.${RPM_ARCH}.rpm' packaging/opensuse/README.md
+require_contains 'repository_rpm_artifact_write_allowed=0' packaging/opensuse/README.md
+require_contains 'opensuse_clean_build_environment_documented=1' packaging/opensuse/README.md
+require_contains 'opensuse_build_environment_provisioned=0' packaging/opensuse/README.md
+require_contains 'osc_build_environment_provisioned=0' packaging/opensuse/README.md
+require_contains 'explicit_operator_build_authorization=0' packaging/opensuse/README.md
+require_contains 'environment_transcript_present=0' packaging/opensuse/README.md
+require_contains 'rpmbuild_allowed=0' packaging/opensuse/README.md
+require_contains 'osc_build_allowed=0' packaging/opensuse/README.md
+require_contains 'spec_cleaner_allowed=0' packaging/opensuse/README.md
 require_contains 'rpm_artifact_created=0' packaging/opensuse/README.md
+require_contains 'rpmbuild_run=0' packaging/opensuse/README.md
 require_contains 'osc_build_run=0' packaging/opensuse/README.md
+require_contains 'source_rpm_artifact_created=0' packaging/opensuse/README.md
+require_contains 'binary_rpm_artifact_created=0' packaging/opensuse/README.md
 require_contains 'accepted_rpmlint_transcript_present=0' packaging/opensuse/README.md
 require_contains 'rpmlint_package_readiness_claimed=0' packaging/opensuse/README.md
 require_contains 'opensuse_obs_publication_claimed=0' packaging/opensuse/README.md

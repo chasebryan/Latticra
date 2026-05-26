@@ -39,6 +39,9 @@ require_file scripts/test-quality-safety-guards.sh
 require_contains 'Status: memory-safety roadmap' "$doc"
 require_contains 'Source refresh date: 2026-05-26' "$doc"
 require_contains 'NSA/CISA memory-safe-language guidance' "$doc"
+require_contains 'CISA The Case for Memory Safe Roadmaps' "$doc"
+require_contains 'buffer overflow alert' "$doc"
+require_contains 'OS command injection' "$doc"
 require_contains 'CISA/FBI product-security bad-practice guidance' "$doc"
 require_contains 'Component Inventory' "$doc"
 require_contains 'Required Rules' "$doc"
@@ -82,6 +85,17 @@ for component in \
   'Future network, MCP, server, update, recovery, boot, or hardware surfaces'
 do
   require_contains "$component" "$doc"
+done
+
+for allocation in \
+  'buffer-overflow-class and format-string hazards' \
+  'truncation, off-by-one, and lifetime faults' \
+  'distinct operator/workload identity context' \
+  'no raw shell interpolation path' \
+  'command-boundary review' \
+  'buffer overflow, format-string, off-by-one, use-after-free, and command-construction hazards'
+do
+  require_contains "$allocation" "$doc"
 done
 
 for guard in \

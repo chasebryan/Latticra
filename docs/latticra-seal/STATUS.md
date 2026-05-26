@@ -23,6 +23,8 @@ Known current evidence includes:
 - policy regression workflow through GitHub Actions
 - policy-denial testing through `make seal-policy-denials`
 - product-spine direction for an earned security-product path
+- no-effect operator receipt report implementation for bundled denied metadata
+- operator-visible receipt report surface and status checkpoint
 
 ## Current authority limits
 
@@ -45,6 +47,9 @@ manifest_hash_baseline=1
 policy_regression_lane=1
 product_spine_present=1
 product_spine_status_present=1
+operator_receipt_report_implementation_present=1
+operator_receipt_report_surface_present=1
+operator_receipt_report_status_present=1
 panel_bridge_planning=1
 runtime_enforcement=0
 network_operation=0

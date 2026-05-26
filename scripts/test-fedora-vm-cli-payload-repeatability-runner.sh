@@ -68,7 +68,7 @@ require_contains 'require_flag LATTICRA_OPERATOR_CONSENT_RECORDED 1' "$runner"
 require_contains '[ "${ID:-}" = "fedora" ]' "$runner"
 require_contains 'run as a non-root operator account; sudo is used only for rpm install/removal' "$runner"
 
-for cmd in awk cat cc find git grep gzip id mktemp rpm rpmbuild sha256sum sort sudo tar uname; do
+for cmd in awk cat cc find git grep gzip id mktemp python3 rpm rpmbuild sha256sum sort sudo tar uname; do
   require_contains "require_command $cmd" "$runner"
 done
 
@@ -96,8 +96,12 @@ require_contains 'source_tree_revision="$(git rev-parse --verify HEAD)"' "$runne
 require_contains "spec_checksum=\"\$(sha256sum packaging/fedora/latticra.spec | awk '{ print \$1 }')\"" "$runner"
 require_contains 'symlink_entry=$(find . -path' "$runner"
 require_contains 'refusing source archive with symlink entry' "$runner"
-require_contains "--exclude='./.git'" "$runner"
-require_contains "--exclude='./*.tar.gz'" "$runner"
+require_contains '"git", "ls-files"' "$runner"
+require_contains 'gzip.GzipFile' "$runner"
+require_contains 'mtime=0' "$runner"
+require_contains 'info.uid = 0' "$runner"
+require_contains 'info.gid = 0' "$runner"
+require_contains 'write_source_archive "$source_archive" "$root"' "$runner"
 require_contains 'source_archive_checksum="$(sha256sum "$source_archive" | awk' "$runner"
 require_contains 'rpmbuild --define "_topdir $rpmtop" -bb "$rpmtop/SPECS/latticra.spec"' "$runner"
 

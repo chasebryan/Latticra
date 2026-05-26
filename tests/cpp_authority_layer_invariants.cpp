@@ -197,6 +197,93 @@ void cpp_authority_layer_does_not_allocate_in_report_path() noexcept {
     expect(contains_text(buffer, "network_allowed=0"));
 }
 
+void cpp_authority_layer_preserves_source_identity_in_audit() noexcept {
+    latticra::authority_request request{};
+    request.flags.no_effect = true;
+    request.requested_effect = latticra::authority_effect::read;
+    request.source_identity = "authority-fixture";
+    latticra::authority_audit_report report{};
+    char buffer[latticra::LATTICRA_AUTHORITY_REPORT_MAX]{};
+
+    expect(latticra::classify_effect_request(request, report) ==
+           latticra::authority_status::policy_denied);
+    expect(same_text(report.records[0].source_identity.data(),
+                     "authority-fixture"));
+    expect(latticra::render_authority_audit_report(
+               report, buffer, sizeof(buffer)) == latticra::authority_status::ok);
+    expect(contains_text(buffer,
+                         "record[0].source_identity=authority-fixture"));
+}
+
+void cpp_authority_layer_rejects_oversized_source_identity() noexcept {
+    char source[latticra::LATTICRA_AUTHORITY_SOURCE_IDENTITY_MAX + 1u]{};
+    for (std::size_t index = 0u;
+         index < latticra::LATTICRA_AUTHORITY_SOURCE_IDENTITY_MAX + 1u;
+         ++index) {
+        source[index] = 'a';
+    }
+
+    latticra::authority_request request{};
+    request.flags.no_effect = true;
+    request.requested_effect = latticra::authority_effect::none;
+    request.source_identity = std::string_view{
+        source, latticra::LATTICRA_AUTHORITY_SOURCE_IDENTITY_MAX + 1u};
+
+    latticra::authority_audit_report report{};
+    const latticra::authority_status status =
+        latticra::classify_effect_request(request, report);
+
+    expect(status == latticra::authority_status::capacity_exceeded);
+    expect(same_text(report.records[0].denial_reason.data(),
+                     "source_identity_too_large"));
+}
+
+void cpp_authority_layer_bounds_source_identity_before_audit_copy() noexcept {
+    char source[latticra::LATTICRA_AUTHORITY_SOURCE_IDENTITY_MAX + 1u]{};
+    for (std::size_t index = 0u;
+         index < latticra::LATTICRA_AUTHORITY_SOURCE_IDENTITY_MAX + 1u;
+         ++index) {
+        source[index] = 'b';
+    }
+
+    latticra::authority_request request{};
+    request.flags.no_effect = true;
+    request.flags.mutation_allowed = true;
+    request.requested_effect = latticra::authority_effect::none;
+    request.source_identity = std::string_view{
+        source, latticra::LATTICRA_AUTHORITY_SOURCE_IDENTITY_MAX + 1u};
+
+    latticra::authority_audit_report report{};
+    const latticra::authority_status status =
+        latticra::classify_effect_request(request, report);
+
+    expect(status == latticra::authority_status::capacity_exceeded);
+    expect(report.record_count == 1u);
+    expect(same_text(report.records[0].denial_reason.data(),
+                     "source_identity_too_large"));
+}
+
+void cpp_authority_layer_rejects_nul_source_identity() noexcept {
+    const char source[4]{'l', 'a', '\0', 't'};
+
+    latticra::authority_request request{};
+    request.flags.no_effect = true;
+    request.requested_effect = latticra::authority_effect::none;
+    request.source_identity = std::string_view{source, sizeof(source)};
+
+    latticra::authority_audit_report report{};
+    char buffer[latticra::LATTICRA_AUTHORITY_REPORT_MAX]{};
+    const latticra::authority_status status =
+        latticra::classify_effect_request(request, report);
+
+    expect(status == latticra::authority_status::invalid_input);
+    expect(same_text(report.records[0].denial_reason.data(),
+                     "source_identity_contains_nul"));
+    expect(latticra::render_authority_audit_report(
+               report, buffer, sizeof(buffer)) == latticra::authority_status::ok);
+    expect(contains_text(buffer, "source_identity_contains_nul"));
+}
+
 void cpp_authority_layer_validates_lat_parse_result_metadata() noexcept {
     latticra::authority_audit_report report{};
     latticra_lat_parse_result_t result = valid_lat_result();
@@ -333,6 +420,46 @@ void cpp_authority_layer_rejects_lir_network_flags() noexcept {
                      "lir_no_effect_flags_not_preserved"));
 }
 
+void cpp_authority_layer_rejects_request_lat_network_flags() noexcept {
+    latticra_lat_parse_result_t result = valid_lat_result();
+    result.network_allowed = 1;
+
+    latticra::authority_request request{};
+    request.flags.no_effect = true;
+    request.requested_effect = latticra::authority_effect::none;
+    request.lat_result = &result;
+
+    latticra::authority_audit_report report{};
+    const latticra::authority_status status =
+        latticra::classify_effect_request(request, report);
+
+    expect(status == latticra::authority_status::policy_denied);
+    expect(report.flags.network_allowed);
+    expect(report.records[0].requested_effect == latticra::authority_effect::none);
+    expect(same_text(report.records[0].denial_reason.data(),
+                     "lat_no_effect_flags_not_preserved"));
+}
+
+void cpp_authority_layer_rejects_request_lir_network_flags() noexcept {
+    latticra_lir_module_t module = valid_lir_module();
+    module.network_allowed = 1;
+
+    latticra::authority_request request{};
+    request.flags.no_effect = true;
+    request.requested_effect = latticra::authority_effect::none;
+    request.lir_module = &module;
+
+    latticra::authority_audit_report report{};
+    const latticra::authority_status status =
+        latticra::classify_effect_request(request, report);
+
+    expect(status == latticra::authority_status::policy_denied);
+    expect(report.flags.network_allowed);
+    expect(report.records[0].requested_effect == latticra::authority_effect::none);
+    expect(same_text(report.records[0].denial_reason.data(),
+                     "lir_no_effect_flags_not_preserved"));
+}
+
 void cpp_authority_layer_classifies_effects_without_performing_them() noexcept {
     latticra::authority_request request{};
     request.flags.no_effect = true;
@@ -361,6 +488,10 @@ int main() {
     cpp_authority_layer_uses_explicit_result_labels();
     cpp_authority_layer_does_not_throw_across_c_boundary();
     cpp_authority_layer_does_not_allocate_in_report_path();
+    cpp_authority_layer_preserves_source_identity_in_audit();
+    cpp_authority_layer_rejects_oversized_source_identity();
+    cpp_authority_layer_bounds_source_identity_before_audit_copy();
+    cpp_authority_layer_rejects_nul_source_identity();
     cpp_authority_layer_validates_lat_parse_result_metadata();
     cpp_authority_layer_validates_lir_shape_metadata();
     cpp_authority_layer_audit_report_is_deterministic();
@@ -370,6 +501,8 @@ int main() {
     cpp_authority_layer_rejects_network_flags();
     cpp_authority_layer_rejects_lat_network_flags();
     cpp_authority_layer_rejects_lir_network_flags();
+    cpp_authority_layer_rejects_request_lat_network_flags();
+    cpp_authority_layer_rejects_request_lir_network_flags();
     cpp_authority_layer_classifies_effects_without_performing_them();
     cpp_authority_layer_builds_with_fno_exceptions_and_fno_rtti();
     return failures;

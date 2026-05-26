@@ -76,10 +76,12 @@ require_contains 'LATTICRA_OPERATOR_CONSENT_RECORDED=1' "$doc"
 require_contains 'operator_is_non_root=1' "$doc"
 require_contains 'sudo` only for RPM install and RPM removal' "$doc"
 
-for cmd in awk cat cc find git grep gzip id mktemp rpm rpmbuild sha256sum sort sudo tar uname; do
+for cmd in awk cat cc find git grep gzip id mktemp python3 rpm rpmbuild sha256sum sort sudo tar uname; do
   require_contains "$cmd" "$doc"
 done
 require_contains 'fail closed rather than silently omitting checksum evidence' "$doc"
+require_contains 'Git'\''s tracked and unignored source view' "$doc"
+require_contains 'deterministic tar/gzip metadata' "$doc"
 
 require_contains 'Capture source tree revision.' "$doc"
 require_contains 'Capture packaging/fedora/latticra.spec checksum.' "$doc"

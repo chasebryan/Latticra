@@ -29,6 +29,9 @@ require_file docs/KERNEL_LIFECYCLE_SEED.md
 require_file docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
 require_file docs/KERNEL_PREEMPTION_SEED.md
 require_file docs/KERNEL_SCHEDULER_CREDIT_SEED.md
+require_file docs/KERNEL_SCHEDULER_SELECTION_SEED.md
+require_file docs/KERNEL_SCHEDULER_DISPATCH_SEED.md
+require_file docs/KERNEL_SCHEDULER_HANDOFF_SEED.md
 require_file docs/KERNEL_LIFECYCLE_ROLLBACK_PLAN.md
 require_file scripts/test-kernel-lifecycle.sh
 require_file scripts/test-kernel-lifecycle-report-runner.sh
@@ -68,6 +71,15 @@ require_file .github/workflows/kernel-preemption.yml
 require_file scripts/test-kernel-scheduler-credit.sh
 require_file scripts/test-kernel-scheduler-credit-report-runner.sh
 require_file .github/workflows/kernel-scheduler-credit.yml
+require_file scripts/test-kernel-scheduler-selection.sh
+require_file scripts/test-kernel-scheduler-selection-report-runner.sh
+require_file .github/workflows/kernel-scheduler-selection.yml
+require_file scripts/test-kernel-scheduler-dispatch.sh
+require_file scripts/test-kernel-scheduler-dispatch-report-runner.sh
+require_file .github/workflows/kernel-scheduler-dispatch.yml
+require_file scripts/test-kernel-scheduler-handoff.sh
+require_file scripts/test-kernel-scheduler-handoff-report-runner.sh
+require_file .github/workflows/kernel-scheduler-handoff.yml
 require_file scripts/test-kernel-process-table.sh
 require_file scripts/test-kernel-process-table-report-runner.sh
 require_file .github/workflows/kernel-process-table.yml
@@ -107,17 +119,26 @@ require_contains 'kernel preemption guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE
 require_contains 'kernel preemption report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel scheduler credit guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel scheduler credit report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel scheduler selection guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel scheduler selection report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel scheduler dispatch guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel scheduler dispatch report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel scheduler handoff guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel scheduler handoff report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel process table guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel process table report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel syscall table guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel syscall table report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel lifecycle subsystem summary' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel lifecycle rollback plan' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
-require_contains 'final_state=scheduler-credit-ready' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'final_state=scheduler-handoff-ready' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'external_effect_performed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'no_external_effect_chain=1' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'runtime_entry_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'scheduler_execution_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'scheduler_selection_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'scheduler_dispatch_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'scheduler_handoff_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'memory_allocation_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'process_spawn_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'syscall_dispatch_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
@@ -161,7 +182,7 @@ require_contains 'scheduler_credit_update_allowed=0' docs/status/KERNEL_LIFECYCL
 require_contains 'process_wake_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'dma_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'hardware_effect_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
-require_contains 'Add no-effect scheduler selection classifier' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'Add no-effect scheduler activation classifier' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-ipc-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-vfs-namespace.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-device-registry.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
@@ -174,6 +195,9 @@ require_contains '.github/workflows/kernel-context-switch.yml' docs/status/KERNE
 require_contains '.github/workflows/kernel-time-accounting.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-preemption.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-scheduler-credit.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-scheduler-selection.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-scheduler-dispatch.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-scheduler-handoff.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-process-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-syscall-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 
@@ -203,14 +227,23 @@ require_contains 'kernel preemption guard' docs/status/README.md
 require_contains 'kernel preemption report runner' docs/status/README.md
 require_contains 'kernel scheduler credit guard' docs/status/README.md
 require_contains 'kernel scheduler credit report runner' docs/status/README.md
+require_contains 'kernel scheduler selection guard' docs/status/README.md
+require_contains 'kernel scheduler selection report runner' docs/status/README.md
+require_contains 'kernel scheduler dispatch guard' docs/status/README.md
+require_contains 'kernel scheduler dispatch report runner' docs/status/README.md
+require_contains 'kernel scheduler handoff guard' docs/status/README.md
+require_contains 'kernel scheduler handoff report runner' docs/status/README.md
 require_contains 'kernel process table guard' docs/status/README.md
 require_contains 'kernel process table report runner' docs/status/README.md
 require_contains 'kernel syscall table guard' docs/status/README.md
 require_contains 'kernel syscall table report runner' docs/status/README.md
-require_contains 'final_state=scheduler-credit-ready' docs/status/README.md
+require_contains 'final_state=scheduler-handoff-ready' docs/status/README.md
 require_contains 'external_effect_performed=0' docs/status/README.md
 require_contains 'runtime_entry_allowed=0' docs/status/README.md
 require_contains 'scheduler_execution_allowed=0' docs/status/README.md
+require_contains 'scheduler_selection_allowed=0' docs/status/README.md
+require_contains 'scheduler_dispatch_allowed=0' docs/status/README.md
+require_contains 'scheduler_handoff_allowed=0' docs/status/README.md
 require_contains 'memory_allocation_allowed=0' docs/status/README.md
 require_contains 'process_spawn_allowed=0' docs/status/README.md
 require_contains 'syscall_dispatch_allowed=0' docs/status/README.md
@@ -254,17 +287,24 @@ require_contains 'scheduler_credit_update_allowed=0' docs/status/README.md
 require_contains 'process_wake_allowed=0' docs/status/README.md
 require_contains 'dma_allowed=0' docs/status/README.md
 require_contains 'hardware_effect_allowed=0' docs/status/README.md
-require_contains '| Kernel lifecycle evidence | No-effect kernel lifecycle path reaches `scheduler-credit-ready` with guarded process-table/syscall-table metadata' README.md
+require_contains 'Add no-effect scheduler activation classifier' docs/status/README.md
+require_contains '| Kernel lifecycle evidence | No-effect kernel lifecycle path reaches `scheduler-handoff-ready` with guarded process-table/syscall-table metadata' README.md
 require_contains 'kernel_lifecycle_evidence_status_present=1' README.md
 require_contains 'kernel_run_queue_guard_present=1' README.md
 require_contains 'kernel_context_switch_guard_present=1' README.md
 require_contains 'kernel_time_accounting_guard_present=1' README.md
 require_contains 'kernel_preemption_guard_present=1' README.md
 require_contains 'kernel_scheduler_credit_guard_present=1' README.md
+require_contains 'kernel_scheduler_selection_guard_present=1' README.md
+require_contains 'kernel_scheduler_dispatch_guard_present=1' README.md
+require_contains 'kernel_scheduler_handoff_guard_present=1' README.md
 require_contains 'kernel_process_table_guard_present=1' README.md
 require_contains 'kernel_syscall_table_guard_present=1' README.md
-require_contains 'final_state=scheduler-credit-ready' README.md
+require_contains 'final_state=scheduler-handoff-ready' README.md
 require_contains 'runtime_entry_allowed=0' README.md
+require_contains 'scheduler_selection_allowed=0' README.md
+require_contains 'scheduler_dispatch_allowed=0' README.md
+require_contains 'scheduler_handoff_allowed=0' README.md
 require_contains 'process_spawn_allowed=0' README.md
 require_contains 'syscall_dispatch_allowed=0' README.md
 require_contains 'run_queue_mutation_allowed=0' README.md
@@ -275,6 +315,8 @@ require_contains 'preemption_allowed=0' README.md
 require_contains 'scheduler_credit_update_allowed=0' README.md
 require_contains 'hardware_effect_allowed=0' README.md
 require_contains 'docs/KERNEL_RUN_QUEUE_SEED.md' README.md
+require_contains 'docs/KERNEL_SCHEDULER_DISPATCH_SEED.md' README.md
+require_contains 'docs/KERNEL_SCHEDULER_HANDOFF_SEED.md' README.md
 require_contains 'docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md' README.md
 require_contains 'Latest kernel lifecycle evidence status note: 2026-05-26 CDT' STATUS.md
 require_contains 'Kernel run queue seed' STATUS.md
@@ -282,6 +324,9 @@ require_contains 'Kernel context switch seed' STATUS.md
 require_contains 'Kernel time accounting seed' STATUS.md
 require_contains 'Kernel preemption seed' STATUS.md
 require_contains 'Kernel scheduler credit seed' STATUS.md
+require_contains 'Kernel scheduler selection seed' STATUS.md
+require_contains 'Kernel scheduler dispatch seed' STATUS.md
+require_contains 'Kernel scheduler handoff seed' STATUS.md
 require_contains 'Kernel lifecycle rollback plan' STATUS.md
 require_contains 'Latest kernel lifecycle evidence status note: 2026-05-26 CDT' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel run queue seed' docs/status/CURRENT_STATUS.md
@@ -289,6 +334,9 @@ require_contains 'Kernel context switch seed' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel time accounting seed' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel preemption seed' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel scheduler credit seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel scheduler selection seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel scheduler dispatch seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel scheduler handoff seed' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel lifecycle rollback plan' docs/status/CURRENT_STATUS.md
 require_contains 'status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'KERNEL_RUN_QUEUE_SEED.md' docs/FOUNDATION_INDEX.md
@@ -296,6 +344,9 @@ require_contains 'KERNEL_CONTEXT_SWITCH_SEED.md' docs/FOUNDATION_INDEX.md
 require_contains 'KERNEL_TIME_ACCOUNTING_SEED.md' docs/FOUNDATION_INDEX.md
 require_contains 'KERNEL_PREEMPTION_SEED.md' docs/FOUNDATION_INDEX.md
 require_contains 'KERNEL_SCHEDULER_CREDIT_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_SCHEDULER_SELECTION_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_SCHEDULER_DISPATCH_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_SCHEDULER_HANDOFF_SEED.md' docs/FOUNDATION_INDEX.md
 require_contains 'sh scripts/test-kernel-ipc-table.sh' .github/workflows/kernel-ipc-table.yml
 require_contains 'sh scripts/test-kernel-ipc-table-report-runner.sh' .github/workflows/kernel-ipc-table.yml
 require_contains 'sh scripts/test-kernel-vfs-namespace.sh' .github/workflows/kernel-vfs-namespace.yml
@@ -320,6 +371,12 @@ require_contains 'sh scripts/test-kernel-preemption.sh' .github/workflows/kernel
 require_contains 'sh scripts/test-kernel-preemption-report-runner.sh' .github/workflows/kernel-preemption.yml
 require_contains 'sh scripts/test-kernel-scheduler-credit.sh' .github/workflows/kernel-scheduler-credit.yml
 require_contains 'sh scripts/test-kernel-scheduler-credit-report-runner.sh' .github/workflows/kernel-scheduler-credit.yml
+require_contains 'sh scripts/test-kernel-scheduler-selection.sh' .github/workflows/kernel-scheduler-selection.yml
+require_contains 'sh scripts/test-kernel-scheduler-selection-report-runner.sh' .github/workflows/kernel-scheduler-selection.yml
+require_contains 'sh scripts/test-kernel-scheduler-dispatch.sh' .github/workflows/kernel-scheduler-dispatch.yml
+require_contains 'sh scripts/test-kernel-scheduler-dispatch-report-runner.sh' .github/workflows/kernel-scheduler-dispatch.yml
+require_contains 'sh scripts/test-kernel-scheduler-handoff.sh' .github/workflows/kernel-scheduler-handoff.yml
+require_contains 'sh scripts/test-kernel-scheduler-handoff-report-runner.sh' .github/workflows/kernel-scheduler-handoff.yml
 require_contains 'sh scripts/test-kernel-process-table.sh' .github/workflows/kernel-process-table.yml
 require_contains 'sh scripts/test-kernel-process-table-report-runner.sh' .github/workflows/kernel-process-table.yml
 require_contains 'sh scripts/test-kernel-syscall-table.sh' .github/workflows/kernel-syscall-table.yml

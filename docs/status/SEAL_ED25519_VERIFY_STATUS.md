@@ -70,6 +70,7 @@ cryptographic_verification_performed=1
 verified=1
 invalid=0
 authority_usable=0
+ed25519_authority_usable=0
 capability_gate_allowed=0
 runtime_authority_granted=0
 mode=verify-only-authority-neutral

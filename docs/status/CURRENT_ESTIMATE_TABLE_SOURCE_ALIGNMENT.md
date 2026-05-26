@@ -52,7 +52,7 @@ LIR / Intermediate Representation: 24%
 C/C++ foundation direction: 22%
 Constrained C++ authority layer: 5%
 Nucleus real task execution: 12%
-Runtime / operating-system-universe direction: 25%
+Runtime / operating-system-universe direction: 26%
 Security-hardening implementation: 9%
 Public product readiness: 10%
 ```

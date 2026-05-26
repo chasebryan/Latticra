@@ -27,9 +27,32 @@ opensuse_rpmlint_findings_classification_present=1
 opensuse_source_archive_reproducibility_contract_present=1
 opensuse_source_archive_fixture_lane_present=1
 opensuse_rpm_topdir_handoff_lane_present=1
+opensuse_local_rpm_build_gate_contract_present=1
+opensuse_local_rpm_build_environment_contract_present=1
+opensuse_rpm_artifact_naming_contract_present=1
 temporary_rpm_topdir_handoff_lane_present=1
+opensuse_rpm_build_gate_state=closed-no-effect
+opensuse_rpm_build_environment_contract_state=specified-no-effect
+opensuse_rpm_artifact_naming_contract_state=specified-no-effect
+rpm_artifact_naming_contract_present=1
+opensuse_clean_build_environment_documented=1
+opensuse_target_distribution_documented=1
+osc_build_environment_documented=1
+opensuse_build_environment_provisioned=0
+osc_build_environment_provisioned=0
+explicit_operator_build_authorization=0
+disposable_validation_environment_required=1
+disposable_validation_environment_provisioned=0
+environment_transcript_present=0
+rpmbuild_allowed=0
+osc_build_allowed=0
+spec_cleaner_allowed=0
 rpm_artifact_created=0
 rpm_installed_on_host=0
+rpmbuild_run=0
+rpmbuild_ba_run=0
+rpmbuild_bb_run=0
+rpmbuild_bs_run=0
 osc_build_run=0
 accepted_rpmlint_transcript_present=0
 expected_draft_findings_count_recorded=0
@@ -49,6 +72,15 @@ temporary_rpm_specs_spec_staged=1
 temporary_rpm_specs_changes_staged=1
 temporary_rpm_source_sha256_preserved=1
 temporary_rpm_source_listing_preserved=1
+rpm_source_artifact_name_pattern_recorded=1
+rpm_binary_artifact_name_pattern_recorded=1
+rpm_source_package_name=latticra-0.0.0-0.local.src.rpm
+rpm_binary_package_name_pattern=latticra-0.0.0-0.local.${RPM_ARCH}.rpm
+repository_rpm_artifact_write_allowed=0
+source_rpm_artifact_created=0
+binary_rpm_artifact_created=0
+rpm_artifact_sha256_recorded=0
+rpm_artifact_published=0
 spec_cleaner_run=0
 rpmlint_package_readiness_claimed=0
 opensuse_obs_publication_claimed=0
@@ -72,6 +104,9 @@ docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
+docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
+docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
 docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 packaging/opensuse/README.md
 packaging/opensuse/latticra.spec
@@ -84,6 +119,9 @@ scripts/test-opensuse-rpmlint-findings-classification.sh
 scripts/test-opensuse-source-archive-reproducibility-contract.sh
 scripts/test-opensuse-source-archive-fixture-lane.sh
 scripts/test-opensuse-rpm-topdir-handoff-lane.sh
+scripts/test-opensuse-local-rpm-build-gate-contract.sh
+scripts/test-opensuse-local-rpm-build-environment-contract.sh
+scripts/test-opensuse-rpm-artifact-naming-contract.sh
 .github/workflows/opensuse-developer-workflow.yml
 .github/workflows/opensuse-local-rpm-static-validation.yml
 .github/workflows/opensuse-rpmlint-osc-availability.yml
@@ -92,6 +130,9 @@ scripts/test-opensuse-rpm-topdir-handoff-lane.sh
 .github/workflows/opensuse-source-archive-reproducibility-contract.yml
 .github/workflows/opensuse-source-archive-fixture-lane.yml
 .github/workflows/opensuse-rpm-topdir-handoff-lane.yml
+.github/workflows/opensuse-local-rpm-build-gate-contract.yml
+.github/workflows/opensuse-local-rpm-build-environment-contract.yml
+.github/workflows/opensuse-rpm-artifact-naming-contract.yml
 ```
 
 ## Public Entry Points
@@ -123,8 +164,14 @@ The openSUSE source archive fixture lane creates two temporary archive fixtures,
 
 The openSUSE RPM topdir handoff lane stages the verified temporary source archive and local-only spec files into a disposable RPM topdir. It does not run `rpmbuild`, run `osc build`, create source RPM or binary RPM artifacts, publish to Open Build Service, or claim package readiness.
 
+The openSUSE local RPM build gate contract keeps `rpmbuild`, `osc build`, `spec-cleaner`, package artifact creation, host installation, and Open Build Service publication blocked until source acceptance, lint classification, license, notice, BuildRequires, environment, authorization, payload inspection, install/remove, and OBS non-claim evidence exists.
+
+The openSUSE local RPM build environment contract documents disposable openSUSE build environment requirements while keeping environment provisioning, operator authorization, `rpmbuild`, `osc build`, `spec-cleaner`, package artifacts, host installation, and Open Build Service publication disabled.
+
+The openSUSE RPM artifact naming contract records future source RPM and binary RPM names and disposable output boundaries while keeping repository RPM artifact writes, checksum claims, artifact creation, host installation, and Open Build Service publication disabled.
+
 ## Next Recommended Lane
 
 ```text
-Add openSUSE local RPM build evidence gate contract before any rpmbuild or osc build command can run.
+Add openSUSE RPM payload inspection contract before any RPM artifact can be accepted.
 ```

@@ -61,10 +61,10 @@ require_contains 'Overall Latticra system: 45%' "$record"
 require_contains 'Nadia offline AI foundation: 74%' "$record"
 require_contains 'Public product readiness: 10%' "$record"
 require_contains 'sh scripts/test-current-estimate-table-source-alignment.sh' "$record"
-require_contains 'weighted_sum=4454' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
-require_contains 'overall_estimate=round(4454 / 100)=45' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
+require_contains 'weighted_sum=4462' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
+require_contains 'overall_estimate=round(4462 / 100)=45' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
 require_contains '| Nadia offline AI foundation | 70% | 74% |' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
-require_contains '| Runtime / operating-system-universe direction | 19% | 25% |' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
+require_contains '| Runtime / operating-system-universe direction | 19% | 26% |' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
 
 require_contains '| Estimate source | Current public estimate table below, mirrored from `STATUS.md` and `docs/status/CURRENT_STATUS.md` |' README.md
 require_contains 'Current public estimate table, as summarized by [`STATUS.md`](STATUS.md) and [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md):' README.md
@@ -87,7 +87,7 @@ for file in README.md STATUS.md docs/status/CURRENT_STATUS.md; do
   require_contains '| C/C++ foundation direction | 22% |' "$file"
   require_contains '| Constrained C++ authority layer | 5% |' "$file"
   require_contains '| Nucleus real task execution | 12% |' "$file"
-  require_contains '| Runtime / operating-system-universe direction | 25% |' "$file"
+  require_contains '| Runtime / operating-system-universe direction | 26% |' "$file"
   require_contains '| Security-hardening implementation | 9% |' "$file"
   require_contains '| Public product readiness | 10% |' "$file"
 done

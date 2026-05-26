@@ -64,5 +64,12 @@ require_contains 'handoff_mode=metadata-only' "$product_doc"
 require_contains 'enforce_mode=future-closed' "$product_doc"
 require_contains 'production_security_product=0' "$product_doc"
 require_contains 'runtime_authority_granted=0' "$product_doc"
+require_contains 'operator_receipt_report_implementation_plan_present=1' "$product_doc"
+require_contains 'operator_receipt_report_implementation_present=1' "$product_doc"
+require_contains 'operator_receipt_report_surface_present=1' "$product_doc"
+require_contains 'operator_receipt_report_status_present=1' "$product_doc"
+require_contains 'bundled operator receipt report contract, implementation plan, implementation, report surface, and status record' "$status_file"
+require_contains 'Panel-visible Seal dashboard planning checkpoint' "$status_file"
+require_contains 'local capability registry schema contract' "$status_file"
 
 printf 'latticra seal product spine status: ok\n'

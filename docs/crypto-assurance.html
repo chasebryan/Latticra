@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cryptographic Assurance and Key Management | Latticra</title>
+  <meta name="description" content="A public overview of Latticra cryptographic assurance and key-management gates, FIPS/CMVP claim boundaries, key lifecycle requirements, randomness review, and production crypto non-claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Cryptographic Assurance and Key Management">
+  <meta property="og:description" content="FIPS/CMVP claim gates, key lifecycle, randomness, self-tests, post-quantum planning, and no production crypto claims.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero security-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Cryptographic assurance and key management</p>
+        <p class="eyebrow">FIPS, Keys, Randomness, and Non-Claims</p>
+        <h1>Cryptographic assurance and key management</h1>
+        <p class="page-lede">
+          Latticra records the evidence required before production cryptography, signing, key storage, FIPS/CMVP claims, randomness, or post-quantum migration wording can promote. It does not implement production crypto or grant signing authority.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell security-intro">
+        <div>
+          <p class="eyebrow">Current Rule</p>
+          <h2>Crypto metadata is not signing authority.</h2>
+        </div>
+        <p>
+          The baseline names cryptographic module boundaries, approved algorithm and parameter inventories, key lifecycle contracts, randomness review, self-test behavior, sensitive-data handling, and post-quantum planning as prerequisites. Until those records are complete and validated, crypto-facing records remain metadata and non-claim language.
+        </p>
+      </div>
+
+      <div class="content-shell security-rule-grid" aria-label="Cryptographic assurance gate overview">
+        <article>
+          <span>01</span>
+          <h3>Module boundary</h3>
+          <p>Any future production crypto needs a named module boundary, interface inventory, approved algorithms, parameters, and security-strength records.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Key lifecycle</h3>
+          <p>Key types, generation, storage, access control, rotation, expiration, zeroization, compromise response, and metadata protection must be explicit.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Randomness and self-tests</h3>
+          <p>Entropy source, DRBG or random-bit generator, startup self-tests, continuous checks, and failure behavior require written review.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Post-quantum planning</h3>
+          <p>Migration wording needs an inventory of affected algorithms, dependencies, transition rules, and operator-visible non-claims.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Current Snapshot</p>
+        <h2>The baseline exists to keep crypto claims closed.</h2>
+        <p>
+          These fields are a claim boundary. They show that requirements are tracked, while production cryptography, signing authority, and FIPS claims remain unavailable.
+        </p>
+      </div>
+      <div class="content-shell report-grid" aria-label="Cryptographic assurance status snapshot">
+        <article>
+          <span>cryptographic_assurance_key_management_baseline</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>fips_140_3_boundary_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>validated_module_claim_requires_certificate</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>key_lifecycle_contract_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>seal_crypto_metadata_only_current</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>production_crypto_added</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>signing_authority_granted</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>fips_claim_allowed</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell security-split">
+        <div class="section-heading">
+          <p class="eyebrow">Promotion Gate</p>
+          <h2>No crypto-facing wording can promote without the required evidence.</h2>
+          <p>
+            A future cryptographic capability needs evidence that covers module scope, algorithm choices, key material, randomness, failure behavior, validation status, and public non-claims before it can affect release wording.
+          </p>
+        </div>
+        <div class="security-table" role="table" aria-label="Cryptographic assurance promotion gate">
+          <div role="row">
+            <span role="cell">Present now</span>
+            <p role="cell">Baseline record, status record, guard script, source references, Seal metadata-only records, and public non-claim wording.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Required before promotion</span>
+            <p role="cell">Module boundary, interface inventory, algorithm and parameter inventory, key lifecycle and storage contract, access control, zeroization, compromise response, entropy and DRBG review, self-test failure behavior, sensitive-data logging review, side-channel review, validation certificate or non-FIPS disclosure, post-quantum inventory, and operator-visible non-claims.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Denied now</span>
+            <p role="cell">Production cryptography, FIPS/CMVP claims, release signing, update signing, receipt signing, key generation, key storage, key derivation, entropy collection, random-bit generation, post-quantum migration claims, and cryptographic module validation claims.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Seal Crypto Boundary</p>
+        <h2>Seal records crypto-facing metadata without becoming crypto enforcement.</h2>
+        <p>
+          Seal can describe verification posture and denied authority, but the current records do not create a production signing path, key store, validated module, or runtime enforcement boundary.
+        </p>
+      </div>
+      <div class="content-shell security-effect-grid">
+        <article class="effect-guarded">
+          <span>Metadata</span>
+          <h3>Verify backend</h3>
+          <p>The current crypto verify backend status is metadata-only and does not claim production verification.</p>
+        </article>
+        <article class="effect-guarded">
+          <span>Verify only</span>
+          <h3>Ed25519 posture</h3>
+          <p>Ed25519 records stay authority-neutral and do not create signing or update authority.</p>
+        </article>
+        <article class="effect-blocked">
+          <span>Closed</span>
+          <h3>Signing and key material</h3>
+          <p>Signing, key material handling, key storage, key generation, and release/update signatures remain unavailable.</p>
+        </article>
+        <article class="effect-blocked">
+          <span>Closed</span>
+          <h3>Production enforcement</h3>
+          <p>No runtime authority, FIPS claim, CMVP claim, production crypto enforcement, or external endorsement is granted.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Commands</p>
+        <h2>Validate the records without enabling crypto behavior.</h2>
+        <p>
+          These commands check that public records, status fields, and safety gates stay aligned. They do not generate keys, sign artifacts, collect entropy, or perform validation submissions.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Crypto baseline</h3>
+          <pre><code>sh scripts/test-cryptographic-assurance-key-management-baseline.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>High-assurance rollup</h3>
+          <pre><code>sh scripts/test-high-assurance-security-baseline.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Runtime authority gate</h3>
+          <pre><code>sh scripts/test-zero-trust-runtime-authority-baseline.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Use exact records before repeating crypto assurance wording.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md"><strong>Cryptographic assurance and key management baseline</strong><span>FIPS/CMVP claim gates, algorithm inventory, key lifecycle, randomness, post-quantum planning, and no production crypto claims.</span></a>
+        <a href="status/CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE_STATUS.md"><strong>Crypto assurance status</strong><span>Status fields and expected guard output for the cryptographic assurance baseline.</span></a>
+        <a href="HIGH_ASSURANCE_SECURITY_BASELINE.md"><strong>High-assurance baseline</strong><span>Source-tracked security posture and future cryptographic control allocation.</span></a>
+        <a href="LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_CONTRACT.md"><strong>Seal crypto verify contract</strong><span>Metadata-only verification boundary and unsupported production crypto posture.</span></a>
+        <a href="LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_IMPLEMENTATION.md"><strong>Seal crypto verify implementation</strong><span>Implementation record for the current crypto verify backend boundary.</span></a>
+        <a href="status/SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md"><strong>Seal crypto verify status</strong><span>Status field showing the current unsupported crypto verify state.</span></a>
+        <a href="status/SEAL_ED25519_VERIFY_STATUS.md"><strong>Seal Ed25519 verify status</strong><span>Authority-neutral Ed25519 verify posture and non-signing status.</span></a>
+        <a href="seal.html"><strong>Seal overview</strong><span>Report-only evidence, policy denial, dry-run posture, and authority boundaries.</span></a>
+        <a href="supply-chain.html"><strong>Supply-chain gates</strong><span>Release authority, signing, SBOM, update delivery, and runtime authority blockers.</span></a>
+        <a href="vulnerability-management.html"><strong>Vulnerability management gate</strong><span>KEV/NVD review, exception records, release blockers, and product-security non-claims.</span></a>
+        <a href="security.html"><strong>Security overview</strong><span>Safe testing, effect gates, runtime boundary, and security non-claims.</span></a>
+        <a href="evidence.html"><strong>Evidence model</strong><span>Promotion levels, public claim boundaries, and exact source records.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra cryptographic assurance and key management.</span>
+      <span><a href="security.html">Open security overview</a></span>
+    </div>
+  </footer>
+</body>
+</html>

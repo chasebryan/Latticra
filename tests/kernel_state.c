@@ -40,6 +40,8 @@ static int default_request_denies_state_change(void) {
         "default does not change state");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "no external effect");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "default network denied");
     EXPECT_TRUE(result.denied == 1,
         "denied flag set");
     return 0;
@@ -71,6 +73,8 @@ static int allowed_transition_changes_state(void) {
         "state change performed");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "external effect remains absent");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "allowed transition network denied");
     EXPECT_TRUE(result.denied == 0,
         "not denied");
     EXPECT_TRUE(strcmp(result.memory_map.map_status, "memory-map-seed-ready") == 0,
@@ -120,6 +124,8 @@ static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_qu
         "syscall file I/O denied");
     EXPECT_TRUE(result.syscall_table.network_allowed == 0,
         "syscall network denied");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "syscall transition aggregate network denied");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "syscall transition no external effect");
     EXPECT_TRUE(result.denied == 0,
@@ -146,6 +152,10 @@ static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_qu
         "ipc queue mutation denied");
     EXPECT_TRUE(result.ipc_table.endpoint_bind_allowed == 0,
         "ipc endpoint bind denied");
+    EXPECT_TRUE(result.ipc_table.network_allowed == 0,
+        "ipc network denied");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "ipc transition aggregate network denied");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "ipc transition no external effect");
     EXPECT_TRUE(result.denied == 0,
@@ -533,6 +543,119 @@ static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_qu
         "scheduler credit transition no external effect");
     EXPECT_TRUE(result.denied == 0,
         "scheduler credit transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler selection transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY,
+        "next scheduler-selection-ready");
+    EXPECT_TRUE(strcmp(result.scheduler_selection.selection_status,
+            "scheduler-selection-seed-ready") == 0,
+        "scheduler selection ready");
+    EXPECT_TRUE(strcmp(result.scheduler_credit.credit_status,
+            "scheduler-credit-seed-ready") == 0,
+        "scheduler selection transition keeps scheduler credit ready");
+    EXPECT_TRUE(strcmp(result.preemption.preemption_status,
+            "preemption-seed-ready") == 0,
+        "scheduler selection transition keeps preemption ready");
+    EXPECT_TRUE(result.scheduler_selection.selection_count == 4u,
+        "scheduler selection count");
+    EXPECT_TRUE(result.scheduler_selection.scheduler_selection_allowed == 0,
+        "scheduler selection denied");
+    EXPECT_TRUE(result.scheduler_selection.dispatch_allowed == 0,
+        "scheduler selection dispatch denied");
+    EXPECT_TRUE(result.scheduler_selection.run_queue_mutation_allowed == 0,
+        "scheduler selection run queue mutation denied");
+    EXPECT_TRUE(result.scheduler_selection.context_switch_allowed == 0,
+        "scheduler selection context switch denied");
+    EXPECT_TRUE(result.scheduler_selection.scheduler_credit_update_allowed == 0,
+        "scheduler selection credit update denied");
+    EXPECT_TRUE(result.scheduler_selection.process_wake_allowed == 0,
+        "scheduler selection process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "scheduler selection transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "scheduler selection transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler dispatch transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY,
+        "next scheduler-dispatch-ready");
+    EXPECT_TRUE(strcmp(result.scheduler_dispatch.dispatch_status,
+            "scheduler-dispatch-seed-ready") == 0,
+        "scheduler dispatch ready");
+    EXPECT_TRUE(strcmp(result.scheduler_selection.selection_status,
+            "scheduler-selection-seed-ready") == 0,
+        "scheduler dispatch transition keeps scheduler selection ready");
+    EXPECT_TRUE(strcmp(result.scheduler_credit.credit_status,
+            "scheduler-credit-seed-ready") == 0,
+        "scheduler dispatch transition keeps scheduler credit ready");
+    EXPECT_TRUE(result.scheduler_dispatch.dispatch_count == 4u,
+        "scheduler dispatch count");
+    EXPECT_TRUE(result.scheduler_dispatch.scheduler_dispatch_allowed == 0,
+        "scheduler dispatch denied");
+    EXPECT_TRUE(result.scheduler_dispatch.scheduler_selection_allowed == 0,
+        "scheduler dispatch selection denied");
+    EXPECT_TRUE(result.scheduler_dispatch.dispatch_allowed == 0,
+        "scheduler dispatch dispatch denied");
+    EXPECT_TRUE(result.scheduler_dispatch.run_queue_mutation_allowed == 0,
+        "scheduler dispatch run queue mutation denied");
+    EXPECT_TRUE(result.scheduler_dispatch.context_switch_allowed == 0,
+        "scheduler dispatch context switch denied");
+    EXPECT_TRUE(result.scheduler_dispatch.scheduler_credit_update_allowed == 0,
+        "scheduler dispatch credit update denied");
+    EXPECT_TRUE(result.scheduler_dispatch.process_wake_allowed == 0,
+        "scheduler dispatch process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "scheduler dispatch transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "scheduler dispatch transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler handoff transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY,
+        "next scheduler-handoff-ready");
+    EXPECT_TRUE(strcmp(result.scheduler_handoff.handoff_status,
+            "scheduler-handoff-seed-ready") == 0,
+        "scheduler handoff ready");
+    EXPECT_TRUE(strcmp(result.scheduler_dispatch.dispatch_status,
+            "scheduler-dispatch-seed-ready") == 0,
+        "scheduler handoff transition keeps scheduler dispatch ready");
+    EXPECT_TRUE(strcmp(result.scheduler_selection.selection_status,
+            "scheduler-selection-seed-ready") == 0,
+        "scheduler handoff transition keeps scheduler selection ready");
+    EXPECT_TRUE(result.scheduler_handoff.handoff_count == 4u,
+        "scheduler handoff count");
+    EXPECT_TRUE(result.scheduler_handoff.scheduler_handoff_allowed == 0,
+        "scheduler handoff denied");
+    EXPECT_TRUE(result.scheduler_handoff.scheduler_dispatch_allowed == 0,
+        "scheduler handoff dispatch denied");
+    EXPECT_TRUE(result.scheduler_handoff.scheduler_selection_allowed == 0,
+        "scheduler handoff selection denied");
+    EXPECT_TRUE(result.scheduler_handoff.dispatch_allowed == 0,
+        "scheduler handoff dispatch authority denied");
+    EXPECT_TRUE(result.scheduler_handoff.run_queue_mutation_allowed == 0,
+        "scheduler handoff run queue mutation denied");
+    EXPECT_TRUE(result.scheduler_handoff.context_switch_allowed == 0,
+        "scheduler handoff context switch denied");
+    EXPECT_TRUE(result.scheduler_handoff.scheduler_credit_update_allowed == 0,
+        "scheduler handoff credit update denied");
+    EXPECT_TRUE(result.scheduler_handoff.process_wake_allowed == 0,
+        "scheduler handoff process wake denied");
+    EXPECT_TRUE(result.scheduler_handoff.no_effect == 1,
+        "scheduler handoff no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "scheduler handoff transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "scheduler handoff transition not denied");
     return 0;
 }
 
@@ -618,6 +741,12 @@ static int report_records_state_change(void) {
         "state change emitted");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "external effect emitted");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0,
+        "network flag emitted");
+    EXPECT_TRUE(strstr(report, "syscall_network_allowed=0\n") != 0,
+        "syscall network flag emitted");
+    EXPECT_TRUE(strstr(report, "ipc_network_allowed=0\n") != 0,
+        "ipc network flag emitted");
     EXPECT_TRUE(strstr(report, "denied=0\n") != 0,
         "denied emitted");
     EXPECT_TRUE(strstr(report, "memory_map_status=memory-map-seed-ready\n") != 0,
@@ -651,6 +780,10 @@ static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_
         "syscall table emitted");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "syscall report external effect emitted");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0,
+        "syscall report aggregate network emitted");
+    EXPECT_TRUE(strstr(report, "syscall_network_allowed=0\n") != 0,
+        "syscall report network emitted");
 
     request.current_state = LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY;
     request.target_state = LATTICRA_KERNEL_STATE_IPC_TABLE_READY;
@@ -670,6 +803,10 @@ static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_
         "ipc syscall table emitted");
     EXPECT_TRUE(strstr(report, "ipc_table_status=ipc-table-seed-ready\n") != 0,
         "ipc table emitted");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0,
+        "ipc report aggregate network emitted");
+    EXPECT_TRUE(strstr(report, "ipc_network_allowed=0\n") != 0,
+        "ipc report network emitted");
 
     request.current_state = LATTICRA_KERNEL_STATE_IPC_TABLE_READY;
     request.target_state = LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY;
@@ -864,6 +1001,63 @@ static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_
     EXPECT_TRUE(strstr(report,
             "scheduler_credit_status=scheduler-credit-seed-ready\n") != 0,
         "scheduler credit emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler selection transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "scheduler selection report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=scheduler-credit-ready\n") != 0,
+        "scheduler credit previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=scheduler-selection-ready\n") != 0,
+        "scheduler selection next emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_credit_status=scheduler-credit-seed-ready\n") != 0,
+        "scheduler selection report credit emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_selection_status=scheduler-selection-seed-ready\n") != 0,
+        "scheduler selection emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler dispatch transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "scheduler dispatch report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=scheduler-selection-ready\n") != 0,
+        "scheduler selection previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=scheduler-dispatch-ready\n") != 0,
+        "scheduler dispatch next emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_selection_status=scheduler-selection-seed-ready\n") != 0,
+        "scheduler dispatch report selection emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_dispatch_status=scheduler-dispatch-seed-ready\n") != 0,
+        "scheduler dispatch emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler handoff transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "scheduler handoff report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=scheduler-dispatch-ready\n") != 0,
+        "scheduler dispatch previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=scheduler-handoff-ready\n") != 0,
+        "scheduler handoff next emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_dispatch_status=scheduler-dispatch-seed-ready\n") != 0,
+        "scheduler handoff report dispatch emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_handoff_status=scheduler-handoff-seed-ready\n") != 0,
+        "scheduler handoff emitted");
     return 0;
 }
 

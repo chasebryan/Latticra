@@ -29,7 +29,7 @@ docs/KERNEL_LIFECYCLE_SEED.md
 The default lifecycle target is:
 
 ```text
-scheduler-credit-ready
+scheduler-handoff-ready
 ```
 
 The approved sequence is:
@@ -53,6 +53,9 @@ run-queue-ready -> context-switch-ready
 context-switch-ready -> time-accounting-ready
 time-accounting-ready -> preemption-ready
 preemption-ready -> scheduler-credit-ready
+scheduler-credit-ready -> scheduler-selection-ready
+scheduler-selection-ready -> scheduler-dispatch-ready
+scheduler-dispatch-ready -> scheduler-handoff-ready
 ```
 
 ## Controlled effect boundary
@@ -62,7 +65,7 @@ This slice allows internal state-machine mutation only.
 The result may report:
 
 ```text
-state_change_count=18
+state_change_count=21
 lifecycle_complete=1
 ```
 
@@ -96,12 +99,12 @@ The guard verifies:
 LATTICRA KERNEL LIFECYCLE REPORT
 lifecycle_status=lifecycle-complete
 policy_status=gate-allowed
-final_state=scheduler-credit-ready
-step_count=18
-state_change_count=18
+final_state=scheduler-handoff-ready
+step_count=21
+state_change_count=21
 lifecycle_complete=1
 external_effect_performed=0
-machine_log_count=18
+machine_log_count=21
 evidence_level=10
 ```
 
@@ -127,7 +130,7 @@ The guards verify:
 
 ```text
 default request is denied
-allowed lifecycle reaches scheduler-credit-ready
+allowed lifecycle reaches scheduler-handoff-ready
 intermediate target stops correctly
 step limit is respected
 report includes lifecycle completion and transition log
@@ -155,6 +158,9 @@ timer arming
 preemption
 quota updates
 scheduler credit updates
+scheduler selection
+scheduler dispatch
+scheduler handoff
 time reads
 scheduler execution
 memory allocation

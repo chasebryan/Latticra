@@ -90,7 +90,7 @@ latticra_panel_signed_updater_denial_transcript: ok
 ## Next Recommended Lane
 
 ```text
-Add a Panel signed-updater manifest fixture contract that remains local and no-effect.
+Add Panel signed-updater state fixture validation without enabling transition execution or update apply.
 ```
 
 ## Non-Claims

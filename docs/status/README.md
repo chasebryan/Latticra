@@ -28,6 +28,9 @@ non-claims
 - [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) - current mathematical planning-estimate rebase after recent guarded status, packaging, macOS, Nadia, Lat/LIR, and public-entry alignment slices.
 - [`HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md`](HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md) - High-assurance security baseline status for official-source review requirements before runtime execution, effect execution, host behavior, network behavior, cryptographic enforcement, compliance claims, certification claims, production protection claims, or runtime authority.
 - [`CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE_STATUS.md`](CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE_STATUS.md) - Cyber incident reporting and response baseline status for vulnerability reports, suspected compromise triage, reporting paths, evidence preservation, communications routing, and incident-response non-claims. Field: `cyber_incident_reporting_response_baseline_present=1`.
+- [`VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE_STATUS.md`](VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE_STATUS.md) - Vulnerability management release gate baseline status for CISA KEV review, NVD/CVE review, disclosure handling, release blocking, and no product-security claims. Field: `vulnerability_management_release_gate_baseline_present=1`.
+- [`CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE_STATUS.md`](CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE_STATUS.md) - Cryptographic assurance and key-management baseline status for FIPS/CMVP claim gates, algorithm inventory, key lifecycle, randomness, post-quantum planning, and no production crypto claims. Field: `cryptographic_assurance_key_management_baseline_present=1`.
+- [`IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE_STATUS.md`](IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE_STATUS.md) - Identity, credential, and access management baseline status for privileged access, phishing-resistant MFA planning, account lifecycle, service identity, identity logging, and no hosted identity/access claims. Field: `identity_credential_access_management_baseline_present=1`.
 - [`SUPPLY_CHAIN_SECURITY_BASELINE_STATUS.md`](SUPPLY_CHAIN_SECURITY_BASELINE_STATUS.md) - Supply-chain security baseline status for repository, CI, dependency, package, installer, artifact, SBOM, release, and update-lane posture before release publishing, signing authority, production installer claims, compliance claims, or certification claims.
 - [`ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE_STATUS.md`](ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE_STATUS.md) - zero-trust runtime authority baseline status for future runtime, tool, host I/O, network, server/MCP, update, recovery, boot, hardware, agentic automation, and authority-bearing request paths.
 - [`MEMORY_SAFETY_ROADMAP_STATUS.md`](MEMORY_SAFETY_ROADMAP_STATUS.md) - Memory-safety roadmap status for component inventory, restricted C/C++ profile requirements, fuzzing prerequisites, and no current production protection claims.
@@ -39,6 +42,9 @@ non-claims
 - [`LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md) - Latticra Panel local install public-entrypoint alignment after the Fedora Workstation user-local install evidence milestone.
 - [`LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE_STATUS.md`](LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE_STATUS.md) - Latticra Panel closed signed updater delivery gate status for future update delivery work without network fetch, remote repository trust, or signed update apply authority.
 - [`LATTICRA_PANEL_SIGNED_UPDATER_DENIAL_TRANSCRIPT_STATUS.md`](LATTICRA_PANEL_SIGNED_UPDATER_DENIAL_TRANSCRIPT_STATUS.md) - Latticra Panel no-effect signed updater denial transcript status for the closed signed-updater delivery gate.
+- [`LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_CONTRACT_STATUS.md`](LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_CONTRACT_STATUS.md) - Latticra Panel local no-effect signed updater manifest fixture contract status for future validation work without trusted update delivery or apply authority.
+- [`LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_VALIDATION_STATUS.md`](LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_VALIDATION_STATUS.md) - Latticra Panel local no-effect signed updater manifest fixture validation status for shape and closed-authority field checks without trusted update delivery or apply authority.
+- [`LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_CONTRACT_STATUS.md`](LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_CONTRACT_STATUS.md) - Latticra Panel local no-effect signed updater state fixture contract status for future state naming without transition execution, staging, activation, rollback execution, receipt writes, or host mutation.
 - [`LATTICRA_PANEL_UI_DESIGN_CHECKPOINT.md`](LATTICRA_PANEL_UI_DESIGN_CHECKPOINT.md) - Latticra Panel UI design checkpoint for the current product surface review.
 - [`MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md`](MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md) - macOS integration transferability status for adapting current no-effect, receipt-first, user-local Latticra surfaces into a future macOS lane.
 - [`MACOS_BUILD_PLATFORM_PROBE_STATUS.md`](MACOS_BUILD_PLATFORM_PROBE_STATUS.md) - macOS build/platform probe status for no-effect toolchain, architecture, Panel-readiness, and C-test-readiness reporting.
@@ -71,6 +77,10 @@ non-claims
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_TRANSCRIPT_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_TRANSCRIPT_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial transcript contract status for recording the closed acceptance gate without dispatch, deletion, receipts, absence reports, host mutation, network access, root authority, or runtime authority.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_REVIEW_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_REVIEW_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial review contract status for reviewing the closed acceptance gate while preserving zero dispatch, deletion, receipts, mutation, network, root, and runtime authority.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition contract status for recording the reviewed closed-gate denial without dispatch, deletion, receipts, mutation, network, root, or runtime authority.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_REVIEW_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_REVIEW_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition review contract status for reviewing the no-effect disposition while preserving zero dispatch, deletion, receipts, mutation, network, root, runtime authority, disposition application, and runner release.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout contract status for closing the no-effect disposition while preserving zero dispatch, deletion, receipts, mutation, network, root, runtime authority, runner release, and audit opening.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit contract status for auditing the no-effect closeout while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, audit review opening, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review contract status for reviewing the no-effect closeout audit while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, next disposition, and implementation claims.
 - [`MACOS_README_INSTALLER_USAGE_STATUS.md`](MACOS_README_INSTALLER_USAGE_STATUS.md) - macOS README installer usage status for documenting current Mac-specific no-effect installer commands, target paths, and closed commit-gate posture.
 - [`NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](NADIA_OFFLINE_AI_STAGE_0_STATUS.md) - Nadia offline AI Stage-0 foundation status for Panel installability, Console interoperability, and awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) - Nadia Stage-1 local context-engine status for no-network context-pack generation.
@@ -114,6 +124,8 @@ non-claims
 - [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_39_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_39_STATUS.md) - Nadia Stage-39 prompt-evaluation result release receipt review disposition release receipt contract status before release-receipt recording, receipt signing, receipt publication, disposition-release recording, release publication, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_40_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_40_STATUS.md) - Nadia Stage-40 prompt-evaluation result release receipt review disposition release receipt review contract status before review-disposition-release receipt recording, receipt emission, receipt signing, receipt publication, review recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_41_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_41_STATUS.md) - Nadia Stage-41 prompt-evaluation result release receipt review disposition release receipt review disposition contract status before release-receipt-review-disposition records, review decisions, review findings, receipt signing, receipt publication, receipt packaging, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_42_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_42_STATUS.md) - Nadia Stage-42 prompt-evaluation result release receipt review disposition release receipt review disposition release contract status before disposition-release recording, release decisions, release publication, release packaging, release receipt creation, disposition recording, review recording, receipt recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_43_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_43_STATUS.md) - Nadia Stage-43 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt contract status before release-receipt records, receipt emission, receipt signing, receipt publication, release records, review records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
 - [`../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md`](../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md) — defensive threat model validation refinement.
 - [`../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`](../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md) — runtime boundary policy expansion after threat-model validation.
@@ -129,6 +141,11 @@ non-claims
 - [`SEAL_AGENTIC_AUTOMATION_SECURITY_INDEX_ALIGNMENT.md`](SEAL_AGENTIC_AUTOMATION_SECURITY_INDEX_ALIGNMENT.md) — Latticra Seal agentic automation security index alignment.
 - [`SEAL_AGENTIC_AUTOMATION_SECURITY_STATUS.md`](SEAL_AGENTIC_AUTOMATION_SECURITY_STATUS.md) — Latticra Seal agentic automation security metadata status.
 - [`SEAL_PRODUCT_SPINE_STATUS.md`](SEAL_PRODUCT_SPINE_STATUS.md) — Latticra Seal product-spine status for the current observe, verify, decide, handoff, and future-closed enforce posture.
+- [`../LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_CONTRACT.md`](../LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_CONTRACT.md) — Latticra Seal operator receipt report contract.
+- [`../LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION_PLAN.md`](../LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION_PLAN.md) — Latticra Seal operator receipt report implementation plan.
+- [`../LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md`](../LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md) — Latticra Seal operator receipt report implementation.
+- [`../LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SURFACE.md`](../LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SURFACE.md) — Latticra Seal operator receipt report surface.
+- [`SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md`](SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md) — Latticra Seal operator receipt report status.
 - [`SEAL_STATUS_ROLLUP_STATUS.md`](SEAL_STATUS_ROLLUP_STATUS.md) — Latticra Seal status rollup metadata status and public-entry checkpoint.
 - [`SEAL_RUNTIME_HANDOFF_STATUS.md`](SEAL_RUNTIME_HANDOFF_STATUS.md) — Latticra Seal runtime handoff metadata status and public-entry checkpoint.
 - [`SEAL_EFFECT_DECISION_STATUS.md`](SEAL_EFFECT_DECISION_STATUS.md) — Latticra Seal effect decision metadata status and public-entry checkpoint.
@@ -137,7 +154,9 @@ non-claims
 - [`SEAL_VERIFICATION_RECEIPT_STATUS.md`](SEAL_VERIFICATION_RECEIPT_STATUS.md) — Latticra Seal verification receipt metadata status and public-entry checkpoint.
 - [`SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md`](SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md) — Latticra Seal crypto verify backend metadata status and public-entry checkpoint.
 - [`SEAL_ED25519_VERIFY_STATUS.md`](SEAL_ED25519_VERIFY_STATUS.md) — Latticra Seal Ed25519 verify-only result status and public-entry checkpoint.
+- [`SEAL_CRYPTO_GRADUATION_GATE_STATUS.md`](SEAL_CRYPTO_GRADUATION_GATE_STATUS.md) — Latticra Seal authority-neutral crypto graduation gate status for standards-gated local verification and receipt promotion. Field: `seal_crypto_graduation_gate_present=1`.
 - [`SEAL_VERIFIED_RECEIPT_PROMOTION_STATUS.md`](SEAL_VERIFIED_RECEIPT_PROMOTION_STATUS.md) — Latticra Seal verified receipt promotion metadata status and public-entry checkpoint.
+- [`SEAL_CRYPTO_GRADUATION_GATE_STATUS.md`](SEAL_CRYPTO_GRADUATION_GATE_STATUS.md) — Latticra Seal crypto graduation gate status for authority-neutral Ed25519 verify-only and verified receipt promotion metadata without signing, key handling, network lookup, production crypto claims, capability enforcement, effect execution, host behavior, or runtime authority.
 - [`SEAL_VERIFIED_CAPABILITY_GATE_STATUS.md`](SEAL_VERIFIED_CAPABILITY_GATE_STATUS.md) — Latticra Seal verified capability gate metadata status and public-entry checkpoint.
 - [`SEAL_VERIFIED_EFFECT_DECISION_STATUS.md`](SEAL_VERIFIED_EFFECT_DECISION_STATUS.md) — Latticra Seal verified effect decision metadata status and public-entry checkpoint.
 - [`SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md`](SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md) — Latticra Seal runtime handoff evaluation metadata status and public-entry checkpoint.
@@ -164,7 +183,7 @@ non-claims
 - [`SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE_STATUS.md`](SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE_STATUS.md) — Latticra Seal runtime dry-run report surface status.
 - [`SEAL_RUNTIME_DRY_RUN_STATUS_INDEX_ALIGNMENT.md`](SEAL_RUNTIME_DRY_RUN_STATUS_INDEX_ALIGNMENT.md) — Latticra Seal runtime dry-run status-index alignment.
 - [`SEAL_RUNTIME_DRY_RUN_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](SEAL_RUNTIME_DRY_RUN_PUBLIC_ENTRYPOINT_ALIGNMENT.md) — Latticra Seal runtime dry-run public-entrypoint alignment.
-- [`KERNEL_LIFECYCLE_EVIDENCE_STATUS.md`](KERNEL_LIFECYCLE_EVIDENCE_STATUS.md) — status alignment after the kernel IPC, VFS namespace, process table, syscall table, interrupt table, timer source, scheduler tick, run queue, context-switch, time-accounting, preemption, and scheduler credit guards plus the lifecycle report runner, subsystem summary, and rollback plan.
+- [`KERNEL_LIFECYCLE_EVIDENCE_STATUS.md`](KERNEL_LIFECYCLE_EVIDENCE_STATUS.md) — status alignment after the kernel IPC, VFS namespace, process table, syscall table, interrupt table, timer source, scheduler tick, run queue, context-switch, time-accounting, preemption, scheduler credit, scheduler selection, scheduler dispatch, and scheduler handoff guards plus the lifecycle report runner, subsystem summary, and rollback plan.
 - [`FEDORA_HOST_INSTALL_PREFLIGHT_STATUS.md`](FEDORA_HOST_INSTALL_PREFLIGHT_STATUS.md) — status record for the no-effect Fedora host install preflight classifier.
 - [`FEDORA_INSTALL_PREFLIGHT_SNAPSHOT_CAPTURE_STATUS.md`](FEDORA_INSTALL_PREFLIGHT_SNAPSHOT_CAPTURE_STATUS.md) — status record for the no-effect Fedora install preflight snapshot capture implementation.
 - [`FEDORA_LIVE_READONLY_SNAPSHOT_ADAPTER_STATUS.md`](FEDORA_LIVE_READONLY_SNAPSHOT_ADAPTER_STATUS.md) — status record for the live read-only Fedora snapshot adapter implementation.
@@ -182,8 +201,14 @@ non-claims
 - [`FEDORA_VM_CLI_PAYLOAD_VALIDATION_ANNOUNCEMENT_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_VALIDATION_ANNOUNCEMENT_STATUS.md) — announcement/status alignment for the disposable Fedora VM CLI payload validation milestone.
 - [`FEDORA_VM_CLI_PAYLOAD_NEXT_VALIDATION_LANE_PLAN_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_NEXT_VALIDATION_LANE_PLAN_STATUS.md) — status record for the Fedora VM CLI payload next-validation lane plan.
 - [`FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_CONTRACT_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_CONTRACT_STATUS.md) — status record for the future second disposable Fedora VM CLI payload validation transcript contract.
+- [`FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_CAPTURE_TEMPLATE_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_CAPTURE_TEMPLATE_STATUS.md) — status record for the Fedora VM CLI payload repeatability transcript capture template.
+- [`FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_REVIEW_VALIDATOR_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_REVIEW_VALIDATOR_STATUS.md) — status record for the Fedora VM CLI payload repeatability transcript review validator.
 - [`FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_RUNNER_PLAN_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_RUNNER_PLAN_STATUS.md) — status record for the manual disposable Fedora VM CLI payload repeatability runner plan.
 - [`FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_RUNNER_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_RUNNER_STATUS.md) — status record for the manually gated Fedora VM CLI payload repeatability runner.
+- [`FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_EVIDENCE_REVIEW_GATE_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_EVIDENCE_REVIEW_GATE_STATUS.md) — status record for the Fedora VM CLI payload repeatability evidence review gate.
+- [`FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_CAPTURE_TEMPLATE_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_CAPTURE_TEMPLATE_STATUS.md) — status record for the no-effect Fedora VM CLI payload repeatability transcript capture template.
+- [`FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_REVIEW_VALIDATOR_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_REVIEW_VALIDATOR_STATUS.md) — status record for the no-effect Fedora VM CLI payload repeatability transcript review validator.
+- [`FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_EVIDENCE_ACCEPTANCE_CONTRACT_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_EVIDENCE_ACCEPTANCE_CONTRACT_STATUS.md) — status record for the Fedora VM CLI payload repeatability evidence acceptance contract.
 - [`FEDORA_VM_RPM_VALIDATION_ANNOUNCEMENT_STATUS.md`](FEDORA_VM_RPM_VALIDATION_ANNOUNCEMENT_STATUS.md) — announcement/status alignment for the disposable Fedora VM local RPM validation milestone.
 - [`UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md`](UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the Ubuntu build lane, Panel apt prerequisites, and local-only deb packaging draft.
 - [`DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md`](DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the local-only Debian deb packaging draft and static validation lane.
@@ -192,7 +217,13 @@ non-claims
 - [`../DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md) — source archive and checksum contract for Debian, FreeBSD, and OpenBSD package/port draft promotion blockers.
 - [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md) — temporary package input handoff lane for Debian, FreeBSD, and OpenBSD source and distfile staging without package builds.
 - [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md) — closed package-build evidence gate for Debian, FreeBSD, and OpenBSD package build commands.
-- [`OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md`](OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the openSUSE compatibility lane, Panel zypper prerequisites, local-only RPM maintenance draft, `rpmlint`/`osc` availability lane, static spec lint lane, findings classification record, source archive reproducibility contract, source archive fixture lane, and temporary RPM topdir handoff lane.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_ENVIRONMENT_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_ENVIRONMENT_CONTRACT.md) — package-build environment contract for disposable Debian, FreeBSD, and OpenBSD validation environments without package builds.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_ARTIFACT_NAMING_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_ARTIFACT_NAMING_CONTRACT.md) — package artifact naming contract for future Debian, FreeBSD, and OpenBSD package files without creating artifacts.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md) — package payload inspection contract for future Debian, FreeBSD, and OpenBSD package files without inspecting artifacts.
+- [`OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md`](OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the openSUSE compatibility lane, Panel zypper prerequisites, local-only RPM maintenance draft, `rpmlint`/`osc` availability lane, static spec lint lane, findings classification record, source archive reproducibility contract, source archive fixture lane, temporary RPM topdir handoff lane, local RPM build gate contract, and local RPM build environment contract.
+- [`../OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md`](../OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md) — closed openSUSE local RPM build evidence gate contract before any `rpmbuild` or `osc build` command can run.
+- [`../OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md`](../OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md) — openSUSE local RPM build environment contract for disposable validation environments without `rpmbuild` or `osc build`.
+- [`../OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md`](../OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md) — openSUSE RPM artifact naming contract for future source RPM and binary RPM files without creating artifacts.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) — current public estimate table source alignment across README, root status, and detailed current status.
 - [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) — current mathematical planning-estimate rebase for the live public estimate table.
@@ -299,8 +330,10 @@ runtime_handoff_predecessor_effect_decision_status_present=1
 seal_runtime_handoff_report_status_present=1
 seal_status_rollup_metadata_present=1
 seal_status_rollup_status_present=1
+status_rollup_predecessor_runtime_handoff_status_present=1
 seal_agentic_automation_security_metadata_present=1
 seal_agentic_automation_security_status_present=1
+agentic_automation_security_predecessor_status_rollup_status_present=1
 seal_agentic_automation_security_index_alignment_present=1
 seal_agentic_automation_security_report_surface_present=1
 seal_agentic_automation_security_public_entrypoint_alignment_present=1
@@ -308,10 +341,12 @@ seal_parameter_schema_contract_present=1
 seal_parameter_schema_metadata_present=1
 seal_parameter_schema_report_surface_present=1
 seal_parameter_schema_status_present=1
+parameter_schema_predecessor_agentic_automation_security_status_present=1
 seal_request_freshness_contract_present=1
 seal_request_freshness_metadata_present=1
 seal_request_freshness_report_surface_present=1
 seal_request_freshness_status_present=1
+request_freshness_predecessor_parameter_schema_status_present=1
 seal_signed_request_contract_present=1
 seal_signed_request_metadata_present=1
 seal_signed_request_status_present=1
@@ -331,6 +366,18 @@ cyber_incident_reporting_response_baseline_present=1
 cyber_incident_reporting_response_guard_present=1
 cisa_reporting_channel_documented=1
 fbi_cyber_reporting_channel_documented=1
+vulnerability_management_release_gate_baseline_present=1
+vulnerability_management_release_gate_guard_present=1
+cisa_kev_catalog_tracked=1
+nvd_cve_review_required=1
+cryptographic_assurance_key_management_baseline_present=1
+cryptographic_assurance_key_management_guard_present=1
+fips_140_3_boundary_required_before_production_crypto=1
+production_crypto_claim_allowed=0
+identity_credential_access_management_baseline_present=1
+identity_credential_access_management_guard_present=1
+phishing_resistant_mfa_required_for_privileged_access=1
+privileged_access_granted=0
 zero_trust_runtime_authority_baseline_present=1
 zero_trust_runtime_authority_guard_present=1
 per_request_authorization_required=1
@@ -428,7 +475,7 @@ runtime_handoff_report_runtime_authority_granted=0
 The careful current public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata/status, signature-request metadata/status, signing authorization metadata/status, signer handoff/invocation/operation metadata/status, key-handling and key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, verified receipt promotion metadata/status, verified capability gate metadata/status, verified effect decision metadata/status, runtime handoff evaluation metadata/status, runtime handoff report metadata/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status tied to its guarded effect decision predecessor, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata/status, signature-request metadata/status, signing authorization metadata/status, signer handoff/invocation/operation metadata/status, key-handling and key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, verified receipt promotion metadata/status, authority-neutral crypto graduation gate/status, verified capability gate metadata/status, verified effect decision metadata/status, runtime handoff evaluation metadata/status, runtime handoff report metadata/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status tied to its guarded effect decision predecessor, metadata-only status rollup/status, report-only agentic automation security metadata/status tied to its guarded status rollup predecessor, report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 The current next recommended Seal lane is:
@@ -559,6 +606,137 @@ The current next recommended Fedora CLI payload lane is:
 
 ```text
 Capture reviewed Fedora VM CLI payload repeatability transcript evidence
+```
+
+## Current Fedora VM CLI payload repeatability transcript capture template checkpoint
+
+The latest Fedora VM CLI payload repeatability transcript capture template status records:
+
+```text
+fedora_vm_cli_payload_repeatability_transcript_contract_present=1
+fedora_vm_cli_payload_repeatability_runner_present=1
+fedora_vm_cli_payload_repeatability_evidence_review_gate_present=1
+fedora_vm_cli_payload_repeatability_transcript_capture_template_present=1
+fedora_vm_cli_payload_repeatability_transcript_review_validator_present=1
+repeatability_transcript_template_mode=no-effect-template
+repeatability_transcript_template_complete=0
+repeatability_transcript_candidate_valid=0
+repeatability_transcript_attached=0
+repeatability_transcript_reviewed=0
+repeatability_transcript_accepted=0
+second_disposable_vm_cli_validation_completed=0
+cli_payload_repeatability_evidence_present=0
+host_install_ready_for_cli_payload=1
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+```
+
+The template prints the future transcript shape to stdout. It does not run the manual repeatability runner, build RPMs, install packages, remove packages, mutate a host, attach a transcript, or accept evidence.
+
+The current next recommended Fedora CLI payload lane is:
+
+```text
+Run manual disposable Fedora VM CLI payload repeatability lane, validate the transcript candidate, and then add reviewed evidence status
+```
+
+## Current Fedora VM CLI payload repeatability transcript review validator checkpoint
+
+The latest Fedora VM CLI payload repeatability transcript review validator status records:
+
+```text
+fedora_vm_cli_payload_repeatability_transcript_contract_present=1
+fedora_vm_cli_payload_repeatability_transcript_capture_template_present=1
+fedora_vm_cli_payload_repeatability_evidence_review_gate_present=1
+fedora_vm_cli_payload_repeatability_transcript_review_validator_present=1
+repeatability_transcript_review_mode=no-effect-validation
+repeatability_transcript_candidate_valid=0
+repeatability_transcript_reviewed=0
+repeatability_transcript_accepted=0
+evidence_status_written=0
+promotion_allowed_by_validator_alone=0
+second_disposable_vm_cli_validation_completed=0
+cli_payload_repeatability_evidence_present=0
+host_install_ready_for_cli_payload=1
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+```
+
+The validator checks a supplied transcript candidate and rejects placeholders. It does not run the repeatability runner, write evidence status, or promote repeatability evidence by itself.
+
+The current next recommended Fedora CLI payload lane is:
+
+```text
+Run manual disposable Fedora VM CLI payload repeatability lane, validate the transcript candidate, and then add reviewed evidence status
+```
+
+## Current Fedora VM CLI payload repeatability evidence review gate checkpoint
+
+The latest Fedora VM CLI payload repeatability evidence review gate status records:
+
+```text
+fedora_vm_cli_payload_repeatability_transcript_contract_present=1
+fedora_vm_cli_payload_repeatability_runner_present=1
+fedora_vm_cli_payload_repeatability_evidence_review_gate_present=1
+fedora_vm_cli_payload_repeatability_transcript_capture_template_present=1
+fedora_vm_cli_payload_repeatability_transcript_review_validator_present=1
+repeatability_transcript_template_mode=no-effect-template
+repeatability_transcript_template_complete=0
+repeatability_transcript_candidate_valid=0
+repeatability_transcript_review_required=1
+repeatability_transcript_attached=0
+repeatability_transcript_reviewed=0
+repeatability_transcript_accepted=0
+second_disposable_vm_cli_validation_completed=0
+cli_payload_repeatability_evidence_present=0
+host_install_ready_for_cli_payload=1
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+```
+
+The gate is present but does not attach or accept evidence. It blocks repeatability promotion until a complete operator-reviewed transcript from a real disposable Fedora VM run is attached.
+
+The current next recommended Fedora CLI payload lane is:
+
+```text
+Run manual disposable Fedora VM CLI payload repeatability lane, validate the transcript candidate, and then add reviewed evidence status
+```
+
+## Current Fedora VM CLI payload repeatability evidence acceptance contract checkpoint
+
+The latest Fedora VM CLI payload repeatability evidence acceptance contract status records:
+
+```text
+fedora_vm_cli_payload_repeatability_evidence_acceptance_contract_present=1
+repeatability_transcript_attached=0
+repeatability_transcript_reviewed=0
+repeatability_transcript_candidate_valid=0
+repeatability_transcript_accepted=0
+evidence_status_written=0
+second_disposable_vm_cli_validation_completed=0
+cli_payload_repeatability_evidence_present=0
+host_install_ready_for_cli_payload=1
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+```
+
+The acceptance contract is present but does not attach, accept, or write repeatability evidence. It only defines the future accepted status record after a real disposable Fedora VM repeatability transcript is validated and reviewed.
+
+The current next recommended Fedora CLI payload lane is:
+
+```text
+Run manual disposable Fedora VM CLI payload repeatability lane, validate transcript candidate, and write accepted repeatability evidence status
 ```
 
 ## Current Fedora VM CLI payload validation lane checkpoint
@@ -988,16 +1166,25 @@ kernel preemption guard
 kernel preemption report runner
 kernel scheduler credit guard
 kernel scheduler credit report runner
+kernel scheduler selection guard
+kernel scheduler selection report runner
+kernel scheduler dispatch guard
+kernel scheduler dispatch report runner
+kernel scheduler handoff guard
+kernel scheduler handoff report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
 kernel syscall table report runner
 kernel lifecycle subsystem summary
 kernel lifecycle rollback plan
-final_state=scheduler-credit-ready
+final_state=scheduler-handoff-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
+scheduler_selection_allowed=0
+scheduler_dispatch_allowed=0
+scheduler_handoff_allowed=0
 memory_allocation_allowed=0
 process_spawn_allowed=0
 syscall_dispatch_allowed=0
@@ -1046,7 +1233,7 @@ hardware_effect_allowed=0
 The current next recommended kernel lane is:
 
 ```text
-Add no-effect scheduler selection classifier
+Add no-effect scheduler activation classifier
 ```
 
 ## Status update rules

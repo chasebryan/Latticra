@@ -20,6 +20,9 @@ APP_FILE="$HOME/.local/share/applications/latticra-panel.desktop"
 ICON_FILE="$HOME/.local/share/icons/hicolor/256x256/apps/latticra-panel.png"
 LC_INSTALL_CONFIG="$PREFIX/share/latticra/lc/install/config.toml"
 LC_COMMAND_REGISTRY="$PREFIX/share/latticra/lc/commands/seed-registry.txt"
+LC_WORKSPACE_CONTRACT="$PREFIX/share/latticra/lc/workspace/contract.toml"
+LC_NAMESPACE_CONTRACT="$PREFIX/share/latticra/lc/namespace/contract.toml"
+LC_ROOTFS_CONTRACT="$PREFIX/share/latticra/lc/rootfs/contract.toml"
 UPDATER_CONFIG="$PREFIX/etc/latticra/updater.toml"
 UPDATER_POLICY="$PREFIX/share/latticra/updater/policy.toml"
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/latticra-installer-verify.XXXXXX")"
@@ -138,6 +141,9 @@ check "desktop entry" "$APP_FILE"
 check "desktop icon" "$ICON_FILE"
 check "LC install config" "$LC_INSTALL_CONFIG"
 check "LC command registry" "$LC_COMMAND_REGISTRY"
+check "LC workspace contract" "$LC_WORKSPACE_CONTRACT"
+check "LC namespace contract" "$LC_NAMESPACE_CONTRACT"
+check "LC rootfs contract" "$LC_ROOTFS_CONTRACT"
 check "updater config" "$UPDATER_CONFIG"
 check "updater policy" "$UPDATER_POLICY"
 
@@ -148,10 +154,31 @@ check_contains "LC standalone requires Panel disabled" 'standalone_requires_pane
 check_contains "LC standalone contract metadata" 'standalone_contract_present = true' "$LC_INSTALL_CONFIG"
 check_contains "LC session contract profile" 'session_contract_profile = "lc-session-v0"' "$LC_INSTALL_CONFIG"
 check_contains "LC session contract metadata" 'session_contract_present = true' "$LC_INSTALL_CONFIG"
+check_contains "LC workspace contract profile" 'workspace_contract_profile = "lc-workspace-v0"' "$LC_INSTALL_CONFIG"
+check_contains "LC workspace contract metadata" 'workspace_contract_present = true' "$LC_INSTALL_CONFIG"
+check_contains "LC namespace contract profile" 'namespace_contract_profile = "lc-namespace-v0"' "$LC_INSTALL_CONFIG"
+check_contains "LC namespace contract metadata" 'namespace_contract_present = true' "$LC_INSTALL_CONFIG"
+check_contains "LC rootfs contract profile" 'rootfs_contract_profile = "lc-rootfs-v0"' "$LC_INSTALL_CONFIG"
+check_contains "LC rootfs contract metadata" 'rootfs_contract_present = true' "$LC_INSTALL_CONFIG"
 check_contains "LC external host command authority disabled" 'allow_external_host_commands = false' "$LC_INSTALL_CONFIG"
 check_contains "LC install-config registry command" 'name=lc install-config category=core effect=none capability=lc.install.config' "$LC_COMMAND_REGISTRY"
 check_contains "LC standalone registry command" 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' "$LC_COMMAND_REGISTRY"
 check_contains "LC session registry command" 'name=lc session category=core effect=none capability=lc.session.contract' "$LC_COMMAND_REGISTRY"
+check_contains "LC workspace registry command" 'name=lc workspace category=core effect=none capability=lc.workspace.contract' "$LC_COMMAND_REGISTRY"
+check_contains "LC namespace registry command" 'name=lc namespace category=core effect=none capability=lc.namespace.contract' "$LC_COMMAND_REGISTRY"
+check_contains "LC rootfs registry command" 'name=lc rootfs category=core effect=none capability=lc.rootfs.contract' "$LC_COMMAND_REGISTRY"
+check_contains "LC workspace command surface" 'command_surface = "lc workspace"' "$LC_WORKSPACE_CONTRACT"
+check_contains "LC workspace mount denied" 'workspace_mount_allowed = false' "$LC_WORKSPACE_CONTRACT"
+check_contains "LC workspace host process denied" 'host_process_launch_allowed = false' "$LC_WORKSPACE_CONTRACT"
+check_contains "LC namespace command surface" 'command_surface = "lc namespace"' "$LC_NAMESPACE_CONTRACT"
+check_contains "LC namespace mount denied" 'namespace_mount_allowed = false' "$LC_NAMESPACE_CONTRACT"
+check_contains "LC namespace rootfs mount denied" 'rootfs_mount_allowed = false' "$LC_NAMESPACE_CONTRACT"
+check_contains "LC namespace host process denied" 'host_process_launch_allowed = false' "$LC_NAMESPACE_CONTRACT"
+check_contains "LC rootfs command surface" 'command_surface = "lc rootfs"' "$LC_ROOTFS_CONTRACT"
+check_contains "LC rootfs image creation denied" 'rootfs_image_create_allowed = false' "$LC_ROOTFS_CONTRACT"
+check_contains "LC rootfs mount denied" 'rootfs_mount_allowed = false' "$LC_ROOTFS_CONTRACT"
+check_contains "LC rootfs package install denied" 'rootfs_package_install_allowed = false' "$LC_ROOTFS_CONTRACT"
+check_contains "LC rootfs host process denied" 'host_process_launch_allowed = false' "$LC_ROOTFS_CONTRACT"
 check_contains "updater panel-owned config" 'panel_owned = true' "$UPDATER_CONFIG"
 check_contains "updater network authority disabled" 'allow_network_fetch = false' "$UPDATER_CONFIG"
 check_contains "updater apply mode" 'update_apply_mode = "guarded-local-prefix-reinstall"' "$UPDATER_CONFIG"
@@ -200,6 +227,9 @@ if [ -x "$LC_COMMAND" ]; then
     check_contains "LC wrapper standalone requires Panel denied" 'standalone_requires_panel=0' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper standalone contract present" 'standalone_contract_present=1' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper session contract present" 'session_contract_present=1' "$TMP_DIR/lc-install-config.txt"
+    check_contains "LC wrapper workspace contract present" 'workspace_contract_present=1' "$TMP_DIR/lc-install-config.txt"
+    check_contains "LC wrapper namespace contract present" 'namespace_contract_present=1' "$TMP_DIR/lc-install-config.txt"
+    check_contains "LC wrapper rootfs contract present" 'rootfs_contract_present=1' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-install-config.txt"
   else
     echo "failed: $LC_COMMAND_WRAPPER install-config" >&2
@@ -213,6 +243,39 @@ if [ -x "$LC_COMMAND" ]; then
     check_contains "LC wrapper session host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-session.txt"
   else
     echo "failed: $LC_COMMAND_WRAPPER session" >&2
+    failures=$((failures + 1))
+  fi
+
+  if "$LC_COMMAND" workspace > "$TMP_DIR/lc-workspace.txt"; then
+    check_contains "LC wrapper workspace report" 'LATTICRA CONSOLE WORKSPACE CONTRACT' "$TMP_DIR/lc-workspace.txt"
+    check_contains "LC wrapper workspace command surface" 'command_surface=lc workspace' "$TMP_DIR/lc-workspace.txt"
+    check_contains "LC wrapper workspace mount denied" 'workspace_mount_allowed=0' "$TMP_DIR/lc-workspace.txt"
+    check_contains "LC wrapper workspace host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-workspace.txt"
+  else
+    echo "failed: $LC_COMMAND_WRAPPER workspace" >&2
+    failures=$((failures + 1))
+  fi
+
+  if "$LC_COMMAND" namespace > "$TMP_DIR/lc-namespace.txt"; then
+    check_contains "LC wrapper namespace report" 'LATTICRA CONSOLE NAMESPACE CONTRACT' "$TMP_DIR/lc-namespace.txt"
+    check_contains "LC wrapper namespace command surface" 'command_surface=lc namespace' "$TMP_DIR/lc-namespace.txt"
+    check_contains "LC wrapper namespace mount denied" 'namespace_mount_allowed=0' "$TMP_DIR/lc-namespace.txt"
+    check_contains "LC wrapper namespace rootfs mount denied" 'rootfs_mount_allowed=0' "$TMP_DIR/lc-namespace.txt"
+    check_contains "LC wrapper namespace host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-namespace.txt"
+  else
+    echo "failed: $LC_COMMAND_WRAPPER namespace" >&2
+    failures=$((failures + 1))
+  fi
+
+  if "$LC_COMMAND" rootfs > "$TMP_DIR/lc-rootfs.txt"; then
+    check_contains "LC wrapper rootfs report" 'LATTICRA CONSOLE ROOTFS CONTRACT' "$TMP_DIR/lc-rootfs.txt"
+    check_contains "LC wrapper rootfs command surface" 'command_surface=lc rootfs' "$TMP_DIR/lc-rootfs.txt"
+    check_contains "LC wrapper rootfs image creation denied" 'rootfs_image_create_allowed=0' "$TMP_DIR/lc-rootfs.txt"
+    check_contains "LC wrapper rootfs mount denied" 'rootfs_mount_allowed=0' "$TMP_DIR/lc-rootfs.txt"
+    check_contains "LC wrapper rootfs package install denied" 'rootfs_package_install_allowed=0' "$TMP_DIR/lc-rootfs.txt"
+    check_contains "LC wrapper rootfs host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-rootfs.txt"
+  else
+    echo "failed: $LC_COMMAND_WRAPPER rootfs" >&2
     failures=$((failures + 1))
   fi
 fi

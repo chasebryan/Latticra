@@ -17,6 +17,9 @@ Use it when a change affects public wording, capability posture, estimates, plat
 | Project identity and broad non-claims | [`../README.md`](../README.md), [`REAL_SYSTEM_CONTRACT.md`](REAL_SYSTEM_CONTRACT.md), [`NON_CLAIMS.md`](NON_CLAIMS.md) | [`map.html`](map.html), [`latticra-system-substrate/README.md`](latticra-system-substrate/README.md), [`latticra/DOCUMENTATION_MAP.md`](latticra/DOCUMENTATION_MAP.md) |
 | Current status and estimates | [`../STATUS.md`](../STATUS.md), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), [`status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md), [`status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) | [`../README.md`](../README.md), [`status.html`](status.html), [`roadmap.html`](roadmap.html), [`index.html`](index.html) |
 | Documentation navigation | [`README.md`](README.md), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md) | [`../README.md`](../README.md), [`map.html`](map.html), [`project_notes/README.md`](project_notes/README.md) |
+| Documentation traceability | [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html), review packets |
+| Documentation validation | [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) | Review packets, status records, platform docs, subsystem landing pages |
+| Documentation style and terminology | [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) | [`../README.md`](../README.md), [`index.html`](index.html), [`map.html`](map.html), platform README files, subsystem landing pages |
 | Security posture | [`../SECURITY.md`](../SECURITY.md), [`HIGH_ASSURANCE_SECURITY_BASELINE.md`](HIGH_ASSURANCE_SECURITY_BASELINE.md), [`DEFENSIVE_THREAT_MODEL_CONTRACT.md`](DEFENSIVE_THREAT_MODEL_CONTRACT.md) | [`security.html`](security.html), [`../README.md`](../README.md), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) |
 | Installer authority | [`../installer/README.md`](../installer/README.md), [`../installer/docs/README.md`](../installer/docs/README.md), [`PRODUCTION_INSTALLER_READINESS_CONTRACT.md`](PRODUCTION_INSTALLER_READINESS_CONTRACT.md) | [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md), [`validation.html`](validation.html), [`../README.md`](../README.md) |
 | Platform and packaging posture | Platform workflow and package README files | [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md), [`validation.html`](validation.html), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), [`../README.md`](../README.md) |
@@ -40,6 +43,14 @@ docs/index.html
 ```
 
 Do not update every file mechanically. Update only the files whose reader-facing claim actually changes.
+
+Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) when a public-entry change needs an explicit record of touched surfaces, source records, claim classification, mirrors, validation commands, and rollback or demotion path.
+
+Use [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) when a public-entry change needs a source-record, mirror, validation, or non-claim lookup.
+
+Use [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) when choosing hygiene, link, public-entry, estimate, platform, subsystem, or claim-promotion checks.
+
+Use [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md) when a public-entry change edits terminology, status labels, date style, heading shape, link style, platform names, or replacement wording.
 
 ## Estimate Rule
 
@@ -107,6 +118,8 @@ sh scripts/test-opensuse-developer-workflow.sh
 ```
 
 Add the exact milestone guard named by the status record when changing a milestone-specific status or public-entry alignment.
+
+For command selection and failure handling, use [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
 
 ## Documentation-Only Boundary
 

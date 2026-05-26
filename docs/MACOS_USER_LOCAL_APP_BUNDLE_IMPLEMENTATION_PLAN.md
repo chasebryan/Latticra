@@ -250,5 +250,5 @@ Add a macOS reset/uninstall evidence-bundle contract that groups implementation-
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner acceptance-denial disposition review contract that reviews the no-effect disposition without opening dispatch or deletion.
+Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition contract that records the reviewed no-effect closeout audit as a no-effect disposition without opening dispatch or deletion.
 ```

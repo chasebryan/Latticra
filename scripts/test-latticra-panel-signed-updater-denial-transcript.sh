@@ -93,7 +93,7 @@ require_contains 'signed_updater_denial_transcript_state=recorded-no-effect' "$s
 require_contains 'signed_updater_denial_decision=deny-signed-update-delivery' "$script"
 require_contains 'network_fetch_attempted=0' "$script"
 require_contains 'transcript_write_performed=0' "$script"
-require_contains 'next_lane=panel-signed-updater-manifest-fixture-contract' "$script"
+require_contains 'next_lane=panel-signed-updater-state-fixture-validation' "$script"
 
 require_contains 'LATTICRA_PANEL_SIGNED_UPDATER_DENIAL_TRANSCRIPT_STATUS.md' "$index"
 require_contains 'signed updater denial transcript' "$index"
@@ -102,10 +102,10 @@ require_contains 'signed_updater_denial_transcript_present=1' "$self_update"
 require_contains 'signed_updater_denial_decision=deny-signed-update-delivery' "$self_update"
 require_contains 'signed_updater_denial_transcript_file_write_enabled=0' "$self_update"
 
-require_contains 'panel-signed-updater-manifest-fixture-contract' "$gate_script"
-require_contains 'Panel signed-updater manifest fixture contract' "$gate_doc"
-require_contains 'Panel signed-updater manifest fixture contract' "$gate_status"
-require_contains 'panel-signed-updater-manifest-fixture-contract' "$gate_test"
+require_contains 'panel-signed-updater-state-fixture-validation' "$gate_script"
+require_contains 'Panel signed-updater state fixture validation' "$gate_doc"
+require_contains 'Panel signed-updater state fixture validation' "$gate_status"
+require_contains 'panel-signed-updater-state-fixture-validation' "$gate_test"
 
 require_contains 'sh ./scripts/test-latticra-panel-signed-updater-denial-transcript.sh' "$makefile"
 require_contains 'docs/LATTICRA_PANEL_SIGNED_UPDATER_DENIAL_TRANSCRIPT.md' "$workflow"

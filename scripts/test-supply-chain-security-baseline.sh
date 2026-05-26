@@ -38,10 +38,14 @@ require_file docs/security.html
 require_file Makefile
 require_file scripts/test-high-assurance-security-baseline.sh
 require_file scripts/test-quality-safety-guards.sh
+require_file scripts/test-secret-material-guard.sh
+require_file scripts/test-report-redaction-boundary.sh
 require_file installer/scripts/latticra-installer-apply.sh
 
 require_contains 'Status: supply-chain security baseline' "$doc"
 require_contains 'Source refresh date: 2026-05-26' "$doc"
+require_contains 'NIST SP 800-53 Release 5.2.0' "$doc"
+require_contains 'OS command injection' "$doc"
 require_contains 'Current Guarded Controls' "$doc"
 require_contains 'Required Release Gate' "$doc"
 require_contains 'Dependency Review Rules' "$doc"
@@ -62,6 +66,12 @@ for field in \
   'pull_request_target_forbidden=1' \
   'repository_secret_use_requires_dedicated_review=1' \
   'implicit_github_token_use_requires_dedicated_review=1' \
+  'repository_secret_filename_scan_required=1' \
+  'repository_secret_content_marker_scan_required=1' \
+  'sensitive_local_artifact_filename_guard_required=1' \
+  'report_redaction_boundary_guard_required=1' \
+  'whole_environment_report_dump_forbidden=1' \
+  'installer_engine_log_redaction_required=1' \
   'locked_dependency_builds_required=1' \
   'offline_installer_builds_required=1' \
   'ad_hoc_network_client_commands_forbidden_without_guard=1' \
@@ -94,6 +104,10 @@ for gate in \
   'release_secret_boundary_reviewed=1' \
   'artifact_integrity_hashes_recorded=1' \
   'signing_authority_contract_present=1' \
+  'update_payload_integrity_reviewed=1' \
+  'update_authenticity_path_reviewed=1' \
+  'update_rollback_evidence_present=1' \
+  'command_boundary_reviewed=1' \
   'rollback_or_recovery_contract_present=1' \
   'vulnerability_disclosure_path_present=1' \
   'production_non_claim_review_completed=1'
@@ -119,12 +133,22 @@ require_contains 'workflow must not use pull_request_target' scripts/test-qualit
 require_contains 'workflow must not consume repository secrets without a dedicated review guard' scripts/test-quality-safety-guards.sh
 require_contains 'workflow must not consume implicit GitHub token surfaces without a dedicated review guard' scripts/test-quality-safety-guards.sh
 require_contains 'workflow must not add ad hoc network client commands without a dedicated review guard' scripts/test-quality-safety-guards.sh
+require_contains 'possible committed secret-bearing filenames found' scripts/test-secret-material-guard.sh
+require_contains 'possible committed secret or private-key content markers found' scripts/test-secret-material-guard.sh
+require_contains 'sh ./scripts/test-secret-material-guard.sh' Makefile
+require_contains 'secret-material-guard:' Makefile
+require_contains 'whole process environments' scripts/test-report-redaction-boundary.sh
+require_contains 'redact child stdout before forwarding install logs' scripts/test-report-redaction-boundary.sh
+require_contains 'redact_log_line(&line)' installer/latticra-installer/src/engine.rs
+require_contains 'sh ./scripts/test-report-redaction-boundary.sh' Makefile
+require_contains 'report-redaction-boundary:' Makefile
 require_contains 'source archives must use deterministic tar/gzip metadata' scripts/test-quality-safety-guards.sh
 require_contains 'cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml' Makefile
 require_contains 'cargo build --release --locked --offline' installer/scripts/latticra-installer-apply.sh
 require_contains 'SBOM evidence for shipped artifacts' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
 require_contains 'dependency inventory with license and security review' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
 require_contains 'KEV/NVD review or documented offline exception before release' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
+require_contains 'software update and patch integrity, authenticity, validation, and rollback evidence before any mutating update lane' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
 require_contains 'docs/SUPPLY_CHAIN_SECURITY_BASELINE.md' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
 require_contains 'scripts/test-supply-chain-security-baseline.sh' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
 require_contains 'docs/SUPPLY_CHAIN_SECURITY_BASELINE.md' SECURITY.md
@@ -139,5 +163,14 @@ require_contains 'SUPPLY_CHAIN_SECURITY_BASELINE.md' docs/security.html
 require_contains 'sh ./scripts/test-supply-chain-security-baseline.sh' Makefile
 require_contains 'supply-chain-security-baseline:' Makefile
 require_contains 'test-supply-chain-security-baseline.sh' scripts/test-quality-safety-guards.sh
+
+for allocation in \
+  'process-launch boundary centralized' \
+  'update authenticity and integrity impact review' \
+  'command-boundary review' \
+  'integrity, authenticity, validation, and rollback evidence'
+do
+  require_contains "$allocation" "$doc"
+done
 
 printf 'supply_chain_security_baseline: ok\n'

@@ -45,6 +45,8 @@ ubuntu_package_notice_promotion_gate_contract_present=1
 ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_package_license_review_contract_present=1
 ubuntu_package_license_review_status=blocked-pending-formal-review
+ubuntu_lintian_static_metadata_contract_present=1
+ubuntu_lintian_static_metadata_status=blocked-pending-package-license-promotion
 ubuntu_package_notice_review_unblocked=0
 ubuntu_package_license_review_unblocked=0
 license_expression_candidate_recorded=1
@@ -58,6 +60,8 @@ ubuntu_local_deb_build_transcript_unblocked=0
 ## Relationship To Lintian And Build Evidence
 
 The Ubuntu static metadata lint lane and local deb build transcript evidence may not advance until this gate records that the package notice gate is unblocked, the package license review is complete, the packaging license expression is updated, and license expression review is no longer unresolved.
+
+The Ubuntu lintian static metadata contract records the next evidence schema while keeping lintian execution blocked behind this gate.
 
 This gate is a coordination record for the current local deb draft. It is not a package publication claim or a compliance certification.
 

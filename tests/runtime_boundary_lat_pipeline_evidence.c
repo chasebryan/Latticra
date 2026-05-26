@@ -132,10 +132,24 @@ static latticra_lir_module_t lat_lir_module(void) {
     lir.edges[0].from_index = 0u;
     lir.edges[0].to_index = 1u;
     lir.edges[0].edge_kind = LATTICRA_LIR_EDGE_CONTAINS;
+    lir.edges[0].source_span.start_offset = 64u;
+    lir.edges[0].source_span.end_offset = 80u;
+    lir.edges[0].source_span.start_line = 4u;
+    lir.edges[0].source_span.start_column = 3u;
+    lir.edges[0].source_span.end_line = 4u;
+    lir.edges[0].source_span.end_column = 19u;
     lir.edges[1].edge_kind = LATTICRA_LIR_EDGE_BINDS;
     lir.edges[2].edge_kind = LATTICRA_LIR_EDGE_ANNOTATES;
     lir.edges[3].edge_kind = LATTICRA_LIR_EDGE_ORDERS_BEFORE;
+    lir.edges[4].from_index = 2u;
+    lir.edges[4].to_index = 1u;
     lir.edges[4].edge_kind = LATTICRA_LIR_EDGE_TRANSITIONS_FROM;
+    lir.edges[4].source_span.start_offset = 96u;
+    lir.edges[4].source_span.end_offset = 112u;
+    lir.edges[4].source_span.start_line = 5u;
+    lir.edges[4].source_span.start_column = 7u;
+    lir.edges[4].source_span.end_line = 5u;
+    lir.edges[4].source_span.end_column = 23u;
     return lir;
 }
 
@@ -255,9 +269,26 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(result.record.lat_lir_first_edge_from_index == 0u, "lat lir first edge from copied");
     EXPECT_TRUE(result.record.lat_lir_first_edge_to_index == 1u, "lat lir first edge to copied");
     EXPECT_TRUE(result.record.lat_lir_first_edge_kind == LATTICRA_LIR_EDGE_CONTAINS, "lat lir first edge kind copied");
+    EXPECT_TRUE(result.record.lat_lir_first_edge_span.start_offset == 64u, "lat lir first edge span start copied");
+    EXPECT_TRUE(result.record.lat_lir_first_edge_span.end_offset == 80u, "lat lir first edge span end copied");
+    EXPECT_TRUE(result.record.lat_lir_first_edge_span.start_line == 4u, "lat lir first edge span line copied");
+    EXPECT_TRUE(result.record.lat_lir_first_edge_span.start_column == 3u, "lat lir first edge span column copied");
+    EXPECT_TRUE(result.record.lat_lir_first_edge_span.end_line == 4u, "lat lir first edge span end line copied");
+    EXPECT_TRUE(result.record.lat_lir_first_edge_span.end_column == 19u, "lat lir first edge span end column copied");
     EXPECT_TRUE(result.record.lat_lir_has_lat_state_nodes == 1, "lat state evidence copied");
     EXPECT_TRUE(result.record.lat_lir_has_lat_transition_nodes == 1, "lat transition evidence copied");
     EXPECT_TRUE(result.record.lat_lir_has_transition_source_edges == 1, "transition source evidence copied");
+    EXPECT_TRUE(result.record.lat_lir_has_first_transition_source_edge == 1, "first transition source edge present");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_index == 4u, "first transition source edge index copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_from_index == 2u, "first transition source edge from copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_to_index == 1u, "first transition source edge to copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_kind == LATTICRA_LIR_EDGE_TRANSITIONS_FROM, "first transition source edge kind copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_span.start_offset == 96u, "first transition source edge span start copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_span.end_offset == 112u, "first transition source edge span end copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_span.start_line == 5u, "first transition source edge span line copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_span.start_column == 7u, "first transition source edge span column copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_span.end_line == 5u, "first transition source edge span end line copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_span.end_column == 23u, "first transition source edge span end column copied");
     return 0;
 }
 
@@ -583,9 +614,26 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_lir_first_edge_from_index=0\n") != 0, "lat lir first edge from report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_edge_to_index=1\n") != 0, "lat lir first edge to report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_edge_kind=contains\n") != 0, "lat lir first edge kind report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_edge_span_start_offset=64\n") != 0, "lat lir first edge span start report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_edge_span_end_offset=80\n") != 0, "lat lir first edge span end report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_edge_span_start_line=4\n") != 0, "lat lir first edge span line report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_edge_span_start_column=3\n") != 0, "lat lir first edge span column report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_edge_span_end_line=4\n") != 0, "lat lir first edge span end line report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_edge_span_end_column=19\n") != 0, "lat lir first edge span end column report present");
     EXPECT_TRUE(strstr(report, "lat_lir_has_lat_state_nodes=1\n") != 0, "lat state report present");
     EXPECT_TRUE(strstr(report, "lat_lir_has_lat_transition_nodes=1\n") != 0, "lat transition report present");
     EXPECT_TRUE(strstr(report, "lat_lir_has_transition_source_edges=1\n") != 0, "transition source report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_has_first_transition_source_edge=1\n") != 0, "first transition source edge present report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_index=4\n") != 0, "first transition source edge index report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_from_index=2\n") != 0, "first transition source edge from report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_to_index=1\n") != 0, "first transition source edge to report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_kind=transitions_from\n") != 0, "first transition source edge kind report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_span_start_offset=96\n") != 0, "first transition source edge span start report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_span_end_offset=112\n") != 0, "first transition source edge span end report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_span_start_line=5\n") != 0, "first transition source edge span line report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_span_start_column=7\n") != 0, "first transition source edge span column report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_span_end_line=5\n") != 0, "first transition source edge span end line report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_span_end_column=23\n") != 0, "first transition source edge span end column report present");
     return 0;
 }
 

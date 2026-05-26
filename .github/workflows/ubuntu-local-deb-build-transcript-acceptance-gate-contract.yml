@@ -1,0 +1,22 @@
+name: Ubuntu Local Deb Build Transcript Acceptance Gate Contract
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  ubuntu-local-deb-build-transcript-acceptance-gate-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Ubuntu local deb build transcript acceptance gate guard
+        run: sh scripts/test-ubuntu-local-deb-build-transcript-acceptance-gate-contract.sh

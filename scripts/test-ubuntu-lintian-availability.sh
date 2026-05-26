@@ -33,6 +33,7 @@ apt_install() {
 }
 
 require_file docs/UBUNTU_LINTIAN_AVAILABILITY.md
+require_file docs/UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md
 require_file docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_file scripts/test-ubuntu-local-deb-static-validation.sh
 require_file packaging/ubuntu/debian/control
@@ -42,7 +43,8 @@ require_contains 'lintian installs' docs/UBUNTU_LINTIAN_AVAILABILITY.md
 require_contains 'does not lint the Latticra deb draft yet' docs/UBUNTU_LINTIAN_AVAILABILITY.md
 require_contains 'does not run `dpkg-buildpackage`, `debuild`, `sbuild`, or `pbuilder`' docs/UBUNTU_LINTIAN_AVAILABILITY.md
 require_contains 'does not create package artifacts' docs/UBUNTU_LINTIAN_AVAILABILITY.md
-require_contains 'Add Ubuntu lintian static debian metadata lane after license expression review' docs/UBUNTU_LINTIAN_AVAILABILITY.md
+require_contains 'Review the Ubuntu lintian static metadata contract after package license promotion is unblocked.' docs/UBUNTU_LINTIAN_AVAILABILITY.md
+require_contains 'Status: no-effect lintian static metadata contract' docs/UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md
 require_contains 'ubuntu_lintian_availability: ok' docs/UBUNTU_LINTIAN_AVAILABILITY.md
 
 if [ ! -r /etc/os-release ] || ! grep -Eq '^(ID=ubuntu|ID_LIKE=.*ubuntu)' /etc/os-release; then

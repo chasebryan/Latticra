@@ -39,6 +39,19 @@ failures=
 status=
 ```
 
+## Current Seal report surfaces
+
+Current report-only Seal surfaces include:
+
+```text
+seal_capability_metadata_report=1
+seal_policy_decision_report=1
+seal_runtime_dry_run_report=1
+seal_operator_receipt_report=1
+```
+
+The operator receipt report is a bundled denied metadata receipt. It does not grant authority, execute tools, read or write host data, use the network, or perform effects.
+
 ## Report modes
 
 ### report-only

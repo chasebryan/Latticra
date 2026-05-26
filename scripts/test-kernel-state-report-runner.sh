@@ -35,6 +35,9 @@ cc $CFLAGS \
   src/kernel_time_accounting.c \
   src/kernel_preemption.c \
   src/kernel_scheduler_credit.c \
+  src/kernel_scheduler_selection.c \
+  src/kernel_scheduler_dispatch.c \
+  src/kernel_scheduler_handoff.c \
   src/kernel_state.c \
   tools/kernel_state_report.c \
   -o "$report_bin"
@@ -50,6 +53,9 @@ grep -Fq 'previous_state=created' "$report_txt"
 grep -Fq 'next_state=initialized' "$report_txt"
 grep -Fq 'state_change_performed=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
+grep -Fq 'network_allowed=0' "$report_txt"
+grep -Fq 'syscall_network_allowed=0' "$report_txt"
+grep -Fq 'ipc_network_allowed=0' "$report_txt"
 grep -Fq 'denied=0' "$report_txt"
 
 printf 'kernel_state_report_runner: ok\n'

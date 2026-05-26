@@ -32,6 +32,9 @@ require_file docs/DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md
 require_file docs/MEMORY_SAFETY_ROADMAP.md
 require_file docs/SUPPLY_CHAIN_SECURITY_BASELINE.md
 require_file docs/CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md
+require_file docs/VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE.md
+require_file docs/CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md
+require_file docs/IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md
 require_file docs/security/C_CPP_SECURITY_PROFILE.md
 require_file docs/security/C_ABI_BOUNDARY_POLICY.md
 require_file docs/status/README.md
@@ -41,6 +44,9 @@ require_file scripts/test-defensive-threat-model-validation-refinement.sh
 require_file scripts/test-memory-safety-roadmap.sh
 require_file scripts/test-supply-chain-security-baseline.sh
 require_file scripts/test-cyber-incident-reporting-response-baseline.sh
+require_file scripts/test-vulnerability-management-release-gate-baseline.sh
+require_file scripts/test-cryptographic-assurance-key-management-baseline.sh
+require_file scripts/test-identity-credential-access-management-baseline.sh
 require_file scripts/test-quality-safety-guards.sh
 
 require_contains 'Status: high-assurance security baseline checkpoint' "$doc"
@@ -48,12 +54,17 @@ require_contains 'Source refresh date: 2026-05-26' "$doc"
 require_contains 'Date checked: 2026-05-26' "$doc"
 require_contains 'Authoritative Source Inventory' "$doc"
 require_contains 'NSA Zero Trust Implementation Guidelines, Primer, Discovery Phase, Phase One, and Phase Two' "$doc"
+require_contains 'NSA Advancing Zero Trust Maturity Throughout the User Pillar' "$doc"
+require_contains 'CISA and NSA Identity and Access Management: Recommended Best Practices for Administrators' "$doc"
 require_contains 'NSA/CISA Memory Safe Languages CSI' "$doc"
 require_contains 'CISA Secure by Design' "$doc"
 require_contains 'CISA/FBI Product Security Bad Practices' "$doc"
 require_contains 'CISA Cross-Sector Cybersecurity Performance Goals' "$doc"
 require_contains 'CISA Zero Trust Maturity Model v2' "$doc"
+require_contains 'NIST SP 800-63-4 Digital Identity Guidelines' "$doc"
+require_contains 'CISA/NSA/FBI/MS-ISAC Phishing Guidance' "$doc"
 require_contains 'CISA Known Exploited Vulnerabilities Catalog' "$doc"
+require_contains 'NIST National Vulnerability Database and CVSS metrics' "$doc"
 require_contains 'FBI Cyber' "$doc"
 require_contains 'CISA/FBI/NSA/MS-ISAC #StopRansomware Guide' "$doc"
 require_contains 'NIST Cybersecurity Framework 2.0' "$doc"
@@ -62,6 +73,8 @@ require_contains 'NIST SP 800-53 Rev. 5, Release 5.2.0' "$doc"
 require_contains 'NIST SP 800-160 Vol. 2 Rev. 1' "$doc"
 require_contains 'NIST SP 800-207 Zero Trust Architecture' "$doc"
 require_contains 'FIPS 140-3' "$doc"
+require_contains 'NIST SP 800-57 Part 1 Rev. 5, SP 800-131A Rev. 2, and SP 800-90 series' "$doc"
+require_contains 'NSA/CISA/NIST post-quantum guidance and NSA CNSA 2.0' "$doc"
 
 for field in \
   'high_assurance_security_baseline_present=1' \
@@ -74,8 +87,12 @@ for field in \
   'cpg_operational_baseline_required=1' \
   'supply_chain_security_baseline_present=1' \
   'cyber_incident_reporting_response_baseline_present=1' \
+  'vulnerability_management_release_gate_baseline_present=1' \
+  'cryptographic_assurance_key_management_baseline_present=1' \
+  'identity_credential_access_management_baseline_present=1' \
   'kev_release_review_required=1' \
   'fips_crypto_boundary_required_before_production_crypto=1' \
+  'phishing_resistant_mfa_required_before_remote_privileged_access=1' \
   'sbom_required_before_production_installer=1' \
   'third_party_security_validation_required_before_security_release=1' \
   'incident_response_plan_required_before_production_service=1' \
@@ -107,9 +124,13 @@ for allocation in \
   'future_gate_denied_until_contract=1' \
   'SBOM evidence for shipped artifacts' \
   'KEV/NVD review or documented offline exception before release' \
+  'vulnerability-management release gate before production release or supported-version claims' \
   'software update and patch integrity, authenticity, validation, and rollback evidence before any mutating update lane' \
   'defined cryptographic module boundary' \
   'FIPS 140-3 applicability decision' \
+  'cryptographic assurance and key-management baseline before production cryptography claims' \
+  'phishing-resistant MFA path for privileged and remote access' \
+  'prohibit shared administrative accounts and default credentials' \
   'assign a named cybersecurity owner' \
   'publish a cyber incident reporting and response baseline before any incident-response feature' \
   'schedule table-top or third-party validation before security release'
@@ -127,15 +148,24 @@ require_contains 'docs/HIGH_ASSURANCE_SECURITY_BASELINE.md' SECURITY.md
 require_contains 'docs/MEMORY_SAFETY_ROADMAP.md' SECURITY.md
 require_contains 'docs/SUPPLY_CHAIN_SECURITY_BASELINE.md' SECURITY.md
 require_contains 'docs/CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md' SECURITY.md
+require_contains 'docs/VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE.md' SECURITY.md
+require_contains 'docs/CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md' SECURITY.md
+require_contains 'docs/IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md' SECURITY.md
 require_contains 'high_assurance_security_baseline_present=1' README.md
 require_contains 'memory_safety_roadmap_present=1' README.md
 require_contains 'supply_chain_security_baseline_present=1' README.md
 require_contains 'cyber_incident_reporting_response_baseline_present=1' README.md
+require_contains 'vulnerability_management_release_gate_baseline_present=1' README.md
+require_contains 'cryptographic_assurance_key_management_baseline_present=1' README.md
+require_contains 'identity_credential_access_management_baseline_present=1' README.md
 require_contains 'source_refresh_date=2026-05-26' README.md
 require_contains 'high_assurance_security_baseline_present=1' STATUS.md
 require_contains 'memory_safety_roadmap_present=1' STATUS.md
 require_contains 'supply_chain_security_baseline_present=1' STATUS.md
 require_contains 'cyber_incident_reporting_response_baseline_present=1' STATUS.md
+require_contains 'vulnerability_management_release_gate_baseline_present=1' STATUS.md
+require_contains 'cryptographic_assurance_key_management_baseline_present=1' STATUS.md
+require_contains 'identity_credential_access_management_baseline_present=1' STATUS.md
 require_contains 'High-assurance security baseline' docs/status/README.md
 require_contains 'HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md' docs/status/README.md
 require_contains 'Latest high-assurance security baseline note: 2026-05-26 CDT' docs/status/CURRENT_STATUS.md
@@ -145,6 +175,9 @@ require_contains 'sh ./scripts/test-high-assurance-security-baseline.sh' Makefil
 require_contains 'sh ./scripts/test-memory-safety-roadmap.sh' Makefile
 require_contains 'sh ./scripts/test-supply-chain-security-baseline.sh' Makefile
 require_contains 'sh ./scripts/test-cyber-incident-reporting-response-baseline.sh' Makefile
+require_contains 'sh ./scripts/test-vulnerability-management-release-gate-baseline.sh' Makefile
+require_contains 'sh ./scripts/test-cryptographic-assurance-key-management-baseline.sh' Makefile
+require_contains 'sh ./scripts/test-identity-credential-access-management-baseline.sh' Makefile
 require_contains 'quality-security-standards:' Makefile
 require_contains 'quality-security-standards' Makefile
 require_contains 'test-high-assurance-security-baseline.sh' scripts/test-quality-safety-guards.sh

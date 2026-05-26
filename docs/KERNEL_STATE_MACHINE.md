@@ -48,6 +48,9 @@ context-switch-ready
 time-accounting-ready
 preemption-ready
 scheduler-credit-ready
+scheduler-selection-ready
+scheduler-dispatch-ready
+scheduler-handoff-ready
 ```
 
 ## Controlled effect boundary

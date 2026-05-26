@@ -45,6 +45,9 @@ require_file docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_file docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 require_file docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_file docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
+require_file docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
+require_file docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+require_file docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
 require_file docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 require_file scripts/test-opensuse-local-rpm-static-validation.sh
 require_file packaging/opensuse/latticra.spec
@@ -61,7 +64,10 @@ require_contains 'docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md' docs/OPENSUS
 require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_contains 'docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
-require_contains 'Add openSUSE local RPM build evidence gate contract' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_contains 'docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_contains 'docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_contains 'docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_contains 'Add openSUSE RPM payload inspection contract' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_contains 'opensuse_rpmlint_osc_availability: ok' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 
 if [ ! -r /etc/os-release ] || ! grep -Eq '^(ID=opensuse|ID_LIKE=.*suse|ID="opensuse|ID_LIKE=".*suse)' /etc/os-release; then

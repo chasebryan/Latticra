@@ -134,11 +134,12 @@ no_effect=1
 execution_allowed=0
 mutation_allowed=0
 server_allowed=0
+network_allowed=0
 recovery_allowed=0
 hardware_allowed=0
 ```
 
-Any mutation, execution, server, recovery, or hardware flag is denied.
+Any mutation, execution, server, network, recovery, or hardware flag is denied.
 
 ## Lat metadata validation
 
@@ -150,6 +151,7 @@ It checks:
 Lat parse result status
 Lat parse error value
 Lat no-effect flags
+Lat network_allowed flag denial
 Lat declaration capacity
 Lat clause capacity
 Lat module declaration capacity
@@ -170,6 +172,7 @@ It checks:
 LIR module status
 LIR error value
 LIR no-effect flags
+LIR network_allowed flag denial
 LIR node capacity
 LIR edge capacity
 LIR binding capacity
@@ -183,6 +186,12 @@ It does not execute LIR, render L-UI, execute Lat, call Nucleus task execution, 
 ## Effect classification
 
 `latticra::classify_effect_request` classifies requested effects without performing them.
+If a request carries linked Lat or LIR metadata, classification also validates
+that linked metadata before allowing even a no-effect request.
+Bounded request source identity is copied into fixed audit storage and rendered
+in the report; oversized source identity is denied before any audit copy.
+Source identity containing an embedded NUL is rejected so report text cannot
+silently truncate the identity.
 
 Initial behavior:
 
@@ -211,9 +220,11 @@ no_effect=<0|1>
 execution_allowed=<0|1>
 mutation_allowed=<0|1>
 server_allowed=<0|1>
+network_allowed=<0|1>
 recovery_allowed=<0|1>
 hardware_allowed=<0|1>
 record[0].policy=<policy-name>
+record[0].source_identity=<source-identity>
 record[0].validator=<validator-label>
 record[0].requested_effect=<effect-label>
 record[0].result=<authority-status-label>
@@ -275,12 +286,21 @@ cpp_authority_layer_has_no_hardware_path
 cpp_authority_layer_uses_explicit_result_labels
 cpp_authority_layer_does_not_throw_across_c_boundary
 cpp_authority_layer_does_not_allocate_in_report_path
+cpp_authority_layer_preserves_source_identity_in_audit
+cpp_authority_layer_rejects_oversized_source_identity
+cpp_authority_layer_bounds_source_identity_before_audit_copy
+cpp_authority_layer_rejects_nul_source_identity
 cpp_authority_layer_validates_lat_parse_result_metadata
 cpp_authority_layer_validates_lir_shape_metadata
 cpp_authority_layer_audit_report_is_deterministic
 cpp_authority_layer_rejects_small_report_buffer
 cpp_authority_layer_is_deterministic
 cpp_authority_layer_rejects_mutation_flags
+cpp_authority_layer_rejects_network_flags
+cpp_authority_layer_rejects_lat_network_flags
+cpp_authority_layer_rejects_lir_network_flags
+cpp_authority_layer_rejects_request_lat_network_flags
+cpp_authority_layer_rejects_request_lir_network_flags
 cpp_authority_layer_classifies_effects_without_performing_them
 cpp_authority_layer_builds_with_fno_exceptions_and_fno_rtti
 ```

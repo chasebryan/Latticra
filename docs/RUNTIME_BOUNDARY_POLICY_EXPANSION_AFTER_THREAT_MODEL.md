@@ -99,6 +99,8 @@ Current request families:
 | hardware/boot | hardware-action, boot-action | requires future gate and remains denied | separate hardware/boot contract and evidence |
 | unknown | unknown or malformed request kind | deny | negative tests and deterministic denial report |
 
+Future authority-bearing families must also preserve distinct operator identity, workload or service identity, and host or device integrity context before promotion.
+
 ## Effect policy map
 
 Current effect families:
@@ -124,12 +126,18 @@ No future runtime request may be promoted unless every relevant prerequisite is 
 contract identity present
 request kind known
 requested effect known
+caller identity known
+operator identity known when operator context exists
+workload or service identity known when tool, MCP, model, runtime, updater, signer, or installer authority is requested
+asset or resource identity known
+host or device integrity context known when host, network, update, recovery, boot, or hardware authority is requested
 mode matches request family
 authority summary present
 authority status ok
 authority no-effect flags preserved
 operator confirmation recorded as metadata only
 operator confirmation cannot override policy
+least-privilege scope recorded for the exact requested effect
 Nucleus task record denies effect behavior unless a future contract changes it
 runtime report names policy, denial reason, gate state, matrix cell, domain cell, and evidence level
 negative tests exist for unknown request, unknown effect, future-gated operation, blocked effect, prerequisite denial, and operator confirmation non-override
@@ -146,6 +154,8 @@ LIR execution -> future LIR execution contract
 file read/write -> future host I/O authority contract
 network open -> future network authority contract
 server interaction -> future server/MCP authority contract
+self-update signer or update payload acceptance -> future signed update contract with integrity, authenticity, and rollback evidence
+tool, MCP, model, or runtime workload invocation -> future workload-identity-aware authority contract
 self-update -> future signed update contract
 recovery or rollback -> future recovery contract
 hardware or boot -> future hardware/boot contract
@@ -162,6 +172,9 @@ unknown request is treated as allowed -> runtime-boundary unknown request denial
 unknown effect is treated as allowed -> runtime-boundary unknown effect denial tests
 future-gated request is treated as executable -> future-gate classification tests
 operator confirmation overrides policy -> operator confirmation non-override tests
+future workload or service authority lacks distinct workload identity -> zero-trust workload-identity gap remains open
+future host, network, update, recovery, boot, or hardware authority lacks host or device integrity context -> zero-trust host-integrity gap remains open
+future tool or command path reaches a shell boundary without dedicated command-boundary review -> command-boundary gap remains open
 report omits denial reason -> runtime-boundary report fields and report-refinement tests
 failed authority metadata is treated as allowed -> authority prerequisite denial tests
 invalid LIR input reaches rendering -> LIR prerequisite denial tests
@@ -189,6 +202,8 @@ runtime boundary source code still performs no operational behavior
 no host I/O authority exists
 no network authority exists
 no MCP behavior exists
+no workload/service identity-aware runtime authority profile exists
+no host/device integrity-aware authority profile exists
 no production protection claim exists
 no certification or compliance mapping exists
 ```

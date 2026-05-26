@@ -2,7 +2,7 @@
 
 Status: active Stage-0 foundation
 Date: 2026-05-26
-Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, session contract, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
+Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, session contract, workspace contract, namespace contract, rootfs contract, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
 
 ## Current Evidence
 
@@ -34,6 +34,27 @@ session_contract_profile=lc-session-v0
 runtime_session_created=0
 runtime_process_spawn_allowed=0
 interactive_shell_allowed=0
+workspace_contract_status=metadata-only-contract
+workspace_contract_present=1
+workspace_contract_command=lc workspace
+workspace_contract_profile=lc-workspace-v0
+workspace_mount_allowed=0
+workspace_file_write_allowed=0
+workspace_mutation_allowed=0
+namespace_contract_status=metadata-only-contract
+namespace_contract_present=1
+namespace_contract_command=lc namespace
+namespace_contract_profile=lc-namespace-v0
+namespace_mount_allowed=0
+rootfs_contract_status=metadata-only-contract
+rootfs_contract_present=1
+rootfs_contract_command=lc rootfs
+rootfs_contract_profile=lc-rootfs-v0
+rootfs_image_create_allowed=0
+rootfs_mount_allowed=0
+rootfs_package_install_allowed=0
+host_path_projection_allowed=0
+namespace_mutation_allowed=0
 substrate_bridge_status=metadata-bound
 command_registry_status=seed-registry
 command_registry_source=c-static-table

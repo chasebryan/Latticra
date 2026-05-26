@@ -50,9 +50,21 @@ signed_updater_denial_transcript_present=1
 signed_updater_denial_decision=deny-signed-update-delivery
 signed_updater_denial_transcript_stdout_only=1
 signed_updater_denial_transcript_file_write_enabled=0
+signed_updater_manifest_fixture_contract_present=1
+signed_updater_manifest_fixture_present=1
+signed_updater_manifest_fixture_validation_present=1
+signed_updater_manifest_fixture_validated=1
+signed_updater_state_fixture_contract_present=1
+signed_updater_state_fixture_present=1
+current_update_state=blocked
+state_transition_execution_allowed=0
+state_transition_execution_performed=0
+manifest_fixture_trusted_for_apply=0
+signed_updater_manifest_fixture_valid_for_apply=0
+trusted_signed_manifest_present=0
 ```
 
-This is not a signed updater, not a remote update client, not a network self-update path, and not production update readiness.
+The local signed updater manifest fixture validation only checks shape and closed-authority fields. The local signed updater state fixture only records blocked state names without transition execution. This is not a signed updater, not a remote update client, not a network self-update path, not update state execution, and not production update readiness.
 
 ## Update channels
 
@@ -202,6 +214,9 @@ The signed staged update model still needs:
 update manifest fixture
 update state fixture
 no-effect signed updater denial transcript
+local signed updater manifest fixture contract
+local signed updater manifest fixture validation
+local signed updater state fixture contract
 signature-required marker
 rollback visibility marker
 validation test

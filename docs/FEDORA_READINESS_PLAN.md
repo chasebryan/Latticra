@@ -70,10 +70,13 @@ Known current posture:
 
 ```text
 kernel lifecycle evidence exists
-final_state=scheduler-credit-ready
+final_state=scheduler-handoff-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
+scheduler_selection_allowed=0
+scheduler_dispatch_allowed=0
+scheduler_handoff_allowed=0
 memory_allocation_allowed=0
 process_spawn_allowed=0
 syscall_dispatch_allowed=0

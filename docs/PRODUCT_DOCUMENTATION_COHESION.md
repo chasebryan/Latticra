@@ -32,6 +32,12 @@ explicit about non-claims
 
 Do not let a shorter product summary outgrow the evidence in status records, contracts, guard scripts, or the [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
 
+Use [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) to connect public surfaces to source records, validation checks, and non-claim boundaries.
+
+Use [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) to choose documentation validation commands and failure-handling paths.
+
+Use [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md) for canonical terminology, status/date style, heading shape, link style, and replacement wording.
+
 ## Product Surface Matrix
 
 | Surface | Reader job | Must say | Must not imply |
@@ -80,8 +86,12 @@ Use this route for someone changing documentation or product posture:
 1. [`README.md`](README.md)
 2. [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md)
 3. [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md)
-4. The relevant subsystem contract and status record
-5. The exact guard named by that record
+4. [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md)
+5. [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md)
+6. [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md)
+7. [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md)
+8. The relevant subsystem contract and status record
+9. The exact guard named by that record
 
 The route should prevent documentation from getting ahead of implementation or validation evidence.
 
@@ -146,7 +156,11 @@ Run this review when public wording changes:
 3. Does the status record use the same posture words?
 4. Does the page say what is blocked?
 5. Does the validation path prove the narrow claim?
-6. Does the change preserve the documentation-only boundary if no implementation changed?
+6. Does [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) identify the source record, mirror, validation, and non-claim boundary?
+7. Does [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) identify the narrowest relevant checks?
+8. Does the change preserve the documentation-only boundary if no implementation changed?
+9. Does the wording follow [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md)?
+10. Does the change need a [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) outcome label?
 
 ## Maintenance Boundary
 

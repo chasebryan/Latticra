@@ -33,5 +33,11 @@ grep -q "runtime_authority_granted=0" docs/latticra-seal/PRODUCT.md
 grep -q "seal_capability_metadata_report=1" docs/latticra-seal/PRODUCT.md
 grep -q "seal_product_spine_status_present=1" docs/latticra-seal/PRODUCT.md
 grep -q "product_spine_changes_authority=0" docs/latticra-seal/PRODUCT.md
+grep -q "operator_receipt_report_contract_present=1" docs/latticra-seal/PRODUCT.md
+grep -q "operator_receipt_report_implementation_plan_present=1" docs/latticra-seal/PRODUCT.md
+grep -q "operator_receipt_report_implementation_present=1" docs/latticra-seal/PRODUCT.md
+grep -q "operator_receipt_report_surface_present=1" docs/latticra-seal/PRODUCT.md
+grep -q "operator_receipt_report_status_present=1" docs/latticra-seal/PRODUCT.md
+grep -q "seal_operator_receipt_report=1" docs/latticra-seal/REPORTS.md
 
 echo "latticra_seal_docs: ok"

@@ -101,7 +101,7 @@ require_contains 'artifact_signature_verified=0' "$script"
 require_contains 'rollback_plan_present=0' "$script"
 require_contains 'operator_confirmation_observed=0' "$script"
 require_contains 'signed_update_apply_allowed=0' "$script"
-require_contains 'next_lane=panel-signed-updater-manifest-fixture-contract' "$script"
+require_contains 'next_lane=panel-signed-updater-state-fixture-validation' "$script"
 
 require_contains 'LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE_STATUS.md' "$index"
 require_contains 'closed signed updater delivery gate' "$index"

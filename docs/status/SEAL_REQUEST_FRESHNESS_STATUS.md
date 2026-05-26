@@ -38,6 +38,9 @@ scripts/test-latticra-seal-request-freshness.sh
 scripts/latticra-seal-request-freshness-report.sh
 scripts/test-latticra-seal-request-freshness-report-surface.sh
 scripts/test-latticra-seal-request-freshness-status.sh
+scripts/test-latticra-seal-parameter-schema-status.sh
+.github/workflows/latticra-seal-parameter-schema-status.yml
+.github/workflows/latticra-seal-request-freshness-status.yml
 docs/LATTICRA_SEAL_SIGNED_REQUEST_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNED_REQUEST_IMPLEMENTATION.md
 docs/status/SEAL_SIGNED_REQUEST_STATUS.md
@@ -62,6 +65,13 @@ seal_request_freshness_report_surface_present=1
 seal_request_freshness_report_runner_present=1
 seal_request_freshness_report_guard_present=1
 seal_request_freshness_status_present=1
+seal_request_freshness_status_runner_present=1
+seal_request_freshness_status_workflow_present=1
+seal_parameter_schema_status_present=1
+seal_parameter_schema_status_runner_present=1
+seal_parameter_schema_status_workflow_present=1
+parameter_schema_predecessor_agentic_automation_security_status_present=1
+request_freshness_predecessor_parameter_schema_status_present=1
 readme_mentions_request_freshness_metadata=1
 readme_mentions_request_freshness_report_surface=1
 readme_links_request_freshness_contract=1
@@ -71,7 +81,7 @@ readme_links_request_freshness_status=1
 root_status_mentions_request_freshness_status=1
 status_index_links_request_freshness_status=1
 foundation_index_links_request_freshness_status=1
-project_notes_point_to_policy_decision_status=1
+project_notes_point_to_signed_request_status=1
 freshness_profile=latticra-seal-request-freshness/0.1
 request_freshness_supported=0
 request_freshness_validation_supported=0
@@ -87,6 +97,7 @@ parameter_hash_present=0
 freshness_valid=0
 replay_detected=0
 mode=status-public-entry-alignment
+request_freshness_status_added=1
 implementation_behavior_changed=0
 timestamp_parsing_implemented=0
 trusted_clock_behavior_added=0
@@ -168,6 +179,24 @@ sh scripts/test-latticra-seal-request-freshness-report-surface.sh
 Expected output:
 
 ```text
+seal report envelope status: ok
+seal signature request status: ok
+seal signing authorization status: ok
+seal signer handoff status: ok
+seal signer invocation status: ok
+seal signing operation status: ok
+seal key-handling status: ok
+seal key-material status: ok
+seal public-key parsing status: ok
+seal key parsing status: ok
+seal verification policy status: ok
+seal verification receipt status: ok
+seal capability gate status: ok
+seal effect decision status: ok
+seal runtime handoff status: ok
+seal status rollup status: ok
+seal agentic automation security status: ok
+seal parameter schema status: ok
 seal request freshness status: ok
 ```
 
@@ -175,10 +204,12 @@ seal request freshness status: ok
 
 This status record is documentation/status/public-entry alignment only.
 
+This refresh adds the request freshness status guard workflow and records the guarded parameter schema status predecessor without changing the report-only request freshness metadata, implementation, or report surface.
+
 It does not add timestamp parsing, trusted clock behavior, nonce storage, replay-cache storage, context hashing, parameter hashing, freshness validation, replay detection, signature verification, MCP protocol behavior, MCP server behavior, MCP client behavior, AI agent execution, model execution, tool execution, shell execution, runtime behavior, host reads, host writes, network behavior, cryptographic verification, key handling, signature generation, receipt verification, capability enforcement, policy enforcement, runtime enforcement, production readiness, external endorsement, or authority grants.
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is policy decision status/public-entry alignment.
+The next valid Latticra Seal slice is signed request status/workflow guard alignment.
 
-That future slice must preserve the no-effect posture and must not implement real policy evaluation, policy enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signature verification, freshness validation, replay detection, authority grants, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, or shell execution.
+That future slice must preserve the no-effect posture and must not implement signature generation, signature verification, trust-store loading, revocation lookup, signed request enforcement, real policy evaluation, policy enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, freshness validation, replay detection, authority grants, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, or shell execution.

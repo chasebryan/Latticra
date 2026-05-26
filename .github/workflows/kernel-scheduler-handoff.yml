@@ -1,0 +1,26 @@
+name: Kernel scheduler handoff
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  kernel-scheduler-handoff:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - name: Run kernel scheduler handoff guard
+        run: sh scripts/test-kernel-scheduler-handoff.sh
+
+      - name: Run kernel scheduler handoff report runner
+        run: sh scripts/test-kernel-scheduler-handoff-report-runner.sh

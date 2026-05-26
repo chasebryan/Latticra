@@ -25,6 +25,9 @@ static void seed_summary_result(
     summary_copy(result->final_state, sizeof(result->final_state), "created");
     result->runtime_entry_allowed = 0;
     result->scheduler_execution_allowed = 0;
+    result->scheduler_selection_allowed = 0;
+    result->scheduler_dispatch_allowed = 0;
+    result->scheduler_handoff_allowed = 0;
     result->memory_allocation_allowed = 0;
     result->process_spawn_allowed = 0;
     result->syscall_dispatch_allowed = 0;
@@ -87,7 +90,7 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_default_request(
 
     request->lifecycle_request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
     request->lifecycle_request.target_state =
-        LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY;
+        LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
     request->lifecycle_request.max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
 }
@@ -134,6 +137,18 @@ static const char *lifecycle_relation_for(
         case LATTICRA_KERNEL_SUBSYSTEM_RUNTIME:
             return "runtime-not-entered";
         case LATTICRA_KERNEL_SUBSYSTEM_SCHEDULER:
+            if (state_at_or_after(final_state,
+                    LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY)) {
+                return "scheduler-handoff-ready";
+            }
+            if (state_at_or_after(final_state,
+                    LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY)) {
+                return "scheduler-dispatch-ready";
+            }
+            if (state_at_or_after(final_state,
+                    LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY)) {
+                return "scheduler-selection-ready";
+            }
             if (state_at_or_after(final_state,
                     LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY)) {
                 return "scheduler-credit-ready";
@@ -265,6 +280,9 @@ static void finalize_summary(
     result->registry_no_effect = result->registry.no_effect;
     result->runtime_entry_allowed = 0;
     result->scheduler_execution_allowed = 0;
+    result->scheduler_selection_allowed = 0;
+    result->scheduler_dispatch_allowed = 0;
+    result->scheduler_handoff_allowed = 0;
     result->memory_allocation_allowed = 0;
     result->process_spawn_allowed = 0;
     result->syscall_dispatch_allowed = 0;
@@ -316,7 +334,7 @@ static void finalize_summary(
     summary_copy(result->summary_status, sizeof(result->summary_status),
         (result->lifecycle_complete == 1 &&
          result->lifecycle.final_state ==
-            LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY &&
+            LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY &&
          result->registry_no_effect == 1 &&
          result->external_effect_performed == 0) ?
             "summary-ready" : "summary-incomplete");
@@ -404,6 +422,9 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         "registry_no_effect=%d\n"
         "runtime_entry_allowed=%d\n"
         "scheduler_execution_allowed=%d\n"
+        "scheduler_selection_allowed=%d\n"
+        "scheduler_dispatch_allowed=%d\n"
+        "scheduler_handoff_allowed=%d\n"
         "memory_allocation_allowed=%d\n"
         "process_spawn_allowed=%d\n"
         "syscall_dispatch_allowed=%d\n"
@@ -462,6 +483,9 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         result->registry_no_effect,
         result->runtime_entry_allowed,
         result->scheduler_execution_allowed,
+        result->scheduler_selection_allowed,
+        result->scheduler_dispatch_allowed,
+        result->scheduler_handoff_allowed,
         result->memory_allocation_allowed,
         result->process_spawn_allowed,
         result->syscall_dispatch_allowed,

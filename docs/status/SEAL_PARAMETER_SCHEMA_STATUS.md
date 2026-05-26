@@ -25,7 +25,10 @@ docs/LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_CONTRACT.md
 docs/LATTICRA_SEAL_MCP_ALIGNMENT_PLAN.md
 docs/LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_IMPLEMENTATION.md
 docs/LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_REPORT_SURFACE.md
+docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_STATUS.md
 docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md
+scripts/test-latticra-seal-agentic-automation-security-status.sh
+.github/workflows/latticra-seal-agentic-automation-security-status.yml
 docs/LATTICRA_SEAL_PARAMETER_SCHEMA_CONTRACT.md
 docs/LATTICRA_SEAL_PARAMETER_SCHEMA_IMPLEMENTATION.md
 docs/LATTICRA_SEAL_PARAMETER_SCHEMA_REPORT_SURFACE.md
@@ -39,12 +42,15 @@ scripts/test-latticra-seal-parameter-schema.sh
 scripts/latticra-seal-parameter-schema-report.sh
 scripts/test-latticra-seal-parameter-schema-report-surface.sh
 scripts/test-latticra-seal-parameter-schema-status.sh
+.github/workflows/latticra-seal-parameter-schema-status.yml
 docs/LATTICRA_SEAL_REQUEST_FRESHNESS_CONTRACT.md
 docs/LATTICRA_SEAL_REQUEST_FRESHNESS_IMPLEMENTATION.md
 docs/LATTICRA_SEAL_REQUEST_FRESHNESS_REPORT_SURFACE.md
+docs/status/SEAL_REQUEST_FRESHNESS_STATUS.md
 scripts/test-latticra-seal-request-freshness-contract.sh
 scripts/test-latticra-seal-request-freshness.sh
 scripts/test-latticra-seal-request-freshness-report-surface.sh
+scripts/test-latticra-seal-request-freshness-status.sh
 ```
 
 ## Current checkpoint
@@ -63,6 +69,13 @@ seal_parameter_schema_report_surface_present=1
 seal_parameter_schema_report_runner_present=1
 seal_parameter_schema_report_guard_present=1
 seal_parameter_schema_status_present=1
+seal_parameter_schema_status_runner_present=1
+seal_parameter_schema_status_workflow_present=1
+seal_agentic_automation_security_status_present=1
+seal_agentic_automation_security_status_runner_present=1
+seal_agentic_automation_security_status_workflow_present=1
+agentic_automation_security_predecessor_status_rollup_status_present=1
+parameter_schema_predecessor_agentic_automation_security_status_present=1
 readme_mentions_parameter_schema_metadata=1
 readme_mentions_parameter_schema_report_surface=1
 readme_links_parameter_schema_contract=1
@@ -104,6 +117,11 @@ cryptographic_enforcement_added=0
 capability_enforcement_added=0
 production_readiness_claimed=0
 external_endorsement_claimed=0
+parameter_schema_status_added=1
+schema_parsing_added=0
+schema_validation_added=0
+policy_evaluation_added=0
+policy_enforcement_added=0
 ```
 
 ## Expected report posture
@@ -156,6 +174,23 @@ sh scripts/test-latticra-seal-parameter-schema-report-surface.sh
 Expected output:
 
 ```text
+seal report envelope status: ok
+seal signature request status: ok
+seal signing authorization status: ok
+seal signer handoff status: ok
+seal signer invocation status: ok
+seal signing operation status: ok
+seal key-handling status: ok
+seal key-material status: ok
+seal public-key parsing status: ok
+seal key parsing status: ok
+seal verification policy status: ok
+seal verification receipt status: ok
+seal capability gate status: ok
+seal effect decision status: ok
+seal runtime handoff status: ok
+seal status rollup status: ok
+seal agentic automation security status: ok
 seal parameter schema status: ok
 ```
 
@@ -163,10 +198,12 @@ seal parameter schema status: ok
 
 This status record is documentation/status/public-entry alignment only.
 
+This refresh adds the parameter schema status guard workflow and records the guarded agentic automation security status predecessor without changing the report-only parameter schema metadata, implementation, or report surface.
+
 It does not add schema parsing, schema validation, MCP protocol behavior, MCP server behavior, MCP client behavior, AI agent execution, model execution, tool execution, shell execution, runtime behavior, host reads, host writes, network behavior, cryptographic verification, key handling, signature verification, receipt verification, capability enforcement, policy enforcement, runtime enforcement, production readiness, external endorsement, or authority grants.
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is policy decision status/public-entry alignment.
+The next valid Latticra Seal slice is request freshness status/workflow guard alignment or another narrow status/index alignment follow-up.
 
 That future slice must preserve the no-effect posture and must not implement real policy evaluation, policy enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signature verification, freshness validation, replay detection, authority grants, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, or shell execution.

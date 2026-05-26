@@ -45,6 +45,12 @@ ubuntu_package_notice_promotion_gate_contract_present=1
 ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_package_license_promotion_gate_contract_present=1
 ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
+ubuntu_lintian_static_metadata_contract_present=1
+ubuntu_lintian_static_metadata_status=blocked-pending-package-license-promotion
+ubuntu_local_deb_build_transcript_acceptance_gate_contract_present=1
+ubuntu_local_deb_build_transcript_acceptance_gate_status=blocked-pending-lintian-static-metadata-and-build-transcript
+ubuntu_local_deb_install_remove_evidence_contract_present=1
+ubuntu_local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript
 ubuntu_package_notice_review_contract_present=1
 ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 license_expression_candidate_recorded=1
@@ -83,6 +89,33 @@ installed_payload_notice_requirements_recorded=0
 release_artifact_notice_requirements_recorded=0
 source_package_notice_requirements_recorded=0
 release_notes_notice_requirements_recorded=0
+deb_removed_from_host=0
+lintian_static_metadata_run=0
+lintian_static_metadata_findings_classified=0
+lintian_expected_draft_findings_classified=0
+lintian_unexpected_findings_classified=0
+build_transcript_acceptance_gate_open=0
+build_transcript_acceptance_gate_unblocked=0
+local_deb_build_transcript_accepted=0
+transcript_header_reviewed=0
+tooling_evidence_reviewed=0
+package_evidence_reviewed=0
+build_evidence_reviewed=0
+payload_evidence_reviewed=0
+non_claims_reviewed=0
+install_remove_test_environment_recorded=0
+install_command_recorded=0
+install_exit_status_recorded=0
+installed_payload_listing_recorded=0
+usr_bin_latticra_installed=0
+status_command_after_install_recorded=0
+remove_command_recorded=0
+remove_exit_status_recorded=0
+post_remove_absence_checked=0
+residual_payload_reviewed=0
+install_remove_findings_classified=0
+host_mutation_scope_reviewed=0
+ubuntu_install_remove_evidence_unblocked=0
 third_party_notice_reviewed=0
 third_party_notice_requirements_recorded=0
 notice_file_present=0
@@ -122,9 +155,12 @@ docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
 docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_PROMOTION_GATE_CONTRACT.md
+docs/UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
+docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md
+docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
 packaging/ubuntu/README.md
 packaging/ubuntu/debian/control
 packaging/ubuntu/debian/rules
@@ -147,9 +183,12 @@ scripts/test-ubuntu-trademark-notice-boundary-contract.sh
 scripts/test-ubuntu-release-artifact-notice-requirements-contract.sh
 scripts/test-ubuntu-package-notice-promotion-gate-contract.sh
 scripts/test-ubuntu-package-license-promotion-gate-contract.sh
+scripts/test-ubuntu-lintian-static-metadata-contract.sh
 scripts/test-ubuntu-package-notice-review-contract.sh
 scripts/test-ubuntu-package-license-review-contract.sh
 scripts/test-ubuntu-local-deb-build-transcript-contract.sh
+scripts/test-ubuntu-local-deb-build-transcript-acceptance-gate-contract.sh
+scripts/test-ubuntu-local-deb-install-remove-evidence-contract.sh
 .github/workflows/ubuntu-package-notice-inventory.yml
 .github/workflows/ubuntu-doc-payload-license-review-contract.yml
 .github/workflows/ubuntu-third-party-material-review-contract.yml
@@ -160,7 +199,10 @@ scripts/test-ubuntu-local-deb-build-transcript-contract.sh
 .github/workflows/ubuntu-release-artifact-notice-requirements-contract.yml
 .github/workflows/ubuntu-package-notice-promotion-gate-contract.yml
 .github/workflows/ubuntu-package-license-promotion-gate-contract.yml
+.github/workflows/ubuntu-lintian-static-metadata-contract.yml
 .github/workflows/ubuntu-package-notice-review-contract.yml
+.github/workflows/ubuntu-local-deb-build-transcript-acceptance-gate-contract.yml
+.github/workflows/ubuntu-local-deb-install-remove-evidence-contract.yml
 ```
 
 ## Public Entry Points
@@ -200,10 +242,16 @@ The Ubuntu package notice promotion gate records the aggregate blocked state acr
 
 The Ubuntu package license promotion gate records the aggregate blocked state across package notice and package license prerequisites before lintian/static metadata or build transcript evidence can proceed.
 
+The Ubuntu lintian static metadata contract records the future lintian/static metadata evidence shape while keeping lintian execution and build transcript evidence blocked.
+
+The Ubuntu local deb build transcript acceptance gate records that no future local build transcript can be accepted until lintian/static metadata, package license promotion, transcript evidence, payload evidence, and non-claims are reviewed.
+
+The Ubuntu local deb install/remove evidence contract records the future install/remove evidence shape while keeping package install commands, package remove commands, host mutation, and install/remove evidence promotion blocked.
+
 The Ubuntu package notice inventory records the current local-deb draft payload facts without promoting the review. The Ubuntu package notice review contract records the unresolved documentation-license and notice obligations that must be settled before the package license review can be promoted.
 
 ## Next Recommended Lane
 
 ```text
-Review the Ubuntu package license promotion gate contract, then advance lintian/static metadata only after package notice and package license prerequisites are reviewed.
+Review the Ubuntu local deb install/remove evidence contract, then keep install/remove evidence blocked until a reviewed local deb build transcript is accepted.
 ```

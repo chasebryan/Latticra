@@ -170,13 +170,22 @@ static int sequential_steps_advance_ladder(void) {
     request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY;
     EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
         "preemption ready to scheduler credit ready");
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "scheduler credit ready to scheduler selection ready");
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "scheduler selection ready to scheduler dispatch ready");
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "scheduler dispatch ready to scheduler handoff ready");
 
-    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY,
-        "machine reaches scheduler credit ready");
-    EXPECT_TRUE(strcmp(machine.machine_status, "scheduler-credit-ready") == 0,
-        "machine status scheduler credit ready");
-    EXPECT_TRUE(machine.log_count == 18u,
-        "eighteen transitions logged");
+    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY,
+        "machine reaches scheduler handoff ready");
+    EXPECT_TRUE(strcmp(machine.machine_status, "scheduler-handoff-ready") == 0,
+        "machine status scheduler handoff ready");
+    EXPECT_TRUE(machine.log_count == 21u,
+        "twenty one transitions logged");
     EXPECT_TRUE(machine.external_effect_performed == 0,
         "sequence external effects absent");
     EXPECT_TRUE(machine.log[4].to_state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY,
@@ -207,6 +216,12 @@ static int sequential_steps_advance_ladder(void) {
         "log preemption ready");
     EXPECT_TRUE(machine.log[17].to_state == LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY,
         "log scheduler credit ready");
+    EXPECT_TRUE(machine.log[18].to_state == LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY,
+        "log scheduler selection ready");
+    EXPECT_TRUE(machine.log[19].to_state == LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY,
+        "log scheduler dispatch ready");
+    EXPECT_TRUE(machine.log[20].to_state == LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY,
+        "log scheduler handoff ready");
     return 0;
 }
 

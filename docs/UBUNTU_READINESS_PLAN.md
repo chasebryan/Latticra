@@ -94,11 +94,20 @@ ubuntu_package_notice_promotion_gate_contract_present=1
 ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_package_license_promotion_gate_contract_present=1
 ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
+ubuntu_lintian_static_metadata_contract_present=1
+ubuntu_lintian_static_metadata_status=blocked-pending-package-license-promotion
+ubuntu_local_deb_build_transcript_acceptance_gate_contract_present=1
+ubuntu_local_deb_build_transcript_acceptance_gate_status=blocked-pending-lintian-static-metadata-and-build-transcript
+ubuntu_local_deb_install_remove_evidence_contract_present=1
+ubuntu_local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript
 ubuntu_package_notice_review_contract_present=1
 ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 ubuntu_local_deb_build_transcript_contract_present=1
 ubuntu_local_deb_build_transcript_present=0
+local_deb_build_transcript_accepted=0
 deb_artifact_created=0
+deb_installed_on_host=0
+deb_removed_from_host=0
 ppa_claimed=0
 ubuntu_archive_ready=0
 production_installer_ready=0
@@ -172,9 +181,12 @@ docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
 docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_PROMOTION_GATE_CONTRACT.md
+docs/UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
+docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md
+docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
 scripts/ubuntu-package-notice-inventory.sh
 scripts/test-ubuntu-package-notice-inventory.sh
 scripts/test-ubuntu-doc-payload-license-review-contract.sh
@@ -186,9 +198,12 @@ scripts/test-ubuntu-trademark-notice-boundary-contract.sh
 scripts/test-ubuntu-release-artifact-notice-requirements-contract.sh
 scripts/test-ubuntu-package-notice-promotion-gate-contract.sh
 scripts/test-ubuntu-package-license-promotion-gate-contract.sh
+scripts/test-ubuntu-lintian-static-metadata-contract.sh
 scripts/test-ubuntu-package-license-review-contract.sh
 scripts/test-ubuntu-package-notice-review-contract.sh
 scripts/test-ubuntu-local-deb-build-transcript-contract.sh
+scripts/test-ubuntu-local-deb-build-transcript-acceptance-gate-contract.sh
+scripts/test-ubuntu-local-deb-install-remove-evidence-contract.sh
 .github/workflows/ubuntu-package-notice-inventory.yml
 .github/workflows/ubuntu-doc-payload-license-review-contract.yml
 .github/workflows/ubuntu-third-party-material-review-contract.yml
@@ -199,9 +214,12 @@ scripts/test-ubuntu-local-deb-build-transcript-contract.sh
 .github/workflows/ubuntu-release-artifact-notice-requirements-contract.yml
 .github/workflows/ubuntu-package-notice-promotion-gate-contract.yml
 .github/workflows/ubuntu-package-license-promotion-gate-contract.yml
+.github/workflows/ubuntu-lintian-static-metadata-contract.yml
 .github/workflows/ubuntu-package-notice-review-contract.yml
 .github/workflows/ubuntu-package-license-review-contract.yml
 .github/workflows/ubuntu-local-deb-build-transcript-contract.yml
+.github/workflows/ubuntu-local-deb-build-transcript-acceptance-gate-contract.yml
+.github/workflows/ubuntu-local-deb-install-remove-evidence-contract.yml
 ```
 
 The first deb draft is only a packaging-shape record until lint/build/install evidence is added.
@@ -228,7 +246,7 @@ claim operating-system completeness
 Recommended next slice:
 
 ```text
-Review the Ubuntu package license promotion gate contract, then advance lintian/static metadata only after package notice and package license prerequisites are reviewed.
+Review the Ubuntu local deb install/remove evidence contract, then keep install/remove evidence blocked until a reviewed local deb build transcript is accepted.
 ```
 
 That should preserve the current no-artifact, no-submission, local-only Ubuntu package posture while the local deb path matures.

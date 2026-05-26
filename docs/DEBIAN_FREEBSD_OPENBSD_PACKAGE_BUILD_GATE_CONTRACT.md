@@ -15,6 +15,9 @@ This contract is documentation-only and static. It does not run package build to
 
 ```text
 debian_freebsd_openbsd_package_build_gate_contract_present=1
+debian_freebsd_openbsd_package_build_environment_contract_present=1
+debian_freebsd_openbsd_package_artifact_naming_contract_present=1
+debian_freebsd_openbsd_package_payload_inspection_contract_present=1
 package_build_gate_state=closed-no-effect
 debian_build_allowed=0
 freebsd_build_allowed=0
@@ -172,6 +175,9 @@ This contract depends on:
 docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_ENVIRONMENT_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_ARTIFACT_NAMING_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md
 ```
 
 The source archive fixture lane proves temporary archive shape in a disposable workspace.
@@ -180,15 +186,60 @@ The package input handoff lane proves temporary package input staging while pres
 
 This package-build gate keeps package build execution closed until source acceptance, checksum, license, notice, environment, authorization, payload inspection, install/remove, and publication non-claim evidence exists.
 
-## Next Slice
+## Completed Follow-On Lane
 
-Recommended next slice:
+Completed follow-on lane:
 
 ```text
 Add a Debian, FreeBSD, and OpenBSD package-build environment contract that documents disposable validation environments without running package build commands.
 ```
 
-That future lane should keep `package_build_gate_state=closed-no-effect` until environment evidence, operator authorization evidence, artifact naming, install/remove transcript rules, payload inspection rules, and publication non-claim review are all present.
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_ENVIRONMENT_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-build-environment-contract.sh
+```
+
+That lane documents disposable validation environment requirements while keeping `package_build_gate_state=closed-no-effect`.
+
+## Completed Follow-On Lane
+
+Completed follow-on lane:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package artifact naming contract before any package artifact can be created.
+```
+
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_ARTIFACT_NAMING_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-artifact-naming-contract.sh
+```
+
+That lane defines package artifact names, output directories, checksum binding, retention rules, and publication non-claims while keeping builds blocked.
+
+## Completed Follow-On Lane
+
+Completed follow-on lane:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package payload inspection contract before any package artifact can be accepted.
+```
+
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-payload-inspection-contract.sh
+```
+
+That lane defines payload inspection evidence without opening the package-build gate.
+
+## Next Slice
+
+Recommended next slice:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package install/remove transcript contract before any package install can be accepted.
+```
+
+That future lane should define disposable install/remove evidence while keeping host installs and package readiness blocked.
 
 ## Validation
 

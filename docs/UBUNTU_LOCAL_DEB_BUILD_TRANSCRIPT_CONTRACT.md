@@ -74,6 +74,12 @@ ubuntu_package_notice_promotion_gate_contract_present=1
 ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_package_license_promotion_gate_contract_present=1
 ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
+ubuntu_lintian_static_metadata_contract_present=1
+ubuntu_lintian_static_metadata_status=blocked-pending-package-license-promotion
+ubuntu_local_deb_build_transcript_acceptance_gate_contract_present=1
+ubuntu_local_deb_build_transcript_acceptance_gate_status=blocked-pending-lintian-static-metadata-and-build-transcript
+ubuntu_local_deb_install_remove_evidence_contract_present=1
+ubuntu_local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript
 ubuntu_package_notice_review_contract_present=1
 ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 license_expression_candidate_recorded=1
@@ -127,15 +133,23 @@ operating_system_replacement_claimed=0
 ```text
 ubuntu_local_deb_build_transcript_contract_present=1
 ubuntu_local_deb_build_transcript_present=0
+local_deb_build_transcript_accepted=0
+build_transcript_acceptance_gate_unblocked=0
 deb_artifact_created=0
 deb_artifact_installed=0
+deb_removed_from_host=0
 license_expression_reviewed=0
 license_expression_unresolved=1
+ubuntu_lintian_static_metadata_unblocked=0
 ```
 
 ## Acceptance Rule
 
-A future transcript may only be accepted if all required fields are present, the license expression has been reviewed, expected draft findings are classified, unexpected findings are either absent or explicitly reviewed, and all non-claims remain zero.
+A future transcript may only be accepted if all required fields are present, the license expression has been reviewed, lintian/static metadata is unblocked, expected draft findings are classified, unexpected findings are either absent or explicitly reviewed, the acceptance gate is unblocked, and all non-claims remain zero.
+
+The Ubuntu local deb build transcript acceptance gate records that acceptance decision separately from this evidence schema.
+
+The Ubuntu local deb install/remove evidence contract is downstream of this schema and remains blocked until a reviewed build transcript is accepted.
 
 ## Validation
 

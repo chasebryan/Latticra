@@ -271,6 +271,7 @@ bool no_effect;
 bool execution_allowed;
 bool mutation_allowed;
 bool server_allowed;
+bool network_allowed;
 bool recovery_allowed;
 bool hardware_allowed;
 ```
@@ -282,6 +283,7 @@ no_effect=1
 execution_allowed=0
 mutation_allowed=0
 server_allowed=0
+network_allowed=0
 recovery_allowed=0
 hardware_allowed=0
 ```
@@ -316,6 +318,9 @@ const latticra_lir_module_t *lir_module;
 ```
 
 The first implementation must treat `source_identity` as a non-owning bounded view and must not retain it after the call returns.
+When present and within bounds, the implementation should copy it into fixed audit storage.
+The bound check must run before any audit record copies caller-provided source identity.
+Source identity containing an embedded NUL must be rejected before report rendering.
 
 ## Authority audit record struct
 
@@ -327,6 +332,7 @@ authority_validator validator;
 authority_effect requested_effect;
 authority_flags flags;
 std::array<char, LATTICRA_AUTHORITY_POLICY_NAME_MAX> policy_name;
+std::array<char, LATTICRA_AUTHORITY_SOURCE_IDENTITY_MAX + 1u> source_identity;
 std::array<char, LATTICRA_AUTHORITY_VALIDATOR_NAME_MAX> validator_name;
 std::array<char, LATTICRA_AUTHORITY_DENIAL_REASON_MAX> denial_reason;
 authority_source_span span;
@@ -513,6 +519,7 @@ Lat no-effect flags are preserved
 Lat execution_allowed is zero
 Lat mutation_allowed is zero
 Lat server_allowed is zero
+Lat network_allowed is zero
 Lat recovery_allowed is zero
 Lat hardware_allowed is zero
 Lat declaration and clause counts do not exceed declared capacity
@@ -533,6 +540,7 @@ LIR module metadata is bounded
 LIR node counts do not exceed declared capacity
 LIR edge counts do not exceed declared capacity
 LIR source spans are ordered and bounded
+LIR network_allowed is zero
 LIR binding metadata remains metadata only
 LIR text references use explicit lengths
 LIR report behavior remains no-effect
@@ -573,9 +581,11 @@ no_effect=<0|1>
 execution_allowed=<0|1>
 mutation_allowed=<0|1>
 server_allowed=<0|1>
+network_allowed=<0|1>
 recovery_allowed=<0|1>
 hardware_allowed=<0|1>
 record[0].policy=<policy-name>
+record[0].source_identity=<source-identity>
 record[0].validator=<validator-label>
 record[0].requested_effect=<effect-label>
 record[0].result=<authority-status-label>
@@ -623,12 +633,21 @@ cpp_authority_layer_has_no_hardware_path
 cpp_authority_layer_uses_explicit_result_labels
 cpp_authority_layer_does_not_throw_across_c_boundary
 cpp_authority_layer_does_not_allocate_in_report_path
+cpp_authority_layer_preserves_source_identity_in_audit
+cpp_authority_layer_rejects_oversized_source_identity
+cpp_authority_layer_bounds_source_identity_before_audit_copy
+cpp_authority_layer_rejects_nul_source_identity
 cpp_authority_layer_validates_lat_parse_result_metadata
 cpp_authority_layer_validates_lir_shape_metadata
 cpp_authority_layer_audit_report_is_deterministic
 cpp_authority_layer_rejects_small_report_buffer
 cpp_authority_layer_is_deterministic
 cpp_authority_layer_rejects_mutation_flags
+cpp_authority_layer_rejects_network_flags
+cpp_authority_layer_rejects_lat_network_flags
+cpp_authority_layer_rejects_lir_network_flags
+cpp_authority_layer_rejects_request_lat_network_flags
+cpp_authority_layer_rejects_request_lir_network_flags
 cpp_authority_layer_classifies_effects_without_performing_them
 cpp_authority_layer_builds_with_fno_exceptions_and_fno_rtti
 ```

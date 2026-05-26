@@ -35,6 +35,9 @@ docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
 docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_PROMOTION_GATE_CONTRACT.md
+docs/UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md
+docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md
+docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
 scripts/ubuntu-package-notice-inventory.sh
 scripts/test-ubuntu-package-notice-inventory.sh
 scripts/test-ubuntu-doc-payload-license-review-contract.sh
@@ -46,9 +49,12 @@ scripts/test-ubuntu-trademark-notice-boundary-contract.sh
 scripts/test-ubuntu-release-artifact-notice-requirements-contract.sh
 scripts/test-ubuntu-package-notice-promotion-gate-contract.sh
 scripts/test-ubuntu-package-license-promotion-gate-contract.sh
+scripts/test-ubuntu-lintian-static-metadata-contract.sh
 scripts/test-ubuntu-package-notice-review-contract.sh
 scripts/test-ubuntu-package-license-review-contract.sh
 scripts/test-ubuntu-local-deb-build-transcript-contract.sh
+scripts/test-ubuntu-local-deb-build-transcript-acceptance-gate-contract.sh
+scripts/test-ubuntu-local-deb-install-remove-evidence-contract.sh
 .github/workflows/ubuntu-local-deb-static-validation.yml
 .github/workflows/ubuntu-lintian-availability.yml
 .github/workflows/ubuntu-package-notice-inventory.yml
@@ -61,9 +67,12 @@ scripts/test-ubuntu-local-deb-build-transcript-contract.sh
 .github/workflows/ubuntu-release-artifact-notice-requirements-contract.yml
 .github/workflows/ubuntu-package-notice-promotion-gate-contract.yml
 .github/workflows/ubuntu-package-license-promotion-gate-contract.yml
+.github/workflows/ubuntu-lintian-static-metadata-contract.yml
 .github/workflows/ubuntu-package-notice-review-contract.yml
 .github/workflows/ubuntu-package-license-review-contract.yml
 .github/workflows/ubuntu-local-deb-build-transcript-contract.yml
+.github/workflows/ubuntu-local-deb-build-transcript-acceptance-gate-contract.yml
+.github/workflows/ubuntu-local-deb-install-remove-evidence-contract.yml
 ```
 
 The static lane preserves:
@@ -109,6 +118,9 @@ package_notice_promotion_gate_unblocked=0
 package_license_promotion_gate_contract_present=1
 package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
 package_license_promotion_gate_unblocked=0
+lintian_static_metadata_contract_present=1
+lintian_static_metadata_status=blocked-pending-package-license-promotion
+lintian_static_metadata_run=0
 package_license_review_contract_present=1
 package_license_review_status=blocked-pending-formal-review
 package_notice_review_contract_present=1
@@ -117,6 +129,13 @@ license_expression_candidate_recorded=1
 packaging_license_expression_updated=0
 local_deb_build_transcript_contract_present=1
 local_deb_build_transcript_present=0
+local_deb_build_transcript_acceptance_gate_contract_present=1
+local_deb_build_transcript_acceptance_gate_status=blocked-pending-lintian-static-metadata-and-build-transcript
+local_deb_build_transcript_accepted=0
+local_deb_install_remove_evidence_contract_present=1
+local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript
+deb_installed_on_host=0
+deb_removed_from_host=0
 ppa_claimed=0
 ubuntu_archive_ready=0
 production_readiness_claimed=0

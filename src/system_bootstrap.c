@@ -33,6 +33,12 @@ static void sb_nucleus_authority(latticra_nucleus_task_authority_summary_t *auth
     sb_copy(authority->requested_effect_label, sizeof(authority->requested_effect_label), "none");
     sb_copy(authority->denial_reason, sizeof(authority->denial_reason), "ok");
     authority->no_effect = 1;
+    authority->execution_allowed = 0;
+    authority->mutation_allowed = 0;
+    authority->server_allowed = 0;
+    authority->network_allowed = 0;
+    authority->recovery_allowed = 0;
+    authority->hardware_allowed = 0;
 }
 
 static void sb_boundary_authority(latticra_runtime_boundary_authority_summary_t *authority) {
@@ -43,6 +49,12 @@ static void sb_boundary_authority(latticra_runtime_boundary_authority_summary_t 
     sb_copy(authority->requested_effect_label, sizeof(authority->requested_effect_label), "none");
     sb_copy(authority->denial_reason, sizeof(authority->denial_reason), "ok");
     authority->no_effect = 1;
+    authority->execution_allowed = 0;
+    authority->mutation_allowed = 0;
+    authority->server_allowed = 0;
+    authority->network_allowed = 0;
+    authority->recovery_allowed = 0;
+    authority->hardware_allowed = 0;
 }
 
 latticra_status_t latticra_system_bootstrap_default_request(latticra_system_bootstrap_request_t *request) {
@@ -139,14 +151,18 @@ latticra_status_t latticra_system_bootstrap_run(const latticra_system_bootstrap_
     status = sb_classify_boundary(request, result);
     if (status != LATTICRA_STATUS_OK) return status;
 
-    result->no_effect = result->nucleus_task.no_effect && result->runtime_boundary.no_effect;
-    result->execution_allowed = 0;
-    result->mutation_allowed = 0;
-    result->file_io_allowed = 0;
-    result->network_allowed = 0;
-    result->server_allowed = 0;
-    result->recovery_allowed = 0;
-    result->hardware_allowed = 0;
+    result->execution_allowed = result->nucleus_task.execution_allowed || result->runtime_boundary.execution_allowed;
+    result->mutation_allowed = result->nucleus_task.mutation_allowed || result->runtime_boundary.mutation_allowed;
+    result->file_io_allowed = result->runtime_boundary.file_io_allowed;
+    result->network_allowed = result->nucleus_task.network_allowed || result->runtime_boundary.network_allowed;
+    result->server_allowed = result->nucleus_task.server_allowed || result->runtime_boundary.server_allowed;
+    result->recovery_allowed = result->nucleus_task.recovery_allowed || result->runtime_boundary.recovery_allowed;
+    result->hardware_allowed = result->nucleus_task.hardware_allowed || result->runtime_boundary.hardware_allowed;
+    result->no_effect = result->nucleus_task.no_effect && result->runtime_boundary.no_effect &&
+                        result->execution_allowed == 0 && result->mutation_allowed == 0 &&
+                        result->file_io_allowed == 0 && result->network_allowed == 0 &&
+                        result->server_allowed == 0 && result->recovery_allowed == 0 &&
+                        result->hardware_allowed == 0;
     sb_copy(result->system_status, sizeof(result->system_status), result->no_effect ? "startup-report-ready" : "startup-report-blocked");
     return result->status;
 }
@@ -172,6 +188,15 @@ latticra_status_t latticra_system_bootstrap_report(const latticra_system_bootstr
         "runtime_classification=%s\n"
         "runtime_policy_matrix_cell=%s\n"
         "no_effect=%d\n"
+        "execution_allowed=%d\n"
+        "mutation_allowed=%d\n"
+        "file_io_allowed=%d\n"
+        "network_allowed=%d\n"
+        "server_allowed=%d\n"
+        "recovery_allowed=%d\n"
+        "hardware_allowed=%d\n"
+        "nucleus_network_allowed=%d\n"
+        "runtime_network_allowed=%d\n"
         "source_identity=%s\n",
         result->bootstrap_id,
         result->phase,
@@ -187,6 +212,15 @@ latticra_status_t latticra_system_bootstrap_report(const latticra_system_bootstr
         latticra_runtime_boundary_report_classification_label(result->runtime_boundary.record.report_classification),
         latticra_runtime_boundary_policy_matrix_cell_label(result->runtime_boundary.record.policy_matrix_cell),
         result->no_effect,
+        result->execution_allowed,
+        result->mutation_allowed,
+        result->file_io_allowed,
+        result->network_allowed,
+        result->server_allowed,
+        result->recovery_allowed,
+        result->hardware_allowed,
+        result->nucleus_task.network_allowed,
+        result->runtime_boundary.network_allowed,
         result->source_identity);
     if (written < 0 || (size_t)written >= buffer_len) {
         buffer[0] = '\0';

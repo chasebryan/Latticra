@@ -90,6 +90,7 @@ grep
 gzip
 id
 mktemp
+python3
 rpm
 rpmbuild
 sha256sum
@@ -100,6 +101,8 @@ uname
 ```
 
 If `sha256sum` is unavailable on a Fedora target, the runner must fail closed rather than silently omitting checksum evidence.
+
+Source archive creation must use Git's tracked and unignored source view, refuse symlink entries, and write deterministic tar/gzip metadata before checksum evidence is recorded.
 
 ## Planned repeatability sequence
 

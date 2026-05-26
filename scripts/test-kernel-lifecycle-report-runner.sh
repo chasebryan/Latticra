@@ -36,6 +36,9 @@ cc $CFLAGS \
   src/kernel_time_accounting.c \
   src/kernel_preemption.c \
   src/kernel_scheduler_credit.c \
+  src/kernel_scheduler_selection.c \
+  src/kernel_scheduler_dispatch.c \
+  src/kernel_scheduler_handoff.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -47,12 +50,12 @@ cc $CFLAGS \
 grep -Fq 'LATTICRA KERNEL LIFECYCLE REPORT' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'policy_status=gate-allowed' "$report_txt"
-grep -Fq 'final_state=scheduler-credit-ready' "$report_txt"
-grep -Fq 'step_count=18' "$report_txt"
-grep -Fq 'state_change_count=18' "$report_txt"
+grep -Fq 'final_state=scheduler-handoff-ready' "$report_txt"
+grep -Fq 'step_count=21' "$report_txt"
+grep -Fq 'state_change_count=21' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
-grep -Fq 'machine_log_count=18' "$report_txt"
+grep -Fq 'machine_log_count=21' "$report_txt"
 grep -Fq 'evidence_level=10' "$report_txt"
 grep -Fq 'log[0].from=created' "$report_txt"
 grep -Fq 'log[0].to=initialized' "$report_txt"
@@ -107,5 +110,17 @@ grep -Fq 'log[17].from=preemption-ready' "$report_txt"
 grep -Fq 'log[17].to=scheduler-credit-ready' "$report_txt"
 grep -Fq 'log[17].state_change_performed=1' "$report_txt"
 grep -Fq 'log[17].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[18].from=scheduler-credit-ready' "$report_txt"
+grep -Fq 'log[18].to=scheduler-selection-ready' "$report_txt"
+grep -Fq 'log[18].state_change_performed=1' "$report_txt"
+grep -Fq 'log[18].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[19].from=scheduler-selection-ready' "$report_txt"
+grep -Fq 'log[19].to=scheduler-dispatch-ready' "$report_txt"
+grep -Fq 'log[19].state_change_performed=1' "$report_txt"
+grep -Fq 'log[19].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[20].from=scheduler-dispatch-ready' "$report_txt"
+grep -Fq 'log[20].to=scheduler-handoff-ready' "$report_txt"
+grep -Fq 'log[20].state_change_performed=1' "$report_txt"
+grep -Fq 'log[20].external_effect_performed=0' "$report_txt"
 
 printf 'kernel_lifecycle_report_runner: ok\n'

@@ -6,6 +6,8 @@ Scope: repository, CI, dependency, package, installer, artifact, SBOM, release, 
 
 This baseline turns the supply-chain requirements in `docs/HIGH_ASSURANCE_SECURITY_BASELINE.md` into a guarded local project contract.
 
+It also carries forward the stricter update-lane, command-boundary, and integrity expectations implied by NIST SP 800-53 Release 5.2.0, CISA KEV practice, and the CISA secure-design alert on OS command injection.
+
 It does not publish artifacts, release packages, add signing authority, claim SLSA level, claim NIST compliance, claim CISA CPG compliance, or make Latticra production-ready.
 
 ## Current Fields
@@ -25,6 +27,12 @@ persist_credentials_false_required=1
 pull_request_target_forbidden=1
 repository_secret_use_requires_dedicated_review=1
 implicit_github_token_use_requires_dedicated_review=1
+repository_secret_filename_scan_required=1
+repository_secret_content_marker_scan_required=1
+sensitive_local_artifact_filename_guard_required=1
+report_redaction_boundary_guard_required=1
+whole_environment_report_dump_forbidden=1
+installer_engine_log_redaction_required=1
 locked_dependency_builds_required=1
 offline_installer_builds_required=1
 ad_hoc_network_client_commands_forbidden_without_guard=1
@@ -48,11 +56,13 @@ external_endorsement_claimed=0
 | Checkout credentials | checkout steps require `persist-credentials: false` | `scripts/test-quality-safety-guards.sh` |
 | Pull request trust boundary | `pull_request_target` is forbidden | `scripts/test-quality-safety-guards.sh` |
 | Secrets and tokens | workflow secret and implicit token use are blocked without a dedicated guard | `scripts/test-quality-safety-guards.sh` |
+| Repository secret material | secret-bearing filenames, private-key blocks, and common live-token markers are blocked from source files | `scripts/test-secret-material-guard.sh` |
+| Report and log redaction | whole-environment dumps, shell xtrace, and unredacted installer child logs are blocked | `scripts/test-report-redaction-boundary.sh` |
 | Workflow network clients | ad hoc `curl`, `wget`, SSH, FTP, and netcat-style commands are blocked without a dedicated guard | `scripts/test-quality-safety-guards.sh` |
 | Package-manager mutation | package-manager use is limited to reviewed workflow/script allowlists | `scripts/test-quality-safety-guards.sh` |
 | Source archive fixtures | package source archives require tracked/unignored source selection, symlink refusal, and deterministic tar/gzip metadata | `scripts/test-quality-safety-guards.sh` |
 | Rust installer dependency use | local quality uses `cargo check --locked` | `Makefile` |
-| Live installer build path | installer apply script requires locked offline Cargo builds | `installer/scripts/latticra-installer-apply.sh` |
+| Live installer build path | installer apply script requires locked offline Cargo builds and keeps the process-launch boundary centralized | `installer/scripts/latticra-installer-apply.sh` |
 | Local installer artifacts | SBOM path is explicit and currently `none` for non-production fixtures | `docs/LOCAL_INSTALLER_ARTIFACT_MANIFEST_CONTRACT.md` |
 | Boot artifact manifest fixture | SBOM fields are required before real boot artifact acceptance | `docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_VALIDATION.md` |
 | Ubuntu package readiness | third-party material, notice, license, generated-artifact, and trademark reviews remain blocked until formal review | `docs/UBUNTU_READINESS_PLAN.md` |
@@ -74,6 +84,10 @@ workflow_write_permission_reviewed=1
 release_secret_boundary_reviewed=1
 artifact_integrity_hashes_recorded=1
 signing_authority_contract_present=1
+update_payload_integrity_reviewed=1
+update_authenticity_path_reviewed=1
+update_rollback_evidence_present=1
+command_boundary_reviewed=1
 rollback_or_recovery_contract_present=1
 vulnerability_disclosure_path_present=1
 production_non_claim_review_completed=1
@@ -102,6 +116,7 @@ Every new dependency, vendored artifact, generated artifact, or bundled binary r
 - transitive dependency review where practical;
 - KEV/NVD check before release or documented offline exception;
 - build reproducibility note where practical;
+- update authenticity and integrity impact review where the dependency can affect installer, package, or update behavior;
 - removal or replacement plan if the dependency becomes unsuitable.
 
 ## CI Authority Rules
@@ -113,7 +128,11 @@ CI changes must preserve:
 - no `pull_request_target`;
 - no repository secrets without dedicated review;
 - no implicit `GITHUB_TOKEN`, `GH_TOKEN`, `ACTIONS_ID_TOKEN`, or runtime token use without dedicated review;
+- no committed local secret files, private-key blocks, or common live-token markers in repository source;
+- no whole-environment dumps, shell xtrace, or unredacted child-process output in report/log paths;
 - no ad hoc network client commands without dedicated review;
+- no new command-construction or shell-interpolation path without a dedicated command-boundary review;
+- no mutating update lane without integrity, authenticity, validation, and rollback evidence;
 - no release publishing without an explicit release-authority contract.
 
 ## Validation
@@ -122,4 +141,6 @@ This baseline is guarded by:
 
 ```sh
 sh scripts/test-supply-chain-security-baseline.sh
+sh scripts/test-secret-material-guard.sh
+sh scripts/test-report-redaction-boundary.sh
 ```

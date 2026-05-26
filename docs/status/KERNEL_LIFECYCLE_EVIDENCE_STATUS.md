@@ -46,6 +46,12 @@ kernel preemption guard
 kernel preemption report runner
 kernel scheduler credit guard
 kernel scheduler credit report runner
+kernel scheduler selection guard
+kernel scheduler selection report runner
+kernel scheduler dispatch guard
+kernel scheduler dispatch report runner
+kernel scheduler handoff guard
+kernel scheduler handoff report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
@@ -58,7 +64,7 @@ kernel lifecycle rollback plan
 The lifecycle evidence can report a bounded in-memory path ending at:
 
 ```text
-final_state=scheduler-credit-ready
+final_state=scheduler-handoff-ready
 ```
 
 The lifecycle report runner and subsystem summary keep the external-effect posture explicit:
@@ -75,6 +81,9 @@ The merged evidence keeps authority denied:
 ```text
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
+scheduler_selection_allowed=0
+scheduler_dispatch_allowed=0
+scheduler_handoff_allowed=0
 memory_allocation_allowed=0
 process_spawn_allowed=0
 syscall_dispatch_allowed=0
@@ -162,7 +171,7 @@ not installer-ready
 Recommended next work:
 
 ```text
-Add no-effect scheduler selection classifier
+Add no-effect scheduler activation classifier
 ```
 
 That future slice should implement classification/reporting only and continue to require:
@@ -197,6 +206,9 @@ Dedicated workflow lanes keep the kernel table guards visible:
 .github/workflows/kernel-time-accounting.yml
 .github/workflows/kernel-preemption.yml
 .github/workflows/kernel-scheduler-credit.yml
+.github/workflows/kernel-scheduler-selection.yml
+.github/workflows/kernel-scheduler-dispatch.yml
+.github/workflows/kernel-scheduler-handoff.yml
 .github/workflows/kernel-process-table.yml
 .github/workflows/kernel-syscall-table.yml
 ```

@@ -41,6 +41,9 @@ require_file docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
 require_file docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
 require_file docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
 require_file docs/UBUNTU_PACKAGE_LICENSE_PROMOTION_GATE_CONTRACT.md
+require_file docs/UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md
+require_file docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md
+require_file docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
 require_file packaging/ubuntu/README.md
 require_file packaging/ubuntu/debian/control
 require_file packaging/ubuntu/debian/rules
@@ -83,6 +86,17 @@ require_contains 'package_notice_promotion_gate_unblocked=0' docs/UBUNTU_LOCAL_D
 require_contains 'package_license_promotion_gate_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'package_license_promotion_gate_status=blocked-pending-package-license-prerequisites' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'package_license_promotion_gate_unblocked=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'lintian_static_metadata_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'lintian_static_metadata_status=blocked-pending-package-license-promotion' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'lintian_static_metadata_run=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'local_deb_build_transcript_acceptance_gate_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'local_deb_build_transcript_acceptance_gate_status=blocked-pending-lintian-static-metadata-and-build-transcript' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'local_deb_build_transcript_accepted=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'local_deb_install_remove_evidence_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'deb_installed_on_host=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'deb_removed_from_host=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'deb_artifact_created=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'ubuntu_archive_ready=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'ubuntu_local_deb_static_validation: ok' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
@@ -112,6 +126,17 @@ require_contains 'package_notice_promotion_gate_status=blocked-pending-package-n
 require_contains 'package_license_promotion_gate_contract_present=1' packaging/ubuntu/README.md
 require_contains 'package_license_promotion_gate_status=blocked-pending-package-license-prerequisites' packaging/ubuntu/README.md
 require_contains 'package_license_promotion_gate_unblocked=0' packaging/ubuntu/README.md
+require_contains 'lintian_static_metadata_contract_present=1' packaging/ubuntu/README.md
+require_contains 'lintian_static_metadata_status=blocked-pending-package-license-promotion' packaging/ubuntu/README.md
+require_contains 'lintian_static_metadata_run=0' packaging/ubuntu/README.md
+require_contains 'local_deb_build_transcript_acceptance_gate_contract_present=1' packaging/ubuntu/README.md
+require_contains 'local_deb_build_transcript_acceptance_gate_status=blocked-pending-lintian-static-metadata-and-build-transcript' packaging/ubuntu/README.md
+require_contains 'local_deb_build_transcript_accepted=0' packaging/ubuntu/README.md
+require_contains 'docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md' packaging/ubuntu/README.md
+require_contains 'local_deb_install_remove_evidence_contract_present=1' packaging/ubuntu/README.md
+require_contains 'local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript' packaging/ubuntu/README.md
+require_contains 'deb_installed_on_host=0' packaging/ubuntu/README.md
+require_contains 'deb_removed_from_host=0' packaging/ubuntu/README.md
 require_contains 'ppa_claimed=0' packaging/ubuntu/README.md
 require_contains 'ubuntu_archive_ready=0' packaging/ubuntu/README.md
 

@@ -1,0 +1,22 @@
+name: Ubuntu Local Deb Install Remove Evidence Contract
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  ubuntu-local-deb-install-remove-evidence-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Ubuntu local deb install remove evidence guard
+        run: sh scripts/test-ubuntu-local-deb-install-remove-evidence-contract.sh

@@ -72,6 +72,8 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_39.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_39.md) — Stage-39 prompt-evaluation result release receipt review disposition release receipt contract for Nadia before release-receipt records, receipt signing, receipt publication, disposition-release records, release publication, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_40.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_40.md) — Stage-40 prompt-evaluation result release receipt review disposition release receipt review contract for Nadia before release-receipt-review records, review decisions, review findings, release-receipt records, receipt signing, receipt publication, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_41.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_41.md) — Stage-41 prompt-evaluation result release receipt review disposition release receipt review disposition contract for Nadia before release-receipt-review-disposition records, review decisions, review findings, receipt signing, receipt publication, receipt packaging, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_42.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_42.md) — Stage-42 prompt-evaluation result release receipt review disposition release receipt review disposition release contract for Nadia before disposition-release recording, release decisions, release publication, release packaging, release receipt creation, disposition recording, review recording, receipt recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_43.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_43.md) — Stage-43 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt contract for Nadia before release-receipt records, receipt emission, receipt signing, receipt publication, release records, review records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`SELF_UPDATE_MODEL.md`](SELF_UPDATE_MODEL.md) — staged signed update and rollback design.
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
@@ -81,6 +83,10 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 
 - [`README.md`](README.md) — reader-facing documentation hub for choosing the right documentation level before using the full foundation index.
 - [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) — maintenance guide for public entry points, estimate mirrors, status docs, platform docs, static HTML summaries, and documentation-only validation.
+- [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) — reusable documentation review packet for public wording, reader routes, mirrors, non-claims, validation, and rollback checks.
+- [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md) — documentation style guide for canonical terms, status/date style, claim wording, headings, links, tables, and replacement phrasing.
+- [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) — traceability matrix mapping public surfaces to source records, validation, mirrors, and non-claim boundaries.
+- [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) — documentation validation playbook for hygiene, link, public-entry, estimate, platform, subsystem, and claim-promotion checks.
 - [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md) — product-facing documentation cohesion guide for reader routes, public copy, surface responsibilities, and cross-link expectations.
 - [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md) — short user-facing install, run, update, reset/uninstall, and clean full user-local uninstall command sheet.
 - [`../STATUS.md`](../STATUS.md) — root status shortcut with completion estimates and next step.
@@ -90,6 +96,9 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`SUPPLY_CHAIN_SECURITY_BASELINE.md`](SUPPLY_CHAIN_SECURITY_BASELINE.md) — supply-chain security baseline for CI, dependency, SBOM, KEV/NVD, package, installer, release, and update-lane blockers.
 - [`ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md`](ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md) — zero-trust runtime authority baseline for per-request authorization, identity/resource visibility, policy decisions, denial reasons, audit records, and no implicit runtime trust.
 - [`CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md`](CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md) — cyber incident reporting and response baseline for CISA/FBI/IC3 path awareness, ransomware response planning, evidence preservation, communications routing, and no service claims.
+- [`VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE.md`](VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE.md) — vulnerability management release gate baseline for CISA KEV review, NVD/CVE review, disclosure handling, release blocking, and no product-security claims.
+- [`CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md`](CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md) — cryptographic assurance and key-management baseline for FIPS/CMVP claim gates, algorithm inventory, key lifecycle, randomness, post-quantum planning, and no production crypto claims.
+- [`IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md`](IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md) — identity, credential, and access management baseline for privileged access, phishing-resistant MFA planning, account lifecycle, service identity, identity logging, and no hosted access claims.
 - [`DEFENSIVE_THREAT_MODEL_CONTRACT.md`](DEFENSIVE_THREAT_MODEL_CONTRACT.md) — defensive threat model contract for protected assets, trust boundaries, abuse cases, evidence expectations, and non-claims.
 - [`DEFENSIVE_THREAT_MODEL_IMPLEMENTATION_PLAN.md`](DEFENSIVE_THREAT_MODEL_IMPLEMENTATION_PLAN.md) — documentation-and-guard implementation plan for defensive threat model validation.
 - [`DEFENSIVE_THREAT_MODEL_VALIDATION.md`](DEFENSIVE_THREAT_MODEL_VALIDATION.md) — defensive threat model validation ledger.
@@ -181,7 +190,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md`](RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md) — exact future runtime API, structs, enums, reports, buffers, tests, task usage, authority usage, and non-claims before runtime boundary code.
 - [`RUNTIME_BOUNDARY_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_IMPLEMENTATION.md) — first runtime boundary public API, source surface, smoke invariants, dedicated runner, and dedicated workflow record.
 - [`RUNTIME_BOUNDARY_REFINEMENT_PLAN.md`](RUNTIME_BOUNDARY_REFINEMENT_PLAN.md) — runtime-boundary refinement plan.
-- [`RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md) — runtime-boundary Lat pipeline first-clause, first-declaration, module/count, stage-summary, line-comment, Lat-specific LIR module-summary, Lat-specific LIR source-span, Lat-specific LIR node-kind, Lat-specific LIR first-node, Lat-specific LIR first-node span, Lat-specific LIR first-edge, Lat-specific LIR no-effect, and Lat-specific LIR edge-kind evidence refinement implementation.
+- [`RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md) — runtime-boundary Lat pipeline first-clause, first-declaration, module/count, stage-summary, line-comment, Lat-specific LIR module-summary, Lat-specific LIR source-span, Lat-specific LIR node-kind, Lat-specific LIR first-node, Lat-specific LIR first-node span, Lat-specific LIR first-edge, Lat-specific LIR first-edge span, Lat-specific LIR first transition-source edge, Lat-specific LIR first transition-source edge span, Lat-specific LIR no-effect, and Lat-specific LIR edge-kind evidence refinement implementation.
 - [`RUNTIME_BOUNDARY_REPORT_REFINEMENT.md`](RUNTIME_BOUNDARY_REPORT_REFINEMENT.md) — runtime-boundary report refinement implementation.
 - [`RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md`](RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md) — runtime-boundary policy matrix refinement implementation.
 - [`RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`](RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md) — runtime-boundary policy expansion after defensive threat-model validation.
@@ -195,6 +204,9 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`KERNEL_TIME_ACCOUNTING_SEED.md`](KERNEL_TIME_ACCOUNTING_SEED.md) — no-effect time-accounting metadata seed.
 - [`KERNEL_PREEMPTION_SEED.md`](KERNEL_PREEMPTION_SEED.md) — no-effect preemption metadata seed.
 - [`KERNEL_SCHEDULER_CREDIT_SEED.md`](KERNEL_SCHEDULER_CREDIT_SEED.md) — no-effect scheduler credit metadata seed.
+- [`KERNEL_SCHEDULER_SELECTION_SEED.md`](KERNEL_SCHEDULER_SELECTION_SEED.md) — no-effect scheduler selection metadata seed.
+- [`KERNEL_SCHEDULER_DISPATCH_SEED.md`](KERNEL_SCHEDULER_DISPATCH_SEED.md) — no-effect scheduler dispatch metadata seed.
+- [`KERNEL_SCHEDULER_HANDOFF_SEED.md`](KERNEL_SCHEDULER_HANDOFF_SEED.md) — no-effect scheduler handoff metadata seed.
 - [`KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md`](KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md) — kernel lifecycle subsystem summary.
 - [`KERNEL_LIFECYCLE_ROLLBACK_PLAN.md`](KERNEL_LIFECYCLE_ROLLBACK_PLAN.md) — no-effect kernel lifecycle rollback plan.
 - [`LATTICRA_SEAL_CONTRACT.md`](LATTICRA_SEAL_CONTRACT.md) — Latticra Seal evidence-boundary, capability-boundary, promotion-gate, and non-claim contract.
@@ -234,6 +246,8 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_ED25519_VERIFY_ONLY_CONTRACT.md`](LATTICRA_SEAL_ED25519_VERIFY_ONLY_CONTRACT.md) — Ed25519 verify-only implementation contract after crypto verify backend metadata.
 - [`LATTICRA_SEAL_ED25519_VERIFY_IMPLEMENTATION.md`](LATTICRA_SEAL_ED25519_VERIFY_IMPLEMENTATION.md) — local provider-backed Ed25519 verify-only result implementation.
 - [`status/SEAL_ED25519_VERIFY_STATUS.md`](status/SEAL_ED25519_VERIFY_STATUS.md) — status/public-entry checkpoint for authority-neutral Seal Ed25519 verify-only results.
+- [`LATTICRA_SEAL_CRYPTO_GRADUATION_GATE_IMPLEMENTATION.md`](LATTICRA_SEAL_CRYPTO_GRADUATION_GATE_IMPLEMENTATION.md) — authority-neutral crypto graduation gate over local Ed25519 verification, verified receipt promotion, and cryptographic assurance baseline expectations.
+- [`status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md`](status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md) — status checkpoint for the Seal crypto graduation gate.
 - [`LATTICRA_SEAL_VERIFIED_RECEIPT_PROMOTION_CONTRACT.md`](LATTICRA_SEAL_VERIFIED_RECEIPT_PROMOTION_CONTRACT.md) — verified receipt promotion boundary after successful Ed25519 verify-only results.
 - [`LATTICRA_SEAL_VERIFIED_RECEIPT_PROMOTION_IMPLEMENTATION.md`](LATTICRA_SEAL_VERIFIED_RECEIPT_PROMOTION_IMPLEMENTATION.md) — first authority-neutral verified receipt promotion metadata implementation.
 - [`status/SEAL_VERIFIED_RECEIPT_PROMOTION_STATUS.md`](status/SEAL_VERIFIED_RECEIPT_PROMOTION_STATUS.md) — status/public-entry checkpoint for verified receipt promotion metadata.
@@ -302,6 +316,11 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/SEAL_CAPABILITY_METADATA_REPORT_SURFACE_STATUS.md`](status/SEAL_CAPABILITY_METADATA_REPORT_SURFACE_STATUS.md) — status checkpoint for the Seal capability metadata report surface.
 - [`latticra-seal/PRODUCT.md`](latticra-seal/PRODUCT.md) — product spine for earned Latticra Seal security-product capability.
 - [`status/SEAL_PRODUCT_SPINE_STATUS.md`](status/SEAL_PRODUCT_SPINE_STATUS.md) — status checkpoint for the Seal product spine.
+- [`LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_CONTRACT.md`](LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_CONTRACT.md) — contract for a future bundled local Seal operator receipt report.
+- [`LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION_PLAN.md`](LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION_PLAN.md) — exact no-effect Seal operator receipt report implementation plan.
+- [`LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md`](LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md) — no-effect Seal operator receipt report implementation.
+- [`LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SURFACE.md`](LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SURFACE.md) — deterministic local report surface for the Seal operator receipt report.
+- [`status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md`](status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md) — status checkpoint for the Seal operator receipt report surface.
 - [`status/SEAL_README_STATUS_ROW_ALIGNMENT.md`](status/SEAL_README_STATUS_ROW_ALIGNMENT.md) — README status row alignment with the current Latticra Seal public status checkpoint.
 - [`status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md`](status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md) — status checkpoint for the Seal policy decision report surface.
 - [`status/SEAL_SIGNER_INVOCATION_STATUS.md`](status/SEAL_SIGNER_INVOCATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer invocation implementation.
@@ -426,9 +445,13 @@ Latticra Seal effect decision predecessor status alignment + guardrails
 Latticra Seal runtime handoff status/public-entry alignment + guardrails
 Latticra Seal runtime handoff predecessor status alignment + guardrails
 Latticra Seal status rollup status/public-entry alignment + guardrails
+Latticra Seal status rollup predecessor status alignment + guardrails
 Latticra Seal agentic automation security public-entrypoint alignment + guardrails
+Latticra Seal agentic automation security predecessor status alignment + guardrails
 Latticra Seal parameter schema status/public-entry alignment + guardrails
+Latticra Seal parameter schema predecessor status alignment + guardrails
 Latticra Seal request freshness status/public-entry alignment + guardrails
+Latticra Seal request freshness predecessor status alignment + guardrails
 Latticra Seal signed request status/public-entry alignment + guardrails
 Latticra Seal policy decision status/public-entry alignment + guardrails
 Defensive threat model validation refinement + guardrails
@@ -482,6 +505,8 @@ Nadia prompt evaluation result release receipt review disposition release contra
 Nadia prompt evaluation result release receipt review disposition release receipt contract Stage-39 + guardrails
 Nadia prompt evaluation result release receipt review disposition release receipt review contract Stage-40 + guardrails
 Nadia prompt evaluation result release receipt review disposition release receipt review disposition contract Stage-41 + guardrails
+Nadia prompt evaluation result release receipt review disposition release receipt review disposition release contract Stage-42 + guardrails
+Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt contract Stage-43 + guardrails
 Latticra Seal verification policy status/public-entry alignment + guardrails
 Latticra Seal crypto verify backend status/public-entry alignment + guardrails
 Latticra Seal Ed25519 verify-only status/public-entry alignment + guardrails
@@ -540,6 +565,9 @@ Lat LIR node-kind evidence propagation + invariants
 Lat LIR first-node evidence propagation + invariants
 Lat LIR first-node span evidence propagation + invariants
 Lat LIR first-edge evidence propagation + invariants
+Lat LIR first-edge span evidence propagation + invariants
+Lat LIR first transition-source edge evidence propagation + invariants
+Lat LIR first transition-source edge span evidence propagation + invariants
 Lat pipeline implementation + invariants
 Lat pipeline report refinement + invariants
 Lat pipeline diagnostic integration refinement + invariants

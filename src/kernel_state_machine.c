@@ -97,6 +97,24 @@ latticra_status_t latticra_kernel_state_machine_default_step_request(
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
     request->scheduler_credit_request.preemption_request = request->preemption_request;
+    if (latticra_kernel_scheduler_selection_default_request(
+            &request->scheduler_selection_request) != LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->scheduler_selection_request.scheduler_credit_request =
+        request->scheduler_credit_request;
+    if (latticra_kernel_scheduler_dispatch_default_request(
+            &request->scheduler_dispatch_request) != LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->scheduler_dispatch_request.scheduler_selection_request =
+        request->scheduler_selection_request;
+    if (latticra_kernel_scheduler_handoff_default_request(
+            &request->scheduler_handoff_request) != LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->scheduler_handoff_request.scheduler_dispatch_request =
+        request->scheduler_dispatch_request;
     request->target_state = LATTICRA_KERNEL_STATE_INITIALIZED;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
     return LATTICRA_STATUS_OK;
@@ -162,6 +180,12 @@ latticra_status_t latticra_kernel_state_machine_step(
     transition_request.time_accounting_request = request->time_accounting_request;
     transition_request.preemption_request = request->preemption_request;
     transition_request.scheduler_credit_request = request->scheduler_credit_request;
+    transition_request.scheduler_selection_request =
+        request->scheduler_selection_request;
+    transition_request.scheduler_dispatch_request =
+        request->scheduler_dispatch_request;
+    transition_request.scheduler_handoff_request =
+        request->scheduler_handoff_request;
     transition_request.current_state = machine->current_state;
     transition_request.target_state = request->target_state;
     transition_request.gate = request->gate;

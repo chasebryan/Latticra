@@ -82,6 +82,9 @@ opensuse_rpmlint_findings_classification_present=1
 opensuse_source_archive_reproducibility_contract_present=1
 opensuse_source_archive_fixture_lane_present=1
 opensuse_rpm_topdir_handoff_lane_present=1
+opensuse_local_rpm_build_gate_contract_present=1
+opensuse_local_rpm_build_environment_contract_present=1
+opensuse_rpm_artifact_naming_contract_present=1
 opensuse_obs_publication_claimed=0
 opensuse_official_package_claimed=0
 suse_endorsement_claimed=0
@@ -147,18 +150,27 @@ docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
+docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
+docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
 scripts/test-opensuse-rpmlint-osc-availability.sh
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
 scripts/test-opensuse-rpmlint-findings-classification.sh
 scripts/test-opensuse-source-archive-reproducibility-contract.sh
 scripts/test-opensuse-source-archive-fixture-lane.sh
 scripts/test-opensuse-rpm-topdir-handoff-lane.sh
+scripts/test-opensuse-local-rpm-build-gate-contract.sh
+scripts/test-opensuse-local-rpm-build-environment-contract.sh
+scripts/test-opensuse-rpm-artifact-naming-contract.sh
 .github/workflows/opensuse-rpmlint-osc-availability.yml
 .github/workflows/opensuse-rpmlint-static-spec-lane.yml
 .github/workflows/opensuse-rpmlint-findings-classification.yml
 .github/workflows/opensuse-source-archive-reproducibility-contract.yml
 .github/workflows/opensuse-source-archive-fixture-lane.yml
 .github/workflows/opensuse-rpm-topdir-handoff-lane.yml
+.github/workflows/opensuse-local-rpm-build-gate-contract.yml
+.github/workflows/opensuse-local-rpm-build-environment-contract.yml
+.github/workflows/opensuse-rpm-artifact-naming-contract.yml
 ```
 
 Before any Open Build Service publication or submit request can be claimed, the lane needs evidence for:
@@ -171,6 +183,9 @@ local osc build transcript
 source archive reproducibility
 source archive fixture reproducibility
 temporary RPM topdir handoff
+local RPM build gate contract
+local RPM build environment contract
+RPM artifact naming contract
 package artifact inspection
 install/remove behavior transcript
 ```
@@ -197,10 +212,10 @@ claim operating-system completeness
 Recommended next slice:
 
 ```text
-Add openSUSE local RPM build evidence gate contract before any rpmbuild or osc build command can run.
+Add openSUSE RPM payload inspection contract before any RPM artifact can be accepted.
 ```
 
-That should define the exact evidence required before the temporary RPM topdir can be used by `rpmbuild`, `osc build`, or Open Build Service validation.
+That should define how source RPM and binary RPM payloads are inspected after creation while keeping `opensuse_rpm_build_gate_state=closed-no-effect` until the remaining prerequisites are satisfied.
 
 ## Validation
 
@@ -215,6 +230,9 @@ sh scripts/test-opensuse-rpmlint-findings-classification.sh
 sh scripts/test-opensuse-source-archive-reproducibility-contract.sh
 sh scripts/test-opensuse-source-archive-fixture-lane.sh
 sh scripts/test-opensuse-rpm-topdir-handoff-lane.sh
+sh scripts/test-opensuse-local-rpm-build-gate-contract.sh
+sh scripts/test-opensuse-local-rpm-build-environment-contract.sh
+sh scripts/test-opensuse-rpm-artifact-naming-contract.sh
 ```
 
 Expected output:
@@ -228,4 +246,7 @@ opensuse_rpmlint_findings_classification: ok
 opensuse_source_archive_reproducibility_contract: ok
 opensuse_source_archive_fixture_lane: ok
 opensuse_rpm_topdir_handoff_lane: ok
+opensuse_local_rpm_build_gate_contract: ok
+opensuse_local_rpm_build_environment_contract: ok
+opensuse_rpm_artifact_naming_contract: ok
 ```

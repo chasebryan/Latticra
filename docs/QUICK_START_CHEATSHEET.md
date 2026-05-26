@@ -75,6 +75,9 @@ sh scripts/test-ubuntu-trademark-notice-boundary-contract.sh
 sh scripts/test-ubuntu-release-artifact-notice-requirements-contract.sh
 sh scripts/test-ubuntu-package-notice-promotion-gate-contract.sh
 sh scripts/test-ubuntu-package-license-promotion-gate-contract.sh
+sh scripts/test-ubuntu-lintian-static-metadata-contract.sh
+sh scripts/test-ubuntu-local-deb-build-transcript-acceptance-gate-contract.sh
+sh scripts/test-ubuntu-local-deb-install-remove-evidence-contract.sh
 ```
 
 openSUSE no-effect validation:
@@ -93,6 +96,9 @@ sh scripts/test-opensuse-rpmlint-findings-classification.sh
 sh scripts/test-opensuse-source-archive-reproducibility-contract.sh
 sh scripts/test-opensuse-source-archive-fixture-lane.sh
 sh scripts/test-opensuse-rpm-topdir-handoff-lane.sh
+sh scripts/test-opensuse-local-rpm-build-gate-contract.sh
+sh scripts/test-opensuse-local-rpm-build-environment-contract.sh
+sh scripts/test-opensuse-rpm-artifact-naming-contract.sh
 ```
 
 ## Run

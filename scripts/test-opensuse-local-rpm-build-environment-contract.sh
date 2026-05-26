@@ -1,0 +1,163 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+require_file() {
+  file="$1"
+  if [ ! -f "$file" ]; then
+    printf 'opensuse local rpm build environment contract: missing file: %s\n' "$file" >&2
+    exit 1
+  fi
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  if ! grep -Fq -- "$pattern" "$file"; then
+    printf 'opensuse local rpm build environment contract: missing required pattern in %s: %s\n' "$file" "$pattern" >&2
+    exit 1
+  fi
+}
+
+require_no_rpm_artifacts() {
+  dir="$1"
+  if find "$dir" \( -name '*.rpm' -o -name '*.src.rpm' \) -print | grep -q .; then
+    printf 'opensuse local rpm build environment contract: unexpected RPM artifact under %s\n' "$dir" >&2
+    exit 1
+  fi
+}
+
+contract='docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md'
+gate_contract='docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md'
+artifact_contract='docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md'
+
+require_file "$contract"
+require_file "$gate_contract"
+require_file "$artifact_contract"
+require_file docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
+require_file docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_file docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+require_file docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+require_file docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_file docs/README.md
+require_file docs/status/README.md
+require_file packaging/opensuse/README.md
+require_file packaging/opensuse/latticra.spec
+require_file packaging/opensuse/latticra.changes
+require_file README.md
+require_file scripts/test-opensuse-rpm-artifact-naming-contract.sh
+require_file .github/workflows/opensuse-local-rpm-build-environment-contract.yml
+require_file .github/workflows/opensuse-rpm-artifact-naming-contract.yml
+
+require_contains 'Status: active local RPM build environment contract' "$contract"
+require_contains 'documentation-only and static' "$contract"
+require_contains 'opensuse_local_rpm_build_environment_contract_present=1' "$contract"
+require_contains 'opensuse_rpm_artifact_naming_contract_present=1' "$contract"
+require_contains 'opensuse_rpm_build_environment_contract_state=specified-no-effect' "$contract"
+require_contains 'opensuse_rpm_artifact_naming_contract_state=specified-no-effect' "$contract"
+require_contains 'opensuse_rpm_build_gate_state=closed-no-effect' "$contract"
+require_contains 'opensuse_clean_build_environment_documented=1' "$contract"
+require_contains 'opensuse_target_distribution_documented=1' "$contract"
+require_contains 'osc_build_environment_documented=1' "$contract"
+require_contains 'opensuse_build_environment_provisioned=0' "$contract"
+require_contains 'osc_build_environment_provisioned=0' "$contract"
+require_contains 'explicit_operator_build_authorization=0' "$contract"
+require_contains 'disposable_validation_environment_required=1' "$contract"
+require_contains 'disposable_validation_environment_provisioned=0' "$contract"
+require_contains 'environment_transcript_present=0' "$contract"
+require_contains 'toolchain_version_capture_required=1' "$contract"
+require_contains 'rpm_input_digest_binding_required=1' "$contract"
+require_contains 'rpmbuild_command_allowed=0' "$contract"
+require_contains 'osc_build_command_allowed=0' "$contract"
+require_contains 'rpmbuild_run=0' "$contract"
+require_contains 'osc_build_run=0' "$contract"
+require_contains 'spec_cleaner_run=0' "$contract"
+require_contains 'rpm_artifact_created=0' "$contract"
+require_contains 'source_rpm_artifact_created=0' "$contract"
+require_contains 'binary_rpm_artifact_created=0' "$contract"
+require_contains 'rpm_artifact_sha256_recorded=0' "$contract"
+require_contains 'rpm_installed_on_host=0' "$contract"
+require_contains 'package_readiness_claimed=0' "$contract"
+
+require_contains 'opensuse_container_or_vm_required=1' "$contract"
+require_contains 'opensuse_target_distribution_record_required=1' "$contract"
+require_contains 'opensuse_architecture_record_required=1' "$contract"
+require_contains 'opensuse_repository_state_record_required=1' "$contract"
+require_contains 'opensuse_build_dependency_resolution_transcript_required=1' "$contract"
+require_contains 'rpmbuild_toolchain_versions_required=1' "$contract"
+require_contains 'source_archive_digest_required=1' "$contract"
+require_contains 'rpm_topdir_input_path_required=1' "$contract"
+require_contains 'rpmbuild_ba_run=0' "$contract"
+require_contains 'rpmbuild_bb_run=0' "$contract"
+require_contains 'rpmbuild_bs_run=0' "$contract"
+
+require_contains 'osc_local_build_context_required=1' "$contract"
+require_contains 'osc_config_scope_record_required=1' "$contract"
+require_contains 'osc_target_project_record_required=1' "$contract"
+require_contains 'osc_target_repository_record_required=1' "$contract"
+require_contains 'osc_build_root_policy_required=1' "$contract"
+require_contains 'osc_toolchain_versions_required=1' "$contract"
+require_contains 'osc_commit_run=0' "$contract"
+require_contains 'obs_publication_claimed=0' "$contract"
+
+require_contains 'environment_identifier' "$contract"
+require_contains 'operator_authorization_reference' "$contract"
+require_contains 'source_archive_accepted_for_build=0' "$contract"
+require_contains 'accepted_rpmlint_transcript_present=0' "$contract"
+require_contains 'unexpected_findings_count_recorded=0' "$contract"
+require_contains 'license_expression_reviewed=0' "$contract"
+require_contains 'package_notice_obligations_reviewed=0' "$contract"
+require_contains 'buildrequires_reviewed=0' "$contract"
+require_contains 'rpm_artifact_naming_contract_present=1' "$contract"
+require_contains 'rpm_payload_inspection_contract_present=0' "$contract"
+require_contains 'rpm_install_remove_transcript_contract_present=0' "$contract"
+require_contains 'obs_publication_non_claim_review_present=0' "$contract"
+require_contains 'Add openSUSE RPM payload inspection contract' "$contract"
+require_contains 'opensuse_local_rpm_build_environment_contract: ok' "$contract"
+
+require_contains "$contract" "$gate_contract"
+require_contains "$artifact_contract" "$contract"
+require_contains "$contract" docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains "$artifact_contract" docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains "$contract" packaging/opensuse/README.md
+require_contains "$artifact_contract" packaging/opensuse/README.md
+require_contains "$contract" README.md
+require_contains "$artifact_contract" README.md
+require_contains 'OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md' docs/README.md
+require_contains 'OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md' docs/status/README.md
+require_contains 'OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md' docs/README.md
+require_contains 'OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md' docs/status/README.md
+
+require_contains 'opensuse_local_rpm_build_environment_contract_present=1' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'opensuse_rpm_artifact_naming_contract_present=1' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'opensuse_rpm_build_environment_contract_state=specified-no-effect' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'opensuse_rpm_artifact_naming_contract_state=specified-no-effect' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'opensuse_clean_build_environment_documented=1' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'opensuse_build_environment_provisioned=0' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'osc_build_environment_provisioned=0' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'explicit_operator_build_authorization=0' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'environment_transcript_present=0' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+
+require_contains 'opensuse_local_rpm_build_environment_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_artifact_naming_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_environment_contract_state=specified-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_artifact_naming_contract_state=specified-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_clean_build_environment_documented=1' packaging/opensuse/README.md
+require_contains 'opensuse_build_environment_provisioned=0' packaging/opensuse/README.md
+require_contains 'osc_build_environment_provisioned=0' packaging/opensuse/README.md
+require_contains 'explicit_operator_build_authorization=0' packaging/opensuse/README.md
+require_contains 'environment_transcript_present=0' packaging/opensuse/README.md
+
+require_contains 'License:        LicenseRef-Latticra-TBD' packaging/opensuse/latticra.spec
+require_contains 'BuildRequires:  gcc' packaging/opensuse/latticra.spec
+require_contains 'BuildRequires:  make' packaging/opensuse/latticra.spec
+require_contains 'Open Build Service publication' packaging/opensuse/latticra.changes
+
+require_no_rpm_artifacts packaging/opensuse
+
+require_contains 'Run openSUSE local RPM build environment contract guard' .github/workflows/opensuse-local-rpm-build-environment-contract.yml
+require_contains 'sh scripts/test-opensuse-local-rpm-build-environment-contract.sh' .github/workflows/opensuse-local-rpm-build-environment-contract.yml
+require_contains 'Run openSUSE RPM artifact naming contract guard' .github/workflows/opensuse-rpm-artifact-naming-contract.yml
+require_contains 'sh scripts/test-opensuse-rpm-artifact-naming-contract.sh' .github/workflows/opensuse-rpm-artifact-naming-contract.yml
+
+printf 'opensuse_local_rpm_build_environment_contract: ok\n'

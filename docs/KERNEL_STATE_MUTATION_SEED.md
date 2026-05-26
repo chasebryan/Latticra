@@ -52,6 +52,9 @@ context-switch-ready
 time-accounting-ready
 preemption-ready
 scheduler-credit-ready
+scheduler-selection-ready
+scheduler-dispatch-ready
+scheduler-handoff-ready
 ```
 
 Allowed transitions are intentionally sequential:
@@ -75,6 +78,9 @@ run-queue-ready -> context-switch-ready
 context-switch-ready -> time-accounting-ready
 time-accounting-ready -> preemption-ready
 preemption-ready -> scheduler-credit-ready
+scheduler-credit-ready -> scheduler-selection-ready
+scheduler-selection-ready -> scheduler-dispatch-ready
+scheduler-dispatch-ready -> scheduler-handoff-ready
 ```
 
 No-op transitions are allowed when the gate allows them.

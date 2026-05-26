@@ -19,11 +19,32 @@ deb_installed_on_host=0
 debian_freebsd_openbsd_source_archive_contract_present=1
 debian_freebsd_openbsd_package_input_handoff_lane_present=1
 debian_freebsd_openbsd_package_build_gate_contract_present=1
+debian_freebsd_openbsd_package_build_environment_contract_present=1
+debian_freebsd_openbsd_package_artifact_naming_contract_present=1
+debian_freebsd_openbsd_package_payload_inspection_contract_present=1
 temporary_debian_source_input_staged=1
 temporary_debian_orig_archive_staged=1
 temporary_debian_debian_dir_overlay_staged=1
 package_build_gate_state=closed-no-effect
+package_build_environment_contract_state=specified-no-effect
+artifact_naming_contract_state=specified-no-effect
+payload_inspection_contract_state=specified-no-effect
 debian_build_allowed=0
+debian_clean_build_environment_documented=1
+debian_build_environment_provisioned=0
+explicit_operator_build_authorization=0
+disposable_validation_environment_required=1
+environment_transcript_present=0
+debian_artifact_name_pattern_recorded=1
+debian_source_package_name=latticra_0.0.0-1local1.dsc
+debian_binary_package_name_pattern=latticra_0.0.0-1local1_${DEB_HOST_ARCH}.deb
+package_artifact_output_directory_created=0
+repository_package_artifact_write_allowed=0
+debian_payload_expected_bin=usr/bin/latticra
+debian_payload_expected_doc=usr/share/doc/latticra/README.md
+debian_payload_inspection_run=0
+package_payload_inspection_run=0
+package_payload_accepted=0
 source_archive_policy_recorded=1
 source_archive_created=0
 source_archive_sha256_recorded=0
@@ -35,6 +56,7 @@ dpkg_buildpackage_run=0
 debuild_run=0
 lintian_run=0
 package_artifact_created=0
+package_artifact_sha256_recorded=0
 install_on_host_run=0
 lintian_transcript_present=0
 debian_archive_ready=0
@@ -52,6 +74,9 @@ docs/DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md
 docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_ENVIRONMENT_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_ARTIFACT_NAMING_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md
 packaging/debian/README.md
 packaging/debian/debian/control
 packaging/debian/debian/rules
@@ -62,9 +87,15 @@ packaging/debian/debian/source/format
 scripts/test-debian-local-deb-static-validation.sh
 scripts/test-debian-freebsd-openbsd-source-archive-contract.sh
 scripts/test-debian-freebsd-openbsd-package-build-gate-contract.sh
+scripts/test-debian-freebsd-openbsd-package-build-environment-contract.sh
+scripts/test-debian-freebsd-openbsd-package-artifact-naming-contract.sh
+scripts/test-debian-freebsd-openbsd-package-payload-inspection-contract.sh
 .github/workflows/debian-local-deb-static-validation.yml
 .github/workflows/debian-freebsd-openbsd-source-archive-contract.yml
 .github/workflows/debian-freebsd-openbsd-package-build-gate-contract.yml
+.github/workflows/debian-freebsd-openbsd-package-build-environment-contract.yml
+.github/workflows/debian-freebsd-openbsd-package-artifact-naming-contract.yml
+.github/workflows/debian-freebsd-openbsd-package-payload-inspection-contract.yml
 ```
 
 ## Current Boundary
@@ -77,8 +108,14 @@ The source archive contract records the expected `latticra_0.0.0.orig.tar.gz` bo
 
 The package-build gate is recorded in `docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md`. It keeps `package_build_gate_state=closed-no-effect`, `debian_build_allowed=0`, `dpkg_buildpackage_run=0`, `debuild_run=0`, and `lintian_run=0` until source, checksum, license, notice, clean build environment, operator authorization, payload inspection, install/remove transcript, and publication non-claim evidence exists.
 
+The package-build environment contract is recorded in `docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_ENVIRONMENT_CONTRACT.md`. It documents the Debian clean build environment requirement while keeping `debian_build_environment_provisioned=0`, `explicit_operator_build_authorization=0`, `environment_transcript_present=0`, and all Debian package build commands disabled.
+
+The package artifact naming contract is recorded in `docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_ARTIFACT_NAMING_CONTRACT.md`. It records future Debian source and binary artifact names while keeping `package_artifact_created=0`, `repository_package_artifact_write_allowed=0`, and `package_artifact_sha256_recorded=0`.
+
+The package payload inspection contract is recorded in `docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md`. It records the expected Debian payload paths while keeping `debian_payload_inspection_run=0`, `package_payload_accepted=0`, and `package_artifact_created=0`.
+
 ## Next Recommended Lane
 
 ```text
-Add a Debian package-build environment contract only after the package-build gate prerequisites are reviewed.
+Add a Debian package install/remove transcript contract only after the package payload inspection contract is reviewed.
 ```

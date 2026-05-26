@@ -32,6 +32,7 @@ require_file "$contract"
 require_file "$status"
 require_file "$license_contract"
 require_file "$notice_gate_contract"
+require_file docs/UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md
 require_file "$build_transcript_contract"
 require_file "$static_validation"
 require_file "$readiness"
@@ -65,6 +66,8 @@ require_contains 'ubuntu_package_license_promotion_gate_contract_present=1' "$co
 require_contains 'ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites' "$contract"
 require_contains 'ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites' "$contract"
 require_contains 'ubuntu_package_license_review_status=blocked-pending-formal-review' "$contract"
+require_contains 'ubuntu_lintian_static_metadata_contract_present=1' "$contract"
+require_contains 'ubuntu_lintian_static_metadata_status=blocked-pending-package-license-promotion' "$contract"
 require_contains 'ubuntu_package_notice_review_unblocked=0' "$contract"
 require_contains 'ubuntu_package_license_review_unblocked=0' "$contract"
 require_contains 'license_expression_candidate_recorded=1' "$contract"
@@ -93,6 +96,7 @@ require_contains 'ubuntu_package_license_promotion_gate_contract_present=1' "$li
 require_contains 'ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites' "$license_contract"
 require_contains 'ubuntu_package_notice_promotion_gate_contract_present=1' "$notice_gate_contract"
 require_contains 'ubuntu_package_license_promotion_gate_contract_present=1' "$build_transcript_contract"
+require_contains 'ubuntu_lintian_static_metadata_contract_present=1' docs/UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md
 require_contains 'package_license_promotion_gate_contract_present=1' "$static_validation"
 require_contains 'ubuntu_package_license_promotion_gate_contract_present=1' "$readiness"
 require_contains 'docs/UBUNTU_PACKAGE_LICENSE_PROMOTION_GATE_CONTRACT.md' README.md

@@ -85,13 +85,37 @@ It does not claim official openSUSE package status, SUSE endorsement, Open Build
 
 ## Next Slice
 
+Completed follow-on local RPM build gate contract:
+
+```text
+docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
+scripts/test-opensuse-local-rpm-build-gate-contract.sh
+.github/workflows/opensuse-local-rpm-build-gate-contract.yml
+```
+
+Completed follow-on local RPM build environment contract:
+
+```text
+docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+scripts/test-opensuse-local-rpm-build-environment-contract.sh
+.github/workflows/opensuse-local-rpm-build-environment-contract.yml
+```
+
+Completed follow-on RPM artifact naming contract:
+
+```text
+docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
+scripts/test-opensuse-rpm-artifact-naming-contract.sh
+.github/workflows/opensuse-rpm-artifact-naming-contract.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE local RPM build evidence gate contract before any rpmbuild or osc build command can run.
+Add openSUSE RPM payload inspection contract before any RPM artifact can be accepted.
 ```
 
-That future lane should define the exact evidence required before the temporary RPM topdir can be used by `rpmbuild`, `osc build`, or Open Build Service validation.
+That future lane should define how source RPM and binary RPM payloads are inspected after creation while keeping `opensuse_rpm_build_gate_state=closed-no-effect` until the remaining prerequisites are satisfied.
 
 ## Validation
 

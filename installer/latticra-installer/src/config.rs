@@ -243,6 +243,9 @@ pub struct LatticraConsoleConfig {
     pub host_inventory_contract_profile: String,
     pub host_adapter_contract_profile: String,
     pub session_contract_profile: String,
+    pub workspace_contract_profile: String,
+    pub namespace_contract_profile: String,
+    pub rootfs_contract_profile: String,
     pub receipt_request_contract_profile: String,
     pub receipt_payload_schema_profile: String,
     pub receipt_payload_artifact_draft_profile: String,
@@ -264,6 +267,9 @@ pub struct LatticraConsoleConfig {
     pub require_host_inventory_receipt: bool,
     pub require_host_adapter_contract: bool,
     pub require_session_contract: bool,
+    pub require_workspace_contract: bool,
+    pub require_namespace_contract: bool,
+    pub require_rootfs_contract: bool,
     pub require_receipt_request_contract: bool,
     pub require_receipt_payload_schema: bool,
     pub require_receipt_payload_artifact_draft: bool,
@@ -290,6 +296,9 @@ impl Default for LatticraConsoleConfig {
             host_inventory_contract_profile: "lc-host-inventory-v0".to_owned(),
             host_adapter_contract_profile: "lc-host-adapter-v0".to_owned(),
             session_contract_profile: "lc-session-v0".to_owned(),
+            workspace_contract_profile: "lc-workspace-v0".to_owned(),
+            namespace_contract_profile: "lc-namespace-v0".to_owned(),
+            rootfs_contract_profile: "lc-rootfs-v0".to_owned(),
             receipt_request_contract_profile: "lc-receipt-request-v0".to_owned(),
             receipt_payload_schema_profile: "lc-receipt-payload-schema-v0".to_owned(),
             receipt_payload_artifact_draft_profile: "lc-receipt-payload-artifact-draft-v0"
@@ -316,6 +325,9 @@ impl Default for LatticraConsoleConfig {
             require_host_inventory_receipt: true,
             require_host_adapter_contract: true,
             require_session_contract: true,
+            require_workspace_contract: true,
+            require_namespace_contract: true,
+            require_rootfs_contract: true,
             require_receipt_request_contract: true,
             require_receipt_payload_schema: true,
             require_receipt_payload_artifact_draft: true,
@@ -372,6 +384,9 @@ impl LatticraConsoleConfig {
         self.host_inventory_contract_profile = "lc-host-inventory-v0".to_owned();
         self.host_adapter_contract_profile = "lc-host-adapter-v0".to_owned();
         self.session_contract_profile = "lc-session-v0".to_owned();
+        self.workspace_contract_profile = "lc-workspace-v0".to_owned();
+        self.namespace_contract_profile = "lc-namespace-v0".to_owned();
+        self.rootfs_contract_profile = "lc-rootfs-v0".to_owned();
         self.receipt_request_contract_profile = "lc-receipt-request-v0".to_owned();
         self.receipt_payload_schema_profile = "lc-receipt-payload-schema-v0".to_owned();
         self.receipt_payload_artifact_draft_profile =
@@ -396,6 +411,9 @@ impl LatticraConsoleConfig {
         self.require_host_inventory_receipt = true;
         self.require_host_adapter_contract = true;
         self.require_session_contract = true;
+        self.require_workspace_contract = true;
+        self.require_namespace_contract = true;
+        self.require_rootfs_contract = true;
         self.require_receipt_request_contract = true;
         self.require_receipt_payload_schema = true;
         self.require_receipt_payload_artifact_draft = true;
@@ -984,6 +1002,27 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "session_contract_present=1");
     let _ = writeln!(
         out,
+        "workspace_contract_profile={}",
+        config.lc.workspace_contract_profile
+    );
+    let _ = writeln!(out, "workspace_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "workspace_contract_present=1");
+    let _ = writeln!(
+        out,
+        "namespace_contract_profile={}",
+        config.lc.namespace_contract_profile
+    );
+    let _ = writeln!(out, "namespace_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "namespace_contract_present=1");
+    let _ = writeln!(
+        out,
+        "rootfs_contract_profile={}",
+        config.lc.rootfs_contract_profile
+    );
+    let _ = writeln!(out, "rootfs_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "rootfs_contract_present=1");
+    let _ = writeln!(
+        out,
         "panel_embedded_console={}",
         config.lc.install.panel_embedded_console
     );
@@ -1054,6 +1093,21 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         out,
         "session_contract_profile={}",
         config.lc.session_contract_profile
+    );
+    let _ = writeln!(
+        out,
+        "workspace_contract_profile={}",
+        config.lc.workspace_contract_profile
+    );
+    let _ = writeln!(
+        out,
+        "namespace_contract_profile={}",
+        config.lc.namespace_contract_profile
+    );
+    let _ = writeln!(
+        out,
+        "rootfs_contract_profile={}",
+        config.lc.rootfs_contract_profile
     );
     let _ = writeln!(
         out,
@@ -1151,6 +1205,21 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "workspace_contract_required={}",
+        config.lc.require_workspace_contract
+    );
+    let _ = writeln!(
+        out,
+        "namespace_contract_required={}",
+        config.lc.require_namespace_contract
+    );
+    let _ = writeln!(
+        out,
+        "rootfs_contract_required={}",
+        config.lc.require_rootfs_contract
+    );
+    let _ = writeln!(
+        out,
         "receipt_request_contract_required={}",
         config.lc.require_receipt_request_contract
     );
@@ -1226,6 +1295,9 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "host_inventory_contract_status=metadata-only-contract");
     let _ = writeln!(out, "host_adapter_contract_status=metadata-only-contract");
     let _ = writeln!(out, "session_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "workspace_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "namespace_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "rootfs_contract_status=metadata-only-contract");
     let _ = writeln!(
         out,
         "receipt_request_contract_status=metadata-only-contract"
@@ -1287,11 +1359,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
     let _ = writeln!(
         out,
-        "stage=41-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-contract"
+        "stage=43-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"
     );
     let _ = writeln!(
         out,
-        "previous_stage=40-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract"
+        "previous_stage=42-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-contract"
     );
     let _ = writeln!(
         out,
@@ -2683,6 +2755,122 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(
         out,
         "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_stage=42-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_stage=contract-only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_status=contract_only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_allowed=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_record_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_decision_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_published=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_stage=43-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_stage=contract-only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_status=contract_only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_allowed=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_record_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_decision_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_emitted=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_signed=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_published=0"
+    );
+    let _ = writeln!(
+        out,
+        "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1"
     );
     let _ = writeln!(out, "requires_prompt_evaluation_result_contract=1");
     let _ = writeln!(

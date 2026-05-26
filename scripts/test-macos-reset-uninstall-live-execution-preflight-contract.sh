@@ -146,7 +146,7 @@ require_contains 'live_execution_preflight_passed=0' "$readme_status"
 
 require_contains 'macos_reset_uninstall_live_execution_preflight_contract_present=1' "$live_plan_doc"
 require_contains 'macos_reset_uninstall_live_execution_preflight_contract_present=1' "$live_plan_status"
-require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-review-contract' "$live_plan_script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-contract' "$live_plan_script"
 require_contains 'macos_reset_uninstall_live_execution_preflight_contract_present=1' "$evidence_status"
 require_contains 'macos_reset_uninstall_live_execution_preflight_contract_present=1' "$effect_status"
 require_contains 'macos_reset_uninstall_live_execution_preflight_contract_present=1' "$operator_status"
@@ -183,7 +183,7 @@ require_contains 'file_delete_performed=0' "$script"
 require_contains 'directory_delete_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-review-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -214,7 +214,7 @@ require_output_contains "$output" 'directory_delete_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'network_performed=0'
 require_output_contains "$output" 'runtime_authority_granted=0'
-require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-review-contract'
+require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-contract'
 
 require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
 require_contains 'persist-credentials: false' "$workflow"

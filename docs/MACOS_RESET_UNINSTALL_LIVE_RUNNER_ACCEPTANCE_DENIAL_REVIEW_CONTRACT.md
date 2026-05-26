@@ -253,5 +253,5 @@ Add a macOS reset/uninstall live-runner acceptance-denial review contract that r
 The next lane should add a disposition contract so the reviewed closed-gate denial has a recorded no-effect disposition before any future dispatch work is reconsidered.
 
 ```text
-Add a macOS reset/uninstall live-runner acceptance-denial disposition review contract that reviews the no-effect disposition without opening dispatch or deletion.
+Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition contract that records the reviewed no-effect closeout audit as a no-effect disposition without opening dispatch or deletion.
 ```

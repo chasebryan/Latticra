@@ -88,21 +88,25 @@ static latticra_status_t kernel_run_bootstrap(
 }
 
 static void kernel_finalize(latticra_kernel_result_t *result) {
-    if (result->bootstrap.status != LATTICRA_STATUS_OK || result->bootstrap.no_effect != 1) {
+    result->execution_allowed = result->bootstrap.execution_allowed;
+    result->mutation_allowed = result->bootstrap.mutation_allowed;
+    result->file_io_allowed = result->bootstrap.file_io_allowed;
+    result->network_allowed = result->bootstrap.network_allowed;
+    result->server_allowed = result->bootstrap.server_allowed;
+    result->recovery_allowed = result->bootstrap.recovery_allowed;
+    result->hardware_allowed = result->bootstrap.hardware_allowed;
+    result->boot_allowed = 0;
+
+    if (result->bootstrap.status != LATTICRA_STATUS_OK || result->bootstrap.no_effect != 1 ||
+        result->execution_allowed != 0 || result->mutation_allowed != 0 ||
+        result->file_io_allowed != 0 || result->network_allowed != 0 ||
+        result->server_allowed != 0 || result->recovery_allowed != 0 ||
+        result->hardware_allowed != 0) {
         result->status = result->bootstrap.status;
         kernel_copy(result->kernel_status, sizeof(result->kernel_status), "bootstrap-not-ready");
         result->no_effect = 0;
         return;
     }
-
-    result->execution_allowed = 0;
-    result->mutation_allowed = 0;
-    result->file_io_allowed = 0;
-    result->network_allowed = 0;
-    result->server_allowed = 0;
-    result->recovery_allowed = 0;
-    result->hardware_allowed = 0;
-    result->boot_allowed = 0;
 
     result->no_effect = 1;
     kernel_copy(result->kernel_status, sizeof(result->kernel_status), "initialized-report-only");
@@ -169,6 +173,8 @@ latticra_status_t latticra_kernel_report(
         "bootstrap_status=%s\n"
         "bootstrap_runtime_entry_status=%s\n"
         "bootstrap_no_effect=%d\n"
+        "bootstrap_network_allowed=%d\n"
+        "bootstrap_server_allowed=%d\n"
         "no_effect=%d\n"
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
@@ -195,6 +201,8 @@ latticra_status_t latticra_kernel_report(
         result->bootstrap.system_status,
         result->bootstrap.runtime_entry_status,
         result->bootstrap.no_effect,
+        result->bootstrap.network_allowed,
+        result->bootstrap.server_allowed,
         result->no_effect,
         result->execution_allowed,
         result->mutation_allowed,

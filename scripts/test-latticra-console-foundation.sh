@@ -14,6 +14,9 @@ man_txt="$tmpdir/latticra-console-man.txt"
 boundary_txt="$tmpdir/latticra-console-boundary.txt"
 standalone_txt="$tmpdir/latticra-console-standalone.txt"
 session_txt="$tmpdir/latticra-console-session.txt"
+workspace_txt="$tmpdir/latticra-console-workspace.txt"
+namespace_txt="$tmpdir/latticra-console-namespace.txt"
+rootfs_txt="$tmpdir/latticra-console-rootfs.txt"
 host_contract_txt="$tmpdir/latticra-console-host-contract.txt"
 host_inventory_txt="$tmpdir/latticra-console-host-inventory.txt"
 host_adapter_txt="$tmpdir/latticra-console-host-adapter.txt"
@@ -65,6 +68,9 @@ cc $CFLAGS \
 "$report_bin" boundary > "$boundary_txt"
 "$report_bin" standalone > "$standalone_txt"
 "$report_bin" session > "$session_txt"
+"$report_bin" workspace > "$workspace_txt"
+"$report_bin" namespace > "$namespace_txt"
+"$report_bin" rootfs > "$rootfs_txt"
 "$report_bin" host-contract > "$host_contract_txt"
 "$report_bin" host-inventory > "$host_inventory_txt"
 "$report_bin" host-adapter > "$host_adapter_txt"
@@ -97,6 +103,12 @@ grep -Fq 'command=lc standalone' "$report_txt"
 grep -Fq 'capability=lc.standalone.inspect' "$report_txt"
 grep -Fq 'command=lc session' "$report_txt"
 grep -Fq 'capability=lc.session.contract' "$report_txt"
+grep -Fq 'command=lc workspace' "$report_txt"
+grep -Fq 'capability=lc.workspace.contract' "$report_txt"
+grep -Fq 'command=lc namespace' "$report_txt"
+grep -Fq 'capability=lc.namespace.contract' "$report_txt"
+grep -Fq 'command=lc rootfs' "$report_txt"
+grep -Fq 'capability=lc.rootfs.contract' "$report_txt"
 grep -Fq 'command=lc profiles' "$report_txt"
 grep -Fq 'capability=lc.core.profiles' "$report_txt"
 grep -Fq 'command=lc host-contract' "$report_txt"
@@ -167,6 +179,12 @@ grep -Fq 'standalone_console_status=metadata-only-standalone-contract-ready' "$r
 grep -Fq 'standalone_contract_present=1' "$report_txt"
 grep -Fq 'session_contract_status=metadata-only-contract-ready' "$report_txt"
 grep -Fq 'session_contract_present=1' "$report_txt"
+grep -Fq 'workspace_contract_status=metadata-only-contract-ready' "$report_txt"
+grep -Fq 'workspace_contract_present=1' "$report_txt"
+grep -Fq 'namespace_contract_status=metadata-only-contract-ready' "$report_txt"
+grep -Fq 'namespace_contract_present=1' "$report_txt"
+grep -Fq 'rootfs_contract_status=metadata-only-contract-ready' "$report_txt"
+grep -Fq 'rootfs_contract_present=1' "$report_txt"
 grep -Fq 'future_os_base_claim=planned_not_claimed' "$report_txt"
 grep -Fq 'execution_allowed=0' "$report_txt"
 grep -Fq 'network_allowed=0' "$report_txt"
@@ -178,6 +196,9 @@ grep -Fq 'registry_source=c-static-table' "$help_txt"
 grep -Fq 'lc install-config' "$help_txt"
 grep -Fq 'lc standalone' "$help_txt"
 grep -Fq 'lc session' "$help_txt"
+grep -Fq 'lc workspace' "$help_txt"
+grep -Fq 'lc namespace' "$help_txt"
+grep -Fq 'lc rootfs' "$help_txt"
 grep -Fq 'lc profiles' "$help_txt"
 grep -Fq 'lc receipts' "$help_txt"
 grep -Fq 'lc host-contract' "$help_txt"
@@ -201,6 +222,9 @@ grep -Fq 'COMMANDS' "$man_txt"
 grep -Fq 'latticra-lc install-config' "$man_txt"
 grep -Fq 'latticra-lc standalone' "$man_txt"
 grep -Fq 'latticra-lc session' "$man_txt"
+grep -Fq 'latticra-lc workspace' "$man_txt"
+grep -Fq 'latticra-lc namespace' "$man_txt"
+grep -Fq 'latticra-lc rootfs' "$man_txt"
 grep -Fq 'latticra-lc host-contract' "$man_txt"
 grep -Fq 'latticra-lc host-inventory' "$man_txt"
 grep -Fq 'latticra-lc host-adapter' "$man_txt"
@@ -222,6 +246,9 @@ grep -Fq 'seal_capability_labels_bound=1' "$boundary_txt"
 grep -Fq 'command=lc install-config' "$boundary_txt"
 grep -Fq 'command=lc standalone' "$boundary_txt"
 grep -Fq 'command=lc session' "$boundary_txt"
+grep -Fq 'command=lc workspace' "$boundary_txt"
+grep -Fq 'command=lc namespace' "$boundary_txt"
+grep -Fq 'command=lc rootfs' "$boundary_txt"
 grep -Fq 'command=lc substrate' "$boundary_txt"
 grep -Fq 'command=lc host-contract' "$boundary_txt"
 grep -Fq 'command=lc host-inventory' "$boundary_txt"
@@ -241,6 +268,8 @@ grep -Fq 'command=lc vm-evidence' "$boundary_txt"
 grep -Fq 'command=lc os' "$boundary_txt"
 grep -Fq 'policy_matrix_cell=future-gated-operation' "$boundary_txt"
 grep -Fq 'seal_capability=seal.capability.inspect' "$boundary_txt"
+grep -Fq 'network_allowed=0' "$boundary_txt"
+grep -Fq 'runtime_enforcement_allowed=0' "$boundary_txt"
 grep -Fq 'boot_allowed=0' "$boundary_txt"
 grep -Fq 'LATTICRA CONSOLE STANDALONE CONTRACT' "$standalone_txt"
 grep -Fq 'standalone_console_profile=lc-standalone-console-v0' "$standalone_txt"
@@ -257,6 +286,31 @@ grep -Fq 'runtime_process_spawn_allowed=0' "$session_txt"
 grep -Fq 'command_surface=lc session' "$session_txt"
 grep -Fq 'host_process_launch_allowed=0' "$session_txt"
 grep -Fq 'production_os_claim=0' "$session_txt"
+grep -Fq 'LATTICRA CONSOLE WORKSPACE CONTRACT' "$workspace_txt"
+grep -Fq 'workspace_profile=lc-workspace-v0' "$workspace_txt"
+grep -Fq 'workspace_contract_present=1' "$workspace_txt"
+grep -Fq 'workspace_mount_allowed=0' "$workspace_txt"
+grep -Fq 'workspace_file_write_allowed=0' "$workspace_txt"
+grep -Fq 'command_surface=lc workspace' "$workspace_txt"
+grep -Fq 'host_process_launch_allowed=0' "$workspace_txt"
+grep -Fq 'production_os_claim=0' "$workspace_txt"
+grep -Fq 'LATTICRA CONSOLE NAMESPACE CONTRACT' "$namespace_txt"
+grep -Fq 'namespace_profile=lc-namespace-v0' "$namespace_txt"
+grep -Fq 'namespace_contract_present=1' "$namespace_txt"
+grep -Fq 'namespace_mount_allowed=0' "$namespace_txt"
+grep -Fq 'rootfs_mount_allowed=0' "$namespace_txt"
+grep -Fq 'command_surface=lc namespace' "$namespace_txt"
+grep -Fq 'host_process_launch_allowed=0' "$namespace_txt"
+grep -Fq 'production_os_claim=0' "$namespace_txt"
+grep -Fq 'LATTICRA CONSOLE ROOTFS CONTRACT' "$rootfs_txt"
+grep -Fq 'rootfs_profile=lc-rootfs-v0' "$rootfs_txt"
+grep -Fq 'rootfs_contract_present=1' "$rootfs_txt"
+grep -Fq 'rootfs_image_create_allowed=0' "$rootfs_txt"
+grep -Fq 'rootfs_mount_allowed=0' "$rootfs_txt"
+grep -Fq 'rootfs_package_install_allowed=0' "$rootfs_txt"
+grep -Fq 'command_surface=lc rootfs' "$rootfs_txt"
+grep -Fq 'host_process_launch_allowed=0' "$rootfs_txt"
+grep -Fq 'production_os_claim=0' "$rootfs_txt"
 grep -Fq 'LATTICRA CONSOLE HOST EMBEDDING CONTRACT' "$host_contract_txt"
 grep -Fq 'contract_profile=lc-host-embedding-v0' "$host_contract_txt"
 grep -Fq 'host_process_launch_allowed=0' "$host_contract_txt"
@@ -434,6 +488,12 @@ grep -Fq 'host_inventory_contract_receipt_required=1' "$receipts_txt"
 grep -Fq 'host_adapter_contract_receipt_required=1' "$receipts_txt"
 grep -Fq 'session_contract_receipt_required=1' "$receipts_txt"
 grep -Fq 'session_contract_command=lc session' "$receipts_txt"
+grep -Fq 'workspace_contract_receipt_required=1' "$receipts_txt"
+grep -Fq 'workspace_contract_command=lc workspace' "$receipts_txt"
+grep -Fq 'namespace_contract_receipt_required=1' "$receipts_txt"
+grep -Fq 'namespace_contract_command=lc namespace' "$receipts_txt"
+grep -Fq 'rootfs_contract_receipt_required=1' "$receipts_txt"
+grep -Fq 'rootfs_contract_command=lc rootfs' "$receipts_txt"
 grep -Fq 'receipt_request_contract_required=1' "$receipts_txt"
 grep -Fq 'receipt_payload_schema_required=1' "$receipts_txt"
 grep -Fq 'receipt_payload_artifact_draft_required=1' "$receipts_txt"
@@ -466,6 +526,9 @@ grep -Fq 'bin/<lc.install.command_wrapper>' installer/manifests/components.toml
 grep -Fq 'share/latticra/lc/install/config.toml' installer/manifests/components.toml
 grep -Fq 'share/latticra/lc/standalone' installer/manifests/components.toml
 grep -Fq 'share/latticra/lc/session' installer/manifests/components.toml
+grep -Fq 'share/latticra/lc/workspace' installer/manifests/components.toml
+grep -Fq 'share/latticra/lc/namespace' installer/manifests/components.toml
+grep -Fq 'share/latticra/lc/rootfs' installer/manifests/components.toml
 grep -Fq 'share/latticra/lc/host-inventory' installer/manifests/components.toml
 grep -Fq 'LC install metadata records config/share paths and the standalone command wrapper' installer/manifests/components.toml
 grep -Fq 'latticra_console = true' installer/configs/default.installer.toml
@@ -479,6 +542,9 @@ grep -Fq 'allow_host_mutation = true' installer/configs/lc-standalone-local.inst
 grep -Fq 'pub latticra_console: bool' installer/latticra-installer/src/config.rs
 grep -Fq 'pub struct LatticraConsoleConfig' installer/latticra-installer/src/config.rs
 grep -Fq 'pub session_contract_profile: String' installer/latticra-installer/src/config.rs
+grep -Fq 'pub workspace_contract_profile: String' installer/latticra-installer/src/config.rs
+grep -Fq 'pub namespace_contract_profile: String' installer/latticra-installer/src/config.rs
+grep -Fq 'pub rootfs_contract_profile: String' installer/latticra-installer/src/config.rs
 grep -Fq 'LatticraConsoleProfile::PanelEmbedded' installer/latticra-installer/src/config.rs
 grep -Fq 'Self::Standalone => "standalone"' installer/latticra-installer/src/config.rs
 grep -Fq 'InstallProfile::LcStandalone' installer/latticra-installer/src/config.rs
@@ -495,6 +561,12 @@ grep -Fq 'host_inventory_contract_profile = "lc-host-inventory-v0"' installer/co
 grep -Fq 'host_adapter_contract_profile = "lc-host-adapter-v0"' installer/configs/default.installer.toml
 grep -Fq 'session_contract_profile = "lc-session-v0"' installer/configs/default.installer.toml
 grep -Fq 'require_session_contract = true' installer/configs/default.installer.toml
+grep -Fq 'workspace_contract_profile = "lc-workspace-v0"' installer/configs/default.installer.toml
+grep -Fq 'require_workspace_contract = true' installer/configs/default.installer.toml
+grep -Fq 'namespace_contract_profile = "lc-namespace-v0"' installer/configs/default.installer.toml
+grep -Fq 'require_namespace_contract = true' installer/configs/default.installer.toml
+grep -Fq 'rootfs_contract_profile = "lc-rootfs-v0"' installer/configs/default.installer.toml
+grep -Fq 'require_rootfs_contract = true' installer/configs/default.installer.toml
 grep -Fq 'receipt_request_contract_profile = "lc-receipt-request-v0"' installer/configs/default.installer.toml
 grep -Fq 'receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"' installer/configs/default.installer.toml
 grep -Fq 'receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"' installer/configs/default.installer.toml
@@ -528,8 +600,17 @@ grep -Fq 'LC_HOST_EMBEDDING_CONTRACT_PROFILE=$(cfg_section lc host_embedding_con
 grep -Fq 'LC_HOST_INVENTORY_CONTRACT_PROFILE=$(cfg_section lc host_inventory_contract_profile lc-host-inventory-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_HOST_ADAPTER_CONTRACT_PROFILE=$(cfg_section lc host_adapter_contract_profile lc-host-adapter-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_SESSION_CONTRACT_PROFILE=$(cfg_section lc session_contract_profile lc-session-v0)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_WORKSPACE_CONTRACT_PROFILE=$(cfg_section lc workspace_contract_profile lc-workspace-v0)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_NAMESPACE_CONTRACT_PROFILE=$(cfg_section lc namespace_contract_profile lc-namespace-v0)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_ROOTFS_CONTRACT_PROFILE=$(cfg_section lc rootfs_contract_profile lc-rootfs-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc session category=core effect=none capability=lc.session.contract' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'session/contract.toml' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'name=lc workspace category=core effect=none capability=lc.workspace.contract' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'workspace/contract.toml' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'name=lc namespace category=core effect=none capability=lc.namespace.contract' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'namespace/contract.toml' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'name=lc rootfs category=core effect=none capability=lc.rootfs.contract' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'rootfs/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_RECEIPT_REQUEST_CONTRACT_PROFILE=$(cfg_section lc receipt_request_contract_profile lc-receipt-request-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE=$(cfg_section lc receipt_payload_schema_profile lc-receipt-payload-schema-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE=$(cfg_section lc receipt_payload_artifact_draft_profile lc-receipt-payload-artifact-draft-v0)' installer/scripts/latticra-installer-apply.sh
@@ -575,6 +656,9 @@ grep -Fq 'os_base_planning -> future OS-base plan with zero boot, kernel, or run
 grep -Fq 'The default user-local wrapper is:' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Panel installs can rename that direct wrapper with `lc.install.command_wrapper`' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Standalone Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'Workspace Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'Namespace Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'Rootfs Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Host Embedding Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Read-Only Host Inventory Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Host Adapter Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
@@ -591,6 +675,12 @@ grep -Fq 'Status: active Stage-0 foundation' "$status_file"
 grep -Fq 'latticra_console_report_surface_present=1' "$status_file"
 grep -Fq 'standalone_contract_present=1' "$status_file"
 grep -Fq 'standalone_contract_command=lc standalone' "$status_file"
+grep -Fq 'workspace_contract_present=1' "$status_file"
+grep -Fq 'workspace_contract_command=lc workspace' "$status_file"
+grep -Fq 'namespace_contract_present=1' "$status_file"
+grep -Fq 'namespace_contract_command=lc namespace' "$status_file"
+grep -Fq 'rootfs_contract_present=1' "$status_file"
+grep -Fq 'rootfs_contract_command=lc rootfs' "$status_file"
 grep -Fq 'host_adapter_contract_present=1' "$status_file"
 grep -Fq 'receipt_payload_schema_present=1' "$status_file"
 grep -Fq 'receipt_payload_artifact_draft_present=1' "$status_file"

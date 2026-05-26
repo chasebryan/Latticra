@@ -91,6 +91,7 @@ struct authority_audit_record {
     authority_effect requested_effect{authority_effect::none};
     authority_flags flags{};
     std::array<char, LATTICRA_AUTHORITY_POLICY_NAME_MAX> policy_name{};
+    std::array<char, LATTICRA_AUTHORITY_SOURCE_IDENTITY_MAX + 1u> source_identity{};
     std::array<char, LATTICRA_AUTHORITY_VALIDATOR_NAME_MAX> validator_name{};
     std::array<char, LATTICRA_AUTHORITY_DENIAL_REASON_MAX> denial_reason{};
     authority_source_span span{};

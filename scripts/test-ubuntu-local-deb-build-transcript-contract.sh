@@ -36,8 +36,11 @@ require_file docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
 require_file docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
 require_file docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
 require_file docs/UBUNTU_PACKAGE_LICENSE_PROMOTION_GATE_CONTRACT.md
+require_file docs/UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md
 require_file docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_file docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md
+require_file docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
 require_file packaging/ubuntu/README.md
 require_file scripts/test-ubuntu-local-deb-static-validation.sh
 
@@ -71,6 +74,12 @@ require_contains 'ubuntu_package_notice_promotion_gate_contract_present=1' "$con
 require_contains 'ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites' "$contract"
 require_contains 'ubuntu_package_license_promotion_gate_contract_present=1' "$contract"
 require_contains 'ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites' "$contract"
+require_contains 'ubuntu_lintian_static_metadata_contract_present=1' "$contract"
+require_contains 'ubuntu_lintian_static_metadata_status=blocked-pending-package-license-promotion' "$contract"
+require_contains 'ubuntu_local_deb_build_transcript_acceptance_gate_contract_present=1' "$contract"
+require_contains 'ubuntu_local_deb_build_transcript_acceptance_gate_status=blocked-pending-lintian-static-metadata-and-build-transcript' "$contract"
+require_contains 'ubuntu_local_deb_install_remove_evidence_contract_present=1' "$contract"
+require_contains 'ubuntu_local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript' "$contract"
 require_contains 'dpkg_buildpackage_command_recorded=1' "$contract"
 require_contains 'deb_artifact_digest_recorded=1' "$contract"
 require_contains 'lintian_output_digest_recorded=1' "$contract"
@@ -86,7 +95,11 @@ require_contains 'ubuntu_archive_ready=0' "$contract"
 require_contains 'production_installer_ready=0' "$contract"
 require_contains 'ubuntu_local_deb_build_transcript_contract_present=1' "$contract"
 require_contains 'ubuntu_local_deb_build_transcript_present=0' "$contract"
+require_contains 'local_deb_build_transcript_accepted=0' "$contract"
+require_contains 'build_transcript_acceptance_gate_unblocked=0' "$contract"
 require_contains 'deb_artifact_created=0' "$contract"
+require_contains 'deb_artifact_installed=0' "$contract"
+require_contains 'deb_removed_from_host=0' "$contract"
 require_contains 'ubuntu_local_deb_build_transcript_contract: ok' "$contract"
 
 require_contains 'ubuntu_lintian_availability_present=1' "$status"
@@ -115,8 +128,14 @@ require_contains 'ubuntu_package_notice_promotion_gate_contract_present=1' "$sta
 require_contains 'ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites' "$status"
 require_contains 'ubuntu_package_license_promotion_gate_contract_present=1' "$status"
 require_contains 'ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites' "$status"
+require_contains 'ubuntu_lintian_static_metadata_contract_present=1' "$status"
+require_contains 'ubuntu_lintian_static_metadata_status=blocked-pending-package-license-promotion' "$status"
+require_contains 'ubuntu_local_deb_build_transcript_acceptance_gate_contract_present=1' "$status"
+require_contains 'ubuntu_local_deb_build_transcript_acceptance_gate_status=blocked-pending-lintian-static-metadata-and-build-transcript' "$status"
 require_contains 'ubuntu_package_notice_review_contract_present=1' "$status"
 require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' "$status"
 require_contains 'packaging_license_expression_updated=0' "$status"
+require_contains 'ubuntu_local_deb_install_remove_evidence_contract_present=1' "$status"
+require_contains 'ubuntu_local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript' "$status"
 
 printf 'ubuntu_local_deb_build_transcript_contract: ok\n'
