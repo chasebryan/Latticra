@@ -42,6 +42,8 @@ kernel context switch guard
 kernel context switch report runner
 kernel time accounting guard
 kernel time accounting report runner
+kernel preemption guard
+kernel preemption report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
@@ -54,7 +56,7 @@ kernel lifecycle rollback plan
 The lifecycle evidence can report a bounded in-memory path ending at:
 
 ```text
-final_state=time-accounting-ready
+final_state=preemption-ready
 ```
 
 The lifecycle report runner and subsystem summary keep the external-effect posture explicit:
@@ -191,6 +193,7 @@ Dedicated workflow lanes keep the kernel table guards visible:
 .github/workflows/kernel-run-queue.yml
 .github/workflows/kernel-context-switch.yml
 .github/workflows/kernel-time-accounting.yml
+.github/workflows/kernel-preemption.yml
 .github/workflows/kernel-process-table.yml
 .github/workflows/kernel-syscall-table.yml
 ```

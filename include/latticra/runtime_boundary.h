@@ -287,6 +287,7 @@ typedef struct {
     char lat_lir_first_lat_node_value[LATTICRA_LIR_VALUE_MAX];
     char lat_lir_first_lat_node_operator[LATTICRA_LIR_NAME_MAX];
     char lat_lir_first_lat_node_binding[LATTICRA_LIR_BINDING_MAX];
+    latticra_l_ui_source_span_t lat_lir_first_lat_node_span;
     int lat_lir_no_effect_chain_ok;
     unsigned int lat_lir_evidence_level;
     int lat_lir_no_effect;

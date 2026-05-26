@@ -457,6 +457,43 @@ static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_qu
         "time accounting transition no external effect");
     EXPECT_TRUE(result.denied == 0,
         "time accounting transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_PREEMPTION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "preemption transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_PREEMPTION_READY,
+        "next preemption-ready");
+    EXPECT_TRUE(strcmp(result.preemption.preemption_status,
+            "preemption-seed-ready") == 0,
+        "preemption ready");
+    EXPECT_TRUE(strcmp(result.time_accounting.accounting_status,
+            "time-accounting-seed-ready") == 0,
+        "preemption transition keeps time accounting ready");
+    EXPECT_TRUE(strcmp(result.context_switch.switch_status,
+            "context-switch-seed-ready") == 0,
+        "preemption transition keeps context switch ready");
+    EXPECT_TRUE(result.preemption.decision_count == 4u,
+        "preemption decision count");
+    EXPECT_TRUE(result.preemption.preemption_allowed == 0,
+        "preemption denied");
+    EXPECT_TRUE(result.preemption.dispatch_allowed == 0,
+        "preemption dispatch denied");
+    EXPECT_TRUE(result.preemption.run_queue_mutation_allowed == 0,
+        "preemption run queue mutation denied");
+    EXPECT_TRUE(result.preemption.context_switch_allowed == 0,
+        "preemption context switch denied");
+    EXPECT_TRUE(result.preemption.time_read_allowed == 0,
+        "preemption time read denied");
+    EXPECT_TRUE(result.preemption.time_accounting_allowed == 0,
+        "preemption time accounting denied");
+    EXPECT_TRUE(result.preemption.process_wake_allowed == 0,
+        "preemption process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "preemption transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "preemption transition not denied");
     return 0;
 }
 
@@ -750,6 +787,25 @@ static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_
     EXPECT_TRUE(strstr(report,
             "time_accounting_status=time-accounting-seed-ready\n") != 0,
         "time accounting emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_PREEMPTION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "preemption transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "preemption report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=time-accounting-ready\n") != 0,
+        "time accounting previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=preemption-ready\n") != 0,
+        "preemption next emitted");
+    EXPECT_TRUE(strstr(report,
+            "time_accounting_status=time-accounting-seed-ready\n") != 0,
+        "preemption report time accounting emitted");
+    EXPECT_TRUE(strstr(report,
+            "preemption_status=preemption-seed-ready\n") != 0,
+        "preemption emitted");
     return 0;
 }
 

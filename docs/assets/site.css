@@ -530,6 +530,16 @@ p:last-child {
   background-size: 500px auto;
 }
 
+.packaging-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.98) 0%, rgba(17, 24, 39, 0.9) 56%, rgba(17, 24, 39, 0.62) 100%),
+    url("latticra-panel.png");
+  background-color: #111827;
+  background-position: right 44px center;
+  background-repeat: no-repeat;
+  background-size: 500px auto;
+}
+
 .evidence-hero {
   background:
     linear-gradient(90deg, rgba(17, 24, 39, 0.97) 0%, rgba(17, 24, 39, 0.88) 58%, rgba(17, 24, 39, 0.66) 100%),
@@ -1989,6 +1999,146 @@ p:last-child {
   font-size: 0.94rem;
 }
 
+.packaging-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.packaging-intro p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.packaging-flow,
+.packaging-platform-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.packaging-flow {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.packaging-flow article {
+  min-width: 0;
+  min-height: 212px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--teal);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.packaging-flow span,
+.packaging-platform span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--blue);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.packaging-flow p,
+.packaging-platform p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.packaging-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(300px, 1.18fr);
+  gap: 30px;
+  align-items: center;
+}
+
+.packaging-figure img {
+  width: min(420px, 100%);
+  margin-inline: auto;
+  object-fit: contain;
+}
+
+.packaging-platform-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.packaging-platform {
+  min-width: 0;
+  min-height: 258px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--border-strong);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.packaging-platform a {
+  display: inline-flex;
+  margin-top: 8px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.packaging-platform a:hover {
+  text-decoration: underline;
+}
+
+.packaging-fedora {
+  border-top-color: #0ea5e9;
+}
+
+.packaging-ubuntu {
+  border-top-color: var(--green);
+}
+
+.packaging-opensuse {
+  border-top-color: var(--teal);
+}
+
+.packaging-macos {
+  border-top-color: #334155;
+}
+
+.packaging-blocked {
+  border-top-color: var(--red);
+}
+
+.packaging-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.packaging-table {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.packaging-table div {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.packaging-table div:last-child {
+  border-bottom: 0;
+}
+
+.packaging-table span {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.packaging-table p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
 .evidence-rule-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2850,6 +3000,11 @@ p:last-child {
   .boot-flow,
   .boot-profile-grid,
   .boot-split,
+  .packaging-intro,
+  .packaging-flow,
+  .packaging-showcase,
+  .packaging-platform-grid,
+  .packaging-split,
   .workbench-intro,
   .workbench-flow,
   .workbench-showcase,
@@ -2942,7 +3097,8 @@ p:last-child {
   .ladder-grid,
   .claim-language-grid,
   .nadia-principle-grid,
-  .validation-lane-grid {
+  .validation-lane-grid,
+  .packaging-platform-grid {
     grid-template-columns: 1fr;
   }
 
@@ -2957,6 +3113,7 @@ p:last-child {
   .roadmap-table div,
   .kernel-table div,
   .boot-table div,
+  .packaging-table div,
   .workbench-table div,
   .panel-table div,
   .console-table div,

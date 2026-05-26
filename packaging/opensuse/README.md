@@ -26,6 +26,7 @@ docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 scripts/test-opensuse-developer-workflow.sh
 scripts/test-opensuse-local-rpm-static-validation.sh
@@ -33,12 +34,14 @@ scripts/test-opensuse-rpmlint-osc-availability.sh
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
 scripts/test-opensuse-rpmlint-findings-classification.sh
 scripts/test-opensuse-source-archive-reproducibility-contract.sh
+scripts/test-opensuse-source-archive-fixture-lane.sh
 .github/workflows/opensuse-developer-workflow.yml
 .github/workflows/opensuse-local-rpm-static-validation.yml
 .github/workflows/opensuse-rpmlint-osc-availability.yml
 .github/workflows/opensuse-rpmlint-static-spec-lane.yml
 .github/workflows/opensuse-rpmlint-findings-classification.yml
 .github/workflows/opensuse-source-archive-reproducibility-contract.yml
+.github/workflows/opensuse-source-archive-fixture-lane.yml
 ```
 
 The static lane preserves:
@@ -50,6 +53,7 @@ opensuse_rpmlint_osc_availability_lane_present=1
 opensuse_rpmlint_static_spec_lane_present=1
 opensuse_rpmlint_findings_classification_present=1
 opensuse_source_archive_reproducibility_contract_present=1
+opensuse_source_archive_fixture_lane_present=1
 rpm_artifact_created=0
 rpmbuild_run_required=0
 osc_build_run=0
@@ -57,10 +61,12 @@ accepted_rpmlint_transcript_present=0
 expected_draft_findings_count_recorded=0
 unexpected_findings_count_recorded=0
 source_archive_policy_recorded=1
-source_archive_transcript_present=0
-source_archive_created=0
-source_archive_sha256_recorded=0
-source_archive_reproducible=0
+source_archive_transcript_present=1
+source_archive_created=1
+source_archive_sha256_recorded=1
+source_archive_reproducible=1
+source_archive_generated_twice=1
+source_archive_repeated_sha256_match=1
 source_archive_accepted_for_build=0
 spec_cleaner_run=0
 rpmlint_package_readiness_claimed=0

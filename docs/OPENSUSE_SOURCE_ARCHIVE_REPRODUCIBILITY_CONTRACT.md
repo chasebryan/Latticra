@@ -9,7 +9,7 @@ This contract defines the source archive evidence required before Latticra accep
 
 The current goal is conservative: record the expected `Source0` archive shape, reproducibility requirements, transcript fields, and promotion blockers without creating an archive or running a package build.
 
-This contract sits after the `rpmlint` findings classification record and before any source archive fixture, `rpmbuild`, `osc build`, or Open Build Service publication evidence.
+This contract sits after the `rpmlint` findings classification record and before the source archive fixture, `rpmbuild`, `osc build`, or Open Build Service publication evidence.
 
 ## Current Spec Inputs
 
@@ -81,18 +81,21 @@ Until those conditions are met, source archive evidence is a review input only, 
 
 ## Current Baseline
 
+The current baseline includes the follow-on temporary fixture lane. The archive remains unaccepted for package build input until the remaining acceptance requirements are met.
+
 ```text
 opensuse_source_archive_reproducibility_contract_present=1
 opensuse_rpmlint_findings_classification_present=1
+opensuse_source_archive_fixture_lane_present=1
 source_archive_policy_recorded=1
 source_archive_name_expected=latticra-0.0.0.tar.gz
 source_archive_root_expected=latticra-0.0.0/
 source_archive_matches_source0_required=1
 source_archive_matches_autosetup_required=1
-source_archive_transcript_present=0
-source_archive_created=0
-source_archive_sha256_recorded=0
-source_archive_reproducible=0
+source_archive_transcript_present=1
+source_archive_created=1
+source_archive_sha256_recorded=1
+source_archive_reproducible=1
 source_archive_accepted_for_build=0
 rpmbuild_run=0
 osc_build_run=0
@@ -122,15 +125,23 @@ claim SUSE endorsement
 claim production readiness
 ```
 
-## Next Slice
+## Follow-On Fixture Lane
+
+Completed follow-on fixture lane:
+
+```text
+docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+scripts/test-opensuse-source-archive-fixture-lane.sh
+.github/workflows/opensuse-source-archive-fixture-lane.yml
+```
+
+That lane proves archive shape and reproducibility in a temporary workspace while keeping package build and publication claims blocked.
 
 Recommended next slice:
 
 ```text
-Add openSUSE source archive fixture lane that creates and inspects a temporary archive without running rpmbuild or osc build.
+Add openSUSE temporary RPM topdir handoff lane that stages the verified source archive without running rpmbuild or osc build.
 ```
-
-That future lane should prove archive shape and reproducibility in a temporary workspace while keeping package build and publication claims blocked.
 
 ## Validation
 

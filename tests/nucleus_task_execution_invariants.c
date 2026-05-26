@@ -139,6 +139,24 @@ static int nucleus_task_execution_requires_effect_gate_success(void) {
     return 0;
 }
 
+static int nucleus_task_execution_rejects_network_marked_preview_gate(void) {
+    latticra_nucleus_task_authority_summary_t authority;
+    latticra_nucleus_preview_t preview;
+    latticra_nucleus_task_request_t request;
+    latticra_nucleus_task_result_t result;
+    authority_ok(&authority);
+    preview = preview_for(LATTICRA_REQUEST_STATE_REPORT, LATTICRA_EFFECT_NONE);
+    preview.network_allowed = 1;
+    request = base_request(LATTICRA_NUCLEUS_TASK_STATE_REPORT, LATTICRA_NUCLEUS_TASK_EFFECT_NONE, &authority);
+    request.preview = &preview;
+    EXPECT_TRUE(latticra_nucleus_task_classify(&request, &result) == LATTICRA_STATUS_OK, "network marked preview status");
+    EXPECT_TRUE(result.record.policy == LATTICRA_NUCLEUS_TASK_POLICY_DENY, "network marked preview denied");
+    EXPECT_TRUE(result.record.denial == LATTICRA_NUCLEUS_TASK_DENIAL_EFFECT_BLOCKED, "network marked preview reason");
+    EXPECT_TRUE(result.record.network_allowed == 0, "network marked preview record remains denied");
+    EXPECT_TRUE(result.network_allowed == 0, "network marked preview result remains denied");
+    return 0;
+}
+
 static int nucleus_task_execution_requires_no_effect_flags(void) {
     latticra_nucleus_task_authority_summary_t authority;
     latticra_nucleus_task_request_t request;
@@ -359,6 +377,7 @@ int main(void) {
     if (nucleus_task_execution_preserves_preview_only_boundary() != 0) return 1;
     if (nucleus_task_execution_requires_authority_success() != 0) return 1;
     if (nucleus_task_execution_requires_effect_gate_success() != 0) return 1;
+    if (nucleus_task_execution_rejects_network_marked_preview_gate() != 0) return 1;
     if (nucleus_task_execution_requires_no_effect_flags() != 0) return 1;
     if (nucleus_task_execution_allows_state_report_preview_only() != 0) return 1;
     if (nucleus_task_execution_allows_transition_preview_only() != 0) return 1;

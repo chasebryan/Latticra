@@ -1263,11 +1263,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
     let _ = writeln!(
         out,
-        "stage=39-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract"
+        "stage=40-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract"
     );
     let _ = writeln!(
         out,
-        "previous_stage=38-prompt-evaluation-result-release-receipt-review-disposition-release-contract"
+        "previous_stage=39-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract"
     );
     let _ = writeln!(
         out,
@@ -2559,6 +2559,46 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(
         out,
         "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_stage=40-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_status=contract_only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_record_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_decision_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_published=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_signed=0"
+    );
+    let _ = writeln!(
+        out,
+        "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_contract=1"
     );
     let _ = writeln!(out, "requires_prompt_evaluation_result_contract=1");
     let _ = writeln!(

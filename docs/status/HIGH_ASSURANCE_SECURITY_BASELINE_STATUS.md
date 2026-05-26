@@ -34,6 +34,7 @@ memory_safety_roadmap_present=1
 zero_trust_runtime_boundary_required=1
 ssdf_secure_development_required=1
 cpg_operational_baseline_required=1
+supply_chain_security_baseline_present=1
 kev_release_review_required=1
 fips_crypto_boundary_required_before_production_crypto=1
 sbom_required_before_production_installer=1

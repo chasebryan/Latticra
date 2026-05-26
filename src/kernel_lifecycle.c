@@ -32,7 +32,7 @@ latticra_status_t latticra_kernel_lifecycle_default_request(
     latticra_kernel_lifecycle_request_t *request) {
     if (request == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     memset(request, 0, sizeof(*request));
-    request->target_state = LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY;
+    request->target_state = LATTICRA_KERNEL_STATE_PREEMPTION_READY;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
     request->max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
@@ -55,7 +55,8 @@ static int state_is_known(latticra_kernel_state_kind_t state) {
            state == LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY ||
            state == LATTICRA_KERNEL_STATE_RUN_QUEUE_READY ||
            state == LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY ||
-           state == LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY;
+           state == LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY ||
+           state == LATTICRA_KERNEL_STATE_PREEMPTION_READY;
 }
 
 static latticra_kernel_state_kind_t next_state_after(latticra_kernel_state_kind_t state) {
@@ -93,6 +94,8 @@ static latticra_kernel_state_kind_t next_state_after(latticra_kernel_state_kind_
         case LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY:
             return LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY;
         case LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY:
+            return LATTICRA_KERNEL_STATE_PREEMPTION_READY;
+        case LATTICRA_KERNEL_STATE_PREEMPTION_READY:
         default:
             return state;
     }

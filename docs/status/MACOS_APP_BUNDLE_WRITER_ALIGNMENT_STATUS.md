@@ -74,7 +74,7 @@ macos_app_bundle_writer_alignment: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner acceptance-denial transcript contract that records the closed acceptance gate without dispatching effects.
+Add a macOS reset/uninstall live-runner acceptance-denial review contract that reviews the closed gate transcript without enabling dispatch or deletion.
 ```
 
 ## Non-Claims

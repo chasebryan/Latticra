@@ -23,6 +23,7 @@ Latticra keeps a deliberately dense record trail: public status, foundation cont
 | Announcements and status history | [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md), [`status/README.md`](status/README.md) |
 | Security reporting and non-claims | [`../SECURITY.md`](../SECURITY.md), [`HIGH_ASSURANCE_SECURITY_BASELINE.md`](HIGH_ASSURANCE_SECURITY_BASELINE.md) |
 | Contribution rules | [`../CONTRIBUTING.md`](../CONTRIBUTING.md) |
+| Documentation maintenance rules | [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) |
 
 ## Documentation Levels
 
@@ -33,7 +34,7 @@ Latticra keeps a deliberately dense record trail: public status, foundation cont
 | Foundation rules | Evidence ladder, real-system contract, naming, authority, effect, and security rules | [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), [`REAL_SYSTEM_CONTRACT.md`](REAL_SYSTEM_CONTRACT.md), [`EVIDENCE_LADDER.md`](EVIDENCE_LADDER.md), [`NON_CLAIMS.md`](NON_CLAIMS.md) |
 | Architecture and language | C/C++ direction, Lat, LIR, L-UI, Nucleus, Runtime Boundary, and Seal contracts | [`architecture/LATTICRA_LANGUAGE_FOUNDATION.md`](architecture/LATTICRA_LANGUAGE_FOUNDATION.md), [`LANGUAGE_STRATEGY.md`](LANGUAGE_STRATEGY.md), [`RUNTIME_BOUNDARY_CONTRACT.md`](RUNTIME_BOUNDARY_CONTRACT.md), [`LATTICRA_SEAL_CONTRACT.md`](LATTICRA_SEAL_CONTRACT.md) |
 | Subsystem handbooks | Focused landing pages for durable subsystems | [`latticra-system-substrate/README.md`](latticra-system-substrate/README.md), [`latticra-seal/README.md`](latticra-seal/README.md), [`latticra/DOCUMENTATION_MAP.md`](latticra/DOCUMENTATION_MAP.md) |
-| Installer and platform lanes | Panel, macOS, Fedora, Ubuntu, Debian, FreeBSD, OpenBSD, openSUSE, and local package records | [`../installer/README.md`](../installer/README.md), [`../installer/docs/README.md`](../installer/docs/README.md), [`FEDORA_DEVELOPER_WORKFLOW.md`](FEDORA_DEVELOPER_WORKFLOW.md), [`UBUNTU_DEVELOPER_WORKFLOW.md`](UBUNTU_DEVELOPER_WORKFLOW.md), [`DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md`](DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md), [`FREEBSD_PORT_STATIC_VALIDATION.md`](FREEBSD_PORT_STATIC_VALIDATION.md), [`OPENBSD_PORT_STATIC_VALIDATION.md`](OPENBSD_PORT_STATIC_VALIDATION.md), [`OPENSUSE_DEVELOPER_WORKFLOW.md`](OPENSUSE_DEVELOPER_WORKFLOW.md) |
+| Installer and platform lanes | Panel, macOS, Fedora, Ubuntu, Debian, FreeBSD, OpenBSD, openSUSE, and local package records | [`../installer/README.md`](../installer/README.md), [`../installer/docs/README.md`](../installer/docs/README.md), [`FEDORA_DEVELOPER_WORKFLOW.md`](FEDORA_DEVELOPER_WORKFLOW.md), [`UBUNTU_DEVELOPER_WORKFLOW.md`](UBUNTU_DEVELOPER_WORKFLOW.md), [`DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md`](DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md), [`FREEBSD_PORT_STATIC_VALIDATION.md`](FREEBSD_PORT_STATIC_VALIDATION.md), [`OPENBSD_PORT_STATIC_VALIDATION.md`](OPENBSD_PORT_STATIC_VALIDATION.md), [`DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md`](DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md), [`OPENSUSE_DEVELOPER_WORKFLOW.md`](OPENSUSE_DEVELOPER_WORKFLOW.md) |
 | Project notes and strategy | Short narrative direction, upcoming work, strategy templates, and dated strategy records | [`project_notes/README.md`](project_notes/README.md), [`strategy/README.md`](strategy/README.md) |
 
 ## Reader Routes
@@ -64,6 +65,7 @@ For packaging or platform work:
 
 ## Maintenance Rules
 
+- Use [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) before changing public entry points, estimates, status mirrors, static HTML summaries, platform posture, or non-claim wording.
 - Keep `README.md`, `STATUS.md`, `docs/status/CURRENT_STATUS.md`, and this hub aligned when public posture changes.
 - Keep `docs/status/README.md` and `docs/FOUNDATION_INDEX.md` as evidence-heavy indexes; keep this file as the reader route.
 - Update `docs/map.html` and related HTML pages when reader-facing estimates or dates change.

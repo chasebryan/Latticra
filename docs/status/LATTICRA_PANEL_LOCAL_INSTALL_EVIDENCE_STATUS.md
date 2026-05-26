@@ -61,6 +61,34 @@ ok: Latticra Panel launcher is available
 Latticra local install verification: ok
 ```
 
+## Current updater policy alignment
+
+The current verifier additionally requires the Panel-owned updater policy and non-launching updater status report:
+
+```text
+ok: updater config
+ok: updater policy
+ok: updater status report
+ok: updater status dry-run command
+ok: updater status apply command
+ok: updater status network fetch authority disabled
+ok: updater status apply mode
+```
+
+The updater remains a guarded local-checkout Panel lane:
+
+```text
+updater_panel_owned=1
+updater_policy_present=1
+updater_status_report_present=1
+updater_preview_command=updater dry-run
+updater_apply_command=updater apply
+updater_apply_mode=guarded-local-prefix-reinstall
+updater_network_fetch_authority=0
+updater_root_authority=0
+updater_system_mutation_authority=0
+```
+
 ## Seal report evidence
 
 ```text
@@ -98,6 +126,10 @@ latticra_local_prefix_present=1
 latticra_payload_tree_present=1
 latticra_receipts_present=1
 latticra_seal_report_generated=1
+updater_policy_present=1
+updater_status_report_present=1
+updater_network_fetch_authority=0
+updater_apply_mode=guarded-local-prefix-reinstall
 seal_report_only_mode=1
 network_authority=0
 runtime_enforcement_authority=0

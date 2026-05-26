@@ -124,7 +124,7 @@
         </article>
         <article>
           <span>final_state</span>
-          <strong>time-accounting-ready</strong>
+          <strong>preemption-ready</strong>
         </article>
         <article>
           <span>lifecycle_complete</span>
@@ -146,7 +146,7 @@
         <p class="eyebrow">Lifecycle Ladder</p>
         <h2>The sequence is explicit and bounded.</h2>
         <p>
-          The lifecycle runner can advance a local in-memory state object through an approved sequence ending at time-accounting-ready. That path is evidence, not scheduler execution.
+          The lifecycle runner can advance a local in-memory state object through an approved sequence ending at preemption-ready. That path is evidence, not scheduler execution.
         </p>
       </div>
       <div class="content-shell kernel-ladder-grid">
@@ -172,8 +172,8 @@
         </article>
         <article>
           <span>Target</span>
-          <h3>time-accounting-ready</h3>
-          <p>Reports the current lifecycle target while time reads, CPU usage writes, quota updates, scheduler credit updates, and preemption remain denied.</p>
+          <h3>preemption-ready</h3>
+          <p>Reports the current lifecycle target while time reads, preemption, dispatch, context switch, and run queue mutation remain denied.</p>
         </article>
       </div>
     </section>
@@ -194,7 +194,7 @@
           </div>
           <div role="row">
             <span role="cell">Controlled internal state</span>
-            <p role="cell">The lifecycle may report internal state changes such as a completed sequence to time-accounting-ready while preserving external_effect_performed=0.</p>
+            <p role="cell">The lifecycle may report internal state changes such as a completed sequence to preemption-ready while preserving external_effect_performed=0.</p>
           </div>
           <div role="row">
             <span role="cell">Denied now</span>
@@ -244,8 +244,9 @@ sh scripts/test-kernel-lifecycle-status-alignment.sh</code></pre>
         <a href="KERNEL_IMPLEMENTATION.md"><strong>Kernel seed</strong><span>Compiled kernel identity, report fields, no-effect posture, and denied boot/runtime behavior.</span></a>
         <a href="KERNEL_SUBSYSTEM_REGISTRY.md"><strong>Subsystem registry</strong><span>Boot, runtime, scheduler, memory, process, filesystem, network, device, and security metadata.</span></a>
         <a href="KERNEL_STATE_MACHINE.md"><strong>State machine</strong><span>Bounded in-memory state object, sequential step function, transition log, and report surface.</span></a>
-        <a href="KERNEL_LIFECYCLE_SEED.md"><strong>Lifecycle seed</strong><span>Approved sequence to time-accounting-ready with external effects denied.</span></a>
+        <a href="KERNEL_LIFECYCLE_SEED.md"><strong>Lifecycle seed</strong><span>Approved sequence to preemption-ready with external effects denied.</span></a>
         <a href="KERNEL_TIME_ACCOUNTING_SEED.md"><strong>Time accounting seed</strong><span>Candidate CPU charge metadata with clock, quota, and scheduler credit authority denied.</span></a>
+        <a href="KERNEL_PREEMPTION_SEED.md"><strong>Preemption seed</strong><span>Candidate preemption decision metadata with dispatch and context-switch authority denied.</span></a>
         <a href="KERNEL_CONTEXT_SWITCH_SEED.md"><strong>Context switch seed</strong><span>Candidate switch metadata with register, stack, and address-space authority denied.</span></a>
         <a href="KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md"><strong>Subsystem summary</strong><span>Lifecycle-to-registry summary and denied subsystem authority labels.</span></a>
         <a href="status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md"><strong>Kernel lifecycle status</strong><span>Status alignment, current evidence list, authority posture, rollback planning, and non-claims.</span></a>

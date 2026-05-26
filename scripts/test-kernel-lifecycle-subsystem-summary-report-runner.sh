@@ -34,6 +34,7 @@ cc $CFLAGS \
   src/kernel_run_queue.c \
   src/kernel_context_switch.c \
   src/kernel_time_accounting.c \
+  src/kernel_preemption.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -45,12 +46,12 @@ cc $CFLAGS \
 
 grep -Fq 'LATTICRA KERNEL LIFECYCLE SUBSYSTEM SUMMARY REPORT' "$report_txt"
 grep -Fq 'summary_status=summary-ready' "$report_txt"
-grep -Fq 'final_state=time-accounting-ready' "$report_txt"
+grep -Fq 'final_state=preemption-ready' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'registry_status=registry-ready' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
-grep -Fq 'lifecycle_step_count=16' "$report_txt"
-grep -Fq 'lifecycle_state_change_count=16' "$report_txt"
+grep -Fq 'lifecycle_step_count=17' "$report_txt"
+grep -Fq 'lifecycle_state_change_count=17' "$report_txt"
 grep -Fq 'lifecycle_state_mutated=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
 grep -Fq 'registry_no_effect=1' "$report_txt"
@@ -105,7 +106,7 @@ grep -Fq 'subsystem[0].name=boot' "$report_txt"
 grep -Fq 'subsystem[0].lifecycle_relation=boot-sequence-seeded' "$report_txt"
 grep -Fq 'subsystem[1].name=runtime' "$report_txt"
 grep -Fq 'subsystem[1].authority_status=runtime-entry-denied' "$report_txt"
-grep -Fq 'subsystem[2].lifecycle_relation=time-accounting-ready' "$report_txt"
+grep -Fq 'subsystem[2].lifecycle_relation=preemption-ready' "$report_txt"
 grep -Fq 'subsystem[2].authority_status=scheduler-execution-denied' "$report_txt"
 grep -Fq 'subsystem[3].lifecycle_relation=memory-map-ready' "$report_txt"
 grep -Fq 'subsystem[3].authority_status=memory-allocation-denied' "$report_txt"

@@ -67,6 +67,19 @@ Before submitting broader code or installer changes, run:
 make quality
 ```
 
+## Documentation changes
+
+Documentation changes should preserve reader-facing cohesion and current non-claims.
+
+Before changing public status, estimates, platform readiness, installer authority, security wording, subsystem status, or top-level navigation, read:
+
+```text
+docs/README.md
+docs/DOCUMENTATION_MAINTENANCE.md
+```
+
+For documentation-only changes, run the narrowest relevant guards from `docs/DOCUMENTATION_MAINTENANCE.md` and avoid changing source behavior, installer authority, package authority, runtime authority, workflow permissions, or security posture.
+
 ## Security-sensitive changes
 
 Changes that affect runtime behavior, state mutation, external effects, command behavior, file behavior, network behavior, hardware behavior, boot behavior, recovery behavior, or security claims require explicit tests and documentation.

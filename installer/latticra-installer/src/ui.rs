@@ -21,7 +21,7 @@ const RUNNING_PROGRESS_MAX_WIDTH: f32 = 520.0;
 const RUNNING_RECENT_LOG_MAX_HEIGHT: f32 = 180.0;
 const RUNNING_MONITOR_WIDE_WIDTH: f32 = 980.0;
 const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
-    ("status", "Stage-39 status and authority summary"),
+    ("status", "Stage-40 status and authority summary"),
     ("context", "Stage-1 local context-pack metadata"),
     ("runtime", "Stage-2 runtime-profile metadata"),
     ("plan", "Stage-3 prompt-plan workbench metadata"),
@@ -135,6 +135,10 @@ const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
     (
         "prompt-evaluation-result-release-receipt-review-disposition-release-receipt",
         "Stage-39 prompt-evaluation result release receipt review disposition release receipt contract",
+    ),
+    (
+        "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review",
+        "Stage-40 prompt-evaluation result release receipt review disposition release receipt review contract",
     ),
 ];
 
@@ -654,7 +658,7 @@ impl LatticraInstallerApp {
                     "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc profile hosted|panel|standalone|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
                 );
                 self.push_console(
-                    "nadia: use `nadia commands` for the full Stage-1 through Stage-39 command map",
+                    "nadia: use `nadia commands` for the full Stage-1 through Stage-40 command map",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -2027,6 +2031,12 @@ impl LatticraInstallerApp {
                     "stage=39 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract; prompt_evaluation_result_release_receipt_review_disposition_release_receipt_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_signed=0 runtime_invoked=0",
                 );
                 self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_stage=40-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract",
+                );
+                self.push_console(
+                    "stage=40 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract; prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_signed=0 runtime_invoked=0",
+                );
+                self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
                 );
             }
@@ -2588,6 +2598,31 @@ impl LatticraInstallerApp {
                 );
                 self.push_console(
                     "requires_prompt_evaluation_result_release_receipt_review_disposition_release_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract=1",
+                );
+            }
+            ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review"]
+            | ["nadia", "evaluation-result-release-receipt-review-disposition-release-receipt-review"]
+            | ["nadia", "prompt-result-release-receipt-review-disposition-release-receipt-review"]
+            | ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract"] =>
+            {
+                self.push_console(
+                    "nadia_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review=stage-40-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract",
+                );
+                self.push_console(
+                    "panel_command=nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console(
+                    "installed_cli=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_status=contract_only prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_record_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_decision_recorded=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_findings_recorded=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_contract=1",
                 );
             }
             ["nadia", "inference-readiness"]
@@ -3187,7 +3222,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-39 prompt-evaluation-result-release-receipt-review-disposition-release-receipt contract with metadata-only Console surfaces.",
+            "Stage-40 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,

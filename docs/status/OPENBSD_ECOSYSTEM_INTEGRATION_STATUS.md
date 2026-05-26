@@ -14,6 +14,11 @@ This is an ecosystem integration checkpoint, not a production readiness claim.
 ```text
 openbsd_port_draft_present=1
 openbsd_port_static_validation_present=1
+debian_freebsd_openbsd_source_archive_contract_present=1
+source_archive_policy_recorded=1
+source_archive_created=0
+source_archive_sha256_recorded=0
+openbsd_distinfo_created=0
 openbsd_ports_tree_submission_claimed=0
 openbsd_ports_review_thread_claimed=0
 openbsd_maintainer_acceptance_claimed=0
@@ -32,12 +37,15 @@ root_installer_ready=0
 
 ```text
 docs/OPENBSD_PORT_STATIC_VALIDATION.md
+docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md
 packaging/openbsd/README.md
 packaging/openbsd/Makefile
 packaging/openbsd/pkg/DESCR
 packaging/openbsd/pkg/PLIST
 scripts/test-openbsd-port-static-validation.sh
+scripts/test-debian-freebsd-openbsd-source-archive-contract.sh
 .github/workflows/openbsd-port-static-validation.yml
+.github/workflows/debian-freebsd-openbsd-source-archive-contract.yml
 ```
 
 ## Current Boundary
@@ -45,6 +53,8 @@ scripts/test-openbsd-port-static-validation.sh
 The OpenBSD lane does not publish a package, submit to the OpenBSD ports tree, claim ports@ review evidence, claim maintainer acceptance, claim bulk build success, claim portcheck success, enable package redistribution, install an rc.d script, change the kernel, add a privileged helper, grant network authority, or claim production readiness.
 
 The local ports metadata keeps `PERMIT_PACKAGE=No` and `LicenseRef-Latticra-TBD` until license, documentation, source archive, checksum, redistribution, and notice obligations are reviewed.
+
+The source archive contract records the expected `latticra-0.0.0.tar.gz` distfile and distinfo boundary while keeping archive creation, checksum acceptance, `distinfo`, `PERMIT_PACKAGE=Yes`, package artifacts, and build transcript promotion blocked.
 
 ## Next Recommended Lane
 

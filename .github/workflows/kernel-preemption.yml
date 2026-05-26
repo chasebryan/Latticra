@@ -1,0 +1,26 @@
+name: Kernel preemption
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  kernel-preemption:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - name: Run kernel preemption guard
+        run: sh scripts/test-kernel-preemption.sh
+
+      - name: Run kernel preemption report runner
+        run: sh scripts/test-kernel-preemption-report-runner.sh

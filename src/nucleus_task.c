@@ -489,6 +489,7 @@ static int preview_allows(const latticra_nucleus_preview_t *preview,
            preview->executed == 0 &&
            preview->mutation_allowed == 0 &&
            preview->server_interaction_allowed == 0 &&
+           preview->network_allowed == 0 &&
            preview->recovery_allowed == 0 &&
            preview->hardware_allowed == 0;
 }

@@ -2,7 +2,7 @@
 
 Status: mathematical planning-estimate rebase
 Date: 2026-05-26 CDT
-Scope: present public estimate table after the recent Seal status chain, Ubuntu local deb lane, macOS reset/uninstall contract lane, Nadia prompt-evaluation contracts, Lat/LIR evidence propagation, and current status/public-entry alignment. This record does not implement runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, production readiness, public-readiness promotion, security hardening, or runtime authority.
+Scope: present public estimate table after the recent Seal status chain, Ubuntu local deb lane, macOS reset/uninstall contract lane, Nadia prompt-evaluation contracts, Lat/LIR evidence propagation, kernel lifecycle time-accounting evidence, and current status/public-entry alignment. This record does not implement runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, production readiness, public-readiness promotion, security hardening, or runtime authority.
 
 ## Purpose
 
@@ -38,9 +38,9 @@ weight_total=100
 Weighted calculation:
 
 ```text
-weighted_sum=4432
+weighted_sum=4446
 weight_total=100
-overall_estimate=round(4432 / 100)=44
+overall_estimate=round(4446 / 100)=44
 ```
 
 ## Rebased Estimate Table
@@ -50,7 +50,7 @@ overall_estimate=round(4432 / 100)=44
 | Overall Latticra system | 39% | 44% |
 | Latticra Seal / local evidence layer | 34% | 39% |
 | Latticra Panel / local control surface | 28% | 31% |
-| Nadia offline AI foundation | 70% | 73% |
+| Nadia offline AI foundation | 70% | 74% |
 | L-UI parser / AST / string foundation | 87% | 87% |
 | Foundation documents and contracts | 92% | 94% |
 | Public documentation posture | 88% | 91% |
@@ -60,7 +60,7 @@ overall_estimate=round(4432 / 100)=44
 | C/C++ foundation direction | 18% | 22% |
 | Constrained C++ authority layer | 4% | 5% |
 | Nucleus real task execution | 11% | 12% |
-| Runtime / operating-system-universe direction | 19% | 23% |
+| Runtime / operating-system-universe direction | 19% | 24% |
 | Security-hardening implementation | 7% | 9% |
 | Public product readiness | 8% | 10% |
 

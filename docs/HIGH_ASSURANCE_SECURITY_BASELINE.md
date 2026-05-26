@@ -59,6 +59,7 @@ memory_safety_roadmap_present=1
 zero_trust_runtime_boundary_required=1
 ssdf_secure_development_required=1
 cpg_operational_baseline_required=1
+supply_chain_security_baseline_present=1
 kev_release_review_required=1
 fips_crypto_boundary_required_before_production_crypto=1
 sbom_required_before_production_installer=1
@@ -177,6 +178,7 @@ docs/DEFENSIVE_THREAT_MODEL_VALIDATION.md
 docs/DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md
 docs/RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md
 docs/MEMORY_SAFETY_ROADMAP.md
+docs/SUPPLY_CHAIN_SECURITY_BASELINE.md
 docs/security/C_CPP_SECURITY_PROFILE.md
 docs/security/C_ABI_BOUNDARY_POLICY.md
 scripts/test-quality-safety-guards.sh
@@ -184,6 +186,7 @@ scripts/test-defensive-threat-model-validation.sh
 scripts/test-defensive-threat-model-validation-refinement.sh
 scripts/test-high-assurance-security-baseline.sh
 scripts/test-memory-safety-roadmap.sh
+scripts/test-supply-chain-security-baseline.sh
 ```
 
 ## Non-Claims

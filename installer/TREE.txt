@@ -6,6 +6,7 @@ installer/
   configs/
     default.installer.toml
     lc-standalone.installer.toml
+    lc-standalone-local.installer.toml
     local-prefix-example.installer.toml
   docs/
     INSTALL_BUTTON_EXECUTION_MODEL.md

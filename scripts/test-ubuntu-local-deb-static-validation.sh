@@ -39,6 +39,7 @@ require_file docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md
 require_file docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md
 require_file docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
 require_file docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
+require_file docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
 require_file packaging/ubuntu/README.md
 require_file packaging/ubuntu/debian/control
 require_file packaging/ubuntu/debian/rules
@@ -75,6 +76,9 @@ require_contains 'trademark_notice_boundary_recorded=0' docs/UBUNTU_LOCAL_DEB_ST
 require_contains 'release_artifact_notice_requirements_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'release_artifact_notice_requirements_recorded=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'package_notice_promotion_gate_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'package_notice_promotion_gate_unblocked=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'deb_artifact_created=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'ubuntu_archive_ready=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'ubuntu_local_deb_static_validation: ok' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
@@ -99,6 +103,8 @@ require_contains 'trademark_notice_boundary_contract_present=1' packaging/ubuntu
 require_contains 'trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary' packaging/ubuntu/README.md
 require_contains 'release_artifact_notice_requirements_contract_present=1' packaging/ubuntu/README.md
 require_contains 'release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements' packaging/ubuntu/README.md
+require_contains 'package_notice_promotion_gate_contract_present=1' packaging/ubuntu/README.md
+require_contains 'package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites' packaging/ubuntu/README.md
 require_contains 'ppa_claimed=0' packaging/ubuntu/README.md
 require_contains 'ubuntu_archive_ready=0' packaging/ubuntu/README.md
 

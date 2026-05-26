@@ -20,8 +20,10 @@ packaging/opensuse/latticra.spec
 packaging/opensuse/latticra.changes
 docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
 scripts/test-opensuse-source-archive-reproducibility-contract.sh
+scripts/test-opensuse-source-archive-fixture-lane.sh
 ```
 
 ## Expected Draft Finding Classes
@@ -143,13 +145,21 @@ scripts/test-opensuse-source-archive-reproducibility-contract.sh
 .github/workflows/opensuse-source-archive-reproducibility-contract.yml
 ```
 
+Completed follow-on source archive fixture:
+
+```text
+docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+scripts/test-opensuse-source-archive-fixture-lane.sh
+.github/workflows/opensuse-source-archive-fixture-lane.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE source archive fixture lane that creates and inspects a temporary archive without running rpmbuild or osc build.
+Add openSUSE temporary RPM topdir handoff lane that stages the verified source archive without running rpmbuild or osc build.
 ```
 
-That future lane should prove archive shape and reproducibility in a temporary workspace while keeping package build and publication claims blocked.
+That future lane should prove the temporary source archive can be staged into RPM build input paths while keeping package build and publication claims blocked.
 
 ## Validation
 

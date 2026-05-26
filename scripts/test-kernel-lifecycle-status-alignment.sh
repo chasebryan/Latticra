@@ -27,6 +27,7 @@ require_file docs/status/CURRENT_STATUS.md
 require_file docs/FOUNDATION_INDEX.md
 require_file docs/KERNEL_LIFECYCLE_SEED.md
 require_file docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_file docs/KERNEL_PREEMPTION_SEED.md
 require_file docs/KERNEL_LIFECYCLE_ROLLBACK_PLAN.md
 require_file scripts/test-kernel-lifecycle.sh
 require_file scripts/test-kernel-lifecycle-report-runner.sh
@@ -60,6 +61,9 @@ require_file .github/workflows/kernel-context-switch.yml
 require_file scripts/test-kernel-time-accounting.sh
 require_file scripts/test-kernel-time-accounting-report-runner.sh
 require_file .github/workflows/kernel-time-accounting.yml
+require_file scripts/test-kernel-preemption.sh
+require_file scripts/test-kernel-preemption-report-runner.sh
+require_file .github/workflows/kernel-preemption.yml
 require_file scripts/test-kernel-process-table.sh
 require_file scripts/test-kernel-process-table-report-runner.sh
 require_file .github/workflows/kernel-process-table.yml
@@ -95,13 +99,15 @@ require_contains 'kernel context switch guard' docs/status/KERNEL_LIFECYCLE_EVID
 require_contains 'kernel context switch report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel time accounting guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel time accounting report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel preemption guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel preemption report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel process table guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel process table report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel syscall table guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel syscall table report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel lifecycle subsystem summary' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel lifecycle rollback plan' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
-require_contains 'final_state=time-accounting-ready' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'final_state=preemption-ready' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'external_effect_performed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'no_external_effect_chain=1' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'runtime_entry_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
@@ -160,6 +166,7 @@ require_contains '.github/workflows/kernel-scheduler-tick.yml' docs/status/KERNE
 require_contains '.github/workflows/kernel-run-queue.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-context-switch.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-time-accounting.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-preemption.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-process-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-syscall-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 
@@ -185,11 +192,13 @@ require_contains 'kernel context switch guard' docs/status/README.md
 require_contains 'kernel context switch report runner' docs/status/README.md
 require_contains 'kernel time accounting guard' docs/status/README.md
 require_contains 'kernel time accounting report runner' docs/status/README.md
+require_contains 'kernel preemption guard' docs/status/README.md
+require_contains 'kernel preemption report runner' docs/status/README.md
 require_contains 'kernel process table guard' docs/status/README.md
 require_contains 'kernel process table report runner' docs/status/README.md
 require_contains 'kernel syscall table guard' docs/status/README.md
 require_contains 'kernel syscall table report runner' docs/status/README.md
-require_contains 'final_state=time-accounting-ready' docs/status/README.md
+require_contains 'final_state=preemption-ready' docs/status/README.md
 require_contains 'external_effect_performed=0' docs/status/README.md
 require_contains 'runtime_entry_allowed=0' docs/status/README.md
 require_contains 'scheduler_execution_allowed=0' docs/status/README.md
@@ -236,17 +245,19 @@ require_contains 'scheduler_credit_update_allowed=0' docs/status/README.md
 require_contains 'process_wake_allowed=0' docs/status/README.md
 require_contains 'dma_allowed=0' docs/status/README.md
 require_contains 'hardware_effect_allowed=0' docs/status/README.md
-require_contains '| Kernel lifecycle evidence | No-effect kernel lifecycle path reaches `time-accounting-ready`' README.md
+require_contains '| Kernel lifecycle evidence | No-effect kernel lifecycle path reaches `preemption-ready`' README.md
 require_contains 'kernel_lifecycle_evidence_status_present=1' README.md
 require_contains 'kernel_run_queue_guard_present=1' README.md
 require_contains 'kernel_context_switch_guard_present=1' README.md
 require_contains 'kernel_time_accounting_guard_present=1' README.md
-require_contains 'final_state=time-accounting-ready' README.md
+require_contains 'kernel_preemption_guard_present=1' README.md
+require_contains 'final_state=preemption-ready' README.md
 require_contains 'runtime_entry_allowed=0' README.md
 require_contains 'run_queue_mutation_allowed=0' README.md
 require_contains 'dispatch_allowed=0' README.md
 require_contains 'context_switch_allowed=0' README.md
 require_contains 'time_accounting_allowed=0' README.md
+require_contains 'preemption_allowed=0' README.md
 require_contains 'hardware_effect_allowed=0' README.md
 require_contains 'docs/KERNEL_RUN_QUEUE_SEED.md' README.md
 require_contains 'docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md' README.md
@@ -281,6 +292,8 @@ require_contains 'sh scripts/test-kernel-context-switch.sh' .github/workflows/ke
 require_contains 'sh scripts/test-kernel-context-switch-report-runner.sh' .github/workflows/kernel-context-switch.yml
 require_contains 'sh scripts/test-kernel-time-accounting.sh' .github/workflows/kernel-time-accounting.yml
 require_contains 'sh scripts/test-kernel-time-accounting-report-runner.sh' .github/workflows/kernel-time-accounting.yml
+require_contains 'sh scripts/test-kernel-preemption.sh' .github/workflows/kernel-preemption.yml
+require_contains 'sh scripts/test-kernel-preemption-report-runner.sh' .github/workflows/kernel-preemption.yml
 require_contains 'sh scripts/test-kernel-process-table.sh' .github/workflows/kernel-process-table.yml
 require_contains 'sh scripts/test-kernel-process-table-report-runner.sh' .github/workflows/kernel-process-table.yml
 require_contains 'sh scripts/test-kernel-syscall-table.sh' .github/workflows/kernel-syscall-table.yml

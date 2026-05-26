@@ -35,6 +35,7 @@ config='installer/latticra-installer/src/config.rs'
 apply='installer/scripts/latticra-installer-apply.sh'
 default_config='installer/configs/default.installer.toml'
 standalone_config='installer/configs/lc-standalone.installer.toml'
+standalone_local_config='installer/configs/lc-standalone-local.installer.toml'
 local_config='installer/configs/local-prefix-example.installer.toml'
 manifest='installer/manifests/components.toml'
 foundation_doc='docs/LATTICRA_CONSOLE_FOUNDATION.md'
@@ -46,6 +47,7 @@ for file in \
   "$apply" \
   "$default_config" \
   "$standalone_config" \
+  "$standalone_local_config" \
   "$local_config" \
   "$manifest" \
   "$foundation_doc" \
@@ -79,6 +81,16 @@ require_contains 'panel_embedded_console = false' "$standalone_config"
 require_contains 'allow_external_host_commands = false' "$standalone_config"
 require_contains 'build_gui_installer = false' "$standalone_config"
 require_contains 'install_desktop_entry = false' "$standalone_config"
+require_contains 'profile = "lc_standalone"' "$standalone_local_config"
+require_contains 'profile = "standalone"' "$standalone_local_config"
+require_contains 'install_profile = "lc-standalone-install-v0"' "$standalone_local_config"
+require_contains 'install_mode = "metadata-only-standalone-console"' "$standalone_local_config"
+require_contains 'dry_run = false' "$standalone_local_config"
+require_contains 'allow_host_mutation = true' "$standalone_local_config"
+require_contains 'allow_network_effect = false' "$standalone_local_config"
+require_contains 'panel_embedded_console = false' "$standalone_local_config"
+require_contains 'build_gui_installer = false' "$standalone_local_config"
+require_contains 'install_desktop_entry = false' "$standalone_local_config"
 require_contains '[lc.install]' "$local_config"
 require_contains 'install_user_wrapper = true' "$local_config"
 require_contains 'LC_INSTALL_PROFILE=$(cfg_section lc.install install_profile lc-panel-install-v0)' "$apply"
@@ -97,9 +109,11 @@ require_contains 'LC install metadata records config/share paths and the standal
 require_contains 'share/latticra/lc/install/config.toml' "$foundation_doc"
 require_contains 'lc.install.command_wrapper' "$foundation_doc"
 require_contains 'installer/configs/lc-standalone.installer.toml' "$foundation_doc"
+require_contains 'installer/configs/lc-standalone-local.installer.toml' "$foundation_doc"
 require_contains 'lc-standalone-install-v0' "$foundation_doc"
 require_contains 'sh ./scripts/test-latticra-panel-lc-install-config.sh' Makefile
 require_contains 'lc-standalone-dry-run' installer/Makefile
+require_contains 'lc-standalone-local' installer/Makefile
 require_contains 'Validate Latticra Panel LC install configuration' "$workflow"
 
 tmp="$(mktemp -d "${TMPDIR:-/tmp}/latticra-panel-lc-install-config-test.XXXXXX")"

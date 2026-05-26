@@ -84,7 +84,7 @@ require_contains 'Nadia prompt evaluation result release receipt review disposit
 require_contains 'Stage-39: Prompt Evaluation Result Release Receipt Review Disposition Release Receipt Contract' "$foundation"
 require_contains 'latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt' "$installer_readme"
 require_contains 'prompt-evaluation result release receipt review disposition release receipt recording' "$installer_readme"
-require_contains 'Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, and Stage-39 console surfaces are metadata-only' "$ui_model"
+require_contains 'Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, and Stage-40 console surfaces are metadata-only' "$ui_model"
 require_contains 'Stage-39 prompt-evaluation result release receipt review disposition release receipt contract' "$components_manifest"
 require_contains 'prompt-evaluation result release receipt review disposition release receipt recording' "$components_manifest"
 require_contains 'prompt-evaluation-result-release-receipt-review-disposition-release-receipt metadata records future prompt evaluation result release receipt review disposition release receipt review requirements' "$components_manifest"
