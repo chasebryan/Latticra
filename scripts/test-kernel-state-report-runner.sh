@@ -30,6 +30,7 @@ cc $CFLAGS \
   src/kernel_interrupt_table.c \
   src/kernel_timer_source.c \
   src/kernel_scheduler_tick.c \
+  src/kernel_run_queue.c \
   src/kernel_state.c \
   tools/kernel_state_report.c \
   -o "$report_bin"

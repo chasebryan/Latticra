@@ -25,6 +25,7 @@ ubuntu_package_notice_inventory_present=1
 ubuntu_doc_payload_license_review_contract_present=1
 ubuntu_third_party_material_review_contract_present=1
 ubuntu_generated_artifact_notice_review_contract_present=1
+ubuntu_debian_copyright_notice_mapping_contract_present=1
 ubuntu_package_notice_review_contract_present=1
 ```
 
@@ -64,6 +65,8 @@ ubuntu_local_deb_build_transcript_unblocked=0
 ## Relationship To Notice Review
 
 The Ubuntu package notice review may not be promoted until the package has a reviewed `NOTICE` file decision. That decision may later require a file or record why no file is required, but this contract does not make that decision.
+
+The Debian copyright notice mapping review remains separate, but it must also be resolved before the Ubuntu package notice review can be promoted.
 
 This contract is scoped to the Ubuntu local deb draft. It is not a repository-wide release notice decision.
 

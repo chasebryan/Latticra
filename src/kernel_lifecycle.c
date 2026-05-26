@@ -32,7 +32,7 @@ latticra_status_t latticra_kernel_lifecycle_default_request(
     latticra_kernel_lifecycle_request_t *request) {
     if (request == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     memset(request, 0, sizeof(*request));
-    request->target_state = LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY;
+    request->target_state = LATTICRA_KERNEL_STATE_RUN_QUEUE_READY;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
     request->max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
@@ -52,7 +52,8 @@ static int state_is_known(latticra_kernel_state_kind_t state) {
            state == LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY ||
            state == LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY ||
            state == LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY ||
-           state == LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY;
+           state == LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY ||
+           state == LATTICRA_KERNEL_STATE_RUN_QUEUE_READY;
 }
 
 static latticra_kernel_state_kind_t next_state_after(latticra_kernel_state_kind_t state) {
@@ -84,6 +85,8 @@ static latticra_kernel_state_kind_t next_state_after(latticra_kernel_state_kind_
         case LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY:
             return LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY;
         case LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY:
+            return LATTICRA_KERNEL_STATE_RUN_QUEUE_READY;
+        case LATTICRA_KERNEL_STATE_RUN_QUEUE_READY:
         default:
             return state;
     }

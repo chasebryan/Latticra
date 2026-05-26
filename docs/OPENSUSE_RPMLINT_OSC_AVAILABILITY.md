@@ -44,13 +44,21 @@ It does not create package artifacts, create an Open Build Service project, publ
 
 ## Next Slice
 
+Completed follow-on static spec lane:
+
+```text
+docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+scripts/test-opensuse-rpmlint-static-spec-lane.sh
+.github/workflows/opensuse-rpmlint-static-spec-lane.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE rpmlint static spec lane for packaging/opensuse/latticra.spec with expected local-only draft findings classified separately.
+Add openSUSE rpmlint findings classification report.
 ```
 
-That future lane may run `rpmlint packaging/opensuse/latticra.spec` inside openSUSE and capture expected findings without requiring a clean lint result or promoting the package.
+That future lane may classify expected local-only draft findings separately from unexpected spec findings while keeping the package local-only.
 
 ## Validation
 

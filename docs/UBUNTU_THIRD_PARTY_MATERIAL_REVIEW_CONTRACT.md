@@ -23,6 +23,7 @@ ubuntu_package_notice_inventory_report_present=1
 ubuntu_doc_payload_license_review_contract_present=1
 ubuntu_generated_artifact_notice_review_contract_present=1
 ubuntu_notice_file_decision_contract_present=1
+ubuntu_debian_copyright_notice_mapping_contract_present=1
 ubuntu_package_notice_review_contract_present=1
 ```
 
@@ -71,6 +72,8 @@ The Ubuntu package notice review may not be promoted until third-party material 
 The generated-artifact notice review remains separate, but it must also be resolved before the Ubuntu package notice review can be promoted.
 
 The NOTICE file decision remains separate, but it must also be resolved before the Ubuntu package notice review can be promoted.
+
+The Debian copyright notice mapping remains separate, but it must also be resolved before the Ubuntu package notice review can be promoted.
 
 This contract is scoped to the current Ubuntu local deb draft payload. It is not a repository-wide third-party materials audit.
 

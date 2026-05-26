@@ -144,6 +144,26 @@ qemu_boot_execution_attempted=0
 bootable_os_ready=0
 ```
 
+## Boot artifact manifest template
+
+The no-effect boot artifact manifest template is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-template.sh
+```
+
+It records the future artifact metadata shape without creating images, invoking GRUB, installing kernels, writing initramfs files, or creating a boot artifact manifest.
+
+```text
+seabios_grub_boot_preview_boot_artifact_manifest_template_present=1
+boot_artifact_manifest_template_mode=no-effect-template
+boot_artifact_manifest_template_decision=blocked-template-only-no-artifact
+boot_artifact_manifest_ready=0
+boot_artifact_manifest_present=0
+disk_image_created=0
+bootable_os_ready=0
+```
+
 ## QEMU argv template
 
 The no-effect QEMU argv template is:
@@ -173,6 +193,7 @@ sh scripts/test-seabios-grub-boot-preview-evidence-contract.sh
 sh scripts/test-seabios-grub-boot-preview-preflight.sh
 sh scripts/test-seabios-grub-boot-preview-evidence-template.sh
 sh scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh
+sh scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-template.sh
 ```
 
 Expected output:

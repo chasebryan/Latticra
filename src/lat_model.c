@@ -76,6 +76,7 @@ static void model_default(latticra_lat_model_t *model) {
     model->execution_allowed = 0;
     model->mutation_allowed = 0;
     model->server_allowed = 0;
+    model->network_allowed = 0;
     model->recovery_allowed = 0;
     model->hardware_allowed = 0;
 }
@@ -124,12 +125,14 @@ static int no_effect_ok(
            parse_result->execution_allowed == 0 &&
            parse_result->mutation_allowed == 0 &&
            parse_result->server_allowed == 0 &&
+           parse_result->network_allowed == 0 &&
            parse_result->recovery_allowed == 0 &&
            parse_result->hardware_allowed == 0 &&
            semantic_result->no_effect == 1 &&
            semantic_result->execution_allowed == 0 &&
            semantic_result->mutation_allowed == 0 &&
            semantic_result->server_allowed == 0 &&
+           semantic_result->network_allowed == 0 &&
            semantic_result->recovery_allowed == 0 &&
            semantic_result->hardware_allowed == 0;
 }
@@ -146,6 +149,7 @@ static void copy_summary(
     model->execution_allowed = parse_result->execution_allowed;
     model->mutation_allowed = parse_result->mutation_allowed;
     model->server_allowed = parse_result->server_allowed;
+    model->network_allowed = parse_result->network_allowed;
     model->recovery_allowed = parse_result->recovery_allowed;
     model->hardware_allowed = parse_result->hardware_allowed;
 }
@@ -310,6 +314,7 @@ latticra_status_t latticra_lat_model_normalize_module(
     model->execution_allowed = 0;
     model->mutation_allowed = 0;
     model->server_allowed = 0;
+    model->network_allowed = 0;
     model->recovery_allowed = 0;
     model->hardware_allowed = 0;
     return LATTICRA_STATUS_OK;
@@ -411,6 +416,7 @@ latticra_status_t latticra_lat_model_report(
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
         "server_allowed=%d\n"
+        "network_allowed=%d\n"
         "recovery_allowed=%d\n"
         "hardware_allowed=%d\n"
         "span_start_offset=%zu\n"
@@ -453,6 +459,7 @@ latticra_status_t latticra_lat_model_report(
         model->execution_allowed,
         model->mutation_allowed,
         model->server_allowed,
+        model->network_allowed,
         model->recovery_allowed,
         model->hardware_allowed,
         model->span.start_offset,

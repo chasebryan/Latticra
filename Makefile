@@ -1,6 +1,6 @@
-.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly nadia-prompt-evaluation-input nadia-prompt-evaluation-runtime-handoff nadia-prompt-evaluation-invocation nadia-prompt-evaluation-result nadia-prompt-evaluation-result-review nadia-prompt-evaluation-result-disposition nadia-prompt-evaluation-result-release nadia-prompt-evaluation-result-release-receipt nadia-prompt-evaluation-result-release-receipt-review
+.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly nadia-prompt-evaluation-input nadia-prompt-evaluation-runtime-handoff nadia-prompt-evaluation-invocation nadia-prompt-evaluation-result nadia-prompt-evaluation-result-review nadia-prompt-evaluation-result-disposition nadia-prompt-evaluation-result-release nadia-prompt-evaluation-result-release-receipt nadia-prompt-evaluation-result-release-receipt-review nadia-prompt-evaluation-result-release-receipt-review-disposition
 
-.PHONY: quality quality-worktree quality-safety-guards quality-defensive-threat-model quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation boot-compatibility boot-preview-preflight boot-evidence-template boot-qemu-argv-template macos-reset-uninstall-live-denial-transcript nadia-commands
+.PHONY: quality quality-worktree quality-safety-guards quality-defensive-threat-model quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation boot-compatibility boot-preview-preflight boot-evidence-template boot-qemu-argv-template boot-artifact-template macos-reset-uninstall-live-denial-transcript macos-reset-uninstall-live-runner-denied-dispatch-transcript nadia-commands
 
 quality: quality-worktree quality-safety-guards quality-defensive-threat-model seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation
 
@@ -40,6 +40,7 @@ quality-installer-readiness:
 	sh ./scripts/test-seabios-grub-boot-preview-preflight.sh
 	sh ./scripts/test-seabios-grub-boot-preview-evidence-template.sh
 	sh ./scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh
+	sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-template.sh
 
 quality-nadia:
 	sh ./scripts/test-nadia-command-surface.sh
@@ -48,6 +49,7 @@ quality-nadia:
 	sh ./scripts/test-nadia-prompt-evaluation-result-release-contract-stage-34.sh
 	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-contract-stage-35.sh
 	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh
+	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.sh
 
 quality-c-foundation:
 	sh ./scripts/test-latticra-console-foundation.sh
@@ -56,6 +58,8 @@ quality-c-foundation:
 	sh ./scripts/test-kernel-timer-source-report-runner.sh
 	sh ./scripts/test-kernel-scheduler-tick.sh
 	sh ./scripts/test-kernel-scheduler-tick-report-runner.sh
+	sh ./scripts/test-kernel-run-queue.sh
+	sh ./scripts/test-kernel-run-queue-report-runner.sh
 
 boot-compatibility:
 	sh ./scripts/test-seabios-grub-compatibility-contract.sh
@@ -63,6 +67,7 @@ boot-compatibility:
 	sh ./scripts/test-seabios-grub-boot-preview-preflight.sh
 	sh ./scripts/test-seabios-grub-boot-preview-evidence-template.sh
 	sh ./scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh
+	sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-template.sh
 
 boot-preview-preflight:
 	sh ./scripts/seabios-grub-boot-preview-preflight.sh
@@ -73,8 +78,14 @@ boot-evidence-template:
 boot-qemu-argv-template:
 	sh ./scripts/seabios-grub-boot-preview-qemu-argv-template.sh
 
+boot-artifact-template:
+	sh ./scripts/seabios-grub-boot-preview-boot-artifact-manifest-template.sh
+
 macos-reset-uninstall-live-denial-transcript:
 	sh ./scripts/test-macos-reset-uninstall-live-denial-transcript-contract.sh
+
+macos-reset-uninstall-live-runner-denied-dispatch-transcript:
+	sh ./scripts/test-macos-reset-uninstall-live-runner-denied-dispatch-transcript-contract.sh
 
 nadia-commands:
 	sh ./scripts/test-nadia-command-surface.sh
@@ -192,6 +203,9 @@ nadia-prompt-evaluation-result-release-receipt:
 
 nadia-prompt-evaluation-result-release-receipt-review:
 	sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-contract.sh
+
+nadia-prompt-evaluation-result-release-receipt-review-disposition:
+	sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-contract.sh
 
 .PHONY: seal-policy-denials
 

@@ -269,6 +269,7 @@ typedef struct {
     char lat_lir_module_name[LATTICRA_LIR_NAME_MAX];
     latticra_lir_report_classification_t lat_lir_report_classification;
     latticra_lir_shape_kind_t lat_lir_shape_kind;
+    latticra_l_ui_source_span_t lat_lir_source_span;
     size_t lat_lir_module_node_count;
     size_t lat_lir_module_edge_count;
     size_t lat_lir_binding_count;

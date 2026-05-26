@@ -201,8 +201,21 @@ static int lat_model_preserves_no_effect_flags(void) {
     EXPECT_TRUE(model.execution_allowed == 0, "model execution flag");
     EXPECT_TRUE(model.mutation_allowed == 0, "model mutation flag");
     EXPECT_TRUE(model.server_allowed == 0, "model server flag");
+    EXPECT_TRUE(model.network_allowed == 0, "model network flag");
     EXPECT_TRUE(model.recovery_allowed == 0, "model recovery flag");
     EXPECT_TRUE(model.hardware_allowed == 0, "model hardware flag");
+    return 0;
+}
+
+static int lat_model_rejects_semantic_network_flag(void) {
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lat_model_t model;
+
+    EXPECT_TRUE(normalize_foundation(&parse, &semantic, &model) == 0, "network model baseline");
+    semantic.network_allowed = 1;
+    EXPECT_TRUE(latticra_lat_model_normalize_module(&parse, &semantic, &model) == LATTICRA_STATUS_OK, "network model status");
+    EXPECT_TRUE(model.error == LATTICRA_LAT_MODEL_NO_EFFECT_VIOLATION, "network model rejected");
     return 0;
 }
 
@@ -234,6 +247,7 @@ static int lat_model_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(one, "first_clause_name=origin\n") != 0, "model first clause name report");
     EXPECT_TRUE(strstr(one, "first_clause_operator==\n") != 0, "model first clause operator report");
     EXPECT_TRUE(strstr(one, "first_clause_value=0/0\n") != 0, "model first clause value report");
+    EXPECT_TRUE(strstr(one, "network_allowed=0\n") != 0, "model report network denied");
     return 0;
 }
 
@@ -257,6 +271,7 @@ int main(void) {
     if (lat_model_rejects_parse_failure() != 0) return 1;
     if (lat_model_rejects_semantic_failure() != 0) return 1;
     if (lat_model_preserves_no_effect_flags() != 0) return 1;
+    if (lat_model_rejects_semantic_network_flag() != 0) return 1;
     if (lat_model_report_is_deterministic() != 0) return 1;
     if (lat_model_report_rejects_small_buffer() != 0) return 1;
 

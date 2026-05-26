@@ -43,6 +43,78 @@ require_make_quality_prereq() {
     fail "Makefile quality target must include prerequisite: $prereq"
 }
 
+make_target_exists() {
+  makefile="$1"
+  target="$2"
+
+  [ -f "$makefile" ] ||
+    fail "missing makefile for target reference check: $makefile"
+
+  awk -v target="$target" '
+    /^[[:space:]]*#/ || /^[[:space:]]*$/ {
+      next
+    }
+    /^[^[:space:]][^=]*:/ {
+      line = $0
+      sub(/:.*/, "", line)
+      count = split(line, targets, /[[:space:]]+/)
+      for (i = 1; i <= count; i++) {
+        if (targets[i] == target) {
+          found = 1
+        }
+      }
+    }
+    END {
+      exit found ? 0 : 1
+    }
+  ' "$makefile"
+}
+
+check_workflow_make_refs() {
+  workflow="$1"
+  make_runs="$(grep -En '^[[:space:]]*run:[[:space:]]*make([[:space:]]|$)' "$workflow" || :)"
+
+  [ -n "$make_runs" ] || return 0
+
+  printf '%s\n' "$make_runs" |
+    while IFS= read -r make_run; do
+      command="${make_run#*:}"
+      command="${command#*run:}"
+      set -- $command
+
+      [ "${1:-}" = "make" ] || continue
+      shift || true
+
+      makefile="Makefile"
+      target=""
+      while [ "$#" -gt 0 ]; do
+        case "$1" in
+          -C)
+            [ "$#" -ge 2 ] ||
+              fail "$workflow has make -C without a directory"
+            makefile="$2/Makefile"
+            shift 2
+            ;;
+          --directory=*)
+            makefile="${1#--directory=}/Makefile"
+            shift
+            ;;
+          -*|*=*)
+            shift
+            ;;
+          *)
+            target="$1"
+            break
+            ;;
+        esac
+      done
+
+      [ -n "$target" ] || continue
+      make_target_exists "$makefile" "$target" ||
+        fail "$workflow references missing make target $target in $makefile"
+    done
+}
+
 check_no_conflict_markers() {
   if command -v rg >/dev/null 2>&1; then
     conflict_markers="$(rg --hidden -n -S '^(<<<<<<<|=======|>>>>>>>)' --glob '!.git' . || :)"
@@ -282,7 +354,7 @@ check_workflow() {
       .github/workflows/compat-linux.yml|.github/workflows/fedora-build-lane.yml|.github/workflows/fedora-rpmlint-availability.yml|.github/workflows/fedora-rpmlint-static-spec-lane.yml)
         unexpected_package_lines="$(printf '%s\n' "$package_manager_lines" | grep -Ev ':[[:space:]]*run:[[:space:]]*dnf[[:space:]]+-y[[:space:]]+install[[:space:]]+git[[:space:]]+tar[[:space:]]+gzip[[:space:]]*$' || :)"
         ;;
-      .github/workflows/opensuse-rpmlint-osc-availability.yml)
+      .github/workflows/opensuse-rpmlint-osc-availability.yml|.github/workflows/opensuse-rpmlint-static-spec-lane.yml)
         unexpected_package_lines="$(printf '%s\n' "$package_manager_lines" | grep -Ev ':[[:space:]]*run:[[:space:]]*zypper[[:space:]]+--non-interactive[[:space:]]+install[[:space:]]+git[[:space:]]+tar[[:space:]]+gzip[[:space:]]*$' || :)"
         ;;
       *)
@@ -334,6 +406,8 @@ check_workflow() {
     [ -f "$script_ref" ] ||
       fail "$workflow references missing guard script $script_ref"
   done
+
+  check_workflow_make_refs "$workflow"
 }
 
 check_makefile_script_refs() {
@@ -544,6 +618,7 @@ require_contains "sh ./scripts/test-seabios-grub-boot-preview-evidence-contract.
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-preflight.sh" "Makefile"
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-evidence-template.sh" "Makefile"
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh" "Makefile"
+require_contains "sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-template.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-denial-transcript:" "Makefile"
 require_contains "sh ./scripts/test-macos-reset-uninstall-live-denial-transcript-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-command-surface.sh" "Makefile"
@@ -552,15 +627,19 @@ require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-disposition-c
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-contract-stage-34.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-contract-stage-35.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh" "Makefile"
+require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.sh" "Makefile"
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-contract.sh" "Makefile"
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-contract.sh" "Makefile"
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-contract.sh" "Makefile"
+require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-console-foundation.sh" "Makefile"
 require_contains "sh ./scripts/test-cpp-authority-layer.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-timer-source.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-timer-source-report-runner.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-scheduler-tick.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-scheduler-tick-report-runner.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-run-queue.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-run-queue-report-runner.sh" "Makefile"
 require_contains "make quality" ".github/workflows/quality.yml"
 require_contains "uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" ".github/workflows/quality.yml"
 require_contains "persist-credentials: false" ".github/workflows/quality.yml"
@@ -575,6 +654,7 @@ require_contains "timeout-minutes: 10" ".github/workflows/quality-safety-guards.
 require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-contract-stage-34.sh" ".github/workflows/nadia-prompt-evaluation-result-release-contract-stage-34.yml"
 require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt-contract-stage-35.sh" ".github/workflows/nadia-prompt-evaluation-result-release-receipt-contract-stage-35.yml"
 require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh" ".github/workflows/nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.yml"
+require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.sh" ".github/workflows/nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.yml"
 require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" ".github/workflows/latticra-panel-installer.yml"
 require_contains "uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8" ".github/workflows/latticra-panel-installer.yml"
 require_contains "persist-credentials: false" ".github/workflows/latticra-panel-installer.yml"

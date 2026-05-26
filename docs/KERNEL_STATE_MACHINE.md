@@ -43,6 +43,7 @@ driver-catalog-ready
 interrupt-table-ready
 timer-source-ready
 scheduler-tick-ready
+run-queue-ready
 ```
 
 ## Controlled effect boundary

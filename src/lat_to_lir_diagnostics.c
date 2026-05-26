@@ -40,6 +40,7 @@ static void diagnostic_default(latticra_lat_to_lir_diagnostic_result_t *result) 
     result->no_effect = 1;
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
+    result->network_allowed = 0;
     result->evidence_level = 0u;
 }
 
@@ -129,10 +130,12 @@ latticra_status_t latticra_lat_to_lir_diagnostics_evaluate(
     result->no_effect = lowering->no_effect;
     result->execution_allowed = lowering->execution_allowed;
     result->mutation_allowed = lowering->mutation_allowed;
+    result->network_allowed = lowering->network_allowed;
     result->no_effect_issue = lowering->error == LATTICRA_LAT_TO_LIR_NO_EFFECT_VIOLATION ||
         lowering->no_effect != 1 ||
         lowering->execution_allowed != 0 ||
-        lowering->mutation_allowed != 0;
+        lowering->mutation_allowed != 0 ||
+        lowering->network_allowed != 0;
 
     if (module != 0) {
         result->lir_error = module->error;
@@ -190,6 +193,7 @@ latticra_status_t latticra_lat_to_lir_diagnostics_report(
         "no_effect=%d\n"
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
+        "network_allowed=%d\n"
         "evidence_level=%u\n",
         (int)result->status,
         latticra_lat_to_lir_diagnostic_class_label(result->diagnostic_class),
@@ -222,6 +226,7 @@ latticra_status_t latticra_lat_to_lir_diagnostics_report(
         result->no_effect,
         result->execution_allowed,
         result->mutation_allowed,
+        result->network_allowed,
         result->evidence_level);
     if (written < 0 || (size_t)written >= buffer_len) {
         buffer[0] = '\0';

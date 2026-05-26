@@ -112,6 +112,7 @@ static int lat_pipeline_report_refinement_reports_success_stage_summary(void) {
     EXPECT_STR_EQ(pipeline.first_clause_operator, "=", "first clause operator");
     EXPECT_STR_EQ(pipeline.first_clause_value, "0/0", "first clause value");
     EXPECT_TRUE(pipeline.no_effect_chain_ok == 1, "no-effect chain ok");
+    EXPECT_TRUE(pipeline.network_allowed == 0, "pipeline network denied");
     EXPECT_TRUE(pipeline.evidence_level == 2u, "success evidence level two");
 
     EXPECT_TRUE(latticra_lat_pipeline_report(&pipeline, report, sizeof(report)) == LATTICRA_STATUS_OK, "success report ok");
@@ -142,6 +143,7 @@ static int lat_pipeline_report_refinement_reports_success_stage_summary(void) {
     EXPECT_TRUE(strstr(report, "lowering_ok=1\n") != 0, "lowering ok report field");
     EXPECT_TRUE(strstr(report, "lir_ok=1\n") != 0, "lir ok report field");
     EXPECT_TRUE(strstr(report, "no_effect_chain_ok=1\n") != 0, "no-effect chain report field");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0, "network report field");
     EXPECT_TRUE(strstr(report, "evidence_level=2\n") != 0, "evidence level report field");
     return 0;
 }
