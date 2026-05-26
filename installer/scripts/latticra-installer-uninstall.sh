@@ -171,6 +171,7 @@ removed_count=0
 planned_count=0
 preserved_count=0
 missing_count=0
+preserved_unmanaged_targets=""
 
 if [ "$WRITE_RECEIPT" = true ]; then
   mkdir -p "$RECEIPT_DIR"
@@ -202,6 +203,17 @@ log() {
 
 phase() {
   log "PHASE $1/5: $2"
+}
+
+record_preserved_unmanaged_target() {
+  path="$1"
+
+  if [ -z "$preserved_unmanaged_targets" ]; then
+    preserved_unmanaged_targets="$path"
+  else
+    preserved_unmanaged_targets="$preserved_unmanaged_targets
+$path"
+  fi
 }
 
 remove_file() {
@@ -240,6 +252,7 @@ remove_managed_file() {
   else
     preserved_count=$((preserved_count + 1))
     log "[preserve] unmanaged $label: $path"
+    record_preserved_unmanaged_target "$path"
   fi
 }
 
@@ -300,6 +313,20 @@ log "removed_count=$removed_count"
 log "planned_count=$planned_count"
 log "preserved_count=$preserved_count"
 log "missing_count=$missing_count"
+if [ "$preserved_count" -gt 0 ]; then
+  if [ "$OPERATION" = uninstall ]; then
+    log "UNINSTALL_WARNING: preserved unmanaged targets may block the next install"
+  else
+    log "RESET_WARNING: preserved unmanaged targets may block the next install"
+  fi
+  log "PRESERVED_UNMANAGED_TARGETS_BEGIN"
+  printf '%s\n' "$preserved_unmanaged_targets" | while IFS= read -r preserved_path; do
+    [ -n "$preserved_path" ] || continue
+    log "  $preserved_path"
+  done
+  log "PRESERVED_UNMANAGED_TARGETS_END"
+  log "PRESERVED_UNMANAGED_TARGETS_ACTION=move-or-remove-manually-before-reinstall"
+fi
 if [ "$OPERATION" = uninstall ]; then
   log "UNINSTALL_RESULT: success mode=$MODE prefix=$PREFIX"
 else

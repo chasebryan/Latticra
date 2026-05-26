@@ -84,6 +84,10 @@ HOME="$HOME_DIR" sh "$SCRIPT" --prefix "$PREFIX" --receipt-dir "$RECEIPTS" > "$T
 
 require_contains 'mode=local-prefix-reset' "$TMP_DIR/reset.out"
 require_contains '[preserve] unmanaged command wrapper' "$TMP_DIR/reset.out"
+require_contains 'RESET_WARNING: preserved unmanaged targets may block the next install' "$TMP_DIR/reset.out"
+require_contains 'PRESERVED_UNMANAGED_TARGETS_BEGIN' "$TMP_DIR/reset.out"
+require_contains "$USER_BIN/latticra" "$TMP_DIR/reset.out"
+require_contains 'PRESERVED_UNMANAGED_TARGETS_ACTION=move-or-remove-manually-before-reinstall' "$TMP_DIR/reset.out"
 require_contains 'RESET_RESULT: success mode=local-prefix-reset' "$TMP_DIR/reset.out"
 require_absent "$PREFIX"
 require_exists "$USER_BIN/latticra"
@@ -99,6 +103,8 @@ require_absent "$ICON_DIR/latticra-installer.png"
 require_absent "$ICON_DIR/latticra-seal.png"
 require_contains 'mode=local-prefix-reset' "$RECEIPTS/latest-reset-receipt.txt"
 require_contains 'preserved_count=1' "$RECEIPTS/latest-reset-receipt.txt"
+require_contains 'RESET_WARNING: preserved unmanaged targets may block the next install' "$RECEIPTS/latest-reset-receipt.txt"
+require_contains "$USER_BIN/latticra" "$RECEIPTS/latest-reset-receipt.txt"
 
 HOME="$HOME_DIR" sh "$SCRIPT" --prefix "$PREFIX" --receipt-dir "$RECEIPTS" --operation uninstall --dry-run > "$TMP_DIR/uninstall-dry-run.out"
 
