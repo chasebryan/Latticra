@@ -12,6 +12,7 @@ const PANEL_BUILD: &str = "gui-workbench";
 const SEAL_PNG: &[u8] = include_bytes!("../assets/latticra-panel.png");
 const COMPACT_LAYOUT_WIDTH: f32 = 1400.0;
 const NARROW_LAYOUT_WIDTH: f32 = 900.0;
+const RIGHT_PANEL_MAX_WIDTH: f32 = 640.0;
 const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
     ("status", "Stage-36 status and authority summary"),
     ("context", "Stage-1 local context-pack metadata"),
@@ -4177,17 +4178,27 @@ impl LatticraInstallerApp {
                 .stroke(egui::Stroke::new(1.0, egui::Color32::from_rgb(45, 90, 130)))
                 .inner_margin(egui::Margin::same(8))
                 .show(ui, |ui| {
+                    let console_width = ui.available_width();
                     egui::ScrollArea::vertical()
                         .id_salt("latticra_embedded_console")
+                        .max_width(console_width)
                         .max_height(520.0)
                         .stick_to_bottom(true)
                         .show(ui, |ui| {
-                            ui.monospace("host@latticra-panel:~");
+                            ui.add(
+                                egui::Label::new(
+                                    egui::RichText::new("host@latticra-panel:~").monospace(),
+                                )
+                                .wrap(),
+                            );
                             for line in &self.console_lines {
-                                ui.label(
-                                    egui::RichText::new(line)
-                                        .monospace()
-                                        .color(egui::Color32::from_rgb(160, 230, 255)),
+                                ui.add(
+                                    egui::Label::new(
+                                        egui::RichText::new(line)
+                                            .monospace()
+                                            .color(egui::Color32::from_rgb(160, 230, 255)),
+                                    )
+                                    .wrap(),
                                 );
                             }
                         });
@@ -4260,18 +4271,25 @@ impl LatticraInstallerApp {
                 });
             });
 
+            let evidence_width = ui.available_width();
             egui::ScrollArea::vertical()
                 .id_salt("latticra_right_evidence")
+                .max_width(evidence_width)
                 .max_height(220.0)
                 .stick_to_bottom(!self.show_plan_over_log)
                 .show(ui, |ui| {
                     if self.show_plan_over_log {
-                        ui.monospace(&self.plan);
+                        ui.add(
+                            egui::Label::new(egui::RichText::new(&self.plan).monospace()).wrap(),
+                        );
                     } else if self.logs.is_empty() {
-                        ui.monospace("No engine log yet.");
+                        ui.add(
+                            egui::Label::new(egui::RichText::new("No engine log yet.").monospace())
+                                .wrap(),
+                        );
                     } else {
                         for line in &self.logs {
-                            ui.monospace(line);
+                            ui.add(egui::Label::new(egui::RichText::new(line).monospace()).wrap());
                         }
                     }
                 });
@@ -4333,6 +4351,7 @@ impl eframe::App for LatticraInstallerApp {
                 .resizable(true)
                 .default_size(560.0)
                 .min_size(360.0)
+                .max_size(RIGHT_PANEL_MAX_WIDTH)
                 .show_inside(root_ui, |ui| {
                     egui::ScrollArea::vertical()
                         .id_salt("right_console_scroll")
