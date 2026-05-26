@@ -22,10 +22,10 @@ require_contains() {
 zypper_install() {
   if [ "$(id -u)" -eq 0 ]; then
     zypper --non-interactive refresh
-    zypper --non-interactive install "$@"
+    zypper --non-interactive install --force-resolution "$@"
   elif command -v sudo >/dev/null 2>&1; then
     sudo zypper --non-interactive refresh
-    sudo zypper --non-interactive install "$@"
+    sudo zypper --non-interactive install --force-resolution "$@"
   else
     printf 'opensuse rpmlint osc availability: zypper install requires root or sudo\n' >&2
     exit 1
