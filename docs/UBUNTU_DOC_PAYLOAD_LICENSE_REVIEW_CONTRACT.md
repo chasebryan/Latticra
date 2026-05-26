@@ -21,6 +21,8 @@ license_policy_present=1
 license_migration_plan_present=1
 documentation_license_decision_present=0
 ubuntu_package_notice_inventory_present=1
+ubuntu_third_party_material_review_contract_present=1
+ubuntu_generated_artifact_notice_review_contract_present=1
 ubuntu_package_notice_review_contract_present=1
 ```
 
@@ -66,6 +68,10 @@ ubuntu_local_deb_build_transcript_unblocked=0
 ## Relationship To Notice Review
 
 The Ubuntu package notice review may not be promoted until this documentation payload license review is resolved and mapped into Debian copyright metadata.
+
+The third-party material review remains separate, but it must also be resolved before the Ubuntu package notice review can be promoted.
+
+The generated-artifact notice review remains separate, but it must also be resolved before the Ubuntu package notice review can be promoted.
 
 This contract is a guardrail for the current `README.md` package payload. It is not a general documentation relicensing decision for the whole repository.
 

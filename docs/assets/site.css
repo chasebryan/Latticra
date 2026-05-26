@@ -83,6 +83,10 @@ img {
   margin-inline: auto;
 }
 
+.header-inner {
+  width: min(1280px, calc(100% - 32px));
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -127,8 +131,8 @@ img {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 8px 16px;
-  font-size: 0.9rem;
+  gap: 8px 12px;
+  font-size: 0.86rem;
 }
 
 .nav-links a {
@@ -458,6 +462,22 @@ p:last-child {
   background-size: 540px auto;
 }
 
+.nadia-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.98) 0%, rgba(17, 24, 39, 0.9) 58%, rgba(17, 24, 39, 0.62) 100%),
+    url("latticra-seal-runtime-dry-run-native-demo.png");
+  background-position: center right;
+  background-size: cover;
+}
+
+.runtime-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.98) 0%, rgba(17, 24, 39, 0.9) 58%, rgba(17, 24, 39, 0.62) 100%),
+    url("latticra-seal-runtime-dry-run-native-demo.png");
+  background-position: center right;
+  background-size: cover;
+}
+
 .security-hero {
   background:
     linear-gradient(90deg, rgba(17, 24, 39, 0.97) 0%, rgba(17, 24, 39, 0.88) 58%, rgba(17, 24, 39, 0.64) 100%),
@@ -589,6 +609,8 @@ p:last-child {
 .seal-intro,
 .roadmap-intro,
 .workbench-intro,
+.nadia-intro,
+.runtime-intro,
 .security-intro,
 .validation-intro {
   display: grid;
@@ -603,6 +625,8 @@ p:last-child {
 .seal-intro p:not(.eyebrow),
 .roadmap-intro p:not(.eyebrow),
 .workbench-intro p:not(.eyebrow),
+.nadia-intro p:not(.eyebrow),
+.runtime-intro p:not(.eyebrow),
 .security-intro p:not(.eyebrow),
 .validation-intro p:not(.eyebrow) {
   color: var(--muted);
@@ -1120,6 +1144,184 @@ p:last-child {
 }
 
 .workbench-table p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.nadia-flow,
+.nadia-principle-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.nadia-flow {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.nadia-flow article {
+  min-width: 0;
+  min-height: 220px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--violet);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.nadia-flow span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--ochre);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.nadia-flow p,
+.nadia-principle-grid p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.nadia-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.nadia-table {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.nadia-table div {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.nadia-table div:last-child {
+  border-bottom: 0;
+}
+
+.nadia-table span {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.nadia-table p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.nadia-principle-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.nadia-principle-grid article {
+  min-width: 0;
+  min-height: 188px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--teal);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.runtime-flow,
+.runtime-matrix-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.runtime-flow {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.runtime-flow article {
+  min-width: 0;
+  min-height: 212px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--teal);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.runtime-flow span,
+.runtime-matrix-grid span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--ochre);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.runtime-flow p,
+.runtime-matrix-grid p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.runtime-matrix-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.runtime-matrix-grid article {
+  min-width: 0;
+  min-height: 194px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.matrix-allow {
+  border-top: 4px solid var(--green) !important;
+}
+
+.matrix-guarded {
+  border-top: 4px solid var(--ochre) !important;
+}
+
+.matrix-blocked {
+  border-top: 4px solid var(--red) !important;
+}
+
+.runtime-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.runtime-table {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.runtime-table div {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.runtime-table div:last-child {
+  border-bottom: 0;
+}
+
+.runtime-table span {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.runtime-table p {
   color: var(--muted);
   font-size: 0.94rem;
 }
@@ -2208,6 +2410,14 @@ p:last-child {
   .workbench-showcase,
   .workbench-surface-grid,
   .workbench-split,
+  .nadia-intro,
+  .nadia-flow,
+  .nadia-split,
+  .nadia-principle-grid,
+  .runtime-intro,
+  .runtime-flow,
+  .runtime-matrix-grid,
+  .runtime-split,
   .security-intro,
   .security-rule-grid,
   .security-scope-grid,
@@ -2277,6 +2487,7 @@ p:last-child {
   .evidence-rule-grid,
   .ladder-grid,
   .claim-language-grid,
+  .nadia-principle-grid,
   .validation-lane-grid {
     grid-template-columns: 1fr;
   }

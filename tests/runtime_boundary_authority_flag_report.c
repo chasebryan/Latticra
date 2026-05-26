@@ -32,6 +32,7 @@ int main(void) {
     CHECK_TEXT(report, "authority_execution_allowed=0");
     CHECK_TEXT(report, "authority_mutation_allowed=0");
     CHECK_TEXT(report, "authority_server_allowed=0");
+    CHECK_TEXT(report, "authority_network_allowed=0");
     CHECK_TEXT(report, "authority_recovery_allowed=0");
     CHECK_TEXT(report, "authority_hardware_allowed=0");
 

@@ -41,6 +41,7 @@ vfs-namespace-ready
 device-registry-ready
 driver-catalog-ready
 interrupt-table-ready
+timer-source-ready
 ```
 
 ## Controlled effect boundary

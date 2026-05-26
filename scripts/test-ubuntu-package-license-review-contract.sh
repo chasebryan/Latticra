@@ -26,6 +26,8 @@ require_file "$contract"
 require_file "$status"
 require_file docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md
 require_file docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 require_file LICENSE
 require_file docs/LICENSE_POLICY.md
@@ -54,6 +56,10 @@ require_contains 'ubuntu_package_notice_inventory_present=1' "$contract"
 require_contains 'ubuntu_package_notice_inventory_report_present=1' "$contract"
 require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$contract"
 require_contains 'ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision' "$contract"
+require_contains 'ubuntu_third_party_material_review_contract_present=1' "$contract"
+require_contains 'ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review' "$contract"
+require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' "$contract"
+require_contains 'ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review' "$contract"
 require_contains 'ubuntu_package_notice_review_contract_present=1' "$contract"
 require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' "$contract"
 require_contains 'ubuntu_package_license_review_unblocked=0' "$contract"
@@ -77,6 +83,10 @@ require_contains 'ubuntu_package_notice_inventory_present=1' "$status"
 require_contains 'ubuntu_package_notice_inventory_report_present=1' "$status"
 require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$status"
 require_contains 'ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision' "$status"
+require_contains 'ubuntu_third_party_material_review_contract_present=1' "$status"
+require_contains 'ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review' "$status"
+require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' "$status"
+require_contains 'ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review' "$status"
 require_contains 'ubuntu_package_notice_review_contract_present=1' "$status"
 require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' "$status"
 require_contains 'license_expression_candidate_recorded=1' "$status"

@@ -103,12 +103,55 @@ qemu_boot_execution_allowed_by_guard=0
 production_os_claim=0
 ```
 
+## Boot-preview preflight
+
+The no-effect boot-preview preflight is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-preflight.sh
+```
+
+It validates this fixture lane and reports local tool visibility without running QEMU, invoking GRUB, creating disk images, writing bootloader state, or recording boot evidence.
+
+```text
+seabios_grub_boot_preview_preflight_present=1
+preflight_mode=no-effect-report
+preflight_decision=blocked-fixture-only-no-boot-execution
+manifest_fixture_valid=1
+qemu_boot_execution_attempted=0
+grub_install_invoked=0
+disk_image_created=0
+host_mutation_performed=0
+```
+
+## Boot-preview evidence capture template
+
+The no-effect evidence capture template is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-evidence-template.sh
+```
+
+It prints the required future evidence bundle fields without running QEMU, invoking GRUB, creating disk images, or promoting any boot claim.
+
+```text
+seabios_grub_boot_preview_evidence_capture_template_present=1
+capture_template_mode=no-effect-template
+capture_template_decision=blocked-template-only-no-boot-execution
+capture_template_complete=0
+boot_evidence_record_ready=0
+qemu_boot_execution_attempted=0
+bootable_os_ready=0
+```
+
 ## Guard validation
 
 This preview lane is guarded by:
 
 ```sh
 sh scripts/test-seabios-grub-boot-preview-evidence-contract.sh
+sh scripts/test-seabios-grub-boot-preview-preflight.sh
+sh scripts/test-seabios-grub-boot-preview-evidence-template.sh
 ```
 
 Expected output:

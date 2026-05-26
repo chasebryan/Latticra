@@ -101,6 +101,8 @@ stage_4_macos_reset_uninstall_operator_intent_contract=present
 stage_4_macos_reset_uninstall_effect_authorization_contract=present
 stage_4_macos_reset_uninstall_evidence_bundle_contract=present
 stage_4_macos_reset_uninstall_live_implementation_plan_contract=present
+stage_4_macos_reset_uninstall_live_execution_preflight_contract=present
+stage_4_macos_reset_uninstall_live_denial_transcript_contract=present
 stage_5_codesigning_notarization_plan=future
 stage_6_controlled_os_integration_contracts=future
 ```
@@ -286,6 +288,22 @@ scripts/macos-reset-uninstall-live-implementation-plan-contract.sh
 docs/status/MACOS_RESET_UNINSTALL_LIVE_IMPLEMENTATION_PLAN_CONTRACT_STATUS.md
 ```
 
+The Stage 4 macOS reset/uninstall live-execution preflight contract is implemented by:
+
+```text
+docs/MACOS_RESET_UNINSTALL_LIVE_EXECUTION_PREFLIGHT_CONTRACT.md
+scripts/macos-reset-uninstall-live-execution-preflight-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_LIVE_EXECUTION_PREFLIGHT_CONTRACT_STATUS.md
+```
+
+The Stage 4 macOS reset/uninstall live-denial transcript contract is implemented by:
+
+```text
+docs/MACOS_RESET_UNINSTALL_LIVE_DENIAL_TRANSCRIPT_CONTRACT.md
+scripts/macos-reset-uninstall-live-denial-transcript-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_LIVE_DENIAL_TRANSCRIPT_CONTRACT_STATUS.md
+```
+
 ## App Bundle Direction
 
 The macOS Panel should be represented as a managed user-local app bundle:
@@ -415,8 +433,20 @@ Current recommended lane now present:
 Add a macOS reset/uninstall live-implementation plan contract that maps future effect-authorized execution phases while deletion remains disabled.
 ```
 
-## Next Recommended Lane
+Current preflight lane now present:
 
 ```text
 Add a macOS reset/uninstall live-execution preflight contract that proves the live implementation plan still cannot delete until all evidence gates are satisfied.
+```
+
+Current live-denial transcript lane now present:
+
+```text
+Add a macOS reset/uninstall live-denial transcript contract that records the failed preflight decision without deleting files.
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner interface contract that accepts only a passed preflight and keeps deletion disabled otherwise.
 ```

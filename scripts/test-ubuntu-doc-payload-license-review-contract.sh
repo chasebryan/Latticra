@@ -22,6 +22,8 @@ require_contains() {
 contract='docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md'
 status='docs/status/UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md'
 notice_contract='docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md'
+third_party_contract='docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md'
+generated_artifact_contract='docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md'
 license_contract='docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md'
 readiness='docs/UBUNTU_READINESS_PLAN.md'
 workflow='.github/workflows/ubuntu-doc-payload-license-review-contract.yml'
@@ -29,6 +31,8 @@ workflow='.github/workflows/ubuntu-doc-payload-license-review-contract.yml'
 require_file "$contract"
 require_file "$status"
 require_file "$notice_contract"
+require_file "$third_party_contract"
+require_file "$generated_artifact_contract"
 require_file "$license_contract"
 require_file "$readiness"
 require_file "$workflow"
@@ -45,6 +49,8 @@ require_contains 'doc_payload_source_present=1' "$contract"
 require_contains 'root_license_current=Apache-2.0' "$contract"
 require_contains 'documentation_license_decision_present=0' "$contract"
 require_contains 'ubuntu_package_notice_inventory_present=1' "$contract"
+require_contains 'ubuntu_third_party_material_review_contract_present=1' "$contract"
+require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' "$contract"
 require_contains 'candidate_doc_payload_license=Apache-2.0-or-docs-decision-pending' "$contract"
 require_contains 'candidate_doc_payload_license_applied_to_packaging=0' "$contract"
 require_contains 'doc_payload_license_decision_recorded=1' "$contract"
@@ -83,6 +89,8 @@ require_contains '.github/workflows/ubuntu-doc-payload-license-review-contract.y
 require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$notice_contract"
 require_contains 'ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision' "$notice_contract"
 require_contains 'doc_payload_license_decision_recorded=1' "$notice_contract"
+require_contains 'ubuntu_third_party_material_review_contract_present=1' "$third_party_contract"
+require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' "$generated_artifact_contract"
 require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$license_contract"
 require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$readiness"
 require_contains 'docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md' README.md

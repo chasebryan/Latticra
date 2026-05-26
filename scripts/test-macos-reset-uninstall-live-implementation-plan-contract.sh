@@ -85,7 +85,8 @@ require_contains 'live_implementation_plan_contract_decision=blocked-deletion-di
 require_contains 'live_implementation_plan_complete=0' "$doc"
 require_contains 'live_implementation_plan_execution_enabled=0' "$doc"
 require_contains 'live_implementation_plan_deletion_enabled=0' "$doc"
-require_contains 'live_implementation_plan_preflight_present=0' "$doc"
+require_contains 'live_implementation_plan_preflight_present=1' "$doc"
+require_contains 'live_execution_preflight_blocking=1' "$doc"
 require_contains 'reset_uninstall_live_run_allowed=0' "$doc"
 require_contains 'reset_uninstall_deletion_enabled=0' "$doc"
 require_contains 'macos_reset_uninstall_evidence_bundle_contract_present=1' "$doc"
@@ -105,7 +106,7 @@ require_contains 'directory_delete_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
 require_contains 'macos_reset_uninstall_live_implementation_plan_contract: ok' "$doc"
-require_contains 'Add a macOS reset/uninstall live-execution preflight contract' "$doc"
+require_contains 'Add a macOS reset/uninstall live-runner interface contract' "$doc"
 
 require_contains 'Status: no-effect reset/uninstall live-implementation plan contract status' "$status"
 require_contains 'macos_reset_uninstall_live_implementation_plan_contract_present=1' "$status"
@@ -114,7 +115,8 @@ require_contains 'live_implementation_plan_contract_state=defined-no-effect' "$s
 require_contains 'live_implementation_plan_complete=0' "$status"
 require_contains 'live_implementation_plan_execution_enabled=0' "$status"
 require_contains 'live_implementation_plan_deletion_enabled=0' "$status"
-require_contains 'live_implementation_plan_preflight_present=0' "$status"
+require_contains 'live_implementation_plan_preflight_present=1' "$status"
+require_contains 'live_execution_preflight_blocking=1' "$status"
 require_contains 'live_implementation_requires_evidence_bundle_complete=1' "$status"
 require_contains 'live_implementation_result_effect_authorized=not_met' "$status"
 require_contains 'live_implementation_phase_11_status=disabled' "$status"
@@ -134,6 +136,7 @@ require_contains 'live_implementation_plan_contract_state=defined-no-effect' "$t
 require_contains 'live_implementation_plan_execution_enabled=0' "$transfer_status"
 require_contains 'Add a macOS reset/uninstall live-implementation plan contract' "$transfer_status"
 require_contains 'Add a macOS reset/uninstall live-execution preflight contract' "$transfer_status"
+require_contains 'Add a macOS reset/uninstall live-denial transcript contract' "$transfer_status"
 
 require_contains 'macos_reset_uninstall_live_implementation_plan_contract_present=1' "$readme"
 require_contains 'sh scripts/macos-reset-uninstall-live-implementation-plan-contract.sh' "$readme"
@@ -149,7 +152,7 @@ require_contains 'live_implementation_plan_deletion_enabled=0' "$readme_status"
 
 require_contains 'macos_reset_uninstall_live_implementation_plan_contract_present=1' "$evidence_doc"
 require_contains 'macos_reset_uninstall_live_implementation_plan_contract_present=1' "$evidence_status"
-require_contains 'next_lane=macos-reset-uninstall-live-execution-preflight-contract' "$evidence_script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-interface-contract' "$evidence_script"
 require_contains 'macos_reset_uninstall_live_implementation_plan_contract_present=1' "$effect_status"
 require_contains 'macos_reset_uninstall_live_implementation_plan_contract_present=1' "$operator_status"
 require_contains 'macos_reset_uninstall_live_implementation_plan_contract_present=1' "$implementation_status"
@@ -166,7 +169,8 @@ require_contains 'live_implementation_plan_contract_decision=blocked-deletion-di
 require_contains 'live_implementation_plan_complete=0' "$script"
 require_contains 'live_implementation_plan_execution_enabled=0' "$script"
 require_contains 'live_implementation_plan_deletion_enabled=0' "$script"
-require_contains 'live_implementation_plan_preflight_present=0' "$script"
+require_contains 'live_implementation_plan_preflight_present=1' "$script"
+require_contains 'live_execution_preflight_blocking=1' "$script"
 require_contains 'reset_uninstall_live_run_allowed=0' "$script"
 require_contains 'reset_uninstall_deletion_enabled=0' "$script"
 require_contains 'reset_uninstall_evidence_bundle_complete=0' "$script"
@@ -180,6 +184,7 @@ require_contains 'live_implementation_condition_no_network=required' "$script"
 require_contains 'live_implementation_condition_no_root=required' "$script"
 require_contains 'live_implementation_result_evidence_bundle_complete=not_met' "$script"
 require_contains 'live_implementation_result_effect_authorized=not_met' "$script"
+require_contains 'live_implementation_result_live_execution_preflight=blocked-no-effect' "$script"
 require_contains 'live_implementation_result_no_network=met' "$script"
 require_contains 'live_implementation_result_no_root=met' "$script"
 require_contains 'live_implementation_phase_6_status=disabled' "$script"
@@ -188,7 +193,7 @@ require_contains 'file_delete_performed=0' "$script"
 require_contains 'directory_delete_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-live-execution-preflight-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-interface-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -203,7 +208,8 @@ require_output_contains "$output" 'live_implementation_plan_contract_decision=bl
 require_output_contains "$output" 'live_implementation_plan_complete=0'
 require_output_contains "$output" 'live_implementation_plan_execution_enabled=0'
 require_output_contains "$output" 'live_implementation_plan_deletion_enabled=0'
-require_output_contains "$output" 'live_implementation_plan_preflight_present=0'
+require_output_contains "$output" 'live_implementation_plan_preflight_present=1'
+require_output_contains "$output" 'live_execution_preflight_blocking=1'
 require_output_contains "$output" 'reset_uninstall_live_run_allowed=0'
 require_output_contains "$output" 'reset_uninstall_deletion_enabled=0'
 require_output_contains "$output" 'reset_uninstall_evidence_bundle_complete=0'
@@ -215,6 +221,7 @@ require_output_contains "$output" 'live_implementation_requires_evidence_bundle_
 require_output_contains "$output" 'live_implementation_requires_live_execution_preflight=1'
 require_output_contains "$output" 'live_implementation_result_evidence_bundle_complete=not_met'
 require_output_contains "$output" 'live_implementation_result_effect_authorized=not_met'
+require_output_contains "$output" 'live_implementation_result_live_execution_preflight=blocked-no-effect'
 require_output_contains "$output" 'live_implementation_phase_6_status=disabled'
 require_output_contains "$output" 'live_implementation_phase_11_status=disabled'
 require_output_contains "$output" 'macos_reset_uninstall_implemented=0'
@@ -223,7 +230,7 @@ require_output_contains "$output" 'directory_delete_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'network_performed=0'
 require_output_contains "$output" 'runtime_authority_granted=0'
-require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-execution-preflight-contract'
+require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-interface-contract'
 
 require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
 require_contains 'persist-credentials: false' "$workflow"

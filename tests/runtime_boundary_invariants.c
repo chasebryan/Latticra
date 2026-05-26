@@ -108,6 +108,17 @@ static int runtime_boundary_requires_no_effect_authority_flags(void) {
     return 0;
 }
 
+static int runtime_boundary_requires_network_denied_authority_flag(void) {
+    latticra_runtime_boundary_authority_summary_t authority = authority_ok();
+    latticra_runtime_boundary_request_t request;
+    latticra_runtime_boundary_result_t result;
+    authority.network_allowed = 1;
+    request = base_request(&authority);
+    EXPECT_TRUE(latticra_runtime_boundary_classify(&request, &result) == LATTICRA_STATUS_OK, "authority network flag status");
+    EXPECT_TRUE(result.record.denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_NON_NO_EFFECT_FLAGS, "authority network flag denied");
+    return 0;
+}
+
 static int runtime_boundary_denies_unknown_request(void) {
     latticra_runtime_boundary_authority_summary_t authority = authority_ok();
     latticra_runtime_boundary_request_t request = base_request(&authority);
@@ -247,6 +258,7 @@ int main(void) {
     if (runtime_boundary_requires_authority() != 0) return 1;
     if (runtime_boundary_requires_authority_success() != 0) return 1;
     if (runtime_boundary_requires_no_effect_authority_flags() != 0) return 1;
+    if (runtime_boundary_requires_network_denied_authority_flag() != 0) return 1;
     if (runtime_boundary_denies_unknown_request() != 0) return 1;
     if (runtime_boundary_denies_unknown_effect() != 0) return 1;
     if (runtime_boundary_requires_task_for_task_report() != 0) return 1;

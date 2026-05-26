@@ -13,6 +13,9 @@ live_plan="$tmpdir/live-plan.txt"
 live_receipts="$tmpdir/live-receipts"
 lc_report="$tmpdir/lc-install-config.txt"
 latticra_lc_report="$tmpdir/latticra-lc-install-config.txt"
+lc_help="$tmpdir/lc-help.txt"
+lc_man="$tmpdir/lc-man.txt"
+lc_usage="$tmpdir/lc-usage.txt"
 verify_log="$tmpdir/verify.log"
 lc_wrapper="latticra-console-custom"
 bad_config="$tmpdir/bad.installer.toml"
@@ -29,6 +32,7 @@ grep -Fq 'LC_INSTALL_PROFILE=$(cfg_section lc.install install_profile lc-panel-i
 grep -Fq 'LC install configuration cannot enable external host commands from the Panel' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc install-config category=core effect=none capability=lc.install.config' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'install-config|install)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_COMMAND_WRAPPER="$LC_INSTALL_COMMAND_WRAPPER"' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC command wrapper ($LC_COMMAND_WRAPPER)' installer/scripts/latticra-installer-verify.sh
 grep -Fq 'LC install-config registry command' installer/scripts/latticra-installer-verify.sh
 
@@ -110,6 +114,12 @@ grep -Fq "lc_install_command_wrapper=$lc_wrapper" "$live_receipts/latest-receipt
 
 HOME="$home" "$home/.local/bin/$lc_wrapper" install-config > "$lc_report"
 HOME="$home" "$home/.local/bin/latticra" lc install-config > "$latticra_lc_report"
+HOME="$home" "$home/.local/bin/$lc_wrapper" help > "$lc_help"
+HOME="$home" "$home/.local/bin/$lc_wrapper" man > "$lc_man"
+if HOME="$home" "$home/.local/bin/$lc_wrapper" not-a-command > "$lc_usage" 2>&1; then
+  echo "expected custom LC wrapper usage failure" >&2
+  exit 1
+fi
 
 grep -Fq 'LATTICRA CONSOLE INSTALL CONFIGURATION' "$lc_report"
 grep -Fq 'install_profile=lc-panel-install-v0' "$lc_report"
@@ -117,6 +127,14 @@ grep -Fq "command_wrapper=$lc_wrapper" "$lc_report"
 grep -Fq 'allow_external_host_commands=false' "$lc_report"
 grep -Fq 'host_process_launch_allowed=0' "$lc_report"
 cmp "$lc_report" "$latticra_lc_report" >/dev/null
+grep -Fq "command_wrapper=$lc_wrapper" "$lc_help"
+grep -Fq "  $lc_wrapper - Latticra Console metadata and operator-base surface" "$lc_man"
+grep -Fq "  $lc_wrapper install-config" "$lc_man"
+grep -Fq "usage: $lc_wrapper {status|help|man|boundary|commands|install-config" "$lc_usage"
+if grep -Fq '  latticra-lc install-config' "$lc_man"; then
+  echo "custom LC wrapper manpage still references the default wrapper command" >&2
+  exit 1
+fi
 
 mkdir -p \
   "$home/.local/share/applications" \

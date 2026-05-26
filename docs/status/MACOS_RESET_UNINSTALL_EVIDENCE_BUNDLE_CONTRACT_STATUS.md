@@ -15,10 +15,20 @@ The contract groups the implementation gate, operator intent, dry-run planner, l
 ```text
 macos_reset_uninstall_evidence_bundle_contract_present=1
 macos_reset_uninstall_live_implementation_plan_contract_present=1
+macos_reset_uninstall_live_execution_preflight_contract_present=1
+macos_reset_uninstall_live_denial_transcript_contract_present=1
+live_execution_preflight_contract_state=closed-no-effect
+live_execution_preflight_passed=0
+live_execution_preflight_blocking=1
+live_execution_preflight_deletion_enabled=0
+live_denial_transcript_contract_state=recorded-no-effect
+live_denial_transcript_recorded=1
+live_denial_transcript_stdout_only=1
+live_denial_transcript_file_write_enabled=0
 live_implementation_plan_contract_state=defined-no-effect
 live_implementation_plan_execution_enabled=0
 live_implementation_plan_deletion_enabled=0
-live_implementation_plan_preflight_present=0
+live_implementation_plan_preflight_present=1
 live_reset_uninstall_implementation_present=0
 macos_reset_uninstall_evidence_bundle_contract_guard_present=1
 evidence_bundle_contract_state=defined-no-effect
@@ -163,7 +173,7 @@ Add a macOS reset/uninstall evidence-bundle contract that groups implementation-
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-execution preflight contract that proves the live implementation plan still cannot delete until all evidence gates are satisfied.
+Add a macOS reset/uninstall live-runner interface contract that accepts only a passed preflight and keeps deletion disabled otherwise.
 ```
 
 Current completed lane:

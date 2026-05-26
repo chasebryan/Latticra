@@ -19,6 +19,13 @@
         } \
     } while (0)
 
+static void copy_text(char *dest, size_t dest_len, const char *src) {
+    if (dest_len == 0u) {
+        return;
+    }
+    (void)snprintf(dest, dest_len, "%s", src);
+}
+
 static latticra_nucleus_task_result_t allowed_task(latticra_nucleus_task_policy_t policy) {
     latticra_nucleus_task_result_t task;
     memset(&task, 0, sizeof(task));
@@ -42,7 +49,7 @@ static int accepted_no_effect_sequence_reports_plan(void) {
     tasks[2] = allowed_task(LATTICRA_NUCLEUS_TASK_POLICY_ALLOW_VALIDATION);
 
     memset(&request, 0, sizeof(request));
-    (void)strcpy(request.plan_id, "plan-alpha");
+    copy_text(request.plan_id, sizeof(request.plan_id), "plan-alpha");
     request.tasks = tasks;
     request.task_count = 3u;
 
@@ -78,7 +85,7 @@ static int empty_plan_reports_empty_plan_denial(void) {
     char report[LATTICRA_NUCLEUS_TASK_PLAN_REPORT_MAX];
 
     memset(&request, 0, sizeof(request));
-    (void)strcpy(request.plan_id, "plan-empty");
+    copy_text(request.plan_id, sizeof(request.plan_id), "plan-empty");
     request.tasks = 0;
     request.task_count = 0u;
 
@@ -110,7 +117,7 @@ static int future_gated_task_blocks_plan(void) {
     tasks[1].record.gate_state = LATTICRA_NUCLEUS_TASK_GATE_PLANNED;
 
     memset(&request, 0, sizeof(request));
-    (void)strcpy(request.plan_id, "plan-future-gate");
+    copy_text(request.plan_id, sizeof(request.plan_id), "plan-future-gate");
     request.tasks = tasks;
     request.task_count = 2u;
 
@@ -134,7 +141,7 @@ static int non_no_effect_flags_block_plan(void) {
     task.record.executed = 1;
 
     memset(&request, 0, sizeof(request));
-    (void)strcpy(request.plan_id, "plan-non-no-effect");
+    copy_text(request.plan_id, sizeof(request.plan_id), "plan-non-no-effect");
     request.tasks = &task;
     request.task_count = 1u;
 

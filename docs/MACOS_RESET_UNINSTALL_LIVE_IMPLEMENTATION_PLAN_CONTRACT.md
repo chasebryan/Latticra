@@ -24,6 +24,16 @@ The current live-implementation plan posture is:
 
 ```text
 macos_reset_uninstall_live_implementation_plan_contract_present=1
+macos_reset_uninstall_live_execution_preflight_contract_present=1
+macos_reset_uninstall_live_denial_transcript_contract_present=1
+live_execution_preflight_contract_state=closed-no-effect
+live_execution_preflight_passed=0
+live_execution_preflight_blocking=1
+live_execution_preflight_deletion_enabled=0
+live_denial_transcript_contract_state=recorded-no-effect
+live_denial_transcript_recorded=1
+live_denial_transcript_stdout_only=1
+live_denial_transcript_file_write_enabled=0
 live_implementation_plan_contract_state=defined-no-effect
 live_implementation_plan_contract_decision=blocked-deletion-disabled-and-evidence-incomplete
 live_implementation_plan_required=1
@@ -33,7 +43,7 @@ live_implementation_plan_deletion_enabled=0
 live_implementation_plan_receipt_write_enabled=0
 live_implementation_plan_absence_write_enabled=0
 live_implementation_plan_preflight_required=1
-live_implementation_plan_preflight_present=0
+live_implementation_plan_preflight_present=1
 reset_uninstall_live_run_allowed=0
 reset_uninstall_deletion_enabled=0
 managed_target_removal_allowed=0
@@ -124,7 +134,7 @@ live_implementation_result_effect_authorized=not_met
 live_implementation_result_implementation_gate_open=not_met
 live_implementation_result_operator_intent_evidence=not_met
 live_implementation_result_no_unmanaged_targets=not_evaluated_contract_only
-live_implementation_result_live_execution_preflight=missing
+live_implementation_result_live_execution_preflight=blocked-no-effect
 live_implementation_result_no_network=met
 live_implementation_result_no_root=met
 ```
@@ -225,5 +235,5 @@ Add a macOS reset/uninstall live-implementation plan contract that maps future e
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-execution preflight contract that proves the live implementation plan still cannot delete until all evidence gates are satisfied.
+Add a macOS reset/uninstall live-runner interface contract that accepts only a passed preflight and keeps deletion disabled otherwise.
 ```

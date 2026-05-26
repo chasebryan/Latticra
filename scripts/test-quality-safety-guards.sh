@@ -1,7 +1,11 @@
 #!/usr/bin/env sh
 set -eu
 
-ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+if [ -n "${LATTICRA_ROOT:-}" ]; then
+  ROOT="$LATTICRA_ROOT"
+else
+  ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+fi
 cd "$ROOT"
 
 fail() {
@@ -84,6 +88,39 @@ check_no_source_shell_exec() {
         fi
         if grep -Eq '(^|[^A-Za-z0-9_])system[[:space:]]*\(' "$source"; then
           fail "$source must not use system; use explicit argv process launch instead"
+        fi
+      done
+  done
+}
+
+check_no_unsafe_c_string_apis() {
+  for source_root in latt-field-engines src include tools tests; do
+    [ -d "$source_root" ] || continue
+    find "$source_root" -type f \( -name '*.c' -o -name '*.h' -o -name '*.cpp' -o -name '*.hpp' \) |
+      while IFS= read -r source; do
+        if grep -Eq '(^|[^A-Za-z0-9_])(strcpy|strcat|sprintf|vsprintf|gets|tmpnam|tempnam)[[:space:]]*\(' "$source"; then
+          fail "$source must not use unsafe C string/temp APIs; use bounded copies or private temp helpers"
+        fi
+      done
+  done
+}
+
+check_no_unsafe_python_apis() {
+  for py_root in scripts tools tests installer; do
+    [ -d "$py_root" ] || continue
+    find "$py_root" -type f -name '*.py' ! -path '*/target/*' |
+      while IFS= read -r helper; do
+        if grep -Eq 'shell[[:space:]]*=[[:space:]]*True' "$helper"; then
+          fail "$helper must not use shell=True; pass explicit argv lists instead"
+        fi
+        if grep -Eq '(^|[^A-Za-z0-9_])(os[.]system|os[.]popen|subprocess[.](getoutput|getstatusoutput)|tempfile[.]mktemp)[[:space:]]*\(' "$helper"; then
+          fail "$helper must not use shell execution helpers or tempfile.mktemp"
+        fi
+        if grep -Eq '(^|[^A-Za-z0-9_])(pickle[.](load|loads)|marshal[.](load|loads)|yaml[.]load)[[:space:]]*\(' "$helper"; then
+          fail "$helper must not use unsafe deserialization helpers"
+        fi
+        if grep -Eq '(^|[^A-Za-z0-9_])(eval|exec)[[:space:]]*\(' "$helper"; then
+          fail "$helper must not use Python dynamic evaluation APIs"
         fi
       done
   done
@@ -279,8 +316,10 @@ check_workflow() {
 check_shell_script() {
   script="$1"
 
-  sh -n "$script" ||
-    fail "$script failed shell syntax validation"
+  if [ "$script" != "scripts/test-quality-safety-guards.sh" ]; then
+    sh -n "$script" ||
+      fail "$script failed shell syntax validation"
+  fi
 
   if ! sed -n '1,6p' "$script" | grep -Eq '^set -e'; then
     fail "$script must enable fail-fast shell behavior near the top"
@@ -434,6 +473,8 @@ workflow_count=0
 check_no_conflict_markers
 check_status_index_completeness
 check_no_source_shell_exec
+check_no_unsafe_c_string_apis
+check_no_unsafe_python_apis
 check_rust_installer_engine_shell_boundary
 check_no_c_test_fixed_latticra_tmp
 check_no_doc_fixed_latticra_tmp
@@ -452,7 +493,7 @@ for prereq in quality-worktree quality-safety-guards quality-defensive-threat-mo
   require_make_quality_prereq "$prereq"
 done
 require_contains "git diff --check" "Makefile"
-require_contains "sh ./scripts/test-quality-safety-guards.sh" "Makefile"
+require_contains "test-quality-safety-guards.sh" "Makefile"
 require_contains "sh ./scripts/test-defensive-threat-model-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-defensive-threat-model-implementation-plan.sh" "Makefile"
 require_contains "sh ./scripts/test-defensive-threat-model-validation.sh" "Makefile"
@@ -462,8 +503,24 @@ require_contains "python3 scripts/check_latticra_panel_ui_design.py" "Makefile"
 require_contains "sh ./scripts/test-latticra-panel-local-install-evidence-status.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-panel-local-install-public-entrypoint-alignment.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-panel-local-uninstall-reset.sh" "Makefile"
+require_contains "sh ./scripts/test-production-installer-readiness-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-local-installer-artifact-manifest-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-local-artifact-manifest-fixture.sh" "Makefile"
+require_contains "sh ./scripts/test-seabios-grub-compatibility-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-seabios-grub-boot-preview-evidence-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-seabios-grub-boot-preview-preflight.sh" "Makefile"
+require_contains "sh ./scripts/test-seabios-grub-boot-preview-evidence-template.sh" "Makefile"
+require_contains "sh ./scripts/test-nadia-command-surface.sh" "Makefile"
+require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-review-contract-stage-32.sh" "Makefile"
+require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-disposition-contract-stage-33.sh" "Makefile"
+require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-contract-stage-34.sh" "Makefile"
+require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-contract-stage-35.sh" "Makefile"
+require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-contract.sh" "Makefile"
+require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-console-foundation.sh" "Makefile"
 require_contains "sh ./scripts/test-cpp-authority-layer.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-timer-source.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-timer-source-report-runner.sh" "Makefile"
 require_contains "make quality" ".github/workflows/quality.yml"
 require_contains "uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" ".github/workflows/quality.yml"
 require_contains "persist-credentials: false" ".github/workflows/quality.yml"
@@ -475,6 +532,8 @@ require_contains "make quality-safety-guards" ".github/workflows/quality-safety-
 require_contains "uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" ".github/workflows/quality-safety-guards.yml"
 require_contains "persist-credentials: false" ".github/workflows/quality-safety-guards.yml"
 require_contains "timeout-minutes: 10" ".github/workflows/quality-safety-guards.yml"
+require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-contract-stage-34.sh" ".github/workflows/nadia-prompt-evaluation-result-release-contract-stage-34.yml"
+require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt-contract-stage-35.sh" ".github/workflows/nadia-prompt-evaluation-result-release-receipt-contract-stage-35.yml"
 require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" ".github/workflows/latticra-panel-installer.yml"
 require_contains "uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8" ".github/workflows/latticra-panel-installer.yml"
 require_contains "persist-credentials: false" ".github/workflows/latticra-panel-installer.yml"

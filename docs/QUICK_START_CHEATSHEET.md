@@ -24,6 +24,16 @@ sudo dnf install -y rust cargo make gcc pkgconf-pkg-config \
   libxkbcommon-devel mesa-libGL-devel wayland-devel desktop-file-utils gtk3
 ```
 
+openSUSE prerequisites:
+
+```sh
+sudo zypper refresh
+sudo zypper install -y rust cargo make gcc pkgconf \
+  libX11-devel libxcb-devel libXcursor-devel libXrandr-devel libXi-devel \
+  libxkbcommon-devel Mesa-libGL-devel wayland-devel desktop-file-utils \
+  gtk3-tools
+```
+
 Clone and enter the repo:
 
 ```sh
@@ -57,6 +67,15 @@ sh scripts/test-ubuntu-build-lane.sh
 sh scripts/test-ubuntu-developer-workflow.sh
 sh scripts/test-ubuntu-package-notice-inventory.sh
 sh scripts/test-ubuntu-doc-payload-license-review-contract.sh
+sh scripts/test-ubuntu-third-party-material-review-contract.sh
+sh scripts/test-ubuntu-generated-artifact-notice-review-contract.sh
+```
+
+openSUSE no-effect validation:
+
+```sh
+sh scripts/test-opensuse-developer-workflow.sh
+sh scripts/test-opensuse-local-rpm-static-validation.sh
 ```
 
 ## Run
@@ -127,8 +146,11 @@ Use this only when normal uninstall/reset cannot clean up an old or broken user-
 
 These commands are intentionally exact. Do not replace them with broad paths such as `~/.local`, `/usr`, `/`, or unreviewed wildcards.
 
+If LC was installed with a custom `lc.install.command_wrapper`, set `LC_WRAPPER` to that command name; the default is `latticra-lc`.
+
 ```sh
 LATTICRA_PREFIX="${LATTICRA_PREFIX:-$HOME/.local/share/latticra}"
+LC_WRAPPER="${LC_WRAPPER:-latticra-lc}"
 
 rm -rf -- \
   "$LATTICRA_PREFIX" \
@@ -137,7 +159,7 @@ rm -rf -- \
 
 rm -f -- \
   "$HOME/.local/bin/latticra" \
-  "$HOME/.local/bin/latticra-lc" \
+  "$HOME/.local/bin/$LC_WRAPPER" \
   "$HOME/.local/bin/lat" \
   "$HOME/.local/bin/latticra-seal" \
   "$HOME/.local/bin/latticra-nadia" \
@@ -154,6 +176,7 @@ If those paths are root-owned because an earlier command was run with `sudo`, re
 
 ```sh
 LATTICRA_PREFIX="${LATTICRA_PREFIX:-$HOME/.local/share/latticra}"
+LC_WRAPPER="${LC_WRAPPER:-latticra-lc}"
 
 sudo rm -rf -- \
   "$LATTICRA_PREFIX" \
@@ -162,7 +185,7 @@ sudo rm -rf -- \
 
 sudo rm -f -- \
   "$HOME/.local/bin/latticra" \
-  "$HOME/.local/bin/latticra-lc" \
+  "$HOME/.local/bin/$LC_WRAPPER" \
   "$HOME/.local/bin/lat" \
   "$HOME/.local/bin/latticra-seal" \
   "$HOME/.local/bin/latticra-nadia" \

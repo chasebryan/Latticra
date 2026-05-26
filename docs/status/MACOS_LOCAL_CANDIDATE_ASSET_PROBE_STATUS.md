@@ -77,7 +77,7 @@ macos_local_candidate_asset_probe: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-execution preflight contract that proves the live implementation plan still cannot delete until all evidence gates are satisfied.
+Add a macOS reset/uninstall live-runner interface contract that accepts only a passed preflight and keeps deletion disabled otherwise.
 ```
 
 ## Non-Claims

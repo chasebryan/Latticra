@@ -29,6 +29,10 @@ ubuntu_package_notice_inventory_present=1
 ubuntu_package_notice_inventory_report_present=1
 ubuntu_doc_payload_license_review_contract_present=1
 ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
+ubuntu_third_party_material_review_contract_present=1
+ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review
+ubuntu_generated_artifact_notice_review_contract_present=1
+ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review
 ubuntu_package_notice_review_contract_present=1
 ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 license_expression_candidate_recorded=1
@@ -41,8 +45,19 @@ doc_payload_license_decision_recorded=0
 debian_copyright_doc_payload_mapping_reviewed=0
 third_party_material_inventory_recorded=1
 third_party_material_inventory_reviewed=0
+third_party_material_source_records_present=0
+third_party_material_license_records_present=0
+third_party_material_compatibility_notes_present=0
 generated_artifact_notice_reviewed=0
+generated_artifact_notice_requirements_recorded=0
+binary_payload_generation_path_reviewed=0
+doc_payload_generation_path_reviewed=0
+deb_artifact_notice_requirements_recorded=0
+changes_file_notice_requirements_recorded=0
+build_log_notice_requirements_recorded=0
+installed_payload_notice_requirements_recorded=0
 third_party_notice_reviewed=0
+third_party_notice_requirements_recorded=0
 notice_file_decision_recorded=0
 debian_copyright_notice_mapping_reviewed=0
 ubuntu_package_notice_review_unblocked=0
@@ -66,6 +81,8 @@ docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 docs/UBUNTU_LINTIAN_AVAILABILITY.md
 docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md
 docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md
+docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md
+docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
@@ -83,11 +100,15 @@ scripts/test-ubuntu-lintian-availability.sh
 scripts/ubuntu-package-notice-inventory.sh
 scripts/test-ubuntu-package-notice-inventory.sh
 scripts/test-ubuntu-doc-payload-license-review-contract.sh
+scripts/test-ubuntu-third-party-material-review-contract.sh
+scripts/test-ubuntu-generated-artifact-notice-review-contract.sh
 scripts/test-ubuntu-package-notice-review-contract.sh
 scripts/test-ubuntu-package-license-review-contract.sh
 scripts/test-ubuntu-local-deb-build-transcript-contract.sh
 .github/workflows/ubuntu-package-notice-inventory.yml
 .github/workflows/ubuntu-doc-payload-license-review-contract.yml
+.github/workflows/ubuntu-third-party-material-review-contract.yml
+.github/workflows/ubuntu-generated-artifact-notice-review-contract.yml
 .github/workflows/ubuntu-package-notice-review-contract.yml
 ```
 
@@ -112,10 +133,14 @@ The Ubuntu package license review contract now records the current source facts 
 
 The Ubuntu doc payload license review contract records that `README.md` is included in the local deb documentation payload while the repository documentation-license decision remains unresolved.
 
+The Ubuntu third-party material review contract records that source, license, compatibility, and notice-requirement records still need formal review before package notice promotion.
+
+The Ubuntu generated-artifact notice review contract records that generated-artifact notice requirements still need formal review before any deb artifact or build evidence can promote package notice status.
+
 The Ubuntu package notice inventory records the current local-deb draft payload facts without promoting the review. The Ubuntu package notice review contract records the unresolved documentation-license and notice obligations that must be settled before the package license review can be promoted.
 
 ## Next Recommended Lane
 
 ```text
-Review the Ubuntu doc payload license contract, then promote the Ubuntu package notice review only after documentation licensing, third-party notices, generated-artifact notices, and Debian copyright mapping are decided.
+Review the Ubuntu generated-artifact notice contract, then promote the Ubuntu package notice review only after documentation licensing, third-party notices, generated-artifact notices, and Debian copyright mapping are decided.
 ```

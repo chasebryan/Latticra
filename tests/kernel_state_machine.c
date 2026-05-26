@@ -149,13 +149,16 @@ static int sequential_steps_advance_ladder(void) {
     request.target_state = LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY;
     EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
         "driver catalog ready to interrupt table ready");
+    request.target_state = LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "interrupt table ready to timer source ready");
 
-    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY,
-        "machine reaches interrupt table ready");
-    EXPECT_TRUE(strcmp(machine.machine_status, "interrupt-table-ready") == 0,
-        "machine status interrupt table ready");
-    EXPECT_TRUE(machine.log_count == 11u,
-        "eleven transitions logged");
+    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY,
+        "machine reaches timer source ready");
+    EXPECT_TRUE(strcmp(machine.machine_status, "timer-source-ready") == 0,
+        "machine status timer source ready");
+    EXPECT_TRUE(machine.log_count == 12u,
+        "twelve transitions logged");
     EXPECT_TRUE(machine.external_effect_performed == 0,
         "sequence external effects absent");
     EXPECT_TRUE(machine.log[4].to_state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY,
@@ -172,6 +175,8 @@ static int sequential_steps_advance_ladder(void) {
         "log driver catalog ready");
     EXPECT_TRUE(machine.log[10].to_state == LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY,
         "log interrupt table ready");
+    EXPECT_TRUE(machine.log[11].to_state == LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY,
+        "log timer source ready");
     return 0;
 }
 

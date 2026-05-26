@@ -30,6 +30,7 @@ static void authority_ok(latticra_nucleus_task_authority_summary_t *authority) {
     authority->execution_allowed = 0;
     authority->mutation_allowed = 0;
     authority->server_allowed = 0;
+    authority->network_allowed = 0;
     authority->recovery_allowed = 0;
     authority->hardware_allowed = 0;
 }
@@ -90,6 +91,7 @@ static int accepted_report_has_alignment_labels(void) {
     EXPECT_TRUE(result.record.executed == 0, "accepted no execution");
     EXPECT_TRUE(result.record.mutation_allowed == 0, "accepted no mutation");
     EXPECT_TRUE(result.record.server_interaction_allowed == 0, "accepted no server");
+    EXPECT_TRUE(result.record.network_allowed == 0, "accepted no network");
     EXPECT_TRUE(result.record.recovery_allowed == 0, "accepted no recovery");
     EXPECT_TRUE(result.record.hardware_allowed == 0, "accepted no hardware");
 
@@ -98,6 +100,7 @@ static int accepted_report_has_alignment_labels(void) {
     EXPECT_TRUE(strstr(report, "no_effect_policy=preserved\n") != 0, "accepted no-effect policy emitted");
     EXPECT_TRUE(strstr(report, "representation_gate=language-representation-reviewed\n") != 0, "accepted representation gate emitted");
     EXPECT_TRUE(strstr(report, "executed=0\n") != 0, "accepted executed emitted");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0, "accepted network emitted");
     return 0;
 }
 

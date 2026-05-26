@@ -28,6 +28,8 @@ require_file docs/UBUNTU_LINTIAN_AVAILABILITY.md
 require_file docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md
 require_file docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_file packaging/ubuntu/README.md
@@ -47,6 +49,10 @@ require_contains 'license_expression_unresolved=1' "$contract"
 require_contains 'ubuntu_package_notice_inventory_present=1' "$contract"
 require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$contract"
 require_contains 'ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision' "$contract"
+require_contains 'ubuntu_third_party_material_review_contract_present=1' "$contract"
+require_contains 'ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review' "$contract"
+require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' "$contract"
+require_contains 'ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review' "$contract"
 require_contains 'dpkg_buildpackage_command_recorded=1' "$contract"
 require_contains 'deb_artifact_digest_recorded=1' "$contract"
 require_contains 'lintian_output_digest_recorded=1' "$contract"
@@ -75,6 +81,10 @@ require_contains 'ubuntu_package_license_review_status=blocked-pending-formal-re
 require_contains 'ubuntu_package_notice_inventory_present=1' "$status"
 require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$status"
 require_contains 'ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision' "$status"
+require_contains 'ubuntu_third_party_material_review_contract_present=1' "$status"
+require_contains 'ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review' "$status"
+require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' "$status"
+require_contains 'ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review' "$status"
 require_contains 'ubuntu_package_notice_review_contract_present=1' "$status"
 require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' "$status"
 require_contains 'packaging_license_expression_updated=0' "$status"

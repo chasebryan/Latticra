@@ -39,6 +39,8 @@ require_file tests/seal_signing_operation_invariants.c
 require_file scripts/test-latticra-seal-signing-operation-contract.sh
 require_file scripts/test-latticra-seal-signing-operation.sh
 require_file scripts/test-latticra-seal-signing-operation-status.sh
+require_file .github/workflows/latticra-seal-signing-operation-status.yml
+require_file .github/workflows/latticra-seal-key-handling-status.yml
 require_file README.md
 require_file STATUS.md
 require_file docs/status/README.md
@@ -46,6 +48,7 @@ require_file docs/status/CURRENT_STATUS.md
 require_file docs/FOUNDATION_INDEX.md
 require_file docs/project_notes/CURRENT_DIRECTION.md
 require_file docs/project_notes/UPCOMING_WORK.md
+require_file docs/project_notes/README.md
 
 require_contains 'Status: status record for Latticra Seal key-handling metadata' "$status_file"
 require_contains 'Source: local follow-up slice' "$status_file"
@@ -57,10 +60,19 @@ require_contains 'seal_key_handling_invariant_test_present=1' "$status_file"
 require_contains 'seal_key_handling_runner_present=1' "$status_file"
 require_contains 'seal_key_handling_metadata_present=1' "$status_file"
 require_contains 'seal_key_handling_status_present=1' "$status_file"
+require_contains 'seal_key_handling_status_runner_present=1' "$status_file"
+require_contains 'seal_key_handling_status_workflow_present=1' "$status_file"
 require_contains 'seal_key_material_contract_present=1' "$status_file"
 require_contains 'seal_signing_operation_contract_present=1' "$status_file"
 require_contains 'seal_signing_operation_implementation_present=1' "$status_file"
 require_contains 'seal_signing_operation_status_present=1' "$status_file"
+require_contains 'seal_signing_operation_status_runner_present=1' "$status_file"
+require_contains 'seal_signing_operation_status_workflow_present=1' "$status_file"
+require_contains 'key_handling_predecessor_signing_operation_status_present=1' "$status_file"
+require_contains 'readme_links_key_handling_status=1' "$status_file"
+require_contains 'root_status_mentions_key_handling_status=1' "$status_file"
+require_contains 'status_index_links_key_handling_status=1' "$status_file"
+require_contains 'foundation_index_links_key_handling_status=1' "$status_file"
 require_contains 'key_handling_profile=latticra-seal-key-handling/0.1' "$status_file"
 require_contains 'signing_operation_profile=latticra-seal-signing-operation/0.1' "$status_file"
 require_contains 'signer_invocation_profile=latticra-seal-signer-invocation/0.1' "$status_file"
@@ -93,30 +105,63 @@ require_contains 'host_write_performed=0' "$status_file"
 require_contains 'network_performed=0' "$status_file"
 require_contains 'mode=metadata-only' "$status_file"
 require_contains 'status=key-handling-metadata' "$status_file"
-require_contains 'bounded no-effect key parsing implementation' "$status_file"
+require_contains 'key_handling_status_added=1' "$status_file"
+require_contains 'public_key_parsing_added=0' "$status_file"
+require_contains 'key_material_loading_added=0' "$status_file"
+require_contains 'private_key_handling_added=0' "$status_file"
+require_contains 'key_generation_added=0' "$status_file"
+require_contains 'hardware_key_use_added=0' "$status_file"
+require_contains 'trust_store_behavior_added=0' "$status_file"
+require_contains 'revocation_lookup_added=0' "$status_file"
+require_contains 'signing_added=0' "$status_file"
+require_contains 'signature_verification_added=0' "$status_file"
+require_contains 'signer_invocation_behavior_added=0' "$status_file"
+require_contains 'signer_process_execution_added=0' "$status_file"
+require_contains 'object_sealing_added=0' "$status_file"
+require_contains 'runtime_handoff_execution_added=0' "$status_file"
+require_contains 'effect_execution_added=0' "$status_file"
+require_contains 'capability_enforcement_added=0' "$status_file"
+require_contains 'network_behavior_changed=0' "$status_file"
+require_contains 'host_behavior_changed=0' "$status_file"
+require_contains 'key-material status/workflow guard alignment' "$status_file"
+require_contains 'seal key-handling status: ok' "$status_file"
 
 require_contains 'SEAL_KEY_HANDLING_STATUS.md' README.md
 require_contains 'LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md' README.md
 require_contains 'LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md' README.md
 require_contains 'latticra_seal_key_handling_status_present=1' README.md
 require_contains 'latticra_seal_key_handling_metadata_present=1' README.md
+require_contains 'key-handling status record now ties that metadata-only checkpoint to the guarded signing-operation status predecessor' README.md
 require_contains 'latticra_seal_key_material_contract_present=1' README.md
 require_contains 'seal_key_handling_status_present=1' README.md
 require_contains 'seal_key_handling_metadata_present=1' README.md
 require_contains 'seal_key_material_contract_present=1' README.md
 require_contains 'Seal key-handling status/public-entry alignment' STATUS.md
+require_contains 'Seal key-handling predecessor status alignment' STATUS.md
 require_contains 'Seal key-material boundary contract' STATUS.md
 require_contains 'seal_key_handling_status_present=1' STATUS.md
+require_contains 'key_handling_predecessor_signing_operation_status_present=1' STATUS.md
 require_contains 'seal_key_material_contract_present=1' STATUS.md
 require_contains 'seal_key_handling_status_present=1' docs/status/README.md
+require_contains 'key_handling_predecessor_signing_operation_status_present=1' docs/status/README.md
 require_contains 'seal_key_material_contract_present=1' docs/status/README.md
 require_contains 'SEAL_KEY_HANDLING_STATUS.md' docs/status/README.md
 require_contains 'Latticra Seal key-handling status/public-entry alignment' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal key-handling predecessor status alignment' docs/status/CURRENT_STATUS.md
+require_contains 'key_handling_predecessor_signing_operation_status_present=1' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal key-material boundary contract' docs/status/CURRENT_STATUS.md
 require_contains 'SEAL_KEY_HANDLING_STATUS.md' docs/FOUNDATION_INDEX.md
+require_contains 'Latticra Seal key-handling predecessor status alignment' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal key-handling status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Latticra Seal key-handling predecessor status alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal key-material boundary contract' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Seal bounded no-effect key parsing implementation' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Latticra Seal key-handling predecessor status alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'docs/status/SEAL_KEY_HANDLING_STATUS.md' docs/project_notes/README.md
+require_contains 'docs/status/SEAL_SIGNING_OPERATION_STATUS.md' docs/project_notes/README.md
+require_contains 'sh scripts/test-latticra-seal-key-handling-status.sh' .github/workflows/latticra-seal-key-handling-status.yml
+
+sh scripts/test-latticra-seal-signing-operation-status.sh
 
 printf 'seal key-handling status: ok\n'

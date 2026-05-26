@@ -142,6 +142,7 @@ typedef struct {
     int execution_allowed;
     int mutation_allowed;
     int server_allowed;
+    int network_allowed;
     int recovery_allowed;
     int hardware_allowed;
 } latticra_nucleus_task_authority_summary_t;
@@ -189,6 +190,7 @@ typedef struct {
     int executed;
     int mutation_allowed;
     int server_interaction_allowed;
+    int network_allowed;
     int recovery_allowed;
     int hardware_allowed;
     unsigned int evidence_level;
@@ -202,6 +204,7 @@ typedef struct {
     int execution_allowed;
     int mutation_allowed;
     int server_allowed;
+    int network_allowed;
     int recovery_allowed;
     int hardware_allowed;
 } latticra_nucleus_task_result_t;

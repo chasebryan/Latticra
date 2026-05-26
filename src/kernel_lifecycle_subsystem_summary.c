@@ -46,6 +46,12 @@ static void seed_summary_result(
     result->interrupt_unmask_allowed = 0;
     result->interrupt_dispatch_allowed = 0;
     result->interrupt_ack_allowed = 0;
+    result->timer_tick_allowed = 0;
+    result->timer_arm_allowed = 0;
+    result->timer_disarm_allowed = 0;
+    result->scheduler_tick_allowed = 0;
+    result->preemption_allowed = 0;
+    result->time_read_allowed = 0;
     result->dma_allowed = 0;
     result->hardware_effect_allowed = 0;
     result->no_external_effect_chain = 1;
@@ -66,7 +72,7 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_default_request(
     if (status != LATTICRA_STATUS_OK) return status;
 
     request->lifecycle_request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
-    request->lifecycle_request.target_state = LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY;
+    request->lifecycle_request.target_state = LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY;
     request->lifecycle_request.max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
 }
@@ -113,6 +119,9 @@ static const char *lifecycle_relation_for(
         case LATTICRA_KERNEL_SUBSYSTEM_RUNTIME:
             return "runtime-not-entered";
         case LATTICRA_KERNEL_SUBSYSTEM_SCHEDULER:
+            if (state_at_or_after(final_state, LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY)) {
+                return "timer-source-ready";
+            }
             return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_SCHEDULER_READY) ?
                 "scheduler-ready-metadata" : "scheduler-not-ready";
         case LATTICRA_KERNEL_SUBSYSTEM_MEMORY:
@@ -243,6 +252,12 @@ static void finalize_summary(
     result->interrupt_unmask_allowed = 0;
     result->interrupt_dispatch_allowed = 0;
     result->interrupt_ack_allowed = 0;
+    result->timer_tick_allowed = 0;
+    result->timer_arm_allowed = 0;
+    result->timer_disarm_allowed = 0;
+    result->scheduler_tick_allowed = 0;
+    result->preemption_allowed = 0;
+    result->time_read_allowed = 0;
     result->dma_allowed = 0;
     result->hardware_effect_allowed = 0;
     result->no_external_effect_chain =
@@ -252,7 +267,7 @@ static void finalize_summary(
 
     summary_copy(result->summary_status, sizeof(result->summary_status),
         (result->lifecycle_complete == 1 &&
-         result->lifecycle.final_state == LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY &&
+         result->lifecycle.final_state == LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY &&
          result->registry_no_effect == 1 &&
          result->external_effect_performed == 0) ?
             "summary-ready" : "summary-incomplete");
@@ -361,6 +376,12 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         "interrupt_unmask_allowed=%d\n"
         "interrupt_dispatch_allowed=%d\n"
         "interrupt_ack_allowed=%d\n"
+        "timer_tick_allowed=%d\n"
+        "timer_arm_allowed=%d\n"
+        "timer_disarm_allowed=%d\n"
+        "scheduler_tick_allowed=%d\n"
+        "preemption_allowed=%d\n"
+        "time_read_allowed=%d\n"
         "dma_allowed=%d\n"
         "hardware_effect_allowed=%d\n"
         "no_external_effect_chain=%d\n"
@@ -399,6 +420,12 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         result->interrupt_unmask_allowed,
         result->interrupt_dispatch_allowed,
         result->interrupt_ack_allowed,
+        result->timer_tick_allowed,
+        result->timer_arm_allowed,
+        result->timer_disarm_allowed,
+        result->scheduler_tick_allowed,
+        result->preemption_allowed,
+        result->time_read_allowed,
         result->dma_allowed,
         result->hardware_effect_allowed,
         result->no_external_effect_chain,

@@ -34,7 +34,7 @@ The installer does not currently claim:
 1. Add signed release artifact ingestion.
 2. Add stronger manifest validation.
 3. Add Fedora package integration plan.
-4. Add VM validation mode.
-5. Fill the boot-preview evidence manifest with real QEMU artifact paths, serial logs, checksums, and recovery records only after the compatibility guard is satisfied.
+4. Use the boot-preview preflight report to classify local QEMU/GRUB readiness before any VM validation mode runs.
+5. Use the boot-preview evidence manifest and boot-preview evidence capture template to record future artifact paths, serial logs, checksums, QEMU argv records, and recovery evidence only after the compatibility guard is satisfied.
 6. Add failed-install recovery receipts.
 7. Add system-level installer only after explicit design review.

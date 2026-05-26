@@ -1,7 +1,7 @@
 # Latticra Strategy Index
 
 Status: active strategy index
-Last updated: 2026-05-25 22:46 CDT
+Last updated: 2026-05-26 00:34 CDT
 Scope: dated strategy records, mission alignment, review cadence, and quality expectations.
 
 ## Purpose
@@ -84,6 +84,18 @@ Latest Panel-guided local evaluation evidence capture plan:
 
 ```text
 2026-05-25-2246-cdt-panel-guided-local-evaluation-evidence-capture-plan.md
+```
+
+Latest Panel-guided local evaluation non-claim review template:
+
+```text
+2026-05-26-0019-cdt-panel-guided-local-evaluation-non-claim-review-template.md
+```
+
+Latest Panel-guided local evaluation public-entrypoint review template:
+
+```text
+2026-05-26-0034-cdt-panel-guided-local-evaluation-public-entrypoint-review-template.md
 ```
 
 Current operating rule:

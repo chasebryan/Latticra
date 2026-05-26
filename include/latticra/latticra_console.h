@@ -24,6 +24,7 @@ extern "C" {
 #define LATTICRA_CONSOLE_RECEIPT_PAYLOAD_SCHEMA_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_REPORT_MAX 12000u
+#define LATTICRA_CONSOLE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_SIGNATURE_REQUEST_BINDING_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_RECEIPT_REPORT_MAX 12000u
@@ -113,6 +114,7 @@ typedef struct {
     char receipt_payload_schema_status[LATTICRA_CONSOLE_LABEL_MAX];
     char receipt_payload_artifact_draft_status[LATTICRA_CONSOLE_LABEL_MAX];
     char receipt_payload_artifact_review_status[LATTICRA_CONSOLE_LABEL_MAX];
+    char receipt_payload_artifact_review_receipt_status[LATTICRA_CONSOLE_LABEL_MAX];
     char receipt_payload_materialization_plan_status[LATTICRA_CONSOLE_LABEL_MAX];
     char signature_request_binding_status[LATTICRA_CONSOLE_LABEL_MAX];
     char receipt_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
@@ -135,6 +137,7 @@ typedef struct {
     int receipt_payload_schema_present;
     int receipt_payload_artifact_draft_present;
     int receipt_payload_artifact_review_present;
+    int receipt_payload_artifact_review_receipt_present;
     int receipt_payload_materialization_plan_present;
     int signature_request_binding_present;
     int receipt_contract_present;
@@ -214,6 +217,10 @@ latticra_status_t latticra_console_receipt_payload_artifact_draft_report(
     size_t buffer_len);
 
 latticra_status_t latticra_console_receipt_payload_artifact_review_report(
+    char *buffer,
+    size_t buffer_len);
+
+latticra_status_t latticra_console_receipt_payload_artifact_review_receipt_report(
     char *buffer,
     size_t buffer_len);
 

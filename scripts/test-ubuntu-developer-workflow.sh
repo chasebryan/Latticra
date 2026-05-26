@@ -24,6 +24,8 @@ require_file docs/UBUNTU_READINESS_PLAN.md
 require_file docs/UBUNTU_LINTIAN_AVAILABILITY.md
 require_file docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md
 require_file docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
@@ -53,6 +55,10 @@ require_contains 'ubuntu_package_notice_inventory_present=1' docs/UBUNTU_READINE
 require_contains 'ubuntu_package_notice_inventory_report_present=1' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_doc_payload_license_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_third_party_material_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_package_notice_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_package_license_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
@@ -69,6 +75,8 @@ require_contains 'sh scripts/test-ubuntu-build-lane.sh' README.md
 require_contains 'docs/UBUNTU_LINTIAN_AVAILABILITY.md' README.md
 require_contains 'docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md' README.md
 require_contains 'docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md' README.md

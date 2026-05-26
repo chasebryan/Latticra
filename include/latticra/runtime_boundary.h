@@ -167,6 +167,7 @@ typedef struct {
     int execution_allowed;
     int mutation_allowed;
     int server_allowed;
+    int network_allowed;
     int recovery_allowed;
     int hardware_allowed;
 } latticra_runtime_boundary_authority_summary_t;
@@ -212,6 +213,7 @@ typedef struct {
     int task_executed;
     int task_mutation_allowed;
     int task_server_interaction_allowed;
+    int task_network_allowed;
     int task_recovery_allowed;
     int task_hardware_allowed;
     latticra_status_t render_status;
@@ -265,6 +267,18 @@ typedef struct {
     latticra_lat_source_span_t lat_pipeline_first_comment_span;
     latticra_lir_source_kind_t lat_lir_source_kind;
     size_t lat_lir_module_node_count;
+    int lat_lir_no_effect_chain_ok;
+    unsigned int lat_lir_evidence_level;
+    int lat_lir_no_effect;
+    int lat_lir_execution_allowed;
+    int lat_lir_mutation_allowed;
+    int lat_lir_server_allowed;
+    int lat_lir_recovery_allowed;
+    int lat_lir_hardware_allowed;
+    size_t lat_lir_contains_edge_count;
+    size_t lat_lir_binds_edge_count;
+    size_t lat_lir_annotates_edge_count;
+    size_t lat_lir_orders_before_edge_count;
     size_t lat_lir_transition_edge_count;
     int lat_lir_has_lat_state_nodes;
     int lat_lir_has_lat_transition_nodes;

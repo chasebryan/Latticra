@@ -1,7 +1,7 @@
 # Kernel Lifecycle Evidence Status
 
 Status: status alignment record
-Date: 2026-05-20 17:20 CDT
+Date: 2026-05-26 00:45 CDT
 Scope: public status alignment after the merged kernel lifecycle evidence sequence.
 
 ## Purpose
@@ -32,6 +32,8 @@ kernel driver catalog guard
 kernel driver catalog report runner
 kernel interrupt table guard
 kernel interrupt table report runner
+kernel timer source guard
+kernel timer source report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
@@ -44,7 +46,7 @@ kernel lifecycle rollback plan
 The lifecycle evidence can report a bounded in-memory path ending at:
 
 ```text
-final_state=interrupt-table-ready
+final_state=timer-source-ready
 ```
 
 The lifecycle report runner and subsystem summary keep the external-effect posture explicit:
@@ -82,6 +84,12 @@ interrupt_mask_allowed=0
 interrupt_unmask_allowed=0
 interrupt_dispatch_allowed=0
 interrupt_ack_allowed=0
+timer_tick_allowed=0
+timer_arm_allowed=0
+timer_disarm_allowed=0
+scheduler_tick_allowed=0
+preemption_allowed=0
+time_read_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0
 ```
@@ -156,6 +164,7 @@ Dedicated workflow lanes keep the kernel table guards visible:
 .github/workflows/kernel-device-registry.yml
 .github/workflows/kernel-driver-catalog.yml
 .github/workflows/kernel-interrupt-table.yml
+.github/workflows/kernel-timer-source.yml
 .github/workflows/kernel-process-table.yml
 .github/workflows/kernel-syscall-table.yml
 ```

@@ -19,14 +19,21 @@
         } \
     } while (0)
 
+static void copy_text(char *dest, size_t dest_len, const char *src) {
+    if (dest_len == 0u) {
+        return;
+    }
+    (void)snprintf(dest, dest_len, "%s", src);
+}
+
 static latticra_runtime_boundary_authority_summary_t ok_authority(void) {
     latticra_runtime_boundary_authority_summary_t authority;
     memset(&authority, 0, sizeof(authority));
     authority.status = LATTICRA_STATUS_OK;
-    strcpy(authority.status_label, "ok");
-    strcpy(authority.validator_label, "domain-matrix");
-    strcpy(authority.requested_effect_label, "none");
-    strcpy(authority.denial_reason, "ok");
+    copy_text(authority.status_label, sizeof(authority.status_label), "ok");
+    copy_text(authority.validator_label, sizeof(authority.validator_label), "domain-matrix");
+    copy_text(authority.requested_effect_label, sizeof(authority.requested_effect_label), "none");
+    copy_text(authority.denial_reason, sizeof(authority.denial_reason), "ok");
     authority.no_effect = 1;
     return authority;
 }
@@ -57,7 +64,7 @@ static int runtime_boundary_domain_matrix_reports_declarative_host_domain(void) 
     latticra_runtime_boundary_domain_matrix_result_t matrix;
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "domain-matrix-host");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "domain-matrix-host");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;
@@ -85,7 +92,7 @@ static int runtime_boundary_domain_matrix_reports_future_gated_process_domain(vo
     latticra_runtime_boundary_domain_matrix_result_t matrix;
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "domain-matrix-process");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "domain-matrix-process");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_LAT_EXECUTE;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_REQUIRES_FUTURE_GATE;
@@ -111,7 +118,7 @@ static int runtime_boundary_domain_matrix_reports_unknown_domain(void) {
     latticra_runtime_boundary_domain_matrix_result_t matrix;
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "domain-matrix-unknown");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "domain-matrix-unknown");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;

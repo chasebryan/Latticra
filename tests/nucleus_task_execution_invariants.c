@@ -29,6 +29,7 @@ static void authority_ok(latticra_nucleus_task_authority_summary_t *authority) {
     authority->execution_allowed = 0;
     authority->mutation_allowed = 0;
     authority->server_allowed = 0;
+    authority->network_allowed = 0;
     authority->recovery_allowed = 0;
     authority->hardware_allowed = 0;
 }
@@ -237,6 +238,8 @@ static int future_gate_denial(latticra_nucleus_task_request_kind_t kind) {
     EXPECT_TRUE(result.record.policy == LATTICRA_NUCLEUS_TASK_POLICY_REQUIRES_FUTURE_GATE, "future gate policy");
     EXPECT_TRUE(result.record.denial == LATTICRA_NUCLEUS_TASK_DENIAL_EFFECT_REQUIRES_FUTURE_GATE, "future gate reason");
     EXPECT_TRUE(result.record.executed == 0, "future gate not executed");
+    EXPECT_TRUE(result.record.network_allowed == 0, "future gate network denied");
+    EXPECT_TRUE(result.network_allowed == 0, "future gate result network denied");
     return 0;
 }
 
@@ -293,7 +296,25 @@ static int nucleus_task_execution_does_not_mutate_state(void) {
 }
 
 static int nucleus_task_execution_does_not_open_network(void) {
-    return future_gate_denial(LATTICRA_NUCLEUS_TASK_SERVER_INTERACTION);
+    latticra_nucleus_task_authority_summary_t authority;
+    latticra_nucleus_task_request_t request;
+    latticra_nucleus_task_result_t result;
+    char report[LATTICRA_NUCLEUS_TASK_REPORT_MAX];
+    authority_ok(&authority);
+    request = base_request(LATTICRA_NUCLEUS_TASK_SERVER_INTERACTION,
+                           LATTICRA_NUCLEUS_TASK_EFFECT_NONE,
+                           &authority);
+    EXPECT_TRUE(latticra_nucleus_task_classify(&request, &result) == LATTICRA_STATUS_OK, "network classify");
+    EXPECT_TRUE(result.record.policy == LATTICRA_NUCLEUS_TASK_POLICY_REQUIRES_FUTURE_GATE, "network future gate policy");
+    EXPECT_TRUE(result.record.denial == LATTICRA_NUCLEUS_TASK_DENIAL_EFFECT_REQUIRES_FUTURE_GATE, "network future gate reason");
+    EXPECT_TRUE(result.record.executed == 0, "network not executed");
+    EXPECT_TRUE(result.record.server_interaction_allowed == 0, "network server denied");
+    EXPECT_TRUE(result.record.network_allowed == 0, "network flag denied");
+    EXPECT_TRUE(result.network_allowed == 0, "network result denied");
+    EXPECT_TRUE(latticra_nucleus_task_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "network report");
+    EXPECT_TRUE(strstr(report, "request=server-interaction\n") != 0, "network request emitted");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0, "network flag emitted");
+    return 0;
 }
 
 static int nucleus_task_execution_does_not_touch_hardware(void) {

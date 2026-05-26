@@ -1,0 +1,72 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+require_file() {
+  file="$1"
+  if [ ! -f "$file" ]; then
+    printf 'opensuse developer workflow: missing file: %s\n' "$file" >&2
+    exit 1
+  fi
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  if ! grep -Fq -- "$pattern" "$file"; then
+    printf 'opensuse developer workflow: missing required pattern in %s: %s\n' "$file" "$pattern" >&2
+    exit 1
+  fi
+}
+
+require_file docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_file docs/OPENSUSE_READINESS_PLAN.md
+require_file docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_file docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_file docs/QUICK_START_CHEATSHEET.md
+require_file README.md
+require_file installer/README.md
+require_file packaging/opensuse/README.md
+require_file packaging/opensuse/latticra.spec
+require_file packaging/opensuse/latticra.changes
+require_file .github/workflows/opensuse-developer-workflow.yml
+
+require_contains 'Status: developer workflow record' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'local openSUSE Linux commands for productive Latticra development' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'same guards as the Fedora and Ubuntu tracks' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sudo zypper refresh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sudo zypper install -y git gcc make coreutils findutils diffutils grep pkgconf' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sudo zypper install -y rust cargo make gcc pkgconf' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-local-rpm-static-validation.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'opensuse_developer_workflow: ok' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+
+require_contains 'Status: planning and maintenance record' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'same purpose as the Fedora and Ubuntu tracks' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'openSUSE integration and maintenance' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'opensuse_developer_workflow_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_panel_prerequisites_documented=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_local_rpm_draft_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_local_rpm_static_validation_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_changes_file_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_obs_publication_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_official_package_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'suse_endorsement_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
+
+require_contains 'openSUSE prerequisites' README.md
+require_contains '## openSUSE integration and maintenance' README.md
+require_contains 'docs/OPENSUSE_DEVELOPER_WORKFLOW.md' README.md
+require_contains 'docs/OPENSUSE_READINESS_PLAN.md' README.md
+require_contains 'docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md' README.md
+require_contains 'packaging/opensuse/README.md' README.md
+require_contains 'sh scripts/test-opensuse-developer-workflow.sh' README.md
+require_contains 'sh scripts/test-opensuse-local-rpm-static-validation.sh' README.md
+
+require_contains 'openSUSE prerequisites:' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sudo zypper install -y rust cargo make gcc pkgconf' docs/QUICK_START_CHEATSHEET.md
+require_contains 'openSUSE:' installer/README.md
+
+require_contains 'Status: local-only packaging draft' packaging/opensuse/README.md
+require_contains 'not an official openSUSE package' packaging/opensuse/README.md
+require_contains 'not Open Build Service publication evidence' packaging/opensuse/README.md
+
+printf 'opensuse_developer_workflow: ok\n'

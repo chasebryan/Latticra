@@ -30,6 +30,7 @@ static void authority_ok(latticra_nucleus_task_authority_summary_t *authority) {
     authority->execution_allowed = 0;
     authority->mutation_allowed = 0;
     authority->server_allowed = 0;
+    authority->network_allowed = 0;
     authority->recovery_allowed = 0;
     authority->hardware_allowed = 0;
 }
@@ -89,6 +90,7 @@ static int accepted_report_is_report_only(void) {
     EXPECT_TRUE(result.record.executed == 0, "accepted execution flag remains zero");
     EXPECT_TRUE(result.record.mutation_allowed == 0, "accepted mutation remains disabled");
     EXPECT_TRUE(result.record.server_interaction_allowed == 0, "accepted server remains disabled");
+    EXPECT_TRUE(result.record.network_allowed == 0, "accepted network remains disabled");
     EXPECT_TRUE(result.record.recovery_allowed == 0, "accepted recovery remains disabled");
     EXPECT_TRUE(result.record.hardware_allowed == 0, "accepted hardware remains disabled");
 
@@ -97,6 +99,7 @@ static int accepted_report_is_report_only(void) {
     EXPECT_TRUE(strstr(report, "effect_status=report-only\n") != 0, "accepted effect status emitted");
     EXPECT_TRUE(strstr(report, "runtime_status=not-entered\n") != 0, "accepted runtime status emitted");
     EXPECT_TRUE(strstr(report, "executed=0\n") != 0, "accepted executed flag emitted");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0, "accepted network emitted");
     return 0;
 }
 

@@ -45,6 +45,7 @@ int main(void) {
     char receipt_payload_schema_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_SCHEMA_REPORT_MAX];
     char receipt_payload_artifact_draft_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_REPORT_MAX];
     char receipt_payload_artifact_review_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_REPORT_MAX];
+    char receipt_payload_artifact_review_receipt_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_REPORT_MAX];
     char receipt_payload_materialization_plan_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_REPORT_MAX];
     char signature_request_binding_report[LATTICRA_CONSOLE_SIGNATURE_REQUEST_BINDING_REPORT_MAX];
     char receipt_report[LATTICRA_CONSOLE_RECEIPT_REPORT_MAX];
@@ -104,6 +105,10 @@ int main(void) {
         result.receipt_payload_artifact_review_status,
         "metadata-only-review-gate-ready");
     failures += require_text(
+        "result.receipt_payload_artifact_review_receipt_status",
+        result.receipt_payload_artifact_review_receipt_status,
+        "metadata-only-receipt-contract-ready");
+    failures += require_text(
         "result.receipt_payload_materialization_plan_status",
         result.receipt_payload_materialization_plan_status,
         "metadata-only-plan-ready");
@@ -161,6 +166,10 @@ int main(void) {
         result.receipt_payload_artifact_review_present,
         1);
     failures += require_int(
+        "result.receipt_payload_artifact_review_receipt_present",
+        result.receipt_payload_artifact_review_receipt_present,
+        1);
+    failures += require_int(
         "result.receipt_payload_materialization_plan_present",
         result.receipt_payload_materialization_plan_present,
         1);
@@ -191,7 +200,7 @@ int main(void) {
         "command_count",
         (int)latticra_console_command_count(),
         (int)result.command_count);
-    failures += require_int("command_count_min", result.command_count >= 19u, 1);
+    failures += require_int("command_count_min", result.command_count >= 20u, 1);
 
     command = latticra_console_find_command("lc substrate");
     failures += require_int("find lc substrate", command != 0, 1);
@@ -278,6 +287,17 @@ int main(void) {
             "lc.receipt.artifact.review");
         failures += require_int("lc receipt-artifact-review no_effect", command->no_effect, 1);
         failures += require_int("lc receipt-artifact-review host launch", command->launches_host_process, 0);
+    }
+
+    command = latticra_console_find_command("lc receipt-review-receipt");
+    failures += require_int("find lc receipt-review-receipt", command != 0, 1);
+    if (command != 0) {
+        failures += require_text(
+            "lc receipt-review-receipt capability",
+            command->capability_label,
+            "lc.receipt.review.receipt");
+        failures += require_int("lc receipt-review-receipt no_effect", command->no_effect, 1);
+        failures += require_int("lc receipt-review-receipt host launch", command->launches_host_process, 0);
     }
 
     command = latticra_console_find_command("lc receipt-materialization-plan");
@@ -389,6 +409,7 @@ int main(void) {
     failures += require_contains("report", report, "receipt_payload_schema_present=1");
     failures += require_contains("report", report, "receipt_payload_artifact_draft_present=1");
     failures += require_contains("report", report, "receipt_payload_artifact_review_present=1");
+    failures += require_contains("report", report, "receipt_payload_artifact_review_receipt_present=1");
     failures += require_contains("report", report, "receipt_payload_materialization_plan_present=1");
     failures += require_contains("report", report, "signature_request_binding_present=1");
     failures += require_contains("report", report, "receipt_contract_present=1");
@@ -422,6 +443,10 @@ int main(void) {
         "report",
         report,
         "receipt_payload_artifact_review_status=metadata-only-review-gate-ready");
+    failures += require_contains(
+        "report",
+        report,
+        "receipt_payload_artifact_review_receipt_status=metadata-only-receipt-contract-ready");
     failures += require_contains(
         "report",
         report,
@@ -478,6 +503,8 @@ int main(void) {
     failures += require_contains("registry_report", registry_report, "capability=lc.receipt.artifact");
     failures += require_contains("registry_report", registry_report, "command=lc receipt-artifact-review");
     failures += require_contains("registry_report", registry_report, "capability=lc.receipt.artifact.review");
+    failures += require_contains("registry_report", registry_report, "command=lc receipt-review-receipt");
+    failures += require_contains("registry_report", registry_report, "capability=lc.receipt.review.receipt");
     failures += require_contains("registry_report", registry_report, "command=lc receipt-materialization-plan");
     failures += require_contains("registry_report", registry_report, "capability=lc.receipt.materialization.plan");
     failures += require_contains("registry_report", registry_report, "command=lc signature-request");
@@ -510,6 +537,7 @@ int main(void) {
     failures += require_contains("help_report", help_report, "lc receipt-payload");
     failures += require_contains("help_report", help_report, "lc receipt-artifact");
     failures += require_contains("help_report", help_report, "lc receipt-artifact-review");
+    failures += require_contains("help_report", help_report, "lc receipt-review-receipt");
     failures += require_contains("help_report", help_report, "lc receipt-materialization-plan");
     failures += require_contains("help_report", help_report, "lc signature-request");
     failures += require_contains("help_report", help_report, "lc os-contract");
@@ -532,6 +560,7 @@ int main(void) {
     failures += require_contains("manpage_report", manpage_report, "latticra-lc receipt-payload");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc receipt-artifact");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc receipt-artifact-review");
+    failures += require_contains("manpage_report", manpage_report, "latticra-lc receipt-review-receipt");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc receipt-materialization-plan");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc signature-request");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc os-contract");
@@ -714,6 +743,26 @@ int main(void) {
     failures += require_int("lc receipt-artifact-review boundary no effect", boundary.no_effect, 1);
     failures += require_int("lc receipt-artifact-review boundary host mutation allowed", boundary.host_mutation_allowed, 0);
 
+    command = latticra_console_find_command("lc receipt-review-receipt");
+    failures += require_int(
+        "lc receipt-review-receipt boundary",
+        latticra_console_command_boundary_classify(command, &boundary),
+        LATTICRA_STATUS_OK);
+    failures += require_text(
+        "lc receipt-review-receipt seal capability",
+        boundary.seal_capability_label,
+        "seal.capability.report");
+    failures += require_int(
+        "lc receipt-review-receipt runtime kind",
+        boundary.runtime_request_kind,
+        LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK);
+    failures += require_int("lc receipt-review-receipt boundary future gate", boundary.requires_future_gate, 0);
+    failures += require_int("lc receipt-review-receipt boundary no effect", boundary.no_effect, 1);
+    failures += require_int(
+        "lc receipt-review-receipt boundary host mutation allowed",
+        boundary.host_mutation_allowed,
+        0);
+
     command = latticra_console_find_command("lc receipt-materialization-plan");
     failures += require_int(
         "lc receipt-materialization-plan boundary",
@@ -819,6 +868,7 @@ int main(void) {
     failures += require_contains("boundary_report", boundary_report, "command=lc receipt-payload");
     failures += require_contains("boundary_report", boundary_report, "command=lc receipt-artifact");
     failures += require_contains("boundary_report", boundary_report, "command=lc receipt-artifact-review");
+    failures += require_contains("boundary_report", boundary_report, "command=lc receipt-review-receipt");
     failures += require_contains("boundary_report", boundary_report, "command=lc receipt-materialization-plan");
     failures += require_contains("boundary_report", boundary_report, "command=lc signature-request");
     failures += require_contains("boundary_report", boundary_report, "runtime_request=authority-check");
@@ -952,6 +1002,22 @@ int main(void) {
     failures += require_contains(
         "receipt_request_report",
         receipt_request_report,
+        "receipt_payload_artifact_review_receipt_profile=lc-receipt-payload-artifact-review-receipt-v0");
+    failures += require_contains(
+        "receipt_request_report",
+        receipt_request_report,
+        "receipt_payload_artifact_review_receipt_required=1");
+    failures += require_contains(
+        "receipt_request_report",
+        receipt_request_report,
+        "receipt_payload_artifact_review_receipt_present=1");
+    failures += require_contains(
+        "receipt_request_report",
+        receipt_request_report,
+        "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt");
+    failures += require_contains(
+        "receipt_request_report",
+        receipt_request_report,
         "receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0");
     failures += require_contains(
         "receipt_request_report",
@@ -1039,6 +1105,18 @@ int main(void) {
     failures += require_contains(
         "receipt_payload_schema_report",
         receipt_payload_schema_report,
+        "receipt_payload_artifact_review_receipt_profile=lc-receipt-payload-artifact-review-receipt-v0");
+    failures += require_contains(
+        "receipt_payload_schema_report",
+        receipt_payload_schema_report,
+        "receipt_payload_artifact_review_receipt_present=1");
+    failures += require_contains(
+        "receipt_payload_schema_report",
+        receipt_payload_schema_report,
+        "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt");
+    failures += require_contains(
+        "receipt_payload_schema_report",
+        receipt_payload_schema_report,
         "receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0");
     failures += require_contains(
         "receipt_payload_schema_report",
@@ -1095,6 +1173,18 @@ int main(void) {
         "receipt_payload_artifact_draft_report",
         receipt_payload_artifact_draft_report,
         "related_review_command=lc receipt-artifact-review");
+    failures += require_contains(
+        "receipt_payload_artifact_draft_report",
+        receipt_payload_artifact_draft_report,
+        "receipt_payload_artifact_review_receipt_profile=lc-receipt-payload-artifact-review-receipt-v0");
+    failures += require_contains(
+        "receipt_payload_artifact_draft_report",
+        receipt_payload_artifact_draft_report,
+        "receipt_payload_artifact_review_receipt_present=1");
+    failures += require_contains(
+        "receipt_payload_artifact_draft_report",
+        receipt_payload_artifact_draft_report,
+        "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt");
     failures += require_contains(
         "receipt_payload_artifact_draft_report",
         receipt_payload_artifact_draft_report,
@@ -1173,6 +1263,22 @@ int main(void) {
     failures += require_contains(
         "receipt_payload_artifact_review_report",
         receipt_payload_artifact_review_report,
+        "receipt_payload_artifact_review_receipt_profile=lc-receipt-payload-artifact-review-receipt-v0");
+    failures += require_contains(
+        "receipt_payload_artifact_review_report",
+        receipt_payload_artifact_review_report,
+        "receipt_payload_artifact_review_receipt_required=1");
+    failures += require_contains(
+        "receipt_payload_artifact_review_report",
+        receipt_payload_artifact_review_report,
+        "receipt_payload_artifact_review_receipt_present=1");
+    failures += require_contains(
+        "receipt_payload_artifact_review_report",
+        receipt_payload_artifact_review_report,
+        "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt");
+    failures += require_contains(
+        "receipt_payload_artifact_review_report",
+        receipt_payload_artifact_review_report,
         "receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0");
     failures += require_contains(
         "receipt_payload_artifact_review_report",
@@ -1224,6 +1330,65 @@ int main(void) {
         "promotion_gate=lc_receipt_payload_artifact_review_before_materialization");
 
     failures += require_int(
+        "receipt_payload_artifact_review_receipt_report",
+        latticra_console_receipt_payload_artifact_review_receipt_report(
+            receipt_payload_artifact_review_receipt_report,
+            sizeof(receipt_payload_artifact_review_receipt_report)),
+        LATTICRA_STATUS_OK);
+    failures += require_contains(
+        "receipt_payload_artifact_review_receipt_report",
+        receipt_payload_artifact_review_receipt_report,
+        "LATTICRA CONSOLE RECEIPT PAYLOAD ARTIFACT REVIEW RECEIPT CONTRACT");
+    failures += require_contains(
+        "receipt_payload_artifact_review_receipt_report",
+        receipt_payload_artifact_review_receipt_report,
+        "review_receipt_profile=lc-receipt-payload-artifact-review-receipt-v0");
+    failures += require_contains(
+        "receipt_payload_artifact_review_receipt_report",
+        receipt_payload_artifact_review_receipt_report,
+        "draft_review_receipt_present=0");
+    failures += require_contains(
+        "receipt_payload_artifact_review_receipt_report",
+        receipt_payload_artifact_review_receipt_report,
+        "draft_review_receipt_artifact_present=0");
+    failures += require_contains(
+        "receipt_payload_artifact_review_receipt_report",
+        receipt_payload_artifact_review_receipt_report,
+        "draft_review_receipt_write_allowed=0");
+    failures += require_contains(
+        "receipt_payload_artifact_review_receipt_report",
+        receipt_payload_artifact_review_receipt_report,
+        "draft_review_receipt_signed=0");
+    failures += require_contains(
+        "receipt_payload_artifact_review_receipt_report",
+        receipt_payload_artifact_review_receipt_report,
+        "materialization_preconditions_met=0");
+    failures += require_contains(
+        "receipt_payload_artifact_review_receipt_report",
+        receipt_payload_artifact_review_receipt_report,
+        "materialization_allowed=0");
+    failures += require_contains(
+        "receipt_payload_artifact_review_receipt_report",
+        receipt_payload_artifact_review_receipt_report,
+        "payload_write_allowed=0");
+    failures += require_contains(
+        "receipt_payload_artifact_review_receipt_report",
+        receipt_payload_artifact_review_receipt_report,
+        "signature_request_binding_allowed=0");
+    failures += require_contains(
+        "receipt_payload_artifact_review_receipt_report",
+        receipt_payload_artifact_review_receipt_report,
+        "receipt_write_allowed=0");
+    failures += require_contains(
+        "receipt_payload_artifact_review_receipt_report",
+        receipt_payload_artifact_review_receipt_report,
+        "command_surface=lc receipt-review-receipt");
+    failures += require_contains(
+        "receipt_payload_artifact_review_receipt_report",
+        receipt_payload_artifact_review_receipt_report,
+        "promotion_gate=lc_receipt_payload_artifact_review_receipt_before_materialization_preconditions");
+
+    failures += require_int(
         "receipt_payload_materialization_plan_report",
         latticra_console_receipt_payload_materialization_plan_report(
             receipt_payload_materialization_plan_report,
@@ -1237,6 +1402,26 @@ int main(void) {
         "receipt_payload_materialization_plan_report",
         receipt_payload_materialization_plan_report,
         "materialization_plan_profile=lc-receipt-payload-materialization-plan-v0");
+    failures += require_contains(
+        "receipt_payload_materialization_plan_report",
+        receipt_payload_materialization_plan_report,
+        "receipt_payload_artifact_review_receipt_profile=lc-receipt-payload-artifact-review-receipt-v0");
+    failures += require_contains(
+        "receipt_payload_materialization_plan_report",
+        receipt_payload_materialization_plan_report,
+        "receipt_payload_artifact_review_receipt_required=1");
+    failures += require_contains(
+        "receipt_payload_materialization_plan_report",
+        receipt_payload_materialization_plan_report,
+        "receipt_payload_artifact_review_receipt_present=1");
+    failures += require_contains(
+        "receipt_payload_materialization_plan_report",
+        receipt_payload_materialization_plan_report,
+        "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt");
+    failures += require_contains(
+        "receipt_payload_materialization_plan_report",
+        receipt_payload_materialization_plan_report,
+        "draft_review_receipt_required=1");
     failures += require_contains(
         "receipt_payload_materialization_plan_report",
         receipt_payload_materialization_plan_report,
@@ -1311,7 +1496,31 @@ int main(void) {
     failures += require_contains(
         "signature_request_binding_report",
         signature_request_binding_report,
+        "receipt_payload_artifact_review_receipt_profile=lc-receipt-payload-artifact-review-receipt-v0");
+    failures += require_contains(
+        "signature_request_binding_report",
+        signature_request_binding_report,
+        "receipt_payload_artifact_review_receipt_required=1");
+    failures += require_contains(
+        "signature_request_binding_report",
+        signature_request_binding_report,
+        "receipt_payload_artifact_review_receipt_present=1");
+    failures += require_contains(
+        "signature_request_binding_report",
+        signature_request_binding_report,
+        "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt");
+    failures += require_contains(
+        "signature_request_binding_report",
+        signature_request_binding_report,
         "receipt_payload_materialization_plan_present=1");
+    failures += require_contains(
+        "signature_request_binding_report",
+        signature_request_binding_report,
+        "draft_review_receipt_present=0");
+    failures += require_contains(
+        "signature_request_binding_report",
+        signature_request_binding_report,
+        "materialization_preconditions_met=0");
     failures += require_contains(
         "signature_request_binding_report",
         signature_request_binding_report,
@@ -1336,6 +1545,10 @@ int main(void) {
         "signature_request_binding_report",
         signature_request_binding_report,
         "receipt_write_allowed=0");
+    failures += require_contains(
+        "signature_request_binding_report",
+        signature_request_binding_report,
+        "required_surfaces=receipt-request,receipt-payload-schema,receipt-payload-artifact-draft,receipt-payload-artifact-review,receipt-payload-artifact-review-receipt,receipt-payload-materialization-plan,receipt-contract,runtime-boundary,seal-capability-labels");
     failures += require_contains(
         "signature_request_binding_report",
         signature_request_binding_report,
@@ -1380,6 +1593,14 @@ int main(void) {
     failures += require_contains(
         "receipt_report",
         receipt_report,
+        "receipt_payload_artifact_review_receipt_required=1");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
+        "receipt_payload_artifact_review_receipt_present=1");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
         "receipt_payload_materialization_plan_required=1");
     failures += require_contains(
         "receipt_report",
@@ -1397,6 +1618,10 @@ int main(void) {
         "receipt_report",
         receipt_report,
         "receipt_signed=0");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
+        "receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt");
     failures += require_contains(
         "receipt_report",
         receipt_report,

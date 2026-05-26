@@ -20,6 +20,10 @@ ubuntu_package_notice_inventory_present=1
 ubuntu_package_notice_inventory_report_present=1
 ubuntu_doc_payload_license_review_contract_present=1
 ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
+ubuntu_third_party_material_review_contract_present=1
+ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review
+ubuntu_generated_artifact_notice_review_contract_present=1
+ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review
 third_party_material_inventory_recorded=1
 notice_file_present=0
 documentation_license_decision_present=0
@@ -57,12 +61,18 @@ ubuntu_package_notice_inventory_present=1
 ubuntu_package_notice_inventory_report_present=1
 ubuntu_doc_payload_license_review_contract_present=1
 ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
+ubuntu_third_party_material_review_contract_present=1
+ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review
+ubuntu_generated_artifact_notice_review_contract_present=1
+ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review
 doc_payload_license_reviewed=0
 doc_payload_license_unresolved=1
 doc_payload_license_decision_recorded=0
 third_party_material_inventory_recorded=1
 third_party_material_inventory_reviewed=0
+third_party_notice_requirements_recorded=0
 generated_artifact_notice_reviewed=0
+generated_artifact_notice_requirements_recorded=0
 third_party_notice_reviewed=0
 notice_file_decision_recorded=0
 debian_copyright_notice_mapping_reviewed=0
@@ -78,6 +88,10 @@ The Ubuntu package license review contract may record candidate expressions, but
 The Ubuntu package notice inventory report records current payload facts and open notice obligations, but it does not unblock this review by itself.
 
 The Ubuntu doc payload license review contract records the unresolved `README.md` documentation-license decision required before this notice review can be promoted.
+
+The Ubuntu third-party material review contract records the source, license, compatibility, and notice-requirement evidence required before this notice review can be promoted.
+
+The Ubuntu generated-artifact notice review contract records the generated payload, build artifact, changes-file, build-log, and installed-payload notice evidence required before this notice review can be promoted.
 
 ## Non-Claims
 

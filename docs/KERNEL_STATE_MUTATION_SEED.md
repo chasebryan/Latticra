@@ -45,6 +45,7 @@ vfs-namespace-ready
 device-registry-ready
 driver-catalog-ready
 interrupt-table-ready
+timer-source-ready
 ```
 
 Allowed transitions are intentionally sequential:
@@ -61,6 +62,7 @@ ipc-table-ready -> vfs-namespace-ready
 vfs-namespace-ready -> device-registry-ready
 device-registry-ready -> driver-catalog-ready
 driver-catalog-ready -> interrupt-table-ready
+interrupt-table-ready -> timer-source-ready
 ```
 
 No-op transitions are allowed when the gate allows them.

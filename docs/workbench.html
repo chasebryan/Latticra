@@ -26,7 +26,9 @@
         <a href="status.html">Status</a>
         <a href="roadmap.html">Roadmap</a>
         <a href="architecture.html">Architecture</a>
+        <a href="runtime.html">Runtime</a>
         <a href="workbench.html">Workbench</a>
+        <a href="nadia.html">Nadia</a>
         <a href="language.html">Language</a>
         <a href="examples.html">Examples</a>
         <a href="seal.html">Seal</a>
@@ -139,7 +141,7 @@
         </article>
         <article>
           <span>Nadia stage</span>
-          <strong>31</strong>
+          <strong>34</strong>
         </article>
         <article>
           <span>model_runtime</span>
@@ -187,23 +189,23 @@
       <div class="content-shell workbench-split">
         <div class="section-heading">
           <p class="eyebrow">Nadia Boundary</p>
-          <h2>Stage-31 is still contract-only.</h2>
+          <h2>Stage-35 is still contract-only.</h2>
           <p>
-            Nadia now records a prompt-evaluation result contract path, but result recording, model output, runtime invocation, prompt evaluation, token generation, inference, and dialogue generation remain blocked.
+            Nadia now records a prompt-evaluation result release receipt contract path, but receipt recording, receipt signing, receipt publication, release recording, model output, runtime invocation, prompt evaluation, token generation, inference, and dialogue generation remain blocked.
           </p>
         </div>
         <div class="workbench-table" role="table" aria-label="Nadia workbench boundaries">
           <div role="row">
             <span role="cell">Present</span>
-            <p role="cell">Identity, local config, context packs, runtime profile metadata, prompt plans, safety contracts, and prompt-evaluation result contract metadata.</p>
+            <p role="cell">Identity, local config, context packs, runtime profile metadata, prompt plans, safety contracts, and prompt-evaluation result release receipt contract metadata.</p>
           </div>
           <div role="row">
             <span role="cell">Denied</span>
-            <p role="cell">Model loading, prompt evaluation, token generation, inference, result recording, tool execution, source mutation, training, and network use.</p>
+            <p role="cell">Model loading, prompt evaluation, token generation, inference, result release, tool execution, source mutation, training, and network use.</p>
           </div>
           <div role="row">
             <span role="cell">Next boundary</span>
-            <p role="cell">A future result-review contract must explicitly name review shape, safety inheritance, operator gates, and non-claims before promotion.</p>
+            <p role="cell">A future release-receipt review contract must explicitly name review shape, safety inheritance, operator gates, and non-claims before promotion.</p>
           </div>
         </div>
       </div>
@@ -231,7 +233,7 @@ latticra-lc commands</code></pre>
         <article class="command-panel">
           <h3>Inspect Nadia metadata</h3>
           <pre><code>latticra-nadia context-pack
-latticra-nadia prompt-evaluation-result</code></pre>
+latticra-nadia prompt-evaluation-result-release-receipt</code></pre>
         </article>
       </div>
     </section>
@@ -245,8 +247,9 @@ latticra-nadia prompt-evaluation-result</code></pre>
         <a href="https://github.com/Bryforge/Latticra/blob/main/installer/README.md"><strong>Panel README</strong><span>Guided workbench, embedded console, install flow, and local verification.</span></a>
         <a href="validation.html"><strong>Local validation</strong><span>Panel install evidence, package guards, disposable VM gates, and dry-run contracts.</span></a>
         <a href="LATTICRA_CONSOLE_FOUNDATION.md"><strong>LC foundation</strong><span>Console identity, command registry, host contracts, receipts, and OS-base planning.</span></a>
+        <a href="nadia.html"><strong>Nadia overview</strong><span>Offline AI contract lane, Stage-35 metadata, and blocked runtime authority.</span></a>
         <a href="NADIA_OFFLINE_AI_FOUNDATION.md"><strong>Nadia foundation</strong><span>Offline AI identity, stages, local layout, and authority boundaries.</span></a>
-        <a href="NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31.md"><strong>Nadia Stage-31</strong><span>Prompt-evaluation result contract and blocked inference boundary.</span></a>
+        <a href="NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_CONTRACT_STAGE_35.md"><strong>Nadia Stage-35</strong><span>Prompt-evaluation result release receipt contract and blocked inference boundary.</span></a>
       </div>
     </section>
   </main>

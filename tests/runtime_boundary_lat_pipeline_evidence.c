@@ -11,14 +11,21 @@
         } \
     } while (0)
 
+static void copy_text(char *dest, size_t dest_len, const char *src) {
+    if (dest_len == 0u) {
+        return;
+    }
+    (void)snprintf(dest, dest_len, "%s", src);
+}
+
 static latticra_runtime_boundary_authority_summary_t ok_authority(void) {
     latticra_runtime_boundary_authority_summary_t authority;
     memset(&authority, 0, sizeof(authority));
     authority.status = LATTICRA_STATUS_OK;
-    strcpy(authority.status_label, "ok");
-    strcpy(authority.validator_label, "runtime-lat-pipeline-evidence");
-    strcpy(authority.requested_effect_label, "none");
-    strcpy(authority.denial_reason, "ok");
+    copy_text(authority.status_label, sizeof(authority.status_label), "ok");
+    copy_text(authority.validator_label, sizeof(authority.validator_label), "runtime-lat-pipeline-evidence");
+    copy_text(authority.requested_effect_label, sizeof(authority.requested_effect_label), "none");
+    copy_text(authority.denial_reason, sizeof(authority.denial_reason), "ok");
     authority.no_effect = 1;
     return authority;
 }
@@ -33,7 +40,7 @@ static latticra_lat_pipeline_result_t ok_pipeline(void) {
     pipeline.model_error = LATTICRA_LAT_MODEL_OK;
     pipeline.lowering_error = LATTICRA_LAT_TO_LIR_OK;
     pipeline.lir_error = LATTICRA_LIR_OK;
-    strcpy(pipeline.module_name, "RuntimeEvidenceModule");
+    copy_text(pipeline.module_name, sizeof(pipeline.module_name), "RuntimeEvidenceModule");
     pipeline.source_len = 256u;
     pipeline.span.start_offset = 25u;
     pipeline.span.end_offset = 256u;
@@ -48,8 +55,8 @@ static latticra_lat_pipeline_result_t ok_pipeline(void) {
     pipeline.model_clause_count = 23u;
     pipeline.first_declaration_node_index = 1u;
     pipeline.first_declaration_kind = LATTICRA_LAT_DECLARATION_STATE;
-    strcpy(pipeline.first_declaration_name, "RootCell");
-    strcpy(pipeline.first_declaration_source, "");
+    copy_text(pipeline.first_declaration_name, sizeof(pipeline.first_declaration_name), "RootCell");
+    copy_text(pipeline.first_declaration_source, sizeof(pipeline.first_declaration_source), "");
     pipeline.first_declaration_parse_index = 0u;
     pipeline.first_declaration_first_clause_index = 0u;
     pipeline.first_declaration_clause_count = 9u;
@@ -58,9 +65,9 @@ static latticra_lat_pipeline_result_t ok_pipeline(void) {
     pipeline.first_clause_node_index = 6u;
     pipeline.first_clause_role = LATTICRA_LAT_MODEL_CLAUSE_FIELD;
     pipeline.first_clause_effect = LATTICRA_LAT_EFFECT_NONE;
-    strcpy(pipeline.first_clause_name, "name");
-    strcpy(pipeline.first_clause_operator, "=");
-    strcpy(pipeline.first_clause_value, "root");
+    copy_text(pipeline.first_clause_name, sizeof(pipeline.first_clause_name), "name");
+    copy_text(pipeline.first_clause_operator, sizeof(pipeline.first_clause_operator), "=");
+    copy_text(pipeline.first_clause_value, sizeof(pipeline.first_clause_value), "root");
     pipeline.first_comment_span.start_offset = 0u;
     pipeline.first_comment_span.end_offset = 24u;
     pipeline.first_comment_span.start_line = 1u;
@@ -89,16 +96,21 @@ static latticra_lir_module_t lat_lir_module(void) {
     lir.status = LATTICRA_STATUS_OK;
     lir.error = LATTICRA_LIR_OK;
     lir.source_kind = LATTICRA_LIR_SOURCE_LAT_MODULE;
-    strcpy(lir.module_name, "RuntimeEvidenceModule");
+    copy_text(lir.module_name, sizeof(lir.module_name), "RuntimeEvidenceModule");
     lir.node_count = 4u;
-    lir.edge_count = 2u;
+    lir.edge_count = 5u;
+    lir.no_effect_chain_ok = 1;
+    lir.evidence_level = 2u;
     lir.no_effect = 1;
     lir.nodes[0].kind = LATTICRA_LIR_NODE_MODULE;
     lir.nodes[1].kind = LATTICRA_LIR_NODE_LAT_STATE;
     lir.nodes[2].kind = LATTICRA_LIR_NODE_LAT_TRANSITION;
     lir.nodes[3].kind = LATTICRA_LIR_NODE_LAT_REQUIREMENT;
     lir.edges[0].edge_kind = LATTICRA_LIR_EDGE_CONTAINS;
-    lir.edges[1].edge_kind = LATTICRA_LIR_EDGE_TRANSITIONS_FROM;
+    lir.edges[1].edge_kind = LATTICRA_LIR_EDGE_BINDS;
+    lir.edges[2].edge_kind = LATTICRA_LIR_EDGE_ANNOTATES;
+    lir.edges[3].edge_kind = LATTICRA_LIR_EDGE_ORDERS_BEFORE;
+    lir.edges[4].edge_kind = LATTICRA_LIR_EDGE_TRANSITIONS_FROM;
     return lir;
 }
 
@@ -110,7 +122,7 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     latticra_runtime_boundary_result_t result;
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "runtime-lat-pipeline");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "runtime-lat-pipeline");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;
@@ -172,6 +184,18 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(result.record.lat_pipeline_first_comment_span.start_column == 1u, "pipeline comment column copied");
     EXPECT_TRUE(result.record.lat_lir_source_kind == LATTICRA_LIR_SOURCE_LAT_MODULE, "lat lir source kind copied");
     EXPECT_TRUE(result.record.lat_lir_module_node_count == 4u, "lat lir node count copied");
+    EXPECT_TRUE(result.record.lat_lir_no_effect_chain_ok == 1, "lat lir no-effect chain copied");
+    EXPECT_TRUE(result.record.lat_lir_evidence_level == 2u, "lat lir evidence level copied");
+    EXPECT_TRUE(result.record.lat_lir_no_effect == 1, "lat lir no-effect copied");
+    EXPECT_TRUE(result.record.lat_lir_execution_allowed == 0, "lat lir execution flag copied");
+    EXPECT_TRUE(result.record.lat_lir_mutation_allowed == 0, "lat lir mutation flag copied");
+    EXPECT_TRUE(result.record.lat_lir_server_allowed == 0, "lat lir server flag copied");
+    EXPECT_TRUE(result.record.lat_lir_recovery_allowed == 0, "lat lir recovery flag copied");
+    EXPECT_TRUE(result.record.lat_lir_hardware_allowed == 0, "lat lir hardware flag copied");
+    EXPECT_TRUE(result.record.lat_lir_contains_edge_count == 1u, "lat lir contains edge count copied");
+    EXPECT_TRUE(result.record.lat_lir_binds_edge_count == 1u, "lat lir binds edge count copied");
+    EXPECT_TRUE(result.record.lat_lir_annotates_edge_count == 1u, "lat lir annotates edge count copied");
+    EXPECT_TRUE(result.record.lat_lir_orders_before_edge_count == 1u, "lat lir orders edge count copied");
     EXPECT_TRUE(result.record.lat_lir_transition_edge_count == 1u, "transition edge count copied");
     EXPECT_TRUE(result.record.lat_lir_has_lat_state_nodes == 1, "lat state evidence copied");
     EXPECT_TRUE(result.record.lat_lir_has_lat_transition_nodes == 1, "lat transition evidence copied");
@@ -211,7 +235,7 @@ static int runtime_boundary_denies_failed_lat_pipeline_metadata(void) {
     pipeline.first_comment_span.end_column = 29u;
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "runtime-lat-pipeline-failed");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "runtime-lat-pipeline-failed");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;
@@ -277,7 +301,7 @@ static int runtime_boundary_denies_parse_failed_lat_pipeline_metadata(void) {
     pipeline.first_comment_span.end_column = 29u;
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "runtime-lat-pipeline-parse-failed");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "runtime-lat-pipeline-parse-failed");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;
@@ -328,7 +352,7 @@ static int runtime_boundary_denies_model_failed_lat_pipeline_metadata(void) {
     pipeline.evidence_level = 1u;
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "runtime-lat-pipeline-model-failed");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "runtime-lat-pipeline-model-failed");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;
@@ -368,7 +392,7 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     char report[LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX];
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "runtime-lat-pipeline-report");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "runtime-lat-pipeline-report");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;
@@ -427,6 +451,18 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_pipeline_first_comment_start_column=1\n") != 0, "pipeline comment column report present");
     EXPECT_TRUE(strstr(report, "lat_lir_source_kind=lat_module\n") != 0, "lat lir source kind report present");
     EXPECT_TRUE(strstr(report, "lat_lir_module_node_count=4\n") != 0, "lat lir node count report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_no_effect_chain_ok=1\n") != 0, "lat lir no-effect chain report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_evidence_level=2\n") != 0, "lat lir evidence level report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_no_effect=1\n") != 0, "lat lir no-effect report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_execution_allowed=0\n") != 0, "lat lir execution flag report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_mutation_allowed=0\n") != 0, "lat lir mutation flag report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_server_allowed=0\n") != 0, "lat lir server flag report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_recovery_allowed=0\n") != 0, "lat lir recovery flag report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_hardware_allowed=0\n") != 0, "lat lir hardware flag report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_contains_edge_count=1\n") != 0, "lat lir contains edge count report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_binds_edge_count=1\n") != 0, "lat lir binds edge count report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_annotates_edge_count=1\n") != 0, "lat lir annotates edge count report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_orders_before_edge_count=1\n") != 0, "lat lir orders edge count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_transition_edge_count=1\n") != 0, "lat lir transition edge count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_has_lat_state_nodes=1\n") != 0, "lat state report present");
     EXPECT_TRUE(strstr(report, "lat_lir_has_lat_transition_nodes=1\n") != 0, "lat transition report present");
@@ -441,7 +477,7 @@ static int runtime_boundary_keeps_lat_lir_execution_future_gated(void) {
     latticra_runtime_boundary_result_t result;
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "runtime-lat-execute-denied");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "runtime-lat-execute-denied");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_LAT_EXECUTE;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;

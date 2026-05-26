@@ -71,6 +71,12 @@ typedef struct {
     int interrupt_unmask_allowed;
     int interrupt_dispatch_allowed;
     int interrupt_ack_allowed;
+    int timer_tick_allowed;
+    int timer_arm_allowed;
+    int timer_disarm_allowed;
+    int scheduler_tick_allowed;
+    int preemption_allowed;
+    int time_read_allowed;
     int dma_allowed;
     int hardware_effect_allowed;
     int no_external_effect_chain;

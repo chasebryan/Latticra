@@ -1,0 +1,192 @@
+# macOS Reset/Uninstall Live-Denial Transcript Contract Status
+
+Status: no-effect reset/uninstall live-denial transcript contract status
+Date: 2026-05-26 CDT
+Scope: status checkpoint after adding the macOS reset/uninstall live-denial transcript contract.
+
+## Summary
+
+Latticra now has a no-effect macOS reset/uninstall live-denial transcript contract.
+
+The contract records the failed live-execution preflight decision to stdout only. It keeps deletion disabled, receipt writing disabled, absence-report writing disabled, host mutation disabled, network access absent, root authority absent, and runtime authority absent.
+
+## Status Fields
+
+```text
+macos_reset_uninstall_live_denial_transcript_contract_present=1
+macos_reset_uninstall_live_denial_transcript_contract_guard_present=1
+live_denial_transcript_contract_state=recorded-no-effect
+live_denial_transcript_contract_decision=denied-by-preflight-block
+live_denial_transcript_required=1
+live_denial_transcript_present=1
+live_denial_transcript_recorded=1
+live_denial_transcript_stdout_only=1
+live_denial_transcript_file_write_enabled=0
+live_denial_transcript_receipt_write_enabled=0
+live_denial_transcript_absence_report_write_enabled=0
+live_denial_transcript_preflight_present=1
+live_denial_transcript_preflight_passed=0
+live_denial_transcript_denial_recorded=1
+live_denial_transcript_denial_reason=missing-complete-evidence-bundle-and-effect-authorization
+live_denial_transcript_denial_source=macos-reset-uninstall-live-execution-preflight-contract
+live_denial_transcript_effect=none
+live_denial_transcript_effect_authorization_required=1
+live_denial_transcript_effect_authorized=0
+reset_uninstall_live_run_allowed=0
+reset_uninstall_deletion_enabled=0
+managed_target_removal_allowed=0
+managed_target_deletion_enabled=0
+reset_uninstall_receipt_write_enabled=0
+absence_report_write_enabled=0
+macos_reset_uninstall_live_execution_preflight_contract_present=1
+live_execution_preflight_contract_state=closed-no-effect
+live_execution_preflight_contract_decision=blocked-missing-complete-evidence-bundle-and-effect-authorization
+live_execution_preflight_required=1
+live_execution_preflight_present=1
+live_execution_preflight_passed=0
+live_execution_preflight_blocking=1
+live_execution_preflight_evidence_present=0
+live_execution_preflight_record_write_enabled=0
+live_execution_preflight_denial_recorded=1
+live_execution_preflight_denial_reason=missing-complete-evidence-bundle-and-effect-authorization
+macos_reset_uninstall_live_implementation_plan_contract_present=1
+live_implementation_plan_contract_state=defined-no-effect
+live_implementation_plan_execution_enabled=0
+live_implementation_plan_deletion_enabled=0
+live_implementation_plan_preflight_present=1
+live_implementation_plan_preflight_passed=0
+macos_reset_uninstall_evidence_bundle_contract_present=1
+evidence_bundle_contract_state=defined-no-effect
+reset_uninstall_evidence_bundle_complete=0
+evidence_bundle_complete=0
+reset_uninstall_evidence_bundle_valid=0
+reset_uninstall_evidence_bundle_evidence_present=0
+macos_reset_uninstall_effect_authorization_contract_present=1
+effect_authorization_contract_state=closed-no-effect
+effect_authorization_open=0
+reset_uninstall_effect_authorized=0
+macos_reset_uninstall_implementation_gate_contract_present=1
+implementation_gate_contract_state=closed-no-effect
+implementation_gate_open=0
+macos_reset_uninstall_operator_intent_contract_present=1
+operator_intent_contract_state=defined-no-effect
+operator_reset_uninstall_intent_evidence_present=0
+operator_explicit_reset_uninstall_intent_observed=0
+macos_reset_uninstall_dry_run_planner_present=1
+reset_uninstall_dry_run_planner_transcript_present=1
+macos_reset_uninstall_live_target_classifier_present=1
+macos_reset_uninstall_receipt_schema_contract_present=1
+macos_reset_uninstall_absence_report_contract_present=1
+macos_reset_uninstall_dry_run_contract_present=1
+macos_verification_transcript_contract_present=1
+macos_commit_gate_contract_present=1
+live_denial_transcript_schema_version=macos-reset-uninstall-live-denial-transcript/1
+live_denial_transcript_required_input_count=7
+live_denial_transcript_observed_input_count=7
+live_denial_transcript_requires_live_execution_preflight=1
+live_denial_transcript_requires_preflight_denial=1
+live_denial_transcript_requires_denial_reason=1
+live_denial_transcript_requires_no_receipt_write=1
+live_denial_transcript_requires_no_absence_report_write=1
+live_denial_transcript_requires_no_deletion=1
+live_denial_transcript_requires_no_network=1
+live_denial_transcript_requires_no_root=1
+live_denial_transcript_condition_preflight_present=required
+live_denial_transcript_condition_preflight_passed=must_be_zero_for_denial
+live_denial_transcript_condition_denial_reason=required
+live_denial_transcript_condition_stdout_only=required
+live_denial_transcript_condition_no_receipt_write=required
+live_denial_transcript_condition_no_absence_report_write=required
+live_denial_transcript_condition_no_deletion=required
+live_denial_transcript_condition_no_network=required
+live_denial_transcript_condition_no_root=required
+live_denial_transcript_result_preflight_present=met
+live_denial_transcript_result_preflight_passed=not_met
+live_denial_transcript_result_denial_reason=met
+live_denial_transcript_result_stdout_only=met
+live_denial_transcript_result_no_receipt_write=met
+live_denial_transcript_result_no_absence_report_write=met
+live_denial_transcript_result_no_deletion=met
+live_denial_transcript_result_no_network=met
+live_denial_transcript_result_no_root=met
+live_denial_transcript_entry_1_status=met
+live_denial_transcript_entry_2_status=recorded
+live_denial_transcript_entry_3_status=recorded
+live_denial_transcript_entry_4_status=recorded
+live_denial_transcript_entry_5_status=recorded
+live_denial_transcript_entry_6_status=recorded
+live_denial_transcript_entry_7_status=recorded
+live_denial_transcript_phase_1_status=contract-only
+live_denial_transcript_phase_2_status=stdout-only
+live_denial_transcript_phase_3_status=enforced-by-zero-authority
+live_denial_transcript_phase_4_status=disabled-until-interface-contract
+reset_uninstall_implementation_present=0
+macos_reset_uninstall_implemented=0
+live_reset_uninstall_runner_present=0
+live_reset_uninstall_runner_enabled=0
+managed_wrapper_removal_performed=0
+managed_app_bundle_removal_performed=0
+managed_application_support_removal_performed=0
+reset_receipt_write_performed=0
+absence_report_run_performed=0
+absence_report_written=0
+file_delete_performed=0
+directory_delete_performed=0
+application_support_write_performed=0
+receipt_write_performed=0
+app_bundle_write_performed=0
+cli_wrapper_write_performed=0
+shell_profile_mutation_performed=0
+host_mutation_performed=0
+network_performed=0
+root_authority=0
+launchagent_authority=0
+keychain_authority=0
+tcc_bypass_authority=0
+endpoint_security_authority=0
+system_extension_authority=0
+network_extension_authority=0
+privileged_helper_authority=0
+runtime_authority_granted=0
+production_installer_ready=0
+```
+
+## Public Meaning
+
+The careful public meaning is:
+
+```text
+Latticra has a no-effect macOS reset/uninstall live-denial transcript contract that records why live deletion remains blocked.
+```
+
+That does not mean Latticra has live reset execution, live uninstall execution, complete evidence-bundle evidence, effect approval evidence, live approval evidence, a macOS reset implementation, uninstall implementation, installer, commit-capable app bundle writer, verified app bundle, signed build, notarized build, launchd integration, Keychain integration, Endpoint Security integration, System Extension integration, privileged helper, or production security capability.
+
+## Guard Validation
+
+This status record is guarded by:
+
+```sh
+sh scripts/test-macos-reset-uninstall-live-denial-transcript-contract.sh
+```
+
+Expected output:
+
+```text
+macos_reset_uninstall_live_denial_transcript_contract: ok
+```
+
+## Previous Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-denial transcript contract that records the failed preflight decision without deleting files.
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner interface contract that accepts only a passed preflight and keeps deletion disabled otherwise.
+```
+
+## Non-Claims
+
+This status record is not macOS reset evidence, macOS uninstall evidence, macOS install evidence, macOS app bundle evidence, live reset execution, live uninstall execution, complete evidence-bundle evidence, receipt evidence, absence verification evidence, operator approval evidence, effect approval evidence, signed app evidence, notarization evidence, launchd evidence, Keychain evidence, Secure Enclave evidence, sandbox evidence, TCC approval evidence, Endpoint Security evidence, System Extension evidence, Network Extension evidence, privileged helper evidence, malware prevention, ransomware prevention, production readiness, Apple platform approval, or runtime authority.

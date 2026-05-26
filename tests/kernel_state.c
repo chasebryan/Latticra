@@ -78,7 +78,7 @@ static int allowed_transition_changes_state(void) {
     return 0;
 }
 
-static int allowed_process_syscall_ipc_vfs_device_driver_and_interrupt_transitions_are_metadata_only(void) {
+static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_and_timer_transitions_are_metadata_only(void) {
     latticra_kernel_state_request_t request;
     latticra_kernel_state_result_t result;
 
@@ -268,6 +268,42 @@ static int allowed_process_syscall_ipc_vfs_device_driver_and_interrupt_transitio
         "interrupt transition no external effect");
     EXPECT_TRUE(result.denied == 0,
         "interrupt transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "timer source transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY,
+        "next timer-source-ready");
+    EXPECT_TRUE(strcmp(result.timer_source.timer_status, "timer-source-seed-ready") == 0,
+        "timer source ready");
+    EXPECT_TRUE(strcmp(result.interrupt_table.table_status, "interrupt-table-seed-ready") == 0,
+        "timer transition keeps interrupt table ready");
+    EXPECT_TRUE(strcmp(result.driver_catalog.catalog_status, "driver-catalog-seed-ready") == 0,
+        "timer transition keeps driver catalog ready");
+    EXPECT_TRUE(result.timer_source.timer_count == 4u,
+        "timer source count");
+    EXPECT_TRUE(result.timer_source.timer_tick_allowed == 0,
+        "timer tick denied");
+    EXPECT_TRUE(result.timer_source.timer_arm_allowed == 0,
+        "timer arm denied");
+    EXPECT_TRUE(result.timer_source.timer_disarm_allowed == 0,
+        "timer disarm denied");
+    EXPECT_TRUE(result.timer_source.scheduler_tick_allowed == 0,
+        "timer scheduler tick denied");
+    EXPECT_TRUE(result.timer_source.preemption_allowed == 0,
+        "timer preemption denied");
+    EXPECT_TRUE(result.timer_source.time_read_allowed == 0,
+        "timer time read denied");
+    EXPECT_TRUE(result.timer_source.hardware_effect_allowed == 0,
+        "timer hardware effect denied");
+    EXPECT_TRUE(result.timer_source.host_effect_allowed == 0,
+        "timer host effect denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "timer transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "timer transition not denied");
     return 0;
 }
 
@@ -360,7 +396,7 @@ static int report_records_state_change(void) {
     return 0;
 }
 
-static int report_records_process_syscall_ipc_vfs_device_driver_and_interrupt_readiness(void) {
+static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_and_timer_readiness(void) {
     latticra_kernel_state_request_t request;
     latticra_kernel_state_result_t result;
     char report[LATTICRA_KERNEL_STATE_REPORT_MAX];
@@ -473,6 +509,23 @@ static int report_records_process_syscall_ipc_vfs_device_driver_and_interrupt_re
         "interrupt report driver catalog emitted");
     EXPECT_TRUE(strstr(report, "interrupt_table_status=interrupt-table-seed-ready\n") != 0,
         "interrupt table emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "timer transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "timer report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=interrupt-table-ready\n") != 0,
+        "interrupt previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=timer-source-ready\n") != 0,
+        "timer next emitted");
+    EXPECT_TRUE(strstr(report, "interrupt_table_status=interrupt-table-seed-ready\n") != 0,
+        "timer report interrupt table emitted");
+    EXPECT_TRUE(strstr(report, "timer_source_status=timer-source-seed-ready\n") != 0,
+        "timer source emitted");
     return 0;
 }
 
@@ -498,11 +551,11 @@ static int null_guards_are_safe(void) {
 int main(void) {
     if (default_request_denies_state_change() != 0) return 1;
     if (allowed_transition_changes_state() != 0) return 1;
-    if (allowed_process_syscall_ipc_vfs_device_driver_and_interrupt_transitions_are_metadata_only() != 0) return 1;
+    if (allowed_process_syscall_ipc_vfs_device_driver_interrupt_and_timer_transitions_are_metadata_only() != 0) return 1;
     if (denied_transition_does_not_change_state() != 0) return 1;
     if (allowed_noop_is_stable() != 0) return 1;
     if (report_records_state_change() != 0) return 1;
-    if (report_records_process_syscall_ipc_vfs_device_driver_and_interrupt_readiness() != 0) return 1;
+    if (report_records_process_syscall_ipc_vfs_device_driver_interrupt_and_timer_readiness() != 0) return 1;
     if (null_guards_are_safe() != 0) return 1;
 
     puts("kernel_state: ok");
