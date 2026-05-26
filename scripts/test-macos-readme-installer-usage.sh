@@ -127,7 +127,7 @@ require_contains 'It cannot yet create, install, sign, notarize, open, verify, r
 require_contains 'a commit-capable macOS installer' "$readme"
 require_contains 'a signed or notarized macOS app' "$readme"
 require_contains 'macOS app bundle install evidence' "$readme"
-require_contains 'Installer, macOS, and Fedora direction' "$readme"
+require_contains 'Installer, macOS, Fedora, Ubuntu, and openSUSE direction' "$readme"
 require_contains 'docs/MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md' "$readme"
 require_contains 'docs/MACOS_APP_BUNDLE_WRITER_DRY_RUN.md' "$readme"
 require_contains 'docs/MACOS_COMMIT_GATE_CONTRACT.md' "$readme"
