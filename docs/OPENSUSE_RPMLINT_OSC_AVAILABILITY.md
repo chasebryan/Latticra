@@ -58,10 +58,10 @@ scripts/test-opensuse-rpmlint-findings-classification.sh
 Recommended next slice:
 
 ```text
-Add openSUSE rpmlint findings classification report.
+Add openSUSE source archive reproducibility contract before accepting package build evidence.
 ```
 
-That future lane may classify expected local-only draft findings separately from unexpected spec findings while keeping the package local-only.
+That future lane should keep source archive, license, and build evidence separate from `rpmlint` output so the openSUSE package path remains reviewable.
 
 ## Validation
 
