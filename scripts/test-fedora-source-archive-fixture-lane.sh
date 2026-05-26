@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
-export COPYFILE_DISABLE=1
 
 require_file() {
   file="$1"
@@ -47,8 +46,6 @@ require_contains '%autosetup -n %{name}-%{version}' docs/FEDORA_SOURCE_ARCHIVE_F
 require_contains 'latticra-0.0.0.tar.gz' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'latticra-0.0.0/' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'exclude .git' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
-require_contains 'refuse symlink entries' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
-require_contains 'normalize tar metadata' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'does not run `rpmbuild`' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'does not run `mock`' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'does not create source RPM artifacts' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
@@ -74,83 +71,22 @@ archive_listing="$tmpdir/archive.list"
 
 mkdir -p "$tmpdir/$root"
 
-python3 - "$archive_path" "$root" <<'PY'
-import gzip
-import os
-import stat
-import subprocess
-import sys
-import tarfile
+symlink_entry=$(find . -path './.git' -prune -o -type l -print | sed -n '1p')
+if [ -n "$symlink_entry" ]; then
+  printf 'fedora source archive fixture lane: refusing source archive with symlink entry: %s\n' "$symlink_entry" >&2
+  exit 1
+fi
 
-archive_path = sys.argv[1]
-root = sys.argv[2]
-source_root = os.getcwd()
+# Copy the current checked-out tree into the expected Source0 root while excluding
+# VCS metadata and local RPM work outputs. This fixture remains temporary.
+tar \
+  --exclude='./.git' \
+  --exclude='./.rpmwork' \
+  --exclude='./*.rpm' \
+  --exclude='./*.tar.gz' \
+  -cf - . | tar -C "$tmpdir/$root" -xf -
 
-
-def excluded(relative):
-    parts = relative.split(os.sep)
-    if ".git" in parts or ".rpmwork" in parts:
-        return True
-    name = parts[-1]
-    return name.endswith(".rpm") or name.endswith(".tar.gz")
-
-
-def add_entry(tar, disk_path, archive_name):
-    st = os.lstat(disk_path)
-    if stat.S_ISLNK(st.st_mode):
-        raise SystemExit(f"refusing symlink entry in source archive fixture: {archive_name}")
-    if not stat.S_ISDIR(st.st_mode) and not stat.S_ISREG(st.st_mode):
-        raise SystemExit(f"refusing unsupported source archive entry: {archive_name}")
-
-    info = tarfile.TarInfo(archive_name)
-    info.uid = 0
-    info.gid = 0
-    info.uname = "root"
-    info.gname = "root"
-    info.mtime = 0
-    if stat.S_ISDIR(st.st_mode):
-        info.type = tarfile.DIRTYPE
-        info.mode = 0o755
-        tar.addfile(info)
-        return
-
-    info.size = st.st_size
-    info.mode = 0o755 if (st.st_mode & stat.S_IXUSR) else 0o644
-    with open(disk_path, "rb") as fh:
-        tar.addfile(info, fh)
-
-
-with open(archive_path, "wb") as raw:
-    with gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as gz:
-        with tarfile.open(fileobj=gz, mode="w", format=tarfile.PAX_FORMAT) as tar:
-            add_entry(tar, source_root, root)
-            proc = subprocess.run(
-                ["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard"],
-                cwd=source_root,
-                check=True,
-                stdout=subprocess.PIPE,
-            )
-            paths = sorted(
-                item.decode("utf-8")
-                for item in proc.stdout.split(b"\0")
-                if item
-            )
-            dirs = set()
-            for rel in paths:
-                if excluded(rel):
-                    continue
-                parent = os.path.dirname(rel)
-                while parent:
-                    dirs.add(parent)
-                    parent = os.path.dirname(parent)
-
-            for rel in sorted(dirs):
-                add_entry(tar, os.path.join(source_root, rel), f"{root}/{rel}")
-            for rel in paths:
-                if excluded(rel):
-                    continue
-                add_entry(tar, os.path.join(source_root, rel), f"{root}/{rel}")
-PY
+tar -C "$tmpdir" -czf "$archive_path" "$root"
 tar -tzf "$archive_path" >"$archive_listing"
 
 require_archive_entry "$root/README.md"

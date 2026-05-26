@@ -13,12 +13,9 @@ The current goal is only to prove that `rpmlint` and `osc` can be installed and 
 
 ```text
 docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
-docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 scripts/test-opensuse-rpmlint-osc-availability.sh
-scripts/test-opensuse-rpmlint-static-spec-lane.sh
 .github/workflows/opensuse-rpmlint-osc-availability.yml
-.github/workflows/opensuse-rpmlint-static-spec-lane.yml
 ```
 
 ## Checks
@@ -47,13 +44,30 @@ It does not create package artifacts, create an Open Build Service project, publ
 
 ## Next Slice
 
+Completed follow-on static spec lane:
+
+```text
+docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+scripts/test-opensuse-rpmlint-static-spec-lane.sh
+scripts/test-opensuse-rpmlint-findings-classification.sh
+scripts/test-opensuse-source-archive-reproducibility-contract.sh
+scripts/test-opensuse-source-archive-fixture-lane.sh
+.github/workflows/opensuse-rpmlint-static-spec-lane.yml
+.github/workflows/opensuse-rpmlint-findings-classification.yml
+.github/workflows/opensuse-source-archive-reproducibility-contract.yml
+.github/workflows/opensuse-source-archive-fixture-lane.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE rpmlint findings classification record before accepting any lint transcript as package readiness evidence.
+Add openSUSE temporary RPM topdir handoff lane that stages the verified source archive without running rpmbuild or osc build.
 ```
 
-That future lane should separate expected local-only draft findings from unexpected blockers while keeping package readiness blocked.
+That future lane should prove the temporary source archive can be staged into RPM build input paths while keeping package build and publication claims blocked.
 
 ## Validation
 

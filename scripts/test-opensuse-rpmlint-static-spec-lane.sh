@@ -21,6 +21,8 @@ require_contains() {
 
 require_file docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_file docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_file docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+require_file docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_file scripts/test-opensuse-rpmlint-osc-availability.sh
 require_file packaging/opensuse/latticra.spec
 require_file packaging/opensuse/latticra.changes
@@ -32,7 +34,11 @@ require_contains 'does not run `rpmbuild`' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LAN
 require_contains 'does not run `osc build`' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'does not run `spec-cleaner`' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'does not create package artifacts' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
-require_contains 'Add openSUSE rpmlint findings classification record' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_contains 'does not create an Open Build Service project' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_contains 'docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_contains 'Add openSUSE temporary RPM topdir handoff lane' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'opensuse_rpmlint_static_spec_lane: ok' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 
 require_contains 'LOCAL-ONLY openSUSE DRAFT' packaging/opensuse/latticra.spec
@@ -45,21 +51,11 @@ if [ ! -r /etc/os-release ] || ! grep -Eq '^(ID=opensuse|ID_LIKE=.*suse|ID="open
   exit 1
 fi
 
-if ! command -v zypper >/dev/null 2>&1; then
-  printf 'opensuse rpmlint static spec lane: missing zypper\n' >&2
-  exit 1
-fi
+command -v zypper >/dev/null 2>&1
 
 sh scripts/test-opensuse-rpmlint-osc-availability.sh
 
-if ! command -v rpmlint >/dev/null 2>&1; then
-  printf 'opensuse rpmlint static spec lane: missing rpmlint\n' >&2
-  exit 1
-fi
-
-tmpdir="$(mktemp -d)"
-trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
-rpmlint_output="$tmpdir/rpmlint.out"
+rpmlint_output="$(mktemp)"
 if rpmlint packaging/opensuse/latticra.spec >"$rpmlint_output" 2>&1; then
   rpmlint_status=0
 else
@@ -70,12 +66,16 @@ cat "$rpmlint_output"
 
 if [ "$rpmlint_status" -gt 64 ]; then
   printf 'opensuse rpmlint static spec lane: rpmlint failed unexpectedly with status %s\n' "$rpmlint_status" >&2
+  rm -f "$rpmlint_output"
   exit 1
 fi
 
 if [ ! -s "$rpmlint_output" ]; then
   printf 'opensuse rpmlint static spec lane: expected rpmlint audit output\n' >&2
+  rm -f "$rpmlint_output"
   exit 1
 fi
+
+rm -f "$rpmlint_output"
 
 printf 'opensuse_rpmlint_static_spec_lane: ok\n'

@@ -74,6 +74,7 @@ latticra_status_t latticra_nucleus_classify_preview(
     preview->executed = 0;
     preview->mutation_allowed = 0;
     preview->server_interaction_allowed = 0;
+    preview->network_allowed = 0;
     preview->recovery_allowed = 0;
     preview->hardware_allowed = 0;
 
@@ -119,6 +120,7 @@ latticra_status_t latticra_nucleus_preview_report(
         "executed=%d\n"
         "mutation_allowed=%d\n"
         "server_interaction_allowed=%d\n"
+        "network_allowed=%d\n"
         "recovery_allowed=%d\n"
         "hardware_allowed=%d\n",
         latticra_request_kind_label(preview->request_kind),
@@ -128,6 +130,7 @@ latticra_status_t latticra_nucleus_preview_report(
         preview->executed,
         preview->mutation_allowed,
         preview->server_interaction_allowed,
+        preview->network_allowed,
         preview->recovery_allowed,
         preview->hardware_allowed);
 

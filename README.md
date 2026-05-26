@@ -1,20 +1,21 @@
 # Latticra
 
 **Status:** early-stage, evidence-bound systems architecture repository  
-**README review snapshot:** 2026-05-25 CDT  
+**README review snapshot:** 2026-05-26 CDT<br>
 **Default branch:** `main`
 
 > “The simulacrum is never what hides the truth.” — Jean Baudrillard
 
 **Featured handbook:** [The Latticra System Substrate PDF](docs/latticra-system-substrate/the-latticra-system-substrate.pdf)  
 **Editable handbook:** [The Latticra System Substrate DOCX](docs/latticra-system-substrate/the-latticra-system-substrate.docx)  
+**Documentation hub:** [docs/README.md](docs/README.md)<br>
 **System Substrate docs:** [docs/latticra-system-substrate/](docs/latticra-system-substrate/)  
-**Seal subsystem docs:** [docs/latticra-seal/](docs/latticra-seal/)
+**Seal subsystem docs:** [docs/latticra-seal/](docs/latticra-seal/)<br>
 **Quick user cheat sheet:** [docs/QUICK_START_CHEATSHEET.md](docs/QUICK_START_CHEATSHEET.md)
 
 Latticra is an evidence-bound systems substrate for Linux-era and AI-era computing. Its purpose is to make system actions, automation, tool execution, and agentic workflows safer through deny-by-default authority, contract-first validation, cryptographic-verification planning, no-effect reporting, runtime gating, and auditable evidence.
 
-This repository is foundational engineering work. It is not a deployed platform, certified product, production runtime, hardened sandbox, Fedora-approved package, Ubuntu archive-ready package, daily-driver installer, bootable operating system, or operating-system replacement.
+This repository is foundational engineering work. It is not a deployed platform, certified product, production runtime, hardened sandbox, Fedora-approved package, Ubuntu archive-ready package, Debian archive-ready package, FreeBSD official port, OpenBSD official port, daily-driver installer, bootable operating system, or operating-system replacement.
 
 ---
 
@@ -81,7 +82,7 @@ Latticra currently focuses on:
 - Nucleus coordination and task-boundary reports;
 - Runtime Boundary classification before operational behavior;
 - Latticra Seal tool-boundary and trust-boundary planning;
-- Fedora/Ubuntu/openSUSE/Linux validation evidence for narrow host-facing paths;
+- Fedora/Ubuntu/openSUSE/Debian/FreeBSD/OpenBSD package and port validation evidence for narrow host-facing paths;
 - visual theorem engines for symbolic Latticra substrate demonstrations.
 
 ---
@@ -93,25 +94,26 @@ The authoritative status files are [`STATUS.md`](STATUS.md) and [`docs/status/CU
 | Area | Current posture |
 | --- | --- |
 | Overall system | Early-stage, evidence-bound foundation |
-| Current public estimate | Roughly 39% overall system planning estimate |
+| Current public estimate | Roughly 44% overall system planning estimate |
 | Estimate source | Current public estimate table below, mirrored from `STATUS.md` and `docs/status/CURRENT_STATUS.md` |
-| Foundation documents and contracts | Mature relative to implementation; around 92% planning estimate |
-| Public documentation posture | Strong but still evolving; around 88% planning estimate |
+| Foundation documents and contracts | Mature relative to implementation; around 94% planning estimate |
+| Public documentation posture | Strong but still evolving; around 91% planning estimate |
 | Lat / Latticra Language | No-effect parse / validate / lower path exists; no execution |
 | LIR | Bounded metadata/reporting exists; no LIR execution |
 | L-UI | Parser, validation, and report/rendering foundations exist; no interactive terminal-control renderer |
 | Nucleus | Report-only task-boundary and classification work exists; no effect-performing execution |
 | Runtime Boundary | Denied-by-default classification and reporting exists; no runtime authority |
-| Latticra Seal | Report-only runtime gate path, sealed report-envelope metadata/status, signature/signing/key/public-key/bounded-key parsing metadata/status, capability metadata/report-surface/status alignment, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, verified receipt promotion metadata/status, verified capability gate metadata/status, verified effect decision metadata/status, runtime handoff evaluation metadata/status, runtime handoff report metadata/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only freshness/signed-request/policy-decision metadata/status/report surfaces, product-spine direction, and core negative-test evidence for AI-era tool-boundary planning; no production enforcement |
+| Kernel lifecycle evidence | No-effect kernel lifecycle path reaches `preemption-ready` through scheduler tick, run queue, context-switch, time-accounting, and preemption metadata; no runtime entry, dispatch, hardware effect, or OS replacement |
+| Latticra Seal | Report-only runtime gate path, sealed report-envelope metadata/status, signature/signing/key/public-key/bounded-key parsing metadata/status, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, verified receipt promotion metadata/status, verified capability gate metadata/status, verified effect decision metadata/status, runtime handoff evaluation metadata/status, runtime handoff report metadata/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only freshness/signed-request/policy-decision metadata/status/report surfaces, and core negative-test evidence for AI-era tool-boundary planning; no production enforcement |
 | Fedora integration | Local-only package and validation lanes exist; not Fedora-approved or distribution-ready |
 | Ubuntu integration | Ubuntu build lane, Panel apt prerequisites, and local-only deb draft exist; not PPA-backed, archive-ready, or production-ready |
-| Debian integration | Local-only deb draft and temporary package-input handoff lane exist; not Debian archive-ready, sponsored, or production-ready |
-| FreeBSD port draft | Local-only ports metadata and temporary package-input handoff lane exist; not submitted, poudriere-tested, portlint-clean, official, or production-ready |
-| OpenBSD port draft | Local-only ports metadata and temporary package-input handoff lane exist; `PERMIT_PACKAGE=No`; not submitted, bulk-built, portcheck-clean, official, or production-ready |
+| Debian integration | Local-only deb packaging draft exists; not Debian archive-ready, sponsored, or production-ready |
+| FreeBSD port draft | Local-only ports metadata draft exists; not submitted, poudriere-tested, portlint-clean, official, or production-ready |
+| OpenBSD port draft | Local-only ports metadata draft exists; `PERMIT_PACKAGE=No`; not submitted, bulk-built, portcheck-clean, official, or production-ready |
 | openSUSE integration | openSUSE developer workflow, Panel zypper prerequisites, and local-only RPM maintenance draft exist; not Open Build Service-published, official, or production-ready |
 | Latticra Panel | GUI-first local installer/control workbench exists; user-local and guarded |
 | macOS installer lane | Mac-specific no-effect installer path exists for probes, path planning, app-bundle dry-run, candidate checks, reset/uninstall classification, dry-run planning, and evidence-bundle gating; no `.app` is written yet |
-| Nadia offline AI | Stage-37 prompt-evaluation result release receipt review disposition contract, Stage-36 prompt-evaluation result release receipt review contract, Stage-35 prompt-evaluation result release receipt contract, Stage-34 prompt-evaluation result release contract, Stage-33 prompt-evaluation result disposition contract, Stage-32 prompt-evaluation result review contract, Stage-31 prompt-evaluation result contract, Stage-30 prompt-evaluation invocation contract, Stage-29 prompt-evaluation runtime handoff contract, Stage-28 prompt-evaluation-input contract, Stage-27 context-window assembly contract, Stage-26 prompt-token-sequence contract, Stage-25 prompt-tokenization contract, Stage-24 tokenizer-runtime-attachment contract, Stage-23 tokenizer-artifact-binding contract, Stage-22 tokenizer-artifact-verification contract, Stage-21 tokenizer-artifact-measurement contract, Stage-20 tokenizer-artifact-inventory contract, Stage-19 tokenizer-manifest contract, Stage-18 tokenizer-specification contract, Stage-17 tokenization-boundary contract, Stage-16 prompt-evaluation handoff contract, Stage-15 awareness-dialogue contract, Stage-14 prompt-materialization contract, Stage-13 prompt-receipt contract, Stage-12 model-load contract, Stage-11 runtime-invocation contract, Stage-10 inference-readiness contract, Stage-9 local model-registry contract, Stage-8 prompt-evaluation contract, Stage-7 report-only tool preflight, Stage-6 protective safety boundary, Stage-5 productivity ledger, Stage-4 systems-engineering mode validator, Stage-3 prompt-plan workbench, Stage-2 runtime-profile boundary, and Stage-1 context-pack generator exist; optional Panel component and metadata-only Console surface; future survivor-centered Q&A scope planned for official Nadia Initiative awareness topics; no dialogue generation, prompt text receipt, prompt text reading, prompt buffer allocation, prompt tokenization, prompt token creation, prompt token sequence recording, prompt token ID recording, prompt token order recording, prompt token offset recording, context window assembly, prompt evaluation input creation, prompt materialization, tokenizer artifact path resolution, tokenizer artifact opening, tokenizer artifact reading, tokenizer artifact scanning, tokenizer artifact hashing, tokenizer artifact measurement, tokenizer artifact verification, tokenizer artifact digest comparison, tokenizer artifact size comparison, tokenizer artifact binding, tokenizer runtime attachment, runtime handoff, prompt-evaluation invocation request creation, prompt-evaluation result recording, prompt-evaluation result review recording, prompt-evaluation result disposition recording, disposition decision recording, prompt-evaluation result release recording, release decision recording, release publication, release packaging, release receipt creation, prompt-evaluation result release receipt recording, prompt-evaluation result release receipt review recording, prompt-evaluation result release receipt review disposition recording, review decision recording, review findings recording, receipt signing, receipt publication, model-output recording, runtime session creation, tokenizer artifact digest recording, tokenizer artifact size recording, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, model file opening, weight mapping, model loading, token generation, prompt evaluation, inference, or tool execution |
+| Nadia offline AI | Stage-40 prompt-evaluation result release receipt review disposition release receipt review contract, Stage-39 prompt-evaluation result release receipt review disposition release receipt contract, Stage-38 prompt-evaluation result release receipt review disposition release contract, Stage-37 prompt-evaluation result release receipt review disposition contract, Stage-36 prompt-evaluation result release receipt review contract, Stage-35 prompt-evaluation result release receipt contract, Stage-34 prompt-evaluation result release contract, Stage-33 prompt-evaluation result disposition contract, Stage-32 prompt-evaluation result review contract, Stage-31 prompt-evaluation result contract, Stage-30 prompt-evaluation invocation contract, Stage-29 prompt-evaluation runtime handoff contract, Stage-28 prompt-evaluation-input contract, Stage-27 context-window assembly contract, Stage-26 prompt-token-sequence contract, Stage-25 prompt-tokenization contract, Stage-24 tokenizer-runtime-attachment contract, Stage-23 tokenizer-artifact-binding contract, Stage-22 tokenizer-artifact-verification contract, Stage-21 tokenizer-artifact-measurement contract, Stage-20 tokenizer-artifact-inventory contract, Stage-19 tokenizer-manifest contract, Stage-18 tokenizer-specification contract, Stage-17 tokenization-boundary contract, Stage-16 prompt-evaluation handoff contract, Stage-15 awareness-dialogue contract, Stage-14 prompt-materialization contract, Stage-13 prompt-receipt contract, Stage-12 model-load contract, Stage-11 runtime-invocation contract, Stage-10 inference-readiness contract, Stage-9 local model-registry contract, Stage-8 prompt-evaluation contract, Stage-7 report-only tool preflight, Stage-6 protective safety boundary, Stage-5 productivity ledger, Stage-4 systems-engineering mode validator, Stage-3 prompt-plan workbench, Stage-2 runtime-profile boundary, and Stage-1 context-pack generator exist; optional Panel component and metadata-only Console surface; future survivor-centered Q&A scope planned for official Nadia Initiative awareness topics; no dialogue generation, prompt text receipt, prompt text reading, prompt buffer allocation, prompt tokenization, prompt token creation, prompt token sequence recording, prompt token ID recording, prompt token order recording, context window assembly, prompt evaluation input creation, prompt materialization, prompt-evaluation result release receipt review disposition release receipt review recording, prompt-evaluation result release receipt review disposition release receipt recording, prompt-evaluation result release receipt review disposition release recording, prompt-evaluation result release receipt review disposition recording, receipt signing, receipt publication, model-output recording, runtime session creation, model loading, token generation, prompt evaluation, inference, or tool execution |
 | Security hardening | Early; no production security boundary claimed |
 | Product readiness | Early; no production platform claimed |
 
@@ -121,24 +123,24 @@ Current public estimate table, as summarized by [`STATUS.md`](STATUS.md) and [`d
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 39% |
-| Latticra Seal / local evidence layer | 34% |
-| Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 70% |
+| Overall Latticra system | 44% |
+| Latticra Seal / local evidence layer | 39% |
+| Latticra Panel / local control surface | 31% |
+| Nadia offline AI foundation | 74% |
 | L-UI parser / AST / string foundation | 87% |
-| Foundation documents and contracts | 92% |
-| Public documentation posture | 88% |
-| Strategy/status/funding framework | 60% |
-| Lat / Latticra Programming Language | 25% |
-| LIR / Intermediate Representation | 22% |
-| C/C++ foundation direction | 18% |
-| Constrained C++ authority layer | 4% |
-| Nucleus real task execution | 11% |
-| Runtime / operating-system-universe direction | 19% |
-| Security-hardening implementation | 7% |
-| Public product readiness | 8% |
+| Foundation documents and contracts | 94% |
+| Public documentation posture | 91% |
+| Strategy/status/funding framework | 63% |
+| Lat / Latticra Programming Language | 27% |
+| LIR / Intermediate Representation | 24% |
+| C/C++ foundation direction | 22% |
+| Constrained C++ authority layer | 5% |
+| Nucleus real task execution | 12% |
+| Runtime / operating-system-universe direction | 24% |
+| Security-hardening implementation | 9% |
+| Public product readiness | 10% |
 
-The current estimate table source alignment is [`docs/status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](docs/status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md). The latest estimate refresh record is [`docs/status/CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](docs/status/CURRENT_ESTIMATE_REFRESH_2026_05_24.md). The latest estimate hold review is [`docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md); it keeps the runtime-boundary fixture-slice estimate decision unchanged because capability posture did not change. The live public estimate table above, mirrored from [`STATUS.md`](STATUS.md) and [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md), is the current reader-facing estimate source.
+The current estimate table source alignment is [`docs/status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](docs/status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md). The latest mathematical estimate rebase is [`docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md). The latest estimate refresh record is [`docs/status/CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](docs/status/CURRENT_ESTIMATE_REFRESH_2026_05_24.md). The latest estimate hold review is [`docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md); it keeps that runtime-boundary fixture-slice decision as a dated snapshot because capability posture did not change in that slice. The live public estimate table above, mirrored from [`STATUS.md`](STATUS.md) and [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md), is the current reader-facing estimate source.
 
 ---
 
@@ -187,7 +189,7 @@ Runtime Boundary
 
 Latticra Seal
   Trust-boundary, request-boundary, policy-boundary, tool-boundary, and crypto-profile planning.
-  Current posture: report-only runtime gate path, sealed report-envelope metadata/status, signature-request metadata/status, signing authorization metadata/status, signer handoff/invocation/operation metadata/status, key-handling and key-material metadata/status, public-key parsing metadata/status, future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, capability metadata/report-surface/status alignment, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, verified receipt promotion metadata/status, verified capability gate metadata/status, verified effect decision metadata/status, runtime handoff evaluation metadata/status, runtime handoff report metadata/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, product-spine direction for earned security-product capability, and core negative-test evidence for AI-era tool-boundary planning; no production enforcement.
+  Current posture: report-only runtime gate path, sealed report-envelope metadata/status, signature-request metadata/status, signing authorization metadata/status, signer handoff/invocation/operation metadata/status, key-handling and key-material metadata/status, public-key parsing metadata/status, future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, verified receipt promotion metadata/status, verified capability gate metadata/status, verified effect decision metadata/status, runtime handoff evaluation metadata/status, runtime handoff report metadata/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning; no production enforcement.
 
 Latticra Panel
   GUI-first local workbench for guided first-run configuration, evidence review, dry-run, and guarded local-prefix install.
@@ -199,7 +201,7 @@ macOS installer lane
 
 Nadia Offline AI
   Future local AI companion for Latticra software development, systems engineering, and AI development workflows.
-  Current posture: Stage-37 prompt-evaluation result release receipt review disposition contract, Stage-36 prompt-evaluation result release receipt review contract, Stage-35 prompt-evaluation result release receipt contract, Stage-34 prompt-evaluation result release contract, Stage-33 prompt-evaluation result disposition contract, Stage-32 prompt-evaluation result review contract, Stage-31 prompt-evaluation result contract, Stage-30 prompt-evaluation invocation contract, Stage-29 prompt-evaluation runtime handoff contract, Stage-28 prompt-evaluation-input contract, Stage-27 context-window assembly contract, Stage-26 prompt-token-sequence contract, Stage-25 prompt-tokenization contract, Stage-24 tokenizer-runtime-attachment contract, Stage-23 tokenizer-artifact-binding contract, Stage-22 tokenizer-artifact-verification contract, Stage-21 tokenizer-artifact-measurement contract, Stage-20 tokenizer-artifact-inventory contract, Stage-19 tokenizer-manifest contract, Stage-18 tokenizer-specification contract, Stage-17 tokenization-boundary contract, Stage-16 prompt-evaluation handoff contract, Stage-15 awareness-dialogue contract, Stage-14 prompt-materialization contract, Stage-13 prompt-receipt contract, Stage-12 model-load contract, Stage-11 runtime-invocation contract, Stage-10 inference-readiness contract, Stage-9 local model-registry contract, Stage-8 prompt-evaluation contract, Stage-7 report-only guarded tool-authority preflight, Stage-6 protective safety boundary, Stage-5 operator-reviewed productivity ledger, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan workbench, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, Panel component, Console metadata, local config, and productivity-ledger path; future survivor-centered Q&A scope planned for official Nadia Initiative awareness topics; no sexual user functionality, dialogue generation, prompt text receipt, prompt text reading, prompt source reading, prompt buffer allocation, prompt tokenization, prompt token creation, prompt token sequence recording, prompt token ID recording, prompt token order recording, prompt token offset recording, context window assembly, prompt evaluation input creation, prompt materialization, tokenizer artifact path resolution, tokenizer artifact opening, tokenizer artifact reading, tokenizer artifact scanning, tokenizer artifact hashing, tokenizer artifact measurement, tokenizer artifact verification, tokenizer artifact digest comparison, tokenizer artifact size comparison, tokenizer artifact binding, tokenizer runtime attachment, runtime handoff, prompt-evaluation invocation request creation, prompt-evaluation result recording, prompt-evaluation result review recording, review decision recording, prompt-evaluation result disposition recording, disposition decision recording, prompt-evaluation result release recording, release decision recording, release publication, release packaging, release receipt creation, prompt-evaluation result release receipt recording, prompt-evaluation result release receipt review recording, prompt-evaluation result release receipt review disposition recording, review findings recording, receipt signing, receipt publication, model-output recording, tokenizer artifact digest recording, tokenizer artifact size recording, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, model file opening, weight mapping, model loading, runtime process spawning, runtime session creation, model selection, model installation, token generation, prompt evaluation, inference, tool execution, training, distillation, source mutation, or network authority.
+  Current posture: Stage-40 prompt-evaluation result release receipt review disposition release receipt review contract, Stage-39 prompt-evaluation result release receipt review disposition release receipt contract, Stage-38 prompt-evaluation result release receipt review disposition release contract, Stage-37 prompt-evaluation result release receipt review disposition contract, Stage-36 prompt-evaluation result release receipt review contract, Stage-35 prompt-evaluation result release receipt contract, Stage-34 prompt-evaluation result release contract, Stage-33 prompt-evaluation result disposition contract, Stage-32 prompt-evaluation result review contract, Stage-31 prompt-evaluation result contract, Stage-30 prompt-evaluation invocation contract, Stage-29 prompt-evaluation runtime handoff contract, Stage-28 prompt-evaluation-input contract, Stage-27 context-window assembly contract, Stage-26 prompt-token-sequence contract, Stage-25 prompt-tokenization contract, Stage-24 tokenizer-runtime-attachment contract, Stage-23 tokenizer-artifact-binding contract, Stage-22 tokenizer-artifact-verification contract, Stage-21 tokenizer-artifact-measurement contract, Stage-20 tokenizer-artifact-inventory contract, Stage-19 tokenizer-manifest contract, Stage-18 tokenizer-specification contract, Stage-17 tokenization-boundary contract, Stage-16 prompt-evaluation handoff contract, Stage-15 awareness-dialogue contract, Stage-14 prompt-materialization contract, Stage-13 prompt-receipt contract, Stage-12 model-load contract, Stage-11 runtime-invocation contract, Stage-10 inference-readiness contract, Stage-9 local model-registry contract, Stage-8 prompt-evaluation contract, Stage-7 report-only guarded tool-authority preflight, Stage-6 protective safety boundary, Stage-5 operator-reviewed productivity ledger, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan workbench, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, Panel component, Console metadata, local config, and productivity-ledger path; future survivor-centered Q&A scope planned for official Nadia Initiative awareness topics; no sexual user functionality, dialogue generation, prompt-evaluation result release receipt review disposition release receipt review recording, review decision recording, review findings recording, receipt signing, receipt publication, model-output recording, runtime process spawning, runtime session creation, model installation, token generation, prompt evaluation, inference, tool execution, training, distillation, source mutation, or network authority.
 
 Ubuntu/Fedora/openSUSE/Linux substrate
   Current host-facing validation lanes and integration targets.
@@ -224,6 +226,10 @@ no_effect_cli_status_surface=1
 defensive_threat_model_contract_present=1
 defensive_threat_model_validation_present=1
 defensive_threat_model_validation_refinement_present=1
+high_assurance_security_baseline_present=1
+memory_safety_roadmap_present=1
+supply_chain_security_baseline_present=1
+zero_trust_runtime_authority_baseline_present=1
 runtime_boundary_policy_expansion_after_threat_model_present=1
 runtime_boundary_abuse_case_fixture_expansion_present=1
 lat_parse_validate_lower_pipeline_present=1
@@ -234,10 +240,6 @@ nucleus_report_only_task_boundary_present=1
 latticra_seal_report_only_tool_boundary_metadata_present=1
 latticra_seal_runtime_dry_run_report_surface_present=1
 latticra_seal_guarded_allowlist_report_surface_present=1
-latticra_seal_capability_metadata_present=1
-latticra_seal_capability_metadata_report_surface_present=1
-latticra_seal_capability_metadata_report_surface_status_present=1
-latticra_seal_product_spine_present=1
 latticra_seal_agentic_automation_security_metadata_present=1
 latticra_seal_agentic_automation_security_status_present=1
 latticra_seal_agentic_automation_security_index_alignment_present=1
@@ -286,20 +288,20 @@ latticra_seal_key_material_status_present=1
 latticra_seal_public_key_parsing_contract_present=1
 latticra_seal_public_key_parsing_metadata_present=1
 latticra_seal_public_key_parsing_status_present=1
-public_key_parsing_predecessor_key_material_status_present=1
 latticra_seal_future_key_parsing_implementation_contract_present=1
 latticra_seal_future_key_parsing_implementation_plan_present=1
 latticra_seal_key_parsing_metadata_present=1
 latticra_seal_key_parsing_status_present=1
 latticra_seal_verification_policy_metadata_present=1
 latticra_seal_verification_policy_status_present=1
+verification_policy_predecessor_key_parsing_status_present=1
 latticra_seal_verification_receipt_metadata_present=1
 latticra_seal_verification_receipt_status_present=1
+verification_receipt_predecessor_verification_policy_status_present=1
 latticra_seal_capability_gate_metadata_present=1
 latticra_seal_capability_gate_status_present=1
 latticra_seal_effect_decision_metadata_present=1
 latticra_seal_effect_decision_status_present=1
-effect_decision_predecessor_capability_gate_status_present=1
 latticra_seal_runtime_handoff_metadata_present=1
 latticra_seal_runtime_handoff_status_present=1
 latticra_seal_status_rollup_metadata_present=1
@@ -387,6 +389,9 @@ macos_reset_uninstall_live_denial_transcript_contract_present=1
 macos_reset_uninstall_live_runner_interface_contract_present=1
 macos_reset_uninstall_live_runner_noop_prototype_contract_present=1
 macos_reset_uninstall_live_runner_denied_dispatch_transcript_contract_present=1
+macos_reset_uninstall_live_runner_denied_dispatch_review_contract_present=1
+macos_reset_uninstall_live_runner_acceptance_gate_contract_present=1
+macos_reset_uninstall_live_runner_acceptance_denial_transcript_contract_present=1
 live_execution_preflight_contract_state=closed-no-effect
 live_execution_preflight_passed=0
 live_execution_preflight_blocking=1
@@ -409,12 +414,42 @@ live_runner_noop_prototype_denial_path_exercised=1
 live_runner_noop_prototype_dispatch_enabled=0
 live_runner_noop_prototype_deletion_enabled=0
 live_runner_denied_dispatch_transcript_contract_state=recorded-no-effect
-live_runner_denied_dispatch_transcript_recorded=1
 live_runner_denied_dispatch_transcript_stdout_only=1
-live_runner_denied_dispatch_transcript_dispatch_denied=1
-live_runner_denied_dispatch_transcript_dispatch_allowed=0
+live_runner_denied_dispatch_transcript_file_write_enabled=0
 live_runner_denied_dispatch_transcript_dispatch_enabled=0
+live_runner_denied_dispatch_transcript_dispatch_denied=1
+live_runner_denied_dispatch_transcript_dispatch_performed=0
 live_runner_denied_dispatch_transcript_deletion_enabled=0
+live_runner_denied_dispatch_review_contract_state=reviewed-no-effect
+live_runner_denied_dispatch_review_stdout_only=1
+live_runner_denied_dispatch_review_file_write_enabled=0
+live_runner_denied_dispatch_review_dispatch_reviewed=1
+live_runner_denied_dispatch_review_dispatch_enabled=0
+live_runner_denied_dispatch_review_dispatch_denied=1
+live_runner_denied_dispatch_review_dispatch_performed=0
+live_runner_denied_dispatch_review_deletion_enabled=0
+live_runner_denied_dispatch_review_acceptance_gate_opened=0
+macos_reset_uninstall_live_runner_acceptance_gate_contract_present=1
+live_runner_acceptance_gate_contract_state=closed-no-effect
+live_runner_acceptance_gate_open=0
+live_runner_acceptance_gate_closed=1
+live_runner_acceptance_gate_dispatch_allowed=0
+live_runner_acceptance_gate_dispatch_enabled=0
+live_runner_acceptance_gate_dispatch_performed=0
+live_runner_acceptance_gate_deletion_enabled=0
+live_runner_acceptance_gate_result_passed_preflight=blocked
+live_runner_acceptance_gate_result_complete_evidence_bundle=blocked
+live_runner_acceptance_gate_result_effect_authorization=blocked
+live_runner_acceptance_gate_result_no_dispatch_until_open=met
+live_runner_acceptance_denial_transcript_contract_state=recorded-no-effect
+live_runner_acceptance_denial_transcript_recorded=1
+live_runner_acceptance_denial_transcript_stdout_only=1
+live_runner_acceptance_denial_transcript_file_write_enabled=0
+live_runner_acceptance_denial_transcript_acceptance_gate_open=0
+live_runner_acceptance_denial_transcript_dispatch_allowed=0
+live_runner_acceptance_denial_transcript_dispatch_enabled=0
+live_runner_acceptance_denial_transcript_dispatch_performed=0
+live_runner_acceptance_denial_transcript_deletion_enabled=0
 live_runner_interface_current_preflight_passed=0
 live_runner_interface_current_decision=deny
 live_runner_interface_dispatch_enabled=0
@@ -552,7 +587,10 @@ sh scripts/test-seabios-grub-compatibility-contract.sh
 sh scripts/test-seabios-grub-boot-preview-evidence-contract.sh
 sh scripts/test-seabios-grub-boot-preview-preflight.sh
 sh scripts/test-seabios-grub-boot-preview-evidence-template.sh
+sh scripts/test-seabios-grub-boot-preview-evidence-validate.sh
 sh scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh
+sh scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-template.sh
+sh scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
 ```
 
 Run selected Ubuntu/local deb status guards when working on Ubuntu validation lanes:
@@ -586,6 +624,9 @@ On openSUSE, the `rpmlint` and `osc` availability lane is:
 ```sh
 sh scripts/test-opensuse-rpmlint-osc-availability.sh
 sh scripts/test-opensuse-rpmlint-static-spec-lane.sh
+sh scripts/test-opensuse-rpmlint-findings-classification.sh
+sh scripts/test-opensuse-source-archive-reproducibility-contract.sh
+sh scripts/test-opensuse-source-archive-fixture-lane.sh
 ```
 
 Run selected macOS installer-lane guards when working on Mac integration:
@@ -610,7 +651,13 @@ The SeaBIOS and GRUB boot-preview preflight is [`docs/SEABIOS_GRUB_BOOT_PREVIEW_
 
 The SeaBIOS and GRUB boot-preview evidence capture template is [`docs/SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_CAPTURE_TEMPLATE.md`](docs/SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_CAPTURE_TEMPLATE.md). Operators can run `sh scripts/seabios-grub-boot-preview-evidence-template.sh` to print the future evidence bundle shape before any VM boot attempt is authorized.
 
+The SeaBIOS and GRUB boot-preview evidence validation is [`docs/SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_VALIDATION.md`](docs/SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_VALIDATION.md). Operators can run `sh scripts/seabios-grub-boot-preview-evidence-validate.sh` to reject forged QEMU, serial-console, recovery, and bootability claims before evidence is accepted.
+
 The SeaBIOS and GRUB boot-preview QEMU argv template is [`docs/SEABIOS_GRUB_BOOT_PREVIEW_QEMU_ARGV_TEMPLATE.md`](docs/SEABIOS_GRUB_BOOT_PREVIEW_QEMU_ARGV_TEMPLATE.md). Operators can run `sh scripts/seabios-grub-boot-preview-qemu-argv-template.sh` to print the future profile-specific QEMU argv record shape without running QEMU.
+
+The SeaBIOS and GRUB boot-preview boot artifact manifest template is [`docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_TEMPLATE.md`](docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_TEMPLATE.md). Operators can run `sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-template.sh` to print the future artifact metadata shape without creating images, installing GRUB, or writing boot files.
+
+The SeaBIOS and GRUB boot-preview boot artifact manifest validation is [`docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_VALIDATION.md`](docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_VALIDATION.md). Operators can run `sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-validate.sh` to classify the current fixture, reject premature bootable/production claims, and keep artifact acceptance blocked until real evidence exists.
 
 The current compatibility posture is narrow and intentional: the Panel installer is ready for guarded user-local installs, and it is boot-safe by absence because it does not write firmware state, partitions, boot sectors, EFI variables, GRUB configuration, kernel images, initramfs files, or bootloader entries. This is not a bootable Latticra OS image, not a GRUB installer, and not a production OS claim.
 
@@ -620,10 +667,16 @@ installer_boot_safe_by_absence=1
 boot_preview_manifest_fixture_present=1
 seabios_grub_boot_preview_preflight_present=1
 seabios_grub_boot_preview_evidence_capture_template_present=1
+seabios_grub_boot_preview_evidence_validation_present=1
 seabios_grub_boot_preview_qemu_argv_template_present=1
+seabios_grub_boot_preview_boot_artifact_manifest_template_present=1
+seabios_grub_boot_preview_boot_artifact_manifest_validation_present=1
 preflight_decision=blocked-fixture-only-no-boot-execution
 capture_template_decision=blocked-template-only-no-boot-execution
+boot_evidence_validation_decision=blocked-fixture-only-no-boot-evidence
 qemu_argv_template_decision=blocked-template-only-no-qemu-execution
+boot_artifact_manifest_template_decision=blocked-template-only-no-artifact
+boot_artifact_manifest_validation_decision=blocked-fixture-only-incomplete
 bootloader_write_allowed=0
 partition_mutation_allowed=0
 grub_install_allowed=0
@@ -632,6 +685,9 @@ qemu_execution_allowed_by_guard=0
 qemu_boot_execution_attempted=0
 qemu_argv_record_ready=0
 boot_evidence_record_ready=0
+boot_evidence_candidate_ready=0
+boot_artifact_manifest_candidate_ready=0
+boot_artifact_manifest_ready=0
 bootable_os_ready=0
 production_installer_ready=0
 ```
@@ -642,15 +698,25 @@ Future SeaBIOS and GRUB work must move through explicit QEMU/VM evidence, boot l
 
 ## Nadia Offline AI
 
-Nadia now has a Stage-37 prompt-evaluation result release receipt review disposition contract. It is metadata-only and preserves denial of review-disposition records, disposition decisions, disposition findings, review records, review decisions, review findings, receipt records, receipt signing, receipt publication, release records, release decisions, release publication, release packaging, disposition records, result-review records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, and tool execution.
+Nadia now has a Stage-40 prompt-evaluation result release receipt review disposition release receipt review contract. It is metadata-only and preserves denial of release-receipt-review records, review decisions, review findings, review dispositions, receipt emission, receipt signing, receipt publication, disposition-release records, release decisions, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, and tool execution.
 
 ```text
-nadia_stage_37_prompt_evaluation_result_release_receipt_review_disposition_contract_present=1
-installed_prompt_evaluation_result_release_receipt_review_disposition_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition
-prompt_evaluation_result_release_receipt_review_disposition_contract_status=contract_only
+nadia_stage_40_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_present=1
+installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_status=contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_record_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_findings_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_applied=0
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_contract=1
+prompt_evaluation_result_release_receipt_review_disposition_release_record_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_published=0
 prompt_evaluation_result_release_receipt_review_disposition_record_created=0
 prompt_evaluation_result_release_receipt_review_disposition_decision_recorded=0
 prompt_evaluation_result_release_receipt_review_disposition_findings_recorded=0
+prompt_evaluation_result_release_receipt_review_record_created=0
+prompt_evaluation_result_release_receipt_review_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_findings_recorded=0
 prompt_evaluation_result_release_receipt_record_created=0
 prompt_evaluation_result_release_receipt_signed=0
 prompt_evaluation_result_release_receipt_published=0
@@ -791,6 +857,10 @@ nadia prompt-evaluation-result-disposition
 nadia prompt-evaluation-result-release
 nadia prompt-evaluation-result-release-receipt
 nadia prompt-evaluation-result-release-receipt-review
+nadia prompt-evaluation-result-release-receipt-review-disposition
+nadia prompt-evaluation-result-release-receipt-review-disposition-release
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
 profile guided
 profile seal
 profile fedora
@@ -810,6 +880,9 @@ Seal Report-Only
 
 Fedora Validation VM
   Fedora/Ubuntu/openSUSE/Linux validation workspace for VM testing and host-facing evidence capture.
+
+LC Standalone
+  Console-only preset that installs LC metadata, profiles, registry, contracts, and wrapper without requiring Panel at runtime.
 
 Custom
   Manual operator profile for users who understand the selected components and authority posture.
@@ -855,13 +928,12 @@ This uses:
 installer/configs/lc-standalone.installer.toml
 ```
 
-The standalone LC configuration keeps only `latticra_console` enabled, selects `lc.profile = "standalone"`, writes `lc-standalone-install-v0` metadata, disables Panel embedding for the installed console, and preserves the no-effect host and network authority floor.
+The standalone LC configuration keeps only `latticra_console` enabled, selects `lc.profile = "standalone"`, writes `lc-standalone-install-v0` metadata, disables Panel embedding for the installed console, and preserves the same no-effect host and network authority floor.
 
 ### Guarded standalone LC local install
 
 ```sh
 make -C installer lc-standalone-local
-make -C installer verify-lc-standalone
 ```
 
 This uses:
@@ -870,7 +942,7 @@ This uses:
 installer/configs/lc-standalone-local.installer.toml
 ```
 
-It performs a guarded user-local standalone LC install with Panel GUI build disabled, desktop entry install disabled, and the direct `latticra-lc` wrapper enabled.
+It performs a guarded user-local standalone LC install with `dry_run = false`, `allow_host_mutation = true`, Panel GUI build disabled, desktop entry install disabled, and the direct `latticra-lc` wrapper enabled.
 
 ### Guarded user-local install
 
@@ -1176,6 +1248,24 @@ Review the reset/uninstall live-runner denied-dispatch transcript contract:
 sh scripts/macos-reset-uninstall-live-runner-denied-dispatch-transcript-contract.sh
 ```
 
+Review the reset/uninstall live-runner denied-dispatch review contract:
+
+```sh
+sh scripts/macos-reset-uninstall-live-runner-denied-dispatch-review-contract.sh
+```
+
+Review the reset/uninstall live-runner acceptance-gate contract:
+
+```sh
+sh scripts/macos-reset-uninstall-live-runner-acceptance-gate-contract.sh
+```
+
+Review the reset/uninstall live-runner acceptance-denial transcript contract:
+
+```sh
+sh scripts/macos-reset-uninstall-live-runner-acceptance-denial-transcript-contract.sh
+```
+
 Expected commit posture:
 
 ```text
@@ -1213,6 +1303,9 @@ macos_reset_uninstall_live_denial_transcript_contract_present=1
 macos_reset_uninstall_live_runner_interface_contract_present=1
 macos_reset_uninstall_live_runner_noop_prototype_contract_present=1
 macos_reset_uninstall_live_runner_denied_dispatch_transcript_contract_present=1
+macos_reset_uninstall_live_runner_denied_dispatch_review_contract_present=1
+macos_reset_uninstall_live_runner_acceptance_gate_contract_present=1
+macos_reset_uninstall_live_runner_acceptance_denial_transcript_contract_present=1
 live_execution_preflight_contract_state=closed-no-effect
 live_execution_preflight_passed=0
 live_execution_preflight_blocking=1
@@ -1235,14 +1328,42 @@ live_runner_noop_prototype_denial_path_exercised=1
 live_runner_noop_prototype_dispatch_enabled=0
 live_runner_noop_prototype_deletion_enabled=0
 live_runner_denied_dispatch_transcript_contract_state=recorded-no-effect
-live_runner_denied_dispatch_transcript_recorded=1
 live_runner_denied_dispatch_transcript_stdout_only=1
 live_runner_denied_dispatch_transcript_file_write_enabled=0
-live_runner_denied_dispatch_transcript_dispatch_denied=1
-live_runner_denied_dispatch_transcript_dispatch_allowed=0
 live_runner_denied_dispatch_transcript_dispatch_enabled=0
+live_runner_denied_dispatch_transcript_dispatch_denied=1
 live_runner_denied_dispatch_transcript_dispatch_performed=0
 live_runner_denied_dispatch_transcript_deletion_enabled=0
+live_runner_denied_dispatch_review_contract_state=reviewed-no-effect
+live_runner_denied_dispatch_review_stdout_only=1
+live_runner_denied_dispatch_review_file_write_enabled=0
+live_runner_denied_dispatch_review_dispatch_reviewed=1
+live_runner_denied_dispatch_review_dispatch_enabled=0
+live_runner_denied_dispatch_review_dispatch_denied=1
+live_runner_denied_dispatch_review_dispatch_performed=0
+live_runner_denied_dispatch_review_deletion_enabled=0
+live_runner_denied_dispatch_review_acceptance_gate_opened=0
+macos_reset_uninstall_live_runner_acceptance_gate_contract_present=1
+live_runner_acceptance_gate_contract_state=closed-no-effect
+live_runner_acceptance_gate_open=0
+live_runner_acceptance_gate_closed=1
+live_runner_acceptance_gate_dispatch_allowed=0
+live_runner_acceptance_gate_dispatch_enabled=0
+live_runner_acceptance_gate_dispatch_performed=0
+live_runner_acceptance_gate_deletion_enabled=0
+live_runner_acceptance_gate_result_passed_preflight=blocked
+live_runner_acceptance_gate_result_complete_evidence_bundle=blocked
+live_runner_acceptance_gate_result_effect_authorization=blocked
+live_runner_acceptance_gate_result_no_dispatch_until_open=met
+live_runner_acceptance_denial_transcript_contract_state=recorded-no-effect
+live_runner_acceptance_denial_transcript_recorded=1
+live_runner_acceptance_denial_transcript_stdout_only=1
+live_runner_acceptance_denial_transcript_file_write_enabled=0
+live_runner_acceptance_denial_transcript_acceptance_gate_open=0
+live_runner_acceptance_denial_transcript_dispatch_allowed=0
+live_runner_acceptance_denial_transcript_dispatch_enabled=0
+live_runner_acceptance_denial_transcript_dispatch_performed=0
+live_runner_acceptance_denial_transcript_deletion_enabled=0
 live_runner_interface_current_preflight_passed=0
 live_runner_interface_current_decision=deny
 live_runner_interface_dispatch_enabled=0
@@ -1275,7 +1396,7 @@ host_mutation_performed=0
 network_performed=0
 ```
 
-This means Latticra can currently document, probe, dry-run the Mac-specific app-bundle path, classify reset/uninstall targets, render a reset/uninstall dry-run transcript, define required absence-report, reset/uninstall receipt-schema, operator-intent, effect-authorization, evidence-bundle, live-implementation plan, live-execution preflight, live-denial transcript, live-runner interface, live-runner no-op prototype, and live-runner denied-dispatch transcript contracts, and keep live reset/uninstall execution disabled until live approval and all required evidence exist. It cannot yet create, install, sign, notarize, open, verify, reset, or uninstall a real macOS `.app`.
+This means Latticra can currently document, probe, dry-run the Mac-specific app-bundle path, classify reset/uninstall targets, render a reset/uninstall dry-run transcript, define required absence-report, reset/uninstall receipt-schema, operator-intent, effect-authorization, evidence-bundle, live-implementation plan, live-execution preflight, live-denial transcript, live-runner interface, live-runner no-op prototype, live-runner denied-dispatch transcript, live-runner denied-dispatch review, live-runner acceptance-gate, and live-runner acceptance-denial transcript contracts, and keep live reset/uninstall execution disabled until live approval and all required evidence exist. It cannot yet create, install, sign, notarize, open, verify, reset, or uninstall a real macOS `.app`.
 
 ### macOS documentation
 
@@ -1301,6 +1422,9 @@ This means Latticra can currently document, probe, dry-run the Mac-specific app-
 - [`docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_INTERFACE_CONTRACT.md`](docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_INTERFACE_CONTRACT.md)
 - [`docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_NOOP_PROTOTYPE_CONTRACT.md`](docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_NOOP_PROTOTYPE_CONTRACT.md)
 - [`docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_DENIED_DISPATCH_TRANSCRIPT_CONTRACT.md`](docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_DENIED_DISPATCH_TRANSCRIPT_CONTRACT.md)
+- [`docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_DENIED_DISPATCH_REVIEW_CONTRACT.md`](docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_DENIED_DISPATCH_REVIEW_CONTRACT.md)
+- [`docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_GATE_CONTRACT.md`](docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_GATE_CONTRACT.md)
+- [`docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_TRANSCRIPT_CONTRACT.md`](docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_TRANSCRIPT_CONTRACT.md)
 
 ---
 
@@ -1314,7 +1438,7 @@ Nadia's protective boundary explicitly forbids sexual user functionality, sexual
 
 Documentation and code identify the solemn implementation identity as `Nadia Witness Foundation`; the human-facing interactive name remains `Nadia`.
 
-Current Nadia status is Stage-37 prompt-evaluation result release receipt review disposition contract plus the Stage-36 prompt-evaluation result release receipt review contract, Stage-35 prompt-evaluation result release receipt contract, Stage-34 prompt-evaluation result release contract, Stage-33 prompt-evaluation result disposition contract, Stage-32 prompt-evaluation result review contract, Stage-31 prompt-evaluation result contract, Stage-30 prompt-evaluation invocation contract, Stage-29 prompt-evaluation runtime handoff contract, Stage-28, Stage-27, Stage-26, Stage-25, Stage-24, Stage-23, Stage-22, Stage-21, Stage-20, Stage-19, Stage-18, Stage-17, Stage-16, Stage-15, Stage-14, Stage-13, Stage-12, Stage-11, Stage-10, Stage-9, Stage-8, Stage-7, Stage-6, Stage-5, Stage-4, Stage-3, Stage-2, Stage-1, and Stage-0 foundations:
+Current Nadia status is Stage-40 prompt-evaluation result release receipt review disposition release receipt review contract plus the Stage-39 prompt-evaluation result release receipt review disposition release receipt contract, the Stage-38 prompt-evaluation result release receipt review disposition release contract, the Stage-37 prompt-evaluation result release receipt review disposition contract, the Stage-36 prompt-evaluation result release receipt review contract, Stage-35 prompt-evaluation result release receipt contract, Stage-34 prompt-evaluation result release contract, Stage-33 prompt-evaluation result disposition contract, Stage-32 prompt-evaluation result review contract, Stage-31 prompt-evaluation result contract, Stage-30 prompt-evaluation invocation contract, Stage-29 prompt-evaluation runtime handoff contract, Stage-28, Stage-27, Stage-26, Stage-25, Stage-24, Stage-23, Stage-22, Stage-21, Stage-20, Stage-19, Stage-18, Stage-17, Stage-16, Stage-15, Stage-14, Stage-13, Stage-12, Stage-11, Stage-10, Stage-9, Stage-8, Stage-7, Stage-6, Stage-5, Stage-4, Stage-3, Stage-2, Stage-1, and Stage-0 foundations:
 
 ```text
 component_key=nadia_offline_ai
@@ -1982,11 +2106,91 @@ prompt_evaluation_result_release_receipt_review_disposition_result_recorded=0
 prompt_evaluation_result_release_receipt_review_disposition_runtime_invoked=0
 prompt_evaluation_result_release_receipt_review_disposition_record_created=0
 prompt_evaluation_result_release_receipt_review_disposition_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_approval_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_rejection_recorded=0
 prompt_evaluation_result_release_receipt_review_disposition_findings_recorded=0
 prompt_evaluation_result_release_receipt_review_disposition_applied=0
 requires_prompt_evaluation_result_release_receipt_review_contract=1
 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_contract=1
 prompt_evaluation_result_release_receipt_review_disposition_promotion_allowed=0
+nadia_stage_38_prompt_evaluation_result_release_receipt_review_disposition_release_contract_present=1
+prompt_evaluation_result_release_receipt_review_disposition_release_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-contract.sh
+installed_prompt_evaluation_result_release_receipt_review_disposition_release_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release
+prompt_evaluation_result_release_receipt_review_disposition_release_stage=contract-only
+prompt_evaluation_result_release_receipt_review_disposition_release_contract_status=contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_authority=0
+prompt_evaluation_result_release_receipt_review_disposition_release_allowed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_performed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_metadata_present=1
+prompt_evaluation_result_release_receipt_review_disposition_release_family=operator-reviewed-prompt-evaluation-result-release-receipt-review-disposition-release
+prompt_evaluation_result_release_receipt_review_disposition_release_format=contract-only-offline-evaluation-result-release-receipt-review-disposition-release
+prompt_evaluation_result_release_receipt_review_disposition_release_decision=blocked_contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_plan_recorded=1
+prompt_evaluation_result_release_receipt_review_disposition_release_result_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_runtime_invoked=0
+prompt_evaluation_result_release_receipt_review_disposition_release_record_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_approval_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_rejection_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_findings_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_published=0
+prompt_evaluation_result_release_receipt_review_disposition_release_packaged=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_created=0
+requires_prompt_evaluation_result_release_receipt_review_disposition_contract=1
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract=1
+prompt_evaluation_result_release_receipt_review_disposition_release_promotion_allowed=0
+nadia_stage_39_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract_present=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract.sh
+installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_stage=contract-only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract_status=contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_authority=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_allowed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_performed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_metadata_present=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_family=operator-reviewed-prompt-evaluation-result-release-receipt-review-disposition-release-receipt
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_format=contract-only-offline-evaluation-result-release-receipt-review-disposition-release-receipt
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_decision=blocked_contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_plan_recorded=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_result_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_runtime_invoked=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_record_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_emitted=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_signed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_published=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_packaged=0
+requires_prompt_evaluation_result_release_receipt_review_disposition_release_contract=1
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_promotion_allowed=0
+nadia_stage_40_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_present=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract.sh
+installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_stage=contract-only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_status=contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_authority=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_allowed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_performed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_metadata_present=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_family=operator-reviewed-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_format=contract-only-offline-evaluation-result-release-receipt-review-disposition-release-receipt-review
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_decision=blocked_contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_plan_recorded=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_result_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_runtime_invoked=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_record_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_findings_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_applied=0
+requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract=1
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_contract=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_promotion_allowed=0
 local_file_read_for_indexing=operator_invoked
 offline_by_default=1
 panel_install_surface_present=1
@@ -2053,11 +2257,15 @@ latticra-nadia prompt-evaluation-result-disposition
 latticra-nadia prompt-evaluation-result-release
 latticra-nadia prompt-evaluation-result-release-receipt
 latticra-nadia prompt-evaluation-result-release-receipt-review
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
 ```
 
 See [`docs/NADIA_OFFLINE_AI_FOUNDATION.md`](docs/NADIA_OFFLINE_AI_FOUNDATION.md), [`docs/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](docs/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md), [`docs/NADIA_RUNTIME_PROFILE_STAGE_2.md`](docs/NADIA_RUNTIME_PROFILE_STAGE_2.md), [`docs/NADIA_DEVELOPER_WORKBENCH_STAGE_3.md`](docs/NADIA_DEVELOPER_WORKBENCH_STAGE_3.md), [`docs/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md`](docs/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md), [`docs/NADIA_PRODUCTIVITY_LOOP_STAGE_5.md`](docs/NADIA_PRODUCTIVITY_LOOP_STAGE_5.md), [`docs/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md`](docs/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md), [`docs/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md`](docs/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md), [`docs/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md`](docs/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md), [`docs/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md`](docs/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md), [`docs/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md`](docs/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md), [`docs/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md`](docs/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md), [`docs/NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md`](docs/NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md), [`docs/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md`](docs/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md), [`docs/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md`](docs/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md), [`docs/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15.md`](docs/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15.md), [`docs/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16.md`](docs/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16.md), [`docs/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17.md`](docs/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17.md), [`docs/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18.md`](docs/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18.md), [`docs/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19.md`](docs/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19.md), [`docs/NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20.md`](docs/NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20.md), [`docs/NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21.md`](docs/NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21.md), [`docs/NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22.md`](docs/NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22.md), [`docs/NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23.md`](docs/NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23.md), [`docs/status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](docs/status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md), [`docs/status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](docs/status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md), [`docs/status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md`](docs/status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md), [`docs/status/NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md`](docs/status/NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md), [`docs/status/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4_STATUS.md`](docs/status/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4_STATUS.md), [`docs/status/NADIA_PRODUCTIVITY_LOOP_STAGE_5_STATUS.md`](docs/status/NADIA_PRODUCTIVITY_LOOP_STAGE_5_STATUS.md), [`docs/status/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md`](docs/status/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md), [`docs/status/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7_STATUS.md`](docs/status/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8_STATUS.md), [`docs/status/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md`](docs/status/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md), [`docs/status/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10_STATUS.md`](docs/status/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10_STATUS.md), [`docs/status/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md`](docs/status/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md), [`docs/status/NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md`](docs/status/NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md), [`docs/status/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13_STATUS.md`](docs/status/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13_STATUS.md), [`docs/status/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md`](docs/status/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md), [`docs/status/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15_STATUS.md`](docs/status/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16_STATUS.md), [`docs/status/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17_STATUS.md`](docs/status/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17_STATUS.md), [`docs/status/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18_STATUS.md`](docs/status/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18_STATUS.md), [`docs/status/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19_STATUS.md`](docs/status/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19_STATUS.md), [`docs/status/NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20_STATUS.md`](docs/status/NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20_STATUS.md), [`docs/status/NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21_STATUS.md`](docs/status/NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21_STATUS.md), [`docs/status/NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22_STATUS.md`](docs/status/NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22_STATUS.md), and [`docs/status/NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23_STATUS.md`](docs/status/NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23_STATUS.md).
 
-Current Nadia continuation docs: [`docs/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md`](docs/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md), [`docs/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md`](docs/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md), [`docs/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26.md`](docs/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26.md), [`docs/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md`](docs/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md), [`docs/NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28.md`](docs/NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28.md), [`docs/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29.md`](docs/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29.md), [`docs/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md`](docs/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_CONTRACT_STAGE_34.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_CONTRACT_STAGE_34.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_CONTRACT_STAGE_35.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_CONTRACT_STAGE_35.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36.md), [`docs/status/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md`](docs/status/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md), [`docs/status/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md`](docs/status/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md), [`docs/status/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26_STATUS.md`](docs/status/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26_STATUS.md), [`docs/status/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md`](docs/status/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_CONTRACT_STAGE_34_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_CONTRACT_STAGE_34_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_CONTRACT_STAGE_35_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_CONTRACT_STAGE_35_STATUS.md), and [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36_STATUS.md).
+Current Nadia continuation docs: [`docs/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md`](docs/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md), [`docs/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md`](docs/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md), [`docs/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26.md`](docs/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26.md), [`docs/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md`](docs/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md), [`docs/NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28.md`](docs/NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28.md), [`docs/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29.md`](docs/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29.md), [`docs/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md`](docs/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_CONTRACT_STAGE_34.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_CONTRACT_STAGE_34.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_CONTRACT_STAGE_35.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_CONTRACT_STAGE_35.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_37.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_37.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_38.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_38.md), [`docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_39.md`](docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_39.md), [`docs/status/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md`](docs/status/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md), [`docs/status/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md`](docs/status/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md), [`docs/status/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26_STATUS.md`](docs/status/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26_STATUS.md), [`docs/status/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md`](docs/status/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_CONTRACT_STAGE_34_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_CONTRACT_STAGE_34_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_CONTRACT_STAGE_35_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_CONTRACT_STAGE_35_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_37_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_37_STATUS.md), [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_38_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_38_STATUS.md), and [`docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_39_STATUS.md`](docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_39_STATUS.md).
 
 ---
 
@@ -2152,6 +2360,27 @@ runtime_behavior=0
 effect_authority=denied
 ```
 
+Kernel lifecycle evidence is the current no-effect operating-system-universe evidence lane.
+
+Current kernel lifecycle posture:
+
+```text
+kernel_lifecycle_evidence_status_present=1
+kernel_run_queue_guard_present=1
+kernel_context_switch_guard_present=1
+kernel_time_accounting_guard_present=1
+kernel_preemption_guard_present=1
+final_state=preemption-ready
+external_effect_performed=0
+runtime_entry_allowed=0
+run_queue_mutation_allowed=0
+dispatch_allowed=0
+context_switch_allowed=0
+time_accounting_allowed=0
+preemption_allowed=0
+hardware_effect_allowed=0
+```
+
 Relevant documents:
 
 - [`docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md`](docs/NUCLEUS_TASK_EXECUTION_CONTRACT.md)
@@ -2166,6 +2395,13 @@ Relevant documents:
 - [`docs/RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`](docs/RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md)
 - [`docs/RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md`](docs/RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md)
 - [`docs/RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md`](docs/RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md)
+- [`docs/KERNEL_LIFECYCLE_SEED.md`](docs/KERNEL_LIFECYCLE_SEED.md)
+- [`docs/KERNEL_SCHEDULER_TICK_SEED.md`](docs/KERNEL_SCHEDULER_TICK_SEED.md)
+- [`docs/KERNEL_RUN_QUEUE_SEED.md`](docs/KERNEL_RUN_QUEUE_SEED.md)
+- [`docs/KERNEL_CONTEXT_SWITCH_SEED.md`](docs/KERNEL_CONTEXT_SWITCH_SEED.md)
+- [`docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md`](docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md)
+- [`docs/KERNEL_LIFECYCLE_ROLLBACK_PLAN.md`](docs/KERNEL_LIFECYCLE_ROLLBACK_PLAN.md)
+- [`docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md`](docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md)
 
 ---
 
@@ -2240,19 +2476,6 @@ allow_candidate_executes_tool=0
 allow_candidate_reads_host=0
 allow_candidate_writes_host=0
 allow_candidate_uses_network=0
-seal_capability_metadata_present=1
-seal_capability_metadata_report_surface_present=1
-seal_capability_metadata_report_surface_status_present=1
-operator_visible_capability_metadata_report=1
-known_fixture_capability_candidate_visible=1
-capability_grants_authority=0
-capability_executes_tool=0
-capability_reads_host=0
-capability_writes_host=0
-capability_uses_network=0
-seal_product_spine_present=1
-next_generation_security_product_target=1
-production_security_product=0
 seal_report_envelope_contract_present=1
 seal_report_envelope_implementation_present=1
 seal_report_envelope_status_present=1
@@ -2290,13 +2513,13 @@ seal_key_material_status_present=1
 seal_public_key_parsing_contract_present=1
 seal_public_key_parsing_metadata_present=1
 seal_public_key_parsing_status_present=1
-public_key_parsing_predecessor_key_material_status_present=1
 seal_future_key_parsing_implementation_contract_present=1
 seal_future_key_parsing_implementation_plan_present=1
 seal_key_parsing_metadata_present=1
 seal_key_parsing_status_present=1
 seal_verification_policy_metadata_present=1
 seal_verification_policy_status_present=1
+verification_policy_predecessor_key_parsing_status_present=1
 seal_crypto_verify_backend_contract_present=1
 seal_crypto_verify_backend_metadata_present=1
 seal_crypto_verify_backend_status_present=1
@@ -2375,11 +2598,11 @@ runtime_handoff_report_host_write_performed=0
 runtime_handoff_report_network_performed=0
 seal_verification_receipt_metadata_present=1
 seal_verification_receipt_status_present=1
+verification_receipt_predecessor_verification_policy_status_present=1
 seal_capability_gate_metadata_present=1
 seal_capability_gate_status_present=1
 seal_effect_decision_metadata_present=1
 seal_effect_decision_status_present=1
-effect_decision_predecessor_capability_gate_status_present=1
 seal_runtime_handoff_metadata_present=1
 seal_runtime_handoff_status_present=1
 seal_status_rollup_metadata_present=1
@@ -2481,7 +2704,7 @@ The public-key parsing metadata implementation classifies ready key-material met
 
 The public-key parsing status record makes that metadata-only checkpoint visible from the public entry points without changing implementation behavior.
 
-The public-key parsing status record now ties that metadata-only checkpoint to the guarded key-material status predecessor without adding public-key parsing, key material loading, private-key handling, signing, verification, signer invocation behavior, host behavior, network behavior, capability enforcement, or runtime authority.
+The public-key parsing status record now ties that metadata-only checkpoint to the guarded key-material status predecessor without adding public-key parsing, key material loading, private-key handling, signing, verification, signer invocation behavior, host behavior, network behavior, or runtime authority.
 
 The future key parsing implementation contract defines the next planning boundary after public-key parsing status readiness. It adds no parser, loads no key material, handles no private keys, performs no signing or verification, invokes no signer, touches no host or network behavior, enforces no capability, and grants no runtime authority.
 
@@ -2491,9 +2714,13 @@ The bounded key parsing metadata implementation now accepts caller-provided Ed25
 
 The key parsing status record makes that bounded public-key byte metadata checkpoint visible from the public entry points without changing implementation behavior.
 
+The key parsing status record now ties that bounded public-key byte metadata checkpoint to the guarded public-key parsing status predecessor without changing parsing behavior, loading key material, handling private keys, signing, verifying, touching host or network behavior, or granting runtime authority.
+
 The verification policy metadata implementation records unsupported verification-policy posture from existing signature metadata and a caller-provided public-key identity label. It does not perform cryptographic verification, consume public-key bytes, load key material, handle private keys, query trust stores or revocation sources, touch host or network behavior, enforce capabilities, or grant runtime authority.
 
 The verification policy status record makes that metadata-only checkpoint visible from the public entry points without changing implementation behavior.
+
+The verification policy status record now ties that metadata-only checkpoint to the guarded key parsing status predecessor without adding cryptographic verification, public-key byte verification, key material loading, private-key handling, signing, host behavior, network behavior, capability enforcement, or runtime authority.
 
 The crypto verify backend metadata implementation records an unsupported backend posture from verification policy metadata. It does not perform cryptographic verification, parse public keys, load key material, handle private keys, query trust stores or revocation sources, touch host or network behavior, enforce capabilities, or grant runtime authority.
 
@@ -2527,13 +2754,15 @@ The verification receipt metadata implementation records unverified receipt meta
 
 The verification receipt status record makes that metadata-only checkpoint visible from the public entry points without changing implementation behavior.
 
+The verification receipt status record now ties that metadata-only checkpoint to the guarded verification policy status predecessor without adding cryptographic verification, verified receipt authority, signing, public-key byte verification, key material loading, private-key handling, host behavior, network behavior, capability enforcement, or runtime authority.
+
 The capability gate metadata implementation records denied-by-default capability gate posture from unverified receipt metadata. It does not enforce capabilities, perform effects, verify signatures, assert verified receipt authority, touch host or network behavior, or grant runtime authority.
 
 The capability gate status record makes that metadata-only denied checkpoint visible from the public entry points without changing implementation behavior.
 
 The effect decision metadata implementation records denied-by-gate effect decision posture from capability gate metadata. It does not perform effects, enforce capabilities, touch host or network behavior, run a runtime handoff, or grant runtime authority.
 
-The effect decision status record now ties that denied metadata checkpoint to the guarded capability gate status predecessor while keeping it visible from the public entry points without changing implementation behavior.
+The effect decision status record makes that metadata-only denied checkpoint visible from the public entry points without changing implementation behavior.
 
 The runtime handoff metadata implementation records inactive runtime handoff posture from denied effect decision metadata. It does not execute runtime behavior, perform effects, touch host or network behavior, enforce capabilities, or grant runtime authority.
 
@@ -2606,12 +2835,6 @@ Relevant Seal records:
 - [`docs/status/SEAL_GUARDED_ALLOWLIST_REPORT_SURFACE_STATUS.md`](docs/status/SEAL_GUARDED_ALLOWLIST_REPORT_SURFACE_STATUS.md)
 - [`docs/status/SEAL_GUARDED_ALLOWLIST_STATUS_INDEX_ALIGNMENT.md`](docs/status/SEAL_GUARDED_ALLOWLIST_STATUS_INDEX_ALIGNMENT.md)
 - [`docs/status/SEAL_GUARDED_ALLOWLIST_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](docs/status/SEAL_GUARDED_ALLOWLIST_PUBLIC_ENTRYPOINT_ALIGNMENT.md)
-- [`docs/LATTICRA_SEAL_CAPABILITY_METADATA_CONTRACT.md`](docs/LATTICRA_SEAL_CAPABILITY_METADATA_CONTRACT.md)
-- [`docs/LATTICRA_SEAL_CAPABILITY_METADATA_IMPLEMENTATION_PLAN.md`](docs/LATTICRA_SEAL_CAPABILITY_METADATA_IMPLEMENTATION_PLAN.md)
-- [`docs/LATTICRA_SEAL_CAPABILITY_METADATA_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_CAPABILITY_METADATA_IMPLEMENTATION.md)
-- [`docs/LATTICRA_SEAL_CAPABILITY_METADATA_REPORT_SURFACE.md`](docs/LATTICRA_SEAL_CAPABILITY_METADATA_REPORT_SURFACE.md)
-- [`docs/status/SEAL_CAPABILITY_METADATA_REPORT_SURFACE_STATUS.md`](docs/status/SEAL_CAPABILITY_METADATA_REPORT_SURFACE_STATUS.md)
-- [`docs/latticra-seal/PRODUCT.md`](docs/latticra-seal/PRODUCT.md)
 - [`docs/LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_CONTRACT.md`](docs/LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_IMPLEMENTATION.md)
 - [`docs/LATTICRA_SEAL_REPORT_ENVELOPE_CONTRACT.md`](docs/LATTICRA_SEAL_REPORT_ENVELOPE_CONTRACT.md)
@@ -2742,6 +2965,7 @@ Relevant Fedora records:
 - [`docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_RUNNER_PLAN.md`](docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_RUNNER_PLAN.md)
 - [`docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md`](docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md)
 - [`docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md`](docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md)
+- [`docs/status/FEDORA_VM_CLI_PAYLOAD_README_ALIGNMENT_STATUS.md`](docs/status/FEDORA_VM_CLI_PAYLOAD_README_ALIGNMENT_STATUS.md)
 - [`packaging/fedora/latticra.spec`](packaging/fedora/latticra.spec)
 
 ---
@@ -2772,6 +2996,12 @@ ubuntu_notice_file_decision_contract_present=1
 ubuntu_notice_file_decision_status=blocked-pending-notice-file-decision
 ubuntu_debian_copyright_notice_mapping_contract_present=1
 ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping
+ubuntu_trademark_notice_boundary_contract_present=1
+ubuntu_trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary
+ubuntu_release_artifact_notice_requirements_contract_present=1
+ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements
+ubuntu_package_notice_promotion_gate_contract_present=1
+ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_package_notice_review_contract_present=1
 ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 ubuntu_package_license_review_contract_present=1
@@ -2788,6 +3018,19 @@ doc_payload_license_reviewed=0
 doc_payload_license_unresolved=1
 doc_payload_license_decision_recorded=0
 debian_copyright_doc_payload_mapping_reviewed=0
+debian_copyright_notice_mapping_reviewed=0
+debian_copyright_binary_payload_mapping_reviewed=0
+debian_copyright_third_party_notice_mapping_reviewed=0
+debian_copyright_generated_artifact_notice_mapping_reviewed=0
+debian_copyright_notice_file_mapping_reviewed=0
+debian_copyright_trademark_notice_boundary_reviewed=0
+debian_copyright_license_ref_replaced_or_justified=0
+trademark_notice_boundary_recorded=0
+trademark_policy_applied_to_package_notice=0
+package_description_endorsement_boundary_reviewed=0
+documentation_trademark_boundary_reviewed=0
+canonical_endorsement_boundary_reviewed=0
+project_identity_downstream_use_boundary_recorded=0
 third_party_material_inventory_recorded=1
 third_party_material_inventory_reviewed=0
 third_party_material_source_records_present=0
@@ -2801,6 +3044,9 @@ deb_artifact_notice_requirements_recorded=0
 changes_file_notice_requirements_recorded=0
 build_log_notice_requirements_recorded=0
 installed_payload_notice_requirements_recorded=0
+release_artifact_notice_requirements_recorded=0
+source_package_notice_requirements_recorded=0
+release_notes_notice_requirements_recorded=0
 third_party_notice_reviewed=0
 third_party_notice_requirements_recorded=0
 notice_file_present=0
@@ -2810,7 +3056,6 @@ notice_file_content_requirements_recorded=0
 notice_file_install_path_reviewed=0
 notice_file_packaging_mapping_reviewed=0
 notice_file_absence_justification_recorded=0
-debian_copyright_notice_mapping_reviewed=0
 packaging_license_expression_updated=0
 ppa_claimed=0
 ubuntu_archive_ready=0
@@ -2846,6 +3091,9 @@ Relevant Ubuntu records:
 - [`docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md`](docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md)
 - [`docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md`](docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md)
 - [`docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md`](docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md)
+- [`docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md`](docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md)
+- [`docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md`](docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md)
+- [`docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md`](docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md)
 - [`docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md`](docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md)
 - [`docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md`](docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md)
 - [`docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md`](docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md)
@@ -2856,38 +3104,64 @@ Relevant Ubuntu records:
 
 ## Debian, FreeBSD, and OpenBSD port drafts
 
-Latticra now has local-only Debian, FreeBSD, and OpenBSD package/port draft lanes for the no-effect CLI payload.
+Latticra now has first-pass Debian, FreeBSD, and OpenBSD package/port draft lanes for the no-effect CLI payload.
 
-These drafts record package shape, temporary source archive checks, and temporary package-input handoff checks. They do not claim Debian archive readiness, FreeBSD ports-tree readiness, OpenBSD ports-tree readiness, package publication, native build success, package installation success, or production readiness.
+These drafts are intentionally static and local-only. They record package shape and review blockers, but they do not claim Debian archive readiness, FreeBSD ports-tree readiness, OpenBSD ports-tree readiness, package publication, native build success, package installation success, or production readiness.
 
 Current local port posture:
 
 ```text
 debian_local_deb_draft_present=1
+debian_static_deb_validation_present=1
+debian_archive_ready=0
+debian_mentors_upload_claimed=0
+debian_sponsorship_claimed=0
 freebsd_port_draft_present=1
-openbsd_port_draft_present=1
+freebsd_port_static_validation_present=1
 debian_freebsd_openbsd_source_archive_contract_present=1
-debian_freebsd_openbsd_source_archive_fixture_lane_present=1
-debian_freebsd_openbsd_package_input_handoff_lane_present=1
-temporary_debian_source_input_staged=1
-temporary_debian_orig_archive_staged=1
-temporary_freebsd_port_input_staged=1
-temporary_freebsd_distfile_staged=1
-temporary_openbsd_port_input_staged=1
-temporary_openbsd_distfile_staged=1
-freebsd_distinfo_file_written=0
-openbsd_distinfo_file_written=0
-dpkg_buildpackage_run=0
-freebsd_make_package_run=0
-openbsd_make_package_run=0
+source_archive_policy_recorded=1
+source_archive_created=0
+source_archive_sha256_recorded=0
+freebsd_ports_tree_submission_claimed=0
+poudriere_build_run=0
+portlint_run=0
+freebsd_official_port_claimed=0
+openbsd_port_draft_present=1
+openbsd_port_static_validation_present=1
+freebsd_distinfo_created=0
+openbsd_distinfo_created=0
+openbsd_ports_tree_submission_claimed=0
+bulk_build_run=0
+portcheck_run=0
+permit_package_enabled=0
+openbsd_official_port_claimed=0
 package_artifact_created=0
 production_installer_ready=0
+root_installer_ready=0
 ```
+
+The Debian draft records the same narrow deb payload as the Ubuntu draft:
+
+```text
+usr/bin/latticra
+usr/share/doc/latticra/README.md
+```
+
+The FreeBSD and OpenBSD draft ports record the intended local payload:
+
+```text
+bin/latticra
+share/doc/latticra/README.md
+```
+
+The CLI itself reports no-effect status and disabled runtime behavior.
 
 Relevant Debian, FreeBSD, and OpenBSD records:
 
+- [`docs/DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md`](docs/DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md)
+- [`docs/FREEBSD_PORT_STATIC_VALIDATION.md`](docs/FREEBSD_PORT_STATIC_VALIDATION.md)
+- [`docs/OPENBSD_PORT_STATIC_VALIDATION.md`](docs/OPENBSD_PORT_STATIC_VALIDATION.md)
 - [`docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md`](docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md)
-- [`docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md`](docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md)
 - [`docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md`](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md)
 - [`docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md`](docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md)
 - [`docs/status/FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md`](docs/status/FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md)
@@ -2918,11 +3192,26 @@ opensuse_changes_file_present=1
 opensuse_maintenance_lane_present=1
 opensuse_rpmlint_osc_availability_lane_present=1
 opensuse_rpmlint_static_spec_lane_present=1
+opensuse_rpmlint_findings_classification_present=1
+opensuse_source_archive_reproducibility_contract_present=1
+opensuse_source_archive_fixture_lane_present=1
 rpm_artifact_created=0
 rpm_installed_on_host=0
 osc_build_run=0
-rpmlint_run=0
+accepted_rpmlint_transcript_present=0
+expected_draft_findings_count_recorded=0
+unexpected_findings_count_recorded=0
+classification_decision=blocked-pending-reviewed-rpmlint-output
+source_archive_policy_recorded=1
+source_archive_transcript_present=1
+source_archive_created=1
+source_archive_sha256_recorded=1
+source_archive_reproducible=1
+source_archive_generated_twice=1
+source_archive_repeated_sha256_match=1
+source_archive_accepted_for_build=0
 spec_cleaner_run=0
+rpmlint_package_readiness_claimed=0
 opensuse_obs_publication_claimed=0
 opensuse_official_package_claimed=0
 suse_endorsement_claimed=0
@@ -2954,6 +3243,9 @@ Relevant openSUSE records:
 - [`docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md`](docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md)
 - [`docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md`](docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md)
 - [`docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md`](docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md)
+- [`docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md`](docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md)
+- [`docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md`](docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md)
+- [`docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md`](docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md)
 - [`docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md`](docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md)
 - [`packaging/opensuse/README.md`](packaging/opensuse/README.md)
 - [`packaging/opensuse/latticra.spec`](packaging/opensuse/latticra.spec)
@@ -3028,6 +3320,7 @@ High-level map:
 ├── CONTRIBUTING.md
 ├── LICENSE
 ├── docs/
+│   ├── README.md
 │   ├── FOUNDATION_INDEX.md
 │   ├── status/
 │   ├── strategy/
@@ -3071,8 +3364,11 @@ installer/
   TREE.txt
   configs/
     default.installer.toml
+    lc-standalone.installer.toml
+    lc-standalone-local.installer.toml
     local-prefix-example.installer.toml
   docs/
+    README.md
     INSTALL_BUTTON_EXECUTION_MODEL.md
     INSTALLER_READINESS_CONTRACT.md
     RECEIPTS_AND_EVIDENCE.md
@@ -3100,11 +3396,11 @@ installer/
 
 Start here:
 
-- [`docs/QUICK_START_CHEATSHEET.md`](docs/QUICK_START_CHEATSHEET.md)
 - [`docs/README.md`](docs/README.md)
+- [`docs/DOCUMENTATION_MAINTENANCE.md`](docs/DOCUMENTATION_MAINTENANCE.md)
+- [`docs/QUICK_START_CHEATSHEET.md`](docs/QUICK_START_CHEATSHEET.md)
 - [`STATUS.md`](STATUS.md)
 - [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md)
-- [`docs/PUBLIC_CLAIMS_LEDGER.md`](docs/PUBLIC_CLAIMS_LEDGER.md)
 - [`docs/status/ANNOUNCEMENTS.md`](docs/status/ANNOUNCEMENTS.md)
 - [`docs/FOUNDATION_INDEX.md`](docs/FOUNDATION_INDEX.md)
 - [`docs/latticra-system-substrate/`](docs/latticra-system-substrate/)
@@ -3138,6 +3434,7 @@ Runtime, Nucleus, and boundary direction:
 Installer, macOS, Fedora, Ubuntu, Debian, FreeBSD, OpenBSD, and openSUSE direction:
 
 - [`installer/README.md`](installer/README.md)
+- [`installer/docs/README.md`](installer/docs/README.md)
 - [`installer/docs/UI_CONFIGURATION_MODEL.md`](installer/docs/UI_CONFIGURATION_MODEL.md)
 - [`docs/MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md`](docs/MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md)
 - [`docs/MACOS_USER_LOCAL_APP_BUNDLE_CONTRACT.md`](docs/MACOS_USER_LOCAL_APP_BUNDLE_CONTRACT.md)
@@ -3155,13 +3452,17 @@ Installer, macOS, Fedora, Ubuntu, Debian, FreeBSD, OpenBSD, and openSUSE directi
 - [`docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md`](docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md)
 - [`docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md`](docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md)
 - [`docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md`](docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md)
+- [`docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md`](docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md)
+- [`docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md`](docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md)
+- [`docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md`](docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md)
 - [`docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md`](docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md)
 - [`docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md`](docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md)
 - [`docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md`](docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md)
 - [`packaging/ubuntu/README.md`](packaging/ubuntu/README.md)
+- [`docs/DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md`](docs/DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md)
+- [`docs/FREEBSD_PORT_STATIC_VALIDATION.md`](docs/FREEBSD_PORT_STATIC_VALIDATION.md)
+- [`docs/OPENBSD_PORT_STATIC_VALIDATION.md`](docs/OPENBSD_PORT_STATIC_VALIDATION.md)
 - [`docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md`](docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md)
-- [`docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md`](docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md)
-- [`docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md`](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md)
 - [`docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md`](docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md)
 - [`docs/status/FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md`](docs/status/FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md)
 - [`docs/status/OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md`](docs/status/OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md)
@@ -3173,6 +3474,9 @@ Installer, macOS, Fedora, Ubuntu, Debian, FreeBSD, OpenBSD, and openSUSE directi
 - [`docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md`](docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md)
 - [`docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md`](docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md)
 - [`docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md`](docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md)
+- [`docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md`](docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md)
+- [`docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md`](docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md)
+- [`docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md`](docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md)
 - [`docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md`](docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md)
 - [`packaging/opensuse/README.md`](packaging/opensuse/README.md)
 
@@ -3209,10 +3513,9 @@ Local quality gate:
 ```sh
 make quality
 make quality-safety-guards
-make quality-packaging-static
 ```
 
-The full quality target runs the quick deterministic local quality lanes, including static packaging/status guards that do not require a distro-specific host. The safety guard checks workflow trigger and permission hygiene, action references, unsafe workflow shell patterns, referenced guard scripts, reviewed archive extraction lanes, shell syntax, fail-fast shell setup, and C/C++ warning-policy defaults for compile-bearing guard scripts.
+The full quality target runs the quick deterministic local quality lanes. The safety guard checks workflow trigger and permission hygiene, action references, unsafe workflow shell patterns, referenced guard scripts, shell syntax, fail-fast shell setup, and C/C++ warning-policy defaults for compile-bearing guard scripts.
 
 ---
 
@@ -3235,13 +3538,21 @@ production_cryptography=0
 defensive_threat_model_contract_present=1
 defensive_threat_model_validation_present=1
 defensive_threat_model_validation_refinement_present=1
+high_assurance_security_baseline_present=1
+source_refresh_date=2026-05-26
+memory_safety_roadmap_required=1
+memory_safety_roadmap_present=1
+supply_chain_security_baseline_present=1
 zero_trust_runtime_authority_baseline_present=1
 zero_trust_runtime_authority_guard_present=1
 per_request_authorization_required=1
-runtime_authority_granted=0
+zero_trust_runtime_boundary_required=1
+certification_claim_allowed=0
+compliance_claim_allowed=0
+production_protection_claim_allowed=0
 ```
 
-The defensive threat model validation refinement and [`docs/ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md`](docs/ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md) are source-tracking and evidence-mapping work only. They do not claim certification, compliance, runtime protection, malware prevention, ransomware prevention, sandboxing, production protection, or operational security authority.
+The defensive threat model validation refinement, [`docs/HIGH_ASSURANCE_SECURITY_BASELINE.md`](docs/HIGH_ASSURANCE_SECURITY_BASELINE.md), [`docs/MEMORY_SAFETY_ROADMAP.md`](docs/MEMORY_SAFETY_ROADMAP.md), [`docs/SUPPLY_CHAIN_SECURITY_BASELINE.md`](docs/SUPPLY_CHAIN_SECURITY_BASELINE.md), and [`docs/ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md`](docs/ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md) are source-tracking, allocation, and evidence-mapping work only. They do not claim certification, compliance, runtime protection, malware prevention, ransomware prevention, sandboxing, production protection, memory-safety guarantees, release readiness, or operational security authority.
 
 Security reports should target the current `main` branch unless another branch or release line is explicitly identified as supported.
 

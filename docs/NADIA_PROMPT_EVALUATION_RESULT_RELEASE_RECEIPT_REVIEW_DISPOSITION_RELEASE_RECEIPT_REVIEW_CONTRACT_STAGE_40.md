@@ -1,0 +1,99 @@
+# Nadia Prompt Evaluation Result Release Receipt Review Disposition Release Receipt Review Contract Stage-40
+
+Status: Stage-40 implementation contract
+
+Scope: prompt-evaluation result release receipt review disposition release receipt review metadata before release-receipt-review records, review decisions, review findings, disposition records, receipt signing, receipt publication, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+
+## Purpose
+
+Stage-40 gives Nadia a prompt-evaluation result release receipt review disposition release receipt review contract after the Stage-39 prompt-evaluation result release receipt review disposition release receipt contract is present.
+
+The contract records how a future review-disposition-release receipt review lane must reference the Stage-39 release receipt contract, Stage-38 release-disposition contract, Stage-37 review-disposition contract, Stage-36 receipt-review contract, Stage-35 release receipt contract, Stage-34 release contract, Stage-33 disposition contract, Stage-32 review contract, and Stage-31 result contract. It preserves the absolute rule that Nadia cannot yet review receipts, decide reviews, record review findings, create dispositions, sign receipts, publish receipts, read or record model output, invoke a runtime, evaluate prompts, generate dialogue, generate tokens, run inference, execute tools, mutate source, train, distill, download, or use the network.
+
+## Contract Fields
+
+Stage-40 adds:
+
+```text
+nadia_stage_40_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_present=1
+nadia_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_generator_present=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract.sh
+installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_status=contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_stage=contract-only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_authority=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_allowed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_performed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_metadata_present=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_family=operator-reviewed-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_format=contract-only-offline-evaluation-result-release-receipt-review-disposition-release-receipt-review
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_decision=blocked_contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_evidence_present=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_source_policy=operator-reviewed-offline
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_plan_recorded=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_result_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_runtime_invoked=0
+requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract=1
+requires_prompt_evaluation_result_release_receipt_review_disposition_release_contract=1
+requires_prompt_evaluation_result_release_receipt_review_disposition_contract=1
+requires_prompt_evaluation_result_release_receipt_review_contract=1
+requires_prompt_evaluation_result_release_receipt_contract=1
+requires_prompt_evaluation_result_release_contract=1
+requires_prompt_evaluation_result_disposition_contract=1
+requires_prompt_evaluation_result_review_contract=1
+requires_prompt_evaluation_result_contract=1
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_contract=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_promotion_allowed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_record_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_approval_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_rejection_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_findings_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_record_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_signed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_published=0
+prompt_evaluation_result_model_output_recorded=0
+prompt_evaluation_result_output_text_recorded=0
+runtime_invoked=0
+prompt_evaluated=0
+token_generation_performed=0
+inference_performed=0
+qa_dialogue_generated=0
+answer_text_generated=0
+```
+
+## Commands
+
+Repository command:
+
+```sh
+sh scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract.sh \
+  --prompt-evaluation-result-release-receipt-review-disposition-release-receipt reports/nadia/prompt-evaluation-result-release-receipt-review-disposition-release-receipt/latest-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract.txt \
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review.XXXXXX")"
+```
+
+Installed command:
+
+```sh
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
+```
+
+## Non-Claims
+
+Stage-40 Nadia is not yet a Q&A assistant, dialogue generator, prompt evaluator, prompt reader, prompt materializer, tokenizer, context-window assembler, prompt-evaluation-input creator, prompt-evaluation runtime handoff layer, prompt-evaluation invocation layer, prompt-evaluation result layer, prompt-evaluation result reviewer, prompt-evaluation result disposition recorder, prompt-evaluation result release recorder, release publisher, release packager, release receipt creator, receipt signer, receipt publisher, release receipt reviewer, receipt review disposition recorder, receipt review disposition release recorder, receipt review disposition release receipt layer, model-output reader, model-output recorder, answer generator, model loader, inference runtime, runtime process launcher, token generator, model selector, tool executor, shell runner, network client, source mutator, training system, distillation system, security product, sexual assistant, roleplay surface, adult-content generator, legal adviser, medical adviser, trauma counselor, crisis intervention service, or production AI assistant.
+
+## Validation
+
+Run:
+
+```sh
+sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract-stage-40.sh
+```
+
+Expected output:
+
+```text
+nadia_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_stage_40: ok
+```

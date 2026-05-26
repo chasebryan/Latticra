@@ -12,6 +12,7 @@ report_txt="$tmpdir/latticra-console-report.txt"
 help_txt="$tmpdir/latticra-console-help.txt"
 man_txt="$tmpdir/latticra-console-man.txt"
 boundary_txt="$tmpdir/latticra-console-boundary.txt"
+standalone_txt="$tmpdir/latticra-console-standalone.txt"
 host_contract_txt="$tmpdir/latticra-console-host-contract.txt"
 host_inventory_txt="$tmpdir/latticra-console-host-inventory.txt"
 host_adapter_txt="$tmpdir/latticra-console-host-adapter.txt"
@@ -61,6 +62,7 @@ cc $CFLAGS \
 "$report_bin" help > "$help_txt"
 "$report_bin" man > "$man_txt"
 "$report_bin" boundary > "$boundary_txt"
+"$report_bin" standalone > "$standalone_txt"
 "$report_bin" host-contract > "$host_contract_txt"
 "$report_bin" host-inventory > "$host_inventory_txt"
 "$report_bin" host-adapter > "$host_adapter_txt"
@@ -89,6 +91,8 @@ grep -Fq 'seal_capability_labels_bound=1' "$report_txt"
 grep -Fq 'LATTICRA CONSOLE COMMAND REGISTRY' "$report_txt"
 grep -Fq 'command=lc install-config' "$report_txt"
 grep -Fq 'capability=lc.install.config' "$report_txt"
+grep -Fq 'command=lc standalone' "$report_txt"
+grep -Fq 'capability=lc.standalone.inspect' "$report_txt"
 grep -Fq 'command=lc profiles' "$report_txt"
 grep -Fq 'capability=lc.core.profiles' "$report_txt"
 grep -Fq 'command=lc host-contract' "$report_txt"
@@ -152,6 +156,11 @@ grep -Fq 'os_base_contract_present=1' "$report_txt"
 grep -Fq 'vm_evidence_contract_status=metadata-only-contract-ready' "$report_txt"
 grep -Fq 'vm_evidence_contract_present=1' "$report_txt"
 grep -Fq 'panel_installable=1' "$report_txt"
+grep -Fq 'standalone_installable=1' "$report_txt"
+grep -Fq 'standalone_requires_panel=0' "$report_txt"
+grep -Fq 'standalone_command_wrapper=latticra-lc' "$report_txt"
+grep -Fq 'standalone_console_status=metadata-only-standalone-contract-ready' "$report_txt"
+grep -Fq 'standalone_contract_present=1' "$report_txt"
 grep -Fq 'future_os_base_claim=planned_not_claimed' "$report_txt"
 grep -Fq 'execution_allowed=0' "$report_txt"
 grep -Fq 'network_allowed=0' "$report_txt"
@@ -161,6 +170,7 @@ grep -Fq 'production_os_claim=0' "$report_txt"
 grep -Fq 'LATTICRA CONSOLE HELP' "$help_txt"
 grep -Fq 'registry_source=c-static-table' "$help_txt"
 grep -Fq 'lc install-config' "$help_txt"
+grep -Fq 'lc standalone' "$help_txt"
 grep -Fq 'lc profiles' "$help_txt"
 grep -Fq 'lc receipts' "$help_txt"
 grep -Fq 'lc host-contract' "$help_txt"
@@ -182,6 +192,7 @@ grep -Fq 'host_process_launch_allowed=0' "$help_txt"
 grep -Fq 'LATTICRA-CONSOLE(1)' "$man_txt"
 grep -Fq 'COMMANDS' "$man_txt"
 grep -Fq 'latticra-lc install-config' "$man_txt"
+grep -Fq 'latticra-lc standalone' "$man_txt"
 grep -Fq 'latticra-lc host-contract' "$man_txt"
 grep -Fq 'latticra-lc host-inventory' "$man_txt"
 grep -Fq 'latticra-lc host-adapter' "$man_txt"
@@ -201,6 +212,7 @@ grep -Fq 'LATTICRA CONSOLE COMMAND BOUNDARY REPORT' "$boundary_txt"
 grep -Fq 'runtime_boundary_bound=1' "$boundary_txt"
 grep -Fq 'seal_capability_labels_bound=1' "$boundary_txt"
 grep -Fq 'command=lc install-config' "$boundary_txt"
+grep -Fq 'command=lc standalone' "$boundary_txt"
 grep -Fq 'command=lc substrate' "$boundary_txt"
 grep -Fq 'command=lc host-contract' "$boundary_txt"
 grep -Fq 'command=lc host-inventory' "$boundary_txt"
@@ -221,6 +233,13 @@ grep -Fq 'command=lc os' "$boundary_txt"
 grep -Fq 'policy_matrix_cell=future-gated-operation' "$boundary_txt"
 grep -Fq 'seal_capability=seal.capability.inspect' "$boundary_txt"
 grep -Fq 'boot_allowed=0' "$boundary_txt"
+grep -Fq 'LATTICRA CONSOLE STANDALONE CONTRACT' "$standalone_txt"
+grep -Fq 'standalone_console_profile=lc-standalone-console-v0' "$standalone_txt"
+grep -Fq 'standalone_contract_present=1' "$standalone_txt"
+grep -Fq 'standalone_requires_panel=0' "$standalone_txt"
+grep -Fq 'command_surface=lc standalone' "$standalone_txt"
+grep -Fq 'host_process_launch_allowed=0' "$standalone_txt"
+grep -Fq 'production_os_claim=0' "$standalone_txt"
 grep -Fq 'LATTICRA CONSOLE HOST EMBEDDING CONTRACT' "$host_contract_txt"
 grep -Fq 'contract_profile=lc-host-embedding-v0' "$host_contract_txt"
 grep -Fq 'host_process_launch_allowed=0' "$host_contract_txt"
@@ -426,22 +445,26 @@ grep -Fq 'promotion_gate=vm_evidence_contract_before_boot_adjacency' "$vm_eviden
 grep -Fq '[components.latticra_console]' installer/manifests/components.toml
 grep -Fq 'bin/<lc.install.command_wrapper>' installer/manifests/components.toml
 grep -Fq 'share/latticra/lc/install/config.toml' installer/manifests/components.toml
+grep -Fq 'share/latticra/lc/standalone' installer/manifests/components.toml
 grep -Fq 'share/latticra/lc/host-inventory' installer/manifests/components.toml
-grep -Fq 'LC install metadata records config/share paths and the command wrapper' installer/manifests/components.toml
+grep -Fq 'LC install metadata records config/share paths and the standalone command wrapper' installer/manifests/components.toml
 grep -Fq 'latticra_console = true' installer/configs/default.installer.toml
 grep -Fq 'latticra_console = true' installer/configs/local-prefix-example.installer.toml
 grep -Fq 'profile = "lc_standalone"' installer/configs/lc-standalone.installer.toml
+grep -Fq 'latticra_console = true' installer/configs/lc-standalone.installer.toml
+grep -Fq 'lat_tooling = false' installer/configs/lc-standalone.installer.toml
 grep -Fq 'profile = "lc_standalone"' installer/configs/lc-standalone-local.installer.toml
-grep -Fq 'install_profile = "lc-standalone-install-v0"' installer/configs/lc-standalone.installer.toml
-grep -Fq 'standalone_console = true' installer/configs/lc-standalone.installer.toml
 grep -Fq 'dry_run = false' installer/configs/lc-standalone-local.installer.toml
+grep -Fq 'allow_host_mutation = true' installer/configs/lc-standalone-local.installer.toml
 grep -Fq 'pub latticra_console: bool' installer/latticra-installer/src/config.rs
 grep -Fq 'pub struct LatticraConsoleConfig' installer/latticra-installer/src/config.rs
-grep -Fq 'LatticraConsoleProfile::Standalone' installer/latticra-installer/src/config.rs
 grep -Fq 'LatticraConsoleProfile::PanelEmbedded' installer/latticra-installer/src/config.rs
+grep -Fq 'Self::Standalone => "standalone"' installer/latticra-installer/src/config.rs
+grep -Fq 'InstallProfile::LcStandalone' installer/latticra-installer/src/config.rs
 grep -Fq 'Latticra Console (LC)' installer/latticra-installer/src/ui.rs
 grep -Fq 'WorkspaceTab::Console' installer/latticra-installer/src/ui.rs
 grep -Fq 'profile = "panel_embedded"' installer/configs/default.installer.toml
+grep -Fq 'standalone_console = true' installer/configs/default.installer.toml
 grep -Fq '[lc.install]' installer/configs/default.installer.toml
 grep -Fq 'install_profile = "lc-panel-install-v0"' installer/configs/default.installer.toml
 grep -Fq 'allow_external_host_commands = false' installer/configs/default.installer.toml
@@ -464,6 +487,15 @@ grep -Fq 'signature_request_binding_profile = "lc-signature-request-binding-v0"'
 grep -Fq 'receipt_contract_profile = "lc-receipts-v0"' installer/configs/default.installer.toml
 grep -Fq 'os_base_contract_profile = "lc-os-base-v0"' installer/configs/default.installer.toml
 grep -Fq 'vm_evidence_contract_profile = "lc-vm-evidence-v0"' installer/configs/default.installer.toml
+grep -Fq 'profile = "standalone"' installer/configs/lc-standalone.installer.toml
+grep -Fq 'install_profile = "lc-standalone-install-v0"' installer/configs/lc-standalone.installer.toml
+grep -Fq 'install_mode = "metadata-only-standalone-console"' installer/configs/lc-standalone.installer.toml
+grep -Fq 'panel_embedded_console = false' installer/configs/lc-standalone.installer.toml
+grep -Fq 'build_gui_installer = false' installer/configs/lc-standalone.installer.toml
+grep -Fq 'install_desktop_entry = false' installer/configs/lc-standalone.installer.toml
+grep -Fq 'install_profile = "lc-standalone-install-v0"' installer/configs/lc-standalone-local.installer.toml
+grep -Fq 'install_mode = "metadata-only-standalone-console"' installer/configs/lc-standalone-local.installer.toml
+grep -Fq 'panel_embedded_console = false' installer/configs/lc-standalone-local.installer.toml
 grep -Fq 'LATTICRA_CONSOLE=$(cfg latticra_console true)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_PROFILE=$(cfg_section lc profile panel_embedded)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_INSTALL_STANDALONE_CONSOLE=$(cfg_section lc.install standalone_console true)' installer/scripts/latticra-installer-apply.sh
@@ -486,8 +518,6 @@ grep -Fq 'LC_VM_EVIDENCE_CONTRACT_PROFILE=$(cfg_section lc vm_evidence_contract_
 grep -Fq 'profiles/hosted-reference.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'profiles/standalone-console.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'standalone/contract.toml' installer/scripts/latticra-installer-apply.sh
-grep -Fq 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' installer/scripts/latticra-installer-apply.sh
-grep -Fq 'Latticra standalone LC verification: ok' installer/scripts/latticra-installer-verify-lc-standalone.sh
 grep -Fq 'host-embedding/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'host-inventory/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'host-adapter/contract.toml' installer/scripts/latticra-installer-apply.sh
@@ -509,10 +539,16 @@ grep -Fq 'render_lc_man()' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'render_lc_boundary()' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'Latticra Console Foundation' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Panel Profile Presets' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'installer/configs/lc-standalone.installer.toml' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'installer/configs/lc-standalone-local.installer.toml' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'share/latticra/lc/install/config.toml' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'lc.install.command_wrapper' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'panel_embedded -> default Panel-installed LC operator surface' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'host_embedded_planning -> future host-embedding plan with zero host mutation authority' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'os_base_planning -> future OS-base plan with zero boot, kernel, or runtime enforcement authority' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'The default user-local wrapper is:' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Panel installs can rename that direct wrapper with `lc.install.command_wrapper`' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'Standalone Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Host Embedding Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Read-Only Host Inventory Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Host Adapter Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
@@ -527,6 +563,8 @@ grep -Fq 'Help And Manpage Rendering' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Runtime Boundary Binding' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Status: active Stage-0 foundation' "$status_file"
 grep -Fq 'latticra_console_report_surface_present=1' "$status_file"
+grep -Fq 'standalone_contract_present=1' "$status_file"
+grep -Fq 'standalone_contract_command=lc standalone' "$status_file"
 grep -Fq 'host_adapter_contract_present=1' "$status_file"
 grep -Fq 'receipt_payload_schema_present=1' "$status_file"
 grep -Fq 'receipt_payload_artifact_draft_present=1' "$status_file"

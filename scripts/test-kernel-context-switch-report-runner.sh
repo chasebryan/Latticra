@@ -59,8 +59,9 @@ grep -Fq 'host_effect_allowed=0' "$report_txt"
 grep -Fq 'switch[0].from_process_label=idle-process-metadata' "$report_txt"
 grep -Fq 'switch[0].to_process_label=kernel-report-process-metadata' "$report_txt"
 grep -Fq 'switch[0].switch_class=idle-to-kernel-report-context-switch' "$report_txt"
-grep -Fq 'switch[0].saved=0' "$report_txt"
-grep -Fq 'switch[0].restored=0' "$report_txt"
+grep -Fq 'switch[0].prepared=0' "$report_txt"
+grep -Fq 'switch[0].selected=0' "$report_txt"
+grep -Fq 'switch[0].committed=0' "$report_txt"
 grep -Fq 'switch[0].no_effect=1' "$report_txt"
 
 printf 'kernel_context_switch_report_runner: ok\n'

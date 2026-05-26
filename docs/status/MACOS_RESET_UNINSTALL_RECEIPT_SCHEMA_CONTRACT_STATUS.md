@@ -135,7 +135,7 @@ macos_reset_uninstall_receipt_schema_contract: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner denied-dispatch review contract that keeps review-only dispatch denial evidence separate from any effects.
+Add a macOS reset/uninstall live-runner acceptance-denial review contract that reviews the closed gate transcript without enabling dispatch or deletion.
 ```
 
 ## Non-Claims

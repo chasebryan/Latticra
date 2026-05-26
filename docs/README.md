@@ -1,86 +1,77 @@
 # Latticra Documentation Hub
 
-Status: public documentation orientation
-Last updated: 2026-05-26
-Scope: first reading paths, claim boundaries, subsystem maps, and documentation update rules.
+Status: active reader-facing documentation hub
+Last updated: 2026-05-26 CDT
+Scope: public orientation, status, foundation contracts, subsystem records, installer and packaging documentation, and documentation-maintenance rules.
 
 ## Purpose
 
-This hub gives Markdown readers a stable entry point into the documentation tree.
+This file is the short route through the Latticra documentation set.
 
-The public site pages in this folder are useful for browsing, while the Markdown records are the durable source documents for status, claims, contracts, implementation boundaries, validation, and non-claims.
+Latticra keeps a deliberately dense record trail: public status, foundation contracts, implementation records, no-effect reports, package and installer notes, strategy records, and project notes. Use this hub to choose the right level before diving into the full index.
 
-## First Reading Path
+## Start Here
 
-Start here when reviewing the project from a fresh checkout:
+| Need | Read |
+| --- | --- |
+| Fast user-local install and cleanup commands | [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md) |
+| Current public posture and estimates | [`../STATUS.md`](../STATUS.md), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) |
+| Full architecture and operations index | [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md) |
+| Project-level handbook | [`latticra-system-substrate/README.md`](latticra-system-substrate/README.md) |
+| GitHub Pages documentation map | [`map.html`](map.html) |
+| Current direction and near-term queue | [`project_notes/README.md`](project_notes/README.md) |
+| Announcements and status history | [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md), [`status/README.md`](status/README.md) |
+| Security reporting and non-claims | [`../SECURITY.md`](../SECURITY.md), [`HIGH_ASSURANCE_SECURITY_BASELINE.md`](HIGH_ASSURANCE_SECURITY_BASELINE.md) |
+| Contribution rules | [`../CONTRIBUTING.md`](../CONTRIBUTING.md) |
+| Documentation maintenance rules | [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) |
 
-1. [`../README.md`](../README.md)
-2. [`../STATUS.md`](../STATUS.md)
-3. [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md)
-4. [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md)
-5. [`NON_CLAIMS.md`](NON_CLAIMS.md)
-6. [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md)
-7. [`EVIDENCE_LADDER.md`](EVIDENCE_LADDER.md)
-8. [`map.html`](map.html)
+## Documentation Levels
 
-## Public Claim and Status Records
+| Level | Role | Primary files |
+| --- | --- | --- |
+| Public orientation | Reader-facing project identity, quick start, and non-claims | [`../README.md`](../README.md), [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md), [`map.html`](map.html) |
+| Live status | Current posture, estimates, milestone status, and announcement records | [`../STATUS.md`](../STATUS.md), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), [`status/README.md`](status/README.md) |
+| Foundation rules | Evidence ladder, real-system contract, naming, authority, effect, and security rules | [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), [`REAL_SYSTEM_CONTRACT.md`](REAL_SYSTEM_CONTRACT.md), [`EVIDENCE_LADDER.md`](EVIDENCE_LADDER.md), [`NON_CLAIMS.md`](NON_CLAIMS.md) |
+| Architecture and language | C/C++ direction, Lat, LIR, L-UI, Nucleus, Runtime Boundary, and Seal contracts | [`architecture/LATTICRA_LANGUAGE_FOUNDATION.md`](architecture/LATTICRA_LANGUAGE_FOUNDATION.md), [`LANGUAGE_STRATEGY.md`](LANGUAGE_STRATEGY.md), [`RUNTIME_BOUNDARY_CONTRACT.md`](RUNTIME_BOUNDARY_CONTRACT.md), [`LATTICRA_SEAL_CONTRACT.md`](LATTICRA_SEAL_CONTRACT.md) |
+| Subsystem handbooks | Focused landing pages for durable subsystems | [`latticra-system-substrate/README.md`](latticra-system-substrate/README.md), [`latticra-seal/README.md`](latticra-seal/README.md), [`latticra/DOCUMENTATION_MAP.md`](latticra/DOCUMENTATION_MAP.md) |
+| Installer and platform lanes | Panel, macOS, Fedora, Ubuntu, Debian, FreeBSD, OpenBSD, openSUSE, and local package records | [`../installer/README.md`](../installer/README.md), [`../installer/docs/README.md`](../installer/docs/README.md), [`FEDORA_DEVELOPER_WORKFLOW.md`](FEDORA_DEVELOPER_WORKFLOW.md), [`UBUNTU_DEVELOPER_WORKFLOW.md`](UBUNTU_DEVELOPER_WORKFLOW.md), [`DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md`](DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md), [`FREEBSD_PORT_STATIC_VALIDATION.md`](FREEBSD_PORT_STATIC_VALIDATION.md), [`OPENBSD_PORT_STATIC_VALIDATION.md`](OPENBSD_PORT_STATIC_VALIDATION.md), [`DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md`](DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md), [`OPENSUSE_DEVELOPER_WORKFLOW.md`](OPENSUSE_DEVELOPER_WORKFLOW.md) |
+| Project notes and strategy | Short narrative direction, upcoming work, strategy templates, and dated strategy records | [`project_notes/README.md`](project_notes/README.md), [`strategy/README.md`](strategy/README.md) |
 
-- [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) - allowed wording, blocked wording, promotion requirements, and review checklist.
-- [`NON_CLAIMS.md`](NON_CLAIMS.md) - claims Latticra explicitly does not currently make.
-- [`EVIDENCE_LADDER.md`](EVIDENCE_LADDER.md) - evidence levels for concept, fixture, tested model, report surface, guarded experiment, and later real-system capability.
-- [`REAL_SYSTEM_CONTRACT.md`](REAL_SYSTEM_CONTRACT.md) - repository identity, real-system boundary, and evidence rules.
-- [`status/README.md`](status/README.md) - status index and update rules.
-- [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) - current detailed project posture and estimates.
+## Reader Routes
 
-## System Foundation
+For a user or operator:
 
-- [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md) - broad index of foundation, project operations, implementation, guard, and current-priority records.
-- [`ARCHITECTURE_SEED.md`](ARCHITECTURE_SEED.md) - initial state-lattice and software-universe vocabulary.
-- [`C_CPP_FOUNDATION_DIRECTION.md`](C_CPP_FOUNDATION_DIRECTION.md) - C, constrained C++, and contract roles.
-- [`CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md`](CONSTRAINED_CPP_AUTHORITY_LAYER_CONTRACT.md) - future governed C++ authority boundary.
-- [`DEFENSIVE_THREAT_MODEL_CONTRACT.md`](DEFENSIVE_THREAT_MODEL_CONTRACT.md) - defensive threat-model boundary and evidence expectations.
-- [`ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md`](ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md) - runtime-authority baseline and promotion rules.
+1. Read [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md).
+2. Confirm current posture in [`../STATUS.md`](../STATUS.md).
+3. Use [`../installer/README.md`](../installer/README.md) only for guarded user-local Panel work.
 
-## Runtime and Language Lanes
+For an implementer:
 
-- [`LANGUAGE_STRATEGY.md`](LANGUAGE_STRATEGY.md) - roles for C, constrained C++, Lat, L-UI, and LIR.
-- [`LAT_PIPELINE_CONTRACT.md`](LAT_PIPELINE_CONTRACT.md) - no-effect Lat parse, validate, diagnose, and lower boundary.
-- [`LIR_SHAPE_CONTRACT.md`](LIR_SHAPE_CONTRACT.md) - bounded intermediate-representation shape boundary.
-- [`L_UI_PARSER.md`](L_UI_PARSER.md) - L-UI parser design and current report posture.
-- [`NUCLEUS_TASK_EXECUTION_CONTRACT.md`](NUCLEUS_TASK_EXECUTION_CONTRACT.md) - task-boundary prerequisites and non-claims.
-- [`RUNTIME_BOUNDARY_CONTRACT.md`](RUNTIME_BOUNDARY_CONTRACT.md) - disabled-by-default runtime boundary.
+1. Read [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md).
+2. Find the relevant contract and implementation record.
+3. Run the guard script named by that record before changing public claims.
 
-## Product Surface and Validation Lanes
+For a reviewer:
 
-- [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md) - short command-oriented user path.
-- [`../installer/README.md`](../installer/README.md) - Panel and installer workflow orientation.
-- [`PRODUCTION_INSTALLER_READINESS_CONTRACT.md`](PRODUCTION_INSTALLER_READINESS_CONTRACT.md) - readiness boundary before production installer claims.
-- [`FEDORA_READINESS_PLAN.md`](FEDORA_READINESS_PLAN.md) - Fedora readiness path and non-claims.
-- [`UBUNTU_READINESS_PLAN.md`](UBUNTU_READINESS_PLAN.md) - Ubuntu readiness path and non-claims.
-- [`OPENSUSE_READINESS_PLAN.md`](OPENSUSE_READINESS_PLAN.md) - openSUSE readiness path and non-claims.
-- [`DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md`](DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md) - Debian, FreeBSD, and OpenBSD temporary package-input handoff lane.
-- [`../packaging/fedora/README.md`](../packaging/fedora/README.md) - local Fedora packaging records.
-- [`../packaging/ubuntu/README.md`](../packaging/ubuntu/README.md) - local Ubuntu packaging records.
-- [`../packaging/debian/README.md`](../packaging/debian/README.md) - local Debian packaging records.
-- [`../packaging/freebsd/README.md`](../packaging/freebsd/README.md) - local FreeBSD port records.
-- [`../packaging/openbsd/README.md`](../packaging/openbsd/README.md) - local OpenBSD port records.
-- [`../packaging/opensuse/README.md`](../packaging/opensuse/README.md) - local openSUSE packaging records.
+1. Start with [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md).
+2. Compare public claims against [`NON_CLAIMS.md`](NON_CLAIMS.md).
+3. Check whether the relevant implementation, guard, and status record all agree.
 
-## Subsystem Maps
+For packaging or platform work:
 
-- [`latticra-seal/README.md`](latticra-seal/README.md) - Latticra Seal documentation map.
-- [`latticra-system-substrate/README.md`](latticra-system-substrate/README.md) - handbook source and generated artifacts.
-- [`project_notes/README.md`](project_notes/README.md) - current direction and upcoming work notes.
-- [`strategy/README.md`](strategy/README.md) - strategy record index and rules.
+1. Use the platform README or workflow document.
+2. Keep local-only status explicit.
+3. Do not treat static spec, lint, or transcript lanes as distribution approval.
 
-## Update Rule
+## Maintenance Rules
 
-Documentation changes that alter public meaning should update the relevant source record and entry point together.
+- Use [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) before changing public entry points, estimates, status mirrors, static HTML summaries, platform posture, or non-claim wording.
+- Keep `README.md`, `STATUS.md`, `docs/status/CURRENT_STATUS.md`, and this hub aligned when public posture changes.
+- Keep `docs/status/README.md` and `docs/FOUNDATION_INDEX.md` as evidence-heavy indexes; keep this file as the reader route.
+- Update `docs/map.html` and related HTML pages when reader-facing estimates or dates change.
+- Do not promote production runtime, host protection, package approval, certification, or OS replacement claims without reproducible implementation, tests, status records, and public-entry alignment.
+- Documentation-only work should not change source behavior, installer authority, packaging authority, runtime authority, or security claims.
 
-Use this minimum check:
+## Current Non-Claim Reminder
 
-1. The claim appears in only the narrowest justified form.
-2. The status record, non-claims, and public claims ledger agree.
-3. The linked contract or implementation record exists.
-4. The validation or guard path is named when the claim depends on evidence.
-5. Public HTML pages and Markdown indexes do not point readers at stale wording.
+Latticra is still early-stage and evidence-bound. It is not a production security product, hardened sandbox, operating-system replacement, Fedora-approved package, Ubuntu archive-ready package, Debian archive-ready package, FreeBSD official port, OpenBSD official port, openSUSE official package, root installer, network authority, or production runtime.

@@ -25,6 +25,9 @@ notice_contract='docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md'
 third_party_contract='docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md'
 generated_artifact_contract='docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md'
 notice_file_contract='docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md'
+copyright_mapping_contract='docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md'
+trademark_contract='docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md'
+release_artifact_contract='docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md'
 license_contract='docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md'
 readiness='docs/UBUNTU_READINESS_PLAN.md'
 workflow='.github/workflows/ubuntu-doc-payload-license-review-contract.yml'
@@ -35,6 +38,9 @@ require_file "$notice_contract"
 require_file "$third_party_contract"
 require_file "$generated_artifact_contract"
 require_file "$notice_file_contract"
+require_file "$copyright_mapping_contract"
+require_file "$trademark_contract"
+require_file "$release_artifact_contract"
 require_file "$license_contract"
 require_file "$readiness"
 require_file "$workflow"
@@ -54,6 +60,9 @@ require_contains 'ubuntu_package_notice_inventory_present=1' "$contract"
 require_contains 'ubuntu_third_party_material_review_contract_present=1' "$contract"
 require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' "$contract"
 require_contains 'ubuntu_notice_file_decision_contract_present=1' "$contract"
+require_contains 'ubuntu_debian_copyright_notice_mapping_contract_present=1' "$contract"
+require_contains 'ubuntu_trademark_notice_boundary_contract_present=1' "$contract"
+require_contains 'ubuntu_release_artifact_notice_requirements_contract_present=1' "$contract"
 require_contains 'candidate_doc_payload_license=Apache-2.0-or-docs-decision-pending' "$contract"
 require_contains 'candidate_doc_payload_license_applied_to_packaging=0' "$contract"
 require_contains 'doc_payload_license_decision_recorded=1' "$contract"
@@ -95,6 +104,9 @@ require_contains 'doc_payload_license_decision_recorded=1' "$notice_contract"
 require_contains 'ubuntu_third_party_material_review_contract_present=1' "$third_party_contract"
 require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' "$generated_artifact_contract"
 require_contains 'ubuntu_notice_file_decision_contract_present=1' "$notice_file_contract"
+require_contains 'ubuntu_debian_copyright_notice_mapping_contract_present=1' "$copyright_mapping_contract"
+require_contains 'ubuntu_trademark_notice_boundary_contract_present=1' "$trademark_contract"
+require_contains 'ubuntu_release_artifact_notice_requirements_contract_present=1' "$release_artifact_contract"
 require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$license_contract"
 require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$readiness"
 require_contains 'docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md' README.md

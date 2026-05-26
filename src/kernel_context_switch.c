@@ -18,10 +18,8 @@ static void switch_copy(char *dst, size_t dst_len, const char *src) {
 static void seed_result(latticra_kernel_context_switch_result_t *result) {
     memset(result, 0, sizeof(*result));
     result->status = LATTICRA_STATUS_OK;
-    switch_copy(result->switch_status, sizeof(result->switch_status),
-        "pending");
-    switch_copy(result->policy_status, sizeof(result->policy_status),
-        "report-only");
+    switch_copy(result->switch_status, sizeof(result->switch_status), "pending");
+    switch_copy(result->policy_status, sizeof(result->policy_status), "report-only");
     result->no_effect = 1;
     result->context_switch_allowed = 0;
     result->register_save_allowed = 0;
@@ -58,11 +56,10 @@ static void fill_switch(
     unsigned long to_pid_token,
     unsigned long queue_token,
     unsigned long tick_token,
-    unsigned long timer_token,
     unsigned long priority,
-    unsigned long budget_ns,
     const char *from_process_label,
     const char *to_process_label,
+    const char *scheduler_slot_label,
     const char *switch_class) {
     memset(entry, 0, sizeof(*entry));
     entry->switch_index = index;
@@ -71,23 +68,22 @@ static void fill_switch(
     entry->to_pid_token = to_pid_token;
     entry->queue_token = queue_token;
     entry->tick_token = tick_token;
-    entry->timer_token = timer_token;
     entry->priority = priority;
-    entry->budget_ns = budget_ns;
     switch_copy(entry->from_process_label, sizeof(entry->from_process_label),
         from_process_label);
     switch_copy(entry->to_process_label, sizeof(entry->to_process_label),
         to_process_label);
-    switch_copy(entry->switch_class, sizeof(entry->switch_class),
-        switch_class);
+    switch_copy(entry->scheduler_slot_label, sizeof(entry->scheduler_slot_label),
+        scheduler_slot_label);
+    switch_copy(entry->switch_class, sizeof(entry->switch_class), switch_class);
     switch_copy(entry->switch_status, sizeof(entry->switch_status),
         "declared-metadata");
     switch_copy(entry->authority_status, sizeof(entry->authority_status),
         "context-switch-authority-denied");
     entry->declared = 1;
     entry->prepared = 0;
-    entry->saved = 0;
-    entry->restored = 0;
+    entry->selected = 0;
+    entry->committed = 0;
     entry->context_switch_allowed = 0;
     entry->register_save_allowed = 0;
     entry->register_restore_allowed = 0;
@@ -113,60 +109,52 @@ static const latticra_kernel_run_queue_entry_t *queue_at(
     return 0;
 }
 
+static const char *queue_process_for(
+    const latticra_kernel_run_queue_result_t *run_queue,
+    size_t index,
+    const char *fallback) {
+    const latticra_kernel_run_queue_entry_t *queue = queue_at(run_queue, index);
+    return queue ? queue->process_label : fallback;
+}
+
+static const char *queue_slot_for(
+    const latticra_kernel_run_queue_result_t *run_queue,
+    size_t index,
+    const char *fallback) {
+    const latticra_kernel_run_queue_entry_t *queue = queue_at(run_queue, index);
+    return queue ? queue->scheduler_slot_label : fallback;
+}
+
+static unsigned long queue_pid_for(
+    const latticra_kernel_run_queue_result_t *run_queue,
+    size_t index,
+    unsigned long fallback) {
+    const latticra_kernel_run_queue_entry_t *queue = queue_at(run_queue, index);
+    return queue ? queue->pid_token : fallback;
+}
+
 static unsigned long queue_token_for(
     const latticra_kernel_run_queue_result_t *run_queue,
     size_t index,
     unsigned long fallback) {
-    const latticra_kernel_run_queue_entry_t *entry = queue_at(run_queue, index);
-    return entry ? entry->queue_token : fallback;
-}
-
-static unsigned long pid_for(
-    const latticra_kernel_run_queue_result_t *run_queue,
-    size_t index,
-    unsigned long fallback) {
-    const latticra_kernel_run_queue_entry_t *entry = queue_at(run_queue, index);
-    return entry ? entry->pid_token : fallback;
+    const latticra_kernel_run_queue_entry_t *queue = queue_at(run_queue, index);
+    return queue ? queue->queue_token : fallback;
 }
 
 static unsigned long tick_token_for(
     const latticra_kernel_run_queue_result_t *run_queue,
     size_t index,
     unsigned long fallback) {
-    const latticra_kernel_run_queue_entry_t *entry = queue_at(run_queue, index);
-    return entry ? entry->tick_token : fallback;
-}
-
-static unsigned long timer_token_for(
-    const latticra_kernel_run_queue_result_t *run_queue,
-    size_t index,
-    unsigned long fallback) {
-    const latticra_kernel_run_queue_entry_t *entry = queue_at(run_queue, index);
-    return entry ? entry->timer_token : fallback;
+    const latticra_kernel_run_queue_entry_t *queue = queue_at(run_queue, index);
+    return queue ? queue->tick_token : fallback;
 }
 
 static unsigned long priority_for(
     const latticra_kernel_run_queue_result_t *run_queue,
     size_t index,
     unsigned long fallback) {
-    const latticra_kernel_run_queue_entry_t *entry = queue_at(run_queue, index);
-    return entry ? entry->priority : fallback;
-}
-
-static unsigned long budget_for(
-    const latticra_kernel_run_queue_result_t *run_queue,
-    size_t index,
-    unsigned long fallback) {
-    const latticra_kernel_run_queue_entry_t *entry = queue_at(run_queue, index);
-    return entry ? entry->budget_ns : fallback;
-}
-
-static const char *process_for(
-    const latticra_kernel_run_queue_result_t *run_queue,
-    size_t index,
-    const char *fallback) {
-    const latticra_kernel_run_queue_entry_t *entry = queue_at(run_queue, index);
-    return entry ? entry->process_label : fallback;
+    const latticra_kernel_run_queue_entry_t *queue = queue_at(run_queue, index);
+    return queue ? queue->priority : fallback;
 }
 
 static void fill_switches(
@@ -174,7 +162,6 @@ static void fill_switches(
     size_t requested_switch_count) {
     size_t count = requested_switch_count;
     size_t i;
-
     if (count == 0u) count = 4u;
     if (count > LATTICRA_KERNEL_CONTEXT_SWITCH_MAX) {
         count = LATTICRA_KERNEL_CONTEXT_SWITCH_MAX;
@@ -182,75 +169,69 @@ static void fill_switches(
 
     result->switch_count = count;
     if (count > 0u) {
-        fill_switch(&result->switches[0], 0u, 0ul, 0ul,
-            pid_for(&result->run_queue, 0u, 1ul),
-            queue_token_for(&result->run_queue, 0u, 0ul),
-            tick_token_for(&result->run_queue, 0u, 1ul),
-            timer_token_for(&result->run_queue, 0u, 1ul),
-            priority_for(&result->run_queue, 0u, 10ul),
-            budget_for(&result->run_queue, 0u, 1000000ul),
-            process_for(&result->run_queue, 3u, "idle-process-metadata"),
-            process_for(&result->run_queue, 0u,
+        fill_switch(&result->switches[0], 0u, 0ul,
+            queue_pid_for(&result->run_queue, 0u, 0ul),
+            queue_pid_for(&result->run_queue, 1u, 1ul),
+            queue_token_for(&result->run_queue, 1u, 1ul),
+            tick_token_for(&result->run_queue, 1u, 1ul),
+            priority_for(&result->run_queue, 1u, 10ul),
+            queue_process_for(&result->run_queue, 0u, "idle-process-metadata"),
+            queue_process_for(&result->run_queue, 1u,
                 "kernel-report-process-metadata"),
+            queue_slot_for(&result->run_queue, 1u, "kernel-report-metadata"),
             "idle-to-kernel-report-context-switch");
     }
     if (count > 1u) {
         fill_switch(&result->switches[1], 1u, 1ul,
-            pid_for(&result->run_queue, 0u, 1ul),
-            pid_for(&result->run_queue, 1u, 2ul),
-            queue_token_for(&result->run_queue, 1u, 1ul),
-            tick_token_for(&result->run_queue, 1u, 2ul),
-            timer_token_for(&result->run_queue, 1u, 2ul),
-            priority_for(&result->run_queue, 1u, 20ul),
-            budget_for(&result->run_queue, 1u, 0ul),
-            process_for(&result->run_queue, 0u,
+            queue_pid_for(&result->run_queue, 1u, 1ul),
+            queue_pid_for(&result->run_queue, 2u, 2ul),
+            queue_token_for(&result->run_queue, 2u, 2ul),
+            tick_token_for(&result->run_queue, 2u, 2ul),
+            priority_for(&result->run_queue, 2u, 20ul),
+            queue_process_for(&result->run_queue, 1u,
                 "kernel-report-process-metadata"),
-            process_for(&result->run_queue, 1u,
+            queue_process_for(&result->run_queue, 2u,
                 "entropy-report-process-metadata"),
+            queue_slot_for(&result->run_queue, 2u, "operator-report-metadata"),
             "kernel-report-to-entropy-context-switch");
     }
     if (count > 2u) {
         fill_switch(&result->switches[2], 2u, 2ul,
-            pid_for(&result->run_queue, 1u, 2ul),
-            pid_for(&result->run_queue, 2u, 3ul),
-            queue_token_for(&result->run_queue, 2u, 2ul),
-            tick_token_for(&result->run_queue, 2u, 3ul),
-            timer_token_for(&result->run_queue, 2u, 3ul),
-            priority_for(&result->run_queue, 2u, 30ul),
-            budget_for(&result->run_queue, 2u, 0ul),
-            process_for(&result->run_queue, 1u,
+            queue_pid_for(&result->run_queue, 2u, 2ul),
+            queue_pid_for(&result->run_queue, 3u, 3ul),
+            queue_token_for(&result->run_queue, 3u, 3ul),
+            tick_token_for(&result->run_queue, 3u, 3ul),
+            priority_for(&result->run_queue, 3u, 30ul),
+            queue_process_for(&result->run_queue, 2u,
                 "entropy-report-process-metadata"),
-            process_for(&result->run_queue, 2u,
+            queue_process_for(&result->run_queue, 3u,
                 "console-report-process-metadata"),
+            queue_slot_for(&result->run_queue, 3u, "operator-report-metadata"),
             "entropy-to-console-context-switch");
     }
     if (count > 3u) {
         fill_switch(&result->switches[3], 3u, 3ul,
-            pid_for(&result->run_queue, 2u, 3ul),
-            pid_for(&result->run_queue, 3u, 0ul),
-            queue_token_for(&result->run_queue, 3u, 3ul),
-            tick_token_for(&result->run_queue, 3u, 0ul),
-            timer_token_for(&result->run_queue, 3u, 0ul),
-            priority_for(&result->run_queue, 3u, 0ul),
-            budget_for(&result->run_queue, 3u, 10000000ul),
-            process_for(&result->run_queue, 2u,
+            queue_pid_for(&result->run_queue, 3u, 3ul),
+            queue_pid_for(&result->run_queue, 0u, 0ul),
+            queue_token_for(&result->run_queue, 0u, 0ul),
+            tick_token_for(&result->run_queue, 0u, 0ul),
+            priority_for(&result->run_queue, 0u, 0ul),
+            queue_process_for(&result->run_queue, 3u,
                 "console-report-process-metadata"),
-            process_for(&result->run_queue, 3u, "idle-process-metadata"),
+            queue_process_for(&result->run_queue, 0u, "idle-process-metadata"),
+            queue_slot_for(&result->run_queue, 0u, "idle-metadata"),
             "console-to-idle-context-switch");
     }
     for (i = 4u; i < count; ++i) {
         fill_switch(&result->switches[i], i, 6000ul + (unsigned long)i,
-            pid_for(&result->run_queue, i - 1u, 1999ul + (unsigned long)i),
-            pid_for(&result->run_queue, i, 2000ul + (unsigned long)i),
+            1000ul + (unsigned long)i,
+            2000ul + (unsigned long)i,
             queue_token_for(&result->run_queue, i, 5000ul + (unsigned long)i),
             tick_token_for(&result->run_queue, i, 4000ul + (unsigned long)i),
-            timer_token_for(&result->run_queue, i, 3000ul + (unsigned long)i),
-            priority_for(&result->run_queue, i, 0ul),
-            budget_for(&result->run_queue, i, 0ul),
-            process_for(&result->run_queue, i - 1u,
-                "reserved-process-metadata"),
-            process_for(&result->run_queue, i,
-                "reserved-process-metadata"),
+            priority_for(&result->run_queue, i, 100ul),
+            "reserved-current-process-metadata",
+            queue_process_for(&result->run_queue, i, "reserved-process-metadata"),
+            queue_slot_for(&result->run_queue, i, "reserved-metadata"),
             "reserved-context-switch");
     }
 }
@@ -265,8 +246,7 @@ latticra_status_t latticra_kernel_context_switch_evaluate(
 
     if (request == 0) {
         result->status = LATTICRA_STATUS_NULL_ARGUMENT;
-        switch_copy(result->switch_status, sizeof(result->switch_status),
-            "null-request");
+        switch_copy(result->switch_status, sizeof(result->switch_status), "null-request");
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
@@ -327,6 +307,10 @@ latticra_status_t latticra_kernel_context_switch_report(
         "run_queue_status=%s\n"
         "scheduler_tick_status=%s\n"
         "timer_source_status=%s\n"
+        "interrupt_table_status=%s\n"
+        "process_table_status=%s\n"
+        "memory_map_status=%s\n"
+        "scheduler_status=%s\n"
         "switch_count=%lu\n"
         "no_effect=%d\n"
         "context_switch_allowed=%d\n"
@@ -347,6 +331,10 @@ latticra_status_t latticra_kernel_context_switch_report(
         result->run_queue.queue_status,
         result->run_queue.scheduler_tick.tick_status,
         result->run_queue.scheduler_tick.timer_source.timer_status,
+        result->run_queue.scheduler_tick.timer_source.interrupt_table.table_status,
+        result->run_queue.scheduler_tick.timer_source.interrupt_table.driver_catalog.device_registry.vfs_namespace.ipc_table.syscall_table.process_table.table_status,
+        result->run_queue.scheduler_tick.timer_source.interrupt_table.driver_catalog.device_registry.vfs_namespace.ipc_table.syscall_table.process_table.memory_map.map_status,
+        result->run_queue.scheduler_tick.timer_source.interrupt_table.driver_catalog.device_registry.vfs_namespace.ipc_table.syscall_table.process_table.memory_map.scheduler.scheduler_status,
         (unsigned long)result->switch_count,
         result->no_effect,
         result->context_switch_allowed,
@@ -373,16 +361,15 @@ latticra_status_t latticra_kernel_context_switch_report(
             "switch[%lu].to_pid_token=%lu\n"
             "switch[%lu].queue_token=%lu\n"
             "switch[%lu].tick_token=%lu\n"
-            "switch[%lu].timer_token=%lu\n"
             "switch[%lu].priority=%lu\n"
-            "switch[%lu].budget_ns=%lu\n"
+            "switch[%lu].scheduler_slot_label=%s\n"
             "switch[%lu].switch_class=%s\n"
             "switch[%lu].switch_status=%s\n"
             "switch[%lu].authority_status=%s\n"
             "switch[%lu].declared=%d\n"
             "switch[%lu].prepared=%d\n"
-            "switch[%lu].saved=%d\n"
-            "switch[%lu].restored=%d\n"
+            "switch[%lu].selected=%d\n"
+            "switch[%lu].committed=%d\n"
             "switch[%lu].context_switch_allowed=%d\n"
             "switch[%lu].register_save_allowed=%d\n"
             "switch[%lu].register_restore_allowed=%d\n"
@@ -403,22 +390,20 @@ latticra_status_t latticra_kernel_context_switch_report(
             (unsigned long)i, result->switches[i].to_pid_token,
             (unsigned long)i, result->switches[i].queue_token,
             (unsigned long)i, result->switches[i].tick_token,
-            (unsigned long)i, result->switches[i].timer_token,
             (unsigned long)i, result->switches[i].priority,
-            (unsigned long)i, result->switches[i].budget_ns,
+            (unsigned long)i, result->switches[i].scheduler_slot_label,
             (unsigned long)i, result->switches[i].switch_class,
             (unsigned long)i, result->switches[i].switch_status,
             (unsigned long)i, result->switches[i].authority_status,
             (unsigned long)i, result->switches[i].declared,
             (unsigned long)i, result->switches[i].prepared,
-            (unsigned long)i, result->switches[i].saved,
-            (unsigned long)i, result->switches[i].restored,
+            (unsigned long)i, result->switches[i].selected,
+            (unsigned long)i, result->switches[i].committed,
             (unsigned long)i, result->switches[i].context_switch_allowed,
             (unsigned long)i, result->switches[i].register_save_allowed,
             (unsigned long)i, result->switches[i].register_restore_allowed,
             (unsigned long)i, result->switches[i].stack_switch_allowed,
-            (unsigned long)i,
-            result->switches[i].address_space_switch_allowed,
+            (unsigned long)i, result->switches[i].address_space_switch_allowed,
             (unsigned long)i, result->switches[i].dispatch_allowed,
             (unsigned long)i, result->switches[i].run_queue_mutation_allowed,
             (unsigned long)i, result->switches[i].preemption_allowed,

@@ -26,8 +26,11 @@
         <a href="status.html">Status</a>
         <a href="roadmap.html">Roadmap</a>
         <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
         <a href="runtime.html">Runtime</a>
         <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
         <a href="console.html">Console</a>
         <a href="nadia.html">Nadia</a>
         <a href="language.html">Language</a>
@@ -84,7 +87,7 @@
         <article>
           <span>04</span>
           <h3>Run static package guards</h3>
-          <p>Use Fedora and Ubuntu package validation scripts without creating distribution artifacts.</p>
+          <p>Use Fedora, Ubuntu, Debian, FreeBSD, and OpenBSD package validation scripts without creating distribution artifacts.</p>
         </article>
         <article>
           <span>05</span>
@@ -186,6 +189,24 @@
           <p>Checks local package shape for the no-effect CLI payload without running dpkg-buildpackage, debuild, lintian, sbuild, or pbuilder.</p>
           <a href="UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md">Deb static validation</a>
         </article>
+        <article class="validation-lane">
+          <span>Debian</span>
+          <h3>Local deb static validation</h3>
+          <p>Checks local Debian package shape for the no-effect CLI payload without claiming archive readiness, sponsorship, or ftp-master acceptance.</p>
+          <a href="DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md">Debian static validation</a>
+        </article>
+        <article class="validation-lane">
+          <span>FreeBSD</span>
+          <h3>Port static validation</h3>
+          <p>Checks local ports metadata without running make package, poudriere, portlint, or claiming ports-tree submission.</p>
+          <a href="FREEBSD_PORT_STATIC_VALIDATION.md">FreeBSD port validation</a>
+        </article>
+        <article class="validation-lane">
+          <span>OpenBSD</span>
+          <h3>Port static validation</h3>
+          <p>Checks local ports metadata with package redistribution disabled until license, checksum, portcheck, and bulk-build evidence exist.</p>
+          <a href="OPENBSD_PORT_STATIC_VALIDATION.md">OpenBSD port validation</a>
+        </article>
         <article class="validation-lane validation-lane-macos">
           <span>macOS</span>
           <h3>Reset/uninstall dry-run contract</h3>
@@ -261,12 +282,19 @@ sh scripts/test-macos-reset-uninstall-dry-run-contract.sh</code></pre>
         </p>
       </div>
       <div class="content-shell reader-grid">
+        <a href="panel.html"><strong>Panel overview</strong><span>Guided GUI workbench, dry-run-first installer flow, receipts, updater, and user-local evidence.</span></a>
+        <a href="boot.html"><strong>Boot preview boundary</strong><span>SeaBIOS/GRUB fixture evidence, no-effect preflight, and blocked QEMU, GRUB, disk image, and bootable OS claims.</span></a>
+        <a href="packaging.html"><strong>Packaging readiness</strong><span>Fedora, Ubuntu, openSUSE, Debian, BSD, and macOS package-shape lanes with release claims blocked.</span></a>
         <a href="https://github.com/Bryforge/Latticra/blob/main/installer/README.md"><strong>Panel README</strong><span>Dry-run-first workbench flow, local install commands, and installed paths.</span></a>
         <a href="installer.html"><strong>Installer readiness</strong><span>Disposable VM CLI payload evidence, artifact manifest fixture, production gates, and release non-claims.</span></a>
         <a href="status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md"><strong>Panel install evidence</strong><span>Fedora user-local install evidence and exact non-claims.</span></a>
         <a href="FEDORA_LOCAL_RPM_VALIDATION_PLAN.md"><strong>Fedora RPM plan</strong><span>Static local RPM validation sequence without artifact creation.</span></a>
         <a href="FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md"><strong>Disposable VM lane</strong><span>Hard gates for Fedora RPM validation on a disposable VM only.</span></a>
         <a href="UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md"><strong>Ubuntu deb static lane</strong><span>Local-only deb shape checks and archive-readiness non-claims.</span></a>
+        <a href="DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md"><strong>Debian deb static lane</strong><span>Local-only deb shape checks and Debian archive-readiness non-claims.</span></a>
+        <a href="FREEBSD_PORT_STATIC_VALIDATION.md"><strong>FreeBSD port static lane</strong><span>Local-only ports metadata checks without package or ports-tree claims.</span></a>
+        <a href="OPENBSD_PORT_STATIC_VALIDATION.md"><strong>OpenBSD port static lane</strong><span>Local-only ports metadata checks with package redistribution disabled.</span></a>
+        <a href="DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md"><strong>Debian/BSD source archive contract</strong><span>Archive, checksum, and distinfo blockers before build evidence.</span></a>
         <a href="MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT.md"><strong>macOS reset dry-run</strong><span>Managed-target reset/uninstall contract while deletion remains disabled.</span></a>
         <a href="workbench.html"><strong>Workbench overview</strong><span>Panel, LC, Nadia, and local authority boundaries.</span></a>
         <a href="security.html"><strong>Security boundaries</strong><span>Safe testing, effect gates, runtime boundary, and non-claims.</span></a>

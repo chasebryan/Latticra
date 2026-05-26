@@ -39,6 +39,9 @@ A future argv record must not be accepted unless these inputs exist:
 
 ```text
 operator_review_id
+boot_artifact_manifest_template_path
+boot_artifact_manifest_validation_report_path
+boot_evidence_validation_report_path
 boot_artifact_manifest_path
 disk_image_path
 disk_image_sha256

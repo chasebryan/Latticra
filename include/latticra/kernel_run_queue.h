@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #define LATTICRA_KERNEL_RUN_QUEUE_LABEL_MAX 64u
-#define LATTICRA_KERNEL_RUN_QUEUE_MAX 8u
+#define LATTICRA_KERNEL_RUN_QUEUE_ENTRY_MAX 8u
 #define LATTICRA_KERNEL_RUN_QUEUE_REPORT_MAX 32768u
 
 typedef struct {
@@ -21,12 +21,9 @@ typedef struct {
     unsigned long queue_token;
     unsigned long pid_token;
     unsigned long tick_token;
-    unsigned long timer_token;
-    unsigned long irq_vector;
     unsigned long priority;
-    unsigned long budget_ns;
-    char scheduler_slot_label[LATTICRA_KERNEL_RUN_QUEUE_LABEL_MAX];
     char process_label[LATTICRA_KERNEL_RUN_QUEUE_LABEL_MAX];
+    char scheduler_slot_label[LATTICRA_KERNEL_RUN_QUEUE_LABEL_MAX];
     char queue_class[LATTICRA_KERNEL_RUN_QUEUE_LABEL_MAX];
     char queue_status[LATTICRA_KERNEL_RUN_QUEUE_LABEL_MAX];
     char authority_status[LATTICRA_KERNEL_RUN_QUEUE_LABEL_MAX];
@@ -53,7 +50,8 @@ typedef struct {
     char queue_status[LATTICRA_KERNEL_RUN_QUEUE_LABEL_MAX];
     char policy_status[LATTICRA_KERNEL_RUN_QUEUE_LABEL_MAX];
     latticra_kernel_scheduler_tick_result_t scheduler_tick;
-    latticra_kernel_run_queue_entry_t queues[LATTICRA_KERNEL_RUN_QUEUE_MAX];
+    latticra_kernel_run_queue_entry_t queues[
+        LATTICRA_KERNEL_RUN_QUEUE_ENTRY_MAX];
     size_t queue_count;
     int no_effect;
     int run_queue_mutation_allowed;

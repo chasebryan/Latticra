@@ -86,6 +86,12 @@ ubuntu_notice_file_decision_contract_present=1
 ubuntu_notice_file_decision_status=blocked-pending-notice-file-decision
 ubuntu_debian_copyright_notice_mapping_contract_present=1
 ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping
+ubuntu_trademark_notice_boundary_contract_present=1
+ubuntu_trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary
+ubuntu_release_artifact_notice_requirements_contract_present=1
+ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements
+ubuntu_package_notice_promotion_gate_contract_present=1
+ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_package_notice_review_contract_present=1
 ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 ubuntu_local_deb_build_transcript_contract_present=1
@@ -160,6 +166,9 @@ docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md
 docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md
 docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md
+docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
+docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
+docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
@@ -170,6 +179,9 @@ scripts/test-ubuntu-third-party-material-review-contract.sh
 scripts/test-ubuntu-generated-artifact-notice-review-contract.sh
 scripts/test-ubuntu-notice-file-decision-contract.sh
 scripts/test-ubuntu-debian-copyright-notice-mapping-contract.sh
+scripts/test-ubuntu-trademark-notice-boundary-contract.sh
+scripts/test-ubuntu-release-artifact-notice-requirements-contract.sh
+scripts/test-ubuntu-package-notice-promotion-gate-contract.sh
 scripts/test-ubuntu-package-license-review-contract.sh
 scripts/test-ubuntu-package-notice-review-contract.sh
 scripts/test-ubuntu-local-deb-build-transcript-contract.sh
@@ -179,6 +191,9 @@ scripts/test-ubuntu-local-deb-build-transcript-contract.sh
 .github/workflows/ubuntu-generated-artifact-notice-review-contract.yml
 .github/workflows/ubuntu-notice-file-decision-contract.yml
 .github/workflows/ubuntu-debian-copyright-notice-mapping-contract.yml
+.github/workflows/ubuntu-trademark-notice-boundary-contract.yml
+.github/workflows/ubuntu-release-artifact-notice-requirements-contract.yml
+.github/workflows/ubuntu-package-notice-promotion-gate-contract.yml
 .github/workflows/ubuntu-package-notice-review-contract.yml
 .github/workflows/ubuntu-package-license-review-contract.yml
 .github/workflows/ubuntu-local-deb-build-transcript-contract.yml
@@ -208,7 +223,7 @@ claim operating-system completeness
 Recommended next slice:
 
 ```text
-Review the Ubuntu Debian copyright notice mapping contract, then promote the Ubuntu package notice review only after documentation licensing, third-party notices, generated-artifact notices, NOTICE requirements, and Debian copyright mapping are decided.
+Review the Ubuntu package notice promotion gate contract, then promote the Ubuntu package notice review only after documentation licensing, third-party notices, generated-artifact notices, NOTICE requirements, Debian copyright mapping, trademark boundaries, and release-artifact notices are decided.
 ```
 
 That should preserve the current no-artifact, no-submission, local-only Ubuntu package posture while the local deb path matures.

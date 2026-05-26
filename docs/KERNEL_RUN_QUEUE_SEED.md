@@ -7,7 +7,7 @@ Scope: report-only bridge from scheduler tick metadata to run queue intent.
 
 This slice connects the scheduler tick seed to deterministic run queue metadata.
 
-It does not mutate a run queue, enqueue work, dequeue work, dispatch work, switch contexts, preempt execution, wake processes, or touch hardware. It records candidate queue declarations that future scheduler work can refine behind explicit authority gates.
+It does not enqueue processes, dequeue processes, dispatch work, mutate run queues, switch contexts, account CPU time, wake processes, preempt execution, or touch hardware. It records queue declarations that future scheduler work can refine behind explicit authority gates.
 
 ## Files
 
@@ -22,7 +22,7 @@ scripts/test-kernel-run-queue-report-runner.sh
 docs/KERNEL_RUN_QUEUE_SEED.md
 ```
 
-## Current Posture
+## Current posture
 
 The default request evaluates the scheduler tick seed and emits:
 
@@ -30,6 +30,8 @@ The default request evaluates the scheduler tick seed and emits:
 queue_status=run-queue-seed-ready
 scheduler_tick_status=scheduler-tick-seed-ready
 timer_source_status=timer-source-seed-ready
+interrupt_table_status=interrupt-table-seed-ready
+scheduler_status=scheduler-seed-ready
 queue_count=4
 no_effect=1
 ```
@@ -67,4 +69,4 @@ kernel_run_queue_report_runner: ok
 
 ## Non-claims
 
-This slice does not schedule execution, mutate run queues, perform enqueue or dequeue operations, dispatch work, switch contexts, read clocks, preempt execution, wake processes, dispatch interrupts, perform I/O, boot hardware, or replace an operating system.
+This slice does not schedule execution, mutate run queues, perform context switches, wake processes, account CPU time, dispatch interrupts, perform I/O, boot hardware, or replace an operating system.

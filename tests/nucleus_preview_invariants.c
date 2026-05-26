@@ -33,6 +33,7 @@ static int state_report_no_effect_is_allowed_preview(void) {
     EXPECT_TRUE(preview.executed == 0, "state report preview must not execute");
     EXPECT_TRUE(preview.mutation_allowed == 0, "state report preview must not allow mutation");
     EXPECT_TRUE(preview.server_interaction_allowed == 0, "state report preview must not allow server interaction");
+    EXPECT_TRUE(preview.network_allowed == 0, "state report preview must not allow network");
     EXPECT_TRUE(preview.recovery_allowed == 0, "state report preview must not allow recovery");
     EXPECT_TRUE(preview.hardware_allowed == 0, "state report preview must not allow hardware");
 
@@ -52,6 +53,7 @@ static int transition_preview_read_effect_is_allowed_preview(void) {
     EXPECT_TRUE(preview.policy_reason == LATTICRA_POLICY_REASON_OK, "transition read reason should be ok");
     EXPECT_TRUE(preview.executed == 0, "transition preview must not execute");
     EXPECT_TRUE(preview.mutation_allowed == 0, "transition preview must not allow mutation");
+    EXPECT_TRUE(preview.network_allowed == 0, "transition preview must not allow network");
 
     return 0;
 }
@@ -69,6 +71,7 @@ static int mutating_effect_is_denied_for_preview_request(void) {
     EXPECT_TRUE(preview.policy_reason == LATTICRA_POLICY_REASON_EFFECT_BLOCKED, "mutating effect blocked reason");
     EXPECT_TRUE(preview.executed == 0, "mutating denial must not execute");
     EXPECT_TRUE(preview.mutation_allowed == 0, "mutating denial must not allow mutation");
+    EXPECT_TRUE(preview.network_allowed == 0, "mutating denial must not allow network");
 
     return 0;
 }
@@ -87,6 +90,7 @@ static int server_update_recovery_and_hardware_are_future_gated(void) {
         preview.policy_reason == LATTICRA_POLICY_REASON_EFFECT_REQUIRES_FUTURE_GATE,
         "server interaction requires future gate");
     EXPECT_TRUE(preview.server_interaction_allowed == 0, "server interaction must remain blocked");
+    EXPECT_TRUE(preview.network_allowed == 0, "network must remain blocked");
 
     EXPECT_TRUE(
         latticra_nucleus_classify_preview(
@@ -155,6 +159,7 @@ static int report_contains_operator_visible_fields(void) {
     EXPECT_TRUE(strstr(report, "executed=0") != 0, "report executed flag");
     EXPECT_TRUE(strstr(report, "mutation_allowed=0") != 0, "report mutation flag");
     EXPECT_TRUE(strstr(report, "server_interaction_allowed=0") != 0, "report server flag");
+    EXPECT_TRUE(strstr(report, "network_allowed=0") != 0, "report network flag");
     EXPECT_TRUE(strstr(report, "recovery_allowed=0") != 0, "report recovery flag");
     EXPECT_TRUE(strstr(report, "hardware_allowed=0") != 0, "report hardware flag");
 
@@ -180,6 +185,7 @@ static int report_handles_denied_requests(void) {
     EXPECT_TRUE(strstr(report, "reason=effect-requires-future-gate") != 0, "denied report reason");
     EXPECT_TRUE(strstr(report, "executed=0") != 0, "denied report executed flag");
     EXPECT_TRUE(strstr(report, "server_interaction_allowed=0") != 0, "denied report server flag");
+    EXPECT_TRUE(strstr(report, "network_allowed=0") != 0, "denied report network flag");
 
     return 0;
 }

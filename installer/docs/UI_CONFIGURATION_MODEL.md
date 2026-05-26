@@ -13,6 +13,7 @@ The graphical panel uses one shared `InstallerConfig` model, generates the same 
 - Plan and receipt evidence before action
 - Embedded panel-aware console instead of a separate TUI
 - Adaptive maximized/resizable layout for Fedora workstations and smaller screens
+- v0.5.0 keeps the selected workspace stable while installation runs, adds a focused run monitor with bounded recent engine output, keeps long engine lines from expanding the right evidence rail, and keeps the console command-focused during an active engine operation
 
 ## Profiles
 
@@ -27,6 +28,10 @@ Minimal report-only Seal-side layout and documentation for users who only want r
 ### Fedora Validation VM
 
 For a Fedora or Fedora-like validation VM. Enables the Fedora validation workspace and keeps the run dry by default.
+
+### LC Standalone
+
+Console-only profile. Enables the LC wrapper, profile presets, seed registry, and contract metadata while disabling Panel embedding. The dry-run preset previews it, and the local preset runs the guarded user-local standalone LC install.
 
 ### Custom
 
@@ -120,6 +125,10 @@ nadia prompt-evaluation-result-disposition
 nadia prompt-evaluation-result-release
 nadia prompt-evaluation-result-release-receipt
 nadia prompt-evaluation-result-release-receipt-review
+nadia prompt-evaluation-result-release-receipt-review-disposition
+nadia prompt-evaluation-result-release-receipt-review-disposition-release
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
 profile guided
 profile seal
 profile fedora
@@ -130,16 +139,16 @@ clear
 
 The console exists inside the GUI so users can stay in one coherent Latticra control surface while still getting terminal-style feedback and procedure visibility.
 
-LC is the Panel-installable console foundation for substrate interaction, host embedding planning, and future OS-base work. Its current Panel commands are metadata-only and do not execute external host commands.
+LC is the standalone and Panel-installable console foundation for substrate interaction, host embedding planning, and future OS-base work. Its current Panel and standalone commands are metadata-only and do not execute external host commands.
 
-Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, Stage-11, Stage-12, Stage-13, Stage-14, Stage-15, Stage-16, Stage-17, Stage-18, Stage-19, Stage-20, Stage-21, Stage-22, Stage-23, Stage-24, Stage-25, Stage-26, Stage-27, Stage-28, Stage-29, Stage-30, Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, and Stage-37 console surfaces are metadata-only inside the Panel and do not launch an external host process or model runtime.
+Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, Stage-11, Stage-12, Stage-13, Stage-14, Stage-15, Stage-16, Stage-17, Stage-18, Stage-19, Stage-20, Stage-21, Stage-22, Stage-23, Stage-24, Stage-25, Stage-26, Stage-27, Stage-28, Stage-29, Stage-30, Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, and Stage-40 console surfaces are metadata-only inside the Panel and do not launch an external host process or model runtime.
 
-Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, Stage-11, Stage-12, Stage-13, Stage-14, Stage-15, Stage-16, Stage-17, Stage-18, Stage-19, Stage-20, Stage-21, Stage-22, Stage-23, Stage-24, Stage-25, Stage-26, Stage-27, Stage-28, Stage-29, Stage-30, Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, and Stage-36 console surfaces are metadata-only.
+Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, and Stage-40 console surfaces are metadata-only result, review, disposition, release, release receipt, release receipt review, release receipt review disposition, release receipt review disposition release, release receipt review disposition release receipt, and release receipt review disposition release receipt review surfaces inside the Panel.
 
-Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, and Stage-37 console surfaces are metadata-only result, review, disposition, release, release receipt, release receipt review, and release receipt review disposition surfaces inside the Panel.
+Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, and Stage-40 console surfaces are metadata-only and remain covered by the Stage-40 metadata-only console posture.
 
-Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, and Stage-36 console surfaces are metadata-only and remain covered by the Stage-36 metadata-only console posture.
+Nadia's Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, and Stage-40 console surfaces are metadata-only and remain covered by the Stage-40 metadata-only console posture.
 
-Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, and Stage-37 console surfaces are metadata-only and remain covered by the Stage-37 metadata-only console posture.
+Stage-40 prompt-evaluation result release receipt review disposition release receipt review contract adds a metadata-only prompt-evaluation result release receipt review disposition release receipt review surface for the next review contract boundary.
 
-Nadia's Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, and Stage-37 console surfaces are metadata-only and remain covered by the Stage-37 metadata-only console posture.
+Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, and Stage-40 console surfaces are metadata-only and remain covered by the Stage-40 metadata-only console posture.

@@ -37,6 +37,12 @@ ubuntu_notice_file_decision_contract_present=1
 ubuntu_notice_file_decision_status=blocked-pending-notice-file-decision
 ubuntu_debian_copyright_notice_mapping_contract_present=1
 ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping
+ubuntu_trademark_notice_boundary_contract_present=1
+ubuntu_trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary
+ubuntu_release_artifact_notice_requirements_contract_present=1
+ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements
+ubuntu_package_notice_promotion_gate_contract_present=1
+ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
 ubuntu_package_notice_review_contract_present=1
 ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 license_expression_candidate_recorded=1
@@ -47,6 +53,18 @@ doc_payload_license_reviewed=0
 doc_payload_license_unresolved=1
 doc_payload_license_decision_recorded=0
 debian_copyright_doc_payload_mapping_reviewed=0
+debian_copyright_binary_payload_mapping_reviewed=0
+debian_copyright_third_party_notice_mapping_reviewed=0
+debian_copyright_generated_artifact_notice_mapping_reviewed=0
+debian_copyright_notice_file_mapping_reviewed=0
+debian_copyright_trademark_notice_boundary_reviewed=0
+debian_copyright_license_ref_replaced_or_justified=0
+trademark_notice_boundary_recorded=0
+trademark_policy_applied_to_package_notice=0
+package_description_endorsement_boundary_reviewed=0
+documentation_trademark_boundary_reviewed=0
+canonical_endorsement_boundary_reviewed=0
+project_identity_downstream_use_boundary_recorded=0
 third_party_material_inventory_recorded=1
 third_party_material_inventory_reviewed=0
 third_party_material_source_records_present=0
@@ -60,6 +78,9 @@ deb_artifact_notice_requirements_recorded=0
 changes_file_notice_requirements_recorded=0
 build_log_notice_requirements_recorded=0
 installed_payload_notice_requirements_recorded=0
+release_artifact_notice_requirements_recorded=0
+source_package_notice_requirements_recorded=0
+release_notes_notice_requirements_recorded=0
 third_party_notice_reviewed=0
 third_party_notice_requirements_recorded=0
 notice_file_present=0
@@ -95,6 +116,9 @@ docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md
 docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md
 docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md
+docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
+docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
+docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
@@ -116,6 +140,9 @@ scripts/test-ubuntu-third-party-material-review-contract.sh
 scripts/test-ubuntu-generated-artifact-notice-review-contract.sh
 scripts/test-ubuntu-notice-file-decision-contract.sh
 scripts/test-ubuntu-debian-copyright-notice-mapping-contract.sh
+scripts/test-ubuntu-trademark-notice-boundary-contract.sh
+scripts/test-ubuntu-release-artifact-notice-requirements-contract.sh
+scripts/test-ubuntu-package-notice-promotion-gate-contract.sh
 scripts/test-ubuntu-package-notice-review-contract.sh
 scripts/test-ubuntu-package-license-review-contract.sh
 scripts/test-ubuntu-local-deb-build-transcript-contract.sh
@@ -125,6 +152,9 @@ scripts/test-ubuntu-local-deb-build-transcript-contract.sh
 .github/workflows/ubuntu-generated-artifact-notice-review-contract.yml
 .github/workflows/ubuntu-notice-file-decision-contract.yml
 .github/workflows/ubuntu-debian-copyright-notice-mapping-contract.yml
+.github/workflows/ubuntu-trademark-notice-boundary-contract.yml
+.github/workflows/ubuntu-release-artifact-notice-requirements-contract.yml
+.github/workflows/ubuntu-package-notice-promotion-gate-contract.yml
 .github/workflows/ubuntu-package-notice-review-contract.yml
 ```
 
@@ -155,12 +185,18 @@ The Ubuntu generated-artifact notice review contract records that generated-arti
 
 The Ubuntu NOTICE file decision contract records that the package still needs a reviewed decision about whether a `NOTICE` file is required and how it would be mapped into the local deb payload.
 
-The Ubuntu Debian copyright notice mapping contract records that `packaging/ubuntu/debian/copyright` still needs a reviewed binary, documentation, third-party, generated-artifact, and NOTICE mapping before package notice promotion.
+The Ubuntu Debian copyright notice mapping contract records that the local deb payload still needs a reviewed mapping into `packaging/ubuntu/debian/copyright` before package notice promotion.
+
+The Ubuntu trademark notice boundary contract records that package metadata still needs a reviewed trademark, project-identity, and endorsement boundary before package notice promotion.
+
+The Ubuntu release artifact notice requirements contract records that source package, deb artifact, `.changes`, build-log, installed-payload, and release-notes notice requirements still need review before package notice promotion.
+
+The Ubuntu package notice promotion gate records the aggregate blocked state across all package notice prerequisites before package license promotion can proceed.
 
 The Ubuntu package notice inventory records the current local-deb draft payload facts without promoting the review. The Ubuntu package notice review contract records the unresolved documentation-license and notice obligations that must be settled before the package license review can be promoted.
 
 ## Next Recommended Lane
 
 ```text
-Review the Ubuntu Debian copyright notice mapping contract, then promote the Ubuntu package notice review only after documentation licensing, third-party notices, generated-artifact notices, NOTICE requirements, and Debian copyright mapping are decided.
+Review the Ubuntu package notice promotion gate contract, then promote the Ubuntu package notice review only after documentation licensing, third-party notices, generated-artifact notices, NOTICE requirements, Debian copyright mapping, trademark boundaries, and release-artifact notices are decided.
 ```

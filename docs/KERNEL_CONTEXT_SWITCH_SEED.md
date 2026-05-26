@@ -7,7 +7,7 @@ Scope: report-only bridge from run queue metadata to context switch intent.
 
 This slice connects the run queue seed to deterministic context switch metadata.
 
-It does not save registers, restore registers, switch stacks, switch address spaces, dispatch work, mutate run queues, preempt execution, wake processes, or touch hardware. It records candidate context switch declarations that future scheduler work can refine behind explicit authority gates.
+It does not save registers, restore registers, switch stacks, switch address spaces, dispatch work, mutate run queues, wake processes, preempt execution, or touch hardware. It records candidate switch declarations that future scheduler work can refine behind explicit authority gates.
 
 ## Files
 
@@ -22,7 +22,7 @@ scripts/test-kernel-context-switch-report-runner.sh
 docs/KERNEL_CONTEXT_SWITCH_SEED.md
 ```
 
-## Current Posture
+## Current posture
 
 The default request evaluates the run queue seed and emits:
 
@@ -70,4 +70,4 @@ kernel_context_switch_report_runner: ok
 
 ## Non-claims
 
-This slice does not schedule execution, mutate run queues, perform a context switch, save or restore registers, switch stacks, switch address spaces, account CPU time, wake processes, dispatch interrupts, perform I/O, boot hardware, or replace an operating system.
+This slice does not schedule execution, mutate run queues, perform context switches, wake processes, account CPU time, dispatch interrupts, perform I/O, boot hardware, or replace an operating system.

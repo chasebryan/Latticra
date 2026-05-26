@@ -107,6 +107,7 @@ static int lat_to_lir_diagnostic_reports_valid_lowering(void) {
     EXPECT_STR_EQ(diagnostic.first_clause_name, "origin", "valid first clause name");
     EXPECT_STR_EQ(diagnostic.first_clause_operator, "=", "valid first clause operator");
     EXPECT_STR_EQ(diagnostic.first_clause_value, "0/0", "valid first clause value");
+    EXPECT_TRUE(diagnostic.network_allowed == 0, "valid network denied");
     EXPECT_TRUE(diagnostic.evidence_level == 2u, "valid evidence level");
 
     EXPECT_TRUE(latticra_lat_to_lir_diagnostics_report(&diagnostic, report, sizeof(report)) == LATTICRA_STATUS_OK, "valid diagnostic report");
@@ -128,6 +129,7 @@ static int lat_to_lir_diagnostic_reports_valid_lowering(void) {
     EXPECT_TRUE(strstr(report, "first_clause_name=origin\n") != 0, "report first clause name");
     EXPECT_TRUE(strstr(report, "first_clause_operator==\n") != 0, "report first clause operator");
     EXPECT_TRUE(strstr(report, "first_clause_value=0/0\n") != 0, "report first clause value");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0, "report network flag");
     EXPECT_TRUE(strstr(report, "evidence_level=2\n") != 0, "report evidence");
     return 0;
 }

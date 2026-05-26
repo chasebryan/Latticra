@@ -1,4 +1,4 @@
-.PHONY: help gui panel build-gui build-panel dry-run lc-standalone-dry-run standalone-dry-run lc-standalone-local standalone-local local-example install-local verify-local verify-lc-standalone verify-standalone uninstall-local reset-local uninstall-dry-run reset-dry-run fmt tree clean refresh-desktop
+.PHONY: help gui panel build-gui build-panel dry-run lc-standalone-dry-run standalone-dry-run lc-standalone-local standalone-local local-example install-local verify-local uninstall-local reset-local uninstall-dry-run reset-dry-run fmt tree clean refresh-desktop
 
 INSTALLER_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 GUI_DIR := $(INSTALLER_DIR)latticra-installer
@@ -20,7 +20,6 @@ help:
 	  "  make -C installer local-example   Run actual guarded user-local install" \
 	  "  make -C installer install-local   Same as local-example" \
 	  "  make -C installer verify-local    Verify the local install" \
-	  "  make -C installer verify-lc-standalone Verify standalone LC local install" \
 	  "  make -C installer reset-local     Reset managed local install for reinstall" \
 	  "  make -C installer uninstall-local Uninstall managed local install" \
 	  "  make -C installer reset-dry-run   Preview managed local reset" \
@@ -62,10 +61,6 @@ local-example install-local:
 
 verify-local:
 	sh "$(SCRIPT_DIR)/latticra-installer-verify.sh" \
-	  --prefix "$(HOME)/.local/share/latticra"
-
-verify-lc-standalone verify-standalone:
-	sh "$(SCRIPT_DIR)/latticra-installer-verify-lc-standalone.sh" \
 	  --prefix "$(HOME)/.local/share/latticra"
 
 uninstall-local:

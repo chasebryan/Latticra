@@ -26,8 +26,11 @@
         <a href="status.html">Status</a>
         <a href="roadmap.html">Roadmap</a>
         <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
         <a href="runtime.html">Runtime</a>
         <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
         <a href="console.html">Console</a>
         <a href="nadia.html">Nadia</a>
         <a href="language.html">Language</a>
@@ -58,15 +61,15 @@
     <section class="metrics-band" aria-label="Current planning estimates">
       <div class="content-shell metrics-grid">
         <article class="metric">
-          <span class="metric-value">39%</span>
+          <span class="metric-value">44%</span>
           <span class="metric-label">overall system planning estimate</span>
         </article>
         <article class="metric">
-          <span class="metric-value">92%</span>
+          <span class="metric-value">94%</span>
           <span class="metric-label">foundation documents planning estimate</span>
         </article>
         <article class="metric">
-          <span class="metric-value">88%</span>
+          <span class="metric-value">91%</span>
           <span class="metric-label">public documentation planning estimate</span>
         </article>
         <article class="metric metric-guarded">
@@ -80,7 +83,7 @@
       <div class="content-shell status-summary">
         <div>
           <p class="eyebrow">Status Record</p>
-          <h2>Last public status update: May 25, 2026 CDT.</h2>
+          <h2>Last public status update: May 26, 2026 CDT.</h2>
           <p>
             The authoritative records are the root status file and the detailed current-status record. This page is a navigation and summary surface for GitHub Pages readers.
           </p>
@@ -90,7 +93,7 @@
           <a class="button button-primary button-outline" href="status/CURRENT_STATUS.md">Current status</a>
           <a class="button button-primary button-outline" href="roadmap.html">Roadmap</a>
           <a class="button button-primary button-outline" href="validation.html">Validation</a>
-          <a class="button button-primary button-outline" href="status/CURRENT_ESTIMATE_REFRESH_2026_05_24.md">Estimate refresh</a>
+          <a class="button button-primary button-outline" href="status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md">Estimate rebase</a>
         </div>
       </div>
     </section>
@@ -142,6 +145,18 @@
           <a href="language.html">Language overview</a>
         </article>
         <article class="status-lane">
+          <h3>Kernel / State Lattice</h3>
+          <p>Compiled C kernel identity, state machine, lifecycle summary, and subsystem reports keep external effects denied.</p>
+          <a href="kernel.html">Kernel overview</a>
+          <a href="status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md">Kernel lifecycle status</a>
+        </article>
+        <article class="status-lane">
+          <h3>Boot Preview / SeaBIOS-GRUB</h3>
+          <p>Compatibility is safe by absence: fixture manifests and preflight records exist, while QEMU execution, boot artifacts, and production OS claims remain blocked.</p>
+          <a href="boot.html">Boot preview boundary</a>
+          <a href="SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_CONTRACT.md">Boot-preview evidence contract</a>
+        </article>
+        <article class="status-lane">
           <h3>Nucleus / Runtime Boundary</h3>
           <p>Task-boundary and runtime-boundary reports remain denied-by-default and report-only.</p>
           <a href="runtime.html">Runtime overview</a>
@@ -156,16 +171,18 @@
           <h3>Panel / Console / Nadia</h3>
           <p>Local workbench, profile, prompt-plan, and offline AI planning lanes remain explicitly non-runtime and non-authoritative.</p>
           <a href="workbench.html">Workbench overview</a>
+          <a href="panel.html">Panel overview</a>
           <a href="console.html">Console overview</a>
           <a href="nadia.html">Nadia overview</a>
         </article>
         <article class="status-lane">
           <h3>Ubuntu / Fedora / Packaging</h3>
           <p>Validation lanes are local and evidence-oriented. They do not indicate Ubuntu archive readiness, Fedora approval, or distribution readiness.</p>
-          <a href="installer.html">Installer readiness</a>
+          <a href="packaging.html">Packaging overview</a>
           <a href="validation.html">Validation overview</a>
           <a href="FEDORA_READINESS_PLAN.md">Fedora readiness</a>
           <a href="UBUNTU_READINESS_PLAN.md">Ubuntu readiness</a>
+          <a href="OPENSUSE_READINESS_PLAN.md">openSUSE readiness</a>
         </article>
         <article class="status-lane">
           <h3>Security Posture</h3>

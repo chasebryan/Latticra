@@ -23,8 +23,6 @@ static int default_request_is_stable(void) {
         "run queue seed request preserved");
     EXPECT_TRUE(request.run_queue_request.scheduler_tick_request.requested_tick_count == 4u,
         "scheduler tick seed request preserved");
-    EXPECT_TRUE(request.run_queue_request.scheduler_tick_request.timer_source_request.requested_timer_count == 4u,
-        "timer source seed request preserved");
     return 0;
 }
 
@@ -38,20 +36,15 @@ static int context_switch_seed_is_metadata_only(void) {
     EXPECT_TRUE(latticra_kernel_context_switch_evaluate(&request, &result) ==
             LATTICRA_STATUS_OK,
         "context switch evaluates");
-    EXPECT_TRUE(strcmp(result.switch_status,
-            "context-switch-seed-ready") == 0,
+    EXPECT_TRUE(strcmp(result.switch_status, "context-switch-seed-ready") == 0,
         "context switch ready");
     EXPECT_TRUE(strcmp(result.policy_status, "report-only") == 0,
         "policy report-only");
-    EXPECT_TRUE(strcmp(result.run_queue.queue_status,
-            "run-queue-seed-ready") == 0,
+    EXPECT_TRUE(strcmp(result.run_queue.queue_status, "run-queue-seed-ready") == 0,
         "run queue ready");
     EXPECT_TRUE(strcmp(result.run_queue.scheduler_tick.tick_status,
             "scheduler-tick-seed-ready") == 0,
         "scheduler tick ready");
-    EXPECT_TRUE(strcmp(result.run_queue.scheduler_tick.timer_source.timer_status,
-            "timer-source-seed-ready") == 0,
-        "timer source ready");
     EXPECT_TRUE(result.switch_count == 4u,
         "switch count four");
     EXPECT_TRUE(result.no_effect == 1,
@@ -83,10 +76,13 @@ static int context_switch_seed_is_metadata_only(void) {
 
     EXPECT_TRUE(strcmp(result.switches[0].from_process_label,
             "idle-process-metadata") == 0,
-        "switch zero from idle");
+        "switch zero from process");
     EXPECT_TRUE(strcmp(result.switches[0].to_process_label,
             "kernel-report-process-metadata") == 0,
-        "switch zero to kernel report");
+        "switch zero to process");
+    EXPECT_TRUE(strcmp(result.switches[0].scheduler_slot_label,
+            "kernel-report-metadata") == 0,
+        "switch zero scheduler slot");
     EXPECT_TRUE(strcmp(result.switches[0].switch_class,
             "idle-to-kernel-report-context-switch") == 0,
         "switch zero class");
@@ -96,16 +92,12 @@ static int context_switch_seed_is_metadata_only(void) {
         "switch zero from pid");
     EXPECT_TRUE(result.switches[0].to_pid_token == 1ul,
         "switch zero to pid");
-    EXPECT_TRUE(result.switches[0].queue_token == 0ul,
+    EXPECT_TRUE(result.switches[0].queue_token == 1ul,
         "switch zero queue token");
     EXPECT_TRUE(result.switches[0].tick_token == 1ul,
-        "switch zero tick");
-    EXPECT_TRUE(result.switches[0].timer_token == 1ul,
-        "switch zero timer");
+        "switch zero tick token");
     EXPECT_TRUE(result.switches[0].priority == 10ul,
         "switch zero priority");
-    EXPECT_TRUE(result.switches[0].budget_ns == 1000000ul,
-        "switch zero budget");
     EXPECT_TRUE(strcmp(result.switches[0].authority_status,
             "context-switch-authority-denied") == 0,
         "switch authority denied");
@@ -113,31 +105,39 @@ static int context_switch_seed_is_metadata_only(void) {
         "switch declared");
     EXPECT_TRUE(result.switches[0].prepared == 0,
         "switch not prepared");
-    EXPECT_TRUE(result.switches[0].saved == 0,
-        "switch not saved");
-    EXPECT_TRUE(result.switches[0].restored == 0,
-        "switch not restored");
+    EXPECT_TRUE(result.switches[0].selected == 0,
+        "switch not selected");
+    EXPECT_TRUE(result.switches[0].committed == 0,
+        "switch not committed");
     EXPECT_TRUE(result.switches[0].context_switch_allowed == 0,
-        "switch entry context switch denied");
+        "switch context denied");
     EXPECT_TRUE(result.switches[0].register_save_allowed == 0,
-        "switch entry register save denied");
+        "switch register save denied");
     EXPECT_TRUE(result.switches[0].register_restore_allowed == 0,
-        "switch entry register restore denied");
+        "switch register restore denied");
     EXPECT_TRUE(result.switches[0].stack_switch_allowed == 0,
-        "switch entry stack switch denied");
+        "switch stack denied");
     EXPECT_TRUE(result.switches[0].address_space_switch_allowed == 0,
-        "switch entry address space switch denied");
+        "switch address space denied");
+    EXPECT_TRUE(result.switches[0].dispatch_allowed == 0,
+        "switch dispatch denied");
+    EXPECT_TRUE(result.switches[0].run_queue_mutation_allowed == 0,
+        "switch run queue mutation denied");
+    EXPECT_TRUE(result.switches[0].time_accounting_allowed == 0,
+        "switch time accounting denied");
+    EXPECT_TRUE(result.switches[0].process_wake_allowed == 0,
+        "switch process wake denied");
     EXPECT_TRUE(result.switches[0].no_effect == 1,
-        "switch entry no-effect");
+        "switch no-effect");
     EXPECT_TRUE(strcmp(result.switches[1].switch_class,
             "kernel-report-to-entropy-context-switch") == 0,
-        "entropy switch class");
+        "kernel report switch class");
     EXPECT_TRUE(strcmp(result.switches[2].switch_class,
             "entropy-to-console-context-switch") == 0,
-        "console switch class");
+        "entropy switch class");
     EXPECT_TRUE(strcmp(result.switches[3].switch_class,
             "console-to-idle-context-switch") == 0,
-        "idle switch class");
+        "console switch class");
     return 0;
 }
 
@@ -149,7 +149,6 @@ static int context_switch_caps_switch_count(void) {
             LATTICRA_STATUS_OK,
         "request initialized for cap");
     request.requested_switch_count = 99u;
-    request.run_queue_request.requested_queue_count = 99u;
     EXPECT_TRUE(latticra_kernel_context_switch_evaluate(&request, &result) ==
             LATTICRA_STATUS_OK,
         "context switch evaluates cap");
@@ -160,8 +159,8 @@ static int context_switch_caps_switch_count(void) {
         "reserved switch class");
     EXPECT_TRUE(result.switches[4].switch_token == 6004ul,
         "reserved switch token");
-    EXPECT_TRUE(result.switches[4].queue_token == 5004ul,
-        "reserved queue token");
+    EXPECT_TRUE(result.switches[4].from_pid_token == 1004ul,
+        "reserved from pid token");
     return 0;
 }
 
@@ -185,7 +184,7 @@ static int context_switch_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "switch_status=context-switch-seed-ready\n") != 0,
         "switch status emitted");
     EXPECT_TRUE(strstr(report, "run_queue_status=run-queue-seed-ready\n") != 0,
-        "run queue status emitted");
+        "run queue emitted");
     EXPECT_TRUE(strstr(report, "scheduler_tick_status=scheduler-tick-seed-ready\n") != 0,
         "scheduler tick emitted");
     EXPECT_TRUE(strstr(report, "switch_count=4\n") != 0,
@@ -199,17 +198,23 @@ static int context_switch_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "stack_switch_allowed=0\n") != 0,
         "stack switch flag emitted");
     EXPECT_TRUE(strstr(report, "address_space_switch_allowed=0\n") != 0,
-        "address space switch flag emitted");
+        "address space flag emitted");
+    EXPECT_TRUE(strstr(report, "dispatch_allowed=0\n") != 0,
+        "dispatch flag emitted");
+    EXPECT_TRUE(strstr(report, "run_queue_mutation_allowed=0\n") != 0,
+        "run queue mutation flag emitted");
     EXPECT_TRUE(strstr(report, "switch[0].from_process_label=idle-process-metadata\n") != 0,
         "switch zero from emitted");
     EXPECT_TRUE(strstr(report, "switch[0].to_process_label=kernel-report-process-metadata\n") != 0,
         "switch zero to emitted");
     EXPECT_TRUE(strstr(report, "switch[0].switch_class=idle-to-kernel-report-context-switch\n") != 0,
         "switch zero class emitted");
-    EXPECT_TRUE(strstr(report, "switch[0].saved=0\n") != 0,
-        "saved emitted");
-    EXPECT_TRUE(strstr(report, "switch[0].restored=0\n") != 0,
-        "restored emitted");
+    EXPECT_TRUE(strstr(report, "switch[0].prepared=0\n") != 0,
+        "prepared emitted");
+    EXPECT_TRUE(strstr(report, "switch[0].selected=0\n") != 0,
+        "selected emitted");
+    EXPECT_TRUE(strstr(report, "switch[0].committed=0\n") != 0,
+        "committed emitted");
     EXPECT_TRUE(strstr(report, "switch[0].no_effect=1\n") != 0,
         "switch no-effect emitted");
     return 0;

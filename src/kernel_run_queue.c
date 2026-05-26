@@ -19,8 +19,7 @@ static void seed_result(latticra_kernel_run_queue_result_t *result) {
     memset(result, 0, sizeof(*result));
     result->status = LATTICRA_STATUS_OK;
     queue_copy(result->queue_status, sizeof(result->queue_status), "pending");
-    queue_copy(result->policy_status, sizeof(result->policy_status),
-        "report-only");
+    queue_copy(result->policy_status, sizeof(result->policy_status), "report-only");
     result->no_effect = 1;
     result->run_queue_mutation_allowed = 0;
     result->enqueue_allowed = 0;
@@ -39,8 +38,8 @@ latticra_status_t latticra_kernel_run_queue_default_request(
     latticra_kernel_run_queue_request_t *request) {
     if (request == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     memset(request, 0, sizeof(*request));
-    if (latticra_kernel_scheduler_tick_default_request(
-            &request->scheduler_tick_request) != LATTICRA_STATUS_OK) {
+    if (latticra_kernel_scheduler_tick_default_request(&request->scheduler_tick_request) !=
+            LATTICRA_STATUS_OK) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
     request->requested_queue_count = 4u;
@@ -48,116 +47,74 @@ latticra_status_t latticra_kernel_run_queue_default_request(
 }
 
 static void fill_queue(
-    latticra_kernel_run_queue_entry_t *entry,
+    latticra_kernel_run_queue_entry_t *queue,
     size_t index,
     unsigned long queue_token,
     unsigned long pid_token,
     unsigned long tick_token,
-    unsigned long timer_token,
-    unsigned long irq_vector,
     unsigned long priority,
-    unsigned long budget_ns,
-    const char *scheduler_slot_label,
     const char *process_label,
+    const char *scheduler_slot_label,
     const char *queue_class) {
-    memset(entry, 0, sizeof(*entry));
-    entry->queue_index = index;
-    entry->queue_token = queue_token;
-    entry->pid_token = pid_token;
-    entry->tick_token = tick_token;
-    entry->timer_token = timer_token;
-    entry->irq_vector = irq_vector;
-    entry->priority = priority;
-    entry->budget_ns = budget_ns;
-    queue_copy(entry->scheduler_slot_label, sizeof(entry->scheduler_slot_label),
+    memset(queue, 0, sizeof(*queue));
+    queue->queue_index = index;
+    queue->queue_token = queue_token;
+    queue->pid_token = pid_token;
+    queue->tick_token = tick_token;
+    queue->priority = priority;
+    queue_copy(queue->process_label, sizeof(queue->process_label), process_label);
+    queue_copy(queue->scheduler_slot_label, sizeof(queue->scheduler_slot_label),
         scheduler_slot_label);
-    queue_copy(entry->process_label, sizeof(entry->process_label),
-        process_label);
-    queue_copy(entry->queue_class, sizeof(entry->queue_class), queue_class);
-    queue_copy(entry->queue_status, sizeof(entry->queue_status),
-        "declared-metadata");
-    queue_copy(entry->authority_status, sizeof(entry->authority_status),
+    queue_copy(queue->queue_class, sizeof(queue->queue_class), queue_class);
+    queue_copy(queue->queue_status, sizeof(queue->queue_status), "declared-metadata");
+    queue_copy(queue->authority_status, sizeof(queue->authority_status),
         "run-queue-authority-denied");
-    entry->declared = 1;
-    entry->enqueued = 0;
-    entry->dequeued = 0;
-    entry->selected = 0;
-    entry->run_queue_mutation_allowed = 0;
-    entry->enqueue_allowed = 0;
-    entry->dequeue_allowed = 0;
-    entry->dispatch_allowed = 0;
-    entry->context_switch_allowed = 0;
-    entry->preemption_allowed = 0;
-    entry->time_accounting_allowed = 0;
-    entry->process_wake_allowed = 0;
-    entry->hardware_effect_allowed = 0;
-    entry->host_effect_allowed = 0;
-    entry->no_effect = 1;
-    entry->evidence_level = 17u;
+    queue->declared = 1;
+    queue->enqueued = 0;
+    queue->dequeued = 0;
+    queue->selected = 0;
+    queue->run_queue_mutation_allowed = 0;
+    queue->enqueue_allowed = 0;
+    queue->dequeue_allowed = 0;
+    queue->dispatch_allowed = 0;
+    queue->context_switch_allowed = 0;
+    queue->preemption_allowed = 0;
+    queue->time_accounting_allowed = 0;
+    queue->process_wake_allowed = 0;
+    queue->hardware_effect_allowed = 0;
+    queue->host_effect_allowed = 0;
+    queue->no_effect = 1;
+    queue->evidence_level = 17u;
 }
 
-static const latticra_kernel_scheduler_tick_entry_t *tick_at(
+static const char *tick_process_for(
     const latticra_kernel_scheduler_tick_result_t *scheduler_tick,
-    size_t index) {
-    if (index < scheduler_tick->tick_count &&
-        scheduler_tick->ticks[index].declared) {
-        return &scheduler_tick->ticks[index];
+    size_t index,
+    const char *fallback) {
+    if (index < scheduler_tick->tick_count && scheduler_tick->ticks[index].declared) {
+        return scheduler_tick->ticks[index].process_label;
     }
-    return 0;
+    return fallback;
+}
+
+static const char *tick_slot_for(
+    const latticra_kernel_scheduler_tick_result_t *scheduler_tick,
+    size_t index,
+    const char *fallback) {
+    if (index < scheduler_tick->tick_count && scheduler_tick->ticks[index].declared) {
+        return scheduler_tick->ticks[index].scheduler_slot_label;
+    }
+    return fallback;
 }
 
 static unsigned long tick_token_for(
     const latticra_kernel_scheduler_tick_result_t *scheduler_tick,
     size_t index,
     unsigned long fallback) {
-    const latticra_kernel_scheduler_tick_entry_t *entry =
-        tick_at(scheduler_tick, index);
-    return entry ? entry->tick_token : fallback;
-}
-
-static unsigned long timer_token_for(
-    const latticra_kernel_scheduler_tick_result_t *scheduler_tick,
-    size_t index,
-    unsigned long fallback) {
-    const latticra_kernel_scheduler_tick_entry_t *entry =
-        tick_at(scheduler_tick, index);
-    return entry ? entry->timer_token : fallback;
-}
-
-static unsigned long irq_for(
-    const latticra_kernel_scheduler_tick_result_t *scheduler_tick,
-    size_t index,
-    unsigned long fallback) {
-    const latticra_kernel_scheduler_tick_entry_t *entry =
-        tick_at(scheduler_tick, index);
-    return entry ? entry->irq_vector : fallback;
-}
-
-static unsigned long budget_for(
-    const latticra_kernel_scheduler_tick_result_t *scheduler_tick,
-    size_t index,
-    unsigned long fallback) {
-    const latticra_kernel_scheduler_tick_entry_t *entry =
-        tick_at(scheduler_tick, index);
-    return entry ? entry->budget_ns : fallback;
-}
-
-static const char *slot_for(
-    const latticra_kernel_scheduler_tick_result_t *scheduler_tick,
-    size_t index,
-    const char *fallback) {
-    const latticra_kernel_scheduler_tick_entry_t *entry =
-        tick_at(scheduler_tick, index);
-    return entry ? entry->scheduler_slot_label : fallback;
-}
-
-static const char *process_for(
-    const latticra_kernel_scheduler_tick_result_t *scheduler_tick,
-    size_t index,
-    const char *fallback) {
-    const latticra_kernel_scheduler_tick_entry_t *entry =
-        tick_at(scheduler_tick, index);
-    return entry ? entry->process_label : fallback;
+    if (index < scheduler_tick->tick_count && scheduler_tick->ticks[index].declared) {
+        return scheduler_tick->ticks[index].tick_token;
+    }
+    return fallback;
 }
 
 static void fill_queues(
@@ -166,73 +123,54 @@ static void fill_queues(
     size_t count = requested_queue_count;
     size_t i;
     if (count == 0u) count = 4u;
-    if (count > LATTICRA_KERNEL_RUN_QUEUE_MAX) {
-        count = LATTICRA_KERNEL_RUN_QUEUE_MAX;
+    if (count > LATTICRA_KERNEL_RUN_QUEUE_ENTRY_MAX) {
+        count = LATTICRA_KERNEL_RUN_QUEUE_ENTRY_MAX;
     }
 
     result->queue_count = count;
     if (count > 0u) {
-        fill_queue(&result->queues[0], 0u, 0ul, 1ul,
-            tick_token_for(&result->scheduler_tick, 1u, 1ul),
-            timer_token_for(&result->scheduler_tick, 1u, 1ul),
-            irq_for(&result->scheduler_tick, 1u, 35ul),
-            10ul,
-            budget_for(&result->scheduler_tick, 1u, 1000000ul),
-            slot_for(&result->scheduler_tick, 1u, "kernel-report-metadata"),
-            process_for(&result->scheduler_tick, 1u,
-                "kernel-report-process-metadata"),
-            "kernel-report-run-queue-entry");
+        fill_queue(&result->queues[0], 0u, 0ul, 0ul,
+            tick_token_for(&result->scheduler_tick, 0u, 0ul),
+            0ul,
+            tick_process_for(&result->scheduler_tick, 0u, "idle-process-metadata"),
+            tick_slot_for(&result->scheduler_tick, 0u, "idle-metadata"),
+            "idle-run-queue");
     }
     if (count > 1u) {
-        fill_queue(&result->queues[1], 1u, 1ul, 2ul,
-            tick_token_for(&result->scheduler_tick, 2u, 2ul),
-            timer_token_for(&result->scheduler_tick, 2u, 2ul),
-            irq_for(&result->scheduler_tick, 2u, 34ul),
-            20ul,
-            budget_for(&result->scheduler_tick, 2u, 0ul),
-            slot_for(&result->scheduler_tick, 2u, "operator-report-metadata"),
-            process_for(&result->scheduler_tick, 2u,
-                "entropy-report-process-metadata"),
-            "entropy-run-queue-entry");
+        fill_queue(&result->queues[1], 1u, 1ul, 1ul,
+            tick_token_for(&result->scheduler_tick, 1u, 1ul),
+            10ul,
+            tick_process_for(&result->scheduler_tick, 1u,
+                "kernel-report-process-metadata"),
+            tick_slot_for(&result->scheduler_tick, 1u, "kernel-report-metadata"),
+            "kernel-report-run-queue");
     }
     if (count > 2u) {
-        fill_queue(&result->queues[2], 2u, 2ul, 3ul,
-            tick_token_for(&result->scheduler_tick, 3u, 3ul),
-            timer_token_for(&result->scheduler_tick, 3u, 3ul),
-            irq_for(&result->scheduler_tick, 3u, 32ul),
-            30ul,
-            budget_for(&result->scheduler_tick, 3u, 0ul),
-            slot_for(&result->scheduler_tick, 3u, "operator-report-metadata"),
-            process_for(&result->scheduler_tick, 3u,
-                "console-report-process-metadata"),
-            "console-run-queue-entry");
+        fill_queue(&result->queues[2], 2u, 2ul, 2ul,
+            tick_token_for(&result->scheduler_tick, 2u, 2ul),
+            20ul,
+            tick_process_for(&result->scheduler_tick, 2u,
+                "entropy-report-process-metadata"),
+            tick_slot_for(&result->scheduler_tick, 2u, "operator-report-metadata"),
+            "entropy-run-queue");
     }
     if (count > 3u) {
-        fill_queue(&result->queues[3], 3u, 3ul, 0ul,
-            tick_token_for(&result->scheduler_tick, 0u, 0ul),
-            timer_token_for(&result->scheduler_tick, 0u, 0ul),
-            irq_for(&result->scheduler_tick, 0u, 35ul),
-            0ul,
-            budget_for(&result->scheduler_tick, 0u, 10000000ul),
-            slot_for(&result->scheduler_tick, 0u, "idle-metadata"),
-            process_for(&result->scheduler_tick, 0u,
-                "idle-process-metadata"),
-            "idle-run-queue-entry");
+        fill_queue(&result->queues[3], 3u, 3ul, 3ul,
+            tick_token_for(&result->scheduler_tick, 3u, 3ul),
+            30ul,
+            tick_process_for(&result->scheduler_tick, 3u,
+                "console-report-process-metadata"),
+            tick_slot_for(&result->scheduler_tick, 3u, "operator-report-metadata"),
+            "console-run-queue");
     }
     for (i = 4u; i < count; ++i) {
         fill_queue(&result->queues[i], i, 5000ul + (unsigned long)i,
-            2000ul + (unsigned long)i,
-            tick_token_for(&result->scheduler_tick, i,
-                4000ul + (unsigned long)i),
-            timer_token_for(&result->scheduler_tick, i,
-                3000ul + (unsigned long)i),
-            irq_for(&result->scheduler_tick, i, 128ul + (unsigned long)i),
-            0ul,
-            budget_for(&result->scheduler_tick, i, 0ul),
-            slot_for(&result->scheduler_tick, i, "reserved-metadata"),
-            process_for(&result->scheduler_tick, i,
-                "reserved-process-metadata"),
-            "reserved-run-queue-entry");
+            1000ul + (unsigned long)i,
+            tick_token_for(&result->scheduler_tick, i, 4000ul + (unsigned long)i),
+            100ul,
+            tick_process_for(&result->scheduler_tick, i, "reserved-process-metadata"),
+            tick_slot_for(&result->scheduler_tick, i, "reserved-metadata"),
+            "reserved-run-queue");
     }
 }
 
@@ -246,13 +184,11 @@ latticra_status_t latticra_kernel_run_queue_evaluate(
 
     if (request == 0) {
         result->status = LATTICRA_STATUS_NULL_ARGUMENT;
-        queue_copy(result->queue_status, sizeof(result->queue_status),
-            "null-request");
+        queue_copy(result->queue_status, sizeof(result->queue_status), "null-request");
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
-    status = latticra_kernel_scheduler_tick_evaluate(
-        &request->scheduler_tick_request,
+    status = latticra_kernel_scheduler_tick_evaluate(&request->scheduler_tick_request,
         &result->scheduler_tick);
     if (status != LATTICRA_STATUS_OK) {
         result->status = status;
@@ -265,8 +201,7 @@ latticra_status_t latticra_kernel_run_queue_evaluate(
     fill_queues(result, request->requested_queue_count);
     result->no_effect = result->scheduler_tick.no_effect;
     queue_copy(result->queue_status, sizeof(result->queue_status),
-        result->no_effect ? "run-queue-seed-ready" :
-            "run-queue-seed-blocked");
+        result->no_effect ? "run-queue-seed-ready" : "run-queue-seed-blocked");
     return result->status;
 }
 
@@ -308,6 +243,10 @@ latticra_status_t latticra_kernel_run_queue_report(
         "policy_status=%s\n"
         "scheduler_tick_status=%s\n"
         "timer_source_status=%s\n"
+        "interrupt_table_status=%s\n"
+        "process_table_status=%s\n"
+        "memory_map_status=%s\n"
+        "scheduler_status=%s\n"
         "queue_count=%lu\n"
         "no_effect=%d\n"
         "run_queue_mutation_allowed=%d\n"
@@ -325,6 +264,10 @@ latticra_status_t latticra_kernel_run_queue_report(
         result->policy_status,
         result->scheduler_tick.tick_status,
         result->scheduler_tick.timer_source.timer_status,
+        result->scheduler_tick.timer_source.interrupt_table.table_status,
+        result->scheduler_tick.timer_source.interrupt_table.driver_catalog.device_registry.vfs_namespace.ipc_table.syscall_table.process_table.table_status,
+        result->scheduler_tick.timer_source.interrupt_table.driver_catalog.device_registry.vfs_namespace.ipc_table.syscall_table.process_table.memory_map.map_status,
+        result->scheduler_tick.timer_source.interrupt_table.driver_catalog.device_registry.vfs_namespace.ipc_table.syscall_table.process_table.memory_map.scheduler.scheduler_status,
         (unsigned long)result->queue_count,
         result->no_effect,
         result->run_queue_mutation_allowed,
@@ -343,14 +286,11 @@ latticra_status_t latticra_kernel_run_queue_report(
     for (i = 0u; i < result->queue_count; ++i) {
         status = append_text(buffer, buffer_len, &used,
             "queue[%lu].process_label=%s\n"
-            "queue[%lu].scheduler_slot_label=%s\n"
             "queue[%lu].queue_token=%lu\n"
             "queue[%lu].pid_token=%lu\n"
             "queue[%lu].tick_token=%lu\n"
-            "queue[%lu].timer_token=%lu\n"
-            "queue[%lu].irq_vector=%lu\n"
             "queue[%lu].priority=%lu\n"
-            "queue[%lu].budget_ns=%lu\n"
+            "queue[%lu].scheduler_slot_label=%s\n"
             "queue[%lu].queue_class=%s\n"
             "queue[%lu].queue_status=%s\n"
             "queue[%lu].authority_status=%s\n"
@@ -370,14 +310,11 @@ latticra_status_t latticra_kernel_run_queue_report(
             "queue[%lu].host_effect_allowed=%d\n"
             "queue[%lu].no_effect=%d\n",
             (unsigned long)i, result->queues[i].process_label,
-            (unsigned long)i, result->queues[i].scheduler_slot_label,
             (unsigned long)i, result->queues[i].queue_token,
             (unsigned long)i, result->queues[i].pid_token,
             (unsigned long)i, result->queues[i].tick_token,
-            (unsigned long)i, result->queues[i].timer_token,
-            (unsigned long)i, result->queues[i].irq_vector,
             (unsigned long)i, result->queues[i].priority,
-            (unsigned long)i, result->queues[i].budget_ns,
+            (unsigned long)i, result->queues[i].scheduler_slot_label,
             (unsigned long)i, result->queues[i].queue_class,
             (unsigned long)i, result->queues[i].queue_status,
             (unsigned long)i, result->queues[i].authority_status,

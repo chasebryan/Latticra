@@ -47,6 +47,7 @@ readme_status='docs/status/MACOS_README_INSTALLER_USAGE_STATUS.md'
 transfer_plan='docs/MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md'
 transfer_status='docs/status/MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md'
 interface_script='scripts/macos-reset-uninstall-live-runner-interface-contract.sh'
+makefile='Makefile'
 
 require_file "$doc"
 require_file "$status"
@@ -58,6 +59,7 @@ require_file "$readme_status"
 require_file "$transfer_plan"
 require_file "$transfer_status"
 require_file "$interface_script"
+require_file "$makefile"
 
 require_contains 'Status: no-effect macOS reset/uninstall live-runner no-op prototype contract' "$doc"
 require_contains 'sh scripts/macos-reset-uninstall-live-runner-noop-prototype-contract.sh' "$doc"
@@ -90,7 +92,7 @@ require_contains 'live_runner_noop_prototype_contract_state=executed-no-effect' 
 require_contains 'live_runner_noop_prototype_contract_decision=denied-interface-path-only' "$status"
 require_contains 'live_runner_noop_prototype_stdout_only=1' "$status"
 require_contains 'live_runner_noop_prototype_phase_5_status=stdout-only' "$status"
-require_contains 'Add a macOS reset/uninstall live-runner denied-dispatch review contract that keeps review-only dispatch denial evidence separate from any effects.' "$status"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial review contract that reviews the closed gate transcript without enabling dispatch or deletion.' "$status"
 require_contains 'runtime_authority_granted=0' "$status"
 
 require_contains 'MACOS_RESET_UNINSTALL_LIVE_RUNNER_NOOP_PROTOTYPE_CONTRACT_STATUS.md' "$index"
@@ -106,18 +108,18 @@ require_contains 'live_runner_noop_prototype_contract_state=executed-no-effect' 
 require_contains 'stage_4_macos_reset_uninstall_live_runner_noop_prototype_contract=present' "$transfer_plan"
 require_contains 'docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_NOOP_PROTOTYPE_CONTRACT.md' "$transfer_plan"
 require_contains 'Current live-runner no-op prototype lane now present' "$transfer_plan"
-require_contains 'Add a macOS reset/uninstall live-runner denied-dispatch review contract that keeps review-only dispatch denial evidence separate from any effects.' "$transfer_plan"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial review contract that reviews the closed gate transcript without enabling dispatch or deletion.' "$transfer_plan"
 require_contains 'macos_reset_uninstall_live_runner_noop_prototype_contract_present=1' "$transfer_status"
 require_contains 'live_runner_noop_prototype_contract_state=executed-no-effect' "$transfer_status"
 require_contains 'live_runner_noop_prototype_stdout_only=1' "$transfer_status"
 require_contains 'Current live-runner no-op prototype lane' "$transfer_status"
-require_contains 'Add a macOS reset/uninstall live-runner denied-dispatch review contract that keeps review-only dispatch denial evidence separate from any effects.' "$transfer_status"
-require_contains 'next_lane=macos-reset-uninstall-live-runner-denied-dispatch-review-contract' "$interface_script"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial review contract that reviews the closed gate transcript without enabling dispatch or deletion.' "$transfer_status"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-review-contract' "$interface_script"
 
 require_contains 'MACOS RESET UNINSTALL LIVE RUNNER NOOP PROTOTYPE CONTRACT' "$script"
 require_contains 'live_runner_noop_prototype_runner_enabled=0' "$script"
 require_contains 'live_runner_noop_prototype_requires_no_dispatch=1' "$script"
-require_contains 'next_lane=macos-reset-uninstall-live-runner-denied-dispatch-review-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-review-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -133,8 +135,10 @@ require_output_contains "$output" 'live_runner_noop_prototype_dispatch_enabled=0
 require_output_contains "$output" 'live_runner_noop_prototype_deletion_enabled=0'
 require_output_contains "$output" 'file_delete_performed=0'
 require_output_contains "$output" 'network_performed=0'
-require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-denied-dispatch-review-contract'
+require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-review-contract'
 
+require_contains 'macos-reset-uninstall-live-runner-noop-prototype:' "$makefile"
+require_contains 'sh ./scripts/test-macos-reset-uninstall-live-runner-noop-prototype-contract.sh' "$makefile"
 require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
 require_contains 'persist-credentials: false' "$workflow"
 require_contains 'sh scripts/test-macos-reset-uninstall-live-runner-noop-prototype-contract.sh' "$workflow"

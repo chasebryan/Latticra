@@ -16,8 +16,6 @@ no hardware effect before an explicit gate
 no recovery behavior before rollback and failure behavior are documented
 ```
 
-The current repository supply-chain posture is documented in [`docs/SUPPLY_CHAIN_SECURITY_BASELINE.md`](docs/SUPPLY_CHAIN_SECURITY_BASELINE.md). That baseline keeps workflow authority narrow, rejects unreviewed token and secret surfaces, and treats source archive generation as a reviewed, deterministic, symlink-refusing path.
-
 ## Supported versions
 
 Latticra does not currently publish stable production releases.
@@ -155,13 +153,21 @@ Security-relevant changes should prefer:
 - explicit non-claims;
 - clear rollback or failure behavior when mutation is ever introduced.
 
-## Zero-trust runtime authority posture
+## High-assurance standards posture
+
+The current high-assurance standards checkpoint is recorded in `docs/HIGH_ASSURANCE_SECURITY_BASELINE.md`.
+
+That baseline tracks current NSA, CISA, FBI, and NIST security guidance as source input for Latticra security work. It requires memory-safety roadmap discipline, zero-trust runtime-boundary prerequisites, SSDF-style secure development evidence, CPG-inspired operational readiness gates, KEV-aware release review, SBOM evidence before production installer claims, and a FIPS 140-3 cryptographic module boundary decision before any production cryptography claim.
+
+The component-level memory-safety roadmap is recorded in `docs/MEMORY_SAFETY_ROADMAP.md`.
+
+The supply-chain security baseline is recorded in `docs/SUPPLY_CHAIN_SECURITY_BASELINE.md`.
 
 The zero-trust runtime authority baseline is recorded in `docs/ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md`.
 
 It requires caller identity, resource identity, per-request authorization, least-privilege effect scope, policy decision visibility, denial reason visibility, and audit records before any future runtime authority is considered. Operator confirmation remains metadata-only and must not override denied effects.
 
-This is not a zero-trust certification, compliance claim, runtime protection claim, production security claim, or external endorsement.
+This posture is an allocation of required work, not a compliance claim. It does not certify Latticra, accredit Latticra, make Latticra a production security product, or create a hardened runtime boundary.
 
 ## Contact and attribution
 

@@ -70,7 +70,7 @@ Known current posture:
 
 ```text
 kernel lifecycle evidence exists
-final_state=context-switch-ready
+final_state=preemption-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
@@ -111,6 +111,9 @@ address_space_switch_allowed=0
 preemption_allowed=0
 time_accounting_allowed=0
 time_read_allowed=0
+cpu_usage_write_allowed=0
+quota_update_allowed=0
+scheduler_credit_update_allowed=0
 process_wake_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0

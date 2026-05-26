@@ -16,8 +16,17 @@ This lane does not require a clean `rpmlint` result yet because the spec remains
 ```text
 docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
+scripts/test-opensuse-rpmlint-findings-classification.sh
+scripts/test-opensuse-source-archive-reproducibility-contract.sh
+scripts/test-opensuse-source-archive-fixture-lane.sh
 .github/workflows/opensuse-rpmlint-static-spec-lane.yml
+.github/workflows/opensuse-rpmlint-findings-classification.yml
+.github/workflows/opensuse-source-archive-reproducibility-contract.yml
+.github/workflows/opensuse-source-archive-fixture-lane.yml
 packaging/opensuse/latticra.spec
 ```
 
@@ -68,13 +77,32 @@ It does not claim official openSUSE package status, SUSE endorsement, product re
 
 ## Next Slice
 
+Completed follow-on classification lane:
+
+```text
+docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+scripts/test-opensuse-rpmlint-findings-classification.sh
+.github/workflows/opensuse-rpmlint-findings-classification.yml
+```
+
+Completed follow-on source archive lanes:
+
+```text
+docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+scripts/test-opensuse-source-archive-reproducibility-contract.sh
+scripts/test-opensuse-source-archive-fixture-lane.sh
+.github/workflows/opensuse-source-archive-reproducibility-contract.yml
+.github/workflows/opensuse-source-archive-fixture-lane.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE rpmlint findings classification record before accepting any lint transcript as package readiness evidence.
+Add openSUSE temporary RPM topdir handoff lane that stages the verified source archive without running rpmbuild or osc build.
 ```
 
-That future lane should separate expected local-only draft findings from unexpected blockers.
+That future lane should prove the temporary source archive can be staged into RPM build input paths while keeping package build and publication claims blocked.
 
 ## Validation
 

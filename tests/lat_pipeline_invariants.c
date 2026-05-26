@@ -318,6 +318,7 @@ static int lat_pipeline_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(one, "first_clause_operator==\n") != 0, "first clause operator in report");
     EXPECT_TRUE(strstr(one, "first_clause_value=0/0\n") != 0, "first clause value in report");
     EXPECT_TRUE(strstr(one, "lowering_error=ok\n") != 0, "lowering ok in report");
+    EXPECT_TRUE(strstr(one, "network_allowed=0\n") != 0, "pipeline report network denied");
     return 0;
 }
 

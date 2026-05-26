@@ -30,6 +30,8 @@ cc $CFLAGS \
   src/kernel_scheduler_tick.c \
   src/kernel_run_queue.c \
   src/kernel_context_switch.c \
+  src/kernel_time_accounting.c \
+  src/kernel_preemption.c \
   src/kernel_state.c \
   tests/kernel_state.c \
   -o "$bin"

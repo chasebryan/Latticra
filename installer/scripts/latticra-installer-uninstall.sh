@@ -35,11 +35,16 @@ canonical_existing_path() {
   path="$1"
   dir=$(dirname -- "$path")
   base=$(basename -- "$path")
-  if cd -- "$dir" 2>/dev/null; then
-    printf '%s/%s\n' "$(pwd -P)" "$base"
-  else
+
+  resolved=$(
+    cd -- "$dir" 2>/dev/null &&
+      printf '%s/%s\n' "$(pwd -P)" "$base"
+  ) || {
     printf '%s\n' "$path"
-  fi
+    return 0
+  }
+
+  printf '%s\n' "$resolved"
 }
 
 path_has_parent_reference() {

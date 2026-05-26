@@ -25,7 +25,7 @@ require_file src/runtime_boundary.c
 require_file tests/runtime_boundary_lat_pipeline_evidence.c
 require_file scripts/test-runtime-boundary.sh
 
-require_contains 'Status: runtime boundary refinement implementation with Lat pipeline clause, declaration, module/count, stage-summary, parse-error, semantic-error, downstream-stage-error, span, comment, Lat LIR module-summary, Lat LIR source-span, Lat LIR no-effect, and Lat LIR edge-kind evidence' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
+require_contains 'Status: runtime boundary refinement implementation with Lat pipeline clause, declaration, module/count, stage-summary, parse-error, semantic-error, downstream-stage-error, span, comment, Lat LIR module-summary, Lat LIR source-span, Lat LIR node-kind, Lat LIR first-node, Lat LIR first-node span, Lat LIR no-effect, and Lat LIR edge-kind evidence' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'no-effect runtime-boundary evidence reporting' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_pipeline_status' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_pipeline_parse_error' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
@@ -51,16 +51,20 @@ require_contains 'lat_pipeline_comment_count' docs/RUNTIME_BOUNDARY_REFINEMENT_I
 require_contains 'lat_lir_module_name' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_report_classification' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_shape_kind' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
-require_contains 'lat_lir_source_span_start_line' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
+require_contains 'lat_lir_span_start_line' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_module_edge_count' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_binding_count' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_text_count' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
+require_contains 'lat_lir_lat_state_node_count' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
+require_contains 'lat_lir_first_lat_node_name' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
+require_contains 'lat_lir_first_lat_node_span_start_line' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_no_effect_chain_ok' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_evidence_level' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_no_effect' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_execution_allowed' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_mutation_allowed' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_server_allowed' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
+require_contains 'lat_lir_network_allowed' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_recovery_allowed' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_hardware_allowed' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_contains_edge_count' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
@@ -100,12 +104,16 @@ require_contains 'lat_lir_source_span' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_module_edge_count' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_binding_count' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_text_count' include/latticra/runtime_boundary.h
+require_contains 'lat_lir_lat_state_node_count' include/latticra/runtime_boundary.h
+require_contains 'lat_lir_first_lat_node_name' include/latticra/runtime_boundary.h
+require_contains 'lat_lir_first_lat_node_span' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_no_effect_chain_ok' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_evidence_level' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_no_effect' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_execution_allowed' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_mutation_allowed' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_server_allowed' include/latticra/runtime_boundary.h
+require_contains 'lat_lir_network_allowed' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_recovery_allowed' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_hardware_allowed' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_contains_edge_count' include/latticra/runtime_boundary.h
@@ -138,16 +146,20 @@ require_contains 'lat_pipeline_comment_count=' src/runtime_boundary.c
 require_contains 'lat_lir_module_name=' src/runtime_boundary.c
 require_contains 'lat_lir_report_classification=' src/runtime_boundary.c
 require_contains 'lat_lir_shape_kind=' src/runtime_boundary.c
-require_contains 'lat_lir_source_span_start_line=' src/runtime_boundary.c
+require_contains 'lat_lir_span_start_line=' src/runtime_boundary.c
 require_contains 'lat_lir_module_edge_count=' src/runtime_boundary.c
 require_contains 'lat_lir_binding_count=' src/runtime_boundary.c
 require_contains 'lat_lir_text_count=' src/runtime_boundary.c
+require_contains 'lat_lir_lat_state_node_count=' src/runtime_boundary.c
+require_contains 'lat_lir_first_lat_node_name=' src/runtime_boundary.c
+require_contains 'lat_lir_first_lat_node_span_start_line=' src/runtime_boundary.c
 require_contains 'lat_lir_no_effect_chain_ok=' src/runtime_boundary.c
 require_contains 'lat_lir_evidence_level=' src/runtime_boundary.c
 require_contains 'lat_lir_no_effect=' src/runtime_boundary.c
 require_contains 'lat_lir_execution_allowed=' src/runtime_boundary.c
 require_contains 'lat_lir_mutation_allowed=' src/runtime_boundary.c
 require_contains 'lat_lir_server_allowed=' src/runtime_boundary.c
+require_contains 'lat_lir_network_allowed=' src/runtime_boundary.c
 require_contains 'lat_lir_recovery_allowed=' src/runtime_boundary.c
 require_contains 'lat_lir_hardware_allowed=' src/runtime_boundary.c
 require_contains 'lat_lir_contains_edge_count=' src/runtime_boundary.c
@@ -179,16 +191,20 @@ require_contains 'lat_pipeline_comment_count=2' tests/runtime_boundary_lat_pipel
 require_contains 'lat_lir_module_name=RuntimeEvidenceModule' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_report_classification=materialized' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_shape_kind=lat-module-graph' tests/runtime_boundary_lat_pipeline_evidence.c
-require_contains 'lat_lir_source_span_start_line=2' tests/runtime_boundary_lat_pipeline_evidence.c
+require_contains 'lat_lir_span_start_line=2' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_module_edge_count=5' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_binding_count=2' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_text_count=1' tests/runtime_boundary_lat_pipeline_evidence.c
+require_contains 'lat_lir_lat_state_node_count=1' tests/runtime_boundary_lat_pipeline_evidence.c
+require_contains 'lat_lir_first_lat_node_name=RootCell' tests/runtime_boundary_lat_pipeline_evidence.c
+require_contains 'lat_lir_first_lat_node_span_start_line=3' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_no_effect_chain_ok=1' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_evidence_level=2' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_no_effect=1' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_execution_allowed=0' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_mutation_allowed=0' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_server_allowed=0' tests/runtime_boundary_lat_pipeline_evidence.c
+require_contains 'lat_lir_network_allowed=0' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_recovery_allowed=0' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_hardware_allowed=0' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_contains_edge_count=1' tests/runtime_boundary_lat_pipeline_evidence.c

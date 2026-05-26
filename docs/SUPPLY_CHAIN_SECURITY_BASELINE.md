@@ -1,68 +1,116 @@
-# Supply Chain Security Baseline
+# Latticra Supply-Chain Security Baseline
 
 Status: supply-chain security baseline
-Scope: repository workflows, quality guards, local guard scripts, package fixture archives, installer/package lanes, and public security non-claims.
+Source refresh date: 2026-05-26
+Scope: repository, CI, dependency, package, installer, artifact, SBOM, release, and update-lane security posture for current Latticra work.
 
-## Purpose
+This baseline turns the supply-chain requirements in `docs/HIGH_ASSURANCE_SECURITY_BASELINE.md` into a guarded local project contract.
 
-This baseline records the current repository supply-chain posture for Latticra.
+It does not publish artifacts, release packages, add signing authority, claim SLSA level, claim NIST compliance, claim CISA CPG compliance, or make Latticra production-ready.
 
-It focuses on repository-controlled automation and local fixture generation. It does not claim production release security, artifact signing, deployment security, registry trust, dependency freshness, vulnerability remediation, or package approval.
-
-This document does not grant release, deployment, network, package-manager, secret, OIDC, write-token, or source-mutation authority.
-
-## Current Baseline
+## Current Fields
 
 ```text
-workflow_triggers_limited_to_push_and_pull_request=1
-out_of_band_workflow_triggers_require_dedicated_review=1
-deployment_environment_use_requires_dedicated_review=1
-github_expression_interpolation_requires_dedicated_review=1
-external_actions_must_be_commit_pinned=1
-checkout_persist_credentials_false_required=1
-workflow_token_permissions_read_only=1
-workflow_secrets_disallowed_without_dedicated_review=1
-implicit_github_token_surfaces_disallowed_without_dedicated_review=1
-remote_pipe_to_shell_disallowed=1
-package_manager_commands_allowlisted=1
-source_archive_fixture_requires_reviewed_symlink_guard=1
-reproducible_source_archive_metadata_required=1
+supply_chain_security_baseline_present=1
+supply_chain_security_guard_present=1
+high_assurance_security_baseline_present=1
+ssdf_supply_chain_profile_present=1
+cpg_supply_chain_profile_present=1
+sbom_required_before_production_installer=1
+kev_nvd_review_required_before_release=1
+dependency_inventory_required=1
+pinned_ci_actions_required=1
+read_only_workflow_permissions_required=1
+persist_credentials_false_required=1
+pull_request_target_forbidden=1
+repository_secret_use_requires_dedicated_review=1
+implicit_github_token_use_requires_dedicated_review=1
+locked_dependency_builds_required=1
+offline_installer_builds_required=1
+ad_hoc_network_client_commands_forbidden_without_guard=1
+release_publishing_authority_granted=0
+production_installer_claim_allowed=0
+production_update_claim_allowed=0
+compliance_claim_allowed=0
+certification_claim_allowed=0
+external_endorsement_claimed=0
 ```
 
-## Workflow Rules
+## Current Guarded Controls
 
-GitHub workflows remain on the narrow reviewed automation path:
+| Surface | Current control | Evidence |
+| --- | --- | --- |
+| GitHub workflows | actions pinned to approved commit SHAs | `scripts/test-quality-safety-guards.sh` |
+| GitHub token permissions | workflows require explicit read-only repository permissions | `scripts/test-quality-safety-guards.sh` |
+| Checkout credentials | checkout steps require `persist-credentials: false` | `scripts/test-quality-safety-guards.sh` |
+| Pull request trust boundary | `pull_request_target` is forbidden | `scripts/test-quality-safety-guards.sh` |
+| Secrets and tokens | workflow secret and implicit token use are blocked without a dedicated guard | `scripts/test-quality-safety-guards.sh` |
+| Workflow network clients | ad hoc `curl`, `wget`, SSH, FTP, and netcat-style commands are blocked without a dedicated guard | `scripts/test-quality-safety-guards.sh` |
+| Package-manager mutation | package-manager use is limited to reviewed workflow/script allowlists | `scripts/test-quality-safety-guards.sh` |
+| Rust installer dependency use | local quality uses `cargo check --locked` | `Makefile` |
+| Live installer build path | installer apply script requires locked offline Cargo builds | `installer/scripts/latticra-installer-apply.sh` |
+| Local installer artifacts | SBOM path is explicit and currently `none` for non-production fixtures | `docs/LOCAL_INSTALLER_ARTIFACT_MANIFEST_CONTRACT.md` |
+| Boot artifact manifest fixture | SBOM fields are required before real boot artifact acceptance | `docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_VALIDATION.md` |
+| Ubuntu package readiness | third-party material, notice, license, generated-artifact, and trademark reviews remain blocked until formal review | `docs/UBUNTU_READINESS_PLAN.md` |
+
+## Required Release Gate
+
+No production package, production installer, internet-facing service, update lane, boot artifact, or release artifact may be described as production-ready until the following gate is complete:
 
 ```text
-allowed_trigger_push=1
-allowed_trigger_pull_request=1
-schedule_trigger_allowed=0
-workflow_run_trigger_allowed=0
-workflow_call_trigger_allowed=0
-workflow_dispatch_trigger_allowed=0
-repository_dispatch_trigger_allowed=0
-deployment_environment_allowed=0
-github_expression_interpolation_allowed=0
-write_token_permission_allowed=0
-broad_token_permission_allowed=0
-pull_request_target_allowed=0
-repository_secret_consumption_allowed=0
-implicit_github_token_consumption_allowed=0
+release_artifact_inventory_present=1
+sbom_present=1
+sbom_reviewed=1
+dependency_inventory_reviewed=1
+third_party_material_reviewed=1
+license_notice_reviewed=1
+kev_nvd_review_completed=1
+known_exploited_vulnerability_mitigation_recorded=1
+workflow_write_permission_reviewed=1
+release_secret_boundary_reviewed=1
+artifact_integrity_hashes_recorded=1
+signing_authority_contract_present=1
+rollback_or_recovery_contract_present=1
+vulnerability_disclosure_path_present=1
+production_non_claim_review_completed=1
 ```
 
-External GitHub Actions must be pinned to approved 40-character commit SHAs. Checkout steps must set `persist-credentials: false`.
+Until this gate is complete, the required posture is:
 
-## Script Rules
+```text
+sbom_present_for_production_release=0
+release_artifact_published=0
+release_signing_performed=0
+release_secret_access_granted=0
+release_write_token_granted=0
+production_installer_claim_allowed=0
+production_update_claim_allowed=0
+production_security_claim_allowed=0
+```
 
-Repository shell guards must keep fail-fast behavior, avoid `eval`, avoid remote pipe-to-shell patterns, avoid unsafe broad mutation commands, and register cleanup traps for temporary work directories.
+## Dependency Review Rules
 
-Package-manager commands are only allowed in reviewed bootstrap workflows. Any new package-manager lane must receive a dedicated review guard before it joins the quality aggregate.
+Every new dependency, vendored artifact, generated artifact, or bundled binary requires:
 
-## Source Archive Rules
+- purpose and ownership;
+- license and notice review;
+- security history review where practical;
+- transitive dependency review where practical;
+- KEV/NVD check before release or documented offline exception;
+- build reproducibility note where practical;
+- removal or replacement plan if the dependency becomes unsuitable.
 
-Source archive fixtures must be temporary and local. They must exclude VCS metadata, RPM work directories, RPM artifacts, and nested source archives.
+## CI Authority Rules
 
-Archive creation must refuse symlink entries and normalize tar metadata for deterministic fixture output. Source archive fixtures remain evidence for shape and boundary only; they do not publish packages, run RPM builds, install Latticra, or claim distribution approval.
+CI changes must preserve:
+
+- explicit workflow permissions;
+- read-only default repository token posture;
+- no `pull_request_target`;
+- no repository secrets without dedicated review;
+- no implicit `GITHUB_TOKEN`, `GH_TOKEN`, `ACTIONS_ID_TOKEN`, or runtime token use without dedicated review;
+- no ad hoc network client commands without dedicated review;
+- no release publishing without an explicit release-authority contract.
 
 ## Validation
 
@@ -70,12 +118,4 @@ This baseline is guarded by:
 
 ```sh
 sh scripts/test-supply-chain-security-baseline.sh
-sh scripts/test-quality-safety-guards.sh
-sh scripts/test-fedora-source-archive-fixture-lane.sh
 ```
-
-The repository quality aggregate must include `quality-security-standards` so the baseline runs with the main local quality gate.
-
-## Non-Claims
-
-This baseline does not claim complete supply-chain security, dependency vulnerability coverage, reproducible release builds, signed release enforcement, deployment protection, package-manager trust, registry trust, maintainer account protection, or production readiness.

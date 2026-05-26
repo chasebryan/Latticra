@@ -91,8 +91,11 @@ seal_key_material_implementation_present=1
 seal_key_material_status_present=1
 seal_key_material_status_runner_present=1
 seal_key_material_status_workflow_present=1
-key_material_predecessor_key_handling_status_present=1
 public_key_parsing_predecessor_key_material_status_present=1
+readme_links_public_key_parsing_status=1
+root_status_mentions_public_key_parsing_status=1
+status_index_links_public_key_parsing_status=1
+foundation_index_links_public_key_parsing_status=1
 public_key_parsing_profile=latticra-seal-public-key-parsing/0.1
 key_material_profile=latticra-seal-key-material/0.1
 key_handling_profile=latticra-seal-key-handling/0.1
@@ -220,12 +223,12 @@ seal key-material status: ok
 
 This status record is documentation/status alignment only.
 
-This refresh adds the public-key parsing status guard workflow and records the guarded key-material status predecessor without changing the public-key parsing metadata implementation.
+This refresh adds the public-key parsing status guard workflow and records the guarded key-material status predecessor without changing the public-key parsing implementation.
 
 It does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, verification, signer invocation behavior, signer process execution, runtime handoff execution, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, object sealing, kernel behavior, production readiness, or authority grants.
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is status rollup status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is key parsing status/workflow guard alignment or another narrow status/index alignment follow-up.
 
 That future slice must not add runtime execution, effect execution, cryptographic verification, signing, public-key parsing behavior, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

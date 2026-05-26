@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #define LATTICRA_KERNEL_STATE_MACHINE_LABEL_MAX 64u
-#define LATTICRA_KERNEL_STATE_MACHINE_LOG_MAX 15u
+#define LATTICRA_KERNEL_STATE_MACHINE_LOG_MAX 17u
 #define LATTICRA_KERNEL_STATE_MACHINE_REPORT_MAX 16384u
 
 typedef struct {
@@ -42,6 +42,8 @@ typedef struct {
     latticra_kernel_scheduler_tick_request_t scheduler_tick_request;
     latticra_kernel_run_queue_request_t run_queue_request;
     latticra_kernel_context_switch_request_t context_switch_request;
+    latticra_kernel_time_accounting_request_t time_accounting_request;
+    latticra_kernel_preemption_request_t preemption_request;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
 } latticra_kernel_state_machine_step_request_t;

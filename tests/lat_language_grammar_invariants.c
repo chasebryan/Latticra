@@ -297,6 +297,7 @@ static int lat_grammar_report_is_deterministic(void) {
     EXPECT_TRUE(latticra_lat_parse_report(&result, one, sizeof(one)) == LATTICRA_STATUS_OK, "first report builds");
     EXPECT_TRUE(latticra_lat_parse_report(&result, two, sizeof(two)) == LATTICRA_STATUS_OK, "second report builds");
     EXPECT_STR_EQ(one, two, "report deterministic");
+    EXPECT_TRUE(strstr(one, "network_allowed=0\n") != 0, "report network denied");
     return 0;
 }
 

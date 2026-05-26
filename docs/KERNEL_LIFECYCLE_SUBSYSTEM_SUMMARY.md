@@ -12,7 +12,7 @@ kernel lifecycle runner
 kernel subsystem registry
 ```
 
-The lifecycle runner can move a local in-memory kernel state machine from `created` to `context-switch-ready` through gated internal state changes.
+The lifecycle runner can move a local in-memory kernel state machine from `created` to `preemption-ready` through gated internal state changes.
 
 The subsystem registry exposes boot, runtime, scheduler, memory, process, filesystem, network, device, and security subsystem posture.
 
@@ -43,17 +43,17 @@ docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
 The default summary request allows the lifecycle runner to reach:
 
 ```text
-context-switch-ready
+preemption-ready
 ```
 
 That produces:
 
 ```text
 summary_status=summary-ready
-final_state=context-switch-ready
+final_state=preemption-ready
 lifecycle_complete=1
-lifecycle_step_count=15
-lifecycle_state_change_count=15
+lifecycle_step_count=17
+lifecycle_state_change_count=17
 external_effect_performed=0
 registry_no_effect=1
 no_external_effect_chain=1
@@ -65,7 +65,7 @@ Expected readiness examples:
 
 ```text
 boot -> boot-sequence-seeded
-scheduler -> context-switch-ready
+scheduler -> preemption-ready
 memory -> memory-map-ready
 process -> ipc-table-ready
 filesystem -> vfs-namespace-ready
@@ -117,6 +117,9 @@ address_space_switch_allowed=0
 preemption_allowed=0
 time_accounting_allowed=0
 time_read_allowed=0
+cpu_usage_write_allowed=0
+quota_update_allowed=0
+scheduler_credit_update_allowed=0
 process_wake_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0
@@ -172,8 +175,8 @@ kernel_lifecycle_subsystem_summary_report_runner: ok
 The guards verify:
 
 ```text
-default request targets context-switch-ready
-summary reaches context-switch-ready
+default request targets preemption-ready
+summary reaches preemption-ready
 summary marks boot/scheduler/memory/process/filesystem as lifecycle-ready metadata
 runtime remains not entered
 runtime entry remains denied
@@ -183,7 +186,7 @@ process spawn remains denied
 syscall dispatch remains denied
 IPC send, receive, and queue mutation remain denied
 filesystem lookup, read, write, and namespace mutation remain denied
-device open, read, write, driver probe, driver load, driver bind, interrupt mask, interrupt unmask, interrupt dispatch, interrupt ack, timer tick, timer arm, timer disarm, scheduler tick, run queue mutation, enqueue, dequeue, dispatch, context switch, register save, register restore, stack switch, address space switch, preemption, time accounting, time read, process wake, DMA, and hardware effect remain denied
+device open, read, write, driver probe, driver load, driver bind, interrupt mask, interrupt unmask, interrupt dispatch, interrupt ack, timer tick, timer arm, timer disarm, scheduler tick, run queue mutation, enqueue, dequeue, dispatch, context switch, register save, register restore, stack switch, address space switch, preemption, time accounting, time read, CPU usage write, quota update, scheduler credit update, process wake, DMA, and hardware effect remain denied
 network and device authority remain denied
 limited lifecycle summary reports incomplete readiness
 external_effect_performed=0 remains true
@@ -195,4 +198,4 @@ This slice does not make Latticra bootable, runnable as an operating system, pro
 
 ## Next possible lane
 
-A later slice may add lifecycle rollback planning, preemption metadata, or time-accounting metadata. Those should remain report-only unless a separate authority contract is introduced first.
+A later slice may add lifecycle rollback planning, virtual device binding metadata, or scheduler-to-timer handoff metadata. Those should remain report-only unless a separate authority contract is introduced first.

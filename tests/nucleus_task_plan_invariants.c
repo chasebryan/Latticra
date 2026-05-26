@@ -63,6 +63,8 @@ static int accepted_no_effect_sequence_reports_plan(void) {
     CHECK_TRUE(result.record.execution_allowed == 0);
     CHECK_TRUE(result.record.mutation_allowed == 0);
     CHECK_TRUE(result.record.server_allowed == 0);
+    CHECK_TRUE(result.record.network_allowed == 0);
+    CHECK_TRUE(result.network_allowed == 0);
     CHECK_TRUE(result.record.recovery_allowed == 0);
     CHECK_TRUE(result.record.hardware_allowed == 0);
 
@@ -76,6 +78,8 @@ static int accepted_no_effect_sequence_reports_plan(void) {
     CHECK_TEXT(report, "no_effect=1");
     CHECK_TEXT(report, "execution_allowed=0");
     CHECK_TEXT(report, "mutation_allowed=0");
+    CHECK_TEXT(report, "server_allowed=0");
+    CHECK_TEXT(report, "network_allowed=0");
     return 0;
 }
 
@@ -129,6 +133,7 @@ static int future_gated_task_blocks_plan(void) {
     CHECK_TRUE(result.record.first_blocked_index == 1u);
     CHECK_TRUE(result.record.execution_allowed == 0);
     CHECK_TRUE(result.record.mutation_allowed == 0);
+    CHECK_TRUE(result.record.network_allowed == 0);
     return 0;
 }
 
@@ -153,6 +158,35 @@ static int non_no_effect_flags_block_plan(void) {
     CHECK_TRUE(result.record.first_blocked_index == 0u);
     CHECK_TRUE(result.record.no_effect == 1);
     CHECK_TRUE(result.record.execution_allowed == 0);
+    CHECK_TRUE(result.record.network_allowed == 0);
+    return 0;
+}
+
+static int network_flags_block_plan(void) {
+    latticra_nucleus_task_result_t task;
+    latticra_nucleus_task_plan_request_t request;
+    latticra_nucleus_task_plan_result_t result;
+    char report[LATTICRA_NUCLEUS_TASK_PLAN_REPORT_MAX];
+
+    task = allowed_task(LATTICRA_NUCLEUS_TASK_POLICY_ALLOW_REPORT);
+    task.network_allowed = 1;
+    task.record.network_allowed = 1;
+
+    memset(&request, 0, sizeof(request));
+    copy_text(request.plan_id, sizeof(request.plan_id), "plan-network-denied");
+    request.tasks = &task;
+    request.task_count = 1u;
+
+    CHECK_TRUE(latticra_nucleus_task_plan_evaluate(&request, &result) == LATTICRA_STATUS_OK);
+    CHECK_TRUE(result.record.policy == LATTICRA_NUCLEUS_TASK_PLAN_POLICY_DENY);
+    CHECK_TRUE(result.record.denial == LATTICRA_NUCLEUS_TASK_PLAN_DENIAL_NON_NO_EFFECT_FLAGS);
+    CHECK_TRUE(result.record.has_blocked_task == 1);
+    CHECK_TRUE(result.record.first_blocked_index == 0u);
+    CHECK_TRUE(result.record.network_allowed == 0);
+    CHECK_TRUE(result.network_allowed == 0);
+    CHECK_TRUE(latticra_nucleus_task_plan_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK);
+    CHECK_TEXT(report, "reason=non-no-effect-flags");
+    CHECK_TEXT(report, "network_allowed=0");
     return 0;
 }
 
@@ -161,6 +195,7 @@ int main(void) {
     CHECK_TRUE(empty_plan_reports_empty_plan_denial() == 0);
     CHECK_TRUE(future_gated_task_blocks_plan() == 0);
     CHECK_TRUE(non_no_effect_flags_block_plan() == 0);
+    CHECK_TRUE(network_flags_block_plan() == 0);
     puts("nucleus_task_plan_invariants: ok");
     return 0;
 }

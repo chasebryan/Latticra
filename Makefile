@@ -1,8 +1,8 @@
-.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly nadia-prompt-evaluation-input nadia-prompt-evaluation-runtime-handoff nadia-prompt-evaluation-invocation nadia-prompt-evaluation-result nadia-prompt-evaluation-result-review nadia-prompt-evaluation-result-disposition nadia-prompt-evaluation-result-release nadia-prompt-evaluation-result-release-receipt nadia-prompt-evaluation-result-release-receipt-review nadia-prompt-evaluation-result-release-receipt-review-disposition
+.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly nadia-prompt-evaluation-input nadia-prompt-evaluation-runtime-handoff nadia-prompt-evaluation-invocation nadia-prompt-evaluation-result nadia-prompt-evaluation-result-review nadia-prompt-evaluation-result-disposition nadia-prompt-evaluation-result-release nadia-prompt-evaluation-result-release-receipt nadia-prompt-evaluation-result-release-receipt-review nadia-prompt-evaluation-result-release-receipt-review-disposition nadia-prompt-evaluation-result-release-receipt-review-disposition-release nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
 
-.PHONY: quality quality-worktree quality-safety-guards quality-security-standards quality-defensive-threat-model quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation zero-trust-runtime-authority-baseline boot-compatibility boot-preview-preflight boot-evidence-template boot-qemu-argv-template macos-reset-uninstall-live-denial-transcript macos-reset-uninstall-live-runner-denied-dispatch-transcript nadia-commands
+.PHONY: quality quality-worktree quality-safety-guards quality-defensive-threat-model quality-security-standards quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation quality-macos quality-status boot-compatibility boot-preview-preflight boot-evidence-template boot-evidence-validate boot-qemu-argv-template boot-artifact-template boot-artifact-validate fedora-vm-cli-payload-readme-alignment fedora-vm-cli-payload-repeatability-runner-plan fedora-vm-cli-payload-repeatability-transcript-contract debian-freebsd-openbsd-package-input-handoff-lane macos-reset-uninstall-live-denial-transcript macos-reset-uninstall-live-runner-interface macos-reset-uninstall-live-runner-noop-prototype macos-reset-uninstall-live-runner-denied-dispatch-transcript macos-reset-uninstall-live-runner-denied-dispatch-review macos-reset-uninstall-live-runner-acceptance-gate macos-reset-uninstall-live-runner-acceptance-denial-transcript nadia-commands high-assurance-security-baseline memory-safety-roadmap supply-chain-security-baseline zero-trust-runtime-authority-baseline latticra-panel-signed-updater-delivery-gate
 
-quality: quality-worktree quality-safety-guards quality-security-standards quality-defensive-threat-model seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation
+quality: quality-worktree quality-safety-guards quality-defensive-threat-model quality-security-standards seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation quality-macos quality-status
 
 quality-worktree:
 	git diff --check
@@ -13,14 +13,17 @@ quality-safety-guards:
 	cp ./scripts/test-quality-safety-guards.sh "$$tmp/test-quality-safety-guards.sh"; \
 	LATTICRA_ROOT="$$(pwd)" sh "$$tmp/test-quality-safety-guards.sh"
 
-quality-security-standards:
-	sh ./scripts/test-supply-chain-security-baseline.sh
-	sh ./scripts/test-zero-trust-runtime-authority-baseline.sh
-
 quality-defensive-threat-model:
 	sh ./scripts/test-defensive-threat-model-contract.sh
 	sh ./scripts/test-defensive-threat-model-implementation-plan.sh
 	sh ./scripts/test-defensive-threat-model-validation.sh
+
+quality-security-standards:
+	sh ./scripts/test-defensive-threat-model-validation-refinement.sh
+	sh ./scripts/test-high-assurance-security-baseline.sh
+	sh ./scripts/test-memory-safety-roadmap.sh
+	sh ./scripts/test-supply-chain-security-baseline.sh
+	sh ./scripts/test-zero-trust-runtime-authority-baseline.sh
 
 quality-rust-installer:
 	cargo fmt --manifest-path installer/latticra-installer/Cargo.toml -- --check
@@ -44,7 +47,10 @@ quality-installer-readiness:
 	sh ./scripts/test-seabios-grub-boot-preview-evidence-contract.sh
 	sh ./scripts/test-seabios-grub-boot-preview-preflight.sh
 	sh ./scripts/test-seabios-grub-boot-preview-evidence-template.sh
+	sh ./scripts/test-seabios-grub-boot-preview-evidence-validate.sh
 	sh ./scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh
+	sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-template.sh
+	sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
 
 quality-packaging-static:
 	sh ./scripts/test-fedora-readiness-plan.sh
@@ -54,6 +60,8 @@ quality-packaging-static:
 	sh ./scripts/test-fedora-local-rpm-static-validation.sh
 	sh ./scripts/test-fedora-vm-cli-payload-next-validation-lane-plan.sh
 	sh ./scripts/test-fedora-source-archive-fixture-lane.sh
+	sh ./scripts/test-fedora-vm-cli-payload-repeatability-transcript-contract.sh
+	sh ./scripts/test-fedora-vm-cli-payload-repeatability-runner-plan.sh
 	sh ./scripts/test-ubuntu-developer-workflow.sh
 	sh ./scripts/test-ubuntu-local-deb-static-validation.sh
 	sh ./scripts/test-ubuntu-package-notice-inventory.sh
@@ -79,6 +87,9 @@ quality-nadia:
 	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-contract-stage-35.sh
 	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh
 	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.sh
+	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-contract-stage-38.sh
+	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract-stage-39.sh
+	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract-stage-40.sh
 
 quality-c-foundation:
 	sh ./scripts/test-latticra-console-foundation.sh
@@ -91,16 +102,29 @@ quality-c-foundation:
 	sh ./scripts/test-kernel-run-queue-report-runner.sh
 	sh ./scripts/test-kernel-context-switch.sh
 	sh ./scripts/test-kernel-context-switch-report-runner.sh
+	sh ./scripts/test-kernel-time-accounting.sh
+	sh ./scripts/test-kernel-time-accounting-report-runner.sh
+	sh ./scripts/test-kernel-preemption.sh
+	sh ./scripts/test-kernel-preemption-report-runner.sh
 
-zero-trust-runtime-authority-baseline:
-	sh ./scripts/test-zero-trust-runtime-authority-baseline.sh
+quality-macos:
+	sh ./scripts/test-macos-readme-installer-usage.sh
+	sh ./scripts/test-macos-integration-transferability.sh
+	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-gate-contract.sh
+	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-transcript-contract.sh
+
+quality-status:
+	sh ./scripts/test-current-estimate-table-source-alignment.sh
 
 boot-compatibility:
 	sh ./scripts/test-seabios-grub-compatibility-contract.sh
 	sh ./scripts/test-seabios-grub-boot-preview-evidence-contract.sh
 	sh ./scripts/test-seabios-grub-boot-preview-preflight.sh
 	sh ./scripts/test-seabios-grub-boot-preview-evidence-template.sh
+	sh ./scripts/test-seabios-grub-boot-preview-evidence-validate.sh
 	sh ./scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh
+	sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-template.sh
+	sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
 
 boot-preview-preflight:
 	sh ./scripts/seabios-grub-boot-preview-preflight.sh
@@ -108,17 +132,68 @@ boot-preview-preflight:
 boot-evidence-template:
 	sh ./scripts/seabios-grub-boot-preview-evidence-template.sh
 
+boot-evidence-validate:
+	sh ./scripts/seabios-grub-boot-preview-evidence-validate.sh
+
 boot-qemu-argv-template:
 	sh ./scripts/seabios-grub-boot-preview-qemu-argv-template.sh
+
+boot-artifact-template:
+	sh ./scripts/seabios-grub-boot-preview-boot-artifact-manifest-template.sh
+
+boot-artifact-validate:
+	sh ./scripts/seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
+
+fedora-vm-cli-payload-readme-alignment:
+	sh ./scripts/test-fedora-vm-cli-payload-readme-alignment.sh
+
+fedora-vm-cli-payload-repeatability-runner-plan:
+	sh ./scripts/test-fedora-vm-cli-payload-repeatability-runner-plan.sh
+
+fedora-vm-cli-payload-repeatability-transcript-contract:
+	sh ./scripts/test-fedora-vm-cli-payload-repeatability-transcript-contract.sh
+
+debian-freebsd-openbsd-package-input-handoff-lane:
+	sh ./scripts/test-debian-freebsd-openbsd-package-input-handoff-lane.sh
 
 macos-reset-uninstall-live-denial-transcript:
 	sh ./scripts/test-macos-reset-uninstall-live-denial-transcript-contract.sh
 
+macos-reset-uninstall-live-runner-interface:
+	sh ./scripts/test-macos-reset-uninstall-live-runner-interface-contract.sh
+
+macos-reset-uninstall-live-runner-noop-prototype:
+	sh ./scripts/test-macos-reset-uninstall-live-runner-noop-prototype-contract.sh
+
 macos-reset-uninstall-live-runner-denied-dispatch-transcript:
 	sh ./scripts/test-macos-reset-uninstall-live-runner-denied-dispatch-transcript-contract.sh
 
+macos-reset-uninstall-live-runner-denied-dispatch-review:
+	sh ./scripts/test-macos-reset-uninstall-live-runner-denied-dispatch-review-contract.sh
+
+macos-reset-uninstall-live-runner-acceptance-gate:
+	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-gate-contract.sh
+
+macos-reset-uninstall-live-runner-acceptance-denial-transcript:
+	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-transcript-contract.sh
+
 nadia-commands:
 	sh ./scripts/test-nadia-command-surface.sh
+
+high-assurance-security-baseline:
+	sh ./scripts/test-high-assurance-security-baseline.sh
+
+memory-safety-roadmap:
+	sh ./scripts/test-memory-safety-roadmap.sh
+
+supply-chain-security-baseline:
+	sh ./scripts/test-supply-chain-security-baseline.sh
+
+zero-trust-runtime-authority-baseline:
+	sh ./scripts/test-zero-trust-runtime-authority-baseline.sh
+
+latticra-panel-signed-updater-delivery-gate:
+	sh ./scripts/test-latticra-panel-signed-updater-delivery-gate.sh
 
 seal:
 	./scripts/latticra-seal-smoke.sh
@@ -237,12 +312,21 @@ nadia-prompt-evaluation-result-release-receipt-review:
 nadia-prompt-evaluation-result-release-receipt-review-disposition:
 	sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-contract.sh
 
+nadia-prompt-evaluation-result-release-receipt-review-disposition-release:
+	sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-contract.sh
+
+nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt:
+	sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract.sh
+
+nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review:
+	sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract.sh
+
 .PHONY: seal-policy-denials
 
 seal-policy-denials:
 	bash ./scripts/test-latticra-seal-policy-denials.sh
 
-.PHONY: seal-cli seal-run seal-cli-hardening
+.PHONY: seal-cli seal-run
 
 PKG_CONFIG ?= pkg-config
 SEAL_CFLAGS ?= -Wall -Wextra -O2 -std=c11
@@ -258,9 +342,6 @@ seal-cli:
 
 seal-run: seal-cli
 	./build/latticra-seal
-
-seal-cli-hardening:
-	sh ./scripts/test-latticra-seal-cli-output-hardening.sh
 
 .PHONY: seal-check seal-manifest seal-report seal-version
 

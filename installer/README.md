@@ -1,8 +1,10 @@
 # Latticra Panel
 
-Graphical installer and first-run control panel for Latticra, Lat, LIR, Latticra Seal, and the Nadia offline AI foundation.
+Graphical installer and first-run control panel for Latticra, Lat, LIR, Latticra Seal, and the Nadia offline AI foundation. The current Panel package version is v0.5.0.
 
 The panel is designed as the main first impression for Latticra. It opens as a maximized, resizable GUI workbench with guided defaults, visible authority boundaries, component configuration, delivery controls, plan/evidence review, and an embedded Latticra Console for panel-aware commands.
+
+Installer-specific contracts are indexed in [`docs/README.md`](docs/README.md). Start there when reviewing installer authority, UI configuration, install-button behavior, receipts, or evidence wording.
 
 ## Prerequisites
 
@@ -62,6 +64,8 @@ LATTICRA_INSTALLER_ROOT="$PWD/.." cargo run
 5. Review the embedded console, plan, and engine log.
 6. Enable guarded local-prefix writes only after the dry-run evidence looks correct.
 
+The **LC Standalone** profile narrows that flow to the Console component only. It records `lc-standalone-install-v0`, keeps `lc.profile = "standalone"`, disables Panel embedding for the installed console, and preserves the no-effect host and network authority floor.
+
 ## SeaBIOS and GRUB compatibility boundary
 
 The current Panel installer is compatible with SeaBIOS and GRUB hosts by staying out of the boot path. It installs only to a guarded user-local prefix and does not write firmware, partitions, boot sectors, EFI variables, GRUB configuration, kernel images, initramfs files, services, or drivers.
@@ -74,7 +78,13 @@ The SeaBIOS and GRUB boot-preview preflight is [`../docs/SEABIOS_GRUB_BOOT_PREVI
 
 The SeaBIOS and GRUB boot-preview evidence capture template is [`../docs/SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_CAPTURE_TEMPLATE.md`](../docs/SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_CAPTURE_TEMPLATE.md). It is available as `sh scripts/seabios-grub-boot-preview-evidence-template.sh` and emits the future evidence bundle shape without running a VM.
 
+The SeaBIOS and GRUB boot-preview evidence validation is [`../docs/SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_VALIDATION.md`](../docs/SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_VALIDATION.md). It is available as `sh scripts/seabios-grub-boot-preview-evidence-validate.sh` and rejects forged QEMU, serial-console, recovery, and bootability claims from the current fixture lane.
+
 The SeaBIOS and GRUB boot-preview QEMU argv template is [`../docs/SEABIOS_GRUB_BOOT_PREVIEW_QEMU_ARGV_TEMPLATE.md`](../docs/SEABIOS_GRUB_BOOT_PREVIEW_QEMU_ARGV_TEMPLATE.md). It is available as `sh scripts/seabios-grub-boot-preview-qemu-argv-template.sh` and emits future profile-specific QEMU argv record placeholders without running QEMU.
+
+The SeaBIOS and GRUB boot-preview boot artifact manifest template is [`../docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_TEMPLATE.md`](../docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_TEMPLATE.md). It is available as `sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-template.sh` and emits future artifact metadata placeholders without creating images or writing boot files.
+
+The SeaBIOS and GRUB boot-preview boot artifact manifest validation is [`../docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_VALIDATION.md`](../docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_VALIDATION.md). It is available as `sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-validate.sh` and rejects premature bootable, GRUB, QEMU, or production OS claims from the current fixture lane.
 
 ```text
 installer_ready_for_user_local_panel=1
@@ -82,7 +92,10 @@ installer_boot_safe_by_absence=1
 boot_preview_manifest_fixture_present=1
 seabios_grub_boot_preview_preflight_present=1
 seabios_grub_boot_preview_evidence_capture_template_present=1
+seabios_grub_boot_preview_evidence_validation_present=1
 seabios_grub_boot_preview_qemu_argv_template_present=1
+seabios_grub_boot_preview_boot_artifact_manifest_template_present=1
+seabios_grub_boot_preview_boot_artifact_manifest_validation_present=1
 firmware_mutation_allowed=0
 bootloader_write_allowed=0
 partition_mutation_allowed=0
@@ -92,6 +105,9 @@ qemu_execution_allowed_by_guard=0
 qemu_boot_execution_attempted=0
 qemu_argv_record_ready=0
 boot_evidence_record_ready=0
+boot_evidence_candidate_ready=0
+boot_artifact_manifest_candidate_ready=0
+boot_artifact_manifest_ready=0
 bootable_os_ready=0
 production_installer_ready=0
 ```
@@ -155,6 +171,10 @@ nadia prompt-evaluation-result-disposition
 nadia prompt-evaluation-result-release
 nadia prompt-evaluation-result-release-receipt
 nadia prompt-evaluation-result-release-receipt-review
+nadia prompt-evaluation-result-release-receipt-review-disposition
+nadia prompt-evaluation-result-release-receipt-review-disposition-release
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
 profile guided
 profile seal
 profile fedora
@@ -177,6 +197,8 @@ The installed umbrella command can report the Panel-owned updater policy without
 latticra updater status
 ```
 
+That report includes the configured source strategy, update channel, `updater dry-run` preview command, `updater apply` command, guarded apply mode, receipt setting, and disabled network/root/system mutation authority.
+
 ## Dry-run
 
 ```sh
@@ -189,14 +211,15 @@ make -C installer dry-run
 make -C installer lc-standalone-dry-run
 ```
 
+This uses `configs/lc-standalone.installer.toml` and previews a standalone LC wrapper, registry, profile presets, and contract files without requiring Panel at runtime.
+
 ## Standalone LC local install
 
 ```sh
 make -C installer lc-standalone-local
-make -C installer verify-lc-standalone
 ```
 
-The standalone LC lane installs the direct `latticra-lc` wrapper, standalone profile, seed registry, and standalone contract without installing Panel desktop integration.
+This uses `configs/lc-standalone-local.installer.toml` and runs the guarded user-local standalone LC install path. It keeps Panel GUI build and desktop integration disabled while installing the direct `latticra-lc` wrapper and LC metadata.
 
 ## Install locally
 
@@ -235,9 +258,9 @@ Or from the desktop app grid, open **Latticra Panel**.
 
 ## Latticra Console (LC)
 
-LC is installed as the configurable operator base for Latticra substrate, Panel, and future host-embedded workflows. In this first slice it is metadata-only:
+LC is installed as the configurable operator base for Latticra substrate, Panel, standalone console use, and future host-embedded workflows. In this first slice it is metadata-only:
 
-The default direct wrapper is `latticra-lc`; custom Panel installs use `lc.install.command_wrapper`. The umbrella `latticra lc ...` route stays stable across wrapper names.
+The default direct wrapper is `latticra-lc`; custom Panel installs use `lc.install.command_wrapper`. It is also the standalone LC wrapper, does not require Panel at runtime, and the umbrella `latticra lc ...` route stays stable across wrapper names.
 
 ```sh
 latticra lc status
@@ -257,11 +280,9 @@ LC does not launch external host commands, mutate host files, use the network, g
 
 Nadia is Latticra's planned offline AI companion for software development, systems engineering, and AI development work. The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, harm-aware development, and an absolute non-sexual-use boundary visible in the system direction. Documentation and code identify the solemn implementation identity as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
 
-In the current installer lane, Nadia includes Stage-37 prompt-evaluation result release receipt review disposition contract metadata, Stage-36 prompt-evaluation result release receipt review contract metadata, Stage-35 prompt-evaluation result release receipt contract metadata, Stage-34 prompt-evaluation result release contract metadata, Stage-33 prompt-evaluation result disposition contract metadata, Stage-32 prompt-evaluation result review contract metadata, Stage-31 prompt-evaluation result contract metadata, Stage-30 prompt-evaluation invocation contract metadata, Stage-29 prompt-evaluation runtime handoff contract metadata, Stage-28 prompt-evaluation-input contract metadata, Stage-27 context-window-assembly contract metadata, Stage-26 prompt-token-sequence contract metadata, Stage-25 prompt-tokenization contract metadata, Stage-24 tokenizer-runtime-attachment contract metadata, Stage-23 tokenizer-artifact-binding contract metadata, Stage-22 tokenizer-artifact-verification contract metadata, Stage-21 tokenizer-artifact-measurement contract metadata, Stage-20 tokenizer-artifact-inventory contract metadata, Stage-19 tokenizer-manifest contract metadata, Stage-18 tokenizer-specification contract metadata, Stage-17 tokenization-boundary contract metadata, Stage-16 prompt-evaluation handoff contract metadata, Stage-15 awareness-dialogue contract metadata, Stage-14 prompt-materialization contract metadata, Stage-13 prompt-receipt contract metadata, Stage-12 model-load contract metadata, Stage-11 runtime-invocation contract metadata, Stage-10 inference-readiness contract metadata, Stage-9 local model-registry contract metadata, Stage-8 prompt-evaluation contract metadata, Stage-7 report-only tool-preflight metadata, Stage-6 protective-safety metadata, Stage-5 productivity-ledger metadata, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan metadata, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, config, Console status, component marker, and productivity-ledger space. No sexual user functionality, dialogue generation, prompt text receipt, prompt text reading, prompt source reading, prompt buffer allocation, prompt tokenization, prompt token creation, prompt token sequence recording, prompt token ID recording, prompt token order recording, prompt token offset recording, context window assembly, prompt evaluation input creation, prompt evaluation runtime handoff, prompt-evaluation invocation request creation, prompt-evaluation result recording, prompt-evaluation result review recording, prompt-evaluation result disposition recording, disposition decision recording, prompt-evaluation result release recording, release decision recording, release publication, release packaging, release receipt creation, prompt-evaluation result release receipt recording, prompt-evaluation result release receipt review recording, prompt-evaluation result release receipt review disposition recording, review decision recording, review findings recording, receipt signing, receipt publication, model-output recording, prompt materialization, tokenizer artifact path resolution, tokenizer artifact opening, tokenizer artifact reading, tokenizer artifact scanning, tokenizer artifact hashing, tokenizer artifact measurement, tokenizer artifact digest recording, tokenizer artifact size recording, tokenizer artifact verification, tokenizer artifact digest comparison, tokenizer artifact size comparison, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, inference, prompt evaluation, tool execution, model installation, training, distillation, source mutation, or network authority are installed. Awareness-dialogue metadata defines future survivor-centered Q&A scope for official Nadia Initiative awareness topics, prompt-evaluation handoff metadata packages that evidence, tokenization-boundary metadata keeps prompt tokenization blocked, tokenizer-specification metadata records future review requirements, tokenizer-manifest metadata records future manifest review requirements, tokenizer-artifact-inventory metadata records future artifact measurement requirements, tokenizer-artifact-measurement metadata records future artifact verification requirements, tokenizer-artifact-verification metadata records future artifact binding requirements, tokenizer-artifact-binding metadata records future runtime attachment requirements, tokenizer-runtime-attachment metadata records future prompt tokenization requirements, prompt-tokenization metadata records future prompt token sequence requirements, prompt-token-sequence metadata records future context window assembly requirements, context-window-assembly metadata records future prompt evaluation input requirements, prompt-evaluation-input metadata records future prompt evaluation runtime handoff requirements, prompt-evaluation-runtime-handoff metadata records future prompt evaluation invocation requirements, prompt-evaluation-invocation metadata records future prompt evaluation result requirements, prompt-evaluation-result metadata records future prompt evaluation result review requirements, prompt-evaluation-result-review metadata records future prompt evaluation result disposition requirements, prompt-evaluation-result-disposition metadata records future prompt evaluation result release requirements, prompt-evaluation-result-release metadata records future prompt evaluation result release receipt requirements, prompt-evaluation-result-release-receipt metadata records future prompt evaluation result release receipt review requirements, prompt-evaluation-result-release-receipt-review metadata records future prompt evaluation result release receipt review disposition requirements, and prompt-evaluation-result-release-receipt-review-disposition metadata records future prompt evaluation result release receipt review disposition release requirements; none grants dialogue generation, live web lookup, prompt evaluation, token generation, inference, or tool execution authority.
+In the current installer lane, Nadia includes Stage-40 prompt-evaluation result release receipt review disposition release receipt review contract metadata, Stage-39 prompt-evaluation result release receipt review disposition release receipt contract metadata, Stage-38 prompt-evaluation result release receipt review disposition release contract metadata, Stage-37 prompt-evaluation result release receipt review disposition contract metadata, Stage-36 prompt-evaluation result release receipt review contract metadata, Stage-35 prompt-evaluation result release receipt contract metadata, Stage-34 prompt-evaluation result release contract metadata, Stage-33 prompt-evaluation result disposition contract metadata, Stage-32 prompt-evaluation result review contract metadata, Stage-31 prompt-evaluation result contract metadata, Stage-30 prompt-evaluation invocation contract metadata, Stage-29 prompt-evaluation runtime handoff contract metadata, Stage-28 prompt-evaluation-input contract metadata, Stage-27 context-window-assembly contract metadata, Stage-26 prompt-token-sequence contract metadata, Stage-25 prompt-tokenization contract metadata, Stage-24 tokenizer-runtime-attachment contract metadata, Stage-23 tokenizer-artifact-binding contract metadata, Stage-22 tokenizer-artifact-verification contract metadata, Stage-21 tokenizer-artifact-measurement contract metadata, Stage-20 tokenizer-artifact-inventory contract metadata, Stage-19 tokenizer-manifest contract metadata, Stage-18 tokenizer-specification contract metadata, Stage-17 tokenization-boundary contract metadata, Stage-16 prompt-evaluation handoff contract metadata, Stage-15 awareness-dialogue contract metadata, Stage-14 prompt-materialization contract metadata, Stage-13 prompt-receipt contract metadata, Stage-12 model-load contract metadata, Stage-11 runtime-invocation contract metadata, Stage-10 inference-readiness contract metadata, Stage-9 local model-registry contract metadata, Stage-8 prompt-evaluation contract metadata, Stage-7 report-only tool-preflight metadata, Stage-6 protective-safety metadata, Stage-5 productivity-ledger metadata, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan metadata, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, config, Console status, component marker, and productivity-ledger space. No sexual user functionality, dialogue generation, prompt text receipt, prompt text reading, prompt source reading, prompt buffer allocation, prompt tokenization, prompt token creation, prompt token sequence recording, prompt token ID recording, prompt token order recording, prompt token offset recording, context window assembly, prompt evaluation input creation, prompt evaluation runtime handoff, prompt-evaluation invocation request creation, prompt-evaluation result recording, prompt-evaluation result review recording, prompt-evaluation result disposition recording, disposition decision recording, prompt-evaluation result release recording, release decision recording, release publication, release packaging, release receipt creation, prompt-evaluation result release receipt recording, prompt-evaluation result release receipt review recording, review decision recording, review findings recording, receipt signing, receipt publication, model-output recording, prompt materialization, tokenizer artifact path resolution, tokenizer artifact opening, tokenizer artifact reading, tokenizer artifact scanning, tokenizer artifact hashing, tokenizer artifact measurement, tokenizer artifact digest recording, tokenizer artifact size recording, tokenizer artifact verification, tokenizer artifact digest comparison, tokenizer artifact size comparison, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, inference, prompt evaluation, tool execution, model installation, training, distillation, source mutation, or network authority are installed. Awareness-dialogue metadata defines future survivor-centered Q&A scope for official Nadia Initiative awareness topics, prompt-evaluation handoff metadata packages that evidence, tokenization-boundary metadata keeps prompt tokenization blocked, tokenizer-specification metadata records future review requirements, tokenizer-manifest metadata records future manifest review requirements, tokenizer-artifact-inventory metadata records future artifact measurement requirements, tokenizer-artifact-measurement metadata records future artifact verification requirements, tokenizer-artifact-verification metadata records future artifact binding requirements, tokenizer-artifact-binding metadata records future runtime attachment requirements, tokenizer-runtime-attachment metadata records future prompt tokenization requirements, prompt-tokenization metadata records future prompt token sequence requirements, prompt-token-sequence metadata records future context window assembly requirements, context-window-assembly metadata records future prompt evaluation input requirements, prompt-evaluation-input metadata records future prompt evaluation runtime handoff requirements, prompt-evaluation-runtime-handoff metadata records future prompt evaluation invocation requirements, prompt-evaluation-invocation metadata records future prompt evaluation result requirements, prompt-evaluation-result metadata records future prompt evaluation result review requirements, prompt-evaluation-result-review metadata records future prompt evaluation result disposition requirements, prompt-evaluation-result-disposition metadata records future prompt evaluation result release requirements, prompt-evaluation-result-release metadata records future prompt evaluation result release receipt requirements, prompt-evaluation-result-release-receipt metadata records future prompt evaluation result release receipt review requirements, prompt-evaluation-result-release-receipt-review metadata records future prompt evaluation result release receipt review disposition requirements, prompt-evaluation-result-release-receipt-review-disposition metadata records future prompt evaluation result release receipt review disposition release requirements, prompt-evaluation-result-release-receipt-review-disposition-release metadata records future prompt evaluation result release receipt review disposition release receipt requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt metadata records future prompt evaluation result release receipt review disposition release receipt review requirements, and prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review metadata records future prompt evaluation result release receipt review disposition release receipt review disposition requirements, including prompt-evaluation result release receipt review disposition release receipt recording metadata only, prompt-evaluation result release receipt review disposition release recording metadata only, and prompt-evaluation result release receipt review disposition recording metadata only; none grants dialogue generation, live web lookup, prompt evaluation, token generation, inference, or tool execution authority.
 
-Historical guard compatibility: No sexual user functionality, dialogue generation, prompt text receipt, prompt text reading, prompt source reading, prompt buffer allocation, prompt tokenization, prompt token creation, prompt token sequence recording, prompt token ID recording, prompt token order recording, prompt token offset recording, context window assembly, prompt evaluation input creation, prompt evaluation runtime handoff, prompt-evaluation invocation request creation, prompt-evaluation result recording, prompt-evaluation result review recording, prompt-evaluation result disposition recording, disposition decision recording, prompt-evaluation result release recording, release decision recording, release publication, release packaging, release receipt creation, prompt-evaluation result release receipt recording, prompt-evaluation result release receipt review recording, review decision recording, review findings recording, receipt signing, receipt publication, model-output recording, prompt materialization, tokenizer artifact path resolution, tokenizer artifact opening, tokenizer artifact reading, tokenizer artifact scanning, tokenizer artifact hashing, tokenizer artifact measurement, tokenizer artifact digest recording, tokenizer artifact size recording, tokenizer artifact verification, tokenizer artifact digest comparison, tokenizer artifact size comparison, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, inference, prompt evaluation, tool execution, model installation, training, distillation, source mutation, or network authority are installed.
-
-Stage-37 adds `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition` as prompt-evaluation result release receipt review disposition metadata only. prompt-evaluation result release receipt review disposition recording remains blocked metadata only.
+Stage-40 adds `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review` as prompt-evaluation result release receipt review disposition release receipt review metadata only. Prompt-evaluation result release receipt review disposition release receipt review recording remains blocked metadata only.
 
 After a guarded local install with Nadia enabled:
 
@@ -304,6 +325,11 @@ latticra-nadia prompt-evaluation-result-release
 latticra-nadia prompt-evaluation-result-release-receipt
 latticra-nadia prompt-evaluation-result-release-receipt-review
 latticra-nadia prompt-evaluation-result-release-receipt-review-disposition
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
 ```
 
 ## Uninstall managed local install

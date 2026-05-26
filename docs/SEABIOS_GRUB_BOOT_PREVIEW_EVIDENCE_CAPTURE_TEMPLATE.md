@@ -44,6 +44,30 @@ sh scripts/seabios-grub-boot-preview-qemu-argv-template.sh
 
 It prints future profile-specific QEMU argv record placeholders without running QEMU.
 
+The Boot artifact manifest template companion is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-template.sh
+```
+
+It prints future boot artifact metadata placeholders without creating disk images, installing GRUB, or writing boot files.
+
+The Boot-preview evidence validation companion is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-evidence-validate.sh
+```
+
+It checks the current fixture for premature QEMU, serial-console, recovery, or bootability claims before any future evidence bundle is accepted.
+
+The Boot artifact manifest validation companion is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
+```
+
+It checks the current fixture for premature bootable, GRUB, QEMU, or production OS claims before any future artifact manifest is accepted.
+
 ## Required Future Evidence Fields
 
 A future completed evidence bundle must record:
@@ -56,6 +80,11 @@ boot_preview_manifest_path
 boot_preview_manifest_sha256
 boot_artifact_manifest_path
 boot_artifact_manifest_sha256
+boot_artifact_manifest_template_path
+boot_artifact_manifest_validation_report_path
+boot_artifact_manifest_validation_report_sha256
+boot_evidence_validation_report_path
+boot_evidence_validation_report_sha256
 disk_image_path
 disk_image_sha256
 artifact_format

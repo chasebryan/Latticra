@@ -131,8 +131,8 @@ img {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 8px 12px;
-  font-size: 0.86rem;
+  gap: 7px 8px;
+  font-size: 0.79rem;
 }
 
 .nav-links a {
@@ -412,6 +412,22 @@ p:last-child {
   background-size: cover;
 }
 
+.kernel-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.98) 0%, rgba(17, 24, 39, 0.9) 58%, rgba(17, 24, 39, 0.62) 100%),
+    url("latticra-seal-runtime-dry-run-native-demo.png");
+  background-position: center right;
+  background-size: cover;
+}
+
+.boot-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.98) 0%, rgba(17, 24, 39, 0.9) 58%, rgba(17, 24, 39, 0.62) 100%),
+    url("latticra-seal-runtime-dry-run-native-demo.png");
+  background-position: center right;
+  background-size: cover;
+}
+
 .start-hero {
   background:
     linear-gradient(90deg, rgba(17, 24, 39, 0.97) 0%, rgba(17, 24, 39, 0.86) 58%, rgba(17, 24, 39, 0.66) 100%),
@@ -462,6 +478,16 @@ p:last-child {
   background-size: 540px auto;
 }
 
+.panel-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.98) 0%, rgba(17, 24, 39, 0.9) 56%, rgba(17, 24, 39, 0.62) 100%),
+    url("latticra-panel.png");
+  background-color: #111827;
+  background-position: right 44px center;
+  background-repeat: no-repeat;
+  background-size: 520px auto;
+}
+
 .console-hero {
   background:
     linear-gradient(90deg, rgba(17, 24, 39, 0.98) 0%, rgba(17, 24, 39, 0.9) 58%, rgba(17, 24, 39, 0.62) 100%),
@@ -504,7 +530,7 @@ p:last-child {
   background-size: 500px auto;
 }
 
-.installer-hero {
+.packaging-hero {
   background:
     linear-gradient(90deg, rgba(17, 24, 39, 0.98) 0%, rgba(17, 24, 39, 0.9) 56%, rgba(17, 24, 39, 0.62) 100%),
     url("latticra-panel.png");
@@ -626,7 +652,10 @@ p:last-child {
 .examples-intro,
 .seal-intro,
 .roadmap-intro,
+.kernel-intro,
+.boot-intro,
 .workbench-intro,
+.panel-intro,
 .console-intro,
 .nadia-intro,
 .runtime-intro,
@@ -643,7 +672,10 @@ p:last-child {
 .examples-intro p:not(.eyebrow),
 .seal-intro p:not(.eyebrow),
 .roadmap-intro p:not(.eyebrow),
+.kernel-intro p:not(.eyebrow),
+.boot-intro p:not(.eyebrow),
 .workbench-intro p:not(.eyebrow),
+.panel-intro p:not(.eyebrow),
 .console-intro p:not(.eyebrow),
 .nadia-intro p:not(.eyebrow),
 .runtime-intro p:not(.eyebrow),
@@ -678,7 +710,6 @@ p:last-child {
   color: var(--ochre);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-weight: 900;
-  overflow-wrap: anywhere;
 }
 
 .language-step p,
@@ -1061,6 +1092,191 @@ p:last-child {
   font-size: 0.94rem;
 }
 
+.kernel-flow,
+.kernel-ladder-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.kernel-flow {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.kernel-flow article {
+  min-width: 0;
+  min-height: 212px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--teal);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.kernel-flow span,
+.kernel-ladder-grid span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--ochre);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.kernel-flow p,
+.kernel-ladder-grid p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.kernel-ladder-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.kernel-ladder-grid article {
+  min-width: 0;
+  min-height: 212px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--blue);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.kernel-ladder-grid article:nth-child(3) {
+  border-top-color: var(--violet);
+}
+
+.kernel-ladder-grid article:nth-child(4),
+.kernel-ladder-grid article:nth-child(5) {
+  border-top-color: var(--ochre);
+}
+
+.kernel-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.kernel-table {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.kernel-table div {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.kernel-table div:last-child {
+  border-bottom: 0;
+}
+
+.kernel-table span {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.kernel-table p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.boot-flow,
+.boot-profile-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.boot-flow {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.boot-flow article {
+  min-width: 0;
+  min-height: 218px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--ochre);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.boot-flow span,
+.boot-profile-grid span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--ochre);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.boot-flow p,
+.boot-profile-grid p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.boot-profile-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.boot-profile-grid article {
+  min-width: 0;
+  min-height: 210px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--blue);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.boot-profile-grid article:nth-child(3) {
+  border-top-color: var(--violet);
+}
+
+.boot-profile-grid article:nth-child(4) {
+  border-top-color: var(--teal);
+}
+
+.boot-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.boot-table {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.boot-table div {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.boot-table div:last-child {
+  border-bottom: 0;
+}
+
+.boot-table span {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.boot-table p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
 .workbench-flow,
 .workbench-surface-grid {
   display: grid;
@@ -1169,6 +1385,118 @@ p:last-child {
   font-size: 0.94rem;
 }
 
+.panel-flow,
+.panel-workspace-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.panel-flow {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.panel-flow article {
+  min-width: 0;
+  min-height: 214px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--green);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.panel-flow span,
+.panel-workspace-grid span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--ochre);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.panel-flow p,
+.panel-workspace-grid p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.panel-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(300px, 1.18fr);
+  gap: 30px;
+  align-items: center;
+}
+
+.panel-figure img {
+  width: min(440px, 100%);
+  margin-inline: auto;
+  object-fit: contain;
+}
+
+.panel-workspace-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.panel-workspace-grid article {
+  min-width: 0;
+  min-height: 210px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--teal);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.panel-workspace-grid article:nth-child(3),
+.panel-workspace-grid article:nth-child(4) {
+  border-top-color: var(--ochre);
+}
+
+.panel-workspace-grid article:nth-child(5),
+.panel-workspace-grid article:nth-child(8) {
+  border-top-color: var(--violet);
+}
+
+.panel-workspace-grid article:nth-child(6),
+.panel-workspace-grid article:nth-child(7) {
+  border-top-color: var(--blue);
+}
+
+.panel-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.panel-table {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.panel-table div {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-table div:last-child {
+  border-bottom: 0;
+}
+
+.panel-table span {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.panel-table p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
 .console-flow,
 .console-profile-grid {
   display: grid;
@@ -1196,7 +1524,6 @@ p:last-child {
   color: var(--ochre);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-weight: 900;
-  overflow-wrap: anywhere;
 }
 
 .console-flow p,
@@ -1672,84 +1999,125 @@ p:last-child {
   font-size: 0.94rem;
 }
 
-.installer-intro {
+.packaging-intro {
   display: grid;
   grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
   gap: 34px;
   align-items: start;
 }
 
-.installer-intro p:not(.eyebrow) {
+.packaging-intro p:not(.eyebrow) {
   color: var(--muted);
   font-size: 1.05rem;
 }
 
-.installer-intro code {
-  padding: 1px 4px;
-  border-radius: 4px;
-  background: rgba(47, 125, 106, 0.12);
-  color: var(--ink);
-  font-size: 0.92em;
-  overflow-wrap: anywhere;
-}
-
-.installer-flow {
+.packaging-flow,
+.packaging-platform-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 14px;
 }
 
-.installer-flow article {
+.packaging-flow {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.packaging-flow article {
   min-width: 0;
-  min-height: 218px;
+  min-height: 212px;
   padding: 16px;
   border: 1px solid var(--border);
-  border-top: 4px solid var(--ochre);
+  border-top: 4px solid var(--teal);
   border-radius: 8px;
   background: #fff;
 }
 
-.installer-flow span {
+.packaging-flow span,
+.packaging-platform span {
   display: block;
   margin-bottom: 18px;
-  color: var(--red);
+  color: var(--blue);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-weight: 900;
 }
 
-.installer-flow p {
+.packaging-flow p,
+.packaging-platform p {
   color: var(--muted);
   font-size: 0.92rem;
-  overflow-wrap: anywhere;
 }
 
-.installer-showcase {
+.packaging-showcase {
   display: grid;
   grid-template-columns: minmax(0, 0.82fr) minmax(300px, 1.18fr);
   gap: 30px;
   align-items: center;
 }
 
-.installer-figure img {
+.packaging-figure img {
   width: min(420px, 100%);
   margin-inline: auto;
   object-fit: contain;
 }
 
-.installer-split {
+.packaging-platform-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.packaging-platform {
+  min-width: 0;
+  min-height: 258px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--border-strong);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.packaging-platform a {
+  display: inline-flex;
+  margin-top: 8px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.packaging-platform a:hover {
+  text-decoration: underline;
+}
+
+.packaging-fedora {
+  border-top-color: #0ea5e9;
+}
+
+.packaging-ubuntu {
+  border-top-color: var(--green);
+}
+
+.packaging-opensuse {
+  border-top-color: var(--teal);
+}
+
+.packaging-macos {
+  border-top-color: #334155;
+}
+
+.packaging-blocked {
+  border-top-color: var(--red);
+}
+
+.packaging-split {
   display: grid;
   grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
   gap: 34px;
   align-items: start;
 }
 
-.installer-table {
+.packaging-table {
   border: 1px solid var(--border);
   border-radius: 8px;
   background: #fff;
 }
 
-.installer-table div {
+.packaging-table div {
   display: grid;
   grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
   gap: 18px;
@@ -1757,16 +2125,16 @@ p:last-child {
   border-bottom: 1px solid var(--border);
 }
 
-.installer-table div:last-child {
+.packaging-table div:last-child {
   border-bottom: 0;
 }
 
-.installer-table span {
+.packaging-table span {
   color: var(--ink);
   font-weight: 900;
 }
 
-.installer-table p {
+.packaging-table p {
   color: var(--muted);
   font-size: 0.94rem;
 }
@@ -1988,7 +2356,7 @@ p:last-child {
 .flow-step::after {
   position: absolute;
   top: 48px;
-  right: 0;
+  right: -10px;
   width: 10px;
   height: 1px;
   background: var(--border-strong);
@@ -2495,12 +2863,12 @@ p:last-child {
   color: #e5e7eb;
   font-size: 0.83rem;
   line-height: 1.5;
-  overflow-wrap: anywhere;
-  white-space: pre-wrap;
 }
 
 .command-panel code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 
 .resource-grid {
@@ -2624,11 +2992,29 @@ p:last-child {
   .roadmap-lane-grid,
   .roadmap-stage-grid,
   .roadmap-split,
+  .kernel-intro,
+  .kernel-flow,
+  .kernel-ladder-grid,
+  .kernel-split,
+  .boot-intro,
+  .boot-flow,
+  .boot-profile-grid,
+  .boot-split,
+  .packaging-intro,
+  .packaging-flow,
+  .packaging-showcase,
+  .packaging-platform-grid,
+  .packaging-split,
   .workbench-intro,
   .workbench-flow,
   .workbench-showcase,
   .workbench-surface-grid,
   .workbench-split,
+  .panel-intro,
+  .panel-flow,
+  .panel-showcase,
+  .panel-workspace-grid,
+  .panel-split,
   .console-intro,
   .console-flow,
   .console-profile-grid,
@@ -2651,11 +3037,7 @@ p:last-child {
   .validation-flow,
   .validation-showcase,
   .validation-lane-grid,
-  .validation-split,
-  .installer-intro,
-  .installer-flow,
-  .installer-showcase,
-  .installer-split {
+  .validation-split {
     grid-template-columns: 1fr;
   }
 
@@ -2716,7 +3098,7 @@ p:last-child {
   .claim-language-grid,
   .nadia-principle-grid,
   .validation-lane-grid,
-  .installer-flow {
+  .packaging-platform-grid {
     grid-template-columns: 1fr;
   }
 
@@ -2729,12 +3111,15 @@ p:last-child {
   .example-table div,
   .seal-table div,
   .roadmap-table div,
+  .kernel-table div,
+  .boot-table div,
+  .packaging-table div,
   .workbench-table div,
+  .panel-table div,
   .console-table div,
   .nadia-table div,
   .runtime-table div,
-  .security-table div,
-  .installer-table div {
+  .security-table div {
     grid-template-columns: 1fr;
     gap: 8px;
   }

@@ -61,6 +61,24 @@ The QEMU argv template for future profile-specific command records is:
 sh scripts/seabios-grub-boot-preview-qemu-argv-template.sh
 ```
 
+The boot artifact manifest template for future artifact metadata is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-template.sh
+```
+
+The boot artifact manifest validation for the current blocked fixture is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
+```
+
+The boot-preview evidence validation for future QEMU and serial-console evidence is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-evidence-validate.sh
+```
+
 ## Required Non-Effects
 
 The preflight must always report:

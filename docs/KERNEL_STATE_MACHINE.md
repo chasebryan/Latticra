@@ -45,6 +45,8 @@ timer-source-ready
 scheduler-tick-ready
 run-queue-ready
 context-switch-ready
+time-accounting-ready
+preemption-ready
 ```
 
 ## Controlled effect boundary

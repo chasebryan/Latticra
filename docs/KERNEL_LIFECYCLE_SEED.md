@@ -29,7 +29,7 @@ docs/KERNEL_LIFECYCLE_SEED.md
 The default lifecycle target is:
 
 ```text
-context-switch-ready
+preemption-ready
 ```
 
 The approved sequence is:
@@ -50,6 +50,8 @@ interrupt-table-ready -> timer-source-ready
 timer-source-ready -> scheduler-tick-ready
 scheduler-tick-ready -> run-queue-ready
 run-queue-ready -> context-switch-ready
+context-switch-ready -> time-accounting-ready
+time-accounting-ready -> preemption-ready
 ```
 
 ## Controlled effect boundary
@@ -59,7 +61,7 @@ This slice allows internal state-machine mutation only.
 The result may report:
 
 ```text
-state_change_count=15
+state_change_count=17
 lifecycle_complete=1
 ```
 
@@ -93,12 +95,12 @@ The guard verifies:
 LATTICRA KERNEL LIFECYCLE REPORT
 lifecycle_status=lifecycle-complete
 policy_status=gate-allowed
-final_state=context-switch-ready
-step_count=15
-state_change_count=15
+final_state=preemption-ready
+step_count=17
+state_change_count=17
 lifecycle_complete=1
 external_effect_performed=0
-machine_log_count=15
+machine_log_count=17
 evidence_level=10
 ```
 
@@ -124,7 +126,7 @@ The guards verify:
 
 ```text
 default request is denied
-allowed lifecycle reaches context-switch-ready
+allowed lifecycle reaches preemption-ready
 intermediate target stops correctly
 step limit is respected
 report includes lifecycle completion and transition log
@@ -146,10 +148,6 @@ device operation
 scheduler tick
 run queue mutation
 context switching
-register saving
-register restoring
-stack switching
-address space switching
 time accounting
 process wakeups
 timer arming

@@ -144,6 +144,70 @@ qemu_boot_execution_attempted=0
 bootable_os_ready=0
 ```
 
+## Boot-preview evidence validation
+
+The no-effect boot-preview evidence validation gate is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-evidence-validate.sh
+```
+
+It classifies the current fixture and rejects premature QEMU, serial-console, recovery, and bootability claims before future boot evidence can be accepted.
+
+```text
+seabios_grub_boot_preview_evidence_validation_present=1
+boot_evidence_validation_mode=no-effect-readiness-check
+boot_evidence_validation_decision=blocked-fixture-only-no-boot-evidence
+boot_evidence_candidate_ready=0
+qemu_i440fx_seabios_boot_validation_completed=0
+qemu_grub2_bios_boot_validation_completed=0
+qemu_ovmf_grub2_uefi_boot_validation_completed=0
+serial_console_boot_log_recorded=0
+operator_recovery_runbook_present=0
+bootable_os_ready=0
+production_os_claim=0
+```
+
+## Boot artifact manifest template
+
+The no-effect boot artifact manifest template is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-template.sh
+```
+
+It records the future artifact metadata shape without creating images, invoking GRUB, installing kernels, writing initramfs files, or creating a boot artifact manifest.
+
+```text
+seabios_grub_boot_preview_boot_artifact_manifest_template_present=1
+boot_artifact_manifest_template_mode=no-effect-template
+boot_artifact_manifest_template_decision=blocked-template-only-no-artifact
+boot_artifact_manifest_ready=0
+boot_artifact_manifest_present=0
+disk_image_created=0
+bootable_os_ready=0
+```
+
+## Boot artifact manifest validation
+
+The no-effect boot artifact manifest validation gate is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
+```
+
+It classifies the current fixture and rejects premature bootable, GRUB, QEMU, or production OS claims before a future artifact manifest can be accepted.
+
+```text
+seabios_grub_boot_preview_boot_artifact_manifest_validation_present=1
+boot_artifact_manifest_validation_mode=no-effect-readiness-check
+boot_artifact_manifest_validation_decision=blocked-fixture-only-incomplete
+boot_artifact_manifest_candidate_ready=0
+boot_artifact_manifest_present=0
+bootable_os_ready=0
+production_os_claim=0
+```
+
 ## QEMU argv template
 
 The no-effect QEMU argv template is:
@@ -172,7 +236,10 @@ This preview lane is guarded by:
 sh scripts/test-seabios-grub-boot-preview-evidence-contract.sh
 sh scripts/test-seabios-grub-boot-preview-preflight.sh
 sh scripts/test-seabios-grub-boot-preview-evidence-template.sh
+sh scripts/test-seabios-grub-boot-preview-evidence-validate.sh
 sh scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh
+sh scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-template.sh
+sh scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
 ```
 
 Expected output:

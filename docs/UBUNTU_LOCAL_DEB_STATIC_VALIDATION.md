@@ -27,6 +27,9 @@ docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md
 docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md
 docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md
+docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
+docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
+docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
@@ -62,6 +65,15 @@ notice_file_decision_recorded=0
 debian_copyright_notice_mapping_contract_present=1
 debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping
 debian_copyright_notice_mapping_reviewed=0
+trademark_notice_boundary_contract_present=1
+trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary
+trademark_notice_boundary_recorded=0
+release_artifact_notice_requirements_contract_present=1
+release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements
+release_artifact_notice_requirements_recorded=0
+package_notice_promotion_gate_contract_present=1
+package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
+package_notice_promotion_gate_unblocked=0
 ppa_claimed=0
 ubuntu_archive_ready=0
 production_readiness_claimed=0
@@ -101,7 +113,7 @@ claim production readiness
 
 ## Next Recommended Lane
 
-Review the Ubuntu Debian copyright notice mapping contract before promoting the package notice review or package license expression.
+Promote the Ubuntu package license expression only after documentation licensing and notice obligations are reviewed.
 
 ## Validation
 

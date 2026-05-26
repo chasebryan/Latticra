@@ -26,8 +26,11 @@
         <a href="status.html">Status</a>
         <a href="roadmap.html">Roadmap</a>
         <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
         <a href="runtime.html">Runtime</a>
         <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
         <a href="console.html">Console</a>
         <a href="nadia.html">Nadia</a>
         <a href="language.html">Language</a>
@@ -71,8 +74,9 @@
           <span class="map-number">01</span>
           <h3>Start Here</h3>
           <ul class="map-list">
+            <li><a href="README.md">Documentation Hub</a><span>Short route through public orientation, status, foundation, platform, and subsystem records.</span></li>
+            <li><a href="DOCUMENTATION_MAINTENANCE.md">Documentation Maintenance</a><span>Rules for public entry points, estimate mirrors, non-claims, and documentation-only validation.</span></li>
             <li><a href="start.html">Getting Started</a><span>No-effect first-run guide and reading paths.</span></li>
-            <li><a href="README.md">Documentation Hub</a><span>Markdown-first reading path for status, claims, contracts, and subsystem maps.</span></li>
             <li><a href="examples.html">Examples and Local Checks</a><span>Concrete no-effect path through the L-UI fixture and language guards.</span></li>
             <li><a href="status.html">Public Status Dashboard</a><span>Scannable status, estimates, posture, and next reading paths.</span></li>
             <li><a href="roadmap.html">Roadmap and Current Direction</a><span>Sequencing principles, estimates, active lanes, and guarded next steps.</span></li>
@@ -88,9 +92,9 @@
             <li><a href="evidence.html">Claims and Evidence</a><span>Reader-facing evidence ladder, promotion rules, and non-claims.</span></li>
             <li><a href="security.html">Security and Boundaries</a><span>Safe testing, effect gates, runtime boundary, and security non-claims.</span></li>
             <li><a href="validation.html">Local Validation</a><span>Panel install evidence, package guards, disposable VM gates, and dry-run contracts.</span></li>
+            <li><a href="boot.html">Boot Preview Boundary</a><span>SeaBIOS/GRUB compatibility, no-effect preflight, and blocked boot claims.</span></li>
             <li><a href="FOUNDATION_INDEX.md">Foundation Index</a><span>Main index for contracts, status records, and guards.</span></li>
             <li><a href="EVIDENCE_LADDER.md">Evidence Ladder</a><span>Promotion levels from idea to supported capability.</span></li>
-            <li><a href="PUBLIC_CLAIMS_LEDGER.md">Public Claims Ledger</a><span>Allowed wording, blocked wording, and proof required before claim promotion.</span></li>
             <li><a href="NON_CLAIMS.md">Non-Claims</a><span>Explicit boundaries for what Latticra does not yet provide.</span></li>
           </ul>
         </article>
@@ -100,7 +104,11 @@
           <h3>Architecture Foundation</h3>
           <ul class="map-list">
             <li><a href="architecture.html">System Architecture</a><span>Reader-facing guide to layers, boundaries, and evidence flow.</span></li>
+            <li><a href="kernel.html">Kernel and State Lattice</a><span>Compiled kernel identity, lifecycle reports, subsystem summaries, and no-external-effect posture.</span></li>
+            <li><a href="boot.html">Boot Preview Boundary</a><span>Fixture-only SeaBIOS/GRUB lane and promotion evidence required before boot claims can change.</span></li>
             <li><a href="ARCHITECTURE_SEED.md">Architecture Seed</a><span>Initial state-lattice and software-universe vocabulary.</span></li>
+            <li><a href="STATE_LATTICE.md">State Lattice</a><span>Fixed-size no-effect C fixture and initial state vocabulary.</span></li>
+            <li><a href="KERNEL_IMPLEMENTATION.md">Kernel Seed</a><span>Compiled kernel identity and deterministic report surface.</span></li>
             <li><a href="C_CPP_FOUNDATION_DIRECTION.md">C/C++ Foundation</a><span>Substrate and constrained authority direction.</span></li>
             <li><a href="LANGUAGE_STRATEGY.md">Language Strategy</a><span>Roles for C, constrained C++, Lat, L-UI, and LIR.</span></li>
           </ul>
@@ -147,12 +155,13 @@
           <h3>Panel, Nadia, and Local Workflows</h3>
           <ul class="map-list">
             <li><a href="workbench.html">Workbench Overview</a><span>Reader-facing guide to Panel, LC, Nadia, and user-local authority boundaries.</span></li>
+            <li><a href="panel.html">Latticra Panel Overview</a><span>Guided GUI workbench, dry-run-first install flow, receipts, updater, and user-local evidence.</span></li>
             <li><a href="console.html">Latticra Console Overview</a><span>Stage-0 LC identity, command registry, Panel profiles, host contracts, and receipt planning.</span></li>
-            <li><a href="nadia.html">Nadia Overview</a><span>Reader-facing guide to offline AI contracts, Stage-36 metadata, and non-runtime boundaries.</span></li>
+            <li><a href="nadia.html">Nadia Overview</a><span>Reader-facing guide to offline AI contracts, Stage-40 metadata, and non-runtime boundaries.</span></li>
             <li><a href="https://github.com/Bryforge/Latticra/blob/main/installer/README.md">Installer README</a><span>Local Panel and installer workflow orientation.</span></li>
             <li><a href="LATTICRA_CONSOLE_FOUNDATION.md">LC Foundation</a><span>Console foundation and profile presets.</span></li>
             <li><a href="NADIA_OFFLINE_AI_FOUNDATION.md">Nadia Offline AI</a><span>No-effect offline AI foundation and boundaries.</span></li>
-            <li><a href="NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36.md">Nadia Stage-36</a><span>Prompt-evaluation result release receipt review contract before runtime, inference, or result release receipt reviews.</span></li>
+            <li><a href="NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_40.md">Nadia Stage-40</a><span>Prompt-evaluation result release receipt review disposition release receipt review contract before runtime, inference, or release-receipt-review recording.</span></li>
             <li><a href="MACOS_USER_LOCAL_APP_BUNDLE_CONTRACT.md">macOS User-Local App Bundle</a><span>User-local bundle contract and limits.</span></li>
           </ul>
         </article>
@@ -164,10 +173,15 @@
             <li><a href="https://github.com/Bryforge/Latticra/blob/main/SECURITY.md">Security Policy</a><span>Safe testing, vulnerability reporting, and security non-claims.</span></li>
             <li><a href="security.html">Security Overview</a><span>Reader-facing safe testing and boundary page.</span></li>
             <li><a href="validation.html">Local Validation</a><span>Reader-facing install evidence and package validation page.</span></li>
-            <li><a href="installer.html">Installer Readiness Boundary</a><span>Production installer gates, artifact manifest fixture, and release non-claims.</span></li>
+            <li><a href="packaging.html">Packaging and Platform Readiness</a><span>Fedora, Ubuntu, openSUSE, Debian, BSD, and macOS packaging boundaries.</span></li>
             <li><a href="FEDORA_READINESS_PLAN.md">Fedora Readiness Plan</a><span>Fedora validation direction and constraints.</span></li>
             <li><a href="FEDORA_LOCAL_RPM_VALIDATION_PLAN.md">Local RPM Validation</a><span>Local package validation lane.</span></li>
             <li><a href="UBUNTU_READINESS_PLAN.md">Ubuntu Readiness Plan</a><span>Ubuntu development, Panel prerequisite, and local deb constraints.</span></li>
+            <li><a href="DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md">Debian Deb Static Validation</a><span>Local-only Debian deb shape checks and archive non-claim boundaries.</span></li>
+            <li><a href="FREEBSD_PORT_STATIC_VALIDATION.md">FreeBSD Port Static Validation</a><span>Local-only FreeBSD port draft checks and ports-tree non-claim boundaries.</span></li>
+            <li><a href="OPENBSD_PORT_STATIC_VALIDATION.md">OpenBSD Port Static Validation</a><span>Local-only OpenBSD port draft checks and package-redistribution non-claim boundaries.</span></li>
+            <li><a href="DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md">Debian/BSD Source Archive Contract</a><span>Source archive, checksum, and distinfo blockers before package build evidence.</span></li>
+            <li><a href="OPENSUSE_READINESS_PLAN.md">openSUSE Readiness Plan</a><span>openSUSE local RPM maintenance, rpmlint, osc, and OBS non-claim boundaries.</span></li>
             <li><a href="roadmap.html">Roadmap</a><span>Reader-facing roadmap and current direction page.</span></li>
           </ul>
         </article>

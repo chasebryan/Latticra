@@ -22,15 +22,11 @@ Panel-owned local-checkout updater policy is active.
 The current implemented updater surface is the Latticra Panel updater. It is limited to a reviewed local checkout and a guarded local-prefix reinstall flow:
 
 ```text
-latticra_panel_updater_present=1
-latticra_panel_updater_owned=1
 updater_current_source_strategy=current-source-checkout
-updater_current_update_channel=local-checkout
 updater_current_apply_mode=guarded-local-prefix-reinstall
-updater_network_fetch_enabled=0
-network_fetch_authority=0
-root_authority=0
-system_mutation_authority=0
+network_self_update_ready=0
+remote_update_repository_trust=0
+signed_update_delivery_ready=0
 ```
 
 The signed delivery gate is still closed:
@@ -51,6 +47,8 @@ operator_confirmation_required=1
 operator_confirmation_observed=0
 signed_update_apply_allowed=0
 ```
+
+This is not a signed updater, not a remote update client, not a network self-update path, and not production update readiness.
 
 ## Update channels
 
@@ -178,23 +176,34 @@ Update server interaction must pass through the Server Gateway.
 
 No component should perform direct update network behavior outside the signed update model.
 
-## Current Implementation Target
+## First implementation target
 
-The current implementation target is not signed or network-delivered update execution.
+The current Panel implementation target is a local-checkout updater policy surface, not signed or networked self-update.
 
-It is:
+It installs and reports:
 
 ```text
-Panel updater local-checkout policy
-non-launching updater status report
-closed signed updater delivery gate
+etc/latticra/updater.toml
+share/latticra/updater/policy.toml
+latticra updater status
+updater dry-run
+updater apply
+```
+
+The Panel updater reuses the guarded installer engine for a local-prefix reinstall from the current reviewed checkout. It has no network fetch, root, system mutation, boot, or recovery authority. `latticra updater status` reports the configured source strategy, channel, preview/apply commands, receipt setting, guarded apply mode, and disabled authority posture without launching the GUI.
+
+The signed staged update model still needs:
+
+```text
+update manifest fixture
+update state fixture
 signature-required marker
-rollback-required marker
-validation guard
+rollback visibility marker
+validation test
 ```
 
 ## Non-claims
 
-This document does not implement self-update.
+This document does not implement signed or networked self-update.
 
-It does not claim signed update delivery, network self-update, safe update execution, secure update delivery, rollback success, boot update safety, or production release readiness.
+The Panel updater does not claim secure update delivery, rollback success, boot update safety, recovery behavior, network fetch authority, root authority, system mutation authority, or production release readiness.

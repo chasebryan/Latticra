@@ -46,6 +46,9 @@ static int run_queue_seed_is_metadata_only(void) {
     EXPECT_TRUE(strcmp(result.scheduler_tick.timer_source.timer_status,
             "timer-source-seed-ready") == 0,
         "timer source ready");
+    EXPECT_TRUE(strcmp(result.scheduler_tick.timer_source.interrupt_table.table_status,
+            "interrupt-table-seed-ready") == 0,
+        "interrupt table ready");
     EXPECT_TRUE(result.queue_count == 4u,
         "queue count four");
     EXPECT_TRUE(result.no_effect == 1,
@@ -71,27 +74,20 @@ static int run_queue_seed_is_metadata_only(void) {
     EXPECT_TRUE(result.host_effect_allowed == 0,
         "host effect denied");
 
-    EXPECT_TRUE(strcmp(result.queues[0].process_label,
-            "kernel-report-process-metadata") == 0,
+    EXPECT_TRUE(strcmp(result.queues[0].process_label, "idle-process-metadata") == 0,
         "queue zero process");
-    EXPECT_TRUE(strcmp(result.queues[0].scheduler_slot_label,
-            "kernel-report-metadata") == 0,
-        "queue zero slot");
-    EXPECT_TRUE(strcmp(result.queues[0].queue_class,
-            "kernel-report-run-queue-entry") == 0,
+    EXPECT_TRUE(strcmp(result.queues[0].scheduler_slot_label, "idle-metadata") == 0,
+        "queue zero scheduler slot");
+    EXPECT_TRUE(strcmp(result.queues[0].queue_class, "idle-run-queue") == 0,
         "queue zero class");
     EXPECT_TRUE(result.queues[0].queue_token == 0ul,
         "queue zero token");
-    EXPECT_TRUE(result.queues[0].pid_token == 1ul,
+    EXPECT_TRUE(result.queues[0].pid_token == 0ul,
         "queue zero pid");
-    EXPECT_TRUE(result.queues[0].tick_token == 1ul,
-        "queue zero tick");
-    EXPECT_TRUE(result.queues[0].timer_token == 1ul,
-        "queue zero timer");
-    EXPECT_TRUE(result.queues[0].priority == 10ul,
+    EXPECT_TRUE(result.queues[0].tick_token == 0ul,
+        "queue zero tick token");
+    EXPECT_TRUE(result.queues[0].priority == 0ul,
         "queue zero priority");
-    EXPECT_TRUE(result.queues[0].budget_ns == 1000000ul,
-        "queue zero budget");
     EXPECT_TRUE(strcmp(result.queues[0].authority_status,
             "run-queue-authority-denied") == 0,
         "queue authority denied");
@@ -104,26 +100,27 @@ static int run_queue_seed_is_metadata_only(void) {
     EXPECT_TRUE(result.queues[0].selected == 0,
         "queue not selected");
     EXPECT_TRUE(result.queues[0].run_queue_mutation_allowed == 0,
-        "queue entry run queue mutation denied");
+        "queue mutation denied");
     EXPECT_TRUE(result.queues[0].enqueue_allowed == 0,
-        "queue entry enqueue denied");
+        "queue enqueue denied");
     EXPECT_TRUE(result.queues[0].dequeue_allowed == 0,
-        "queue entry dequeue denied");
+        "queue dequeue denied");
     EXPECT_TRUE(result.queues[0].dispatch_allowed == 0,
-        "queue entry dispatch denied");
+        "queue dispatch denied");
     EXPECT_TRUE(result.queues[0].context_switch_allowed == 0,
-        "queue entry context switch denied");
+        "queue context switch denied");
+    EXPECT_TRUE(result.queues[0].time_accounting_allowed == 0,
+        "queue time accounting denied");
+    EXPECT_TRUE(result.queues[0].process_wake_allowed == 0,
+        "queue process wake denied");
     EXPECT_TRUE(result.queues[0].no_effect == 1,
-        "queue entry no-effect");
-    EXPECT_TRUE(strcmp(result.queues[1].queue_class,
-            "entropy-run-queue-entry") == 0,
+        "queue no-effect");
+    EXPECT_TRUE(strcmp(result.queues[1].queue_class, "kernel-report-run-queue") == 0,
+        "kernel report queue class");
+    EXPECT_TRUE(strcmp(result.queues[2].queue_class, "entropy-run-queue") == 0,
         "entropy queue class");
-    EXPECT_TRUE(strcmp(result.queues[2].queue_class,
-            "console-run-queue-entry") == 0,
+    EXPECT_TRUE(strcmp(result.queues[3].queue_class, "console-run-queue") == 0,
         "console queue class");
-    EXPECT_TRUE(strcmp(result.queues[3].queue_class,
-            "idle-run-queue-entry") == 0,
-        "idle queue class");
     return 0;
 }
 
@@ -135,17 +132,17 @@ static int run_queue_caps_queue_count(void) {
             LATTICRA_STATUS_OK,
         "request initialized for cap");
     request.requested_queue_count = 99u;
-    request.scheduler_tick_request.requested_tick_count = 99u;
     EXPECT_TRUE(latticra_kernel_run_queue_evaluate(&request, &result) ==
             LATTICRA_STATUS_OK,
         "run queue evaluates cap");
-    EXPECT_TRUE(result.queue_count == LATTICRA_KERNEL_RUN_QUEUE_MAX,
+    EXPECT_TRUE(result.queue_count == LATTICRA_KERNEL_RUN_QUEUE_ENTRY_MAX,
         "queue count capped");
-    EXPECT_TRUE(strcmp(result.queues[4].queue_class,
-            "reserved-run-queue-entry") == 0,
+    EXPECT_TRUE(strcmp(result.queues[4].queue_class, "reserved-run-queue") == 0,
         "reserved queue class");
     EXPECT_TRUE(result.queues[4].queue_token == 5004ul,
         "reserved queue token");
+    EXPECT_TRUE(result.queues[4].pid_token == 1004ul,
+        "reserved pid token");
     return 0;
 }
 
@@ -170,10 +167,12 @@ static int run_queue_report_is_deterministic(void) {
         "queue status emitted");
     EXPECT_TRUE(strstr(report, "scheduler_tick_status=scheduler-tick-seed-ready\n") != 0,
         "scheduler tick emitted");
+    EXPECT_TRUE(strstr(report, "timer_source_status=timer-source-seed-ready\n") != 0,
+        "timer source emitted");
     EXPECT_TRUE(strstr(report, "queue_count=4\n") != 0,
         "queue count emitted");
     EXPECT_TRUE(strstr(report, "run_queue_mutation_allowed=0\n") != 0,
-        "run queue flag emitted");
+        "run queue mutation flag emitted");
     EXPECT_TRUE(strstr(report, "enqueue_allowed=0\n") != 0,
         "enqueue flag emitted");
     EXPECT_TRUE(strstr(report, "dequeue_allowed=0\n") != 0,
@@ -182,9 +181,15 @@ static int run_queue_report_is_deterministic(void) {
         "dispatch flag emitted");
     EXPECT_TRUE(strstr(report, "context_switch_allowed=0\n") != 0,
         "context switch flag emitted");
-    EXPECT_TRUE(strstr(report, "queue[0].process_label=kernel-report-process-metadata\n") != 0,
+    EXPECT_TRUE(strstr(report, "time_accounting_allowed=0\n") != 0,
+        "time accounting flag emitted");
+    EXPECT_TRUE(strstr(report, "process_wake_allowed=0\n") != 0,
+        "process wake flag emitted");
+    EXPECT_TRUE(strstr(report, "queue[0].process_label=idle-process-metadata\n") != 0,
         "queue zero process emitted");
-    EXPECT_TRUE(strstr(report, "queue[0].queue_class=kernel-report-run-queue-entry\n") != 0,
+    EXPECT_TRUE(strstr(report, "queue[0].scheduler_slot_label=idle-metadata\n") != 0,
+        "queue zero slot emitted");
+    EXPECT_TRUE(strstr(report, "queue[0].queue_class=idle-run-queue\n") != 0,
         "queue zero class emitted");
     EXPECT_TRUE(strstr(report, "queue[0].enqueued=0\n") != 0,
         "enqueued emitted");

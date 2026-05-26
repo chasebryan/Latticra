@@ -161,13 +161,19 @@ static int sequential_steps_advance_ladder(void) {
     request.target_state = LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY;
     EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
         "run queue ready to context switch ready");
+    request.target_state = LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "context switch ready to time accounting ready");
+    request.target_state = LATTICRA_KERNEL_STATE_PREEMPTION_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "time accounting ready to preemption ready");
 
-    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY,
-        "machine reaches context switch ready");
-    EXPECT_TRUE(strcmp(machine.machine_status, "context-switch-ready") == 0,
-        "machine status context switch ready");
-    EXPECT_TRUE(machine.log_count == 15u,
-        "fifteen transitions logged");
+    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_PREEMPTION_READY,
+        "machine reaches preemption ready");
+    EXPECT_TRUE(strcmp(machine.machine_status, "preemption-ready") == 0,
+        "machine status preemption ready");
+    EXPECT_TRUE(machine.log_count == 17u,
+        "seventeen transitions logged");
     EXPECT_TRUE(machine.external_effect_performed == 0,
         "sequence external effects absent");
     EXPECT_TRUE(machine.log[4].to_state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY,
@@ -192,6 +198,10 @@ static int sequential_steps_advance_ladder(void) {
         "log run queue ready");
     EXPECT_TRUE(machine.log[14].to_state == LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY,
         "log context switch ready");
+    EXPECT_TRUE(machine.log[15].to_state == LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY,
+        "log time accounting ready");
+    EXPECT_TRUE(machine.log[16].to_state == LATTICRA_KERNEL_STATE_PREEMPTION_READY,
+        "log preemption ready");
     return 0;
 }
 

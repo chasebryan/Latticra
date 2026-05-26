@@ -2,13 +2,13 @@
 
 Status: implementation status record
 
-Scope: prompt-evaluation result release receipt review disposition metadata before review recording, review decisions, review findings, receipt recording, receipt signing, receipt publication, release recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+Scope: prompt-evaluation result release receipt review disposition metadata before disposition recording, disposition decisions, disposition findings, review recording, review decisions, review findings, receipt recording, receipt signing, receipt publication, release recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 
 ## Summary
 
 Nadia Stage-37 adds a prompt-evaluation result release receipt review disposition contract generator.
 
-It consumes the Stage-36 prompt-evaluation result release receipt review report as prerequisite evidence and records a future review-disposition release lane for release receipt references, release references, disposition references, review references, result references, invocation references, runtime handoff references, evaluation input references, generated-text denial policy, token-generation denial policy, review-disposition policy, and survivor-centered safety requirements. It remains contract-only: no release receipt review is created, no review record is created, no review decision is recorded, no review findings are recorded, no release receipt is created, no receipt is signed, no receipt is emitted, no receipt is published, no release record is created, no model output is read or recorded, no runtime is invoked, no prompt is evaluated, no token is generated, and no dialogue is generated.
+It consumes the Stage-36 prompt-evaluation result release receipt review report as prerequisite evidence and records a future review-disposition release lane for review references, release receipt references, release references, disposition references, review references, result references, generated-text denial policy, token-generation denial policy, review-disposition release policy, and survivor-centered safety requirements. It remains contract-only: no review disposition is created, no disposition record is created, no disposition decision is recorded, no disposition findings are recorded, no release receipt review is created, no review record is created, no review decision is recorded, no review findings are recorded, no release receipt is created, no receipt is signed, no receipt is emitted, no receipt is published, no release record is created, no model output is read or recorded, no runtime is invoked, no prompt is evaluated, no token is generated, and no dialogue is generated.
 
 ## Status Fields
 
@@ -31,9 +31,9 @@ prompt_evaluation_result_release_receipt_review_disposition_decision=blocked_con
 prompt_evaluation_result_release_receipt_review_disposition_evidence_present=1
 prompt_evaluation_result_release_receipt_review_disposition_source_policy=operator-reviewed-offline
 prompt_evaluation_result_release_receipt_review_disposition_plan_recorded=1
-prompt_evaluation_result_release_receipt_review_disposition_method_planned=offline-prompt-evaluation-result-release-receipt-review-disposition-policy-review
 prompt_evaluation_result_release_receipt_review_disposition_result_recorded=0
 prompt_evaluation_result_release_receipt_review_disposition_runtime_invoked=0
+requires_prompt_evaluation_result_release_receipt_review_contract=1
 requires_prompt_evaluation_result_release_receipt_contract=1
 requires_prompt_evaluation_result_release_contract=1
 requires_prompt_evaluation_result_disposition_contract=1
@@ -60,6 +60,10 @@ prompt_evaluation_result_release_receipt_review_disposition_approval_recorded=0
 prompt_evaluation_result_release_receipt_review_disposition_rejection_recorded=0
 prompt_evaluation_result_release_receipt_review_disposition_findings_recorded=0
 prompt_evaluation_result_release_receipt_review_disposition_applied=0
+prompt_evaluation_result_release_receipt_review_record_created=0
+prompt_evaluation_result_release_receipt_review_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_findings_recorded=0
+prompt_evaluation_result_release_receipt_review_applied=0
 prompt_evaluation_result_release_receipt_record_created=0
 prompt_evaluation_result_release_receipt_signed=0
 prompt_evaluation_result_release_receipt_published=0
@@ -108,11 +112,11 @@ The Latticra Panel and installed `latticra-nadia` wrapper expose `prompt-evaluat
 
 ## Next Boundary
 
-Nadia can now produce a prompt-evaluation result release receipt review disposition contract that packages Stage-36 prompt-evaluation result release receipt review evidence and records review-disposition release requirements for a future prompt-evaluation result release receipt review disposition release contract.
+Nadia can produce a prompt-evaluation result release receipt review disposition contract that packages Stage-36 prompt-evaluation result release receipt review evidence and records release requirements for the Stage-38 prompt-evaluation result release receipt review disposition release contract.
 
-Runtime invocation, prompt evaluation, token generation, inference, review recording, review decision recording, review findings recording, receipt recording, receipt signing, receipt publication, release recording, result recording, model-output recording, and dialogue generation remain blocked until a later contract explicitly names review disposition shape, runtime execution denial fields, safety inheritance, operator review gates, and non-claims.
+Runtime invocation, prompt evaluation, token generation, inference, review disposition recording, disposition decision recording, disposition findings recording, review recording, review decision recording, review findings recording, receipt recording, receipt signing, receipt publication, release recording, result recording, model-output recording, and dialogue generation remain blocked until a later contract explicitly names review-disposition release shape, runtime execution denial fields, safety inheritance, operator review gates, and non-claims.
 
-That later prompt-evaluation result release receipt review disposition release contract is the next boundary; Stage-37 only records the prerequisite metadata.
+Stage-38 now records that later prompt-evaluation result release receipt review disposition release contract; Stage-37 remains the prerequisite metadata boundary.
 
 ## Validation
 

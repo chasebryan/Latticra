@@ -51,7 +51,7 @@ require_contains 'Fedora endorsement' docs/FEDORA_READINESS_PLAN.md
 require_contains 'Fedora allowed license posture' docs/FEDORA_READINESS_PLAN.md
 require_contains 'BuildRequires completeness' docs/FEDORA_READINESS_PLAN.md
 require_contains 'mock build readiness' docs/FEDORA_READINESS_PLAN.md
-require_contains 'final_state=context-switch-ready' docs/FEDORA_READINESS_PLAN.md
+require_contains 'final_state=preemption-ready' docs/FEDORA_READINESS_PLAN.md
 require_contains 'external_effect_performed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'scheduler_execution_allowed=0' docs/FEDORA_READINESS_PLAN.md
@@ -92,6 +92,9 @@ require_contains 'address_space_switch_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'preemption_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'time_accounting_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'time_read_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'cpu_usage_write_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'quota_update_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'scheduler_credit_update_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'process_wake_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'dma_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'hardware_effect_allowed=0' docs/FEDORA_READINESS_PLAN.md

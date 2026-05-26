@@ -95,7 +95,7 @@ require_contains 'source_mutation_authority=0' "$receipt_script"
 require_contains 'outside Nadia prompt-evaluation-result-release-receipt boundary' "$receipt_script"
 
 require_contains 'prompt_evaluation_result_release_receipt_contract_stage=35-prompt-evaluation-result-release-receipt-contract' "$panel_ui"
-require_contains 'stage=36 prompt-evaluation-result-release-receipt-review-contract; prompt_evaluation_result_release_receipt_review_record_created=0 prompt_evaluation_result_release_receipt_review_decision_recorded=0 runtime_invoked=0' "$panel_ui"
+require_contains 'stage=40 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract; prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_signed=0 runtime_invoked=0' "$panel_ui"
 
 require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
 require_contains 'persist-credentials: false' "$workflow"

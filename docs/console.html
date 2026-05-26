@@ -26,8 +26,11 @@
         <a href="status.html">Status</a>
         <a href="roadmap.html">Roadmap</a>
         <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
         <a href="runtime.html">Runtime</a>
         <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
         <a href="console.html">Console</a>
         <a href="nadia.html">Nadia</a>
         <a href="language.html">Language</a>
@@ -49,7 +52,7 @@
         <p class="eyebrow">Stage-0 Operator Base</p>
         <h1>Latticra Console</h1>
         <p class="page-lede">
-          LC is the planned main operator base for Latticra. Today it is a configurable, Panel-installable, metadata-only report surface with registry-backed commands and no shell, host, network, runtime-enforcement, boot, or production OS authority.
+          LC is the planned main operator base for Latticra. Today it is a configurable, standalone and Panel-installable, metadata-only report surface with registry-backed commands and no shell, host, network, runtime-enforcement, boot, or production OS authority.
         </p>
       </div>
     </section>
@@ -79,7 +82,7 @@
         <article>
           <span>03</span>
           <h3>Panel profiles</h3>
-          <p>Hosted, Panel-embedded, host-planning, OS-base-planning, and custom presets remain configuration metadata.</p>
+          <p>Hosted, standalone, Panel-embedded, host-planning, OS-base-planning, and custom presets remain configuration metadata.</p>
         </article>
         <article>
           <span>04</span>
@@ -151,6 +154,11 @@
           <span>hosted_reference</span>
           <h3>Hosted reference</h3>
           <p>Reference metadata without embedded-host claims.</p>
+        </article>
+        <article>
+          <span>standalone</span>
+          <h3>Standalone LC</h3>
+          <p>Dry-run and guarded local install presets with <code>lc-standalone-install-v0</code>, a standalone contract, and no Panel runtime requirement.</p>
         </article>
         <article>
           <span>panel_embedded</span>
@@ -239,6 +247,7 @@ latticra lc vm-evidence</code></pre>
       <div class="content-shell reader-grid">
         <a href="LATTICRA_CONSOLE_FOUNDATION.md"><strong>LC foundation</strong><span>Identity, Panel installability, command registry, host contracts, receipts, and OS-base planning.</span></a>
         <a href="status/LATTICRA_CONSOLE_FOUNDATION_STATUS.md"><strong>LC status</strong><span>Stage-0 evidence fields, no-effect flags, contract presence, and non-claims.</span></a>
+        <a href="panel.html"><strong>Panel overview</strong><span>Guided GUI workbench, Panel-installable LC, receipts, updater, and user-local evidence.</span></a>
         <a href="workbench.html"><strong>Workbench overview</strong><span>How Panel, LC, and Nadia fit together as local operator surfaces.</span></a>
         <a href="runtime.html"><strong>Runtime boundary</strong><span>Default-deny runtime posture and policy matrix metadata LC binds to.</span></a>
         <a href="seal.html"><strong>Latticra Seal</strong><span>Capability labels, signature-request planning, receipts, and trust-boundary context.</span></a>

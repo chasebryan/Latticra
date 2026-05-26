@@ -76,6 +76,7 @@ require_contains 'scripts/seabios-grub-boot-preview-qemu-argv-template.sh' "$evi
 require_contains 'scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh' "$evidence_doc"
 require_contains 'QEMU argv template' "$capture_doc"
 require_contains 'scripts/seabios-grub-boot-preview-qemu-argv-template.sh' "$capture_doc"
+require_contains 'boot_artifact_manifest_template_path' "$doc"
 
 require_contains 'SEABIOS GRUB BOOT PREVIEW QEMU ARGV TEMPLATE' "$script"
 require_contains 'qemu_argv_template_decision=blocked-template-only-no-qemu-execution' "$script"

@@ -62,6 +62,9 @@ static void seed_summary_result(
     result->preemption_allowed = 0;
     result->time_accounting_allowed = 0;
     result->time_read_allowed = 0;
+    result->cpu_usage_write_allowed = 0;
+    result->quota_update_allowed = 0;
+    result->scheduler_credit_update_allowed = 0;
     result->process_wake_allowed = 0;
     result->dma_allowed = 0;
     result->hardware_effect_allowed = 0;
@@ -83,7 +86,7 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_default_request(
     if (status != LATTICRA_STATUS_OK) return status;
 
     request->lifecycle_request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
-    request->lifecycle_request.target_state = LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY;
+    request->lifecycle_request.target_state = LATTICRA_KERNEL_STATE_PREEMPTION_READY;
     request->lifecycle_request.max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
 }
@@ -130,6 +133,12 @@ static const char *lifecycle_relation_for(
         case LATTICRA_KERNEL_SUBSYSTEM_RUNTIME:
             return "runtime-not-entered";
         case LATTICRA_KERNEL_SUBSYSTEM_SCHEDULER:
+            if (state_at_or_after(final_state, LATTICRA_KERNEL_STATE_PREEMPTION_READY)) {
+                return "preemption-ready";
+            }
+            if (state_at_or_after(final_state, LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY)) {
+                return "time-accounting-ready";
+            }
             if (state_at_or_after(final_state, LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY)) {
                 return "context-switch-ready";
             }
@@ -288,6 +297,9 @@ static void finalize_summary(
     result->preemption_allowed = 0;
     result->time_accounting_allowed = 0;
     result->time_read_allowed = 0;
+    result->cpu_usage_write_allowed = 0;
+    result->quota_update_allowed = 0;
+    result->scheduler_credit_update_allowed = 0;
     result->process_wake_allowed = 0;
     result->dma_allowed = 0;
     result->hardware_effect_allowed = 0;
@@ -298,7 +310,7 @@ static void finalize_summary(
 
     summary_copy(result->summary_status, sizeof(result->summary_status),
         (result->lifecycle_complete == 1 &&
-         result->lifecycle.final_state == LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY &&
+         result->lifecycle.final_state == LATTICRA_KERNEL_STATE_PREEMPTION_READY &&
          result->registry_no_effect == 1 &&
          result->external_effect_performed == 0) ?
             "summary-ready" : "summary-incomplete");
@@ -423,6 +435,9 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         "preemption_allowed=%d\n"
         "time_accounting_allowed=%d\n"
         "time_read_allowed=%d\n"
+        "cpu_usage_write_allowed=%d\n"
+        "quota_update_allowed=%d\n"
+        "scheduler_credit_update_allowed=%d\n"
         "process_wake_allowed=%d\n"
         "dma_allowed=%d\n"
         "hardware_effect_allowed=%d\n"
@@ -478,6 +493,9 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         result->preemption_allowed,
         result->time_accounting_allowed,
         result->time_read_allowed,
+        result->cpu_usage_write_allowed,
+        result->quota_update_allowed,
+        result->scheduler_credit_update_allowed,
         result->process_wake_allowed,
         result->dma_allowed,
         result->hardware_effect_allowed,

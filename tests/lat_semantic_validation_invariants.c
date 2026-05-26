@@ -208,6 +208,17 @@ static int lat_semantic_preserves_no_effect_flags(void) {
     return 0;
 }
 
+static int lat_semantic_rejects_network_flag(void) {
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    EXPECT_TRUE(latticra_lat_parse_source(FOUNDATION_MODEL, strlen(FOUNDATION_MODEL), &parse) == LATTICRA_STATUS_OK, "network flag parse status");
+    parse.network_allowed = 1;
+    EXPECT_TRUE(latticra_lat_validate_module(&parse, &semantic) == LATTICRA_STATUS_OK, "network flag semantic status");
+    EXPECT_TRUE(semantic.error == LATTICRA_LAT_SEMANTIC_NO_EFFECT_VIOLATION, "network flag semantic rejected");
+    EXPECT_TRUE(semantic.network_allowed == 1, "network flag copied");
+    return 0;
+}
+
 static int lat_semantic_reports_are_deterministic(void) {
     latticra_lat_parse_result_t parse;
     latticra_lat_semantic_result_t semantic;
@@ -217,6 +228,7 @@ static int lat_semantic_reports_are_deterministic(void) {
     EXPECT_TRUE(latticra_lat_semantic_report(&semantic, one, sizeof(one)) == LATTICRA_STATUS_OK, "first semantic report builds");
     EXPECT_TRUE(latticra_lat_semantic_report(&semantic, two, sizeof(two)) == LATTICRA_STATUS_OK, "second semantic report builds");
     EXPECT_STR_EQ(one, two, "semantic report deterministic");
+    EXPECT_TRUE(strstr(one, "network_allowed=0\n") != 0, "semantic report network denied");
     return 0;
 }
 
@@ -267,6 +279,7 @@ int main(void) {
     if (lat_semantic_rejects_invalid_effect_value() != 0) return 1;
     if (lat_semantic_rejects_effect_requiring_gate() != 0) return 1;
     if (lat_semantic_preserves_no_effect_flags() != 0) return 1;
+    if (lat_semantic_rejects_network_flag() != 0) return 1;
     if (lat_semantic_reports_are_deterministic() != 0) return 1;
     if (lat_semantic_report_rejects_small_buffer() != 0) return 1;
     if (lat_semantic_error_labels_are_stable() != 0) return 1;

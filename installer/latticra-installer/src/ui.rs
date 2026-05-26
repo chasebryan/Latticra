@@ -13,8 +13,15 @@ const SEAL_PNG: &[u8] = include_bytes!("../assets/latticra-panel.png");
 const COMPACT_LAYOUT_WIDTH: f32 = 1400.0;
 const NARROW_LAYOUT_WIDTH: f32 = 900.0;
 const RIGHT_PANEL_MAX_WIDTH: f32 = 640.0;
+const RUNNING_CONSOLE_MAX_HEIGHT: f32 = 220.0;
+const IDLE_CONSOLE_MAX_HEIGHT: f32 = 520.0;
+const RUNNING_EVIDENCE_MAX_HEIGHT: f32 = 420.0;
+const IDLE_EVIDENCE_MAX_HEIGHT: f32 = 220.0;
+const RUNNING_PROGRESS_MAX_WIDTH: f32 = 520.0;
+const RUNNING_RECENT_LOG_MAX_HEIGHT: f32 = 180.0;
+const RUNNING_MONITOR_WIDE_WIDTH: f32 = 980.0;
 const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
-    ("status", "Stage-37 status and authority summary"),
+    ("status", "Stage-40 status and authority summary"),
     ("context", "Stage-1 local context-pack metadata"),
     ("runtime", "Stage-2 runtime-profile metadata"),
     ("plan", "Stage-3 prompt-plan workbench metadata"),
@@ -120,6 +127,18 @@ const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
     (
         "prompt-evaluation-result-release-receipt-review-disposition",
         "Stage-37 prompt-evaluation result release receipt review disposition contract",
+    ),
+    (
+        "prompt-evaluation-result-release-receipt-review-disposition-release",
+        "Stage-38 prompt-evaluation result release receipt review disposition release contract",
+    ),
+    (
+        "prompt-evaluation-result-release-receipt-review-disposition-release-receipt",
+        "Stage-39 prompt-evaluation result release receipt review disposition release receipt contract",
+    ),
+    (
+        "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review",
+        "Stage-40 prompt-evaluation result release receipt review disposition release receipt review contract",
     ),
 ];
 
@@ -374,7 +393,6 @@ impl LatticraInstallerApp {
                 self.status = format!("Starting {label}...");
                 self.push_console(format!("launching {label}"));
                 self.rx = Some(engine::launch(self.config.clone()));
-                self.active_tab = WorkspaceTab::Evidence;
                 self.show_plan_over_log = false;
             }
             Err(err) => {
@@ -460,7 +478,6 @@ impl LatticraInstallerApp {
                 self.status = format!("Starting {mode_label}...");
                 self.push_console(format!("launching {mode_label}"));
                 self.rx = Some(engine::launch_removal(self.config.clone(), operation));
-                self.active_tab = WorkspaceTab::Evidence;
                 self.show_plan_over_log = false;
             }
             Err(err) => {
@@ -504,7 +521,6 @@ impl LatticraInstallerApp {
                         self.status = format!("{title}...");
                     }
                     self.logs.push(line.clone());
-                    self.push_console(line);
                     if self.logs.len() > 500 {
                         let drain_count = self.logs.len() - 500;
                         self.logs.drain(0..drain_count);
@@ -639,10 +655,10 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc profile hosted|panel|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
+                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc profile hosted|panel|standalone|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
                 );
                 self.push_console(
-                    "nadia: use `nadia commands` for the full Stage-1 through Stage-37 command map",
+                    "nadia: use `nadia commands` for the full Stage-1 through Stage-40 command map",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -745,6 +761,18 @@ impl LatticraInstallerApp {
                     "install_command_wrapper={}",
                     self.config.lc.install.command_wrapper
                 ));
+                self.push_console(format!(
+                    "standalone_console={}",
+                    self.config.lc.install.standalone_console
+                ));
+                self.push_console("standalone_installable=1");
+                self.push_console("standalone_requires_panel=0");
+                self.push_console(format!(
+                    "standalone_command_wrapper={}",
+                    self.config.lc.install.command_wrapper
+                ));
+                self.push_console("standalone_console_status=metadata-only-standalone-contract");
+                self.push_console("standalone_contract_present=1");
                 self.push_console(format!(
                     "command_registry_profile={}",
                     self.config.lc.command_registry_profile
@@ -943,7 +971,13 @@ impl LatticraInstallerApp {
                     "standalone_console={}",
                     self.config.lc.install.standalone_console
                 ));
+                self.push_console("standalone_installable=1");
                 self.push_console("standalone_requires_panel=0");
+                self.push_console(format!(
+                    "standalone_command_wrapper={}",
+                    self.config.lc.install.command_wrapper
+                ));
+                self.push_console("standalone_contract_present=1");
                 self.push_console(format!(
                     "panel_embedded_console={}",
                     self.config.lc.install.panel_embedded_console
@@ -984,7 +1018,7 @@ impl LatticraInstallerApp {
             ["lc", "profile", "panel"] | ["lc", "profile", "panel_embedded"] => {
                 self.apply_lc_profile(LatticraConsoleProfile::PanelEmbedded);
             }
-            ["lc", "profile", "standalone"] | ["lc", "profile", "lc_standalone"] => {
+            ["lc", "profile", "standalone"] | ["lc", "profile", "standalone_console"] => {
                 self.apply_lc_profile(LatticraConsoleProfile::Standalone);
             }
             ["lc", "profile", "host"] | ["lc", "profile", "host_embedded_planning"] => {
@@ -996,8 +1030,12 @@ impl LatticraInstallerApp {
             ["lc", "profile", "custom"] => {
                 self.apply_lc_profile(LatticraConsoleProfile::Custom);
             }
-            ["lc", "standalone"] | ["console", "standalone"] => {
-                self.push_console("LATTICRA CONSOLE STANDALONE CONTRACT");
+            ["lc", "commands"] | ["console", "commands"] => {
+                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc install-config,lc standalone,lc profiles,lc receipts,lc receipt-request,lc receipt-payload,lc receipt-artifact,lc receipt-artifact-review,lc receipt-review-receipt,lc receipt-review-draft,lc receipt-materialization-plan,lc signature-request,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
+                self.push_console("registry_authority=metadata-only external_host_processes=0");
+            }
+            ["lc", "standalone"] | ["console", "standalone"] | ["lc", "standalone-contract"] => {
+                self.push_console("lc.standalone=Latticra Console standalone contract");
                 self.push_console("standalone_console_profile=lc-standalone-console-v0");
                 self.push_console("standalone_console_status=metadata-only-contract");
                 self.push_console("standalone_contract_present=1");
@@ -1005,19 +1043,16 @@ impl LatticraInstallerApp {
                     "standalone_console={}",
                     self.config.lc.install.standalone_console
                 ));
-                self.push_console("standalone_requires_panel=0");
+                self.push_console("standalone_installable=1 standalone_requires_panel=0");
                 self.push_console(format!(
                     "standalone_command_wrapper={}",
                     self.config.lc.install.command_wrapper
                 ));
                 self.push_console("panel_required_for_runtime=0");
+                self.push_console("command_surface=lc standalone");
                 self.push_console(
                     "shell_execution_allowed=0 host_process_launch_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 production_os_claim=0",
                 );
-            }
-            ["lc", "commands"] | ["console", "commands"] => {
-                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc install-config,lc standalone,lc profiles,lc receipts,lc receipt-request,lc receipt-payload,lc receipt-artifact,lc receipt-artifact-review,lc receipt-review-receipt,lc receipt-review-draft,lc receipt-materialization-plan,lc signature-request,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
-                self.push_console("registry_authority=metadata-only external_host_processes=0");
             }
             ["lc", "receipts"]
             | ["console", "receipts"]
@@ -1984,13 +2019,22 @@ impl LatticraInstallerApp {
                     "prompt_evaluation_result_release_receipt_review_contract_stage=36-prompt-evaluation-result-release-receipt-review-contract",
                 );
                 self.push_console(
-                    "stage=36 prompt-evaluation-result-release-receipt-review-contract; prompt_evaluation_result_release_receipt_review_record_created=0 prompt_evaluation_result_release_receipt_review_decision_recorded=0 runtime_invoked=0",
-                );
-                self.push_console(
                     "prompt_evaluation_result_release_receipt_review_disposition_contract_stage=37-prompt-evaluation-result-release-receipt-review-disposition-contract",
                 );
                 self.push_console(
-                    "stage=37 prompt-evaluation-result-release-receipt-review-disposition-contract; prompt_evaluation_result_release_receipt_review_disposition_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_decision_recorded=0 runtime_invoked=0",
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_contract_stage=38-prompt-evaluation-result-release-receipt-review-disposition-release-contract",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract_stage=39-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract",
+                );
+                self.push_console(
+                    "stage=39 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract; prompt_evaluation_result_release_receipt_review_disposition_release_receipt_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_signed=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_stage=40-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract",
+                );
+                self.push_console(
+                    "stage=40 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract; prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_signed=0 runtime_invoked=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -2506,6 +2550,81 @@ impl LatticraInstallerApp {
                     "requires_prompt_evaluation_result_release_receipt_review_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_contract=1",
                 );
             }
+            ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release"]
+            | ["nadia", "evaluation-result-release-receipt-review-disposition-release"]
+            | ["nadia", "prompt-result-release-receipt-review-disposition-release"]
+            | ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-contract"] =>
+            {
+                self.push_console(
+                    "nadia_prompt_evaluation_result_release_receipt_review_disposition_release=stage-38-prompt-evaluation-result-release-receipt-review-disposition-release-contract",
+                );
+                self.push_console(
+                    "panel_command=nadia prompt-evaluation-result-release-receipt-review-disposition-release",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console(
+                    "installed_cli=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_contract_status=contract_only prompt_evaluation_result_release_receipt_review_disposition_release_record_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_decision_recorded=0 prompt_evaluation_result_release_receipt_review_disposition_release_published=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_result_release_receipt_review_disposition_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract=1",
+                );
+            }
+            ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt"]
+            | ["nadia", "evaluation-result-release-receipt-review-disposition-release-receipt"]
+            | ["nadia", "prompt-result-release-receipt-review-disposition-release-receipt"]
+            | ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract"] =>
+            {
+                self.push_console(
+                    "nadia_prompt_evaluation_result_release_receipt_review_disposition_release_receipt=stage-39-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract",
+                );
+                self.push_console(
+                    "panel_command=nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console(
+                    "installed_cli=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract_status=contract_only prompt_evaluation_result_release_receipt_review_disposition_release_receipt_record_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_signed=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_published=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_result_release_receipt_review_disposition_release_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract=1",
+                );
+            }
+            ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review"]
+            | ["nadia", "evaluation-result-release-receipt-review-disposition-release-receipt-review"]
+            | ["nadia", "prompt-result-release-receipt-review-disposition-release-receipt-review"]
+            | ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract"] =>
+            {
+                self.push_console(
+                    "nadia_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review=stage-40-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract",
+                );
+                self.push_console(
+                    "panel_command=nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console(
+                    "installed_cli=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract_status=contract_only prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_record_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_decision_recorded=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_findings_recorded=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_contract=1",
+                );
+            }
             ["nadia", "inference-readiness"]
             | ["nadia", "readiness"]
             | ["nadia", "inference-contract"] => {
@@ -2858,6 +2977,10 @@ impl LatticraInstallerApp {
             .show(ui, |ui| {
                 self.show_hero_strip(ui);
                 ui.add_space(10.0);
+                if self.install_state == InstallState::Running {
+                    self.show_install_run_monitor(ui, compact);
+                    ui.add_space(10.0);
+                }
 
                 match self.active_tab {
                     WorkspaceTab::Dashboard => self.show_dashboard(ui),
@@ -2908,15 +3031,13 @@ impl LatticraInstallerApp {
                 ui.add_space(6.0);
                 ui.horizontal_wrapped(|ui| {
                     status_chip(ui, "next", self.next_action_label());
+                    if self.install_state == InstallState::Running {
+                        status_chip(ui, "phase", &self.phase_title);
+                    }
                     status_chip(ui, "root", "0");
                     status_chip(ui, "network", "0");
                     status_chip(ui, "runtime", "0");
                 });
-                if self.install_state == InstallState::Running {
-                    ui.add_space(8.0);
-                    ui.add(egui::ProgressBar::new(self.progress()).show_percentage());
-                    ui.small(format!("Current phase: {}", self.phase_title));
-                }
                 return;
             }
 
@@ -2946,9 +3067,6 @@ impl LatticraInstallerApp {
                         status_chip(ui, "next", self.next_action_label());
                         status_chip(ui, "phase", &self.phase_title);
                     });
-                    if self.install_state == InstallState::Running {
-                        ui.add(egui::ProgressBar::new(self.progress()).show_percentage());
-                    }
                 });
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::TOP), |ui| {
                     ui.vertical(|ui| {
@@ -3104,7 +3222,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-37 prompt-evaluation-result-release-receipt-review-disposition contract with metadata-only Console surfaces.",
+            "Stage-40 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,
@@ -3162,12 +3280,6 @@ impl LatticraInstallerApp {
             lc_profile_button(
                 ui,
                 self,
-                LatticraConsoleProfile::Standalone,
-                "Standalone wrapper lane",
-            );
-            lc_profile_button(
-                ui,
-                self,
                 LatticraConsoleProfile::HostEmbeddedPlanning,
                 "Future host-embedding lane",
             );
@@ -3196,19 +3308,11 @@ impl LatticraInstallerApp {
                 lc_profile_button(
                     &mut columns[0],
                     self,
-                    LatticraConsoleProfile::Standalone,
-                    "Standalone wrapper lane",
-                );
-                lc_profile_button(
-                    &mut columns[1],
-                    self,
                     LatticraConsoleProfile::HostEmbeddedPlanning,
                     "Future host-embedding lane",
                 );
-            });
-            ui.columns(2, |columns| {
                 lc_profile_button(
-                    &mut columns[0],
+                    &mut columns[1],
                     self,
                     LatticraConsoleProfile::OsBasePlanning,
                     "Future OS-base lane",
@@ -3222,7 +3326,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.latticra_console,
             "Install Latticra Console",
-            "LC is installed as the Panel-owned operator console and metadata surface.",
+            "LC is installed as a standalone and Panel-embedded operator console metadata surface.",
         );
         labeled_text_field(
             ui,
@@ -3241,7 +3345,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.lc.install.standalone_console,
             "Standalone console",
-            "Install the direct LC wrapper so the Console does not require Panel at runtime.",
+            "Install LC as a direct user-local console wrapper that does not require Panel at runtime.",
         );
         checkbox_note(
             ui,
@@ -3259,7 +3363,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.lc.install.write_profile_presets,
             "Write profile presets",
-            "Install hosted, Panel, host-planning, and OS-planning profile metadata.",
+            "Install hosted, standalone, Panel, host-planning, and OS-planning profile metadata.",
         );
         checkbox_note(
             ui,
@@ -4047,6 +4151,125 @@ impl LatticraInstallerApp {
             });
     }
 
+    fn show_install_run_monitor(&mut self, ui: &mut egui::Ui, compact: bool) {
+        panel_card_with_stroke(blue()).show(ui, |ui| {
+            if !compact && ui.available_width() >= RUNNING_MONITOR_WIDE_WIDTH {
+                ui.columns(2, |columns| {
+                    columns[0].vertical(|ui| {
+                        self.show_install_run_summary(ui);
+                        ui.add_space(6.0);
+                        self.show_bounded_install_progress(ui, RUNNING_PROGRESS_MAX_WIDTH);
+                        ui.add_space(6.0);
+                        self.show_install_run_monitor_actions(ui);
+                    });
+                    columns[1].vertical(|ui| {
+                        self.show_recent_engine_output(ui, 8, RUNNING_RECENT_LOG_MAX_HEIGHT);
+                    });
+                });
+                return;
+            }
+
+            ui.vertical(|ui| {
+                self.show_install_run_summary(ui);
+                ui.add_space(6.0);
+                let max_width = if compact {
+                    ui.available_width()
+                } else {
+                    RUNNING_PROGRESS_MAX_WIDTH
+                };
+                self.show_bounded_install_progress(ui, max_width);
+                ui.add_space(6.0);
+                self.show_recent_engine_output(ui, 5, RUNNING_RECENT_LOG_MAX_HEIGHT);
+                ui.add_space(6.0);
+                self.show_install_run_monitor_actions(ui);
+            });
+        });
+    }
+
+    fn show_bounded_install_progress(&self, ui: &mut egui::Ui, max_width: f32) {
+        let width = ui.available_width().min(max_width).max(180.0);
+        ui.add_sized(
+            [width, 16.0],
+            egui::ProgressBar::new(self.progress()).show_percentage(),
+        );
+    }
+
+    fn show_install_run_summary(&self, ui: &mut egui::Ui) {
+        ui.horizontal_wrapped(|ui| {
+            ui.label(
+                egui::RichText::new(format!("Running {}", self.operation_label()))
+                    .strong()
+                    .color(ink()),
+            );
+            status_chip(ui, "phase", &self.phase_title);
+            status_chip(ui, "root", "0");
+            status_chip(ui, "network", "0");
+        });
+        ui.add(egui::Label::new(&self.status).wrap());
+    }
+
+    fn show_install_run_monitor_actions(&mut self, ui: &mut egui::Ui) {
+        ui.horizontal_wrapped(|ui| {
+            if ui.button("Engine log").clicked() {
+                self.active_tab = WorkspaceTab::Evidence;
+                self.show_plan_over_log = false;
+            }
+            if ui.button("Plan").clicked() {
+                self.active_tab = WorkspaceTab::Evidence;
+                self.show_plan_over_log = true;
+            }
+        });
+    }
+
+    fn show_recent_engine_output(&self, ui: &mut egui::Ui, max_lines: usize, max_height: f32) {
+        ui.label(
+            egui::RichText::new("Recent engine output")
+                .small()
+                .strong()
+                .color(teal()),
+        );
+        egui::Frame::NONE
+            .fill(egui::Color32::from_rgb(6, 10, 18))
+            .stroke(egui::Stroke::new(1.0, egui::Color32::from_rgb(45, 90, 130)))
+            .inner_margin(egui::Margin::same(8))
+            .show(ui, |ui| {
+                egui::ScrollArea::both()
+                    .id_salt("latticra_recent_engine_output")
+                    .max_height(max_height)
+                    .stick_to_bottom(true)
+                    .auto_shrink([false, false])
+                    .show(ui, |ui| self.show_engine_log_lines(ui, max_lines));
+            });
+    }
+
+    fn show_engine_log_lines(&self, ui: &mut egui::Ui, max_lines: usize) {
+        if self.logs.is_empty() {
+            ui.add(
+                egui::Label::new(
+                    egui::RichText::new("engine_log=waiting")
+                        .monospace()
+                        .small()
+                        .color(muted()),
+                )
+                .wrap(),
+            );
+            return;
+        }
+
+        let start = self.logs.len().saturating_sub(max_lines);
+        for line in &self.logs[start..] {
+            ui.add(
+                egui::Label::new(
+                    egui::RichText::new(line)
+                        .monospace()
+                        .small()
+                        .color(egui::Color32::from_rgb(160, 230, 255)),
+                )
+                .extend(),
+            );
+        }
+    }
+
     fn show_procedure(&mut self, ui: &mut egui::Ui) {
         ui.heading("Recommended procedure");
         ui.label("A safe Latticra first run is evidence-first, then install-second.");
@@ -4260,10 +4483,15 @@ impl LatticraInstallerApp {
                 .inner_margin(egui::Margin::same(8))
                 .show(ui, |ui| {
                     let console_width = ui.available_width();
+                    let console_height = if self.install_state == InstallState::Running {
+                        RUNNING_CONSOLE_MAX_HEIGHT
+                    } else {
+                        IDLE_CONSOLE_MAX_HEIGHT
+                    };
                     egui::ScrollArea::vertical()
                         .id_salt("latticra_embedded_console")
                         .max_width(console_width)
-                        .max_height(520.0)
+                        .max_height(console_height)
                         .stick_to_bottom(true)
                         .show(ui, |ui| {
                             ui.add(
@@ -4305,28 +4533,30 @@ impl LatticraInstallerApp {
                     });
                 });
 
-            ui.add_space(6.0);
-            ui.horizontal_wrapped(|ui| {
-                for command in [
-                    "help",
-                    "status",
-                    "updater",
-                    "updater dry-run",
-                    "pwd",
-                    "plan",
-                    "dry-run",
-                    "reset",
-                    "uninstall",
-                    "mode dry",
-                    "mode local",
-                    "clear",
-                ] {
-                    if ui.button(command).clicked() {
-                        self.console_input = command.to_owned();
-                        self.run_console_command();
+            if self.install_state != InstallState::Running {
+                ui.add_space(6.0);
+                ui.horizontal_wrapped(|ui| {
+                    for command in [
+                        "help",
+                        "status",
+                        "updater",
+                        "updater dry-run",
+                        "pwd",
+                        "plan",
+                        "dry-run",
+                        "reset",
+                        "uninstall",
+                        "mode dry",
+                        "mode local",
+                        "clear",
+                    ] {
+                        if ui.button(command).clicked() {
+                            self.console_input = command.to_owned();
+                            self.run_console_command();
+                        }
                     }
-                }
-            });
+                });
+            }
         });
     }
 
@@ -4351,34 +4581,50 @@ impl LatticraInstallerApp {
                     }
                 });
             });
+            if self.install_state == InstallState::Running {
+                ui.add(egui::ProgressBar::new(self.progress()).show_percentage());
+                ui.add(
+                    egui::Label::new(
+                        egui::RichText::new(format!("{}: {}", self.phase_title, self.status))
+                            .small()
+                            .color(muted()),
+                    )
+                    .wrap(),
+                );
+            }
 
             let evidence_width = ui.available_width();
-            egui::ScrollArea::vertical()
-                .id_salt("latticra_right_evidence")
-                .max_width(evidence_width)
-                .max_height(220.0)
-                .stick_to_bottom(!self.show_plan_over_log)
-                .show(ui, |ui| {
-                    if self.show_plan_over_log {
+            let evidence_height = if self.install_state == InstallState::Running {
+                RUNNING_EVIDENCE_MAX_HEIGHT
+            } else {
+                IDLE_EVIDENCE_MAX_HEIGHT
+            };
+            if self.show_plan_over_log {
+                egui::ScrollArea::vertical()
+                    .id_salt("latticra_right_evidence_plan")
+                    .max_width(evidence_width)
+                    .max_height(evidence_height)
+                    .show(ui, |ui| {
                         ui.add(
                             egui::Label::new(egui::RichText::new(&self.plan).monospace()).wrap(),
                         );
-                    } else if self.logs.is_empty() {
-                        ui.add(
-                            egui::Label::new(egui::RichText::new("No engine log yet.").monospace())
-                                .wrap(),
-                        );
-                    } else {
-                        for line in &self.logs {
-                            ui.add(egui::Label::new(egui::RichText::new(line).monospace()).wrap());
-                        }
-                    }
-                });
+                    });
+            } else {
+                egui::ScrollArea::both()
+                    .id_salt("latticra_right_evidence_log")
+                    .max_width(evidence_width)
+                    .max_height(evidence_height)
+                    .stick_to_bottom(true)
+                    .auto_shrink([false, false])
+                    .show(ui, |ui| {
+                        self.show_engine_log_lines(ui, self.logs.len().max(1))
+                    });
+            }
         });
     }
 
     fn show_status_bar(&mut self, ui: &mut egui::Ui) {
-        ui.horizontal_wrapped(|ui| {
+        ui.horizontal(|ui| {
             ui.monospace(
                 egui::RichText::new(format!("Latticra Panel v{PANEL_VERSION}")).color(ink()),
             );
@@ -4389,7 +4635,7 @@ impl LatticraInstallerApp {
             ui.separator();
             ui.monospace(format!("mode={}", self.config.execution_mode_label()));
             ui.separator();
-            ui.label(&self.status);
+            ui.add(egui::Label::new(&self.status).truncate());
         });
     }
 }
@@ -4438,9 +4684,15 @@ impl eframe::App for LatticraInstallerApp {
                         .id_salt("right_console_scroll")
                         .auto_shrink([false, false])
                         .show(ui, |ui| {
-                            self.show_console_panel(ui);
-                            ui.add_space(10.0);
-                            self.show_right_evidence_panel(ui);
+                            if self.install_state == InstallState::Running {
+                                self.show_right_evidence_panel(ui);
+                                ui.add_space(10.0);
+                                self.show_console_panel(ui);
+                            } else {
+                                self.show_console_panel(ui);
+                                ui.add_space(10.0);
+                                self.show_right_evidence_panel(ui);
+                            }
                         });
                 });
         }
