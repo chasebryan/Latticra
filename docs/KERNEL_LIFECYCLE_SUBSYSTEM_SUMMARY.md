@@ -12,7 +12,7 @@ kernel lifecycle runner
 kernel subsystem registry
 ```
 
-The lifecycle runner can move a local in-memory kernel state machine from `created` to `time-accounting-ready` through gated internal state changes.
+The lifecycle runner can move a local in-memory kernel state machine from `created` to `preemption-ready` through gated internal state changes.
 
 The subsystem registry exposes boot, runtime, scheduler, memory, process, filesystem, network, device, and security subsystem posture.
 
@@ -43,17 +43,17 @@ docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
 The default summary request allows the lifecycle runner to reach:
 
 ```text
-time-accounting-ready
+preemption-ready
 ```
 
 That produces:
 
 ```text
 summary_status=summary-ready
-final_state=time-accounting-ready
+final_state=preemption-ready
 lifecycle_complete=1
-lifecycle_step_count=16
-lifecycle_state_change_count=16
+lifecycle_step_count=17
+lifecycle_state_change_count=17
 external_effect_performed=0
 registry_no_effect=1
 no_external_effect_chain=1
@@ -65,7 +65,7 @@ Expected readiness examples:
 
 ```text
 boot -> boot-sequence-seeded
-scheduler -> time-accounting-ready
+scheduler -> preemption-ready
 memory -> memory-map-ready
 process -> ipc-table-ready
 filesystem -> vfs-namespace-ready
@@ -175,8 +175,8 @@ kernel_lifecycle_subsystem_summary_report_runner: ok
 The guards verify:
 
 ```text
-default request targets time-accounting-ready
-summary reaches time-accounting-ready
+default request targets preemption-ready
+summary reaches preemption-ready
 summary marks boot/scheduler/memory/process/filesystem as lifecycle-ready metadata
 runtime remains not entered
 runtime entry remains denied

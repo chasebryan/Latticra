@@ -1,0 +1,139 @@
+#!/usr/bin/env sh
+set -eu
+
+doc="docs/SUPPLY_CHAIN_SECURITY_BASELINE.md"
+status_doc="docs/status/SUPPLY_CHAIN_SECURITY_BASELINE_STATUS.md"
+
+require_file() {
+  file="$1"
+  if [ ! -f "$file" ]; then
+    printf 'supply chain security baseline: missing file: %s\n' "$file" >&2
+    exit 1
+  fi
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  if ! grep -Fq -- "$pattern" "$file"; then
+    printf 'supply chain security baseline: missing required pattern in %s: %s\n' "$file" "$pattern" >&2
+    exit 1
+  fi
+}
+
+require_file "$doc"
+require_file "$status_doc"
+require_file docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
+require_file docs/MEMORY_SAFETY_ROADMAP.md
+require_file docs/LOCAL_INSTALLER_ARTIFACT_MANIFEST_CONTRACT.md
+require_file docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_VALIDATION.md
+require_file docs/UBUNTU_READINESS_PLAN.md
+require_file SECURITY.md
+require_file README.md
+require_file STATUS.md
+require_file docs/status/README.md
+require_file docs/status/CURRENT_STATUS.md
+require_file docs/FOUNDATION_INDEX.md
+require_file docs/security.html
+require_file Makefile
+require_file scripts/test-high-assurance-security-baseline.sh
+require_file scripts/test-quality-safety-guards.sh
+require_file installer/scripts/latticra-installer-apply.sh
+
+require_contains 'Status: supply-chain security baseline' "$doc"
+require_contains 'Source refresh date: 2026-05-26' "$doc"
+require_contains 'Current Guarded Controls' "$doc"
+require_contains 'Required Release Gate' "$doc"
+require_contains 'Dependency Review Rules' "$doc"
+require_contains 'CI Authority Rules' "$doc"
+
+for field in \
+  'supply_chain_security_baseline_present=1' \
+  'supply_chain_security_guard_present=1' \
+  'high_assurance_security_baseline_present=1' \
+  'ssdf_supply_chain_profile_present=1' \
+  'cpg_supply_chain_profile_present=1' \
+  'sbom_required_before_production_installer=1' \
+  'kev_nvd_review_required_before_release=1' \
+  'dependency_inventory_required=1' \
+  'pinned_ci_actions_required=1' \
+  'read_only_workflow_permissions_required=1' \
+  'persist_credentials_false_required=1' \
+  'pull_request_target_forbidden=1' \
+  'repository_secret_use_requires_dedicated_review=1' \
+  'implicit_github_token_use_requires_dedicated_review=1' \
+  'locked_dependency_builds_required=1' \
+  'offline_installer_builds_required=1' \
+  'ad_hoc_network_client_commands_forbidden_without_guard=1' \
+  'release_publishing_authority_granted=0' \
+  'production_installer_claim_allowed=0' \
+  'production_update_claim_allowed=0' \
+  'compliance_claim_allowed=0' \
+  'certification_claim_allowed=0' \
+  'external_endorsement_claimed=0'
+do
+  require_contains "$field" "$doc"
+  require_contains "$field" "$status_doc"
+done
+
+require_contains 'supply_chain_security_status_present=1' "$status_doc"
+
+for gate in \
+  'release_artifact_inventory_present=1' \
+  'sbom_present=1' \
+  'sbom_reviewed=1' \
+  'dependency_inventory_reviewed=1' \
+  'third_party_material_reviewed=1' \
+  'license_notice_reviewed=1' \
+  'kev_nvd_review_completed=1' \
+  'known_exploited_vulnerability_mitigation_recorded=1' \
+  'workflow_write_permission_reviewed=1' \
+  'release_secret_boundary_reviewed=1' \
+  'artifact_integrity_hashes_recorded=1' \
+  'signing_authority_contract_present=1' \
+  'rollback_or_recovery_contract_present=1' \
+  'vulnerability_disclosure_path_present=1' \
+  'production_non_claim_review_completed=1'
+do
+  require_contains "$gate" "$doc"
+done
+
+for closed in \
+  'sbom_present_for_production_release=0' \
+  'release_artifact_published=0' \
+  'release_signing_performed=0' \
+  'release_secret_access_granted=0' \
+  'release_write_token_granted=0' \
+  'production_security_claim_allowed=0'
+do
+  require_contains "$closed" "$doc"
+done
+
+require_contains 'workflow must pin external action refs to a 40-character commit SHA' scripts/test-quality-safety-guards.sh
+require_contains 'workflow must keep repository token permissions read-only' scripts/test-quality-safety-guards.sh
+require_contains 'workflow must set persist-credentials: false in every checkout step' scripts/test-quality-safety-guards.sh
+require_contains 'workflow must not use pull_request_target' scripts/test-quality-safety-guards.sh
+require_contains 'workflow must not consume repository secrets without a dedicated review guard' scripts/test-quality-safety-guards.sh
+require_contains 'workflow must not consume implicit GitHub token surfaces without a dedicated review guard' scripts/test-quality-safety-guards.sh
+require_contains 'workflow must not add ad hoc network client commands without a dedicated review guard' scripts/test-quality-safety-guards.sh
+require_contains 'cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml' Makefile
+require_contains 'cargo build --release --locked --offline' installer/scripts/latticra-installer-apply.sh
+require_contains 'SBOM evidence for shipped artifacts' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
+require_contains 'dependency inventory with license and security review' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
+require_contains 'KEV/NVD review or documented offline exception before release' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
+require_contains 'docs/SUPPLY_CHAIN_SECURITY_BASELINE.md' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
+require_contains 'scripts/test-supply-chain-security-baseline.sh' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
+require_contains 'docs/SUPPLY_CHAIN_SECURITY_BASELINE.md' SECURITY.md
+require_contains 'supply_chain_security_baseline_present=1' README.md
+require_contains 'supply_chain_security_baseline_present=1' STATUS.md
+require_contains 'SUPPLY_CHAIN_SECURITY_BASELINE_STATUS.md' docs/status/README.md
+require_contains 'supply_chain_security_baseline_present=1' docs/status/README.md
+require_contains 'Latest supply-chain security baseline note: 2026-05-26 CDT' docs/status/CURRENT_STATUS.md
+require_contains 'SUPPLY_CHAIN_SECURITY_BASELINE.md' docs/FOUNDATION_INDEX.md
+require_contains 'Supply-chain baseline' docs/security.html
+require_contains 'SUPPLY_CHAIN_SECURITY_BASELINE.md' docs/security.html
+require_contains 'sh ./scripts/test-supply-chain-security-baseline.sh' Makefile
+require_contains 'supply-chain-security-baseline:' Makefile
+require_contains 'test-supply-chain-security-baseline.sh' scripts/test-quality-safety-guards.sh
+
+printf 'supply_chain_security_baseline: ok\n'

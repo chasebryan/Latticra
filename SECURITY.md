@@ -161,6 +161,8 @@ That baseline tracks current NSA, CISA, FBI, and NIST security guidance as sourc
 
 The component-level memory-safety roadmap is recorded in `docs/MEMORY_SAFETY_ROADMAP.md`.
 
+The supply-chain security baseline is recorded in `docs/SUPPLY_CHAIN_SECURITY_BASELINE.md`.
+
 This posture is an allocation of required work, not a compliance claim. It does not certify Latticra, accredit Latticra, make Latticra a production security product, or create a hardened runtime boundary.
 
 ## Contact and attribution

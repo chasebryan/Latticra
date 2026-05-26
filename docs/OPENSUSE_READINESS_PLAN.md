@@ -80,6 +80,7 @@ opensuse_rpmlint_osc_availability_lane_present=1
 opensuse_rpmlint_static_spec_lane_present=1
 opensuse_rpmlint_findings_classification_present=1
 opensuse_source_archive_reproducibility_contract_present=1
+opensuse_source_archive_fixture_lane_present=1
 opensuse_obs_publication_claimed=0
 opensuse_official_package_claimed=0
 suse_endorsement_claimed=0
@@ -143,14 +144,17 @@ docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 scripts/test-opensuse-rpmlint-osc-availability.sh
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
 scripts/test-opensuse-rpmlint-findings-classification.sh
 scripts/test-opensuse-source-archive-reproducibility-contract.sh
+scripts/test-opensuse-source-archive-fixture-lane.sh
 .github/workflows/opensuse-rpmlint-osc-availability.yml
 .github/workflows/opensuse-rpmlint-static-spec-lane.yml
 .github/workflows/opensuse-rpmlint-findings-classification.yml
 .github/workflows/opensuse-source-archive-reproducibility-contract.yml
+.github/workflows/opensuse-source-archive-fixture-lane.yml
 ```
 
 Before any Open Build Service publication or submit request can be claimed, the lane needs evidence for:
@@ -161,6 +165,7 @@ rpmlint availability
 spec-cleaner review posture
 local osc build transcript
 source archive reproducibility
+source archive fixture reproducibility
 package artifact inspection
 install/remove behavior transcript
 ```
@@ -187,10 +192,10 @@ claim operating-system completeness
 Recommended next slice:
 
 ```text
-Add openSUSE source archive fixture lane that creates and inspects a temporary archive without running rpmbuild or osc build.
+Add openSUSE temporary RPM topdir handoff lane that stages the verified source archive without running rpmbuild or osc build.
 ```
 
-That should prove archive shape and reproducibility in a temporary workspace while keeping package build and publication claims blocked.
+That should prove the temporary source archive can be staged into RPM build input paths while package build and publication claims remain blocked.
 
 ## Validation
 
@@ -203,6 +208,7 @@ sh scripts/test-opensuse-rpmlint-osc-availability.sh
 sh scripts/test-opensuse-rpmlint-static-spec-lane.sh
 sh scripts/test-opensuse-rpmlint-findings-classification.sh
 sh scripts/test-opensuse-source-archive-reproducibility-contract.sh
+sh scripts/test-opensuse-source-archive-fixture-lane.sh
 ```
 
 Expected output:
@@ -214,4 +220,5 @@ opensuse_rpmlint_osc_availability: ok
 opensuse_rpmlint_static_spec_lane: ok
 opensuse_rpmlint_findings_classification: ok
 opensuse_source_archive_reproducibility_contract: ok
+opensuse_source_archive_fixture_lane: ok
 ```

@@ -20,9 +20,12 @@ packaging/freebsd/Makefile
 packaging/freebsd/pkg-descr
 packaging/freebsd/pkg-plist
 docs/FREEBSD_PORT_STATIC_VALIDATION.md
+docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md
 docs/status/FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md
 scripts/test-freebsd-port-static-validation.sh
+scripts/test-debian-freebsd-openbsd-source-archive-contract.sh
 .github/workflows/freebsd-port-static-validation.yml
+.github/workflows/debian-freebsd-openbsd-source-archive-contract.yml
 ```
 
 The static lane preserves:
@@ -31,6 +34,11 @@ The static lane preserves:
 local_only_draft=1
 freebsd_port_draft_present=1
 freebsd_port_static_validation_present=1
+debian_freebsd_openbsd_source_archive_contract_present=1
+source_archive_policy_recorded=1
+source_archive_created=0
+source_archive_sha256_recorded=0
+freebsd_distinfo_created=0
 freebsd_ports_tree_submission_claimed=0
 freebsd_bugzilla_pr_claimed=0
 freebsd_committer_review_claimed=0
@@ -50,3 +58,5 @@ bin/latticra
 ```
 
 The CLI reports no-effect status and disabled runtime behavior.
+
+The source archive contract records the expected `latticra-0.0.0.tar.gz` distfile and future distinfo boundary, but it does not create an archive, generate `distinfo`, run `make stage`, run `make package`, run portlint, or accept FreeBSD build evidence.

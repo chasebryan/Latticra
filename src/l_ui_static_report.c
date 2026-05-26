@@ -35,7 +35,7 @@ latticra_status_t latticra_l_ui_nucleus_preview_card(
         "rail.gates=safe_portal:%s rollback:%s\n"
         "rail.effects=host:%s external:%s requested:%s\n"
         "rail.policy=request:%s policy:%s reason:%s\n"
-        "rail.execution=executed:%d mutation:%d server:%d recovery:%d hardware:%d\n"
+        "rail.execution=executed:%d mutation:%d server:%d network:%d recovery:%d hardware:%d\n"
         "rail.bottom=preview-only no-live-movement no-host-effect no-external-effect\n",
         latticra_l_ui_report_kind_label(LATTICRA_L_UI_REPORT_NUCLEUS_PREVIEW),
         state->origin,
@@ -59,6 +59,7 @@ latticra_status_t latticra_l_ui_nucleus_preview_card(
         preview->executed,
         preview->mutation_allowed,
         preview->server_interaction_allowed,
+        preview->network_allowed,
         preview->recovery_allowed,
         preview->hardware_allowed);
 

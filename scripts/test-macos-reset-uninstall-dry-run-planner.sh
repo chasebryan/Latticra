@@ -119,7 +119,7 @@ require_contains 'file_delete_performed=0' "$script"
 require_contains 'directory_delete_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-transcript-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-review-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -150,7 +150,7 @@ require_output_contains "$absent_output" 'reset_receipt_write_planned=0'
 require_output_contains "$absent_output" 'absence_report_planned=1'
 require_output_contains "$absent_output" 'file_delete_performed=0'
 require_output_contains "$absent_output" 'directory_delete_performed=0'
-require_output_contains "$absent_output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-transcript-contract'
+require_output_contains "$absent_output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-review-contract'
 
 mkdir -p "$managed_home/Applications/Latticra Panel.app/Contents/Resources/latticra"
 mkdir -p "$managed_home/Library/Application Support/Latticra"

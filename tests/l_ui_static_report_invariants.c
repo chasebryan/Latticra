@@ -43,7 +43,7 @@ static int l_ui_card_contains_required_rails(void) {
     EXPECT_TRUE(strstr(report, "rail.gates=safe_portal:planned rollback:available") != 0, "gate rail");
     EXPECT_TRUE(strstr(report, "rail.effects=host:none external:none requested:read") != 0, "effect rail");
     EXPECT_TRUE(strstr(report, "rail.policy=request:transition-preview policy:allow-preview reason:ok") != 0, "policy rail");
-    EXPECT_TRUE(strstr(report, "rail.execution=executed:0 mutation:0 server:0 recovery:0 hardware:0") != 0, "execution rail");
+    EXPECT_TRUE(strstr(report, "rail.execution=executed:0 mutation:0 server:0 network:0 recovery:0 hardware:0") != 0, "execution rail");
     EXPECT_TRUE(
         strstr(report, "rail.bottom=preview-only no-live-movement no-host-effect no-external-effect") != 0,
         "bottom rail");
@@ -70,7 +70,7 @@ static int l_ui_card_handles_denied_requests(void) {
     EXPECT_TRUE(
         strstr(report, "rail.policy=request:recovery-action policy:deny reason:effect-requires-future-gate") != 0,
         "denied policy rail");
-    EXPECT_TRUE(strstr(report, "rail.execution=executed:0 mutation:0 server:0 recovery:0 hardware:0") != 0, "denied execution rail");
+    EXPECT_TRUE(strstr(report, "rail.execution=executed:0 mutation:0 server:0 network:0 recovery:0 hardware:0") != 0, "denied execution rail");
     EXPECT_TRUE(
         strstr(report, "rail.bottom=preview-only no-live-movement no-host-effect no-external-effect") != 0,
         "denied bottom rail");

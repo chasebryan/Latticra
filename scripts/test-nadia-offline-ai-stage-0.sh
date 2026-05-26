@@ -131,6 +131,6 @@ require_contains 'prompt-evaluation result release receipt review disposition re
 require_contains 'receipt signing, receipt publication, model-output recording' "$installer_readme"
 require_contains 'inference, prompt evaluation, tool execution, model installation, training, distillation, source mutation, or network authority are installed.' "$installer_readme"
 require_contains 'Nadia offline AI foundation' "$ui_model"
-require_contains "Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, Stage-11, Stage-12, Stage-13, Stage-14, Stage-15, Stage-16, Stage-17, Stage-18, Stage-19, Stage-20, Stage-21, Stage-22, Stage-23, Stage-24, Stage-25, Stage-26, Stage-27, Stage-28, Stage-29, Stage-30, Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, and Stage-39 console surfaces are metadata-only" "$ui_model"
+require_contains "Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, Stage-11, Stage-12, Stage-13, Stage-14, Stage-15, Stage-16, Stage-17, Stage-18, Stage-19, Stage-20, Stage-21, Stage-22, Stage-23, Stage-24, Stage-25, Stage-26, Stage-27, Stage-28, Stage-29, Stage-30, Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, and Stage-40 console surfaces are metadata-only" "$ui_model"
 
 printf 'nadia_offline_ai_stage_0: ok\n'

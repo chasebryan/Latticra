@@ -1,7 +1,7 @@
 #ifndef LATTICRA_KERNEL_STATE_H
 #define LATTICRA_KERNEL_STATE_H
 
-#include "latticra/kernel_time_accounting.h"
+#include "latticra/kernel_preemption.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,7 +27,8 @@ typedef enum {
     LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY = 13,
     LATTICRA_KERNEL_STATE_RUN_QUEUE_READY = 14,
     LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY = 15,
-    LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY = 16
+    LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY = 16,
+    LATTICRA_KERNEL_STATE_PREEMPTION_READY = 17
 } latticra_kernel_state_kind_t;
 
 typedef enum {
@@ -49,6 +50,7 @@ typedef struct {
     latticra_kernel_run_queue_request_t run_queue_request;
     latticra_kernel_context_switch_request_t context_switch_request;
     latticra_kernel_time_accounting_request_t time_accounting_request;
+    latticra_kernel_preemption_request_t preemption_request;
     latticra_kernel_state_kind_t current_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
@@ -73,6 +75,7 @@ typedef struct {
     latticra_kernel_run_queue_result_t run_queue;
     latticra_kernel_context_switch_result_t context_switch;
     latticra_kernel_time_accounting_result_t time_accounting;
+    latticra_kernel_preemption_result_t preemption;
     latticra_kernel_state_kind_t previous_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_kind_t next_state;

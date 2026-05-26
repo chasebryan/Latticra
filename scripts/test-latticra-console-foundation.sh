@@ -453,6 +453,9 @@ grep -Fq 'latticra_console = true' installer/configs/local-prefix-example.instal
 grep -Fq 'profile = "lc_standalone"' installer/configs/lc-standalone.installer.toml
 grep -Fq 'latticra_console = true' installer/configs/lc-standalone.installer.toml
 grep -Fq 'lat_tooling = false' installer/configs/lc-standalone.installer.toml
+grep -Fq 'profile = "lc_standalone"' installer/configs/lc-standalone-local.installer.toml
+grep -Fq 'dry_run = false' installer/configs/lc-standalone-local.installer.toml
+grep -Fq 'allow_host_mutation = true' installer/configs/lc-standalone-local.installer.toml
 grep -Fq 'pub latticra_console: bool' installer/latticra-installer/src/config.rs
 grep -Fq 'pub struct LatticraConsoleConfig' installer/latticra-installer/src/config.rs
 grep -Fq 'LatticraConsoleProfile::PanelEmbedded' installer/latticra-installer/src/config.rs
@@ -490,6 +493,9 @@ grep -Fq 'install_mode = "metadata-only-standalone-console"' installer/configs/l
 grep -Fq 'panel_embedded_console = false' installer/configs/lc-standalone.installer.toml
 grep -Fq 'build_gui_installer = false' installer/configs/lc-standalone.installer.toml
 grep -Fq 'install_desktop_entry = false' installer/configs/lc-standalone.installer.toml
+grep -Fq 'install_profile = "lc-standalone-install-v0"' installer/configs/lc-standalone-local.installer.toml
+grep -Fq 'install_mode = "metadata-only-standalone-console"' installer/configs/lc-standalone-local.installer.toml
+grep -Fq 'panel_embedded_console = false' installer/configs/lc-standalone-local.installer.toml
 grep -Fq 'LATTICRA_CONSOLE=$(cfg latticra_console true)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_PROFILE=$(cfg_section lc profile panel_embedded)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_INSTALL_STANDALONE_CONSOLE=$(cfg_section lc.install standalone_console true)' installer/scripts/latticra-installer-apply.sh
@@ -534,6 +540,7 @@ grep -Fq 'render_lc_boundary()' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'Latticra Console Foundation' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Panel Profile Presets' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'installer/configs/lc-standalone.installer.toml' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'installer/configs/lc-standalone-local.installer.toml' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'share/latticra/lc/install/config.toml' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'lc.install.command_wrapper' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'panel_embedded -> default Panel-installed LC operator surface' docs/LATTICRA_CONSOLE_FOUNDATION.md

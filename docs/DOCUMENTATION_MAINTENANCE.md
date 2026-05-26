@@ -1,0 +1,113 @@
+# Documentation Maintenance
+
+Status: active documentation maintenance guide
+Last updated: 2026-05-26 CDT
+Scope: public documentation entry points, status mirrors, estimate sources, static HTML mirrors, platform guides, and documentation-only validation.
+
+## Purpose
+
+This guide defines how Latticra documentation should stay cohesive as the project changes.
+
+Use it when a change affects public wording, capability posture, estimates, platform readiness, security claims, installer authority, package claims, subsystem status, or reader navigation.
+
+## Source Of Truth
+
+| Subject | Source of truth | Mirrors that may need updates |
+| --- | --- | --- |
+| Project identity and broad non-claims | [`../README.md`](../README.md), [`REAL_SYSTEM_CONTRACT.md`](REAL_SYSTEM_CONTRACT.md), [`NON_CLAIMS.md`](NON_CLAIMS.md) | [`map.html`](map.html), [`latticra-system-substrate/README.md`](latticra-system-substrate/README.md), [`latticra/DOCUMENTATION_MAP.md`](latticra/DOCUMENTATION_MAP.md) |
+| Current status and estimates | [`../STATUS.md`](../STATUS.md), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), [`status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md), [`status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) | [`../README.md`](../README.md), [`status.html`](status.html), [`roadmap.html`](roadmap.html), [`index.html`](index.html) |
+| Documentation navigation | [`README.md`](README.md), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md) | [`../README.md`](../README.md), [`map.html`](map.html), [`project_notes/README.md`](project_notes/README.md) |
+| Security posture | [`../SECURITY.md`](../SECURITY.md), [`HIGH_ASSURANCE_SECURITY_BASELINE.md`](HIGH_ASSURANCE_SECURITY_BASELINE.md), [`DEFENSIVE_THREAT_MODEL_CONTRACT.md`](DEFENSIVE_THREAT_MODEL_CONTRACT.md) | [`security.html`](security.html), [`../README.md`](../README.md), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) |
+| Installer authority | [`../installer/README.md`](../installer/README.md), [`../installer/docs/README.md`](../installer/docs/README.md), [`PRODUCTION_INSTALLER_READINESS_CONTRACT.md`](PRODUCTION_INSTALLER_READINESS_CONTRACT.md) | [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md), [`validation.html`](validation.html), [`../README.md`](../README.md) |
+| Platform and packaging posture | Platform workflow and package README files | [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md), [`validation.html`](validation.html), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), [`../README.md`](../README.md) |
+
+## Public-Entry Checklist
+
+When a milestone changes capability posture or public wording, review these files:
+
+```text
+README.md
+STATUS.md
+docs/README.md
+docs/FOUNDATION_INDEX.md
+docs/status/CURRENT_STATUS.md
+docs/status/README.md
+docs/project_notes/README.md
+docs/map.html
+docs/status.html
+docs/roadmap.html
+docs/index.html
+```
+
+Do not update every file mechanically. Update only the files whose reader-facing claim actually changes.
+
+## Estimate Rule
+
+Planning estimates are posture markers, not release promises.
+
+When an estimate changes:
+
+1. Update the source record under `docs/status/`.
+2. Mirror the current public table in `README.md`, `STATUS.md`, and `docs/status/CURRENT_STATUS.md`.
+3. Update static HTML summary values in `docs/index.html`, `docs/status.html`, and `docs/roadmap.html` when those pages display the changed values.
+4. Run the current estimate table source-alignment guard.
+
+## Non-Claim Rule
+
+Never promote these claims without implementation, tests, status records, and public-entry alignment:
+
+```text
+production runtime
+host protection
+hardened sandbox
+malware prevention
+ransomware prevention
+kernel enforcement
+root installer
+network authority
+package approval
+official distribution readiness
+OS replacement
+certification
+compliance
+production cryptography
+AI-agent execution control
+```
+
+Use narrower language when evidence is narrow. For example, a disposable VM transcript can support a bounded local validation claim without supporting daily-driver, production, security, update-safety, recovery-safety, or distribution-readiness claims.
+
+## Platform Documentation Rule
+
+Platform and package documentation must state the current authority boundary:
+
+- Fedora: local-only unless Fedora approval evidence exists.
+- Ubuntu: local-only unless Ubuntu archive or PPA evidence exists.
+- Debian: local-only unless Debian archive evidence exists.
+- openSUSE: local-only unless Open Build Service publication or official package evidence exists.
+- FreeBSD and OpenBSD: local-only unless official port evidence exists.
+- macOS: no-effect or user-local only unless app-bundle write, signing, notarization, install, verification, reset, and uninstall evidence exists.
+
+## Validation
+
+For documentation-only work, run the narrowest relevant guard set:
+
+```sh
+git diff --check
+sh scripts/test-project-strategy-status-framework.sh
+sh scripts/test-current-estimate-table-source-alignment.sh
+sh scripts/test-latticra-seal-docs.sh
+```
+
+Add platform guards when platform docs move:
+
+```sh
+sh scripts/test-fedora-developer-workflow.sh
+sh scripts/test-ubuntu-developer-workflow.sh
+sh scripts/test-opensuse-developer-workflow.sh
+```
+
+Add the exact milestone guard named by the status record when changing a milestone-specific status or public-entry alignment.
+
+## Documentation-Only Boundary
+
+Documentation-only changes should not change source behavior, installer authority, package authority, runtime authority, shell guard behavior, workflow permissions, or security posture. If a documentation update requires code or guard changes to become true, keep the documentation claim blocked until that implementation evidence exists.

@@ -18,12 +18,15 @@ docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
 scripts/test-opensuse-rpmlint-findings-classification.sh
 scripts/test-opensuse-source-archive-reproducibility-contract.sh
+scripts/test-opensuse-source-archive-fixture-lane.sh
 .github/workflows/opensuse-rpmlint-static-spec-lane.yml
 .github/workflows/opensuse-rpmlint-findings-classification.yml
 .github/workflows/opensuse-source-archive-reproducibility-contract.yml
+.github/workflows/opensuse-source-archive-fixture-lane.yml
 packaging/opensuse/latticra.spec
 ```
 
@@ -82,13 +85,24 @@ scripts/test-opensuse-rpmlint-findings-classification.sh
 .github/workflows/opensuse-rpmlint-findings-classification.yml
 ```
 
+Completed follow-on source archive lanes:
+
+```text
+docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+scripts/test-opensuse-source-archive-reproducibility-contract.sh
+scripts/test-opensuse-source-archive-fixture-lane.sh
+.github/workflows/opensuse-source-archive-reproducibility-contract.yml
+.github/workflows/opensuse-source-archive-fixture-lane.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE source archive fixture lane that creates and inspects a temporary archive without running rpmbuild or osc build.
+Add openSUSE temporary RPM topdir handoff lane that stages the verified source archive without running rpmbuild or osc build.
 ```
 
-That future lane should prove archive shape and reproducibility in a temporary workspace while keeping package build and publication claims blocked.
+That future lane should prove the temporary source archive can be staged into RPM build input paths while keeping package build and publication claims blocked.
 
 ## Validation
 

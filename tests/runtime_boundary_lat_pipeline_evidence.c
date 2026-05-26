@@ -118,6 +118,12 @@ static latticra_lir_module_t lat_lir_module(void) {
     copy_text(lir.nodes[1].value, sizeof(lir.nodes[1].value), "root");
     copy_text(lir.nodes[1].operator_text, sizeof(lir.nodes[1].operator_text), "=");
     copy_text(lir.nodes[1].binding, sizeof(lir.nodes[1].binding), "lat.state.root");
+    lir.nodes[1].source_span.start_offset = 31u;
+    lir.nodes[1].source_span.end_offset = 64u;
+    lir.nodes[1].source_span.start_line = 3u;
+    lir.nodes[1].source_span.start_column = 5u;
+    lir.nodes[1].source_span.end_line = 3u;
+    lir.nodes[1].source_span.end_column = 38u;
     lir.nodes[2].kind = LATTICRA_LIR_NODE_LAT_TRANSITION;
     lir.nodes[3].kind = LATTICRA_LIR_NODE_LAT_REQUIREMENT;
     lir.nodes[4].kind = LATTICRA_LIR_NODE_LAT_POLICY;
@@ -224,6 +230,10 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_lat_node_value, "root") == 0, "lat lir first node value copied");
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_lat_node_operator, "=") == 0, "lat lir first node operator copied");
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_lat_node_binding, "lat.state.root") == 0, "lat lir first node binding copied");
+    EXPECT_TRUE(result.record.lat_lir_first_lat_node_span.start_line == 3u, "lat lir first node span line copied");
+    EXPECT_TRUE(result.record.lat_lir_first_lat_node_span.start_column == 5u, "lat lir first node span column copied");
+    EXPECT_TRUE(result.record.lat_lir_first_lat_node_span.end_line == 3u, "lat lir first node span end line copied");
+    EXPECT_TRUE(result.record.lat_lir_first_lat_node_span.end_column == 38u, "lat lir first node span end column copied");
     EXPECT_TRUE(result.record.lat_lir_no_effect_chain_ok == 1, "lat lir no-effect chain copied");
     EXPECT_TRUE(result.record.lat_lir_evidence_level == 2u, "lat lir evidence level copied");
     EXPECT_TRUE(result.record.lat_lir_no_effect == 1, "lat lir no-effect copied");
@@ -543,6 +553,10 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_value=root\n") != 0, "lat lir first node value report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_operator==\n") != 0, "lat lir first node operator report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_binding=lat.state.root\n") != 0, "lat lir first node binding report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_span_start_line=3\n") != 0, "lat lir first node span line report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_span_start_column=5\n") != 0, "lat lir first node span column report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_span_end_line=3\n") != 0, "lat lir first node span end line report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_span_end_column=38\n") != 0, "lat lir first node span end column report present");
     EXPECT_TRUE(strstr(report, "lat_lir_no_effect_chain_ok=1\n") != 0, "lat lir no-effect chain report present");
     EXPECT_TRUE(strstr(report, "lat_lir_evidence_level=2\n") != 0, "lat lir evidence level report present");
     EXPECT_TRUE(strstr(report, "lat_lir_no_effect=1\n") != 0, "lat lir no-effect report present");

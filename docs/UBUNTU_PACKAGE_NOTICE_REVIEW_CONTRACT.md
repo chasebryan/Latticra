@@ -152,6 +152,8 @@ The Ubuntu trademark notice boundary contract records the reviewed project-ident
 
 The Ubuntu release artifact notice requirements contract records the reviewed source-package, deb-artifact, changes-file, build-log, installed-payload, and release-notes notice requirements required before package notice obligations can be promoted.
 
+The Ubuntu package notice promotion gate aggregates these prerequisites before package license promotion can proceed.
+
 ## Non-Claims
 
 This contract is not legal advice. It does not claim license-compliance completion, Ubuntu archive readiness, PPA readiness, Canonical endorsement, production installer readiness, package publication readiness, or release readiness.

@@ -32,6 +32,7 @@ require_file docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md
 require_file docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md
 require_file docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
 require_file docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
+require_file docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
 require_file docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 require_file LICENSE
 require_file docs/LICENSE_POLICY.md
@@ -72,6 +73,8 @@ require_contains 'ubuntu_trademark_notice_boundary_contract_present=1' "$contrac
 require_contains 'ubuntu_trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary' "$contract"
 require_contains 'ubuntu_release_artifact_notice_requirements_contract_present=1' "$contract"
 require_contains 'ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements' "$contract"
+require_contains 'ubuntu_package_notice_promotion_gate_contract_present=1' "$contract"
+require_contains 'ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites' "$contract"
 require_contains 'ubuntu_package_notice_review_contract_present=1' "$contract"
 require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' "$contract"
 require_contains 'ubuntu_package_license_review_unblocked=0' "$contract"
@@ -107,6 +110,8 @@ require_contains 'ubuntu_trademark_notice_boundary_contract_present=1' "$status"
 require_contains 'ubuntu_trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary' "$status"
 require_contains 'ubuntu_release_artifact_notice_requirements_contract_present=1' "$status"
 require_contains 'ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements' "$status"
+require_contains 'ubuntu_package_notice_promotion_gate_contract_present=1' "$status"
+require_contains 'ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites' "$status"
 require_contains 'ubuntu_package_notice_review_contract_present=1' "$status"
 require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' "$status"
 require_contains 'license_expression_candidate_recorded=1' "$status"

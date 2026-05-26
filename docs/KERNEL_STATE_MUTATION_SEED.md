@@ -50,6 +50,7 @@ scheduler-tick-ready
 run-queue-ready
 context-switch-ready
 time-accounting-ready
+preemption-ready
 ```
 
 Allowed transitions are intentionally sequential:
@@ -71,6 +72,7 @@ timer-source-ready -> scheduler-tick-ready
 scheduler-tick-ready -> run-queue-ready
 run-queue-ready -> context-switch-ready
 context-switch-ready -> time-accounting-ready
+time-accounting-ready -> preemption-ready
 ```
 
 No-op transitions are allowed when the gate allows them.

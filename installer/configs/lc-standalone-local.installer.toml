@@ -1,0 +1,96 @@
+profile = "lc_standalone"
+install_prefix = "~/.local/share/latticra"
+
+[components]
+latticra_console = true
+lat_tooling = false
+lir_contracts = false
+seal_report_only = false
+nadia_offline_ai = false
+fedora_validation = false
+docs_and_examples = false
+developer_cli_helpers = false
+
+[lc]
+profile = "standalone"
+command_registry_profile = "c-static-table"
+substrate_bridge_profile = "metadata-bound"
+host_embedding_profile = "not-embedded"
+host_embedding_contract_profile = "lc-host-embedding-v0"
+host_inventory_contract_profile = "lc-host-inventory-v0"
+host_adapter_contract_profile = "lc-host-adapter-v0"
+receipt_request_contract_profile = "lc-receipt-request-v0"
+receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
+receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
+receipt_payload_artifact_review_profile = "lc-receipt-payload-artifact-review-v0"
+receipt_payload_artifact_review_receipt_profile = "lc-receipt-payload-artifact-review-receipt-v0"
+receipt_payload_artifact_review_receipt_draft_profile = "lc-receipt-payload-artifact-review-receipt-draft-v0"
+receipt_payload_materialization_plan_profile = "lc-receipt-payload-materialization-plan-v0"
+signature_request_binding_profile = "lc-signature-request-binding-v0"
+receipt_contract_profile = "lc-receipts-v0"
+os_base_contract_profile = "lc-os-base-v0"
+vm_evidence_contract_profile = "lc-vm-evidence-v0"
+os_base_profile = "planned-no-boot-authority"
+panel_bridge = "standalone-optional"
+report_only = true
+require_host_embedding_contract = true
+require_read_only_host_inventory_contract = true
+require_profile_receipt = true
+require_host_contract_receipt = true
+require_host_inventory_receipt = true
+require_host_adapter_contract = true
+require_receipt_request_contract = true
+require_receipt_payload_schema = true
+require_receipt_payload_artifact_draft = true
+require_receipt_payload_artifact_review = true
+require_receipt_payload_artifact_review_receipt = true
+require_receipt_payload_artifact_review_receipt_draft = true
+require_receipt_payload_materialization_plan = true
+require_signature_request_binding = true
+require_os_base_contract = true
+require_vm_evidence_contract = true
+require_runtime_boundary_binding = true
+require_seal_capability_labels = true
+
+[lc.install]
+install_profile = "lc-standalone-install-v0"
+install_mode = "metadata-only-standalone-console"
+config_path = "etc/latticra/lc.toml"
+share_path = "share/latticra/lc"
+command_wrapper = "latticra-lc"
+standalone_console = true
+panel_embedded_console = false
+write_config_file = true
+write_profile_presets = true
+write_command_registry = true
+write_contract_files = true
+install_user_wrapper = true
+allow_external_host_commands = false
+
+[safety]
+dry_run = false
+allow_host_mutation = true
+allow_network_effect = false
+require_component_manifest = true
+require_artifact_measurements = true
+require_verification_policy_metadata = true
+write_operator_receipt = true
+
+[behavior]
+create_prefix_layout = true
+create_component_markers = true
+create_cli_shims = true
+preserve_existing_files = true
+build_gui_installer = false
+build_latticra_from_source = false
+install_payload_tree = true
+install_desktop_entry = false
+install_user_bin_wrappers = true
+
+[updater]
+source_strategy = "current-source-checkout"
+update_channel = "local-checkout"
+allow_network_fetch = false
+require_dry_run_before_apply = true
+reuse_installer_engine = true
+write_update_receipt = true

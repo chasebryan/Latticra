@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Packaging and Platform Readiness | Latticra</title>
+  <meta name="description" content="A public overview of Latticra packaging and platform readiness across Fedora, Ubuntu, openSUSE, Debian, BSD ports, and macOS dry-run lanes without distribution or production installer claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Packaging and Platform Readiness">
+  <meta property="og:description" content="Static package shape checks, source archive fixtures, notice blockers, disposable VM gates, and macOS no-effect app bundle dry-runs.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero packaging-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Packaging and platform readiness</p>
+        <p class="eyebrow">Local Package Shape and Platform Gates</p>
+        <h1>Packaging and platform readiness</h1>
+        <p class="page-lede">
+          Latticra has package-shape records for Linux ecosystems and no-effect macOS writer dry-runs. It does not have official distribution packages, published release artifacts, production installer readiness, or daily-driver install eligibility.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell packaging-intro">
+        <div>
+          <p class="eyebrow">Packaging Rule</p>
+          <h2>Package shape is not release readiness.</h2>
+        </div>
+        <p>
+          The current packaging work is useful because it names platform expectations early. Static validation, fixture archives, notice reviews, and dry-run writers stay separate from build artifacts, app bundles, package publication, host mutation, and endorsement claims.
+        </p>
+      </div>
+
+      <div class="content-shell packaging-flow" aria-label="Packaging readiness flow">
+        <article>
+          <span>01</span>
+          <h3>Record platform scope</h3>
+          <p>Each lane states the packaging target, local inputs, and the phrases that must not be used yet.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Validate static shape</h3>
+          <p>Spec, deb, changes, and ports metadata checks run before any package build or host install claim.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Keep notices blocked</h3>
+          <p>License, notice, trademark, and generated-artifact review records remain blockers until reviewed evidence exists.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Gate target mutation</h3>
+          <p>Install and removal validation requires disposable targets, clean snapshots, recovery paths, and operator consent.</p>
+        </article>
+        <article>
+          <span>05</span>
+          <h3>Block publication claims</h3>
+          <p>Official package, PPA, OBS, notarization, app-store, endorsement, and production installer claims stay false.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell packaging-showcase">
+        <div class="showcase-copy">
+          <p class="eyebrow">Workbench Tie-In</p>
+          <h2>Packaging points back to no-effect payloads.</h2>
+          <p>
+            The strongest current path is still local evidence: Panel and CLI surfaces can be inspected, status reports can be generated, and package metadata can be checked without pretending a release artifact exists.
+          </p>
+          <div class="status-row" aria-label="Packaging posture summary">
+            <span class="status-pill status-present">static checks</span>
+            <span class="status-pill status-guarded">fixture lanes</span>
+            <span class="status-pill status-blocked">not released</span>
+          </div>
+        </div>
+        <figure class="showcase-figure packaging-figure">
+          <img src="assets/latticra-panel.png" alt="Latticra Panel local workbench used for plan and evidence review.">
+          <figcaption>Panel remains the human-facing local workbench; package records do not expand its authority.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Current Snapshot</p>
+        <h2>Readiness records exist, while release claims remain blocked.</h2>
+        <p>
+          These fields summarize the public packaging posture across the current Fedora, Ubuntu, openSUSE, and macOS records.
+        </p>
+      </div>
+      <div class="content-shell report-grid">
+        <article>
+          <span>fedora_local_rpm_static</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>fedora_source_archive_fixture</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>ubuntu_local_deb_draft</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>ubuntu_notice_review_unblocked</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>opensuse_local_rpm_static</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>opensuse_obs_publication</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>macos_app_bundle_commit</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>production_installer_ready</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Platform Lanes</p>
+        <h2>Each ecosystem has a different proof shape.</h2>
+        <p>
+          The page groups platform work by the strongest evidence currently present and the claim that still remains blocked.
+        </p>
+      </div>
+      <div class="content-shell packaging-platform-grid">
+        <article class="packaging-platform packaging-fedora">
+          <span>Fedora</span>
+          <h3>RPM shape and VM-gated payload validation</h3>
+          <p>Static RPM validation and source archive fixtures exist. Install and removal evidence requires a disposable Fedora VM with snapshot, recovery, and consent gates.</p>
+          <a href="FEDORA_READINESS_PLAN.md">Fedora readiness</a>
+        </article>
+        <article class="packaging-platform packaging-ubuntu">
+          <span>Ubuntu</span>
+          <h3>Local deb draft with notice blockers</h3>
+          <p>The local deb draft checks the no-effect CLI payload while release-artifact notices, package notice review, lint/build transcripts, and archive readiness remain blocked.</p>
+          <a href="UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md">Ubuntu deb lane</a>
+        </article>
+        <article class="packaging-platform packaging-opensuse">
+          <span>openSUSE</span>
+          <h3>RPM draft and maintenance records</h3>
+          <p>openSUSE records cover local RPM shape, a changes file, rpmlint and osc availability, findings classification, and source archive reproducibility blockers before any OBS claim.</p>
+          <a href="OPENSUSE_READINESS_PLAN.md">openSUSE readiness</a>
+        </article>
+        <article class="packaging-platform">
+          <span>Debian and BSD</span>
+          <h3>Static metadata checks</h3>
+          <p>Debian deb, FreeBSD port, and OpenBSD port records remain local-only metadata checks with archive, ports-tree, and package redistribution claims blocked.</p>
+          <a href="DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md">Debian static lane</a>
+        </article>
+        <article class="packaging-platform packaging-macos">
+          <span>macOS</span>
+          <h3>No-effect app bundle writer dry-run</h3>
+          <p>The macOS lane can render writer phases, inspect candidate assets, and block unsafe paths while app bundle writes, signing, notarization, and verification stay disabled.</p>
+          <a href="MACOS_APP_BUNDLE_WRITER_ALIGNMENT.md">macOS writer alignment</a>
+        </article>
+        <article class="packaging-platform packaging-blocked">
+          <span>Blocked</span>
+          <h3>Publication and endorsement claims</h3>
+          <p>No official package, Ubuntu archive package, PPA, Fedora approval, Open Build Service publication, SUSE endorsement, notarized app, or production installer is claimed.</p>
+          <a href="NON_CLAIMS.md">Non-claims</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell packaging-split">
+        <div class="section-heading">
+          <p class="eyebrow">Gate Matrix</p>
+          <h2>Publishing stays downstream of local evidence.</h2>
+          <p>
+            A package lane can advance only by naming which action is allowed, which target it may touch, and which broader claims remain false.
+          </p>
+        </div>
+        <div class="packaging-table" role="table" aria-label="Packaging readiness gate matrix">
+          <div role="row">
+            <span role="cell">Allowed now</span>
+            <p role="cell">Read plans, run static checks, inspect source archive fixtures, run notice blockers, and execute no-effect macOS dry-run reports.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Temporary fixture only</span>
+            <p role="cell">Fedora archive fixture checks may create and inspect disposable temporary archives without source RPMs, binary RPMs, installs, or publication.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Disposable target only</span>
+            <p role="cell">Fedora RPM install/removal validation requires explicit disposable VM evidence, clean snapshot, recovery path, and operator consent.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Blocked claims</span>
+            <p role="cell">Distribution approval, package publication, production installer readiness, root installer readiness, daily-driver readiness, notarization, signing, and platform endorsement.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Commands</p>
+        <h2>Run packaging checks without publishing anything.</h2>
+        <p>
+          These commands inspect static package shape, fixture boundaries, and no-effect writer readiness. They do not publish packages or grant install authority.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Static package shape</h3>
+          <pre><code>sh scripts/test-fedora-local-rpm-static-validation.sh
+sh scripts/test-ubuntu-local-deb-static-validation.sh
+sh scripts/test-opensuse-local-rpm-static-validation.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Archive, lint, and notice gates</h3>
+          <pre><code>sh scripts/test-fedora-source-archive-fixture-lane.sh
+sh scripts/test-opensuse-rpmlint-findings-classification.sh
+sh scripts/test-ubuntu-release-artifact-notice-requirements-contract.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>macOS dry-run gates</h3>
+          <pre><code>sh scripts/test-macos-app-bundle-writer-alignment.sh
+sh scripts/test-macos-local-candidate-asset-probe.sh
+sh scripts/test-macos-dry-run-writer-candidate-integration.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Trace packaging claims to exact files.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="FEDORA_READINESS_PLAN.md"><strong>Fedora readiness</strong><span>Fedora-friendly package review direction, terminology boundary, and non-claims.</span></a>
+        <a href="FEDORA_LOCAL_RPM_STATIC_VALIDATION.md"><strong>Fedora static RPM</strong><span>Local spec skeleton checks without rpmbuild, rpmlint, mock, or artifacts.</span></a>
+        <a href="FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md"><strong>Fedora source fixture</strong><span>Temporary source archive shape checks before source RPM or binary RPM work.</span></a>
+        <a href="FEDORA_VM_CLI_PAYLOAD_VALIDATION_LANE.md"><strong>Fedora VM payload lane</strong><span>Manual disposable VM payload validation gate and forbidden payload surfaces.</span></a>
+        <a href="UBUNTU_READINESS_PLAN.md"><strong>Ubuntu readiness</strong><span>Ubuntu local deb draft, notice blockers, build transcript blockers, and archive non-claims.</span></a>
+        <a href="UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md"><strong>Ubuntu deb static</strong><span>Local deb shape checks for the no-effect CLI payload without package build tools.</span></a>
+        <a href="UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md"><strong>Ubuntu release notices</strong><span>Release-artifact notice requirements that remain blocked before package notice review can promote.</span></a>
+        <a href="OPENSUSE_READINESS_PLAN.md"><strong>openSUSE readiness</strong><span>openSUSE local RPM, maintenance, rpmlint, osc, and OBS non-claim boundaries.</span></a>
+        <a href="OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md"><strong>openSUSE source archive</strong><span>Source archive reproducibility requirements and blockers before build transcripts or OBS claims.</span></a>
+        <a href="OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md"><strong>openSUSE rpmlint findings</strong><span>Findings classification and blocked publication posture before OBS or build claims.</span></a>
+        <a href="MACOS_APP_BUNDLE_WRITER_ALIGNMENT.md"><strong>macOS writer alignment</strong><span>No-effect app bundle writer dry-run and blocked commit-capable writer claims.</span></a>
+        <a href="MACOS_LOCAL_CANDIDATE_ASSET_PROBE.md"><strong>macOS asset probe</strong><span>Local candidate executable and icon checks before any future writer commit gate.</span></a>
+        <a href="validation.html"><strong>Local validation</strong><span>Install evidence, package guards, disposable VM gates, and validation non-claims.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra packaging and platform readiness.</span>
+      <span><a href="validation.html">Open validation</a></span>
+    </div>
+  </footer>
+</body>
+</html>

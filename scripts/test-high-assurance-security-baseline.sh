@@ -30,6 +30,7 @@ require_file docs/security.html
 require_file docs/DEFENSIVE_THREAT_MODEL_VALIDATION.md
 require_file docs/DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md
 require_file docs/MEMORY_SAFETY_ROADMAP.md
+require_file docs/SUPPLY_CHAIN_SECURITY_BASELINE.md
 require_file docs/security/C_CPP_SECURITY_PROFILE.md
 require_file docs/security/C_ABI_BOUNDARY_POLICY.md
 require_file docs/status/README.md
@@ -37,6 +38,7 @@ require_file docs/status/CURRENT_STATUS.md
 require_file scripts/test-defensive-threat-model-validation.sh
 require_file scripts/test-defensive-threat-model-validation-refinement.sh
 require_file scripts/test-memory-safety-roadmap.sh
+require_file scripts/test-supply-chain-security-baseline.sh
 require_file scripts/test-quality-safety-guards.sh
 
 require_contains 'Status: high-assurance security baseline checkpoint' "$doc"
@@ -67,6 +69,7 @@ for field in \
   'zero_trust_runtime_boundary_required=1' \
   'ssdf_secure_development_required=1' \
   'cpg_operational_baseline_required=1' \
+  'supply_chain_security_baseline_present=1' \
   'kev_release_review_required=1' \
   'fips_crypto_boundary_required_before_production_crypto=1' \
   'sbom_required_before_production_installer=1' \
@@ -112,11 +115,14 @@ require_contains 'FIPS 140-3' docs/security/C_CPP_SECURITY_PROFILE.md
 require_contains 'High-assurance standards posture' SECURITY.md
 require_contains 'docs/HIGH_ASSURANCE_SECURITY_BASELINE.md' SECURITY.md
 require_contains 'docs/MEMORY_SAFETY_ROADMAP.md' SECURITY.md
+require_contains 'docs/SUPPLY_CHAIN_SECURITY_BASELINE.md' SECURITY.md
 require_contains 'high_assurance_security_baseline_present=1' README.md
 require_contains 'memory_safety_roadmap_present=1' README.md
+require_contains 'supply_chain_security_baseline_present=1' README.md
 require_contains 'source_refresh_date=2026-05-26' README.md
 require_contains 'high_assurance_security_baseline_present=1' STATUS.md
 require_contains 'memory_safety_roadmap_present=1' STATUS.md
+require_contains 'supply_chain_security_baseline_present=1' STATUS.md
 require_contains 'High-assurance security baseline' docs/status/README.md
 require_contains 'HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md' docs/status/README.md
 require_contains 'Latest high-assurance security baseline note: 2026-05-26 CDT' docs/status/CURRENT_STATUS.md
@@ -124,6 +130,7 @@ require_contains 'High-assurance baseline' docs/security.html
 require_contains 'HIGH_ASSURANCE_SECURITY_BASELINE.md' docs/security.html
 require_contains 'sh ./scripts/test-high-assurance-security-baseline.sh' Makefile
 require_contains 'sh ./scripts/test-memory-safety-roadmap.sh' Makefile
+require_contains 'sh ./scripts/test-supply-chain-security-baseline.sh' Makefile
 require_contains 'quality-security-standards:' Makefile
 require_contains 'quality-security-standards' Makefile
 require_contains 'test-high-assurance-security-baseline.sh' scripts/test-quality-safety-guards.sh

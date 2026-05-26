@@ -108,6 +108,7 @@ stage_4_macos_reset_uninstall_live_runner_noop_prototype_contract=present
 stage_4_macos_reset_uninstall_live_runner_denied_dispatch_transcript_contract=present
 stage_4_macos_reset_uninstall_live_runner_denied_dispatch_review_contract=present
 stage_4_macos_reset_uninstall_live_runner_acceptance_gate_contract=present
+stage_4_macos_reset_uninstall_live_runner_acceptance_denial_transcript_contract=present
 stage_5_codesigning_notarization_plan=future
 stage_6_controlled_os_integration_contracts=future
 ```
@@ -349,6 +350,14 @@ scripts/macos-reset-uninstall-live-runner-acceptance-gate-contract.sh
 docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_GATE_CONTRACT_STATUS.md
 ```
 
+The Stage 4 macOS reset/uninstall live-runner acceptance-denial transcript contract is implemented by:
+
+```text
+docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_TRANSCRIPT_CONTRACT.md
+scripts/macos-reset-uninstall-live-runner-acceptance-denial-transcript-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_TRANSCRIPT_CONTRACT_STATUS.md
+```
+
 ## App Bundle Direction
 
 The macOS Panel should be represented as a managed user-local app bundle:
@@ -520,8 +529,14 @@ Current live-runner acceptance-gate lane now present:
 Add a macOS reset/uninstall live-runner acceptance-gate contract that keeps the live runner closed until passed preflight, evidence, authorization, operator intent, and implementation are all present.
 ```
 
-## Next Recommended Lane
+Current live-runner acceptance-denial transcript lane now present:
 
 ```text
 Add a macOS reset/uninstall live-runner acceptance-denial transcript contract that records the closed acceptance gate without dispatching effects.
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner acceptance-denial review contract that reviews the closed gate transcript without enabling dispatch or deletion.
 ```

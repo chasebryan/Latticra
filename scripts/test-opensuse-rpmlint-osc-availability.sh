@@ -43,6 +43,7 @@ probe_tool_invocation() {
 require_file docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_file docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_file docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+require_file docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_file docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 require_file scripts/test-opensuse-local-rpm-static-validation.sh
 require_file packaging/opensuse/latticra.spec
@@ -57,7 +58,8 @@ require_contains 'does not create package artifacts' docs/OPENSUSE_RPMLINT_OSC_A
 require_contains 'docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_contains 'docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
-require_contains 'Add openSUSE source archive fixture lane' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_contains 'Add openSUSE temporary RPM topdir handoff lane' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_contains 'opensuse_rpmlint_osc_availability: ok' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 
 if [ ! -r /etc/os-release ] || ! grep -Eq '^(ID=opensuse|ID_LIKE=.*suse|ID="opensuse|ID_LIKE=".*suse)' /etc/os-release; then
