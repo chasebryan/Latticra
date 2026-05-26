@@ -131,10 +131,20 @@ require_contains 'nadia tokenizer-artifact-measurement' "$ui_model"
 require_contains 'tokenizer-artifact-measurement' "$components_manifest"
 require_contains 'nadia-tokenizer-artifact-measurement' "$makefile"
 
-sh "$stage20_guard" >/tmp/latticra-nadia-stage21-prereq-stage20-test.out
+if [ -n "${NADIA_TEST_TMP_ROOT:-}" ]; then
+  tmp_root="$NADIA_TEST_TMP_ROOT"
+else
+  tmp_base="${TMPDIR:-/tmp}"
+  tmp_root=$(mktemp -d "$tmp_base/latticra-nadia-stage21-test.XXXXXX")
+  trap 'rm -rf "$tmp_root"' EXIT INT HUP TERM
+fi
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage21-tokenizer-artifact-measurement-test"
-inventory="${TMPDIR:-/tmp}/latticra-nadia-stage20-tokenizer-artifact-inventory-test/nadia-tokenizer-artifact-inventory-contract-stage20-test.txt"
+log_out="$tmp_root/stage21/logs"
+mkdir -p "$log_out"
+NADIA_TEST_TMP_ROOT="$tmp_root" sh "$stage20_guard" >"$log_out/prereq-stage20.out"
+
+out="$tmp_root/stage21/tokenizer-artifact-measurement"
+inventory="$tmp_root/stage20/tokenizer-artifact-inventory/nadia-tokenizer-artifact-inventory-contract-stage20-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 
@@ -145,7 +155,7 @@ NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_TIMESTAMP=stage21-test sh "$measurement_scr
   --request-class awareness-education \
   --measurement-family operator-reviewed-tokenizer-artifact-measurement \
   --measurement-format contract-only-offline-measurement \
-  --output "$out" >/tmp/latticra-nadia-stage21-tokenizer-artifact-measurement-test.out
+  --output "$out" >"$log_out/measurement.out"
 measurement="$out/nadia-tokenizer-artifact-measurement-contract-stage21-test.txt"
 
 require_file "$measurement"
@@ -265,10 +275,10 @@ require_contains 'network_authority=0' "$measurement"
 if NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_TIMESTAMP=stage21-reject sh "$measurement_script" \
   --tokenizer-artifact-inventory "$inventory" \
   --request-class sexual \
-  --output "$out" >/tmp/latticra-nadia-stage21-reject-test.out 2>/tmp/latticra-nadia-stage21-reject-test.err; then
+  --output "$out" >"$log_out/reject.out" 2>"$log_out/reject.err"; then
   printf 'nadia tokenizer artifact measurement contract stage 21: sexual request class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia tokenizer-artifact-measurement boundary' /tmp/latticra-nadia-stage21-reject-test.err
+require_contains 'outside Nadia tokenizer-artifact-measurement boundary' "$log_out/reject.err"
 
 printf 'nadia_tokenizer_artifact_measurement_contract_stage_21: ok\n'

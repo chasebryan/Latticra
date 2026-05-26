@@ -74,7 +74,7 @@ macos_app_bundle_writer_dry_run: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall operator-intent contract for explicit future live reset/uninstall approval evidence.
+Add a macOS reset/uninstall effect-authorization contract that keeps live execution disabled until implementation-gate and operator-intent evidence are both present.
 ```
 
 ## Non-Claims

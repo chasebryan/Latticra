@@ -119,10 +119,20 @@ require_contains 'nadia prompt-materialization' "$ui_model"
 require_contains 'prompt-materialization' "$components_manifest"
 require_contains 'nadia-prompt-materialization' "$makefile"
 
-sh "$stage13_guard" >/tmp/latticra-nadia-stage14-prereq-stage13-test.out
+if [ -n "${NADIA_TEST_TMP_ROOT:-}" ]; then
+  tmp_root="$NADIA_TEST_TMP_ROOT"
+else
+  tmp_base="${TMPDIR:-/tmp}"
+  tmp_root=$(mktemp -d "$tmp_base/latticra-nadia-stage14-test.XXXXXX")
+  trap 'rm -rf "$tmp_root"' EXIT INT HUP TERM
+fi
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage14-materialization-test"
-receipt="${TMPDIR:-/tmp}/latticra-nadia-stage13-receipt-test/nadia-prompt-receipt-contract-stage13-test.txt"
+log_out="$tmp_root/stage14/logs"
+mkdir -p "$log_out"
+NADIA_TEST_TMP_ROOT="$tmp_root" sh "$stage13_guard" >"$log_out/prereq-stage13.out"
+
+out="$tmp_root/stage14/materialization"
+receipt="$tmp_root/stage13/receipt/nadia-prompt-receipt-contract-stage13-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 
@@ -131,7 +141,7 @@ require_file "$receipt"
 NADIA_PROMPT_MATERIALIZATION_TIMESTAMP=stage14-test sh "$prompt_materialization_script" \
   --prompt-receipt "$receipt" \
   --request-class software-development \
-  --output "$out" >/tmp/latticra-nadia-stage14-materialization-test.out
+  --output "$out" >"$log_out/materialization.out"
 materialization="$out/nadia-prompt-materialization-contract-stage14-test.txt"
 
 require_file "$materialization"
@@ -189,10 +199,10 @@ require_contains 'sexual_request_refusal=always' "$materialization"
 if NADIA_PROMPT_MATERIALIZATION_TIMESTAMP=stage14-reject sh "$prompt_materialization_script" \
   --prompt-receipt "$receipt" \
   --request-class sexual \
-  --output "$out" >/tmp/latticra-nadia-stage14-reject-test.out 2>/tmp/latticra-nadia-stage14-reject-test.err; then
+  --output "$out" >"$log_out/reject.out" 2>"$log_out/reject.err"; then
   printf 'nadia prompt materialization contract stage 14: sexual request class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia prompt-materialization boundary' /tmp/latticra-nadia-stage14-reject-test.err
+require_contains 'outside Nadia prompt-materialization boundary' "$log_out/reject.err"
 
 printf 'nadia_prompt_materialization_contract_stage_14: ok\n'

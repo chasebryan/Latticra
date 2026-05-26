@@ -34,6 +34,11 @@ initialized
 registry-ready
 scheduler-ready
 memory-map-ready
+process-table-ready
+syscall-table-ready
+ipc-table-ready
+vfs-namespace-ready
+device-registry-ready
 ```
 
 ## Controlled effect boundary
@@ -100,4 +105,4 @@ operating-system replacement
 
 ## Next possible lane
 
-A later slice may connect the state machine to a kernel operator command or add rollback for in-memory state transitions before any external effects are introduced.
+A later slice may connect the state machine to a kernel operator command or add rollback classification for in-memory state transitions before any external effects are introduced.

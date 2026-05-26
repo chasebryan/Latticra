@@ -1,0 +1,12 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Latticra
+Source: https://github.com/Bryforge/Latticra
+Comment:
+ LOCAL-ONLY DRAFT. This copyright metadata mirrors the current repository
+ license-review posture and is not Ubuntu archive readiness evidence.
+
+Files: *
+Copyright: 2026 Bryforge
+License: LicenseRef-Latticra-TBD
+ The license expression must be reviewed before any Ubuntu archive, PPA,
+ distribution, or production package claim is made.

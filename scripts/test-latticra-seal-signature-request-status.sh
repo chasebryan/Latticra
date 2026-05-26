@@ -33,6 +33,7 @@ require_file docs/LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md
 require_file docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
 require_file docs/status/SEAL_SIGNER_INVOCATION_STATUS.md
 require_file docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md
+require_file docs/status/SEAL_REPORT_ENVELOPE_STATUS.md
 require_file include/latticra/seal_signature_request.h
 require_file include/latticra/seal_signing_authorization.h
 require_file include/latticra/seal_signer_handoff.h
@@ -59,11 +60,16 @@ require_file scripts/test-latticra-seal-signer-invocation-status.sh
 require_file scripts/test-latticra-seal-signing-operation-contract.sh
 require_file docs/LATTICRA_SEAL_REPORT_ENVELOPE_IMPLEMENTATION.md
 require_file scripts/test-latticra-seal-report-envelope.sh
+require_file scripts/test-latticra-seal-report-envelope-status.sh
+require_file .github/workflows/latticra-seal-signature-request-status.yml
 require_file README.md
 require_file STATUS.md
 require_file docs/status/README.md
 require_file docs/status/CURRENT_STATUS.md
 require_file docs/FOUNDATION_INDEX.md
+require_file docs/project_notes/CURRENT_DIRECTION.md
+require_file docs/project_notes/UPCOMING_WORK.md
+require_file docs/project_notes/README.md
 
 require_contains 'Status: status record for Latticra Seal signature request metadata' "$status_file"
 require_contains 'Source: local follow-up slice' "$status_file"
@@ -73,6 +79,9 @@ require_contains 'seal_signature_request_header_present=1' "$status_file"
 require_contains 'seal_signature_request_source_present=1' "$status_file"
 require_contains 'seal_signature_request_invariant_test_present=1' "$status_file"
 require_contains 'seal_signature_request_runner_present=1' "$status_file"
+require_contains 'seal_signature_request_status_present=1' "$status_file"
+require_contains 'seal_signature_request_status_runner_present=1' "$status_file"
+require_contains 'seal_signature_request_status_workflow_present=1' "$status_file"
 require_contains 'seal_signing_authorization_contract_present=1' "$status_file"
 require_contains 'seal_signing_authorization_implementation_present=1' "$status_file"
 require_contains 'seal_signing_authorization_header_present=1' "$status_file"
@@ -95,6 +104,13 @@ require_contains 'seal_signer_invocation_status_present=1' "$status_file"
 require_contains 'seal_signing_operation_contract_present=1' docs/status/SEAL_SIGNER_INVOCATION_STATUS.md
 require_contains 'seal_report_envelope_implementation_present=1' "$status_file"
 require_contains 'seal_report_envelope_runner_present=1' "$status_file"
+require_contains 'seal_report_envelope_status_present=1' "$status_file"
+require_contains 'seal_report_envelope_status_runner_present=1' "$status_file"
+require_contains 'signature_request_predecessor_report_envelope_status_present=1' "$status_file"
+require_contains 'readme_links_signature_request_status=1' "$status_file"
+require_contains 'root_status_mentions_signature_request_status=1' "$status_file"
+require_contains 'status_index_links_signature_request_status=1' "$status_file"
+require_contains 'foundation_index_links_signature_request_status=1' "$status_file"
 require_contains 'signature_request_profile=latticra-seal-signature-request/0.1' "$status_file"
 require_contains 'requested_signature=Ed25519-development' "$status_file"
 require_contains 'signature_request_state=requested-metadata-only' "$status_file"
@@ -108,15 +124,43 @@ require_contains 'host_write_performed=0' "$status_file"
 require_contains 'network_performed=0' "$status_file"
 require_contains 'mode=metadata-only' "$status_file"
 require_contains 'status=signature-request-metadata' "$status_file"
-require_contains 'bounded no-effect key parsing implementation' "$status_file"
+require_contains 'signature_request_status_added=1' "$status_file"
+require_contains 'signing_added=0' "$status_file"
+require_contains 'signature_verification_added=0' "$status_file"
+require_contains 'key_generation_added=0' "$status_file"
+require_contains 'private_key_handling_added=0' "$status_file"
+require_contains 'trust_store_behavior_added=0' "$status_file"
+require_contains 'revocation_lookup_added=0' "$status_file"
+require_contains 'object_sealing_added=0' "$status_file"
+require_contains 'runtime_handoff_execution_added=0' "$status_file"
+require_contains 'effect_execution_added=0' "$status_file"
+require_contains 'capability_enforcement_added=0' "$status_file"
+require_contains 'network_behavior_changed=0' "$status_file"
+require_contains 'host_behavior_changed=0' "$status_file"
+require_contains 'seal signature request status: ok' "$status_file"
+require_contains 'seal report envelope status: ok' "$status_file"
+require_contains 'signing authorization status/workflow guard alignment' "$status_file"
 
 require_contains 'SEAL_SIGNATURE_REQUEST_STATUS.md' README.md
 require_contains 'seal_signature_request_status_present=1' README.md
+require_contains 'signature-request status record now ties that metadata-only checkpoint to the guarded report-envelope status predecessor' README.md
 require_contains 'Seal signature request status/public-entry alignment' STATUS.md
 require_contains 'seal_signature_request_status_present=1' STATUS.md
+require_contains 'Seal signature request predecessor status alignment' STATUS.md
+require_contains 'signature_request_predecessor_report_envelope_status_present=1' STATUS.md
 require_contains 'SEAL_SIGNATURE_REQUEST_STATUS.md' docs/status/README.md
 require_contains 'seal_signature_request_status_present=1' docs/status/README.md
+require_contains 'signature_request_predecessor_report_envelope_status_present=1' docs/status/README.md
 require_contains 'Latticra Seal signature request status/public-entry alignment' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal signature request predecessor status alignment' docs/status/CURRENT_STATUS.md
+require_contains 'signature_request_predecessor_report_envelope_status_present=1' docs/status/CURRENT_STATUS.md
 require_contains 'SEAL_SIGNATURE_REQUEST_STATUS.md' docs/FOUNDATION_INDEX.md
+require_contains 'Latticra Seal signature request predecessor status alignment' docs/FOUNDATION_INDEX.md
+require_contains 'Latticra Seal signature request predecessor status alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Latticra Seal signature request predecessor status alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md' docs/project_notes/README.md
+require_contains 'sh scripts/test-latticra-seal-signature-request-status.sh' .github/workflows/latticra-seal-signature-request-status.yml
+
+sh scripts/test-latticra-seal-report-envelope-status.sh
 
 printf 'seal signature request status: ok\n'

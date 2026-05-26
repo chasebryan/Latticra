@@ -2,13 +2,13 @@
 
 Status: status record for the Latticra Seal runtime handoff evaluation metadata surface
 Source: local follow-up slice
-Scope: status and public-entry alignment after the Seal runtime handoff evaluation contract and metadata implementation. This record does not add runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, signing, key generation, private-key storage, public-key trust stores, network trust lookup, revocation lookup, object sealing, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
+Scope: status and public-entry alignment after the Seal runtime handoff evaluation contract and metadata implementation. This record does not add runtime handoff execution, effect execution, capability enforcement, runtime authority, host effects, network behavior, signing, key generation, private-key storage, public-key trust stores, network trust lookup, revocation lookup, object sealing, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
 
 ## Purpose
 
 This status record makes the Latticra Seal runtime handoff evaluation implementation visible from public entry points.
 
-The evaluation consumes verified effect decision metadata and classifies a narrow report-only/evaluate-only handoff posture. It is handoff classification metadata, not runtime handoff.
+The evaluation consumes verified effect decision metadata and evaluates a narrow local metadata-only handoff request. It is handoff classification metadata, not runtime handoff.
 
 ## Reviewed files
 
@@ -85,7 +85,6 @@ runtime_handoff_evaluation_added=1
 runtime_handoff_execution_added=0
 effect_execution_added=0
 capability_enforcement_added=0
-runtime_authority_granted=0
 signing_added=0
 key_generation_added=0
 private_key_handling_added=0
@@ -120,12 +119,12 @@ seal runtime handoff evaluation invariants: ok
 
 This status record is documentation/status alignment only.
 
-The runtime handoff evaluation implementation classifies an allowed metadata-only verified effect decision as report-only or evaluate-only handoff-eligible metadata. A successful evaluation may set `handoff_eligible=1`, but it remains metadata-only and does not perform a runtime handoff.
+The runtime handoff evaluation implementation evaluates a verified effect decision record against a narrow local metadata-only handoff request. A successful evaluation may set `handoff_eligible=1` and `handoff_state=eligible-report-only`, but it remains metadata-only and authority-neutral.
 
-It does not add runtime handoff execution, runtime behavior, runtime authority, effect execution, host behavior, network behavior, shell execution, tool execution, capability enforcement, signing, key generation, private-key handling, trust-store behavior, revocation lookup, production readiness, external endorsement, or authority grants.
+It does not add runtime handoff execution, effect execution, capability enforcement, runtime behavior, host behavior, network behavior, signing, key generation, private-key handling, trust-store behavior, revocation lookup, production readiness, external endorsement, or authority grants.
 
 ## Current next valid slice
 
 No completion-estimate review is required from this status/public-entry alignment.
 
-The next valid Latticra Seal slice is runtime handoff report surface status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is a runtime handoff report surface, runtime handoff report status/public-entry alignment, or another narrow status/index alignment follow-up.

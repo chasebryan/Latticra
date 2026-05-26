@@ -120,10 +120,20 @@ require_contains 'nadia tokenization-boundary' "$ui_model"
 require_contains 'tokenization-boundary' "$components_manifest"
 require_contains 'nadia-tokenization-boundary' "$makefile"
 
-sh "$stage16_guard" >/tmp/latticra-nadia-stage17-prereq-stage16-test.out
+if [ -n "${NADIA_TEST_TMP_ROOT:-}" ]; then
+  tmp_root="$NADIA_TEST_TMP_ROOT"
+else
+  tmp_base="${TMPDIR:-/tmp}"
+  tmp_root=$(mktemp -d "$tmp_base/latticra-nadia-stage17-test.XXXXXX")
+  trap 'rm -rf "$tmp_root"' EXIT INT HUP TERM
+fi
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage17-tokenization-test"
-handoff="${TMPDIR:-/tmp}/latticra-nadia-stage16-handoff-test/nadia-prompt-evaluation-handoff-contract-stage16-test.txt"
+log_out="$tmp_root/stage17/logs"
+mkdir -p "$log_out"
+NADIA_TEST_TMP_ROOT="$tmp_root" sh "$stage16_guard" >"$log_out/prereq-stage16.out"
+
+out="$tmp_root/stage17/tokenization"
+handoff="$tmp_root/stage16/handoff/nadia-prompt-evaluation-handoff-contract-stage16-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 
@@ -132,7 +142,7 @@ require_file "$handoff"
 NADIA_TOKENIZATION_BOUNDARY_TIMESTAMP=stage17-test sh "$tokenization_script" \
   --prompt-evaluation-handoff "$handoff" \
   --request-class awareness-education \
-  --output "$out" >/tmp/latticra-nadia-stage17-tokenization-test.out
+  --output "$out" >"$log_out/tokenization.out"
 tokenization="$out/nadia-tokenization-boundary-contract-stage17-test.txt"
 
 require_file "$tokenization"
@@ -201,10 +211,10 @@ require_contains 'network_authority=0' "$tokenization"
 if NADIA_TOKENIZATION_BOUNDARY_TIMESTAMP=stage17-reject sh "$tokenization_script" \
   --prompt-evaluation-handoff "$handoff" \
   --request-class sexual \
-  --output "$out" >/tmp/latticra-nadia-stage17-reject-test.out 2>/tmp/latticra-nadia-stage17-reject-test.err; then
+  --output "$out" >"$log_out/reject.out" 2>"$log_out/reject.err"; then
   printf 'nadia tokenization boundary contract stage 17: sexual request class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia tokenization-boundary boundary' /tmp/latticra-nadia-stage17-reject-test.err
+require_contains 'outside Nadia tokenization-boundary boundary' "$log_out/reject.err"
 
 printf 'nadia_tokenization_boundary_contract_stage_17: ok\n'

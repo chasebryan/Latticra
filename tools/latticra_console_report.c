@@ -15,12 +15,14 @@ int main(int argc, char **argv) {
     char host_inventory_report[LATTICRA_CONSOLE_HOST_INVENTORY_REPORT_MAX];
     char host_adapter_report[LATTICRA_CONSOLE_HOST_ADAPTER_REPORT_MAX];
     char receipt_request_report[LATTICRA_CONSOLE_RECEIPT_REQUEST_REPORT_MAX];
+    char receipt_payload_schema_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_SCHEMA_REPORT_MAX];
+    char signature_request_binding_report[LATTICRA_CONSOLE_SIGNATURE_REQUEST_BINDING_REPORT_MAX];
     char receipt_report[LATTICRA_CONSOLE_RECEIPT_REPORT_MAX];
     char os_contract_report[LATTICRA_CONSOLE_OS_CONTRACT_REPORT_MAX];
     char vm_evidence_report[LATTICRA_CONSOLE_VM_EVIDENCE_REPORT_MAX];
 
     if (argc > 2) {
-        fputs("usage: latticra_console_report [report|registry|help|man|boundary|host-contract|host-inventory|host-adapter|receipt-request|receipts|os-contract|vm-evidence]\n", stderr);
+        fputs("usage: latticra_console_report [report|registry|help|man|boundary|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
         return 64;
     }
 
@@ -122,6 +124,32 @@ int main(int argc, char **argv) {
     }
 
     if (argc == 2 &&
+        (strcmp(argv[1], "receipt-payload") == 0 || strcmp(argv[1], "receipt-payload-schema") == 0 ||
+         strcmp(argv[1], "payload-schema") == 0)) {
+        if (latticra_console_receipt_payload_schema_report(
+                receipt_payload_schema_report,
+                sizeof(receipt_payload_schema_report)) != LATTICRA_STATUS_OK) {
+            fputs("latticra_console_report: receipt payload schema report render failed\n", stderr);
+            return 1;
+        }
+        fputs(receipt_payload_schema_report, stdout);
+        return 0;
+    }
+
+    if (argc == 2 &&
+        (strcmp(argv[1], "signature-request") == 0 || strcmp(argv[1], "receipt-signature-request") == 0 ||
+         strcmp(argv[1], "signature-request-binding") == 0)) {
+        if (latticra_console_signature_request_binding_report(
+                signature_request_binding_report,
+                sizeof(signature_request_binding_report)) != LATTICRA_STATUS_OK) {
+            fputs("latticra_console_report: signature request binding report render failed\n", stderr);
+            return 1;
+        }
+        fputs(signature_request_binding_report, stdout);
+        return 0;
+    }
+
+    if (argc == 2 &&
         (strcmp(argv[1], "os-contract") == 0 || strcmp(argv[1], "base-contract") == 0)) {
         if (latticra_console_os_contract_report(os_contract_report, sizeof(os_contract_report)) !=
             LATTICRA_STATUS_OK) {
@@ -144,7 +172,7 @@ int main(int argc, char **argv) {
     }
 
     if (argc == 2 && strcmp(argv[1], "report") != 0) {
-        fputs("usage: latticra_console_report [report|registry|help|man|boundary|host-contract|host-inventory|host-adapter|receipt-request|receipts|os-contract|vm-evidence]\n", stderr);
+        fputs("usage: latticra_console_report [report|registry|help|man|boundary|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
         return 64;
     }
 
@@ -212,6 +240,26 @@ int main(int argc, char **argv) {
     }
 
     fputs(receipt_request_report, stdout);
+    fputc('\n', stdout);
+
+    if (latticra_console_receipt_payload_schema_report(
+            receipt_payload_schema_report,
+            sizeof(receipt_payload_schema_report)) != LATTICRA_STATUS_OK) {
+        fputs("latticra_console_report: receipt payload schema report render failed\n", stderr);
+        return 1;
+    }
+
+    fputs(receipt_payload_schema_report, stdout);
+    fputc('\n', stdout);
+
+    if (latticra_console_signature_request_binding_report(
+            signature_request_binding_report,
+            sizeof(signature_request_binding_report)) != LATTICRA_STATUS_OK) {
+        fputs("latticra_console_report: signature request binding report render failed\n", stderr);
+        return 1;
+    }
+
+    fputs(signature_request_binding_report, stdout);
     fputc('\n', stdout);
 
     if (latticra_console_receipt_report(receipt_report, sizeof(receipt_report)) != LATTICRA_STATUS_OK) {

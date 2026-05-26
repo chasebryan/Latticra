@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage1.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -96,10 +99,11 @@ require_contains 'context_engine_stage=1-local-context-engine' "$panel_config"
 require_contains 'nadia context' "$panel_ui"
 require_contains 'latticra-nadia context-pack' "$installer_readme"
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage1-context-test"
+out="$tmpdir/latticra-nadia-stage1-context-test"
+context_stdout="$tmpdir/latticra-nadia-stage1-context-test.out"
 rm -rf "$out"
 mkdir -p "$out"
-NADIA_CONTEXT_PACK_TIMESTAMP=stage1-test sh "$context_script" --repo . --output "$out" >/tmp/latticra-nadia-stage1-context-test.out
+NADIA_CONTEXT_PACK_TIMESTAMP=stage1-test sh "$context_script" --repo . --output "$out" > "$context_stdout"
 pack="$out/nadia-context-pack-stage1-test.txt"
 index="$out/nadia-context-file-index-stage1-test.tsv"
 

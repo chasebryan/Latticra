@@ -22,23 +22,25 @@ The current kernel evidence now includes:
 
 ```text
 kernel lifecycle seed
-kernel lifecycle report runner
-kernel lifecycle subsystem summary
-kernel lifecycle rollback plan
+kernel IPC table guard
+kernel IPC table report runner
+kernel VFS namespace guard
+kernel VFS namespace report runner
+kernel device registry guard
+kernel device registry report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
 kernel syscall table report runner
-kernel ipc table guard
-kernel ipc table report runner
-kernel vfs namespace guard
-kernel vfs namespace report runner
+kernel lifecycle report runner
+kernel lifecycle subsystem summary
+kernel lifecycle rollback plan
 ```
 
 The lifecycle evidence can report a bounded in-memory path ending at:
 
 ```text
-final_state=vfs-namespace-ready
+final_state=device-registry-ready
 ```
 
 The lifecycle report runner and subsystem summary keep the external-effect posture explicit:
@@ -60,10 +62,16 @@ process_spawn_allowed=0
 syscall_dispatch_allowed=0
 ipc_send_allowed=0
 ipc_receive_allowed=0
+ipc_queue_mutation_allowed=0
 filesystem_lookup_allowed=0
 filesystem_read_allowed=0
 filesystem_write_allowed=0
 namespace_mutation_allowed=0
+device_open_allowed=0
+device_read_allowed=0
+device_write_allowed=0
+driver_bind_allowed=0
+hardware_effect_allowed=0
 ```
 
 The subsystem summary also keeps process, filesystem, network, device, and production-boundary claims denied or report-only.
@@ -128,9 +136,12 @@ This status alignment is guarded by:
 sh scripts/test-kernel-lifecycle-status-alignment.sh
 ```
 
-Dedicated workflow lanes now keep the terminal process/syscall table guards visible:
+Dedicated workflow lanes keep the kernel table guards visible:
 
 ```text
+.github/workflows/kernel-ipc-table.yml
+.github/workflows/kernel-vfs-namespace.yml
+.github/workflows/kernel-device-registry.yml
 .github/workflows/kernel-process-table.yml
 .github/workflows/kernel-syscall-table.yml
 ```

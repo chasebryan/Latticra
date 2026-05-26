@@ -16,7 +16,8 @@ static int default_request_is_stable(void) {
 
     EXPECT_TRUE(latticra_kernel_ipc_table_default_request(&request) == LATTICRA_STATUS_OK,
         "default request status");
-    EXPECT_TRUE(request.requested_port_count == 4u, "default port count");
+    EXPECT_TRUE(request.requested_port_count == 5u,
+        "default port count");
     EXPECT_TRUE(request.syscall_table_request.requested_call_count == 8u,
         "syscall table seed request preserved");
     EXPECT_TRUE(request.syscall_table_request.process_table_request.requested_process_count == 4u,
@@ -33,7 +34,7 @@ static int ipc_table_seed_is_metadata_only(void) {
     EXPECT_TRUE(latticra_kernel_ipc_table_evaluate(&request, &result) == LATTICRA_STATUS_OK,
         "ipc table evaluates");
     EXPECT_TRUE(strcmp(result.table_status, "ipc-table-seed-ready") == 0,
-        "ipc table ready");
+        "table ready");
     EXPECT_TRUE(strcmp(result.policy_status, "report-only") == 0,
         "policy report-only");
     EXPECT_TRUE(strcmp(result.syscall_table.table_status, "syscall-table-seed-ready") == 0,
@@ -41,33 +42,45 @@ static int ipc_table_seed_is_metadata_only(void) {
     EXPECT_TRUE(strcmp(result.syscall_table.process_table.table_status,
             "process-table-seed-ready") == 0,
         "process table ready");
-    EXPECT_TRUE(result.port_count == 4u, "port count four");
-    EXPECT_TRUE(result.no_effect == 1, "ipc table no-effect");
-    EXPECT_TRUE(result.ipc_send_allowed == 0, "send denied");
-    EXPECT_TRUE(result.ipc_receive_allowed == 0, "receive denied");
-    EXPECT_TRUE(result.queue_mutation_allowed == 0, "queue mutation denied");
-    EXPECT_TRUE(result.host_effect_allowed == 0, "host effect denied");
+    EXPECT_TRUE(result.port_count == 5u,
+        "port count five");
+    EXPECT_TRUE(result.no_effect == 1,
+        "ipc table no-effect");
+    EXPECT_TRUE(result.ipc_send_allowed == 0,
+        "ipc send denied");
+    EXPECT_TRUE(result.ipc_receive_allowed == 0,
+        "ipc receive denied");
+    EXPECT_TRUE(result.queue_mutation_allowed == 0,
+        "queue mutation denied");
+    EXPECT_TRUE(result.endpoint_bind_allowed == 0,
+        "endpoint bind denied");
+    EXPECT_TRUE(result.host_effect_allowed == 0,
+        "host effect denied");
 
     EXPECT_TRUE(strcmp(result.ports[0].label, "kernel-control-port-metadata") == 0,
-        "port zero label");
-    EXPECT_TRUE(strcmp(result.ports[1].label, "operator-report-port-metadata") == 0,
-        "port one label");
-    EXPECT_TRUE(strcmp(result.ports[0].owner_process_label,
-            "kernel-report-process-metadata") == 0,
-        "port owner label");
-    EXPECT_TRUE(strcmp(result.ports[0].peer_process_label,
-            "supervisor-process-metadata") == 0,
-        "port peer label");
-    EXPECT_TRUE(strcmp(result.ports[0].queue_status, "queue-metadata-only") == 0,
-        "queue metadata only");
-    EXPECT_TRUE(strcmp(result.ports[0].authority_status, "message-transfer-denied") == 0,
-        "message transfer denied");
-    EXPECT_TRUE(result.ports[0].declared == 1, "port declared");
-    EXPECT_TRUE(result.ports[0].bound == 0, "port not bound");
-    EXPECT_TRUE(result.ports[0].send_allowed == 0, "port send denied");
-    EXPECT_TRUE(result.ports[0].receive_allowed == 0, "port receive denied");
-    EXPECT_TRUE(result.ports[0].queue_mutation_allowed == 0, "port queue mutation denied");
-    EXPECT_TRUE(result.ports[0].no_effect == 1, "port no-effect");
+        "control port label");
+    EXPECT_TRUE(strcmp(result.ports[1].domain, "process") == 0,
+        "process port domain");
+    EXPECT_TRUE(strcmp(result.ports[2].authority_status, "ipc-queue-denied") == 0,
+        "queue authority denied");
+    EXPECT_TRUE(strcmp(result.ports[3].authority_status, "ipc-endpoint-bind-denied") == 0,
+        "endpoint authority denied");
+    EXPECT_TRUE(strcmp(result.ports[4].domain, "network") == 0,
+        "network port domain");
+    EXPECT_TRUE(result.ports[0].declared == 1,
+        "port declared");
+    EXPECT_TRUE(result.ports[0].bound == 0,
+        "port not bound");
+    EXPECT_TRUE(result.ports[0].send_allowed == 0,
+        "port send denied");
+    EXPECT_TRUE(result.ports[0].receive_allowed == 0,
+        "port receive denied");
+    EXPECT_TRUE(result.ports[0].queue_mutation_allowed == 0,
+        "port queue mutation denied");
+    EXPECT_TRUE(result.ports[0].host_effect_allowed == 0,
+        "port host effect denied");
+    EXPECT_TRUE(result.ports[0].no_effect == 1,
+        "port no-effect");
     return 0;
 }
 
@@ -82,9 +95,9 @@ static int ipc_table_caps_port_count(void) {
         "ipc table evaluates cap");
     EXPECT_TRUE(result.port_count == LATTICRA_KERNEL_IPC_TABLE_PORT_MAX,
         "port count capped");
-    EXPECT_TRUE(strcmp(result.ports[4].label, "reserved-ipc-port-metadata") == 0,
+    EXPECT_TRUE(strcmp(result.ports[5].label, "reserved-ipc-port-metadata") == 0,
         "reserved port label");
-    EXPECT_TRUE(result.ports[4].port_token == 1004ul,
+    EXPECT_TRUE(result.ports[5].port_token == 1005ul,
         "reserved port token");
     return 0;
 }
@@ -109,23 +122,27 @@ static int ipc_table_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "policy_status=report-only\n") != 0,
         "policy emitted");
     EXPECT_TRUE(strstr(report, "syscall_table_status=syscall-table-seed-ready\n") != 0,
-        "syscall status emitted");
+        "syscall table emitted");
     EXPECT_TRUE(strstr(report, "process_table_status=process-table-seed-ready\n") != 0,
-        "process status emitted");
-    EXPECT_TRUE(strstr(report, "port_count=4\n") != 0,
+        "process table emitted");
+    EXPECT_TRUE(strstr(report, "port_count=5\n") != 0,
         "port count emitted");
     EXPECT_TRUE(strstr(report, "ipc_send_allowed=0\n") != 0,
         "send flag emitted");
     EXPECT_TRUE(strstr(report, "ipc_receive_allowed=0\n") != 0,
         "receive flag emitted");
     EXPECT_TRUE(strstr(report, "queue_mutation_allowed=0\n") != 0,
-        "queue mutation flag emitted");
+        "queue flag emitted");
+    EXPECT_TRUE(strstr(report, "endpoint_bind_allowed=0\n") != 0,
+        "endpoint flag emitted");
     EXPECT_TRUE(strstr(report, "port[0].label=kernel-control-port-metadata\n") != 0,
-        "port label emitted");
-    EXPECT_TRUE(strstr(report, "port[0].authority_status=message-transfer-denied\n") != 0,
-        "authority emitted");
-    EXPECT_TRUE(strstr(report, "port[0].send_allowed=0\n") != 0,
-        "port send emitted");
+        "control port emitted");
+    EXPECT_TRUE(strstr(report, "port[2].authority_status=ipc-queue-denied\n") != 0,
+        "queue denial emitted");
+    EXPECT_TRUE(strstr(report, "port[4].domain=network\n") != 0,
+        "network port emitted");
+    EXPECT_TRUE(strstr(report, "port[0].bound=0\n") != 0,
+        "bound flag emitted");
     EXPECT_TRUE(strstr(report, "port[0].no_effect=1\n") != 0,
         "port no-effect emitted");
     return 0;

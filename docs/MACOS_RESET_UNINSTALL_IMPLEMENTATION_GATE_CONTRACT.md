@@ -2,11 +2,11 @@
 
 Status: no-effect macOS reset/uninstall implementation-gate contract
 Date: 2026-05-25 CDT
-Scope: contract for keeping future live reset/uninstall execution closed until required evidence exists.
+Scope: contract for keeping future reset/uninstall live activity closed until all required macOS evidence exists.
 
 ## Purpose
 
-This contract defines the gate that a future macOS reset/uninstall implementation must pass before any live managed-target removal can be allowed.
+This contract defines the gate that a future macOS reset/uninstall implementation must pass before live managed-target removal or receipt writing can be considered.
 
 It is contract-only. It does not delete files, remove directories, write receipts, write absence reports, mutate host state, open the network, or claim reset/uninstall implementation.
 
@@ -24,6 +24,9 @@ The current implementation-gate posture is:
 
 ```text
 macos_reset_uninstall_implementation_gate_contract_present=1
+macos_reset_uninstall_operator_intent_contract_present=1
+operator_intent_contract_state=defined-no-effect
+operator_intent_evidence_written=0
 implementation_gate_contract_state=closed-no-effect
 implementation_gate_state=closed-no-effect
 implementation_gate_decision=blocked-missing-reset-uninstall-evidence
@@ -34,15 +37,11 @@ reset_uninstall_deletion_enabled=0
 managed_target_removal_allowed=0
 managed_target_deletion_enabled=0
 reset_uninstall_receipt_write_enabled=0
-operator_reset_uninstall_intent_evidence_present=0
-operator_explicit_reset_uninstall_intent_observed=0
-reset_uninstall_implementation_present=0
-macos_reset_uninstall_implemented=0
 ```
 
-## Required Inputs
+## Required Evidence
 
-A future implementation gate must bind to the existing no-effect macOS reset/uninstall chain:
+The gate stays closed until the reset/uninstall chain has all required evidence:
 
 ```text
 macos_reset_uninstall_receipt_schema_contract_present=1
@@ -58,11 +57,26 @@ reset_uninstall_receipt_evidence_present=0
 reset_receipt_evidence_present=0
 receipt_schema_evidence_present=0
 absence_report_evidence_present=0
+operator_reset_uninstall_intent_evidence_present=0
+operator_explicit_reset_uninstall_intent_observed=0
 ```
 
-## Gate Conditions
+## Target Scope
 
-The future gate must require:
+The future gate must bind evidence to the known user-local macOS targets:
+
+```text
+app_support_prefix_target=$HOME/Library/Application Support/Latticra
+app_bundle_target=$HOME/Applications/Latticra Panel.app
+cli_wrapper_target=$HOME/.local/bin/latticra-panel
+reset_receipts_dir_target=$HOME/Library/Application Support/Latticra Reset Receipts
+reset_receipt_path_future=$HOME/Library/Application Support/Latticra Reset Receipts/reset-uninstall-receipt.json
+absence_report_path_future=$HOME/Library/Application Support/Latticra Reset Receipts/absence-report.txt
+```
+
+## Gate Requirements
+
+The future gate requires:
 
 ```text
 managed_target_classification_required=1
@@ -80,7 +94,7 @@ operator_intent_must_acknowledge_no_unmanaged_removal=1
 operator_intent_must_acknowledge_receipt_path=1
 ```
 
-The future gate must keep live execution closed unless every condition is satisfied:
+The gate conditions are:
 
 ```text
 gate_condition_receipt_schema_contract_present=required
@@ -106,6 +120,10 @@ implementation_gate_phase_3=validate_receipt_schema_and_absence_contract
 implementation_gate_phase_4=validate_operator_intent
 implementation_gate_phase_5=authorize_future_reset_uninstall_implementation
 implementation_gate_phase_6=run_live_reset_uninstall
+implementation_gate_phase_1_status=contract-only
+implementation_gate_phase_2_status=contract-only
+implementation_gate_phase_3_status=contract-only
+implementation_gate_phase_4_status=contract-only
 implementation_gate_phase_5_status=disabled
 implementation_gate_phase_6_status=disabled
 ```
@@ -115,6 +133,12 @@ implementation_gate_phase_6_status=disabled
 This contract preserves:
 
 ```text
+reset_uninstall_implementation_present=0
+macos_reset_uninstall_implemented=0
+managed_marker_required=1
+unmanaged_target_preservation_required=1
+receipt_outside_removed_prefix_required=1
+absence_report_required=1
 managed_wrapper_removal_performed=0
 managed_app_bundle_removal_performed=0
 managed_application_support_removal_performed=0
@@ -163,5 +187,5 @@ This contract is not macOS reset evidence, macOS uninstall evidence, macOS insta
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall operator-intent contract for explicit future live reset/uninstall approval evidence.
+Add a macOS reset/uninstall effect-authorization contract that keeps live execution disabled until implementation-gate and operator-intent evidence are both present.
 ```

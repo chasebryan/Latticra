@@ -2,7 +2,7 @@
 
 Status: Stage-30 implementation contract
 
-Scope: prompt-evaluation invocation metadata before runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+Scope: prompt-evaluation invocation metadata before invocation request creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 
 ## Purpose
 

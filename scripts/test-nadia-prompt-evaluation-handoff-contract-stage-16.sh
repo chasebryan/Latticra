@@ -120,10 +120,20 @@ require_contains 'nadia prompt-evaluation-handoff' "$ui_model"
 require_contains 'prompt-evaluation-handoff' "$components_manifest"
 require_contains 'nadia-prompt-evaluation-handoff' "$makefile"
 
-sh "$stage15_guard" >/tmp/latticra-nadia-stage16-prereq-stage15-test.out
+if [ -n "${NADIA_TEST_TMP_ROOT:-}" ]; then
+  tmp_root="$NADIA_TEST_TMP_ROOT"
+else
+  tmp_base="${TMPDIR:-/tmp}"
+  tmp_root=$(mktemp -d "$tmp_base/latticra-nadia-stage16-test.XXXXXX")
+  trap 'rm -rf "$tmp_root"' EXIT INT HUP TERM
+fi
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage16-handoff-test"
-awareness="${TMPDIR:-/tmp}/latticra-nadia-stage15-awareness-test/nadia-awareness-dialogue-contract-stage15-test.txt"
+log_out="$tmp_root/stage16/logs"
+mkdir -p "$log_out"
+NADIA_TEST_TMP_ROOT="$tmp_root" sh "$stage15_guard" >"$log_out/prereq-stage15.out"
+
+out="$tmp_root/stage16/handoff"
+awareness="$tmp_root/stage15/awareness/nadia-awareness-dialogue-contract-stage15-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 
@@ -132,7 +142,7 @@ require_file "$awareness"
 NADIA_PROMPT_EVALUATION_HANDOFF_TIMESTAMP=stage16-test sh "$handoff_script" \
   --awareness-dialogue "$awareness" \
   --request-class awareness-education \
-  --output "$out" >/tmp/latticra-nadia-stage16-handoff-test.out
+  --output "$out" >"$log_out/handoff.out"
 handoff="$out/nadia-prompt-evaluation-handoff-contract-stage16-test.txt"
 
 require_file "$handoff"
@@ -191,10 +201,10 @@ require_contains 'network_authority=0' "$handoff"
 if NADIA_PROMPT_EVALUATION_HANDOFF_TIMESTAMP=stage16-reject sh "$handoff_script" \
   --awareness-dialogue "$awareness" \
   --request-class sexual \
-  --output "$out" >/tmp/latticra-nadia-stage16-reject-test.out 2>/tmp/latticra-nadia-stage16-reject-test.err; then
+  --output "$out" >"$log_out/reject.out" 2>"$log_out/reject.err"; then
   printf 'nadia prompt evaluation handoff contract stage 16: sexual request class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia prompt-evaluation-handoff boundary' /tmp/latticra-nadia-stage16-reject-test.err
+require_contains 'outside Nadia prompt-evaluation-handoff boundary' "$log_out/reject.err"
 
 printf 'nadia_prompt_evaluation_handoff_contract_stage_16: ok\n'

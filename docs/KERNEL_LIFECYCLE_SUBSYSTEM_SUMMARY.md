@@ -12,7 +12,7 @@ kernel lifecycle runner
 kernel subsystem registry
 ```
 
-The lifecycle runner can move a local in-memory kernel state machine from `created` to `memory-map-ready` through gated internal state changes.
+The lifecycle runner can move a local in-memory kernel state machine from `created` to `device-registry-ready` through gated internal state changes.
 
 The subsystem registry exposes boot, runtime, scheduler, memory, process, filesystem, network, device, and security subsystem posture.
 
@@ -43,17 +43,17 @@ docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
 The default summary request allows the lifecycle runner to reach:
 
 ```text
-memory-map-ready
+device-registry-ready
 ```
 
 That produces:
 
 ```text
 summary_status=summary-ready
-final_state=memory-map-ready
+final_state=device-registry-ready
 lifecycle_complete=1
-lifecycle_step_count=4
-lifecycle_state_change_count=4
+lifecycle_step_count=9
+lifecycle_state_change_count=9
 external_effect_performed=0
 registry_no_effect=1
 no_external_effect_chain=1
@@ -67,6 +67,10 @@ Expected readiness examples:
 boot -> boot-sequence-seeded
 scheduler -> scheduler-ready-metadata
 memory -> memory-map-ready
+process -> ipc-table-ready
+filesystem -> vfs-namespace-ready
+network -> network-syscall-metadata-ready
+device -> device-registry-ready
 runtime -> runtime-not-entered
 security -> security-not-production-boundary
 ```
@@ -77,6 +81,20 @@ Authority remains denied:
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
 memory_allocation_allowed=0
+process_spawn_allowed=0
+syscall_dispatch_allowed=0
+ipc_send_allowed=0
+ipc_receive_allowed=0
+ipc_queue_mutation_allowed=0
+filesystem_lookup_allowed=0
+filesystem_read_allowed=0
+filesystem_write_allowed=0
+namespace_mutation_allowed=0
+device_open_allowed=0
+device_read_allowed=0
+device_write_allowed=0
+driver_bind_allowed=0
+hardware_effect_allowed=0
 ```
 
 Subsystem authority labels include:
@@ -129,13 +147,18 @@ kernel_lifecycle_subsystem_summary_report_runner: ok
 The guards verify:
 
 ```text
-default request targets memory-map-ready
-summary reaches memory-map-ready
-summary marks boot/scheduler/memory as lifecycle-ready metadata
+default request targets device-registry-ready
+summary reaches device-registry-ready
+summary marks boot/scheduler/memory/process/filesystem as lifecycle-ready metadata
 runtime remains not entered
 runtime entry remains denied
 scheduler execution remains denied
 memory allocation remains denied
+process spawn remains denied
+syscall dispatch remains denied
+IPC send, receive, and queue mutation remain denied
+filesystem lookup, read, write, and namespace mutation remain denied
+device open, read, write, driver bind, and hardware effect remain denied
 network and device authority remain denied
 limited lifecycle summary reports incomplete readiness
 external_effect_performed=0 remains true
@@ -147,4 +170,4 @@ This slice does not make Latticra bootable, runnable as an operating system, pro
 
 ## Next possible lane
 
-A later slice may add lifecycle rollback planning, kernel memory-region validation against lifecycle readiness, or a process descriptor seed. Those should remain report-only unless a separate authority contract is introduced first.
+A later slice may add lifecycle rollback planning, driver catalog metadata, or virtual device binding metadata. Those should remain report-only unless a separate authority contract is introduced first.

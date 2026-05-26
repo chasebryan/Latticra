@@ -23,6 +23,7 @@ non-claims
 - [`CURRENT_STATUS.md`](CURRENT_STATUS.md) — current project status, completion estimates, and next priorities.
 - [`CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](CURRENT_ESTIMATE_REFRESH_2026_05_24.md) - current planning-estimate refresh after Panel, Seal, documentation, and local evidence work.
 - [`CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) - current public estimate table source alignment for README, root status, detailed status, foundation index, and project notes.
+- [`LATTICRA_CONSOLE_FOUNDATION_STATUS.md`](LATTICRA_CONSOLE_FOUNDATION_STATUS.md) - Latticra Console foundation status for the LC C report surface, Panel installability, metadata-only host/OS/VM contracts, and no-effect authority baseline.
 - [`MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md`](MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md) - macOS integration transferability status for adapting current no-effect, receipt-first, user-local Latticra surfaces into a future macOS lane.
 - [`MACOS_BUILD_PLATFORM_PROBE_STATUS.md`](MACOS_BUILD_PLATFORM_PROBE_STATUS.md) - macOS build/platform probe status for no-effect toolchain, architecture, Panel-readiness, and C-test-readiness reporting.
 - [`MACOS_DRY_RUN_PLAN_ADAPTER_STATUS.md`](MACOS_DRY_RUN_PLAN_ADAPTER_STATUS.md) - macOS dry-run plan adapter status for rendering user-local Application Support, app bundle, CLI-wrapper, receipt, and verification intent without writing artifacts.
@@ -39,7 +40,8 @@ non-claims
 - [`MACOS_RESET_UNINSTALL_DRY_RUN_PLANNER_STATUS.md`](MACOS_RESET_UNINSTALL_DRY_RUN_PLANNER_STATUS.md) - macOS reset/uninstall dry-run planner status for converting live target classifications into an ordered no-effect transcript.
 - [`MACOS_RESET_UNINSTALL_ABSENCE_REPORT_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_ABSENCE_REPORT_CONTRACT_STATUS.md) - macOS reset/uninstall absence-report contract status for future post-removal verification evidence.
 - [`MACOS_RESET_UNINSTALL_RECEIPT_SCHEMA_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_RECEIPT_SCHEMA_CONTRACT_STATUS.md) - macOS reset/uninstall receipt-schema contract status for future reset/uninstall receipt fields and path constraints.
-- [`MACOS_RESET_UNINSTALL_IMPLEMENTATION_GATE_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_IMPLEMENTATION_GATE_CONTRACT_STATUS.md) - macOS reset/uninstall implementation-gate contract status for keeping deletion disabled until required evidence and explicit operator intent exist.
+- [`MACOS_RESET_UNINSTALL_IMPLEMENTATION_GATE_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_IMPLEMENTATION_GATE_CONTRACT_STATUS.md) - macOS reset/uninstall implementation-gate contract status for keeping live reset/uninstall execution closed until required evidence exists.
+- [`MACOS_RESET_UNINSTALL_OPERATOR_INTENT_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_OPERATOR_INTENT_CONTRACT_STATUS.md) - macOS reset/uninstall operator-intent contract status for future explicit live reset/uninstall approval evidence.
 - [`MACOS_README_INSTALLER_USAGE_STATUS.md`](MACOS_README_INSTALLER_USAGE_STATUS.md) - macOS README installer usage status for documenting current Mac-specific no-effect installer commands, target paths, and closed commit-gate posture.
 - [`NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](NADIA_OFFLINE_AI_STAGE_0_STATUS.md) - Nadia offline AI Stage-0 foundation status for Panel installability, Console interoperability, and awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) - Nadia Stage-1 local context-engine status for no-network context-pack generation.
@@ -71,7 +73,8 @@ non-claims
 - [`NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md`](NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md) - Nadia Stage-27 context-window assembly contract status before context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md`](NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md) - Nadia Stage-28 prompt-evaluation-input contract status before prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md`](NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md) - Nadia Stage-29 prompt-evaluation runtime handoff contract status before runtime handoff, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
-- [`NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md`](NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md) - Nadia Stage-30 prompt-evaluation invocation contract status before invocation request creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md`](NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md) - Nadia Stage-30 prompt-evaluation invocation contract status before invocation requests, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31_STATUS.md) - Nadia Stage-31 prompt-evaluation result contract status before result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
 - [`../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md`](../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md) — defensive threat model validation refinement.
 - [`../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`](../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md) — runtime boundary policy expansion after threat-model validation.
@@ -97,6 +100,8 @@ non-claims
 - [`SEAL_VERIFIED_CAPABILITY_GATE_STATUS.md`](SEAL_VERIFIED_CAPABILITY_GATE_STATUS.md) — Latticra Seal verified capability gate metadata status and public-entry checkpoint.
 - [`SEAL_VERIFIED_EFFECT_DECISION_STATUS.md`](SEAL_VERIFIED_EFFECT_DECISION_STATUS.md) — Latticra Seal verified effect decision metadata status and public-entry checkpoint.
 - [`SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md`](SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md) — Latticra Seal runtime handoff evaluation metadata status and public-entry checkpoint.
+- [`SEAL_RUNTIME_HANDOFF_REPORT_STATUS.md`](SEAL_RUNTIME_HANDOFF_REPORT_STATUS.md) — Latticra Seal runtime handoff report metadata status and public-entry checkpoint.
+- [`SEAL_REPORT_ENVELOPE_STATUS.md`](SEAL_REPORT_ENVELOPE_STATUS.md) — Latticra Seal sealed report-envelope metadata status and public-entry checkpoint.
 - [`SEAL_VERIFICATION_POLICY_STATUS.md`](SEAL_VERIFICATION_POLICY_STATUS.md) — Latticra Seal verification policy metadata status and public-entry checkpoint.
 - [`SEAL_KEY_PARSING_STATUS.md`](SEAL_KEY_PARSING_STATUS.md) — Latticra Seal key parsing metadata status and public-entry checkpoint.
 - [`SEAL_PUBLIC_KEY_PARSING_STATUS.md`](SEAL_PUBLIC_KEY_PARSING_STATUS.md) — Latticra Seal public-key parsing metadata status and public-entry checkpoint.
@@ -109,7 +114,7 @@ non-claims
 - [`SEAL_SIGNATURE_REQUEST_STATUS.md`](SEAL_SIGNATURE_REQUEST_STATUS.md) — Latticra Seal signature request metadata status and public-entry checkpoint.
 - [`SEAL_CORE_EVIDENCE_STATUS.md`](SEAL_CORE_EVIDENCE_STATUS.md) — Latticra Seal core evidence status surface after the completed report-only runtime gate evidence milestone.
 - [`SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md`](SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md) — Latticra Seal core evidence index alignment after the status surface.
-- [`KERNEL_LIFECYCLE_EVIDENCE_STATUS.md`](KERNEL_LIFECYCLE_EVIDENCE_STATUS.md) — status alignment after the kernel lifecycle report runner, subsystem summary, and rollback plan.
+- [`KERNEL_LIFECYCLE_EVIDENCE_STATUS.md`](KERNEL_LIFECYCLE_EVIDENCE_STATUS.md) — status alignment after the kernel IPC, VFS namespace, process table, and syscall table guards plus the lifecycle report runner, subsystem summary, and rollback plan.
 - [`FEDORA_HOST_INSTALL_PREFLIGHT_STATUS.md`](FEDORA_HOST_INSTALL_PREFLIGHT_STATUS.md) — status record for the no-effect Fedora host install preflight classifier.
 - [`FEDORA_INSTALL_PREFLIGHT_SNAPSHOT_CAPTURE_STATUS.md`](FEDORA_INSTALL_PREFLIGHT_SNAPSHOT_CAPTURE_STATUS.md) — status record for the no-effect Fedora install preflight snapshot capture implementation.
 - [`FEDORA_LIVE_READONLY_SNAPSHOT_ADAPTER_STATUS.md`](FEDORA_LIVE_READONLY_SNAPSHOT_ADAPTER_STATUS.md) — status record for the live read-only Fedora snapshot adapter implementation.
@@ -122,6 +127,7 @@ non-claims
 - [`FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md`](FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_EVIDENCE_STATUS.md) — evidence status record for the successful disposable Fedora VM local RPM validation transcript.
 - [`FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md`](FEDORA_DISPOSABLE_VM_RPM_README_ALIGNMENT_STATUS.md) — Fedora disposable VM RPM README alignment.
 - [`FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md`](FEDORA_VM_CLI_PAYLOAD_VALIDATION_STATUS.md) — status record for the manually gated disposable Fedora VM CLI payload validation lane runner.
+- [`UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md`](UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the Ubuntu build lane, Panel apt prerequisites, and local-only deb packaging draft.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) — current public estimate table source alignment across README, root status, and detailed current status.
 - [`COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md`](COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md) — completion-estimate review after the L-UI detailed report refinement.
@@ -159,11 +165,23 @@ seal_readme_status_row_alignment_present=1
 seal_core_evidence_report_present=1
 seal_core_evidence_public_status_present=1
 seal_core_evidence_status_surface_present=1
-seal_report_envelope_metadata_present=1
-seal_report_envelope_ready_metadata_present=1
+seal_report_envelope_contract_present=1
+seal_report_envelope_implementation_present=1
+seal_report_envelope_status_present=1
+report_envelope_profile=latticra-seal-report-envelope/0.1
+report_envelope_ready=1
+report_envelope_state=sealed-report-only
+report_envelope_signature_performed=0
+report_envelope_handoff_performed=0
+report_envelope_effect_performed=0
+report_envelope_runtime_authority_granted=0
+report_envelope_host_read_performed=0
+report_envelope_host_write_performed=0
+report_envelope_network_performed=0
 seal_signature_request_contract_present=1
 seal_signature_request_metadata_present=1
 seal_signature_request_status_present=1
+signature_request_predecessor_report_envelope_status_present=1
 seal_signing_authorization_contract_present=1
 seal_signing_authorization_metadata_present=1
 seal_signing_authorization_status_present=1
@@ -199,6 +217,7 @@ seal_effect_decision_metadata_present=1
 seal_effect_decision_status_present=1
 seal_runtime_handoff_metadata_present=1
 seal_runtime_handoff_status_present=1
+seal_runtime_handoff_report_status_present=1
 seal_status_rollup_metadata_present=1
 seal_status_rollup_status_present=1
 seal_agentic_automation_security_metadata_present=1
@@ -305,12 +324,17 @@ runtime_handoff_evaluation_eligible=1
 runtime_handoff_evaluation_state=eligible-report-only
 runtime_handoff_evaluation_handoff_performed=0
 runtime_handoff_evaluation_runtime_authority_granted=0
+seal_runtime_handoff_report_status_present=1
+runtime_handoff_report_ready=1
+runtime_handoff_report_state=ready-report-only
+runtime_handoff_report_handoff_performed=0
+runtime_handoff_report_runtime_authority_granted=0
 ```
 
 The careful current public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, verified receipt promotion metadata/status, verified capability gate metadata/status, verified effect decision metadata/status, runtime handoff evaluation metadata/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata/status, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, verified receipt promotion metadata/status, verified capability gate metadata/status, verified effect decision metadata/status, runtime handoff evaluation metadata/status, runtime handoff report metadata/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 The current next recommended Seal lane is:
@@ -722,17 +746,19 @@ The latest kernel status alignment records:
 
 ```text
 kernel lifecycle report runner
-kernel lifecycle subsystem summary
-kernel lifecycle rollback plan
+kernel IPC table guard
+kernel IPC table report runner
+kernel VFS namespace guard
+kernel VFS namespace report runner
+kernel device registry guard
+kernel device registry report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
 kernel syscall table report runner
-kernel ipc table guard
-kernel ipc table report runner
-kernel vfs namespace guard
-kernel vfs namespace report runner
-final_state=vfs-namespace-ready
+kernel lifecycle subsystem summary
+kernel lifecycle rollback plan
+final_state=device-registry-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
@@ -741,10 +767,16 @@ process_spawn_allowed=0
 syscall_dispatch_allowed=0
 ipc_send_allowed=0
 ipc_receive_allowed=0
+ipc_queue_mutation_allowed=0
 filesystem_lookup_allowed=0
 filesystem_read_allowed=0
 filesystem_write_allowed=0
 namespace_mutation_allowed=0
+device_open_allowed=0
+device_read_allowed=0
+device_write_allowed=0
+driver_bind_allowed=0
+hardware_effect_allowed=0
 ```
 
 The current next recommended kernel lane is:

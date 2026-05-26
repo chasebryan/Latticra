@@ -29,7 +29,7 @@ docs/KERNEL_LIFECYCLE_SEED.md
 The default lifecycle target is:
 
 ```text
-memory-map-ready
+device-registry-ready
 ```
 
 The approved sequence is:
@@ -39,6 +39,11 @@ created -> initialized
 initialized -> registry-ready
 registry-ready -> scheduler-ready
 scheduler-ready -> memory-map-ready
+memory-map-ready -> process-table-ready
+process-table-ready -> syscall-table-ready
+syscall-table-ready -> ipc-table-ready
+ipc-table-ready -> vfs-namespace-ready
+vfs-namespace-ready -> device-registry-ready
 ```
 
 ## Controlled effect boundary
@@ -48,7 +53,7 @@ This slice allows internal state-machine mutation only.
 The result may report:
 
 ```text
-state_change_count=4
+state_change_count=9
 lifecycle_complete=1
 ```
 
@@ -82,12 +87,12 @@ The guard verifies:
 LATTICRA KERNEL LIFECYCLE REPORT
 lifecycle_status=lifecycle-complete
 policy_status=gate-allowed
-final_state=memory-map-ready
-step_count=4
-state_change_count=4
+final_state=device-registry-ready
+step_count=9
+state_change_count=9
 lifecycle_complete=1
 external_effect_performed=0
-machine_log_count=4
+machine_log_count=9
 evidence_level=10
 ```
 
@@ -113,7 +118,7 @@ The guards verify:
 
 ```text
 default request is denied
-allowed lifecycle reaches memory-map-ready
+allowed lifecycle reaches device-registry-ready
 intermediate target stops correctly
 step limit is respected
 report includes lifecycle completion and transition log

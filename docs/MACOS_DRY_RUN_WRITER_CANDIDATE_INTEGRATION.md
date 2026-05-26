@@ -132,5 +132,5 @@ This integration is not macOS installation, macOS app bundle evidence, signed ap
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall operator-intent contract for explicit future live reset/uninstall approval evidence.
+Add a macOS reset/uninstall effect-authorization contract that keeps live execution disabled until implementation-gate and operator-intent evidence are both present.
 ```

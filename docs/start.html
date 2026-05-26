@@ -24,10 +24,12 @@
         <a href="./">Home</a>
         <a href="start.html">Start</a>
         <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
         <a href="architecture.html">Architecture</a>
         <a href="language.html">Language</a>
-        <a href="evidence.html">Evidence</a>
+        <a href="examples.html">Examples</a>
         <a href="seal.html">Seal</a>
+        <a href="evidence.html">Evidence</a>
         <a href="map.html">Map</a>
         <a href="https://github.com/Bryforge/Latticra">GitHub</a>
       </nav>
@@ -74,13 +76,13 @@
           <span>03</span>
           <h3>Run no-effect checks</h3>
           <p>Use local commands only as inspection and regression checks.</p>
-          <a href="#commands">Jump to commands</a>
+          <a href="examples.html">Open examples</a>
         </article>
         <article class="start-step">
           <span>04</span>
           <h3>Pick a record lane</h3>
           <p>Use the documentation map to continue into the exact contracts.</p>
-          <a href="map.html">Open docs map</a>
+          <a href="roadmap.html">Open roadmap</a>
         </article>
       </div>
     </section>
@@ -122,6 +124,14 @@
         </p>
       </div>
       <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Ubuntu prerequisites</h3>
+          <pre><code>sudo apt-get update
+sudo apt-get install -y rustc cargo make gcc pkg-config \
+  libx11-dev libxcb1-dev libxcursor-dev libxrandr-dev libxi-dev \
+  libxkbcommon-dev libgl1-mesa-dev libwayland-dev desktop-file-utils \
+  libgtk-3-bin</code></pre>
+        </article>
         <article class="command-panel">
           <h3>Read status</h3>
           <pre><code>sed -n '1,220p' STATUS.md
@@ -168,9 +178,12 @@ effect_authority=denied</code></pre>
       </div>
       <div class="content-shell reader-grid">
         <a href="REAL_SYSTEM_CONTRACT.md"><strong>Project identity</strong><span>Evidence rules, real-system boundary, and non-claims.</span></a>
+        <a href="roadmap.html"><strong>Roadmap</strong><span>Sequencing, estimates, active lanes, and guarded promotion rules.</span></a>
         <a href="evidence.html"><strong>Evidence model</strong><span>Promotion levels, claim boundaries, and exact source records.</span></a>
-        <a href="language.html"><strong>Language lane</strong><span>Lat, LIR, L-UI, parser, and pipeline boundaries.</span></a>
         <a href="architecture.html"><strong>System structure</strong><span>Layered architecture, authority boundaries, and evidence flow.</span></a>
+        <a href="language.html"><strong>Language lane</strong><span>Lat, LIR, L-UI, no-effect reports, and source records.</span></a>
+        <a href="examples.html"><strong>Examples</strong><span>Runnable local checks and expected report fields.</span></a>
+        <a href="seal.html"><strong>Tool-boundary review</strong><span>Latticra Seal status, policy, reports, and boundaries.</span></a>
       </div>
     </section>
   </main>

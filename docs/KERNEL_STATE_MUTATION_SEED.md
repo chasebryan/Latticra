@@ -30,7 +30,7 @@ docs/KERNEL_STATE_MUTATION_SEED.md
 
 ## State ladder
 
-The initial guarded ladder is:
+The current guarded ladder is:
 
 ```text
 created
@@ -38,6 +38,11 @@ initialized
 registry-ready
 scheduler-ready
 memory-map-ready
+process-table-ready
+syscall-table-ready
+ipc-table-ready
+vfs-namespace-ready
+device-registry-ready
 ```
 
 Allowed transitions are intentionally sequential:
@@ -47,6 +52,11 @@ created -> initialized
 initialized -> registry-ready
 registry-ready -> scheduler-ready
 scheduler-ready -> memory-map-ready
+memory-map-ready -> process-table-ready
+process-table-ready -> syscall-table-ready
+syscall-table-ready -> ipc-table-ready
+ipc-table-ready -> vfs-namespace-ready
+vfs-namespace-ready -> device-registry-ready
 ```
 
 No-op transitions are allowed when the gate allows them.
@@ -118,4 +128,4 @@ operating-system replacement
 
 ## Next possible lane
 
-A later slice may add a kernel state machine runner or state persistence plan, but external effects should remain blocked until a separate effect contract and rollback policy exist.
+A later slice may add state persistence planning or rollback classification, but external effects should remain blocked until a separate effect contract and rollback policy exist.

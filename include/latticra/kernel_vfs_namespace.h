@@ -8,7 +8,6 @@ extern "C" {
 #endif
 
 #define LATTICRA_KERNEL_VFS_NAMESPACE_LABEL_MAX 64u
-#define LATTICRA_KERNEL_VFS_NAMESPACE_PATH_MAX 96u
 #define LATTICRA_KERNEL_VFS_NAMESPACE_MOUNT_MAX 8u
 #define LATTICRA_KERNEL_VFS_NAMESPACE_REPORT_MAX 24576u
 
@@ -20,10 +19,10 @@ typedef struct {
 typedef struct {
     size_t mount_index;
     unsigned long mount_token;
-    char label[LATTICRA_KERNEL_VFS_NAMESPACE_LABEL_MAX];
-    char path[LATTICRA_KERNEL_VFS_NAMESPACE_PATH_MAX];
-    char role[LATTICRA_KERNEL_VFS_NAMESPACE_LABEL_MAX];
-    char backing_status[LATTICRA_KERNEL_VFS_NAMESPACE_LABEL_MAX];
+    char path[LATTICRA_KERNEL_VFS_NAMESPACE_LABEL_MAX];
+    char source[LATTICRA_KERNEL_VFS_NAMESPACE_LABEL_MAX];
+    char kind[LATTICRA_KERNEL_VFS_NAMESPACE_LABEL_MAX];
+    char mount_status[LATTICRA_KERNEL_VFS_NAMESPACE_LABEL_MAX];
     char authority_status[LATTICRA_KERNEL_VFS_NAMESPACE_LABEL_MAX];
     int declared;
     int mounted;
@@ -31,6 +30,7 @@ typedef struct {
     int read_allowed;
     int write_allowed;
     int namespace_mutation_allowed;
+    int host_effect_allowed;
     int no_effect;
     unsigned int evidence_level;
 } latticra_kernel_vfs_namespace_mount_t;
@@ -44,9 +44,9 @@ typedef struct {
         LATTICRA_KERNEL_VFS_NAMESPACE_MOUNT_MAX];
     size_t mount_count;
     int no_effect;
-    int path_lookup_allowed;
-    int file_read_allowed;
-    int file_write_allowed;
+    int filesystem_lookup_allowed;
+    int filesystem_read_allowed;
+    int filesystem_write_allowed;
     int namespace_mutation_allowed;
     int host_effect_allowed;
     unsigned int evidence_level;

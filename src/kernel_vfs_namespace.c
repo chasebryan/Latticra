@@ -21,9 +21,9 @@ static void seed_result(latticra_kernel_vfs_namespace_result_t *result) {
     vfs_copy(result->namespace_status, sizeof(result->namespace_status), "pending");
     vfs_copy(result->policy_status, sizeof(result->policy_status), "report-only");
     result->no_effect = 1;
-    result->path_lookup_allowed = 0;
-    result->file_read_allowed = 0;
-    result->file_write_allowed = 0;
+    result->filesystem_lookup_allowed = 0;
+    result->filesystem_read_allowed = 0;
+    result->filesystem_write_allowed = 0;
     result->namespace_mutation_allowed = 0;
     result->host_effect_allowed = 0;
     result->evidence_level = 11u;
@@ -45,25 +45,25 @@ static void fill_mount(
     latticra_kernel_vfs_namespace_mount_t *mount,
     size_t index,
     unsigned long mount_token,
-    const char *label,
     const char *path,
-    const char *role,
-    const char *backing_status) {
+    const char *source,
+    const char *kind,
+    const char *authority_status) {
     memset(mount, 0, sizeof(*mount));
     mount->mount_index = index;
     mount->mount_token = mount_token;
-    vfs_copy(mount->label, sizeof(mount->label), label);
     vfs_copy(mount->path, sizeof(mount->path), path);
-    vfs_copy(mount->role, sizeof(mount->role), role);
-    vfs_copy(mount->backing_status, sizeof(mount->backing_status), backing_status);
-    vfs_copy(mount->authority_status, sizeof(mount->authority_status),
-        "filesystem-access-denied");
+    vfs_copy(mount->source, sizeof(mount->source), source);
+    vfs_copy(mount->kind, sizeof(mount->kind), kind);
+    vfs_copy(mount->mount_status, sizeof(mount->mount_status), "declared-metadata");
+    vfs_copy(mount->authority_status, sizeof(mount->authority_status), authority_status);
     mount->declared = 1;
     mount->mounted = 0;
     mount->lookup_allowed = 0;
     mount->read_allowed = 0;
     mount->write_allowed = 0;
     mount->namespace_mutation_allowed = 0;
+    mount->host_effect_allowed = 0;
     mount->no_effect = 1;
     mount->evidence_level = 11u;
 }
@@ -80,25 +80,29 @@ static void fill_mounts(
 
     result->mount_count = count;
     if (count > 0u) {
-        fill_mount(&result->mounts[0], 0u, 0ul, "root-namespace-metadata",
-            "/", "root-namespace-label", "metadata-backing-only");
+        fill_mount(&result->mounts[0], 0u, 0ul, "/",
+            "kernel-root-metadata", "root-namespace",
+            "filesystem-lookup-denied");
     }
     if (count > 1u) {
-        fill_mount(&result->mounts[1], 1u, 1ul, "process-namespace-metadata",
-            "/proc", "process-table-label", "process-table-metadata");
+        fill_mount(&result->mounts[1], 1u, 1ul, "/proc",
+            "process-table-metadata", "process-namespace",
+            "filesystem-read-denied");
     }
     if (count > 2u) {
-        fill_mount(&result->mounts[2], 2u, 2ul, "syscall-namespace-metadata",
-            "/syscall", "syscall-table-label", "syscall-table-metadata");
+        fill_mount(&result->mounts[2], 2u, 2ul, "/syscall",
+            "syscall-table-metadata", "syscall-namespace",
+            "filesystem-write-denied");
     }
     if (count > 3u) {
-        fill_mount(&result->mounts[3], 3u, 3ul, "ipc-namespace-metadata",
-            "/ipc", "ipc-table-label", "ipc-table-metadata");
+        fill_mount(&result->mounts[3], 3u, 3ul, "/ipc",
+            "ipc-table-metadata", "ipc-namespace",
+            "namespace-mutation-denied");
     }
     for (i = 4u; i < count; ++i) {
         fill_mount(&result->mounts[i], i, 1000ul + (unsigned long)i,
-            "reserved-vfs-namespace-metadata", "/reserved",
-            "reserved-namespace-label", "reserved-metadata");
+            "/reserved", "reserved-vfs-metadata", "reserved-namespace",
+            "reserved-denied");
     }
 }
 
@@ -129,7 +133,8 @@ latticra_status_t latticra_kernel_vfs_namespace_evaluate(
     fill_mounts(result, request->requested_mount_count);
     result->no_effect = result->ipc_table.no_effect;
     vfs_copy(result->namespace_status, sizeof(result->namespace_status),
-        result->no_effect ? "vfs-namespace-seed-ready" : "vfs-namespace-seed-blocked");
+        result->no_effect ? "vfs-namespace-seed-ready" :
+            "vfs-namespace-seed-blocked");
     return result->status;
 }
 
@@ -171,11 +176,13 @@ latticra_status_t latticra_kernel_vfs_namespace_report(
         "policy_status=%s\n"
         "ipc_table_status=%s\n"
         "syscall_table_status=%s\n"
+        "process_table_status=%s\n"
+        "memory_map_status=%s\n"
         "mount_count=%lu\n"
         "no_effect=%d\n"
-        "path_lookup_allowed=%d\n"
-        "file_read_allowed=%d\n"
-        "file_write_allowed=%d\n"
+        "filesystem_lookup_allowed=%d\n"
+        "filesystem_read_allowed=%d\n"
+        "filesystem_write_allowed=%d\n"
         "namespace_mutation_allowed=%d\n"
         "host_effect_allowed=%d\n"
         "evidence_level=%u\n",
@@ -183,11 +190,13 @@ latticra_status_t latticra_kernel_vfs_namespace_report(
         result->policy_status,
         result->ipc_table.table_status,
         result->ipc_table.syscall_table.table_status,
+        result->ipc_table.syscall_table.process_table.table_status,
+        result->ipc_table.syscall_table.process_table.memory_map.map_status,
         (unsigned long)result->mount_count,
         result->no_effect,
-        result->path_lookup_allowed,
-        result->file_read_allowed,
-        result->file_write_allowed,
+        result->filesystem_lookup_allowed,
+        result->filesystem_read_allowed,
+        result->filesystem_write_allowed,
         result->namespace_mutation_allowed,
         result->host_effect_allowed,
         result->evidence_level);
@@ -195,11 +204,11 @@ latticra_status_t latticra_kernel_vfs_namespace_report(
 
     for (i = 0u; i < result->mount_count; ++i) {
         status = append_text(buffer, buffer_len, &used,
-            "mount[%lu].label=%s\n"
-            "mount[%lu].token=%lu\n"
             "mount[%lu].path=%s\n"
-            "mount[%lu].role=%s\n"
-            "mount[%lu].backing_status=%s\n"
+            "mount[%lu].token=%lu\n"
+            "mount[%lu].source=%s\n"
+            "mount[%lu].kind=%s\n"
+            "mount[%lu].mount_status=%s\n"
             "mount[%lu].authority_status=%s\n"
             "mount[%lu].declared=%d\n"
             "mount[%lu].mounted=%d\n"
@@ -207,12 +216,13 @@ latticra_status_t latticra_kernel_vfs_namespace_report(
             "mount[%lu].read_allowed=%d\n"
             "mount[%lu].write_allowed=%d\n"
             "mount[%lu].namespace_mutation_allowed=%d\n"
+            "mount[%lu].host_effect_allowed=%d\n"
             "mount[%lu].no_effect=%d\n",
-            (unsigned long)i, result->mounts[i].label,
-            (unsigned long)i, result->mounts[i].mount_token,
             (unsigned long)i, result->mounts[i].path,
-            (unsigned long)i, result->mounts[i].role,
-            (unsigned long)i, result->mounts[i].backing_status,
+            (unsigned long)i, result->mounts[i].mount_token,
+            (unsigned long)i, result->mounts[i].source,
+            (unsigned long)i, result->mounts[i].kind,
+            (unsigned long)i, result->mounts[i].mount_status,
             (unsigned long)i, result->mounts[i].authority_status,
             (unsigned long)i, result->mounts[i].declared,
             (unsigned long)i, result->mounts[i].mounted,
@@ -220,6 +230,7 @@ latticra_status_t latticra_kernel_vfs_namespace_report(
             (unsigned long)i, result->mounts[i].read_allowed,
             (unsigned long)i, result->mounts[i].write_allowed,
             (unsigned long)i, result->mounts[i].namespace_mutation_allowed,
+            (unsigned long)i, result->mounts[i].host_effect_allowed,
             (unsigned long)i, result->mounts[i].no_effect);
         if (status != LATTICRA_STATUS_OK) return status;
     }

@@ -126,6 +126,18 @@ static const latticra_console_command_t lc_commands[] = {
         0
     },
     {
+        "lc install-config",
+        "lc install-config",
+        "Report LC install configuration metadata from the Panel console.",
+        "lc.install.config",
+        LATTICRA_CONSOLE_COMMAND_CORE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
         "lc profiles",
         "lc profiles",
         "Show installed LC configuration profile presets.",
@@ -154,6 +166,30 @@ static const latticra_console_command_t lc_commands[] = {
         "lc receipt-request",
         "Inspect the metadata-only Seal receipt request contract without signing.",
         "lc.receipt.request",
+        LATTICRA_CONSOLE_COMMAND_CORE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "lc receipt-payload",
+        "lc receipt-payload",
+        "Inspect the metadata-only LC receipt payload schema before Seal binding.",
+        "lc.receipt.payload",
+        LATTICRA_CONSOLE_COMMAND_CORE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "lc signature-request",
+        "lc signature-request",
+        "Inspect the metadata-only LC binding contract for a future Seal signature request.",
+        "lc.signature.request",
         LATTICRA_CONSOLE_COMMAND_CORE,
         LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
         1,
@@ -539,6 +575,10 @@ static void lc_seed_result(
         "metadata-only-contract");
     lc_copy(result->receipt_request_contract_status, sizeof(result->receipt_request_contract_status),
         "metadata-only-contract");
+    lc_copy(result->receipt_payload_schema_status, sizeof(result->receipt_payload_schema_status),
+        "metadata-only-schema");
+    lc_copy(result->signature_request_binding_status, sizeof(result->signature_request_binding_status),
+        "metadata-only-contract");
     lc_copy(result->receipt_contract_status, sizeof(result->receipt_contract_status),
         "metadata-only-contract");
     lc_copy(result->os_base_contract_status, sizeof(result->os_base_contract_status),
@@ -557,6 +597,8 @@ static void lc_seed_result(
     result->host_inventory_contract_present = 1;
     result->host_adapter_contract_present = 1;
     result->receipt_request_contract_present = 1;
+    result->receipt_payload_schema_present = 1;
+    result->signature_request_binding_present = 1;
     result->receipt_contract_present = 1;
     result->os_base_contract_present = 1;
     result->vm_evidence_contract_present = 1;
@@ -624,6 +666,10 @@ static void lc_finalize(latticra_console_result_t *result) {
     lc_copy(result->host_adapter_contract_status, sizeof(result->host_adapter_contract_status),
         "metadata-only-contract-ready");
     lc_copy(result->receipt_request_contract_status, sizeof(result->receipt_request_contract_status),
+        "metadata-only-contract-ready");
+    lc_copy(result->receipt_payload_schema_status, sizeof(result->receipt_payload_schema_status),
+        "metadata-only-schema-ready");
+    lc_copy(result->signature_request_binding_status, sizeof(result->signature_request_binding_status),
         "metadata-only-contract-ready");
     lc_copy(result->receipt_contract_status, sizeof(result->receipt_contract_status),
         "metadata-only-contract-ready");
@@ -772,9 +818,12 @@ latticra_status_t latticra_console_manpage_report(
         "  latticra-lc status\n"
         "  latticra-lc help\n"
         "  latticra-lc commands\n"
+        "  latticra-lc install-config\n"
         "  latticra-lc profiles\n"
         "  latticra-lc receipts\n"
         "  latticra-lc receipt-request\n"
+        "  latticra-lc receipt-payload\n"
+        "  latticra-lc signature-request\n"
         "  latticra-lc substrate\n"
         "  latticra-lc host\n"
         "  latticra-lc host-contract\n"
@@ -1022,6 +1071,14 @@ latticra_status_t latticra_console_receipt_request_report(
         "requested_receipt_profile=latticra-seal-verified-receipt/0.1\n"
         "requested_capability=verified-receipt-report\n"
         "requested_surfaces=profile,host-contract,host-inventory,host-adapter,runtime-boundary\n"
+        "receipt_payload_schema_profile=lc-receipt-payload-schema-v0\n"
+        "receipt_payload_schema_required=1\n"
+        "receipt_payload_schema_present=1\n"
+        "receipt_payload_schema_command=lc receipt-payload\n"
+        "signature_request_binding_profile=lc-signature-request-binding-v0\n"
+        "signature_request_binding_required=1\n"
+        "signature_request_binding_contract_present=1\n"
+        "signature_request_binding_command=lc signature-request\n"
         "receipt_payload_profile=lc-receipts-v0\n"
         "receipt_payload_hash_recorded=0\n"
         "receipt_payload_path_recorded=0\n"
@@ -1037,6 +1094,112 @@ latticra_status_t latticra_console_receipt_request_report(
         "promotion_gate=lc_receipt_request_review_before_signing\n"
         "command_surface=lc receipt-request\n"
         "related_contract_command=lc receipts\n"
+        "no_effect=1\n"
+        "file_write_allowed=0\n"
+        "host_process_launch_allowed=0\n"
+        "host_file_read_allowed=0\n"
+        "host_file_write_allowed=0\n"
+        "host_mutation_allowed=0\n"
+        "network_allowed=0\n"
+        "runtime_enforcement_allowed=0\n"
+        "boot_allowed=0\n");
+    return status;
+}
+
+latticra_status_t latticra_console_receipt_payload_schema_report(
+    char *buffer,
+    size_t buffer_len) {
+    size_t used = 0u;
+    latticra_status_t status;
+
+    if (buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    buffer[0] = '\0';
+
+    status = lc_appendf(buffer, buffer_len, &used,
+        "LATTICRA CONSOLE RECEIPT PAYLOAD SCHEMA\n"
+        "schema_profile=lc-receipt-payload-schema-v0\n"
+        "schema_status=metadata-only\n"
+        "schema_present=1\n"
+        "receipt_request_profile=lc-receipt-request-v0\n"
+        "receipt_contract_profile=lc-receipts-v0\n"
+        "signature_request_profile=latticra-seal-signature-request/0.1\n"
+        "requested_receipt_profile=latticra-seal-verified-receipt/0.1\n"
+        "requested_capability=verified-receipt-report\n"
+        "payload_fields=console_id,profile,command_registry,host_contract,host_inventory,host_adapter,runtime_boundary,seal_capability_labels,authority_denials\n"
+        "required_contract_fields=host_embedding_contract_status,host_inventory_contract_status,host_adapter_contract_status,receipt_request_contract_status,receipt_contract_status\n"
+        "required_authority_fields=no_effect,execution_allowed,host_mutation_allowed,network_allowed,runtime_enforcement_allowed,boot_allowed\n"
+        "payload_artifact_present=0\n"
+        "payload_hash_computed=0\n"
+        "payload_path_recorded=0\n"
+        "signature_request_binding_present=0\n"
+        "signature_request_binding_allowed=0\n"
+        "signature_request_binding_contract_present=1\n"
+        "signature_request_binding_command=lc signature-request\n"
+        "seal_signature_request_ready=0\n"
+        "seal_signature_request_present=0\n"
+        "seal_signing_authority_present=0\n"
+        "receipt_write_allowed=0\n"
+        "receipt_signed=0\n"
+        "promotion_gate=lc_receipt_payload_schema_before_signature_request_binding\n"
+        "command_surface=lc receipt-payload\n"
+        "related_request_command=lc receipt-request\n"
+        "no_effect=1\n"
+        "file_write_allowed=0\n"
+        "host_process_launch_allowed=0\n"
+        "host_file_read_allowed=0\n"
+        "host_file_write_allowed=0\n"
+        "host_mutation_allowed=0\n"
+        "network_allowed=0\n"
+        "runtime_enforcement_allowed=0\n"
+        "boot_allowed=0\n");
+    return status;
+}
+
+latticra_status_t latticra_console_signature_request_binding_report(
+    char *buffer,
+    size_t buffer_len) {
+    size_t used = 0u;
+    latticra_status_t status;
+
+    if (buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    buffer[0] = '\0';
+
+    status = lc_appendf(buffer, buffer_len, &used,
+        "LATTICRA CONSOLE SIGNATURE REQUEST BINDING CONTRACT\n"
+        "binding_profile=lc-signature-request-binding-v0\n"
+        "binding_status=metadata-only\n"
+        "binding_contract_present=1\n"
+        "receipt_request_profile=lc-receipt-request-v0\n"
+        "receipt_payload_schema_profile=lc-receipt-payload-schema-v0\n"
+        "receipt_contract_profile=lc-receipts-v0\n"
+        "signature_request_profile=latticra-seal-signature-request/0.1\n"
+        "signing_authorization_profile=latticra-seal-signing-authorization/0.1\n"
+        "requested_signature=Ed25519-development\n"
+        "requested_signing_authorization=metadata-only\n"
+        "requested_receipt_profile=latticra-seal-verified-receipt/0.1\n"
+        "requested_capability=verified-receipt-report\n"
+        "required_surfaces=receipt-request,receipt-payload-schema,receipt-contract,runtime-boundary,seal-capability-labels\n"
+        "required_payload_state=payload_artifact_present=0,payload_hash_computed=0,payload_path_recorded=0\n"
+        "signature_request_binding_artifact_present=0\n"
+        "signature_request_binding_artifact_path_recorded=0\n"
+        "signature_request_binding_hash_recorded=0\n"
+        "signature_request_binding_allowed=0\n"
+        "seal_signature_request_metadata_referenced=1\n"
+        "seal_signature_request_ready=0\n"
+        "seal_signature_request_present=0\n"
+        "seal_signature_request_written=0\n"
+        "seal_signing_authorization_metadata_referenced=1\n"
+        "seal_signing_authority_present=0\n"
+        "seal_signer_handoff_allowed=0\n"
+        "seal_signing_operation_allowed=0\n"
+        "receipt_write_allowed=0\n"
+        "receipt_signed=0\n"
+        "promotion_gate=lc_signature_request_binding_after_payload_artifact_and_signing_authority\n"
+        "command_surface=lc signature-request\n"
+        "related_payload_command=lc receipt-payload\n"
+        "related_request_command=lc receipt-request\n"
         "no_effect=1\n"
         "file_write_allowed=0\n"
         "host_process_launch_allowed=0\n"
@@ -1070,10 +1233,16 @@ latticra_status_t latticra_console_receipt_report(
         "host_adapter_contract_receipt_required=1\n"
         "receipt_request_contract_required=1\n"
         "receipt_request_contract_present=1\n"
+        "receipt_payload_schema_required=1\n"
+        "receipt_payload_schema_present=1\n"
+        "signature_request_binding_required=1\n"
+        "signature_request_binding_contract_present=1\n"
         "runtime_boundary_receipt_required=1\n"
         "seal_capability_labels_required=1\n"
         "signature_request_profile=latticra-seal-signature-request/0.1\n"
         "receipt_request_command=lc receipt-request\n"
+        "receipt_payload_schema_command=lc receipt-payload\n"
+        "signature_request_binding_command=lc signature-request\n"
         "seal_signature_planned=1\n"
         "seal_signature_present=0\n"
         "seal_signing_authority_present=0\n"
@@ -1212,6 +1381,8 @@ latticra_status_t latticra_console_report(
         "host_inventory_contract_status=%s\n"
         "host_adapter_contract_status=%s\n"
         "receipt_request_contract_status=%s\n"
+        "receipt_payload_schema_status=%s\n"
+        "signature_request_binding_status=%s\n"
         "receipt_contract_status=%s\n"
         "os_base_contract_status=%s\n"
         "vm_evidence_contract_status=%s\n"
@@ -1226,6 +1397,8 @@ latticra_status_t latticra_console_report(
         "host_inventory_contract_present=%d\n"
         "host_adapter_contract_present=%d\n"
         "receipt_request_contract_present=%d\n"
+        "receipt_payload_schema_present=%d\n"
+        "signature_request_binding_present=%d\n"
         "receipt_contract_present=%d\n"
         "os_base_contract_present=%d\n"
         "vm_evidence_contract_present=%d\n"
@@ -1266,6 +1439,8 @@ latticra_status_t latticra_console_report(
         result->host_inventory_contract_status,
         result->host_adapter_contract_status,
         result->receipt_request_contract_status,
+        result->receipt_payload_schema_status,
+        result->signature_request_binding_status,
         result->receipt_contract_status,
         result->os_base_contract_status,
         result->vm_evidence_contract_status,
@@ -1280,6 +1455,8 @@ latticra_status_t latticra_console_report(
         result->host_inventory_contract_present,
         result->host_adapter_contract_present,
         result->receipt_request_contract_present,
+        result->receipt_payload_schema_present,
+        result->signature_request_binding_present,
         result->receipt_contract_present,
         result->os_base_contract_present,
         result->vm_evidence_contract_present,

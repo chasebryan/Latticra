@@ -29,6 +29,12 @@ require_line() {
     fail "$file must contain line: $pattern"
 }
 
+check_no_conflict_markers() {
+  conflict_markers="$(git grep -n -E '^(<<<<<<<|=======|>>>>>>>)' -- . || :)"
+  [ -z "$conflict_markers" ] ||
+    fail "working tree contains unresolved merge conflict markers"
+}
+
 check_workflow() {
   workflow="$1"
 
@@ -50,6 +56,7 @@ check_workflow() {
   [ "$runs_on_count" -eq 0 ] ||
     [ "$timeout_count" -ge "$runs_on_count" ] ||
     fail "$workflow must set timeout-minutes for every job"
+
   long_timeouts="$(awk '
     /^[[:space:]]*timeout-minutes:[[:space:]]*[0-9]+[[:space:]]*$/ {
       value = $0
@@ -107,6 +114,24 @@ check_workflow() {
 
   if grep -Eq 'github\.token|GITHUB_TOKEN|GH_TOKEN|ACTIONS_ID_TOKEN|ACTIONS_RUNTIME_TOKEN' "$workflow"; then
     fail "$workflow must not consume implicit GitHub token surfaces without a dedicated review guard"
+  fi
+
+  package_manager_lines="$(grep -En '(^|[[:space:]])(sudo[[:space:]]+)?(apt-get|apt|dnf|yum|brew|pip[0-9]*|python[0-9]*[[:space:]]+-m[[:space:]]+pip|npm|pnpm|yarn)([[:space:]]|$)' "$workflow" || :)"
+  if [ -n "$package_manager_lines" ]; then
+    case "$workflow" in
+      .github/workflows/quality.yml|.github/workflows/latticra-panel-installer.yml)
+        unexpected_package_lines="$(printf '%s\n' "$package_manager_lines" | grep -Ev ':[[:space:]]*sudo[[:space:]]+apt-get[[:space:]]+(update|install[[:space:]]+-y)([[:space:]]|$)' || :)"
+        ;;
+      .github/workflows/compat-linux.yml|.github/workflows/fedora-build-lane.yml|.github/workflows/fedora-rpmlint-availability.yml|.github/workflows/fedora-rpmlint-static-spec-lane.yml)
+        unexpected_package_lines="$(printf '%s\n' "$package_manager_lines" | grep -Ev ':[[:space:]]*run:[[:space:]]*dnf[[:space:]]+-y[[:space:]]+install[[:space:]]+git[[:space:]]+tar[[:space:]]+gzip[[:space:]]*$' || :)"
+        ;;
+      *)
+        fail "$workflow must not add package-manager commands outside reviewed bootstrap workflows"
+        ;;
+    esac
+
+    [ -z "$unexpected_package_lines" ] ||
+      fail "$workflow package-manager commands must stay on the reviewed bootstrap allowlist"
   fi
 
   if grep -Eq 'curl[^|]*\|[[:space:]]*(sh|bash)|wget[^|]*\|[[:space:]]*(sh|bash)|bash[[:space:]]+<|sh[[:space:]]+<' "$workflow"; then
@@ -217,6 +242,22 @@ check_shell_script() {
         require_contains 'trap '\''rm -rf "$tmpdir"'\'' EXIT INT HUP TERM' "$script"
       fi
       ;;
+    scripts/test-nucleus*.sh|scripts/test-fedora*.sh)
+      if grep -Eq '/tmp/latticra-(nucleus|fedora)|-o[[:space:]]+/tmp/latticra-(nucleus|fedora)|>[[:space:]]*/tmp/latticra-(nucleus|fedora)' "$script"; then
+        fail "$script must use a private mktemp workdir instead of fixed /tmp/latticra-nucleus or /tmp/latticra-fedora paths"
+      fi
+      if grep -Eq '\$tmpdir/latticra-(nucleus|fedora)' "$script"; then
+        require_contains 'mktemp -d' "$script"
+        require_contains 'trap '\''rm -rf "$tmpdir"'\'' EXIT INT HUP TERM' "$script"
+      fi
+      ;;
+    scripts/test-nadia-local-context-engine-stage-1.sh|scripts/test-nadia-runtime-profile-stage-2.sh|scripts/test-nadia-developer-workbench-stage-3.sh|scripts/test-nadia-systems-engineering-mode-stage-4.sh)
+      if grep -Eq '/tmp/latticra-nadia|/private/tmp/latticra-nadia|>[[:space:]]*/tmp/latticra-nadia' "$script"; then
+        fail "$script must use a private mktemp workdir instead of fixed Nadia /tmp paths"
+      fi
+      require_contains 'mktemp -d' "$script"
+      require_contains 'trap '\''rm -rf "$tmpdir"'\'' EXIT INT HUP TERM' "$script"
+      ;;
   esac
 
   if grep -q 'CFLAGS:=' "$script"; then
@@ -253,6 +294,8 @@ check_shell_script() {
 }
 
 workflow_count=0
+check_no_conflict_markers
+
 for workflow in .github/workflows/*.yml .github/workflows/*.yaml; do
   [ -f "$workflow" ] || continue
   workflow_count=$((workflow_count + 1))

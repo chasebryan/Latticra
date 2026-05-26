@@ -24,6 +24,7 @@ static void seed_result(latticra_kernel_ipc_table_result_t *result) {
     result->ipc_send_allowed = 0;
     result->ipc_receive_allowed = 0;
     result->queue_mutation_allowed = 0;
+    result->endpoint_bind_allowed = 0;
     result->host_effect_allowed = 0;
     result->evidence_level = 10u;
 }
@@ -36,33 +37,30 @@ latticra_status_t latticra_kernel_ipc_table_default_request(
             LATTICRA_STATUS_OK) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
-    request->requested_port_count = 4u;
+    request->requested_port_count = 5u;
     return LATTICRA_STATUS_OK;
 }
 
 static void fill_port(
-    latticra_kernel_ipc_table_port_t *port,
+    latticra_kernel_ipc_table_entry_t *port,
     size_t index,
     unsigned long port_token,
     const char *label,
-    const char *owner_process_label,
-    const char *peer_process_label) {
+    const char *domain,
+    const char *authority_status) {
     memset(port, 0, sizeof(*port));
     port->port_index = index;
     port->port_token = port_token;
     ipc_copy(port->label, sizeof(port->label), label);
-    ipc_copy(port->owner_process_label, sizeof(port->owner_process_label),
-        owner_process_label);
-    ipc_copy(port->peer_process_label, sizeof(port->peer_process_label),
-        peer_process_label);
-    ipc_copy(port->queue_status, sizeof(port->queue_status), "queue-metadata-only");
-    ipc_copy(port->authority_status, sizeof(port->authority_status),
-        "message-transfer-denied");
+    ipc_copy(port->domain, sizeof(port->domain), domain);
+    ipc_copy(port->endpoint_status, sizeof(port->endpoint_status), "declared-metadata");
+    ipc_copy(port->authority_status, sizeof(port->authority_status), authority_status);
     port->declared = 1;
     port->bound = 0;
     port->send_allowed = 0;
     port->receive_allowed = 0;
     port->queue_mutation_allowed = 0;
+    port->host_effect_allowed = 0;
     port->no_effect = 1;
     port->evidence_level = 10u;
 }
@@ -72,7 +70,7 @@ static void fill_ports(
     size_t requested_port_count) {
     size_t count = requested_port_count;
     size_t i;
-    if (count == 0u) count = 4u;
+    if (count == 0u) count = 5u;
     if (count > LATTICRA_KERNEL_IPC_TABLE_PORT_MAX) {
         count = LATTICRA_KERNEL_IPC_TABLE_PORT_MAX;
     }
@@ -80,24 +78,27 @@ static void fill_ports(
     result->port_count = count;
     if (count > 0u) {
         fill_port(&result->ports[0], 0u, 0ul, "kernel-control-port-metadata",
-            "kernel-report-process-metadata", "supervisor-process-metadata");
+            "control", "ipc-send-denied");
     }
     if (count > 1u) {
-        fill_port(&result->ports[1], 1u, 1ul, "operator-report-port-metadata",
-            "operator-report-process-metadata", "kernel-report-process-metadata");
+        fill_port(&result->ports[1], 1u, 1ul, "process-report-port-metadata",
+            "process", "ipc-receive-denied");
     }
     if (count > 2u) {
-        fill_port(&result->ports[2], 2u, 2ul, "supervisor-event-port-metadata",
-            "supervisor-process-metadata", "operator-report-process-metadata");
+        fill_port(&result->ports[2], 2u, 2ul, "filesystem-request-port-metadata",
+            "filesystem", "ipc-queue-denied");
     }
     if (count > 3u) {
-        fill_port(&result->ports[3], 3u, 3ul, "audit-trace-port-metadata",
-            "kernel-report-process-metadata", "operator-report-process-metadata");
+        fill_port(&result->ports[3], 3u, 3ul, "device-event-port-metadata",
+            "device", "ipc-endpoint-bind-denied");
     }
-    for (i = 4u; i < count; ++i) {
+    if (count > 4u) {
+        fill_port(&result->ports[4], 4u, 4ul, "network-event-port-metadata",
+            "network", "ipc-host-effect-denied");
+    }
+    for (i = 5u; i < count; ++i) {
         fill_port(&result->ports[i], i, 1000ul + (unsigned long)i,
-            "reserved-ipc-port-metadata", "reserved-process-metadata",
-            "reserved-process-metadata");
+            "reserved-ipc-port-metadata", "reserved", "reserved-denied");
     }
 }
 
@@ -170,22 +171,26 @@ latticra_status_t latticra_kernel_ipc_table_report(
         "policy_status=%s\n"
         "syscall_table_status=%s\n"
         "process_table_status=%s\n"
+        "memory_map_status=%s\n"
         "port_count=%lu\n"
         "no_effect=%d\n"
         "ipc_send_allowed=%d\n"
         "ipc_receive_allowed=%d\n"
         "queue_mutation_allowed=%d\n"
+        "endpoint_bind_allowed=%d\n"
         "host_effect_allowed=%d\n"
         "evidence_level=%u\n",
         result->table_status,
         result->policy_status,
         result->syscall_table.table_status,
         result->syscall_table.process_table.table_status,
+        result->syscall_table.process_table.memory_map.map_status,
         (unsigned long)result->port_count,
         result->no_effect,
         result->ipc_send_allowed,
         result->ipc_receive_allowed,
         result->queue_mutation_allowed,
+        result->endpoint_bind_allowed,
         result->host_effect_allowed,
         result->evidence_level);
     if (status != LATTICRA_STATUS_OK) return status;
@@ -194,27 +199,27 @@ latticra_status_t latticra_kernel_ipc_table_report(
         status = append_text(buffer, buffer_len, &used,
             "port[%lu].label=%s\n"
             "port[%lu].token=%lu\n"
-            "port[%lu].owner_process_label=%s\n"
-            "port[%lu].peer_process_label=%s\n"
-            "port[%lu].queue_status=%s\n"
+            "port[%lu].domain=%s\n"
+            "port[%lu].endpoint_status=%s\n"
             "port[%lu].authority_status=%s\n"
             "port[%lu].declared=%d\n"
             "port[%lu].bound=%d\n"
             "port[%lu].send_allowed=%d\n"
             "port[%lu].receive_allowed=%d\n"
             "port[%lu].queue_mutation_allowed=%d\n"
+            "port[%lu].host_effect_allowed=%d\n"
             "port[%lu].no_effect=%d\n",
             (unsigned long)i, result->ports[i].label,
             (unsigned long)i, result->ports[i].port_token,
-            (unsigned long)i, result->ports[i].owner_process_label,
-            (unsigned long)i, result->ports[i].peer_process_label,
-            (unsigned long)i, result->ports[i].queue_status,
+            (unsigned long)i, result->ports[i].domain,
+            (unsigned long)i, result->ports[i].endpoint_status,
             (unsigned long)i, result->ports[i].authority_status,
             (unsigned long)i, result->ports[i].declared,
             (unsigned long)i, result->ports[i].bound,
             (unsigned long)i, result->ports[i].send_allowed,
             (unsigned long)i, result->ports[i].receive_allowed,
             (unsigned long)i, result->ports[i].queue_mutation_allowed,
+            (unsigned long)i, result->ports[i].host_effect_allowed,
             (unsigned long)i, result->ports[i].no_effect);
         if (status != LATTICRA_STATUS_OK) return status;
     }

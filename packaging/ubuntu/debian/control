@@ -1,0 +1,21 @@
+Source: latticra
+Section: devel
+Priority: optional
+Maintainer: Bryforge <noreply@example.invalid>
+Build-Depends:
+ debhelper-compat (= 13),
+ gcc,
+ make
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/Bryforge/Latticra
+
+Package: latticra
+Architecture: any
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends}
+Description: contract-first systems architecture and language project
+ Latticra is an early-stage contract-first systems architecture and
+ language project. This local Ubuntu draft records package shape only and
+ installs the no-effect CLI status surface.

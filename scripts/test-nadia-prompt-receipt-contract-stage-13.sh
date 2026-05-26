@@ -120,53 +120,62 @@ require_contains 'nadia prompt-receipt' "$ui_model"
 require_contains 'prompt-receipt' "$components_manifest"
 require_contains 'nadia-prompt-receipt' "$makefile"
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage13-receipt-test"
-context_out="${TMPDIR:-/tmp}/latticra-nadia-stage13-context-test"
-runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage13-runtime-test"
-plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage13-plan-test"
-mode_out="${TMPDIR:-/tmp}/latticra-nadia-stage13-mode-test"
-ledger_out="${TMPDIR:-/tmp}/latticra-nadia-stage13-ledger-test"
-safety_out="${TMPDIR:-/tmp}/latticra-nadia-stage13-safety-test"
-tool_out="${TMPDIR:-/tmp}/latticra-nadia-stage13-tool-test"
-contract_out="${TMPDIR:-/tmp}/latticra-nadia-stage13-contract-test"
-registry_out="${TMPDIR:-/tmp}/latticra-nadia-stage13-registry-test"
-readiness_out="${TMPDIR:-/tmp}/latticra-nadia-stage13-readiness-test"
-invocation_out="${TMPDIR:-/tmp}/latticra-nadia-stage13-invocation-test"
-load_out="${TMPDIR:-/tmp}/latticra-nadia-stage13-load-test"
-rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out" "$registry_out" "$readiness_out" "$invocation_out" "$load_out"
-mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out" "$registry_out" "$readiness_out" "$invocation_out" "$load_out"
-NADIA_CONTEXT_PACK_TIMESTAMP=stage13-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage13-context-test.out
+if [ -n "${NADIA_TEST_TMP_ROOT:-}" ]; then
+  tmp_root="$NADIA_TEST_TMP_ROOT"
+else
+  tmp_base="${TMPDIR:-/tmp}"
+  tmp_root=$(mktemp -d "$tmp_base/latticra-nadia-stage13-test.XXXXXX")
+  trap 'rm -rf "$tmp_root"' EXIT INT HUP TERM
+fi
+
+out="$tmp_root/stage13/receipt"
+context_out="$tmp_root/stage13/context"
+runtime_out="$tmp_root/stage13/runtime"
+plan_out="$tmp_root/stage13/plan"
+mode_out="$tmp_root/stage13/mode"
+ledger_out="$tmp_root/stage13/ledger"
+safety_out="$tmp_root/stage13/safety"
+tool_out="$tmp_root/stage13/tool"
+contract_out="$tmp_root/stage13/contract"
+registry_out="$tmp_root/stage13/registry"
+readiness_out="$tmp_root/stage13/readiness"
+invocation_out="$tmp_root/stage13/invocation"
+load_out="$tmp_root/stage13/load"
+log_out="$tmp_root/stage13/logs"
+rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out" "$registry_out" "$readiness_out" "$invocation_out" "$load_out" "$log_out"
+mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out" "$registry_out" "$readiness_out" "$invocation_out" "$load_out" "$log_out"
+NADIA_CONTEXT_PACK_TIMESTAMP=stage13-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >"$log_out/context.out"
 NADIA_RUNTIME_PROFILE_TIMESTAMP=stage13-test sh scripts/nadia-runtime-profile.sh \
   --context-tokens 8192 \
   --memory-mib 16384 \
-  --output "$runtime_out" >/tmp/latticra-nadia-stage13-runtime-test.out
+  --output "$runtime_out" >"$log_out/runtime.out"
 NADIA_PROMPT_PLAN_TIMESTAMP=stage13-test sh scripts/nadia-prompt-plan.sh \
   --context-pack "$context_out/nadia-context-pack-stage13-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage13-test.txt" \
   --task "prompt receipt contract planning" \
-  --output "$plan_out" >/tmp/latticra-nadia-stage13-plan-test.out
+  --output "$plan_out" >"$log_out/plan.out"
 NADIA_MODE_VALIDATION_TIMESTAMP=stage13-test sh scripts/nadia-mode-validate.sh \
   --prompt-plan "$plan_out/nadia-prompt-plan-stage13-test.txt" \
   --mode ai-development \
-  --output "$mode_out" >/tmp/latticra-nadia-stage13-mode-test.out
+  --output "$mode_out" >"$log_out/mode.out"
 NADIA_PRODUCTIVITY_LEDGER_TIMESTAMP=stage13-test sh scripts/nadia-productivity-ledger.sh \
   --mode-validation "$mode_out/nadia-mode-validation-stage13-test.txt" \
   --outcome "accepted prompt receipt boundary" \
   --recommendation "keep prompt receipt contract-only" \
-  --output "$ledger_out" >/tmp/latticra-nadia-stage13-ledger-test.out
+  --output "$ledger_out" >"$log_out/ledger.out"
 NADIA_PROTECTIVE_SAFETY_TIMESTAMP=stage13-test sh scripts/nadia-protective-safety-boundary.sh \
   --productivity-entry "$ledger_out/nadia-productivity-entry-stage13-test.txt" \
   --request-class software-development \
-  --output "$safety_out" >/tmp/latticra-nadia-stage13-safety-test.out
+  --output "$safety_out" >"$log_out/safety.out"
 NADIA_TOOL_PREFLIGHT_TIMESTAMP=stage13-test sh scripts/nadia-tool-authority-preflight.sh \
   --protective-safety "$safety_out/nadia-protective-safety-stage13-test.txt" \
   --tool-class metadata-read \
   --action "prepare prompt receipt contract evidence" \
-  --output "$tool_out" >/tmp/latticra-nadia-stage13-tool-test.out
+  --output "$tool_out" >"$log_out/tool.out"
 NADIA_PROMPT_CONTRACT_TIMESTAMP=stage13-test sh scripts/nadia-prompt-evaluation-contract.sh \
   --tool-preflight "$tool_out/nadia-tool-preflight-stage13-test.txt" \
   --request-class software-development \
-  --output "$contract_out" >/tmp/latticra-nadia-stage13-contract-test.out
+  --output "$contract_out" >"$log_out/contract.out"
 NADIA_MODEL_REGISTRY_TIMESTAMP=stage13-test sh scripts/nadia-local-model-registry-contract.sh \
   --prompt-contract "$contract_out/nadia-prompt-contract-stage13-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage13-test.txt" \
@@ -174,23 +183,23 @@ NADIA_MODEL_REGISTRY_TIMESTAMP=stage13-test sh scripts/nadia-local-model-registr
   --quantization q4_k_m \
   --source operator-provided-local \
   --license operator-review-required \
-  --output "$registry_out" >/tmp/latticra-nadia-stage13-registry-test.out
+  --output "$registry_out" >"$log_out/registry.out"
 NADIA_INFERENCE_READINESS_TIMESTAMP=stage13-test sh scripts/nadia-inference-readiness-contract.sh \
   --model-registry "$registry_out/nadia-model-registry-contract-stage13-test.txt" \
   --request-class software-development \
-  --output "$readiness_out" >/tmp/latticra-nadia-stage13-readiness-test.out
+  --output "$readiness_out" >"$log_out/readiness.out"
 NADIA_RUNTIME_INVOCATION_TIMESTAMP=stage13-test sh scripts/nadia-runtime-invocation-contract.sh \
   --inference-readiness "$readiness_out/nadia-inference-readiness-contract-stage13-test.txt" \
   --request-class software-development \
-  --output "$invocation_out" >/tmp/latticra-nadia-stage13-invocation-test.out
+  --output "$invocation_out" >"$log_out/invocation.out"
 NADIA_MODEL_LOAD_TIMESTAMP=stage13-test sh scripts/nadia-model-load-contract.sh \
   --runtime-invocation "$invocation_out/nadia-runtime-invocation-contract-stage13-test.txt" \
   --request-class software-development \
-  --output "$load_out" >/tmp/latticra-nadia-stage13-load-test.out
+  --output "$load_out" >"$log_out/load.out"
 NADIA_PROMPT_RECEIPT_TIMESTAMP=stage13-test sh "$prompt_receipt_script" \
   --model-load "$load_out/nadia-model-load-contract-stage13-test.txt" \
   --request-class software-development \
-  --output "$out" >/tmp/latticra-nadia-stage13-receipt-test.out
+  --output "$out" >"$log_out/receipt.out"
 receipt="$out/nadia-prompt-receipt-contract-stage13-test.txt"
 
 require_file "$receipt"
@@ -240,10 +249,10 @@ require_contains 'sexual_request_refusal=always' "$receipt"
 if NADIA_PROMPT_RECEIPT_TIMESTAMP=stage13-reject sh "$prompt_receipt_script" \
   --model-load "$load_out/nadia-model-load-contract-stage13-test.txt" \
   --request-class sexual \
-  --output "$out" >/tmp/latticra-nadia-stage13-reject-test.out 2>/tmp/latticra-nadia-stage13-reject-test.err; then
+  --output "$out" >"$log_out/reject.out" 2>"$log_out/reject.err"; then
   printf 'nadia prompt receipt contract stage 13: sexual request class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia prompt-receipt boundary' /tmp/latticra-nadia-stage13-reject-test.err
+require_contains 'outside Nadia prompt-receipt boundary' "$log_out/reject.err"
 
 printf 'nadia_prompt_receipt_contract_stage_13: ok\n'

@@ -114,6 +114,7 @@ nadia context-window-assembly
 nadia prompt-evaluation-input
 nadia prompt-evaluation-runtime-handoff
 nadia prompt-evaluation-invocation
+nadia prompt-evaluation-result
 profile guided
 profile seal
 profile fedora
@@ -126,4 +127,6 @@ The console exists inside the GUI so users can stay in one coherent Latticra con
 
 LC is the Panel-installable console foundation for substrate interaction, host embedding planning, and future OS-base work. Its current Panel commands are metadata-only and do not execute external host commands.
 
-Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, Stage-11, Stage-12, Stage-13, Stage-14, Stage-15, Stage-16, Stage-17, Stage-18, Stage-19, Stage-20, Stage-21, Stage-22, Stage-23, Stage-24, Stage-25, Stage-26, Stage-27, Stage-28, Stage-29, and Stage-30 console surfaces are metadata-only inside the Panel and do not launch an external host process or model runtime.
+Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, Stage-11, Stage-12, Stage-13, Stage-14, Stage-15, Stage-16, Stage-17, Stage-18, Stage-19, Stage-20, Stage-21, Stage-22, Stage-23, Stage-24, Stage-25, Stage-26, Stage-27, Stage-28, Stage-29, Stage-30, and Stage-31 console surfaces are metadata-only inside the Panel and do not launch an external host process or model runtime.
+
+Nadia's Stage-30 and Stage-31 console surfaces are metadata-only and remain covered by the Stage-31 metadata-only console posture.

@@ -55,10 +55,16 @@ typedef struct {
     int syscall_dispatch_allowed;
     int ipc_send_allowed;
     int ipc_receive_allowed;
+    int ipc_queue_mutation_allowed;
     int filesystem_lookup_allowed;
     int filesystem_read_allowed;
     int filesystem_write_allowed;
     int namespace_mutation_allowed;
+    int device_open_allowed;
+    int device_read_allowed;
+    int device_write_allowed;
+    int driver_bind_allowed;
+    int hardware_effect_allowed;
     int no_external_effect_chain;
     unsigned int evidence_level;
 } latticra_kernel_lifecycle_subsystem_summary_result_t;

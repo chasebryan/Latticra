@@ -2,13 +2,15 @@
 
 Status: implementation status record
 
-Scope: prompt-evaluation invocation metadata before runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+Scope: prompt-evaluation invocation metadata before invocation request creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 
 ## Summary
 
 Nadia Stage-30 adds a prompt-evaluation invocation contract generator.
 
 It consumes the Stage-29 prompt-evaluation runtime handoff report as prerequisite evidence and records a future review lane for prompt-evaluation invocation schema, runtime handoff references, evaluation input references, runtime profile references, runtime-invocation contract references, model-load contract references, inference-readiness contract references, invocation-denial policy, token-generation denial policy, and prompt-evaluation result requirements. It remains contract-only: no runtime handoff is performed, no invocation request is created, no runtime is invoked, no prompt is evaluated, no token is generated, and no dialogue is generated.
+
+Stage-31 now defines a prompt-evaluation result contract that keeps result recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, and inference blocked.
 
 ## Status Fields
 

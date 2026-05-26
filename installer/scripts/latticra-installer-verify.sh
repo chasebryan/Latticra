@@ -18,7 +18,16 @@ done
 USER_BIN="$HOME/.local/bin"
 APP_FILE="$HOME/.local/share/applications/latticra-panel.desktop"
 ICON_FILE="$HOME/.local/share/icons/hicolor/256x256/apps/latticra-panel.png"
+LC_INSTALL_CONFIG="$PREFIX/share/latticra/lc/install/config.toml"
+LC_COMMAND_REGISTRY="$PREFIX/share/latticra/lc/commands/seed-registry.txt"
+TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/latticra-installer-verify.XXXXXX")"
 failures=0
+
+cleanup() {
+  rm -rf "$TMP_DIR"
+}
+
+trap cleanup EXIT INT HUP TERM
 
 check() {
   label="$1"
@@ -42,19 +51,73 @@ check_exec() {
   fi
 }
 
+check_contains() {
+  label="$1"
+  pattern="$2"
+  path="$3"
+  if [ -f "$path" ] && grep -Fq -- "$pattern" "$path"; then
+    echo "ok: $label"
+  else
+    echo "missing pattern: $label -> $path :: $pattern" >&2
+    failures=$((failures + 1))
+  fi
+}
+
+check_same_file() {
+  label="$1"
+  left="$2"
+  right="$3"
+  if cmp "$left" "$right" >/dev/null 2>&1; then
+    echo "ok: $label"
+  else
+    echo "mismatch: $label" >&2
+    failures=$((failures + 1))
+  fi
+}
+
 check "prefix" "$PREFIX"
 check "payload tree" "$PREFIX/lib/latticra"
 check "config" "$PREFIX/etc/latticra/installer-config.toml"
 check "receipts" "$PREFIX/share/latticra/receipts"
 check_exec "latticra command" "$USER_BIN/latticra"
+check_exec "latticra-lc command" "$USER_BIN/latticra-lc"
 check_exec "lat command" "$USER_BIN/lat"
 check_exec "latticra-seal command" "$USER_BIN/latticra-seal"
 check_exec "latticra-panel command" "$USER_BIN/latticra-panel"
 check "desktop entry" "$APP_FILE"
 check "desktop icon" "$ICON_FILE"
+check "LC install config" "$LC_INSTALL_CONFIG"
+check "LC command registry" "$LC_COMMAND_REGISTRY"
+
+check_contains "LC install profile metadata" 'install_profile = "lc-panel-install-v0"' "$LC_INSTALL_CONFIG"
+check_contains "LC external host command authority disabled" 'allow_external_host_commands = false' "$LC_INSTALL_CONFIG"
+check_contains "LC install-config registry command" 'name=lc install-config category=core effect=none capability=lc.install.config' "$LC_COMMAND_REGISTRY"
 
 if [ -x "$USER_BIN/latticra" ]; then
   "$USER_BIN/latticra" status || failures=$((failures + 1))
+fi
+
+if [ -x "$USER_BIN/latticra-lc" ]; then
+  if "$USER_BIN/latticra-lc" install-config > "$TMP_DIR/lc-install-config.txt"; then
+    check_contains "LC wrapper install-config report" 'LATTICRA CONSOLE INSTALL CONFIGURATION' "$TMP_DIR/lc-install-config.txt"
+    check_contains "LC wrapper install profile" 'install_profile=lc-panel-install-v0' "$TMP_DIR/lc-install-config.txt"
+    check_contains "LC wrapper host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-install-config.txt"
+  else
+    echo "failed: latticra-lc install-config" >&2
+    failures=$((failures + 1))
+  fi
+fi
+
+if [ -x "$USER_BIN/latticra" ] && [ -x "$USER_BIN/latticra-lc" ]; then
+  if "$USER_BIN/latticra" lc install-config > "$TMP_DIR/latticra-lc-install-config.txt"; then
+    check_contains "Latticra wrapper LC install-config report" 'LATTICRA CONSOLE INSTALL CONFIGURATION' "$TMP_DIR/latticra-lc-install-config.txt"
+    if [ -f "$TMP_DIR/lc-install-config.txt" ]; then
+      check_same_file "latticra lc install-config matches latticra-lc install-config" "$TMP_DIR/lc-install-config.txt" "$TMP_DIR/latticra-lc-install-config.txt"
+    fi
+  else
+    echo "failed: latticra lc install-config" >&2
+    failures=$((failures + 1))
+  fi
 fi
 
 if [ -x "$USER_BIN/latticra-seal" ]; then

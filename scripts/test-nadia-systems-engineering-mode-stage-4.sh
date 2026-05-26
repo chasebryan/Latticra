@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage4.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -104,23 +107,27 @@ require_contains 'nadia mode' "$ui_model"
 require_contains 'mode-validations' "$components_manifest"
 require_contains 'nadia-mode' "$makefile"
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage4-mode-test"
-context_out="${TMPDIR:-/tmp}/latticra-nadia-stage4-context-test"
-runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage4-runtime-test"
-plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage4-plan-test"
+out="$tmpdir/latticra-nadia-stage4-mode-test"
+context_out="$tmpdir/latticra-nadia-stage4-context-test"
+runtime_out="$tmpdir/latticra-nadia-stage4-runtime-test"
+plan_out="$tmpdir/latticra-nadia-stage4-plan-test"
+context_stdout="$tmpdir/latticra-nadia-stage4-context-test.out"
+runtime_stdout="$tmpdir/latticra-nadia-stage4-runtime-test.out"
+plan_stdout="$tmpdir/latticra-nadia-stage4-plan-test.out"
+mode_stdout="$tmpdir/latticra-nadia-stage4-mode-test.out"
 rm -rf "$out" "$context_out" "$runtime_out" "$plan_out"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out"
-NADIA_CONTEXT_PACK_TIMESTAMP=stage4-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage4-context-test.out
-NADIA_RUNTIME_PROFILE_TIMESTAMP=stage4-test sh scripts/nadia-runtime-profile.sh --output "$runtime_out" >/tmp/latticra-nadia-stage4-runtime-test.out
+NADIA_CONTEXT_PACK_TIMESTAMP=stage4-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" > "$context_stdout"
+NADIA_RUNTIME_PROFILE_TIMESTAMP=stage4-test sh scripts/nadia-runtime-profile.sh --output "$runtime_out" > "$runtime_stdout"
 NADIA_PROMPT_PLAN_TIMESTAMP=stage4-test sh scripts/nadia-prompt-plan.sh \
   --context-pack "$context_out/nadia-context-pack-stage4-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage4-test.txt" \
   --task "systems mode planning" \
-  --output "$plan_out" >/tmp/latticra-nadia-stage4-plan-test.out
+  --output "$plan_out" > "$plan_stdout"
 NADIA_MODE_VALIDATION_TIMESTAMP=stage4-test sh "$mode_script" \
   --prompt-plan "$plan_out/nadia-prompt-plan-stage4-test.txt" \
   --mode runtime-boundary \
-  --output "$out" >/tmp/latticra-nadia-stage4-mode-test.out
+  --output "$out" > "$mode_stdout"
 report="$out/nadia-mode-validation-stage4-test.txt"
 
 require_file "$report"

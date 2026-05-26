@@ -134,10 +134,20 @@ require_contains 'nadia tokenizer-artifact-binding' "$ui_model"
 require_contains 'tokenizer-artifact-binding' "$components_manifest"
 require_contains 'nadia-tokenizer-artifact-binding' "$makefile"
 
-sh "$stage22_guard" >/tmp/latticra-nadia-stage23-prereq-stage22-test.out
+if [ -n "${NADIA_TEST_TMP_ROOT:-}" ]; then
+  tmp_root="$NADIA_TEST_TMP_ROOT"
+else
+  tmp_base="${TMPDIR:-/tmp}"
+  tmp_root=$(mktemp -d "$tmp_base/latticra-nadia-stage23-test.XXXXXX")
+  trap 'rm -rf "$tmp_root"' EXIT INT HUP TERM
+fi
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage23-tokenizer-artifact-binding-test"
-verification="${TMPDIR:-/tmp}/latticra-nadia-stage22-tokenizer-artifact-verification-test/nadia-tokenizer-artifact-verification-contract-stage22-test.txt"
+log_out="$tmp_root/stage23/logs"
+mkdir -p "$log_out"
+NADIA_TEST_TMP_ROOT="$tmp_root" sh "$stage22_guard" >"$log_out/prereq-stage22.out"
+
+out="$tmp_root/stage23/tokenizer-artifact-binding"
+verification="$tmp_root/stage22/tokenizer-artifact-verification/nadia-tokenizer-artifact-verification-contract-stage22-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 
@@ -148,7 +158,7 @@ NADIA_TOKENIZER_ARTIFACT_BINDING_TIMESTAMP=stage23-test sh "$binding_script" \
   --request-class awareness-education \
   --binding-family operator-reviewed-tokenizer-artifact-binding \
   --binding-format contract-only-offline-binding \
-  --output "$out" >/tmp/latticra-nadia-stage23-tokenizer-artifact-binding-test.out
+  --output "$out" >"$log_out/binding.out"
 binding="$out/nadia-tokenizer-artifact-binding-contract-stage23-test.txt"
 
 require_file "$binding"
@@ -265,10 +275,10 @@ require_contains 'network_authority=0' "$binding"
 if NADIA_TOKENIZER_ARTIFACT_BINDING_TIMESTAMP=stage23-reject sh "$binding_script" \
   --tokenizer-artifact-verification "$verification" \
   --request-class sexual \
-  --output "$out" >/tmp/latticra-nadia-stage23-reject-test.out 2>/tmp/latticra-nadia-stage23-reject-test.err; then
+  --output "$out" >"$log_out/reject.out" 2>"$log_out/reject.err"; then
   printf 'nadia tokenizer artifact binding contract stage 23: sexual request class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia tokenizer-artifact-binding boundary' /tmp/latticra-nadia-stage23-reject-test.err
+require_contains 'outside Nadia tokenizer-artifact-binding boundary' "$log_out/reject.err"
 
 printf 'nadia_tokenizer_artifact_binding_contract_stage_23: ok\n'

@@ -194,7 +194,7 @@ static int labels_are_stable(void) {
 
 static int null_preview_is_rejected(void) {
     char report[LATTICRA_NUCLEUS_REPORT_MAX];
-    latticra_nucleus_preview_t preview;
+    latticra_nucleus_preview_t preview = {0};
 
     EXPECT_TRUE(
         latticra_nucleus_classify_preview(

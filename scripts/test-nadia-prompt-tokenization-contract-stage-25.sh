@@ -147,10 +147,20 @@ require_contains 'nadia prompt-tokenization' "$ui_model"
 require_contains 'prompt-tokenization' "$components_manifest"
 require_contains 'nadia-prompt-tokenization' "$makefile"
 
-sh "$stage24_guard" >/tmp/latticra-nadia-stage25-prereq-stage24-test.out
+if [ -n "${NADIA_TEST_TMP_ROOT:-}" ]; then
+  tmp_root="$NADIA_TEST_TMP_ROOT"
+else
+  tmp_base="${TMPDIR:-/tmp}"
+  tmp_root=$(mktemp -d "$tmp_base/latticra-nadia-stage25-test.XXXXXX")
+  trap 'rm -rf "$tmp_root"' EXIT INT HUP TERM
+fi
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage25-prompt-tokenization-test"
-attachment="${TMPDIR:-/tmp}/latticra-nadia-stage24-tokenizer-runtime-attachment-test/nadia-tokenizer-runtime-attachment-contract-stage24-test.txt"
+log_out="$tmp_root/stage25/logs"
+mkdir -p "$log_out"
+NADIA_TEST_TMP_ROOT="$tmp_root" sh "$stage24_guard" >"$log_out/prereq-stage24.out"
+
+out="$tmp_root/stage25/prompt-tokenization"
+attachment="$tmp_root/stage24/tokenizer-runtime-attachment/nadia-tokenizer-runtime-attachment-contract-stage24-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 
@@ -161,7 +171,7 @@ NADIA_PROMPT_TOKENIZATION_TIMESTAMP=stage25-test sh "$tokenization_script" \
   --request-class awareness-education \
   --tokenization-family operator-reviewed-prompt-tokenization \
   --tokenization-format contract-only-offline-tokenization \
-  --output "$out" >/tmp/latticra-nadia-stage25-prompt-tokenization-test.out
+  --output "$out" >"$log_out/tokenization.out"
 tokenization="$out/nadia-prompt-tokenization-contract-stage25-test.txt"
 
 require_file "$tokenization"
@@ -281,10 +291,10 @@ require_contains 'network_authority=0' "$tokenization"
 if NADIA_PROMPT_TOKENIZATION_TIMESTAMP=stage25-reject sh "$tokenization_script" \
   --tokenizer-runtime-attachment "$attachment" \
   --request-class sexual \
-  --output "$out" >/tmp/latticra-nadia-stage25-reject-test.out 2>/tmp/latticra-nadia-stage25-reject-test.err; then
+  --output "$out" >"$log_out/reject.out" 2>"$log_out/reject.err"; then
   printf 'nadia prompt tokenization contract stage 25: sexual request class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia prompt-tokenization boundary' /tmp/latticra-nadia-stage25-reject-test.err
+require_contains 'outside Nadia prompt-tokenization boundary' "$log_out/reject.err"
 
 printf 'nadia_prompt_tokenization_contract_stage_25: ok\n'

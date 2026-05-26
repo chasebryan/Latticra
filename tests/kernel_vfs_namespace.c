@@ -16,8 +16,9 @@ static int default_request_is_stable(void) {
 
     EXPECT_TRUE(latticra_kernel_vfs_namespace_default_request(&request) == LATTICRA_STATUS_OK,
         "default request status");
-    EXPECT_TRUE(request.requested_mount_count == 4u, "default mount count");
-    EXPECT_TRUE(request.ipc_table_request.requested_port_count == 4u,
+    EXPECT_TRUE(request.requested_mount_count == 4u,
+        "default mount count");
+    EXPECT_TRUE(request.ipc_table_request.requested_port_count == 5u,
         "ipc table seed request preserved");
     EXPECT_TRUE(request.ipc_table_request.syscall_table_request.requested_call_count == 8u,
         "syscall table seed request preserved");
@@ -33,7 +34,7 @@ static int vfs_namespace_seed_is_metadata_only(void) {
     EXPECT_TRUE(latticra_kernel_vfs_namespace_evaluate(&request, &result) == LATTICRA_STATUS_OK,
         "vfs namespace evaluates");
     EXPECT_TRUE(strcmp(result.namespace_status, "vfs-namespace-seed-ready") == 0,
-        "vfs namespace ready");
+        "namespace ready");
     EXPECT_TRUE(strcmp(result.policy_status, "report-only") == 0,
         "policy report-only");
     EXPECT_TRUE(strcmp(result.ipc_table.table_status, "ipc-table-seed-ready") == 0,
@@ -41,34 +42,45 @@ static int vfs_namespace_seed_is_metadata_only(void) {
     EXPECT_TRUE(strcmp(result.ipc_table.syscall_table.table_status,
             "syscall-table-seed-ready") == 0,
         "syscall table ready");
-    EXPECT_TRUE(result.mount_count == 4u, "mount count four");
-    EXPECT_TRUE(result.no_effect == 1, "vfs namespace no-effect");
-    EXPECT_TRUE(result.path_lookup_allowed == 0, "path lookup denied");
-    EXPECT_TRUE(result.file_read_allowed == 0, "file read denied");
-    EXPECT_TRUE(result.file_write_allowed == 0, "file write denied");
-    EXPECT_TRUE(result.namespace_mutation_allowed == 0, "namespace mutation denied");
-    EXPECT_TRUE(result.host_effect_allowed == 0, "host effect denied");
+    EXPECT_TRUE(result.mount_count == 4u,
+        "mount count four");
+    EXPECT_TRUE(result.no_effect == 1,
+        "vfs namespace no-effect");
+    EXPECT_TRUE(result.filesystem_lookup_allowed == 0,
+        "filesystem lookup denied");
+    EXPECT_TRUE(result.filesystem_read_allowed == 0,
+        "filesystem read denied");
+    EXPECT_TRUE(result.filesystem_write_allowed == 0,
+        "filesystem write denied");
+    EXPECT_TRUE(result.namespace_mutation_allowed == 0,
+        "namespace mutation denied");
+    EXPECT_TRUE(result.host_effect_allowed == 0,
+        "host effect denied");
 
-    EXPECT_TRUE(strcmp(result.mounts[0].label, "root-namespace-metadata") == 0,
-        "mount zero label");
     EXPECT_TRUE(strcmp(result.mounts[0].path, "/") == 0,
-        "root path");
+        "root mount path");
     EXPECT_TRUE(strcmp(result.mounts[1].path, "/proc") == 0,
-        "process path");
-    EXPECT_TRUE(strcmp(result.mounts[2].path, "/syscall") == 0,
-        "syscall path");
-    EXPECT_TRUE(strcmp(result.mounts[3].path, "/ipc") == 0,
-        "ipc path");
-    EXPECT_TRUE(strcmp(result.mounts[0].authority_status, "filesystem-access-denied") == 0,
-        "filesystem access denied");
-    EXPECT_TRUE(result.mounts[0].declared == 1, "mount declared");
-    EXPECT_TRUE(result.mounts[0].mounted == 0, "mount not mounted");
-    EXPECT_TRUE(result.mounts[0].lookup_allowed == 0, "mount lookup denied");
-    EXPECT_TRUE(result.mounts[0].read_allowed == 0, "mount read denied");
-    EXPECT_TRUE(result.mounts[0].write_allowed == 0, "mount write denied");
+        "proc mount path");
+    EXPECT_TRUE(strcmp(result.mounts[2].source, "syscall-table-metadata") == 0,
+        "syscall mount source");
+    EXPECT_TRUE(strcmp(result.mounts[3].authority_status, "namespace-mutation-denied") == 0,
+        "ipc mount namespace mutation denied");
+    EXPECT_TRUE(result.mounts[0].declared == 1,
+        "mount declared");
+    EXPECT_TRUE(result.mounts[0].mounted == 0,
+        "mount not mounted");
+    EXPECT_TRUE(result.mounts[0].lookup_allowed == 0,
+        "mount lookup denied");
+    EXPECT_TRUE(result.mounts[0].read_allowed == 0,
+        "mount read denied");
+    EXPECT_TRUE(result.mounts[0].write_allowed == 0,
+        "mount write denied");
     EXPECT_TRUE(result.mounts[0].namespace_mutation_allowed == 0,
         "mount namespace mutation denied");
-    EXPECT_TRUE(result.mounts[0].no_effect == 1, "mount no-effect");
+    EXPECT_TRUE(result.mounts[0].host_effect_allowed == 0,
+        "mount host effect denied");
+    EXPECT_TRUE(result.mounts[0].no_effect == 1,
+        "mount no-effect");
     return 0;
 }
 
@@ -83,8 +95,8 @@ static int vfs_namespace_caps_mount_count(void) {
         "vfs namespace evaluates cap");
     EXPECT_TRUE(result.mount_count == LATTICRA_KERNEL_VFS_NAMESPACE_MOUNT_MAX,
         "mount count capped");
-    EXPECT_TRUE(strcmp(result.mounts[4].label, "reserved-vfs-namespace-metadata") == 0,
-        "reserved mount label");
+    EXPECT_TRUE(strcmp(result.mounts[4].source, "reserved-vfs-metadata") == 0,
+        "reserved mount source");
     EXPECT_TRUE(result.mounts[4].mount_token == 1004ul,
         "reserved mount token");
     return 0;
@@ -110,25 +122,27 @@ static int vfs_namespace_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "policy_status=report-only\n") != 0,
         "policy emitted");
     EXPECT_TRUE(strstr(report, "ipc_table_status=ipc-table-seed-ready\n") != 0,
-        "ipc status emitted");
+        "ipc table emitted");
+    EXPECT_TRUE(strstr(report, "syscall_table_status=syscall-table-seed-ready\n") != 0,
+        "syscall table emitted");
     EXPECT_TRUE(strstr(report, "mount_count=4\n") != 0,
         "mount count emitted");
-    EXPECT_TRUE(strstr(report, "path_lookup_allowed=0\n") != 0,
+    EXPECT_TRUE(strstr(report, "filesystem_lookup_allowed=0\n") != 0,
         "lookup flag emitted");
-    EXPECT_TRUE(strstr(report, "file_read_allowed=0\n") != 0,
+    EXPECT_TRUE(strstr(report, "filesystem_read_allowed=0\n") != 0,
         "read flag emitted");
-    EXPECT_TRUE(strstr(report, "file_write_allowed=0\n") != 0,
+    EXPECT_TRUE(strstr(report, "filesystem_write_allowed=0\n") != 0,
         "write flag emitted");
     EXPECT_TRUE(strstr(report, "namespace_mutation_allowed=0\n") != 0,
-        "namespace mutation flag emitted");
+        "namespace flag emitted");
     EXPECT_TRUE(strstr(report, "mount[0].path=/\n") != 0,
-        "root path emitted");
+        "root mount emitted");
     EXPECT_TRUE(strstr(report, "mount[1].path=/proc\n") != 0,
-        "process path emitted");
-    EXPECT_TRUE(strstr(report, "mount[0].authority_status=filesystem-access-denied\n") != 0,
-        "authority emitted");
+        "proc mount emitted");
+    EXPECT_TRUE(strstr(report, "mount[3].source=ipc-table-metadata\n") != 0,
+        "ipc mount emitted");
     EXPECT_TRUE(strstr(report, "mount[0].mounted=0\n") != 0,
-        "mounted emitted");
+        "mounted flag emitted");
     EXPECT_TRUE(strstr(report, "mount[0].no_effect=1\n") != 0,
         "mount no-effect emitted");
     return 0;

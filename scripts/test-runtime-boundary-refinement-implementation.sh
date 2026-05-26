@@ -25,7 +25,7 @@ require_file src/runtime_boundary.c
 require_file tests/runtime_boundary_lat_pipeline_evidence.c
 require_file scripts/test-runtime-boundary.sh
 
-require_contains 'Status: runtime boundary refinement implementation with Lat pipeline parse-error, semantic-error, downstream-stage-error, span, and comment evidence' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
+require_contains 'Status: runtime boundary refinement implementation with Lat pipeline stage-summary, parse-error, semantic-error, downstream-stage-error, span, and comment evidence' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'no-effect runtime-boundary evidence reporting' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_pipeline_status' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_pipeline_parse_error' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
@@ -33,6 +33,10 @@ require_contains 'lat_pipeline_semantic_error' docs/RUNTIME_BOUNDARY_REFINEMENT_
 require_contains 'lat_pipeline_model_error' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_pipeline_lowering_error' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_pipeline_lir_error' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
+require_contains 'lat_pipeline_last_completed_stage' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
+require_contains 'lat_pipeline_failed_stage' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
+require_contains 'lat_pipeline_no_effect_chain_ok' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
+require_contains 'lat_pipeline_evidence_level' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_pipeline_span_start_line' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_pipeline_comment_count' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_has_transition_source_edges' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
@@ -46,6 +50,10 @@ require_contains 'lat_pipeline_semantic_error' include/latticra/runtime_boundary
 require_contains 'lat_pipeline_model_error' include/latticra/runtime_boundary.h
 require_contains 'lat_pipeline_lowering_error' include/latticra/runtime_boundary.h
 require_contains 'lat_pipeline_lir_error' include/latticra/runtime_boundary.h
+require_contains 'lat_pipeline_last_completed_stage' include/latticra/runtime_boundary.h
+require_contains 'lat_pipeline_failed_stage' include/latticra/runtime_boundary.h
+require_contains 'lat_pipeline_no_effect_chain_ok' include/latticra/runtime_boundary.h
+require_contains 'lat_pipeline_evidence_level' include/latticra/runtime_boundary.h
 require_contains 'lat_pipeline_span' include/latticra/runtime_boundary.h
 require_contains 'lat_pipeline_comment_count' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_transition_edge_count' include/latticra/runtime_boundary.h
@@ -56,6 +64,10 @@ require_contains 'lat_pipeline_semantic_error=' src/runtime_boundary.c
 require_contains 'lat_pipeline_model_error=' src/runtime_boundary.c
 require_contains 'lat_pipeline_lowering_error=' src/runtime_boundary.c
 require_contains 'lat_pipeline_lir_error=' src/runtime_boundary.c
+require_contains 'lat_pipeline_last_completed_stage=' src/runtime_boundary.c
+require_contains 'lat_pipeline_failed_stage=' src/runtime_boundary.c
+require_contains 'lat_pipeline_no_effect_chain_ok=' src/runtime_boundary.c
+require_contains 'lat_pipeline_evidence_level=' src/runtime_boundary.c
 require_contains 'lat_pipeline_span_start_line=' src/runtime_boundary.c
 require_contains 'lat_pipeline_comment_count=' src/runtime_boundary.c
 require_contains 'lat_lir_has_transition_source_edges=' src/runtime_boundary.c
@@ -65,6 +77,10 @@ require_contains 'runtime_boundary_denies_model_failed_lat_pipeline_metadata' te
 require_contains 'lat_pipeline_parse_error=unsupported_block_comment' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_pipeline_semantic_error=unknown_transition_source' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_pipeline_model_error=unsupported_clause' tests/runtime_boundary_lat_pipeline_evidence.c
+require_contains 'lat_pipeline_last_completed_stage=report' tests/runtime_boundary_lat_pipeline_evidence.c
+require_contains 'lat_pipeline_failed_stage=parse' tests/runtime_boundary_lat_pipeline_evidence.c
+require_contains 'lat_pipeline_no_effect_chain_ok=1' tests/runtime_boundary_lat_pipeline_evidence.c
+require_contains 'lat_pipeline_evidence_level=2' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_pipeline_span_start_line=2' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_pipeline_comment_count=2' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'runtime_boundary_keeps_lat_lir_execution_future_gated' tests/runtime_boundary_lat_pipeline_evidence.c

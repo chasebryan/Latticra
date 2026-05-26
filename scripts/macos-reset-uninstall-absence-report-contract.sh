@@ -38,6 +38,17 @@ MACOS RESET UNINSTALL ABSENCE REPORT CONTRACT
 
 reset_uninstall_absence_report_contract_status=ok
 macos_reset_uninstall_absence_report_contract_present=1
+macos_reset_uninstall_receipt_schema_contract_present=1
+macos_reset_uninstall_implementation_gate_contract_present=1
+macos_reset_uninstall_operator_intent_contract_present=1
+operator_intent_contract_state=defined-no-effect
+operator_intent_evidence_written=0
+reset_uninstall_live_run_allowed=0
+reset_uninstall_deletion_enabled=0
+operator_reset_uninstall_intent_evidence_present=0
+operator_explicit_reset_uninstall_intent_observed=0
+reset_uninstall_receipt_evidence_present=0
+reset_receipt_evidence_present=0
 repo_root=$ROOT
 host_kernel_name=$UNAME_S
 host_arch=$UNAME_M
@@ -53,6 +64,7 @@ macos_reset_uninstall_live_target_classifier_present=1
 macos_reset_uninstall_dry_run_contract_present=1
 macos_reset_uninstall_receipt_schema_contract_present=1
 macos_reset_uninstall_implementation_gate_contract_present=1
+macos_reset_uninstall_operator_intent_contract_present=1
 reset_uninstall_live_run_allowed=0
 operator_reset_uninstall_intent_evidence_present=0
 reset_uninstall_dry_run_evidence_present=0
@@ -128,5 +140,5 @@ network_extension_authority=0
 privileged_helper_authority=0
 runtime_authority_granted=0
 production_installer_ready=0
-next_lane=macos-reset-uninstall-operator-intent-contract
+next_lane=macos-reset-uninstall-effect-authorization-contract
 REPORT

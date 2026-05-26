@@ -7,11 +7,11 @@ usage() {
 Usage:
   macos-reset-uninstall-implementation-gate-contract.sh
 
-Emits the no-effect macOS reset/uninstall implementation-gate contract. It keeps
-future live reset/uninstall execution closed until classifier, planner, receipt,
-absence-report, and explicit operator-intent evidence exist. It does not delete
-files, write receipts, mutate host state, open the network, or claim
-reset/uninstall implementation.
+Emits the no-effect macOS reset/uninstall implementation-gate contract. It
+keeps future live reset/uninstall activity closed until receipt, absence,
+planner, classifier, and explicit operator-intent evidence all exist. It does
+not enable live activity, delete files, write receipts, mutate host state, open
+the network, or claim reset/uninstall implementation.
 USAGE
 }
 
@@ -38,6 +38,9 @@ MACOS RESET UNINSTALL IMPLEMENTATION GATE CONTRACT
 
 reset_uninstall_implementation_gate_contract_status=ok
 macos_reset_uninstall_implementation_gate_contract_present=1
+macos_reset_uninstall_operator_intent_contract_present=1
+operator_intent_contract_state=defined-no-effect
+operator_intent_evidence_written=0
 repo_root=$ROOT
 host_kernel_name=$UNAME_S
 host_arch=$UNAME_M
@@ -138,5 +141,5 @@ network_extension_authority=0
 privileged_helper_authority=0
 runtime_authority_granted=0
 production_installer_ready=0
-next_lane=macos-reset-uninstall-operator-intent-contract
+next_lane=macos-reset-uninstall-effect-authorization-contract
 REPORT

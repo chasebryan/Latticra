@@ -3,11 +3,14 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-nucleus-preview.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 cc $CFLAGS \
   -Iinclude \
   src/state_lattice.c \
   src/nucleus_preview.c \
   tests/nucleus_preview_invariants.c \
-  -o /tmp/latticra-nucleus-preview-invariants
+  -o "$tmpdir/latticra-nucleus-preview-invariants"
 
-/tmp/latticra-nucleus-preview-invariants
+"$tmpdir/latticra-nucleus-preview-invariants"

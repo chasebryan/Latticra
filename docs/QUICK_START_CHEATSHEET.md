@@ -6,6 +6,16 @@ Status: Latticra is still early-stage and evidence-bound. The current installer 
 
 ## Fast Install
 
+Ubuntu prerequisites:
+
+```sh
+sudo apt-get update
+sudo apt-get install -y rustc cargo make gcc pkg-config \
+  libx11-dev libxcb1-dev libxcursor-dev libxrandr-dev libxi-dev \
+  libxkbcommon-dev libgl1-mesa-dev libwayland-dev desktop-file-utils \
+  libgtk-3-bin
+```
+
 Fedora prerequisites:
 
 ```sh
@@ -166,4 +176,4 @@ hash -r 2>/dev/null || true
 - Current install scope is user-local under `~/.local`.
 - Dry-run first, then install.
 - Latticra currently remains early-stage and evidence-bound.
-- No production security boundary, root installer, system service, kernel integration, or network authority is claimed.
+- No production security boundary, root installer, system service, kernel integration, Ubuntu archive/PPA readiness, or network authority is claimed.

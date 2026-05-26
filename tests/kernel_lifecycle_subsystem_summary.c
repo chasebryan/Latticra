@@ -13,7 +13,7 @@
         } \
     } while (0)
 
-static int default_request_targets_syscall_table_ready(void) {
+static int default_request_targets_device_registry_ready(void) {
     latticra_kernel_lifecycle_subsystem_summary_request_t request;
 
     EXPECT_TRUE(latticra_kernel_lifecycle_subsystem_summary_default_request(&request) ==
@@ -21,8 +21,8 @@ static int default_request_targets_syscall_table_ready(void) {
         "default summary request status");
     EXPECT_TRUE(request.lifecycle_request.gate == LATTICRA_KERNEL_STATE_GATE_ALLOW,
         "summary default lifecycle gate allow");
-    EXPECT_TRUE(request.lifecycle_request.target_state == LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY,
-        "summary default target vfs-namespace-ready");
+    EXPECT_TRUE(request.lifecycle_request.target_state == LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY,
+        "summary default target device-registry-ready");
     EXPECT_TRUE(request.lifecycle_request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
         "summary default max steps");
     EXPECT_TRUE(strcmp(request.registry_request.kernel_request.kernel_id, "latticra-kernel-seed") == 0,
@@ -43,14 +43,14 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.summary_status, "summary-ready") == 0,
         "summary ready");
-    EXPECT_TRUE(strcmp(result.final_state, "vfs-namespace-ready") == 0,
-        "summary final state vfs-namespace-ready");
+    EXPECT_TRUE(strcmp(result.final_state, "device-registry-ready") == 0,
+        "summary final state device-registry-ready");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "summary lifecycle complete");
-    EXPECT_TRUE(result.lifecycle_step_count == 8u,
-        "summary eight lifecycle steps");
-    EXPECT_TRUE(result.lifecycle_state_change_count == 8u,
-        "summary eight lifecycle state changes");
+    EXPECT_TRUE(result.lifecycle_step_count == 9u,
+        "summary nine lifecycle steps");
+    EXPECT_TRUE(result.lifecycle_state_change_count == 9u,
+        "summary nine lifecycle state changes");
     EXPECT_TRUE(result.lifecycle_state_mutated == 1,
         "summary lifecycle state mutated internally");
     EXPECT_TRUE(result.external_effect_performed == 0,
@@ -71,6 +71,8 @@ static int summary_reaches_ready_without_authority(void) {
         "summary ipc send denied");
     EXPECT_TRUE(result.ipc_receive_allowed == 0,
         "summary ipc receive denied");
+    EXPECT_TRUE(result.ipc_queue_mutation_allowed == 0,
+        "summary ipc queue mutation denied");
     EXPECT_TRUE(result.filesystem_lookup_allowed == 0,
         "summary filesystem lookup denied");
     EXPECT_TRUE(result.filesystem_read_allowed == 0,
@@ -79,6 +81,16 @@ static int summary_reaches_ready_without_authority(void) {
         "summary filesystem write denied");
     EXPECT_TRUE(result.namespace_mutation_allowed == 0,
         "summary namespace mutation denied");
+    EXPECT_TRUE(result.device_open_allowed == 0,
+        "summary device open denied");
+    EXPECT_TRUE(result.device_read_allowed == 0,
+        "summary device read denied");
+    EXPECT_TRUE(result.device_write_allowed == 0,
+        "summary device write denied");
+    EXPECT_TRUE(result.driver_bind_allowed == 0,
+        "summary driver bind denied");
+    EXPECT_TRUE(result.hardware_effect_allowed == 0,
+        "summary hardware effect denied");
     EXPECT_TRUE(result.no_external_effect_chain == 1,
         "summary no external effect chain");
     EXPECT_TRUE(result.entry_count == LATTICRA_KERNEL_SUBSYSTEM_COUNT,
@@ -129,7 +141,7 @@ static int summary_reaches_ready_without_authority(void) {
     EXPECT_TRUE(strcmp(result.entries[5].authority_status, "filesystem-denied") == 0,
         "summary filesystem authority denied");
     EXPECT_TRUE(strcmp(result.entries[5].lifecycle_relation, "vfs-namespace-ready") == 0,
-        "summary filesystem vfs namespace ready");
+        "summary vfs namespace ready");
     EXPECT_TRUE(result.entries[5].lifecycle_ready == 1,
         "summary filesystem lifecycle ready");
     EXPECT_TRUE(strcmp(result.entries[6].authority_status, "network-denied") == 0,
@@ -140,8 +152,8 @@ static int summary_reaches_ready_without_authority(void) {
         "summary network lifecycle ready");
     EXPECT_TRUE(strcmp(result.entries[7].authority_status, "device-denied") == 0,
         "summary device authority denied");
-    EXPECT_TRUE(strcmp(result.entries[7].lifecycle_relation, "device-syscall-metadata-ready") == 0,
-        "summary device syscall metadata ready");
+    EXPECT_TRUE(strcmp(result.entries[7].lifecycle_relation, "device-registry-ready") == 0,
+        "summary device registry ready");
     EXPECT_TRUE(result.entries[7].lifecycle_ready == 1,
         "summary device lifecycle ready");
     EXPECT_TRUE(strcmp(result.entries[8].authority_status, "not-production-boundary") == 0,
@@ -203,13 +215,13 @@ static int summary_report_is_deterministic(void) {
         "summary report title");
     EXPECT_TRUE(strstr(report, "summary_status=summary-ready\n") != 0,
         "summary report status");
-    EXPECT_TRUE(strstr(report, "final_state=vfs-namespace-ready\n") != 0,
+    EXPECT_TRUE(strstr(report, "final_state=device-registry-ready\n") != 0,
         "summary report final state");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "summary report lifecycle complete");
-    EXPECT_TRUE(strstr(report, "lifecycle_step_count=8\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_step_count=9\n") != 0,
         "summary report step count");
-    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=8\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=9\n") != 0,
         "summary report state changes");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "summary report external effect");
@@ -227,6 +239,8 @@ static int summary_report_is_deterministic(void) {
         "summary report ipc send denied");
     EXPECT_TRUE(strstr(report, "ipc_receive_allowed=0\n") != 0,
         "summary report ipc receive denied");
+    EXPECT_TRUE(strstr(report, "ipc_queue_mutation_allowed=0\n") != 0,
+        "summary report ipc queue mutation denied");
     EXPECT_TRUE(strstr(report, "filesystem_lookup_allowed=0\n") != 0,
         "summary report filesystem lookup denied");
     EXPECT_TRUE(strstr(report, "filesystem_read_allowed=0\n") != 0,
@@ -235,6 +249,16 @@ static int summary_report_is_deterministic(void) {
         "summary report filesystem write denied");
     EXPECT_TRUE(strstr(report, "namespace_mutation_allowed=0\n") != 0,
         "summary report namespace mutation denied");
+    EXPECT_TRUE(strstr(report, "device_open_allowed=0\n") != 0,
+        "summary report device open denied");
+    EXPECT_TRUE(strstr(report, "device_read_allowed=0\n") != 0,
+        "summary report device read denied");
+    EXPECT_TRUE(strstr(report, "device_write_allowed=0\n") != 0,
+        "summary report device write denied");
+    EXPECT_TRUE(strstr(report, "driver_bind_allowed=0\n") != 0,
+        "summary report driver bind denied");
+    EXPECT_TRUE(strstr(report, "hardware_effect_allowed=0\n") != 0,
+        "summary report hardware effect denied");
     EXPECT_TRUE(strstr(report, "no_external_effect_chain=1\n") != 0,
         "summary report no external effect chain");
     EXPECT_TRUE(strstr(report, "entry_count=9\n") != 0,
@@ -246,11 +270,13 @@ static int summary_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "subsystem[3].lifecycle_relation=memory-map-ready\n") != 0,
         "summary report memory relation");
     EXPECT_TRUE(strstr(report, "subsystem[4].lifecycle_relation=ipc-table-ready\n") != 0,
-        "summary report ipc relation");
+        "summary report process relation");
     EXPECT_TRUE(strstr(report, "subsystem[5].lifecycle_relation=vfs-namespace-ready\n") != 0,
-        "summary report vfs relation");
+        "summary report filesystem relation");
     EXPECT_TRUE(strstr(report, "subsystem[6].lifecycle_relation=network-syscall-metadata-ready\n") != 0,
         "summary report network relation");
+    EXPECT_TRUE(strstr(report, "subsystem[7].lifecycle_relation=device-registry-ready\n") != 0,
+        "summary report device relation");
     return 0;
 }
 
@@ -284,7 +310,7 @@ static int null_guards_are_safe(void) {
 }
 
 int main(void) {
-    if (default_request_targets_syscall_table_ready() != 0) return 1;
+    if (default_request_targets_device_registry_ready() != 0) return 1;
     if (summary_reaches_ready_without_authority() != 0) return 1;
     if (summary_respects_lifecycle_step_limit() != 0) return 1;
     if (summary_report_is_deterministic() != 0) return 1;

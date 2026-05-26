@@ -2,13 +2,13 @@
 
 Status: status record for the Latticra Seal verified effect decision metadata surface
 Source: local follow-up slice
-Scope: status and public-entry alignment after the Seal verified effect decision contract and metadata implementation. This record does not add effect execution, runtime authority, host effects, network behavior, shell execution, tool execution, capability enforcement, policy persistence, signing, key generation, private-key storage, public-key trust stores, network trust lookup, revocation lookup, object sealing, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
+Scope: status and public-entry alignment after the Seal verified effect decision contract and metadata implementation. This record does not add effect execution, capability enforcement, runtime authority, host effects, network behavior, signing, key generation, private-key storage, public-key trust stores, network trust lookup, revocation lookup, object sealing, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
 
 ## Purpose
 
 This status record makes the Latticra Seal verified effect decision implementation visible from public entry points.
 
-The decision consumes verified capability gate metadata and classifies a narrow local metadata-only effect as report-only or evaluate-only. It is effect-decision metadata, not effect execution.
+The decision consumes verified capability gate metadata and evaluates a narrow local metadata-only effect request. It is effect classification metadata, not effect execution.
 
 ## Reviewed files
 
@@ -59,9 +59,14 @@ receipt_profile=latticra-seal-verified-receipt/0.1
 verify_profile=latticra-seal-ed25519-verify/0.1
 message_digest_algorithm=SHA-256
 public_key_identity_label=rfc8032-test-key
+receipt_state=verified
+verification_state=verified
 requested_capability=verified-receipt-report
 requested_effect=report-only
 requested_scope=local-fixture-scope
+verified=1
+authority_usable=0
+receipt_capability_gate_allowed=0
 gate_allowed=1
 gate_state=allowed-metadata-only
 decision_state=allowed-report-only
@@ -75,7 +80,6 @@ error=ok
 status=verified-effect-decision-metadata
 verified_effect_decision_added=1
 effect_execution_added=0
-runtime_authority_granted=0
 capability_enforcement_added=0
 signing_added=0
 key_generation_added=0
@@ -111,12 +115,12 @@ seal verified effect decision invariants: ok
 
 This status record is documentation/status alignment only.
 
-The verified effect decision implementation evaluates an allowed verified capability gate record and classifies the requested metadata-only effect. A successful decision may set `effect_allowed=1` and `decision_state=allowed-report-only`, but it remains metadata-only and authority-neutral.
+The verified effect decision implementation evaluates a verified capability gate record against a narrow local metadata-only effect request. A successful decision may set `effect_allowed=1` and `decision_state=allowed-report-only`, but it remains metadata-only and authority-neutral.
 
-It does not add effect execution, runtime behavior, host behavior, network behavior, shell execution, tool execution, capability enforcement, signing, key generation, private-key handling, trust-store behavior, revocation lookup, production readiness, external endorsement, or authority grants.
+It does not add effect execution, capability enforcement, runtime behavior, host behavior, network behavior, signing, key generation, private-key handling, trust-store behavior, revocation lookup, production readiness, external endorsement, or authority grants.
 
 ## Current next valid slice
 
 No completion-estimate review is required from this status/public-entry alignment.
 
-The next valid Latticra Seal slice is runtime handoff evaluation from an allowed metadata-only verified effect decision or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is runtime handoff evaluation from an allowed metadata-only effect decision, runtime handoff evaluation status/public-entry alignment, or another narrow status/index alignment follow-up.

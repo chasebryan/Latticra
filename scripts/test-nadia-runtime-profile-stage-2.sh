@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage2.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -102,12 +105,13 @@ require_contains 'nadia runtime' "$panel_ui"
 require_contains 'latticra-nadia runtime-profile' "$installer_readme"
 require_contains 'nadia-runtime' "$makefile"
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage2-runtime-test"
-model="${TMPDIR:-/tmp}/latticra-nadia-stage2-model.gguf"
+out="$tmpdir/latticra-nadia-stage2-runtime-test"
+model="$tmpdir/latticra-nadia-stage2-model.gguf"
+runtime_stdout="$tmpdir/latticra-nadia-stage2-runtime-test.out"
 rm -rf "$out"
 mkdir -p "$out"
 printf 'not a real model fixture\n' > "$model"
-NADIA_RUNTIME_PROFILE_TIMESTAMP=stage2-test sh "$runtime_script" --model "$model" --context-tokens 8192 --memory-mib 16384 --output "$out" >/tmp/latticra-nadia-stage2-runtime-test.out
+NADIA_RUNTIME_PROFILE_TIMESTAMP=stage2-test sh "$runtime_script" --model "$model" --context-tokens 8192 --memory-mib 16384 --output "$out" > "$runtime_stdout"
 profile="$out/nadia-runtime-profile-stage2-test.txt"
 
 require_file "$profile"

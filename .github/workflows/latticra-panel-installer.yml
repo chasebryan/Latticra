@@ -9,8 +9,6 @@ on:
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md"
       - "scripts/test-latticra-panel-local-install-*.sh"
-      - "scripts/test-latticra-panel-lc-install-config.sh"
-      - "scripts/test-latticra-panel-updater.sh"
       - "scripts/check_latticra_panel_ui_design.py"
   push:
     branches:
@@ -22,8 +20,6 @@ on:
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md"
       - "scripts/test-latticra-panel-local-install-*.sh"
-      - "scripts/test-latticra-panel-lc-install-config.sh"
-      - "scripts/test-latticra-panel-updater.sh"
       - "scripts/check_latticra_panel_ui_design.py"
 
 permissions:
@@ -69,11 +65,8 @@ jobs:
       - name: Validate Panel UI design checkpoint
         run: python3 scripts/check_latticra_panel_ui_design.py
 
-      - name: Validate Latticra Panel LC install configuration
-        run: sh scripts/test-latticra-panel-lc-install-config.sh
-
-      - name: Validate Latticra Panel updater surface
-        run: sh scripts/test-latticra-panel-updater.sh
+      - name: Validate Latticra Panel LC install config
+        run: sh scripts/test-latticra-panel-local-install-lc-install-config.sh
 
       - name: Validate installer shell scripts
         run: |

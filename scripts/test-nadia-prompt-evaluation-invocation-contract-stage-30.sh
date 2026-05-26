@@ -21,26 +21,54 @@ require_contains() {
 
 stage30_doc='docs/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md'
 stage30_status='docs/status/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md'
+stage29_status='docs/status/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md'
 foundation='docs/NADIA_OFFLINE_AI_FOUNDATION.md'
-generator='scripts/nadia-prompt-evaluation-invocation-contract.sh'
-guard='scripts/test-nadia-prompt-evaluation-invocation-contract-stage-30.sh'
+foundation_index='docs/FOUNDATION_INDEX.md'
+status_index='docs/status/README.md'
+readme='README.md'
+root_status='STATUS.md'
+current_status='docs/status/CURRENT_STATUS.md'
+installer_readme='installer/README.md'
+ui_model='installer/docs/UI_CONFIGURATION_MODEL.md'
+components_manifest='installer/manifests/components.toml'
+apply_script='installer/scripts/latticra-installer-apply.sh'
+panel_config='installer/latticra-installer/src/config.rs'
+panel_ui='installer/latticra-installer/src/ui.rs'
+invocation_script='scripts/nadia-prompt-evaluation-invocation-contract.sh'
+stage30_guard='scripts/test-nadia-prompt-evaluation-invocation-contract-stage-30.sh'
 workflow='.github/workflows/nadia-prompt-evaluation-invocation-contract-stage-30.yml'
+makefile='Makefile'
 
 require_file "$stage30_doc"
 require_file "$stage30_status"
+require_file "$stage29_status"
 require_file "$foundation"
-require_file "$generator"
-require_file "$guard"
+require_file "$foundation_index"
+require_file "$status_index"
+require_file "$readme"
+require_file "$root_status"
+require_file "$current_status"
+require_file "$installer_readme"
+require_file "$ui_model"
+require_file "$components_manifest"
+require_file "$apply_script"
+require_file "$panel_config"
+require_file "$panel_ui"
+require_file "$invocation_script"
+require_file "$stage30_guard"
 require_file "$workflow"
+require_file "$makefile"
 
 require_contains 'Status: Stage-30 implementation contract' "$stage30_doc"
+require_contains 'nadia_stage_30_prompt_evaluation_invocation_contract_present=1' "$stage30_doc"
 require_contains 'prompt_evaluation_invocation_contract_command=scripts/nadia-prompt-evaluation-invocation-contract.sh' "$stage30_doc"
 require_contains 'installed_prompt_evaluation_invocation_contract_command=latticra-nadia prompt-evaluation-invocation' "$stage30_doc"
 require_contains 'prompt_evaluation_invocation_contract_status=contract_only' "$stage30_doc"
 require_contains 'prompt_evaluation_invocation_authority=0' "$stage30_doc"
 require_contains 'requires_prompt_evaluation_runtime_handoff_contract=1' "$stage30_doc"
 require_contains 'requires_future_prompt_evaluation_result_contract=1' "$stage30_doc"
-require_contains 'prompt_evaluation_invocation_promotion_allowed=0' "$stage30_doc"
+require_contains 'prompt_evaluation_invocation_request_created=0' "$stage30_doc"
+require_contains 'prompt_evaluation_invocation_request_submitted=0' "$stage30_doc"
 require_contains 'runtime_invoked=0' "$stage30_doc"
 require_contains 'prompt_evaluated=0' "$stage30_doc"
 require_contains 'token_generation_performed=0' "$stage30_doc"
@@ -49,33 +77,69 @@ require_contains 'sh scripts/test-nadia-prompt-evaluation-invocation-contract-st
 
 require_contains 'Status: implementation status record' "$stage30_status"
 require_contains 'nadia_stage_30_prompt_evaluation_invocation_contract_present=1' "$stage30_status"
+require_contains 'nadia_prompt_evaluation_invocation_contract_generator_present=1' "$stage30_status"
 require_contains 'prompt_evaluation_invocation_contract_status=contract_only' "$stage30_status"
-require_contains 'prompt_evaluation_invocation_performed=0' "$stage30_status"
-require_contains 'prompt_evaluation_invocation_request_submitted=0' "$stage30_status"
+require_contains 'prompt_evaluation_invocation_promotion_allowed=0' "$stage30_status"
+require_contains 'prompt_evaluation_invocation_request_created=0' "$stage30_status"
 require_contains 'runtime_invoked=0' "$stage30_status"
-require_contains 'qa_dialogue_generated=0' "$stage30_status"
-require_contains 'sexual_request_refusal=always' "$stage30_status"
-require_contains 'manipulation_resistance=required' "$stage30_status"
+require_contains 'prompt_evaluated=0' "$stage30_status"
+require_contains 'token_generation_performed=0' "$stage30_status"
+require_contains 'inference_performed=0' "$stage30_status"
+require_contains 'prompt-evaluation result contract' "$stage30_status"
+require_contains 'Stage-31 now defines a prompt-evaluation result contract' "$stage30_status"
 
 require_contains 'Stage-30: Prompt Evaluation Invocation Contract' "$foundation"
-require_contains 'Before prompt evaluation result handling starts' "$foundation"
-require_contains 'NADIA PROMPT EVALUATION INVOCATION CONTRACT' "$generator"
-require_contains 'prompt_evaluation_invocation_contract_status=contract_only' "$generator"
-require_contains 'prompt_evaluation_invocation_request_submitted=0' "$generator"
-require_contains 'runtime_invoked=0' "$generator"
-require_contains 'prompt_evaluated=0' "$generator"
-require_contains 'token_generation_performed=0' "$generator"
-require_contains 'inference_performed=0' "$generator"
-require_contains 'outside Nadia prompt-evaluation-invocation boundary' "$generator"
+require_contains 'NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md' "$foundation_index"
+require_contains 'NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md' "$status_index"
+require_contains 'prompt-evaluation invocation contract' "$stage29_status"
+require_contains 'Nadia prompt evaluation invocation contract Stage-30 + guardrails' "$foundation_index"
+require_contains 'nadia_stage_30_prompt_evaluation_invocation_contract_present=1' "$readme"
+require_contains 'latticra-nadia prompt-evaluation-invocation' "$readme"
+require_contains '| Nadia offline AI foundation | 65% |' "$readme"
+require_contains 'Latest Nadia prompt evaluation invocation contract Stage-30 note: 2026-05-25 CDT' "$root_status"
+require_contains 'Latest Nadia prompt evaluation invocation contract Stage-30 note: 2026-05-25 CDT' "$current_status"
+require_contains '| Nadia offline AI foundation | 65% |' "$root_status"
+require_contains '| Nadia offline AI foundation | 65% |' "$current_status"
+require_contains 'Nadia prompt evaluation invocation contract Stage-30' "$current_status"
+require_contains 'latticra-nadia prompt-evaluation-invocation' "$installer_readme"
+require_contains 'prompt-evaluation invocation request creation' "$installer_readme"
+require_contains 'nadia prompt-evaluation-invocation' "$ui_model"
+require_contains 'Stage-30 and Stage-31 console surfaces are metadata-only' "$ui_model"
+require_contains 'share/latticra/nadia/prompt-evaluation-invocation' "$components_manifest"
+require_contains 'prompt-evaluation invocation request creation' "$components_manifest"
+require_contains 'prompt-evaluation-invocation metadata records future prompt evaluation result requirements' "$components_manifest"
+require_contains 'scripts/nadia-prompt-evaluation-invocation-contract.sh' "$apply_script"
+require_contains 'prompt_evaluation_invocation_contract_stage=30-prompt-evaluation-invocation-contract' "$apply_script"
+require_contains 'prompt_evaluation_invocation_request_created=0' "$apply_script"
+require_contains 'stage=31-prompt-evaluation-result-contract' "$apply_script"
+require_contains 'stage=31-prompt-evaluation-result-contract' "$panel_config"
+require_contains 'prompt_evaluation_invocation_contract_stage=30-prompt-evaluation-invocation-contract' "$panel_config"
+require_contains 'nadia prompt-evaluation-invocation' "$panel_ui"
+require_contains 'nadia_prompt_evaluation_invocation=stage-30-prompt-evaluation-invocation-contract' "$panel_ui"
+require_contains 'nadia-prompt-evaluation-invocation' "$makefile"
+require_contains 'sh ./scripts/nadia-prompt-evaluation-invocation-contract.sh' "$makefile"
 require_contains 'sh scripts/test-nadia-prompt-evaluation-invocation-contract-stage-30.sh' "$workflow"
 
-tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage30.XXXXXX")"
+require_contains 'NADIA PROMPT EVALUATION INVOCATION CONTRACT' "$invocation_script"
+require_contains 'prompt_evaluation_invocation_contract_status=contract_only' "$invocation_script"
+require_contains 'requires_prompt_evaluation_runtime_handoff_contract=1' "$invocation_script"
+require_contains 'requires_future_prompt_evaluation_result_contract=1' "$invocation_script"
+require_contains 'prompt_evaluation_invocation_request_created=0' "$invocation_script"
+require_contains 'prompt_evaluation_invocation_request_submitted=0' "$invocation_script"
+require_contains 'runtime_invoked=0' "$invocation_script"
+require_contains 'prompt_evaluated=0' "$invocation_script"
+require_contains 'token_generation_performed=0' "$invocation_script"
+require_contains 'inference_performed=0' "$invocation_script"
+require_contains 'outside Nadia prompt-evaluation-invocation boundary' "$invocation_script"
+
+tmp_root="${TMPDIR:-/tmp}"
+tmp_root="${tmp_root%/}"
+tmpdir=$(mktemp -d "$tmp_root/latticra-nadia-stage30-invocation-test.XXXXXX")
 trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
 
 handoff="$tmpdir/prompt-evaluation-runtime-handoff-stage29-fixture.txt"
-out="$tmpdir/prompt-evaluation-invocation"
-stdout="$tmpdir/stage30.out"
-boundary_out="$tmpdir/stage30-boundary.out"
+out="$tmpdir/out"
+mkdir -p "$out"
 
 cat > "$handoff" <<'EOF_HANDOFF'
 NADIA PROMPT EVALUATION RUNTIME HANDOFF CONTRACT
@@ -188,12 +252,12 @@ prompt_tokenization_stage=contract-only
 tokenizer_runtime_attachment_stage=contract-only
 EOF_HANDOFF
 
-NADIA_PROMPT_EVALUATION_INVOCATION_TIMESTAMP=stage30-test sh "$generator" \
+NADIA_PROMPT_EVALUATION_INVOCATION_TIMESTAMP=stage30-test sh "$invocation_script" \
   --prompt-evaluation-runtime-handoff "$handoff" \
   --request-class awareness-education \
   --invocation-family operator-reviewed-prompt-evaluation-invocation \
   --invocation-format contract-only-offline-evaluation-invocation \
-  --output "$out" > "$stdout"
+  --output "$out" > "$tmpdir/stdout.txt"
 
 report="$out/nadia-prompt-evaluation-invocation-contract-stage30-test.txt"
 require_file "$report"
@@ -202,14 +266,12 @@ require_contains 'NADIA PROMPT EVALUATION INVOCATION CONTRACT' "$report"
 require_contains 'stage=30-prompt-evaluation-invocation-contract' "$report"
 require_contains 'prompt_evaluation_invocation_contract_status=contract_only' "$report"
 require_contains 'prompt_evaluation_invocation_authority=0' "$report"
-require_contains 'prompt_evaluation_invocation_allowed=0' "$report"
 require_contains 'prompt_evaluation_invocation_performed=0' "$report"
-require_contains 'prompt_evaluation_invocation_request_created=0' "$report"
-require_contains 'prompt_evaluation_invocation_request_submitted=0' "$report"
-require_contains 'prompt_evaluation_invocation_runtime_invoked=0' "$report"
 require_contains 'requires_prompt_evaluation_runtime_handoff_contract=1' "$report"
 require_contains 'requires_future_prompt_evaluation_result_contract=1' "$report"
 require_contains 'prompt_evaluation_invocation_promotion_allowed=0' "$report"
+require_contains 'prompt_evaluation_invocation_request_created=0' "$report"
+require_contains 'prompt_evaluation_invocation_request_submitted=0' "$report"
 require_contains 'runtime_invoked=0' "$report"
 require_contains 'runtime_session_created=0' "$report"
 require_contains 'prompt_evaluated=0' "$report"
@@ -218,16 +280,17 @@ require_contains 'inference_performed=0' "$report"
 require_contains 'qa_dialogue_generated=0' "$report"
 require_contains 'sexual_request_refusal=always' "$report"
 require_contains 'manipulation_resistance=required' "$report"
-require_contains 'NADIA_PROMPT_EVALUATION_INVOCATION_PERFORMED=0' "$stdout"
-require_contains 'NADIA_RUNTIME_INVOKED=0' "$stdout"
+require_contains 'network_authority=0' "$report"
+require_contains 'tool_execution_performed=0' "$report"
+require_contains 'source_mutation_authority=0' "$report"
 
-if sh "$generator" \
+if sh "$invocation_script" \
   --prompt-evaluation-runtime-handoff "$handoff" \
   --request-class sexual-content \
-  --output "$out" > "$boundary_out" 2>&1; then
+  --output "$out" > "$tmpdir/boundary.out" 2>&1; then
   printf 'nadia prompt evaluation invocation contract stage 30: sexual boundary label was accepted\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia prompt-evaluation-invocation boundary' "$boundary_out"
+require_contains 'outside Nadia prompt-evaluation-invocation boundary' "$tmpdir/boundary.out"
 
 printf 'nadia_prompt_evaluation_invocation_contract_stage_30: ok\n'

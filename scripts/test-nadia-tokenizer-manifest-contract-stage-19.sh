@@ -125,10 +125,20 @@ require_contains 'nadia tokenizer-manifest' "$ui_model"
 require_contains 'tokenizer-manifest' "$components_manifest"
 require_contains 'nadia-tokenizer-manifest' "$makefile"
 
-sh "$stage18_guard" >/tmp/latticra-nadia-stage19-prereq-stage18-test.out
+if [ -n "${NADIA_TEST_TMP_ROOT:-}" ]; then
+  tmp_root="$NADIA_TEST_TMP_ROOT"
+else
+  tmp_base="${TMPDIR:-/tmp}"
+  tmp_root=$(mktemp -d "$tmp_base/latticra-nadia-stage19-test.XXXXXX")
+  trap 'rm -rf "$tmp_root"' EXIT INT HUP TERM
+fi
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage19-tokenizer-manifest-test"
-tokenizer_spec="${TMPDIR:-/tmp}/latticra-nadia-stage18-tokenizer-test/nadia-tokenizer-specification-contract-stage18-test.txt"
+log_out="$tmp_root/stage19/logs"
+mkdir -p "$log_out"
+NADIA_TEST_TMP_ROOT="$tmp_root" sh "$stage18_guard" >"$log_out/prereq-stage18.out"
+
+out="$tmp_root/stage19/tokenizer-manifest"
+tokenizer_spec="$tmp_root/stage18/tokenizer/nadia-tokenizer-specification-contract-stage18-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 
@@ -139,7 +149,7 @@ NADIA_TOKENIZER_MANIFEST_TIMESTAMP=stage19-test sh "$manifest_script" \
   --request-class awareness-education \
   --manifest-family operator-reviewed-tokenizer-manifest \
   --manifest-format contract-only-offline-manifest \
-  --output "$out" >/tmp/latticra-nadia-stage19-tokenizer-manifest-test.out
+  --output "$out" >"$log_out/manifest.out"
 manifest="$out/nadia-tokenizer-manifest-contract-stage19-test.txt"
 
 require_file "$manifest"
@@ -248,10 +258,10 @@ require_contains 'network_authority=0' "$manifest"
 if NADIA_TOKENIZER_MANIFEST_TIMESTAMP=stage19-reject sh "$manifest_script" \
   --tokenizer-specification "$tokenizer_spec" \
   --request-class sexual \
-  --output "$out" >/tmp/latticra-nadia-stage19-reject-test.out 2>/tmp/latticra-nadia-stage19-reject-test.err; then
+  --output "$out" >"$log_out/reject.out" 2>"$log_out/reject.err"; then
   printf 'nadia tokenizer manifest contract stage 19: sexual request class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia tokenizer-manifest boundary' /tmp/latticra-nadia-stage19-reject-test.err
+require_contains 'outside Nadia tokenizer-manifest boundary' "$log_out/reject.err"
 
 printf 'nadia_tokenizer_manifest_contract_stage_19: ok\n'

@@ -148,10 +148,20 @@ require_contains 'prompt-token-sequence' "$components_manifest"
 require_contains 'nadia-prompt-token-sequence' "$makefile"
 require_contains 'sh scripts/test-nadia-prompt-token-sequence-contract-stage-26.sh' "$workflow"
 
-sh "$stage25_guard" >/tmp/latticra-nadia-stage26-prereq-stage25-test.out
+if [ -n "${NADIA_TEST_TMP_ROOT:-}" ]; then
+  tmp_root="$NADIA_TEST_TMP_ROOT"
+else
+  tmp_base="${TMPDIR:-/tmp}"
+  tmp_root=$(mktemp -d "$tmp_base/latticra-nadia-stage26-test.XXXXXX")
+  trap 'rm -rf "$tmp_root"' EXIT INT HUP TERM
+fi
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage26-prompt-token-sequence-test"
-tokenization="${TMPDIR:-/tmp}/latticra-nadia-stage25-prompt-tokenization-test/nadia-prompt-tokenization-contract-stage25-test.txt"
+log_out="$tmp_root/stage26/logs"
+mkdir -p "$log_out"
+NADIA_TEST_TMP_ROOT="$tmp_root" sh "$stage25_guard" >"$log_out/prereq-stage25.out"
+
+out="$tmp_root/stage26/prompt-token-sequence"
+tokenization="$tmp_root/stage25/prompt-tokenization/nadia-prompt-tokenization-contract-stage25-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 
@@ -162,7 +172,7 @@ NADIA_PROMPT_TOKEN_SEQUENCE_TIMESTAMP=stage26-test sh "$sequence_script" \
   --request-class awareness-education \
   --sequence-family operator-reviewed-prompt-token-sequence \
   --sequence-format contract-only-offline-sequence \
-  --output "$out" >/tmp/latticra-nadia-stage26-prompt-token-sequence-test.out
+  --output "$out" >"$log_out/sequence.out"
 sequence="$out/nadia-prompt-token-sequence-contract-stage26-test.txt"
 
 require_file "$sequence"
@@ -247,10 +257,10 @@ require_contains 'network_authority=0' "$sequence"
 if sh "$sequence_script" \
   --prompt-tokenization "$tokenization" \
   --request-class sexual-content \
-  --output "$out" >/tmp/latticra-nadia-stage26-boundary.out 2>&1; then
+  --output "$out" >"$log_out/boundary.out" 2>&1; then
   printf 'nadia prompt token sequence contract stage 26: sexual boundary label was accepted\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia prompt-token-sequence boundary' /tmp/latticra-nadia-stage26-boundary.out
+require_contains 'outside Nadia prompt-token-sequence boundary' "$log_out/boundary.out"
 
 printf 'nadia_prompt_token_sequence_contract_stage_26: ok\n'

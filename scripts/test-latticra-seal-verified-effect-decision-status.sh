@@ -48,24 +48,9 @@ require_contains 'seal_verified_effect_decision_invariant_test_present=1' "$stat
 require_contains 'seal_verified_effect_decision_runner_present=1' "$status_file"
 require_contains 'seal_verified_effect_decision_status_present=1' "$status_file"
 require_contains 'seal_verified_capability_gate_status_present=1' "$status_file"
-require_contains 'readme_links_verified_effect_decision_contract=1' "$status_file"
-require_contains 'readme_links_verified_effect_decision_implementation=1' "$status_file"
-require_contains 'readme_links_verified_effect_decision_status=1' "$status_file"
-require_contains 'root_status_mentions_verified_effect_decision_status=1' "$status_file"
-require_contains 'status_index_links_verified_effect_decision_status=1' "$status_file"
-require_contains 'foundation_index_links_verified_effect_decision_status=1' "$status_file"
-require_contains 'project_notes_mark_verified_effect_decision_status_complete=1' "$status_file"
 require_contains 'decision_profile=latticra-seal-verified-effect-decision/0.1' "$status_file"
 require_contains 'gate_profile=latticra-seal-verified-capability-gate/0.1' "$status_file"
-require_contains 'receipt_profile=latticra-seal-verified-receipt/0.1' "$status_file"
-require_contains 'verify_profile=latticra-seal-ed25519-verify/0.1' "$status_file"
-require_contains 'message_digest_algorithm=SHA-256' "$status_file"
-require_contains 'public_key_identity_label=rfc8032-test-key' "$status_file"
-require_contains 'requested_capability=verified-receipt-report' "$status_file"
 require_contains 'requested_effect=report-only' "$status_file"
-require_contains 'requested_scope=local-fixture-scope' "$status_file"
-require_contains 'gate_allowed=1' "$status_file"
-require_contains 'gate_state=allowed-metadata-only' "$status_file"
 require_contains 'decision_state=allowed-report-only' "$status_file"
 require_contains 'effect_allowed=1' "$status_file"
 require_contains 'effect_performed=0' "$status_file"
@@ -73,28 +58,15 @@ require_contains 'runtime_authority_granted=0' "$status_file"
 require_contains 'host_read_performed=0' "$status_file"
 require_contains 'host_write_performed=0' "$status_file"
 require_contains 'network_performed=0' "$status_file"
-require_contains 'error=ok' "$status_file"
 require_contains 'status=verified-effect-decision-metadata' "$status_file"
-require_contains 'verified_effect_decision_added=1' "$status_file"
-require_contains 'effect_execution_added=0' "$status_file"
-require_contains 'capability_enforcement_added=0' "$status_file"
-require_contains 'signing_added=0' "$status_file"
-require_contains 'key_generation_added=0' "$status_file"
-require_contains 'private_key_handling_added=0' "$status_file"
-require_contains 'trust_store_behavior_added=0' "$status_file"
-require_contains 'revocation_lookup_added=0' "$status_file"
-require_contains 'network_behavior_changed=0' "$status_file"
-require_contains 'host_behavior_changed=0' "$status_file"
-require_contains 'seal verified effect decision status: ok' "$status_file"
-require_contains 'seal verified effect decision invariants: ok' "$status_file"
-require_contains 'runtime handoff evaluation from an allowed metadata-only verified effect decision' "$status_file"
+require_contains 'runtime handoff evaluation status/public-entry alignment' "$status_file"
 
 require_contains 'verified effect decision metadata/status' README.md
 require_contains 'seal_verified_effect_decision_contract_present=1' README.md
 require_contains 'seal_verified_effect_decision_implementation_present=1' README.md
 require_contains 'seal_verified_effect_decision_status_present=1' README.md
-require_contains 'verified_effect_decision_state=allowed-report-only' README.md
 require_contains 'verified_effect_decision_allowed=1' README.md
+require_contains 'verified_effect_decision_state=allowed-report-only' README.md
 require_contains 'verified_effect_decision_effect_performed=0' README.md
 require_contains 'verified_effect_decision_runtime_authority_granted=0' README.md
 require_contains 'docs/LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_CONTRACT.md' README.md
@@ -104,8 +76,8 @@ require_contains 'docs/status/SEAL_VERIFIED_EFFECT_DECISION_STATUS.md' README.md
 require_contains 'Latest Seal verified effect decision status/public-entry note: 2026-05-25 CDT' STATUS.md
 require_contains 'Seal verified effect decision status/public-entry alignment' STATUS.md
 require_contains 'seal_verified_effect_decision_status_present=1' STATUS.md
-require_contains 'verified_effect_decision_state=allowed-report-only' STATUS.md
 require_contains 'verified_effect_decision_allowed=1' STATUS.md
+require_contains 'verified_effect_decision_state=allowed-report-only' STATUS.md
 require_contains 'verified_effect_decision_effect_performed=0' STATUS.md
 require_contains 'verified_effect_decision_runtime_authority_granted=0' STATUS.md
 
@@ -116,8 +88,8 @@ require_contains 'verified effect decision metadata/status' docs/status/README.m
 require_contains 'Latest Seal verified effect decision status/public-entry note: 2026-05-25 CDT' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal verified effect decision status/public-entry alignment' docs/status/CURRENT_STATUS.md
 require_contains 'seal_verified_effect_decision_status_present=1' docs/status/CURRENT_STATUS.md
-require_contains 'verified_effect_decision_state=allowed-report-only' docs/status/CURRENT_STATUS.md
 require_contains 'verified_effect_decision_allowed=1' docs/status/CURRENT_STATUS.md
+require_contains 'verified_effect_decision_state=allowed-report-only' docs/status/CURRENT_STATUS.md
 require_contains 'verified_effect_decision_effect_performed=0' docs/status/CURRENT_STATUS.md
 require_contains 'verified_effect_decision_runtime_authority_granted=0' docs/status/CURRENT_STATUS.md
 

@@ -23,10 +23,14 @@
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#orientation">Orientation</a>
         <a href="#architecture">Architecture</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
         <a href="evidence.html">Evidence</a>
         <a href="start.html">Start</a>
         <a href="#resources">Resources</a>
         <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
         <a href="architecture.html">System</a>
         <a href="language.html">Language</a>
         <a href="seal.html">Seal</a>
@@ -107,7 +111,7 @@
           <h3>What Latticra does not claim</h3>
           <ul>
             <li>No production runtime, hardened sandbox, certified security boundary, or operating-system replacement.</li>
-            <li>No unrestricted command execution, network authority, root installer, or Fedora approval.</li>
+            <li>No unrestricted command execution, network authority, root installer, Fedora approval, or Ubuntu archive readiness.</li>
             <li>No active AI-agent execution control or production cryptographic key authority.</li>
           </ul>
         </article>
@@ -159,9 +163,9 @@
           <p>User-local installer and evidence review path with no root and no network authority by default.</p>
         </article>
         <article class="lane lane-fedora">
-          <span class="lane-label">Fedora/Linux</span>
+          <span class="lane-label">Ubuntu/Fedora/Linux</span>
           <h3>Validation lane</h3>
-          <p>Disposable VM and local RPM evidence paths, not distribution readiness.</p>
+          <p>Ubuntu build/local deb and Fedora disposable VM/local RPM evidence paths, not distribution readiness.</p>
         </article>
       </div>
     </section>
@@ -212,6 +216,9 @@
             <span class="status-pill status-present">report-only</span>
             <span class="status-pill status-blocked">default-deny</span>
             <span class="status-pill status-guarded">operator review</span>
+          </div>
+          <div class="hero-actions" aria-label="Seal actions">
+            <a class="button button-dark" href="seal.html">Open Seal overview</a>
           </div>
         </div>
         <figure class="showcase-figure">
@@ -283,10 +290,25 @@ cc -std=c99 -Wall -Wextra -pedantic src/latticra_cli.c -o build/latticra
           <strong>System Architecture</strong>
           <em>A guided view of layers, authority boundaries, evidence flow, and no-effect posture.</em>
         </a>
+        <a href="language.html">
+          <span>Language</span>
+          <strong>Lat, LIR, and L-UI</strong>
+          <em>A reader-facing guide to declaration, representation, parser, and report boundaries.</em>
+        </a>
+        <a href="examples.html">
+          <span>Examples</span>
+          <strong>Local Checks</strong>
+          <em>Concrete no-effect examples for L-UI fixtures, parser reports, and language guards.</em>
+        </a>
         <a href="status.html">
           <span>Status Dashboard</span>
           <strong>Public Status</strong>
           <em>A scannable dashboard for current estimates, posture, workstreams, and non-claims.</em>
+        </a>
+        <a href="roadmap.html">
+          <span>Direction</span>
+          <strong>Roadmap</strong>
+          <em>Sequencing principles, planning estimates, active lanes, and guarded next steps.</em>
         </a>
         <a href="map.html">
           <span>Navigation</span>
@@ -318,12 +340,12 @@ cc -std=c99 -Wall -Wextra -pedantic src/latticra_cli.c -o build/latticra
           <strong>System Substrate</strong>
           <em>Main project book and substrate documentation entry point.</em>
         </a>
-        <a href="latticra-seal/README.md">
+        <a href="seal.html">
           <span>Subsystem</span>
           <strong>Latticra Seal</strong>
           <em>Verification, reporting, policy-boundary, and tool-boundary records.</em>
         </a>
-        <a href="ROADMAP.md">
+        <a href="roadmap.html">
           <span>Planning</span>
           <strong>Roadmap</strong>
           <em>Design-first path before deeper implementation claims.</em>

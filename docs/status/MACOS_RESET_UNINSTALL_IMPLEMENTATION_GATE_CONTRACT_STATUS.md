@@ -8,46 +8,64 @@ Scope: status checkpoint after adding the macOS reset/uninstall implementation-g
 
 Latticra now has a no-effect macOS reset/uninstall implementation-gate contract.
 
-The contract keeps future live reset/uninstall execution closed until classifier, dry-run planner, receipt-schema, absence-report, and explicit operator-intent evidence exist. It does not delete files, write receipts, write absence reports, mutate host state, or claim reset/uninstall implementation.
+The contract keeps live reset/uninstall activity closed until receipt, absence, planner, classifier, and explicit operator-intent evidence exist. It does not delete files, write receipts, write absence reports, mutate host state, or claim reset/uninstall implementation.
 
 ## Status Fields
 
 ```text
 macos_reset_uninstall_implementation_gate_contract_present=1
+macos_reset_uninstall_operator_intent_contract_present=1
+operator_intent_contract_state=defined-no-effect
+operator_intent_evidence_written=0
 macos_reset_uninstall_implementation_gate_contract_guard_present=1
-macos_reset_uninstall_receipt_schema_contract_present=1
-macos_reset_uninstall_absence_report_contract_present=1
-macos_reset_uninstall_dry_run_planner_present=1
-macos_reset_uninstall_live_target_classifier_present=1
-macos_reset_uninstall_dry_run_contract_present=1
-macos_verification_transcript_contract_present=1
-macos_commit_gate_contract_present=1
 implementation_gate_contract_state=closed-no-effect
-implementation_gate_required=1
-implementation_gate_open=0
 implementation_gate_state=closed-no-effect
 implementation_gate_decision=blocked-missing-reset-uninstall-evidence
+implementation_gate_required=1
+implementation_gate_open=0
 reset_uninstall_live_run_allowed=0
 reset_uninstall_deletion_enabled=0
 managed_target_removal_allowed=0
 managed_target_deletion_enabled=0
 reset_uninstall_receipt_write_enabled=0
-operator_explicit_reset_uninstall_intent_required=1
-operator_reset_uninstall_intent_evidence_present=0
-operator_explicit_reset_uninstall_intent_observed=0
-live_target_classifier_evidence_required=1
-dry_run_planner_transcript_required=1
-reset_uninstall_receipt_evidence_required=1
-absence_report_evidence_required=1
+macos_reset_uninstall_receipt_schema_contract_present=1
+macos_reset_uninstall_absence_report_contract_present=1
+macos_reset_uninstall_dry_run_planner_present=1
+reset_uninstall_dry_run_planner_transcript_present=1
+macos_reset_uninstall_live_target_classifier_present=1
+macos_reset_uninstall_dry_run_contract_present=1
+macos_verification_transcript_contract_present=1
+macos_commit_gate_contract_present=1
 reset_uninstall_dry_run_evidence_present=0
 reset_uninstall_receipt_evidence_present=0
 reset_receipt_evidence_present=0
 receipt_schema_evidence_present=0
 absence_report_evidence_present=0
+operator_reset_uninstall_intent_evidence_present=0
+operator_explicit_reset_uninstall_intent_observed=0
+managed_target_classification_required=1
+live_target_classifier_evidence_required=1
+dry_run_planner_transcript_required=1
+receipt_schema_required=1
+reset_uninstall_receipt_evidence_required=1
+absence_report_contract_required=1
+absence_report_evidence_required=1
+operator_explicit_reset_uninstall_intent_required=1
+operator_intent_must_name_operation=1
+operator_intent_must_name_target_scope=1
+operator_intent_must_acknowledge_managed_targets_only=1
+operator_intent_must_acknowledge_no_unmanaged_removal=1
+operator_intent_must_acknowledge_receipt_path=1
+gate_condition_receipt_schema_contract_present=required
+gate_condition_absence_report_contract_present=required
+gate_condition_dry_run_planner_transcript_present=required
+gate_condition_live_target_classifier_present=required
 gate_condition_operator_intent_evidence_present=required
 gate_condition_no_unmanaged_targets=required
 gate_condition_no_unsafe_paths=required
 gate_condition_receipt_outside_removed_prefix=required
+gate_condition_no_network=required
+gate_condition_no_root=required
 implementation_gate_phase_5_status=disabled
 implementation_gate_phase_6_status=disabled
 macos_reset_uninstall_implemented=0
@@ -56,9 +74,12 @@ managed_wrapper_removal_performed=0
 managed_app_bundle_removal_performed=0
 managed_application_support_removal_performed=0
 reset_receipt_write_performed=0
+absence_report_run_performed=0
+absence_report_written=0
 file_delete_performed=0
 directory_delete_performed=0
 application_support_write_performed=0
+receipt_write_performed=0
 app_bundle_write_performed=0
 cli_wrapper_write_performed=0
 shell_profile_mutation_performed=0
@@ -81,7 +102,7 @@ production_installer_ready=0
 The careful public meaning is:
 
 ```text
-Latticra has a no-effect macOS reset/uninstall implementation-gate contract that keeps live reset/uninstall execution closed.
+Latticra has a no-effect macOS reset/uninstall implementation-gate contract that keeps future live reset/uninstall activity closed until required evidence exists.
 ```
 
 That does not mean Latticra has a macOS reset implementation, uninstall implementation, installer, commit-capable app bundle writer, verified app bundle, signed build, notarized build, launchd integration, Keychain integration, Endpoint Security integration, System Extension integration, privileged helper, or production security capability.
@@ -103,7 +124,7 @@ macos_reset_uninstall_implementation_gate_contract: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall operator-intent contract for explicit future live reset/uninstall approval evidence.
+Add a macOS reset/uninstall effect-authorization contract that keeps live execution disabled until implementation-gate and operator-intent evidence are both present.
 ```
 
 ## Non-Claims

@@ -1,0 +1,147 @@
+# macOS Reset/Uninstall Operator-Intent Contract Status
+
+Status: no-effect reset/uninstall operator-intent contract status
+Date: 2026-05-25 CDT
+Scope: status checkpoint after adding the macOS reset/uninstall operator-intent contract.
+
+## Summary
+
+Latticra now has a no-effect macOS reset/uninstall operator-intent contract.
+
+The contract defines the explicit future approval evidence required before a live reset/uninstall could be considered. It does not prompt for approval, infer approval, delete files, write receipts, write absence reports, mutate host state, or claim reset/uninstall implementation.
+
+## Status Fields
+
+```text
+macos_reset_uninstall_operator_intent_contract_present=1
+macos_reset_uninstall_operator_intent_contract_guard_present=1
+operator_intent_contract_state=defined-no-effect
+operator_intent_contract_decision=contract-defined-intent-not-observed
+operator_intent_contract_required=1
+operator_intent_contract_open=0
+operator_reset_uninstall_intent_required=1
+operator_reset_uninstall_intent_evidence_required=1
+operator_reset_uninstall_intent_evidence_present=0
+operator_explicit_reset_uninstall_intent_observed=0
+operator_intent_capture_performed=0
+operator_intent_record_write_enabled=0
+operator_intent_record_written=0
+operator_intent_evidence_written=0
+operator_intent_transcript_write_performed=0
+implementation_gate_open=0
+reset_uninstall_live_run_allowed=0
+reset_uninstall_deletion_enabled=0
+managed_target_removal_allowed=0
+managed_target_deletion_enabled=0
+reset_uninstall_receipt_write_enabled=0
+macos_reset_uninstall_implementation_gate_contract_present=1
+macos_reset_uninstall_operator_intent_contract_present=1
+implementation_gate_contract_state=closed-no-effect
+implementation_gate_decision=blocked-missing-reset-uninstall-evidence
+macos_reset_uninstall_receipt_schema_contract_present=1
+macos_reset_uninstall_absence_report_contract_present=1
+macos_reset_uninstall_dry_run_planner_present=1
+reset_uninstall_dry_run_planner_transcript_present=1
+macos_reset_uninstall_live_target_classifier_present=1
+macos_reset_uninstall_dry_run_contract_present=1
+macos_verification_transcript_contract_present=1
+macos_commit_gate_contract_present=1
+reset_uninstall_dry_run_evidence_present=0
+reset_uninstall_receipt_evidence_present=0
+reset_receipt_evidence_present=0
+receipt_schema_evidence_present=0
+absence_report_evidence_present=0
+operator_intent_evidence_format=text-transcript
+operator_intent_schema_version=macos-reset-uninstall-operator-intent/1
+operator_intent_digest_algorithm=sha256
+operator_intent_must_be_explicit=1
+operator_intent_must_be_current_session=1
+operator_intent_must_not_be_inferred=1
+operator_intent_must_not_be_defaulted=1
+operator_intent_must_not_be_from_previous_session=1
+operator_intent_must_name_operation=1
+operator_intent_operation_values=reset,uninstall
+operator_intent_must_name_target_scope=1
+operator_intent_target_scope=user-local-managed-targets-only
+operator_intent_must_acknowledge_managed_targets_only=1
+operator_intent_must_acknowledge_no_unmanaged_removal=1
+operator_intent_must_acknowledge_receipt_path=1
+operator_intent_must_acknowledge_absence_report_path=1
+operator_intent_must_acknowledge_no_network=1
+operator_intent_must_acknowledge_no_root=1
+operator_intent_must_acknowledge_live_classifier_digest=1
+operator_intent_must_acknowledge_dry_run_planner_digest=1
+operator_intent_field_dry_run_planner_transcript_digest_required=1
+operator_intent_field_live_classifier_digest_required=1
+operator_intent_field_receipt_schema_digest_required=1
+operator_intent_field_absence_report_contract_digest_required=1
+operator_intent_field_confirmation_text_required=1
+operator_intent_scope_must_match_live_classifier=1
+operator_intent_scope_must_match_dry_run_planner=1
+operator_intent_confirmation_phrase_required=1
+operator_intent_confirmation_phrase_future=reset-or-uninstall-latticra-user-local-managed-targets
+operator_intent_transcript_required=1
+operator_intent_phase_5_status=disabled
+operator_intent_phase_6_status=disabled
+macos_reset_uninstall_implemented=0
+reset_uninstall_implementation_present=0
+managed_wrapper_removal_performed=0
+managed_app_bundle_removal_performed=0
+managed_application_support_removal_performed=0
+reset_receipt_write_performed=0
+absence_report_run_performed=0
+absence_report_written=0
+file_delete_performed=0
+directory_delete_performed=0
+application_support_write_performed=0
+receipt_write_performed=0
+app_bundle_write_performed=0
+cli_wrapper_write_performed=0
+shell_profile_mutation_performed=0
+host_mutation_performed=0
+network_performed=0
+root_authority=0
+launchagent_authority=0
+keychain_authority=0
+tcc_bypass_authority=0
+endpoint_security_authority=0
+system_extension_authority=0
+network_extension_authority=0
+privileged_helper_authority=0
+runtime_authority_granted=0
+production_installer_ready=0
+```
+
+## Public Meaning
+
+The careful public meaning is:
+
+```text
+Latticra has a no-effect macOS reset/uninstall operator-intent contract for future explicit live reset/uninstall approval evidence.
+```
+
+That does not mean Latticra has live approval evidence, a macOS reset implementation, uninstall implementation, installer, commit-capable app bundle writer, verified app bundle, signed build, notarized build, launchd integration, Keychain integration, Endpoint Security integration, System Extension integration, privileged helper, or production security capability.
+
+## Guard Validation
+
+This status record is guarded by:
+
+```sh
+sh scripts/test-macos-reset-uninstall-operator-intent-contract.sh
+```
+
+Expected output:
+
+```text
+macos_reset_uninstall_operator_intent_contract: ok
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall effect-authorization contract that keeps live execution disabled until implementation-gate and operator-intent evidence are both present.
+```
+
+## Non-Claims
+
+This status record is not operator approval evidence, macOS reset evidence, macOS uninstall evidence, macOS install evidence, app bundle evidence, live approval evidence, receipt evidence, absence verification evidence, signed app evidence, notarization evidence, launchd evidence, Keychain evidence, Secure Enclave evidence, sandbox evidence, TCC approval evidence, Endpoint Security evidence, System Extension evidence, Network Extension evidence, privileged helper evidence, malware prevention, ransomware prevention, production readiness, Apple platform approval, or runtime authority.

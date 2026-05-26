@@ -134,10 +134,20 @@ require_contains 'nadia tokenizer-artifact-verification' "$ui_model"
 require_contains 'tokenizer-artifact-verification' "$components_manifest"
 require_contains 'nadia-tokenizer-artifact-verification' "$makefile"
 
-sh "$stage21_guard" >/tmp/latticra-nadia-stage22-prereq-stage21-test.out
+if [ -n "${NADIA_TEST_TMP_ROOT:-}" ]; then
+  tmp_root="$NADIA_TEST_TMP_ROOT"
+else
+  tmp_base="${TMPDIR:-/tmp}"
+  tmp_root=$(mktemp -d "$tmp_base/latticra-nadia-stage22-test.XXXXXX")
+  trap 'rm -rf "$tmp_root"' EXIT INT HUP TERM
+fi
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage22-tokenizer-artifact-verification-test"
-measurement="${TMPDIR:-/tmp}/latticra-nadia-stage21-tokenizer-artifact-measurement-test/nadia-tokenizer-artifact-measurement-contract-stage21-test.txt"
+log_out="$tmp_root/stage22/logs"
+mkdir -p "$log_out"
+NADIA_TEST_TMP_ROOT="$tmp_root" sh "$stage21_guard" >"$log_out/prereq-stage21.out"
+
+out="$tmp_root/stage22/tokenizer-artifact-verification"
+measurement="$tmp_root/stage21/tokenizer-artifact-measurement/nadia-tokenizer-artifact-measurement-contract-stage21-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 
@@ -148,7 +158,7 @@ NADIA_TOKENIZER_ARTIFACT_VERIFICATION_TIMESTAMP=stage22-test sh "$verification_s
   --request-class awareness-education \
   --verification-family operator-reviewed-tokenizer-artifact-verification \
   --verification-format contract-only-offline-verification \
-  --output "$out" >/tmp/latticra-nadia-stage22-tokenizer-artifact-verification-test.out
+  --output "$out" >"$log_out/verification.out"
 verification="$out/nadia-tokenizer-artifact-verification-contract-stage22-test.txt"
 
 require_file "$verification"
@@ -283,10 +293,10 @@ require_contains 'network_authority=0' "$verification"
 if NADIA_TOKENIZER_ARTIFACT_VERIFICATION_TIMESTAMP=stage22-reject sh "$verification_script" \
   --tokenizer-artifact-measurement "$measurement" \
   --request-class sexual \
-  --output "$out" >/tmp/latticra-nadia-stage22-reject-test.out 2>/tmp/latticra-nadia-stage22-reject-test.err; then
+  --output "$out" >"$log_out/reject.out" 2>"$log_out/reject.err"; then
   printf 'nadia tokenizer artifact verification contract stage 22: sexual request class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia tokenizer-artifact-verification boundary' /tmp/latticra-nadia-stage22-reject-test.err
+require_contains 'outside Nadia tokenizer-artifact-verification boundary' "$log_out/reject.err"
 
 printf 'nadia_tokenizer_artifact_verification_contract_stage_22: ok\n'

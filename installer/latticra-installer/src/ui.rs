@@ -77,7 +77,7 @@ impl Default for LatticraInstallerApp {
             console_lines: vec![
                 format!("Latticra Panel v{PANEL_VERSION} bounded operator console online."),
                 "Authority baseline: root=0 network=0 runtime_enforcement=0.".to_owned(),
-                "Panel commands: help, status, lc status, lc receipts, lc receipt-request, lc host-adapter, lc os-contract, lc vm-evidence, lc profile <hosted|panel|host|os|custom>, plan, save, dry-run, reset, uninstall, profile seal, profile fedora."
+                "Panel commands: help, status, lc status, lc install-config, lc receipts, lc receipt-request, lc receipt-payload, lc signature-request, lc host-adapter, lc os-contract, lc vm-evidence, lc profile <hosted|panel|host|os|custom>, plan, save, dry-run, reset, uninstall, profile seal, profile fedora."
                     .to_owned(),
                 "Navigation commands: pwd, cd <dir>. External host commands are denied.".to_owned(),
             ],
@@ -419,7 +419,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc status, lc profiles, lc receipts, lc receipt-request, lc profile hosted|panel|host|os|custom, lc commands, lc substrate, lc host, lc host-contract, lc host-inventory, lc host-adapter, lc os-contract, lc vm-evidence, lc os, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding, nadia tokenizer-runtime-attachment, nadia prompt-tokenization, nadia prompt-token-sequence, nadia context-window-assembly, nadia prompt-evaluation-input, nadia prompt-evaluation-runtime-handoff, nadia prompt-evaluation-invocation",
+                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc status, lc install-config, lc profiles, lc receipts, lc receipt-request, lc receipt-payload, lc signature-request, lc profile hosted|panel|host|os|custom, lc commands, lc substrate, lc host, lc host-contract, lc host-inventory, lc host-adapter, lc os-contract, lc vm-evidence, lc os, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding, nadia tokenizer-runtime-attachment, nadia prompt-tokenization, nadia prompt-token-sequence, nadia context-window-assembly, nadia prompt-evaluation-input, nadia prompt-evaluation-runtime-handoff, nadia prompt-evaluation-invocation, nadia prompt-evaluation-result",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -503,6 +503,26 @@ impl LatticraInstallerApp {
                     self.config.lc.panel_bridge
                 ));
                 self.push_console(format!(
+                    "install_profile={}",
+                    self.config.lc.install.install_profile
+                ));
+                self.push_console(format!(
+                    "install_mode={}",
+                    self.config.lc.install.install_mode
+                ));
+                self.push_console(format!(
+                    "install_config_path={}",
+                    self.config.lc.install.config_path
+                ));
+                self.push_console(format!(
+                    "install_share_path={}",
+                    self.config.lc.install.share_path
+                ));
+                self.push_console(format!(
+                    "install_command_wrapper={}",
+                    self.config.lc.install.command_wrapper
+                ));
+                self.push_console(format!(
                     "command_registry_profile={}",
                     self.config.lc.command_registry_profile
                 ));
@@ -534,6 +554,16 @@ impl LatticraInstallerApp {
                     self.config.lc.receipt_request_contract_profile
                 ));
                 self.push_console("receipt_request_contract_status=metadata-only-contract");
+                self.push_console(format!(
+                    "receipt_payload_schema_profile={}",
+                    self.config.lc.receipt_payload_schema_profile
+                ));
+                self.push_console("receipt_payload_schema_status=metadata-only-schema");
+                self.push_console(format!(
+                    "signature_request_binding_profile={}",
+                    self.config.lc.signature_request_binding_profile
+                ));
+                self.push_console("signature_request_binding_status=metadata-only-contract");
                 self.push_console(format!(
                     "receipt_contract_profile={}",
                     self.config.lc.receipt_contract_profile
@@ -583,6 +613,14 @@ impl LatticraInstallerApp {
                     self.config.lc.require_receipt_request_contract
                 ));
                 self.push_console(format!(
+                    "receipt_payload_schema_required={}",
+                    self.config.lc.require_receipt_payload_schema
+                ));
+                self.push_console(format!(
+                    "signature_request_binding_required={}",
+                    self.config.lc.require_signature_request_binding
+                ));
+                self.push_console(format!(
                     "os_base_contract_required={}",
                     self.config.lc.require_os_base_contract
                 ));
@@ -600,6 +638,61 @@ impl LatticraInstallerApp {
                 ));
                 self.push_console(
                     "execution_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0",
+                );
+            }
+            ["lc", "install"]
+            | ["lc", "install-config"]
+            | ["console", "install"]
+            | ["console", "install-config"] => {
+                self.push_console("lc.install_config=Latticra Console install configuration");
+                self.push_console(format!(
+                    "component_selected={}",
+                    self.config.components.latticra_console
+                ));
+                self.push_console(format!(
+                    "install_profile={}",
+                    self.config.lc.install.install_profile
+                ));
+                self.push_console(format!(
+                    "install_mode={}",
+                    self.config.lc.install.install_mode
+                ));
+                self.push_console(format!(
+                    "config_path={}",
+                    self.config.lc.install.config_path
+                ));
+                self.push_console(format!("share_path={}", self.config.lc.install.share_path));
+                self.push_console(format!(
+                    "command_wrapper={}",
+                    self.config.lc.install.command_wrapper
+                ));
+                self.push_console(format!(
+                    "panel_embedded_console={}",
+                    self.config.lc.install.panel_embedded_console
+                ));
+                self.push_console(format!(
+                    "write_config_file={}",
+                    self.config.lc.install.write_config_file
+                ));
+                self.push_console(format!(
+                    "write_profile_presets={}",
+                    self.config.lc.install.write_profile_presets
+                ));
+                self.push_console(format!(
+                    "write_command_registry={}",
+                    self.config.lc.install.write_command_registry
+                ));
+                self.push_console(format!(
+                    "write_contract_files={}",
+                    self.config.lc.install.write_contract_files
+                ));
+                self.push_console(format!(
+                    "install_user_wrapper={}",
+                    self.config.lc.install.install_user_wrapper
+                ));
+                self.push_console("allow_external_host_commands=false");
+                self.push_console(
+                    "execution_allowed=0 host_process_launch_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0",
                 );
             }
             ["lc", "profiles"] | ["console", "profiles"] => {
@@ -623,7 +716,7 @@ impl LatticraInstallerApp {
                 self.apply_lc_profile(LatticraConsoleProfile::Custom);
             }
             ["lc", "commands"] | ["console", "commands"] => {
-                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc profiles,lc receipts,lc receipt-request,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
+                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc install-config,lc profiles,lc receipts,lc receipt-request,lc receipt-payload,lc signature-request,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
                 self.push_console("registry_authority=metadata-only external_host_processes=0");
             }
             ["lc", "receipts"]
@@ -656,6 +749,16 @@ impl LatticraInstallerApp {
                     "receipt_request_contract_required={}",
                     self.config.lc.require_receipt_request_contract
                 ));
+                self.push_console(format!(
+                    "receipt_payload_schema_required={}",
+                    self.config.lc.require_receipt_payload_schema
+                ));
+                self.push_console("receipt_payload_schema_command=lc receipt-payload");
+                self.push_console(format!(
+                    "signature_request_binding_required={}",
+                    self.config.lc.require_signature_request_binding
+                ));
+                self.push_console("signature_request_binding_command=lc signature-request");
                 self.push_console(
                     "receipt_request_command=lc receipt-request seal_signature_request_present=0",
                 );
@@ -685,9 +788,96 @@ impl LatticraInstallerApp {
                     "receipt_contract_profile={}",
                     self.config.lc.receipt_contract_profile
                 ));
+                self.push_console(format!(
+                    "receipt_payload_schema_profile={}",
+                    self.config.lc.receipt_payload_schema_profile
+                ));
+                self.push_console(
+                    "receipt_payload_schema_required=1 receipt_payload_artifact_present=0",
+                );
+                self.push_console(format!(
+                    "signature_request_binding_profile={}",
+                    self.config.lc.signature_request_binding_profile
+                ));
+                self.push_console("signature_request_binding_required=1 signature_request_binding_artifact_present=0");
                 self.push_console("signature_request_profile=latticra-seal-signature-request/0.1");
                 self.push_console("requested_receipt_profile=latticra-seal-verified-receipt/0.1");
                 self.push_console("requested_capability=verified-receipt-report");
+                self.push_console("seal_signature_request_ready=0 seal_signature_request_present=0 seal_signing_authority_present=0");
+                self.push_console("seal_signer_handoff_allowed=0 seal_signing_operation_allowed=0 receipt_write_allowed=0 receipt_signed=0");
+                self.push_console(
+                    "file_write_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0",
+                );
+            }
+            ["lc", "receipt-payload"]
+            | ["console", "receipt-payload"]
+            | ["lc", "receipt-payload-schema"]
+            | ["console", "receipt-payload-schema"]
+            | ["lc", "payload-schema"]
+            | ["console", "payload-schema"] => {
+                self.push_console(
+                    "lc.receipt_payload_schema=Latticra Console receipt payload schema",
+                );
+                self.push_console(format!(
+                    "schema_profile={}",
+                    self.config.lc.receipt_payload_schema_profile
+                ));
+                self.push_console(format!(
+                    "schema_required={}",
+                    self.config.lc.require_receipt_payload_schema
+                ));
+                self.push_console(format!(
+                    "receipt_request_profile={}",
+                    self.config.lc.receipt_request_contract_profile
+                ));
+                self.push_console(format!(
+                    "receipt_contract_profile={}",
+                    self.config.lc.receipt_contract_profile
+                ));
+                self.push_console("payload_fields=console_id,profile,command_registry,host_contract,host_inventory,host_adapter,runtime_boundary,seal_capability_labels,authority_denials");
+                self.push_console(
+                    "payload_artifact_present=0 payload_hash_computed=0 payload_path_recorded=0",
+                );
+                self.push_console(
+                    "signature_request_binding_present=0 signature_request_binding_allowed=0",
+                );
+                self.push_console(
+                    "signature_request_binding_contract_present=1 signature_request_binding_command=lc signature-request",
+                );
+                self.push_console("seal_signature_request_ready=0 seal_signature_request_present=0 receipt_write_allowed=0 receipt_signed=0");
+                self.push_console(
+                    "file_write_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0",
+                );
+            }
+            ["lc", "signature-request"]
+            | ["console", "signature-request"]
+            | ["lc", "receipt-signature-request"]
+            | ["console", "receipt-signature-request"]
+            | ["lc", "signature-request-binding"]
+            | ["console", "signature-request-binding"] => {
+                self.push_console(
+                    "lc.signature_request_binding=Latticra Console signature request binding contract",
+                );
+                self.push_console(format!(
+                    "binding_profile={}",
+                    self.config.lc.signature_request_binding_profile
+                ));
+                self.push_console(format!(
+                    "binding_required={}",
+                    self.config.lc.require_signature_request_binding
+                ));
+                self.push_console(format!(
+                    "receipt_payload_schema_profile={}",
+                    self.config.lc.receipt_payload_schema_profile
+                ));
+                self.push_console("signature_request_profile=latticra-seal-signature-request/0.1");
+                self.push_console(
+                    "signing_authorization_profile=latticra-seal-signing-authorization/0.1",
+                );
+                self.push_console("requested_signature=Ed25519-development requested_signing_authorization=metadata-only");
+                self.push_console(
+                    "signature_request_binding_artifact_present=0 signature_request_binding_allowed=0",
+                );
                 self.push_console("seal_signature_request_ready=0 seal_signature_request_present=0 seal_signing_authority_present=0");
                 self.push_console("seal_signer_handoff_allowed=0 seal_signing_operation_allowed=0 receipt_write_allowed=0 receipt_signed=0");
                 self.push_console(
@@ -948,7 +1138,10 @@ impl LatticraInstallerApp {
                     "prompt_evaluation_invocation_contract_stage=30-prompt-evaluation-invocation-contract",
                 );
                 self.push_console(
-                    "stage=30 prompt-evaluation-invocation-contract; prompt_evaluation_invocation_request_created=0 runtime_invoked=0 prompt_evaluated=0",
+                    "prompt_evaluation_result_contract_stage=31-prompt-evaluation-result-contract",
+                );
+                self.push_console(
+                    "stage=31 prompt-evaluation-result-contract; prompt_evaluation_result_record_created=0 prompt_evaluation_result_model_output_recorded=0 runtime_invoked=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -1312,6 +1505,25 @@ impl LatticraInstallerApp {
                 );
                 self.push_console(
                     "requires_prompt_evaluation_runtime_handoff_contract=1 requires_future_prompt_evaluation_result_contract=1",
+                );
+            }
+            ["nadia", "prompt-evaluation-result"]
+            | ["nadia", "evaluation-result"]
+            | ["nadia", "prompt-result"]
+            | ["nadia", "prompt-evaluation-result-contract"] => {
+                self.push_console(
+                    "nadia_prompt_evaluation_result=stage-31-prompt-evaluation-result-contract",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia prompt-evaluation-result");
+                self.push_console(
+                    "prompt_evaluation_result_contract_status=contract_only prompt_evaluation_result_recorded=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_record_created=0 prompt_evaluation_result_model_output_recorded=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_invocation_contract=1 requires_future_prompt_evaluation_result_review_contract=1",
                 );
             }
             ["nadia", "inference-readiness"]
@@ -1817,7 +2029,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-30 prompt-evaluation-invocation contract with metadata-only Console surfaces.",
+            "Stage-31 prompt-evaluation-result contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,
@@ -1857,73 +2069,6 @@ impl LatticraInstallerApp {
             self.refresh_plan();
         }
         ui.label(self.config.lc.profile.detail());
-
-        ui.separator();
-        ui.heading("LC install configuration");
-        checkbox_note(
-            ui,
-            &mut self.config.components.latticra_console,
-            "Install Latticra Console",
-            "Install LC metadata, profile presets, command registry, contracts, and the user-local wrapper when selected.",
-        );
-        labeled_text_field(
-            ui,
-            "Install profile",
-            &mut self.config.lc.install.install_profile,
-        );
-        labeled_text_field(ui, "Install mode", &mut self.config.lc.install.install_mode);
-        labeled_text_field(ui, "Config path", &mut self.config.lc.install.config_path);
-        labeled_text_field(ui, "Share path", &mut self.config.lc.install.share_path);
-        labeled_text_field(
-            ui,
-            "Command wrapper",
-            &mut self.config.lc.install.command_wrapper,
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.install.panel_embedded_console,
-            "Panel embedded console",
-            "Expose LC through the Panel-contained console bridge.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.install.write_config_file,
-            "Write LC config file",
-            "Record LC install metadata in the local prefix.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.install.write_profile_presets,
-            "Write LC profile presets",
-            "Install hosted, Panel, host-planning, and OS-base planning profile metadata.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.install.write_command_registry,
-            "Write LC command registry",
-            "Install the no-effect LC command registry metadata.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.install.write_contract_files,
-            "Write LC contract files",
-            "Install LC host, adapter, receipt, OS-base, and VM evidence contracts.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.install.install_user_wrapper,
-            "Install user-local LC wrapper",
-            "Expose the configured LC command wrapper under the user-local bin path.",
-        );
-        self.config.lc.install.allow_external_host_commands = false;
-        ui.add_enabled(
-            false,
-            egui::Checkbox::new(
-                &mut self.config.lc.install.allow_external_host_commands,
-                "External host commands (future; disabled)",
-            ),
-        );
-        ui.small("LC install configuration remains Panel-contained and cannot launch external host commands.");
 
         ui.separator();
         if ui.available_width() < 760.0 {
@@ -1983,6 +2128,74 @@ impl LatticraInstallerApp {
         }
 
         ui.separator();
+        ui.heading("LC install configuration");
+        checkbox_note(
+            ui,
+            &mut self.config.components.latticra_console,
+            "Install Latticra Console",
+            "LC is installed as the Panel-owned operator console and metadata surface.",
+        );
+        labeled_text_field(
+            ui,
+            "Install profile",
+            &mut self.config.lc.install.install_profile,
+        );
+        labeled_text_field(ui, "Install mode", &mut self.config.lc.install.install_mode);
+        labeled_text_field(ui, "Config path", &mut self.config.lc.install.config_path);
+        labeled_text_field(ui, "Share path", &mut self.config.lc.install.share_path);
+        labeled_text_field(
+            ui,
+            "Command wrapper",
+            &mut self.config.lc.install.command_wrapper,
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.install.panel_embedded_console,
+            "Panel embedded console",
+            "LC remains available inside Latticra Panel.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.install.write_config_file,
+            "Write LC config file",
+            "Install LC configuration metadata into the local prefix.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.install.write_profile_presets,
+            "Write profile presets",
+            "Install hosted, Panel, host-planning, and OS-planning profile metadata.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.install.write_command_registry,
+            "Write command registry",
+            "Install the LC command registry used by help, boundary, and commands.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.install.write_contract_files,
+            "Write contract files",
+            "Install LC metadata contracts without granting execution authority.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.install.install_user_wrapper,
+            "Install user wrapper",
+            "Install the latticra-lc wrapper when user command wrappers are enabled.",
+        );
+        let mut external_host_commands = false;
+        ui.add_enabled(
+            false,
+            egui::Checkbox::new(
+                &mut external_host_commands,
+                "External host commands (future; disabled)",
+            ),
+        )
+        .on_hover_text("LC install configuration cannot grant host process launch authority.");
+        self.config.lc.install.allow_external_host_commands = false;
+
+        ui.separator();
         ui.heading("LC substrate and embedding fields");
         labeled_text_field(
             ui,
@@ -2018,6 +2231,16 @@ impl LatticraInstallerApp {
             ui,
             "Receipt request",
             &mut self.config.lc.receipt_request_contract_profile,
+        );
+        labeled_text_field(
+            ui,
+            "Receipt payload",
+            &mut self.config.lc.receipt_payload_schema_profile,
+        );
+        labeled_text_field(
+            ui,
+            "Signature request",
+            &mut self.config.lc.signature_request_binding_profile,
         );
         labeled_text_field(
             ui,
@@ -2083,6 +2306,18 @@ impl LatticraInstallerApp {
             &mut self.config.lc.require_receipt_request_contract,
             "Require receipt-request contract",
             "Future LC receipt signing must prove the request contract before any signature can exist.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.require_receipt_payload_schema,
+            "Require receipt payload schema",
+            "Future LC receipt signing must prove the payload shape before any signature request can bind.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.require_signature_request_binding,
+            "Require signature-request binding",
+            "Future LC receipt signing must prove the binding contract before any Seal signature request artifact can exist.",
         );
         checkbox_note(
             ui,

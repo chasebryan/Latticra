@@ -17,8 +17,8 @@ static int default_request_is_denied(void) {
 
     EXPECT_TRUE(latticra_kernel_lifecycle_default_request(&request) == LATTICRA_STATUS_OK,
         "default request status");
-    EXPECT_TRUE(request.target_state == LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY,
-        "default target vfs-namespace-ready");
+    EXPECT_TRUE(request.target_state == LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY,
+        "default target device-registry-ready");
     EXPECT_TRUE(request.gate == LATTICRA_KERNEL_STATE_GATE_DENY,
         "default gate deny");
     EXPECT_TRUE(request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
@@ -43,7 +43,7 @@ static int default_request_is_denied(void) {
     return 0;
 }
 
-static int allowed_lifecycle_reaches_vfs_namespace_ready(void) {
+static int allowed_lifecycle_reaches_device_registry_ready(void) {
     latticra_kernel_lifecycle_request_t request;
     latticra_kernel_lifecycle_result_t result;
 
@@ -57,18 +57,18 @@ static int allowed_lifecycle_reaches_vfs_namespace_ready(void) {
         "lifecycle complete");
     EXPECT_TRUE(strcmp(result.policy_status, "gate-allowed") == 0,
         "policy gate allowed");
-    EXPECT_TRUE(result.final_state == LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY,
-        "final state vfs-namespace-ready");
-    EXPECT_TRUE(result.step_count == 8u,
-        "eight steps to vfs-namespace-ready");
-    EXPECT_TRUE(result.state_change_count == 8u,
-        "eight state changes");
+    EXPECT_TRUE(result.final_state == LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY,
+        "final state device-registry-ready");
+    EXPECT_TRUE(result.step_count == 9u,
+        "nine steps to device-registry-ready");
+    EXPECT_TRUE(result.state_change_count == 9u,
+        "nine state changes");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "complete flag set");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "external effects absent");
-    EXPECT_TRUE(result.machine.log_count == 8u,
-        "machine log has eight entries");
+    EXPECT_TRUE(result.machine.log_count == 9u,
+        "machine log has nine entries");
     EXPECT_TRUE(result.machine.log[0].from_state == LATTICRA_KERNEL_STATE_CREATED,
         "log zero from created");
     EXPECT_TRUE(result.machine.log[0].to_state == LATTICRA_KERNEL_STATE_INITIALIZED,
@@ -81,7 +81,9 @@ static int allowed_lifecycle_reaches_vfs_namespace_ready(void) {
         "log six to ipc-table-ready");
     EXPECT_TRUE(result.machine.log[7].to_state == LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY,
         "log seven to vfs-namespace-ready");
-    EXPECT_TRUE(result.machine.log[7].state_change_performed == 1,
+    EXPECT_TRUE(result.machine.log[8].to_state == LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY,
+        "log eight to device-registry-ready");
+    EXPECT_TRUE(result.machine.log[8].state_change_performed == 1,
         "last step changed state");
     return 0;
 }
@@ -184,17 +186,17 @@ static int lifecycle_report_is_deterministic(void) {
         "lifecycle status emitted");
     EXPECT_TRUE(strstr(report, "policy_status=gate-allowed\n") != 0,
         "policy status emitted");
-    EXPECT_TRUE(strstr(report, "final_state=vfs-namespace-ready\n") != 0,
+    EXPECT_TRUE(strstr(report, "final_state=device-registry-ready\n") != 0,
         "final state emitted");
-    EXPECT_TRUE(strstr(report, "step_count=8\n") != 0,
+    EXPECT_TRUE(strstr(report, "step_count=9\n") != 0,
         "step count emitted");
-    EXPECT_TRUE(strstr(report, "state_change_count=8\n") != 0,
+    EXPECT_TRUE(strstr(report, "state_change_count=9\n") != 0,
         "state change count emitted");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "complete flag emitted");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "external effect emitted");
-    EXPECT_TRUE(strstr(report, "machine_log_count=8\n") != 0,
+    EXPECT_TRUE(strstr(report, "machine_log_count=9\n") != 0,
         "machine log count emitted");
     EXPECT_TRUE(strstr(report, "log[0].from=created\n") != 0,
         "log zero from emitted");
@@ -205,8 +207,10 @@ static int lifecycle_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "log[6].to=ipc-table-ready\n") != 0,
         "log ipc to emitted");
     EXPECT_TRUE(strstr(report, "log[7].to=vfs-namespace-ready\n") != 0,
+        "log vfs to emitted");
+    EXPECT_TRUE(strstr(report, "log[8].to=device-registry-ready\n") != 0,
         "log final to emitted");
-    EXPECT_TRUE(strstr(report, "log[7].state_change_performed=1\n") != 0,
+    EXPECT_TRUE(strstr(report, "log[8].state_change_performed=1\n") != 0,
         "log final change emitted");
     return 0;
 }
@@ -232,7 +236,7 @@ static int null_guards_are_safe(void) {
 
 int main(void) {
     if (default_request_is_denied() != 0) return 1;
-    if (allowed_lifecycle_reaches_vfs_namespace_ready() != 0) return 1;
+    if (allowed_lifecycle_reaches_device_registry_ready() != 0) return 1;
     if (lifecycle_can_stop_at_intermediate_target() != 0) return 1;
     if (lifecycle_can_stop_at_process_table_ready() != 0) return 1;
     if (lifecycle_respects_step_limit() != 0) return 1;

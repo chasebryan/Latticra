@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #define LATTICRA_KERNEL_STATE_MACHINE_LABEL_MAX 64u
-#define LATTICRA_KERNEL_STATE_MACHINE_LOG_MAX 8u
+#define LATTICRA_KERNEL_STATE_MACHINE_LOG_MAX 9u
 #define LATTICRA_KERNEL_STATE_MACHINE_REPORT_MAX 16384u
 
 typedef struct {
@@ -35,6 +35,7 @@ typedef struct {
     latticra_kernel_syscall_table_request_t syscall_table_request;
     latticra_kernel_ipc_table_request_t ipc_table_request;
     latticra_kernel_vfs_namespace_request_t vfs_namespace_request;
+    latticra_kernel_device_registry_request_t device_registry_request;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
 } latticra_kernel_state_machine_step_request_t;

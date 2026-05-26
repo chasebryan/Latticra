@@ -217,44 +217,20 @@ impl Default for LatticraConsoleInstallConfig {
 }
 
 impl LatticraConsoleInstallConfig {
-    fn validate(&self) -> Result<(), String> {
-        if self.install_profile.trim().is_empty() {
-            return Err("LC install profile must not be empty.".to_owned());
-        }
-        if self.install_mode.trim().is_empty() {
-            return Err("LC install mode must not be empty.".to_owned());
-        }
-        if self.config_path.trim().is_empty() {
-            return Err("LC config path must not be empty.".to_owned());
-        }
-        if self.share_path.trim().is_empty() {
-            return Err("LC share path must not be empty.".to_owned());
-        }
-        if self.command_wrapper.trim().is_empty() {
-            return Err("LC command wrapper must not be empty.".to_owned());
-        }
-        if self.command_wrapper.contains('/')
-            || self.command_wrapper.split_whitespace().count() != 1
-        {
-            return Err("LC command wrapper must be a single command name.".to_owned());
-        }
-        for (label, raw_path) in [
-            ("LC config path", self.config_path.as_str()),
-            ("LC share path", self.share_path.as_str()),
-        ] {
-            let path = Path::new(raw_path);
-            if path.is_absolute() || path_has_parent_reference(path) {
-                return Err(format!(
-                    "{label} must be a relative path under the install prefix."
-                ));
-            }
-        }
+    pub fn validate(&self) -> Result<(), String> {
+        validate_nonempty_field("LC install profile", &self.install_profile)?;
+        validate_nonempty_field("LC install mode", &self.install_mode)?;
+        validate_relative_install_path("LC config path", &self.config_path)?;
+        validate_relative_install_path("LC share path", &self.share_path)?;
+        validate_command_wrapper(&self.command_wrapper)?;
+
         if self.allow_external_host_commands {
             return Err(
                 "LC install configuration cannot enable external host commands from the Panel."
                     .to_owned(),
             );
         }
+
         Ok(())
     }
 }
@@ -271,6 +247,8 @@ pub struct LatticraConsoleConfig {
     pub host_inventory_contract_profile: String,
     pub host_adapter_contract_profile: String,
     pub receipt_request_contract_profile: String,
+    pub receipt_payload_schema_profile: String,
+    pub signature_request_binding_profile: String,
     pub receipt_contract_profile: String,
     pub os_base_contract_profile: String,
     pub vm_evidence_contract_profile: String,
@@ -284,6 +262,8 @@ pub struct LatticraConsoleConfig {
     pub require_host_inventory_receipt: bool,
     pub require_host_adapter_contract: bool,
     pub require_receipt_request_contract: bool,
+    pub require_receipt_payload_schema: bool,
+    pub require_signature_request_binding: bool,
     pub require_os_base_contract: bool,
     pub require_vm_evidence_contract: bool,
     pub require_runtime_boundary_binding: bool,
@@ -302,6 +282,8 @@ impl Default for LatticraConsoleConfig {
             host_inventory_contract_profile: "lc-host-inventory-v0".to_owned(),
             host_adapter_contract_profile: "lc-host-adapter-v0".to_owned(),
             receipt_request_contract_profile: "lc-receipt-request-v0".to_owned(),
+            receipt_payload_schema_profile: "lc-receipt-payload-schema-v0".to_owned(),
+            signature_request_binding_profile: "lc-signature-request-binding-v0".to_owned(),
             receipt_contract_profile: "lc-receipts-v0".to_owned(),
             os_base_contract_profile: "lc-os-base-v0".to_owned(),
             vm_evidence_contract_profile: "lc-vm-evidence-v0".to_owned(),
@@ -315,6 +297,8 @@ impl Default for LatticraConsoleConfig {
             require_host_inventory_receipt: true,
             require_host_adapter_contract: true,
             require_receipt_request_contract: true,
+            require_receipt_payload_schema: true,
+            require_signature_request_binding: true,
             require_os_base_contract: true,
             require_vm_evidence_contract: true,
             require_runtime_boundary_binding: true,
@@ -357,6 +341,8 @@ impl LatticraConsoleConfig {
         self.host_inventory_contract_profile = "lc-host-inventory-v0".to_owned();
         self.host_adapter_contract_profile = "lc-host-adapter-v0".to_owned();
         self.receipt_request_contract_profile = "lc-receipt-request-v0".to_owned();
+        self.receipt_payload_schema_profile = "lc-receipt-payload-schema-v0".to_owned();
+        self.signature_request_binding_profile = "lc-signature-request-binding-v0".to_owned();
         self.receipt_contract_profile = "lc-receipts-v0".to_owned();
         self.os_base_contract_profile = "lc-os-base-v0".to_owned();
         self.vm_evidence_contract_profile = "lc-vm-evidence-v0".to_owned();
@@ -368,6 +354,8 @@ impl LatticraConsoleConfig {
         self.require_host_inventory_receipt = true;
         self.require_host_adapter_contract = true;
         self.require_receipt_request_contract = true;
+        self.require_receipt_payload_schema = true;
+        self.require_signature_request_binding = true;
         self.require_os_base_contract = true;
         self.require_vm_evidence_contract = true;
         self.require_runtime_boundary_binding = true;
@@ -572,6 +560,49 @@ fn expand_install_prefix(raw_prefix: &str, home: &Path) -> PathBuf {
 fn path_has_parent_reference(path: &Path) -> bool {
     path.components()
         .any(|component| matches!(component, Component::ParentDir))
+}
+
+fn validate_nonempty_field(label: &str, value: &str) -> Result<(), String> {
+    if value.trim().is_empty() {
+        return Err(format!("{label} must not be empty."));
+    }
+
+    Ok(())
+}
+
+fn validate_relative_install_path(label: &str, raw_path: &str) -> Result<(), String> {
+    validate_nonempty_field(label, raw_path)?;
+
+    let path = Path::new(raw_path);
+    if path.is_absolute() {
+        return Err(format!("{label} must be relative to the install prefix."));
+    }
+
+    if path_has_parent_reference(path) {
+        return Err(format!(
+            "{label} must not contain parent-directory traversal."
+        ));
+    }
+
+    Ok(())
+}
+
+fn validate_command_wrapper(command: &str) -> Result<(), String> {
+    validate_nonempty_field("LC command wrapper", command)?;
+
+    if command.contains('/')
+        || command.split_whitespace().count() != 1
+        || !command
+            .chars()
+            .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '.' | '_' | '-'))
+    {
+        return Err(
+            "LC command wrapper must be a single command name using only letters, numbers, '.', '_', or '-'."
+                .to_owned(),
+        );
+    }
+
+    Ok(())
 }
 
 fn validate_user_local_install_prefix(raw_prefix: &str) -> Result<(), String> {
@@ -841,9 +872,13 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "panel_installable=1");
     let _ = writeln!(out, "install_profile={}", config.lc.install.install_profile);
     let _ = writeln!(out, "install_mode={}", config.lc.install.install_mode);
-    let _ = writeln!(out, "config_path={}", config.lc.install.config_path);
-    let _ = writeln!(out, "share_path={}", config.lc.install.share_path);
-    let _ = writeln!(out, "command_wrapper={}", config.lc.install.command_wrapper);
+    let _ = writeln!(out, "install_config_path={}", config.lc.install.config_path);
+    let _ = writeln!(out, "install_share_path={}", config.lc.install.share_path);
+    let _ = writeln!(
+        out,
+        "install_command_wrapper={}",
+        config.lc.install.command_wrapper
+    );
     let _ = writeln!(
         out,
         "panel_embedded_console={}",
@@ -919,6 +954,16 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "receipt_payload_schema_profile={}",
+        config.lc.receipt_payload_schema_profile
+    );
+    let _ = writeln!(
+        out,
+        "signature_request_binding_profile={}",
+        config.lc.signature_request_binding_profile
+    );
+    let _ = writeln!(
+        out,
         "receipt_contract_profile={}",
         config.lc.receipt_contract_profile
     );
@@ -971,6 +1016,16 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "receipt_payload_schema_required={}",
+        config.lc.require_receipt_payload_schema
+    );
+    let _ = writeln!(
+        out,
+        "signature_request_binding_required={}",
+        config.lc.require_signature_request_binding
+    );
+    let _ = writeln!(
+        out,
         "os_base_contract_required={}",
         config.lc.require_os_base_contract
     );
@@ -1007,6 +1062,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         out,
         "receipt_request_contract_status=metadata-only-contract"
     );
+    let _ = writeln!(out, "receipt_payload_schema_status=metadata-only-schema");
+    let _ = writeln!(
+        out,
+        "signature_request_binding_status=metadata-only-contract"
+    );
     let _ = writeln!(out, "receipt_contract_status=metadata-only-contract");
     let _ = writeln!(out, "seal_signature_request_ready=0");
     let _ = writeln!(out, "seal_signature_request_present=0");
@@ -1030,7 +1090,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=30-prompt-evaluation-invocation-contract");
+    let _ = writeln!(out, "stage=31-prompt-evaluation-result-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -1989,6 +2049,56 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "requires_prompt_evaluation_runtime_handoff_contract=1");
     let _ = writeln!(out, "requires_future_prompt_evaluation_result_contract=1");
     let _ = writeln!(out, "prompt_evaluation_invocation_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_contract_stage=31-prompt-evaluation-result-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_contract_command=scripts/nadia-prompt-evaluation-result-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_result_contract_command=latticra-nadia prompt-evaluation-result"
+    );
+    let _ = writeln!(out, "prompt_evaluation_result_stage=contract-only");
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_contract_status=contract_only"
+    );
+    let _ = writeln!(out, "prompt_evaluation_result_authority=0");
+    let _ = writeln!(out, "prompt_evaluation_result_allowed=0");
+    let _ = writeln!(out, "prompt_evaluation_result_recorded=0");
+    let _ = writeln!(out, "prompt_evaluation_result_created=0");
+    let _ = writeln!(out, "prompt_evaluation_result_performed=0");
+    let _ = writeln!(out, "prompt_evaluation_result_metadata_present=1");
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_family=operator-reviewed-prompt-evaluation-result"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_format=contract-only-offline-evaluation-result"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_decision=blocked_contract_only"
+    );
+    let _ = writeln!(out, "prompt_evaluation_result_plan_recorded=1");
+    let _ = writeln!(out, "prompt_evaluation_result_result_recorded=0");
+    let _ = writeln!(out, "prompt_evaluation_result_runtime_invoked=0");
+    let _ = writeln!(out, "prompt_evaluation_result_record_created=0");
+    let _ = writeln!(out, "prompt_evaluation_result_model_output_recorded=0");
+    let _ = writeln!(out, "prompt_evaluation_result_output_text_recorded=0");
+    let _ = writeln!(out, "prompt_evaluation_result_score_recorded=0");
+    let _ = writeln!(out, "prompt_evaluation_result_token_logprobs_recorded=0");
+    let _ = writeln!(out, "answer_text_generated=0");
+    let _ = writeln!(out, "requires_prompt_evaluation_invocation_contract=1");
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_result_review_contract=1"
+    );
+    let _ = writeln!(out, "prompt_evaluation_result_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

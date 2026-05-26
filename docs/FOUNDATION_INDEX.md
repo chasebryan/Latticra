@@ -28,7 +28,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`SUPERVISOR_ARCHITECTURE.md`](SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor model and orchestration responsibilities.
 - [`EFFECT_GATES.md`](EFFECT_GATES.md) — effect categories, gating rules, and visibility requirements.
 - [`UI_TERMINAL_LANGUAGE.md`](UI_TERMINAL_LANGUAGE.md) — L-UI terminal/operator interface language direction.
-- [`LATTICRA_CONSOLE_FOUNDATION.md`](LATTICRA_CONSOLE_FOUNDATION.md) — Latticra Console Stage-0 foundation, Panel installability, profile presets, host-embedding contract, read-only host inventory contract, host-adapter contract, receipt contract, Seal receipt-request contract, OS-base planning contract, VM evidence contract, command registry, Runtime Boundary binding, and future host/OS-base posture.
+- [`LATTICRA_CONSOLE_FOUNDATION.md`](LATTICRA_CONSOLE_FOUNDATION.md) — Latticra Console Stage-0 foundation, Panel installability, profile presets, host-embedding contract, read-only host inventory contract, host-adapter contract, receipt contract, Seal receipt-request contract, receipt payload schema, signature-request binding contract, OS-base planning contract, VM evidence contract, command registry, Runtime Boundary binding, and future host/OS-base posture.
 - [`SERVER_INTERACTION_MODEL.md`](SERVER_INTERACTION_MODEL.md) — signed, optional, inspectable server interaction model.
 - [`NADIA_OFFLINE_AI_FOUNDATION.md`](NADIA_OFFLINE_AI_FOUNDATION.md) — Stage-0 foundation contract for Latticra Nadia Witness Foundation, the planned offline AI companion for Latticra software development, systems engineering, AI development, and community-awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md) — Stage-1 no-network local context-pack engine for Nadia.
@@ -60,7 +60,8 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md`](NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md) — Stage-27 context-window assembly contract for Nadia before context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28.md`](NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28.md) — Stage-28 prompt-evaluation-input contract for Nadia before prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29.md`](NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29.md) — Stage-29 prompt-evaluation runtime handoff contract for Nadia before runtime handoff, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
-- [`NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md`](NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md) — Stage-30 prompt-evaluation invocation contract for Nadia before invocation request creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md`](NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md) — Stage-30 prompt-evaluation invocation contract for Nadia before invocation requests, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31.md`](NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31.md) — Stage-31 prompt-evaluation result contract for Nadia before result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`SELF_UPDATE_MODEL.md`](SELF_UPDATE_MODEL.md) — staged signed update and rollback design.
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
@@ -110,7 +111,8 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md`](status/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md) — status record for Nadia Stage-27 context-window assembly contract before context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`status/NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md`](status/NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md) — status record for Nadia Stage-28 prompt-evaluation-input contract before prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`status/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md`](status/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md) — status record for Nadia Stage-29 prompt-evaluation runtime handoff contract before runtime handoff, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
-- [`status/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md`](status/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md) — status record for Nadia Stage-30 prompt-evaluation invocation contract before invocation request creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md`](status/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md) — status record for Nadia Stage-30 prompt-evaluation invocation contract before invocation requests, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31_STATUS.md`](status/NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31_STATUS.md) — status record for Nadia Stage-31 prompt-evaluation result contract before result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
@@ -154,7 +156,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md`](RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md) — exact future runtime API, structs, enums, reports, buffers, tests, task usage, authority usage, and non-claims before runtime boundary code.
 - [`RUNTIME_BOUNDARY_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_IMPLEMENTATION.md) — first runtime boundary public API, source surface, smoke invariants, dedicated runner, and dedicated workflow record.
 - [`RUNTIME_BOUNDARY_REFINEMENT_PLAN.md`](RUNTIME_BOUNDARY_REFINEMENT_PLAN.md) — runtime-boundary refinement plan.
-- [`RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md) — runtime-boundary Lat pipeline, Lat pipeline line-comment, and Lat-specific LIR evidence refinement implementation.
+- [`RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md) — runtime-boundary Lat pipeline stage-summary, Lat pipeline line-comment, and Lat-specific LIR evidence refinement implementation.
 - [`RUNTIME_BOUNDARY_REPORT_REFINEMENT.md`](RUNTIME_BOUNDARY_REPORT_REFINEMENT.md) — runtime-boundary report refinement implementation.
 - [`RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md`](RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md) — runtime-boundary policy matrix refinement implementation.
 - [`RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`](RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md) — runtime-boundary policy expansion after defensive threat-model validation.
@@ -164,6 +166,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_CONTRACT.md`](LATTICRA_SEAL_CONTRACT.md) — Latticra Seal evidence-boundary, capability-boundary, promotion-gate, and non-claim contract.
 - [`LATTICRA_SEAL_REPORT_ENVELOPE_CONTRACT.md`](LATTICRA_SEAL_REPORT_ENVELOPE_CONTRACT.md) — report envelope boundary after ready runtime handoff report metadata.
 - [`LATTICRA_SEAL_REPORT_ENVELOPE_IMPLEMENTATION.md`](LATTICRA_SEAL_REPORT_ENVELOPE_IMPLEMENTATION.md) — first no-effect sealed report-envelope metadata implementation.
+- [`status/SEAL_REPORT_ENVELOPE_STATUS.md`](status/SEAL_REPORT_ENVELOPE_STATUS.md) — status/public-entry checkpoint for sealed report-envelope metadata.
 - [`LATTICRA_SEAL_SIGNATURE_REQUEST_CONTRACT.md`](LATTICRA_SEAL_SIGNATURE_REQUEST_CONTRACT.md) — metadata-only signature request boundary after sealed report-envelope metadata.
 - [`LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md`](LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md) — first no-effect signature request metadata implementation.
 - [`LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md`](LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md) — metadata-only signing authorization boundary after signature request readiness.
@@ -209,6 +212,9 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_CONTRACT.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_CONTRACT.md) — runtime handoff evaluation boundary after verified effect decision metadata.
 - [`LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_IMPLEMENTATION.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_IMPLEMENTATION.md) — first metadata-only runtime handoff evaluation implementation.
 - [`status/SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md`](status/SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md) — status/public-entry checkpoint for runtime handoff evaluation metadata.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_CONTRACT.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_CONTRACT.md) — runtime handoff report boundary after runtime handoff evaluation metadata.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_IMPLEMENTATION.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_IMPLEMENTATION.md) — first metadata-only runtime handoff report implementation.
+- [`status/SEAL_RUNTIME_HANDOFF_REPORT_STATUS.md`](status/SEAL_RUNTIME_HANDOFF_REPORT_STATUS.md) — status/public-entry checkpoint for runtime handoff report metadata.
 - [`LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md`](LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md) — verification receipt boundary after verification policy metadata.
 - [`LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md`](LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md) — first no-effect verification receipt metadata implementation.
 - [`status/SEAL_VERIFICATION_RECEIPT_STATUS.md`](status/SEAL_VERIFICATION_RECEIPT_STATUS.md) — status/public-entry checkpoint for metadata-only Seal verification receipt implementation.
@@ -221,6 +227,12 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_RUNTIME_HANDOFF_CONTRACT.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_CONTRACT.md) — runtime handoff boundary after effect decision metadata.
 - [`LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md) — first no-effect inactive runtime handoff metadata implementation.
 - [`status/SEAL_RUNTIME_HANDOFF_STATUS.md`](status/SEAL_RUNTIME_HANDOFF_STATUS.md) — status/public-entry checkpoint for metadata-only Seal runtime handoff implementation.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_CONTRACT.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_CONTRACT.md) — runtime handoff evaluation boundary after verified effect decision metadata.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_IMPLEMENTATION.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_IMPLEMENTATION.md) — metadata-only runtime handoff evaluation implementation.
+- [`status/SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md`](status/SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md) — status checkpoint for metadata-only Seal runtime handoff evaluation.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_CONTRACT.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_CONTRACT.md) — runtime handoff report boundary after runtime handoff evaluation metadata.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_IMPLEMENTATION.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_IMPLEMENTATION.md) — metadata-only runtime handoff report implementation.
+- [`status/SEAL_RUNTIME_HANDOFF_REPORT_STATUS.md`](status/SEAL_RUNTIME_HANDOFF_REPORT_STATUS.md) — Latticra Seal runtime handoff report status/public-entry alignment.
 - [`LATTICRA_SEAL_STATUS_ROLLUP_CONTRACT.md`](LATTICRA_SEAL_STATUS_ROLLUP_CONTRACT.md) — status rollup boundary after runtime handoff metadata.
 - [`LATTICRA_SEAL_STATUS_ROLLUP_IMPLEMENTATION.md`](LATTICRA_SEAL_STATUS_ROLLUP_IMPLEMENTATION.md) — first metadata-only status rollup implementation.
 - [`status/SEAL_STATUS_ROLLUP_STATUS.md`](status/SEAL_STATUS_ROLLUP_STATUS.md) — status/public-entry checkpoint for metadata-only Seal status rollup implementation.
@@ -342,6 +354,7 @@ Runtime boundary domain matrix report integration + invariants
 Latticra Seal report envelope metadata + invariants
 Latticra Seal signature request contract + guardrails
 Latticra Seal signature request metadata + invariants
+Latticra Seal signature request predecessor status alignment + guardrails
 Latticra Seal signature request status/public-entry alignment + guardrails
 Latticra Seal signing authorization contract + guardrails
 Latticra Seal signing authorization metadata + invariants
@@ -403,8 +416,8 @@ Nadia context window assembly contract Stage-27 + guardrails
 Nadia prompt evaluation input contract Stage-28 + guardrails
 
 Nadia prompt evaluation runtime handoff contract Stage-29 + guardrails
-
 Nadia prompt evaluation invocation contract Stage-30 + guardrails
+Nadia prompt evaluation result contract Stage-31 + guardrails
 Latticra Seal verification policy status/public-entry alignment + guardrails
 Latticra Seal crypto verify backend status/public-entry alignment + guardrails
 Latticra Seal Ed25519 verify-only status/public-entry alignment + guardrails
@@ -412,6 +425,8 @@ Latticra Seal verified receipt promotion status/public-entry alignment + guardra
 Latticra Seal verified capability gate status/public-entry alignment + guardrails
 Latticra Seal verified effect decision status/public-entry alignment + guardrails
 Latticra Seal runtime handoff evaluation status/public-entry alignment + guardrails
+Latticra Seal runtime handoff report status/public-entry alignment + guardrails
+Latticra Seal report envelope status/public-entry alignment + guardrails
 Latticra Seal key parsing status/public-entry alignment + guardrails
 Latticra Seal bounded no-effect key parsing metadata + invariants
 Latticra Seal future key parsing implementation plan + guardrails
@@ -449,6 +464,7 @@ Lat pipeline failure span evidence propagation + invariants
 Lat pipeline parse-error evidence propagation + invariants
 Lat pipeline semantic-error evidence propagation + invariants
 Lat pipeline downstream stage-error evidence propagation + invariants
+Lat pipeline stage-summary evidence propagation + invariants
 Lat pipeline implementation + invariants
 Lat pipeline report refinement + invariants
 Lat pipeline diagnostic integration refinement + invariants

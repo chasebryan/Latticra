@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage3.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -99,18 +102,21 @@ require_contains 'nadia plan' "$panel_ui"
 require_contains 'latticra-nadia prompt-plan' "$installer_readme"
 require_contains 'nadia-plan' "$makefile"
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage3-plan-test"
-context_out="${TMPDIR:-/tmp}/latticra-nadia-stage3-context-test"
-runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage3-runtime-test"
+out="$tmpdir/latticra-nadia-stage3-plan-test"
+context_out="$tmpdir/latticra-nadia-stage3-context-test"
+runtime_out="$tmpdir/latticra-nadia-stage3-runtime-test"
+context_stdout="$tmpdir/latticra-nadia-stage3-context-test.out"
+runtime_stdout="$tmpdir/latticra-nadia-stage3-runtime-test.out"
+plan_stdout="$tmpdir/latticra-nadia-stage3-plan-test.out"
 rm -rf "$out" "$context_out" "$runtime_out"
 mkdir -p "$out" "$context_out" "$runtime_out"
-NADIA_CONTEXT_PACK_TIMESTAMP=stage3-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage3-context-test.out
-NADIA_RUNTIME_PROFILE_TIMESTAMP=stage3-test sh scripts/nadia-runtime-profile.sh --output "$runtime_out" >/tmp/latticra-nadia-stage3-runtime-test.out
+NADIA_CONTEXT_PACK_TIMESTAMP=stage3-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" > "$context_stdout"
+NADIA_RUNTIME_PROFILE_TIMESTAMP=stage3-test sh scripts/nadia-runtime-profile.sh --output "$runtime_out" > "$runtime_stdout"
 NADIA_PROMPT_PLAN_TIMESTAMP=stage3-test sh "$plan_script" \
   --context-pack "$context_out/nadia-context-pack-stage3-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage3-test.txt" \
   --task "runtime boundary planning" \
-  --output "$out" >/tmp/latticra-nadia-stage3-plan-test.out
+  --output "$out" > "$plan_stdout"
 plan="$out/nadia-prompt-plan-stage3-test.txt"
 
 require_file "$plan"

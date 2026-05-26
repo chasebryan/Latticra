@@ -228,6 +228,15 @@ typedef struct {
     latticra_lat_model_error_t lat_pipeline_model_error;
     latticra_lat_to_lir_error_t lat_pipeline_lowering_error;
     latticra_lir_error_t lat_pipeline_lir_error;
+    latticra_lat_pipeline_stage_t lat_pipeline_last_completed_stage;
+    latticra_lat_pipeline_stage_t lat_pipeline_failed_stage;
+    int lat_pipeline_parse_ok;
+    int lat_pipeline_semantic_ok;
+    int lat_pipeline_model_ok;
+    int lat_pipeline_lowering_ok;
+    int lat_pipeline_lir_ok;
+    int lat_pipeline_no_effect_chain_ok;
+    unsigned int lat_pipeline_evidence_level;
     int lat_pipeline_semantic_valid;
     size_t lat_pipeline_source_len;
     size_t lat_pipeline_node_count;

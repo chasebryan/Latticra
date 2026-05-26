@@ -97,6 +97,7 @@ stage_4_macos_reset_uninstall_dry_run_planner=present
 stage_4_macos_reset_uninstall_absence_report_contract=present
 stage_4_macos_reset_uninstall_receipt_schema_contract=present
 stage_4_macos_reset_uninstall_implementation_gate_contract=present
+stage_4_macos_reset_uninstall_operator_intent_contract=present
 stage_5_codesigning_notarization_plan=future
 stage_6_controlled_os_integration_contracts=future
 ```
@@ -250,6 +251,14 @@ scripts/macos-reset-uninstall-implementation-gate-contract.sh
 docs/status/MACOS_RESET_UNINSTALL_IMPLEMENTATION_GATE_CONTRACT_STATUS.md
 ```
 
+The Stage 4 macOS reset/uninstall operator-intent contract is implemented by:
+
+```text
+docs/MACOS_RESET_UNINSTALL_OPERATOR_INTENT_CONTRACT.md
+scripts/macos-reset-uninstall-operator-intent-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_OPERATOR_INTENT_CONTRACT_STATUS.md
+```
+
 ## App Bundle Direction
 
 The macOS Panel should be represented as a managed user-local app bundle:
@@ -370,11 +379,11 @@ macos_production_ready=0
 Previous recommended lane now present:
 
 ```text
-Add a macOS reset/uninstall implementation-gate contract that keeps deletion disabled until receipt, absence, planner, classifier, and operator intent evidence exist.
+Add a macOS reset/uninstall operator-intent contract for explicit future live reset/uninstall approval evidence.
 ```
 
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall operator-intent contract for explicit future live reset/uninstall approval evidence.
+Add a macOS reset/uninstall effect-authorization contract that keeps live execution disabled until implementation-gate and operator-intent evidence are both present.
 ```

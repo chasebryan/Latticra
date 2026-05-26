@@ -119,10 +119,20 @@ require_contains 'nadia awareness-dialogue' "$ui_model"
 require_contains 'awareness-dialogue' "$components_manifest"
 require_contains 'nadia-awareness-dialogue' "$makefile"
 
-sh "$stage14_guard" >/tmp/latticra-nadia-stage15-prereq-stage14-test.out
+if [ -n "${NADIA_TEST_TMP_ROOT:-}" ]; then
+  tmp_root="$NADIA_TEST_TMP_ROOT"
+else
+  tmp_base="${TMPDIR:-/tmp}"
+  tmp_root=$(mktemp -d "$tmp_base/latticra-nadia-stage15-test.XXXXXX")
+  trap 'rm -rf "$tmp_root"' EXIT INT HUP TERM
+fi
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage15-awareness-test"
-materialization="${TMPDIR:-/tmp}/latticra-nadia-stage14-materialization-test/nadia-prompt-materialization-contract-stage14-test.txt"
+log_out="$tmp_root/stage15/logs"
+mkdir -p "$log_out"
+NADIA_TEST_TMP_ROOT="$tmp_root" sh "$stage14_guard" >"$log_out/prereq-stage14.out"
+
+out="$tmp_root/stage15/awareness"
+materialization="$tmp_root/stage14/materialization/nadia-prompt-materialization-contract-stage14-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 
@@ -131,7 +141,7 @@ require_file "$materialization"
 NADIA_AWARENESS_DIALOGUE_TIMESTAMP=stage15-test sh "$awareness_script" \
   --prompt-materialization "$materialization" \
   --request-class awareness-education \
-  --output "$out" >/tmp/latticra-nadia-stage15-awareness-test.out
+  --output "$out" >"$log_out/awareness.out"
 awareness="$out/nadia-awareness-dialogue-contract-stage15-test.txt"
 
 require_file "$awareness"
@@ -187,10 +197,10 @@ require_contains 'network_authority=0' "$awareness"
 if NADIA_AWARENESS_DIALOGUE_TIMESTAMP=stage15-reject sh "$awareness_script" \
   --prompt-materialization "$materialization" \
   --request-class sexual \
-  --output "$out" >/tmp/latticra-nadia-stage15-reject-test.out 2>/tmp/latticra-nadia-stage15-reject-test.err; then
+  --output "$out" >"$log_out/reject.out" 2>"$log_out/reject.err"; then
   printf 'nadia awareness dialogue contract stage 15: sexual request class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia awareness-dialogue boundary' /tmp/latticra-nadia-stage15-reject-test.err
+require_contains 'outside Nadia awareness-dialogue boundary' "$log_out/reject.err"
 
 printf 'nadia_awareness_dialogue_contract_stage_15: ok\n'

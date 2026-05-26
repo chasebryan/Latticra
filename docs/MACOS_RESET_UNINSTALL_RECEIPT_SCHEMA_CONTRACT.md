@@ -25,8 +25,13 @@ The current receipt-schema posture is:
 ```text
 macos_reset_uninstall_receipt_schema_contract_present=1
 macos_reset_uninstall_implementation_gate_contract_present=1
+macos_reset_uninstall_operator_intent_contract_present=1
+operator_intent_contract_state=defined-no-effect
+operator_intent_evidence_written=0
 reset_uninstall_live_run_allowed=0
+reset_uninstall_deletion_enabled=0
 operator_reset_uninstall_intent_evidence_present=0
+operator_explicit_reset_uninstall_intent_observed=0
 receipt_schema_contract_state=defined-no-effect
 receipt_schema_contract_decision=contract-defined-receipt-not-written
 receipt_schema_required=1
@@ -166,5 +171,5 @@ This contract is not macOS reset evidence, macOS uninstall evidence, macOS insta
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall operator-intent contract for explicit future live reset/uninstall approval evidence.
+Add a macOS reset/uninstall effect-authorization contract that keeps live execution disabled until implementation-gate and operator-intent evidence are both present.
 ```

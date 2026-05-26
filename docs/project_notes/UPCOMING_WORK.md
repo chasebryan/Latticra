@@ -13,6 +13,7 @@ Latest Lat pipeline failure span evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline parse-error evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline semantic-error evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline downstream stage-error evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline stage-summary evidence propagation note: 2026-05-25 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
 Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
@@ -21,6 +22,9 @@ Latest Seal verified receipt promotion status/public-entry note: 2026-05-25 CDT
 Latest Seal verified capability gate status/public-entry note: 2026-05-25 CDT
 Latest Seal verified effect decision status/public-entry note: 2026-05-25 CDT
 Latest Seal runtime handoff evaluation status/public-entry note: 2026-05-25 CDT
+Latest Seal runtime handoff report status/public-entry note: 2026-05-25 CDT
+Latest Seal report envelope status/public-entry note: 2026-05-25 CDT
+Latest Seal signature request predecessor status alignment note: 2026-05-25 CDT
 Latest Lat pipeline comment metadata integration note: 2026-05-25 CDT
 Latest Lat pipeline diagnostic comment metadata integration note: 2026-05-25 CDT
 Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
@@ -28,6 +32,7 @@ Latest Lat pipeline failure span evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline parse-error evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline semantic-error evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline downstream stage-error evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline stage-summary evidence propagation note: 2026-05-25 CDT
 
 ## Purpose
 
@@ -49,6 +54,12 @@ Latticra Seal verified effect decision status/public-entry alignment is complete
 
 Latticra Seal runtime handoff evaluation status/public-entry alignment is complete for the existing metadata-only handoff eligibility classification surface. It does not add runtime handoff execution, effect execution, capability enforcement, runtime authority, signing, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
 
+Latticra Seal runtime handoff report status/public-entry alignment is complete for the existing metadata-only report readiness classification surface. It does not add runtime handoff execution, effect execution, capability enforcement, runtime authority, signing, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
+
+Latticra Seal report envelope status/public-entry alignment is complete for the existing metadata-only sealed report envelope surface. It does not add signing, signature verification, object sealing, runtime handoff execution, effect execution, capability enforcement, runtime authority, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
+
+Latticra Seal signature request predecessor status alignment is complete for the existing metadata-only signature request status surface. It does not add signing, signature verification, object sealing, runtime handoff execution, capability enforcement, runtime authority, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
+
 ## Latest completed planning slice
 
 ```text
@@ -64,6 +75,18 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Lat pipeline stage-summary evidence propagation
+```
+
+Purpose completed:
+
+```text
+copy Lat pipeline last-completed stage, failed stage, per-stage OK flags, no-effect-chain status, and evidence level into runtime-boundary Lat pipeline records/reports so boundary evidence keeps the pipeline stage summary visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
 Lat pipeline downstream stage-error evidence propagation
 ```
 
@@ -73,7 +96,7 @@ Purpose completed:
 copy Lat pipeline model, lowering, and LIR error labels into runtime-boundary Lat pipeline records/reports so downstream-stage failure reasons remain visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat pipeline semantic-error evidence propagation
@@ -412,25 +435,25 @@ map runtime-boundary request families, effect families, authority prerequisites,
 ## Latest completed status/public-entry slice
 
 ```text
-Latticra Seal runtime handoff evaluation status/public-entry alignment
+Latticra Seal signature request predecessor status alignment
 ```
 
 Purpose completed:
 
 ```text
-publish and guard the existing metadata-only Seal runtime handoff evaluation from README/status/foundation entry points while preserving no new implementation behavior, no runtime handoff execution, no effect execution, no capability enforcement, no runtime authority, no signing, no key generation, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, and no production cryptography claim
+tie and guard the existing metadata-only Seal signature request status to the report envelope status predecessor while preserving no new implementation behavior, no signing, no signature verification, no object sealing, no runtime handoff execution, no capability enforcement, no runtime authority, no key generation, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, and no production cryptography claim
 ```
 
 ## Previous status/public-entry slice
 
 ```text
-Latticra Seal verified effect decision status/public-entry alignment
+Latticra Seal report envelope status/public-entry alignment
 ```
 
 Purpose completed:
 
 ```text
-publish and guard the existing metadata-only Seal verified effect decision from README/status/foundation entry points while preserving no new implementation behavior, no effect execution, no capability enforcement, no runtime authority, no signing, no key generation, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, and no production cryptography claim
+publish and guard the existing metadata-only Seal report envelope from README/status/foundation entry points while preserving no new implementation behavior, no signing, no signature verification, no object sealing, no runtime handoff execution, no effect execution, no capability enforcement, no runtime authority, no key generation, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, and no production cryptography claim
 ```
 
 ## Earlier status/public-entry slice
@@ -521,6 +544,7 @@ publish and guard the existing metadata-only status rollup surface from public/s
 
 ```text
 Latticra Seal runtime handoff status/public-entry alignment
+Latticra Seal runtime handoff report status/public-entry alignment
 ```
 
 Purpose completed:

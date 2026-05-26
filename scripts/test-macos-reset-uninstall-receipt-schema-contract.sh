@@ -72,35 +72,45 @@ require_contains 'macos_reset_uninstall_implementation_gate_contract_present=1' 
 require_contains 'reset_uninstall_live_run_allowed=0' "$doc"
 require_contains 'operator_reset_uninstall_intent_evidence_present=0' "$doc"
 require_contains 'receipt_schema_contract_state=defined-no-effect' "$doc"
+require_contains 'receipt_schema_contract_decision=contract-defined-receipt-not-written' "$doc"
+require_contains 'receipt_schema_required=1' "$doc"
 require_contains 'reset_uninstall_receipt_evidence_present=0' "$doc"
 require_contains 'receipt_schema_evidence_present=0' "$doc"
+require_contains 'reset_receipt_write_performed=0' "$doc"
+require_contains 'receipt_write_performed=0' "$doc"
+require_contains 'receipt_written=0' "$doc"
 require_contains 'receipt_must_be_outside_removed_prefix=1' "$doc"
 require_contains 'removed_prefix_must_not_contain_receipt=1' "$doc"
 require_contains 'receipt_format=json' "$doc"
 require_contains 'receipt_schema_version=macos-reset-uninstall-receipt/1' "$doc"
+require_contains 'receipt_digest_algorithm=sha256' "$doc"
 require_contains 'receipt_field_planner_transcript_digest_required=1' "$doc"
 require_contains 'receipt_field_live_classifier_digest_required=1' "$doc"
 require_contains 'receipt_field_absence_report_path_required=1' "$doc"
-require_contains 'receipt_field_preserved_unmanaged_targets_required=1' "$doc"
+require_contains 'receipt_field_authority_denials_required=1' "$doc"
 require_contains 'receipt_schema_phase_6_status=disabled' "$doc"
 require_contains 'file_delete_performed=0' "$doc"
 require_contains 'directory_delete_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
 require_contains 'macos_reset_uninstall_receipt_schema_contract: ok' "$doc"
-require_contains 'Add a macOS reset/uninstall operator-intent contract' "$doc"
+require_contains 'Add a macOS reset/uninstall effect-authorization contract' "$doc"
 
 require_contains 'Status: no-effect reset/uninstall receipt-schema contract status' "$status"
 require_contains 'macos_reset_uninstall_receipt_schema_contract_present=1' "$status"
 require_contains 'macos_reset_uninstall_implementation_gate_contract_present=1' "$status"
 require_contains 'macos_reset_uninstall_receipt_schema_contract_guard_present=1' "$status"
 require_contains 'macos_reset_uninstall_absence_report_contract_present=1' "$status"
+require_contains 'receipt_schema_contract_state=defined-no-effect' "$status"
 require_contains 'receipt_schema_required=1' "$status"
 require_contains 'reset_uninstall_receipt_evidence_present=0' "$status"
+require_contains 'receipt_schema_evidence_present=0' "$status"
 require_contains 'receipt_write_performed=0' "$status"
+require_contains 'receipt_written=0' "$status"
+require_contains 'receipt_must_be_outside_removed_prefix=1' "$status"
+require_contains 'removed_prefix_must_not_contain_receipt=1' "$status"
 require_contains 'receipt_schema_version=macos-reset-uninstall-receipt/1' "$status"
-require_contains 'receipt_field_no_network_required=1' "$status"
-require_contains 'receipt_field_no_root_required=1' "$status"
+require_contains 'receipt_field_authority_denials_required=1' "$status"
 require_contains 'file_delete_performed=0' "$status"
 require_contains 'directory_delete_performed=0' "$status"
 require_contains 'host_mutation_performed=0' "$status"
@@ -129,15 +139,30 @@ require_contains 'MACOS RESET UNINSTALL RECEIPT SCHEMA CONTRACT' "$script"
 require_contains 'reset_uninstall_receipt_schema_contract_status=ok' "$script"
 require_contains 'macos_reset_uninstall_receipt_schema_contract_present=1' "$script"
 require_contains 'macos_reset_uninstall_implementation_gate_contract_present=1' "$script"
+require_contains 'receipt_schema_contract_state=defined-no-effect' "$script"
 require_contains 'receipt_schema_contract_decision=contract-defined-receipt-not-written' "$script"
+require_contains 'receipt_schema_required=1' "$script"
 require_contains 'reset_uninstall_receipt_evidence_present=0' "$script"
+require_contains 'receipt_schema_evidence_present=0' "$script"
 require_contains 'receipt_must_be_outside_removed_prefix=1' "$script"
+require_contains 'removed_prefix_must_not_contain_receipt=1' "$script"
+require_contains 'receipt_format=json' "$script"
+require_contains 'receipt_schema_version=macos-reset-uninstall-receipt/1' "$script"
+require_contains 'receipt_digest_algorithm=sha256' "$script"
+require_contains 'receipt_field_operation_required=1' "$script"
+require_contains 'receipt_field_planner_transcript_digest_required=1' "$script"
+require_contains 'receipt_field_live_classifier_digest_required=1' "$script"
+require_contains 'receipt_field_absence_report_path_required=1' "$script"
+require_contains 'receipt_field_target_actions_required=1' "$script"
+require_contains 'receipt_field_removed_managed_targets_required=1' "$script"
+require_contains 'receipt_field_preserved_unmanaged_targets_required=1' "$script"
+require_contains 'receipt_field_authority_denials_required=1' "$script"
 require_contains 'receipt_schema_phase_6_status=disabled' "$script"
 require_contains 'file_delete_performed=0' "$script"
 require_contains 'directory_delete_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-operator-intent-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-effect-authorization-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -152,24 +177,29 @@ require_output_contains "$output" 'macos_reset_uninstall_implementation_gate_con
 require_output_contains "$output" 'reset_uninstall_live_run_allowed=0'
 require_output_contains "$output" 'operator_reset_uninstall_intent_evidence_present=0'
 require_output_contains "$output" 'receipt_schema_contract_decision=contract-defined-receipt-not-written'
+require_output_contains "$output" 'receipt_schema_required=1'
 require_output_contains "$output" 'reset_uninstall_receipt_evidence_present=0'
 require_output_contains "$output" 'receipt_schema_evidence_present=0'
 require_output_contains "$output" 'macos_reset_uninstall_absence_report_contract_present=1'
+require_output_contains "$output" 'reset_uninstall_dry_run_planner_transcript_present=1'
 require_output_contains "$output" 'receipt_must_be_outside_removed_prefix=1'
+require_output_contains "$output" 'removed_prefix_must_not_contain_receipt=1'
+require_output_contains "$output" 'receipt_format=json'
 require_output_contains "$output" 'receipt_schema_version=macos-reset-uninstall-receipt/1'
-require_output_contains "$output" 'receipt_field_target_actions_required=1'
-require_output_contains "$output" 'receipt_field_preserved_unmanaged_targets_required=1'
+require_output_contains "$output" 'receipt_field_authority_denials_required=1'
 require_output_contains "$output" 'receipt_schema_phase_6_status=disabled'
 require_output_contains "$output" 'reset_receipt_write_performed=0'
 require_output_contains "$output" 'receipt_write_performed=0'
+require_output_contains "$output" 'receipt_written=0'
 require_output_contains "$output" 'file_delete_performed=0'
 require_output_contains "$output" 'directory_delete_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'network_performed=0'
 require_output_contains "$output" 'runtime_authority_granted=0'
-require_output_contains "$output" 'next_lane=macos-reset-uninstall-operator-intent-contract'
+require_output_contains "$output" 'next_lane=macos-reset-uninstall-effect-authorization-contract'
 
 require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
+require_contains 'persist-credentials: false' "$workflow"
 require_contains 'sh scripts/test-macos-reset-uninstall-receipt-schema-contract.sh' "$workflow"
 
 sh scripts/test-macos-reset-uninstall-absence-report-contract.sh

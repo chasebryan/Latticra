@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Latticra Seal</title>
-  <meta name="description" content="A public overview of Latticra Seal, the report-only verification, policy-boundary, and tool-boundary evidence layer.">
+  <title>Latticra Seal | Report-Only Evidence Boundary</title>
+  <meta name="description" content="A public overview of Latticra Seal's report-only verification, policy-denial, dry-run, and authority-boundary posture.">
   <meta name="theme-color" content="#f7f8fb">
   <meta property="og:title" content="Latticra Seal">
-  <meta property="og:description" content="Report-only verification, policy-boundary, tool-boundary, dry-run, and blocked-case records for Latticra Seal.">
+  <meta property="og:description" content="Report-only evidence, fail-closed policy checks, and default-deny dry-run metadata for Latticra.">
   <meta property="og:type" content="website">
   <link rel="stylesheet" href="assets/site.css">
 </head>
@@ -24,10 +24,12 @@
         <a href="./">Home</a>
         <a href="start.html">Start</a>
         <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
         <a href="architecture.html">Architecture</a>
         <a href="language.html">Language</a>
-        <a href="evidence.html">Evidence</a>
+        <a href="examples.html">Examples</a>
         <a href="seal.html">Seal</a>
+        <a href="evidence.html">Evidence</a>
         <a href="map.html">Map</a>
         <a href="https://github.com/Bryforge/Latticra">GitHub</a>
       </nav>
@@ -38,32 +40,11 @@
     <section class="page-hero seal-hero">
       <div class="content-shell">
         <p class="breadcrumb"><a href="./">Home</a> / Latticra Seal</p>
-        <p class="eyebrow">Evidence Boundary</p>
+        <p class="eyebrow">Report-Only Evidence Boundary</p>
         <h1>Latticra Seal</h1>
         <p class="page-lede">
-          Latticra Seal is the verification, reporting, policy-boundary, and tool-boundary evidence layer inside the Latticra ecosystem.
+          Seal is Latticra's local verification and policy-boundary layer. It records evidence, denials, report-only dry runs, and non-authority posture before runtime enforcement can be claimed.
         </p>
-      </div>
-    </section>
-
-    <section class="metrics-band" aria-label="Seal current posture">
-      <div class="content-shell metrics-grid">
-        <article class="metric">
-          <span class="metric-value">report</span>
-          <span class="metric-label">current runtime posture</span>
-        </article>
-        <article class="metric">
-          <span class="metric-value">deny</span>
-          <span class="metric-label">default action in dry-run records</span>
-        </article>
-        <article class="metric">
-          <span class="metric-value">0</span>
-          <span class="metric-label">tool execution authority</span>
-        </article>
-        <article class="metric metric-guarded">
-          <span class="metric-value">0</span>
-          <span class="metric-label">production security claims</span>
-        </article>
       </div>
     </section>
 
@@ -71,73 +52,103 @@
       <div class="content-shell seal-intro">
         <div>
           <p class="eyebrow">Current Role</p>
-          <h2>Seal records evidence before authority exists.</h2>
+          <h2>Describe, measure, report, deny.</h2>
         </div>
         <p>
-          Seal currently serves as a local integrity and evidence surface, report-only verification lane, policy regression target, manifest/hash baseline mechanism, and bridge toward future runtime-boundary work.
+          Seal begins with bounded evidence: manifests, hash baselines, policy checks, and deterministic reports. It is not a production security product, sandbox, root installer, kernel layer, network authority, or runtime enforcement authority.
         </p>
       </div>
-      <div class="content-shell status-row seal-status-row" aria-label="Seal posture labels">
-        <span class="status-pill status-present">report-only</span>
-        <span class="status-pill status-blocked">default-deny</span>
-        <span class="status-pill status-guarded">operator review</span>
-        <span class="status-pill status-blocked">no runtime authority</span>
+
+      <div class="content-shell seal-flow" aria-label="Latticra Seal evidence flow">
+        <article class="seal-step">
+          <span>01</span>
+          <h3>Manifest scope</h3>
+          <p>Declare what Seal may inspect and which paths or authority claims remain outside scope.</p>
+        </article>
+        <article class="seal-step">
+          <span>02</span>
+          <h3>Hash baseline</h3>
+          <p>Compare local evidence against lock material and report changed, missing, or new records.</p>
+        </article>
+        <article class="seal-step">
+          <span>03</span>
+          <h3>Policy checks</h3>
+          <p>Fail closed for malformed input, unsupported authority, denied paths, or unsafe assumptions.</p>
+        </article>
+        <article class="seal-step">
+          <span>04</span>
+          <h3>Report surface</h3>
+          <p>Emit human-readable local evidence with mode, status, warnings, failures, and authority flags.</p>
+        </article>
+        <article class="seal-step">
+          <span>05</span>
+          <h3>Future handoff</h3>
+          <p>Prepare metadata for future runtime-boundary work without granting runtime authority now.</p>
+        </article>
       </div>
     </section>
 
     <section class="section-band section-band-muted">
-      <div class="content-shell showcase">
+      <div class="content-shell seal-showcase">
         <div class="showcase-copy">
-          <p class="eyebrow">Runtime Dry Run</p>
-          <h2>What would be denied, and why?</h2>
+          <p class="eyebrow">Dry-Run Posture</p>
+          <h2>The runtime dry-run answers what would be refused.</h2>
           <p>
-            The dry-run surface is designed to answer what the boundary would report and refuse to do. It remains deterministic, local, no-effect, and report-only.
+            The current dry-run report surface renders default-deny metadata for blocked requests. It does not execute tools, read or write host files, use the network, verify signatures, or grant runtime authority.
           </p>
-          <div class="status-row" aria-label="Dry-run defaults">
-            <span class="status-pill status-present">would deny</span>
-            <span class="status-pill status-blocked">would execute tool: 0</span>
-            <span class="status-pill status-blocked">would use network: 0</span>
+          <div class="status-row" aria-label="Seal posture summary">
+            <span class="status-pill status-present">local evidence</span>
+            <span class="status-pill status-blocked">default deny</span>
+            <span class="status-pill status-guarded">operator review</span>
           </div>
         </div>
         <figure class="showcase-figure">
-          <img src="assets/latticra-seal-runtime-dry-run-native-demo.png" alt="Terminal output for a Latticra Seal runtime dry-run demo showing default-deny report-only metadata.">
-          <figcaption>Latticra Seal native runtime dry-run evidence snapshot.</figcaption>
+          <img src="assets/latticra-seal-runtime-dry-run-native-demo.png" alt="Terminal output showing Latticra Seal runtime dry-run report-only default-deny metadata.">
+          <figcaption>Native runtime dry-run report snapshot.</figcaption>
         </figure>
       </div>
     </section>
 
     <section class="section-band">
       <div class="content-shell section-heading">
-        <p class="eyebrow">Boundary Model</p>
-        <h2>Seal is organized around explicit evidence layers.</h2>
+        <p class="eyebrow">Report Fields</p>
+        <h2>What the current dry-run surface is meant to show.</h2>
         <p>
-          Each layer is a record boundary. Current work is planning, metadata, reports, and guarded validation rather than enforcement.
+          These values keep the public posture narrow: a denied dry-run is evidence of refusal, not proof of host security.
         </p>
       </div>
-      <div class="content-shell seal-layer-grid">
-        <article class="seal-layer">
-          <h3>Contract layer</h3>
-          <p>Vocabulary, evidence boundaries, non-claims, and promotion rules.</p>
+      <div class="content-shell report-grid">
+        <article>
+          <span>mode</span>
+          <strong>report-only</strong>
         </article>
-        <article class="seal-layer">
-          <h3>Report layer</h3>
-          <p>Deterministic no-effect status records about what Seal supports.</p>
+        <article>
+          <span>default_action</span>
+          <strong>deny</strong>
         </article>
-        <article class="seal-layer">
-          <h3>Evidence layer</h3>
-          <p>Records for contracts, reports, artifacts, state transitions, and authority decisions.</p>
+        <article>
+          <span>would_execute_tool</span>
+          <strong>0</strong>
         </article>
-        <article class="seal-layer">
-          <h3>Capability layer</h3>
-          <p>Narrow, inspectable, future signed capability-envelope direction.</p>
+        <article>
+          <span>would_use_network</span>
+          <strong>0</strong>
         </article>
-        <article class="seal-layer">
-          <h3>Signature layer</h3>
-          <p>Future signing direction for manifests, reports, releases, gates, and authority decisions.</p>
+        <article>
+          <span>would_read_host</span>
+          <strong>0</strong>
         </article>
-        <article class="seal-layer">
-          <h3>Integrity bridge</h3>
-          <p>Future Linux/Fedora integrity evidence, package evidence, and host validation bridge.</p>
+        <article>
+          <span>would_write_host</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>runtime_authority</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>operator_review</span>
+          <strong>required</strong>
         </article>
       </div>
     </section>
@@ -145,42 +156,60 @@
     <section class="section-band section-band-muted">
       <div class="content-shell section-heading">
         <p class="eyebrow">Blocked Cases</p>
-        <h2>Core request failures remain denied.</h2>
+        <h2>Unsafe or unsupported requests stay denied.</h2>
         <p>
-          Seal dry-run and policy records preserve blocked-case vocabulary without executing tools or granting authority.
+          Seal's current blocked-request vocabulary is explicit so readers can tell which negative cases are represented.
         </p>
       </div>
-      <div class="content-shell blocked-grid">
-        <article>unknown tool</article>
-        <article>unsigned request</article>
-        <article>invalid schema</article>
-        <article>stale request</article>
-        <article>replayed request</article>
-        <article>invalid signature</article>
+      <div class="content-shell seal-blocked-grid">
+        <article>
+          <h3>Unknown tool</h3>
+          <p>Unsupported tools remain denied instead of guessed or auto-approved.</p>
+        </article>
+        <article>
+          <h3>Unsigned request</h3>
+          <p>Missing request signature metadata remains a blocked case.</p>
+        </article>
+        <article>
+          <h3>Invalid schema</h3>
+          <p>Malformed or unsupported parameter shape fails closed.</p>
+        </article>
+        <article>
+          <h3>Stale request</h3>
+          <p>Freshness failures remain denied in the metadata path.</p>
+        </article>
+        <article>
+          <h3>Replayed request</h3>
+          <p>Replay-class cases remain blocked without mutating a live replay cache.</p>
+        </article>
+        <article>
+          <h3>Invalid signature</h3>
+          <p>Invalid signature metadata stays denied without claiming production verification.</p>
+        </article>
       </div>
     </section>
 
     <section class="section-band">
-      <div class="content-shell architecture-split">
+      <div class="content-shell seal-split">
         <div class="section-heading">
-          <p class="eyebrow">Canonical Boundary</p>
-          <h2>Seal is not a production security product.</h2>
+          <p class="eyebrow">Authority Boundary</p>
+          <h2>PASS does not mean the host is secure.</h2>
           <p>
-            The documentation explicitly forbids claims of production security readiness, runtime enforcement, root authority, network authority, Fedora approval, malware prevention, or broad host protection until reproducible evidence supports them.
+            A passing Seal check means the checked evidence matched the declared local expectations for that command. It does not mean production security, malware prevention, runtime isolation, kernel enforcement, or certification.
           </p>
         </div>
-        <div class="architecture-table" role="table" aria-label="Seal current authority boundary">
+        <div class="seal-table" role="table" aria-label="Latticra Seal current authority limits">
           <div role="row">
-            <span role="cell">Allowed now</span>
-            <p role="cell">Contract definition, implementation planning, report-field design, evidence-record design, status alignment, and guard validation.</p>
+            <span role="cell">Present</span>
+            <p role="cell">Local reports, manifest/hash baseline, policy regression, blocked-case metadata, and dry-run report surface.</p>
           </div>
           <div role="row">
-            <span role="cell">Forbidden now</span>
-            <p role="cell">Tool execution, host reads or writes, network operations, key generation, signature verification, runtime authority, and production hardening claims.</p>
+            <span role="cell">Denied</span>
+            <p role="cell">Network authority, runtime enforcement authority, root authority, host mutation, tool execution, and production-security claims.</p>
           </div>
           <div role="row">
-            <span role="cell">Read next</span>
-            <p role="cell">Use the source records below for exact contract language, usage details, policy behavior, reports, and non-claims.</p>
+            <span role="cell">Promotion rule</span>
+            <p role="cell">Runtime enforcement can be considered only after implementation, status alignment, negative-case evidence, and guarded tests exist.</p>
           </div>
         </div>
       </div>
@@ -188,17 +217,41 @@
 
     <section class="section-band section-band-muted">
       <div class="content-shell section-heading">
-        <p class="eyebrow">Source Records</p>
-        <h2>Follow the exact Seal records.</h2>
+        <p class="eyebrow">Local Checks</p>
+        <h2>Run Seal as a report and regression lane.</h2>
         <p>
-          This page summarizes the public posture. The linked records remain the precise source of truth.
+          These commands are local evidence checks. They do not grant root, network, runtime, or host-protection authority.
         </p>
       </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Smoke and report lanes</h3>
+          <pre><code>make seal
+sh scripts/test-latticra-seal-report.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Policy denials</h3>
+          <pre><code>make seal-policy-denials
+sh scripts/test-latticra-seal-policy-decision.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Runtime dry-run report</h3>
+          <pre><code>sh scripts/latticra-seal-runtime-dry-run-report.sh
+sh scripts/test-latticra-seal-runtime-dry-run-report-surface.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Use the exact Seal records for authority claims.</h2>
+      </div>
       <div class="content-shell reader-grid">
-        <a href="latticra-seal/README.md"><strong>Seal Docs</strong><span>Subsystem documentation map and canonical boundary.</span></a>
-        <a href="LATTICRA_SEAL_CONTRACT.md"><strong>Seal Contract</strong><span>Evidence boundary, capability direction, and non-claims.</span></a>
-        <a href="LATTICRA_SEAL_RUNTIME_DRY_RUN_CONTRACT.md"><strong>Dry-Run Contract</strong><span>No-effect dry-run defaults and forbidden behavior.</span></a>
-        <a href="LATTICRA_SEAL_POLICY_DECISION_CONTRACT.md"><strong>Policy Decision</strong><span>Default-deny policy-decision metadata boundary.</span></a>
+        <a href="latticra-seal/README.md"><strong>Seal docs</strong><span>Subsystem landing page and documentation map.</span></a>
+        <a href="latticra-seal/STATUS.md"><strong>Seal status</strong><span>Current readiness, evidence, and authority limits.</span></a>
+        <a href="latticra-seal/REPORTS.md"><strong>Reports</strong><span>Report meanings, fields, PASS, and FAIL interpretation.</span></a>
+        <a href="LATTICRA_SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE.md"><strong>Dry-run report</strong><span>Default-deny runtime dry-run report surface.</span></a>
       </div>
     </section>
   </main>
@@ -206,7 +259,7 @@
   <footer class="site-footer">
     <div class="content-shell footer-inner">
       <span>Latticra Seal overview.</span>
-      <span><a href="evidence.html">Open claims and evidence</a></span>
+      <span><a href="map.html">Open documentation map</a></span>
     </div>
   </footer>
 </body>
