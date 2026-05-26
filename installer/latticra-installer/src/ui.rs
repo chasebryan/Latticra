@@ -4371,44 +4371,45 @@ impl eframe::App for LatticraInstallerApp {
 }
 
 fn apply_panel_theme(ctx: &egui::Context) {
+    ctx.set_theme(egui::Theme::Dark);
     let mut style = (*ctx.global_style()).clone();
     style.spacing.item_spacing = egui::vec2(8.0, 8.0);
     style.spacing.button_padding = egui::vec2(10.0, 7.0);
     style.spacing.interact_size = egui::vec2(40.0, 32.0);
     style.spacing.window_margin = egui::Margin::same(10);
 
-    let mut visuals = egui::Visuals::light();
-    visuals.panel_fill = egui::Color32::from_rgb(244, 247, 246);
-    visuals.window_fill = egui::Color32::from_rgb(255, 255, 255);
+    let mut visuals = egui::Visuals::dark();
+    visuals.panel_fill = egui::Color32::from_rgb(12, 17, 21);
+    visuals.window_fill = egui::Color32::from_rgb(18, 24, 28);
     visuals.window_stroke = egui::Stroke::new(1.0, border());
     visuals.window_corner_radius = egui::CornerRadius::same(8);
     visuals.menu_corner_radius = egui::CornerRadius::same(8);
-    visuals.faint_bg_color = egui::Color32::from_rgb(239, 245, 244);
-    visuals.extreme_bg_color = egui::Color32::from_rgb(230, 238, 238);
-    visuals.code_bg_color = egui::Color32::from_rgb(232, 239, 240);
+    visuals.faint_bg_color = egui::Color32::from_rgb(21, 28, 32);
+    visuals.extreme_bg_color = egui::Color32::from_rgb(8, 12, 15);
+    visuals.code_bg_color = egui::Color32::from_rgb(20, 27, 32);
     visuals.hyperlink_color = blue();
     visuals.warn_fg_color = amber();
     visuals.error_fg_color = red();
-    visuals.selection.bg_fill = egui::Color32::from_rgb(205, 231, 226);
+    visuals.selection.bg_fill = egui::Color32::from_rgb(34, 83, 78);
     visuals.selection.stroke = egui::Stroke::new(1.0, teal());
-    visuals.widgets.noninteractive.bg_fill = egui::Color32::from_rgb(250, 252, 251);
+    visuals.widgets.noninteractive.bg_fill = egui::Color32::from_rgb(18, 24, 28);
     visuals.widgets.noninteractive.weak_bg_fill = soft_surface();
     visuals.widgets.noninteractive.bg_stroke = egui::Stroke::new(1.0, border());
     visuals.widgets.noninteractive.fg_stroke = egui::Stroke::new(1.0, ink());
-    visuals.widgets.inactive.bg_fill = egui::Color32::from_rgb(247, 250, 249);
+    visuals.widgets.inactive.bg_fill = egui::Color32::from_rgb(25, 34, 38);
     visuals.widgets.inactive.weak_bg_fill = soft_surface();
     visuals.widgets.inactive.bg_stroke = egui::Stroke::new(1.0, border());
     visuals.widgets.inactive.fg_stroke = egui::Stroke::new(1.0, ink());
-    visuals.widgets.hovered.bg_fill = egui::Color32::from_rgb(230, 244, 242);
-    visuals.widgets.hovered.weak_bg_fill = egui::Color32::from_rgb(222, 239, 237);
+    visuals.widgets.hovered.bg_fill = egui::Color32::from_rgb(31, 51, 49);
+    visuals.widgets.hovered.weak_bg_fill = egui::Color32::from_rgb(35, 60, 56);
     visuals.widgets.hovered.bg_stroke = egui::Stroke::new(1.0, teal());
     visuals.widgets.hovered.fg_stroke = egui::Stroke::new(1.0, ink());
-    visuals.widgets.active.bg_fill = egui::Color32::from_rgb(208, 232, 228);
-    visuals.widgets.active.weak_bg_fill = egui::Color32::from_rgb(208, 232, 228);
+    visuals.widgets.active.bg_fill = egui::Color32::from_rgb(40, 78, 73);
+    visuals.widgets.active.weak_bg_fill = egui::Color32::from_rgb(40, 78, 73);
     visuals.widgets.active.bg_stroke = egui::Stroke::new(1.0, teal());
     visuals.widgets.active.fg_stroke = egui::Stroke::new(1.0, ink());
-    visuals.widgets.open.bg_fill = egui::Color32::from_rgb(236, 242, 241);
-    visuals.widgets.open.weak_bg_fill = egui::Color32::from_rgb(236, 242, 241);
+    visuals.widgets.open.bg_fill = egui::Color32::from_rgb(28, 38, 42);
+    visuals.widgets.open.weak_bg_fill = egui::Color32::from_rgb(28, 38, 42);
     visuals.widgets.open.bg_stroke = egui::Stroke::new(1.0, border_strong());
     visuals.widgets.open.fg_stroke = egui::Stroke::new(1.0, ink());
     visuals.override_text_color = Some(ink());
@@ -4426,7 +4427,7 @@ fn panel_card() -> egui::Frame {
 
 fn panel_card_with_stroke(stroke_color: egui::Color32) -> egui::Frame {
     egui::Frame::NONE
-        .fill(egui::Color32::from_rgb(255, 255, 255))
+        .fill(egui::Color32::from_rgb(18, 24, 28))
         .stroke(egui::Stroke::new(1.0, stroke_color))
         .corner_radius(egui::CornerRadius::same(8))
         .inner_margin(egui::Margin::same(12))
@@ -4443,10 +4444,10 @@ fn summary_tile(ui: &mut egui::Ui, label: &str, value: &str, note: &str, accent:
 
 fn warning_note(ui: &mut egui::Ui, title: &str, body: &str) {
     egui::Frame::NONE
-        .fill(egui::Color32::from_rgb(255, 248, 235))
+        .fill(egui::Color32::from_rgb(48, 35, 18))
         .stroke(egui::Stroke::new(
             1.0,
-            egui::Color32::from_rgb(226, 175, 88),
+            egui::Color32::from_rgb(160, 112, 40),
         ))
         .corner_radius(egui::CornerRadius::same(8))
         .inner_margin(egui::Margin::same(10))
@@ -4457,51 +4458,51 @@ fn warning_note(ui: &mut egui::Ui, title: &str, body: &str) {
 }
 
 fn ink() -> egui::Color32 {
-    egui::Color32::from_rgb(23, 32, 42)
+    egui::Color32::from_rgb(229, 236, 234)
 }
 
 fn muted() -> egui::Color32 {
-    egui::Color32::from_rgb(82, 97, 111)
+    egui::Color32::from_rgb(158, 174, 180)
 }
 
 fn border() -> egui::Color32 {
-    egui::Color32::from_rgb(213, 222, 226)
+    egui::Color32::from_rgb(55, 73, 82)
 }
 
 fn border_strong() -> egui::Color32 {
-    egui::Color32::from_rgb(172, 184, 194)
+    egui::Color32::from_rgb(84, 108, 118)
 }
 
 fn soft_surface() -> egui::Color32 {
-    egui::Color32::from_rgb(241, 246, 245)
+    egui::Color32::from_rgb(24, 32, 36)
 }
 
 fn soft_blue() -> egui::Color32 {
-    egui::Color32::from_rgb(225, 237, 251)
+    egui::Color32::from_rgb(24, 48, 70)
 }
 
 fn soft_green() -> egui::Color32 {
-    egui::Color32::from_rgb(222, 241, 233)
+    egui::Color32::from_rgb(24, 58, 49)
 }
 
 fn blue() -> egui::Color32 {
-    egui::Color32::from_rgb(29, 78, 216)
+    egui::Color32::from_rgb(96, 165, 250)
 }
 
 fn teal() -> egui::Color32 {
-    egui::Color32::from_rgb(15, 118, 110)
+    egui::Color32::from_rgb(45, 212, 191)
 }
 
 fn green() -> egui::Color32 {
-    egui::Color32::from_rgb(31, 122, 77)
+    egui::Color32::from_rgb(91, 201, 126)
 }
 
 fn amber() -> egui::Color32 {
-    egui::Color32::from_rgb(180, 83, 9)
+    egui::Color32::from_rgb(245, 158, 11)
 }
 
 fn red() -> egui::Color32 {
-    egui::Color32::from_rgb(185, 28, 28)
+    egui::Color32::from_rgb(248, 113, 113)
 }
 
 fn nav_button(ui: &mut egui::Ui, active: &mut WorkspaceTab, tab: WorkspaceTab, label: &str) {
@@ -4697,6 +4698,9 @@ pub fn run() -> eframe::Result<()> {
     eframe::run_native(
         &format!("Latticra Panel v{PANEL_VERSION}"),
         options,
-        Box::new(|_| Ok(Box::<LatticraInstallerApp>::default())),
+        Box::new(|cc| {
+            apply_panel_theme(&cc.egui_ctx);
+            Ok(Box::<LatticraInstallerApp>::default())
+        }),
     )
 }
