@@ -256,6 +256,43 @@ write_file() {
   log "[write] $target"
 }
 
+is_legacy_latticra_managed_file() {
+  path="$1"
+  [ -f "$path" ] || return 1
+
+  case "$(basename -- "$path")" in
+    latticra)
+      grep -q 'Latticra is installed.' "$path" 2>/dev/null &&
+        grep -q 'latticra-installer-uninstall.sh' "$path" 2>/dev/null
+      ;;
+    lat)
+      grep -q 'Lat tooling is installed as part of the Latticra payload.' "$path" 2>/dev/null
+      ;;
+    latticra-lc)
+      grep -q 'LATTICRA CONSOLE HELP' "$path" 2>/dev/null
+      ;;
+    latticra-seal)
+      grep -q 'LATTICRA SEAL REPORT' "$path" 2>/dev/null &&
+        grep -q 'share/latticra/receipts' "$path" 2>/dev/null
+      ;;
+    latticra-nadia)
+      grep -q 'Nadia offline AI foundation' "$path" 2>/dev/null
+      ;;
+    latticra-panel)
+      grep -q 'LATTICRA_INSTALLER_ROOT' "$path" 2>/dev/null
+      ;;
+    latticra-installer)
+      grep -q 'latticra-panel' "$path" 2>/dev/null
+      ;;
+    latticra-panel.desktop|latticra-installer.desktop)
+      grep -q 'Name=Latticra Panel' "$path" 2>/dev/null
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
 write_managed_file() {
   target="$1"
   mode="$2"
@@ -268,8 +305,12 @@ write_managed_file() {
     fail "refusing to overwrite symlink managed file: $target" 74
   fi
   if [ -e "$target" ] && ! grep -q 'LATTICRA_INSTALLER_MANAGED=1' "$target" 2>/dev/null; then
-    rm -f "$tmp"
-    fail "refusing to overwrite unmanaged file: $target" 74
+    if is_legacy_latticra_managed_file "$target"; then
+      log "[replace-legacy-managed] $target"
+    else
+      rm -f "$tmp"
+      fail "refusing to overwrite unmanaged file: $target" 74
+    fi
   fi
   mv "$tmp" "$target"
   chmod "$mode" "$target"

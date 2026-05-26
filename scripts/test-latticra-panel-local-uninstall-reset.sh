@@ -42,6 +42,53 @@ write_managed() {
   chmod 0755 "$path"
 }
 
+write_legacy_seal_wrapper() {
+  path="$1"
+  prefix="$2"
+  mkdir -p "$(dirname "$path")"
+  {
+    printf '%s\n' '#!/usr/bin/env sh'
+    printf 'PREFIX="%s"\n' "$prefix"
+    printf '%s\n' 'REPORT_DIR="$PREFIX/share/latticra/receipts"'
+    printf '%s\n' 'echo "LATTICRA SEAL REPORT"'
+    printf '%s\n' 'echo "$REPORT_DIR"'
+  } > "$path"
+  chmod 0755 "$path"
+}
+
+write_minimal_apply_config() {
+  path="$1"
+  prefix="$2"
+  {
+    printf '%s\n' 'profile = "developer_local"'
+    printf 'install_prefix = "%s"\n' "$prefix"
+    printf '%s\n' 'latticra_console = false'
+    printf '%s\n' 'lat_tooling = false'
+    printf '%s\n' 'lir_contracts = false'
+    printf '%s\n' 'seal_report_only = true'
+    printf '%s\n' 'nadia_offline_ai = false'
+    printf '%s\n' 'fedora_validation = false'
+    printf '%s\n' 'docs_and_examples = false'
+    printf '%s\n' 'developer_cli_helpers = false'
+    printf '%s\n' 'dry_run = false'
+    printf '%s\n' 'allow_host_mutation = true'
+    printf '%s\n' 'allow_network_effect = false'
+    printf '%s\n' 'require_component_manifest = false'
+    printf '%s\n' 'require_artifact_measurements = false'
+    printf '%s\n' 'require_verification_policy_metadata = false'
+    printf '%s\n' 'write_operator_receipt = true'
+    printf '%s\n' 'create_prefix_layout = true'
+    printf '%s\n' 'create_component_markers = true'
+    printf '%s\n' 'create_cli_shims = true'
+    printf '%s\n' 'preserve_existing_files = true'
+    printf '%s\n' 'build_gui_installer = false'
+    printf '%s\n' 'build_latticra_from_source = false'
+    printf '%s\n' 'install_payload_tree = false'
+    printf '%s\n' 'install_desktop_entry = false'
+    printf '%s\n' 'install_user_bin_wrappers = true'
+  } > "$path"
+}
+
 HOME_DIR="$TMP_DIR/home"
 PREFIX="$HOME_DIR/.local/share/latticra"
 RECEIPTS="$TMP_DIR/receipts"
@@ -59,8 +106,9 @@ mkdir -p "$PREFIX/share/latticra/components" "$USER_BIN" "$APP_DIR" "$ICON_DIR"
 printf '%s\n' 'payload' > "$PREFIX/payload.txt"
 printf '%s\n' 'operator-owned' > "$USER_BIN/latticra"
 chmod 0755 "$USER_BIN/latticra"
+write_legacy_seal_wrapper "$USER_BIN/latticra-seal" "$PREFIX"
 
-for command in lat latticra-seal latticra-nadia latticra-panel latticra-installer; do
+for command in lat latticra-nadia latticra-panel latticra-installer; do
   write_managed "$USER_BIN/$command"
 done
 
@@ -84,6 +132,7 @@ HOME="$HOME_DIR" sh "$SCRIPT" --prefix "$PREFIX" --receipt-dir "$RECEIPTS" > "$T
 
 require_contains 'mode=local-prefix-reset' "$TMP_DIR/reset.out"
 require_contains '[preserve] unmanaged command wrapper' "$TMP_DIR/reset.out"
+require_contains '[removed] legacy managed command wrapper' "$TMP_DIR/reset.out"
 require_contains 'RESET_WARNING: preserved unmanaged targets may block the next install' "$TMP_DIR/reset.out"
 require_contains 'PRESERVED_UNMANAGED_TARGETS_BEGIN' "$TMP_DIR/reset.out"
 require_contains "$USER_BIN/latticra" "$TMP_DIR/reset.out"
@@ -140,6 +189,40 @@ fi
 require_contains 'refusing to reset symlink prefix' "$TMP_DIR/symlink.out"
 require_exists "$SYMLINK_TARGET"
 rm -f "$PREFIX"
+
+APPLY_LEGACY_HOME="$TMP_DIR/apply-legacy-home"
+APPLY_LEGACY_PREFIX="$APPLY_LEGACY_HOME/.local/share/latticra"
+APPLY_LEGACY_CONFIG="$TMP_DIR/apply-legacy.toml"
+mkdir -p "$APPLY_LEGACY_HOME/.local/bin"
+write_legacy_seal_wrapper "$APPLY_LEGACY_HOME/.local/bin/latticra-seal" "$APPLY_LEGACY_PREFIX"
+write_minimal_apply_config "$APPLY_LEGACY_CONFIG" "$APPLY_LEGACY_PREFIX"
+
+HOME="$APPLY_LEGACY_HOME" sh "$APPLY_SCRIPT" \
+  --config "$APPLY_LEGACY_CONFIG" \
+  --plan "$TMP_DIR/apply-legacy-plan.txt" \
+  --receipt-dir "$TMP_DIR/apply-legacy-receipts" \
+  > "$TMP_DIR/apply-legacy.out"
+
+require_contains "[replace-legacy-managed] $APPLY_LEGACY_HOME/.local/bin/latticra-seal" "$TMP_DIR/apply-legacy.out"
+require_contains 'INSTALLER_RESULT: success mode=local-prefix-install' "$TMP_DIR/apply-legacy.out"
+require_contains 'LATTICRA_INSTALLER_MANAGED=1' "$APPLY_LEGACY_HOME/.local/bin/latticra-seal"
+
+APPLY_BLOCK_HOME="$TMP_DIR/apply-block-home"
+APPLY_BLOCK_PREFIX="$APPLY_BLOCK_HOME/.local/share/latticra"
+APPLY_BLOCK_CONFIG="$TMP_DIR/apply-block.toml"
+mkdir -p "$APPLY_BLOCK_HOME/.local/bin"
+printf '%s\n' 'operator-owned' > "$APPLY_BLOCK_HOME/.local/bin/latticra-seal"
+chmod 0755 "$APPLY_BLOCK_HOME/.local/bin/latticra-seal"
+write_minimal_apply_config "$APPLY_BLOCK_CONFIG" "$APPLY_BLOCK_PREFIX"
+
+if HOME="$APPLY_BLOCK_HOME" sh "$APPLY_SCRIPT" \
+  --config "$APPLY_BLOCK_CONFIG" \
+  --plan "$TMP_DIR/apply-block-plan.txt" \
+  --receipt-dir "$TMP_DIR/apply-block-receipts" \
+  > "$TMP_DIR/apply-block.out" 2>&1; then
+  fail "unmanaged non-Latticra wrapper should have been refused"
+fi
+require_contains "refusing to overwrite unmanaged file: $APPLY_BLOCK_HOME/.local/bin/latticra-seal" "$TMP_DIR/apply-block.out"
 
 APPLY_HOME="$TMP_DIR/apply-home"
 APPLY_PREFIX="$APPLY_HOME/.local/share/latticra"
