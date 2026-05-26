@@ -147,7 +147,7 @@ static void summarize_parse_semantic(
     pipeline_result->source_len = source_len;
     pipeline_result->parse_error = parse_result->error;
     pipeline_result->semantic_error = semantic_result->error;
-    pipeline_result->span = parse_result->module.span;
+    pipeline_result->span = parse_result->span;
     copy_text(pipeline_result->module_name, sizeof(pipeline_result->module_name), parse_result->module.module_name);
     pipeline_result->declaration_count = parse_result->declaration_count;
     pipeline_result->clause_count = parse_result->clause_count;

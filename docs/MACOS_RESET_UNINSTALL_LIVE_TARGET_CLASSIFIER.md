@@ -6,7 +6,7 @@ Scope: read-only classifier for current macOS user-local reset/uninstall targets
 
 ## Purpose
 
-This classifier reports what exists today at the macOS reset/uninstall targets before any future reset/uninstall dry-run planner exists.
+This classifier reports what exists today at the macOS reset/uninstall targets for the macOS reset/uninstall dry-run planner.
 
 It is read-only. It does not delete files, remove directories, write receipts, mutate host state, run absence verification, open the network, or claim reset/uninstall implementation.
 
@@ -82,6 +82,7 @@ app_bundle_target_state=unmanaged-preserve
 managed_target_detected=report-runtime
 unmanaged_target_detected=report-runtime
 reset_uninstall_dry_run_evidence_present=0
+macos_reset_uninstall_dry_run_planner_present=1
 macos_reset_uninstall_implemented=0
 ```
 
@@ -138,5 +139,5 @@ This classifier is not macOS reset evidence, macOS uninstall evidence, macOS ins
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall dry-run planner that consumes live-target classifications without deleting files.
+Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
 ```

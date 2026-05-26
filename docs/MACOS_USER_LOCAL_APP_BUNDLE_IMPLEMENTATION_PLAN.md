@@ -244,5 +244,5 @@ This plan is not macOS installation, macOS app bundle evidence, signed app evide
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall dry-run planner that consumes live-target classifications without deleting files.
+Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
 ```

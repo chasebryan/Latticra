@@ -39,6 +39,8 @@ authority_denial_fields_required=1
 candidate_integration_ready_required=1
 commit_gate_closed_until_evidence_required=1
 reset_uninstall_dry_run_required=1
+macos_reset_uninstall_dry_run_planner_present=1
+reset_uninstall_dry_run_planner_transcript_present=1
 reset_uninstall_dry_run_evidence_present=0
 unmanaged_target_preservation_required=1
 seal_report_only_output_required=1
@@ -91,7 +93,7 @@ macos_verification_transcript_contract: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall dry-run planner that consumes live-target classifications without deleting files.
+Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
 ```
 
 ## Non-Claims

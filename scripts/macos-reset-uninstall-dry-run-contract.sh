@@ -44,6 +44,8 @@ reset_uninstall_dry_run_contract_state=defined-no-effect
 reset_uninstall_dry_run_decision=contract-defined-removal-not-performed
 reset_uninstall_dry_run_required=1
 reset_uninstall_dry_run_evidence_present=0
+macos_reset_uninstall_live_target_classifier_present=1
+macos_reset_uninstall_dry_run_planner_present=1
 macos_reset_uninstall_implemented=0
 reset_uninstall_implementation_present=0
 commit_user_local_managed_artifacts=0
@@ -108,5 +110,5 @@ network_extension_authority=0
 privileged_helper_authority=0
 runtime_authority_granted=0
 production_installer_ready=0
-next_lane=macos-reset-uninstall-dry-run-planner
+next_lane=macos-reset-uninstall-absence-report-contract
 REPORT

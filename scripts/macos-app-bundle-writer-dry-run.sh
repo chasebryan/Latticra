@@ -281,5 +281,5 @@ system_extension_authority=0
 network_extension_authority=0
 privileged_helper_authority=0
 production_installer_ready=0
-next_lane=macos-reset-uninstall-dry-run-planner
+next_lane=macos-reset-uninstall-absence-report-contract
 REPORT

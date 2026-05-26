@@ -1,7 +1,7 @@
 # Latticra Lat Pipeline Report Refinement
 
-Status: Lat pipeline report refinement implementation with comment, first-declaration, and first-clause metadata
-Scope: deterministic Lat pipeline stage-summary metadata, line-comment report fields, first-declaration report fields, first-clause report fields, invariant tests, guard coverage, and workflow wiring.
+Status: Lat pipeline report refinement implementation with failure-span, comment, first-declaration, and first-clause metadata
+Scope: deterministic Lat pipeline stage-summary metadata, parser span report fields, line-comment report fields, first-declaration report fields, first-clause report fields, invariant tests, guard coverage, and workflow wiring.
 
 ## Purpose
 
@@ -49,6 +49,8 @@ first_clause_value
 ```
 
 The deterministic `LAT PIPELINE REPORT` now emits these fields as labels and integers. Line-comment metadata is copied from the parser result, and first-declaration plus first-clause metadata is copied from the Lat-to-LIR lowering result for audit visibility only.
+
+The pipeline span is copied from the parser result span. Successful parses therefore report the module span, while parse failures report the parser diagnostic span, such as the unsupported block-comment opener location.
 
 ## Stage labels
 
@@ -169,6 +171,7 @@ lat_pipeline_report_refinement_null_result_sets_unknown_stage
 ```
 
 The aggregate Lat pipeline invariants also verify that parser comment metadata is copied into the pipeline result and emitted in `LAT PIPELINE REPORT` on both successful parses and parse failures such as unsupported block-comment rejection.
+They also verify that parse-failure reports preserve the parser diagnostic span instead of falling back to an empty module span.
 
 ## Compatibility
 
@@ -184,6 +187,7 @@ aggregate pipeline error labels
 module/source/count/span reporting
 parser line-comment count and first-comment span reporting
 parse-failure comment metadata reporting
+parse-failure diagnostic span reporting
 no-effect flags
 small-buffer behavior
 null-argument behavior

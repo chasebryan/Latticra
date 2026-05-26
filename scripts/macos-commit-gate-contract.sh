@@ -49,6 +49,9 @@ macos_verification_transcript_contract_present=1
 verification_transcript_contract_present=1
 verification_transcript_evidence_present=0
 macos_reset_uninstall_dry_run_contract_present=1
+macos_reset_uninstall_live_target_classifier_present=1
+macos_reset_uninstall_dry_run_planner_present=1
+reset_uninstall_dry_run_planner_transcript_present=1
 reset_uninstall_dry_run_evidence_present=0
 candidate_integration_required=1
 candidate_flow_ready_required=1
@@ -82,5 +85,5 @@ system_extension_authority=0
 network_extension_authority=0
 privileged_helper_authority=0
 production_installer_ready=0
-next_lane=macos-reset-uninstall-dry-run-planner
+next_lane=macos-reset-uninstall-absence-report-contract
 REPORT

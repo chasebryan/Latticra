@@ -1,8 +1,8 @@
 # The Latticra System Substrate
 
 **Title:** *The Latticra System Substrate: An Effect at Modern Security*<br>
-**Edition:** Working Draft 0.6 — 2026-05-25<br>
-**Role:** Project-level technical handbook for Latticra, Latticra Seal, Latticra Console, Nucleus, Nadia offline AI contracts, Panel, platform install validation lanes, Lat/LIR contract surfaces, receipts, reports, and future runtime-boundary research.
+**Edition:** Working Draft 0.7 — 2026-05-25<br>
+**Role:** Project-level technical handbook for Latticra, Latticra Seal trust-boundary metadata, Latticra Console, Nucleus, Nadia offline AI contracts, Panel, platform install validation lanes, Lat/LIR contract surfaces, receipts, reports, and future runtime-boundary research.
 
 This handbook supersedes the former standalone **Latticra Seal Documentation Handbook** as the main reader-facing book for the project.
 
@@ -46,6 +46,8 @@ The handbook's core claim is narrower and more useful: Latticra is a substrate f
 ## Relationship to Latticra Seal
 
 Latticra Seal remains the verification, reporting, manifest/hash baseline, and policy-boundary lane inside the Latticra ecosystem.
+
+Working Draft 0.7 adds the Seal trust/crypto metadata ladder: signed request metadata, request freshness metadata, verification receipts, crypto verify backend metadata, capability gates, effect decisions, runtime handoff boundaries, and report envelopes. These are documented as metadata and validation surfaces only; they do not claim active signing, cryptographic verification, trust-store behavior, revocation checks, capability enforcement, host effects, network authority, or runtime authority.
 
 The new System Substrate handbook places Seal in the full project architecture alongside:
 

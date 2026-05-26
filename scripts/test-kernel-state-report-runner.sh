@@ -3,6 +3,12 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-kernel-state-report.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
+report_bin="$tmpdir/latticra-kernel-state-report"
+report_txt="$tmpdir/latticra-kernel-state-report.txt"
+
 cc $CFLAGS \
   -Iinclude \
   src/state_lattice.c \
@@ -16,19 +22,19 @@ cc $CFLAGS \
   src/kernel_memory_map.c \
   src/kernel_state.c \
   tools/kernel_state_report.c \
-  -o /tmp/latticra-kernel-state-report
+  -o "$report_bin"
 
-/tmp/latticra-kernel-state-report > /tmp/latticra-kernel-state-report.txt
+"$report_bin" > "$report_txt"
 
-grep -Fq 'LATTICRA KERNEL STATE REPORT' /tmp/latticra-kernel-state-report.txt
-grep -Fq 'state_status=changed' /tmp/latticra-kernel-state-report.txt
-grep -Fq 'gate_status=allow' /tmp/latticra-kernel-state-report.txt
-grep -Fq 'transition_status=transition-applied' /tmp/latticra-kernel-state-report.txt
-grep -Fq 'effect_status=in-memory-state-change' /tmp/latticra-kernel-state-report.txt
-grep -Fq 'previous_state=created' /tmp/latticra-kernel-state-report.txt
-grep -Fq 'next_state=initialized' /tmp/latticra-kernel-state-report.txt
-grep -Fq 'state_change_performed=1' /tmp/latticra-kernel-state-report.txt
-grep -Fq 'external_effect_performed=0' /tmp/latticra-kernel-state-report.txt
-grep -Fq 'denied=0' /tmp/latticra-kernel-state-report.txt
+grep -Fq 'LATTICRA KERNEL STATE REPORT' "$report_txt"
+grep -Fq 'state_status=changed' "$report_txt"
+grep -Fq 'gate_status=allow' "$report_txt"
+grep -Fq 'transition_status=transition-applied' "$report_txt"
+grep -Fq 'effect_status=in-memory-state-change' "$report_txt"
+grep -Fq 'previous_state=created' "$report_txt"
+grep -Fq 'next_state=initialized' "$report_txt"
+grep -Fq 'state_change_performed=1' "$report_txt"
+grep -Fq 'external_effect_performed=0' "$report_txt"
+grep -Fq 'denied=0' "$report_txt"
 
 printf 'kernel_state_report_runner: ok\n'

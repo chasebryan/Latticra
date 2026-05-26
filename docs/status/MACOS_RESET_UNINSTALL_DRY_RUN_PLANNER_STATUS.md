@@ -1,0 +1,90 @@
+# macOS Reset/Uninstall Dry-Run Planner Status
+
+Status: no-effect reset/uninstall dry-run planner status
+Date: 2026-05-25 CDT
+Scope: status checkpoint after adding the macOS reset/uninstall dry-run planner.
+
+## Summary
+
+Latticra now has a no-effect macOS reset/uninstall dry-run planner.
+
+The planner consumes the live-target classifier, records target states, and emits planned reset/uninstall actions for managed targets only. It does not delete files, write receipts, mutate host state, run absence verification, or claim reset/uninstall implementation.
+
+## Status Fields
+
+```text
+macos_reset_uninstall_dry_run_planner_present=1
+macos_reset_uninstall_dry_run_planner_guard_present=1
+macos_reset_uninstall_live_target_classifier_present=1
+reset_uninstall_dry_run_contract_present=1
+dry_run_transcript_present=1
+reset_uninstall_dry_run_planner_transcript_present=1
+planner_consumes_live_target_classifier=1
+planned_removal_count=report-runtime
+managed_wrapper_removal_planned=report-runtime
+managed_app_bundle_removal_planned=report-runtime
+managed_application_support_removal_planned=report-runtime
+reset_receipt_write_planned=report-runtime
+absence_report_planned=report-runtime
+reset_uninstall_dry_run_evidence_present=0
+macos_reset_uninstall_implemented=0
+reset_uninstall_implementation_present=0
+managed_wrapper_removal_performed=0
+managed_app_bundle_removal_performed=0
+managed_application_support_removal_performed=0
+reset_receipt_write_performed=0
+absence_report_run_performed=0
+absence_report_written=0
+file_delete_performed=0
+directory_delete_performed=0
+application_support_write_performed=0
+app_bundle_write_performed=0
+cli_wrapper_write_performed=0
+shell_profile_mutation_performed=0
+host_mutation_performed=0
+network_performed=0
+root_authority=0
+launchagent_authority=0
+keychain_authority=0
+tcc_bypass_authority=0
+endpoint_security_authority=0
+system_extension_authority=0
+network_extension_authority=0
+privileged_helper_authority=0
+runtime_authority_granted=0
+production_installer_ready=0
+```
+
+## Public Meaning
+
+The careful public meaning is:
+
+```text
+Latticra has a no-effect macOS reset/uninstall dry-run planner that can convert live target classifications into planned managed-target actions.
+```
+
+That does not mean Latticra has a macOS reset implementation, uninstall implementation, installer, commit-capable app bundle writer, verified app bundle, signed build, notarized build, launchd integration, Keychain integration, Endpoint Security integration, System Extension integration, privileged helper, or production security capability.
+
+## Guard Validation
+
+This status record is guarded by:
+
+```sh
+sh scripts/test-macos-reset-uninstall-dry-run-planner.sh
+```
+
+Expected output:
+
+```text
+macos_reset_uninstall_dry_run_planner: ok
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
+```
+
+## Non-Claims
+
+This status record is not macOS reset evidence, macOS uninstall evidence, macOS install evidence, app bundle evidence, signed app evidence, notarization evidence, launchd evidence, Keychain evidence, Secure Enclave evidence, sandbox evidence, TCC approval evidence, Endpoint Security evidence, System Extension evidence, Network Extension evidence, privileged helper evidence, malware prevention, ransomware prevention, production readiness, Apple platform approval, or runtime authority.

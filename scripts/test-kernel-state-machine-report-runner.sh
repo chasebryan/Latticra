@@ -3,6 +3,12 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-kernel-state-machine-report.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
+report_bin="$tmpdir/latticra-kernel-state-machine-report"
+report_txt="$tmpdir/latticra-kernel-state-machine-report.txt"
+
 cc $CFLAGS \
   -Iinclude \
   src/state_lattice.c \
@@ -17,19 +23,19 @@ cc $CFLAGS \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   tools/kernel_state_machine_report.c \
-  -o /tmp/latticra-kernel-state-machine-report
+  -o "$report_bin"
 
-/tmp/latticra-kernel-state-machine-report > /tmp/latticra-kernel-state-machine-report.txt
+"$report_bin" > "$report_txt"
 
-grep -Fq 'LATTICRA KERNEL STATE MACHINE REPORT' /tmp/latticra-kernel-state-machine-report.txt
-grep -Fq 'machine_status=initialized' /tmp/latticra-kernel-state-machine-report.txt
-grep -Fq 'current_state=initialized' /tmp/latticra-kernel-state-machine-report.txt
-grep -Fq 'log_count=1' /tmp/latticra-kernel-state-machine-report.txt
-grep -Fq 'state_mutated=1' /tmp/latticra-kernel-state-machine-report.txt
-grep -Fq 'external_effect_performed=0' /tmp/latticra-kernel-state-machine-report.txt
-grep -Fq 'log[0].from=created' /tmp/latticra-kernel-state-machine-report.txt
-grep -Fq 'log[0].to=initialized' /tmp/latticra-kernel-state-machine-report.txt
-grep -Fq 'log[0].status=machine-mutated' /tmp/latticra-kernel-state-machine-report.txt
-grep -Fq 'log[0].state_change_performed=1' /tmp/latticra-kernel-state-machine-report.txt
+grep -Fq 'LATTICRA KERNEL STATE MACHINE REPORT' "$report_txt"
+grep -Fq 'machine_status=initialized' "$report_txt"
+grep -Fq 'current_state=initialized' "$report_txt"
+grep -Fq 'log_count=1' "$report_txt"
+grep -Fq 'state_mutated=1' "$report_txt"
+grep -Fq 'external_effect_performed=0' "$report_txt"
+grep -Fq 'log[0].from=created' "$report_txt"
+grep -Fq 'log[0].to=initialized' "$report_txt"
+grep -Fq 'log[0].status=machine-mutated' "$report_txt"
+grep -Fq 'log[0].state_change_performed=1' "$report_txt"
 
 printf 'kernel_state_machine_report_runner: ok\n'

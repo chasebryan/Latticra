@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Getting Started with Latticra</title>
+  <meta name="description" content="A no-effect getting-started guide for reading Latticra status records, running local checks, and understanding current non-claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Getting Started with Latticra">
+  <meta property="og:description" content="A no-effect first-run path through Latticra status, architecture, local checks, and safe expectations.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero start-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Getting started</p>
+        <p class="eyebrow">No-Effect First Pass</p>
+        <h1>Getting started</h1>
+        <p class="page-lede">
+          Begin with the public posture, run only local no-effect checks, and use the documentation map to choose the next exact record.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell start-intro">
+        <div>
+          <p class="eyebrow">First Rule</p>
+          <h2>Read before running.</h2>
+        </div>
+        <p>
+          Latticra is an early-stage systems architecture repository. The first pass should confirm status, boundaries, and non-claims before touching local validation commands.
+        </p>
+      </div>
+
+      <div class="content-shell start-path">
+        <article class="start-step">
+          <span>01</span>
+          <h3>Read current posture</h3>
+          <p>Start with the dashboard, root status, and detailed current-status record.</p>
+          <a href="status.html">Open status dashboard</a>
+        </article>
+        <article class="start-step">
+          <span>02</span>
+          <h3>Understand layers</h3>
+          <p>Review how Lat, LIR, L-UI, Nucleus, Runtime Boundary, and Seal relate.</p>
+          <a href="architecture.html">Open architecture guide</a>
+        </article>
+        <article class="start-step">
+          <span>03</span>
+          <h3>Run no-effect checks</h3>
+          <p>Use local commands only as inspection and regression checks.</p>
+          <a href="#commands">Jump to commands</a>
+        </article>
+        <article class="start-step">
+          <span>04</span>
+          <h3>Pick a record lane</h3>
+          <p>Use the documentation map to continue into the exact contracts.</p>
+          <a href="map.html">Open docs map</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Safety Expectations</p>
+        <h2>Keep the first pass narrow.</h2>
+        <p>
+          These boundaries make the first-run path useful without overstating what the project currently provides.
+        </p>
+      </div>
+      <div class="content-shell expectation-grid">
+        <article class="expectation-card">
+          <h3>No root authority</h3>
+          <p>Do not treat the first pass as a root installer, host mutation path, or privileged setup flow.</p>
+        </article>
+        <article class="expectation-card">
+          <h3>No production runtime</h3>
+          <p>Current commands expose status, reports, and guards. They do not enable production enforcement.</p>
+        </article>
+        <article class="expectation-card">
+          <h3>No network authority</h3>
+          <p>The public posture emphasizes local records and bounded checks, not network execution authority.</p>
+        </article>
+        <article class="expectation-card">
+          <h3>No certification claim</h3>
+          <p>Status records and planning estimates are not security guarantees, approvals, or readiness claims.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="commands" class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Commands</p>
+        <h2>Inspect, then confirm no-effect posture.</h2>
+        <p>
+          These examples mirror the current public README path. Run them from the repository root after cloning.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Read status</h3>
+          <pre><code>sed -n '1,220p' STATUS.md
+sed -n '1,260p' docs/status/CURRENT_STATUS.md</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Build the no-effect CLI</h3>
+          <pre><code>mkdir -p build
+cc -std=c99 -Wall -Wextra -pedantic src/latticra_cli.c -o build/latticra
+./build/latticra --status</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Run broad guards</h3>
+          <pre><code>make quality
+make seal</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell start-split">
+        <div class="section-heading">
+          <p class="eyebrow">Expected Posture</p>
+          <h2>The first successful read should still be no-effect.</h2>
+          <p>
+            A local status surface should reinforce disabled runtime behavior, denied authority, and no host or network mutation.
+          </p>
+        </div>
+        <pre class="expected-output"><code>mode=no-effect
+runtime_behavior=disabled
+host_mutation=0
+network=0
+effect_authority=denied</code></pre>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Reading Paths</p>
+        <h2>Choose the next lane by intent.</h2>
+        <p>
+          Latticra has a dense record set. Pick a route based on the question you are trying to answer.
+        </p>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="REAL_SYSTEM_CONTRACT.md"><strong>Project identity</strong><span>Evidence rules, real-system boundary, and non-claims.</span></a>
+        <a href="architecture.html"><strong>System structure</strong><span>Layered architecture, authority boundaries, and evidence flow.</span></a>
+        <a href="latticra-seal/README.md"><strong>Tool-boundary review</strong><span>Latticra Seal status, policy, reports, and boundaries.</span></a>
+        <a href="FEDORA_READINESS_PLAN.md"><strong>Host validation</strong><span>Fedora and local RPM validation posture.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra getting started guide.</span>
+      <span><a href="map.html">Open documentation map</a></span>
+    </div>
+  </footer>
+</body>
+</html>

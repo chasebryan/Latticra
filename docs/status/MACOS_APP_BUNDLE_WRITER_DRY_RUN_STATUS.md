@@ -74,7 +74,7 @@ macos_app_bundle_writer_dry_run: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall dry-run planner that consumes live-target classifications without deleting files.
+Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
 ```
 
 ## Non-Claims

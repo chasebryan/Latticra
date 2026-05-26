@@ -20,6 +20,7 @@ host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
+vm_evidence_contract_profile = "lc-vm-evidence-v0"
 os_base_profile = "planned-no-boot-authority"
 panel_bridge = "panel-aware"
 report_only = true
@@ -29,6 +30,7 @@ require_profile_receipt = true
 require_host_contract_receipt = true
 require_host_inventory_receipt = true
 require_os_base_contract = true
+require_vm_evidence_contract = true
 require_runtime_boundary_binding = true
 require_seal_capability_labels = true
 

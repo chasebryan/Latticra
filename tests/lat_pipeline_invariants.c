@@ -216,12 +216,16 @@ static int lat_pipeline_preserves_parse_failure_comment_metadata(void) {
     EXPECT_TRUE(parse.error == LATTICRA_LAT_PARSE_UNSUPPORTED_BLOCK_COMMENT, "parse failure comment unsupported block");
     EXPECT_TRUE(pipeline.error == LATTICRA_LAT_PIPELINE_PARSE_NOT_OK, "parse failure comment pipeline error");
     EXPECT_TRUE(pipeline.parse_error == LATTICRA_LAT_PARSE_UNSUPPORTED_BLOCK_COMMENT, "parse failure comment parse error copied");
+    EXPECT_TRUE(pipeline.span.start_line == 3u, "parse failure span line");
+    EXPECT_TRUE(pipeline.span.start_column == 3u, "parse failure span column");
     EXPECT_TRUE(pipeline.comment_count == 1u, "parse failure comment count");
     EXPECT_TRUE(pipeline.first_comment_span.start_line == 1u, "parse failure comment line");
     EXPECT_TRUE(pipeline.first_comment_span.start_column == 1u, "parse failure comment column");
     EXPECT_TRUE(latticra_lat_pipeline_report(&pipeline, report, sizeof(report)) == LATTICRA_STATUS_OK, "parse failure comment report");
     EXPECT_TRUE(strstr(report, "error=parse_not_ok\n") != 0, "parse failure comment report error");
     EXPECT_TRUE(strstr(report, "parse_error=unsupported_block_comment\n") != 0, "parse failure comment report parse error");
+    EXPECT_TRUE(strstr(report, "span_start_line=3\n") != 0, "parse failure span line in report");
+    EXPECT_TRUE(strstr(report, "span_start_column=3\n") != 0, "parse failure span column in report");
     EXPECT_TRUE(strstr(report, "comment_count=1\n") != 0, "parse failure comment report count");
     EXPECT_TRUE(strstr(report, "first_comment_start_line=1\n") != 0, "parse failure comment report line");
     EXPECT_TRUE(strstr(report, "first_comment_start_column=1\n") != 0, "parse failure comment report column");

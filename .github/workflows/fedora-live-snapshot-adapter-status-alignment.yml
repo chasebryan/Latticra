@@ -15,5 +15,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
       - name: Run Fedora live snapshot adapter status alignment guard
         run: sh scripts/test-fedora-live-snapshot-adapter-status-alignment.sh

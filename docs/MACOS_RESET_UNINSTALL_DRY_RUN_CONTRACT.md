@@ -10,7 +10,7 @@ This contract defines how a future macOS reset/uninstall dry-run must order mana
 
 It is contract-only. It does not delete files, remove directories, write receipts, mutate host state, run absence verification, or claim reset/uninstall implementation.
 
-The macOS verification transcript contract can require this reset/uninstall dry-run contract as evidence shape, and the macOS reset/uninstall live-target classifier can report present, managed, and unmanaged targets. No reset or uninstall evidence exists yet.
+The macOS verification transcript contract can require this reset/uninstall dry-run contract as evidence shape. The macOS reset/uninstall live-target classifier can report present, managed, and unmanaged targets, and the macOS reset/uninstall dry-run planner can turn those states into a no-effect transcript. No reset or uninstall evidence exists yet.
 
 ## Command
 
@@ -131,7 +131,9 @@ production_installer_ready=0
 
 ## Validation
 
-The follow-on macos reset/uninstall live-target classifier reads the current user-local target set and reports absent, managed, unmanaged-preserve, or unsafe-path states without deleting files.
+The follow-on macOS reset/uninstall live-target classifier reads the current user-local target set and reports absent, managed, unmanaged-preserve, or unsafe-path states without deleting files.
+
+The macOS reset/uninstall dry-run planner consumes that classifier output and reports planned managed-target actions without deleting files.
 
 This contract is guarded by:
 
@@ -152,5 +154,5 @@ This contract is not macOS reset evidence, macOS uninstall evidence, macOS insta
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall dry-run planner that consumes live-target classifications without deleting files.
+Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
 ```

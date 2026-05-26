@@ -222,6 +222,7 @@ typedef struct {
     latticra_lir_error_t lir_error;
     latticra_status_t lat_pipeline_status;
     latticra_lat_pipeline_error_t lat_pipeline_error;
+    latticra_lat_source_span_t lat_pipeline_span;
     int lat_pipeline_semantic_valid;
     size_t lat_pipeline_source_len;
     size_t lat_pipeline_node_count;

@@ -18,6 +18,12 @@ latticra_status_t latticra_lat_pipeline_diagnostics_report(
         "diagnostic_class=%s\n"
         "pipeline_error=%s\n"
         "failed_stage=%s\n"
+        "pipeline_span_start_offset=%zu\n"
+        "pipeline_span_end_offset=%zu\n"
+        "pipeline_span_start_line=%zu\n"
+        "pipeline_span_start_column=%zu\n"
+        "pipeline_span_end_line=%zu\n"
+        "pipeline_span_end_column=%zu\n"
         "semantic_class=%s\n"
         "semantic_error=%s\n"
         "lowering_class=%s\n"
@@ -62,6 +68,12 @@ latticra_status_t latticra_lat_pipeline_diagnostics_report(
         latticra_lat_pipeline_diagnostic_class_label(result->diagnostic_class),
         latticra_lat_pipeline_error_label(result->pipeline_error),
         latticra_lat_pipeline_stage_label(result->failed_stage),
+        result->pipeline_span.start_offset,
+        result->pipeline_span.end_offset,
+        result->pipeline_span.start_line,
+        result->pipeline_span.start_column,
+        result->pipeline_span.end_line,
+        result->pipeline_span.end_column,
         latticra_lat_semantic_diagnostic_class_label(result->semantic_class),
         latticra_lat_semantic_error_label(result->semantic_error),
         latticra_lat_to_lir_diagnostic_class_label(result->lowering_class),

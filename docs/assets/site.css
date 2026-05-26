@@ -408,6 +408,14 @@ p:last-child {
   background-size: cover;
 }
 
+.start-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.97) 0%, rgba(17, 24, 39, 0.86) 58%, rgba(17, 24, 39, 0.66) 100%),
+    url("latticra-seal-runtime-dry-run-native-demo.png");
+  background-position: center right;
+  background-size: cover;
+}
+
 .page-hero h1,
 .not-found h1 {
   max-width: 860px;
@@ -480,6 +488,132 @@ p:last-child {
 .architecture-intro p:not(.eyebrow) {
   color: var(--muted);
   font-size: 1.03rem;
+}
+
+.start-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: 32px;
+  align-items: end;
+  margin-bottom: 28px;
+}
+
+.start-intro p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 1.03rem;
+}
+
+.start-path {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.start-step {
+  min-width: 0;
+  min-height: 222px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.start-step span {
+  display: block;
+  margin-bottom: 20px;
+  color: var(--ochre);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.start-step p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.start-step a {
+  display: inline-flex;
+  margin-top: 8px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.start-step a:hover {
+  text-decoration: underline;
+}
+
+.expectation-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.expectation-card {
+  min-width: 0;
+  min-height: 184px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.expectation-card p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.start-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.1fr);
+  gap: 30px;
+  align-items: center;
+}
+
+.expected-output {
+  overflow-x: auto;
+  margin: 0;
+  padding: 18px;
+  border-radius: 8px;
+  background: #111827;
+  color: #e5e7eb;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.expected-output code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.reader-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.reader-grid a {
+  min-width: 0;
+  min-height: 144px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  text-decoration: none;
+}
+
+.reader-grid strong,
+.reader-grid span {
+  display: block;
+}
+
+.reader-grid strong {
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.reader-grid span {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.88rem;
 }
 
 .architecture-flow {
@@ -1104,7 +1238,12 @@ p:last-child {
   .architecture-flow,
   .architecture-grid,
   .architecture-split,
-  .next-grid {
+  .next-grid,
+  .start-intro,
+  .start-path,
+  .expectation-grid,
+  .start-split,
+  .reader-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1156,7 +1295,10 @@ p:last-child {
   .posture-grid,
   .status-lane-grid,
   .architecture-grid,
-  .next-grid {
+  .next-grid,
+  .start-path,
+  .expectation-grid,
+  .reader-grid {
     grid-template-columns: 1fr;
   }
 

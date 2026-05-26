@@ -73,7 +73,7 @@ require_contains 'macOS dry-run writer candidate integration' "$doc"
 require_contains 'macOS commit gate contract' "$doc"
 require_contains 'macOS verification transcript contract' "$doc"
 require_contains 'integration_decision=ready-for-future-commit-gate-no-effect' "$doc"
-require_contains 'Add a macOS reset/uninstall dry-run planner' "$doc"
+require_contains 'Add a macOS reset/uninstall absence-report contract' "$doc"
 
 require_contains 'Status: no-effect writer dry-run status' "$status"
 require_contains 'macos_app_bundle_writer_dry_run_present=1' "$status"
@@ -120,9 +120,12 @@ require_contains 'commit_user_local_managed_artifacts=0' "$script"
 require_contains 'app_bundle_write_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-dry-run-planner' "$script"
+require_contains 'next_lane=macos-reset-uninstall-absence-report-contract' "$script"
 
-default_output=$(sh "$script")
+test_home=$(mktemp -d)
+trap 'rm -rf "$test_home"' EXIT INT HUP TERM
+
+default_output=$(HOME="$test_home" sh "$script")
 require_output_contains "$default_output" 'MACOS APP BUNDLE WRITER DRY RUN'
 require_output_contains "$default_output" 'dry_run_status=ok'
 require_output_contains "$default_output" 'phase_report_only=1'
@@ -143,7 +146,7 @@ require_output_contains "$blocked_output" 'commit_user_local_managed_artifacts=0
 require_output_contains "$blocked_output" 'app_bundle_write_performed=0'
 require_output_contains "$blocked_output" 'host_mutation_performed=0'
 
-ready_output=$(sh "$script" --panel-executable /bin/sh --icon installer/latticra-installer/assets/latticra-panel.png)
+ready_output=$(HOME="$test_home" sh "$script" --panel-executable /bin/sh --icon installer/latticra-installer/assets/latticra-panel.png)
 require_output_contains "$ready_output" 'panel_executable_candidate_present=1'
 require_output_contains "$ready_output" 'icon_candidate_present=1'
 require_output_contains "$ready_output" 'phase_5_status=ok'

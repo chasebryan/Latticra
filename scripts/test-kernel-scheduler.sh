@@ -15,6 +15,10 @@ require_file docs/KERNEL_SCHEDULER_SEED.md
 require_file .github/workflows/kernel-scheduler.yml
 require_file scripts/test-kernel-scheduler-report-runner.sh
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-kernel-scheduler.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+bin="$tmpdir/latticra-kernel-scheduler"
+
 cc $CFLAGS \
   -Iinclude \
   src/state_lattice.c \
@@ -26,6 +30,6 @@ cc $CFLAGS \
   src/kernel_subsystem_registry.c \
   src/kernel_scheduler.c \
   tests/kernel_scheduler.c \
-  -o /tmp/latticra-kernel-scheduler
+  -o "$bin"
 
-/tmp/latticra-kernel-scheduler
+"$bin"

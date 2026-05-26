@@ -30,6 +30,12 @@ static latticra_lat_pipeline_result_t ok_pipeline(void) {
     pipeline.error = LATTICRA_LAT_PIPELINE_OK;
     strcpy(pipeline.module_name, "RuntimeEvidenceModule");
     pipeline.source_len = 256u;
+    pipeline.span.start_offset = 25u;
+    pipeline.span.end_offset = 256u;
+    pipeline.span.start_line = 2u;
+    pipeline.span.start_column = 1u;
+    pipeline.span.end_line = 30u;
+    pipeline.span.end_column = 2u;
     pipeline.declaration_count = 5u;
     pipeline.clause_count = 23u;
     pipeline.comment_count = 2u;
@@ -90,6 +96,8 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(result.execution_allowed == 0, "execution remains denied");
     EXPECT_TRUE(result.record.lat_pipeline_status == LATTICRA_STATUS_OK, "pipeline status copied");
     EXPECT_TRUE(result.record.lat_pipeline_error == LATTICRA_LAT_PIPELINE_OK, "pipeline error copied");
+    EXPECT_TRUE(result.record.lat_pipeline_span.start_line == 2u, "pipeline span line copied");
+    EXPECT_TRUE(result.record.lat_pipeline_span.start_column == 1u, "pipeline span column copied");
     EXPECT_TRUE(result.record.lat_pipeline_semantic_valid == 1, "pipeline semantic valid copied");
     EXPECT_TRUE(result.record.lat_pipeline_source_len == 256u, "pipeline source length copied");
     EXPECT_TRUE(result.record.lat_pipeline_node_count == 29u, "pipeline node count copied");
@@ -114,6 +122,12 @@ static int runtime_boundary_denies_failed_lat_pipeline_metadata(void) {
 
     pipeline.error = LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK;
     pipeline.semantic_valid = 0;
+    pipeline.span.start_offset = 54u;
+    pipeline.span.end_offset = 54u;
+    pipeline.span.start_line = 3u;
+    pipeline.span.start_column = 3u;
+    pipeline.span.end_line = 3u;
+    pipeline.span.end_column = 3u;
     pipeline.comment_count = 1u;
     pipeline.first_comment_span.start_offset = 0u;
     pipeline.first_comment_span.end_offset = 28u;
@@ -135,6 +149,8 @@ static int runtime_boundary_denies_failed_lat_pipeline_metadata(void) {
     EXPECT_TRUE(result.record.policy == LATTICRA_RUNTIME_BOUNDARY_POLICY_DENY, "failed pipeline denied");
     EXPECT_TRUE(result.record.denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_SEMANTIC_FAILED, "failed pipeline semantic reason");
     EXPECT_TRUE(result.record.lat_pipeline_error == LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK, "failed pipeline error copied");
+    EXPECT_TRUE(result.record.lat_pipeline_span.start_line == 3u, "failed pipeline span line copied");
+    EXPECT_TRUE(result.record.lat_pipeline_span.start_column == 3u, "failed pipeline span column copied");
     EXPECT_TRUE(result.record.lat_pipeline_semantic_valid == 0, "failed semantic flag copied");
     EXPECT_TRUE(result.record.lat_pipeline_comment_count == 1u, "failed pipeline comment count copied");
     EXPECT_TRUE(result.record.lat_pipeline_first_comment_span.start_line == 1u, "failed pipeline comment line copied");
@@ -165,6 +181,8 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "request=lat-pipeline-validate\n") != 0, "pipeline request label present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_status=0\n") != 0, "pipeline status report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_error=ok\n") != 0, "pipeline error report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_span_start_line=2\n") != 0, "pipeline span line report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_span_start_column=1\n") != 0, "pipeline span column report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_semantic_valid=1\n") != 0, "pipeline semantic report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_source_len=256\n") != 0, "pipeline source length report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_node_count=29\n") != 0, "pipeline node count report present");

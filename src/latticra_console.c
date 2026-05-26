@@ -210,6 +210,18 @@ static const latticra_console_command_t lc_commands[] = {
         0
     },
     {
+        "lc vm-evidence",
+        "lc vm-evidence",
+        "Inspect the no-effect VM evidence contract before OS-base promotion.",
+        "lc.vm.evidence",
+        LATTICRA_CONSOLE_COMMAND_OS_BASE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
         "lc os",
         "lc os",
         "Inspect future OS-base posture without boot authority.",
@@ -503,6 +515,8 @@ static void lc_seed_result(
         "metadata-only-contract");
     lc_copy(result->os_base_contract_status, sizeof(result->os_base_contract_status),
         "metadata-only-contract");
+    lc_copy(result->vm_evidence_contract_status, sizeof(result->vm_evidence_contract_status),
+        "metadata-only-contract");
     lc_copy(result->os_base_status, sizeof(result->os_base_status), "planned-no-boot-authority");
     result->source_span = lc_default_span();
     result->no_effect = 1;
@@ -515,6 +529,7 @@ static void lc_seed_result(
     result->host_inventory_contract_present = 1;
     result->receipt_contract_present = 1;
     result->os_base_contract_present = 1;
+    result->vm_evidence_contract_present = 1;
     result->host_embedded_now = 0;
     result->operator_shell_present = 1;
     result->command_count = (unsigned int)latticra_console_command_count();
@@ -579,6 +594,8 @@ static void lc_finalize(latticra_console_result_t *result) {
     lc_copy(result->receipt_contract_status, sizeof(result->receipt_contract_status),
         "metadata-only-contract-ready");
     lc_copy(result->os_base_contract_status, sizeof(result->os_base_contract_status),
+        "metadata-only-contract-ready");
+    lc_copy(result->vm_evidence_contract_status, sizeof(result->vm_evidence_contract_status),
         "metadata-only-contract-ready");
     lc_copy(result->panel_install_status, sizeof(result->panel_install_status),
         result->panel_installable ? "panel-installable" : "panel-disabled");
@@ -728,6 +745,7 @@ latticra_status_t latticra_console_manpage_report(
         "  latticra-lc host-contract\n"
         "  latticra-lc host-inventory\n"
         "  latticra-lc os-contract\n"
+        "  latticra-lc vm-evidence\n"
         "  latticra-lc os\n"
         "\n"
         "DESCRIPTION\n"
@@ -977,6 +995,7 @@ latticra_status_t latticra_console_os_contract_report(
         "network_allowed=0\n"
         "runtime_enforcement_allowed=0\n"
         "read_only_host_inventory_receipt_required=1\n"
+        "vm_evidence_contract_required=1\n"
         "vm_evidence_required=1\n"
         "operator_consent_required=1\n"
         "runtime_boundary_required=1\n"
@@ -986,6 +1005,52 @@ latticra_status_t latticra_console_os_contract_report(
         "command_surface=lc os-contract\n"
         "future_os_base_command=lc os\n"
         "no_effect=1\n");
+    return status;
+}
+
+latticra_status_t latticra_console_vm_evidence_report(
+    char *buffer,
+    size_t buffer_len) {
+    size_t used = 0u;
+    latticra_status_t status;
+
+    if (buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    buffer[0] = '\0';
+
+    status = lc_appendf(buffer, buffer_len, &used,
+        "LATTICRA CONSOLE VM EVIDENCE CONTRACT\n"
+        "contract_profile=lc-vm-evidence-v0\n"
+        "contract_status=metadata-only\n"
+        "contract_present=1\n"
+        "vm_evidence_required=1\n"
+        "vm_evidence_capture_enabled=0\n"
+        "vm_evidence_artifact_present=0\n"
+        "vm_launcher_present=0\n"
+        "vm_launch_allowed=0\n"
+        "hypervisor_access_allowed=0\n"
+        "disk_image_open_allowed=0\n"
+        "disk_image_write_allowed=0\n"
+        "snapshot_capture_allowed=0\n"
+        "guest_agent_allowed=0\n"
+        "guest_network_allowed=0\n"
+        "host_probe_allowed=0\n"
+        "os_base_contract_required=1\n"
+        "read_only_host_inventory_receipt_required=1\n"
+        "operator_consent_required=1\n"
+        "runtime_boundary_required=1\n"
+        "seal_capability_labels_required=1\n"
+        "receipt_required_before_vm_evidence=1\n"
+        "promotion_gate=vm_evidence_contract_before_boot_adjacency\n"
+        "command_surface=lc vm-evidence\n"
+        "future_os_base_command=lc os\n"
+        "no_effect=1\n"
+        "execution_allowed=0\n"
+        "host_mutation_allowed=0\n"
+        "network_allowed=0\n"
+        "runtime_enforcement_allowed=0\n"
+        "boot_allowed=0\n"
+        "production_os_claim=0\n");
     return status;
 }
 
@@ -1015,6 +1080,7 @@ latticra_status_t latticra_console_report(
         "host_inventory_contract_status=%s\n"
         "receipt_contract_status=%s\n"
         "os_base_contract_status=%s\n"
+        "vm_evidence_contract_status=%s\n"
         "os_base_status=%s\n"
         "configurable=%d\n"
         "panel_installable=%d\n"
@@ -1026,6 +1092,7 @@ latticra_status_t latticra_console_report(
         "host_inventory_contract_present=%d\n"
         "receipt_contract_present=%d\n"
         "os_base_contract_present=%d\n"
+        "vm_evidence_contract_present=%d\n"
         "host_embedded_now=%d\n"
         "command_count=%u\n"
         "command_registry_source=c-static-table\n"
@@ -1063,6 +1130,7 @@ latticra_status_t latticra_console_report(
         result->host_inventory_contract_status,
         result->receipt_contract_status,
         result->os_base_contract_status,
+        result->vm_evidence_contract_status,
         result->os_base_status,
         result->configurable,
         result->panel_installable,
@@ -1074,6 +1142,7 @@ latticra_status_t latticra_console_report(
         result->host_inventory_contract_present,
         result->receipt_contract_present,
         result->os_base_contract_present,
+        result->vm_evidence_contract_present,
         result->host_embedded_now,
         result->command_count,
         result->kernel.kernel_status,

@@ -100,6 +100,8 @@ Prompt-evaluation input creation remains blocked until a later contract explicit
 
 That later prompt evaluation input contract is the next boundary; Stage-27 only records the prerequisite metadata.
 
+Stage-28 now defines a prompt-evaluation-input contract that keeps prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, and inference blocked.
+
 ## Validation
 
 ```sh

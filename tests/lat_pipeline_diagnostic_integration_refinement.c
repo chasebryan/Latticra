@@ -123,6 +123,8 @@ static int lat_pipeline_diagnostic_integration_reports_valid_pipeline(void) {
     EXPECT_TRUE(diagnostic.lowering_error == LATTICRA_LAT_TO_LIR_OK, "valid lowering error");
     EXPECT_TRUE(diagnostic.model_error == LATTICRA_LAT_MODEL_OK, "valid model error");
     EXPECT_TRUE(diagnostic.lir_error == LATTICRA_LIR_OK, "valid lir error");
+    EXPECT_TRUE(diagnostic.pipeline_span.start_line == 1u, "valid pipeline span line");
+    EXPECT_TRUE(diagnostic.pipeline_span.start_column == 1u, "valid pipeline span column");
     EXPECT_TRUE(diagnostic.comment_count == 0u, "valid comment count");
     EXPECT_TRUE(diagnostic.first_comment_span.start_line == 1u, "valid first comment default line");
     EXPECT_TRUE(diagnostic.first_comment_span.start_column == 1u, "valid first comment default column");
@@ -152,6 +154,8 @@ static int lat_pipeline_diagnostic_integration_reports_valid_pipeline(void) {
 
     EXPECT_TRUE(latticra_lat_pipeline_diagnostics_report(&diagnostic, report, sizeof(report)) == LATTICRA_STATUS_OK, "valid diagnostic report");
     EXPECT_TRUE(strstr(report, "diagnostic_class=valid\n") != 0, "valid report class");
+    EXPECT_TRUE(strstr(report, "pipeline_span_start_line=1\n") != 0, "valid pipeline span line report");
+    EXPECT_TRUE(strstr(report, "pipeline_span_start_column=1\n") != 0, "valid pipeline span column report");
     EXPECT_TRUE(strstr(report, "semantic_class=valid\n") != 0, "valid semantic report class");
     EXPECT_TRUE(strstr(report, "lowering_class=valid\n") != 0, "valid lowering report class");
     EXPECT_TRUE(strstr(report, "comment_count=0\n") != 0, "valid comment count report");
@@ -245,6 +249,8 @@ static int lat_pipeline_diagnostic_integration_reports_parse_failure_comment_met
     EXPECT_TRUE(latticra_lat_pipeline_diagnostics_evaluate_with_lowering(&pipeline, &semantic, &lowering, &module, &diagnostic) == LATTICRA_STATUS_OK, "parse failure comment diagnostic evaluate");
     EXPECT_TRUE(diagnostic.diagnostic_class == LATTICRA_LAT_PIPELINE_DIAGNOSTIC_PARSE, "parse failure comment diagnostic class");
     EXPECT_TRUE(diagnostic.pipeline_error == LATTICRA_LAT_PIPELINE_PARSE_NOT_OK, "parse failure comment pipeline error");
+    EXPECT_TRUE(diagnostic.pipeline_span.start_line == 3u, "parse failure comment span line");
+    EXPECT_TRUE(diagnostic.pipeline_span.start_column == 3u, "parse failure comment span column");
     EXPECT_TRUE(diagnostic.comment_count == 1u, "parse failure comment diagnostic count");
     EXPECT_TRUE(diagnostic.first_comment_span.start_line == 1u, "parse failure comment diagnostic line");
     EXPECT_TRUE(diagnostic.first_comment_span.start_column == 1u, "parse failure comment diagnostic column");
@@ -254,6 +260,8 @@ static int lat_pipeline_diagnostic_integration_reports_parse_failure_comment_met
     EXPECT_TRUE(latticra_lat_pipeline_diagnostics_report(&diagnostic, report, sizeof(report)) == LATTICRA_STATUS_OK, "parse failure comment diagnostic report");
     EXPECT_TRUE(strstr(report, "diagnostic_class=parse\n") != 0, "parse failure comment report class");
     EXPECT_TRUE(strstr(report, "pipeline_error=parse_not_ok\n") != 0, "parse failure comment report pipeline error");
+    EXPECT_TRUE(strstr(report, "pipeline_span_start_line=3\n") != 0, "parse failure comment report span line");
+    EXPECT_TRUE(strstr(report, "pipeline_span_start_column=3\n") != 0, "parse failure comment report span column");
     EXPECT_TRUE(strstr(report, "comment_count=1\n") != 0, "parse failure comment report count");
     EXPECT_TRUE(strstr(report, "first_comment_start_line=1\n") != 0, "parse failure comment report line");
     EXPECT_TRUE(strstr(report, "first_comment_start_column=1\n") != 0, "parse failure comment report column");

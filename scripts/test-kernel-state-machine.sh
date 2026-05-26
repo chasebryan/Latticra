@@ -3,6 +3,10 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-kernel-state-machine.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+bin="$tmpdir/latticra-kernel-state-machine"
+
 cc $CFLAGS \
   -Iinclude \
   src/state_lattice.c \
@@ -17,6 +21,6 @@ cc $CFLAGS \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   tests/kernel_state_machine.c \
-  -o /tmp/latticra-kernel-state-machine
+  -o "$bin"
 
-/tmp/latticra-kernel-state-machine
+"$bin"

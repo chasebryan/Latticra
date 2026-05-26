@@ -325,6 +325,10 @@ static void seed_result(latticra_runtime_boundary_result_t *result) {
     result->record.matrix_requires_authority = 1;
     result->record.task_policy = LATTICRA_NUCLEUS_TASK_POLICY_DENY;
     result->record.task_reason = LATTICRA_NUCLEUS_TASK_DENIAL_IMPLEMENTATION_NOT_PRESENT;
+    result->record.lat_pipeline_span.start_line = 1u;
+    result->record.lat_pipeline_span.start_column = 1u;
+    result->record.lat_pipeline_span.end_line = 1u;
+    result->record.lat_pipeline_span.end_column = 1u;
     result->record.lat_pipeline_first_comment_span.start_line = 1u;
     result->record.lat_pipeline_first_comment_span.start_column = 1u;
     result->record.lat_pipeline_first_comment_span.end_line = 1u;
@@ -362,6 +366,7 @@ static void copy_lat_pipeline(const latticra_lat_pipeline_result_t *lat_pipeline
     if (lat_pipeline == 0) return;
     result->record.lat_pipeline_status = lat_pipeline->status;
     result->record.lat_pipeline_error = lat_pipeline->error;
+    result->record.lat_pipeline_span = lat_pipeline->span;
     result->record.lat_pipeline_semantic_valid = lat_pipeline->semantic_valid;
     result->record.lat_pipeline_source_len = lat_pipeline->source_len;
     result->record.lat_pipeline_node_count = lat_pipeline->node_count;
@@ -550,7 +555,7 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
     if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
     buffer[0] = '\0';
     written = snprintf(buffer, buffer_len,
-        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nallowed_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nreport_classification=%s\nboundary_domain=%s\nauthorization_state=%s\nevidence_level=%u\npolicy_matrix_cell=%s\nmatrix_effect_allowed=%d\nmatrix_mode_allowed=%d\nmatrix_requires_authority=%d\nmatrix_requires_future_gate=%d\nauthority_status=%d\nauthority_status_label=%s\nauthority_validator=%s\nauthority_requested_effect=%s\nauthority_reason=%s\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\ntask_executed=%d\ntask_mutation_allowed=%d\ntask_server_interaction_allowed=%d\ntask_recovery_allowed=%d\ntask_hardware_allowed=%d\nrender_status=%d\nrender_error=%d\nlat_status=%d\nlat_error=%d\nlir_status=%d\nlir_error=%d\nlat_pipeline_status=%d\nlat_pipeline_error=%s\nlat_pipeline_semantic_valid=%d\nlat_pipeline_source_len=%lu\nlat_pipeline_node_count=%lu\nlat_pipeline_edge_count=%lu\nlat_pipeline_comment_count=%lu\nlat_pipeline_first_comment_start_offset=%lu\nlat_pipeline_first_comment_end_offset=%lu\nlat_pipeline_first_comment_start_line=%lu\nlat_pipeline_first_comment_start_column=%lu\nlat_pipeline_first_comment_end_line=%lu\nlat_pipeline_first_comment_end_column=%lu\nlat_lir_source_kind=%s\nlat_lir_module_node_count=%lu\nlat_lir_transition_edge_count=%lu\nlat_lir_has_lat_state_nodes=%d\nlat_lir_has_lat_transition_nodes=%d\nlat_lir_has_transition_source_edges=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
+        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nallowed_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nreport_classification=%s\nboundary_domain=%s\nauthorization_state=%s\nevidence_level=%u\npolicy_matrix_cell=%s\nmatrix_effect_allowed=%d\nmatrix_mode_allowed=%d\nmatrix_requires_authority=%d\nmatrix_requires_future_gate=%d\nauthority_status=%d\nauthority_status_label=%s\nauthority_validator=%s\nauthority_requested_effect=%s\nauthority_reason=%s\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\ntask_executed=%d\ntask_mutation_allowed=%d\ntask_server_interaction_allowed=%d\ntask_recovery_allowed=%d\ntask_hardware_allowed=%d\nrender_status=%d\nrender_error=%d\nlat_status=%d\nlat_error=%d\nlir_status=%d\nlir_error=%d\nlat_pipeline_status=%d\nlat_pipeline_error=%s\nlat_pipeline_span_start_offset=%lu\nlat_pipeline_span_end_offset=%lu\nlat_pipeline_span_start_line=%lu\nlat_pipeline_span_start_column=%lu\nlat_pipeline_span_end_line=%lu\nlat_pipeline_span_end_column=%lu\nlat_pipeline_semantic_valid=%d\nlat_pipeline_source_len=%lu\nlat_pipeline_node_count=%lu\nlat_pipeline_edge_count=%lu\nlat_pipeline_comment_count=%lu\nlat_pipeline_first_comment_start_offset=%lu\nlat_pipeline_first_comment_end_offset=%lu\nlat_pipeline_first_comment_start_line=%lu\nlat_pipeline_first_comment_start_column=%lu\nlat_pipeline_first_comment_end_line=%lu\nlat_pipeline_first_comment_end_column=%lu\nlat_lir_source_kind=%s\nlat_lir_module_node_count=%lu\nlat_lir_transition_edge_count=%lu\nlat_lir_has_lat_state_nodes=%d\nlat_lir_has_lat_transition_nodes=%d\nlat_lir_has_transition_source_edges=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
         result->record.runtime_id,
         (unsigned long)result->record_count,
         latticra_runtime_boundary_request_kind_label(result->record.request_kind),
@@ -596,6 +601,12 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         (int)result->record.lir_error,
         (int)result->record.lat_pipeline_status,
         runtime_lat_pipeline_error_label(result->record.lat_pipeline_error),
+        (unsigned long)result->record.lat_pipeline_span.start_offset,
+        (unsigned long)result->record.lat_pipeline_span.end_offset,
+        (unsigned long)result->record.lat_pipeline_span.start_line,
+        (unsigned long)result->record.lat_pipeline_span.start_column,
+        (unsigned long)result->record.lat_pipeline_span.end_line,
+        (unsigned long)result->record.lat_pipeline_span.end_column,
         result->record.lat_pipeline_semantic_valid,
         (unsigned long)result->record.lat_pipeline_source_len,
         (unsigned long)result->record.lat_pipeline_node_count,

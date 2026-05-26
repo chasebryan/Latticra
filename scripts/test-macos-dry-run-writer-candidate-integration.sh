@@ -113,7 +113,7 @@ require_contains 'macOS dry-run writer candidate integration' "$probe_doc"
 require_contains 'macOS dry-run writer candidate integration' "$writer_doc"
 require_contains 'macOS dry-run writer candidate integration' "$alignment_doc"
 require_contains 'macOS commit gate contract' "$commit_gate_doc"
-require_contains 'Add a macOS reset/uninstall dry-run planner' "$doc"
+require_contains 'Add a macOS reset/uninstall absence-report contract' "$doc"
 require_contains 'sh scripts/test-macos-dry-run-writer-candidate-integration.sh' "$workflow"
 
 require_contains 'MACOS DRY RUN WRITER CANDIDATE INTEGRATION' "$script"
@@ -124,9 +124,12 @@ require_contains 'commit_user_local_managed_artifacts=$COMMIT_FLAG' "$script"
 require_contains 'app_bundle_write_performed=$APP_BUNDLE_WRITE' "$script"
 require_contains 'host_mutation_performed=$HOST_MUTATION' "$script"
 require_contains 'network_performed=$NETWORK' "$script"
-require_contains 'next_lane=macos-reset-uninstall-dry-run-planner' "$script"
+require_contains 'next_lane=macos-reset-uninstall-absence-report-contract' "$script"
 
-missing_output=$(sh "$script")
+test_home=$(mktemp -d)
+trap 'rm -rf "$test_home"' EXIT INT HUP TERM
+
+missing_output=$(HOME="$test_home" sh "$script")
 require_output_contains "$missing_output" 'MACOS DRY RUN WRITER CANDIDATE INTEGRATION'
 require_output_contains "$missing_output" 'integration_status=ok'
 require_output_contains "$missing_output" 'asset_probe_decision=blocked-missing-panel-executable-candidate'
@@ -137,7 +140,7 @@ require_output_contains "$missing_output" 'app_bundle_write_performed=0'
 require_output_contains "$missing_output" 'host_mutation_performed=0'
 require_output_contains "$missing_output" 'network_performed=0'
 
-ready_output=$(sh "$script" --panel-executable /bin/sh --icon installer/latticra-installer/assets/latticra-panel.png)
+ready_output=$(HOME="$test_home" sh "$script" --panel-executable /bin/sh --icon installer/latticra-installer/assets/latticra-panel.png)
 require_output_contains "$ready_output" 'asset_probe_decision=ready-for-dry-run-writer-inputs'
 require_output_contains "$ready_output" 'writer_dry_run_decision=ready-for-future-commit-gate'
 require_output_contains "$ready_output" 'writer_phase_5_status=ok'
@@ -151,7 +154,7 @@ require_output_contains "$ready_output" 'copy_performed=0'
 require_output_contains "$ready_output" 'signing_performed=0'
 require_output_contains "$ready_output" 'notarization_performed=0'
 
-blocked_probe_output=$(sh "$script" --panel-executable /bin/sh --icon scripts/macos-app-bundle-writer-dry-run.sh)
+blocked_probe_output=$(HOME="$test_home" sh "$script" --panel-executable /bin/sh --icon scripts/macos-app-bundle-writer-dry-run.sh)
 require_output_contains "$blocked_probe_output" 'asset_probe_decision=blocked-unsupported-icon-candidate'
 require_output_contains "$blocked_probe_output" 'writer_dry_run_decision=ready-for-future-commit-gate'
 require_output_contains "$blocked_probe_output" 'integration_decision=blocked-asset-probe-not-ready'

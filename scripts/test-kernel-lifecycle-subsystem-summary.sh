@@ -4,6 +4,10 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-kernel-lifecycle-subsystem-summary.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+bin="$tmpdir/latticra-kernel-lifecycle-subsystem-summary"
+
 cc $CFLAGS \
   -Iinclude \
   src/state_lattice.c \
@@ -20,6 +24,6 @@ cc $CFLAGS \
   src/kernel_lifecycle.c \
   src/kernel_lifecycle_subsystem_summary.c \
   tests/kernel_lifecycle_subsystem_summary.c \
-  -o /tmp/latticra-kernel-lifecycle-subsystem-summary
+  -o "$bin"
 
-/tmp/latticra-kernel-lifecycle-subsystem-summary
+"$bin"

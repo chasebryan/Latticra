@@ -93,6 +93,7 @@ stage_4_user_local_verification_transcript_evidence=future
 stage_4_user_local_verification_transcript=future
 stage_4_macos_reset_uninstall_dry_run_contract=present
 stage_4_macos_reset_uninstall_live_target_classifier=present
+stage_4_macos_reset_uninstall_dry_run_planner=present
 stage_5_codesigning_notarization_plan=future
 stage_6_controlled_os_integration_contracts=future
 ```
@@ -212,6 +213,14 @@ The Stage 4 macOS reset/uninstall live-target classifier is implemented by:
 docs/MACOS_RESET_UNINSTALL_LIVE_TARGET_CLASSIFIER.md
 scripts/macos-reset-uninstall-live-target-classifier.sh
 docs/status/MACOS_RESET_UNINSTALL_LIVE_TARGET_CLASSIFIER_STATUS.md
+```
+
+The Stage 4 macOS reset/uninstall dry-run planner is implemented by:
+
+```text
+docs/MACOS_RESET_UNINSTALL_DRY_RUN_PLANNER.md
+scripts/macos-reset-uninstall-dry-run-planner.sh
+docs/status/MACOS_RESET_UNINSTALL_DRY_RUN_PLANNER_STATUS.md
 ```
 
 ## App Bundle Direction
@@ -334,5 +343,5 @@ macos_production_ready=0
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall dry-run planner that consumes live-target classifications without deleting files.
+Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
 ```

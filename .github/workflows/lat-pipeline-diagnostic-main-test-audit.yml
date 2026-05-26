@@ -15,5 +15,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
       - run: sh scripts/test-lat-pipeline-diagnostic-main-test-integration-audit.sh
       - run: sh scripts/test-lat-pipeline.sh

@@ -16,6 +16,7 @@ host_contract_txt="$tmpdir/latticra-console-host-contract.txt"
 host_inventory_txt="$tmpdir/latticra-console-host-inventory.txt"
 receipts_txt="$tmpdir/latticra-console-receipts.txt"
 os_contract_txt="$tmpdir/latticra-console-os-contract.txt"
+vm_evidence_txt="$tmpdir/latticra-console-vm-evidence.txt"
 
 cc $CFLAGS \
   -Iinclude \
@@ -51,6 +52,7 @@ cc $CFLAGS \
 "$report_bin" host-inventory > "$host_inventory_txt"
 "$report_bin" receipts > "$receipts_txt"
 "$report_bin" os-contract > "$os_contract_txt"
+"$report_bin" vm-evidence > "$vm_evidence_txt"
 
 grep -Fq 'LATTICRA CONSOLE REPORT' "$report_txt"
 grep -Fq 'console_id=latticra-console' "$report_txt"
@@ -73,6 +75,8 @@ grep -Fq 'command=lc receipts' "$report_txt"
 grep -Fq 'capability=lc.receipts.inspect' "$report_txt"
 grep -Fq 'command=lc os-contract' "$report_txt"
 grep -Fq 'capability=lc.os.contract' "$report_txt"
+grep -Fq 'command=lc vm-evidence' "$report_txt"
+grep -Fq 'capability=lc.vm.evidence' "$report_txt"
 grep -Fq 'command=lc substrate' "$report_txt"
 grep -Fq 'capability=lc.substrate.inspect' "$report_txt"
 grep -Fq 'launches_host_process=0' "$report_txt"
@@ -85,6 +89,8 @@ grep -Fq 'receipt_contract_status=metadata-only-contract-ready' "$report_txt"
 grep -Fq 'receipt_contract_present=1' "$report_txt"
 grep -Fq 'os_base_contract_status=metadata-only-contract-ready' "$report_txt"
 grep -Fq 'os_base_contract_present=1' "$report_txt"
+grep -Fq 'vm_evidence_contract_status=metadata-only-contract-ready' "$report_txt"
+grep -Fq 'vm_evidence_contract_present=1' "$report_txt"
 grep -Fq 'panel_installable=1' "$report_txt"
 grep -Fq 'future_os_base_claim=planned_not_claimed' "$report_txt"
 grep -Fq 'execution_allowed=0' "$report_txt"
@@ -99,6 +105,7 @@ grep -Fq 'lc receipts' "$help_txt"
 grep -Fq 'lc host-contract' "$help_txt"
 grep -Fq 'lc host-inventory' "$help_txt"
 grep -Fq 'lc os-contract' "$help_txt"
+grep -Fq 'lc vm-evidence' "$help_txt"
 grep -Fq 'lc substrate' "$help_txt"
 grep -Fq 'capability=lc.substrate.inspect' "$help_txt"
 grep -Fq 'host_process_launch_allowed=0' "$help_txt"
@@ -108,6 +115,7 @@ grep -Fq 'latticra-lc host-contract' "$man_txt"
 grep -Fq 'latticra-lc host-inventory' "$man_txt"
 grep -Fq 'latticra-lc receipts' "$man_txt"
 grep -Fq 'latticra-lc os-contract' "$man_txt"
+grep -Fq 'latticra-lc vm-evidence' "$man_txt"
 grep -Fq 'production_os_claim=0' "$man_txt"
 grep -Fq 'LATTICRA CONSOLE COMMAND BOUNDARY REPORT' "$boundary_txt"
 grep -Fq 'runtime_boundary_bound=1' "$boundary_txt"
@@ -118,6 +126,7 @@ grep -Fq 'command=lc host-inventory' "$boundary_txt"
 grep -Fq 'command=lc receipts' "$boundary_txt"
 grep -Fq 'runtime_request=authority-check' "$boundary_txt"
 grep -Fq 'command=lc os-contract' "$boundary_txt"
+grep -Fq 'command=lc vm-evidence' "$boundary_txt"
 grep -Fq 'command=lc os' "$boundary_txt"
 grep -Fq 'policy_matrix_cell=future-gated-operation' "$boundary_txt"
 grep -Fq 'seal_capability=seal.capability.inspect' "$boundary_txt"
@@ -143,8 +152,15 @@ grep -Fq 'LATTICRA CONSOLE OS-BASE PLANNING CONTRACT' "$os_contract_txt"
 grep -Fq 'contract_profile=lc-os-base-v0' "$os_contract_txt"
 grep -Fq 'boot_authority_present=0' "$os_contract_txt"
 grep -Fq 'kernel_change_allowed=0' "$os_contract_txt"
+grep -Fq 'vm_evidence_contract_required=1' "$os_contract_txt"
 grep -Fq 'vm_evidence_required=1' "$os_contract_txt"
 grep -Fq 'promotion_gate=os_base_contract_receipt_and_vm_evidence' "$os_contract_txt"
+grep -Fq 'LATTICRA CONSOLE VM EVIDENCE CONTRACT' "$vm_evidence_txt"
+grep -Fq 'contract_profile=lc-vm-evidence-v0' "$vm_evidence_txt"
+grep -Fq 'vm_launch_allowed=0' "$vm_evidence_txt"
+grep -Fq 'hypervisor_access_allowed=0' "$vm_evidence_txt"
+grep -Fq 'disk_image_write_allowed=0' "$vm_evidence_txt"
+grep -Fq 'promotion_gate=vm_evidence_contract_before_boot_adjacency' "$vm_evidence_txt"
 
 grep -Fq '[components.latticra_console]' installer/manifests/components.toml
 grep -Fq 'latticra_console = true' installer/configs/default.installer.toml
@@ -160,17 +176,20 @@ grep -Fq 'host_embedding_contract_profile = "lc-host-embedding-v0"' installer/co
 grep -Fq 'host_inventory_contract_profile = "lc-host-inventory-v0"' installer/configs/default.installer.toml
 grep -Fq 'receipt_contract_profile = "lc-receipts-v0"' installer/configs/default.installer.toml
 grep -Fq 'os_base_contract_profile = "lc-os-base-v0"' installer/configs/default.installer.toml
+grep -Fq 'vm_evidence_contract_profile = "lc-vm-evidence-v0"' installer/configs/default.installer.toml
 grep -Fq 'LATTICRA_CONSOLE=$(cfg latticra_console true)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_PROFILE=$(cfg_section lc profile panel_embedded)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_HOST_EMBEDDING_CONTRACT_PROFILE=$(cfg_section lc host_embedding_contract_profile lc-host-embedding-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_HOST_INVENTORY_CONTRACT_PROFILE=$(cfg_section lc host_inventory_contract_profile lc-host-inventory-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_RECEIPT_CONTRACT_PROFILE=$(cfg_section lc receipt_contract_profile lc-receipts-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_OS_BASE_CONTRACT_PROFILE=$(cfg_section lc os_base_contract_profile lc-os-base-v0)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_VM_EVIDENCE_CONTRACT_PROFILE=$(cfg_section lc vm_evidence_contract_profile lc-vm-evidence-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'profiles/hosted-reference.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'host-embedding/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'host-inventory/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'receipts/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'os-base/contract.toml' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'vm-evidence/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'latticra-lc' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'render_lc_help()' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'render_lc_man()' installer/scripts/latticra-installer-apply.sh
@@ -181,6 +200,7 @@ grep -Fq 'Host Embedding Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Read-Only Host Inventory Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Receipt Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'OS-Base Planning Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'VM Evidence Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Help And Manpage Rendering' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Runtime Boundary Binding' docs/LATTICRA_CONSOLE_FOUNDATION.md
 

@@ -42,6 +42,7 @@ int main(void) {
     char host_inventory_report[LATTICRA_CONSOLE_HOST_INVENTORY_REPORT_MAX];
     char receipt_report[LATTICRA_CONSOLE_RECEIPT_REPORT_MAX];
     char os_contract_report[LATTICRA_CONSOLE_OS_CONTRACT_REPORT_MAX];
+    char vm_evidence_report[LATTICRA_CONSOLE_VM_EVIDENCE_REPORT_MAX];
     int failures = 0;
 
     failures += require_int(
@@ -84,6 +85,10 @@ int main(void) {
         result.os_base_contract_status,
         "metadata-only-contract-ready");
     failures += require_text(
+        "result.vm_evidence_contract_status",
+        result.vm_evidence_contract_status,
+        "metadata-only-contract-ready");
+    failures += require_text(
         "result.os_base_status",
         result.os_base_status,
         "planned-no-boot-authority");
@@ -107,6 +112,10 @@ int main(void) {
     failures += require_int(
         "result.os_base_contract_present",
         result.os_base_contract_present,
+        1);
+    failures += require_int(
+        "result.vm_evidence_contract_present",
+        result.vm_evidence_contract_present,
         1);
     failures += require_int("result.operator_shell_present", result.operator_shell_present, 1);
     failures += require_int("result.execution_allowed", result.execution_allowed, 0);
@@ -171,6 +180,17 @@ int main(void) {
         failures += require_int("lc os-contract host launch", command->launches_host_process, 0);
     }
 
+    command = latticra_console_find_command("lc vm-evidence");
+    failures += require_int("find lc vm-evidence", command != 0, 1);
+    if (command != 0) {
+        failures += require_text(
+            "lc vm-evidence capability",
+            command->capability_label,
+            "lc.vm.evidence");
+        failures += require_int("lc vm-evidence future gate", command->requires_future_gate, 0);
+        failures += require_int("lc vm-evidence host launch", command->launches_host_process, 0);
+    }
+
     command = latticra_console_find_command("lc host-contract");
     failures += require_int("find lc host-contract", command != 0, 1);
     if (command != 0) {
@@ -215,6 +235,7 @@ int main(void) {
     failures += require_contains("report", report, "host_inventory_contract_present=1");
     failures += require_contains("report", report, "receipt_contract_present=1");
     failures += require_contains("report", report, "os_base_contract_present=1");
+    failures += require_contains("report", report, "vm_evidence_contract_present=1");
     failures += require_contains(
         "report",
         report,
@@ -231,6 +252,10 @@ int main(void) {
         "report",
         report,
         "os_base_contract_status=metadata-only-contract-ready");
+    failures += require_contains(
+        "report",
+        report,
+        "vm_evidence_contract_status=metadata-only-contract-ready");
     failures += require_contains("report", report, "future_os_base_claim=planned_not_claimed");
     failures += require_contains("report", report, "phase1_reference_lessons=registry_help_guarded_boundary_os_track");
     failures += require_contains("report", report, "command_registry_source=c-static-table");
@@ -259,6 +284,8 @@ int main(void) {
     failures += require_contains("registry_report", registry_report, "capability=lc.receipts.inspect");
     failures += require_contains("registry_report", registry_report, "command=lc os-contract");
     failures += require_contains("registry_report", registry_report, "capability=lc.os.contract");
+    failures += require_contains("registry_report", registry_report, "command=lc vm-evidence");
+    failures += require_contains("registry_report", registry_report, "capability=lc.vm.evidence");
     failures += require_contains("registry_report", registry_report, "command=lc profiles");
     failures += require_contains("registry_report", registry_report, "capability=lc.core.profiles");
     failures += require_contains("registry_report", registry_report, "capability=lc.substrate.inspect");
@@ -276,6 +303,7 @@ int main(void) {
     failures += require_contains("help_report", help_report, "lc host-inventory");
     failures += require_contains("help_report", help_report, "lc receipts");
     failures += require_contains("help_report", help_report, "lc os-contract");
+    failures += require_contains("help_report", help_report, "lc vm-evidence");
     failures += require_contains("help_report", help_report, "capability=lc.substrate.inspect");
     failures += require_contains("help_report", help_report, "host_process_launch_allowed=0");
 
@@ -289,6 +317,7 @@ int main(void) {
     failures += require_contains("manpage_report", manpage_report, "latticra-lc host-inventory");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc receipts");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc os-contract");
+    failures += require_contains("manpage_report", manpage_report, "latticra-lc vm-evidence");
     failures += require_contains("manpage_report", manpage_report, "lc os");
     failures += require_contains("manpage_report", manpage_report, "production_os_claim=0");
 
@@ -382,6 +411,23 @@ int main(void) {
     failures += require_int("lc os-contract boundary no effect", boundary.no_effect, 1);
     failures += require_int("lc os-contract boundary boot allowed", boundary.boot_allowed, 0);
 
+    command = latticra_console_find_command("lc vm-evidence");
+    failures += require_int(
+        "lc vm-evidence boundary",
+        latticra_console_command_boundary_classify(command, &boundary),
+        LATTICRA_STATUS_OK);
+    failures += require_text(
+        "lc vm-evidence seal capability",
+        boundary.seal_capability_label,
+        "seal.capability.inspect");
+    failures += require_int(
+        "lc vm-evidence runtime kind",
+        boundary.runtime_request_kind,
+        LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK);
+    failures += require_int("lc vm-evidence boundary future gate", boundary.requires_future_gate, 0);
+    failures += require_int("lc vm-evidence boundary no effect", boundary.no_effect, 1);
+    failures += require_int("lc vm-evidence boundary boot allowed", boundary.boot_allowed, 0);
+
     command = latticra_console_find_command("lc os");
     failures += require_int(
         "lc os boundary",
@@ -415,6 +461,7 @@ int main(void) {
     failures += require_contains("boundary_report", boundary_report, "command=lc receipts");
     failures += require_contains("boundary_report", boundary_report, "runtime_request=authority-check");
     failures += require_contains("boundary_report", boundary_report, "command=lc os-contract");
+    failures += require_contains("boundary_report", boundary_report, "command=lc vm-evidence");
     failures += require_contains("boundary_report", boundary_report, "command=lc os");
     failures += require_contains("boundary_report", boundary_report, "runtime_request=future-gated");
     failures += require_contains("boundary_report", boundary_report, "policy_matrix_cell=future-gated-operation");
@@ -527,11 +574,44 @@ int main(void) {
     failures += require_contains(
         "os_contract_report",
         os_contract_report,
+        "vm_evidence_contract_required=1");
+    failures += require_contains(
+        "os_contract_report",
+        os_contract_report,
         "vm_evidence_required=1");
     failures += require_contains(
         "os_contract_report",
         os_contract_report,
         "promotion_gate=os_base_contract_receipt_and_vm_evidence");
+
+    failures += require_int(
+        "vm_evidence_report",
+        latticra_console_vm_evidence_report(vm_evidence_report, sizeof(vm_evidence_report)),
+        LATTICRA_STATUS_OK);
+    failures += require_contains(
+        "vm_evidence_report",
+        vm_evidence_report,
+        "LATTICRA CONSOLE VM EVIDENCE CONTRACT");
+    failures += require_contains(
+        "vm_evidence_report",
+        vm_evidence_report,
+        "contract_profile=lc-vm-evidence-v0");
+    failures += require_contains(
+        "vm_evidence_report",
+        vm_evidence_report,
+        "vm_launch_allowed=0");
+    failures += require_contains(
+        "vm_evidence_report",
+        vm_evidence_report,
+        "hypervisor_access_allowed=0");
+    failures += require_contains(
+        "vm_evidence_report",
+        vm_evidence_report,
+        "disk_image_write_allowed=0");
+    failures += require_contains(
+        "vm_evidence_report",
+        vm_evidence_report,
+        "promotion_gate=vm_evidence_contract_before_boot_adjacency");
 
     if (failures != 0) return 1;
     puts("latticra_console_foundation: ok");

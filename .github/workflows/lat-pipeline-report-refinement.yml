@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
       - name: Run Lat pipeline report refinement guard
         run: sh scripts/test-lat-pipeline-report-refinement.sh
       - name: Run Lat pipeline tests

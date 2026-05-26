@@ -66,7 +66,7 @@ impl Default for LatticraInstallerApp {
             console_lines: vec![
                 format!("Latticra Panel v{PANEL_VERSION} bounded operator console online."),
                 "Authority baseline: root=0 network=0 runtime_enforcement=0.".to_owned(),
-                "Panel commands: help, status, lc status, lc receipts, lc os-contract, lc profile <hosted|panel|host|os|custom>, plan, save, dry-run, reset, uninstall, profile seal, profile fedora."
+                "Panel commands: help, status, lc status, lc receipts, lc os-contract, lc vm-evidence, lc profile <hosted|panel|host|os|custom>, plan, save, dry-run, reset, uninstall, profile seal, profile fedora."
                     .to_owned(),
                 "Navigation commands: pwd, cd <dir>. External host commands are denied.".to_owned(),
             ],
@@ -335,7 +335,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, lc status, lc profiles, lc receipts, lc profile hosted|panel|host|os|custom, lc commands, lc substrate, lc host, lc host-contract, lc host-inventory, lc os-contract, lc os, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding, nadia tokenizer-runtime-attachment, nadia prompt-tokenization, nadia prompt-token-sequence, nadia context-window-assembly",
+                    "panel: help, status, lc status, lc profiles, lc receipts, lc profile hosted|panel|host|os|custom, lc commands, lc substrate, lc host, lc host-contract, lc host-inventory, lc os-contract, lc vm-evidence, lc os, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding, nadia tokenizer-runtime-attachment, nadia prompt-tokenization, nadia prompt-token-sequence, nadia context-window-assembly, nadia prompt-evaluation-input",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -413,6 +413,11 @@ impl LatticraInstallerApp {
                 ));
                 self.push_console("os_base_contract_status=metadata-only-contract");
                 self.push_console(format!(
+                    "vm_evidence_contract_profile={}",
+                    self.config.lc.vm_evidence_contract_profile
+                ));
+                self.push_console("vm_evidence_contract_status=metadata-only-contract");
+                self.push_console(format!(
                     "os_base_profile={}",
                     self.config.lc.os_base_profile
                 ));
@@ -440,6 +445,10 @@ impl LatticraInstallerApp {
                 self.push_console(format!(
                     "os_base_contract_required={}",
                     self.config.lc.require_os_base_contract
+                ));
+                self.push_console(format!(
+                    "vm_evidence_contract_required={}",
+                    self.config.lc.require_vm_evidence_contract
                 ));
                 self.push_console(format!(
                     "runtime_boundary_binding_required={}",
@@ -474,7 +483,7 @@ impl LatticraInstallerApp {
                 self.apply_lc_profile(LatticraConsoleProfile::Custom);
             }
             ["lc", "commands"] | ["console", "commands"] => {
-                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc profiles,lc receipts,lc substrate,lc host,lc host-contract,lc host-inventory,lc os-contract,lc os");
+                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc profiles,lc receipts,lc substrate,lc host,lc host-contract,lc host-inventory,lc os-contract,lc vm-evidence,lc os");
                 self.push_console("registry_authority=metadata-only external_host_processes=0");
             }
             ["lc", "receipts"]
@@ -586,7 +595,39 @@ impl LatticraInstallerApp {
                     "bootloader_write_allowed=0 partition_mutation_allowed=0 driver_load_allowed=0 service_install_allowed=0",
                 );
                 self.push_console(
-                    "vm_evidence_required=1 receipt_required_before_os_base=1 promotion_gate=os_base_contract_receipt_and_vm_evidence",
+                    "vm_evidence_contract_required=1 vm_evidence_required=1 receipt_required_before_os_base=1 promotion_gate=os_base_contract_receipt_and_vm_evidence",
+                );
+                self.push_console(
+                    "host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 production_os_claim=0",
+                );
+            }
+            ["lc", "vm-evidence"]
+            | ["console", "vm-evidence"]
+            | ["lc", "vm", "evidence"]
+            | ["console", "vm", "evidence"]
+            | ["lc", "vm-contract"]
+            | ["console", "vm-contract"] => {
+                self.push_console("lc.vm_evidence_contract=Latticra Console VM evidence contract");
+                self.push_console(format!(
+                    "contract_profile={}",
+                    self.config.lc.vm_evidence_contract_profile
+                ));
+                self.push_console(format!(
+                    "contract_required={}",
+                    self.config.lc.require_vm_evidence_contract
+                ));
+                self.push_console("contract_status=metadata-only vm_evidence_capture_enabled=0");
+                self.push_console(
+                    "vm_launcher_present=0 vm_launch_allowed=0 hypervisor_access_allowed=0",
+                );
+                self.push_console(
+                    "disk_image_open_allowed=0 disk_image_write_allowed=0 snapshot_capture_allowed=0",
+                );
+                self.push_console(
+                    "guest_agent_allowed=0 guest_network_allowed=0 host_probe_allowed=0",
+                );
+                self.push_console(
+                    "promotion_gate=vm_evidence_contract_before_boot_adjacency receipt_required_before_vm_evidence=1",
                 );
                 self.push_console(
                     "host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 production_os_claim=0",
@@ -600,6 +641,10 @@ impl LatticraInstallerApp {
                 self.push_console(format!(
                     "os_base_contract={}",
                     self.config.lc.os_base_contract_profile
+                ));
+                self.push_console(format!(
+                    "vm_evidence_contract={}",
+                    self.config.lc.vm_evidence_contract_profile
                 ));
                 self.push_console("future_os_base_claim=planned_not_claimed");
                 self.push_console(
@@ -682,7 +727,10 @@ impl LatticraInstallerApp {
                     "context_window_assembly_contract_stage=27-context-window-assembly-contract",
                 );
                 self.push_console(
-                    "stage=27 context-window-assembly-contract; prompt_evaluation_input_created=0 runtime_invoked=0",
+                    "prompt_evaluation_input_contract_stage=28-prompt-evaluation-input-contract",
+                );
+                self.push_console(
+                    "stage=28 prompt-evaluation-input-contract; prompt_evaluation_input_created=0 runtime_invoked=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -991,6 +1039,25 @@ impl LatticraInstallerApp {
                 );
                 self.push_console(
                     "requires_prompt_token_sequence_contract=1 requires_future_prompt_evaluation_input_contract=1",
+                );
+            }
+            ["nadia", "prompt-evaluation-input"]
+            | ["nadia", "evaluation-input"]
+            | ["nadia", "prompt-input"]
+            | ["nadia", "prompt-evaluation-input-contract"] => {
+                self.push_console(
+                    "nadia_prompt_evaluation_input=stage-28-prompt-evaluation-input-contract",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia prompt-evaluation-input");
+                self.push_console(
+                    "prompt_evaluation_input_contract_status=contract_only prompt_evaluation_input_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_input_materialized=0 prompt_evaluation_input_validated=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_context_window_assembly_contract=1 requires_future_prompt_evaluation_runtime_handoff_contract=1",
                 );
             }
             ["nadia", "inference-readiness"]
@@ -1483,7 +1550,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-27 context-window assembly contract with metadata-only Console surfaces.",
+            "Stage-28 prompt-evaluation-input contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,
@@ -1618,6 +1685,11 @@ impl LatticraInstallerApp {
             "OS contract",
             &mut self.config.lc.os_base_contract_profile,
         );
+        labeled_text_field(
+            ui,
+            "VM evidence",
+            &mut self.config.lc.vm_evidence_contract_profile,
+        );
         labeled_text_field(ui, "OS base", &mut self.config.lc.os_base_profile);
         labeled_text_field(ui, "Panel bridge", &mut self.config.lc.panel_bridge);
         checkbox_note(
@@ -1661,6 +1733,12 @@ impl LatticraInstallerApp {
             &mut self.config.lc.require_os_base_contract,
             "Require OS-base contract",
             "Future OS-base work must prove this contract before any boot-adjacent planning advances.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.require_vm_evidence_contract,
+            "Require VM evidence contract",
+            "Future OS-base work must prove VM evidence metadata before any boot-adjacent implementation.",
         );
         checkbox_note(
             ui,

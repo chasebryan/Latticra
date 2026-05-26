@@ -15,5 +15,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
       - name: Run Latticra no-effect CLI status surface guard
         run: sh scripts/test-latticra-no-effect-cli-status-surface.sh

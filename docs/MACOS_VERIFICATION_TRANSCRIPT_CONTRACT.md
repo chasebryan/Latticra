@@ -92,6 +92,8 @@ commit_gate_closed_until_evidence_required=1
 reset_uninstall_dry_run_required=1
 macos_reset_uninstall_dry_run_contract_present=1
 macos_reset_uninstall_live_target_classifier_present=1
+macos_reset_uninstall_dry_run_planner_present=1
+reset_uninstall_dry_run_planner_transcript_present=1
 unmanaged_target_preservation_required=1
 seal_report_only_output_required=1
 lat_or_lir_no_effect_probe_required=1
@@ -150,5 +152,5 @@ This contract is not macOS installation, macOS app bundle evidence, signed app e
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall dry-run planner that consumes live-target classifications without deleting files.
+Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
 ```

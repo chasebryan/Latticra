@@ -16,5 +16,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
       - name: Run system bootstrap report runner guard
         run: sh scripts/test-system-bootstrap-report-runner.sh

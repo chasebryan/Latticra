@@ -191,6 +191,7 @@ pub struct LatticraConsoleConfig {
     pub host_inventory_contract_profile: String,
     pub receipt_contract_profile: String,
     pub os_base_contract_profile: String,
+    pub vm_evidence_contract_profile: String,
     pub os_base_profile: String,
     pub panel_bridge: String,
     pub report_only: bool,
@@ -200,6 +201,7 @@ pub struct LatticraConsoleConfig {
     pub require_host_contract_receipt: bool,
     pub require_host_inventory_receipt: bool,
     pub require_os_base_contract: bool,
+    pub require_vm_evidence_contract: bool,
     pub require_runtime_boundary_binding: bool,
     pub require_seal_capability_labels: bool,
 }
@@ -215,6 +217,7 @@ impl Default for LatticraConsoleConfig {
             host_inventory_contract_profile: "lc-host-inventory-v0".to_owned(),
             receipt_contract_profile: "lc-receipts-v0".to_owned(),
             os_base_contract_profile: "lc-os-base-v0".to_owned(),
+            vm_evidence_contract_profile: "lc-vm-evidence-v0".to_owned(),
             os_base_profile: "planned-no-boot-authority".to_owned(),
             panel_bridge: "panel-aware".to_owned(),
             report_only: true,
@@ -224,6 +227,7 @@ impl Default for LatticraConsoleConfig {
             require_host_contract_receipt: true,
             require_host_inventory_receipt: true,
             require_os_base_contract: true,
+            require_vm_evidence_contract: true,
             require_runtime_boundary_binding: true,
             require_seal_capability_labels: true,
         };
@@ -264,6 +268,7 @@ impl LatticraConsoleConfig {
         self.host_inventory_contract_profile = "lc-host-inventory-v0".to_owned();
         self.receipt_contract_profile = "lc-receipts-v0".to_owned();
         self.os_base_contract_profile = "lc-os-base-v0".to_owned();
+        self.vm_evidence_contract_profile = "lc-vm-evidence-v0".to_owned();
         self.report_only = true;
         self.require_host_embedding_contract = true;
         self.require_read_only_host_inventory_contract = true;
@@ -271,6 +276,7 @@ impl LatticraConsoleConfig {
         self.require_host_contract_receipt = true;
         self.require_host_inventory_receipt = true;
         self.require_os_base_contract = true;
+        self.require_vm_evidence_contract = true;
         self.require_runtime_boundary_binding = true;
         self.require_seal_capability_labels = true;
     }
@@ -707,6 +713,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "os_base_contract_profile={}",
         config.lc.os_base_contract_profile
     );
+    let _ = writeln!(
+        out,
+        "vm_evidence_contract_profile={}",
+        config.lc.vm_evidence_contract_profile
+    );
     let _ = writeln!(out, "os_base_profile={}", config.lc.os_base_profile);
     let _ = writeln!(out, "report_only={}", config.lc.report_only);
     let _ = writeln!(
@@ -741,6 +752,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "vm_evidence_contract_required={}",
+        config.lc.require_vm_evidence_contract
+    );
+    let _ = writeln!(
+        out,
         "runtime_boundary_binding_required={}",
         config.lc.require_runtime_boundary_binding
     );
@@ -764,6 +780,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "host_inventory_contract_status=metadata-only-contract");
     let _ = writeln!(out, "receipt_contract_status=metadata-only-contract");
     let _ = writeln!(out, "os_base_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "vm_evidence_contract_status=metadata-only-contract");
     let _ = writeln!(out, "seal_signature_present=0");
     let _ = writeln!(out, "receipt_signed=0");
     let _ = writeln!(out, "os_base_status={}", config.lc.os_base_profile);
@@ -782,7 +799,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=27-context-window-assembly-contract");
+    let _ = writeln!(out, "stage=28-prompt-evaluation-input-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -1609,6 +1626,49 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "requires_future_prompt_evaluation_input_contract=1");
     let _ = writeln!(out, "prompt_evaluation_input_created=0");
     let _ = writeln!(out, "context_window_assembly_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_input_contract_stage=28-prompt-evaluation-input-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_input_contract_command=scripts/nadia-prompt-evaluation-input-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_input_contract_command=latticra-nadia prompt-evaluation-input"
+    );
+    let _ = writeln!(out, "prompt_evaluation_input_stage=contract-only");
+    let _ = writeln!(out, "prompt_evaluation_input_contract_status=contract_only");
+    let _ = writeln!(out, "prompt_evaluation_input_authority=0");
+    let _ = writeln!(out, "prompt_evaluation_input_allowed=0");
+    let _ = writeln!(out, "prompt_evaluation_input_created=0");
+    let _ = writeln!(out, "prompt_evaluation_input_metadata_present=1");
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_input_family=operator-reviewed-prompt-evaluation-input"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_input_format=contract-only-offline-evaluation-input"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_input_decision=blocked_contract_only"
+    );
+    let _ = writeln!(out, "prompt_evaluation_input_plan_recorded=1");
+    let _ = writeln!(out, "prompt_evaluation_input_result_recorded=0");
+    let _ = writeln!(out, "prompt_evaluation_input_runtime_invoked=0");
+    let _ = writeln!(out, "prompt_evaluation_input_materialized=0");
+    let _ = writeln!(out, "prompt_evaluation_input_validated=0");
+    let _ = writeln!(out, "prompt_evaluation_input_serialized=0");
+    let _ = writeln!(out, "prompt_evaluation_input_written=0");
+    let _ = writeln!(out, "requires_context_window_assembly_contract=1");
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_runtime_handoff_contract=1"
+    );
+    let _ = writeln!(out, "prompt_evaluation_input_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

@@ -26,6 +26,7 @@ typedef struct {
     latticra_lat_pipeline_diagnostic_class_t diagnostic_class;
     latticra_lat_pipeline_error_t pipeline_error;
     latticra_lat_pipeline_stage_t failed_stage;
+    latticra_lat_source_span_t pipeline_span;
     latticra_lat_semantic_diagnostic_class_t semantic_class;
     latticra_lat_semantic_error_t semantic_error;
     latticra_lat_to_lir_diagnostic_class_t lowering_class;

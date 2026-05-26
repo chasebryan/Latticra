@@ -51,6 +51,28 @@ check_workflow() {
     [ "$timeout_count" -ge "$runs_on_count" ] ||
     fail "$workflow must set timeout-minutes for every job"
 
+  checkout_missing_persistence="$(awk '
+    /^[[:space:]]*(-[[:space:]]*)?uses:[[:space:]]*actions\/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5[[:space:]]*$/ {
+      pending = NR
+      next
+    }
+    pending && /^[[:space:]]*persist-credentials:[[:space:]]*false[[:space:]]*$/ {
+      pending = 0
+      next
+    }
+    pending && /^[[:space:]]*-[[:space:]]*(name|uses|run):/ {
+      print pending
+      pending = 0
+    }
+    END {
+      if (pending) {
+        print pending
+      }
+    }
+  ' "$workflow")"
+  [ -z "$checkout_missing_persistence" ] ||
+    fail "$workflow must set persist-credentials: false in every checkout step"
+
   if grep -Eq '^[[:space:]]*[A-Za-z0-9_-]+:[[:space:]]*write([[:space:]]|$)' "$workflow"; then
     fail "$workflow must not request write-scoped token permissions"
   fi
@@ -75,7 +97,7 @@ check_workflow() {
     fail "$workflow contains an unsafe broad mutation command"
   fi
 
-  action_refs="$(sed -nE 's/^[[:space:]]*uses:[[:space:]]*([^[:space:]]+).*/\1/p' "$workflow")"
+  action_refs="$(sed -nE 's/^[[:space:]]*(-[[:space:]]*)?uses:[[:space:]]*([^[:space:]]+).*/\2/p' "$workflow")"
   for action_ref in $action_refs; do
     case "$action_ref" in
       ./*|../*)
@@ -130,6 +152,23 @@ check_shell_script() {
   if grep -Eq 'mktemp[[:space:]]+-u|chmod[[:space:]]+-R[[:space:]]+777|rm[[:space:]]+-rf[[:space:]]+/' "$script"; then
     fail "$script contains an unsafe broad mutation command"
   fi
+
+  case "$script" in
+    scripts/*report-runner.sh)
+      if grep -Eq '/tmp/latticra|-o[[:space:]]+/tmp/latticra|>[[:space:]]*/tmp/latticra' "$script"; then
+        fail "$script must use a private mktemp workdir instead of fixed /tmp/latticra paths"
+      fi
+      require_contains 'mktemp -d' "$script"
+      require_contains 'trap '\''rm -rf "$tmpdir"'\'' EXIT INT HUP TERM' "$script"
+      ;;
+    scripts/test-kernel.sh|scripts/test-kernel-lifecycle.sh|scripts/test-kernel-lifecycle-subsystem-summary.sh|scripts/test-kernel-memory-map.sh|scripts/test-kernel-scheduler.sh|scripts/test-kernel-state.sh|scripts/test-kernel-state-machine.sh|scripts/test-kernel-subsystem-registry.sh)
+      if grep -Eq '/tmp/latticra|-o[[:space:]]+/tmp/latticra|>[[:space:]]*/tmp/latticra' "$script"; then
+        fail "$script must use a private mktemp workdir instead of fixed /tmp/latticra paths"
+      fi
+      require_contains 'mktemp -d' "$script"
+      require_contains 'trap '\''rm -rf "$tmpdir"'\'' EXIT INT HUP TERM' "$script"
+      ;;
+  esac
 
   if grep -q 'CFLAGS:=' "$script"; then
     for flag in -Wall -Wextra -Werror; do
@@ -191,15 +230,18 @@ require_contains "sh ./scripts/test-latticra-console-foundation.sh" "Makefile"
 require_contains "sh ./scripts/test-cpp-authority-layer.sh" "Makefile"
 require_contains "make quality" ".github/workflows/quality.yml"
 require_contains "uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" ".github/workflows/quality.yml"
+require_contains "persist-credentials: false" ".github/workflows/quality.yml"
 require_contains "uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8" ".github/workflows/quality.yml"
 require_contains "gcc \\" ".github/workflows/quality.yml"
 require_contains "g++ \\" ".github/workflows/quality.yml"
 require_contains "timeout-minutes: 20" ".github/workflows/quality.yml"
 require_contains "make quality-safety-guards" ".github/workflows/quality-safety-guards.yml"
 require_contains "uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" ".github/workflows/quality-safety-guards.yml"
+require_contains "persist-credentials: false" ".github/workflows/quality-safety-guards.yml"
 require_contains "timeout-minutes: 10" ".github/workflows/quality-safety-guards.yml"
 require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" ".github/workflows/latticra-panel-installer.yml"
 require_contains "uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8" ".github/workflows/latticra-panel-installer.yml"
+require_contains "persist-credentials: false" ".github/workflows/latticra-panel-installer.yml"
 require_line "make quality" "README.md"
 require_line "make quality-safety-guards" "README.md"
 require_line "make quality" "CONTRIBUTING.md"

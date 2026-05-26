@@ -86,6 +86,7 @@ nadia tokenizer-runtime-attachment
 nadia prompt-tokenization
 nadia prompt-token-sequence
 nadia context-window-assembly
+nadia prompt-evaluation-input
 profile guided
 profile seal
 profile fedora
@@ -157,7 +158,7 @@ LC does not launch external host commands, mutate host files, use the network, g
 
 Nadia is Latticra's planned offline AI companion for software development, systems engineering, and AI development work. The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, harm-aware development, and an absolute non-sexual-use boundary visible in the system direction. Documentation and code identify the solemn implementation identity as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
 
-In the current installer lane, Nadia includes Stage-27 context-window-assembly contract metadata, Stage-26 prompt-token-sequence contract metadata, Stage-25 prompt-tokenization contract metadata, Stage-24 tokenizer-runtime-attachment contract metadata, Stage-23 tokenizer-artifact-binding contract metadata, Stage-22 tokenizer-artifact-verification contract metadata, Stage-21 tokenizer-artifact-measurement contract metadata, Stage-20 tokenizer-artifact-inventory contract metadata, Stage-19 tokenizer-manifest contract metadata, Stage-18 tokenizer-specification contract metadata, Stage-17 tokenization-boundary contract metadata, Stage-16 prompt-evaluation handoff contract metadata, Stage-15 awareness-dialogue contract metadata, Stage-14 prompt-materialization contract metadata, Stage-13 prompt-receipt contract metadata, Stage-12 model-load contract metadata, Stage-11 runtime-invocation contract metadata, Stage-10 inference-readiness contract metadata, Stage-9 local model-registry contract metadata, Stage-8 prompt-evaluation contract metadata, Stage-7 report-only tool-preflight metadata, Stage-6 protective-safety metadata, Stage-5 productivity-ledger metadata, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan metadata, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, config, Console status, component marker, and productivity-ledger space. No sexual user functionality, dialogue generation, prompt text receipt, prompt text reading, prompt source reading, prompt buffer allocation, prompt tokenization, prompt token creation, prompt token sequence recording, prompt token ID recording, prompt token order recording, prompt token offset recording, context window assembly, prompt evaluation input creation, prompt materialization, tokenizer artifact path resolution, tokenizer artifact opening, tokenizer artifact reading, tokenizer artifact scanning, tokenizer artifact hashing, tokenizer artifact measurement, tokenizer artifact digest recording, tokenizer artifact size recording, tokenizer artifact verification, tokenizer artifact digest comparison, tokenizer artifact size comparison, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, inference, prompt evaluation, tool execution, model installation, training, distillation, source mutation, or network authority are installed. Awareness-dialogue metadata defines future survivor-centered Q&A scope for official Nadia Initiative awareness topics, prompt-evaluation handoff metadata packages that evidence, tokenization-boundary metadata keeps prompt tokenization blocked, tokenizer-specification metadata records future review requirements, tokenizer-manifest metadata records future manifest review requirements, tokenizer-artifact-inventory metadata records future artifact measurement requirements, tokenizer-artifact-measurement metadata records future artifact verification requirements, tokenizer-artifact-verification metadata records future artifact binding requirements, tokenizer-artifact-binding metadata records future runtime attachment requirements, tokenizer-runtime-attachment metadata records future prompt tokenization requirements, prompt-tokenization metadata records future prompt token sequence requirements, prompt-token-sequence metadata records future context window assembly requirements, and context-window-assembly metadata records future prompt evaluation input requirements; none grants dialogue generation, live web lookup, prompt evaluation, token generation, inference, or tool execution authority.
+In the current installer lane, Nadia includes Stage-28 prompt-evaluation-input contract metadata, Stage-27 context-window-assembly contract metadata, Stage-26 prompt-token-sequence contract metadata, Stage-25 prompt-tokenization contract metadata, Stage-24 tokenizer-runtime-attachment contract metadata, Stage-23 tokenizer-artifact-binding contract metadata, Stage-22 tokenizer-artifact-verification contract metadata, Stage-21 tokenizer-artifact-measurement contract metadata, Stage-20 tokenizer-artifact-inventory contract metadata, Stage-19 tokenizer-manifest contract metadata, Stage-18 tokenizer-specification contract metadata, Stage-17 tokenization-boundary contract metadata, Stage-16 prompt-evaluation handoff contract metadata, Stage-15 awareness-dialogue contract metadata, Stage-14 prompt-materialization contract metadata, Stage-13 prompt-receipt contract metadata, Stage-12 model-load contract metadata, Stage-11 runtime-invocation contract metadata, Stage-10 inference-readiness contract metadata, Stage-9 local model-registry contract metadata, Stage-8 prompt-evaluation contract metadata, Stage-7 report-only tool-preflight metadata, Stage-6 protective-safety metadata, Stage-5 productivity-ledger metadata, Stage-4 systems-engineering mode validation, Stage-3 prompt-plan metadata, Stage-2 runtime-profile metadata, Stage-1 local context-pack generation, Stage-0 identity, config, Console status, component marker, and productivity-ledger space. No sexual user functionality, dialogue generation, prompt text receipt, prompt text reading, prompt source reading, prompt buffer allocation, prompt tokenization, prompt token creation, prompt token sequence recording, prompt token ID recording, prompt token order recording, prompt token offset recording, context window assembly, prompt evaluation input creation, prompt materialization, tokenizer artifact path resolution, tokenizer artifact opening, tokenizer artifact reading, tokenizer artifact scanning, tokenizer artifact hashing, tokenizer artifact measurement, tokenizer artifact digest recording, tokenizer artifact size recording, tokenizer artifact verification, tokenizer artifact digest comparison, tokenizer artifact size comparison, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, inference, prompt evaluation, tool execution, model installation, training, distillation, source mutation, or network authority are installed. Awareness-dialogue metadata defines future survivor-centered Q&A scope for official Nadia Initiative awareness topics, prompt-evaluation handoff metadata packages that evidence, tokenization-boundary metadata keeps prompt tokenization blocked, tokenizer-specification metadata records future review requirements, tokenizer-manifest metadata records future manifest review requirements, tokenizer-artifact-inventory metadata records future artifact measurement requirements, tokenizer-artifact-measurement metadata records future artifact verification requirements, tokenizer-artifact-verification metadata records future artifact binding requirements, tokenizer-artifact-binding metadata records future runtime attachment requirements, tokenizer-runtime-attachment metadata records future prompt tokenization requirements, prompt-tokenization metadata records future prompt token sequence requirements, prompt-token-sequence metadata records future context window assembly requirements, context-window-assembly metadata records future prompt evaluation input requirements, and prompt-evaluation-input metadata records future prompt evaluation runtime handoff requirements; none grants dialogue generation, live web lookup, prompt evaluation, token generation, inference, or tool execution authority.
 
 After a guarded local install with Nadia enabled:
 
@@ -189,6 +190,7 @@ latticra-nadia tokenizer-runtime-attachment
 latticra-nadia prompt-tokenization
 latticra-nadia prompt-token-sequence
 latticra-nadia context-window-assembly
+latticra-nadia prompt-evaluation-input
 ```
 
 ## Uninstall managed local install
@@ -205,6 +207,60 @@ latticra uninstall
 ```
 
 Reset and uninstall remove the same managed artifacts: command wrappers, the Panel desktop entry, known Panel icons, and the selected local prefix. Use reset when the intent is to reinstall from new Panel specifications; use uninstall when the intent is to remove the local install. Unmanaged files in `~/.local/bin` are preserved.
+
+## Clean full user-local uninstall
+
+Use this only when normal reset/uninstall cannot clean up an old or broken user-local install. The commands below are intentionally scoped to Latticra user-local paths.
+
+```sh
+LATTICRA_PREFIX="${LATTICRA_PREFIX:-$HOME/.local/share/latticra}"
+
+rm -rf -- \
+  "$LATTICRA_PREFIX" \
+  "$HOME/.local/share/latticra-validation" \
+  "$HOME/.local/share/latticra-reset-receipts"
+
+rm -f -- \
+  "$HOME/.local/bin/latticra" \
+  "$HOME/.local/bin/latticra-lc" \
+  "$HOME/.local/bin/lat" \
+  "$HOME/.local/bin/latticra-seal" \
+  "$HOME/.local/bin/latticra-nadia" \
+  "$HOME/.local/bin/latticra-panel" \
+  "$HOME/.local/bin/latticra-installer" \
+  "$HOME/.local/share/applications/latticra-panel.desktop" \
+  "$HOME/.local/share/applications/latticra-installer.desktop" \
+  "$HOME/.local/share/icons/hicolor/256x256/apps/latticra-panel.png" \
+  "$HOME/.local/share/icons/hicolor/256x256/apps/latticra-installer.png" \
+  "$HOME/.local/share/icons/hicolor/256x256/apps/latticra-seal.png"
+```
+
+If those exact paths are root-owned because an earlier command was run with `sudo`, repeat the same exact cleanup with `sudo`:
+
+```sh
+LATTICRA_PREFIX="${LATTICRA_PREFIX:-$HOME/.local/share/latticra}"
+
+sudo rm -rf -- \
+  "$LATTICRA_PREFIX" \
+  "$HOME/.local/share/latticra-validation" \
+  "$HOME/.local/share/latticra-reset-receipts"
+
+sudo rm -f -- \
+  "$HOME/.local/bin/latticra" \
+  "$HOME/.local/bin/latticra-lc" \
+  "$HOME/.local/bin/lat" \
+  "$HOME/.local/bin/latticra-seal" \
+  "$HOME/.local/bin/latticra-nadia" \
+  "$HOME/.local/bin/latticra-panel" \
+  "$HOME/.local/bin/latticra-installer" \
+  "$HOME/.local/share/applications/latticra-panel.desktop" \
+  "$HOME/.local/share/applications/latticra-installer.desktop" \
+  "$HOME/.local/share/icons/hicolor/256x256/apps/latticra-panel.png" \
+  "$HOME/.local/share/icons/hicolor/256x256/apps/latticra-installer.png" \
+  "$HOME/.local/share/icons/hicolor/256x256/apps/latticra-seal.png"
+```
+
+Do not run `sudo rm -rf` against broad paths such as `~/.local`, `/usr`, `/`, or unreviewed wildcards.
 
 ## Safety baseline
 

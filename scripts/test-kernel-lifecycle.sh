@@ -4,6 +4,7 @@ set -eu
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
 tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-kernel-lifecycle.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
 bin="$tmpdir/latticra-kernel-lifecycle"
 
 cc $CFLAGS \

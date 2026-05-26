@@ -209,6 +209,9 @@ static int null_guards_are_safe(void) {
     latticra_kernel_state_machine_step_result_t result;
     char report[LATTICRA_KERNEL_STATE_MACHINE_REPORT_MAX];
 
+    memset(&request, 0, sizeof(request));
+    memset(&result, 0, sizeof(result));
+
     EXPECT_TRUE(latticra_kernel_state_machine_init(0) == LATTICRA_STATUS_NULL_ARGUMENT,
         "null machine init");
     EXPECT_TRUE(latticra_kernel_state_machine_default_step_request(0) == LATTICRA_STATUS_NULL_ARGUMENT,

@@ -430,6 +430,7 @@ LC_HOST_EMBEDDING_CONTRACT_PROFILE=$(cfg_section lc host_embedding_contract_prof
 LC_HOST_INVENTORY_CONTRACT_PROFILE=$(cfg_section lc host_inventory_contract_profile lc-host-inventory-v0)
 LC_RECEIPT_CONTRACT_PROFILE=$(cfg_section lc receipt_contract_profile lc-receipts-v0)
 LC_OS_BASE_CONTRACT_PROFILE=$(cfg_section lc os_base_contract_profile lc-os-base-v0)
+LC_VM_EVIDENCE_CONTRACT_PROFILE=$(cfg_section lc vm_evidence_contract_profile lc-vm-evidence-v0)
 LC_OS_BASE_PROFILE=$(cfg_section lc os_base_profile planned-no-boot-authority)
 LC_PANEL_BRIDGE=$(cfg_section lc panel_bridge panel-aware)
 LC_REPORT_ONLY=$(cfg_section lc report_only true)
@@ -439,6 +440,7 @@ LC_REQUIRE_PROFILE_RECEIPT=$(cfg_section lc require_profile_receipt true)
 LC_REQUIRE_HOST_CONTRACT_RECEIPT=$(cfg_section lc require_host_contract_receipt true)
 LC_REQUIRE_HOST_INVENTORY_RECEIPT=$(cfg_section lc require_host_inventory_receipt true)
 LC_REQUIRE_OS_BASE_CONTRACT=$(cfg_section lc require_os_base_contract true)
+LC_REQUIRE_VM_EVIDENCE_CONTRACT=$(cfg_section lc require_vm_evidence_contract true)
 LC_REQUIRE_RUNTIME_BOUNDARY_BINDING=$(cfg_section lc require_runtime_boundary_binding true)
 LC_REQUIRE_SEAL_CAPABILITY_LABELS=$(cfg_section lc require_seal_capability_labels true)
 
@@ -531,6 +533,7 @@ host_embedding_contract_profile=$LC_HOST_EMBEDDING_CONTRACT_PROFILE
 host_inventory_contract_profile=$LC_HOST_INVENTORY_CONTRACT_PROFILE
 receipt_contract_profile=$LC_RECEIPT_CONTRACT_PROFILE
 os_base_contract_profile=$LC_OS_BASE_CONTRACT_PROFILE
+vm_evidence_contract_profile=$LC_VM_EVIDENCE_CONTRACT_PROFILE
 os_base_profile=$LC_OS_BASE_PROFILE
 report_only=$LC_REPORT_ONLY
 host_embedding_contract_required=$LC_REQUIRE_HOST_EMBEDDING_CONTRACT
@@ -539,6 +542,7 @@ profile_receipt_required=$LC_REQUIRE_PROFILE_RECEIPT
 host_contract_receipt_required=$LC_REQUIRE_HOST_CONTRACT_RECEIPT
 host_inventory_receipt_required=$LC_REQUIRE_HOST_INVENTORY_RECEIPT
 os_base_contract_required=$LC_REQUIRE_OS_BASE_CONTRACT
+vm_evidence_contract_required=$LC_REQUIRE_VM_EVIDENCE_CONTRACT
 runtime_boundary_binding_required=$LC_REQUIRE_RUNTIME_BOUNDARY_BINDING
 seal_capability_labels_required=$LC_REQUIRE_SEAL_CAPABILITY_LABELS
 command_registry_status=seed-registry
@@ -548,6 +552,7 @@ host_embedding_contract_status=metadata-only-contract
 host_inventory_contract_status=metadata-only-contract
 receipt_contract_status=metadata-only-contract
 os_base_contract_status=metadata-only-contract
+vm_evidence_contract_status=metadata-only-contract
 seal_signature_present=0
 receipt_signed=0
 os_base_status=$LC_OS_BASE_PROFILE
@@ -567,7 +572,7 @@ public_name=Nadia
 interactive_name=Nadia
 implementation_name=Nadia Witness Foundation
 documentation_code_name=Nadia Witness Foundation
-stage=27-context-window-assembly-contract
+stage=28-prompt-evaluation-input-contract
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -1045,6 +1050,28 @@ prompt_evaluation_input_created=0
 requires_prompt_token_sequence_contract=1
 requires_future_prompt_evaluation_input_contract=1
 context_window_assembly_promotion_allowed=0
+prompt_evaluation_input_contract_stage=28-prompt-evaluation-input-contract
+prompt_evaluation_input_contract_command=scripts/nadia-prompt-evaluation-input-contract.sh
+installed_prompt_evaluation_input_contract_command=latticra-nadia prompt-evaluation-input
+prompt_evaluation_input_stage=contract-only
+prompt_evaluation_input_contract_status=contract_only
+prompt_evaluation_input_authority=0
+prompt_evaluation_input_allowed=0
+prompt_evaluation_input_created=0
+prompt_evaluation_input_metadata_present=1
+prompt_evaluation_input_family=operator-reviewed-prompt-evaluation-input
+prompt_evaluation_input_format=contract-only-offline-evaluation-input
+prompt_evaluation_input_decision=blocked_contract_only
+prompt_evaluation_input_plan_recorded=1
+prompt_evaluation_input_result_recorded=0
+prompt_evaluation_input_runtime_invoked=0
+prompt_evaluation_input_materialized=0
+prompt_evaluation_input_validated=0
+prompt_evaluation_input_serialized=0
+prompt_evaluation_input_written=0
+requires_context_window_assembly_contract=1
+requires_future_prompt_evaluation_runtime_handoff_contract=1
+prompt_evaluation_input_promotion_allowed=0
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -1238,7 +1265,8 @@ if bool_true "$LATTICRA_CONSOLE"; then
     "$PREFIX/share/latticra/lc/os-base" \
     "$PREFIX/share/latticra/lc/profiles" \
     "$PREFIX/share/latticra/lc/receipts" \
-    "$PREFIX/share/latticra/lc/substrate"
+    "$PREFIX/share/latticra/lc/substrate" \
+    "$PREFIX/share/latticra/lc/vm-evidence"
   write_file "$PREFIX/etc/latticra/lc.toml" 0644 <<LCCONF
 name = "Latticra Console"
 short_name = "LC"
@@ -1253,6 +1281,7 @@ host_embedding_contract_profile = "$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
 host_inventory_contract_profile = "$LC_HOST_INVENTORY_CONTRACT_PROFILE"
 receipt_contract_profile = "$LC_RECEIPT_CONTRACT_PROFILE"
 os_base_contract_profile = "$LC_OS_BASE_CONTRACT_PROFILE"
+vm_evidence_contract_profile = "$LC_VM_EVIDENCE_CONTRACT_PROFILE"
 os_base_profile = "$LC_OS_BASE_PROFILE"
 report_only = $LC_REPORT_ONLY
 host_embedding_contract_required = $LC_REQUIRE_HOST_EMBEDDING_CONTRACT
@@ -1261,6 +1290,7 @@ profile_receipt_required = $LC_REQUIRE_PROFILE_RECEIPT
 host_contract_receipt_required = $LC_REQUIRE_HOST_CONTRACT_RECEIPT
 host_inventory_receipt_required = $LC_REQUIRE_HOST_INVENTORY_RECEIPT
 os_base_contract_required = $LC_REQUIRE_OS_BASE_CONTRACT
+vm_evidence_contract_required = $LC_REQUIRE_VM_EVIDENCE_CONTRACT
 runtime_boundary_binding_required = $LC_REQUIRE_RUNTIME_BOUNDARY_BINDING
 seal_capability_labels_required = $LC_REQUIRE_SEAL_CAPABILITY_LABELS
 command_registry_status = "seed-registry"
@@ -1270,6 +1300,7 @@ host_embedding_contract_status = "metadata-only-contract"
 host_inventory_contract_status = "metadata-only-contract"
 receipt_contract_status = "metadata-only-contract"
 os_base_contract_status = "metadata-only-contract"
+vm_evidence_contract_status = "metadata-only-contract"
 seal_signature_present = false
 receipt_signed = false
 os_base_status = "$LC_OS_BASE_PROFILE"
@@ -1295,6 +1326,7 @@ host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
+vm_evidence_contract_profile = "lc-vm-evidence-v0"
 os_base_profile = "planned-no-boot-authority"
 report_only = true
 host_embedding_contract_required = true
@@ -1303,6 +1335,7 @@ profile_receipt_required = true
 host_contract_receipt_required = true
 host_inventory_receipt_required = true
 os_base_contract_required = true
+vm_evidence_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1322,6 +1355,7 @@ host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
+vm_evidence_contract_profile = "lc-vm-evidence-v0"
 os_base_profile = "planned-no-boot-authority"
 report_only = true
 host_embedding_contract_required = true
@@ -1330,6 +1364,7 @@ profile_receipt_required = true
 host_contract_receipt_required = true
 host_inventory_receipt_required = true
 os_base_contract_required = true
+vm_evidence_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1349,6 +1384,7 @@ host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
+vm_evidence_contract_profile = "lc-vm-evidence-v0"
 os_base_profile = "planned-no-boot-authority"
 report_only = true
 host_embedding_contract_required = true
@@ -1357,6 +1393,7 @@ profile_receipt_required = true
 host_contract_receipt_required = true
 host_inventory_receipt_required = true
 os_base_contract_required = true
+vm_evidence_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1376,6 +1413,7 @@ host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
+vm_evidence_contract_profile = "lc-vm-evidence-v0"
 os_base_profile = "os-base-planning-no-boot-authority"
 report_only = true
 host_embedding_contract_required = true
@@ -1384,6 +1422,7 @@ profile_receipt_required = true
 host_contract_receipt_required = true
 host_inventory_receipt_required = true
 os_base_contract_required = true
+vm_evidence_contract_required = true
 runtime_boundary_binding_required = true
 seal_capability_labels_required = true
 execution_allowed = false
@@ -1496,6 +1535,7 @@ host_mutation_allowed = false
 network_allowed = false
 runtime_enforcement_allowed = false
 read_only_host_inventory_receipt_required = true
+vm_evidence_contract_required = true
 vm_evidence_required = true
 operator_consent_required = true
 runtime_boundary_required = true
@@ -1506,6 +1546,40 @@ command_surface = "lc os-contract"
 future_os_base_command = "lc os"
 no_effect = true
 LC_OS_BASE_CONTRACT
+  write_file "$PREFIX/share/latticra/lc/vm-evidence/contract.toml" 0644 <<LC_VM_EVIDENCE
+contract_name = "Latticra Console VM Evidence Contract"
+contract_profile = "$LC_VM_EVIDENCE_CONTRACT_PROFILE"
+contract_status = "metadata-only"
+contract_present = true
+vm_evidence_required = true
+vm_evidence_capture_enabled = false
+vm_evidence_artifact_present = false
+vm_launcher_present = false
+vm_launch_allowed = false
+hypervisor_access_allowed = false
+disk_image_open_allowed = false
+disk_image_write_allowed = false
+snapshot_capture_allowed = false
+guest_agent_allowed = false
+guest_network_allowed = false
+host_probe_allowed = false
+os_base_contract_required = true
+read_only_host_inventory_receipt_required = true
+operator_consent_required = true
+runtime_boundary_required = true
+seal_capability_labels_required = true
+receipt_required_before_vm_evidence = true
+promotion_gate = "vm_evidence_contract_before_boot_adjacency"
+command_surface = "lc vm-evidence"
+future_os_base_command = "lc os"
+no_effect = true
+execution_allowed = false
+host_mutation_allowed = false
+network_allowed = false
+runtime_enforcement_allowed = false
+boot_allowed = false
+production_os_claim = false
+LC_VM_EVIDENCE
   write_file "$PREFIX/share/latticra/lc/README.md" 0644 <<'LCREADME'
 # Latticra Console (LC)
 
@@ -1537,6 +1611,12 @@ share/latticra/lc/os-base/contract.toml. It records the evidence required before
 LC can advance toward boot-adjacent work, and it grants no boot, kernel,
 hardware, host-mutation, network, runtime enforcement, or production OS
 authority.
+
+The VM evidence lane includes a contract file at
+share/latticra/lc/vm-evidence/contract.toml. It records future evidence
+requirements before OS-base promotion, and it does not launch VMs, access a
+hypervisor, open or write disk images, capture snapshots, or grant boot
+authority.
 LCREADME
   write_file "$PREFIX/share/latticra/lc/commands/seed-registry.txt" 0644 <<'LCCOMMANDS'
 name=help category=core effect=none capability=lc.core.help
@@ -1556,6 +1636,7 @@ name=lc host category=host effect=future-gated capability=lc.host.inspect
 name=lc host-contract category=host effect=none capability=lc.host.contract
 name=lc host-inventory category=host effect=none capability=lc.host.inventory
 name=lc os-contract category=os-base effect=none capability=lc.os.contract
+name=lc vm-evidence category=os-base effect=none capability=lc.vm.evidence
 name=lc os category=os-base effect=future-gated capability=lc.os.inspect
 name=pwd category=panel effect=none capability=lc.panel.navigation
 name=cd category=panel effect=none capability=lc.panel.navigation
@@ -1606,7 +1687,8 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/tokenizer-runtime-attachment" \
     "$PREFIX/share/latticra/nadia/prompt-tokenization" \
     "$PREFIX/share/latticra/nadia/prompt-token-sequence" \
-    "$PREFIX/share/latticra/nadia/context-window-assembly"
+    "$PREFIX/share/latticra/nadia/context-window-assembly" \
+    "$PREFIX/share/latticra/nadia/prompt-evaluation-input"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia Witness Foundation"
@@ -1614,8 +1696,8 @@ public_name = "Nadia"
 interactive_name = "Nadia"
 implementation_name = "Nadia Witness Foundation"
 documentation_code_name = "Nadia Witness Foundation"
-stage = "27-context-window-assembly-contract"
-mode = "offline-context-window-assembly-contract"
+stage = "28-prompt-evaluation-input-contract"
+mode = "offline-prompt-evaluation-input-contract"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -2080,6 +2162,28 @@ prompt_evaluation_input_created = false
 requires_prompt_token_sequence_contract = true
 requires_future_prompt_evaluation_input_contract = true
 context_window_assembly_promotion_allowed = false
+prompt_evaluation_input_contract_stage = "28-prompt-evaluation-input-contract"
+prompt_evaluation_input_contract_command = "scripts/nadia-prompt-evaluation-input-contract.sh"
+installed_prompt_evaluation_input_contract_command = "latticra-nadia prompt-evaluation-input"
+prompt_evaluation_input_stage = "contract-only"
+prompt_evaluation_input_contract_status = "contract_only"
+prompt_evaluation_input_authority = false
+prompt_evaluation_input_allowed = false
+prompt_evaluation_input_created = false
+prompt_evaluation_input_metadata_present = true
+prompt_evaluation_input_family = "operator-reviewed-prompt-evaluation-input"
+prompt_evaluation_input_format = "contract-only-offline-evaluation-input"
+prompt_evaluation_input_decision = "blocked_contract_only"
+prompt_evaluation_input_plan_recorded = true
+prompt_evaluation_input_result_recorded = false
+prompt_evaluation_input_runtime_invoked = false
+prompt_evaluation_input_materialized = false
+prompt_evaluation_input_validated = false
+prompt_evaluation_input_serialized = false
+prompt_evaluation_input_written = false
+requires_context_window_assembly_contract = true
+requires_future_prompt_evaluation_runtime_handoff_contract = true
+prompt_evaluation_input_promotion_allowed = false
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -2100,11 +2204,11 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-27 context-window assembly contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-28 prompt-evaluation-input contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, tokenization-boundary, tokenizer-specification, tokenizer-manifest, tokenizer-artifact-inventory, tokenizer-artifact-measurement, tokenizer-artifact-verification, tokenizer-artifact-binding, tokenizer-runtime-attachment, prompt-tokenization, prompt-token-sequence, context-window-assembly, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract, local model-registry contract metadata when the operator runs latticra-nadia model-registry, inference-readiness contract metadata when the operator runs latticra-nadia inference-readiness, runtime-invocation contract metadata when the operator runs latticra-nadia runtime-invocation, model-load contract metadata when the operator runs latticra-nadia model-load, prompt-receipt contract metadata when the operator runs latticra-nadia prompt-receipt, prompt-materialization contract metadata when the operator runs latticra-nadia prompt-materialization, awareness-dialogue contract metadata when the operator runs latticra-nadia awareness-dialogue, prompt-evaluation handoff contract metadata when the operator runs latticra-nadia prompt-evaluation-handoff, tokenization-boundary contract metadata when the operator runs latticra-nadia tokenization-boundary, tokenizer-specification contract metadata when the operator runs latticra-nadia tokenizer-specification, tokenizer-manifest contract metadata when the operator runs latticra-nadia tokenizer-manifest, tokenizer-artifact-inventory contract metadata when the operator runs latticra-nadia tokenizer-artifact-inventory, tokenizer-artifact-measurement contract metadata when the operator runs latticra-nadia tokenizer-artifact-measurement, tokenizer-artifact-verification contract metadata when the operator runs latticra-nadia tokenizer-artifact-verification, tokenizer-artifact-binding contract metadata when the operator runs latticra-nadia tokenizer-artifact-binding, tokenizer-runtime-attachment contract metadata when the operator runs latticra-nadia tokenizer-runtime-attachment, prompt-tokenization contract metadata when the operator runs latticra-nadia prompt-tokenization, prompt-token-sequence contract metadata when the operator runs latticra-nadia prompt-token-sequence, and context-window assembly contract metadata when the operator runs latticra-nadia context-window-assembly. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, create prompt tokens, record prompt token sequences, record prompt token IDs, record prompt token order, record prompt token offsets, assemble context windows, create prompt evaluation inputs, resolve tokenizer artifact paths, open tokenizer artifacts, read tokenizer artifacts, scan tokenizer artifacts, hash tokenizer artifacts, measure tokenizer artifacts, verify tokenizer artifacts, compare tokenizer artifact digests, compare tokenizer artifact sizes, bind tokenizer artifacts, attach tokenizers to a runtime, create runtime sessions, record tokenizer artifact digests, record tokenizer artifact sizes, load tokenizer manifests, parse tokenizer manifests, open tokenizer files, load tokenizer vocabularies, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn a runtime process, create a runtime session, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source. Context-window assembly metadata records future prompt evaluation input requirements; it grants no prompt evaluation, dialogue generation, inference, or tool execution authority.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, tokenization-boundary, tokenizer-specification, tokenizer-manifest, tokenizer-artifact-inventory, tokenizer-artifact-measurement, tokenizer-artifact-verification, tokenizer-artifact-binding, tokenizer-runtime-attachment, prompt-tokenization, prompt-token-sequence, context-window-assembly, prompt-evaluation-input, and productivity-ledger paths. It can generate local context packs when the operator runs latticra-nadia context-pack, runtime-readiness metadata when the operator runs latticra-nadia runtime-profile, prompt plans when the operator runs latticra-nadia prompt-plan, mode-validation metadata when the operator runs latticra-nadia mode-validate, productivity-ledger entries when the operator runs latticra-nadia productivity-ledger, protective-safety metadata when the operator runs latticra-nadia protective-safety, report-only tool-preflight metadata when the operator runs latticra-nadia tool-preflight, prompt-evaluation contract metadata when the operator runs latticra-nadia prompt-contract, local model-registry contract metadata when the operator runs latticra-nadia model-registry, inference-readiness contract metadata when the operator runs latticra-nadia inference-readiness, runtime-invocation contract metadata when the operator runs latticra-nadia runtime-invocation, model-load contract metadata when the operator runs latticra-nadia model-load, prompt-receipt contract metadata when the operator runs latticra-nadia prompt-receipt, prompt-materialization contract metadata when the operator runs latticra-nadia prompt-materialization, awareness-dialogue contract metadata when the operator runs latticra-nadia awareness-dialogue, prompt-evaluation handoff contract metadata when the operator runs latticra-nadia prompt-evaluation-handoff, tokenization-boundary contract metadata when the operator runs latticra-nadia tokenization-boundary, tokenizer-specification contract metadata when the operator runs latticra-nadia tokenizer-specification, tokenizer-manifest contract metadata when the operator runs latticra-nadia tokenizer-manifest, tokenizer-artifact-inventory contract metadata when the operator runs latticra-nadia tokenizer-artifact-inventory, tokenizer-artifact-measurement contract metadata when the operator runs latticra-nadia tokenizer-artifact-measurement, tokenizer-artifact-verification contract metadata when the operator runs latticra-nadia tokenizer-artifact-verification, tokenizer-artifact-binding contract metadata when the operator runs latticra-nadia tokenizer-artifact-binding, tokenizer-runtime-attachment contract metadata when the operator runs latticra-nadia tokenizer-runtime-attachment, prompt-tokenization contract metadata when the operator runs latticra-nadia prompt-tokenization, prompt-token-sequence contract metadata when the operator runs latticra-nadia prompt-token-sequence, context-window assembly contract metadata when the operator runs latticra-nadia context-window-assembly, and prompt-evaluation-input contract metadata when the operator runs latticra-nadia prompt-evaluation-input. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, create prompt tokens, record prompt token sequences, record prompt token IDs, record prompt token order, record prompt token offsets, assemble context windows, create prompt evaluation inputs, resolve tokenizer artifact paths, open tokenizer artifacts, read tokenizer artifacts, scan tokenizer artifacts, hash tokenizer artifacts, measure tokenizer artifacts, verify tokenizer artifacts, compare tokenizer artifact digests, compare tokenizer artifact sizes, bind tokenizer artifacts, attach tokenizers to a runtime, create runtime sessions, record tokenizer artifact digests, record tokenizer artifact sizes, load tokenizer manifests, parse tokenizer manifests, open tokenizer files, load tokenizer vocabularies, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn a runtime process, create a runtime session, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source. Prompt-evaluation-input metadata records future prompt evaluation runtime handoff requirements; it grants no prompt evaluation, dialogue generation, inference, or tool execution authority.
 NADIAREADME
 fi
 
@@ -2273,6 +2377,7 @@ render_lc_man() {
   echo "  latticra-lc host-contract"
   echo "  latticra-lc host-inventory"
   echo "  latticra-lc os-contract"
+  echo "  latticra-lc vm-evidence"
   echo "  latticra-lc os"
   echo
   render_lc_help || return \$?
@@ -2324,6 +2429,9 @@ render_lc_boundary() {
       "lc os-contract")
         seal_capability=seal.capability.inspect
         ;;
+      "lc vm-evidence")
+        seal_capability=seal.capability.inspect
+        ;;
       "lc host")
         seal_capability=seal.capability.inspect
         runtime_request=future-gated
@@ -2366,6 +2474,7 @@ case "\${1:-status}" in
     echo "host_inventory_contract_profile=$LC_HOST_INVENTORY_CONTRACT_PROFILE"
     echo "receipt_contract_profile=$LC_RECEIPT_CONTRACT_PROFILE"
     echo "os_base_contract_profile=$LC_OS_BASE_CONTRACT_PROFILE"
+    echo "vm_evidence_contract_profile=$LC_VM_EVIDENCE_CONTRACT_PROFILE"
     echo "os_base_profile=$LC_OS_BASE_PROFILE"
     echo "report_only=$LC_REPORT_ONLY"
     echo "host_embedding_contract_required=$LC_REQUIRE_HOST_EMBEDDING_CONTRACT"
@@ -2374,6 +2483,7 @@ case "\${1:-status}" in
     echo "host_contract_receipt_required=$LC_REQUIRE_HOST_CONTRACT_RECEIPT"
     echo "host_inventory_receipt_required=$LC_REQUIRE_HOST_INVENTORY_RECEIPT"
     echo "os_base_contract_required=$LC_REQUIRE_OS_BASE_CONTRACT"
+    echo "vm_evidence_contract_required=$LC_REQUIRE_VM_EVIDENCE_CONTRACT"
     echo "runtime_boundary_binding_required=$LC_REQUIRE_RUNTIME_BOUNDARY_BINDING"
     echo "seal_capability_labels_required=$LC_REQUIRE_SEAL_CAPABILITY_LABELS"
     echo "command_registry_status=seed-registry"
@@ -2383,6 +2493,7 @@ case "\${1:-status}" in
     echo "host_inventory_contract_status=metadata-only-contract"
     echo "receipt_contract_status=metadata-only-contract"
     echo "os_base_contract_status=metadata-only-contract"
+    echo "vm_evidence_contract_status=metadata-only-contract"
     echo "seal_signature_present=0"
     echo "receipt_signed=0"
     echo "os_base_status=$LC_OS_BASE_PROFILE"
@@ -2550,6 +2661,7 @@ case "\${1:-status}" in
     echo "network_allowed=0"
     echo "runtime_enforcement_allowed=0"
     echo "read_only_host_inventory_receipt_required=1"
+    echo "vm_evidence_contract_required=1"
     echo "vm_evidence_required=1"
     echo "operator_consent_required=1"
     echo "runtime_boundary_required=1"
@@ -2560,10 +2672,47 @@ case "\${1:-status}" in
     echo "future_os_base_command=lc os"
     echo "no_effect=1"
     ;;
+  vm-evidence|vm-contract)
+    echo "LATTICRA CONSOLE VM EVIDENCE CONTRACT"
+    echo "contract_profile=$LC_VM_EVIDENCE_CONTRACT_PROFILE"
+    echo "contract_status=metadata-only"
+    echo "contract_file=\$LC_DIR/vm-evidence/contract.toml"
+    echo "contract_present=1"
+    echo "vm_evidence_required=1"
+    echo "vm_evidence_capture_enabled=0"
+    echo "vm_evidence_artifact_present=0"
+    echo "vm_launcher_present=0"
+    echo "vm_launch_allowed=0"
+    echo "hypervisor_access_allowed=0"
+    echo "disk_image_open_allowed=0"
+    echo "disk_image_write_allowed=0"
+    echo "snapshot_capture_allowed=0"
+    echo "guest_agent_allowed=0"
+    echo "guest_network_allowed=0"
+    echo "host_probe_allowed=0"
+    echo "os_base_contract_required=1"
+    echo "read_only_host_inventory_receipt_required=1"
+    echo "operator_consent_required=1"
+    echo "runtime_boundary_required=1"
+    echo "seal_capability_labels_required=1"
+    echo "receipt_required_before_vm_evidence=1"
+    echo "promotion_gate=vm_evidence_contract_before_boot_adjacency"
+    echo "command_surface=lc vm-evidence"
+    echo "future_os_base_command=lc os"
+    echo "no_effect=1"
+    echo "execution_allowed=0"
+    echo "host_mutation_allowed=0"
+    echo "network_allowed=0"
+    echo "runtime_enforcement_allowed=0"
+    echo "boot_allowed=0"
+    echo "production_os_claim=0"
+    ;;
   os|base)
     echo "lc_os_base_status=$LC_OS_BASE_PROFILE"
     echo "os_base_contract=$LC_OS_BASE_CONTRACT_PROFILE"
     echo "os_base_contract_required=$LC_REQUIRE_OS_BASE_CONTRACT"
+    echo "vm_evidence_contract=$LC_VM_EVIDENCE_CONTRACT_PROFILE"
+    echo "vm_evidence_contract_required=$LC_REQUIRE_VM_EVIDENCE_CONTRACT"
     echo "future_os_base_claim=planned_not_claimed"
     echo "boot_allowed=0"
     echo "kernel_enforcement_authority=0"
@@ -2573,7 +2722,7 @@ case "\${1:-status}" in
     echo "\$LC_DIR"
     ;;
   *)
-    echo "usage: latticra-lc {status|help|man|boundary|commands|substrate|host|os-contract|os|path}" >&2
+    echo "usage: latticra-lc {status|help|man|boundary|commands|substrate|host|os-contract|vm-evidence|os|path}" >&2
     exit 64
     ;;
 esac
@@ -2635,8 +2784,8 @@ case "\${1:-status}" in
     echo "interactive_name=Nadia"
     echo "implementation_name=Nadia Witness Foundation"
     echo "documentation_code_name=Nadia Witness Foundation"
-    echo "stage=27-context-window-assembly-contract"
-    echo "mode=offline-context-window-assembly-contract"
+    echo "stage=28-prompt-evaluation-input-contract"
+    echo "mode=offline-prompt-evaluation-input-contract"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "context_packs=\$NADIA_DIR/context-packs"
@@ -2667,6 +2816,7 @@ case "\${1:-status}" in
     echo "prompt_tokenization_contracts=\$NADIA_DIR/prompt-tokenization"
     echo "prompt_token_sequence_contracts=\$NADIA_DIR/prompt-token-sequence"
     echo "context_window_assembly_contracts=\$NADIA_DIR/context-window-assembly"
+    echo "prompt_evaluation_input_contracts=\$NADIA_DIR/prompt-evaluation-input"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "prompt_plan_command=latticra-nadia prompt-plan"
@@ -3127,6 +3277,28 @@ case "\${1:-status}" in
     echo "requires_prompt_token_sequence_contract=1"
     echo "requires_future_prompt_evaluation_input_contract=1"
     echo "context_window_assembly_promotion_allowed=0"
+    echo "prompt_evaluation_input_contract_stage=28-prompt-evaluation-input-contract"
+    echo "prompt_evaluation_input_contract_command=latticra-nadia prompt-evaluation-input"
+    echo "installed_prompt_evaluation_input_contract_command=latticra-nadia prompt-evaluation-input"
+    echo "prompt_evaluation_input_stage=contract-only"
+    echo "prompt_evaluation_input_contract_status=contract_only"
+    echo "prompt_evaluation_input_authority=0"
+    echo "prompt_evaluation_input_allowed=0"
+    echo "prompt_evaluation_input_created=0"
+    echo "prompt_evaluation_input_metadata_present=1"
+    echo "prompt_evaluation_input_family=operator-reviewed-prompt-evaluation-input"
+    echo "prompt_evaluation_input_format=contract-only-offline-evaluation-input"
+    echo "prompt_evaluation_input_decision=blocked_contract_only"
+    echo "prompt_evaluation_input_plan_recorded=1"
+    echo "prompt_evaluation_input_result_recorded=0"
+    echo "prompt_evaluation_input_runtime_invoked=0"
+    echo "prompt_evaluation_input_materialized=0"
+    echo "prompt_evaluation_input_validated=0"
+    echo "prompt_evaluation_input_serialized=0"
+    echo "prompt_evaluation_input_written=0"
+    echo "requires_context_window_assembly_contract=1"
+    echo "requires_future_prompt_evaluation_runtime_handoff_contract=1"
+    echo "prompt_evaluation_input_promotion_allowed=0"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -3528,11 +3700,25 @@ case "\${1:-status}" in
       --prompt-token-sequence "\$NADIA_DIR/prompt-token-sequence/latest-prompt-token-sequence-contract.txt" \
       --output "\$NADIA_DIR/context-window-assembly"
     ;;
+  prompt-evaluation-input|evaluation-input|prompt-input|prompt-evaluation-input-contract)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-prompt-evaluation-input-contract.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia prompt-evaluation-input contract script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --context-window-assembly "\$NADIA_DIR/context-window-assembly/latest-context-window-assembly-contract.txt" \
+      --output "\$NADIA_DIR/prompt-evaluation-input"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|tokenizer-specification|tokenizer-manifest|tokenizer-artifact-inventory|tokenizer-artifact-measurement|tokenizer-artifact-verification|tokenizer-artifact-binding|tokenizer-runtime-attachment|prompt-tokenization|prompt-token-sequence|context-window-assembly|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|tokenizer-specification|tokenizer-manifest|tokenizer-artifact-inventory|tokenizer-artifact-measurement|tokenizer-artifact-verification|tokenizer-artifact-binding|tokenizer-runtime-attachment|prompt-tokenization|prompt-token-sequence|context-window-assembly|prompt-evaluation-input|path}" >&2
     exit 64
     ;;
 esac

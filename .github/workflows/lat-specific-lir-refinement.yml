@@ -16,5 +16,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
       - name: Run Lat-specific LIR refinement tests
         run: sh scripts/test-lat-specific-lir-refinement.sh

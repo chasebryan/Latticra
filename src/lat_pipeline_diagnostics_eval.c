@@ -25,6 +25,7 @@ static void diagnostic_default(latticra_lat_pipeline_diagnostic_result_t *result
     result->diagnostic_class = LATTICRA_LAT_PIPELINE_DIAGNOSTIC_VALID;
     result->pipeline_error = LATTICRA_LAT_PIPELINE_OK;
     result->failed_stage = LATTICRA_LAT_PIPELINE_STAGE_NONE;
+    diagnostic_span_default(&result->pipeline_span);
     result->semantic_class = LATTICRA_LAT_SEMANTIC_DIAGNOSTIC_CLASS_VALID;
     result->semantic_error = LATTICRA_LAT_SEMANTIC_OK;
     result->lowering_class = LATTICRA_LAT_TO_LIR_DIAGNOSTIC_VALID;
@@ -115,6 +116,7 @@ latticra_status_t latticra_lat_pipeline_diagnostics_evaluate_with_lowering(
 
     result->pipeline_error = pipeline->error;
     result->failed_stage = pipeline->failed_stage;
+    result->pipeline_span = pipeline->span;
     result->pipeline_failed = pipeline->error != LATTICRA_LAT_PIPELINE_OK;
     result->diagnostic_class = class_from_pipeline(pipeline);
     result->lowering_error = pipeline->lowering_error;

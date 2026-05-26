@@ -31,6 +31,8 @@ macos_verification_transcript_evidence_present=0
 macos_reset_uninstall_dry_run_contract_present=1
 macos_reset_uninstall_dry_run_evidence_present=0
 macos_reset_uninstall_live_target_classifier_present=1
+macos_reset_uninstall_dry_run_planner_present=1
+reset_uninstall_dry_run_planner_transcript_present=1
 macos_transferable_surfaces_classified=1
 macos_adapter_requirements_recorded=1
 macos_user_local_paths_proposed=1
@@ -98,7 +100,7 @@ macos_integration_transferability: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall dry-run planner that consumes live-target classifications without deleting files.
+Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
 ```
 
 ## Non-Claims

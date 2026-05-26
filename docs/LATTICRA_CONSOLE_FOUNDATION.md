@@ -1,7 +1,7 @@
 # Latticra Console Foundation
 
 Status: Stage-0 foundation
-Scope: LC identity, Panel installability, configurable metadata, substrate bridge, host-embedding plan, OS-base planning contract, and future OS-base direction.
+Scope: LC identity, Panel installability, configurable metadata, substrate bridge, host-embedding plan, OS-base planning contract, VM evidence contract, and future OS-base direction.
 
 ## Purpose
 
@@ -39,6 +39,7 @@ host_embedding_contract_profile=lc-host-embedding-v0
 host_inventory_contract_profile=lc-host-inventory-v0
 receipt_contract_profile=lc-receipts-v0
 os_base_contract_profile=lc-os-base-v0
+vm_evidence_contract_profile=lc-vm-evidence-v0
 os_base_profile=planned-no-boot-authority
 report_only=true
 host_embedding_contract_required=true
@@ -47,6 +48,7 @@ profile_receipt_required=true
 host_contract_receipt_required=true
 host_inventory_receipt_required=true
 os_base_contract_required=true
+vm_evidence_contract_required=true
 runtime_boundary_binding_required=true
 seal_capability_labels_required=true
 ```
@@ -66,6 +68,7 @@ share/latticra/lc/host-embedding/contract.toml
 share/latticra/lc/host-inventory/contract.toml
 share/latticra/lc/receipts/contract.toml
 share/latticra/lc/os-base/contract.toml
+share/latticra/lc/vm-evidence/contract.toml
 share/latticra/components/latticra-console.installed
 ```
 
@@ -101,6 +104,7 @@ lc host
 lc host-contract
 lc host-inventory
 lc os-contract
+lc vm-evidence
 lc os
 pwd
 cd
@@ -136,6 +140,7 @@ host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
+vm_evidence_contract_profile = "lc-vm-evidence-v0"
 os_base_profile = "planned-no-boot-authority"
 panel_bridge = "panel-aware"
 report_only = true
@@ -145,6 +150,7 @@ require_profile_receipt = true
 require_host_contract_receipt = true
 require_host_inventory_receipt = true
 require_os_base_contract = true
+require_vm_evidence_contract = true
 require_runtime_boundary_binding = true
 require_seal_capability_labels = true
 ```
@@ -305,6 +311,7 @@ contract_present=1
 os_base_enabled=0
 production_os_claim=0
 read_only_host_inventory_receipt_required=1
+vm_evidence_contract_required=1
 vm_evidence_required=1
 operator_consent_required=1
 runtime_boundary_required=1
@@ -338,6 +345,54 @@ runtime_enforcement_allowed=0
 ```
 
 `lc os-contract` is an inspectable contract command. `lc os` remains the future-gated boot-action planning lane.
+
+## VM Evidence Contract
+
+LC now installs and reports a VM evidence contract before any boot-adjacent evidence capture exists:
+
+```text
+contract_profile=lc-vm-evidence-v0
+contract_status=metadata-only
+contract_present=1
+vm_evidence_required=1
+vm_evidence_capture_enabled=0
+vm_evidence_artifact_present=0
+os_base_contract_required=1
+read_only_host_inventory_receipt_required=1
+operator_consent_required=1
+runtime_boundary_required=1
+seal_capability_labels_required=1
+receipt_required_before_vm_evidence=1
+promotion_gate=vm_evidence_contract_before_boot_adjacency
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report vm-evidence
+latticra-lc vm-evidence
+```
+
+The contract explicitly denies VM, hypervisor, disk-image, guest, host, and boot authority:
+
+```text
+vm_launcher_present=0
+vm_launch_allowed=0
+hypervisor_access_allowed=0
+disk_image_open_allowed=0
+disk_image_write_allowed=0
+snapshot_capture_allowed=0
+guest_agent_allowed=0
+guest_network_allowed=0
+host_probe_allowed=0
+host_mutation_allowed=0
+network_allowed=0
+runtime_enforcement_allowed=0
+boot_allowed=0
+production_os_claim=0
+```
+
+`lc vm-evidence` is an inspectable evidence-contract command. It does not start a VM or inspect a host.
 
 ## Help And Manpage Rendering
 
@@ -381,6 +436,7 @@ lc receipts -> authority-check / validation-only
 lc host-contract -> authority-check / validation-only
 lc host-inventory -> authority-check / validation-only
 lc os-contract -> authority-check / validation-only
+lc vm-evidence -> authority-check / validation-only
 lc host -> future-gated command-execute planning
 lc os -> future-gated boot-action planning
 ```
@@ -432,6 +488,8 @@ substrate_bridge_status=metadata-bound-ready
 panel_installable=1
 os_base_contract_status=metadata-only-contract-ready
 os_base_contract_present=1
+vm_evidence_contract_status=metadata-only-contract-ready
+vm_evidence_contract_present=1
 os_base_enabled=0
 production_os_claim=0
 future_os_base_claim=planned_not_claimed
@@ -461,4 +519,4 @@ LC Stage-0 does not:
 
 1. Add a future host adapter contract only after the read-only inventory receipt path exists.
 2. Add the first Seal-signed LC receipt path only after signing authority is implemented and gated.
-3. Add VM evidence capture metadata before any boot-adjacent implementation work.
+3. Add a VM evidence artifact schema only after the VM evidence contract is receipted.

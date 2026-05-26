@@ -2,7 +2,7 @@
 
 Status: active Stage-0 foundation
 Date: 2026-05-25
-Scope: LC C report surface, Panel installability, local-prefix metadata, OS-base planning contract, and no-effect authority baseline.
+Scope: LC C report surface, Panel installability, local-prefix metadata, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
 
 ## Current Evidence
 
@@ -34,6 +34,10 @@ os_base_contract_status=metadata-only-contract
 os_base_contract_present=1
 os_base_contract_command=lc os-contract
 os_base_contract_profile=lc-os-base-v0
+vm_evidence_contract_status=metadata-only-contract
+vm_evidence_contract_present=1
+vm_evidence_contract_command=lc vm-evidence
+vm_evidence_contract_profile=lc-vm-evidence-v0
 os_base_status=planned-no-boot-authority
 ```
 
