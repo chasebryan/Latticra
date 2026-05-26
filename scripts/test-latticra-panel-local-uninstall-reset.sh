@@ -42,18 +42,85 @@ write_managed() {
   chmod 0755 "$path"
 }
 
-write_legacy_seal_wrapper() {
+write_legacy_wrapper() {
   path="$1"
   prefix="$2"
+  name="$(basename "$path")"
+  mkdir -p "$(dirname "$path")"
+
+  case "$name" in
+    latticra)
+      {
+        printf '%s\n' '#!/usr/bin/env sh'
+        printf 'PREFIX="%s"\n' "$prefix"
+        printf '%s\n' 'echo "Latticra is installed."'
+        printf '%s\n' 'echo "payload=$PREFIX/lib/latticra"'
+        printf '%s\n' 'echo "receipts=$PREFIX/share/latticra/receipts"'
+      } > "$path"
+      ;;
+    lat)
+      {
+        printf '%s\n' '#!/usr/bin/env sh'
+        printf 'PREFIX="%s"\n' "$prefix"
+        printf '%s\n' 'echo "Lat tooling is installed as part of the Latticra payload."'
+        printf '%s\n' 'echo "payload=$PREFIX/lib/latticra"'
+      } > "$path"
+      ;;
+    latticra-lc)
+      {
+        printf '%s\n' '#!/usr/bin/env sh'
+        printf 'LC_DIR="%s/share/latticra/lc"\n' "$prefix"
+        printf '%s\n' 'echo "LATTICRA CONSOLE"'
+        printf '%s\n' 'echo "$LC_DIR"'
+      } > "$path"
+      ;;
+    latticra-seal)
+      {
+        printf '%s\n' '#!/usr/bin/env sh'
+        printf 'PREFIX="%s"\n' "$prefix"
+        printf '%s\n' 'REPORT_DIR="$PREFIX/share/latticra/receipts"'
+        printf '%s\n' 'echo "LATTICRA SEAL REPORT"'
+        printf '%s\n' 'echo "$REPORT_DIR"'
+      } > "$path"
+      ;;
+    latticra-nadia)
+      {
+        printf '%s\n' '#!/usr/bin/env sh'
+        printf 'NADIA_DIR="%s/share/latticra/nadia"\n' "$prefix"
+        printf '%s\n' 'echo "NADIA OFFLINE AI FOUNDATION"'
+        printf '%s\n' 'echo "$NADIA_DIR"'
+      } > "$path"
+      ;;
+    latticra-panel)
+      {
+        printf '%s\n' '#!/usr/bin/env sh'
+        printf 'export LATTICRA_INSTALLER_ROOT="%s/lib/latticra/installer"\n' "$prefix"
+        printf 'exec "%s/bin/latticra-panel" "$@"\n' "$prefix"
+      } > "$path"
+      ;;
+    latticra-installer)
+      {
+        printf '%s\n' '#!/usr/bin/env sh'
+        printf '%s\n' 'exec "$HOME/.local/bin/latticra-panel" "$@"'
+      } > "$path"
+      ;;
+    *)
+      fail "unknown legacy wrapper fixture: $name"
+      ;;
+  esac
+  chmod 0755 "$path"
+}
+
+write_legacy_desktop_entry() {
+  path="$1"
+  command="$2"
   mkdir -p "$(dirname "$path")"
   {
-    printf '%s\n' '#!/usr/bin/env sh'
-    printf 'PREFIX="%s"\n' "$prefix"
-    printf '%s\n' 'REPORT_DIR="$PREFIX/share/latticra/receipts"'
-    printf '%s\n' 'echo "LATTICRA SEAL REPORT"'
-    printf '%s\n' 'echo "$REPORT_DIR"'
+    printf '%s\n' '[Desktop Entry]'
+    printf '%s\n' 'Name=Latticra Installer'
+    printf 'Exec=%s\n' "$command"
+    printf '%s\n' 'Type=Application'
   } > "$path"
-  chmod 0755 "$path"
 }
 
 write_minimal_apply_config() {
@@ -62,11 +129,11 @@ write_minimal_apply_config() {
   {
     printf '%s\n' 'profile = "developer_local"'
     printf 'install_prefix = "%s"\n' "$prefix"
-    printf '%s\n' 'latticra_console = false'
-    printf '%s\n' 'lat_tooling = false'
+    printf '%s\n' 'latticra_console = true'
+    printf '%s\n' 'lat_tooling = true'
     printf '%s\n' 'lir_contracts = false'
     printf '%s\n' 'seal_report_only = true'
-    printf '%s\n' 'nadia_offline_ai = false'
+    printf '%s\n' 'nadia_offline_ai = true'
     printf '%s\n' 'fedora_validation = false'
     printf '%s\n' 'docs_and_examples = false'
     printf '%s\n' 'developer_cli_helpers = false'
@@ -84,7 +151,7 @@ write_minimal_apply_config() {
     printf '%s\n' 'build_gui_installer = false'
     printf '%s\n' 'build_latticra_from_source = false'
     printf '%s\n' 'install_payload_tree = false'
-    printf '%s\n' 'install_desktop_entry = false'
+    printf '%s\n' 'install_desktop_entry = true'
     printf '%s\n' 'install_user_bin_wrappers = true'
   } > "$path"
 }
@@ -106,7 +173,7 @@ mkdir -p "$PREFIX/share/latticra/components" "$USER_BIN" "$APP_DIR" "$ICON_DIR"
 printf '%s\n' 'payload' > "$PREFIX/payload.txt"
 printf '%s\n' 'operator-owned' > "$USER_BIN/latticra"
 chmod 0755 "$USER_BIN/latticra"
-write_legacy_seal_wrapper "$USER_BIN/latticra-seal" "$PREFIX"
+write_legacy_wrapper "$USER_BIN/latticra-seal" "$PREFIX"
 
 for command in lat latticra-nadia latticra-panel latticra-installer; do
   write_managed "$USER_BIN/$command"
@@ -155,6 +222,39 @@ require_contains 'preserved_count=1' "$RECEIPTS/latest-reset-receipt.txt"
 require_contains 'RESET_WARNING: preserved unmanaged targets may block the next install' "$RECEIPTS/latest-reset-receipt.txt"
 require_contains "$USER_BIN/latticra" "$RECEIPTS/latest-reset-receipt.txt"
 
+RESET_LEGACY_HOME="$TMP_DIR/reset-legacy-home"
+RESET_LEGACY_PREFIX="$RESET_LEGACY_HOME/.local/share/latticra"
+RESET_LEGACY_RECEIPTS="$TMP_DIR/reset-legacy-receipts"
+RESET_LEGACY_USER_BIN="$RESET_LEGACY_HOME/.local/bin"
+RESET_LEGACY_APP_DIR="$RESET_LEGACY_HOME/.local/share/applications"
+mkdir -p "$RESET_LEGACY_PREFIX" "$RESET_LEGACY_USER_BIN" "$RESET_LEGACY_APP_DIR"
+printf '%s\n' 'legacy payload' > "$RESET_LEGACY_PREFIX/payload.txt"
+for command in latticra lat latticra-lc latticra-seal latticra-nadia latticra-panel latticra-installer; do
+  write_legacy_wrapper "$RESET_LEGACY_USER_BIN/$command" "$RESET_LEGACY_PREFIX"
+done
+write_legacy_desktop_entry \
+  "$RESET_LEGACY_APP_DIR/latticra-installer.desktop" \
+  "$RESET_LEGACY_USER_BIN/latticra-installer"
+write_legacy_desktop_entry \
+  "$RESET_LEGACY_APP_DIR/latticra-panel.desktop" \
+  "$RESET_LEGACY_USER_BIN/latticra-panel"
+
+HOME="$RESET_LEGACY_HOME" sh "$SCRIPT" \
+  --prefix "$RESET_LEGACY_PREFIX" \
+  --receipt-dir "$RESET_LEGACY_RECEIPTS" \
+  > "$TMP_DIR/reset-legacy.out"
+
+require_contains '[removed] legacy managed command wrapper' "$TMP_DIR/reset-legacy.out"
+require_contains '[removed] legacy managed desktop entry' "$TMP_DIR/reset-legacy.out"
+require_contains 'preserved_count=0' "$TMP_DIR/reset-legacy.out"
+require_contains 'RESET_RESULT: success mode=local-prefix-reset' "$TMP_DIR/reset-legacy.out"
+require_absent "$RESET_LEGACY_PREFIX"
+for command in latticra lat latticra-lc latticra-seal latticra-nadia latticra-panel latticra-installer; do
+  require_absent "$RESET_LEGACY_USER_BIN/$command"
+done
+require_absent "$RESET_LEGACY_APP_DIR/latticra-installer.desktop"
+require_absent "$RESET_LEGACY_APP_DIR/latticra-panel.desktop"
+
 HOME="$HOME_DIR" sh "$SCRIPT" --prefix "$PREFIX" --receipt-dir "$RECEIPTS" --operation uninstall --dry-run > "$TMP_DIR/uninstall-dry-run.out"
 
 require_contains 'operation=uninstall' "$TMP_DIR/uninstall-dry-run.out"
@@ -193,8 +293,18 @@ rm -f "$PREFIX"
 APPLY_LEGACY_HOME="$TMP_DIR/apply-legacy-home"
 APPLY_LEGACY_PREFIX="$APPLY_LEGACY_HOME/.local/share/latticra"
 APPLY_LEGACY_CONFIG="$TMP_DIR/apply-legacy.toml"
-mkdir -p "$APPLY_LEGACY_HOME/.local/bin"
-write_legacy_seal_wrapper "$APPLY_LEGACY_HOME/.local/bin/latticra-seal" "$APPLY_LEGACY_PREFIX"
+mkdir -p "$APPLY_LEGACY_HOME/.local/bin" "$APPLY_LEGACY_HOME/.local/share/applications" "$APPLY_LEGACY_PREFIX/bin"
+for command in latticra lat latticra-lc latticra-seal latticra-nadia latticra-panel latticra-installer; do
+  write_legacy_wrapper "$APPLY_LEGACY_HOME/.local/bin/$command" "$APPLY_LEGACY_PREFIX"
+done
+write_legacy_desktop_entry \
+  "$APPLY_LEGACY_HOME/.local/share/applications/latticra-installer.desktop" \
+  "$APPLY_LEGACY_HOME/.local/bin/latticra-installer"
+write_legacy_desktop_entry \
+  "$APPLY_LEGACY_HOME/.local/share/applications/latticra-panel.desktop" \
+  "$APPLY_LEGACY_HOME/.local/bin/latticra-panel"
+printf '%s\n' '#!/usr/bin/env sh' 'exit 0' > "$APPLY_LEGACY_PREFIX/bin/latticra-panel"
+chmod 0755 "$APPLY_LEGACY_PREFIX/bin/latticra-panel"
 write_minimal_apply_config "$APPLY_LEGACY_CONFIG" "$APPLY_LEGACY_PREFIX"
 
 HOME="$APPLY_LEGACY_HOME" sh "$APPLY_SCRIPT" \
@@ -203,9 +313,15 @@ HOME="$APPLY_LEGACY_HOME" sh "$APPLY_SCRIPT" \
   --receipt-dir "$TMP_DIR/apply-legacy-receipts" \
   > "$TMP_DIR/apply-legacy.out"
 
-require_contains "[replace-legacy-managed] $APPLY_LEGACY_HOME/.local/bin/latticra-seal" "$TMP_DIR/apply-legacy.out"
+for command in latticra lat latticra-lc latticra-seal latticra-nadia latticra-panel latticra-installer; do
+  require_contains "[replace-legacy-managed] $APPLY_LEGACY_HOME/.local/bin/$command" "$TMP_DIR/apply-legacy.out"
+  require_contains 'LATTICRA_INSTALLER_MANAGED=1' "$APPLY_LEGACY_HOME/.local/bin/$command"
+done
+require_contains "[replace-legacy-managed] $APPLY_LEGACY_HOME/.local/share/applications/latticra-panel.desktop" "$TMP_DIR/apply-legacy.out"
+require_contains "[remove-legacy-managed] $APPLY_LEGACY_HOME/.local/share/applications/latticra-installer.desktop" "$TMP_DIR/apply-legacy.out"
 require_contains 'INSTALLER_RESULT: success mode=local-prefix-install' "$TMP_DIR/apply-legacy.out"
-require_contains 'LATTICRA_INSTALLER_MANAGED=1' "$APPLY_LEGACY_HOME/.local/bin/latticra-seal"
+require_absent "$APPLY_LEGACY_HOME/.local/share/applications/latticra-installer.desktop"
+require_contains 'LATTICRA_INSTALLER_MANAGED=1' "$APPLY_LEGACY_HOME/.local/share/applications/latticra-panel.desktop"
 
 APPLY_BLOCK_HOME="$TMP_DIR/apply-block-home"
 APPLY_BLOCK_PREFIX="$APPLY_BLOCK_HOME/.local/share/latticra"

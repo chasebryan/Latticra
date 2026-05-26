@@ -263,29 +263,45 @@ is_legacy_latticra_managed_file() {
   case "$(basename -- "$path")" in
     latticra)
       grep -q 'Latticra is installed.' "$path" 2>/dev/null &&
-        grep -q 'latticra-installer-uninstall.sh' "$path" 2>/dev/null
+        { grep -q 'lib/latticra' "$path" 2>/dev/null ||
+          grep -q 'share/latticra/receipts' "$path" 2>/dev/null ||
+          grep -q 'LATTICRA_PREFIX' "$path" 2>/dev/null; }
       ;;
     lat)
-      grep -q 'Lat tooling is installed as part of the Latticra payload.' "$path" 2>/dev/null
+      grep -q 'Lat tooling is installed as part of the Latticra payload.' "$path" 2>/dev/null ||
+        { grep -q 'No compiled lat binary was found yet.' "$path" 2>/dev/null &&
+          grep -q 'lib/latticra' "$path" 2>/dev/null; }
       ;;
     latticra-lc)
-      grep -q 'LATTICRA CONSOLE HELP' "$path" 2>/dev/null
+      grep -q 'LATTICRA CONSOLE' "$path" 2>/dev/null &&
+        { grep -q 'share/latticra/lc' "$path" 2>/dev/null ||
+          grep -q 'LC_DIR' "$path" 2>/dev/null; }
       ;;
     latticra-seal)
-      grep -q 'LATTICRA SEAL REPORT' "$path" 2>/dev/null &&
-        grep -q 'share/latticra/receipts' "$path" 2>/dev/null
+      grep -q 'LATTICRA SEAL' "$path" 2>/dev/null &&
+        { grep -q 'share/latticra/receipts' "$path" 2>/dev/null ||
+          grep -q 'latticra-seal-report' "$path" 2>/dev/null ||
+          grep -q 'mode=report-only' "$path" 2>/dev/null; }
       ;;
     latticra-nadia)
-      grep -q 'Nadia offline AI foundation' "$path" 2>/dev/null
+      { grep -q 'NADIA OFFLINE AI FOUNDATION' "$path" 2>/dev/null ||
+        grep -q 'Nadia Witness Foundation' "$path" 2>/dev/null; } &&
+        grep -q 'share/latticra/nadia' "$path" 2>/dev/null
       ;;
     latticra-panel)
-      grep -q 'LATTICRA_INSTALLER_ROOT' "$path" 2>/dev/null
+      grep -q 'latticra-panel' "$path" 2>/dev/null &&
+        { grep -q 'LATTICRA_INSTALLER_ROOT' "$path" 2>/dev/null ||
+          grep -q 'share/latticra' "$path" 2>/dev/null; }
       ;;
     latticra-installer)
-      grep -q 'latticra-panel' "$path" 2>/dev/null
+      grep -q 'latticra-panel' "$path" 2>/dev/null ||
+        grep -q 'latticra-installer' "$path" 2>/dev/null
       ;;
     latticra-panel.desktop|latticra-installer.desktop)
-      grep -q 'Name=Latticra Panel' "$path" 2>/dev/null
+      { grep -q 'Name=Latticra Panel' "$path" 2>/dev/null ||
+        grep -q 'Name=Latticra Installer' "$path" 2>/dev/null; } &&
+        { grep -q 'Exec=.*latticra-panel' "$path" 2>/dev/null ||
+          grep -q 'Exec=.*latticra-installer' "$path" 2>/dev/null; }
       ;;
     *)
       return 1
@@ -3550,9 +3566,14 @@ if bool_true "$INSTALL_DESKTOP_ENTRY" && [ -x "$PREFIX/bin/latticra-panel" ]; th
   # Remove old managed desktop metadata so GNOME/Fedora does not keep showing
   # the previous "Latticra Installer" application identity.
   OLD_DESKTOP="$APP_DIR/latticra-installer.desktop"
-  if [ -f "$OLD_DESKTOP" ] && grep -q 'LATTICRA_INSTALLER_MANAGED=1' "$OLD_DESKTOP" 2>/dev/null; then
-    rm -f "$OLD_DESKTOP"
-    log "[remove-managed] $OLD_DESKTOP"
+  if [ -f "$OLD_DESKTOP" ]; then
+    if grep -q 'LATTICRA_INSTALLER_MANAGED=1' "$OLD_DESKTOP" 2>/dev/null; then
+      rm -f "$OLD_DESKTOP"
+      log "[remove-managed] $OLD_DESKTOP"
+    elif is_legacy_latticra_managed_file "$OLD_DESKTOP"; then
+      rm -f "$OLD_DESKTOP"
+      log "[remove-legacy-managed] $OLD_DESKTOP"
+    fi
   fi
 
   if [ -f "$INSTALLER_ROOT/latticra-installer/assets/latticra-seal.png" ]; then
