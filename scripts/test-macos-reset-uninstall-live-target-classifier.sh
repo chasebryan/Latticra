@@ -78,7 +78,7 @@ require_contains 'directory_delete_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
 require_contains 'macos_reset_uninstall_live_target_classifier: ok' "$doc"
-require_contains 'Add a macOS reset/uninstall effect-authorization contract' "$doc"
+require_contains 'Add a macOS reset/uninstall evidence-bundle contract' "$doc"
 
 require_contains 'Status: no-effect reset/uninstall live-target classifier status' "$status"
 require_contains 'macos_reset_uninstall_live_target_classifier_present=1' "$status"
@@ -113,7 +113,7 @@ require_contains 'file_delete_performed=0' "$script"
 require_contains 'directory_delete_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-effect-authorization-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-implementation-plan-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -145,7 +145,7 @@ require_output_contains "$absent_output" 'absent_target_detected=1'
 require_output_contains "$absent_output" 'reset_uninstall_live_classifier_decision=ready-no-targets-observed-no-effect'
 require_output_contains "$absent_output" 'file_delete_performed=0'
 require_output_contains "$absent_output" 'directory_delete_performed=0'
-require_output_contains "$absent_output" 'next_lane=macos-reset-uninstall-effect-authorization-contract'
+require_output_contains "$absent_output" 'next_lane=macos-reset-uninstall-live-implementation-plan-contract'
 
 mkdir -p "$managed_home/Applications/Latticra Panel.app/Contents/Resources/latticra"
 mkdir -p "$managed_home/Library/Application Support/Latticra"

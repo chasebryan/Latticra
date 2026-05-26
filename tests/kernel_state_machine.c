@@ -143,13 +143,16 @@ static int sequential_steps_advance_ladder(void) {
     request.target_state = LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY;
     EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
         "vfs namespace ready to device registry ready");
+    request.target_state = LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "device registry ready to driver catalog ready");
 
-    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY,
-        "machine reaches device registry ready");
-    EXPECT_TRUE(strcmp(machine.machine_status, "device-registry-ready") == 0,
-        "machine status device registry ready");
-    EXPECT_TRUE(machine.log_count == 9u,
-        "nine transitions logged");
+    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY,
+        "machine reaches driver catalog ready");
+    EXPECT_TRUE(strcmp(machine.machine_status, "driver-catalog-ready") == 0,
+        "machine status driver catalog ready");
+    EXPECT_TRUE(machine.log_count == 10u,
+        "ten transitions logged");
     EXPECT_TRUE(machine.external_effect_performed == 0,
         "sequence external effects absent");
     EXPECT_TRUE(machine.log[4].to_state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY,
@@ -162,6 +165,8 @@ static int sequential_steps_advance_ladder(void) {
         "log vfs namespace ready");
     EXPECT_TRUE(machine.log[8].to_state == LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY,
         "log device registry ready");
+    EXPECT_TRUE(machine.log[9].to_state == LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY,
+        "log driver catalog ready");
     return 0;
 }
 

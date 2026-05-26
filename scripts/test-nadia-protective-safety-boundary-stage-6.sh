@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage6.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -109,34 +112,41 @@ require_contains 'nadia safety' "$ui_model"
 require_contains 'protective-safety' "$components_manifest"
 require_contains 'nadia-safety' "$makefile"
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage6-safety-test"
-context_out="${TMPDIR:-/tmp}/latticra-nadia-stage6-context-test"
-runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage6-runtime-test"
-plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage6-plan-test"
-mode_out="${TMPDIR:-/tmp}/latticra-nadia-stage6-mode-test"
-ledger_out="${TMPDIR:-/tmp}/latticra-nadia-stage6-ledger-test"
-rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out"
+out="$tmpdir/latticra-nadia-stage6-safety-test"
+context_out="$tmpdir/latticra-nadia-stage6-context-test"
+runtime_out="$tmpdir/latticra-nadia-stage6-runtime-test"
+plan_out="$tmpdir/latticra-nadia-stage6-plan-test"
+mode_out="$tmpdir/latticra-nadia-stage6-mode-test"
+ledger_out="$tmpdir/latticra-nadia-stage6-ledger-test"
+context_stdout="$tmpdir/latticra-nadia-stage6-context-test.out"
+runtime_stdout="$tmpdir/latticra-nadia-stage6-runtime-test.out"
+plan_stdout="$tmpdir/latticra-nadia-stage6-plan-test.out"
+mode_stdout="$tmpdir/latticra-nadia-stage6-mode-test.out"
+ledger_stdout="$tmpdir/latticra-nadia-stage6-ledger-test.out"
+safety_stdout="$tmpdir/latticra-nadia-stage6-safety-test.out"
+reject_stdout="$tmpdir/latticra-nadia-stage6-reject-test.out"
+reject_stderr="$tmpdir/latticra-nadia-stage6-reject-test.err"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out"
-NADIA_CONTEXT_PACK_TIMESTAMP=stage6-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage6-context-test.out
-NADIA_RUNTIME_PROFILE_TIMESTAMP=stage6-test sh scripts/nadia-runtime-profile.sh --output "$runtime_out" >/tmp/latticra-nadia-stage6-runtime-test.out
+NADIA_CONTEXT_PACK_TIMESTAMP=stage6-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >"$context_stdout"
+NADIA_RUNTIME_PROFILE_TIMESTAMP=stage6-test sh scripts/nadia-runtime-profile.sh --output "$runtime_out" >"$runtime_stdout"
 NADIA_PROMPT_PLAN_TIMESTAMP=stage6-test sh scripts/nadia-prompt-plan.sh \
   --context-pack "$context_out/nadia-context-pack-stage6-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage6-test.txt" \
   --task "protective safety planning" \
-  --output "$plan_out" >/tmp/latticra-nadia-stage6-plan-test.out
+  --output "$plan_out" >"$plan_stdout"
 NADIA_MODE_VALIDATION_TIMESTAMP=stage6-test sh scripts/nadia-mode-validate.sh \
   --prompt-plan "$plan_out/nadia-prompt-plan-stage6-test.txt" \
   --mode awareness-safety \
-  --output "$mode_out" >/tmp/latticra-nadia-stage6-mode-test.out
+  --output "$mode_out" >"$mode_stdout"
 NADIA_PRODUCTIVITY_LEDGER_TIMESTAMP=stage6-test sh scripts/nadia-productivity-ledger.sh \
   --mode-validation "$mode_out/nadia-mode-validation-stage6-test.txt" \
   --outcome "accepted safety boundary" \
   --recommendation "enforce protective boundary" \
-  --output "$ledger_out" >/tmp/latticra-nadia-stage6-ledger-test.out
+  --output "$ledger_out" >"$ledger_stdout"
 NADIA_PROTECTIVE_SAFETY_TIMESTAMP=stage6-test sh "$safety_script" \
   --productivity-entry "$ledger_out/nadia-productivity-entry-stage6-test.txt" \
   --request-class software-development \
-  --output "$out" >/tmp/latticra-nadia-stage6-safety-test.out
+  --output "$out" >"$safety_stdout"
 report="$out/nadia-protective-safety-stage6-test.txt"
 
 require_file "$report"
@@ -165,10 +175,10 @@ require_contains 'distillation_performed=0' "$report"
 if NADIA_PROTECTIVE_SAFETY_TIMESTAMP=stage6-reject sh "$safety_script" \
   --productivity-entry "$ledger_out/nadia-productivity-entry-stage6-test.txt" \
   --request-class sexual \
-  --output "$out" >/tmp/latticra-nadia-stage6-reject-test.out 2>/tmp/latticra-nadia-stage6-reject-test.err; then
+  --output "$out" >"$reject_stdout" 2>"$reject_stderr"; then
   printf 'nadia protective safety boundary stage 6: sexual request class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia protective boundary' /tmp/latticra-nadia-stage6-reject-test.err
+require_contains 'outside Nadia protective boundary' "$reject_stderr"
 
 printf 'nadia_protective_safety_boundary_stage_6: ok\n'

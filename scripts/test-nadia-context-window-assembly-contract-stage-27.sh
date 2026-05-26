@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage27.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -95,7 +98,7 @@ require_contains 'Stage-29: Prompt Evaluation Runtime Handoff Contract' "$founda
 require_contains 'scripts/nadia-context-window-assembly-contract.sh' "$foundation"
 require_contains 'test-nadia-context-window-assembly-contract-stage-27.sh' "$foundation"
 require_contains 'Before Stage-28 starts' "$foundation"
-require_contains 'Before Stage-32 starts' "$foundation"
+require_contains 'Before Stage-34 starts' "$foundation"
 require_contains 'NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md' "$foundation_index"
 require_contains 'NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md' "$status_index"
 require_contains 'Nadia context window assembly contract Stage-27 + guardrails' "$foundation_index"
@@ -141,8 +144,10 @@ require_contains 'context-window-assembly' "$components_manifest"
 require_contains 'nadia-context-window-assembly' "$makefile"
 require_contains 'sh scripts/test-nadia-context-window-assembly-contract-stage-27.sh' "$workflow"
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage27-context-window-assembly-test-$$"
+out="$tmpdir/latticra-nadia-stage27-context-window-assembly-test"
 sequence="$out/nadia-prompt-token-sequence-contract-stage26-fixture.txt"
+context_stdout="$tmpdir/latticra-nadia-stage27-context-window-assembly-test.out"
+boundary_stdout="$tmpdir/latticra-nadia-stage27-boundary.out"
 mkdir -p "$out"
 
 cat > "$sequence" <<'EOF_SEQUENCE'
@@ -269,7 +274,7 @@ NADIA_CONTEXT_WINDOW_ASSEMBLY_TIMESTAMP=stage27-test sh "$context_script" \
   --request-class awareness-education \
   --context-family operator-reviewed-context-window-assembly \
   --context-format contract-only-offline-context-window \
-  --output "$out" >/tmp/latticra-nadia-stage27-context-window-assembly-test.out
+  --output "$out" >"$context_stdout"
 context="$out/nadia-context-window-assembly-contract-stage27-test.txt"
 
 require_file "$context"
@@ -343,10 +348,10 @@ require_contains 'network_authority=0' "$context"
 if sh "$context_script" \
   --prompt-token-sequence "$sequence" \
   --request-class sexual-content \
-  --output "$out" >/tmp/latticra-nadia-stage27-boundary.out 2>&1; then
+  --output "$out" >"$boundary_stdout" 2>&1; then
   printf 'nadia context window assembly contract stage 27: sexual boundary label was accepted\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia context-window-assembly boundary' /tmp/latticra-nadia-stage27-boundary.out
+require_contains 'outside Nadia context-window-assembly boundary' "$boundary_stdout"
 
 printf 'nadia_context_window_assembly_contract_stage_27: ok\n'

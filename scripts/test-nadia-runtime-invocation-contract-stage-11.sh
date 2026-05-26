@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage11.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -122,51 +125,63 @@ require_contains 'nadia runtime-invocation' "$ui_model"
 require_contains 'runtime-invocation' "$components_manifest"
 require_contains 'nadia-runtime-invocation' "$makefile"
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage11-invocation-test"
-context_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-context-test"
-runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-runtime-test"
-plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-plan-test"
-mode_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-mode-test"
-ledger_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-ledger-test"
-safety_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-safety-test"
-tool_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-tool-test"
-contract_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-contract-test"
-registry_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-registry-test"
-readiness_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-readiness-test"
-rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out" "$registry_out" "$readiness_out"
+out="$tmpdir/latticra-nadia-stage11-invocation-test"
+context_out="$tmpdir/latticra-nadia-stage11-context-test"
+runtime_out="$tmpdir/latticra-nadia-stage11-runtime-test"
+plan_out="$tmpdir/latticra-nadia-stage11-plan-test"
+mode_out="$tmpdir/latticra-nadia-stage11-mode-test"
+ledger_out="$tmpdir/latticra-nadia-stage11-ledger-test"
+safety_out="$tmpdir/latticra-nadia-stage11-safety-test"
+tool_out="$tmpdir/latticra-nadia-stage11-tool-test"
+contract_out="$tmpdir/latticra-nadia-stage11-contract-test"
+registry_out="$tmpdir/latticra-nadia-stage11-registry-test"
+readiness_out="$tmpdir/latticra-nadia-stage11-readiness-test"
+context_stdout="$tmpdir/latticra-nadia-stage11-context-test.out"
+runtime_stdout="$tmpdir/latticra-nadia-stage11-runtime-test.out"
+plan_stdout="$tmpdir/latticra-nadia-stage11-plan-test.out"
+mode_stdout="$tmpdir/latticra-nadia-stage11-mode-test.out"
+ledger_stdout="$tmpdir/latticra-nadia-stage11-ledger-test.out"
+safety_stdout="$tmpdir/latticra-nadia-stage11-safety-test.out"
+tool_stdout="$tmpdir/latticra-nadia-stage11-tool-test.out"
+contract_stdout="$tmpdir/latticra-nadia-stage11-contract-test.out"
+registry_stdout="$tmpdir/latticra-nadia-stage11-registry-test.out"
+readiness_stdout="$tmpdir/latticra-nadia-stage11-readiness-test.out"
+invocation_stdout="$tmpdir/latticra-nadia-stage11-invocation-test.out"
+reject_stdout="$tmpdir/latticra-nadia-stage11-reject-test.out"
+reject_stderr="$tmpdir/latticra-nadia-stage11-reject-test.err"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out" "$registry_out" "$readiness_out"
-NADIA_CONTEXT_PACK_TIMESTAMP=stage11-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage11-context-test.out
+NADIA_CONTEXT_PACK_TIMESTAMP=stage11-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >"$context_stdout"
 NADIA_RUNTIME_PROFILE_TIMESTAMP=stage11-test sh scripts/nadia-runtime-profile.sh \
   --context-tokens 8192 \
   --memory-mib 16384 \
-  --output "$runtime_out" >/tmp/latticra-nadia-stage11-runtime-test.out
+  --output "$runtime_out" >"$runtime_stdout"
 NADIA_PROMPT_PLAN_TIMESTAMP=stage11-test sh scripts/nadia-prompt-plan.sh \
   --context-pack "$context_out/nadia-context-pack-stage11-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage11-test.txt" \
   --task "runtime invocation contract planning" \
-  --output "$plan_out" >/tmp/latticra-nadia-stage11-plan-test.out
+  --output "$plan_out" >"$plan_stdout"
 NADIA_MODE_VALIDATION_TIMESTAMP=stage11-test sh scripts/nadia-mode-validate.sh \
   --prompt-plan "$plan_out/nadia-prompt-plan-stage11-test.txt" \
   --mode ai-development \
-  --output "$mode_out" >/tmp/latticra-nadia-stage11-mode-test.out
+  --output "$mode_out" >"$mode_stdout"
 NADIA_PRODUCTIVITY_LEDGER_TIMESTAMP=stage11-test sh scripts/nadia-productivity-ledger.sh \
   --mode-validation "$mode_out/nadia-mode-validation-stage11-test.txt" \
   --outcome "accepted runtime invocation boundary" \
   --recommendation "keep invocation contract-only" \
-  --output "$ledger_out" >/tmp/latticra-nadia-stage11-ledger-test.out
+  --output "$ledger_out" >"$ledger_stdout"
 NADIA_PROTECTIVE_SAFETY_TIMESTAMP=stage11-test sh scripts/nadia-protective-safety-boundary.sh \
   --productivity-entry "$ledger_out/nadia-productivity-entry-stage11-test.txt" \
   --request-class software-development \
-  --output "$safety_out" >/tmp/latticra-nadia-stage11-safety-test.out
+  --output "$safety_out" >"$safety_stdout"
 NADIA_TOOL_PREFLIGHT_TIMESTAMP=stage11-test sh scripts/nadia-tool-authority-preflight.sh \
   --protective-safety "$safety_out/nadia-protective-safety-stage11-test.txt" \
   --tool-class metadata-read \
   --action "prepare runtime invocation contract evidence" \
-  --output "$tool_out" >/tmp/latticra-nadia-stage11-tool-test.out
+  --output "$tool_out" >"$tool_stdout"
 NADIA_PROMPT_CONTRACT_TIMESTAMP=stage11-test sh scripts/nadia-prompt-evaluation-contract.sh \
   --tool-preflight "$tool_out/nadia-tool-preflight-stage11-test.txt" \
   --request-class software-development \
-  --output "$contract_out" >/tmp/latticra-nadia-stage11-contract-test.out
+  --output "$contract_out" >"$contract_stdout"
 NADIA_MODEL_REGISTRY_TIMESTAMP=stage11-test sh scripts/nadia-local-model-registry-contract.sh \
   --prompt-contract "$contract_out/nadia-prompt-contract-stage11-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage11-test.txt" \
@@ -174,15 +189,15 @@ NADIA_MODEL_REGISTRY_TIMESTAMP=stage11-test sh scripts/nadia-local-model-registr
   --quantization q4_k_m \
   --source operator-provided-local \
   --license operator-review-required \
-  --output "$registry_out" >/tmp/latticra-nadia-stage11-registry-test.out
+  --output "$registry_out" >"$registry_stdout"
 NADIA_INFERENCE_READINESS_TIMESTAMP=stage11-test sh scripts/nadia-inference-readiness-contract.sh \
   --model-registry "$registry_out/nadia-model-registry-contract-stage11-test.txt" \
   --request-class software-development \
-  --output "$readiness_out" >/tmp/latticra-nadia-stage11-readiness-test.out
+  --output "$readiness_out" >"$readiness_stdout"
 NADIA_RUNTIME_INVOCATION_TIMESTAMP=stage11-test sh "$invocation_script" \
   --inference-readiness "$readiness_out/nadia-inference-readiness-contract-stage11-test.txt" \
   --request-class software-development \
-  --output "$out" >/tmp/latticra-nadia-stage11-invocation-test.out
+  --output "$out" >"$invocation_stdout"
 invocation="$out/nadia-runtime-invocation-contract-stage11-test.txt"
 
 require_file "$invocation"
@@ -234,10 +249,10 @@ require_contains 'network_authority=0' "$invocation"
 if NADIA_RUNTIME_INVOCATION_TIMESTAMP=stage11-reject sh "$invocation_script" \
   --inference-readiness "$readiness_out/nadia-inference-readiness-contract-stage11-test.txt" \
   --request-class sexual \
-  --output "$out" >/tmp/latticra-nadia-stage11-reject-test.out 2>/tmp/latticra-nadia-stage11-reject-test.err; then
+  --output "$out" >"$reject_stdout" 2>"$reject_stderr"; then
   printf 'nadia runtime invocation contract stage 11: sexual request class was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia runtime-invocation boundary' /tmp/latticra-nadia-stage11-reject-test.err
+require_contains 'outside Nadia runtime-invocation boundary' "$reject_stderr"
 
 printf 'nadia_runtime_invocation_contract_stage_11: ok\n'

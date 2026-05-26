@@ -41,6 +41,7 @@ grep -Fq 'network_allowed=0' "$report_txt"
 grep -Fq 'call[0].name=yield' "$report_txt"
 grep -Fq 'call[1].name=spawn_process' "$report_txt"
 grep -Fq 'call[7].authority_status=network-io-denied' "$report_txt"
+grep -Fq 'call[7].network_allowed=0' "$report_txt"
 grep -Fq 'call[0].implemented=0' "$report_txt"
 grep -Fq 'no_effect=1' "$report_txt"
 

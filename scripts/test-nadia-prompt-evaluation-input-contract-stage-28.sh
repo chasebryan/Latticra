@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage28.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -93,7 +96,7 @@ require_contains 'Stage-29: Prompt Evaluation Runtime Handoff Contract' "$founda
 require_contains 'Stage-30: Prompt Evaluation Invocation Contract' "$foundation"
 require_contains 'scripts/nadia-prompt-evaluation-input-contract.sh' "$foundation"
 require_contains 'test-nadia-prompt-evaluation-input-contract-stage-28.sh' "$foundation"
-require_contains 'Before Stage-32 starts' "$foundation"
+require_contains 'Before Stage-34 starts' "$foundation"
 require_contains 'NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28.md' "$foundation_index"
 require_contains 'NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md' "$status_index"
 require_contains 'Nadia prompt evaluation input contract Stage-28 + guardrails' "$foundation_index"
@@ -137,11 +140,14 @@ require_contains 'prompt-evaluation-input' "$components_manifest"
 require_contains 'nadia-prompt-evaluation-input' "$makefile"
 require_contains 'sh scripts/test-nadia-prompt-evaluation-input-contract-stage-28.sh' "$workflow"
 
-sh "$stage27_guard" >/tmp/latticra-nadia-stage28-stage27-guard.out
-require_contains 'nadia_context_window_assembly_contract_stage_27: ok' /tmp/latticra-nadia-stage28-stage27-guard.out
+stage27_guard_stdout="$tmpdir/latticra-nadia-stage28-stage27-guard.out"
+sh "$stage27_guard" >"$stage27_guard_stdout"
+require_contains 'nadia_context_window_assembly_contract_stage_27: ok' "$stage27_guard_stdout"
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage28-prompt-evaluation-input-test-$$"
+out="$tmpdir/latticra-nadia-stage28-prompt-evaluation-input-test"
 context="$out/nadia-context-window-assembly-contract-stage27-fixture.txt"
+input_stdout="$tmpdir/latticra-nadia-stage28-prompt-evaluation-input-test.out"
+boundary_stdout="$tmpdir/latticra-nadia-stage28-boundary.out"
 mkdir -p "$out"
 
 cat > "$context" <<'EOF_CONTEXT'
@@ -267,7 +273,7 @@ NADIA_PROMPT_EVALUATION_INPUT_TIMESTAMP=stage28-test sh "$input_script" \
   --request-class awareness-education \
   --input-family operator-reviewed-prompt-evaluation-input \
   --input-format contract-only-offline-evaluation-input \
-  --output "$out" >/tmp/latticra-nadia-stage28-prompt-evaluation-input-test.out
+  --output "$out" >"$input_stdout"
 input="$out/nadia-prompt-evaluation-input-contract-stage28-test.txt"
 
 require_file "$input"
@@ -342,10 +348,10 @@ require_contains 'network_authority=0' "$input"
 if sh "$input_script" \
   --context-window-assembly "$context" \
   --request-class sexual-content \
-  --output "$out" >/tmp/latticra-nadia-stage28-boundary.out 2>&1; then
+  --output "$out" >"$boundary_stdout" 2>&1; then
   printf 'nadia prompt evaluation input contract stage 28: sexual boundary label was accepted\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia prompt-evaluation-input boundary' /tmp/latticra-nadia-stage28-boundary.out
+require_contains 'outside Nadia prompt-evaluation-input boundary' "$boundary_stdout"
 
 printf 'nadia_prompt_evaluation_input_contract_stage_28: ok\n'

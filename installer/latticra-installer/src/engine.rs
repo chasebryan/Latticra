@@ -1,10 +1,14 @@
 use crate::config::{render_plan, InstallerConfig};
 use std::fs;
 use std::io::{BufRead, BufReader};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::sync::mpsc::{channel, Receiver, Sender};
 use std::thread;
+
+const APPLY_SCRIPT: &str = "latticra-installer-apply.sh";
+const UNINSTALL_SCRIPT: &str = "latticra-installer-uninstall.sh";
+const SYSTEM_SHELL: &str = "/bin/sh";
 
 #[derive(Clone, Debug)]
 pub enum InstallEvent {
@@ -65,8 +69,10 @@ pub fn launch_removal(
 fn run_engine(config: InstallerConfig, tx: &Sender<InstallEvent>) -> Result<(), String> {
     config.can_execute()?;
 
-    let cwd = std::env::current_dir().map_err(|err| format!("could not read cwd: {err}"))?;
-    let installer_root = find_installer_root().unwrap_or_else(|| cwd.clone());
+    let installer_root = find_installer_root().ok_or_else(|| {
+        "could not find a validated installer root from the executable path or LATTICRA_INSTALLER_ROOT"
+            .to_owned()
+    })?;
     let config_path = installer_root.join("latticra-installer-config.toml");
     let plan_path = installer_root.join("latticra-installer-plan.txt");
     let receipt_dir = installer_root.join("latticra-installer-receipts");
@@ -78,9 +84,7 @@ fn run_engine(config: InstallerConfig, tx: &Sender<InstallEvent>) -> Result<(), 
     fs::write(&plan_path, render_plan(&config))
         .map_err(|err| format!("could not write {}: {err}", plan_path.display()))?;
 
-    let script = find_apply_script().ok_or_else(|| {
-        "could not find scripts/latticra-installer-apply.sh from current working directory or executable path".to_owned()
-    })?;
+    let script = trusted_installer_script(&installer_root, APPLY_SCRIPT)?;
 
     let _ = tx.send(InstallEvent::Log(format!(
         "ENGINE: config={}",
@@ -95,7 +99,8 @@ fn run_engine(config: InstallerConfig, tx: &Sender<InstallEvent>) -> Result<(), 
         script.display()
     )));
 
-    let child = Command::new("sh")
+    let child = Command::new(SYSTEM_SHELL)
+        .current_dir(&installer_root)
         .arg(&script)
         .arg("--config")
         .arg(&config_path)
@@ -118,9 +123,11 @@ fn run_removal_engine(
 ) -> Result<(), String> {
     config.can_reset()?;
 
-    let script = find_uninstall_script().ok_or_else(|| {
-        "could not find scripts/latticra-installer-uninstall.sh from current working directory or executable path".to_owned()
+    let installer_root = find_installer_root().ok_or_else(|| {
+        "could not find a validated installer root from the executable path or LATTICRA_INSTALLER_ROOT"
+            .to_owned()
     })?;
+    let script = trusted_installer_script(&installer_root, UNINSTALL_SCRIPT)?;
 
     let _ = tx.send(InstallEvent::Log(format!(
         "ENGINE: removal_script={}",
@@ -135,8 +142,9 @@ fn run_removal_engine(
         config.install_prefix
     )));
 
-    let mut command = Command::new("sh");
+    let mut command = Command::new(SYSTEM_SHELL);
     command
+        .current_dir(&installer_root)
         .arg(&script)
         .arg("--prefix")
         .arg(&config.install_prefix)
@@ -215,71 +223,172 @@ fn stream_child(mut child: std::process::Child, tx: &Sender<InstallEvent>) -> Re
 }
 
 fn find_installer_root() -> Option<PathBuf> {
+    installer_root_candidates()
+        .into_iter()
+        .filter_map(|candidate| validate_installer_root(&candidate))
+        .next()
+}
+
+fn installer_root_candidates() -> Vec<PathBuf> {
+    let mut candidates = Vec::new();
+
     if let Ok(root) = std::env::var("LATTICRA_INSTALLER_ROOT") {
-        let path = PathBuf::from(root);
-        if path.is_dir() {
-            return Some(path);
-        }
+        candidates.push(PathBuf::from(root));
     }
 
-    if let Ok(cwd) = std::env::current_dir() {
-        if cwd.join("scripts/latticra-installer-apply.sh").is_file() {
-            return Some(cwd);
-        }
-        if let Some(parent) = cwd.parent() {
-            if parent.join("scripts/latticra-installer-apply.sh").is_file() {
-                return Some(parent.to_path_buf());
+    if let Ok(exe) = std::env::current_exe() {
+        if let Some(dir) = exe.parent() {
+            for ancestor in dir.ancestors().take(8) {
+                candidates.push(ancestor.to_path_buf());
+                candidates.push(ancestor.join("installer"));
             }
         }
     }
 
-    None
+    candidates
 }
 
-fn find_apply_script() -> Option<PathBuf> {
-    let mut candidates = Vec::new();
-
-    if let Some(root) = find_installer_root() {
-        candidates.push(root.join("scripts/latticra-installer-apply.sh"));
+fn validate_installer_root(candidate: &Path) -> Option<PathBuf> {
+    let root = fs::canonicalize(candidate).ok()?;
+    if !root.is_dir() {
+        return None;
     }
 
-    if let Ok(cwd) = std::env::current_dir() {
-        candidates.push(cwd.join("../scripts/latticra-installer-apply.sh"));
-        candidates.push(cwd.join("scripts/latticra-installer-apply.sh"));
-        candidates.push(cwd.join("installer/scripts/latticra-installer-apply.sh"));
+    let scripts_dir = root.join("scripts");
+    let manifests_dir = root.join("manifests");
+    let manifest = manifests_dir.join("components.toml");
+
+    if !regular_non_symlink_dir(&scripts_dir) || !regular_non_symlink_dir(&manifests_dir) {
+        return None;
+    }
+    if !regular_non_symlink_file(&manifest) {
+        return None;
+    }
+    if trusted_installer_script(&root, APPLY_SCRIPT).is_err() {
+        return None;
+    }
+    if trusted_installer_script(&root, UNINSTALL_SCRIPT).is_err() {
+        return None;
     }
 
-    if let Ok(exe) = std::env::current_exe() {
-        if let Some(dir) = exe.parent() {
-            candidates.push(dir.join("../../../scripts/latticra-installer-apply.sh"));
-            candidates.push(dir.join("../../scripts/latticra-installer-apply.sh"));
-            candidates.push(dir.join("../scripts/latticra-installer-apply.sh"));
-        }
-    }
-
-    candidates.into_iter().find(|path| path.is_file())
+    Some(root)
 }
 
-fn find_uninstall_script() -> Option<PathBuf> {
-    let mut candidates = Vec::new();
-
-    if let Some(root) = find_installer_root() {
-        candidates.push(root.join("scripts/latticra-installer-uninstall.sh"));
+fn trusted_installer_script(installer_root: &Path, script_name: &str) -> Result<PathBuf, String> {
+    if script_name.contains('/') || script_name.contains('\\') {
+        return Err(format!(
+            "installer script name is not trusted: {script_name}"
+        ));
     }
 
-    if let Ok(cwd) = std::env::current_dir() {
-        candidates.push(cwd.join("../scripts/latticra-installer-uninstall.sh"));
-        candidates.push(cwd.join("scripts/latticra-installer-uninstall.sh"));
-        candidates.push(cwd.join("installer/scripts/latticra-installer-uninstall.sh"));
+    let root = fs::canonicalize(installer_root)
+        .map_err(|err| format!("could not canonicalize installer root: {err}"))?;
+    let scripts_dir = root.join("scripts");
+    let script = scripts_dir.join(script_name);
+
+    if !regular_non_symlink_dir(&scripts_dir) {
+        return Err(format!(
+            "installer scripts directory is missing or symlinked: {}",
+            scripts_dir.display()
+        ));
+    }
+    if !regular_non_symlink_file(&script) {
+        return Err(format!(
+            "installer script is missing or symlinked: {}",
+            script.display()
+        ));
     }
 
-    if let Ok(exe) = std::env::current_exe() {
-        if let Some(dir) = exe.parent() {
-            candidates.push(dir.join("../../../scripts/latticra-installer-uninstall.sh"));
-            candidates.push(dir.join("../../scripts/latticra-installer-uninstall.sh"));
-            candidates.push(dir.join("../scripts/latticra-installer-uninstall.sh"));
-        }
+    let script_real = fs::canonicalize(&script)
+        .map_err(|err| format!("could not canonicalize installer script: {err}"))?;
+    if !script_real.starts_with(&scripts_dir) {
+        return Err(format!(
+            "installer script escaped trusted root: {}",
+            script_real.display()
+        ));
     }
 
-    candidates.into_iter().find(|path| path.is_file())
+    Ok(script_real)
+}
+
+fn regular_non_symlink_dir(path: &Path) -> bool {
+    fs::symlink_metadata(path)
+        .map(|metadata| metadata.file_type().is_dir())
+        .unwrap_or(false)
+}
+
+fn regular_non_symlink_file(path: &Path) -> bool {
+    fs::symlink_metadata(path)
+        .map(|metadata| metadata.file_type().is_file())
+        .unwrap_or(false)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::time::{SystemTime, UNIX_EPOCH};
+
+    fn unique_temp_root(label: &str) -> PathBuf {
+        let nanos = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .expect("system clock before unix epoch")
+            .as_nanos();
+        std::env::temp_dir().join(format!(
+            "latticra-panel-engine-{label}-{}-{nanos}",
+            std::process::id()
+        ))
+    }
+
+    fn write_fixture(path: &Path, content: &str) {
+        fs::write(path, content).expect("write fixture");
+    }
+
+    fn installer_fixture(label: &str) -> PathBuf {
+        let root = unique_temp_root(label);
+        fs::create_dir_all(root.join("scripts")).expect("create scripts fixture");
+        fs::create_dir_all(root.join("manifests")).expect("create manifests fixture");
+        write_fixture(&root.join("manifests/components.toml"), "# fixture\n");
+        write_fixture(
+            &root.join("scripts").join(APPLY_SCRIPT),
+            "#!/bin/sh\nexit 0\n",
+        );
+        write_fixture(
+            &root.join("scripts").join(UNINSTALL_SCRIPT),
+            "#!/bin/sh\nexit 0\n",
+        );
+        root
+    }
+
+    #[test]
+    fn trusted_installer_script_accepts_regular_script_under_root() {
+        let root = installer_fixture("regular");
+        let script = trusted_installer_script(&root, APPLY_SCRIPT).expect("trusted script");
+
+        assert!(script.ends_with(Path::new("scripts").join(APPLY_SCRIPT)));
+
+        fs::remove_dir_all(root).expect("cleanup fixture");
+    }
+
+    #[test]
+    fn trusted_installer_script_rejects_script_name_traversal() {
+        let root = installer_fixture("traversal");
+
+        assert!(trusted_installer_script(&root, "../latticra-installer-apply.sh").is_err());
+
+        fs::remove_dir_all(root).expect("cleanup fixture");
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn validate_installer_root_rejects_symlinked_script() {
+        let root = installer_fixture("symlink");
+        let apply = root.join("scripts").join(APPLY_SCRIPT);
+
+        fs::remove_file(&apply).expect("remove regular apply fixture");
+        std::os::unix::fs::symlink("/bin/sh", &apply).expect("create script symlink");
+
+        assert!(validate_installer_root(&root).is_none());
+
+        fs::remove_dir_all(root).expect("cleanup fixture");
+    }
 }

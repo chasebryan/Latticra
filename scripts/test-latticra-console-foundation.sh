@@ -17,6 +17,8 @@ host_inventory_txt="$tmpdir/latticra-console-host-inventory.txt"
 host_adapter_txt="$tmpdir/latticra-console-host-adapter.txt"
 receipt_request_txt="$tmpdir/latticra-console-receipt-request.txt"
 receipt_payload_txt="$tmpdir/latticra-console-receipt-payload.txt"
+receipt_artifact_txt="$tmpdir/latticra-console-receipt-artifact.txt"
+receipt_artifact_review_txt="$tmpdir/latticra-console-receipt-artifact-review.txt"
 signature_request_txt="$tmpdir/latticra-console-signature-request.txt"
 receipts_txt="$tmpdir/latticra-console-receipts.txt"
 os_contract_txt="$tmpdir/latticra-console-os-contract.txt"
@@ -61,6 +63,8 @@ cc $CFLAGS \
 "$report_bin" host-adapter > "$host_adapter_txt"
 "$report_bin" receipt-request > "$receipt_request_txt"
 "$report_bin" receipt-payload > "$receipt_payload_txt"
+"$report_bin" receipt-artifact > "$receipt_artifact_txt"
+"$report_bin" receipt-artifact-review > "$receipt_artifact_review_txt"
 "$report_bin" signature-request > "$signature_request_txt"
 "$report_bin" receipts > "$receipts_txt"
 "$report_bin" os-contract > "$os_contract_txt"
@@ -91,6 +95,10 @@ grep -Fq 'command=lc receipt-request' "$report_txt"
 grep -Fq 'capability=lc.receipt.request' "$report_txt"
 grep -Fq 'command=lc receipt-payload' "$report_txt"
 grep -Fq 'capability=lc.receipt.payload' "$report_txt"
+grep -Fq 'command=lc receipt-artifact' "$report_txt"
+grep -Fq 'capability=lc.receipt.artifact' "$report_txt"
+grep -Fq 'command=lc receipt-artifact-review' "$report_txt"
+grep -Fq 'capability=lc.receipt.artifact.review' "$report_txt"
 grep -Fq 'command=lc signature-request' "$report_txt"
 grep -Fq 'capability=lc.signature.request' "$report_txt"
 grep -Fq 'command=lc receipts' "$report_txt"
@@ -113,6 +121,10 @@ grep -Fq 'receipt_request_contract_status=metadata-only-contract-ready' "$report
 grep -Fq 'receipt_request_contract_present=1' "$report_txt"
 grep -Fq 'receipt_payload_schema_status=metadata-only-schema-ready' "$report_txt"
 grep -Fq 'receipt_payload_schema_present=1' "$report_txt"
+grep -Fq 'receipt_payload_artifact_draft_status=metadata-only-draft-ready' "$report_txt"
+grep -Fq 'receipt_payload_artifact_draft_present=1' "$report_txt"
+grep -Fq 'receipt_payload_artifact_review_status=metadata-only-review-gate-ready' "$report_txt"
+grep -Fq 'receipt_payload_artifact_review_present=1' "$report_txt"
 grep -Fq 'signature_request_binding_status=metadata-only-contract-ready' "$report_txt"
 grep -Fq 'signature_request_binding_present=1' "$report_txt"
 grep -Fq 'receipt_contract_status=metadata-only-contract-ready' "$report_txt"
@@ -138,6 +150,8 @@ grep -Fq 'lc host-inventory' "$help_txt"
 grep -Fq 'lc host-adapter' "$help_txt"
 grep -Fq 'lc receipt-request' "$help_txt"
 grep -Fq 'lc receipt-payload' "$help_txt"
+grep -Fq 'lc receipt-artifact' "$help_txt"
+grep -Fq 'lc receipt-artifact-review' "$help_txt"
 grep -Fq 'lc signature-request' "$help_txt"
 grep -Fq 'lc os-contract' "$help_txt"
 grep -Fq 'lc vm-evidence' "$help_txt"
@@ -152,6 +166,8 @@ grep -Fq 'latticra-lc host-inventory' "$man_txt"
 grep -Fq 'latticra-lc host-adapter' "$man_txt"
 grep -Fq 'latticra-lc receipt-request' "$man_txt"
 grep -Fq 'latticra-lc receipt-payload' "$man_txt"
+grep -Fq 'latticra-lc receipt-artifact' "$man_txt"
+grep -Fq 'latticra-lc receipt-artifact-review' "$man_txt"
 grep -Fq 'latticra-lc signature-request' "$man_txt"
 grep -Fq 'latticra-lc receipts' "$man_txt"
 grep -Fq 'latticra-lc os-contract' "$man_txt"
@@ -167,6 +183,8 @@ grep -Fq 'command=lc host-inventory' "$boundary_txt"
 grep -Fq 'command=lc host-adapter' "$boundary_txt"
 grep -Fq 'command=lc receipt-request' "$boundary_txt"
 grep -Fq 'command=lc receipt-payload' "$boundary_txt"
+grep -Fq 'command=lc receipt-artifact' "$boundary_txt"
+grep -Fq 'command=lc receipt-artifact-review' "$boundary_txt"
 grep -Fq 'command=lc signature-request' "$boundary_txt"
 grep -Fq 'command=lc receipts' "$boundary_txt"
 grep -Fq 'runtime_request=authority-check' "$boundary_txt"
@@ -196,6 +214,13 @@ grep -Fq 'promotion_gate=host_adapter_contract_receipts_and_inventory' "$host_ad
 grep -Fq 'LATTICRA CONSOLE SEAL RECEIPT REQUEST CONTRACT' "$receipt_request_txt"
 grep -Fq 'request_profile=lc-receipt-request-v0' "$receipt_request_txt"
 grep -Fq 'receipt_payload_schema_profile=lc-receipt-payload-schema-v0' "$receipt_request_txt"
+grep -Fq 'receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0' "$receipt_request_txt"
+grep -Fq 'receipt_payload_artifact_draft_command=lc receipt-artifact' "$receipt_request_txt"
+grep -Fq 'receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0' "$receipt_request_txt"
+grep -Fq 'receipt_payload_artifact_review_command=lc receipt-artifact-review' "$receipt_request_txt"
+grep -Fq 'draft_review_receipt_present=0' "$receipt_request_txt"
+grep -Fq 'materialization_allowed=0' "$receipt_request_txt"
+grep -Fq 'payload_artifact_present=0' "$receipt_request_txt"
 grep -Fq 'signature_request_binding_profile=lc-signature-request-binding-v0' "$receipt_request_txt"
 grep -Fq 'signature_request_profile=latticra-seal-signature-request/0.1' "$receipt_request_txt"
 grep -Fq 'requested_receipt_profile=latticra-seal-verified-receipt/0.1' "$receipt_request_txt"
@@ -206,13 +231,52 @@ grep -Fq 'LATTICRA CONSOLE RECEIPT PAYLOAD SCHEMA' "$receipt_payload_txt"
 grep -Fq 'schema_profile=lc-receipt-payload-schema-v0' "$receipt_payload_txt"
 grep -Fq 'payload_fields=console_id,profile,command_registry' "$receipt_payload_txt"
 grep -Fq 'payload_artifact_present=0' "$receipt_payload_txt"
+grep -Fq 'receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0' "$receipt_payload_txt"
+grep -Fq 'receipt_payload_artifact_draft_command=lc receipt-artifact' "$receipt_payload_txt"
+grep -Fq 'receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0' "$receipt_payload_txt"
+grep -Fq 'receipt_payload_artifact_review_command=lc receipt-artifact-review' "$receipt_payload_txt"
+grep -Fq 'materialization_allowed=0' "$receipt_payload_txt"
 grep -Fq 'signature_request_binding_allowed=0' "$receipt_payload_txt"
 grep -Fq 'signature_request_binding_contract_present=1' "$receipt_payload_txt"
 grep -Fq 'receipt_write_allowed=0' "$receipt_payload_txt"
 grep -Fq 'promotion_gate=lc_receipt_payload_schema_before_signature_request_binding' "$receipt_payload_txt"
+grep -Fq 'LATTICRA CONSOLE RECEIPT PAYLOAD ARTIFACT DRAFT' "$receipt_artifact_txt"
+grep -Fq 'draft_profile=lc-receipt-payload-artifact-draft-v0' "$receipt_artifact_txt"
+grep -Fq 'draft_contract_present=1' "$receipt_artifact_txt"
+grep -Fq 'receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0' "$receipt_artifact_txt"
+grep -Fq 'related_review_command=lc receipt-artifact-review' "$receipt_artifact_txt"
+grep -Fq 'draft_review_receipt_present=0' "$receipt_artifact_txt"
+grep -Fq 'materialization_allowed=0' "$receipt_artifact_txt"
+grep -Fq 'payload_artifact_present=0' "$receipt_artifact_txt"
+grep -Fq 'payload_write_allowed=0' "$receipt_artifact_txt"
+grep -Fq 'payload_hash_computed=0' "$receipt_artifact_txt"
+grep -Fq 'payload_path_recorded=0' "$receipt_artifact_txt"
+grep -Fq 'signature_request_binding_allowed=0' "$receipt_artifact_txt"
+grep -Fq 'seal_signature_request_ready=0' "$receipt_artifact_txt"
+grep -Fq 'receipt_write_allowed=0' "$receipt_artifact_txt"
+grep -Fq 'command_surface=lc receipt-artifact' "$receipt_artifact_txt"
+grep -Fq 'promotion_gate=lc_receipt_payload_artifact_draft_before_materialization_and_signature_request' "$receipt_artifact_txt"
+grep -Fq 'LATTICRA CONSOLE RECEIPT PAYLOAD ARTIFACT REVIEW GATE' "$receipt_artifact_review_txt"
+grep -Fq 'review_profile=lc-receipt-payload-artifact-review-v0' "$receipt_artifact_review_txt"
+grep -Fq 'receipt_payload_artifact_draft_present=1' "$receipt_artifact_review_txt"
+grep -Fq 'draft_review_present=0' "$receipt_artifact_review_txt"
+grep -Fq 'draft_review_receipt_present=0' "$receipt_artifact_review_txt"
+grep -Fq 'materialization_allowed=0' "$receipt_artifact_review_txt"
+grep -Fq 'payload_artifact_present=0' "$receipt_artifact_review_txt"
+grep -Fq 'payload_write_allowed=0' "$receipt_artifact_review_txt"
+grep -Fq 'signature_request_binding_allowed=0' "$receipt_artifact_review_txt"
+grep -Fq 'seal_signature_request_ready=0' "$receipt_artifact_review_txt"
+grep -Fq 'receipt_write_allowed=0' "$receipt_artifact_review_txt"
+grep -Fq 'command_surface=lc receipt-artifact-review' "$receipt_artifact_review_txt"
+grep -Fq 'promotion_gate=lc_receipt_payload_artifact_review_before_materialization' "$receipt_artifact_review_txt"
 grep -Fq 'LATTICRA CONSOLE SIGNATURE REQUEST BINDING CONTRACT' "$signature_request_txt"
 grep -Fq 'binding_profile=lc-signature-request-binding-v0' "$signature_request_txt"
 grep -Fq 'receipt_payload_schema_profile=lc-receipt-payload-schema-v0' "$signature_request_txt"
+grep -Fq 'receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0' "$signature_request_txt"
+grep -Fq 'receipt_payload_artifact_draft_present=1' "$signature_request_txt"
+grep -Fq 'receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0' "$signature_request_txt"
+grep -Fq 'receipt_payload_artifact_review_present=1' "$signature_request_txt"
+grep -Fq 'materialization_allowed=0' "$signature_request_txt"
 grep -Fq 'signing_authorization_profile=latticra-seal-signing-authorization/0.1' "$signature_request_txt"
 grep -Fq 'signature_request_binding_artifact_present=0' "$signature_request_txt"
 grep -Fq 'seal_signature_request_ready=0' "$signature_request_txt"
@@ -225,6 +289,8 @@ grep -Fq 'host_inventory_contract_receipt_required=1' "$receipts_txt"
 grep -Fq 'host_adapter_contract_receipt_required=1' "$receipts_txt"
 grep -Fq 'receipt_request_contract_required=1' "$receipts_txt"
 grep -Fq 'receipt_payload_schema_required=1' "$receipts_txt"
+grep -Fq 'receipt_payload_artifact_draft_required=1' "$receipts_txt"
+grep -Fq 'receipt_payload_artifact_review_required=1' "$receipts_txt"
 grep -Fq 'signature_request_binding_required=1' "$receipts_txt"
 grep -Fq 'signature_request_profile=latticra-seal-signature-request/0.1' "$receipts_txt"
 grep -Fq 'seal_signature_present=0' "$receipts_txt"
@@ -245,6 +311,10 @@ grep -Fq 'disk_image_write_allowed=0' "$vm_evidence_txt"
 grep -Fq 'promotion_gate=vm_evidence_contract_before_boot_adjacency' "$vm_evidence_txt"
 
 grep -Fq '[components.latticra_console]' installer/manifests/components.toml
+grep -Fq 'bin/<lc.install.command_wrapper>' installer/manifests/components.toml
+grep -Fq 'share/latticra/lc/install/config.toml' installer/manifests/components.toml
+grep -Fq 'share/latticra/lc/host-inventory' installer/manifests/components.toml
+grep -Fq 'LC install metadata records config/share paths and the command wrapper' installer/manifests/components.toml
 grep -Fq 'latticra_console = true' installer/configs/default.installer.toml
 grep -Fq 'latticra_console = true' installer/configs/local-prefix-example.installer.toml
 grep -Fq 'pub latticra_console: bool' installer/latticra-installer/src/config.rs
@@ -262,6 +332,9 @@ grep -Fq 'host_inventory_contract_profile = "lc-host-inventory-v0"' installer/co
 grep -Fq 'host_adapter_contract_profile = "lc-host-adapter-v0"' installer/configs/default.installer.toml
 grep -Fq 'receipt_request_contract_profile = "lc-receipt-request-v0"' installer/configs/default.installer.toml
 grep -Fq 'receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"' installer/configs/default.installer.toml
+grep -Fq 'receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"' installer/configs/default.installer.toml
+grep -Fq 'receipt_payload_artifact_review_profile = "lc-receipt-payload-artifact-review-v0"' installer/configs/default.installer.toml
+grep -Fq 'require_receipt_payload_artifact_review = true' installer/configs/default.installer.toml
 grep -Fq 'signature_request_binding_profile = "lc-signature-request-binding-v0"' installer/configs/default.installer.toml
 grep -Fq 'receipt_contract_profile = "lc-receipts-v0"' installer/configs/default.installer.toml
 grep -Fq 'os_base_contract_profile = "lc-os-base-v0"' installer/configs/default.installer.toml
@@ -275,6 +348,8 @@ grep -Fq 'LC_HOST_INVENTORY_CONTRACT_PROFILE=$(cfg_section lc host_inventory_con
 grep -Fq 'LC_HOST_ADAPTER_CONTRACT_PROFILE=$(cfg_section lc host_adapter_contract_profile lc-host-adapter-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_RECEIPT_REQUEST_CONTRACT_PROFILE=$(cfg_section lc receipt_request_contract_profile lc-receipt-request-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE=$(cfg_section lc receipt_payload_schema_profile lc-receipt-payload-schema-v0)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE=$(cfg_section lc receipt_payload_artifact_draft_profile lc-receipt-payload-artifact-draft-v0)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_PROFILE=$(cfg_section lc receipt_payload_artifact_review_profile lc-receipt-payload-artifact-review-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_SIGNATURE_REQUEST_BINDING_PROFILE=$(cfg_section lc signature_request_binding_profile lc-signature-request-binding-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_RECEIPT_CONTRACT_PROFILE=$(cfg_section lc receipt_contract_profile lc-receipts-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_OS_BASE_CONTRACT_PROFILE=$(cfg_section lc os_base_contract_profile lc-os-base-v0)' installer/scripts/latticra-installer-apply.sh
@@ -285,6 +360,8 @@ grep -Fq 'host-inventory/contract.toml' installer/scripts/latticra-installer-app
 grep -Fq 'host-adapter/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'receipt-request/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'receipt-request/payload-schema.toml' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'receipt-request/payload-artifact-draft.toml' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'receipt-request/payload-artifact-review.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'receipt-request/signature-request-binding.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'receipts/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'os-base/contract.toml' installer/scripts/latticra-installer-apply.sh
@@ -296,6 +373,8 @@ grep -Fq 'render_lc_man()' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'render_lc_boundary()' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'Latticra Console Foundation' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Panel Profile Presets' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'share/latticra/lc/install/config.toml' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'lc.install.command_wrapper' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Host Embedding Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Read-Only Host Inventory Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Host Adapter Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md
@@ -311,6 +390,13 @@ grep -Fq 'Status: active Stage-0 foundation' "$status_file"
 grep -Fq 'latticra_console_report_surface_present=1' "$status_file"
 grep -Fq 'host_adapter_contract_present=1' "$status_file"
 grep -Fq 'receipt_payload_schema_present=1' "$status_file"
+grep -Fq 'receipt_payload_artifact_draft_present=1' "$status_file"
+grep -Fq 'receipt_payload_artifact_review_present=1' "$status_file"
+grep -Fq 'receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0' "$status_file"
+grep -Fq 'receipt_payload_artifact_review_status=metadata-only-review-gate' "$status_file"
+grep -Fq 'receipt_payload_artifact_review_command=lc receipt-artifact-review' "$status_file"
+grep -Fq 'draft_review_receipt_present=0' "$status_file"
+grep -Fq 'materialization_allowed=0' "$status_file"
 grep -Fq 'signature_request_binding_present=1' "$status_file"
 grep -Fq 'os_base_contract_present=1' "$status_file"
 grep -Fq 'vm_evidence_contract_present=1' "$status_file"

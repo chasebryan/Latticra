@@ -55,12 +55,15 @@ static int syscall_table_seed_is_metadata_only(void) {
         "file authority denied");
     EXPECT_TRUE(strcmp(result.calls[7].authority_status, "network-io-denied") == 0,
         "network authority denied");
+    EXPECT_TRUE(result.calls[7].network_allowed == 0,
+        "network call denied");
     EXPECT_TRUE(strcmp(result.calls[0].dispatch_status, "dispatch-denied") == 0,
         "dispatch denied");
     EXPECT_TRUE(result.calls[0].declared == 1, "call declared");
     EXPECT_TRUE(result.calls[0].implemented == 0, "call not implemented");
     EXPECT_TRUE(result.calls[0].dispatch_allowed == 0, "call dispatch denied");
     EXPECT_TRUE(result.calls[0].host_effect_allowed == 0, "call host effect denied");
+    EXPECT_TRUE(result.calls[0].network_allowed == 0, "call network denied");
     EXPECT_TRUE(result.calls[0].no_effect == 1, "call no-effect");
     return 0;
 }
@@ -122,6 +125,8 @@ static int syscall_table_report_is_deterministic(void) {
         "filesystem domain emitted");
     EXPECT_TRUE(strstr(report, "call[7].authority_status=network-io-denied\n") != 0,
         "network denial emitted");
+    EXPECT_TRUE(strstr(report, "call[7].network_allowed=0\n") != 0,
+        "network call flag emitted");
     EXPECT_TRUE(strstr(report, "call[0].implemented=0\n") != 0,
         "implemented flag emitted");
     EXPECT_TRUE(strstr(report, "call[0].no_effect=1\n") != 0,

@@ -1,0 +1,225 @@
+# macOS Reset/Uninstall Effect-Authorization Contract
+
+Status: no-effect macOS reset/uninstall effect-authorization contract
+Date: 2026-05-25 CDT
+Scope: contract for keeping future live macOS reset/uninstall execution disabled until implementation-gate and operator-intent evidence are both present.
+
+## Purpose
+
+This contract defines the future effect-authorization boundary for macOS reset/uninstall. It keeps live managed-target removal and receipt writing disabled until both implementation-gate evidence and operator-intent evidence exist.
+
+It is contract-only. It does not authorize effects, delete files, remove directories, write receipts, write absence reports, mutate host state, open the network, or claim reset/uninstall implementation.
+
+## Command
+
+```sh
+sh scripts/macos-reset-uninstall-effect-authorization-contract.sh
+```
+
+The command writes only a deterministic report to stdout.
+
+## Current Decision
+
+The current effect-authorization posture is:
+
+```text
+macos_reset_uninstall_effect_authorization_contract_present=1
+macos_reset_uninstall_evidence_bundle_contract_present=1
+evidence_bundle_contract_state=defined-no-effect
+evidence_bundle_complete=0
+reset_uninstall_evidence_bundle_complete=0
+effect_authorization_contract_state=closed-no-effect
+effect_authorization_contract_decision=blocked-missing-implementation-gate-and-operator-intent-evidence
+effect_authorization_contract_required=1
+effect_authorization_contract_open=0
+effect_authorization_required=1
+effect_authorization_open=0
+reset_uninstall_effect_authorized=0
+reset_uninstall_effect_authorization_evidence_present=0
+effect_authorization_record_write_enabled=0
+effect_authorization_denial_recorded=1
+effect_authorization_denial_reason=missing-implementation-gate-and-operator-intent-evidence
+reset_uninstall_live_run_allowed=0
+reset_uninstall_deletion_enabled=0
+managed_target_removal_allowed=0
+managed_target_deletion_enabled=0
+reset_uninstall_receipt_write_enabled=0
+```
+
+## Required Evidence Chain
+
+Future effect authorization must bind to the closed implementation gate, explicit operator-intent contract, and reset/uninstall evidence contracts:
+
+```text
+macos_reset_uninstall_operator_intent_contract_present=1
+macos_reset_uninstall_effect_authorization_contract_present=1
+macos_reset_uninstall_evidence_bundle_contract_present=1
+evidence_bundle_contract_state=defined-no-effect
+evidence_bundle_complete=0
+reset_uninstall_evidence_bundle_complete=0
+effect_authorization_contract_state=closed-no-effect
+reset_uninstall_effect_authorized=0
+operator_intent_contract_state=defined-no-effect
+operator_reset_uninstall_intent_evidence_required=1
+operator_reset_uninstall_intent_evidence_present=0
+operator_explicit_reset_uninstall_intent_observed=0
+operator_intent_evidence_written=0
+macos_reset_uninstall_implementation_gate_contract_present=1
+implementation_gate_contract_state=closed-no-effect
+implementation_gate_open=0
+implementation_gate_decision=blocked-missing-reset-uninstall-evidence
+macos_reset_uninstall_receipt_schema_contract_present=1
+macos_reset_uninstall_absence_report_contract_present=1
+macos_reset_uninstall_dry_run_planner_present=1
+reset_uninstall_dry_run_planner_transcript_present=1
+macos_reset_uninstall_live_target_classifier_present=1
+macos_reset_uninstall_dry_run_contract_present=1
+macos_verification_transcript_contract_present=1
+macos_commit_gate_contract_present=1
+reset_uninstall_dry_run_evidence_present=0
+reset_uninstall_receipt_evidence_present=0
+reset_receipt_evidence_present=0
+receipt_schema_evidence_present=0
+absence_report_evidence_present=0
+```
+
+## Target Scope
+
+Future effect authorization must stay bound to user-local managed macOS targets and receipt locations:
+
+```text
+app_support_prefix_target=$HOME/Library/Application Support/Latticra
+app_bundle_target=$HOME/Applications/Latticra Panel.app
+cli_wrapper_target=$HOME/.local/bin/latticra-panel
+reset_receipts_dir_target=$HOME/Library/Application Support/Latticra Reset Receipts
+reset_receipt_path_future=$HOME/Library/Application Support/Latticra Reset Receipts/reset-uninstall-receipt.json
+absence_report_path_future=$HOME/Library/Application Support/Latticra Reset Receipts/absence-report.txt
+```
+
+## Authorization Requirements
+
+The future authorization boundary requires:
+
+```text
+effect_authorization_requires_implementation_gate_open=1
+effect_authorization_requires_operator_intent_evidence=1
+effect_authorization_requires_dry_run_planner_transcript=1
+effect_authorization_requires_live_target_classifier=1
+effect_authorization_requires_receipt_schema=1
+effect_authorization_requires_absence_report_contract=1
+effect_authorization_requires_receipt_outside_removed_prefix=1
+effect_authorization_requires_no_unmanaged_targets=1
+effect_authorization_requires_no_unsafe_paths=1
+effect_authorization_requires_no_network=1
+effect_authorization_requires_no_root=1
+effect_authorization_schema_version=macos-reset-uninstall-effect-authorization/1
+effect_authorization_condition_implementation_gate_open=required
+effect_authorization_condition_operator_intent_evidence_present=required
+effect_authorization_condition_operator_intent_current_session=required
+effect_authorization_condition_no_unmanaged_targets=required
+effect_authorization_condition_no_network=required
+effect_authorization_condition_no_root=required
+effect_authorization_must_not_override_missing_operator_intent=1
+effect_authorization_must_not_override_closed_implementation_gate=1
+effect_authorization_must_not_authorize_unmanaged_target_removal=1
+```
+
+The current condition state remains closed:
+
+```text
+effect_authorization_result_implementation_gate_open=not_met
+effect_authorization_result_operator_intent_evidence=not_met
+effect_authorization_result_dry_run_planner_transcript=contract-only
+effect_authorization_result_live_target_classifier=contract-only
+effect_authorization_result_receipt_schema=contract-only
+effect_authorization_result_absence_report_contract=contract-only
+effect_authorization_result_no_network=met
+effect_authorization_result_no_root=met
+```
+
+## Phases
+
+The future effect-authorization phases are:
+
+```text
+effect_authorization_phase_1=consume_implementation_gate_contract
+effect_authorization_phase_2=consume_operator_intent_contract
+effect_authorization_phase_3=validate_reset_uninstall_evidence_chain
+effect_authorization_phase_4=compute_effect_authorization_decision
+effect_authorization_phase_5=authorize_future_live_reset_uninstall
+effect_authorization_phase_6=run_live_reset_uninstall
+effect_authorization_phase_1_status=contract-only
+effect_authorization_phase_2_status=contract-only
+effect_authorization_phase_3_status=contract-only
+effect_authorization_phase_4_status=contract-only
+effect_authorization_phase_5_status=disabled
+effect_authorization_phase_6_status=disabled
+```
+
+## Authority Boundary
+
+This contract preserves:
+
+```text
+reset_uninstall_implementation_present=0
+macos_reset_uninstall_implemented=0
+managed_marker_required=1
+unmanaged_target_preservation_required=1
+receipt_outside_removed_prefix_required=1
+absence_report_required=1
+managed_wrapper_removal_performed=0
+managed_app_bundle_removal_performed=0
+managed_application_support_removal_performed=0
+reset_receipt_write_performed=0
+absence_report_run_performed=0
+absence_report_written=0
+file_delete_performed=0
+directory_delete_performed=0
+application_support_write_performed=0
+receipt_write_performed=0
+app_bundle_write_performed=0
+cli_wrapper_write_performed=0
+shell_profile_mutation_performed=0
+host_mutation_performed=0
+network_performed=0
+root_authority=0
+launchagent_authority=0
+keychain_authority=0
+tcc_bypass_authority=0
+endpoint_security_authority=0
+system_extension_authority=0
+network_extension_authority=0
+privileged_helper_authority=0
+runtime_authority_granted=0
+production_installer_ready=0
+```
+
+## Validation
+
+This contract is guarded by:
+
+```sh
+sh scripts/test-macos-reset-uninstall-effect-authorization-contract.sh
+```
+
+Expected output:
+
+```text
+macos_reset_uninstall_effect_authorization_contract: ok
+```
+
+## Non-Claims
+
+This contract is not macOS reset evidence, macOS uninstall evidence, macOS install evidence, macOS app bundle evidence, live approval evidence, operator approval evidence, effect approval evidence, receipt evidence, absence verification evidence, signed app evidence, notarization evidence, launchd evidence, Keychain evidence, Secure Enclave evidence, sandbox evidence, TCC approval evidence, Endpoint Security evidence, System Extension evidence, Network Extension evidence, privileged helper evidence, malware prevention, ransomware prevention, production readiness, Apple platform approval, or runtime authority.
+
+## Previous Recommended Lane
+
+```text
+Add a macOS reset/uninstall evidence-bundle contract that groups implementation-gate, operator-intent, receipt, absence, planner, and classifier evidence before any live execution.
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-implementation plan contract that maps future effect-authorized execution phases while deletion remains disabled.
+```

@@ -27,6 +27,7 @@ cc $CFLAGS \
   src/kernel_ipc_table.c \
   src/kernel_vfs_namespace.c \
   src/kernel_device_registry.c \
+  src/kernel_driver_catalog.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -38,12 +39,12 @@ cc $CFLAGS \
 grep -Fq 'LATTICRA KERNEL LIFECYCLE REPORT' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'policy_status=gate-allowed' "$report_txt"
-grep -Fq 'final_state=device-registry-ready' "$report_txt"
-grep -Fq 'step_count=9' "$report_txt"
-grep -Fq 'state_change_count=9' "$report_txt"
+grep -Fq 'final_state=driver-catalog-ready' "$report_txt"
+grep -Fq 'step_count=10' "$report_txt"
+grep -Fq 'state_change_count=10' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
-grep -Fq 'machine_log_count=9' "$report_txt"
+grep -Fq 'machine_log_count=10' "$report_txt"
 grep -Fq 'evidence_level=10' "$report_txt"
 grep -Fq 'log[0].from=created' "$report_txt"
 grep -Fq 'log[0].to=initialized' "$report_txt"
@@ -62,5 +63,9 @@ grep -Fq 'log[8].from=vfs-namespace-ready' "$report_txt"
 grep -Fq 'log[8].to=device-registry-ready' "$report_txt"
 grep -Fq 'log[8].state_change_performed=1' "$report_txt"
 grep -Fq 'log[8].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[9].from=device-registry-ready' "$report_txt"
+grep -Fq 'log[9].to=driver-catalog-ready' "$report_txt"
+grep -Fq 'log[9].state_change_performed=1' "$report_txt"
+grep -Fq 'log[9].external_effect_performed=0' "$report_txt"
 
 printf 'kernel_lifecycle_report_runner: ok\n'

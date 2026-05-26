@@ -10,6 +10,8 @@ Nadia Stage-31 adds a prompt-evaluation result contract generator.
 
 It consumes the Stage-30 prompt-evaluation invocation report as prerequisite evidence and records a future review lane for prompt-evaluation result schema, invocation references, runtime handoff references, evaluation input references, generated-text denial policy, token-generation denial policy, result-review policy, and survivor-centered safety requirements. It remains contract-only: no result record is created, no model output is recorded, no runtime is invoked, no prompt is evaluated, no token is generated, and no dialogue is generated.
 
+Stage-32 now defines a prompt-evaluation result review contract that keeps review recording, result recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, and inference blocked.
+
 ## Status Fields
 
 ```text

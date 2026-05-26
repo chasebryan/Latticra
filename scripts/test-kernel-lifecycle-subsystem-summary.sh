@@ -25,6 +25,7 @@ cc $CFLAGS \
   src/kernel_ipc_table.c \
   src/kernel_vfs_namespace.c \
   src/kernel_device_registry.c \
+  src/kernel_driver_catalog.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \

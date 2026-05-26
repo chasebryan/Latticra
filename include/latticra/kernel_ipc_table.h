@@ -29,6 +29,7 @@ typedef struct {
     int receive_allowed;
     int queue_mutation_allowed;
     int host_effect_allowed;
+    int network_allowed;
     int no_effect;
     unsigned int evidence_level;
 } latticra_kernel_ipc_table_entry_t;
@@ -46,6 +47,7 @@ typedef struct {
     int queue_mutation_allowed;
     int endpoint_bind_allowed;
     int host_effect_allowed;
+    int network_allowed;
     unsigned int evidence_level;
 } latticra_kernel_ipc_table_result_t;
 

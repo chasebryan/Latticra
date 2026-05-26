@@ -26,6 +26,7 @@ static void seed_result(latticra_kernel_ipc_table_result_t *result) {
     result->queue_mutation_allowed = 0;
     result->endpoint_bind_allowed = 0;
     result->host_effect_allowed = 0;
+    result->network_allowed = 0;
     result->evidence_level = 10u;
 }
 
@@ -61,6 +62,7 @@ static void fill_port(
     port->receive_allowed = 0;
     port->queue_mutation_allowed = 0;
     port->host_effect_allowed = 0;
+    port->network_allowed = 0;
     port->no_effect = 1;
     port->evidence_level = 10u;
 }
@@ -179,6 +181,7 @@ latticra_status_t latticra_kernel_ipc_table_report(
         "queue_mutation_allowed=%d\n"
         "endpoint_bind_allowed=%d\n"
         "host_effect_allowed=%d\n"
+        "network_allowed=%d\n"
         "evidence_level=%u\n",
         result->table_status,
         result->policy_status,
@@ -192,6 +195,7 @@ latticra_status_t latticra_kernel_ipc_table_report(
         result->queue_mutation_allowed,
         result->endpoint_bind_allowed,
         result->host_effect_allowed,
+        result->network_allowed,
         result->evidence_level);
     if (status != LATTICRA_STATUS_OK) return status;
 
@@ -208,6 +212,7 @@ latticra_status_t latticra_kernel_ipc_table_report(
             "port[%lu].receive_allowed=%d\n"
             "port[%lu].queue_mutation_allowed=%d\n"
             "port[%lu].host_effect_allowed=%d\n"
+            "port[%lu].network_allowed=%d\n"
             "port[%lu].no_effect=%d\n",
             (unsigned long)i, result->ports[i].label,
             (unsigned long)i, result->ports[i].port_token,
@@ -220,6 +225,7 @@ latticra_status_t latticra_kernel_ipc_table_report(
             (unsigned long)i, result->ports[i].receive_allowed,
             (unsigned long)i, result->ports[i].queue_mutation_allowed,
             (unsigned long)i, result->ports[i].host_effect_allowed,
+            (unsigned long)i, result->ports[i].network_allowed,
             (unsigned long)i, result->ports[i].no_effect);
         if (status != LATTICRA_STATUS_OK) return status;
     }

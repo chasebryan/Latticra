@@ -26,6 +26,7 @@ The installer does not currently claim:
 - SELinux mutation authority
 - package-manager integration
 - bootloader integration
+- firmware/SeaBIOS/GRUB mutation authority
 - network authority
 
 ## Next stages
@@ -34,5 +35,6 @@ The installer does not currently claim:
 2. Add stronger manifest validation.
 3. Add Fedora package integration plan.
 4. Add VM validation mode.
-5. Add failed-install recovery receipts.
-6. Add system-level installer only after explicit design review.
+5. Add SeaBIOS/GRUB compatibility VM evidence only after the contract guard is satisfied.
+6. Add failed-install recovery receipts.
+7. Add system-level installer only after explicit design review.

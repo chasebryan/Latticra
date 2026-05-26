@@ -12,6 +12,99 @@ const PANEL_BUILD: &str = "gui-workbench";
 const SEAL_PNG: &[u8] = include_bytes!("../assets/latticra-panel.png");
 const COMPACT_LAYOUT_WIDTH: f32 = 1400.0;
 const NARROW_LAYOUT_WIDTH: f32 = 900.0;
+const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
+    ("status", "Stage-33 status and authority summary"),
+    ("context", "Stage-1 local context-pack metadata"),
+    ("runtime", "Stage-2 runtime-profile metadata"),
+    ("plan", "Stage-3 prompt-plan workbench metadata"),
+    ("mode", "Stage-4 systems-engineering mode validation"),
+    ("ledger", "Stage-5 productivity ledger metadata"),
+    ("safety", "Stage-6 protective-safety boundary"),
+    ("tool", "Stage-7 guarded tool-authority preflight"),
+    ("prompt-contract", "Stage-8 prompt-evaluation contract"),
+    ("model-registry", "Stage-9 local model-registry contract"),
+    (
+        "inference-readiness",
+        "Stage-10 inference-readiness contract",
+    ),
+    ("runtime-invocation", "Stage-11 runtime-invocation contract"),
+    ("model-load", "Stage-12 model-load contract"),
+    ("prompt-receipt", "Stage-13 prompt-receipt contract"),
+    (
+        "prompt-materialization",
+        "Stage-14 prompt-materialization contract",
+    ),
+    ("awareness-dialogue", "Stage-15 awareness-dialogue contract"),
+    (
+        "prompt-evaluation-handoff",
+        "Stage-16 prompt-evaluation handoff contract",
+    ),
+    (
+        "tokenization-boundary",
+        "Stage-17 tokenization-boundary contract",
+    ),
+    (
+        "tokenizer-specification",
+        "Stage-18 tokenizer-specification contract",
+    ),
+    ("tokenizer-manifest", "Stage-19 tokenizer-manifest contract"),
+    (
+        "tokenizer-artifact-inventory",
+        "Stage-20 tokenizer-artifact-inventory contract",
+    ),
+    (
+        "tokenizer-artifact-measurement",
+        "Stage-21 tokenizer-artifact-measurement contract",
+    ),
+    (
+        "tokenizer-artifact-verification",
+        "Stage-22 tokenizer-artifact-verification contract",
+    ),
+    (
+        "tokenizer-artifact-binding",
+        "Stage-23 tokenizer-artifact-binding contract",
+    ),
+    (
+        "tokenizer-runtime-attachment",
+        "Stage-24 tokenizer-runtime-attachment contract",
+    ),
+    (
+        "prompt-tokenization",
+        "Stage-25 prompt-tokenization contract",
+    ),
+    (
+        "prompt-token-sequence",
+        "Stage-26 prompt-token-sequence contract",
+    ),
+    (
+        "context-window-assembly",
+        "Stage-27 context-window-assembly contract",
+    ),
+    (
+        "prompt-evaluation-input",
+        "Stage-28 prompt-evaluation-input contract",
+    ),
+    (
+        "prompt-evaluation-runtime-handoff",
+        "Stage-29 prompt-evaluation runtime handoff contract",
+    ),
+    (
+        "prompt-evaluation-invocation",
+        "Stage-30 prompt-evaluation invocation contract",
+    ),
+    (
+        "prompt-evaluation-result",
+        "Stage-31 prompt-evaluation result contract",
+    ),
+    (
+        "prompt-evaluation-result-review",
+        "Stage-32 prompt-evaluation result review contract",
+    ),
+    (
+        "prompt-evaluation-result-disposition",
+        "Stage-33 prompt-evaluation result disposition contract",
+    ),
+];
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum InstallState {
@@ -77,7 +170,7 @@ impl Default for LatticraInstallerApp {
             console_lines: vec![
                 format!("Latticra Panel v{PANEL_VERSION} bounded operator console online."),
                 "Authority baseline: root=0 network=0 runtime_enforcement=0.".to_owned(),
-                "Panel commands: help, status, lc status, lc install-config, lc receipts, lc receipt-request, lc receipt-payload, lc signature-request, lc host-adapter, lc os-contract, lc vm-evidence, lc profile <hosted|panel|host|os|custom>, plan, save, dry-run, reset, uninstall, profile seal, profile fedora."
+                "Panel commands: help, status, lc commands, lc status, lc install-config, plan, save, dry-run, reset, uninstall, profile seal, profile fedora, nadia commands."
                     .to_owned(),
                 "Navigation commands: pwd, cd <dir>. External host commands are denied.".to_owned(),
             ],
@@ -128,6 +221,25 @@ impl LatticraInstallerApp {
             let drain_count = self.console_lines.len() - 360;
             self.console_lines.drain(0..drain_count);
         }
+    }
+
+    fn push_nadia_commands(&mut self) {
+        self.push_console("NADIA COMMAND SURFACE");
+        self.push_console("panel_command=nadia commands");
+        self.push_console("installed_wrapper=latticra-nadia commands");
+        self.push_console(format!(
+            "component_selected={}",
+            self.config.components.nadia_offline_ai
+        ));
+        for &(command, detail) in NADIA_PANEL_COMMANDS {
+            self.push_console(format!("command=nadia {command} detail={detail}"));
+        }
+        self.push_console(
+            "network_authority=0 tool_execution_authority=0 runtime_invocation_authority=0 source_mutation_authority=0",
+        );
+        self.push_console(
+            "prompt_evaluation_authority=0 inference_authority=0 model_load_authority=0",
+        );
     }
 
     fn refresh_plan(&mut self) {
@@ -419,7 +531,10 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc status, lc install-config, lc profiles, lc receipts, lc receipt-request, lc receipt-payload, lc signature-request, lc profile hosted|panel|host|os|custom, lc commands, lc substrate, lc host, lc host-contract, lc host-inventory, lc host-adapter, lc os-contract, lc vm-evidence, lc os, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding, nadia tokenizer-runtime-attachment, nadia prompt-tokenization, nadia prompt-token-sequence, nadia context-window-assembly, nadia prompt-evaluation-input, nadia prompt-evaluation-runtime-handoff, nadia prompt-evaluation-invocation, nadia prompt-evaluation-result",
+                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc profile hosted|panel|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
+                );
+                self.push_console(
+                    "nadia: use `nadia commands` for the full Stage-1 through Stage-33 command map",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -560,6 +675,19 @@ impl LatticraInstallerApp {
                 ));
                 self.push_console("receipt_payload_schema_status=metadata-only-schema");
                 self.push_console(format!(
+                    "receipt_payload_artifact_draft_profile={}",
+                    self.config.lc.receipt_payload_artifact_draft_profile
+                ));
+                self.push_console("receipt_payload_artifact_draft_status=metadata-only-draft");
+                self.push_console(format!(
+                    "receipt_payload_artifact_review_profile={}",
+                    self.config.lc.receipt_payload_artifact_review_profile
+                ));
+                self.push_console(
+                    "receipt_payload_artifact_review_status=metadata-only-review-gate",
+                );
+                self.push_console("draft_review_receipt_present=0 materialization_allowed=0");
+                self.push_console(format!(
                     "signature_request_binding_profile={}",
                     self.config.lc.signature_request_binding_profile
                 ));
@@ -615,6 +743,14 @@ impl LatticraInstallerApp {
                 self.push_console(format!(
                     "receipt_payload_schema_required={}",
                     self.config.lc.require_receipt_payload_schema
+                ));
+                self.push_console(format!(
+                    "receipt_payload_artifact_draft_required={}",
+                    self.config.lc.require_receipt_payload_artifact_draft
+                ));
+                self.push_console(format!(
+                    "receipt_payload_artifact_review_required={}",
+                    self.config.lc.require_receipt_payload_artifact_review
                 ));
                 self.push_console(format!(
                     "signature_request_binding_required={}",
@@ -716,7 +852,7 @@ impl LatticraInstallerApp {
                 self.apply_lc_profile(LatticraConsoleProfile::Custom);
             }
             ["lc", "commands"] | ["console", "commands"] => {
-                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc install-config,lc profiles,lc receipts,lc receipt-request,lc receipt-payload,lc signature-request,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
+                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc install-config,lc profiles,lc receipts,lc receipt-request,lc receipt-payload,lc receipt-artifact,lc receipt-artifact-review,lc signature-request,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
                 self.push_console("registry_authority=metadata-only external_host_processes=0");
             }
             ["lc", "receipts"]
@@ -755,6 +891,20 @@ impl LatticraInstallerApp {
                 ));
                 self.push_console("receipt_payload_schema_command=lc receipt-payload");
                 self.push_console(format!(
+                    "receipt_payload_artifact_draft_required={}",
+                    self.config.lc.require_receipt_payload_artifact_draft
+                ));
+                self.push_console("receipt_payload_artifact_draft_command=lc receipt-artifact");
+                self.push_console(format!(
+                    "receipt_payload_artifact_review_required={}",
+                    self.config.lc.require_receipt_payload_artifact_review
+                ));
+                self.push_console("receipt_payload_artifact_review_present=1");
+                self.push_console("draft_review_receipt_present=0");
+                self.push_console(
+                    "receipt_payload_artifact_review_command=lc receipt-artifact-review",
+                );
+                self.push_console(format!(
                     "signature_request_binding_required={}",
                     self.config.lc.require_signature_request_binding
                 ));
@@ -792,9 +942,27 @@ impl LatticraInstallerApp {
                     "receipt_payload_schema_profile={}",
                     self.config.lc.receipt_payload_schema_profile
                 ));
+                self.push_console("receipt_payload_schema_required=1");
+                self.push_console(format!(
+                    "receipt_payload_artifact_draft_profile={}",
+                    self.config.lc.receipt_payload_artifact_draft_profile
+                ));
                 self.push_console(
-                    "receipt_payload_schema_required=1 receipt_payload_artifact_present=0",
+                    "receipt_payload_artifact_draft_required=1 receipt_payload_artifact_draft_present=1",
                 );
+                self.push_console("receipt_payload_artifact_draft_command=lc receipt-artifact");
+                self.push_console(format!(
+                    "receipt_payload_artifact_review_profile={}",
+                    self.config.lc.receipt_payload_artifact_review_profile
+                ));
+                self.push_console(
+                    "receipt_payload_artifact_review_required=1 receipt_payload_artifact_review_present=1",
+                );
+                self.push_console(
+                    "receipt_payload_artifact_review_command=lc receipt-artifact-review",
+                );
+                self.push_console("draft_review_receipt_present=0 materialization_allowed=0");
+                self.push_console("payload_artifact_present=0 payload_materialized=0");
                 self.push_console(format!(
                     "signature_request_binding_profile={}",
                     self.config.lc.signature_request_binding_profile
@@ -838,6 +1006,21 @@ impl LatticraInstallerApp {
                 self.push_console(
                     "payload_artifact_present=0 payload_hash_computed=0 payload_path_recorded=0",
                 );
+                self.push_console(format!(
+                    "receipt_payload_artifact_draft_profile={}",
+                    self.config.lc.receipt_payload_artifact_draft_profile
+                ));
+                self.push_console(
+                    "receipt_payload_artifact_draft_present=1 receipt_payload_artifact_draft_command=lc receipt-artifact",
+                );
+                self.push_console(format!(
+                    "receipt_payload_artifact_review_profile={}",
+                    self.config.lc.receipt_payload_artifact_review_profile
+                ));
+                self.push_console(
+                    "receipt_payload_artifact_review_present=1 receipt_payload_artifact_review_command=lc receipt-artifact-review",
+                );
+                self.push_console("materialization_allowed=0");
                 self.push_console(
                     "signature_request_binding_present=0 signature_request_binding_allowed=0",
                 );
@@ -845,6 +1028,115 @@ impl LatticraInstallerApp {
                     "signature_request_binding_contract_present=1 signature_request_binding_command=lc signature-request",
                 );
                 self.push_console("seal_signature_request_ready=0 seal_signature_request_present=0 receipt_write_allowed=0 receipt_signed=0");
+                self.push_console(
+                    "file_write_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0",
+                );
+            }
+            ["lc", "receipt-artifact"]
+            | ["console", "receipt-artifact"]
+            | ["lc", "receipt-payload-artifact"]
+            | ["console", "receipt-payload-artifact"]
+            | ["lc", "payload-artifact"]
+            | ["console", "payload-artifact"]
+            | ["lc", "receipt-artifact-draft"]
+            | ["console", "receipt-artifact-draft"] => {
+                self.push_console(
+                    "lc.receipt_payload_artifact_draft=Latticra Console receipt payload artifact draft",
+                );
+                self.push_console(format!(
+                    "draft_profile={}",
+                    self.config.lc.receipt_payload_artifact_draft_profile
+                ));
+                self.push_console("draft_status=metadata-only draft_contract_present=1");
+                self.push_console(format!(
+                    "receipt_payload_artifact_review_profile={}",
+                    self.config.lc.receipt_payload_artifact_review_profile
+                ));
+                self.push_console(
+                    "receipt_payload_artifact_review_present=1 receipt_payload_artifact_review_command=lc receipt-artifact-review",
+                );
+                self.push_console("draft_review_required=1 draft_review_present=0");
+                self.push_console("draft_review_receipt_required=1 draft_review_receipt_present=0");
+                self.push_console("draft_review_approval_recorded=0 materialization_allowed=0");
+                self.push_console(format!(
+                    "receipt_request_profile={}",
+                    self.config.lc.receipt_request_contract_profile
+                ));
+                self.push_console(format!(
+                    "receipt_payload_schema_profile={}",
+                    self.config.lc.receipt_payload_schema_profile
+                ));
+                self.push_console(format!(
+                    "signature_request_binding_profile={}",
+                    self.config.lc.signature_request_binding_profile
+                ));
+                self.push_console("canonicalization_profile=lc-receipt-payload-canonical-text-v0");
+                self.push_console("artifact_fields=console_id,profile,command_registry,host_contract,host_inventory,host_adapter,runtime_boundary,seal_capability_labels,authority_denials");
+                self.push_console(
+                    "receipt_payload_artifact_draft_present=1 payload_artifact_present=0 payload_materialized=0",
+                );
+                self.push_console(
+                    "payload_write_allowed=0 payload_hash_computed=0 payload_hash_recorded=0 payload_path_recorded=0",
+                );
+                self.push_console(
+                    "signature_request_binding_artifact_present=0 signature_request_binding_allowed=0",
+                );
+                self.push_console(
+                    "seal_signature_request_ready=0 seal_signature_request_present=0 seal_signing_authority_present=0",
+                );
+                self.push_console(
+                    "receipt_write_allowed=0 receipt_signed=0 command_surface=lc receipt-artifact",
+                );
+                self.push_console("related_review_command=lc receipt-artifact-review");
+                self.push_console(
+                    "file_write_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0",
+                );
+            }
+            ["lc", "receipt-artifact-review"]
+            | ["console", "receipt-artifact-review"]
+            | ["lc", "receipt-review"]
+            | ["console", "receipt-review"]
+            | ["lc", "artifact-review"]
+            | ["console", "artifact-review"]
+            | ["lc", "payload-artifact-review"]
+            | ["console", "payload-artifact-review"] => {
+                self.push_console(
+                    "lc.receipt_payload_artifact_review_gate=Latticra Console receipt payload artifact review gate",
+                );
+                self.push_console(format!(
+                    "review_profile={}",
+                    self.config.lc.receipt_payload_artifact_review_profile
+                ));
+                self.push_console("review_status=metadata-only review_gate_present=1");
+                self.push_console(format!(
+                    "receipt_payload_artifact_draft_profile={}",
+                    self.config.lc.receipt_payload_artifact_draft_profile
+                ));
+                self.push_console(
+                    "receipt_payload_artifact_draft_present=1 receipt_payload_artifact_draft_command=lc receipt-artifact",
+                );
+                self.push_console("draft_review_required=1 draft_review_present=0");
+                self.push_console("draft_review_receipt_required=1 draft_review_receipt_present=0");
+                self.push_console(
+                    "draft_review_approval_recorded=0 draft_reviewer_identity_recorded=0 draft_review_timestamp_recorded=0",
+                );
+                self.push_console(
+                    "materialization_allowed=0 payload_artifact_present=0 payload_materialized=0 payload_write_allowed=0",
+                );
+                self.push_console(
+                    "payload_hash_computed=0 payload_hash_recorded=0 payload_path_recorded=0",
+                );
+                self.push_console(
+                    "signature_request_binding_allowed=0 signature_request_binding_artifact_present=0",
+                );
+                self.push_console(
+                    "seal_signature_request_ready=0 seal_signature_request_present=0 seal_signing_authority_present=0",
+                );
+                self.push_console("receipt_write_allowed=0 receipt_signed=0");
+                self.push_console(
+                    "promotion_gate=lc_receipt_payload_artifact_review_before_materialization",
+                );
+                self.push_console("command_surface=lc receipt-artifact-review");
                 self.push_console(
                     "file_write_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0",
                 );
@@ -870,6 +1162,22 @@ impl LatticraInstallerApp {
                     "receipt_payload_schema_profile={}",
                     self.config.lc.receipt_payload_schema_profile
                 ));
+                self.push_console(format!(
+                    "receipt_payload_artifact_draft_profile={}",
+                    self.config.lc.receipt_payload_artifact_draft_profile
+                ));
+                self.push_console(
+                    "receipt_payload_artifact_draft_present=1 receipt_payload_artifact_draft_command=lc receipt-artifact",
+                );
+                self.push_console(format!(
+                    "receipt_payload_artifact_review_profile={}",
+                    self.config.lc.receipt_payload_artifact_review_profile
+                ));
+                self.push_console(
+                    "receipt_payload_artifact_review_present=1 receipt_payload_artifact_review_command=lc receipt-artifact-review",
+                );
+                self.push_console("draft_review_receipt_present=0 materialization_allowed=0");
+                self.push_console("payload_artifact_present=0");
                 self.push_console("signature_request_profile=latticra-seal-signature-request/0.1");
                 self.push_console(
                     "signing_authorization_profile=latticra-seal-signing-authorization/0.1",
@@ -1053,6 +1361,9 @@ impl LatticraInstallerApp {
                     "boot_allowed=0 kernel_enforcement_authority=0 production_os_claim=0",
                 );
             }
+            ["nadia", "commands"] | ["nadia", "help"] | ["nadia", "?"] => {
+                self.push_nadia_commands();
+            }
             ["nadia"] | ["nadia", "status"] => {
                 self.push_console("name=Nadia");
                 self.push_console("system_name=Latticra Nadia Witness Foundation");
@@ -1141,7 +1452,13 @@ impl LatticraInstallerApp {
                     "prompt_evaluation_result_contract_stage=31-prompt-evaluation-result-contract",
                 );
                 self.push_console(
-                    "stage=31 prompt-evaluation-result-contract; prompt_evaluation_result_record_created=0 prompt_evaluation_result_model_output_recorded=0 runtime_invoked=0",
+                    "prompt_evaluation_result_review_contract_stage=32-prompt-evaluation-result-review-contract",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_disposition_contract_stage=33-prompt-evaluation-result-disposition-contract",
+                );
+                self.push_console(
+                    "stage=33 prompt-evaluation-result-disposition-contract; prompt_evaluation_result_disposition_record_created=0 prompt_evaluation_result_disposition_decision_recorded=0 runtime_invoked=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -1526,6 +1843,47 @@ impl LatticraInstallerApp {
                     "requires_prompt_evaluation_invocation_contract=1 requires_future_prompt_evaluation_result_review_contract=1",
                 );
             }
+            ["nadia", "prompt-evaluation-result-review"]
+            | ["nadia", "evaluation-result-review"]
+            | ["nadia", "prompt-result-review"]
+            | ["nadia", "prompt-evaluation-result-review-contract"] => {
+                self.push_console(
+                    "nadia_prompt_evaluation_result_review=stage-32-prompt-evaluation-result-review-contract",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia prompt-evaluation-result-review");
+                self.push_console(
+                    "prompt_evaluation_result_review_contract_status=contract_only prompt_evaluation_result_review_record_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_review_decision_recorded=0 prompt_evaluation_result_model_output_recorded=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_result_contract=1 requires_future_prompt_evaluation_result_disposition_contract=1",
+                );
+            }
+            ["nadia", "prompt-evaluation-result-disposition"]
+            | ["nadia", "evaluation-result-disposition"]
+            | ["nadia", "prompt-result-disposition"]
+            | ["nadia", "prompt-evaluation-result-disposition-contract"] => {
+                self.push_console(
+                    "nadia_prompt_evaluation_result_disposition=stage-33-prompt-evaluation-result-disposition-contract",
+                );
+                self.push_console("panel_command=nadia prompt-evaluation-result-disposition");
+                self.push_console("panel_action=metadata-only");
+                self.push_console(
+                    "installed_cli=latticra-nadia prompt-evaluation-result-disposition",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_disposition_contract_status=contract_only prompt_evaluation_result_disposition_record_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_disposition_decision_recorded=0 prompt_evaluation_result_release_record_created=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_result_review_contract=1 requires_future_prompt_evaluation_result_release_contract=1",
+                );
+            }
             ["nadia", "inference-readiness"]
             | ["nadia", "readiness"]
             | ["nadia", "inference-contract"] => {
@@ -1545,6 +1903,7 @@ impl LatticraInstallerApp {
                 );
             }
             ["nadia", "plan"] | ["nadia", "prompt-plan"] => {
+                self.push_console("panel_command=nadia plan");
                 self.push_console("nadia_developer_workbench=stage-3-prompt-plan");
                 self.push_console("panel_action=metadata-only");
                 self.push_console("installed_cli=latticra-nadia prompt-plan");
@@ -1567,6 +1926,7 @@ impl LatticraInstallerApp {
                 );
             }
             ["nadia", "ledger"] | ["nadia", "productivity"] | ["nadia", "productivity-ledger"] => {
+                self.push_console("panel_command=nadia ledger");
                 self.push_console("nadia_productivity_loop=stage-5-productivity-ledger-loop");
                 self.push_console("panel_action=metadata-only");
                 self.push_console("installed_cli=latticra-nadia productivity-ledger");
@@ -1578,6 +1938,7 @@ impl LatticraInstallerApp {
                 );
             }
             ["nadia", "safety"] | ["nadia", "protective-safety"] => {
+                self.push_console("panel_command=nadia safety");
                 self.push_console("nadia_protective_safety=stage-6-protective-safety-boundary");
                 self.push_console("panel_action=metadata-only");
                 self.push_console("installed_cli=latticra-nadia protective-safety");
@@ -2029,7 +2390,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-31 prompt-evaluation-result contract with metadata-only Console surfaces.",
+            "Stage-33 prompt-evaluation-result-disposition contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,
@@ -2239,6 +2600,11 @@ impl LatticraInstallerApp {
         );
         labeled_text_field(
             ui,
+            "Receipt artifact",
+            &mut self.config.lc.receipt_payload_artifact_draft_profile,
+        );
+        labeled_text_field(
+            ui,
             "Signature request",
             &mut self.config.lc.signature_request_binding_profile,
         );
@@ -2312,6 +2678,12 @@ impl LatticraInstallerApp {
             &mut self.config.lc.require_receipt_payload_schema,
             "Require receipt payload schema",
             "Future LC receipt signing must prove the payload shape before any signature request can bind.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.require_receipt_payload_artifact_draft,
+            "Require receipt artifact draft",
+            "Future LC receipt signing must prove the no-write payload artifact draft before materialization.",
         );
         checkbox_note(
             ui,

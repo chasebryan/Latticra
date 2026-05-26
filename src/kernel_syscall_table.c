@@ -61,6 +61,7 @@ static void fill_call(
     call->implemented = 0;
     call->dispatch_allowed = 0;
     call->host_effect_allowed = 0;
+    call->network_allowed = 0;
     call->no_effect = 1;
     call->evidence_level = 9u;
 }
@@ -216,6 +217,7 @@ latticra_status_t latticra_kernel_syscall_table_report(
             "call[%lu].implemented=%d\n"
             "call[%lu].dispatch_allowed=%d\n"
             "call[%lu].host_effect_allowed=%d\n"
+            "call[%lu].network_allowed=%d\n"
             "call[%lu].no_effect=%d\n",
             (unsigned long)i, result->calls[i].name,
             (unsigned long)i, result->calls[i].call_number,
@@ -226,6 +228,7 @@ latticra_status_t latticra_kernel_syscall_table_report(
             (unsigned long)i, result->calls[i].implemented,
             (unsigned long)i, result->calls[i].dispatch_allowed,
             (unsigned long)i, result->calls[i].host_effect_allowed,
+            (unsigned long)i, result->calls[i].network_allowed,
             (unsigned long)i, result->calls[i].no_effect);
         if (status != LATTICRA_STATUS_OK) return status;
     }

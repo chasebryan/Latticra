@@ -51,6 +51,16 @@ candidate_expression_applied_to_packaging=0
 
 The candidate expression must not be applied to Ubuntu packaging metadata until a reviewed decision accepts the package source scope, documentation scope, and notice obligations.
 
+The current notice-review dependency is:
+
+```text
+ubuntu_package_notice_inventory_present=1
+ubuntu_package_notice_inventory_report_present=1
+ubuntu_package_notice_review_contract_present=1
+ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
+ubuntu_package_license_review_unblocked=0
+```
+
 ## Required Review Before Promotion
 
 ```text
@@ -69,6 +79,8 @@ packaging_license_expression_updated=1
 ```text
 ubuntu_package_license_review_contract_present=1
 ubuntu_package_license_review_status=blocked-pending-formal-review
+ubuntu_package_notice_review_contract_present=1
+ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 license_expression_candidate_recorded=1
 license_expression_reviewed=0
 license_expression_unresolved=1

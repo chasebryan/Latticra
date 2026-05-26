@@ -14,6 +14,7 @@ live_receipts="$tmpdir/live-receipts"
 lc_report="$tmpdir/lc-install-config.txt"
 latticra_lc_report="$tmpdir/latticra-lc-install-config.txt"
 verify_log="$tmpdir/verify.log"
+lc_wrapper="latticra-console-custom"
 bad_config="$tmpdir/bad.installer.toml"
 mkdir -p "$home"
 
@@ -28,7 +29,7 @@ grep -Fq 'LC_INSTALL_PROFILE=$(cfg_section lc.install install_profile lc-panel-i
 grep -Fq 'LC install configuration cannot enable external host commands from the Panel' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc install-config category=core effect=none capability=lc.install.config' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'install-config|install)' installer/scripts/latticra-installer-apply.sh
-grep -Fq 'check_exec "latticra-lc command" "$USER_BIN/latticra-lc"' installer/scripts/latticra-installer-verify.sh
+grep -Fq 'LC command wrapper ($LC_COMMAND_WRAPPER)' installer/scripts/latticra-installer-verify.sh
 grep -Fq 'LC install-config registry command' installer/scripts/latticra-installer-verify.sh
 
 HOME="$home" sh installer/scripts/latticra-installer-apply.sh \
@@ -79,7 +80,7 @@ install_profile = "lc-panel-install-v0"
 install_mode = "metadata-only-console-foundation"
 config_path = "etc/latticra/lc.toml"
 share_path = "share/latticra/lc"
-command_wrapper = "latticra-lc"
+command_wrapper = "$lc_wrapper"
 panel_embedded_console = true
 write_config_file = true
 write_profile_presets = true
@@ -99,20 +100,20 @@ test -f "$prefix/etc/latticra/lc.toml"
 test -f "$prefix/share/latticra/lc/install/config.toml"
 test -f "$prefix/share/latticra/lc/commands/seed-registry.txt"
 test -x "$home/.local/bin/latticra"
-test -x "$home/.local/bin/latticra-lc"
+test -x "$home/.local/bin/$lc_wrapper"
 
 grep -Fq 'install_profile = "lc-panel-install-v0"' "$prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'allow_external_host_commands = false' "$prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'name=lc install-config category=core effect=none capability=lc.install.config' "$prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'lc_install_profile=lc-panel-install-v0' "$live_receipts/latest-receipt.txt"
-grep -Fq 'lc_install_command_wrapper=latticra-lc' "$live_receipts/latest-receipt.txt"
+grep -Fq "lc_install_command_wrapper=$lc_wrapper" "$live_receipts/latest-receipt.txt"
 
-HOME="$home" "$home/.local/bin/latticra-lc" install-config > "$lc_report"
+HOME="$home" "$home/.local/bin/$lc_wrapper" install-config > "$lc_report"
 HOME="$home" "$home/.local/bin/latticra" lc install-config > "$latticra_lc_report"
 
 grep -Fq 'LATTICRA CONSOLE INSTALL CONFIGURATION' "$lc_report"
 grep -Fq 'install_profile=lc-panel-install-v0' "$lc_report"
-grep -Fq 'command_wrapper=latticra-lc' "$lc_report"
+grep -Fq "command_wrapper=$lc_wrapper" "$lc_report"
 grep -Fq 'allow_external_host_commands=false' "$lc_report"
 grep -Fq 'host_process_launch_allowed=0' "$lc_report"
 cmp "$lc_report" "$latticra_lc_report" >/dev/null
@@ -137,7 +138,7 @@ HOME="$home" sh installer/scripts/latticra-installer-verify.sh --prefix "$prefix
 grep -Fq 'ok: LC install config' "$verify_log"
 grep -Fq 'ok: LC install-config registry command' "$verify_log"
 grep -Fq 'ok: LC wrapper install-config report' "$verify_log"
-grep -Fq 'ok: latticra lc install-config matches latticra-lc install-config' "$verify_log"
+grep -Fq 'ok: latticra lc install-config matches LC command wrapper install-config' "$verify_log"
 
 sed 's/allow_external_host_commands = false/allow_external_host_commands = true/' \
   installer/configs/default.installer.toml > "$bad_config"

@@ -39,6 +39,7 @@ syscall-table-ready
 ipc-table-ready
 vfs-namespace-ready
 device-registry-ready
+driver-catalog-ready
 ```
 
 ## Controlled effect boundary

@@ -45,6 +45,7 @@ It does not submit Latticra to Ubuntu, create a PPA, or claim Ubuntu archive rea
 Recommended next slice:
 
 ```text
+Add Ubuntu lintian static debian metadata lane after license expression review
 Promote the Ubuntu package license expression only after documentation licensing and notice obligations are reviewed.
 ```
 

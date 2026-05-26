@@ -12,7 +12,7 @@ kernel lifecycle runner
 kernel subsystem registry
 ```
 
-The lifecycle runner can move a local in-memory kernel state machine from `created` to `device-registry-ready` through gated internal state changes.
+The lifecycle runner can move a local in-memory kernel state machine from `created` to `driver-catalog-ready` through gated internal state changes.
 
 The subsystem registry exposes boot, runtime, scheduler, memory, process, filesystem, network, device, and security subsystem posture.
 
@@ -43,17 +43,17 @@ docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
 The default summary request allows the lifecycle runner to reach:
 
 ```text
-device-registry-ready
+driver-catalog-ready
 ```
 
 That produces:
 
 ```text
 summary_status=summary-ready
-final_state=device-registry-ready
+final_state=driver-catalog-ready
 lifecycle_complete=1
-lifecycle_step_count=9
-lifecycle_state_change_count=9
+lifecycle_step_count=10
+lifecycle_state_change_count=10
 external_effect_performed=0
 registry_no_effect=1
 no_external_effect_chain=1
@@ -70,7 +70,7 @@ memory -> memory-map-ready
 process -> ipc-table-ready
 filesystem -> vfs-namespace-ready
 network -> network-syscall-metadata-ready
-device -> device-registry-ready
+device -> driver-catalog-ready
 runtime -> runtime-not-entered
 security -> security-not-production-boundary
 ```
@@ -93,7 +93,11 @@ namespace_mutation_allowed=0
 device_open_allowed=0
 device_read_allowed=0
 device_write_allowed=0
+driver_probe_allowed=0
+driver_load_allowed=0
 driver_bind_allowed=0
+interrupt_allowed=0
+dma_allowed=0
 hardware_effect_allowed=0
 ```
 
@@ -147,8 +151,8 @@ kernel_lifecycle_subsystem_summary_report_runner: ok
 The guards verify:
 
 ```text
-default request targets device-registry-ready
-summary reaches device-registry-ready
+default request targets driver-catalog-ready
+summary reaches driver-catalog-ready
 summary marks boot/scheduler/memory/process/filesystem as lifecycle-ready metadata
 runtime remains not entered
 runtime entry remains denied
@@ -158,7 +162,7 @@ process spawn remains denied
 syscall dispatch remains denied
 IPC send, receive, and queue mutation remain denied
 filesystem lookup, read, write, and namespace mutation remain denied
-device open, read, write, driver bind, and hardware effect remain denied
+device open, read, write, driver probe, driver load, driver bind, interrupt, DMA, and hardware effect remain denied
 network and device authority remain denied
 limited lifecycle summary reports incomplete readiness
 external_effect_performed=0 remains true
@@ -170,4 +174,4 @@ This slice does not make Latticra bootable, runnable as an operating system, pro
 
 ## Next possible lane
 
-A later slice may add lifecycle rollback planning, driver catalog metadata, or virtual device binding metadata. Those should remain report-only unless a separate authority contract is introduced first.
+A later slice may add lifecycle rollback planning, virtual device binding metadata, or interrupt-route metadata. Those should remain report-only unless a separate authority contract is introduced first.

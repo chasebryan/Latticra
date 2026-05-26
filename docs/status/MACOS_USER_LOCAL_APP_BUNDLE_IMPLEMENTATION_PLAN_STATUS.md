@@ -74,7 +74,7 @@ macos_user_local_app_bundle_implementation_plan: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall effect-authorization contract that keeps live execution disabled until implementation-gate and operator-intent evidence are both present.
+Add a macOS reset/uninstall live-implementation plan contract that maps future effect-authorized execution phases while deletion remains disabled.
 ```
 
 ## Non-Claims

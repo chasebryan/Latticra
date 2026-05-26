@@ -29,6 +29,54 @@ cleanup() {
 
 trap cleanup EXIT INT HUP TERM
 
+toml_get_key() {
+  path="$1"
+  key="$2"
+  [ -f "$path" ] || return 1
+
+  awk -F '=' -v key="$key" '
+    /^[[:space:]]*#/ { next }
+    /^[[:space:]]*\[/ { next }
+    {
+      left = $1
+      gsub(/^[ \t]+|[ \t]+$/, "", left)
+      if (left == key) {
+        val = $2
+        for (i = 3; i <= NF; i++) val = val "=" $i
+        sub(/[ \t]+#.*/, "", val)
+        gsub(/^[ \t]+|[ \t]+$/, "", val)
+        gsub(/^"/, "", val)
+        gsub(/"$/, "", val)
+        print val
+        exit
+      }
+    }
+  ' "$path"
+}
+
+valid_command_name() {
+  case "$1" in
+    ""|*/*|*" "*|*"	"*|*[!abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-]*)
+      return 1
+      ;;
+    *)
+      return 0
+      ;;
+  esac
+}
+
+detect_lc_command_wrapper() {
+  wrapper=$(toml_get_key "$LC_INSTALL_CONFIG" command_wrapper || true)
+  if valid_command_name "$wrapper"; then
+    printf '%s\n' "$wrapper"
+  else
+    printf '%s\n' 'latticra-lc'
+  fi
+}
+
+LC_COMMAND_WRAPPER=$(detect_lc_command_wrapper)
+LC_COMMAND="$USER_BIN/$LC_COMMAND_WRAPPER"
+
 check() {
   label="$1"
   path="$2"
@@ -80,7 +128,7 @@ check "payload tree" "$PREFIX/lib/latticra"
 check "config" "$PREFIX/etc/latticra/installer-config.toml"
 check "receipts" "$PREFIX/share/latticra/receipts"
 check_exec "latticra command" "$USER_BIN/latticra"
-check_exec "latticra-lc command" "$USER_BIN/latticra-lc"
+check_exec "LC command wrapper ($LC_COMMAND_WRAPPER)" "$LC_COMMAND"
 check_exec "lat command" "$USER_BIN/lat"
 check_exec "latticra-seal command" "$USER_BIN/latticra-seal"
 check_exec "latticra-panel command" "$USER_BIN/latticra-panel"
@@ -90,6 +138,7 @@ check "LC install config" "$LC_INSTALL_CONFIG"
 check "LC command registry" "$LC_COMMAND_REGISTRY"
 
 check_contains "LC install profile metadata" 'install_profile = "lc-panel-install-v0"' "$LC_INSTALL_CONFIG"
+check_contains "LC command wrapper metadata" "command_wrapper = \"$LC_COMMAND_WRAPPER\"" "$LC_INSTALL_CONFIG"
 check_contains "LC external host command authority disabled" 'allow_external_host_commands = false' "$LC_INSTALL_CONFIG"
 check_contains "LC install-config registry command" 'name=lc install-config category=core effect=none capability=lc.install.config' "$LC_COMMAND_REGISTRY"
 
@@ -97,22 +146,23 @@ if [ -x "$USER_BIN/latticra" ]; then
   "$USER_BIN/latticra" status || failures=$((failures + 1))
 fi
 
-if [ -x "$USER_BIN/latticra-lc" ]; then
-  if "$USER_BIN/latticra-lc" install-config > "$TMP_DIR/lc-install-config.txt"; then
+if [ -x "$LC_COMMAND" ]; then
+  if "$LC_COMMAND" install-config > "$TMP_DIR/lc-install-config.txt"; then
     check_contains "LC wrapper install-config report" 'LATTICRA CONSOLE INSTALL CONFIGURATION' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper install profile" 'install_profile=lc-panel-install-v0' "$TMP_DIR/lc-install-config.txt"
+    check_contains "LC wrapper command name" "command_wrapper=$LC_COMMAND_WRAPPER" "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-install-config.txt"
   else
-    echo "failed: latticra-lc install-config" >&2
+    echo "failed: $LC_COMMAND_WRAPPER install-config" >&2
     failures=$((failures + 1))
   fi
 fi
 
-if [ -x "$USER_BIN/latticra" ] && [ -x "$USER_BIN/latticra-lc" ]; then
+if [ -x "$USER_BIN/latticra" ] && [ -x "$LC_COMMAND" ]; then
   if "$USER_BIN/latticra" lc install-config > "$TMP_DIR/latticra-lc-install-config.txt"; then
     check_contains "Latticra wrapper LC install-config report" 'LATTICRA CONSOLE INSTALL CONFIGURATION' "$TMP_DIR/latticra-lc-install-config.txt"
     if [ -f "$TMP_DIR/lc-install-config.txt" ]; then
-      check_same_file "latticra lc install-config matches latticra-lc install-config" "$TMP_DIR/lc-install-config.txt" "$TMP_DIR/latticra-lc-install-config.txt"
+      check_same_file "latticra lc install-config matches LC command wrapper install-config" "$TMP_DIR/lc-install-config.txt" "$TMP_DIR/latticra-lc-install-config.txt"
     fi
   else
     echo "failed: latticra lc install-config" >&2

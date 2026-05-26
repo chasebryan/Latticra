@@ -50,6 +50,14 @@ make -C installer local-example
 make -C installer verify-local
 ```
 
+Ubuntu no-effect validation:
+
+```sh
+sh scripts/test-ubuntu-build-lane.sh
+sh scripts/test-ubuntu-developer-workflow.sh
+sh scripts/test-ubuntu-package-notice-inventory.sh
+```
+
 ## Run
 
 Open the GUI:

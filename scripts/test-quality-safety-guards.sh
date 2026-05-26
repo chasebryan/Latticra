@@ -29,10 +29,98 @@ require_line() {
     fail "$file must contain line: $pattern"
 }
 
+require_make_quality_prereq() {
+  prereq="$1"
+  quality_line="$(grep -E '^quality:' Makefile || :)"
+
+  [ -n "$quality_line" ] ||
+    fail "Makefile must declare a quality target"
+  printf '%s\n' "$quality_line" | grep -Eq "(^|[[:space:]])$prereq([[:space:]]|$)" ||
+    fail "Makefile quality target must include prerequisite: $prereq"
+}
+
 check_no_conflict_markers() {
-  conflict_markers="$(git grep -n -E '^(<<<<<<<|=======|>>>>>>>)' -- . || :)"
+  if command -v rg >/dev/null 2>&1; then
+    conflict_markers="$(rg --hidden -n -S '^(<<<<<<<|=======|>>>>>>>)' --glob '!.git' . || :)"
+  else
+    conflict_markers="$(git grep -n -E '^(<<<<<<<|=======|>>>>>>>)' -- . || :)"
+  fi
+
   [ -z "$conflict_markers" ] ||
     fail "working tree contains unresolved merge conflict markers"
+}
+
+check_status_index_completeness() {
+  index="docs/status/README.md"
+
+  [ -f "$index" ] ||
+    fail "missing status index: $index"
+
+  missing=""
+  for record in docs/status/*.md; do
+    [ -f "$record" ] || continue
+    record_name="$(basename "$record")"
+
+    [ "$record_name" != "README.md" ] || continue
+
+    if ! grep -Fq "$record_name" "$index"; then
+      missing="${missing}${record_name}
+"
+    fi
+  done
+
+  [ -z "$missing" ] ||
+    fail "docs/status/README.md is missing status records:
+$missing"
+}
+
+check_no_source_shell_exec() {
+  for source_root in latt-field-engines src include tools; do
+    [ -d "$source_root" ] || continue
+    find "$source_root" -type f \( -name '*.c' -o -name '*.h' -o -name '*.cpp' -o -name '*.hpp' \) |
+      while IFS= read -r source; do
+        if grep -Eq '(^|[^A-Za-z0-9_])popen[[:space:]]*\(' "$source"; then
+          fail "$source must not use popen; use explicit argv process launch instead"
+        fi
+        if grep -Eq '(^|[^A-Za-z0-9_])system[[:space:]]*\(' "$source"; then
+          fail "$source must not use system; use explicit argv process launch instead"
+        fi
+      done
+  done
+}
+
+check_rust_installer_engine_shell_boundary() {
+  engine="installer/latticra-installer/src/engine.rs"
+
+  require_contains 'const SYSTEM_SHELL: &str = "/bin/sh";' "$engine"
+  require_contains 'trusted_installer_script(&installer_root, APPLY_SCRIPT)' "$engine"
+  require_contains 'trusted_installer_script(&installer_root, UNINSTALL_SCRIPT)' "$engine"
+  require_contains 'regular_non_symlink_file(&script)' "$engine"
+
+  if grep -Eq 'Command::new\("(sh|bash)"\)' "$engine"; then
+    fail "$engine must use an absolute shell path instead of PATH-discovered sh/bash"
+  fi
+  if grep -Fq 'std::env::current_dir()' "$engine"; then
+    fail "$engine must not discover installer scripts from ambient current working directory"
+  fi
+
+  find installer/latticra-installer/src -type f -name '*.rs' |
+    while IFS= read -r source; do
+      if grep -Eq 'Command::new\("(sh|bash)"\)' "$source"; then
+        fail "$source must not invoke PATH-discovered sh/bash"
+      fi
+    done
+}
+
+check_no_c_test_fixed_latticra_tmp() {
+  [ -d tests ] || return 0
+
+  find tests -type f -name '*.c' |
+    while IFS= read -r source; do
+      if grep -Eq '/tmp/latticra|/private/tmp/latticra' "$source"; then
+        fail "$source must use private temp fixtures or repository-relative strings instead of fixed /tmp/latticra paths"
+      fi
+    done
 }
 
 check_workflow() {
@@ -198,6 +286,16 @@ check_shell_script() {
     fail "$script contains an unsafe broad mutation command"
   fi
 
+  if grep -Fq '$''$' "$script"; then
+    fail "$script must not use PID-based temporary paths"
+  fi
+
+  if [ "$script" != "scripts/test-quality-safety-guards.sh" ]; then
+    if grep -Eq '/tmp/latticra|/private/tmp/latticra|-o[[:space:]]+/tmp/latticra|>[[:space:]]*/tmp/latticra' "$script"; then
+      fail "$script must use a private mktemp workdir instead of fixed /tmp/latticra paths"
+    fi
+  fi
+
   if grep -Eq '^[[:space:]]*cc[[:space:]]' "$script" &&
     grep -Eq '^[[:space:]]*src/runtime_boundary\.c[[:space:]]*\\[[:space:]]*$' "$script"; then
     grep -Eq '^[[:space:]]*src/lat_parser\.c[[:space:]]*\\[[:space:]]*$' "$script" ||
@@ -251,7 +349,7 @@ check_shell_script() {
         require_contains 'trap '\''rm -rf "$tmpdir"'\'' EXIT INT HUP TERM' "$script"
       fi
       ;;
-    scripts/test-nadia-local-context-engine-stage-1.sh|scripts/test-nadia-runtime-profile-stage-2.sh|scripts/test-nadia-developer-workbench-stage-3.sh|scripts/test-nadia-systems-engineering-mode-stage-4.sh)
+    scripts/test-nadia-local-context-engine-stage-1.sh|scripts/test-nadia-runtime-profile-stage-2.sh|scripts/test-nadia-developer-workbench-stage-3.sh|scripts/test-nadia-systems-engineering-mode-stage-4.sh|scripts/test-nadia-productivity-loop-stage-5.sh|scripts/test-nadia-protective-safety-boundary-stage-6.sh|scripts/test-nadia-guarded-tool-authority-stage-7.sh|scripts/test-nadia-prompt-evaluation-contract-stage-8.sh|scripts/test-nadia-local-model-registry-contract-stage-9.sh|scripts/test-nadia-inference-readiness-contract-stage-10.sh|scripts/test-nadia-runtime-invocation-contract-stage-11.sh|scripts/test-nadia-model-load-contract-stage-12.sh|scripts/test-nadia-context-window-assembly-contract-stage-27.sh|scripts/test-nadia-prompt-evaluation-input-contract-stage-28.sh|scripts/test-nadia-prompt-evaluation-runtime-handoff-contract-stage-29.sh)
       if grep -Eq '/tmp/latticra-nadia|/private/tmp/latticra-nadia|>[[:space:]]*/tmp/latticra-nadia' "$script"; then
         fail "$script must use a private mktemp workdir instead of fixed Nadia /tmp paths"
       fi
@@ -267,12 +365,34 @@ check_shell_script() {
     done
   fi
 
+  case "$script" in
+    scripts/test-*.sh|scripts/latticra-seal-*.sh)
+      if grep -Eq '^[[:space:]]*(cc|gcc|clang|\$CC)[[:space:]]' "$script"; then
+        for flag in -Wall -Wextra -Werror; do
+          grep -q -- "$flag" "$script" ||
+            fail "$script C compiler invocations must keep strict warning flag $flag"
+        done
+      fi
+      ;;
+  esac
+
   if grep -q 'CXXFLAGS:=' "$script"; then
     for flag in -Wall -Wextra -Werror; do
       grep -q -- "$flag" "$script" ||
         fail "$script CXXFLAGS must include $flag"
     done
   fi
+
+  case "$script" in
+    scripts/test-*.sh|scripts/latticra-seal-*.sh)
+      if grep -Eq '^[[:space:]]*(c\+\+|g\+\+|clang\+\+|\$CXX)[[:space:]]' "$script"; then
+        for flag in -Wall -Wextra -Werror; do
+          grep -q -- "$flag" "$script" ||
+            fail "$script C++ compiler invocations must keep strict warning flag $flag"
+        done
+      fi
+      ;;
+  esac
 
   if [ "$script" = "installer/scripts/latticra-installer-apply.sh" ]; then
     bad_cargo_builds=$(grep -n 'cargo build' "$script" | grep -Ev -- '--locked.*--offline|--offline.*--locked' || :)
@@ -295,6 +415,10 @@ check_shell_script() {
 
 workflow_count=0
 check_no_conflict_markers
+check_status_index_completeness
+check_no_source_shell_exec
+check_rust_installer_engine_shell_boundary
+check_no_c_test_fixed_latticra_tmp
 
 for workflow in .github/workflows/*.yml .github/workflows/*.yaml; do
   [ -f "$workflow" ] || continue
@@ -306,7 +430,9 @@ done
   fail "no GitHub workflow files found"
 
 require_contains "quality-safety-guards:" "Makefile"
-require_contains "quality: quality-worktree quality-safety-guards quality-defensive-threat-model seal-policy-denials quality-rust-installer quality-panel-installer quality-c-foundation" "Makefile"
+for prereq in quality-worktree quality-safety-guards quality-defensive-threat-model seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation; do
+  require_make_quality_prereq "$prereq"
+done
 require_contains "git diff --check" "Makefile"
 require_contains "sh ./scripts/test-quality-safety-guards.sh" "Makefile"
 require_contains "sh ./scripts/test-defensive-threat-model-contract.sh" "Makefile"
@@ -324,8 +450,8 @@ require_contains "make quality" ".github/workflows/quality.yml"
 require_contains "uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" ".github/workflows/quality.yml"
 require_contains "persist-credentials: false" ".github/workflows/quality.yml"
 require_contains "uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8" ".github/workflows/quality.yml"
-require_contains "gcc \\" ".github/workflows/quality.yml"
-require_contains "g++ \\" ".github/workflows/quality.yml"
+require_contains 'gcc \' ".github/workflows/quality.yml"
+require_contains 'g++ \' ".github/workflows/quality.yml"
 require_contains "timeout-minutes: 20" ".github/workflows/quality.yml"
 require_contains "make quality-safety-guards" ".github/workflows/quality-safety-guards.yml"
 require_contains "uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" ".github/workflows/quality-safety-guards.yml"
@@ -348,5 +474,12 @@ done
 
 [ "$script_count" -gt 0 ] ||
   fail "no shell guard scripts found"
+
+for helper in scripts/*.py; do
+  [ -f "$helper" ] || continue
+  if grep -Eq '/tmp/latticra|/private/tmp/latticra' "$helper"; then
+    fail "$helper must not hardcode Latticra helper inputs under shared /tmp"
+  fi
+done
 
 pass "quality safety guards validated workflows=$workflow_count scripts=$script_count"

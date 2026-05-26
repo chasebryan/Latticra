@@ -55,6 +55,9 @@ The current package license review checkpoint is:
 ```text
 ubuntu_package_license_review_contract_present=1
 ubuntu_package_license_review_status=blocked-pending-formal-review
+ubuntu_package_notice_inventory_present=1
+ubuntu_package_notice_review_contract_present=1
+ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 license_expression_candidate_recorded=1
 packaging_license_expression_updated=0
 ```

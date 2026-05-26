@@ -35,6 +35,9 @@ require_file .github/workflows/kernel-vfs-namespace.yml
 require_file scripts/test-kernel-device-registry.sh
 require_file scripts/test-kernel-device-registry-report-runner.sh
 require_file .github/workflows/kernel-device-registry.yml
+require_file scripts/test-kernel-driver-catalog.sh
+require_file scripts/test-kernel-driver-catalog-report-runner.sh
+require_file .github/workflows/kernel-driver-catalog.yml
 require_file scripts/test-kernel-process-table.sh
 require_file scripts/test-kernel-process-table-report-runner.sh
 require_file .github/workflows/kernel-process-table.yml
@@ -56,13 +59,15 @@ require_contains 'kernel VFS namespace guard' docs/status/KERNEL_LIFECYCLE_EVIDE
 require_contains 'kernel VFS namespace report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel device registry guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel device registry report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel driver catalog guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel driver catalog report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel process table guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel process table report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel syscall table guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel syscall table report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel lifecycle subsystem summary' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel lifecycle rollback plan' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
-require_contains 'final_state=device-registry-ready' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'final_state=driver-catalog-ready' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'external_effect_performed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'no_external_effect_chain=1' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'runtime_entry_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
@@ -80,12 +85,17 @@ require_contains 'namespace_mutation_allowed=0' docs/status/KERNEL_LIFECYCLE_EVI
 require_contains 'device_open_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'device_read_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'device_write_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'driver_probe_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'driver_load_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'driver_bind_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'interrupt_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'dma_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'hardware_effect_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'Add no-effect rollback classifier' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-ipc-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-vfs-namespace.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-device-registry.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-driver-catalog.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-process-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-syscall-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 
@@ -97,11 +107,13 @@ require_contains 'kernel VFS namespace guard' docs/status/README.md
 require_contains 'kernel VFS namespace report runner' docs/status/README.md
 require_contains 'kernel device registry guard' docs/status/README.md
 require_contains 'kernel device registry report runner' docs/status/README.md
+require_contains 'kernel driver catalog guard' docs/status/README.md
+require_contains 'kernel driver catalog report runner' docs/status/README.md
 require_contains 'kernel process table guard' docs/status/README.md
 require_contains 'kernel process table report runner' docs/status/README.md
 require_contains 'kernel syscall table guard' docs/status/README.md
 require_contains 'kernel syscall table report runner' docs/status/README.md
-require_contains 'final_state=device-registry-ready' docs/status/README.md
+require_contains 'final_state=driver-catalog-ready' docs/status/README.md
 require_contains 'external_effect_performed=0' docs/status/README.md
 require_contains 'runtime_entry_allowed=0' docs/status/README.md
 require_contains 'scheduler_execution_allowed=0' docs/status/README.md
@@ -118,7 +130,11 @@ require_contains 'namespace_mutation_allowed=0' docs/status/README.md
 require_contains 'device_open_allowed=0' docs/status/README.md
 require_contains 'device_read_allowed=0' docs/status/README.md
 require_contains 'device_write_allowed=0' docs/status/README.md
+require_contains 'driver_probe_allowed=0' docs/status/README.md
+require_contains 'driver_load_allowed=0' docs/status/README.md
 require_contains 'driver_bind_allowed=0' docs/status/README.md
+require_contains 'interrupt_allowed=0' docs/status/README.md
+require_contains 'dma_allowed=0' docs/status/README.md
 require_contains 'hardware_effect_allowed=0' docs/status/README.md
 require_contains 'sh scripts/test-kernel-ipc-table.sh' .github/workflows/kernel-ipc-table.yml
 require_contains 'sh scripts/test-kernel-ipc-table-report-runner.sh' .github/workflows/kernel-ipc-table.yml
@@ -126,6 +142,8 @@ require_contains 'sh scripts/test-kernel-vfs-namespace.sh' .github/workflows/ker
 require_contains 'sh scripts/test-kernel-vfs-namespace-report-runner.sh' .github/workflows/kernel-vfs-namespace.yml
 require_contains 'sh scripts/test-kernel-device-registry.sh' .github/workflows/kernel-device-registry.yml
 require_contains 'sh scripts/test-kernel-device-registry-report-runner.sh' .github/workflows/kernel-device-registry.yml
+require_contains 'sh scripts/test-kernel-driver-catalog.sh' .github/workflows/kernel-driver-catalog.yml
+require_contains 'sh scripts/test-kernel-driver-catalog-report-runner.sh' .github/workflows/kernel-driver-catalog.yml
 require_contains 'sh scripts/test-kernel-process-table.sh' .github/workflows/kernel-process-table.yml
 require_contains 'sh scripts/test-kernel-process-table-report-runner.sh' .github/workflows/kernel-process-table.yml
 require_contains 'sh scripts/test-kernel-syscall-table.sh' .github/workflows/kernel-syscall-table.yml

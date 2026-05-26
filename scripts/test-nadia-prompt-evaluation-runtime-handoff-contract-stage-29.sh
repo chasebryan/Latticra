@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage29.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -79,7 +82,7 @@ require_contains 'prompt-evaluation invocation contract' "$stage29_status"
 require_contains 'Stage-29: Prompt Evaluation Runtime Handoff Contract' "$foundation"
 require_contains 'Stage-30: Prompt Evaluation Invocation Contract' "$foundation"
 require_contains 'Stage-31: Prompt Evaluation Result Contract' "$foundation"
-require_contains 'Before Stage-32 starts' "$foundation"
+require_contains 'Before Stage-34 starts' "$foundation"
 require_contains 'NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29.md' "$foundation_index"
 require_contains 'NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md' "$status_index"
 require_contains 'Nadia prompt evaluation runtime handoff contract Stage-29 + guardrails' "$foundation_index"
@@ -113,13 +116,15 @@ require_contains 'nadia prompt-evaluation-runtime-handoff' "$panel_ui"
 require_contains 'nadia_prompt_evaluation_runtime_handoff=stage-29-prompt-evaluation-runtime-handoff-contract' "$panel_ui"
 require_contains 'latticra-nadia prompt-evaluation-runtime-handoff' "$installer_readme"
 require_contains 'nadia prompt-evaluation-runtime-handoff' "$ui_model"
-require_contains 'Stage-30 and Stage-31 console surfaces are metadata-only' "$ui_model"
+require_contains 'Stage-31, Stage-32, and Stage-33 console surfaces are metadata-only' "$ui_model"
 require_contains 'prompt-evaluation-runtime-handoff' "$components_manifest"
 require_contains 'prompt-evaluation runtime handoff metadata records future prompt evaluation invocation requirements' "$components_manifest"
 require_contains 'Stage-30 now defines a prompt-evaluation invocation contract' "$stage29_status"
 
-out="/private/tmp/latticra-nadia-stage29-runtime-handoff-test-$$"
+out="$tmpdir/latticra-nadia-stage29-runtime-handoff-test"
 input="$out/prompt-evaluation-input-stage28-fixture.txt"
+handoff_stdout="$tmpdir/latticra-nadia-stage29-runtime-handoff-test.out"
+boundary_stdout="$tmpdir/latticra-nadia-stage29-boundary.out"
 mkdir -p "$out"
 
 cat > "$input" <<'EOF_INPUT'
@@ -234,7 +239,7 @@ NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_TIMESTAMP=stage29-test sh "$handoff_scri
   --request-class awareness-education \
   --handoff-family operator-reviewed-prompt-evaluation-runtime-handoff \
   --handoff-format contract-only-offline-runtime-handoff \
-  --output "$out" >/tmp/latticra-nadia-stage29-runtime-handoff-test.out
+  --output "$out" >"$handoff_stdout"
 
 report="$out/nadia-prompt-evaluation-runtime-handoff-contract-stage29-test.txt"
 require_file "$report"
@@ -262,10 +267,10 @@ require_contains 'manipulation_resistance=required' "$report"
 if sh "$handoff_script" \
   --prompt-evaluation-input "$input" \
   --request-class sexual-content \
-  --output "$out" >/tmp/latticra-nadia-stage29-boundary.out 2>&1; then
+  --output "$out" >"$boundary_stdout" 2>&1; then
   printf 'nadia prompt evaluation runtime handoff contract stage 29: sexual boundary label was accepted\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia prompt-evaluation-runtime-handoff boundary' /tmp/latticra-nadia-stage29-boundary.out
+require_contains 'outside Nadia prompt-evaluation-runtime-handoff boundary' "$boundary_stdout"
 
 printf 'nadia_prompt_evaluation_runtime_handoff_contract_stage_29: ok\n'

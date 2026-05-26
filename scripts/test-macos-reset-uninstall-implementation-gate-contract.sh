@@ -98,7 +98,7 @@ require_contains 'directory_delete_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
 require_contains 'macos_reset_uninstall_implementation_gate_contract: ok' "$doc"
-require_contains 'Add a macOS reset/uninstall effect-authorization contract' "$doc"
+require_contains 'Add a macOS reset/uninstall evidence-bundle contract' "$doc"
 
 require_contains 'Status: no-effect reset/uninstall implementation-gate contract status' "$status"
 require_contains 'macos_reset_uninstall_implementation_gate_contract_present=1' "$status"
@@ -128,7 +128,7 @@ require_contains 'macos_reset_uninstall_implementation_gate_contract_present=1' 
 require_contains 'reset_uninstall_live_run_allowed=0' "$transfer_status"
 require_contains 'reset_uninstall_deletion_enabled=0' "$transfer_status"
 require_contains 'operator_reset_uninstall_intent_evidence_present=0' "$transfer_status"
-require_contains 'Add a macOS reset/uninstall effect-authorization contract' "$transfer_status"
+require_contains 'Add a macOS reset/uninstall evidence-bundle contract' "$transfer_status"
 require_contains 'macos_reset_uninstall_implementation_gate_contract_present=1' "$readme"
 require_contains 'sh scripts/macos-reset-uninstall-implementation-gate-contract.sh' "$readme"
 require_contains 'docs/MACOS_RESET_UNINSTALL_IMPLEMENTATION_GATE_CONTRACT.md' "$readme"
@@ -170,7 +170,7 @@ require_contains 'file_delete_performed=0' "$script"
 require_contains 'directory_delete_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-effect-authorization-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-implementation-plan-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -205,7 +205,7 @@ require_output_contains "$output" 'directory_delete_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'network_performed=0'
 require_output_contains "$output" 'runtime_authority_granted=0'
-require_output_contains "$output" 'next_lane=macos-reset-uninstall-effect-authorization-contract'
+require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-implementation-plan-contract'
 
 require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
 require_contains 'persist-credentials: false' "$workflow"

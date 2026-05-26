@@ -87,6 +87,14 @@ macos_reset_uninstall_absence_report_contract_present=1
 macos_reset_uninstall_receipt_schema_contract_present=1
 macos_reset_uninstall_implementation_gate_contract_present=1
 macos_reset_uninstall_operator_intent_contract_present=1
+macos_reset_uninstall_effect_authorization_contract_present=1
+macos_reset_uninstall_evidence_bundle_contract_present=1
+evidence_bundle_contract_state=defined-no-effect
+evidence_bundle_complete=0
+reset_uninstall_evidence_bundle_complete=0
+effect_authorization_contract_state=closed-no-effect
+effect_authorization_open=0
+reset_uninstall_effect_authorized=0
 operator_intent_contract_state=defined-no-effect
 operator_intent_evidence_written=0
 reset_uninstall_live_run_allowed=0
@@ -99,6 +107,13 @@ absence_report_evidence_present=0
 macos_reset_uninstall_receipt_schema_contract_present=1
 macos_reset_uninstall_implementation_gate_contract_present=1
 macos_reset_uninstall_operator_intent_contract_present=1
+macos_reset_uninstall_effect_authorization_contract_present=1
+macos_reset_uninstall_evidence_bundle_contract_present=1
+evidence_bundle_contract_state=defined-no-effect
+evidence_bundle_complete=0
+reset_uninstall_evidence_bundle_complete=0
+effect_authorization_contract_state=closed-no-effect
+reset_uninstall_effect_authorized=0
 reset_uninstall_live_run_allowed=0
 operator_reset_uninstall_intent_evidence_present=0
 reset_receipt_evidence_present=0
@@ -156,8 +171,14 @@ macos_reset_uninstall_live_target_classifier: ok
 
 This classifier is not macOS reset evidence, macOS uninstall evidence, macOS install evidence, macOS app bundle evidence, signed app evidence, notarization evidence, launchd evidence, Keychain evidence, Secure Enclave evidence, sandbox evidence, TCC approval evidence, Endpoint Security evidence, System Extension evidence, Network Extension evidence, privileged helper evidence, malware prevention, ransomware prevention, production readiness, Apple platform approval, or runtime authority.
 
+## Previous Recommended Lane
+
+```text
+Add a macOS reset/uninstall evidence-bundle contract that groups implementation-gate, operator-intent, receipt, absence, planner, and classifier evidence before any live execution.
+```
+
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall effect-authorization contract that keeps live execution disabled until implementation-gate and operator-intent evidence are both present.
+Add a macOS reset/uninstall live-implementation plan contract that maps future effect-authorized execution phases while deletion remains disabled.
 ```

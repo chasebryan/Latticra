@@ -113,7 +113,7 @@ require_contains 'macOS dry-run writer candidate integration' "$probe_doc"
 require_contains 'macOS dry-run writer candidate integration' "$writer_doc"
 require_contains 'macOS dry-run writer candidate integration' "$alignment_doc"
 require_contains 'macOS commit gate contract' "$commit_gate_doc"
-require_contains 'Add a macOS reset/uninstall effect-authorization contract' "$doc"
+require_contains 'Add a macOS reset/uninstall evidence-bundle contract' "$doc"
 require_contains 'sh scripts/test-macos-dry-run-writer-candidate-integration.sh' "$workflow"
 
 require_contains 'MACOS DRY RUN WRITER CANDIDATE INTEGRATION' "$script"
@@ -124,7 +124,7 @@ require_contains 'commit_user_local_managed_artifacts=$COMMIT_FLAG' "$script"
 require_contains 'app_bundle_write_performed=$APP_BUNDLE_WRITE' "$script"
 require_contains 'host_mutation_performed=$HOST_MUTATION' "$script"
 require_contains 'network_performed=$NETWORK' "$script"
-require_contains 'next_lane=macos-reset-uninstall-effect-authorization-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-implementation-plan-contract' "$script"
 
 test_home=$(mktemp -d)
 trap 'rm -rf "$test_home"' EXIT INT HUP TERM

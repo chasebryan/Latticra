@@ -16,6 +16,8 @@ Latest Lat pipeline parse-error evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline semantic-error evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline downstream stage-error evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline stage-summary evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline module/count evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline first-declaration evidence propagation note: 2026-05-25 CDT
 Latest macOS reset/uninstall live-target classifier note: 2026-05-25 CDT
 Latest macOS reset/uninstall dry-run planner note: 2026-05-25 CDT
 Latest macOS reset/uninstall absence-report contract note: 2026-05-25 CDT
@@ -70,12 +72,16 @@ Latest Nadia prompt evaluation input contract Stage-28 note: 2026-05-25 CDT
 Latest Nadia prompt evaluation runtime handoff contract Stage-29 note: 2026-05-25 CDT
 Latest Nadia prompt evaluation invocation contract Stage-30 note: 2026-05-25 CDT
 Latest Nadia prompt evaluation result contract Stage-31 note: 2026-05-25 CDT
+Latest Nadia prompt evaluation result review contract Stage-32 note: 2026-05-25 CDT
+Latest Nadia prompt evaluation result disposition contract Stage-33 note: 2026-05-25 CDT
 Latest Latticra Console profile preset note: 2026-05-25 CDT
 Latest Latticra Console host-embedding contract note: 2026-05-25 CDT
 Latest Latticra Console read-only host inventory contract note: 2026-05-25 CDT
 Latest Latticra Console host-adapter contract note: 2026-05-26 CDT
 Latest Latticra Console Seal receipt-request contract note: 2026-05-26 CDT
 Latest Latticra Console receipt payload schema note: 2026-05-26 CDT
+Latest Latticra Console receipt payload artifact draft note: 2026-05-26 CDT
+Latest Latticra Console receipt payload artifact review gate note: 2026-05-26 CDT
 Latest Latticra Console signature-request binding contract note: 2026-05-26 CDT
 Latest Latticra Console receipt contract note: 2026-05-25 CDT
 Latest Latticra Console OS-base planning contract note: 2026-05-25 CDT
@@ -107,9 +113,11 @@ Latest Seal signing operation contract note: 2026-05-25 CDT
 Latest Seal signer invocation status/public-entry note: 2026-05-25 CDT
 Latest Seal signer invocation implementation note: 2026-05-25 CDT
 Latest Seal signer invocation contract note: 2026-05-25 CDT
+Latest Seal signer handoff predecessor status alignment note: 2026-05-25 CDT
 Latest Seal signer handoff status/public-entry note: 2026-05-25 CDT
 Latest Seal signer handoff implementation note: 2026-05-25 CDT
 Latest Seal signer handoff contract note: 2026-05-25 CDT
+Latest Seal signing authorization predecessor status alignment note: 2026-05-25 CDT
 Latest Seal signing authorization status/public-entry note: 2026-05-25 CDT
 Latest Seal signing authorization implementation note: 2026-05-25 CDT
 Latest Seal signing authorization contract note: 2026-05-25 CDT
@@ -133,6 +141,8 @@ Latest Lat pipeline parse-error evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline semantic-error evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline downstream stage-error evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline stage-summary evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline module/count evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline first-declaration evidence propagation note: 2026-05-25 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
 Latest Lat model report declaration metadata integration note: 2026-05-25 CDT
 Latest Lat model report clause metadata integration note: 2026-05-25 CDT
@@ -225,7 +235,7 @@ docs/strategy/README.md
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 65% |
+| Nadia offline AI foundation | 67% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |
@@ -270,6 +280,8 @@ Runtime boundary policy expansion after threat-model validation
 Runtime boundary abuse-case fixture expansion after policy expansion
 Nadia prompt evaluation invocation contract Stage-30
 Nadia prompt evaluation result contract Stage-31
+Nadia prompt evaluation result review contract Stage-32
+Nadia prompt evaluation result disposition contract Stage-33
 Runtime boundary Lat pipeline comment evidence integration
 Completion estimate review README/status alignment
 Completion estimate review after runtime-boundary abuse-case fixtures
@@ -342,9 +354,11 @@ Seal signing operation contract
 Seal signer invocation status/public-entry alignment
 Seal signer invocation metadata implementation
 Seal signer invocation contract
+Seal signer handoff predecessor status alignment
 Seal signer handoff status/public-entry alignment
 Seal signer handoff metadata implementation
 Seal signer handoff contract
+Seal signing authorization predecessor status alignment
 Seal signing authorization status/public-entry alignment
 Seal signing authorization metadata implementation
 Seal signing authorization contract
@@ -367,6 +381,8 @@ Lat pipeline comment metadata integration
 Lat pipeline diagnostic comment metadata integration
 Runtime boundary Lat pipeline comment evidence integration
 Lat pipeline stage-summary evidence propagation
+Lat pipeline module/count evidence propagation
+Lat pipeline first-declaration evidence propagation
 Lat semantic diagnostics refinement
 Lat model normalization implementation
 Lat model report declaration metadata integration
@@ -743,6 +759,78 @@ host_behavior_changed=0
 estimate_adjustment_required=0
 ```
 
+## Current Seal signing authorization predecessor status boundary
+
+The Seal signing authorization predecessor status alignment ties the existing metadata-only signing authorization status record to the guarded signature-request status predecessor while preserving no signing, no signature verification, no object sealing, no runtime handoff execution, no capability enforcement, no runtime authority, no key generation, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, and no production cryptography claim.
+
+Current signing authorization predecessor status fields:
+
+```text
+seal_signature_request_status_present=1
+seal_signing_authorization_status_present=1
+signing_authorization_predecessor_signature_request_status_present=1
+signature_request_ready=1
+signature_request_state=requested-metadata-only
+signing_authorization_ready=1
+signing_authorization_state=authorized-metadata-only
+signature_performed=0
+verification_performed=0
+private_key_handling=0
+key_generation_performed=0
+trust_store_loaded=0
+revocation_lookup_performed=0
+runtime_authority_granted=0
+host_read_performed=0
+host_write_performed=0
+network_performed=0
+signing_added=0
+signature_verification_added=0
+key_generation_added=0
+private_key_handling_added=0
+object_sealing_added=0
+runtime_handoff_execution_added=0
+network_behavior_changed=0
+host_behavior_changed=0
+estimate_adjustment_required=0
+```
+
+## Current Seal signer handoff predecessor status boundary
+
+The Seal signer handoff predecessor status alignment ties the existing metadata-only signer handoff status record to the guarded signing-authorization status predecessor while preserving no signing, no signature verification, no signer invocation behavior, no object sealing, no runtime handoff execution, no capability enforcement, no runtime authority, no key generation, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, and no production cryptography claim.
+
+Current signer handoff predecessor status fields:
+
+```text
+seal_signing_authorization_status_present=1
+seal_signer_handoff_status_present=1
+signer_handoff_predecessor_signing_authorization_status_present=1
+signing_authorization_ready=1
+signing_authorization_state=authorized-metadata-only
+signer_handoff_ready=1
+signer_handoff_state=handoff-metadata-only
+signature_performed=0
+verification_performed=0
+signer_invoked=0
+private_key_handling=0
+key_generation_performed=0
+trust_store_loaded=0
+revocation_lookup_performed=0
+runtime_authority_granted=0
+host_read_performed=0
+host_write_performed=0
+network_performed=0
+signing_added=0
+signature_verification_added=0
+signer_invocation_behavior_added=0
+key_generation_added=0
+private_key_handling_added=0
+object_sealing_added=0
+runtime_handoff_execution_added=0
+network_behavior_changed=0
+host_behavior_changed=0
+estimate_adjustment_required=0
+```
+
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
@@ -768,9 +856,11 @@ signature_request_predecessor_report_envelope_status_present=1
 seal_signing_authorization_contract_present=1
 seal_signing_authorization_metadata_present=1
 seal_signing_authorization_status_present=1
+signing_authorization_predecessor_signature_request_status_present=1
 seal_signer_handoff_contract_present=1
 seal_signer_handoff_metadata_present=1
 seal_signer_handoff_status_present=1
+signer_handoff_predecessor_signing_authorization_status_present=1
 seal_signer_invocation_contract_present=1
 seal_signer_invocation_metadata_present=1
 seal_signer_invocation_status_present=1
@@ -1071,7 +1161,7 @@ The project notes Nucleus announcement README status/index check verifies that t
 
 ## Current runtime boundary refinement boundary
 
-The runtime boundary now carries no-effect Lat pipeline evidence, Lat pipeline stage-summary evidence, Lat pipeline line-comment count and first-comment span evidence, and Lat-specific LIR evidence in records and reports. It also reports explicit classification, boundary-domain, authorization-state, evidence-level, and policy-matrix fields for runtime-boundary requests while preserving disabled-by-default behavior and future-gated execution requests.
+The runtime boundary now carries no-effect Lat pipeline evidence, Lat pipeline first-declaration evidence, Lat pipeline module/count evidence, Lat pipeline stage-summary evidence, Lat pipeline line-comment count and first-comment span evidence, and Lat-specific LIR evidence in records and reports. It also reports explicit classification, boundary-domain, authorization-state, evidence-level, and policy-matrix fields for runtime-boundary requests while preserving disabled-by-default behavior and future-gated execution requests.
 
 ## Current Lat pipeline boundary
 

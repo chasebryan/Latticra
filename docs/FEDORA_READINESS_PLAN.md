@@ -70,7 +70,7 @@ Known current posture:
 
 ```text
 kernel lifecycle evidence exists
-final_state=device-registry-ready
+final_state=driver-catalog-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
@@ -87,7 +87,11 @@ namespace_mutation_allowed=0
 device_open_allowed=0
 device_read_allowed=0
 device_write_allowed=0
+driver_probe_allowed=0
+driver_load_allowed=0
 driver_bind_allowed=0
+interrupt_allowed=0
+dma_allowed=0
 hardware_effect_allowed=0
 not bootable
 not installer-ready

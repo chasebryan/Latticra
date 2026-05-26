@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-stage9.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -111,49 +114,59 @@ require_contains 'nadia model-registry' "$ui_model"
 require_contains 'model-registry' "$components_manifest"
 require_contains 'nadia-model-registry' "$makefile"
 
-out="${TMPDIR:-/tmp}/latticra-nadia-stage9-registry-test"
-context_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-context-test"
-runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-runtime-test"
-plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-plan-test"
-mode_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-mode-test"
-ledger_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-ledger-test"
-safety_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-safety-test"
-tool_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-tool-test"
-contract_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-contract-test"
-rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out"
+out="$tmpdir/latticra-nadia-stage9-registry-test"
+context_out="$tmpdir/latticra-nadia-stage9-context-test"
+runtime_out="$tmpdir/latticra-nadia-stage9-runtime-test"
+plan_out="$tmpdir/latticra-nadia-stage9-plan-test"
+mode_out="$tmpdir/latticra-nadia-stage9-mode-test"
+ledger_out="$tmpdir/latticra-nadia-stage9-ledger-test"
+safety_out="$tmpdir/latticra-nadia-stage9-safety-test"
+tool_out="$tmpdir/latticra-nadia-stage9-tool-test"
+contract_out="$tmpdir/latticra-nadia-stage9-contract-test"
+context_stdout="$tmpdir/latticra-nadia-stage9-context-test.out"
+runtime_stdout="$tmpdir/latticra-nadia-stage9-runtime-test.out"
+plan_stdout="$tmpdir/latticra-nadia-stage9-plan-test.out"
+mode_stdout="$tmpdir/latticra-nadia-stage9-mode-test.out"
+ledger_stdout="$tmpdir/latticra-nadia-stage9-ledger-test.out"
+safety_stdout="$tmpdir/latticra-nadia-stage9-safety-test.out"
+tool_stdout="$tmpdir/latticra-nadia-stage9-tool-test.out"
+contract_stdout="$tmpdir/latticra-nadia-stage9-contract-test.out"
+registry_stdout="$tmpdir/latticra-nadia-stage9-registry-test.out"
+reject_stdout="$tmpdir/latticra-nadia-stage9-reject-test.out"
+reject_stderr="$tmpdir/latticra-nadia-stage9-reject-test.err"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out"
-NADIA_CONTEXT_PACK_TIMESTAMP=stage9-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage9-context-test.out
+NADIA_CONTEXT_PACK_TIMESTAMP=stage9-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >"$context_stdout"
 NADIA_RUNTIME_PROFILE_TIMESTAMP=stage9-test sh scripts/nadia-runtime-profile.sh \
   --context-tokens 8192 \
   --memory-mib 16384 \
-  --output "$runtime_out" >/tmp/latticra-nadia-stage9-runtime-test.out
+  --output "$runtime_out" >"$runtime_stdout"
 NADIA_PROMPT_PLAN_TIMESTAMP=stage9-test sh scripts/nadia-prompt-plan.sh \
   --context-pack "$context_out/nadia-context-pack-stage9-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage9-test.txt" \
   --task "local model registry contract planning" \
-  --output "$plan_out" >/tmp/latticra-nadia-stage9-plan-test.out
+  --output "$plan_out" >"$plan_stdout"
 NADIA_MODE_VALIDATION_TIMESTAMP=stage9-test sh scripts/nadia-mode-validate.sh \
   --prompt-plan "$plan_out/nadia-prompt-plan-stage9-test.txt" \
   --mode ai-development \
-  --output "$mode_out" >/tmp/latticra-nadia-stage9-mode-test.out
+  --output "$mode_out" >"$mode_stdout"
 NADIA_PRODUCTIVITY_LEDGER_TIMESTAMP=stage9-test sh scripts/nadia-productivity-ledger.sh \
   --mode-validation "$mode_out/nadia-mode-validation-stage9-test.txt" \
   --outcome "accepted local model registry boundary" \
   --recommendation "keep registry metadata-only" \
-  --output "$ledger_out" >/tmp/latticra-nadia-stage9-ledger-test.out
+  --output "$ledger_out" >"$ledger_stdout"
 NADIA_PROTECTIVE_SAFETY_TIMESTAMP=stage9-test sh scripts/nadia-protective-safety-boundary.sh \
   --productivity-entry "$ledger_out/nadia-productivity-entry-stage9-test.txt" \
   --request-class software-development \
-  --output "$safety_out" >/tmp/latticra-nadia-stage9-safety-test.out
+  --output "$safety_out" >"$safety_stdout"
 NADIA_TOOL_PREFLIGHT_TIMESTAMP=stage9-test sh scripts/nadia-tool-authority-preflight.sh \
   --protective-safety "$safety_out/nadia-protective-safety-stage9-test.txt" \
   --tool-class metadata-read \
   --action "prepare model registry contract evidence" \
-  --output "$tool_out" >/tmp/latticra-nadia-stage9-tool-test.out
+  --output "$tool_out" >"$tool_stdout"
 NADIA_PROMPT_CONTRACT_TIMESTAMP=stage9-test sh scripts/nadia-prompt-evaluation-contract.sh \
   --tool-preflight "$tool_out/nadia-tool-preflight-stage9-test.txt" \
   --request-class software-development \
-  --output "$contract_out" >/tmp/latticra-nadia-stage9-contract-test.out
+  --output "$contract_out" >"$contract_stdout"
 NADIA_MODEL_REGISTRY_TIMESTAMP=stage9-test sh "$registry_script" \
   --prompt-contract "$contract_out/nadia-prompt-contract-stage9-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage9-test.txt" \
@@ -161,7 +174,7 @@ NADIA_MODEL_REGISTRY_TIMESTAMP=stage9-test sh "$registry_script" \
   --quantization q4_k_m \
   --source operator-provided-local \
   --license operator-review-required \
-  --output "$out" >/tmp/latticra-nadia-stage9-registry-test.out
+  --output "$out" >"$registry_stdout"
 registry="$out/nadia-model-registry-contract-stage9-test.txt"
 
 require_file "$registry"
@@ -202,10 +215,10 @@ if NADIA_MODEL_REGISTRY_TIMESTAMP=stage9-reject sh "$registry_script" \
   --prompt-contract "$contract_out/nadia-prompt-contract-stage9-test.txt" \
   --runtime-profile "$runtime_out/nadia-runtime-profile-stage9-test.txt" \
   --model-id sexual-model-candidate \
-  --output "$out" >/tmp/latticra-nadia-stage9-reject-test.out 2>/tmp/latticra-nadia-stage9-reject-test.err; then
+  --output "$out" >"$reject_stdout" 2>"$reject_stderr"; then
   printf 'nadia local model registry contract stage 9: sexual model label was not rejected\n' >&2
   exit 1
 fi
-require_contains 'outside Nadia local model-registry boundary' /tmp/latticra-nadia-stage9-reject-test.err
+require_contains 'outside Nadia local model-registry boundary' "$reject_stderr"
 
 printf 'nadia_local_model_registry_contract_stage_9: ok\n'

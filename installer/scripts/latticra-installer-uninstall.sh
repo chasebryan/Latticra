@@ -166,6 +166,77 @@ if [ "$WRITE_RECEIPT" = true ] && [ "$DRY_RUN" != true ]; then
   esac
 fi
 
+toml_get_key() {
+  path="$1"
+  key="$2"
+  [ -f "$path" ] || return 1
+
+  awk -F '=' -v key="$key" '
+    /^[[:space:]]*#/ { next }
+    /^[[:space:]]*\[/ { next }
+    {
+      left = $1
+      gsub(/^[ \t]+|[ \t]+$/, "", left)
+      if (left == key) {
+        val = $2
+        for (i = 3; i <= NF; i++) val = val "=" $i
+        sub(/[ \t]+#.*/, "", val)
+        gsub(/^[ \t]+|[ \t]+$/, "", val)
+        gsub(/^"/, "", val)
+        gsub(/"$/, "", val)
+        print val
+        exit
+      }
+    }
+  ' "$path"
+}
+
+valid_command_name() {
+  case "$1" in
+    ""|*/*|*" "*|*"	"*|*[!abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-]*)
+      return 1
+      ;;
+    *)
+      return 0
+      ;;
+  esac
+}
+
+detect_lc_command_wrapper() {
+  wrapper=$(toml_get_key "$PREFIX/share/latticra/lc/install/config.toml" command_wrapper || true)
+  if [ -z "$wrapper" ]; then
+    wrapper=$(toml_get_key "$PREFIX/etc/latticra/lc.toml" install_command_wrapper || true)
+  fi
+
+  if valid_command_name "$wrapper"; then
+    printf '%s\n' "$wrapper"
+  else
+    printf '%s\n' 'latticra-lc'
+  fi
+}
+
+COMMAND_WRAPPERS=""
+append_command_wrapper() {
+  command="$1"
+  case " $COMMAND_WRAPPERS " in
+    *" $command "*)
+      ;;
+    *)
+      COMMAND_WRAPPERS="${COMMAND_WRAPPERS:+$COMMAND_WRAPPERS }$command"
+      ;;
+  esac
+}
+
+LC_COMMAND_WRAPPER=$(detect_lc_command_wrapper)
+append_command_wrapper latticra
+append_command_wrapper latticra-lc
+append_command_wrapper "$LC_COMMAND_WRAPPER"
+append_command_wrapper lat
+append_command_wrapper latticra-seal
+append_command_wrapper latticra-nadia
+append_command_wrapper latticra-panel
+append_command_wrapper latticra-installer
+
 RECEIPT=""
 removed_count=0
 planned_count=0
@@ -186,6 +257,7 @@ install_prefix=$PREFIX
 user_bin=$USER_BIN
 desktop_dir=$APP_DIR
 icon_dir=$ICON_DIR
+lc_command_wrapper=$LC_COMMAND_WRAPPER
 root_authority=0
 network_authority=0
 runtime_enforcement_authority=0
@@ -335,7 +407,7 @@ log "mode=$MODE"
 log "prefix=$PREFIX"
 
 phase 1 "remove managed command wrappers"
-for command in latticra latticra-lc lat latticra-seal latticra-nadia latticra-panel latticra-installer; do
+for command in $COMMAND_WRAPPERS; do
   remove_managed_file "$USER_BIN/$command" "command wrapper"
 done
 

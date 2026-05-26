@@ -3,6 +3,8 @@
 #include <assert.h>
 #include <string.h>
 
+#define LOCAL_RPM_FIXTURE "fixtures/latticra.rpm"
+
 static latticra_fedora_rpm_gate_input_t allowed_input(void)
 {
     latticra_fedora_rpm_gate_input_t input;
@@ -12,7 +14,7 @@ static latticra_fedora_rpm_gate_input_t allowed_input(void)
     input.mutable_fedora_host = 1;
     input.immutable_host = 0;
     input.local_rpm_present = 1;
-    input.local_rpm_path = "/tmp/latticra.rpm";
+    input.local_rpm_path = LOCAL_RPM_FIXTURE;
     input.local_rpm_path_len = strlen(input.local_rpm_path);
     input.root_or_sudo_available = 1;
     input.network_required = 0;
@@ -41,7 +43,7 @@ static void allowed_gate_reports_allowed_without_performing_mutation(void)
     assert(result.host_mutation_performed == 0);
     assert(result.network_allowed == 0);
     assert(result.evidence_level == 4u);
-    assert(strcmp(result.local_rpm_path, "/tmp/latticra.rpm") == 0);
+    assert(strcmp(result.local_rpm_path, LOCAL_RPM_FIXTURE) == 0);
 
     assert(latticra_fedora_rpm_gate_report(&result, report, sizeof(report)) ==
            LATTICRA_STATUS_OK);
