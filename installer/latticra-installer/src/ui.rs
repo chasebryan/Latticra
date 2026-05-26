@@ -531,7 +531,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc profile hosted|panel|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia commands",
+                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc profile hosted|panel|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
                 );
                 self.push_console(
                     "nadia: use `nadia commands` for the full Stage-1 through Stage-33 command map",
@@ -1903,6 +1903,7 @@ impl LatticraInstallerApp {
                 );
             }
             ["nadia", "plan"] | ["nadia", "prompt-plan"] => {
+                self.push_console("panel_command=nadia plan");
                 self.push_console("nadia_developer_workbench=stage-3-prompt-plan");
                 self.push_console("panel_action=metadata-only");
                 self.push_console("installed_cli=latticra-nadia prompt-plan");
@@ -1925,6 +1926,7 @@ impl LatticraInstallerApp {
                 );
             }
             ["nadia", "ledger"] | ["nadia", "productivity"] | ["nadia", "productivity-ledger"] => {
+                self.push_console("panel_command=nadia ledger");
                 self.push_console("nadia_productivity_loop=stage-5-productivity-ledger-loop");
                 self.push_console("panel_action=metadata-only");
                 self.push_console("installed_cli=latticra-nadia productivity-ledger");

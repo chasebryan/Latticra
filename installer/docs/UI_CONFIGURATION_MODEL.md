@@ -131,6 +131,6 @@ LC is the Panel-installable console foundation for substrate interaction, host e
 
 Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, Stage-11, Stage-12, Stage-13, Stage-14, Stage-15, Stage-16, Stage-17, Stage-18, Stage-19, Stage-20, Stage-21, Stage-22, Stage-23, Stage-24, Stage-25, Stage-26, Stage-27, Stage-28, Stage-29, Stage-30, Stage-31, Stage-32, and Stage-33 console surfaces are metadata-only inside the Panel and do not launch an external host process or model runtime.
 
-Stage-31 and Stage-32 console surfaces are metadata-only result and review surfaces inside the Panel.
+Stage-31, Stage-32, and Stage-33 console surfaces are metadata-only result, review, and disposition surfaces inside the Panel.
 
 Nadia's Stage-31, Stage-32, and Stage-33 console surfaces are metadata-only and remain covered by the Stage-33 metadata-only console posture.
