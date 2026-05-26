@@ -122,8 +122,8 @@ require_contains 'nadia-prompt-evaluation-handoff' "$makefile"
 
 sh "$stage15_guard" >/tmp/latticra-nadia-stage16-prereq-stage15-test.out
 
-out='/private/tmp/latticra-nadia-stage16-handoff-test'
-awareness='/private/tmp/latticra-nadia-stage15-awareness-test/nadia-awareness-dialogue-contract-stage15-test.txt'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage16-handoff-test"
+awareness="${TMPDIR:-/tmp}/latticra-nadia-stage15-awareness-test/nadia-awareness-dialogue-contract-stage15-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 

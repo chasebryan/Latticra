@@ -121,18 +121,18 @@ require_contains 'nadia model-load' "$ui_model"
 require_contains 'model-load' "$components_manifest"
 require_contains 'nadia-model-load' "$makefile"
 
-out='/private/tmp/latticra-nadia-stage12-load-test'
-context_out='/private/tmp/latticra-nadia-stage12-context-test'
-runtime_out='/private/tmp/latticra-nadia-stage12-runtime-test'
-plan_out='/private/tmp/latticra-nadia-stage12-plan-test'
-mode_out='/private/tmp/latticra-nadia-stage12-mode-test'
-ledger_out='/private/tmp/latticra-nadia-stage12-ledger-test'
-safety_out='/private/tmp/latticra-nadia-stage12-safety-test'
-tool_out='/private/tmp/latticra-nadia-stage12-tool-test'
-contract_out='/private/tmp/latticra-nadia-stage12-contract-test'
-registry_out='/private/tmp/latticra-nadia-stage12-registry-test'
-readiness_out='/private/tmp/latticra-nadia-stage12-readiness-test'
-invocation_out='/private/tmp/latticra-nadia-stage12-invocation-test'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage12-load-test"
+context_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-context-test"
+runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-runtime-test"
+plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-plan-test"
+mode_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-mode-test"
+ledger_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-ledger-test"
+safety_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-safety-test"
+tool_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-tool-test"
+contract_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-contract-test"
+registry_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-registry-test"
+readiness_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-readiness-test"
+invocation_out="${TMPDIR:-/tmp}/latticra-nadia-stage12-invocation-test"
 rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out" "$registry_out" "$readiness_out" "$invocation_out"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out" "$registry_out" "$readiness_out" "$invocation_out"
 NADIA_CONTEXT_PACK_TIMESTAMP=stage12-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage12-context-test.out

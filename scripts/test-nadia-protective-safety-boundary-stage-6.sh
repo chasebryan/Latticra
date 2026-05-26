@@ -109,12 +109,12 @@ require_contains 'nadia safety' "$ui_model"
 require_contains 'protective-safety' "$components_manifest"
 require_contains 'nadia-safety' "$makefile"
 
-out='/private/tmp/latticra-nadia-stage6-safety-test'
-context_out='/private/tmp/latticra-nadia-stage6-context-test'
-runtime_out='/private/tmp/latticra-nadia-stage6-runtime-test'
-plan_out='/private/tmp/latticra-nadia-stage6-plan-test'
-mode_out='/private/tmp/latticra-nadia-stage6-mode-test'
-ledger_out='/private/tmp/latticra-nadia-stage6-ledger-test'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage6-safety-test"
+context_out="${TMPDIR:-/tmp}/latticra-nadia-stage6-context-test"
+runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage6-runtime-test"
+plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage6-plan-test"
+mode_out="${TMPDIR:-/tmp}/latticra-nadia-stage6-mode-test"
+ledger_out="${TMPDIR:-/tmp}/latticra-nadia-stage6-ledger-test"
 rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out"
 NADIA_CONTEXT_PACK_TIMESTAMP=stage6-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage6-context-test.out

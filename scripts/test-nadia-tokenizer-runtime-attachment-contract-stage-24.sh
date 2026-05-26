@@ -137,8 +137,8 @@ require_contains 'nadia-tokenizer-runtime-attachment' "$makefile"
 
 sh "$stage23_guard" >/tmp/latticra-nadia-stage24-prereq-stage23-test.out
 
-out='/private/tmp/latticra-nadia-stage24-tokenizer-runtime-attachment-test'
-binding='/private/tmp/latticra-nadia-stage23-tokenizer-artifact-binding-test/nadia-tokenizer-artifact-binding-contract-stage23-test.txt'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage24-tokenizer-runtime-attachment-test"
+binding="${TMPDIR:-/tmp}/latticra-nadia-stage23-tokenizer-artifact-binding-test/nadia-tokenizer-artifact-binding-contract-stage23-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 

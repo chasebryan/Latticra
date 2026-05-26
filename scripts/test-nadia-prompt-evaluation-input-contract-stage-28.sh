@@ -140,7 +140,7 @@ require_contains 'sh scripts/test-nadia-prompt-evaluation-input-contract-stage-2
 sh "$stage27_guard" >/tmp/latticra-nadia-stage28-stage27-guard.out
 require_contains 'nadia_context_window_assembly_contract_stage_27: ok' /tmp/latticra-nadia-stage28-stage27-guard.out
 
-out="/private/tmp/latticra-nadia-stage28-prompt-evaluation-input-test-$$"
+out="${TMPDIR:-/tmp}/latticra-nadia-stage28-prompt-evaluation-input-test-$$"
 context="$out/nadia-context-window-assembly-contract-stage27-fixture.txt"
 mkdir -p "$out"
 

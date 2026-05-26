@@ -99,9 +99,9 @@ require_contains 'nadia plan' "$panel_ui"
 require_contains 'latticra-nadia prompt-plan' "$installer_readme"
 require_contains 'nadia-plan' "$makefile"
 
-out='/private/tmp/latticra-nadia-stage3-plan-test'
-context_out='/private/tmp/latticra-nadia-stage3-context-test'
-runtime_out='/private/tmp/latticra-nadia-stage3-runtime-test'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage3-plan-test"
+context_out="${TMPDIR:-/tmp}/latticra-nadia-stage3-context-test"
+runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage3-runtime-test"
 rm -rf "$out" "$context_out" "$runtime_out"
 mkdir -p "$out" "$context_out" "$runtime_out"
 NADIA_CONTEXT_PACK_TIMESTAMP=stage3-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage3-context-test.out

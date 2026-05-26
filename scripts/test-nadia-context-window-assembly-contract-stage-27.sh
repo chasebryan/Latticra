@@ -141,7 +141,7 @@ require_contains 'context-window-assembly' "$components_manifest"
 require_contains 'nadia-context-window-assembly' "$makefile"
 require_contains 'sh scripts/test-nadia-context-window-assembly-contract-stage-27.sh' "$workflow"
 
-out="/private/tmp/latticra-nadia-stage27-context-window-assembly-test-$$"
+out="${TMPDIR:-/tmp}/latticra-nadia-stage27-context-window-assembly-test-$$"
 sequence="$out/nadia-prompt-token-sequence-contract-stage26-fixture.txt"
 mkdir -p "$out"
 

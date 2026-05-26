@@ -106,11 +106,11 @@ require_contains 'nadia ledger' "$ui_model"
 require_contains 'productivity-ledger' "$components_manifest"
 require_contains 'nadia-ledger' "$makefile"
 
-out='/private/tmp/latticra-nadia-stage5-ledger-test'
-context_out='/private/tmp/latticra-nadia-stage5-context-test'
-runtime_out='/private/tmp/latticra-nadia-stage5-runtime-test'
-plan_out='/private/tmp/latticra-nadia-stage5-plan-test'
-mode_out='/private/tmp/latticra-nadia-stage5-mode-test'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage5-ledger-test"
+context_out="${TMPDIR:-/tmp}/latticra-nadia-stage5-context-test"
+runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage5-runtime-test"
+plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage5-plan-test"
+mode_out="${TMPDIR:-/tmp}/latticra-nadia-stage5-mode-test"
 rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out"
 NADIA_CONTEXT_PACK_TIMESTAMP=stage5-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage5-context-test.out

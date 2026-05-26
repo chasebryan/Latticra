@@ -121,8 +121,8 @@ require_contains 'nadia-prompt-materialization' "$makefile"
 
 sh "$stage13_guard" >/tmp/latticra-nadia-stage14-prereq-stage13-test.out
 
-out='/private/tmp/latticra-nadia-stage14-materialization-test'
-receipt='/private/tmp/latticra-nadia-stage13-receipt-test/nadia-prompt-receipt-contract-stage13-test.txt'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage14-materialization-test"
+receipt="${TMPDIR:-/tmp}/latticra-nadia-stage13-receipt-test/nadia-prompt-receipt-contract-stage13-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 

@@ -118,7 +118,7 @@ require_contains 'Stage-29, and Stage-30 console surfaces are metadata-only' "$u
 require_contains 'prompt-evaluation-runtime-handoff' "$components_manifest"
 require_contains 'prompt-evaluation runtime handoff metadata records future prompt evaluation invocation requirements' "$components_manifest"
 
-out="/private/tmp/latticra-nadia-stage29-runtime-handoff-test-$$"
+out="${TMPDIR:-/tmp}/latticra-nadia-stage29-runtime-handoff-test-$$"
 input="$out/prompt-evaluation-input-stage28-fixture.txt"
 mkdir -p "$out"
 

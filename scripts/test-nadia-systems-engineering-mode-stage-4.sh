@@ -104,10 +104,10 @@ require_contains 'nadia mode' "$ui_model"
 require_contains 'mode-validations' "$components_manifest"
 require_contains 'nadia-mode' "$makefile"
 
-out='/private/tmp/latticra-nadia-stage4-mode-test'
-context_out='/private/tmp/latticra-nadia-stage4-context-test'
-runtime_out='/private/tmp/latticra-nadia-stage4-runtime-test'
-plan_out='/private/tmp/latticra-nadia-stage4-plan-test'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage4-mode-test"
+context_out="${TMPDIR:-/tmp}/latticra-nadia-stage4-context-test"
+runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage4-runtime-test"
+plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage4-plan-test"
 rm -rf "$out" "$context_out" "$runtime_out" "$plan_out"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out"
 NADIA_CONTEXT_PACK_TIMESTAMP=stage4-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage4-context-test.out

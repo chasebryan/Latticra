@@ -96,7 +96,7 @@ require_contains 'context_engine_stage=1-local-context-engine' "$panel_config"
 require_contains 'nadia context' "$panel_ui"
 require_contains 'latticra-nadia context-pack' "$installer_readme"
 
-out='/private/tmp/latticra-nadia-stage1-context-test'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage1-context-test"
 rm -rf "$out"
 mkdir -p "$out"
 NADIA_CONTEXT_PACK_TIMESTAMP=stage1-test sh "$context_script" --repo . --output "$out" >/tmp/latticra-nadia-stage1-context-test.out

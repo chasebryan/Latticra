@@ -111,15 +111,15 @@ require_contains 'nadia model-registry' "$ui_model"
 require_contains 'model-registry' "$components_manifest"
 require_contains 'nadia-model-registry' "$makefile"
 
-out='/private/tmp/latticra-nadia-stage9-registry-test'
-context_out='/private/tmp/latticra-nadia-stage9-context-test'
-runtime_out='/private/tmp/latticra-nadia-stage9-runtime-test'
-plan_out='/private/tmp/latticra-nadia-stage9-plan-test'
-mode_out='/private/tmp/latticra-nadia-stage9-mode-test'
-ledger_out='/private/tmp/latticra-nadia-stage9-ledger-test'
-safety_out='/private/tmp/latticra-nadia-stage9-safety-test'
-tool_out='/private/tmp/latticra-nadia-stage9-tool-test'
-contract_out='/private/tmp/latticra-nadia-stage9-contract-test'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage9-registry-test"
+context_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-context-test"
+runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-runtime-test"
+plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-plan-test"
+mode_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-mode-test"
+ledger_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-ledger-test"
+safety_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-safety-test"
+tool_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-tool-test"
+contract_out="${TMPDIR:-/tmp}/latticra-nadia-stage9-contract-test"
 rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out"
 NADIA_CONTEXT_PACK_TIMESTAMP=stage9-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage9-context-test.out
