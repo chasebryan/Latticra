@@ -118,7 +118,7 @@ With explicit evidence input:
 sh scripts/nadia-runtime-invocation-contract.sh \
   --inference-readiness /path/to/latest-inference-readiness-contract.txt \
   --request-class software-development \
-  --output /private/tmp/latticra-nadia-runtime-invocation
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-runtime-invocation.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

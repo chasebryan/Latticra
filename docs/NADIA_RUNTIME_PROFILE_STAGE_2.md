@@ -59,7 +59,7 @@ The default runtime family is `llama.cpp-compatible` because GGUF-oriented local
 Without a model file:
 
 ```sh
-sh scripts/nadia-runtime-profile.sh --output /private/tmp/latticra-nadia-runtime
+sh scripts/nadia-runtime-profile.sh --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-runtime.XXXXXX")"
 ```
 
 With an operator-provided local model file:
@@ -69,7 +69,7 @@ sh scripts/nadia-runtime-profile.sh \
   --model /path/to/model.gguf \
   --context-tokens 8192 \
   --memory-mib 16384 \
-  --output /private/tmp/latticra-nadia-runtime
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-runtime.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

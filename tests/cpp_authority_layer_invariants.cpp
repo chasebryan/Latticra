@@ -97,6 +97,7 @@ void cpp_authority_layer_preserves_no_effect_flags() noexcept {
     expect(!report.flags.execution_allowed);
     expect(!report.flags.mutation_allowed);
     expect(!report.flags.server_allowed);
+    expect(!report.flags.network_allowed);
     expect(!report.flags.recovery_allowed);
     expect(!report.flags.hardware_allowed);
 }
@@ -141,6 +142,7 @@ void cpp_authority_layer_has_no_network_path() noexcept {
 
     expect(status == latticra::authority_status::policy_denied);
     expect(!report.flags.server_allowed);
+    expect(!report.flags.network_allowed);
 }
 
 void cpp_authority_layer_has_no_hardware_path() noexcept {
@@ -190,6 +192,7 @@ void cpp_authority_layer_does_not_allocate_in_report_path() noexcept {
     expect(latticra::render_authority_audit_report(
                report, buffer, sizeof(buffer)) == latticra::authority_status::ok);
     expect(contains_text(buffer, "CPP AUTHORITY REPORT"));
+    expect(contains_text(buffer, "network_allowed=0"));
 }
 
 void cpp_authority_layer_validates_lat_parse_result_metadata() noexcept {
@@ -285,6 +288,21 @@ void cpp_authority_layer_rejects_mutation_flags() noexcept {
                      "non_no_effect_flags_denied"));
 }
 
+void cpp_authority_layer_rejects_network_flags() noexcept {
+    latticra::authority_request request{};
+    request.flags.no_effect = true;
+    request.flags.network_allowed = true;
+    request.requested_effect = latticra::authority_effect::none;
+
+    latticra::authority_audit_report report{};
+    const latticra::authority_status status =
+        latticra::classify_effect_request(request, report);
+
+    expect(status == latticra::authority_status::policy_denied);
+    expect(same_text(report.records[0].denial_reason.data(),
+                     "non_no_effect_flags_denied"));
+}
+
 void cpp_authority_layer_classifies_effects_without_performing_them() noexcept {
     latticra::authority_request request{};
     request.flags.no_effect = true;
@@ -319,6 +337,7 @@ int main() {
     cpp_authority_layer_rejects_small_report_buffer();
     cpp_authority_layer_is_deterministic();
     cpp_authority_layer_rejects_mutation_flags();
+    cpp_authority_layer_rejects_network_flags();
     cpp_authority_layer_classifies_effects_without_performing_them();
     cpp_authority_layer_builds_with_fno_exceptions_and_fno_rtti();
     return failures;

@@ -246,6 +246,9 @@ macos_reset_uninstall_implementation_gate_contract_present=1
 macos_reset_uninstall_operator_intent_contract_present=1
 macos_reset_uninstall_effect_authorization_contract_present=1
 macos_reset_uninstall_evidence_bundle_contract_present=1
+macos_reset_uninstall_live_implementation_plan_contract_present=1
+live_implementation_plan_contract_state=defined-no-effect
+live_reset_uninstall_implementation_present=0
 evidence_bundle_contract_state=defined-no-effect
 evidence_bundle_complete=0
 effect_authorization_contract_state=closed-no-effect
@@ -338,5 +341,5 @@ network_extension_authority=0
 privileged_helper_authority=0
 runtime_authority_granted=0
 production_installer_ready=0
-next_lane=macos-reset-uninstall-live-implementation-plan-contract
+next_lane=macos-reset-uninstall-live-execution-preflight-contract
 REPORT

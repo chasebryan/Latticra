@@ -100,6 +100,7 @@ stage_4_macos_reset_uninstall_implementation_gate_contract=present
 stage_4_macos_reset_uninstall_operator_intent_contract=present
 stage_4_macos_reset_uninstall_effect_authorization_contract=present
 stage_4_macos_reset_uninstall_evidence_bundle_contract=present
+stage_4_macos_reset_uninstall_live_implementation_plan_contract=present
 stage_5_codesigning_notarization_plan=future
 stage_6_controlled_os_integration_contracts=future
 ```
@@ -277,6 +278,14 @@ scripts/macos-reset-uninstall-evidence-bundle-contract.sh
 docs/status/MACOS_RESET_UNINSTALL_EVIDENCE_BUNDLE_CONTRACT_STATUS.md
 ```
 
+The Stage 4 macOS reset/uninstall live-implementation plan contract is implemented by:
+
+```text
+docs/MACOS_RESET_UNINSTALL_LIVE_IMPLEMENTATION_PLAN_CONTRACT.md
+scripts/macos-reset-uninstall-live-implementation-plan-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_LIVE_IMPLEMENTATION_PLAN_CONTRACT_STATUS.md
+```
+
 ## App Bundle Direction
 
 The macOS Panel should be represented as a managed user-local app bundle:
@@ -400,8 +409,14 @@ Previous recommended lane now present:
 Add a macOS reset/uninstall evidence-bundle contract that groups implementation-gate, operator-intent, receipt, absence, planner, and classifier evidence before any live execution.
 ```
 
-## Next Recommended Lane
+Current recommended lane now present:
 
 ```text
 Add a macOS reset/uninstall live-implementation plan contract that maps future effect-authorized execution phases while deletion remains disabled.
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-execution preflight contract that proves the live implementation plan still cannot delete until all evidence gates are satisfied.
 ```

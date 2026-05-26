@@ -142,7 +142,7 @@ Repository command:
 ```sh
 sh scripts/nadia-context-window-assembly-contract.sh \
   --prompt-token-sequence reports/nadia/prompt-token-sequence/latest-prompt-token-sequence-contract.txt \
-  --output /private/tmp/latticra-nadia-context-window-assembly
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-context-window-assembly.XXXXXX")"
 ```
 
 Installed command:

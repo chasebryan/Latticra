@@ -27,6 +27,7 @@ cc $CFLAGS \
   src/kernel_vfs_namespace.c \
   src/kernel_device_registry.c \
   src/kernel_driver_catalog.c \
+  src/kernel_interrupt_table.c \
   src/kernel_state.c \
   tools/kernel_state_report.c \
   -o "$report_bin"

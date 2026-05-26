@@ -95,7 +95,7 @@ sh scripts/nadia-tool-authority-preflight.sh \
   --protective-safety /path/to/latest-protective-safety.txt \
   --tool-class local-evidence-review \
   --action "review generated receipts" \
-  --output /private/tmp/latticra-nadia-tools
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-tools.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

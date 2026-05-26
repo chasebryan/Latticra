@@ -42,6 +42,10 @@ static void seed_summary_result(
     result->driver_load_allowed = 0;
     result->driver_bind_allowed = 0;
     result->interrupt_allowed = 0;
+    result->interrupt_mask_allowed = 0;
+    result->interrupt_unmask_allowed = 0;
+    result->interrupt_dispatch_allowed = 0;
+    result->interrupt_ack_allowed = 0;
     result->dma_allowed = 0;
     result->hardware_effect_allowed = 0;
     result->no_external_effect_chain = 1;
@@ -62,7 +66,7 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_default_request(
     if (status != LATTICRA_STATUS_OK) return status;
 
     request->lifecycle_request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
-    request->lifecycle_request.target_state = LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY;
+    request->lifecycle_request.target_state = LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY;
     request->lifecycle_request.max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
 }
@@ -86,7 +90,7 @@ static int lifecycle_ready_for_subsystem(
         case LATTICRA_KERNEL_SUBSYSTEM_PROCESS:
             return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY);
         case LATTICRA_KERNEL_SUBSYSTEM_DEVICE:
-            return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY);
+            return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY);
         case LATTICRA_KERNEL_SUBSYSTEM_NETWORK:
             return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY);
         case LATTICRA_KERNEL_SUBSYSTEM_FILESYSTEM:
@@ -127,6 +131,9 @@ static const char *lifecycle_relation_for(
             return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY) ?
                 "network-syscall-metadata-ready" : "network-syscall-metadata-not-ready";
         case LATTICRA_KERNEL_SUBSYSTEM_DEVICE:
+            if (state_at_or_after(final_state, LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY)) {
+                return "interrupt-table-ready";
+            }
             if (state_at_or_after(final_state, LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY)) {
                 return "driver-catalog-ready";
             }
@@ -232,6 +239,10 @@ static void finalize_summary(
     result->driver_load_allowed = 0;
     result->driver_bind_allowed = 0;
     result->interrupt_allowed = 0;
+    result->interrupt_mask_allowed = 0;
+    result->interrupt_unmask_allowed = 0;
+    result->interrupt_dispatch_allowed = 0;
+    result->interrupt_ack_allowed = 0;
     result->dma_allowed = 0;
     result->hardware_effect_allowed = 0;
     result->no_external_effect_chain =
@@ -241,7 +252,7 @@ static void finalize_summary(
 
     summary_copy(result->summary_status, sizeof(result->summary_status),
         (result->lifecycle_complete == 1 &&
-         result->lifecycle.final_state == LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY &&
+         result->lifecycle.final_state == LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY &&
          result->registry_no_effect == 1 &&
          result->external_effect_performed == 0) ?
             "summary-ready" : "summary-incomplete");
@@ -346,6 +357,10 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         "driver_load_allowed=%d\n"
         "driver_bind_allowed=%d\n"
         "interrupt_allowed=%d\n"
+        "interrupt_mask_allowed=%d\n"
+        "interrupt_unmask_allowed=%d\n"
+        "interrupt_dispatch_allowed=%d\n"
+        "interrupt_ack_allowed=%d\n"
         "dma_allowed=%d\n"
         "hardware_effect_allowed=%d\n"
         "no_external_effect_chain=%d\n"
@@ -380,6 +395,10 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         result->driver_load_allowed,
         result->driver_bind_allowed,
         result->interrupt_allowed,
+        result->interrupt_mask_allowed,
+        result->interrupt_unmask_allowed,
+        result->interrupt_dispatch_allowed,
+        result->interrupt_ack_allowed,
         result->dma_allowed,
         result->hardware_effect_allowed,
         result->no_external_effect_chain,

@@ -115,6 +115,8 @@ Runtime invocation, prompt evaluation, token generation, inference, result dispo
 
 That later prompt-evaluation result release contract is the next boundary; Stage-33 only records the prerequisite metadata.
 
+Stage-34 now defines a prompt-evaluation result release contract that keeps release recording, release decision recording, release publication, release receipt creation, disposition recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, and inference blocked.
+
 ## Validation
 
 ```sh

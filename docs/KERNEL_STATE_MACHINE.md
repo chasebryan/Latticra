@@ -40,6 +40,7 @@ ipc-table-ready
 vfs-namespace-ready
 device-registry-ready
 driver-catalog-ready
+interrupt-table-ready
 ```
 
 ## Controlled effect boundary

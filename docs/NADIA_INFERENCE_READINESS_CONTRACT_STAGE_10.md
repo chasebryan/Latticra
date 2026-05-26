@@ -113,7 +113,7 @@ With explicit evidence input:
 sh scripts/nadia-inference-readiness-contract.sh \
   --model-registry /path/to/latest-model-registry-contract.txt \
   --request-class software-development \
-  --output /private/tmp/latticra-nadia-inference-readiness
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-inference-readiness.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

@@ -13,7 +13,7 @@
         } \
     } while (0)
 
-static int default_request_targets_driver_catalog_ready(void) {
+static int default_request_targets_interrupt_table_ready(void) {
     latticra_kernel_lifecycle_subsystem_summary_request_t request;
 
     EXPECT_TRUE(latticra_kernel_lifecycle_subsystem_summary_default_request(&request) ==
@@ -21,8 +21,8 @@ static int default_request_targets_driver_catalog_ready(void) {
         "default summary request status");
     EXPECT_TRUE(request.lifecycle_request.gate == LATTICRA_KERNEL_STATE_GATE_ALLOW,
         "summary default lifecycle gate allow");
-    EXPECT_TRUE(request.lifecycle_request.target_state == LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY,
-        "summary default target driver-catalog-ready");
+    EXPECT_TRUE(request.lifecycle_request.target_state == LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY,
+        "summary default target interrupt-table-ready");
     EXPECT_TRUE(request.lifecycle_request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
         "summary default max steps");
     EXPECT_TRUE(strcmp(request.registry_request.kernel_request.kernel_id, "latticra-kernel-seed") == 0,
@@ -43,14 +43,14 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.summary_status, "summary-ready") == 0,
         "summary ready");
-    EXPECT_TRUE(strcmp(result.final_state, "driver-catalog-ready") == 0,
-        "summary final state driver-catalog-ready");
+    EXPECT_TRUE(strcmp(result.final_state, "interrupt-table-ready") == 0,
+        "summary final state interrupt-table-ready");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "summary lifecycle complete");
-    EXPECT_TRUE(result.lifecycle_step_count == 10u,
-        "summary ten lifecycle steps");
-    EXPECT_TRUE(result.lifecycle_state_change_count == 10u,
-        "summary ten lifecycle state changes");
+    EXPECT_TRUE(result.lifecycle_step_count == 11u,
+        "summary eleven lifecycle steps");
+    EXPECT_TRUE(result.lifecycle_state_change_count == 11u,
+        "summary eleven lifecycle state changes");
     EXPECT_TRUE(result.lifecycle_state_mutated == 1,
         "summary lifecycle state mutated internally");
     EXPECT_TRUE(result.external_effect_performed == 0,
@@ -95,6 +95,14 @@ static int summary_reaches_ready_without_authority(void) {
         "summary driver bind denied");
     EXPECT_TRUE(result.interrupt_allowed == 0,
         "summary interrupt denied");
+    EXPECT_TRUE(result.interrupt_mask_allowed == 0,
+        "summary interrupt mask denied");
+    EXPECT_TRUE(result.interrupt_unmask_allowed == 0,
+        "summary interrupt unmask denied");
+    EXPECT_TRUE(result.interrupt_dispatch_allowed == 0,
+        "summary interrupt dispatch denied");
+    EXPECT_TRUE(result.interrupt_ack_allowed == 0,
+        "summary interrupt ack denied");
     EXPECT_TRUE(result.dma_allowed == 0,
         "summary dma denied");
     EXPECT_TRUE(result.hardware_effect_allowed == 0,
@@ -160,8 +168,8 @@ static int summary_reaches_ready_without_authority(void) {
         "summary network lifecycle ready");
     EXPECT_TRUE(strcmp(result.entries[7].authority_status, "device-denied") == 0,
         "summary device authority denied");
-    EXPECT_TRUE(strcmp(result.entries[7].lifecycle_relation, "driver-catalog-ready") == 0,
-        "summary driver catalog ready");
+    EXPECT_TRUE(strcmp(result.entries[7].lifecycle_relation, "interrupt-table-ready") == 0,
+        "summary interrupt table ready");
     EXPECT_TRUE(result.entries[7].lifecycle_ready == 1,
         "summary device lifecycle ready");
     EXPECT_TRUE(strcmp(result.entries[8].authority_status, "not-production-boundary") == 0,
@@ -223,13 +231,13 @@ static int summary_report_is_deterministic(void) {
         "summary report title");
     EXPECT_TRUE(strstr(report, "summary_status=summary-ready\n") != 0,
         "summary report status");
-    EXPECT_TRUE(strstr(report, "final_state=driver-catalog-ready\n") != 0,
+    EXPECT_TRUE(strstr(report, "final_state=interrupt-table-ready\n") != 0,
         "summary report final state");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "summary report lifecycle complete");
-    EXPECT_TRUE(strstr(report, "lifecycle_step_count=10\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_step_count=11\n") != 0,
         "summary report step count");
-    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=10\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=11\n") != 0,
         "summary report state changes");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "summary report external effect");
@@ -271,6 +279,14 @@ static int summary_report_is_deterministic(void) {
         "summary report driver bind denied");
     EXPECT_TRUE(strstr(report, "interrupt_allowed=0\n") != 0,
         "summary report interrupt denied");
+    EXPECT_TRUE(strstr(report, "interrupt_mask_allowed=0\n") != 0,
+        "summary report interrupt mask denied");
+    EXPECT_TRUE(strstr(report, "interrupt_unmask_allowed=0\n") != 0,
+        "summary report interrupt unmask denied");
+    EXPECT_TRUE(strstr(report, "interrupt_dispatch_allowed=0\n") != 0,
+        "summary report interrupt dispatch denied");
+    EXPECT_TRUE(strstr(report, "interrupt_ack_allowed=0\n") != 0,
+        "summary report interrupt ack denied");
     EXPECT_TRUE(strstr(report, "dma_allowed=0\n") != 0,
         "summary report dma denied");
     EXPECT_TRUE(strstr(report, "hardware_effect_allowed=0\n") != 0,
@@ -291,7 +307,7 @@ static int summary_report_is_deterministic(void) {
         "summary report filesystem relation");
     EXPECT_TRUE(strstr(report, "subsystem[6].lifecycle_relation=network-syscall-metadata-ready\n") != 0,
         "summary report network relation");
-    EXPECT_TRUE(strstr(report, "subsystem[7].lifecycle_relation=driver-catalog-ready\n") != 0,
+    EXPECT_TRUE(strstr(report, "subsystem[7].lifecycle_relation=interrupt-table-ready\n") != 0,
         "summary report device relation");
     return 0;
 }
@@ -326,7 +342,7 @@ static int null_guards_are_safe(void) {
 }
 
 int main(void) {
-    if (default_request_targets_driver_catalog_ready() != 0) return 1;
+    if (default_request_targets_interrupt_table_ready() != 0) return 1;
     if (summary_reaches_ready_without_authority() != 0) return 1;
     if (summary_respects_lifecycle_step_limit() != 0) return 1;
     if (summary_report_is_deterministic() != 0) return 1;

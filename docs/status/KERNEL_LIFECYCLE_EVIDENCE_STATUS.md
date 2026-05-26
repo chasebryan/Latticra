@@ -30,6 +30,8 @@ kernel device registry guard
 kernel device registry report runner
 kernel driver catalog guard
 kernel driver catalog report runner
+kernel interrupt table guard
+kernel interrupt table report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
@@ -42,7 +44,7 @@ kernel lifecycle rollback plan
 The lifecycle evidence can report a bounded in-memory path ending at:
 
 ```text
-final_state=driver-catalog-ready
+final_state=interrupt-table-ready
 ```
 
 The lifecycle report runner and subsystem summary keep the external-effect posture explicit:
@@ -76,6 +78,10 @@ driver_probe_allowed=0
 driver_load_allowed=0
 driver_bind_allowed=0
 interrupt_allowed=0
+interrupt_mask_allowed=0
+interrupt_unmask_allowed=0
+interrupt_dispatch_allowed=0
+interrupt_ack_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0
 ```
@@ -149,6 +155,7 @@ Dedicated workflow lanes keep the kernel table guards visible:
 .github/workflows/kernel-vfs-namespace.yml
 .github/workflows/kernel-device-registry.yml
 .github/workflows/kernel-driver-catalog.yml
+.github/workflows/kernel-interrupt-table.yml
 .github/workflows/kernel-process-table.yml
 .github/workflows/kernel-syscall-table.yml
 ```

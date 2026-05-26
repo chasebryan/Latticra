@@ -85,7 +85,7 @@ With an explicit productivity-ledger entry:
 sh scripts/nadia-protective-safety-boundary.sh \
   --productivity-entry /path/to/latest-productivity-entry.txt \
   --request-class software-development \
-  --output /private/tmp/latticra-nadia-safety
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-safety.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

@@ -70,7 +70,7 @@ Known current posture:
 
 ```text
 kernel lifecycle evidence exists
-final_state=driver-catalog-ready
+final_state=interrupt-table-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
@@ -91,6 +91,10 @@ driver_probe_allowed=0
 driver_load_allowed=0
 driver_bind_allowed=0
 interrupt_allowed=0
+interrupt_mask_allowed=0
+interrupt_unmask_allowed=0
+interrupt_dispatch_allowed=0
+interrupt_ack_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0
 not bootable

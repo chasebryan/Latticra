@@ -38,6 +38,8 @@ const char *latticra_kernel_state_label(latticra_kernel_state_kind_t state) {
             return "device-registry-ready";
         case LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY:
             return "driver-catalog-ready";
+        case LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY:
+            return "interrupt-table-ready";
         default:
             return "unknown";
     }
@@ -67,6 +69,8 @@ static int is_allowed_transition(
         target_state == LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY) return 1;
     if (current_state == LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY &&
         target_state == LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY) return 1;
+    if (current_state == LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY &&
+        target_state == LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY) return 1;
     return 0;
 }
 
@@ -92,6 +96,10 @@ static int state_requires_device_registry(latticra_kernel_state_kind_t state) {
 
 static int state_requires_driver_catalog(latticra_kernel_state_kind_t state) {
     return state >= LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY;
+}
+
+static int state_requires_interrupt_table(latticra_kernel_state_kind_t state) {
+    return state >= LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY;
 }
 
 static void seed_result(latticra_kernel_state_result_t *result) {
@@ -141,6 +149,10 @@ latticra_status_t latticra_kernel_state_default_request(
             LATTICRA_STATUS_OK) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
+    if (latticra_kernel_interrupt_table_default_request(&request->interrupt_table_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
     request->current_state = LATTICRA_KERNEL_STATE_CREATED;
     request->target_state = LATTICRA_KERNEL_STATE_INITIALIZED;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
@@ -167,6 +179,7 @@ latticra_status_t latticra_kernel_state_transition(
     latticra_kernel_vfs_namespace_request_t vfs_request;
     latticra_kernel_device_registry_request_t device_request;
     latticra_kernel_driver_catalog_request_t driver_request;
+    latticra_kernel_interrupt_table_request_t interrupt_request;
 
     if (result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     seed_result(result);
@@ -201,6 +214,8 @@ latticra_status_t latticra_kernel_state_transition(
     device_request.vfs_namespace_request = vfs_request;
     driver_request = request->driver_catalog_request;
     driver_request.device_registry_request = device_request;
+    interrupt_request = request->interrupt_table_request;
+    interrupt_request.driver_catalog_request = driver_request;
 
     if (state_requires_process_table(request->target_state)) {
         status = latticra_kernel_process_table_evaluate(&process_request, &result->process_table);
@@ -243,6 +258,7 @@ latticra_status_t latticra_kernel_state_transition(
         vfs_request.ipc_table_request = ipc_request;
         device_request.vfs_namespace_request = vfs_request;
         driver_request.device_registry_request = device_request;
+        interrupt_request.driver_catalog_request = driver_request;
     }
 
     if (state_requires_vfs_namespace(request->target_state)) {
@@ -261,6 +277,7 @@ latticra_status_t latticra_kernel_state_transition(
         result->memory_map = result->process_table.memory_map;
         device_request.vfs_namespace_request = vfs_request;
         driver_request.device_registry_request = device_request;
+        interrupt_request.driver_catalog_request = driver_request;
     }
 
     if (state_requires_device_registry(request->target_state)) {
@@ -279,6 +296,7 @@ latticra_status_t latticra_kernel_state_transition(
         result->process_table = result->syscall_table.process_table;
         result->memory_map = result->process_table.memory_map;
         driver_request.device_registry_request = device_request;
+        interrupt_request.driver_catalog_request = driver_request;
     }
 
     if (state_requires_driver_catalog(request->target_state)) {
@@ -291,6 +309,26 @@ latticra_status_t latticra_kernel_state_transition(
             state_copy(result->transition_status, sizeof(result->transition_status), "blocked");
             return status;
         }
+        result->device_registry = result->driver_catalog.device_registry;
+        result->vfs_namespace = result->device_registry.vfs_namespace;
+        result->ipc_table = result->vfs_namespace.ipc_table;
+        result->syscall_table = result->ipc_table.syscall_table;
+        result->process_table = result->syscall_table.process_table;
+        result->memory_map = result->process_table.memory_map;
+        interrupt_request.driver_catalog_request = driver_request;
+    }
+
+    if (state_requires_interrupt_table(request->target_state)) {
+        status = latticra_kernel_interrupt_table_evaluate(&interrupt_request,
+            &result->interrupt_table);
+        if (status != LATTICRA_STATUS_OK) {
+            result->status = status;
+            state_copy(result->state_status, sizeof(result->state_status),
+                "interrupt-table-not-ready");
+            state_copy(result->transition_status, sizeof(result->transition_status), "blocked");
+            return status;
+        }
+        result->driver_catalog = result->interrupt_table.driver_catalog;
         result->device_registry = result->driver_catalog.device_registry;
         result->vfs_namespace = result->device_registry.vfs_namespace;
         result->ipc_table = result->vfs_namespace.ipc_table;
@@ -353,6 +391,7 @@ latticra_status_t latticra_kernel_state_report(
         "vfs_namespace_status=%s\n"
         "device_registry_status=%s\n"
         "driver_catalog_status=%s\n"
+        "interrupt_table_status=%s\n"
         "evidence_level=%u\n",
         result->state_status,
         result->gate_status,
@@ -371,6 +410,7 @@ latticra_status_t latticra_kernel_state_report(
         result->vfs_namespace.namespace_status,
         result->device_registry.registry_status,
         result->driver_catalog.catalog_status,
+        result->interrupt_table.table_status,
         result->evidence_level);
 
     if (written < 0 || (size_t)written >= buffer_len) {

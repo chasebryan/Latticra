@@ -139,5 +139,5 @@ This probe is not macOS installation, macOS app bundle evidence, signed app evid
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-implementation plan contract that maps future effect-authorized execution phases while deletion remains disabled.
+Add a macOS reset/uninstall live-execution preflight contract that proves the live implementation plan still cannot delete until all evidence gates are satisfied.
 ```

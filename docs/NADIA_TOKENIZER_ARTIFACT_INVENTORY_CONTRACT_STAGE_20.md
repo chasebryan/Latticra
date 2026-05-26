@@ -130,7 +130,7 @@ From the repository:
 ```sh
 sh scripts/nadia-tokenizer-artifact-inventory-contract.sh \
   --tokenizer-manifest reports/nadia/tokenizer-manifest/latest-tokenizer-manifest-contract.txt \
-  --output /private/tmp/latticra-nadia-tokenizer-artifact-inventory
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-tokenizer-artifact-inventory.XXXXXX")"
 ```
 
 After guarded local install:

@@ -80,7 +80,7 @@ sh scripts/nadia-productivity-ledger.sh \
   --mode-validation /path/to/latest-mode-validation.txt \
   --outcome "accepted planning surface" \
   --recommendation "run stage guards" \
-  --output /private/tmp/latticra-nadia-productivity
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-productivity.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

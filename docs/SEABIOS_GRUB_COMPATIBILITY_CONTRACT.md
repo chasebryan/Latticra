@@ -139,6 +139,7 @@ This contract is guarded by:
 
 ```sh
 sh scripts/test-seabios-grub-compatibility-contract.sh
+sh scripts/test-seabios-grub-boot-preview-evidence-contract.sh
 ```
 
 Expected output:

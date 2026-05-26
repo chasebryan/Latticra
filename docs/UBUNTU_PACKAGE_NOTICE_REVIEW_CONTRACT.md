@@ -18,6 +18,8 @@ third_party_material_policy_present=1
 generated_artifact_notice_policy_present=1
 ubuntu_package_notice_inventory_present=1
 ubuntu_package_notice_inventory_report_present=1
+ubuntu_doc_payload_license_review_contract_present=1
+ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
 third_party_material_inventory_recorded=1
 notice_file_present=0
 documentation_license_decision_present=0
@@ -53,8 +55,11 @@ ubuntu_package_notice_review_contract_present=1
 ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 ubuntu_package_notice_inventory_present=1
 ubuntu_package_notice_inventory_report_present=1
+ubuntu_doc_payload_license_review_contract_present=1
+ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
 doc_payload_license_reviewed=0
 doc_payload_license_unresolved=1
+doc_payload_license_decision_recorded=0
 third_party_material_inventory_recorded=1
 third_party_material_inventory_reviewed=0
 generated_artifact_notice_reviewed=0
@@ -71,6 +76,8 @@ ubuntu_local_deb_build_transcript_unblocked=0
 The Ubuntu package license review contract may record candidate expressions, but it must remain blocked until this notice review contract is promoted by a reviewed documentation-license and notice decision.
 
 The Ubuntu package notice inventory report records current payload facts and open notice obligations, but it does not unblock this review by itself.
+
+The Ubuntu doc payload license review contract records the unresolved `README.md` documentation-license decision required before this notice review can be promoted.
 
 ## Non-Claims
 

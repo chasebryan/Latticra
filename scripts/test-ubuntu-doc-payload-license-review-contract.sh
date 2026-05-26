@@ -1,0 +1,92 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+require_file() {
+  file="$1"
+  if [ ! -f "$file" ]; then
+    printf 'ubuntu doc payload license review contract: missing file: %s\n' "$file" >&2
+    exit 1
+  fi
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  if ! grep -Fq -- "$pattern" "$file"; then
+    printf 'ubuntu doc payload license review contract: missing required pattern in %s: %s\n' "$file" "$pattern" >&2
+    exit 1
+  fi
+}
+
+contract='docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md'
+status='docs/status/UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md'
+notice_contract='docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md'
+license_contract='docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md'
+readiness='docs/UBUNTU_READINESS_PLAN.md'
+workflow='.github/workflows/ubuntu-doc-payload-license-review-contract.yml'
+
+require_file "$contract"
+require_file "$status"
+require_file "$notice_contract"
+require_file "$license_contract"
+require_file "$readiness"
+require_file "$workflow"
+require_file docs/LICENSE_POLICY.md
+require_file docs/LICENSE_MIGRATION_PLAN.md
+require_file README.md
+require_file docs/QUICK_START_CHEATSHEET.md
+require_file packaging/ubuntu/debian/copyright
+
+require_contains 'Status: no-effect documentation-license review contract' "$contract"
+require_contains 'doc_payload=usr/share/doc/latticra/README.md' "$contract"
+require_contains 'doc_payload_source=README.md' "$contract"
+require_contains 'doc_payload_source_present=1' "$contract"
+require_contains 'root_license_current=Apache-2.0' "$contract"
+require_contains 'documentation_license_decision_present=0' "$contract"
+require_contains 'ubuntu_package_notice_inventory_present=1' "$contract"
+require_contains 'candidate_doc_payload_license=Apache-2.0-or-docs-decision-pending' "$contract"
+require_contains 'candidate_doc_payload_license_applied_to_packaging=0' "$contract"
+require_contains 'doc_payload_license_decision_recorded=1' "$contract"
+require_contains 'doc_payload_license_expression_recorded=1' "$contract"
+require_contains 'doc_payload_license_compatible_with_package=1' "$contract"
+require_contains 'readme_embedded_material_reviewed=1' "$contract"
+require_contains 'readme_generated_artifact_notice_reviewed=1' "$contract"
+require_contains 'documentation_trademark_boundary_reviewed=1' "$contract"
+require_contains 'documentation_notice_requirements_recorded=1' "$contract"
+require_contains 'debian_copyright_doc_payload_mapping_reviewed=1' "$contract"
+require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$contract"
+require_contains 'ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision' "$contract"
+require_contains 'doc_payload_license_reviewed=0' "$contract"
+require_contains 'doc_payload_license_unresolved=1' "$contract"
+require_contains 'doc_payload_license_decision_recorded=0' "$contract"
+require_contains 'doc_payload_license_compatible_with_package=0' "$contract"
+require_contains 'ubuntu_package_notice_review_unblocked=0' "$contract"
+require_contains 'ubuntu_package_license_review_unblocked=0' "$contract"
+require_contains 'ubuntu_doc_payload_license_review_contract: ok' "$contract"
+
+require_contains 'Documentation license remains undecided' docs/LICENSE_MIGRATION_PLAN.md
+require_contains 'review docs license direction' docs/LICENSE_POLICY.md
+require_contains 'LicenseRef-Latticra-TBD' packaging/ubuntu/debian/copyright
+
+require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$status"
+require_contains 'ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision' "$status"
+require_contains 'documentation_license_decision_present=0' "$status"
+require_contains 'doc_payload_license_reviewed=0' "$status"
+require_contains 'doc_payload_license_unresolved=1' "$status"
+require_contains 'doc_payload_license_decision_recorded=0' "$status"
+require_contains 'debian_copyright_doc_payload_mapping_reviewed=0' "$status"
+require_contains 'docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md' "$status"
+require_contains 'scripts/test-ubuntu-doc-payload-license-review-contract.sh' "$status"
+require_contains '.github/workflows/ubuntu-doc-payload-license-review-contract.yml' "$status"
+
+require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$notice_contract"
+require_contains 'ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision' "$notice_contract"
+require_contains 'doc_payload_license_decision_recorded=1' "$notice_contract"
+require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$license_contract"
+require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$readiness"
+require_contains 'docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md' README.md
+require_contains 'sh scripts/test-ubuntu-doc-payload-license-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-doc-payload-license-review-contract.sh' "$workflow"
+
+printf 'ubuntu_doc_payload_license_review_contract: ok\n'

@@ -129,7 +129,7 @@ With explicit evidence input:
 sh scripts/nadia-model-load-contract.sh \
   --runtime-invocation /path/to/latest-runtime-invocation-contract.txt \
   --request-class software-development \
-  --output /private/tmp/latticra-nadia-model-load
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-model-load.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

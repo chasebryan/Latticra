@@ -22,6 +22,7 @@ packaging/ubuntu/debian/source/format
 scripts/test-ubuntu-local-deb-static-validation.sh
 docs/UBUNTU_LINTIAN_AVAILABILITY.md
 docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md
+docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
@@ -37,6 +38,10 @@ debuild_run_required=0
 lintian_run_required=0
 package_notice_inventory_present=1
 package_notice_inventory_report_present=1
+doc_payload_license_review_contract_present=1
+doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
+documentation_license_decision_present=0
+doc_payload_license_decision_recorded=0
 third_party_material_inventory_recorded=1
 third_party_material_inventory_reviewed=0
 generated_artifact_notice_reviewed=0

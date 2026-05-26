@@ -466,6 +466,16 @@ p:last-child {
   background-size: cover;
 }
 
+.validation-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.98) 0%, rgba(17, 24, 39, 0.9) 56%, rgba(17, 24, 39, 0.62) 100%),
+    url("latticra-panel.png");
+  background-color: #111827;
+  background-position: right 44px center;
+  background-repeat: no-repeat;
+  background-size: 500px auto;
+}
+
 .evidence-hero {
   background:
     linear-gradient(90deg, rgba(17, 24, 39, 0.97) 0%, rgba(17, 24, 39, 0.88) 58%, rgba(17, 24, 39, 0.66) 100%),
@@ -579,7 +589,8 @@ p:last-child {
 .seal-intro,
 .roadmap-intro,
 .workbench-intro,
-.security-intro {
+.security-intro,
+.validation-intro {
   display: grid;
   grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
   gap: 32px;
@@ -592,7 +603,8 @@ p:last-child {
 .seal-intro p:not(.eyebrow),
 .roadmap-intro p:not(.eyebrow),
 .workbench-intro p:not(.eyebrow),
-.security-intro p:not(.eyebrow) {
+.security-intro p:not(.eyebrow),
+.validation-intro p:not(.eyebrow) {
   color: var(--muted);
   font-size: 1.03rem;
 }
@@ -1213,6 +1225,129 @@ p:last-child {
 }
 
 .security-table p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.validation-flow,
+.validation-lane-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.validation-flow {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.validation-flow article {
+  min-width: 0;
+  min-height: 206px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--blue);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.validation-flow span,
+.validation-lane span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--ochre);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.validation-flow p,
+.validation-lane p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.validation-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(300px, 1.18fr);
+  gap: 30px;
+  align-items: center;
+}
+
+.validation-figure img {
+  width: min(420px, 100%);
+  margin-inline: auto;
+  object-fit: contain;
+}
+
+.validation-lane-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.validation-lane {
+  min-width: 0;
+  min-height: 244px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.validation-lane a {
+  display: inline-flex;
+  margin-top: 8px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.validation-lane a:hover {
+  text-decoration: underline;
+}
+
+.validation-lane-panel {
+  border-top: 4px solid var(--violet);
+}
+
+.validation-lane-fedora {
+  border-top: 4px solid #0ea5e9;
+}
+
+.validation-lane-ubuntu {
+  border-top: 4px solid var(--green);
+}
+
+.validation-lane-macos {
+  border-top: 4px solid #334155;
+}
+
+.validation-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.validation-table {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.validation-table div {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.validation-table div:last-child {
+  border-bottom: 0;
+}
+
+.validation-table span {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.validation-table p {
   color: var(--muted);
   font-size: 0.94rem;
 }
@@ -2078,7 +2213,12 @@ p:last-child {
   .security-scope-grid,
   .security-effect-grid,
   .security-split,
-  .security-nonclaim-grid {
+  .security-nonclaim-grid,
+  .validation-intro,
+  .validation-flow,
+  .validation-showcase,
+  .validation-lane-grid,
+  .validation-split {
     grid-template-columns: 1fr;
   }
 
@@ -2136,7 +2276,8 @@ p:last-child {
   .reader-grid,
   .evidence-rule-grid,
   .ladder-grid,
-  .claim-language-grid {
+  .claim-language-grid,
+  .validation-lane-grid {
     grid-template-columns: 1fr;
   }
 

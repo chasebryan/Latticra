@@ -94,7 +94,7 @@ With an explicit prompt plan:
 sh scripts/nadia-mode-validate.sh \
   --prompt-plan /path/to/latest-prompt-plan.txt \
   --mode runtime-boundary \
-  --output /private/tmp/latticra-nadia-mode
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-mode.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

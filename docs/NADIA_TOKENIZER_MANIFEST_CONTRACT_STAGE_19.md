@@ -117,7 +117,7 @@ From the repository:
 ```sh
 sh scripts/nadia-tokenizer-manifest-contract.sh \
   --tokenizer-specification reports/nadia/tokenizer-specification/latest-tokenizer-specification-contract.txt \
-  --output /private/tmp/latticra-nadia-tokenizer-manifest
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-tokenizer-manifest.XXXXXX")"
 ```
 
 After guarded local install:

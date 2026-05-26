@@ -78,6 +78,10 @@ require_file "$classifier_status"
 require_contains 'Status: no-effect macOS reset/uninstall evidence-bundle contract' "$doc"
 require_contains 'sh scripts/macos-reset-uninstall-evidence-bundle-contract.sh' "$doc"
 require_contains 'macos_reset_uninstall_evidence_bundle_contract_present=1' "$doc"
+require_contains 'macos_reset_uninstall_live_implementation_plan_contract_present=1' "$doc"
+require_contains 'live_implementation_plan_contract_state=defined-no-effect' "$doc"
+require_contains 'live_implementation_plan_execution_enabled=0' "$doc"
+require_contains 'live_implementation_plan_deletion_enabled=0' "$doc"
 require_contains 'evidence_bundle_contract_state=defined-no-effect' "$doc"
 require_contains 'evidence_bundle_contract_decision=blocked-incomplete-reset-uninstall-evidence-bundle' "$doc"
 require_contains 'reset_uninstall_evidence_bundle_complete=0' "$doc"
@@ -120,6 +124,10 @@ require_contains 'Add a macOS reset/uninstall live-implementation plan contract'
 require_contains 'Status: no-effect reset/uninstall evidence-bundle contract status' "$status"
 require_contains 'macos_reset_uninstall_evidence_bundle_contract_present=1' "$status"
 require_contains 'macos_reset_uninstall_evidence_bundle_contract_guard_present=1' "$status"
+require_contains 'macos_reset_uninstall_live_implementation_plan_contract_present=1' "$status"
+require_contains 'live_implementation_plan_contract_state=defined-no-effect' "$status"
+require_contains 'live_implementation_plan_execution_enabled=0' "$status"
+require_contains 'live_implementation_plan_deletion_enabled=0' "$status"
 require_contains 'evidence_bundle_contract_state=defined-no-effect' "$status"
 require_contains 'reset_uninstall_evidence_bundle_complete=0' "$status"
 require_contains 'reset_uninstall_evidence_bundle_evidence_present=0' "$status"
@@ -185,7 +193,7 @@ require_contains 'file_delete_performed=0' "$script"
 require_contains 'directory_delete_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-live-implementation-plan-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-execution-preflight-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -221,7 +229,7 @@ require_output_contains "$output" 'directory_delete_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'network_performed=0'
 require_output_contains "$output" 'runtime_authority_granted=0'
-require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-implementation-plan-contract'
+require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-execution-preflight-contract'
 
 require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
 require_contains 'persist-credentials: false' "$workflow"

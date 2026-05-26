@@ -1,4 +1,4 @@
-.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly nadia-prompt-evaluation-input nadia-prompt-evaluation-runtime-handoff nadia-prompt-evaluation-invocation nadia-prompt-evaluation-result nadia-prompt-evaluation-result-review nadia-prompt-evaluation-result-disposition
+.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly nadia-prompt-evaluation-input nadia-prompt-evaluation-runtime-handoff nadia-prompt-evaluation-invocation nadia-prompt-evaluation-result nadia-prompt-evaluation-result-review nadia-prompt-evaluation-result-disposition nadia-prompt-evaluation-result-release
 
 .PHONY: quality quality-worktree quality-safety-guards quality-defensive-threat-model quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation boot-compatibility nadia-commands
 
@@ -33,11 +33,13 @@ quality-installer-readiness:
 	sh ./scripts/test-local-installer-artifact-manifest-contract.sh
 	sh ./scripts/test-local-artifact-manifest-fixture.sh
 	sh ./scripts/test-seabios-grub-compatibility-contract.sh
+	sh ./scripts/test-seabios-grub-boot-preview-evidence-contract.sh
 
 quality-nadia:
 	sh ./scripts/test-nadia-command-surface.sh
 	sh ./scripts/test-nadia-prompt-evaluation-result-review-contract-stage-32.sh
 	sh ./scripts/test-nadia-prompt-evaluation-result-disposition-contract-stage-33.sh
+	sh ./scripts/test-nadia-prompt-evaluation-result-release-contract-stage-34.sh
 
 quality-c-foundation:
 	sh ./scripts/test-latticra-console-foundation.sh
@@ -45,6 +47,7 @@ quality-c-foundation:
 
 boot-compatibility:
 	sh ./scripts/test-seabios-grub-compatibility-contract.sh
+	sh ./scripts/test-seabios-grub-boot-preview-evidence-contract.sh
 
 nadia-commands:
 	sh ./scripts/test-nadia-command-surface.sh
@@ -153,6 +156,9 @@ nadia-prompt-evaluation-result-review:
 
 nadia-prompt-evaluation-result-disposition:
 	sh ./scripts/nadia-prompt-evaluation-result-disposition-contract.sh
+
+nadia-prompt-evaluation-result-release:
+	sh ./scripts/nadia-prompt-evaluation-result-release-contract.sh
 
 .PHONY: seal-policy-denials
 

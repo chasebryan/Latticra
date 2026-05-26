@@ -119,7 +119,7 @@ sh scripts/nadia-tokenizer-specification-contract.sh \
   --request-class awareness-education \
   --tokenizer-family model-compatible-tokenizer \
   --tokenizer-format operator-reviewed-offline-specification \
-  --output /private/tmp/latticra-nadia-tokenizer-specification
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-tokenizer-specification.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

@@ -114,7 +114,7 @@ sh scripts/nadia-local-model-registry-contract.sh \
   --runtime-profile /path/to/latest-runtime-profile.txt \
   --model-id local-coding-assistant-candidate \
   --quantization q4_k_m \
-  --output /private/tmp/latticra-nadia-model-registry
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-model-registry.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

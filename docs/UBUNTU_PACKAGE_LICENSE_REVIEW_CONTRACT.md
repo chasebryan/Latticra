@@ -56,6 +56,8 @@ The current notice-review dependency is:
 ```text
 ubuntu_package_notice_inventory_present=1
 ubuntu_package_notice_inventory_report_present=1
+ubuntu_doc_payload_license_review_contract_present=1
+ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
 ubuntu_package_notice_review_contract_present=1
 ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 ubuntu_package_license_review_unblocked=0
@@ -79,6 +81,8 @@ packaging_license_expression_updated=1
 ```text
 ubuntu_package_license_review_contract_present=1
 ubuntu_package_license_review_status=blocked-pending-formal-review
+ubuntu_doc_payload_license_review_contract_present=1
+ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision
 ubuntu_package_notice_review_contract_present=1
 ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 license_expression_candidate_recorded=1

@@ -137,7 +137,7 @@ Repository command:
 ```sh
 sh scripts/nadia-tokenizer-runtime-attachment-contract.sh \
   --tokenizer-artifact-binding reports/nadia/tokenizer-artifact-binding/latest-tokenizer-artifact-binding-contract.txt \
-  --output /private/tmp/latticra-nadia-tokenizer-runtime-attachment
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-tokenizer-runtime-attachment.XXXXXX")"
 ```
 
 Installed command:

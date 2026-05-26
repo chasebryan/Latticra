@@ -63,6 +63,7 @@ struct authority_flags {
     bool execution_allowed{false};
     bool mutation_allowed{false};
     bool server_allowed{false};
+    bool network_allowed{false};
     bool recovery_allowed{false};
     bool hardware_allowed{false};
 };

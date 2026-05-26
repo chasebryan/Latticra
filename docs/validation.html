@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Local Validation and Install Evidence | Latticra</title>
+  <meta name="description" content="A public guide to Latticra local validation lanes, Panel install evidence, package guard scripts, disposable VM gates, and no-effect installer boundaries.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Local Validation">
+  <meta property="og:description" content="Panel install evidence, local package checks, disposable VM gates, macOS dry-run contracts, and validation non-claims.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero validation-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Local validation</p>
+        <p class="eyebrow">Install Evidence and Package Guards</p>
+        <h1>Local validation</h1>
+        <p class="page-lede">
+          Latticra validation records show what can be inspected locally, what has user-local install evidence, and which package lanes remain static, gated, or disposable-VM-only.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell validation-intro">
+        <div>
+          <p class="eyebrow">Validation Rule</p>
+          <h2>Validate evidence, not production readiness.</h2>
+        </div>
+        <p>
+          The current validation surface is deliberately narrow. It includes user-local Panel install evidence, static package checks, dry-run contracts, and gated VM lanes. It does not claim root installation, distribution approval, daily-driver safety, runtime enforcement, or production security.
+        </p>
+      </div>
+
+      <div class="content-shell validation-flow" aria-label="Local validation flow">
+        <article>
+          <span>01</span>
+          <h3>Read posture</h3>
+          <p>Start from status, non-claims, and the validation source records before running commands.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Dry-run Panel</h3>
+          <p>Use the workbench path to generate a local plan and inspect receipts before guarded writes.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Verify user-local evidence</h3>
+          <p>Confirm wrappers, prefix, payload tree, desktop entry, icon, receipts, and Seal report-only output.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Run static package guards</h3>
+          <p>Use Fedora and Ubuntu package validation scripts without creating distribution artifacts.</p>
+        </article>
+        <article>
+          <span>05</span>
+          <h3>Respect hard gates</h3>
+          <p>Disposable VM lanes require snapshot, recovery, consent, and exact target evidence.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell validation-showcase">
+        <div class="showcase-copy">
+          <p class="eyebrow">Panel Evidence</p>
+          <h2>User-local install evidence exists, and stays narrow.</h2>
+          <p>
+            The current Panel evidence records a Fedora Workstation user-local install with local wrappers, local prefix, receipts, desktop entry, desktop icon, Panel launcher, and a Latticra Seal report-only local report.
+          </p>
+          <div class="status-row" aria-label="Validation posture summary">
+            <span class="status-pill status-present">verified user-local</span>
+            <span class="status-pill status-guarded">guarded writes</span>
+            <span class="status-pill status-blocked">not production</span>
+          </div>
+        </div>
+        <figure class="showcase-figure validation-figure">
+          <img src="assets/latticra-panel.png" alt="Latticra Panel visual asset for local install and evidence review.">
+          <figcaption>Panel is the human-facing local workbench for plan, receipt, and evidence review.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Evidence Snapshot</p>
+        <h2>The current install claim is bounded by exact fields.</h2>
+        <p>
+          These are the public-facing fields a reader should keep in mind when interpreting local install evidence.
+        </p>
+      </div>
+      <div class="content-shell report-grid">
+        <article>
+          <span>panel_user_local_install_verified</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>seal_report_only_mode</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>root_authority</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>network_authority</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>runtime_enforcement_authority</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>fedora_approval_claimed</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>production_installer_ready</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>daily_driver_install_ready</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Validation Lanes</p>
+        <h2>Each lane has a different effect boundary.</h2>
+        <p>
+          The package and platform records are useful only when their scope is kept visible.
+        </p>
+      </div>
+      <div class="content-shell validation-lane-grid">
+        <article class="validation-lane validation-lane-panel">
+          <span>Panel</span>
+          <h3>User-local install evidence</h3>
+          <p>Fedora Workstation transcript evidence exists for local wrappers, prefix, payload, receipts, desktop entry, icon, launcher, and Seal report-only output.</p>
+          <a href="status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md">Panel evidence status</a>
+        </article>
+        <article class="validation-lane validation-lane-fedora">
+          <span>Fedora</span>
+          <h3>Static RPM and disposable VM lanes</h3>
+          <p>Static local RPM validation does not create artifacts. VM RPM validation is gated to disposable Fedora targets with snapshot, recovery, and consent evidence.</p>
+          <a href="FEDORA_LOCAL_RPM_VALIDATION_PLAN.md">RPM validation plan</a>
+        </article>
+        <article class="validation-lane validation-lane-ubuntu">
+          <span>Ubuntu</span>
+          <h3>Local deb static validation</h3>
+          <p>Checks local package shape for the no-effect CLI payload without running dpkg-buildpackage, debuild, lintian, sbuild, or pbuilder.</p>
+          <a href="UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md">Deb static validation</a>
+        </article>
+        <article class="validation-lane validation-lane-macos">
+          <span>macOS</span>
+          <h3>Reset/uninstall dry-run contract</h3>
+          <p>Defines future managed-target removal order while deletion, receipt writes, absence verification, and host mutation remain disabled.</p>
+          <a href="MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT.md">macOS dry-run contract</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell validation-split">
+        <div class="section-heading">
+          <p class="eyebrow">Gate Matrix</p>
+          <h2>Host-facing validation must name its target.</h2>
+          <p>
+            A local command is not automatically an install claim. The gate has to state which target may be touched and what remains forbidden.
+          </p>
+        </div>
+        <div class="validation-table" role="table" aria-label="Local validation gate matrix">
+          <div role="row">
+            <span role="cell">Allowed locally</span>
+            <p role="cell">Read status, run no-effect guards, inspect Panel dry-runs, verify user-local evidence, and run static package checks.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Guarded locally</span>
+            <p role="cell">Panel local-prefix writes require explicit local mode, receipts, visible prefix, and no root or network authority.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Disposable VM only</span>
+            <p role="cell">Fedora RPM install/removal validation requires disposable VM target evidence, clean snapshot, recovery path, and operator consent.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Blocked claims</span>
+            <p role="cell">Production installer readiness, distro approval, daily-driver eligibility, immutable host readiness, runtime enforcement, and security-product claims.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Commands</p>
+        <h2>Use commands as evidence checks.</h2>
+        <p>
+          These commands are intentionally narrow. Run them from the repository root unless a command names a subdirectory.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Panel dry-run and verification</h3>
+          <pre><code>make -C installer dry-run
+make -C installer verify-local</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Package static guards</h3>
+          <pre><code>sh scripts/test-fedora-local-rpm-validation-plan.sh
+sh scripts/test-ubuntu-local-deb-static-validation.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Install evidence and reset contracts</h3>
+          <pre><code>sh scripts/test-latticra-panel-local-install-evidence-status.sh
+sh scripts/test-macos-reset-uninstall-dry-run-contract.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Follow validation claims back to exact files.</h2>
+        <p>
+          These records define the validation boundaries more precisely than a summary page can.
+        </p>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="https://github.com/Bryforge/Latticra/blob/main/installer/README.md"><strong>Panel README</strong><span>Dry-run-first workbench flow, local install commands, and installed paths.</span></a>
+        <a href="status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md"><strong>Panel install evidence</strong><span>Fedora user-local install evidence and exact non-claims.</span></a>
+        <a href="FEDORA_LOCAL_RPM_VALIDATION_PLAN.md"><strong>Fedora RPM plan</strong><span>Static local RPM validation sequence without artifact creation.</span></a>
+        <a href="FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md"><strong>Disposable VM lane</strong><span>Hard gates for Fedora RPM validation on a disposable VM only.</span></a>
+        <a href="UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md"><strong>Ubuntu deb static lane</strong><span>Local-only deb shape checks and archive-readiness non-claims.</span></a>
+        <a href="MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT.md"><strong>macOS reset dry-run</strong><span>Managed-target reset/uninstall contract while deletion remains disabled.</span></a>
+        <a href="workbench.html"><strong>Workbench overview</strong><span>Panel, LC, Nadia, and local authority boundaries.</span></a>
+        <a href="security.html"><strong>Security boundaries</strong><span>Safe testing, effect gates, runtime boundary, and non-claims.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra local validation guide.</span>
+      <span><a href="status.html">Open public status</a></span>
+    </div>
+  </footer>
+</body>
+</html>

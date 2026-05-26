@@ -1,7 +1,7 @@
 # Latticra Console Foundation
 
 Status: Stage-0 foundation
-Scope: LC identity, Panel installability, configurable metadata, substrate bridge, host-embedding plan, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, signature-request binding contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
+Scope: LC identity, Panel installability, configurable metadata, substrate bridge, host-embedding plan, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
 
 ## Purpose
 
@@ -42,6 +42,7 @@ receipt_request_contract_profile=lc-receipt-request-v0
 receipt_payload_schema_profile=lc-receipt-payload-schema-v0
 receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0
 receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0
+receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0
 signature_request_binding_profile=lc-signature-request-binding-v0
 receipt_contract_profile=lc-receipts-v0
 os_base_contract_profile=lc-os-base-v0
@@ -58,6 +59,7 @@ receipt_request_contract_required=true
 receipt_payload_schema_required=true
 receipt_payload_artifact_draft_required=true
 receipt_payload_artifact_review_required=true
+receipt_payload_materialization_plan_required=true
 signature_request_binding_required=true
 os_base_contract_required=true
 vm_evidence_contract_required=true
@@ -84,6 +86,7 @@ share/latticra/lc/receipt-request/contract.toml
 share/latticra/lc/receipt-request/payload-schema.toml
 share/latticra/lc/receipt-request/payload-artifact-draft.toml
 share/latticra/lc/receipt-request/payload-artifact-review.toml
+share/latticra/lc/receipt-request/payload-materialization-plan.toml
 share/latticra/lc/receipt-request/signature-request-binding.toml
 share/latticra/lc/receipts/contract.toml
 share/latticra/lc/os-base/contract.toml
@@ -122,6 +125,7 @@ lc receipt-request
 lc receipt-payload
 lc receipt-artifact
 lc receipt-artifact-review
+lc receipt-materialization-plan
 lc signature-request
 lc substrate
 lc host
@@ -168,6 +172,7 @@ receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
 receipt_payload_artifact_review_profile = "lc-receipt-payload-artifact-review-v0"
+receipt_payload_materialization_plan_profile = "lc-receipt-payload-materialization-plan-v0"
 signature_request_binding_profile = "lc-signature-request-binding-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
@@ -185,6 +190,7 @@ require_receipt_request_contract = true
 require_receipt_payload_schema = true
 require_receipt_payload_artifact_draft = true
 require_receipt_payload_artifact_review = true
+require_receipt_payload_materialization_plan = true
 require_signature_request_binding = true
 require_os_base_contract = true
 require_vm_evidence_contract = true
@@ -367,6 +373,8 @@ receipt_payload_artifact_draft_required=1
 receipt_payload_artifact_draft_present=1
 receipt_payload_artifact_review_required=1
 receipt_payload_artifact_review_present=1
+receipt_payload_materialization_plan_required=1
+receipt_payload_materialization_plan_present=1
 signature_request_binding_required=1
 signature_request_binding_contract_present=1
 runtime_boundary_receipt_required=1
@@ -376,6 +384,7 @@ receipt_request_command=lc receipt-request
 receipt_payload_schema_command=lc receipt-payload
 receipt_payload_artifact_draft_command=lc receipt-artifact
 receipt_payload_artifact_review_command=lc receipt-artifact-review
+receipt_payload_materialization_plan_command=lc receipt-materialization-plan
 signature_request_binding_command=lc signature-request
 receipt_surfaces=profile,host-contract,host-inventory,host-adapter,runtime-boundary
 promotion_gate=lc_receipts_before_host_adapter_or_os_base
@@ -426,7 +435,12 @@ receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0
 receipt_payload_artifact_review_required=1
 receipt_payload_artifact_review_present=1
 receipt_payload_artifact_review_command=lc receipt-artifact-review
+receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0
+receipt_payload_materialization_plan_required=1
+receipt_payload_materialization_plan_present=1
+receipt_payload_materialization_plan_command=lc receipt-materialization-plan
 draft_review_receipt_present=0
+materialization_preconditions_met=0
 materialization_allowed=0
 payload_artifact_present=0
 payload_materialized=0
@@ -491,6 +505,10 @@ receipt_payload_artifact_draft_command=lc receipt-artifact
 receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0
 receipt_payload_artifact_review_present=1
 receipt_payload_artifact_review_command=lc receipt-artifact-review
+receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0
+receipt_payload_materialization_plan_present=1
+receipt_payload_materialization_plan_command=lc receipt-materialization-plan
+materialization_preconditions_met=0
 materialization_allowed=0
 signature_request_binding_present=0
 signature_request_binding_allowed=0
@@ -521,6 +539,9 @@ receipt_payload_schema_profile=lc-receipt-payload-schema-v0
 receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0
 receipt_payload_artifact_review_present=1
 receipt_payload_artifact_review_command=lc receipt-artifact-review
+receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0
+receipt_payload_materialization_plan_present=1
+receipt_payload_materialization_plan_command=lc receipt-materialization-plan
 signature_request_binding_profile=lc-signature-request-binding-v0
 receipt_contract_profile=lc-receipts-v0
 signature_request_profile=latticra-seal-signature-request/0.1
@@ -534,6 +555,7 @@ draft_review_present=0
 draft_review_receipt_required=1
 draft_review_receipt_present=0
 draft_review_approval_recorded=0
+materialization_preconditions_met=0
 materialization_allowed=0
 payload_artifact_present=0
 payload_materialized=0
@@ -547,6 +569,7 @@ seal_signature_request_ready=0
 receipt_write_allowed=0
 receipt_signed=0
 promotion_gate=lc_receipt_payload_artifact_draft_before_materialization_and_signature_request
+related_materialization_plan_command=lc receipt-materialization-plan
 ```
 
 The source and installed command surfaces are:
@@ -570,6 +593,9 @@ receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0
 receipt_payload_artifact_draft_required=1
 receipt_payload_artifact_draft_present=1
 receipt_payload_artifact_draft_command=lc receipt-artifact
+receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0
+receipt_payload_materialization_plan_present=1
+receipt_payload_materialization_plan_command=lc receipt-materialization-plan
 draft_review_required=1
 draft_review_present=0
 draft_review_receipt_required=1
@@ -577,6 +603,9 @@ draft_review_receipt_present=0
 draft_review_approval_recorded=0
 draft_reviewer_identity_recorded=0
 draft_review_timestamp_recorded=0
+materialization_plan_required=1
+materialization_plan_present=1
+materialization_preconditions_met=0
 materialization_allowed=0
 payload_artifact_present=0
 payload_materialized=0
@@ -593,6 +622,7 @@ receipt_write_allowed=0
 receipt_signed=0
 promotion_gate=lc_receipt_payload_artifact_review_before_materialization
 command_surface=lc receipt-artifact-review
+related_materialization_plan_command=lc receipt-materialization-plan
 ```
 
 The source and installed command surfaces are:
@@ -603,6 +633,49 @@ latticra-lc receipt-artifact-review
 ```
 
 This gate records that the draft still needs review and a review receipt. It does not materialize the payload artifact, write payload bytes, compute or record a payload hash, record a payload path, bind a Seal signature request, invoke signing, or write a receipt.
+
+## Receipt Payload Materialization Plan
+
+LC now installs and reports a metadata-only materialization plan for the future payload artifact:
+
+```text
+materialization_plan_profile=lc-receipt-payload-materialization-plan-v0
+materialization_plan_status=metadata-only
+materialization_plan_present=1
+receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0
+receipt_payload_artifact_review_required=1
+receipt_payload_artifact_review_present=1
+receipt_payload_artifact_review_command=lc receipt-artifact-review
+draft_review_receipt_required=1
+draft_review_receipt_present=0
+draft_review_approval_recorded=0
+materialization_preconditions_met=0
+materialization_allowed=0
+materialization_execution_planned=0
+payload_artifact_present=0
+payload_materialized=0
+payload_write_allowed=0
+payload_file_open_allowed=0
+payload_hash_computed=0
+payload_hash_recorded=0
+payload_path_recorded=0
+signature_request_binding_allowed=0
+signature_request_binding_artifact_present=0
+seal_signature_request_ready=0
+receipt_write_allowed=0
+receipt_signed=0
+promotion_gate=lc_receipt_payload_materialization_plan_after_review_receipt
+command_surface=lc receipt-materialization-plan
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report receipt-materialization-plan
+latticra-lc receipt-materialization-plan
+```
+
+This plan names the preconditions for a future payload artifact. It does not open a payload file, write payload bytes, materialize the payload, compute or record a hash, record a path, bind a Seal signature request, invoke signing, or write a receipt.
 
 ## Signature Request Binding Contract
 
@@ -622,14 +695,19 @@ receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0
 receipt_payload_artifact_review_required=1
 receipt_payload_artifact_review_present=1
 receipt_payload_artifact_review_command=lc receipt-artifact-review
+receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0
+receipt_payload_materialization_plan_required=1
+receipt_payload_materialization_plan_present=1
+receipt_payload_materialization_plan_command=lc receipt-materialization-plan
 draft_review_receipt_present=0
+materialization_preconditions_met=0
 materialization_allowed=0
 receipt_contract_profile=lc-receipts-v0
 signature_request_profile=latticra-seal-signature-request/0.1
 signing_authorization_profile=latticra-seal-signing-authorization/0.1
 requested_signature=Ed25519-development
 requested_signing_authorization=metadata-only
-required_surfaces=receipt-request,receipt-payload-schema,receipt-payload-artifact-draft,receipt-payload-artifact-review,receipt-contract,runtime-boundary,seal-capability-labels
+required_surfaces=receipt-request,receipt-payload-schema,receipt-payload-artifact-draft,receipt-payload-artifact-review,receipt-payload-materialization-plan,receipt-contract,runtime-boundary,seal-capability-labels
 payload_artifact_present=0
 signature_request_binding_allowed=0
 signature_request_binding_artifact_present=0
@@ -787,6 +865,7 @@ lc receipt-request -> authority-check / validation-only
 lc receipt-payload -> authority-check / validation-only
 lc receipt-artifact -> authority-check / validation-only
 lc receipt-artifact-review -> authority-check / validation-only
+lc receipt-materialization-plan -> authority-check / validation-only
 lc signature-request -> authority-check / validation-only
 lc host-contract -> authority-check / validation-only
 lc host-inventory -> authority-check / validation-only
@@ -852,6 +931,8 @@ receipt_payload_artifact_draft_status=metadata-only-draft-ready
 receipt_payload_artifact_draft_present=1
 receipt_payload_artifact_review_status=metadata-only-review-gate-ready
 receipt_payload_artifact_review_present=1
+receipt_payload_materialization_plan_status=metadata-only-plan-ready
+receipt_payload_materialization_plan_present=1
 signature_request_binding_status=metadata-only-contract-ready
 signature_request_binding_present=1
 os_base_contract_status=metadata-only-contract-ready
@@ -885,9 +966,8 @@ LC Stage-0 does not:
 
 ## Next Slices
 
-1. Add a metadata-only LC receipt payload materialization plan only after the review gate is receipted.
-2. Materialize the LC receipt payload artifact only after the draft is reviewed and receipted.
-3. Bind the LC receipt payload artifact to a Seal signature-request artifact only after signing authority is implemented and gated.
-4. Add the first Seal-signed LC receipt path only after the receipt request is reviewed and receipted.
-5. Add a host-adapter artifact schema only after the host-adapter contract is receipted.
-6. Add a VM evidence artifact schema only after the VM evidence contract is receipted.
+1. Materialize the LC receipt payload artifact only after the draft is reviewed and receipted.
+2. Bind the LC receipt payload artifact to a Seal signature-request artifact only after signing authority is implemented and gated.
+3. Add the first Seal-signed LC receipt path only after the receipt request is reviewed and receipted.
+4. Add a host-adapter artifact schema only after the host-adapter contract is receipted.
+5. Add a VM evidence artifact schema only after the VM evidence contract is receipted.

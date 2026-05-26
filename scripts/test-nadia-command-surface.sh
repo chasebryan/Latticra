@@ -24,7 +24,7 @@ require_output_contains() {
   pattern="$1"
   file="$2"
   if ! grep -Fq -- "$pattern" "$file"; then
-    printf '--- output: %s ---\n' "$file" >&2
+    printf '%s\n' "--- output: $file ---" >&2
     sed -n '1,180p' "$file" >&2
     fail "missing required output pattern: $pattern"
   fi
@@ -52,10 +52,12 @@ require_contains 'NADIA COMMAND SURFACE' "$ui"
 require_contains 'panel_command=nadia commands' "$ui"
 require_contains 'installed_wrapper=latticra-nadia commands' "$ui"
 require_contains '"prompt-evaluation-result-review"' "$ui"
-require_contains 'Stage-33 prompt-evaluation result disposition contract' "$ui"
+require_contains 'Stage-34 prompt-evaluation result release contract' "$ui"
+require_contains 'prompt-evaluation-result-release' "$ui"
 require_contains 'render_nadia_commands()' "$apply"
 require_contains 'commands_command=latticra-nadia commands' "$apply"
 require_contains 'command=prompt-evaluation-result-disposition stage=33' "$apply"
+require_contains 'command=prompt-evaluation-result-release stage=34' "$apply"
 require_contains 'usage: latticra-nadia {status|commands|' "$apply"
 require_contains 'nadia commands' "$root_readme"
 require_contains 'latticra-nadia commands' "$root_readme"
@@ -125,10 +127,11 @@ HOME="$home" "$nadia" status > "$status_out"
 
 require_output_contains 'NADIA COMMAND SURFACE' "$commands_out"
 require_output_contains 'wrapper=latticra-nadia' "$commands_out"
-require_output_contains 'command=status stage=33' "$commands_out"
+require_output_contains 'command=status stage=34' "$commands_out"
 require_output_contains 'command=context-pack stage=1' "$commands_out"
 require_output_contains 'command=prompt-evaluation-result-review stage=32' "$commands_out"
 require_output_contains 'command=prompt-evaluation-result-disposition stage=33' "$commands_out"
+require_output_contains 'command=prompt-evaluation-result-release stage=34' "$commands_out"
 require_output_contains 'network_authority=0' "$commands_out"
 require_output_contains 'tool_execution_authority=0' "$commands_out"
 require_output_contains 'runtime_invocation_authority=0' "$commands_out"

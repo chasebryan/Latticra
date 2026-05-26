@@ -23,7 +23,7 @@ non-claims
 - [`CURRENT_STATUS.md`](CURRENT_STATUS.md) — current project status, completion estimates, and next priorities.
 - [`CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](CURRENT_ESTIMATE_REFRESH_2026_05_24.md) - current planning-estimate refresh after Panel, Seal, documentation, and local evidence work.
 - [`CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) - current public estimate table source alignment for README, root status, detailed status, foundation index, and project notes.
-- [`LATTICRA_CONSOLE_FOUNDATION_STATUS.md`](LATTICRA_CONSOLE_FOUNDATION_STATUS.md) - Latticra Console foundation status for the LC C report surface, Panel installability, metadata-only host/OS/VM contracts, receipt payload artifact draft, receipt payload artifact review gate, and no-effect authority baseline.
+- [`LATTICRA_CONSOLE_FOUNDATION_STATUS.md`](LATTICRA_CONSOLE_FOUNDATION_STATUS.md) - Latticra Console foundation status for the LC C report surface, Panel installability, metadata-only host/OS/VM contracts, receipt payload artifact draft, receipt payload artifact review gate, receipt payload materialization plan, and no-effect authority baseline.
 - [`LATTICRA_SEAL_FOUNDATION_STATUS.md`](LATTICRA_SEAL_FOUNDATION_STATUS.md) - Latticra Seal foundation status for the first Seal contract and implementation plan.
 - [`LATTICRA_NO_EFFECT_CLI_RPM_SPEC_UPDATE_STATUS.md`](LATTICRA_NO_EFFECT_CLI_RPM_SPEC_UPDATE_STATUS.md) - Latticra no-effect CLI RPM spec update status for adding the CLI payload to the local Fedora RPM spec.
 - [`LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md`](LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md) - Latticra Panel local install evidence status for the Fedora Workstation user-local install verification transcript.
@@ -49,6 +49,7 @@ non-claims
 - [`MACOS_RESET_UNINSTALL_OPERATOR_INTENT_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_OPERATOR_INTENT_CONTRACT_STATUS.md) - macOS reset/uninstall operator-intent contract status for future explicit live reset/uninstall approval evidence.
 - [`MACOS_RESET_UNINSTALL_EFFECT_AUTHORIZATION_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_EFFECT_AUTHORIZATION_CONTRACT_STATUS.md) - macOS reset/uninstall effect-authorization contract status for keeping live reset/uninstall effects gated by explicit authorization evidence.
 - [`MACOS_RESET_UNINSTALL_EVIDENCE_BUNDLE_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_EVIDENCE_BUNDLE_CONTRACT_STATUS.md) - macOS reset/uninstall evidence-bundle contract status for binding required reset/uninstall evidence before any live implementation can be considered.
+- [`MACOS_RESET_UNINSTALL_LIVE_IMPLEMENTATION_PLAN_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_IMPLEMENTATION_PLAN_CONTRACT_STATUS.md) - macOS reset/uninstall live-implementation plan contract status for mapping future effect-authorized phases while deletion remains disabled.
 - [`MACOS_README_INSTALLER_USAGE_STATUS.md`](MACOS_README_INSTALLER_USAGE_STATUS.md) - macOS README installer usage status for documenting current Mac-specific no-effect installer commands, target paths, and closed commit-gate posture.
 - [`NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](NADIA_OFFLINE_AI_STAGE_0_STATUS.md) - Nadia offline AI Stage-0 foundation status for Panel installability, Console interoperability, and awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) - Nadia Stage-1 local context-engine status for no-network context-pack generation.
@@ -84,6 +85,7 @@ non-claims
 - [`NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31_STATUS.md) - Nadia Stage-31 prompt-evaluation result contract status before result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32_STATUS.md) - Nadia Stage-32 prompt-evaluation result review contract status before result-review records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33_STATUS.md) - Nadia Stage-33 prompt-evaluation result disposition contract status before disposition records, release records, result-review records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_CONTRACT_STAGE_34_STATUS.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_CONTRACT_STAGE_34_STATUS.md) - Nadia Stage-34 prompt-evaluation result release contract status before release recording, release publication, release packaging, release receipts, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
 - [`../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md`](../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md) — defensive threat model validation refinement.
 - [`../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`](../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md) — runtime boundary policy expansion after threat-model validation.
@@ -213,6 +215,7 @@ signer_handoff_predecessor_signing_authorization_status_present=1
 seal_signer_invocation_contract_present=1
 seal_signer_invocation_metadata_present=1
 seal_signer_invocation_status_present=1
+signer_invocation_predecessor_signer_handoff_status_present=1
 seal_signing_operation_contract_present=1
 seal_signing_operation_metadata_present=1
 seal_signing_operation_status_present=1
@@ -776,13 +779,15 @@ kernel device registry guard
 kernel device registry report runner
 kernel driver catalog guard
 kernel driver catalog report runner
+kernel interrupt table guard
+kernel interrupt table report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
 kernel syscall table report runner
 kernel lifecycle subsystem summary
 kernel lifecycle rollback plan
-final_state=driver-catalog-ready
+final_state=interrupt-table-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
@@ -803,6 +808,10 @@ driver_probe_allowed=0
 driver_load_allowed=0
 driver_bind_allowed=0
 interrupt_allowed=0
+interrupt_mask_allowed=0
+interrupt_unmask_allowed=0
+interrupt_dispatch_allowed=0
+interrupt_ack_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0
 ```

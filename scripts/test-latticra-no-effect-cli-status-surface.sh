@@ -88,6 +88,7 @@ require_absent 'setuid(' "$cli"
 require_absent 'setgid(' "$cli"
 
 tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-cli-status.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
 bin="$tmpdir/latticra"
 status_out="$tmpdir/status.out"
 status_expected="$tmpdir/status.expected"

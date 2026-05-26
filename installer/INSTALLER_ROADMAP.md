@@ -35,6 +35,6 @@ The installer does not currently claim:
 2. Add stronger manifest validation.
 3. Add Fedora package integration plan.
 4. Add VM validation mode.
-5. Add SeaBIOS/GRUB compatibility VM evidence only after the contract guard is satisfied.
+5. Fill the boot-preview evidence manifest with real QEMU artifact paths, serial logs, checksums, and recovery records only after the compatibility guard is satisfied.
 6. Add failed-install recovery receipts.
 7. Add system-level installer only after explicit design review.

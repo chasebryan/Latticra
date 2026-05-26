@@ -76,7 +76,7 @@ sh scripts/nadia-prompt-plan.sh \
   --context-pack /path/to/latest-context-pack.txt \
   --runtime-profile /path/to/latest-runtime-profile.txt \
   --task "runtime boundary refactor planning" \
-  --output /private/tmp/latticra-nadia-plans
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-plans.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

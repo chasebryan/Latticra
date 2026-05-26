@@ -120,7 +120,7 @@ With explicit evidence input:
 sh scripts/nadia-awareness-dialogue-contract.sh \
   --prompt-materialization /path/to/latest-prompt-materialization-contract.txt \
   --request-class awareness-education \
-  --output /private/tmp/latticra-nadia-awareness-dialogue
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-awareness-dialogue.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

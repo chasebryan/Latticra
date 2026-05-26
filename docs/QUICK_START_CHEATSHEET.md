@@ -56,6 +56,7 @@ Ubuntu no-effect validation:
 sh scripts/test-ubuntu-build-lane.sh
 sh scripts/test-ubuntu-developer-workflow.sh
 sh scripts/test-ubuntu-package-notice-inventory.sh
+sh scripts/test-ubuntu-doc-payload-license-review-contract.sh
 ```
 
 ## Run
@@ -69,7 +70,8 @@ latticra-panel
 Launch it from a terminal and keep that terminal usable:
 
 ```sh
-latticra-panel >/tmp/latticra-panel.log 2>&1 &
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-panel.XXXXXX")"
+latticra-panel >"$tmpdir/latticra-panel.log" 2>&1 &
 ```
 
 Useful commands:

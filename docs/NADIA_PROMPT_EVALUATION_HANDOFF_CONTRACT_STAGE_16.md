@@ -94,7 +94,7 @@ With explicit evidence input:
 sh scripts/nadia-prompt-evaluation-handoff-contract.sh \
   --awareness-dialogue /path/to/latest-awareness-dialogue-contract.txt \
   --request-class awareness-education \
-  --output /private/tmp/latticra-nadia-prompt-evaluation-handoff
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-prompt-evaluation-handoff.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

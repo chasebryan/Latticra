@@ -24,7 +24,7 @@ require_output_contains() {
   pattern="$1"
   file="$2"
   if ! grep -Fq -- "$pattern" "$file"; then
-    printf '--- output: %s ---\n' "$file" >&2
+    printf '%s\n' "--- output: $file ---" >&2
     sed -n '1,160p' "$file" >&2
     fail "missing required output pattern: $pattern"
   fi

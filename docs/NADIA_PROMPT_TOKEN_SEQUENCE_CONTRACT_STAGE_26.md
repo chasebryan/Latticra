@@ -156,7 +156,7 @@ Repository command:
 ```sh
 sh scripts/nadia-prompt-token-sequence-contract.sh \
   --prompt-tokenization reports/nadia/prompt-tokenization/latest-prompt-tokenization-contract.txt \
-  --output /private/tmp/latticra-nadia-prompt-token-sequence
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-prompt-token-sequence.XXXXXX")"
 ```
 
 Installed command:

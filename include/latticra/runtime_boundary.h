@@ -253,6 +253,12 @@ typedef struct {
     size_t lat_pipeline_first_declaration_clause_count;
     size_t lat_pipeline_first_declaration_source_index;
     size_t lat_pipeline_first_transition_source_index;
+    size_t lat_pipeline_first_clause_node_index;
+    latticra_lat_model_clause_role_t lat_pipeline_first_clause_role;
+    latticra_lat_effect_t lat_pipeline_first_clause_effect;
+    char lat_pipeline_first_clause_name[LATTICRA_LAT_NAME_MAX];
+    char lat_pipeline_first_clause_operator[LATTICRA_LAT_NAME_MAX];
+    char lat_pipeline_first_clause_value[LATTICRA_LAT_VALUE_MAX];
     size_t lat_pipeline_node_count;
     size_t lat_pipeline_edge_count;
     size_t lat_pipeline_comment_count;

@@ -18,13 +18,14 @@ int main(int argc, char **argv) {
     char receipt_payload_schema_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_SCHEMA_REPORT_MAX];
     char receipt_payload_artifact_draft_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_REPORT_MAX];
     char receipt_payload_artifact_review_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_REPORT_MAX];
+    char receipt_payload_materialization_plan_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_REPORT_MAX];
     char signature_request_binding_report[LATTICRA_CONSOLE_SIGNATURE_REQUEST_BINDING_REPORT_MAX];
     char receipt_report[LATTICRA_CONSOLE_RECEIPT_REPORT_MAX];
     char os_contract_report[LATTICRA_CONSOLE_OS_CONTRACT_REPORT_MAX];
     char vm_evidence_report[LATTICRA_CONSOLE_VM_EVIDENCE_REPORT_MAX];
 
     if (argc > 2) {
-        fputs("usage: latticra_console_report [report|registry|help|man|boundary|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
+        fputs("usage: latticra_console_report [report|registry|help|man|boundary|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
         return 64;
     }
 
@@ -170,6 +171,21 @@ int main(int argc, char **argv) {
     }
 
     if (argc == 2 &&
+        (strcmp(argv[1], "receipt-materialization-plan") == 0 ||
+         strcmp(argv[1], "materialization-plan") == 0 ||
+         strcmp(argv[1], "payload-materialization-plan") == 0 ||
+         strcmp(argv[1], "receipt-payload-materialization-plan") == 0)) {
+        if (latticra_console_receipt_payload_materialization_plan_report(
+                receipt_payload_materialization_plan_report,
+                sizeof(receipt_payload_materialization_plan_report)) != LATTICRA_STATUS_OK) {
+            fputs("latticra_console_report: receipt payload materialization plan report render failed\n", stderr);
+            return 1;
+        }
+        fputs(receipt_payload_materialization_plan_report, stdout);
+        return 0;
+    }
+
+    if (argc == 2 &&
         (strcmp(argv[1], "signature-request") == 0 || strcmp(argv[1], "receipt-signature-request") == 0 ||
          strcmp(argv[1], "signature-request-binding") == 0)) {
         if (latticra_console_signature_request_binding_report(
@@ -205,7 +221,7 @@ int main(int argc, char **argv) {
     }
 
     if (argc == 2 && strcmp(argv[1], "report") != 0) {
-        fputs("usage: latticra_console_report [report|registry|help|man|boundary|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
+        fputs("usage: latticra_console_report [report|registry|help|man|boundary|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
         return 64;
     }
 
@@ -303,6 +319,16 @@ int main(int argc, char **argv) {
     }
 
     fputs(receipt_payload_artifact_review_report, stdout);
+    fputc('\n', stdout);
+
+    if (latticra_console_receipt_payload_materialization_plan_report(
+            receipt_payload_materialization_plan_report,
+            sizeof(receipt_payload_materialization_plan_report)) != LATTICRA_STATUS_OK) {
+        fputs("latticra_console_report: receipt payload materialization plan report render failed\n", stderr);
+        return 1;
+    }
+
+    fputs(receipt_payload_materialization_plan_report, stdout);
     fputc('\n', stdout);
 
     if (latticra_console_signature_request_binding_report(

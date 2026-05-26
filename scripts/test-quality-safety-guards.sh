@@ -123,6 +123,18 @@ check_no_c_test_fixed_latticra_tmp() {
     done
 }
 
+check_no_doc_fixed_latticra_tmp() {
+  for doc_root in README.md docs; do
+    [ -e "$doc_root" ] || continue
+    find "$doc_root" \( -name '*.md' -o -name '*.html' \) -type f |
+      while IFS= read -r doc; do
+        if grep -Eq '/tmp/latticra|/private/tmp/latticra' "$doc"; then
+          fail "$doc must show private mktemp workdirs instead of fixed /tmp/latticra paths"
+        fi
+      done
+  done
+}
+
 check_workflow() {
   workflow="$1"
 
@@ -286,6 +298,11 @@ check_shell_script() {
     fail "$script contains an unsafe broad mutation command"
   fi
 
+  if grep -Fq 'mktemp -d' "$script" &&
+    ! grep -Eq 'trap[[:space:]].*(rm -rf|cleanup)' "$script"; then
+    fail "$script must register a cleanup trap for mktemp workdirs"
+  fi
+
   if grep -Fq '$''$' "$script"; then
     fail "$script must not use PID-based temporary paths"
   fi
@@ -419,6 +436,7 @@ check_status_index_completeness
 check_no_source_shell_exec
 check_rust_installer_engine_shell_boundary
 check_no_c_test_fixed_latticra_tmp
+check_no_doc_fixed_latticra_tmp
 
 for workflow in .github/workflows/*.yml .github/workflows/*.yaml; do
   [ -f "$workflow" ] || continue
@@ -450,8 +468,8 @@ require_contains "make quality" ".github/workflows/quality.yml"
 require_contains "uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" ".github/workflows/quality.yml"
 require_contains "persist-credentials: false" ".github/workflows/quality.yml"
 require_contains "uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8" ".github/workflows/quality.yml"
-require_contains 'gcc \' ".github/workflows/quality.yml"
-require_contains 'g++ \' ".github/workflows/quality.yml"
+require_contains "gcc \\" ".github/workflows/quality.yml"
+require_contains "g++ \\" ".github/workflows/quality.yml"
 require_contains "timeout-minutes: 20" ".github/workflows/quality.yml"
 require_contains "make quality-safety-guards" ".github/workflows/quality-safety-guards.yml"
 require_contains "uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" ".github/workflows/quality-safety-guards.yml"

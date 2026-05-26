@@ -250,6 +250,7 @@ pub struct LatticraConsoleConfig {
     pub receipt_payload_schema_profile: String,
     pub receipt_payload_artifact_draft_profile: String,
     pub receipt_payload_artifact_review_profile: String,
+    pub receipt_payload_materialization_plan_profile: String,
     pub signature_request_binding_profile: String,
     pub receipt_contract_profile: String,
     pub os_base_contract_profile: String,
@@ -267,6 +268,7 @@ pub struct LatticraConsoleConfig {
     pub require_receipt_payload_schema: bool,
     pub require_receipt_payload_artifact_draft: bool,
     pub require_receipt_payload_artifact_review: bool,
+    pub require_receipt_payload_materialization_plan: bool,
     pub require_signature_request_binding: bool,
     pub require_os_base_contract: bool,
     pub require_vm_evidence_contract: bool,
@@ -291,6 +293,8 @@ impl Default for LatticraConsoleConfig {
                 .to_owned(),
             receipt_payload_artifact_review_profile: "lc-receipt-payload-artifact-review-v0"
                 .to_owned(),
+            receipt_payload_materialization_plan_profile:
+                "lc-receipt-payload-materialization-plan-v0".to_owned(),
             signature_request_binding_profile: "lc-signature-request-binding-v0".to_owned(),
             receipt_contract_profile: "lc-receipts-v0".to_owned(),
             os_base_contract_profile: "lc-os-base-v0".to_owned(),
@@ -308,6 +312,7 @@ impl Default for LatticraConsoleConfig {
             require_receipt_payload_schema: true,
             require_receipt_payload_artifact_draft: true,
             require_receipt_payload_artifact_review: true,
+            require_receipt_payload_materialization_plan: true,
             require_signature_request_binding: true,
             require_os_base_contract: true,
             require_vm_evidence_contract: true,
@@ -356,6 +361,8 @@ impl LatticraConsoleConfig {
             "lc-receipt-payload-artifact-draft-v0".to_owned();
         self.receipt_payload_artifact_review_profile =
             "lc-receipt-payload-artifact-review-v0".to_owned();
+        self.receipt_payload_materialization_plan_profile =
+            "lc-receipt-payload-materialization-plan-v0".to_owned();
         self.signature_request_binding_profile = "lc-signature-request-binding-v0".to_owned();
         self.receipt_contract_profile = "lc-receipts-v0".to_owned();
         self.os_base_contract_profile = "lc-os-base-v0".to_owned();
@@ -371,6 +378,7 @@ impl LatticraConsoleConfig {
         self.require_receipt_payload_schema = true;
         self.require_receipt_payload_artifact_draft = true;
         self.require_receipt_payload_artifact_review = true;
+        self.require_receipt_payload_materialization_plan = true;
         self.require_signature_request_binding = true;
         self.require_os_base_contract = true;
         self.require_vm_evidence_contract = true;
@@ -987,6 +995,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "receipt_payload_materialization_plan_profile={}",
+        config.lc.receipt_payload_materialization_plan_profile
+    );
+    let _ = writeln!(
+        out,
         "signature_request_binding_profile={}",
         config.lc.signature_request_binding_profile
     );
@@ -1059,6 +1072,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "receipt_payload_materialization_plan_required={}",
+        config.lc.require_receipt_payload_materialization_plan
+    );
+    let _ = writeln!(
+        out,
         "signature_request_binding_required={}",
         config.lc.require_signature_request_binding
     );
@@ -1109,6 +1127,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         out,
         "receipt_payload_artifact_review_status=metadata-only-review-gate"
     );
+    let _ = writeln!(
+        out,
+        "receipt_payload_materialization_plan_status=metadata-only-plan"
+    );
+    let _ = writeln!(out, "materialization_preconditions_met=0");
     let _ = writeln!(out, "draft_review_receipt_present=0");
     let _ = writeln!(out, "materialization_allowed=0");
     let _ = writeln!(out, "payload_artifact_present=0");
@@ -1141,13 +1164,10 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
+    let _ = writeln!(out, "stage=34-prompt-evaluation-result-release-contract");
     let _ = writeln!(
         out,
-        "stage=33-prompt-evaluation-result-disposition-contract"
-    );
-    let _ = writeln!(
-        out,
-        "previous_stage=32-prompt-evaluation-result-review-contract"
+        "previous_stage=33-prompt-evaluation-result-disposition-contract"
     );
     let _ = writeln!(
         out,
@@ -2222,6 +2242,36 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "prompt_evaluation_result_disposition_decision_recorded=0"
     );
     let _ = writeln!(out, "prompt_evaluation_result_release_record_created=0");
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_contract_stage=34-prompt-evaluation-result-release-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_contract_command=scripts/nadia-prompt-evaluation-result-release-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_result_release_contract_command=latticra-nadia prompt-evaluation-result-release"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_contract_status=contract_only"
+    );
+    let _ = writeln!(out, "prompt_evaluation_result_release_recorded=0");
+    let _ = writeln!(out, "prompt_evaluation_result_release_record_created=0");
+    let _ = writeln!(out, "prompt_evaluation_result_release_decision_recorded=0");
+    let _ = writeln!(out, "prompt_evaluation_result_release_published=0");
+    let _ = writeln!(out, "prompt_evaluation_result_release_packaged=0");
+    let _ = writeln!(out, "prompt_evaluation_result_release_receipt_created=0");
+    let _ = writeln!(
+        out,
+        "requires_prompt_evaluation_result_disposition_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_result_release_receipt_contract=1"
+    );
     let _ = writeln!(out, "requires_prompt_evaluation_result_contract=1");
     let _ = writeln!(
         out,

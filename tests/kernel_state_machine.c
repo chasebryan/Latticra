@@ -146,13 +146,16 @@ static int sequential_steps_advance_ladder(void) {
     request.target_state = LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY;
     EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
         "device registry ready to driver catalog ready");
+    request.target_state = LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "driver catalog ready to interrupt table ready");
 
-    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY,
-        "machine reaches driver catalog ready");
-    EXPECT_TRUE(strcmp(machine.machine_status, "driver-catalog-ready") == 0,
-        "machine status driver catalog ready");
-    EXPECT_TRUE(machine.log_count == 10u,
-        "ten transitions logged");
+    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY,
+        "machine reaches interrupt table ready");
+    EXPECT_TRUE(strcmp(machine.machine_status, "interrupt-table-ready") == 0,
+        "machine status interrupt table ready");
+    EXPECT_TRUE(machine.log_count == 11u,
+        "eleven transitions logged");
     EXPECT_TRUE(machine.external_effect_performed == 0,
         "sequence external effects absent");
     EXPECT_TRUE(machine.log[4].to_state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY,
@@ -167,6 +170,8 @@ static int sequential_steps_advance_ladder(void) {
         "log device registry ready");
     EXPECT_TRUE(machine.log[9].to_state == LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY,
         "log driver catalog ready");
+    EXPECT_TRUE(machine.log[10].to_state == LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY,
+        "log interrupt table ready");
     return 0;
 }
 

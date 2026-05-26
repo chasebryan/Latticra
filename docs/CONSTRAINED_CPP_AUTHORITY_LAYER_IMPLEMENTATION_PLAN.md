@@ -599,11 +599,13 @@ The script should compile C substrate objects with `cc`, compile authority C++ o
 
 Recommended command shape:
 
-```text
-cc $CFLAGS -Iinclude -c src/lat_parser.c -o /tmp/latticra-lat-parser.o
-cc $CFLAGS -Iinclude -c src/lir.c -o /tmp/latticra-lir.o
-c++ $CXXFLAGS -Iinclude -c src/cpp/authority.cpp -o /tmp/latticra-cpp-authority.o
-c++ $CXXFLAGS -Iinclude tests/cpp_authority_layer_invariants.cpp /tmp/latticra-cpp-authority.o ... -o /tmp/latticra-cpp-authority-layer-invariants
+```sh
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-cpp-authority.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+cc $CFLAGS -Iinclude -c src/lat_parser.c -o "$tmpdir/latticra-lat-parser.o"
+cc $CFLAGS -Iinclude -c src/lir.c -o "$tmpdir/latticra-lir.o"
+c++ $CXXFLAGS -Iinclude -c src/cpp/authority.cpp -o "$tmpdir/latticra-cpp-authority.o"
+c++ $CXXFLAGS -Iinclude tests/cpp_authority_layer_invariants.cpp "$tmpdir/latticra-cpp-authority.o" ... -o "$tmpdir/latticra-cpp-authority-layer-invariants"
 ```
 
 The exact object list may include L-UI parser and semantic objects if LIR validation requires them.

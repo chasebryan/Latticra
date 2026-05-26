@@ -127,7 +127,7 @@ With explicit evidence input:
 sh scripts/nadia-prompt-receipt-contract.sh \
   --model-load /path/to/latest-model-load-contract.txt \
   --request-class software-development \
-  --output /private/tmp/latticra-nadia-prompt-receipt
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-prompt-receipt.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

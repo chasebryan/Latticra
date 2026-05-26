@@ -16,6 +16,7 @@ Latest Lat pipeline downstream stage-error evidence propagation note: 2026-05-25
 Latest Lat pipeline stage-summary evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline module/count evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline first-declaration evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline first-clause evidence propagation note: 2026-05-25 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
 Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
@@ -29,6 +30,7 @@ Latest Seal report envelope status/public-entry note: 2026-05-25 CDT
 Latest Seal signature request predecessor status alignment note: 2026-05-25 CDT
 Latest Seal signing authorization predecessor status alignment note: 2026-05-25 CDT
 Latest Seal signer handoff predecessor status alignment note: 2026-05-25 CDT
+Latest Seal signer invocation predecessor status alignment note: 2026-05-25 CDT
 Latest Lat pipeline comment metadata integration note: 2026-05-25 CDT
 Latest Lat pipeline diagnostic comment metadata integration note: 2026-05-25 CDT
 Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
@@ -39,6 +41,7 @@ Latest Lat pipeline downstream stage-error evidence propagation note: 2026-05-25
 Latest Lat pipeline stage-summary evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline module/count evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline first-declaration evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline first-clause evidence propagation note: 2026-05-25 CDT
 
 ## Purpose
 
@@ -70,6 +73,8 @@ Latticra Seal signing authorization predecessor status alignment is complete for
 
 Latticra Seal signer handoff predecessor status alignment is complete for the existing metadata-only signer handoff status surface. It does not add signing, signature verification, signer invocation behavior, object sealing, runtime handoff execution, capability enforcement, runtime authority, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
 
+Latticra Seal signer invocation predecessor status alignment is complete for the existing metadata-only signer invocation status surface. It does not add signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, capability enforcement, runtime authority, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
+
 ## Latest completed planning slice
 
 ```text
@@ -85,6 +90,18 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Lat pipeline first-clause evidence propagation
+```
+
+Purpose completed:
+
+```text
+copy Lat pipeline first lowered clause node, role, effect, name, operator, and value into runtime-boundary Lat pipeline records/reports so boundary evidence keeps clause identity visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
 Lat pipeline first-declaration evidence propagation
 ```
 
@@ -94,7 +111,7 @@ Purpose completed:
 copy Lat pipeline first lowered declaration node, kind, name, source, parse index, clause span/count, source index, and first transition source index into runtime-boundary Lat pipeline records/reports so boundary evidence keeps declaration identity visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat pipeline module/count evidence propagation
@@ -469,6 +486,18 @@ map runtime-boundary request families, effect families, authority prerequisites,
 ## Latest completed status/public-entry slice
 
 ```text
+Latticra Seal signer invocation predecessor status alignment
+```
+
+Purpose completed:
+
+```text
+tie and guard the existing metadata-only Seal signer invocation status to the signer-handoff status predecessor while preserving no new implementation behavior, no signing, no signature verification, no signer invocation behavior, no signer process execution, no object sealing, no runtime handoff execution, no capability enforcement, no runtime authority, no key generation, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, and no production cryptography claim
+```
+
+## Previous status/public-entry slice
+
+```text
 Latticra Seal signer handoff predecessor status alignment
 ```
 
@@ -476,18 +505,6 @@ Purpose completed:
 
 ```text
 tie and guard the existing metadata-only Seal signer handoff status to the signing-authorization status predecessor while preserving no new implementation behavior, no signing, no signature verification, no signer invocation behavior, no object sealing, no runtime handoff execution, no capability enforcement, no runtime authority, no key generation, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, and no production cryptography claim
-```
-
-## Previous status/public-entry slice
-
-```text
-Latticra Seal signing authorization predecessor status alignment
-```
-
-Purpose completed:
-
-```text
-tie and guard the existing metadata-only Seal signing authorization status to the signature-request status predecessor while preserving no new implementation behavior, no signing, no signature verification, no object sealing, no runtime handoff execution, no capability enforcement, no runtime authority, no key generation, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, and no production cryptography claim
 ```
 
 ## Earlier status/public-entry slice

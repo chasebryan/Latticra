@@ -55,6 +55,12 @@ static latticra_lat_pipeline_result_t ok_pipeline(void) {
     pipeline.first_declaration_clause_count = 9u;
     pipeline.first_declaration_source_index = LATTICRA_LAT_MODEL_NO_INDEX;
     pipeline.first_transition_source_index = 0u;
+    pipeline.first_clause_node_index = 6u;
+    pipeline.first_clause_role = LATTICRA_LAT_MODEL_CLAUSE_FIELD;
+    pipeline.first_clause_effect = LATTICRA_LAT_EFFECT_NONE;
+    strcpy(pipeline.first_clause_name, "name");
+    strcpy(pipeline.first_clause_operator, "=");
+    strcpy(pipeline.first_clause_value, "root");
     pipeline.first_comment_span.start_offset = 0u;
     pipeline.first_comment_span.end_offset = 24u;
     pipeline.first_comment_span.start_line = 1u;
@@ -153,6 +159,12 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(result.record.lat_pipeline_first_declaration_clause_count == 9u, "pipeline first declaration clause count copied");
     EXPECT_TRUE(result.record.lat_pipeline_first_declaration_source_index == LATTICRA_LAT_MODEL_NO_INDEX, "pipeline first declaration source index copied");
     EXPECT_TRUE(result.record.lat_pipeline_first_transition_source_index == 0u, "pipeline first transition source index copied");
+    EXPECT_TRUE(result.record.lat_pipeline_first_clause_node_index == 6u, "pipeline first clause node copied");
+    EXPECT_TRUE(result.record.lat_pipeline_first_clause_role == LATTICRA_LAT_MODEL_CLAUSE_FIELD, "pipeline first clause role copied");
+    EXPECT_TRUE(result.record.lat_pipeline_first_clause_effect == LATTICRA_LAT_EFFECT_NONE, "pipeline first clause effect copied");
+    EXPECT_TRUE(strcmp(result.record.lat_pipeline_first_clause_name, "name") == 0, "pipeline first clause name copied");
+    EXPECT_TRUE(strcmp(result.record.lat_pipeline_first_clause_operator, "=") == 0, "pipeline first clause operator copied");
+    EXPECT_TRUE(strcmp(result.record.lat_pipeline_first_clause_value, "root") == 0, "pipeline first clause value copied");
     EXPECT_TRUE(result.record.lat_pipeline_node_count == 29u, "pipeline node count copied");
     EXPECT_TRUE(result.record.lat_pipeline_edge_count == 29u, "pipeline edge count copied");
     EXPECT_TRUE(result.record.lat_pipeline_comment_count == 2u, "pipeline comment count copied");
@@ -402,6 +414,12 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_pipeline_first_declaration_clause_count=9\n") != 0, "pipeline first declaration clause count report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_first_declaration_source_index=") != 0, "pipeline first declaration source index report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_first_transition_source_index=0\n") != 0, "pipeline first transition source index report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_first_clause_node_index=6\n") != 0, "pipeline first clause node report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_first_clause_role=field\n") != 0, "pipeline first clause role report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_first_clause_effect=none\n") != 0, "pipeline first clause effect report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_first_clause_name=name\n") != 0, "pipeline first clause name report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_first_clause_operator==\n") != 0, "pipeline first clause operator report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_first_clause_value=root\n") != 0, "pipeline first clause value report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_node_count=29\n") != 0, "pipeline node count report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_edge_count=29\n") != 0, "pipeline edge count report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_comment_count=2\n") != 0, "pipeline comment count report present");

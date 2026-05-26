@@ -65,6 +65,7 @@ if [ "$root" != 'latticra-0.0.0' ]; then
 fi
 
 tmpdir="$(mktemp -d)"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
 archive_path="$tmpdir/$archive"
 archive_listing="$tmpdir/archive.list"
 
@@ -93,7 +94,5 @@ require_no_archive_pattern '(^|/)\.git(/|$)'
 require_no_archive_pattern '(^|/)\.rpmwork(/|$)'
 require_no_archive_pattern '\.rpm$'
 require_no_archive_pattern 'latticra-[^/]*\.tar\.gz$'
-
-rm -rf "$tmpdir"
 
 printf 'fedora_source_archive_fixture_lane: ok\n'

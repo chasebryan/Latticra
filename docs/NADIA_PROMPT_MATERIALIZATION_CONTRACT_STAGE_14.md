@@ -137,7 +137,7 @@ With explicit evidence input:
 sh scripts/nadia-prompt-materialization-contract.sh \
   --prompt-receipt /path/to/latest-prompt-receipt-contract.txt \
   --request-class software-development \
-  --output /private/tmp/latticra-nadia-prompt-materialization
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-prompt-materialization.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

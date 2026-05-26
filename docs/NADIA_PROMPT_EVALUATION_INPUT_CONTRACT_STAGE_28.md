@@ -137,7 +137,7 @@ Repository command:
 ```sh
 sh scripts/nadia-prompt-evaluation-input-contract.sh \
   --context-window-assembly reports/nadia/context-window-assembly/latest-context-window-assembly-contract.txt \
-  --output /private/tmp/latticra-nadia-prompt-evaluation-input
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-prompt-evaluation-input.XXXXXX")"
 ```
 
 Installed command:

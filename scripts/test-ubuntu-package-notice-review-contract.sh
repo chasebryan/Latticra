@@ -21,12 +21,14 @@ require_contains() {
 
 contract='docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md'
 inventory='docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md'
+doc_license_contract='docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md'
 license_contract='docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md'
 status='docs/status/UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md'
 workflow='.github/workflows/ubuntu-package-notice-review-contract.yml'
 
 require_file "$contract"
 require_file "$inventory"
+require_file "$doc_license_contract"
 require_file "$license_contract"
 require_file "$status"
 require_file "$workflow"
@@ -42,6 +44,8 @@ require_contains 'third_party_material_policy_present=1' "$contract"
 require_contains 'generated_artifact_notice_policy_present=1' "$contract"
 require_contains 'ubuntu_package_notice_inventory_present=1' "$contract"
 require_contains 'ubuntu_package_notice_inventory_report_present=1' "$contract"
+require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$contract"
+require_contains 'ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision' "$contract"
 require_contains 'third_party_material_inventory_recorded=1' "$contract"
 require_contains 'notice_file_present=0' "$contract"
 require_contains 'documentation_license_decision_present=0' "$contract"
@@ -59,8 +63,11 @@ require_contains 'ubuntu_package_notice_review_contract_present=1' "$contract"
 require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' "$contract"
 require_contains 'ubuntu_package_notice_inventory_present=1' "$contract"
 require_contains 'ubuntu_package_notice_inventory_report_present=1' "$contract"
+require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$contract"
+require_contains 'ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision' "$contract"
 require_contains 'doc_payload_license_reviewed=0' "$contract"
 require_contains 'doc_payload_license_unresolved=1' "$contract"
+require_contains 'doc_payload_license_decision_recorded=0' "$contract"
 require_contains 'third_party_material_inventory_reviewed=0' "$contract"
 require_contains 'generated_artifact_notice_reviewed=0' "$contract"
 require_contains 'third_party_notice_reviewed=0' "$contract"
@@ -79,9 +86,12 @@ require_contains 'LicenseRef-Latticra-TBD' packaging/ubuntu/debian/copyright
 require_contains 'ubuntu_package_notice_review_contract_present=1' "$status"
 require_contains 'ubuntu_package_notice_inventory_present=1' "$status"
 require_contains 'ubuntu_package_notice_inventory_report_present=1' "$status"
+require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$status"
+require_contains 'ubuntu_doc_payload_license_review_status=blocked-pending-formal-doc-license-decision' "$status"
 require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' "$status"
 require_contains 'doc_payload_license_reviewed=0' "$status"
 require_contains 'doc_payload_license_unresolved=1' "$status"
+require_contains 'doc_payload_license_decision_recorded=0' "$status"
 require_contains 'third_party_material_inventory_recorded=1' "$status"
 require_contains 'third_party_material_inventory_reviewed=0' "$status"
 require_contains 'generated_artifact_notice_reviewed=0' "$status"
@@ -94,6 +104,7 @@ require_contains 'docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md' "$status"
 require_contains '.github/workflows/ubuntu-package-notice-review-contract.yml' "$status"
 
 require_contains 'ubuntu_package_notice_inventory_present=1' "$inventory"
+require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$doc_license_contract"
 require_contains 'documentation scope, and notice obligations' "$license_contract"
 require_contains 'sh scripts/test-ubuntu-package-notice-review-contract.sh' "$workflow"
 

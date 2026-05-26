@@ -137,7 +137,7 @@ Repository command:
 ```sh
 sh scripts/nadia-prompt-evaluation-runtime-handoff-contract.sh \
   --prompt-evaluation-input reports/nadia/prompt-evaluation-input/latest-prompt-evaluation-input-contract.txt \
-  --output /private/tmp/latticra-nadia-prompt-evaluation-runtime-handoff
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-prompt-evaluation-runtime-handoff.XXXXXX")"
 ```
 
 Installed command:

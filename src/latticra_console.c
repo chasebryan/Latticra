@@ -210,6 +210,18 @@ static const latticra_console_command_t lc_commands[] = {
         0
     },
     {
+        "lc receipt-materialization-plan",
+        "lc receipt-materialization-plan",
+        "Inspect the metadata-only LC receipt payload materialization plan before writes exist.",
+        "lc.receipt.materialization.plan",
+        LATTICRA_CONSOLE_COMMAND_CORE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
         "lc signature-request",
         "lc signature-request",
         "Inspect the metadata-only LC binding contract for a future Seal signature request.",
@@ -605,6 +617,8 @@ static void lc_seed_result(
         "metadata-only-draft");
     lc_copy(result->receipt_payload_artifact_review_status, sizeof(result->receipt_payload_artifact_review_status),
         "metadata-only-review-gate");
+    lc_copy(result->receipt_payload_materialization_plan_status, sizeof(result->receipt_payload_materialization_plan_status),
+        "metadata-only-plan");
     lc_copy(result->signature_request_binding_status, sizeof(result->signature_request_binding_status),
         "metadata-only-contract");
     lc_copy(result->receipt_contract_status, sizeof(result->receipt_contract_status),
@@ -628,6 +642,7 @@ static void lc_seed_result(
     result->receipt_payload_schema_present = 1;
     result->receipt_payload_artifact_draft_present = 1;
     result->receipt_payload_artifact_review_present = 1;
+    result->receipt_payload_materialization_plan_present = 1;
     result->signature_request_binding_present = 1;
     result->receipt_contract_present = 1;
     result->os_base_contract_present = 1;
@@ -703,6 +718,8 @@ static void lc_finalize(latticra_console_result_t *result) {
         "metadata-only-draft-ready");
     lc_copy(result->receipt_payload_artifact_review_status, sizeof(result->receipt_payload_artifact_review_status),
         "metadata-only-review-gate-ready");
+    lc_copy(result->receipt_payload_materialization_plan_status, sizeof(result->receipt_payload_materialization_plan_status),
+        "metadata-only-plan-ready");
     lc_copy(result->signature_request_binding_status, sizeof(result->signature_request_binding_status),
         "metadata-only-contract-ready");
     lc_copy(result->receipt_contract_status, sizeof(result->receipt_contract_status),
@@ -859,6 +876,7 @@ latticra_status_t latticra_console_manpage_report(
         "  latticra-lc receipt-payload\n"
         "  latticra-lc receipt-artifact\n"
         "  latticra-lc receipt-artifact-review\n"
+        "  latticra-lc receipt-materialization-plan\n"
         "  latticra-lc signature-request\n"
         "  latticra-lc substrate\n"
         "  latticra-lc host\n"
@@ -1119,7 +1137,12 @@ latticra_status_t latticra_console_receipt_request_report(
         "receipt_payload_artifact_review_required=1\n"
         "receipt_payload_artifact_review_present=1\n"
         "receipt_payload_artifact_review_command=lc receipt-artifact-review\n"
+        "receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0\n"
+        "receipt_payload_materialization_plan_required=1\n"
+        "receipt_payload_materialization_plan_present=1\n"
+        "receipt_payload_materialization_plan_command=lc receipt-materialization-plan\n"
         "draft_review_receipt_present=0\n"
+        "materialization_preconditions_met=0\n"
         "materialization_allowed=0\n"
         "payload_artifact_present=0\n"
         "payload_materialized=0\n"
@@ -1186,6 +1209,10 @@ latticra_status_t latticra_console_receipt_payload_schema_report(
         "receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0\n"
         "receipt_payload_artifact_review_present=1\n"
         "receipt_payload_artifact_review_command=lc receipt-artifact-review\n"
+        "receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0\n"
+        "receipt_payload_materialization_plan_present=1\n"
+        "receipt_payload_materialization_plan_command=lc receipt-materialization-plan\n"
+        "materialization_preconditions_met=0\n"
         "materialization_allowed=0\n"
         "signature_request_binding_present=0\n"
         "signature_request_binding_allowed=0\n"
@@ -1231,6 +1258,9 @@ latticra_status_t latticra_console_receipt_payload_artifact_draft_report(
         "receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0\n"
         "receipt_payload_artifact_review_present=1\n"
         "receipt_payload_artifact_review_command=lc receipt-artifact-review\n"
+        "receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0\n"
+        "receipt_payload_materialization_plan_present=1\n"
+        "receipt_payload_materialization_plan_command=lc receipt-materialization-plan\n"
         "signature_request_binding_profile=lc-signature-request-binding-v0\n"
         "receipt_contract_profile=lc-receipts-v0\n"
         "signature_request_profile=latticra-seal-signature-request/0.1\n"
@@ -1245,6 +1275,7 @@ latticra_status_t latticra_console_receipt_payload_artifact_draft_report(
         "draft_review_receipt_required=1\n"
         "draft_review_receipt_present=0\n"
         "draft_review_approval_recorded=0\n"
+        "materialization_preconditions_met=0\n"
         "materialization_allowed=0\n"
         "payload_artifact_present=0\n"
         "payload_materialized=0\n"
@@ -1262,6 +1293,7 @@ latticra_status_t latticra_console_receipt_payload_artifact_draft_report(
         "promotion_gate=lc_receipt_payload_artifact_draft_before_materialization_and_signature_request\n"
         "command_surface=lc receipt-artifact\n"
         "related_review_command=lc receipt-artifact-review\n"
+        "related_materialization_plan_command=lc receipt-materialization-plan\n"
         "related_schema_command=lc receipt-payload\n"
         "related_binding_command=lc signature-request\n"
         "related_request_command=lc receipt-request\n"
@@ -1298,6 +1330,9 @@ latticra_status_t latticra_console_receipt_payload_artifact_review_report(
         "receipt_payload_artifact_draft_required=1\n"
         "receipt_payload_artifact_draft_present=1\n"
         "receipt_payload_artifact_draft_command=lc receipt-artifact\n"
+        "receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0\n"
+        "receipt_payload_materialization_plan_present=1\n"
+        "receipt_payload_materialization_plan_command=lc receipt-materialization-plan\n"
         "signature_request_binding_profile=lc-signature-request-binding-v0\n"
         "receipt_contract_profile=lc-receipts-v0\n"
         "draft_review_required=1\n"
@@ -1307,6 +1342,9 @@ latticra_status_t latticra_console_receipt_payload_artifact_review_report(
         "draft_review_approval_recorded=0\n"
         "draft_reviewer_identity_recorded=0\n"
         "draft_review_timestamp_recorded=0\n"
+        "materialization_plan_required=1\n"
+        "materialization_plan_present=1\n"
+        "materialization_preconditions_met=0\n"
         "materialization_allowed=0\n"
         "payload_artifact_present=0\n"
         "payload_materialized=0\n"
@@ -1323,6 +1361,72 @@ latticra_status_t latticra_console_receipt_payload_artifact_review_report(
         "receipt_signed=0\n"
         "promotion_gate=lc_receipt_payload_artifact_review_before_materialization\n"
         "command_surface=lc receipt-artifact-review\n"
+        "related_materialization_plan_command=lc receipt-materialization-plan\n"
+        "related_artifact_command=lc receipt-artifact\n"
+        "related_schema_command=lc receipt-payload\n"
+        "related_binding_command=lc signature-request\n"
+        "related_request_command=lc receipt-request\n"
+        "no_effect=1\n"
+        "file_write_allowed=0\n"
+        "host_process_launch_allowed=0\n"
+        "host_file_read_allowed=0\n"
+        "host_file_write_allowed=0\n"
+        "host_mutation_allowed=0\n"
+        "network_allowed=0\n"
+        "runtime_enforcement_allowed=0\n"
+        "boot_allowed=0\n");
+    return status;
+}
+
+latticra_status_t latticra_console_receipt_payload_materialization_plan_report(
+    char *buffer,
+    size_t buffer_len) {
+    size_t used = 0u;
+    latticra_status_t status;
+
+    if (buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    buffer[0] = '\0';
+
+    status = lc_appendf(buffer, buffer_len, &used,
+        "LATTICRA CONSOLE RECEIPT PAYLOAD MATERIALIZATION PLAN\n"
+        "materialization_plan_profile=lc-receipt-payload-materialization-plan-v0\n"
+        "materialization_plan_status=metadata-only\n"
+        "materialization_plan_present=1\n"
+        "receipt_request_profile=lc-receipt-request-v0\n"
+        "receipt_payload_schema_profile=lc-receipt-payload-schema-v0\n"
+        "receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0\n"
+        "receipt_payload_artifact_draft_present=1\n"
+        "receipt_payload_artifact_draft_command=lc receipt-artifact\n"
+        "receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0\n"
+        "receipt_payload_artifact_review_required=1\n"
+        "receipt_payload_artifact_review_present=1\n"
+        "receipt_payload_artifact_review_command=lc receipt-artifact-review\n"
+        "receipt_contract_profile=lc-receipts-v0\n"
+        "signature_request_binding_profile=lc-signature-request-binding-v0\n"
+        "draft_review_receipt_required=1\n"
+        "draft_review_receipt_present=0\n"
+        "draft_review_approval_recorded=0\n"
+        "materialization_preconditions_met=0\n"
+        "materialization_allowed=0\n"
+        "materialization_execution_planned=0\n"
+        "payload_artifact_present=0\n"
+        "payload_materialized=0\n"
+        "payload_write_allowed=0\n"
+        "payload_file_open_allowed=0\n"
+        "payload_hash_computed=0\n"
+        "payload_hash_recorded=0\n"
+        "payload_path_recorded=0\n"
+        "signature_request_binding_allowed=0\n"
+        "signature_request_binding_artifact_present=0\n"
+        "seal_signature_request_ready=0\n"
+        "seal_signature_request_present=0\n"
+        "seal_signing_authority_present=0\n"
+        "receipt_write_allowed=0\n"
+        "receipt_signed=0\n"
+        "promotion_gate=lc_receipt_payload_materialization_plan_after_review_receipt\n"
+        "command_surface=lc receipt-materialization-plan\n"
+        "related_review_command=lc receipt-artifact-review\n"
         "related_artifact_command=lc receipt-artifact\n"
         "related_schema_command=lc receipt-payload\n"
         "related_binding_command=lc signature-request\n"
@@ -1364,7 +1468,12 @@ latticra_status_t latticra_console_signature_request_binding_report(
         "receipt_payload_artifact_review_required=1\n"
         "receipt_payload_artifact_review_present=1\n"
         "receipt_payload_artifact_review_command=lc receipt-artifact-review\n"
+        "receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0\n"
+        "receipt_payload_materialization_plan_required=1\n"
+        "receipt_payload_materialization_plan_present=1\n"
+        "receipt_payload_materialization_plan_command=lc receipt-materialization-plan\n"
         "draft_review_receipt_present=0\n"
+        "materialization_preconditions_met=0\n"
         "materialization_allowed=0\n"
         "receipt_contract_profile=lc-receipts-v0\n"
         "signature_request_profile=latticra-seal-signature-request/0.1\n"
@@ -1373,7 +1482,7 @@ latticra_status_t latticra_console_signature_request_binding_report(
         "requested_signing_authorization=metadata-only\n"
         "requested_receipt_profile=latticra-seal-verified-receipt/0.1\n"
         "requested_capability=verified-receipt-report\n"
-        "required_surfaces=receipt-request,receipt-payload-schema,receipt-payload-artifact-draft,receipt-payload-artifact-review,receipt-contract,runtime-boundary,seal-capability-labels\n"
+        "required_surfaces=receipt-request,receipt-payload-schema,receipt-payload-artifact-draft,receipt-payload-artifact-review,receipt-payload-materialization-plan,receipt-contract,runtime-boundary,seal-capability-labels\n"
         "payload_artifact_present=0\n"
         "required_payload_state=payload_artifact_present=0,payload_hash_computed=0,payload_path_recorded=0\n"
         "signature_request_binding_artifact_present=0\n"
@@ -1433,6 +1542,8 @@ latticra_status_t latticra_console_receipt_report(
         "receipt_payload_artifact_draft_present=1\n"
         "receipt_payload_artifact_review_required=1\n"
         "receipt_payload_artifact_review_present=1\n"
+        "receipt_payload_materialization_plan_required=1\n"
+        "receipt_payload_materialization_plan_present=1\n"
         "draft_review_receipt_present=0\n"
         "signature_request_binding_required=1\n"
         "signature_request_binding_contract_present=1\n"
@@ -1443,6 +1554,7 @@ latticra_status_t latticra_console_receipt_report(
         "receipt_payload_schema_command=lc receipt-payload\n"
         "receipt_payload_artifact_draft_command=lc receipt-artifact\n"
         "receipt_payload_artifact_review_command=lc receipt-artifact-review\n"
+        "receipt_payload_materialization_plan_command=lc receipt-materialization-plan\n"
         "signature_request_binding_command=lc signature-request\n"
         "seal_signature_planned=1\n"
         "seal_signature_present=0\n"
@@ -1585,6 +1697,7 @@ latticra_status_t latticra_console_report(
         "receipt_payload_schema_status=%s\n"
         "receipt_payload_artifact_draft_status=%s\n"
         "receipt_payload_artifact_review_status=%s\n"
+        "receipt_payload_materialization_plan_status=%s\n"
         "signature_request_binding_status=%s\n"
         "receipt_contract_status=%s\n"
         "os_base_contract_status=%s\n"
@@ -1603,6 +1716,7 @@ latticra_status_t latticra_console_report(
         "receipt_payload_schema_present=%d\n"
         "receipt_payload_artifact_draft_present=%d\n"
         "receipt_payload_artifact_review_present=%d\n"
+        "receipt_payload_materialization_plan_present=%d\n"
         "signature_request_binding_present=%d\n"
         "receipt_contract_present=%d\n"
         "os_base_contract_present=%d\n"
@@ -1647,6 +1761,7 @@ latticra_status_t latticra_console_report(
         result->receipt_payload_schema_status,
         result->receipt_payload_artifact_draft_status,
         result->receipt_payload_artifact_review_status,
+        result->receipt_payload_materialization_plan_status,
         result->signature_request_binding_status,
         result->receipt_contract_status,
         result->os_base_contract_status,
@@ -1665,6 +1780,7 @@ latticra_status_t latticra_console_report(
         result->receipt_payload_schema_present,
         result->receipt_payload_artifact_draft_present,
         result->receipt_payload_artifact_review_present,
+        result->receipt_payload_materialization_plan_present,
         result->signature_request_binding_present,
         result->receipt_contract_present,
         result->os_base_contract_present,

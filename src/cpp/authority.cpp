@@ -9,7 +9,7 @@ constexpr authority_flags no_effect_flags() noexcept {
 
 constexpr bool flags_are_no_effect(const authority_flags flags) noexcept {
     return flags.no_effect && !flags.execution_allowed && !flags.mutation_allowed &&
-           !flags.server_allowed && !flags.recovery_allowed &&
+           !flags.server_allowed && !flags.network_allowed && !flags.recovery_allowed &&
            !flags.hardware_allowed;
 }
 
@@ -19,6 +19,7 @@ constexpr authority_flags flags_from_lat(
                            result.execution_allowed != 0,
                            result.mutation_allowed != 0,
                            result.server_allowed != 0,
+                           false,
                            result.recovery_allowed != 0,
                            result.hardware_allowed != 0};
 }
@@ -29,6 +30,7 @@ constexpr authority_flags flags_from_lir(
                            module.execution_allowed != 0,
                            module.mutation_allowed != 0,
                            module.server_allowed != 0,
+                           false,
                            module.recovery_allowed != 0,
                            module.hardware_allowed != 0};
 }
@@ -594,6 +596,9 @@ authority_status render_authority_audit_report(
         append_char(buffer, buffer_len, offset, '\n') &&
         append_c_string(buffer, buffer_len, offset, "server_allowed=") &&
         append_bool(buffer, buffer_len, offset, report.flags.server_allowed) &&
+        append_char(buffer, buffer_len, offset, '\n') &&
+        append_c_string(buffer, buffer_len, offset, "network_allowed=") &&
+        append_bool(buffer, buffer_len, offset, report.flags.network_allowed) &&
         append_char(buffer, buffer_len, offset, '\n') &&
         append_c_string(buffer, buffer_len, offset, "recovery_allowed=") &&
         append_bool(buffer, buffer_len, offset, report.flags.recovery_allowed) &&

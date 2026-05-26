@@ -118,7 +118,7 @@ With explicit evidence input:
 sh scripts/nadia-tokenization-boundary-contract.sh \
   --prompt-evaluation-handoff /path/to/latest-prompt-evaluation-handoff-contract.txt \
   --request-class awareness-education \
-  --output /private/tmp/latticra-nadia-tokenization-boundary
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-tokenization-boundary.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

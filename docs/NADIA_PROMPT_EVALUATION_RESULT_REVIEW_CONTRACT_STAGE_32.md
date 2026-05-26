@@ -153,7 +153,7 @@ Repository command:
 ```sh
 sh scripts/nadia-prompt-evaluation-result-review-contract.sh \
   --prompt-evaluation-result reports/nadia/prompt-evaluation-result/latest-prompt-evaluation-result-contract.txt \
-  --output /private/tmp/latticra-nadia-prompt-evaluation-result-review
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-prompt-evaluation-result-review.XXXXXX")"
 ```
 
 Installed command:

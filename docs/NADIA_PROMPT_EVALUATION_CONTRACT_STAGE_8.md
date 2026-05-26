@@ -92,7 +92,7 @@ With an explicit tool preflight:
 sh scripts/nadia-prompt-evaluation-contract.sh \
   --tool-preflight /path/to/latest-tool-preflight.txt \
   --request-class software-development \
-  --output /private/tmp/latticra-nadia-prompt-contracts
+  --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-prompt-contracts.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:

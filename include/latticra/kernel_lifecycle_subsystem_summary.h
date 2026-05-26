@@ -67,6 +67,10 @@ typedef struct {
     int driver_load_allowed;
     int driver_bind_allowed;
     int interrupt_allowed;
+    int interrupt_mask_allowed;
+    int interrupt_unmask_allowed;
+    int interrupt_dispatch_allowed;
+    int interrupt_ack_allowed;
     int dma_allowed;
     int hardware_effect_allowed;
     int no_external_effect_chain;

@@ -25,6 +25,9 @@ The current effect-authorization posture is:
 ```text
 macos_reset_uninstall_effect_authorization_contract_present=1
 macos_reset_uninstall_evidence_bundle_contract_present=1
+macos_reset_uninstall_live_implementation_plan_contract_present=1
+live_implementation_plan_contract_state=defined-no-effect
+live_reset_uninstall_implementation_present=0
 evidence_bundle_contract_state=defined-no-effect
 evidence_bundle_complete=0
 reset_uninstall_evidence_bundle_complete=0
@@ -54,6 +57,9 @@ Future effect authorization must bind to the closed implementation gate, explici
 macos_reset_uninstall_operator_intent_contract_present=1
 macos_reset_uninstall_effect_authorization_contract_present=1
 macos_reset_uninstall_evidence_bundle_contract_present=1
+macos_reset_uninstall_live_implementation_plan_contract_present=1
+live_implementation_plan_contract_state=defined-no-effect
+live_reset_uninstall_implementation_present=0
 evidence_bundle_contract_state=defined-no-effect
 evidence_bundle_complete=0
 reset_uninstall_evidence_bundle_complete=0
@@ -221,5 +227,5 @@ Add a macOS reset/uninstall evidence-bundle contract that groups implementation-
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-implementation plan contract that maps future effect-authorized execution phases while deletion remains disabled.
+Add a macOS reset/uninstall live-execution preflight contract that proves the live implementation plan still cannot delete until all evidence gates are satisfied.
 ```

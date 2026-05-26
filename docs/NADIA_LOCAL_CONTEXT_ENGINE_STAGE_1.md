@@ -85,7 +85,7 @@ community_awareness_posture=1
 From the repository:
 
 ```sh
-sh scripts/nadia-context-pack.sh --repo . --output /private/tmp/latticra-nadia-context
+sh scripts/nadia-context-pack.sh --repo . --output "$(mktemp -d "${TMPDIR:-/tmp}/latticra-nadia-context.XXXXXX")"
 ```
 
 After a guarded local install with Nadia enabled:
