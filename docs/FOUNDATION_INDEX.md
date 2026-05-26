@@ -408,6 +408,7 @@ Latticra Seal verification policy predecessor status alignment + guardrails
 Latticra Seal verification receipt predecessor status alignment + guardrails
 Latticra Seal README status row alignment + guardrails
 Latticra Seal effect decision status/public-entry alignment + guardrails
+Latticra Seal effect decision predecessor status alignment + guardrails
 Latticra Seal runtime handoff status/public-entry alignment + guardrails
 Latticra Seal status rollup status/public-entry alignment + guardrails
 Latticra Seal agentic automation security public-entrypoint alignment + guardrails

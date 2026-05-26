@@ -2764,6 +2764,8 @@ The effect decision metadata implementation records denied-by-gate effect decisi
 
 The effect decision status record makes that metadata-only denied checkpoint visible from the public entry points without changing implementation behavior.
 
+The effect decision status record now ties that denied metadata checkpoint to the guarded capability gate status predecessor without changing implementation behavior.
+
 The runtime handoff metadata implementation records inactive runtime handoff posture from denied effect decision metadata. It does not execute runtime behavior, perform effects, touch host or network behavior, enforce capabilities, or grant runtime authority.
 
 The runtime handoff status record makes that inactive metadata-only checkpoint visible from the public entry points without changing implementation behavior.

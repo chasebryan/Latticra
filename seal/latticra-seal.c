@@ -61,7 +61,26 @@ static char *xstrdup(const char *s) {
 
 static bool file_exists(const char *path) {
     struct stat st;
-    return lstat(path, &st) == 0 && S_ISREG(st.st_mode);
+    int flags = O_RDONLY;
+#ifdef O_CLOEXEC
+    flags |= O_CLOEXEC;
+#endif
+#ifdef O_NOFOLLOW
+    flags |= O_NOFOLLOW;
+#endif
+#ifdef O_NONBLOCK
+    flags |= O_NONBLOCK;
+#endif
+
+    int fd = open(path, flags);
+
+    if (fd < 0) {
+        return false;
+    }
+
+    bool ok = fstat(fd, &st) == 0 && S_ISREG(st.st_mode);
+    close(fd);
+    return ok;
 }
 
 static bool ensure_report_dir(void) {
@@ -95,16 +114,15 @@ static bool ensure_report_dir(void) {
 static FILE *open_regular_file_for_read(const char *path) {
     struct stat st;
 
-    if (lstat(path, &st) != 0 || !S_ISREG(st.st_mode)) {
-        return NULL;
-    }
-
     int flags = O_RDONLY;
 #ifdef O_CLOEXEC
     flags |= O_CLOEXEC;
 #endif
 #ifdef O_NOFOLLOW
     flags |= O_NOFOLLOW;
+#endif
+#ifdef O_NONBLOCK
+    flags |= O_NONBLOCK;
 #endif
 
     int fd = open(path, flags);
@@ -130,16 +148,15 @@ static FILE *open_regular_file_for_read(const char *path) {
 static FILE *open_regular_file_for_write(const char *path) {
     struct stat st;
 
-    if (lstat(path, &st) == 0 && !S_ISREG(st.st_mode)) {
-        return NULL;
-    }
-
     int flags = O_WRONLY | O_CREAT | O_TRUNC;
 #ifdef O_CLOEXEC
     flags |= O_CLOEXEC;
 #endif
 #ifdef O_NOFOLLOW
     flags |= O_NOFOLLOW;
+#endif
+#ifdef O_NONBLOCK
+    flags |= O_NONBLOCK;
 #endif
 
     int fd = open(path, flags, 0600);
@@ -631,23 +648,16 @@ static int command_check(void) {
 
     section(&run, "Manifest presence");
 
-    if (!file_exists(MANIFEST_PATH)) {
-        fail_run(&run, "latticra.seal is missing");
+    char *manifest = read_file(MANIFEST_PATH);
+
+    if (!manifest) {
+        fail_run(&run, "latticra.seal is missing or unreadable");
         int code = finish(&run);
         fclose(run.report);
         return code;
     }
 
     pass(&run, "latticra.seal exists");
-
-    char *manifest = read_file(MANIFEST_PATH);
-
-    if (!manifest) {
-        fail_run(&run, "could not read latticra.seal");
-        int code = finish(&run);
-        fclose(run.report);
-        return code;
-    }
 
     check_manifest_shape(&run, manifest);
     check_policy_shape(&run, manifest);
@@ -1043,34 +1053,34 @@ static int command_verify(void) {
 
     section(&run, "Baseline presence");
 
-    if (!file_exists(BASELINE_PATH)) {
-        fail_run(&run, "latticra.seal.lock is missing");
+    HashList baseline_probe;
+    baseline_probe.items = NULL;
+    baseline_probe.len = 0;
+    baseline_probe.cap = 0;
+
+    if (!read_hash_list(BASELINE_PATH, &baseline_probe)) {
+        hashlist_free(&baseline_probe);
+        fail_run(&run, "latticra.seal.lock is missing or unreadable");
         int code = finish(&run);
         fclose(run.report);
         return code;
     }
 
+    hashlist_free(&baseline_probe);
     pass(&run, "latticra.seal.lock exists");
 
     section(&run, "Manifest presence");
 
-    if (!file_exists(MANIFEST_PATH)) {
-        fail_run(&run, "latticra.seal is missing");
+    char *manifest = read_file(MANIFEST_PATH);
+
+    if (!manifest) {
+        fail_run(&run, "latticra.seal is missing or unreadable");
         int code = finish(&run);
         fclose(run.report);
         return code;
     }
 
     pass(&run, "latticra.seal exists");
-
-    char *manifest = read_file(MANIFEST_PATH);
-
-    if (!manifest) {
-        fail_run(&run, "could not read latticra.seal");
-        int code = finish(&run);
-        fclose(run.report);
-        return code;
-    }
 
     check_manifest_shape(&run, manifest);
     check_policy_shape(&run, manifest);

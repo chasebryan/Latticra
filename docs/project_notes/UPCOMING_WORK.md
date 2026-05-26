@@ -728,6 +728,7 @@ publish and guard the existing inactive metadata-only runtime handoff surface fr
 
 ```text
 Latticra Seal effect decision status/public-entry alignment
+Latticra Seal effect decision predecessor status alignment
 ```
 
 Purpose completed:

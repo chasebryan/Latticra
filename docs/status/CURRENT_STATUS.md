@@ -1262,6 +1262,12 @@ The Latticra Seal capability gate status record makes the existing metadata-only
 
 The Latticra Seal effect decision status record makes the existing metadata-only denied effect decision implementation visible from public entry points while preserving no effect execution, no capability enforcement, no runtime handoff execution, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, and no runtime authority.
 
+Latticra Seal effect decision predecessor status alignment records that the denied metadata-only effect decision remains tied to the guarded capability gate status predecessor.
+
+```text
+effect_decision_predecessor_capability_gate_status_present=1
+```
+
 The Latticra Seal runtime handoff status record makes the existing inactive metadata-only runtime handoff implementation visible from public entry points while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, and no runtime authority.
 
 The Latticra Seal runtime handoff report status/public-entry alignment makes the existing metadata-only runtime handoff report implementation visible from public entry points while preserving no runtime handoff execution, no effect execution, no capability enforcement, no signing, no host behavior, no network behavior, and no runtime authority.
@@ -1403,6 +1409,7 @@ Latticra Seal signing operation metadata implementation
 Latticra Seal signing operation contract
 Latticra Seal README status row alignment
 Latticra Seal effect decision status/public-entry alignment
+Latticra Seal effect decision predecessor status alignment
 Latticra Seal runtime handoff status/public-entry alignment
 Latticra Seal status rollup status/public-entry alignment
 Latticra Seal agentic automation security public-entrypoint alignment

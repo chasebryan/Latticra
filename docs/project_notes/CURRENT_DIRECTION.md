@@ -418,6 +418,8 @@ Latticra Seal verified capability gate status/public-entry alignment makes the e
 
 Latticra Seal verified effect decision status/public-entry alignment makes the existing metadata-only verified effect decision visible from public status surfaces while preserving no effect execution, no capability enforcement, no runtime authority, no signing, no key handling, no host behavior, no network behavior, and no production cryptography claim.
 
+Latticra Seal effect decision predecessor status alignment preserves the denied metadata-only effect decision's guarded capability gate predecessor without adding effect execution, capability enforcement, host behavior, network behavior, or runtime authority.
+
 Latticra Seal runtime handoff evaluation status/public-entry alignment makes the existing metadata-only runtime handoff evaluation visible from public status surfaces while preserving no runtime handoff execution, no effect execution, no capability enforcement, no runtime authority, no signing, no key handling, no host behavior, no network behavior, and no production cryptography claim.
 
 Latticra Seal runtime handoff report status/public-entry alignment makes the existing metadata-only runtime handoff report visible from public status surfaces while preserving no runtime handoff execution, no effect execution, no capability enforcement, no runtime authority, no signing, no key handling, no host behavior, no network behavior, and no production cryptography claim.
