@@ -123,8 +123,8 @@ require_contains 'nadia-tokenizer-specification' "$makefile"
 
 sh "$stage17_guard" >/tmp/latticra-nadia-stage18-prereq-stage17-test.out
 
-out='/private/tmp/latticra-nadia-stage18-tokenizer-test'
-tokenization='/private/tmp/latticra-nadia-stage17-tokenization-test/nadia-tokenization-boundary-contract-stage17-test.txt'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage18-tokenizer-test"
+tokenization="${TMPDIR:-/tmp}/latticra-nadia-stage17-tokenization-test/nadia-tokenization-boundary-contract-stage17-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 

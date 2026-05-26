@@ -122,8 +122,8 @@ require_contains 'nadia-tokenization-boundary' "$makefile"
 
 sh "$stage16_guard" >/tmp/latticra-nadia-stage17-prereq-stage16-test.out
 
-out='/private/tmp/latticra-nadia-stage17-tokenization-test'
-handoff='/private/tmp/latticra-nadia-stage16-handoff-test/nadia-prompt-evaluation-handoff-contract-stage16-test.txt'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage17-tokenization-test"
+handoff="${TMPDIR:-/tmp}/latticra-nadia-stage16-handoff-test/nadia-prompt-evaluation-handoff-contract-stage16-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 

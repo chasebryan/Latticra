@@ -149,8 +149,8 @@ require_contains 'nadia-prompt-tokenization' "$makefile"
 
 sh "$stage24_guard" >/tmp/latticra-nadia-stage25-prereq-stage24-test.out
 
-out='/private/tmp/latticra-nadia-stage25-prompt-tokenization-test'
-attachment='/private/tmp/latticra-nadia-stage24-tokenizer-runtime-attachment-test/nadia-tokenizer-runtime-attachment-contract-stage24-test.txt'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage25-prompt-tokenization-test"
+attachment="${TMPDIR:-/tmp}/latticra-nadia-stage24-tokenizer-runtime-attachment-test/nadia-tokenizer-runtime-attachment-contract-stage24-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 

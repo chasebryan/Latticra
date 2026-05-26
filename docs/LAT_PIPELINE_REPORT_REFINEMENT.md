@@ -1,6 +1,6 @@
 # Latticra Lat Pipeline Report Refinement
 
-Status: Lat pipeline report refinement implementation with failure-span, comment, first-declaration, and first-clause metadata
+Status: Lat pipeline report refinement implementation with comment, first-declaration, and first-clause metadata
 Scope: deterministic Lat pipeline stage-summary metadata, parser span report fields, line-comment report fields, first-declaration report fields, first-clause report fields, invariant tests, guard coverage, and workflow wiring.
 
 ## Purpose

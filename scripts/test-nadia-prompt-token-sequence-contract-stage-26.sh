@@ -150,8 +150,8 @@ require_contains 'sh scripts/test-nadia-prompt-token-sequence-contract-stage-26.
 
 sh "$stage25_guard" >/tmp/latticra-nadia-stage26-prereq-stage25-test.out
 
-out='/private/tmp/latticra-nadia-stage26-prompt-token-sequence-test'
-tokenization='/private/tmp/latticra-nadia-stage25-prompt-tokenization-test/nadia-prompt-tokenization-contract-stage25-test.txt'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage26-prompt-token-sequence-test"
+tokenization="${TMPDIR:-/tmp}/latticra-nadia-stage25-prompt-tokenization-test/nadia-prompt-tokenization-contract-stage25-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 

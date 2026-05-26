@@ -72,7 +72,7 @@ require_contains 'macOS verification transcript contract' "$doc"
 require_contains 'macos_app_bundle_created=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
-require_contains 'Add a macOS reset/uninstall receipt-schema contract' "$doc"
+require_contains 'Add a macOS reset/uninstall operator-intent contract' "$doc"
 
 require_contains 'Status: implementation plan status' "$status"
 require_contains 'macos_user_local_app_bundle_implementation_plan_present=1' "$status"

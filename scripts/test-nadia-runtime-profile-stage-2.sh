@@ -102,8 +102,8 @@ require_contains 'nadia runtime' "$panel_ui"
 require_contains 'latticra-nadia runtime-profile' "$installer_readme"
 require_contains 'nadia-runtime' "$makefile"
 
-out='/private/tmp/latticra-nadia-stage2-runtime-test'
-model='/private/tmp/latticra-nadia-stage2-model.gguf'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage2-runtime-test"
+model="${TMPDIR:-/tmp}/latticra-nadia-stage2-model.gguf"
 rm -rf "$out"
 mkdir -p "$out"
 printf 'not a real model fixture\n' > "$model"

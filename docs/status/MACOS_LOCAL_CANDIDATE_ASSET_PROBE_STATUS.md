@@ -77,7 +77,7 @@ macos_local_candidate_asset_probe: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall receipt-schema contract for reset/uninstall receipts outside the removed prefix.
+Add a macOS reset/uninstall operator-intent contract for explicit future live reset/uninstall approval evidence.
 ```
 
 ## Non-Claims

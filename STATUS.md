@@ -13,9 +13,12 @@ Latest runtime boundary Lat pipeline comment evidence note: 2026-05-25 CDT
 Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline failure span evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline parse-error evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline semantic-error evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline downstream stage-error evidence propagation note: 2026-05-25 CDT
 Latest macOS reset/uninstall live-target classifier note: 2026-05-25 CDT
 Latest macOS reset/uninstall dry-run planner note: 2026-05-25 CDT
 Latest macOS reset/uninstall absence-report contract note: 2026-05-25 CDT
+Latest macOS reset/uninstall receipt-schema contract note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
 Latest Seal policy decision status/public-entry note: 2026-05-25 CDT
 Latest Seal signed request status/public-entry note: 2026-05-25 CDT
@@ -31,6 +34,8 @@ Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
 Latest Seal Ed25519 verify status/public-entry note: 2026-05-25 CDT
 Latest Seal verified receipt promotion status/public-entry note: 2026-05-25 CDT
 Latest Seal verified capability gate status/public-entry note: 2026-05-25 CDT
+Latest Seal verified effect decision status/public-entry note: 2026-05-25 CDT
+Latest Seal runtime handoff evaluation status/public-entry note: 2026-05-25 CDT
 Latest Nadia offline AI Stage-0 foundation note: 2026-05-25 CDT
 Latest Nadia local context engine Stage-1 note: 2026-05-25 CDT
 Latest Nadia runtime profile Stage-2 note: 2026-05-25 CDT
@@ -61,10 +66,12 @@ Latest Nadia prompt token sequence contract Stage-26 note: 2026-05-25 CDT
 Latest Nadia context window assembly contract Stage-27 note: 2026-05-25 CDT
 Latest Nadia prompt evaluation input contract Stage-28 note: 2026-05-25 CDT
 Latest Nadia prompt evaluation runtime handoff contract Stage-29 note: 2026-05-25 CDT
+Latest Nadia prompt evaluation invocation contract Stage-30 note: 2026-05-25 CDT
 Latest Latticra Console profile preset note: 2026-05-25 CDT
 Latest Latticra Console host-embedding contract note: 2026-05-25 CDT
 Latest Latticra Console read-only host inventory contract note: 2026-05-25 CDT
 Latest Latticra Console host-adapter contract note: 2026-05-26 CDT
+Latest Latticra Console Seal receipt-request contract note: 2026-05-26 CDT
 Latest Latticra Console receipt contract note: 2026-05-25 CDT
 Latest Latticra Console OS-base planning contract note: 2026-05-25 CDT
 Latest Latticra Console VM evidence contract note: 2026-05-25 CDT
@@ -73,6 +80,8 @@ Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
 Latest Seal Ed25519 verify status/public-entry note: 2026-05-25 CDT
 Latest Seal verified receipt promotion status/public-entry note: 2026-05-25 CDT
 Latest Seal verified capability gate status/public-entry note: 2026-05-25 CDT
+Latest Seal verified effect decision status/public-entry note: 2026-05-25 CDT
+Latest Seal runtime handoff evaluation status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
 Latest Seal future key parsing implementation plan note: 2026-05-25 CDT
@@ -113,6 +122,8 @@ Latest Lat pipeline diagnostic comment metadata integration note: 2026-05-25 CDT
 Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline failure span evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline parse-error evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline semantic-error evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline downstream stage-error evidence propagation note: 2026-05-25 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
 Latest Lat model report declaration metadata integration note: 2026-05-25 CDT
 Latest Lat model report clause metadata integration note: 2026-05-25 CDT
@@ -205,7 +216,7 @@ docs/strategy/README.md
 | Overall Latticra system | 39% |
 | Latticra Seal / local evidence layer | 34% |
 | Latticra Panel / local control surface | 28% |
-| Nadia offline AI foundation | 63% |
+| Nadia offline AI foundation | 64% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 92% |
 | Public documentation posture | 88% |
@@ -256,6 +267,8 @@ Seal crypto verify backend status/public-entry alignment
 Seal Ed25519 verify-only status/public-entry alignment
 Seal verified receipt promotion status/public-entry alignment
 Seal verified capability gate status/public-entry alignment
+Seal verified effect decision status/public-entry alignment
+Seal runtime handoff evaluation status/public-entry alignment
 Nadia offline AI Stage-0 foundation
 Nadia local context engine Stage-1
 Nadia runtime profile Stage-2
@@ -286,6 +299,7 @@ Nadia prompt token sequence contract Stage-26
 Nadia context window assembly contract Stage-27
 Nadia prompt evaluation input contract Stage-28
 Nadia prompt evaluation runtime handoff contract Stage-29
+Nadia prompt evaluation invocation contract Stage-30
 Latticra Console profile presets
 Latticra Console host-embedding contract
 Latticra Console read-only host inventory contract
@@ -295,6 +309,8 @@ Seal crypto verify backend status/public-entry alignment
 Seal Ed25519 verify-only status/public-entry alignment
 Seal verified receipt promotion status/public-entry alignment
 Seal verified capability gate status/public-entry alignment
+Seal verified effect decision status/public-entry alignment
+Seal runtime handoff evaluation status/public-entry alignment
 Seal key parsing status/public-entry alignment
 Seal bounded no-effect key parsing implementation
 Seal future key parsing implementation plan
@@ -551,6 +567,83 @@ host_behavior_changed=0
 estimate_adjustment_required=0
 ```
 
+## Current Seal verified effect decision boundary
+
+The Seal verified effect decision status record makes the existing metadata-only effect classification visible from public entry points while preserving no effect execution, no capability enforcement, and no runtime authority.
+
+Current verified effect decision fields:
+
+```text
+seal_verified_effect_decision_contract_present=1
+seal_verified_effect_decision_implementation_present=1
+seal_verified_effect_decision_status_present=1
+decision_profile=latticra-seal-verified-effect-decision/0.1
+gate_profile=latticra-seal-verified-capability-gate/0.1
+receipt_profile=latticra-seal-verified-receipt/0.1
+verify_profile=latticra-seal-ed25519-verify/0.1
+requested_capability=verified-receipt-report
+requested_effect=report-only
+verified_effect_decision_allowed=1
+verified_effect_decision_state=allowed-report-only
+verified_effect_decision_effect_performed=0
+verified_effect_decision_runtime_authority_granted=0
+runtime_authority_granted=0
+effect_allowed=1
+effect_performed=0
+host_read_performed=0
+host_write_performed=0
+network_performed=0
+effect_execution_added=0
+capability_enforcement_added=0
+signing_added=0
+key_generation_added=0
+private_key_handling_added=0
+trust_store_behavior_added=0
+revocation_lookup_added=0
+network_behavior_changed=0
+host_behavior_changed=0
+estimate_adjustment_required=0
+```
+
+## Current Seal runtime handoff evaluation boundary
+
+The Seal runtime handoff evaluation status record makes the existing metadata-only handoff eligibility classification visible from public entry points while preserving no runtime handoff execution, no effect execution, no capability enforcement, and no runtime authority.
+
+Current runtime handoff evaluation fields:
+
+```text
+seal_runtime_handoff_evaluation_contract_present=1
+seal_runtime_handoff_evaluation_implementation_present=1
+seal_runtime_handoff_evaluation_status_present=1
+handoff_profile=latticra-seal-runtime-handoff-evaluation/0.1
+decision_profile=latticra-seal-verified-effect-decision/0.1
+requested_capability=verified-receipt-report
+requested_effect=report-only
+requested_handoff=report-only
+runtime_handoff_evaluation_eligible=1
+runtime_handoff_evaluation_state=eligible-report-only
+runtime_handoff_evaluation_handoff_performed=0
+runtime_handoff_evaluation_runtime_authority_granted=0
+handoff_eligible=1
+handoff_performed=0
+runtime_authority_granted=0
+effect_performed=0
+host_read_performed=0
+host_write_performed=0
+network_performed=0
+runtime_handoff_execution_added=0
+effect_execution_added=0
+capability_enforcement_added=0
+signing_added=0
+key_generation_added=0
+private_key_handling_added=0
+trust_store_behavior_added=0
+revocation_lookup_added=0
+network_behavior_changed=0
+host_behavior_changed=0
+estimate_adjustment_required=0
+```
+
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
@@ -632,6 +725,18 @@ verified_capability_gate_allowed=1
 verified_capability_gate_state=allowed-metadata-only
 verified_capability_gate_runtime_authority_granted=0
 verified_capability_gate_effect_performed=0
+seal_verified_effect_decision_contract_present=1
+seal_verified_effect_decision_implementation_present=1
+seal_verified_effect_decision_status_present=1
+verified_effect_decision_allowed=1
+verified_effect_decision_state=allowed-report-only
+verified_effect_decision_effect_performed=0
+verified_effect_decision_runtime_authority_granted=0
+seal_runtime_handoff_evaluation_status_present=1
+runtime_handoff_evaluation_eligible=1
+runtime_handoff_evaluation_state=eligible-report-only
+runtime_handoff_evaluation_handoff_performed=0
+runtime_handoff_evaluation_runtime_authority_granted=0
 seal_verification_receipt_metadata_present=1
 seal_verification_receipt_status_present=1
 seal_capability_gate_metadata_present=1

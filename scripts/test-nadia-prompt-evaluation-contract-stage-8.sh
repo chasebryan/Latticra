@@ -108,14 +108,14 @@ require_contains 'nadia prompt-contract' "$ui_model"
 require_contains 'prompt-contracts' "$components_manifest"
 require_contains 'nadia-prompt-contract' "$makefile"
 
-out='/private/tmp/latticra-nadia-stage8-contract-test'
-context_out='/private/tmp/latticra-nadia-stage8-context-test'
-runtime_out='/private/tmp/latticra-nadia-stage8-runtime-test'
-plan_out='/private/tmp/latticra-nadia-stage8-plan-test'
-mode_out='/private/tmp/latticra-nadia-stage8-mode-test'
-ledger_out='/private/tmp/latticra-nadia-stage8-ledger-test'
-safety_out='/private/tmp/latticra-nadia-stage8-safety-test'
-tool_out='/private/tmp/latticra-nadia-stage8-tool-test'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage8-contract-test"
+context_out="${TMPDIR:-/tmp}/latticra-nadia-stage8-context-test"
+runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage8-runtime-test"
+plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage8-plan-test"
+mode_out="${TMPDIR:-/tmp}/latticra-nadia-stage8-mode-test"
+ledger_out="${TMPDIR:-/tmp}/latticra-nadia-stage8-ledger-test"
+safety_out="${TMPDIR:-/tmp}/latticra-nadia-stage8-safety-test"
+tool_out="${TMPDIR:-/tmp}/latticra-nadia-stage8-tool-test"
 rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out"
 NADIA_CONTEXT_PACK_TIMESTAMP=stage8-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage8-context-test.out

@@ -3,6 +3,9 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-lat-to-lir-clause-metadata-refinement.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 cc $CFLAGS \
   -Iinclude \
   src/lat_parser.c \
@@ -11,6 +14,6 @@ cc $CFLAGS \
   src/lir.c \
   src/lat_to_lir.c \
   tests/lat_to_lir_clause_metadata_refinement.c \
-  -o /tmp/latticra-lat-to-lir-clause-metadata-refinement
+  -o "$tmpdir/latticra-lat-to-lir-clause-metadata-refinement"
 
-/tmp/latticra-lat-to-lir-clause-metadata-refinement
+"$tmpdir/latticra-lat-to-lir-clause-metadata-refinement"

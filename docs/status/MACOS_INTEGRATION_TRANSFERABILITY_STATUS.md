@@ -35,6 +35,14 @@ macos_reset_uninstall_dry_run_planner_present=1
 reset_uninstall_dry_run_planner_transcript_present=1
 macos_reset_uninstall_absence_report_contract_present=1
 absence_report_evidence_present=0
+macos_reset_uninstall_receipt_schema_contract_present=1
+reset_receipt_evidence_present=0
+reset_uninstall_receipt_evidence_present=0
+macos_reset_uninstall_implementation_gate_contract_present=1
+reset_uninstall_live_run_allowed=0
+operator_reset_uninstall_intent_evidence_present=0
+reset_uninstall_deletion_enabled=0
+operator_explicit_reset_uninstall_intent_observed=0
 macos_transferable_surfaces_classified=1
 macos_adapter_requirements_recorded=1
 macos_user_local_paths_proposed=1
@@ -102,13 +110,13 @@ macos_integration_transferability: ok
 ## Previous Recommended Lane
 
 ```text
-Add a macOS reset/uninstall absence-report contract
+Add a macOS reset/uninstall implementation-gate contract that keeps deletion disabled until receipt, absence, planner, classifier, and operator intent evidence exist.
 ```
 
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall receipt-schema contract for reset/uninstall receipts outside the removed prefix.
+Add a macOS reset/uninstall operator-intent contract for explicit future live reset/uninstall approval evidence.
 ```
 
 ## Non-Claims

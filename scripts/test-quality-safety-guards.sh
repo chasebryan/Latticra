@@ -50,6 +50,18 @@ check_workflow() {
   [ "$runs_on_count" -eq 0 ] ||
     [ "$timeout_count" -ge "$runs_on_count" ] ||
     fail "$workflow must set timeout-minutes for every job"
+  long_timeouts="$(awk '
+    /^[[:space:]]*timeout-minutes:[[:space:]]*[0-9]+[[:space:]]*$/ {
+      value = $0
+      sub(/^[^0-9]*/, "", value)
+      sub(/[^0-9].*$/, "", value)
+      if ((value + 0) > 30) {
+        print NR
+      }
+    }
+  ' "$workflow")"
+  [ -z "$long_timeouts" ] ||
+    fail "$workflow must keep job timeout-minutes at or below 30"
 
   checkout_missing_persistence="$(awk '
     /^[[:space:]]*(-[[:space:]]*)?uses:[[:space:]]*actions\/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5[[:space:]]*$/ {
@@ -77,6 +89,10 @@ check_workflow() {
     fail "$workflow must not request write-scoped token permissions"
   fi
 
+  if grep -Eq 'permissions:[[:space:]]*(write-all|read-all)([[:space:]]|$)|^[[:space:]]*(write-all|read-all)([[:space:]]|$)' "$workflow"; then
+    fail "$workflow must not request broad token permissions"
+  fi
+
   if grep -Eq 'pull_request_target:' "$workflow"; then
     fail "$workflow must not use pull_request_target"
   fi
@@ -87,6 +103,10 @@ check_workflow() {
 
   if grep -Eq 'secrets\.' "$workflow"; then
     fail "$workflow must not consume repository secrets without a dedicated review guard"
+  fi
+
+  if grep -Eq 'github\.token|GITHUB_TOKEN|GH_TOKEN|ACTIONS_ID_TOKEN|ACTIONS_RUNTIME_TOKEN' "$workflow"; then
+    fail "$workflow must not consume implicit GitHub token surfaces without a dedicated review guard"
   fi
 
   if grep -Eq 'curl[^|]*\|[[:space:]]*(sh|bash)|wget[^|]*\|[[:space:]]*(sh|bash)|bash[[:space:]]+<|sh[[:space:]]+<' "$workflow"; then
@@ -184,6 +204,15 @@ check_shell_script() {
         fail "$script must use a private mktemp workdir instead of fixed /tmp/latticra-seal paths"
       fi
       if grep -Fq '$tmpdir/latticra-seal' "$script"; then
+        require_contains 'mktemp -d' "$script"
+        require_contains 'trap '\''rm -rf "$tmpdir"'\'' EXIT INT HUP TERM' "$script"
+      fi
+      ;;
+    scripts/test-l-ui-*.sh|scripts/test-lat-*.sh|scripts/test-lat-to-lir-*.sh|scripts/test-lir-*.sh)
+      if grep -Eq '/tmp/latticra-l|-o[[:space:]]+/tmp/latticra-l|>[[:space:]]*/tmp/latticra-l' "$script"; then
+        fail "$script must use a private mktemp workdir instead of fixed /tmp/latticra-l paths"
+      fi
+      if grep -Fq '$tmpdir/latticra-l' "$script"; then
         require_contains 'mktemp -d' "$script"
         require_contains 'trap '\''rm -rf "$tmpdir"'\'' EXIT INT HUP TERM' "$script"
       fi

@@ -12,6 +12,8 @@ Latest runtime boundary Lat pipeline comment evidence note: 2026-05-25 CDT
 Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline failure span evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline parse-error evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline semantic-error evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline downstream stage-error evidence propagation note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
 Latest Seal policy decision status/public-entry note: 2026-05-25 CDT
 Latest Seal signed request status/public-entry note: 2026-05-25 CDT
@@ -25,6 +27,8 @@ Latest Lat pipeline diagnostic comment metadata integration note: 2026-05-25 CDT
 Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline failure span evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline parse-error evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline semantic-error evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline downstream stage-error evidence propagation note: 2026-05-25 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
 Latest Lat model report declaration metadata integration note: 2026-05-25 CDT
 Latest Lat model report clause metadata integration note: 2026-05-25 CDT
@@ -56,6 +60,8 @@ Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
 Latest Seal Ed25519 verify status/public-entry note: 2026-05-25 CDT
 Latest Seal verified receipt promotion status/public-entry note: 2026-05-25 CDT
 Latest Seal verified capability gate status/public-entry note: 2026-05-25 CDT
+Latest Seal verified effect decision status/public-entry note: 2026-05-25 CDT
+Latest Seal runtime handoff evaluation status/public-entry note: 2026-05-25 CDT
 Latest Seal verification policy status/public-entry note: 2026-05-25 CDT
 Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
@@ -129,6 +135,8 @@ bounded no-effect Lat pipeline diagnostic comment metadata integration
 bounded no-effect Lat parse-failure comment evidence propagation
 bounded no-effect Lat pipeline failure span evidence propagation
 bounded no-effect Lat pipeline parse-error evidence propagation
+bounded no-effect Lat pipeline semantic-error evidence propagation
+bounded no-effect Lat pipeline downstream stage-error evidence propagation
 bounded no-effect semantic validation
 bounded no-effect Lat model normalization
 bounded no-effect Lat model report declaration metadata integration
@@ -191,6 +199,10 @@ The current Lat parse-failure comment evidence propagation guard verifies that l
 The current Lat pipeline failure span evidence propagation copies parser diagnostic/module spans into the pipeline result, pipeline diagnostic reports, and runtime-boundary Lat pipeline evidence so parse-failure locations remain visible without adding execution or runtime authority.
 
 The current Lat pipeline parse-error evidence propagation copies parser error labels into pipeline diagnostic reports and runtime-boundary Lat pipeline evidence so parse-failure reasons remain visible without adding execution or runtime authority.
+
+The current Lat pipeline semantic-error evidence propagation copies semantic error labels into runtime-boundary Lat pipeline evidence so semantic-failure reasons remain visible without adding execution or runtime authority.
+
+The current Lat pipeline downstream stage-error evidence propagation copies model, lowering, and LIR error labels into runtime-boundary Lat pipeline evidence so downstream-stage failure reasons remain visible without adding execution or runtime authority.
 
 The current Lat pipeline diagnostic declaration metadata integration copies first lowered declaration node index, kind, name, source name, parse index, first-clause index, clause count, and source declaration index from Lat-to-LIR diagnostics into deterministic pipeline diagnostic reports.
 
@@ -331,6 +343,10 @@ Latticra Seal Ed25519 verify-only status/public-entry alignment makes the existi
 Latticra Seal verified receipt promotion status/public-entry alignment makes the existing verified receipt promotion metadata visible from public status surfaces while preserving evidence promotion only, no capability authorization, no effect execution, no runtime authority, no signing, no key handling, no host behavior, no network behavior, and no production cryptography claim.
 
 Latticra Seal verified capability gate status/public-entry alignment makes the existing metadata-only verified capability gate visible from public status surfaces while preserving no capability enforcement, no effect execution, no runtime authority, no signing, no key handling, no host behavior, no network behavior, and no production cryptography claim.
+
+Latticra Seal verified effect decision status/public-entry alignment makes the existing metadata-only verified effect decision visible from public status surfaces while preserving no effect execution, no capability enforcement, no runtime authority, no signing, no key handling, no host behavior, no network behavior, and no production cryptography claim.
+
+Latticra Seal runtime handoff evaluation status/public-entry alignment makes the existing metadata-only runtime handoff evaluation visible from public status surfaces while preserving no runtime handoff execution, no effect execution, no capability enforcement, no runtime authority, no signing, no key handling, no host behavior, no network behavior, and no production cryptography claim.
 
 The current recommended review lane is:
 

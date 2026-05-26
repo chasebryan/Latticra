@@ -28,7 +28,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`SUPERVISOR_ARCHITECTURE.md`](SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor model and orchestration responsibilities.
 - [`EFFECT_GATES.md`](EFFECT_GATES.md) — effect categories, gating rules, and visibility requirements.
 - [`UI_TERMINAL_LANGUAGE.md`](UI_TERMINAL_LANGUAGE.md) — L-UI terminal/operator interface language direction.
-- [`LATTICRA_CONSOLE_FOUNDATION.md`](LATTICRA_CONSOLE_FOUNDATION.md) — Latticra Console Stage-0 foundation, Panel installability, profile presets, host-embedding contract, read-only host inventory contract, host-adapter contract, receipt contract, OS-base planning contract, VM evidence contract, command registry, Runtime Boundary binding, and future host/OS-base posture.
+- [`LATTICRA_CONSOLE_FOUNDATION.md`](LATTICRA_CONSOLE_FOUNDATION.md) — Latticra Console Stage-0 foundation, Panel installability, profile presets, host-embedding contract, read-only host inventory contract, host-adapter contract, receipt contract, Seal receipt-request contract, OS-base planning contract, VM evidence contract, command registry, Runtime Boundary binding, and future host/OS-base posture.
 - [`SERVER_INTERACTION_MODEL.md`](SERVER_INTERACTION_MODEL.md) — signed, optional, inspectable server interaction model.
 - [`NADIA_OFFLINE_AI_FOUNDATION.md`](NADIA_OFFLINE_AI_FOUNDATION.md) — Stage-0 foundation contract for Latticra Nadia Witness Foundation, the planned offline AI companion for Latticra software development, systems engineering, AI development, and community-awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md) — Stage-1 no-network local context-pack engine for Nadia.
@@ -60,6 +60,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md`](NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md) — Stage-27 context-window assembly contract for Nadia before context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28.md`](NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28.md) — Stage-28 prompt-evaluation-input contract for Nadia before prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29.md`](NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29.md) — Stage-29 prompt-evaluation runtime handoff contract for Nadia before runtime handoff, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md`](NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md) — Stage-30 prompt-evaluation invocation contract for Nadia before invocation request creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`SELF_UPDATE_MODEL.md`](SELF_UPDATE_MODEL.md) — staged signed update and rollback design.
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
@@ -109,6 +110,7 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md`](status/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md) — status record for Nadia Stage-27 context-window assembly contract before context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`status/NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md`](status/NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md) — status record for Nadia Stage-28 prompt-evaluation-input contract before prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`status/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md`](status/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md) — status record for Nadia Stage-29 prompt-evaluation runtime handoff contract before runtime handoff, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md`](status/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md) — status record for Nadia Stage-30 prompt-evaluation invocation contract before invocation request creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
@@ -201,6 +203,12 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_CONTRACT.md`](LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_CONTRACT.md) — verified capability gate boundary after verified receipt promotion metadata.
 - [`LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_IMPLEMENTATION.md`](LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_IMPLEMENTATION.md) — first metadata-only verified capability gate implementation.
 - [`status/SEAL_VERIFIED_CAPABILITY_GATE_STATUS.md`](status/SEAL_VERIFIED_CAPABILITY_GATE_STATUS.md) — status/public-entry checkpoint for verified capability gate metadata.
+- [`LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_CONTRACT.md`](LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_CONTRACT.md) — verified effect decision boundary after verified capability gate metadata.
+- [`LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_IMPLEMENTATION.md`](LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_IMPLEMENTATION.md) — first metadata-only verified effect decision implementation.
+- [`status/SEAL_VERIFIED_EFFECT_DECISION_STATUS.md`](status/SEAL_VERIFIED_EFFECT_DECISION_STATUS.md) — status/public-entry checkpoint for verified effect decision metadata.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_CONTRACT.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_CONTRACT.md) — runtime handoff evaluation boundary after verified effect decision metadata.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_IMPLEMENTATION.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_IMPLEMENTATION.md) — first metadata-only runtime handoff evaluation implementation.
+- [`status/SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md`](status/SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md) — status/public-entry checkpoint for runtime handoff evaluation metadata.
 - [`LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md`](LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md) — verification receipt boundary after verification policy metadata.
 - [`LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md`](LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md) — first no-effect verification receipt metadata implementation.
 - [`status/SEAL_VERIFICATION_RECEIPT_STATUS.md`](status/SEAL_VERIFICATION_RECEIPT_STATUS.md) — status/public-entry checkpoint for metadata-only Seal verification receipt implementation.
@@ -395,11 +403,15 @@ Nadia context window assembly contract Stage-27 + guardrails
 Nadia prompt evaluation input contract Stage-28 + guardrails
 
 Nadia prompt evaluation runtime handoff contract Stage-29 + guardrails
+
+Nadia prompt evaluation invocation contract Stage-30 + guardrails
 Latticra Seal verification policy status/public-entry alignment + guardrails
 Latticra Seal crypto verify backend status/public-entry alignment + guardrails
 Latticra Seal Ed25519 verify-only status/public-entry alignment + guardrails
 Latticra Seal verified receipt promotion status/public-entry alignment + guardrails
 Latticra Seal verified capability gate status/public-entry alignment + guardrails
+Latticra Seal verified effect decision status/public-entry alignment + guardrails
+Latticra Seal runtime handoff evaluation status/public-entry alignment + guardrails
 Latticra Seal key parsing status/public-entry alignment + guardrails
 Latticra Seal bounded no-effect key parsing metadata + invariants
 Latticra Seal future key parsing implementation plan + guardrails
@@ -435,6 +447,8 @@ Lat pipeline diagnostic comment metadata integration + invariants
 Lat parse-failure comment evidence propagation + invariants
 Lat pipeline failure span evidence propagation + invariants
 Lat pipeline parse-error evidence propagation + invariants
+Lat pipeline semantic-error evidence propagation + invariants
+Lat pipeline downstream stage-error evidence propagation + invariants
 Lat pipeline implementation + invariants
 Lat pipeline report refinement + invariants
 Lat pipeline diagnostic integration refinement + invariants

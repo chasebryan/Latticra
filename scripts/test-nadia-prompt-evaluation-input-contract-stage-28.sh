@@ -93,7 +93,7 @@ require_contains 'Stage-29: Prompt Evaluation Runtime Handoff Contract' "$founda
 require_contains 'Stage-30: Prompt Evaluation Invocation Contract' "$foundation"
 require_contains 'scripts/nadia-prompt-evaluation-input-contract.sh' "$foundation"
 require_contains 'test-nadia-prompt-evaluation-input-contract-stage-28.sh' "$foundation"
-require_contains 'Before Stage-30 starts' "$foundation"
+require_contains 'Before Stage-31 starts' "$foundation"
 require_contains 'NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28.md' "$foundation_index"
 require_contains 'NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md' "$status_index"
 require_contains 'Nadia prompt evaluation input contract Stage-28 + guardrails' "$foundation_index"
@@ -140,7 +140,7 @@ require_contains 'sh scripts/test-nadia-prompt-evaluation-input-contract-stage-2
 sh "$stage27_guard" >/tmp/latticra-nadia-stage28-stage27-guard.out
 require_contains 'nadia_context_window_assembly_contract_stage_27: ok' /tmp/latticra-nadia-stage28-stage27-guard.out
 
-out="/private/tmp/latticra-nadia-stage28-prompt-evaluation-input-test-$$"
+out="${TMPDIR:-/tmp}/latticra-nadia-stage28-prompt-evaluation-input-test-$$"
 context="$out/nadia-context-window-assembly-contract-stage27-fixture.txt"
 mkdir -p "$out"
 

@@ -82,7 +82,7 @@ require_contains 'directory_delete_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
 require_contains 'macos_reset_uninstall_dry_run_planner: ok' "$doc"
-require_contains 'Add a macOS reset/uninstall receipt-schema contract' "$doc"
+require_contains 'Add a macOS reset/uninstall operator-intent contract' "$doc"
 
 require_contains 'Status: no-effect reset/uninstall dry-run planner status' "$status"
 require_contains 'macos_reset_uninstall_dry_run_planner_present=1' "$status"
@@ -119,7 +119,7 @@ require_contains 'file_delete_performed=0' "$script"
 require_contains 'directory_delete_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-receipt-schema-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-operator-intent-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -150,7 +150,7 @@ require_output_contains "$absent_output" 'reset_receipt_write_planned=0'
 require_output_contains "$absent_output" 'absence_report_planned=1'
 require_output_contains "$absent_output" 'file_delete_performed=0'
 require_output_contains "$absent_output" 'directory_delete_performed=0'
-require_output_contains "$absent_output" 'next_lane=macos-reset-uninstall-receipt-schema-contract'
+require_output_contains "$absent_output" 'next_lane=macos-reset-uninstall-operator-intent-contract'
 
 mkdir -p "$managed_home/Applications/Latticra Panel.app/Contents/Resources/latticra"
 mkdir -p "$managed_home/Library/Application Support/Latticra"

@@ -68,7 +68,7 @@ for file in README.md STATUS.md docs/status/CURRENT_STATUS.md; do
   require_contains '| Overall Latticra system | 39% |' "$file"
   require_contains '| Latticra Seal / local evidence layer | 34% |' "$file"
   require_contains '| Latticra Panel / local control surface | 28% |' "$file"
-  require_contains '| Nadia offline AI foundation | 63% |' "$file"
+  require_contains '| Nadia offline AI foundation | 64% |' "$file"
   require_contains '| L-UI parser / AST / string foundation | 87% |' "$file"
   require_contains '| Foundation documents and contracts | 92% |' "$file"
   require_contains '| Public documentation posture | 88% |' "$file"

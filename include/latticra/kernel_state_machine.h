@@ -33,6 +33,8 @@ typedef struct {
     latticra_kernel_memory_map_request_t memory_map_request;
     latticra_kernel_process_table_request_t process_table_request;
     latticra_kernel_syscall_table_request_t syscall_table_request;
+    latticra_kernel_ipc_table_request_t ipc_table_request;
+    latticra_kernel_vfs_namespace_request_t vfs_namespace_request;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
 } latticra_kernel_state_machine_step_request_t;

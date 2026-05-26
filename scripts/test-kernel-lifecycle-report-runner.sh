@@ -24,6 +24,8 @@ cc $CFLAGS \
   src/kernel_memory_map.c \
   src/kernel_process_table.c \
   src/kernel_syscall_table.c \
+  src/kernel_ipc_table.c \
+  src/kernel_vfs_namespace.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -35,12 +37,12 @@ cc $CFLAGS \
 grep -Fq 'LATTICRA KERNEL LIFECYCLE REPORT' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'policy_status=gate-allowed' "$report_txt"
-grep -Fq 'final_state=syscall-table-ready' "$report_txt"
-grep -Fq 'step_count=6' "$report_txt"
-grep -Fq 'state_change_count=6' "$report_txt"
+grep -Fq 'final_state=vfs-namespace-ready' "$report_txt"
+grep -Fq 'step_count=8' "$report_txt"
+grep -Fq 'state_change_count=8' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
-grep -Fq 'machine_log_count=6' "$report_txt"
+grep -Fq 'machine_log_count=8' "$report_txt"
 grep -Fq 'evidence_level=10' "$report_txt"
 grep -Fq 'log[0].from=created' "$report_txt"
 grep -Fq 'log[0].to=initialized' "$report_txt"
@@ -49,7 +51,11 @@ grep -Fq 'log[4].from=memory-map-ready' "$report_txt"
 grep -Fq 'log[4].to=process-table-ready' "$report_txt"
 grep -Fq 'log[5].from=process-table-ready' "$report_txt"
 grep -Fq 'log[5].to=syscall-table-ready' "$report_txt"
-grep -Fq 'log[5].state_change_performed=1' "$report_txt"
-grep -Fq 'log[5].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[6].from=syscall-table-ready' "$report_txt"
+grep -Fq 'log[6].to=ipc-table-ready' "$report_txt"
+grep -Fq 'log[7].from=ipc-table-ready' "$report_txt"
+grep -Fq 'log[7].to=vfs-namespace-ready' "$report_txt"
+grep -Fq 'log[7].state_change_performed=1' "$report_txt"
+grep -Fq 'log[7].external_effect_performed=0' "$report_txt"
 
 printf 'kernel_lifecycle_report_runner: ok\n'

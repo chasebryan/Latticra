@@ -95,7 +95,7 @@ require_contains 'Stage-29: Prompt Evaluation Runtime Handoff Contract' "$founda
 require_contains 'scripts/nadia-context-window-assembly-contract.sh' "$foundation"
 require_contains 'test-nadia-context-window-assembly-contract-stage-27.sh' "$foundation"
 require_contains 'Before Stage-28 starts' "$foundation"
-require_contains 'Before Stage-30 starts' "$foundation"
+require_contains 'Before Stage-31 starts' "$foundation"
 require_contains 'NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md' "$foundation_index"
 require_contains 'NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md' "$status_index"
 require_contains 'Nadia context window assembly contract Stage-27 + guardrails' "$foundation_index"
@@ -141,7 +141,7 @@ require_contains 'context-window-assembly' "$components_manifest"
 require_contains 'nadia-context-window-assembly' "$makefile"
 require_contains 'sh scripts/test-nadia-context-window-assembly-contract-stage-27.sh' "$workflow"
 
-out="/private/tmp/latticra-nadia-stage27-context-window-assembly-test-$$"
+out="${TMPDIR:-/tmp}/latticra-nadia-stage27-context-window-assembly-test-$$"
 sequence="$out/nadia-prompt-token-sequence-contract-stage26-fixture.txt"
 mkdir -p "$out"
 

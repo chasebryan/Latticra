@@ -78,7 +78,7 @@ static int allowed_transition_changes_state(void) {
     return 0;
 }
 
-static int allowed_process_and_syscall_transitions_are_metadata_only(void) {
+static int allowed_process_syscall_ipc_and_vfs_transitions_are_metadata_only(void) {
     latticra_kernel_state_request_t request;
     latticra_kernel_state_result_t result;
 
@@ -124,6 +124,52 @@ static int allowed_process_and_syscall_transitions_are_metadata_only(void) {
         "syscall transition no external effect");
     EXPECT_TRUE(result.denied == 0,
         "syscall transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_IPC_TABLE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "ipc-table transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_IPC_TABLE_READY,
+        "next ipc-table-ready");
+    EXPECT_TRUE(strcmp(result.ipc_table.table_status, "ipc-table-seed-ready") == 0,
+        "ipc table ready");
+    EXPECT_TRUE(strcmp(result.syscall_table.table_status, "syscall-table-seed-ready") == 0,
+        "ipc transition keeps syscall table ready");
+    EXPECT_TRUE(result.ipc_table.ipc_send_allowed == 0,
+        "ipc send denied");
+    EXPECT_TRUE(result.ipc_table.ipc_receive_allowed == 0,
+        "ipc receive denied");
+    EXPECT_TRUE(result.ipc_table.queue_mutation_allowed == 0,
+        "ipc queue mutation denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "ipc transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "ipc transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_IPC_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "vfs namespace transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY,
+        "next vfs-namespace-ready");
+    EXPECT_TRUE(strcmp(result.vfs_namespace.namespace_status, "vfs-namespace-seed-ready") == 0,
+        "vfs namespace ready");
+    EXPECT_TRUE(strcmp(result.ipc_table.table_status, "ipc-table-seed-ready") == 0,
+        "vfs transition keeps ipc table ready");
+    EXPECT_TRUE(result.vfs_namespace.path_lookup_allowed == 0,
+        "vfs path lookup denied");
+    EXPECT_TRUE(result.vfs_namespace.file_read_allowed == 0,
+        "vfs file read denied");
+    EXPECT_TRUE(result.vfs_namespace.file_write_allowed == 0,
+        "vfs file write denied");
+    EXPECT_TRUE(result.vfs_namespace.namespace_mutation_allowed == 0,
+        "vfs namespace mutation denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "vfs transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "vfs transition not denied");
     return 0;
 }
 
@@ -216,32 +262,36 @@ static int report_records_state_change(void) {
     return 0;
 }
 
-static int report_records_process_and_syscall_readiness(void) {
+static int report_records_process_syscall_ipc_and_vfs_readiness(void) {
     latticra_kernel_state_request_t request;
     latticra_kernel_state_result_t result;
     char report[LATTICRA_KERNEL_STATE_REPORT_MAX];
 
     EXPECT_TRUE(latticra_kernel_state_default_request(&request) == LATTICRA_STATUS_OK,
         "request initialized for syscall report");
-    request.current_state = LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY;
-    request.target_state = LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY;
+    request.current_state = LATTICRA_KERNEL_STATE_IPC_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY;
     request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
 
     EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
-        "syscall transition for report");
+        "vfs transition for report");
     EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
         "syscall report writes");
 
-    EXPECT_TRUE(strstr(report, "previous_state=process-table-ready\n") != 0,
-        "process previous emitted");
-    EXPECT_TRUE(strstr(report, "next_state=syscall-table-ready\n") != 0,
-        "syscall next emitted");
+    EXPECT_TRUE(strstr(report, "previous_state=ipc-table-ready\n") != 0,
+        "ipc previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=vfs-namespace-ready\n") != 0,
+        "vfs next emitted");
     EXPECT_TRUE(strstr(report, "process_table_status=process-table-seed-ready\n") != 0,
         "process table emitted");
     EXPECT_TRUE(strstr(report, "syscall_table_status=syscall-table-seed-ready\n") != 0,
         "syscall table emitted");
+    EXPECT_TRUE(strstr(report, "ipc_table_status=ipc-table-seed-ready\n") != 0,
+        "ipc table emitted");
+    EXPECT_TRUE(strstr(report, "vfs_namespace_status=vfs-namespace-seed-ready\n") != 0,
+        "vfs namespace emitted");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
-        "syscall report external effect emitted");
+        "vfs report external effect emitted");
     return 0;
 }
 
@@ -267,11 +317,11 @@ static int null_guards_are_safe(void) {
 int main(void) {
     if (default_request_denies_state_change() != 0) return 1;
     if (allowed_transition_changes_state() != 0) return 1;
-    if (allowed_process_and_syscall_transitions_are_metadata_only() != 0) return 1;
+    if (allowed_process_syscall_ipc_and_vfs_transitions_are_metadata_only() != 0) return 1;
     if (denied_transition_does_not_change_state() != 0) return 1;
     if (allowed_noop_is_stable() != 0) return 1;
     if (report_records_state_change() != 0) return 1;
-    if (report_records_process_and_syscall_readiness() != 0) return 1;
+    if (report_records_process_syscall_ipc_and_vfs_readiness() != 0) return 1;
     if (null_guards_are_safe() != 0) return 1;
 
     puts("kernel_state: ok");

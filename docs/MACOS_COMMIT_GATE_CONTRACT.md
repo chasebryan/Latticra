@@ -51,8 +51,14 @@ macos_reset_uninstall_live_target_classifier_present=1
 macos_reset_uninstall_dry_run_planner_present=1
 reset_uninstall_dry_run_planner_transcript_present=1
 macos_reset_uninstall_absence_report_contract_present=1
+macos_reset_uninstall_receipt_schema_contract_present=1
+macos_reset_uninstall_implementation_gate_contract_present=1
+reset_uninstall_live_run_allowed=0
+operator_reset_uninstall_intent_evidence_present=0
 reset_uninstall_dry_run_evidence_present=0
 absence_report_evidence_present=0
+reset_receipt_evidence_present=0
+reset_uninstall_receipt_evidence_present=0
 ```
 
 ## Opening Preconditions
@@ -129,5 +135,5 @@ This contract is not macOS installation, macOS app bundle evidence, signed app e
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall receipt-schema contract for reset/uninstall receipts outside the removed prefix.
+Add a macOS reset/uninstall operator-intent contract for explicit future live reset/uninstall approval evidence.
 ```

@@ -133,8 +133,8 @@ require_contains 'nadia-tokenizer-artifact-measurement' "$makefile"
 
 sh "$stage20_guard" >/tmp/latticra-nadia-stage21-prereq-stage20-test.out
 
-out='/private/tmp/latticra-nadia-stage21-tokenizer-artifact-measurement-test'
-inventory='/private/tmp/latticra-nadia-stage20-tokenizer-artifact-inventory-test/nadia-tokenizer-artifact-inventory-contract-stage20-test.txt'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage21-tokenizer-artifact-measurement-test"
+inventory="${TMPDIR:-/tmp}/latticra-nadia-stage20-tokenizer-artifact-inventory-test/nadia-tokenizer-artifact-inventory-contract-stage20-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 

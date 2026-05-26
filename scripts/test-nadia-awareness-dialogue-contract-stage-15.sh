@@ -121,8 +121,8 @@ require_contains 'nadia-awareness-dialogue' "$makefile"
 
 sh "$stage14_guard" >/tmp/latticra-nadia-stage15-prereq-stage14-test.out
 
-out='/private/tmp/latticra-nadia-stage15-awareness-test'
-materialization='/private/tmp/latticra-nadia-stage14-materialization-test/nadia-prompt-materialization-contract-stage14-test.txt'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage15-awareness-test"
+materialization="${TMPDIR:-/tmp}/latticra-nadia-stage14-materialization-test/nadia-prompt-materialization-contract-stage14-test.txt"
 rm -rf "$out"
 mkdir -p "$out"
 

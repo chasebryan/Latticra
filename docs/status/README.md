@@ -38,6 +38,8 @@ non-claims
 - [`MACOS_RESET_UNINSTALL_LIVE_TARGET_CLASSIFIER_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_TARGET_CLASSIFIER_STATUS.md) - macOS reset/uninstall live-target classifier status for read-only managed, unmanaged, and absent target reports.
 - [`MACOS_RESET_UNINSTALL_DRY_RUN_PLANNER_STATUS.md`](MACOS_RESET_UNINSTALL_DRY_RUN_PLANNER_STATUS.md) - macOS reset/uninstall dry-run planner status for converting live target classifications into an ordered no-effect transcript.
 - [`MACOS_RESET_UNINSTALL_ABSENCE_REPORT_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_ABSENCE_REPORT_CONTRACT_STATUS.md) - macOS reset/uninstall absence-report contract status for future post-removal verification evidence.
+- [`MACOS_RESET_UNINSTALL_RECEIPT_SCHEMA_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_RECEIPT_SCHEMA_CONTRACT_STATUS.md) - macOS reset/uninstall receipt-schema contract status for future reset/uninstall receipt fields and path constraints.
+- [`MACOS_RESET_UNINSTALL_IMPLEMENTATION_GATE_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_IMPLEMENTATION_GATE_CONTRACT_STATUS.md) - macOS reset/uninstall implementation-gate contract status for keeping deletion disabled until required evidence and explicit operator intent exist.
 - [`MACOS_README_INSTALLER_USAGE_STATUS.md`](MACOS_README_INSTALLER_USAGE_STATUS.md) - macOS README installer usage status for documenting current Mac-specific no-effect installer commands, target paths, and closed commit-gate posture.
 - [`NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](NADIA_OFFLINE_AI_STAGE_0_STATUS.md) - Nadia offline AI Stage-0 foundation status for Panel installability, Console interoperability, and awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) - Nadia Stage-1 local context-engine status for no-network context-pack generation.
@@ -69,6 +71,7 @@ non-claims
 - [`NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md`](NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md) - Nadia Stage-27 context-window assembly contract status before context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md`](NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md) - Nadia Stage-28 prompt-evaluation-input contract status before prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md`](NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md) - Nadia Stage-29 prompt-evaluation runtime handoff contract status before runtime handoff, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md`](NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md) - Nadia Stage-30 prompt-evaluation invocation contract status before invocation request creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`ANNOUNCEMENTS.md`](ANNOUNCEMENTS.md) — public update log and announcement notes.
 - [`../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md`](../DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md) — defensive threat model validation refinement.
 - [`../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`](../RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md) — runtime boundary policy expansion after threat-model validation.
@@ -92,6 +95,8 @@ non-claims
 - [`SEAL_ED25519_VERIFY_STATUS.md`](SEAL_ED25519_VERIFY_STATUS.md) — Latticra Seal Ed25519 verify-only result status and public-entry checkpoint.
 - [`SEAL_VERIFIED_RECEIPT_PROMOTION_STATUS.md`](SEAL_VERIFIED_RECEIPT_PROMOTION_STATUS.md) — Latticra Seal verified receipt promotion metadata status and public-entry checkpoint.
 - [`SEAL_VERIFIED_CAPABILITY_GATE_STATUS.md`](SEAL_VERIFIED_CAPABILITY_GATE_STATUS.md) — Latticra Seal verified capability gate metadata status and public-entry checkpoint.
+- [`SEAL_VERIFIED_EFFECT_DECISION_STATUS.md`](SEAL_VERIFIED_EFFECT_DECISION_STATUS.md) — Latticra Seal verified effect decision metadata status and public-entry checkpoint.
+- [`SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md`](SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md) — Latticra Seal runtime handoff evaluation metadata status and public-entry checkpoint.
 - [`SEAL_VERIFICATION_POLICY_STATUS.md`](SEAL_VERIFICATION_POLICY_STATUS.md) — Latticra Seal verification policy metadata status and public-entry checkpoint.
 - [`SEAL_KEY_PARSING_STATUS.md`](SEAL_KEY_PARSING_STATUS.md) — Latticra Seal key parsing metadata status and public-entry checkpoint.
 - [`SEAL_PUBLIC_KEY_PARSING_STATUS.md`](SEAL_PUBLIC_KEY_PARSING_STATUS.md) — Latticra Seal public-key parsing metadata status and public-entry checkpoint.
@@ -290,12 +295,22 @@ verified_capability_gate_allowed=1
 verified_capability_gate_state=allowed-metadata-only
 verified_capability_gate_runtime_authority_granted=0
 verified_capability_gate_effect_performed=0
+seal_verified_effect_decision_status_present=1
+verified_effect_decision_allowed=1
+verified_effect_decision_state=allowed-report-only
+verified_effect_decision_effect_performed=0
+verified_effect_decision_runtime_authority_granted=0
+seal_runtime_handoff_evaluation_status_present=1
+runtime_handoff_evaluation_eligible=1
+runtime_handoff_evaluation_state=eligible-report-only
+runtime_handoff_evaluation_handoff_performed=0
+runtime_handoff_evaluation_runtime_authority_granted=0
 ```
 
 The careful current public claim is:
 
 ```text
-Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, verified receipt promotion metadata/status, verified capability gate metadata/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path, sealed report-envelope metadata, signature-request metadata, signing authorization metadata, signing authorization status/public-entry alignment, signer handoff metadata, signer invocation metadata, signing operation metadata, key-handling metadata, key-material metadata/status, public-key parsing metadata/status, a future key parsing implementation contract/plan, bounded key parsing metadata/status for caller-provided public-key bytes, metadata-only verification policy/status, metadata-only crypto verify backend/status, local Ed25519 verify-only implementation/status, verified receipt promotion metadata/status, verified capability gate metadata/status, verified effect decision metadata/status, runtime handoff evaluation metadata/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only request freshness metadata/report surface/status-public-entry alignment, report-only signed request metadata/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 The current next recommended Seal lane is:
@@ -709,13 +724,27 @@ The latest kernel status alignment records:
 kernel lifecycle report runner
 kernel lifecycle subsystem summary
 kernel lifecycle rollback plan
-final_state=syscall-table-ready
+kernel process table guard
+kernel process table report runner
+kernel syscall table guard
+kernel syscall table report runner
+kernel ipc table guard
+kernel ipc table report runner
+kernel vfs namespace guard
+kernel vfs namespace report runner
+final_state=vfs-namespace-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
 memory_allocation_allowed=0
 process_spawn_allowed=0
 syscall_dispatch_allowed=0
+ipc_send_allowed=0
+ipc_receive_allowed=0
+filesystem_lookup_allowed=0
+filesystem_read_allowed=0
+filesystem_write_allowed=0
+namespace_mutation_allowed=0
 ```
 
 The current next recommended kernel lane is:

@@ -53,6 +53,12 @@ typedef struct {
     int memory_allocation_allowed;
     int process_spawn_allowed;
     int syscall_dispatch_allowed;
+    int ipc_send_allowed;
+    int ipc_receive_allowed;
+    int filesystem_lookup_allowed;
+    int filesystem_read_allowed;
+    int filesystem_write_allowed;
+    int namespace_mutation_allowed;
     int no_external_effect_chain;
     unsigned int evidence_level;
 } latticra_kernel_lifecycle_subsystem_summary_result_t;

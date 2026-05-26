@@ -122,17 +122,17 @@ require_contains 'nadia runtime-invocation' "$ui_model"
 require_contains 'runtime-invocation' "$components_manifest"
 require_contains 'nadia-runtime-invocation' "$makefile"
 
-out='/private/tmp/latticra-nadia-stage11-invocation-test'
-context_out='/private/tmp/latticra-nadia-stage11-context-test'
-runtime_out='/private/tmp/latticra-nadia-stage11-runtime-test'
-plan_out='/private/tmp/latticra-nadia-stage11-plan-test'
-mode_out='/private/tmp/latticra-nadia-stage11-mode-test'
-ledger_out='/private/tmp/latticra-nadia-stage11-ledger-test'
-safety_out='/private/tmp/latticra-nadia-stage11-safety-test'
-tool_out='/private/tmp/latticra-nadia-stage11-tool-test'
-contract_out='/private/tmp/latticra-nadia-stage11-contract-test'
-registry_out='/private/tmp/latticra-nadia-stage11-registry-test'
-readiness_out='/private/tmp/latticra-nadia-stage11-readiness-test'
+out="${TMPDIR:-/tmp}/latticra-nadia-stage11-invocation-test"
+context_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-context-test"
+runtime_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-runtime-test"
+plan_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-plan-test"
+mode_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-mode-test"
+ledger_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-ledger-test"
+safety_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-safety-test"
+tool_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-tool-test"
+contract_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-contract-test"
+registry_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-registry-test"
+readiness_out="${TMPDIR:-/tmp}/latticra-nadia-stage11-readiness-test"
 rm -rf "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out" "$registry_out" "$readiness_out"
 mkdir -p "$out" "$context_out" "$runtime_out" "$plan_out" "$mode_out" "$ledger_out" "$safety_out" "$tool_out" "$contract_out" "$registry_out" "$readiness_out"
 NADIA_CONTEXT_PACK_TIMESTAMP=stage11-test sh scripts/nadia-context-pack.sh --repo . --output "$context_out" >/tmp/latticra-nadia-stage11-context-test.out
