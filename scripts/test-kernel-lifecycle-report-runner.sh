@@ -15,12 +15,15 @@ cc $CFLAGS \
   src/state_lattice.c \
   src/nucleus_preview.c \
   src/nucleus_task.c \
+  src/lat_parser.c \
   src/runtime_boundary.c \
   src/system_bootstrap.c \
   src/kernel.c \
   src/kernel_subsystem_registry.c \
   src/kernel_scheduler.c \
   src/kernel_memory_map.c \
+  src/kernel_process_table.c \
+  src/kernel_syscall_table.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -32,19 +35,21 @@ cc $CFLAGS \
 grep -Fq 'LATTICRA KERNEL LIFECYCLE REPORT' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'policy_status=gate-allowed' "$report_txt"
-grep -Fq 'final_state=memory-map-ready' "$report_txt"
-grep -Fq 'step_count=4' "$report_txt"
-grep -Fq 'state_change_count=4' "$report_txt"
+grep -Fq 'final_state=syscall-table-ready' "$report_txt"
+grep -Fq 'step_count=6' "$report_txt"
+grep -Fq 'state_change_count=6' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
-grep -Fq 'machine_log_count=4' "$report_txt"
+grep -Fq 'machine_log_count=6' "$report_txt"
 grep -Fq 'evidence_level=10' "$report_txt"
 grep -Fq 'log[0].from=created' "$report_txt"
 grep -Fq 'log[0].to=initialized' "$report_txt"
 grep -Fq 'log[0].status=machine-mutated' "$report_txt"
-grep -Fq 'log[3].from=scheduler-ready' "$report_txt"
-grep -Fq 'log[3].to=memory-map-ready' "$report_txt"
-grep -Fq 'log[3].state_change_performed=1' "$report_txt"
-grep -Fq 'log[3].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[4].from=memory-map-ready' "$report_txt"
+grep -Fq 'log[4].to=process-table-ready' "$report_txt"
+grep -Fq 'log[5].from=process-table-ready' "$report_txt"
+grep -Fq 'log[5].to=syscall-table-ready' "$report_txt"
+grep -Fq 'log[5].state_change_performed=1' "$report_txt"
+grep -Fq 'log[5].external_effect_performed=0' "$report_txt"
 
 printf 'kernel_lifecycle_report_runner: ok\n'

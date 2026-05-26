@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Refinement Implementation
 
-Status: runtime boundary refinement implementation with Lat pipeline span and comment evidence
-Scope: no-effect runtime-boundary evidence reporting for Lat pipeline metadata, Lat pipeline span metadata, Lat pipeline line-comment metadata, and Lat-specific LIR metadata.
+Status: runtime boundary refinement implementation with Lat pipeline parse-error, span, and comment evidence
+Scope: no-effect runtime-boundary evidence reporting for Lat pipeline metadata, Lat pipeline parse-error metadata, Lat pipeline span metadata, Lat pipeline line-comment metadata, and Lat-specific LIR metadata.
 
 ## Purpose
 
@@ -47,6 +47,7 @@ The runtime boundary record now carries no-effect evidence fields for:
 ```text
 lat_pipeline_status
 lat_pipeline_error
+lat_pipeline_parse_error
 lat_pipeline_span_start_offset
 lat_pipeline_span_end_offset
 lat_pipeline_span_start_line
@@ -98,7 +99,7 @@ Lat execution and LIR execution remain future-gated.
 
 ## Report surface
 
-`latticra_runtime_boundary_report` now includes deterministic report fields for Lat pipeline evidence, Lat pipeline span evidence, Lat pipeline line-comment evidence, and Lat-specific LIR evidence.
+`latticra_runtime_boundary_report` now includes deterministic report fields for Lat pipeline evidence, Lat pipeline parse-error evidence, Lat pipeline span evidence, Lat pipeline line-comment evidence, and Lat-specific LIR evidence.
 
 The runtime boundary report capacity is increased to preserve bounded output with the expanded report surface.
 
@@ -115,11 +116,12 @@ The focused evidence tests verify:
 ```text
 runtime_boundary_allows_valid_lat_pipeline_metadata
 runtime_boundary_denies_failed_lat_pipeline_metadata
+runtime_boundary_denies_parse_failed_lat_pipeline_metadata
 runtime_boundary_reports_lat_pipeline_evidence
 runtime_boundary_keeps_lat_lir_execution_future_gated
 ```
 
-The Lat pipeline evidence invariants also verify that parser diagnostic/module span metadata plus line-comment count and first-comment span metadata are copied into runtime-boundary records and reports, including denied records for failed Lat pipeline metadata.
+The Lat pipeline evidence invariants also verify that parser error metadata, parser diagnostic/module span metadata, line-comment count, and first-comment span metadata are copied into runtime-boundary records and reports, including denied records for failed Lat pipeline metadata.
 
 ## Compatibility
 
@@ -139,6 +141,7 @@ unknown request denial
 unknown effect denial
 operator confirmation non-override behavior
 small-buffer behavior
+Lat pipeline parse-error evidence reporting
 Lat pipeline diagnostic/module span evidence reporting
 Lat pipeline line-comment evidence reporting
 denied Lat pipeline comment evidence recording

@@ -73,7 +73,7 @@ require_contains 'macOS dry-run writer candidate integration' "$doc"
 require_contains 'macOS commit gate contract' "$doc"
 require_contains 'macOS verification transcript contract' "$doc"
 require_contains 'integration_decision=ready-for-future-commit-gate-no-effect' "$doc"
-require_contains 'Add a macOS reset/uninstall absence-report contract' "$doc"
+require_contains 'Add a macOS reset/uninstall receipt-schema contract' "$doc"
 
 require_contains 'Status: no-effect writer dry-run status' "$status"
 require_contains 'macos_app_bundle_writer_dry_run_present=1' "$status"
@@ -120,7 +120,7 @@ require_contains 'commit_user_local_managed_artifacts=0' "$script"
 require_contains 'app_bundle_write_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-absence-report-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-receipt-schema-contract' "$script"
 
 test_home=$(mktemp -d)
 trap 'rm -rf "$test_home"' EXIT INT HUP TERM

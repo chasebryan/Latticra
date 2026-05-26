@@ -10,6 +10,10 @@ This planner consumes the macOS reset/uninstall live-target classifier and turns
 
 It is report-only. It does not delete files, remove directories, write receipts, mutate host state, run absence verification, open the network, or claim reset/uninstall implementation.
 
+The macOS reset/uninstall absence-report contract now defines the post-removal evidence shape that this planner hands off to.
+
+The macOS reset/uninstall absence-report contract now defines the future evidence shape for the planner's absence-report phase.
+
 ## Command
 
 ```sh
@@ -60,6 +64,7 @@ planner_report_only=1
 dry_run_transcript_present=1
 reset_uninstall_dry_run_planner_transcript_present=1
 planner_consumes_live_target_classifier=1
+macos_reset_uninstall_absence_report_contract_present=1
 app_bundle_target_state=managed
 app_bundle_dry_run_action=would-remove-managed-app-bundle
 cli_wrapper_dry_run_action=would-remove-managed-wrapper
@@ -67,6 +72,7 @@ reset_receipt_dry_run_action=would-write-reset-uninstall-receipt-outside-removed
 absence_report_dry_run_action=would-emit-verification-absence-report-no-effect
 planned_removal_count=report-runtime
 reset_uninstall_dry_run_evidence_present=0
+absence_report_evidence_present=0
 macos_reset_uninstall_implemented=0
 ```
 
@@ -138,5 +144,5 @@ This planner is not macOS reset evidence, macOS uninstall evidence, macOS instal
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
+Add a macOS reset/uninstall receipt-schema contract for reset/uninstall receipts outside the removed prefix.
 ```

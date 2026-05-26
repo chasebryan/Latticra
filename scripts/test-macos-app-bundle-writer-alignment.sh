@@ -63,7 +63,7 @@ require_contains 'macOS dry-run writer candidate integration' "$doc"
 require_contains 'macOS commit gate contract' "$doc"
 require_contains 'macOS verification transcript contract' "$doc"
 require_contains 'integration_decision=ready-for-future-commit-gate-no-effect' "$doc"
-require_contains 'Add a macOS reset/uninstall absence-report contract' "$doc"
+require_contains 'Add a macOS reset/uninstall receipt-schema contract' "$doc"
 require_contains 'not macOS installation' "$doc"
 
 require_contains 'Status: writer alignment status' "$status"

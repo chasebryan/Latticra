@@ -132,5 +132,5 @@ This integration is not macOS installation, macOS app bundle evidence, signed ap
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
+Add a macOS reset/uninstall receipt-schema contract for reset/uninstall receipts outside the removed prefix.
 ```

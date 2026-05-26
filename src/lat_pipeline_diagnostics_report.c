@@ -17,6 +17,7 @@ latticra_status_t latticra_lat_pipeline_diagnostics_report(
         "status=%d\n"
         "diagnostic_class=%s\n"
         "pipeline_error=%s\n"
+        "parse_error=%s\n"
         "failed_stage=%s\n"
         "pipeline_span_start_offset=%zu\n"
         "pipeline_span_end_offset=%zu\n"
@@ -67,6 +68,7 @@ latticra_status_t latticra_lat_pipeline_diagnostics_report(
         (int)result->status,
         latticra_lat_pipeline_diagnostic_class_label(result->diagnostic_class),
         latticra_lat_pipeline_error_label(result->pipeline_error),
+        latticra_lat_parse_error_label(result->parse_error),
         latticra_lat_pipeline_stage_label(result->failed_stage),
         result->pipeline_span.start_offset,
         result->pipeline_span.end_offset,

@@ -19,6 +19,8 @@ checks = [
     (ui, 'WorkspaceTab::Seal', 'seal tab'),
     (ui, 'WorkspaceTab::Authority', 'authority tab'),
     (ui, 'WorkspaceTab::Delivery', 'delivery tab'),
+    (ui, 'WorkspaceTab::Updater', 'updater tab'),
+    (ui, 'fn show_updater(&mut self, ui: &mut egui::Ui)', 'updater function'),
     (ui, 'WorkspaceTab::Evidence', 'evidence tab'),
     (ui, 'WorkspaceTab::Procedure', 'procedure tab'),
     (ui, 'egui::Panel::left("left_workbench_nav")', 'left panel'),

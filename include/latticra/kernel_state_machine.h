@@ -31,6 +31,8 @@ typedef struct {
 
 typedef struct {
     latticra_kernel_memory_map_request_t memory_map_request;
+    latticra_kernel_process_table_request_t process_table_request;
+    latticra_kernel_syscall_table_request_t syscall_table_request;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
 } latticra_kernel_state_machine_step_request_t;

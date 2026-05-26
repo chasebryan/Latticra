@@ -1,8 +1,8 @@
 # Lat Pipeline Diagnostic Integration Refinement
 
-Status: lowering-aware implementation with pipeline-span, comment, first-declaration, and first-clause metadata
+Status: lowering-aware implementation with parse-error, pipeline-span, comment, first-declaration, and first-clause metadata
 
-This slice adds a companion Lat pipeline diagnostics API that combines pipeline stage/error state with pipeline span metadata, parser line-comment metadata, Lat semantic diagnostic class, count, first-diagnostic indices, model-stage classification, and optional Lat-to-LIR lowering diagnostic metadata.
+This slice adds a companion Lat pipeline diagnostics API that combines pipeline stage/error state with parser error metadata, pipeline span metadata, parser line-comment metadata, Lat semantic diagnostic class, count, first-diagnostic indices, model-stage classification, and optional Lat-to-LIR lowering diagnostic metadata.
 
 Files:
 
@@ -48,6 +48,7 @@ lowering_class
 lowering_error
 model_error
 lir_error
+parse_error
 pipeline_span_start_offset
 pipeline_span_end_offset
 pipeline_span_start_line
@@ -82,6 +83,8 @@ lowering_failed
 model_failed
 lir_failed
 ```
+
+Parse-error metadata is copied from the Lat pipeline result. It records the parser error label, including specific parse-failure reasons such as `unsupported_block_comment`, for report/audit use only.
 
 Pipeline span metadata is copied from the Lat pipeline result. It records the successful module span or the parse-failure diagnostic span for report/audit use only.
 

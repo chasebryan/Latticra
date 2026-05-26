@@ -34,6 +34,14 @@ latticra_status_t latticra_kernel_state_machine_default_step_request(
     if (latticra_kernel_memory_map_default_request(&request->memory_map_request) != LATTICRA_STATUS_OK) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
+    if (latticra_kernel_process_table_default_request(&request->process_table_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (latticra_kernel_syscall_table_default_request(&request->syscall_table_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
     request->target_state = LATTICRA_KERNEL_STATE_INITIALIZED;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
     return LATTICRA_STATUS_OK;
@@ -85,6 +93,8 @@ latticra_status_t latticra_kernel_state_machine_step(
 
     memset(&transition_request, 0, sizeof(transition_request));
     transition_request.memory_map_request = request->memory_map_request;
+    transition_request.process_table_request = request->process_table_request;
+    transition_request.syscall_table_request = request->syscall_table_request;
     transition_request.current_state = machine->current_state;
     transition_request.target_state = request->target_state;
     transition_request.gate = request->gate;

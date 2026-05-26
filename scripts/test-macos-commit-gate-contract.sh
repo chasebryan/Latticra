@@ -74,7 +74,9 @@ require_contains 'macos_verification_transcript_contract_present=1' "$doc"
 require_contains 'verification_transcript_contract_present=1' "$doc"
 require_contains 'verification_transcript_evidence_present=0' "$doc"
 require_contains 'macos_reset_uninstall_dry_run_contract_present=1' "$doc"
+require_contains 'macos_reset_uninstall_absence_report_contract_present=1' "$doc"
 require_contains 'reset_uninstall_dry_run_evidence_present=0' "$doc"
+require_contains 'absence_report_evidence_present=0' "$doc"
 require_contains 'candidate_flow_ready_required=1' "$doc"
 require_contains 'operator_explicit_commit_intent_required=1' "$doc"
 require_contains 'receipt_completeness_tests_required=1' "$doc"
@@ -89,6 +91,7 @@ require_contains 'macos_commit_gate_contract_guard_present=1' "$status"
 require_contains 'macos_dry_run_writer_candidate_integration_present=1' "$status"
 require_contains 'macos_verification_transcript_contract_present=1' "$status"
 require_contains 'macos_reset_uninstall_dry_run_contract_present=1' "$status"
+require_contains 'macos_reset_uninstall_absence_report_contract_present=1' "$status"
 require_contains 'commit_gate_state=closed' "$status"
 require_contains 'commit_gate_decision=blocked-missing-managed-write-implementation' "$status"
 require_contains 'commit_user_local_managed_artifacts=0' "$status"
@@ -96,6 +99,7 @@ require_contains 'managed_write_implementation_present=0' "$status"
 require_contains 'verification_transcript_contract_present=1' "$status"
 require_contains 'verification_transcript_evidence_present=0' "$status"
 require_contains 'reset_uninstall_dry_run_evidence_present=0' "$status"
+require_contains 'absence_report_evidence_present=0' "$status"
 require_contains 'operator_explicit_commit_intent_required=1' "$status"
 require_contains 'host_mutation_performed=0' "$status"
 require_contains 'network_performed=0' "$status"
@@ -123,8 +127,8 @@ require_contains 'macos_reset_uninstall_dry_run_contract_present=1' "$reset_stat
 require_contains 'macOS commit gate contract' "$integration_doc"
 require_contains 'macOS verification transcript contract' "$verification_doc"
 require_contains 'macOS commit gate contract' "$alignment_doc"
-require_contains 'Add a macOS reset/uninstall absence-report contract' "$transfer_plan"
-require_contains 'Add a macOS reset/uninstall absence-report contract' "$transfer_status"
+require_contains 'Add a macOS reset/uninstall receipt-schema contract' "$transfer_plan"
+require_contains 'Add a macOS reset/uninstall receipt-schema contract' "$transfer_status"
 require_contains 'sh scripts/test-macos-commit-gate-contract.sh' "$workflow"
 
 require_contains 'MACOS COMMIT GATE CONTRACT' "$script"
@@ -135,11 +139,13 @@ require_contains 'managed_write_implementation_present=0' "$script"
 require_contains 'macos_verification_transcript_contract_present=1' "$script"
 require_contains 'verification_transcript_contract_present=1' "$script"
 require_contains 'macos_reset_uninstall_dry_run_contract_present=1' "$script"
+require_contains 'macos_reset_uninstall_absence_report_contract_present=1' "$script"
 require_contains 'reset_uninstall_dry_run_evidence_present=0' "$script"
+require_contains 'absence_report_evidence_present=0' "$script"
 require_contains 'app_bundle_write_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-absence-report-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-receipt-schema-contract' "$script"
 
 output=$(sh "$script")
 require_output_contains "$output" 'MACOS COMMIT GATE CONTRACT'
@@ -154,7 +160,9 @@ require_output_contains "$output" 'macos_verification_transcript_contract_presen
 require_output_contains "$output" 'verification_transcript_contract_present=1'
 require_output_contains "$output" 'verification_transcript_evidence_present=0'
 require_output_contains "$output" 'macos_reset_uninstall_dry_run_contract_present=1'
+require_output_contains "$output" 'macos_reset_uninstall_absence_report_contract_present=1'
 require_output_contains "$output" 'reset_uninstall_dry_run_evidence_present=0'
+require_output_contains "$output" 'absence_report_evidence_present=0'
 require_output_contains "$output" 'operator_explicit_commit_intent_observed=0'
 require_output_contains "$output" 'app_bundle_write_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'

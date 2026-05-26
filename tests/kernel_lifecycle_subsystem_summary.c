@@ -13,7 +13,7 @@
         } \
     } while (0)
 
-static int default_request_targets_memory_map_ready(void) {
+static int default_request_targets_syscall_table_ready(void) {
     latticra_kernel_lifecycle_subsystem_summary_request_t request;
 
     EXPECT_TRUE(latticra_kernel_lifecycle_subsystem_summary_default_request(&request) ==
@@ -21,8 +21,8 @@ static int default_request_targets_memory_map_ready(void) {
         "default summary request status");
     EXPECT_TRUE(request.lifecycle_request.gate == LATTICRA_KERNEL_STATE_GATE_ALLOW,
         "summary default lifecycle gate allow");
-    EXPECT_TRUE(request.lifecycle_request.target_state == LATTICRA_KERNEL_STATE_MEMORY_MAP_READY,
-        "summary default target memory-map-ready");
+    EXPECT_TRUE(request.lifecycle_request.target_state == LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY,
+        "summary default target syscall-table-ready");
     EXPECT_TRUE(request.lifecycle_request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
         "summary default max steps");
     EXPECT_TRUE(strcmp(request.registry_request.kernel_request.kernel_id, "latticra-kernel-seed") == 0,
@@ -43,14 +43,14 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.summary_status, "summary-ready") == 0,
         "summary ready");
-    EXPECT_TRUE(strcmp(result.final_state, "memory-map-ready") == 0,
-        "summary final state memory-map-ready");
+    EXPECT_TRUE(strcmp(result.final_state, "syscall-table-ready") == 0,
+        "summary final state syscall-table-ready");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "summary lifecycle complete");
-    EXPECT_TRUE(result.lifecycle_step_count == 4u,
-        "summary four lifecycle steps");
-    EXPECT_TRUE(result.lifecycle_state_change_count == 4u,
-        "summary four lifecycle state changes");
+    EXPECT_TRUE(result.lifecycle_step_count == 6u,
+        "summary six lifecycle steps");
+    EXPECT_TRUE(result.lifecycle_state_change_count == 6u,
+        "summary six lifecycle state changes");
     EXPECT_TRUE(result.lifecycle_state_mutated == 1,
         "summary lifecycle state mutated internally");
     EXPECT_TRUE(result.external_effect_performed == 0,
@@ -63,6 +63,10 @@ static int summary_reaches_ready_without_authority(void) {
         "summary scheduler execution denied");
     EXPECT_TRUE(result.memory_allocation_allowed == 0,
         "summary memory allocation denied");
+    EXPECT_TRUE(result.process_spawn_allowed == 0,
+        "summary process spawn denied");
+    EXPECT_TRUE(result.syscall_dispatch_allowed == 0,
+        "summary syscall dispatch denied");
     EXPECT_TRUE(result.no_external_effect_chain == 1,
         "summary no external effect chain");
     EXPECT_TRUE(result.entry_count == LATTICRA_KERNEL_SUBSYSTEM_COUNT,
@@ -106,12 +110,28 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.entries[4].authority_status, "process-execution-denied") == 0,
         "summary process authority denied");
+    EXPECT_TRUE(strcmp(result.entries[4].lifecycle_relation, "process-table-ready") == 0,
+        "summary process table ready");
+    EXPECT_TRUE(result.entries[4].lifecycle_ready == 1,
+        "summary process lifecycle ready");
     EXPECT_TRUE(strcmp(result.entries[5].authority_status, "filesystem-denied") == 0,
         "summary filesystem authority denied");
+    EXPECT_TRUE(strcmp(result.entries[5].lifecycle_relation, "filesystem-syscall-metadata-ready") == 0,
+        "summary filesystem syscall metadata ready");
+    EXPECT_TRUE(result.entries[5].lifecycle_ready == 1,
+        "summary filesystem lifecycle ready");
     EXPECT_TRUE(strcmp(result.entries[6].authority_status, "network-denied") == 0,
         "summary network authority denied");
+    EXPECT_TRUE(strcmp(result.entries[6].lifecycle_relation, "network-syscall-metadata-ready") == 0,
+        "summary network syscall metadata ready");
+    EXPECT_TRUE(result.entries[6].lifecycle_ready == 1,
+        "summary network lifecycle ready");
     EXPECT_TRUE(strcmp(result.entries[7].authority_status, "device-denied") == 0,
         "summary device authority denied");
+    EXPECT_TRUE(strcmp(result.entries[7].lifecycle_relation, "device-syscall-metadata-ready") == 0,
+        "summary device syscall metadata ready");
+    EXPECT_TRUE(result.entries[7].lifecycle_ready == 1,
+        "summary device lifecycle ready");
     EXPECT_TRUE(strcmp(result.entries[8].authority_status, "not-production-boundary") == 0,
         "summary security authority boundary");
     return 0;
@@ -143,6 +163,8 @@ static int summary_respects_lifecycle_step_limit(void) {
         "limited summary scheduler not ready");
     EXPECT_TRUE(result.entries[3].lifecycle_ready == 0,
         "limited summary memory not ready");
+    EXPECT_TRUE(result.entries[4].lifecycle_ready == 0,
+        "limited summary process not ready");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "limited summary no external effect");
     EXPECT_TRUE(result.no_external_effect_chain == 1,
@@ -169,13 +191,13 @@ static int summary_report_is_deterministic(void) {
         "summary report title");
     EXPECT_TRUE(strstr(report, "summary_status=summary-ready\n") != 0,
         "summary report status");
-    EXPECT_TRUE(strstr(report, "final_state=memory-map-ready\n") != 0,
+    EXPECT_TRUE(strstr(report, "final_state=syscall-table-ready\n") != 0,
         "summary report final state");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "summary report lifecycle complete");
-    EXPECT_TRUE(strstr(report, "lifecycle_step_count=4\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_step_count=6\n") != 0,
         "summary report step count");
-    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=4\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=6\n") != 0,
         "summary report state changes");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "summary report external effect");
@@ -185,6 +207,10 @@ static int summary_report_is_deterministic(void) {
         "summary report scheduler denied");
     EXPECT_TRUE(strstr(report, "memory_allocation_allowed=0\n") != 0,
         "summary report memory allocation denied");
+    EXPECT_TRUE(strstr(report, "process_spawn_allowed=0\n") != 0,
+        "summary report process spawn denied");
+    EXPECT_TRUE(strstr(report, "syscall_dispatch_allowed=0\n") != 0,
+        "summary report syscall dispatch denied");
     EXPECT_TRUE(strstr(report, "no_external_effect_chain=1\n") != 0,
         "summary report no external effect chain");
     EXPECT_TRUE(strstr(report, "entry_count=9\n") != 0,
@@ -195,6 +221,10 @@ static int summary_report_is_deterministic(void) {
         "summary report scheduler relation");
     EXPECT_TRUE(strstr(report, "subsystem[3].lifecycle_relation=memory-map-ready\n") != 0,
         "summary report memory relation");
+    EXPECT_TRUE(strstr(report, "subsystem[4].lifecycle_relation=process-table-ready\n") != 0,
+        "summary report process relation");
+    EXPECT_TRUE(strstr(report, "subsystem[6].lifecycle_relation=network-syscall-metadata-ready\n") != 0,
+        "summary report network relation");
     return 0;
 }
 
@@ -228,7 +258,7 @@ static int null_guards_are_safe(void) {
 }
 
 int main(void) {
-    if (default_request_targets_memory_map_ready() != 0) return 1;
+    if (default_request_targets_syscall_table_ready() != 0) return 1;
     if (summary_reaches_ready_without_authority() != 0) return 1;
     if (summary_respects_lifecycle_step_limit() != 0) return 1;
     if (summary_report_is_deterministic() != 0) return 1;

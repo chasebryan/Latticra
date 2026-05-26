@@ -125,15 +125,28 @@ static int sequential_steps_advance_ladder(void) {
     request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_READY;
     EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
         "registry ready to scheduler ready");
+    request.target_state = LATTICRA_KERNEL_STATE_MEMORY_MAP_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "scheduler ready to memory map ready");
+    request.target_state = LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "memory map ready to process table ready");
+    request.target_state = LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "process table ready to syscall table ready");
 
-    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_SCHEDULER_READY,
-        "machine reaches scheduler ready");
-    EXPECT_TRUE(strcmp(machine.machine_status, "scheduler-ready") == 0,
-        "machine status scheduler ready");
-    EXPECT_TRUE(machine.log_count == 3u,
-        "three transitions logged");
+    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY,
+        "machine reaches syscall table ready");
+    EXPECT_TRUE(strcmp(machine.machine_status, "syscall-table-ready") == 0,
+        "machine status syscall table ready");
+    EXPECT_TRUE(machine.log_count == 6u,
+        "six transitions logged");
     EXPECT_TRUE(machine.external_effect_performed == 0,
         "sequence external effects absent");
+    EXPECT_TRUE(machine.log[4].to_state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY,
+        "log process table ready");
+    EXPECT_TRUE(machine.log[5].to_state == LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY,
+        "log syscall table ready");
     return 0;
 }
 

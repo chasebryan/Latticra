@@ -33,6 +33,7 @@ components tab
 seal tab
 authority tab
 delivery tab
+updater tab
 evidence tab
 procedure tab
 fluid install button

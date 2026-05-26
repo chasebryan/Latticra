@@ -1,7 +1,7 @@
 #ifndef LATTICRA_KERNEL_STATE_H
 #define LATTICRA_KERNEL_STATE_H
 
-#include "latticra/kernel_memory_map.h"
+#include "latticra/kernel_syscall_table.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -15,7 +15,9 @@ typedef enum {
     LATTICRA_KERNEL_STATE_INITIALIZED = 1,
     LATTICRA_KERNEL_STATE_REGISTRY_READY = 2,
     LATTICRA_KERNEL_STATE_SCHEDULER_READY = 3,
-    LATTICRA_KERNEL_STATE_MEMORY_MAP_READY = 4
+    LATTICRA_KERNEL_STATE_MEMORY_MAP_READY = 4,
+    LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY = 5,
+    LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY = 6
 } latticra_kernel_state_kind_t;
 
 typedef enum {
@@ -25,6 +27,8 @@ typedef enum {
 
 typedef struct {
     latticra_kernel_memory_map_request_t memory_map_request;
+    latticra_kernel_process_table_request_t process_table_request;
+    latticra_kernel_syscall_table_request_t syscall_table_request;
     latticra_kernel_state_kind_t current_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
@@ -37,6 +41,8 @@ typedef struct {
     char transition_status[LATTICRA_KERNEL_STATE_LABEL_MAX];
     char effect_status[LATTICRA_KERNEL_STATE_LABEL_MAX];
     latticra_kernel_memory_map_result_t memory_map;
+    latticra_kernel_process_table_result_t process_table;
+    latticra_kernel_syscall_table_result_t syscall_table;
     latticra_kernel_state_kind_t previous_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_kind_t next_state;

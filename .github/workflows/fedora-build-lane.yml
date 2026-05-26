@@ -1,0 +1,26 @@
+name: Fedora Build Lane
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-build-lane:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    container:
+      image: registry.fedoraproject.org/fedora:latest
+    steps:
+      - name: Prepare checkout tools
+        run: dnf -y install git tar gzip
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Fedora build lane guard
+        run: sh scripts/test-fedora-build-lane.sh

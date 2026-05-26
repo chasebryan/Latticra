@@ -1,4 +1,4 @@
-.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly nadia-prompt-evaluation-input
+.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly nadia-prompt-evaluation-input nadia-prompt-evaluation-runtime-handoff
 
 .PHONY: quality quality-worktree quality-safety-guards quality-defensive-threat-model quality-rust-installer quality-panel-installer quality-c-foundation
 
@@ -119,6 +119,9 @@ nadia-context-window-assembly:
 nadia-prompt-evaluation-input:
 	sh ./scripts/nadia-prompt-evaluation-input-contract.sh
 
+nadia-prompt-evaluation-runtime-handoff:
+	sh ./scripts/nadia-prompt-evaluation-runtime-handoff-contract.sh
+
 .PHONY: seal-policy-denials
 
 seal-policy-denials:
@@ -126,9 +129,17 @@ seal-policy-denials:
 
 .PHONY: seal-cli seal-run
 
+PKG_CONFIG ?= pkg-config
+SEAL_CFLAGS ?= -Wall -Wextra -O2 -std=c11
+SEAL_OPENSSL_CFLAGS ?= $(shell $(PKG_CONFIG) --cflags openssl 2>/dev/null)
+SEAL_OPENSSL_LIBS ?= $(shell $(PKG_CONFIG) --libs openssl 2>/dev/null)
+ifeq ($(strip $(SEAL_OPENSSL_LIBS)),)
+SEAL_OPENSSL_LIBS := -lcrypto
+endif
+
 seal-cli:
 	mkdir -p build
-	gcc -Wall -Wextra -O2 -std=c11 -o build/latticra-seal seal/latticra-seal.c -lcrypto
+	$(CC) $(SEAL_CFLAGS) $(SEAL_OPENSSL_CFLAGS) -o build/latticra-seal seal/latticra-seal.c $(SEAL_OPENSSL_LIBS)
 
 seal-run: seal-cli
 	./build/latticra-seal

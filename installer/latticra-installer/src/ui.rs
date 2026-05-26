@@ -22,6 +22,14 @@ enum InstallState {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum OperationIntent {
+    Install,
+    UpdateDryRun,
+    UpdateApply,
+    Removal,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum WorkspaceTab {
     Dashboard,
     Components,
@@ -29,6 +37,7 @@ enum WorkspaceTab {
     Seal,
     Authority,
     Delivery,
+    Updater,
     Evidence,
     Procedure,
 }
@@ -46,6 +55,8 @@ pub struct LatticraInstallerApp {
     seal_texture: Option<egui::TextureHandle>,
     rx: Option<Receiver<InstallEvent>>,
     install_state: InstallState,
+    active_operation: OperationIntent,
+    last_update_dry_run_ok: bool,
     phase_index: usize,
     phase_total: usize,
     phase_title: String,
@@ -66,7 +77,7 @@ impl Default for LatticraInstallerApp {
             console_lines: vec![
                 format!("Latticra Panel v{PANEL_VERSION} bounded operator console online."),
                 "Authority baseline: root=0 network=0 runtime_enforcement=0.".to_owned(),
-                "Panel commands: help, status, lc status, lc receipts, lc os-contract, lc vm-evidence, lc profile <hosted|panel|host|os|custom>, plan, save, dry-run, reset, uninstall, profile seal, profile fedora."
+                "Panel commands: help, status, lc status, lc receipts, lc host-adapter, lc os-contract, lc vm-evidence, lc profile <hosted|panel|host|os|custom>, plan, save, dry-run, reset, uninstall, profile seal, profile fedora."
                     .to_owned(),
                 "Navigation commands: pwd, cd <dir>. External host commands are denied.".to_owned(),
             ],
@@ -77,6 +88,8 @@ impl Default for LatticraInstallerApp {
             seal_texture: None,
             rx: None,
             install_state: InstallState::Idle,
+            active_operation: OperationIntent::Install,
+            last_update_dry_run_ok: false,
             phase_index: 0,
             phase_total: 10,
             phase_title: "idle".to_owned(),
@@ -194,7 +207,12 @@ impl LatticraInstallerApp {
     }
 
     fn start_install(&mut self) {
+        self.start_install_with_intent(OperationIntent::Install);
+    }
+
+    fn start_install_with_intent(&mut self, intent: OperationIntent) {
         self.config.safety.allow_network_effect = false;
+        self.config.updater.allow_network_fetch = false;
         match self.config.can_execute() {
             Ok(()) => {
                 self.refresh_plan();
@@ -202,9 +220,11 @@ impl LatticraInstallerApp {
                 self.phase_index = 0;
                 self.phase_total = 10;
                 self.phase_title = "starting".to_owned();
+                self.active_operation = intent;
                 self.install_state = InstallState::Running;
-                self.status = format!("Starting {}...", self.config.execution_mode_label());
-                self.push_console(format!("launching {}", self.config.execution_mode_label()));
+                let label = self.operation_label();
+                self.status = format!("Starting {label}...");
+                self.push_console(format!("launching {label}"));
                 self.rx = Some(engine::launch(self.config.clone()));
                 self.active_tab = WorkspaceTab::Evidence;
                 self.show_plan_over_log = false;
@@ -217,14 +237,65 @@ impl LatticraInstallerApp {
         }
     }
 
+    fn start_update_dry_run(&mut self) {
+        if !self.config.updater.reuse_installer_engine {
+            self.install_state = InstallState::Failed;
+            self.status = "Updater currently requires reuse_installer_engine=true.".to_owned();
+            self.push_console("blocked: updater requires guarded installer engine reuse");
+            self.active_tab = WorkspaceTab::Updater;
+            return;
+        }
+
+        self.config.safety.dry_run = true;
+        self.config.safety.allow_host_mutation = false;
+        self.config.safety.allow_network_effect = false;
+        self.config.updater.allow_network_fetch = false;
+        self.last_update_dry_run_ok = false;
+        self.refresh_plan();
+        self.status = "Starting updater dry-run from the current checkout.".to_owned();
+        self.push_console("updater: dry-run preview requested");
+        self.start_install_with_intent(OperationIntent::UpdateDryRun);
+    }
+
+    fn start_update_apply(&mut self) {
+        if !self.config.updater.reuse_installer_engine {
+            self.install_state = InstallState::Failed;
+            self.status = "Updater currently requires reuse_installer_engine=true.".to_owned();
+            self.push_console("blocked: updater requires guarded installer engine reuse");
+            self.active_tab = WorkspaceTab::Updater;
+            return;
+        }
+
+        if self.config.updater.require_dry_run_before_apply && !self.last_update_dry_run_ok {
+            self.install_state = InstallState::Failed;
+            self.status =
+                "Updater apply requires a successful updater dry-run in this Panel session."
+                    .to_owned();
+            self.push_console("blocked: updater apply requires successful updater dry-run first");
+            self.active_tab = WorkspaceTab::Updater;
+            return;
+        }
+
+        self.config.safety.dry_run = false;
+        self.config.safety.allow_host_mutation = true;
+        self.config.safety.allow_network_effect = false;
+        self.config.updater.allow_network_fetch = false;
+        self.refresh_plan();
+        self.status = "Starting guarded updater apply from the current checkout.".to_owned();
+        self.push_console("updater: guarded local-prefix apply requested");
+        self.start_install_with_intent(OperationIntent::UpdateApply);
+    }
+
     fn start_removal(&mut self, operation: RemovalOperation) {
         self.config.safety.allow_network_effect = false;
+        self.config.updater.allow_network_fetch = false;
         match self.config.can_reset() {
             Ok(()) => {
                 self.logs.clear();
                 self.phase_index = 0;
                 self.phase_total = 5;
                 self.phase_title = format!("starting {}", operation.arg());
+                self.active_operation = OperationIntent::Removal;
                 self.install_state = InstallState::Running;
                 let mode_label = operation.mode_label(self.config.safety.dry_run);
                 self.status = format!("Starting {mode_label}...");
@@ -285,8 +356,12 @@ impl LatticraInstallerApp {
                     self.phase_index = self.phase_total;
                     if success {
                         self.install_state = InstallState::Complete;
-                        self.status = "Engine completed successfully.".to_owned();
-                        self.push_console("engine: completed successfully");
+                        if self.active_operation == OperationIntent::UpdateDryRun {
+                            self.last_update_dry_run_ok = true;
+                        }
+                        let label = self.operation_label();
+                        self.status = format!("{label} completed successfully.");
+                        self.push_console(format!("engine: {label} completed successfully"));
                     } else {
                         self.install_state = InstallState::Failed;
                         self.status = format!(
@@ -319,6 +394,15 @@ impl LatticraInstallerApp {
         (self.phase_index as f32 / self.phase_total as f32).clamp(0.0, 1.0)
     }
 
+    fn operation_label(&self) -> &'static str {
+        match self.active_operation {
+            OperationIntent::Install => self.config.execution_mode_label(),
+            OperationIntent::UpdateDryRun => "updater dry-run",
+            OperationIntent::UpdateApply => "guarded updater apply",
+            OperationIntent::Removal => "removal engine",
+        }
+    }
+
     fn run_console_command(&mut self) {
         let command = self.console_input.trim().to_owned();
         self.console_input.clear();
@@ -335,7 +419,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, lc status, lc profiles, lc receipts, lc profile hosted|panel|host|os|custom, lc commands, lc substrate, lc host, lc host-contract, lc host-inventory, lc os-contract, lc vm-evidence, lc os, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding, nadia tokenizer-runtime-attachment, nadia prompt-tokenization, nadia prompt-token-sequence, nadia context-window-assembly, nadia prompt-evaluation-input",
+                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc status, lc profiles, lc receipts, lc profile hosted|panel|host|os|custom, lc commands, lc substrate, lc host, lc host-contract, lc host-inventory, lc host-adapter, lc os-contract, lc vm-evidence, lc os, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia context, nadia runtime, nadia plan, nadia mode, nadia ledger, nadia safety, nadia tool, nadia prompt-contract, nadia model-registry, nadia inference-readiness, nadia runtime-invocation, nadia model-load, nadia prompt-receipt, nadia prompt-materialization, nadia awareness-dialogue, nadia prompt-evaluation-handoff, nadia tokenization-boundary, nadia tokenizer-specification, nadia tokenizer-manifest, nadia tokenizer-artifact-inventory, nadia tokenizer-artifact-measurement, nadia tokenizer-artifact-verification, nadia tokenizer-artifact-binding, nadia tokenizer-runtime-attachment, nadia prompt-tokenization, nadia prompt-token-sequence, nadia context-window-assembly, nadia prompt-evaluation-input, nadia prompt-evaluation-runtime-handoff",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -362,8 +446,46 @@ impl LatticraInstallerApp {
                     self.config.components.nadia_offline_ai
                 ));
                 self.push_console(format!("install_prefix={}", self.config.install_prefix));
+                self.push_console(format!(
+                    "updater_source={}",
+                    self.config.updater.source_strategy
+                ));
+                self.push_console(format!(
+                    "updater_channel={}",
+                    self.config.updater.update_channel
+                ));
                 self.push_console(
                     "root_authority=0 network_authority=0 runtime_enforcement_authority=0",
+                );
+            }
+            ["updater"] | ["update"] | ["updater", "status"] | ["update", "status"] => {
+                self.push_console("updater.panel_owned=1");
+                self.push_console(format!(
+                    "updater.source_strategy={}",
+                    self.config.updater.source_strategy
+                ));
+                self.push_console(format!(
+                    "updater.update_channel={}",
+                    self.config.updater.update_channel
+                ));
+                self.push_console(format!(
+                    "updater.require_dry_run_before_apply={}",
+                    self.config.updater.require_dry_run_before_apply
+                ));
+                self.push_console(format!(
+                    "updater.last_dry_run_ok={}",
+                    self.last_update_dry_run_ok
+                ));
+                self.push_console(format!(
+                    "updater.reuse_installer_engine={}",
+                    self.config.updater.reuse_installer_engine
+                ));
+                self.push_console(format!(
+                    "updater.write_update_receipt={}",
+                    self.config.updater.write_update_receipt
+                ));
+                self.push_console(
+                    "updater.network_authority=0 root_authority=0 system_mutation_authority=0",
                 );
             }
             ["lc"] | ["lc", "status"] | ["console"] | ["console", "status"] => {
@@ -403,6 +525,11 @@ impl LatticraInstallerApp {
                 ));
                 self.push_console("host_inventory_contract_status=metadata-only-contract");
                 self.push_console(format!(
+                    "host_adapter_contract_profile={}",
+                    self.config.lc.host_adapter_contract_profile
+                ));
+                self.push_console("host_adapter_contract_status=metadata-only-contract");
+                self.push_console(format!(
                     "receipt_contract_profile={}",
                     self.config.lc.receipt_contract_profile
                 ));
@@ -441,6 +568,10 @@ impl LatticraInstallerApp {
                 self.push_console(format!(
                     "host_inventory_receipt_required={}",
                     self.config.lc.require_host_inventory_receipt
+                ));
+                self.push_console(format!(
+                    "host_adapter_contract_required={}",
+                    self.config.lc.require_host_adapter_contract
                 ));
                 self.push_console(format!(
                     "os_base_contract_required={}",
@@ -483,7 +614,7 @@ impl LatticraInstallerApp {
                 self.apply_lc_profile(LatticraConsoleProfile::Custom);
             }
             ["lc", "commands"] | ["console", "commands"] => {
-                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc profiles,lc receipts,lc substrate,lc host,lc host-contract,lc host-inventory,lc os-contract,lc vm-evidence,lc os");
+                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc profiles,lc receipts,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
                 self.push_console("registry_authority=metadata-only external_host_processes=0");
             }
             ["lc", "receipts"]
@@ -508,6 +639,10 @@ impl LatticraInstallerApp {
                     "host_inventory_receipt_required={}",
                     self.config.lc.require_host_inventory_receipt
                 ));
+                self.push_console(format!(
+                    "host_adapter_contract_required={}",
+                    self.config.lc.require_host_adapter_contract
+                ));
                 self.push_console(
                     "seal_signature_present=0 seal_signing_authority_present=0 receipt_signed=0",
                 );
@@ -526,6 +661,10 @@ impl LatticraInstallerApp {
                 self.push_console(format!(
                     "lc.host_embedding={}",
                     self.config.lc.host_embedding_profile
+                ));
+                self.push_console(format!(
+                    "host_adapter_contract={}",
+                    self.config.lc.host_adapter_contract_profile
                 ));
                 self.push_console("host_embedded_now=0 host_mutation_allowed=0 file_io_allowed=0");
                 self.push_console("future_host_role=embed-within-host-after-gates");
@@ -571,6 +710,35 @@ impl LatticraInstallerApp {
                     "host_probe_allowed=0 host_file_read_allowed=0 host_file_write_allowed=0",
                 );
                 self.push_console("host_process_launch_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0");
+            }
+            ["lc", "host-adapter"]
+            | ["console", "host-adapter"]
+            | ["lc", "host", "adapter"]
+            | ["console", "host", "adapter"]
+            | ["lc", "adapter-contract"]
+            | ["console", "adapter-contract"] => {
+                self.push_console(
+                    "lc.host_adapter_contract=Latticra Console host adapter contract",
+                );
+                self.push_console(format!(
+                    "contract_profile={}",
+                    self.config.lc.host_adapter_contract_profile
+                ));
+                self.push_console(format!(
+                    "contract_required={}",
+                    self.config.lc.require_host_adapter_contract
+                ));
+                self.push_console("contract_status=metadata-only host_adapter_enabled=0");
+                self.push_console("host_adapter_present=0 host_adapter_loaded=0 adapter_api_status=planned adapter_abi_status=planned");
+                self.push_console(
+                    "host_embedding_contract_receipt_required=1 host_inventory_contract_receipt_required=1",
+                );
+                self.push_console(
+                    "host_process_launch_allowed=0 host_probe_allowed=0 host_file_read_allowed=0 host_file_write_allowed=0",
+                );
+                self.push_console(
+                    "host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0",
+                );
             }
             ["lc", "os-contract"]
             | ["console", "os-contract"]
@@ -730,7 +898,10 @@ impl LatticraInstallerApp {
                     "prompt_evaluation_input_contract_stage=28-prompt-evaluation-input-contract",
                 );
                 self.push_console(
-                    "stage=28 prompt-evaluation-input-contract; prompt_evaluation_input_created=0 runtime_invoked=0",
+                    "prompt_evaluation_runtime_handoff_contract_stage=29-prompt-evaluation-runtime-handoff-contract",
+                );
+                self.push_console(
+                    "stage=29 prompt-evaluation-runtime-handoff-contract; runtime_handoff_created=0 runtime_invoked=0 prompt_evaluated=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -1060,6 +1231,23 @@ impl LatticraInstallerApp {
                     "requires_context_window_assembly_contract=1 requires_future_prompt_evaluation_runtime_handoff_contract=1",
                 );
             }
+            ["nadia", "prompt-evaluation-runtime-handoff"]
+            | ["nadia", "runtime-handoff"]
+            | ["nadia", "evaluation-runtime-handoff"]
+            | ["nadia", "prompt-evaluation-runtime-handoff-contract"] => {
+                self.push_console(
+                    "nadia_prompt_evaluation_runtime_handoff=stage-29-prompt-evaluation-runtime-handoff-contract",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console("installed_cli=latticra-nadia prompt-evaluation-runtime-handoff");
+                self.push_console(
+                    "prompt_evaluation_runtime_handoff_contract_status=contract_only prompt_evaluation_runtime_handoff_performed=0",
+                );
+                self.push_console("runtime_handoff_created=0 runtime_invoked=0 prompt_evaluated=0");
+                self.push_console(
+                    "requires_prompt_evaluation_input_contract=1 requires_future_prompt_evaluation_invocation_contract=1",
+                );
+            }
             ["nadia", "inference-readiness"]
             | ["nadia", "readiness"]
             | ["nadia", "inference-contract"] => {
@@ -1164,6 +1352,17 @@ impl LatticraInstallerApp {
                 self.active_tab = WorkspaceTab::Evidence;
                 self.push_console("plan refreshed in evidence panel");
             }
+            ["updater", "plan"] | ["update", "plan"] => {
+                self.refresh_plan();
+                self.show_plan_over_log = true;
+                self.active_tab = WorkspaceTab::Updater;
+                self.push_console("updater: plan refreshed in Panel updater");
+            }
+            ["updater", "dry-run"]
+            | ["update", "dry-run"]
+            | ["updater", "preview"]
+            | ["update", "preview"] => self.start_update_dry_run(),
+            ["updater", "apply"] | ["update", "apply"] => self.start_update_apply(),
             ["save"] => self.save_config(),
             ["dry-run"] | ["run"] => self.start_install(),
             ["reset"] | ["reset-local"] => self.start_reset(),
@@ -1316,6 +1515,7 @@ impl LatticraInstallerApp {
             "Authority gates",
         );
         nav_button(ui, &mut self.active_tab, WorkspaceTab::Delivery, "Delivery");
+        nav_button(ui, &mut self.active_tab, WorkspaceTab::Updater, "Updater");
         nav_button(ui, &mut self.active_tab, WorkspaceTab::Evidence, "Evidence");
         nav_button(
             ui,
@@ -1372,6 +1572,7 @@ impl LatticraInstallerApp {
                     WorkspaceTab::Seal => self.show_seal_config(ui),
                     WorkspaceTab::Authority => self.show_authority(ui),
                     WorkspaceTab::Delivery => self.show_delivery(ui),
+                    WorkspaceTab::Updater => self.show_updater(ui),
                     WorkspaceTab::Evidence => self.show_evidence(ui),
                     WorkspaceTab::Procedure => self.show_procedure(ui),
                 }
@@ -1550,7 +1751,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-28 prompt-evaluation-input contract with metadata-only Console surfaces.",
+            "Stage-29 prompt-evaluation-runtime-handoff contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,
@@ -1677,6 +1878,11 @@ impl LatticraInstallerApp {
         );
         labeled_text_field(
             ui,
+            "Host adapter",
+            &mut self.config.lc.host_adapter_contract_profile,
+        );
+        labeled_text_field(
+            ui,
             "Receipt contract",
             &mut self.config.lc.receipt_contract_profile,
         );
@@ -1727,6 +1933,12 @@ impl LatticraInstallerApp {
             &mut self.config.lc.require_host_inventory_receipt,
             "Require host-inventory receipt",
             "Read-only inventory contract metadata must be receipted before host embedding work.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.require_host_adapter_contract,
+            "Require host-adapter contract",
+            "Future Host embedding must prove the adapter contract before any adapter can exist.",
         );
         checkbox_note(
             ui,
@@ -1990,6 +2202,107 @@ impl LatticraInstallerApp {
         );
     }
 
+    fn show_updater(&mut self, ui: &mut egui::Ui) {
+        ui.heading("Panel updater");
+        ui.label("Update the managed user-local install from the reviewed source checkout through the same guarded installer engine.");
+        ui.add_space(6.0);
+
+        ui.horizontal_wrapped(|ui| {
+            status_chip(ui, "source", &self.config.updater.source_strategy);
+            status_chip(ui, "channel", &self.config.updater.update_channel);
+            status_chip(
+                ui,
+                "dry_run_ok",
+                if self.last_update_dry_run_ok {
+                    "1"
+                } else {
+                    "0"
+                },
+            );
+            status_chip(ui, "network", "0");
+            status_chip(ui, "root", "0");
+        });
+
+        ui.separator();
+        if ui.available_width() < 620.0 {
+            labeled_text_field(
+                ui,
+                "Source strategy",
+                &mut self.config.updater.source_strategy,
+            );
+            labeled_text_field(ui, "Channel", &mut self.config.updater.update_channel);
+        } else {
+            ui.columns(2, |columns| {
+                labeled_text_field(
+                    &mut columns[0],
+                    "Source strategy",
+                    &mut self.config.updater.source_strategy,
+                );
+                labeled_text_field(
+                    &mut columns[1],
+                    "Channel",
+                    &mut self.config.updater.update_channel,
+                );
+            });
+        }
+
+        ui.add_space(4.0);
+        self.config.updater.allow_network_fetch = false;
+        ui.add_enabled(
+            false,
+            egui::Checkbox::new(
+                &mut self.config.updater.allow_network_fetch,
+                "Network fetch (future; disabled)",
+            ),
+        );
+        ui.small("Updater fetch/pull authority remains outside this Panel lane.");
+        checkbox_note(
+            ui,
+            &mut self.config.updater.require_dry_run_before_apply,
+            "Require updater dry-run before apply",
+            "A successful updater dry-run in this Panel session is required before guarded apply.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.updater.reuse_installer_engine,
+            "Reuse guarded installer engine",
+            "Update apply is a guarded local-prefix reinstall over Latticra-managed files.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.updater.write_update_receipt,
+            "Write updater receipt metadata",
+            "Generated plans and receipts include the updater policy fields.",
+        );
+
+        ui.separator();
+        ui.horizontal_wrapped(|ui| {
+            if ui.button("Preview update").clicked() {
+                self.start_update_dry_run();
+            }
+            let can_apply =
+                !self.config.updater.require_dry_run_before_apply || self.last_update_dry_run_ok;
+            if ui
+                .add_enabled(can_apply, egui::Button::new("Apply guarded update"))
+                .clicked()
+            {
+                self.start_update_apply();
+            }
+            if ui.button("Open update plan").clicked() {
+                self.refresh_plan();
+                self.show_plan_over_log = true;
+                self.active_tab = WorkspaceTab::Evidence;
+            }
+        });
+
+        if self.config.updater.require_dry_run_before_apply && !self.last_update_dry_run_ok {
+            ui.colored_label(
+                egui::Color32::from_rgb(255, 190, 130),
+                "Updater apply is locked until Preview update completes successfully.",
+            );
+        }
+    }
+
     fn show_evidence(&mut self, ui: &mut egui::Ui) {
         ui.heading("Plan, receipts, and evidence");
         ui.horizontal(|ui| {
@@ -2076,6 +2389,12 @@ impl LatticraInstallerApp {
         procedure_row(
             ui,
             "08",
+            "Use the Panel updater for reinstall updates",
+            "Preview the update first, then apply the guarded local-prefix reinstall from the current checkout.",
+        );
+        procedure_row(
+            ui,
+            "09",
             "Reset or uninstall when specifications change",
             "Use reset before reinstalling from new specs, or uninstall to remove the managed local install.",
         );
@@ -2259,6 +2578,8 @@ impl LatticraInstallerApp {
                 for command in [
                     "help",
                     "status",
+                    "updater",
+                    "updater dry-run",
                     "pwd",
                     "plan",
                     "dry-run",

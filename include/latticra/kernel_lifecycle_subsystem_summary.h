@@ -51,6 +51,8 @@ typedef struct {
     int runtime_entry_allowed;
     int scheduler_execution_allowed;
     int memory_allocation_allowed;
+    int process_spawn_allowed;
+    int syscall_dispatch_allowed;
     int no_external_effect_chain;
     unsigned int evidence_level;
 } latticra_kernel_lifecycle_subsystem_summary_result_t;

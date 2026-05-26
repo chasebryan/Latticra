@@ -109,9 +109,11 @@ require_contains 'verification_transcript_contract_status=ok' "$script"
 require_contains 'macos_verification_transcript_contract_present=1' "$script"
 require_contains 'verification_transcript_evidence_present=0' "$script"
 require_contains 'macos_reset_uninstall_dry_run_contract_present=1' "$script"
+require_contains 'macos_reset_uninstall_absence_report_contract_present=1' "$script"
+require_contains 'absence_report_evidence_present=0' "$script"
 require_contains 'macos_install_verified=0' "$script"
 require_contains 'commit_user_local_managed_artifacts=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-absence-report-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-receipt-schema-contract' "$script"
 require_not_contains 'curl ' "$script"
 require_not_contains 'wget ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -131,13 +133,15 @@ require_output_contains "$output" 'transcript_line_host_identity_required=1'
 require_output_contains "$output" 'transcript_line_commit_gate_required=1'
 require_output_contains "$output" 'commit_gate_closed_until_evidence_required=1'
 require_output_contains "$output" 'macos_reset_uninstall_dry_run_contract_present=1'
+require_output_contains "$output" 'macos_reset_uninstall_absence_report_contract_present=1'
+require_output_contains "$output" 'absence_report_evidence_present=0'
 require_output_contains "$output" 'verification_transcript_run_performed=0'
 require_output_contains "$output" 'verification_transcript_written=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'network_performed=0'
 require_output_contains "$output" 'runtime_authority_granted=0'
 require_output_contains "$output" 'production_installer_ready=0'
-require_output_contains "$output" 'next_lane=macos-reset-uninstall-absence-report-contract'
+require_output_contains "$output" 'next_lane=macos-reset-uninstall-receipt-schema-contract'
 
 require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
 require_contains 'sh scripts/test-macos-verification-transcript-contract.sh' "$workflow"

@@ -3,6 +3,9 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-latticra-seal-policy-decision.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 cc $CFLAGS \
   -Iinclude \
   src/seal_policy_decision.c \
@@ -12,6 +15,6 @@ cc $CFLAGS \
   src/seal_agentic_automation_security.c \
   src/seal_status_rollup.c \
   tests/seal_policy_decision_invariants.c \
-  -o /tmp/latticra-seal-policy-decision-invariants
+  -o "$tmpdir/latticra-seal-policy-decision-invariants"
 
-/tmp/latticra-seal-policy-decision-invariants
+"$tmpdir/latticra-seal-policy-decision-invariants"

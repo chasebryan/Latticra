@@ -4,6 +4,9 @@ set -euo pipefail
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 cd "$ROOT"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/demo-latticra-seal.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 echo "== Latticra Seal Demo =="
 echo
 
@@ -28,8 +31,8 @@ echo "== Verify Against Saved Baseline =="
 echo
 
 echo "== Hash Preview =="
-./build/latticra-seal hashes > /tmp/latticra-seal-demo-hashes.txt
-head -20 /tmp/latticra-seal-demo-hashes.txt
+./build/latticra-seal hashes > "$tmpdir/latticra-seal-demo-hashes.txt"
+head -20 "$tmpdir/latticra-seal-demo-hashes.txt"
 echo
 
 echo "== Latest Report =="

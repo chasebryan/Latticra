@@ -189,6 +189,7 @@ pub struct LatticraConsoleConfig {
     pub host_embedding_profile: String,
     pub host_embedding_contract_profile: String,
     pub host_inventory_contract_profile: String,
+    pub host_adapter_contract_profile: String,
     pub receipt_contract_profile: String,
     pub os_base_contract_profile: String,
     pub vm_evidence_contract_profile: String,
@@ -200,6 +201,7 @@ pub struct LatticraConsoleConfig {
     pub require_profile_receipt: bool,
     pub require_host_contract_receipt: bool,
     pub require_host_inventory_receipt: bool,
+    pub require_host_adapter_contract: bool,
     pub require_os_base_contract: bool,
     pub require_vm_evidence_contract: bool,
     pub require_runtime_boundary_binding: bool,
@@ -215,6 +217,7 @@ impl Default for LatticraConsoleConfig {
             host_embedding_profile: "panel-contained".to_owned(),
             host_embedding_contract_profile: "lc-host-embedding-v0".to_owned(),
             host_inventory_contract_profile: "lc-host-inventory-v0".to_owned(),
+            host_adapter_contract_profile: "lc-host-adapter-v0".to_owned(),
             receipt_contract_profile: "lc-receipts-v0".to_owned(),
             os_base_contract_profile: "lc-os-base-v0".to_owned(),
             vm_evidence_contract_profile: "lc-vm-evidence-v0".to_owned(),
@@ -226,6 +229,7 @@ impl Default for LatticraConsoleConfig {
             require_profile_receipt: true,
             require_host_contract_receipt: true,
             require_host_inventory_receipt: true,
+            require_host_adapter_contract: true,
             require_os_base_contract: true,
             require_vm_evidence_contract: true,
             require_runtime_boundary_binding: true,
@@ -266,6 +270,7 @@ impl LatticraConsoleConfig {
         self.substrate_bridge_profile = "metadata-bound".to_owned();
         self.host_embedding_contract_profile = "lc-host-embedding-v0".to_owned();
         self.host_inventory_contract_profile = "lc-host-inventory-v0".to_owned();
+        self.host_adapter_contract_profile = "lc-host-adapter-v0".to_owned();
         self.receipt_contract_profile = "lc-receipts-v0".to_owned();
         self.os_base_contract_profile = "lc-os-base-v0".to_owned();
         self.vm_evidence_contract_profile = "lc-vm-evidence-v0".to_owned();
@@ -275,6 +280,7 @@ impl LatticraConsoleConfig {
         self.require_profile_receipt = true;
         self.require_host_contract_receipt = true;
         self.require_host_inventory_receipt = true;
+        self.require_host_adapter_contract = true;
         self.require_os_base_contract = true;
         self.require_vm_evidence_contract = true;
         self.require_runtime_boundary_binding = true;
@@ -334,6 +340,30 @@ impl Default for InstallBehavior {
             install_payload_tree: true,
             install_desktop_entry: true,
             install_user_bin_wrappers: true,
+        }
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(default)]
+pub struct UpdaterConfig {
+    pub source_strategy: String,
+    pub update_channel: String,
+    pub allow_network_fetch: bool,
+    pub require_dry_run_before_apply: bool,
+    pub reuse_installer_engine: bool,
+    pub write_update_receipt: bool,
+}
+
+impl Default for UpdaterConfig {
+    fn default() -> Self {
+        Self {
+            source_strategy: "current-source-checkout".to_owned(),
+            update_channel: "local-checkout".to_owned(),
+            allow_network_fetch: false,
+            require_dry_run_before_apply: true,
+            reuse_installer_engine: true,
+            write_update_receipt: true,
         }
     }
 }
@@ -421,6 +451,7 @@ pub struct InstallerConfig {
     pub lc: LatticraConsoleConfig,
     pub safety: Safety,
     pub behavior: InstallBehavior,
+    pub updater: UpdaterConfig,
     pub seal: SealConfig,
 }
 
@@ -433,6 +464,7 @@ impl Default for InstallerConfig {
             lc: LatticraConsoleConfig::default(),
             safety: Safety::default(),
             behavior: InstallBehavior::default(),
+            updater: UpdaterConfig::default(),
             seal: SealConfig::default(),
         }
     }
@@ -580,6 +612,13 @@ impl InstallerConfig {
             );
         }
 
+        if self.updater.allow_network_fetch {
+            return Err(
+                "Updater network fetch is not implemented in this installer. Use a reviewed local checkout and keep allow_network_fetch=false."
+                    .to_owned(),
+            );
+        }
+
         Ok(())
     }
 
@@ -589,6 +628,13 @@ impl InstallerConfig {
         if self.safety.allow_network_effect {
             return Err(
                 "Network authority is not implemented in this installer. Disable allow_network_effect."
+                    .to_owned(),
+            );
+        }
+
+        if self.updater.allow_network_fetch {
+            return Err(
+                "Updater network fetch is not implemented in this installer. Use a reviewed local checkout and keep allow_network_fetch=false."
                     .to_owned(),
             );
         }
@@ -629,6 +675,35 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         u8::from(!config.safety.dry_run && config.safety.allow_network_effect)
     );
     let _ = writeln!(out, "runtime_enforcement_authority=0");
+    let _ = writeln!(out);
+    let _ = writeln!(out, "[updater]");
+    let _ = writeln!(out, "panel_owned=1");
+    let _ = writeln!(out, "source_strategy={}", config.updater.source_strategy);
+    let _ = writeln!(out, "update_channel={}", config.updater.update_channel);
+    let _ = writeln!(
+        out,
+        "allow_network_fetch={}",
+        config.updater.allow_network_fetch
+    );
+    let _ = writeln!(
+        out,
+        "require_dry_run_before_apply={}",
+        config.updater.require_dry_run_before_apply
+    );
+    let _ = writeln!(
+        out,
+        "reuse_installer_engine={}",
+        config.updater.reuse_installer_engine
+    );
+    let _ = writeln!(
+        out,
+        "write_update_receipt={}",
+        config.updater.write_update_receipt
+    );
+    let _ = writeln!(out, "network_authority=0");
+    let _ = writeln!(out, "root_authority=0");
+    let _ = writeln!(out, "system_mutation_authority=0");
+    let _ = writeln!(out, "update_apply_mode=guarded-local-prefix-reinstall");
     let _ = writeln!(out);
     let _ = writeln!(out, "[components]");
     let _ = writeln!(
@@ -705,6 +780,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "host_adapter_contract_profile={}",
+        config.lc.host_adapter_contract_profile
+    );
+    let _ = writeln!(
+        out,
         "receipt_contract_profile={}",
         config.lc.receipt_contract_profile
     );
@@ -747,6 +827,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "host_adapter_contract_required={}",
+        config.lc.require_host_adapter_contract
+    );
+    let _ = writeln!(
+        out,
         "os_base_contract_required={}",
         config.lc.require_os_base_contract
     );
@@ -778,6 +863,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(out, "host_embedding_contract_status=metadata-only-contract");
     let _ = writeln!(out, "host_inventory_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "host_adapter_contract_status=metadata-only-contract");
     let _ = writeln!(out, "receipt_contract_status=metadata-only-contract");
     let _ = writeln!(out, "os_base_contract_status=metadata-only-contract");
     let _ = writeln!(out, "vm_evidence_contract_status=metadata-only-contract");
@@ -799,7 +885,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=28-prompt-evaluation-input-contract");
+    let _ = writeln!(out, "stage=29-prompt-evaluation-runtime-handoff-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -1669,6 +1755,52 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "requires_future_prompt_evaluation_runtime_handoff_contract=1"
     );
     let _ = writeln!(out, "prompt_evaluation_input_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_runtime_handoff_contract_stage=29-prompt-evaluation-runtime-handoff-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_runtime_handoff_contract_command=scripts/nadia-prompt-evaluation-runtime-handoff-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_runtime_handoff_contract_command=latticra-nadia prompt-evaluation-runtime-handoff"
+    );
+    let _ = writeln!(out, "prompt_evaluation_runtime_handoff_stage=contract-only");
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_runtime_handoff_contract_status=contract_only"
+    );
+    let _ = writeln!(out, "prompt_evaluation_runtime_handoff_authority=0");
+    let _ = writeln!(out, "prompt_evaluation_runtime_handoff_allowed=0");
+    let _ = writeln!(out, "prompt_evaluation_runtime_handoff_performed=0");
+    let _ = writeln!(out, "prompt_evaluation_runtime_handoff_metadata_present=1");
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_runtime_handoff_family=operator-reviewed-prompt-evaluation-runtime-handoff"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_runtime_handoff_format=contract-only-offline-runtime-handoff"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_runtime_handoff_decision=blocked_contract_only"
+    );
+    let _ = writeln!(out, "prompt_evaluation_runtime_handoff_plan_recorded=1");
+    let _ = writeln!(out, "prompt_evaluation_runtime_handoff_result_recorded=0");
+    let _ = writeln!(out, "prompt_evaluation_runtime_handoff_runtime_invoked=0");
+    let _ = writeln!(out, "prompt_evaluation_runtime_handoff_request_created=0");
+    let _ = writeln!(out, "prompt_evaluation_runtime_handoff_request_submitted=0");
+    let _ = writeln!(out, "runtime_handoff_created=0");
+    let _ = writeln!(out, "runtime_invocation_requested=0");
+    let _ = writeln!(out, "requires_prompt_evaluation_input_contract=1");
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_invocation_contract=1"
+    );
+    let _ = writeln!(out, "prompt_evaluation_runtime_handoff_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

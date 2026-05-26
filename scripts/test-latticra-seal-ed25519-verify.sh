@@ -3,6 +3,9 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-latticra-seal-ed25519-verify.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 OPENSSL_CFLAGS="${OPENSSL_CFLAGS:-}"
 OPENSSL_LIBS="${OPENSSL_LIBS:-}"
 
@@ -25,5 +28,5 @@ if [ -z "$OPENSSL_LIBS" ]; then
   OPENSSL_LIBS="-lcrypto"
 fi
 
-cc $CFLAGS $OPENSSL_CFLAGS -Iinclude src/seal_ed25519_verify.c tests/seal_ed25519_verify_invariants.c $OPENSSL_LIBS -o /tmp/latticra-seal-ed25519-verify-invariants
-/tmp/latticra-seal-ed25519-verify-invariants
+cc $CFLAGS $OPENSSL_CFLAGS -Iinclude src/seal_ed25519_verify.c tests/seal_ed25519_verify_invariants.c $OPENSSL_LIBS -o "$tmpdir/latticra-seal-ed25519-verify-invariants"
+"$tmpdir/latticra-seal-ed25519-verify-invariants"

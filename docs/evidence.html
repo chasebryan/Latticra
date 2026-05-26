@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Latticra Claims and Evidence</title>
+  <meta name="description" content="A public guide to Latticra evidence levels, promotion rules, claim boundaries, and non-claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Claims and Evidence">
+  <meta property="og:description" content="Evidence levels, promotion rules, claim boundaries, and non-claims for Latticra.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero evidence-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Claims and evidence</p>
+        <p class="eyebrow">Evidence-Bound Claims</p>
+        <h1>Claims and evidence</h1>
+        <p class="page-lede">
+          Latticra uses exact evidence records to separate concepts, fixtures, tests, reports, guarded experiments, and future real-system claims.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell evidence-intro">
+        <div>
+          <p class="eyebrow">Core Rule</p>
+          <h2>A claim can rise only as far as its evidence.</h2>
+        </div>
+        <p>
+          The evidence ladder prevents design intent from being mistaken for implementation, runtime authority, production security, or operating-system completeness.
+        </p>
+      </div>
+
+      <div class="content-shell evidence-rule-grid">
+        <article class="evidence-rule">
+          <h3>Promotion</h3>
+          <p>A capability moves up only when the evidence for the next level exists.</p>
+        </article>
+        <article class="evidence-rule">
+          <h3>No skipping</h3>
+          <p>A concept cannot jump from simulation or documentation directly to real-device execution.</p>
+        </article>
+        <article class="evidence-rule">
+          <h3>Demotion</h3>
+          <p>A promoted claim must be narrowed when evidence becomes stale, contradicted, unreproducible, unsafe, or ambiguous.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Evidence Ladder</p>
+        <h2>From concept to supported capability.</h2>
+        <p>
+          The source ladder defines levels L0 through L9. This page groups them for quick public orientation.
+        </p>
+      </div>
+      <div class="content-shell ladder-grid">
+        <article class="ladder-card">
+          <span>L0</span>
+          <h3>Concept</h3>
+          <p>Name, description, diagrams, vocabulary, and non-claims. No implementation or security claim.</p>
+        </article>
+        <article class="ladder-card">
+          <span>L1-L2</span>
+          <h3>Fixture and tested model</h3>
+          <p>Static fixtures, expected output, validation scripts, denied-behavior tests, and explicit non-claims.</p>
+        </article>
+        <article class="ladder-card">
+          <span>L3-L4</span>
+          <h3>Read-only report and preview</h3>
+          <p>Inspectable command surfaces, status labels, invariant tests, failure state, and operator-facing reports.</p>
+        </article>
+        <article class="ladder-card">
+          <span>L5-L6</span>
+          <h3>Guarded local or VM evidence</h3>
+          <p>Narrow opt-in local experiments or controlled virtual targets with logs, validation reports, and reset paths.</p>
+        </article>
+        <article class="ladder-card">
+          <span>L7-L8</span>
+          <h3>Real-device evidence</h3>
+          <p>Read-only or gated real hardware evidence with device identity, operator approval, recovery planning, and post-run validation.</p>
+        </article>
+        <article class="ladder-card">
+          <span>L9</span>
+          <h3>Promoted capability</h3>
+          <p>Repeated evidence, tests, documentation, release notes, support boundary, and safety review.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Claim Language</p>
+        <h2>Use exact labels, not broad promises.</h2>
+        <p>
+          Latticra records should name the evidence level or the narrow status surface. They should not imply production readiness unless that evidence exists.
+        </p>
+      </div>
+      <div class="content-shell claim-language-grid">
+        <article class="claim-language-card claim-good">
+          <span class="status-pill status-present">use</span>
+          <h3>Narrow evidence language</h3>
+          <ul>
+            <li>L2 tested model</li>
+            <li>L3 read-only command surface</li>
+            <li>L4 runtime preview</li>
+            <li>report-only metadata</li>
+          </ul>
+        </article>
+        <article class="claim-language-card claim-bad">
+          <span class="status-pill status-blocked">avoid</span>
+          <h3>Unsupported broad claims</h3>
+          <ul>
+            <li>production-ready</li>
+            <li>secure</li>
+            <li>finished operating system</li>
+            <li>real-system execution</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell architecture-split">
+        <div class="section-heading">
+          <p class="eyebrow">Current Posture</p>
+          <h2>Latticra currently stays in low-effect evidence bands.</h2>
+          <p>
+            The public posture centers on contracts, fixtures, tested models, read-only reports, and no-effect local checks. Real-device execution is not claimed.
+          </p>
+        </div>
+        <div class="architecture-table" role="table" aria-label="Current evidence posture">
+          <div role="row">
+            <span role="cell">Supported now</span>
+            <p role="cell">Documentation, contracts, fixtures, no-effect tests, local reports, and public status records.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Guarded lanes</span>
+            <p role="cell">Fedora validation, local RPM work, Panel, Console, macOS planning, and offline AI planning remain status-bound.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Not claimed</span>
+            <p role="cell">Production enforcement, real-device gated execution, root authority, network authority, certification, or OS replacement.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Read the exact record before repeating a claim.</h2>
+        <p>
+          These records define the current claim boundary more precisely than a summary page can.
+        </p>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="EVIDENCE_LADDER.md"><strong>Evidence Ladder</strong><span>Promotion levels and demotion rules.</span></a>
+        <a href="REAL_SYSTEM_CONTRACT.md"><strong>Real System Contract</strong><span>Identity, real-system boundary, and evidence rules.</span></a>
+        <a href="NON_CLAIMS.md"><strong>Non-Claims</strong><span>Unsupported claims Latticra explicitly does not make.</span></a>
+        <a href="PRECURSOR_PROMOTION_RULE.md"><strong>Precursor Promotion</strong><span>Rules for moving precursor work into Latticra.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra claims and evidence guide.</span>
+      <span><a href="status.html">Open public status</a></span>
+    </div>
+  </footer>
+</body>
+</html>

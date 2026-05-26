@@ -18,6 +18,7 @@ substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "panel-contained"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
+host_adapter_contract_profile = "lc-host-adapter-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
 vm_evidence_contract_profile = "lc-vm-evidence-v0"
@@ -29,6 +30,7 @@ require_read_only_host_inventory_contract = true
 require_profile_receipt = true
 require_host_contract_receipt = true
 require_host_inventory_receipt = true
+require_host_adapter_contract = true
 require_os_base_contract = true
 require_vm_evidence_contract = true
 require_runtime_boundary_binding = true
@@ -53,3 +55,11 @@ build_latticra_from_source = true
 install_payload_tree = true
 install_desktop_entry = true
 install_user_bin_wrappers = true
+
+[updater]
+source_strategy = "current-source-checkout"
+update_channel = "local-checkout"
+allow_network_fetch = false
+require_dry_run_before_apply = true
+reuse_installer_engine = true
+write_update_receipt = true

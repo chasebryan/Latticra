@@ -69,12 +69,10 @@ From the source checkout:
 
 ```sh
 git pull
-make -C installer dry-run
-make -C installer local-example
-make -C installer verify-local
+latticra-panel
 ```
 
-The installer migrates old Latticra-owned user-local wrappers when it can prove they are legacy Latticra files. Unrelated user files are still preserved or refused.
+Use the **Updater** workspace in Latticra Panel. Preview the update first, then apply the guarded user-local update from the current checkout. The installer migrates old Latticra-owned user-local wrappers when it can prove they are legacy Latticra files. Unrelated user files are still preserved or refused.
 
 ## Normal Reset Or Uninstall
 

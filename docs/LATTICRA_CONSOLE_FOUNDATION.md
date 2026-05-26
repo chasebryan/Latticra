@@ -1,7 +1,7 @@
 # Latticra Console Foundation
 
 Status: Stage-0 foundation
-Scope: LC identity, Panel installability, configurable metadata, substrate bridge, host-embedding plan, OS-base planning contract, VM evidence contract, and future OS-base direction.
+Scope: LC identity, Panel installability, configurable metadata, substrate bridge, host-embedding plan, host-adapter contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
 
 ## Purpose
 
@@ -37,6 +37,7 @@ substrate_bridge_profile=metadata-bound
 host_embedding_profile=panel-contained
 host_embedding_contract_profile=lc-host-embedding-v0
 host_inventory_contract_profile=lc-host-inventory-v0
+host_adapter_contract_profile=lc-host-adapter-v0
 receipt_contract_profile=lc-receipts-v0
 os_base_contract_profile=lc-os-base-v0
 vm_evidence_contract_profile=lc-vm-evidence-v0
@@ -47,6 +48,7 @@ read_only_host_inventory_contract_required=true
 profile_receipt_required=true
 host_contract_receipt_required=true
 host_inventory_receipt_required=true
+host_adapter_contract_required=true
 os_base_contract_required=true
 vm_evidence_contract_required=true
 runtime_boundary_binding_required=true
@@ -66,6 +68,7 @@ share/latticra/lc/profiles/os-base-planning.toml
 share/latticra/lc/substrate
 share/latticra/lc/host-embedding/contract.toml
 share/latticra/lc/host-inventory/contract.toml
+share/latticra/lc/host-adapter/contract.toml
 share/latticra/lc/receipts/contract.toml
 share/latticra/lc/os-base/contract.toml
 share/latticra/lc/vm-evidence/contract.toml
@@ -103,6 +106,7 @@ lc substrate
 lc host
 lc host-contract
 lc host-inventory
+lc host-adapter
 lc os-contract
 lc vm-evidence
 lc os
@@ -138,6 +142,7 @@ substrate_bridge_profile = "metadata-bound"
 host_embedding_profile = "panel-contained"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
+host_adapter_contract_profile = "lc-host-adapter-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
 vm_evidence_contract_profile = "lc-vm-evidence-v0"
@@ -149,6 +154,7 @@ require_read_only_host_inventory_contract = true
 require_profile_receipt = true
 require_host_contract_receipt = true
 require_host_inventory_receipt = true
+require_host_adapter_contract = true
 require_os_base_contract = true
 require_vm_evidence_contract = true
 require_runtime_boundary_binding = true
@@ -264,6 +270,53 @@ runtime_enforcement_allowed=0
 boot_allowed=0
 ```
 
+## Host Adapter Contract
+
+LC now installs and reports a host-adapter contract before any Host embedding adapter exists:
+
+```text
+contract_profile=lc-host-adapter-v0
+contract_status=metadata-only
+contract_present=1
+host_adapter_enabled=0
+host_adapter_present=0
+host_adapter_loaded=0
+adapter_api_status=planned
+adapter_abi_status=planned
+host_embedding_contract_required=1
+read_only_host_inventory_contract_required=1
+host_embedding_contract_receipt_required=1
+host_inventory_contract_receipt_required=1
+operator_consent_required=1
+runtime_boundary_required=1
+seal_capability_labels_required=1
+receipt_required_before_host_adapter=1
+promotion_gate=host_adapter_contract_receipts_and_inventory
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report host-adapter
+latticra-lc host-adapter
+```
+
+The contract explicitly denies adapter and host authority:
+
+```text
+host_embedded_now=0
+host_process_launch_allowed=0
+host_probe_allowed=0
+host_file_read_allowed=0
+host_file_write_allowed=0
+host_mutation_allowed=0
+network_allowed=0
+runtime_enforcement_allowed=0
+boot_allowed=0
+```
+
+`lc host-adapter` is an inspectable contract command. `lc host` remains the future-gated embedding lane.
+
 ## Receipt Contract
 
 LC now installs and reports a receipt contract for its profile and host-side planning metadata:
@@ -274,9 +327,10 @@ receipt_contract_status=metadata-only
 profile_receipt_required=1
 host_embedding_contract_receipt_required=1
 host_inventory_contract_receipt_required=1
+host_adapter_contract_receipt_required=1
 runtime_boundary_receipt_required=1
 seal_capability_labels_required=1
-receipt_surfaces=profile,host-contract,host-inventory,runtime-boundary
+receipt_surfaces=profile,host-contract,host-inventory,host-adapter,runtime-boundary
 promotion_gate=lc_receipts_before_host_adapter_or_os_base
 ```
 
@@ -435,6 +489,7 @@ core, panel, and substrate inspection -> authority-check / validation-only
 lc receipts -> authority-check / validation-only
 lc host-contract -> authority-check / validation-only
 lc host-inventory -> authority-check / validation-only
+lc host-adapter -> authority-check / validation-only
 lc os-contract -> authority-check / validation-only
 lc vm-evidence -> authority-check / validation-only
 lc host -> future-gated command-execute planning
@@ -486,6 +541,8 @@ runtime_boundary_bound=1
 seal_capability_labels_bound=1
 substrate_bridge_status=metadata-bound-ready
 panel_installable=1
+host_adapter_contract_status=metadata-only-contract-ready
+host_adapter_contract_present=1
 os_base_contract_status=metadata-only-contract-ready
 os_base_contract_present=1
 vm_evidence_contract_status=metadata-only-contract-ready
@@ -517,6 +574,6 @@ LC Stage-0 does not:
 
 ## Next Slices
 
-1. Add a future host adapter contract only after the read-only inventory receipt path exists.
-2. Add the first Seal-signed LC receipt path only after signing authority is implemented and gated.
+1. Add the first Seal-signed LC receipt path only after signing authority is implemented and gated.
+2. Add a host-adapter artifact schema only after the host-adapter contract is receipted.
 3. Add a VM evidence artifact schema only after the VM evidence contract is receipted.

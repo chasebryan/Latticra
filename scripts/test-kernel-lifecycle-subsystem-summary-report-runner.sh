@@ -15,12 +15,15 @@ cc $CFLAGS \
   src/state_lattice.c \
   src/nucleus_preview.c \
   src/nucleus_task.c \
+  src/lat_parser.c \
   src/runtime_boundary.c \
   src/system_bootstrap.c \
   src/kernel.c \
   src/kernel_subsystem_registry.c \
   src/kernel_scheduler.c \
   src/kernel_memory_map.c \
+  src/kernel_process_table.c \
+  src/kernel_syscall_table.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -32,18 +35,20 @@ cc $CFLAGS \
 
 grep -Fq 'LATTICRA KERNEL LIFECYCLE SUBSYSTEM SUMMARY REPORT' "$report_txt"
 grep -Fq 'summary_status=summary-ready' "$report_txt"
-grep -Fq 'final_state=memory-map-ready' "$report_txt"
+grep -Fq 'final_state=syscall-table-ready' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'registry_status=registry-ready' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
-grep -Fq 'lifecycle_step_count=4' "$report_txt"
-grep -Fq 'lifecycle_state_change_count=4' "$report_txt"
+grep -Fq 'lifecycle_step_count=6' "$report_txt"
+grep -Fq 'lifecycle_state_change_count=6' "$report_txt"
 grep -Fq 'lifecycle_state_mutated=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
 grep -Fq 'registry_no_effect=1' "$report_txt"
 grep -Fq 'runtime_entry_allowed=0' "$report_txt"
 grep -Fq 'scheduler_execution_allowed=0' "$report_txt"
 grep -Fq 'memory_allocation_allowed=0' "$report_txt"
+grep -Fq 'process_spawn_allowed=0' "$report_txt"
+grep -Fq 'syscall_dispatch_allowed=0' "$report_txt"
 grep -Fq 'no_external_effect_chain=1' "$report_txt"
 grep -Fq 'entry_count=9' "$report_txt"
 grep -Fq 'subsystem[0].name=boot' "$report_txt"
@@ -54,8 +59,13 @@ grep -Fq 'subsystem[2].lifecycle_relation=scheduler-ready-metadata' "$report_txt
 grep -Fq 'subsystem[2].authority_status=scheduler-execution-denied' "$report_txt"
 grep -Fq 'subsystem[3].lifecycle_relation=memory-map-ready' "$report_txt"
 grep -Fq 'subsystem[3].authority_status=memory-allocation-denied' "$report_txt"
+grep -Fq 'subsystem[4].lifecycle_relation=process-table-ready' "$report_txt"
+grep -Fq 'subsystem[4].authority_status=process-execution-denied' "$report_txt"
+grep -Fq 'subsystem[5].lifecycle_relation=filesystem-syscall-metadata-ready' "$report_txt"
 grep -Fq 'subsystem[6].authority_status=network-denied' "$report_txt"
+grep -Fq 'subsystem[6].lifecycle_relation=network-syscall-metadata-ready' "$report_txt"
 grep -Fq 'subsystem[7].authority_status=device-denied' "$report_txt"
+grep -Fq 'subsystem[7].lifecycle_relation=device-syscall-metadata-ready' "$report_txt"
 grep -Fq 'subsystem[8].authority_status=not-production-boundary' "$report_txt"
 
 printf 'kernel_lifecycle_subsystem_summary_report_runner: ok\n'

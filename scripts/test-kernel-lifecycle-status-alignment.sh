@@ -37,20 +37,24 @@ require_contains 'PR #172 — kernel lifecycle rollback plan' docs/status/KERNEL
 require_contains 'kernel lifecycle report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel lifecycle subsystem summary' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel lifecycle rollback plan' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
-require_contains 'final_state=memory-map-ready' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'final_state=syscall-table-ready' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'external_effect_performed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'no_external_effect_chain=1' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'runtime_entry_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'scheduler_execution_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'memory_allocation_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'process_spawn_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'syscall_dispatch_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'Add no-effect rollback classifier' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 
 require_contains 'KERNEL_LIFECYCLE_EVIDENCE_STATUS.md' docs/status/README.md
 require_contains 'Current kernel lifecycle checkpoint' docs/status/README.md
-require_contains 'final_state=memory-map-ready' docs/status/README.md
+require_contains 'final_state=syscall-table-ready' docs/status/README.md
 require_contains 'external_effect_performed=0' docs/status/README.md
 require_contains 'runtime_entry_allowed=0' docs/status/README.md
 require_contains 'scheduler_execution_allowed=0' docs/status/README.md
 require_contains 'memory_allocation_allowed=0' docs/status/README.md
+require_contains 'process_spawn_allowed=0' docs/status/README.md
+require_contains 'syscall_dispatch_allowed=0' docs/status/README.md
 
 printf 'kernel_lifecycle_status_alignment: ok\n'

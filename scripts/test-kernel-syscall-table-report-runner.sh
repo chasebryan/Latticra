@@ -14,6 +14,7 @@ cc $CFLAGS \
   src/state_lattice.c \
   src/nucleus_preview.c \
   src/nucleus_task.c \
+  src/lat_parser.c \
   src/runtime_boundary.c \
   src/system_bootstrap.c \
   src/kernel.c \

@@ -26,6 +26,10 @@ const char *latticra_kernel_state_label(latticra_kernel_state_kind_t state) {
             return "scheduler-ready";
         case LATTICRA_KERNEL_STATE_MEMORY_MAP_READY:
             return "memory-map-ready";
+        case LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY:
+            return "process-table-ready";
+        case LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY:
+            return "syscall-table-ready";
         default:
             return "unknown";
     }
@@ -43,7 +47,19 @@ static int is_allowed_transition(
         target_state == LATTICRA_KERNEL_STATE_SCHEDULER_READY) return 1;
     if (current_state == LATTICRA_KERNEL_STATE_SCHEDULER_READY &&
         target_state == LATTICRA_KERNEL_STATE_MEMORY_MAP_READY) return 1;
+    if (current_state == LATTICRA_KERNEL_STATE_MEMORY_MAP_READY &&
+        target_state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY) return 1;
+    if (current_state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY &&
+        target_state == LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY) return 1;
     return 0;
+}
+
+static int state_requires_process_table(latticra_kernel_state_kind_t state) {
+    return state >= LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY;
+}
+
+static int state_requires_syscall_table(latticra_kernel_state_kind_t state) {
+    return state >= LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY;
 }
 
 static void seed_result(latticra_kernel_state_result_t *result) {
@@ -69,6 +85,14 @@ latticra_status_t latticra_kernel_state_default_request(
     if (latticra_kernel_memory_map_default_request(&request->memory_map_request) != LATTICRA_STATUS_OK) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
+    if (latticra_kernel_process_table_default_request(&request->process_table_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (latticra_kernel_syscall_table_default_request(&request->syscall_table_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
     request->current_state = LATTICRA_KERNEL_STATE_CREATED;
     request->target_state = LATTICRA_KERNEL_STATE_INITIALIZED;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
@@ -89,6 +113,8 @@ latticra_status_t latticra_kernel_state_transition(
     const latticra_kernel_state_request_t *request,
     latticra_kernel_state_result_t *result) {
     latticra_status_t status;
+    latticra_kernel_process_table_request_t process_request;
+    latticra_kernel_syscall_table_request_t syscall_request;
 
     if (result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     seed_result(result);
@@ -109,6 +135,36 @@ latticra_status_t latticra_kernel_state_transition(
         state_copy(result->state_status, sizeof(result->state_status), "memory-map-not-ready");
         state_copy(result->transition_status, sizeof(result->transition_status), "blocked");
         return status;
+    }
+
+    process_request = request->process_table_request;
+    process_request.memory_map_request = request->memory_map_request;
+
+    if (state_requires_process_table(request->target_state)) {
+        status = latticra_kernel_process_table_evaluate(&process_request, &result->process_table);
+        if (status != LATTICRA_STATUS_OK) {
+            result->status = status;
+            state_copy(result->state_status, sizeof(result->state_status),
+                "process-table-not-ready");
+            state_copy(result->transition_status, sizeof(result->transition_status), "blocked");
+            return status;
+        }
+        result->memory_map = result->process_table.memory_map;
+    }
+
+    if (state_requires_syscall_table(request->target_state)) {
+        syscall_request = request->syscall_table_request;
+        syscall_request.process_table_request = process_request;
+        status = latticra_kernel_syscall_table_evaluate(&syscall_request, &result->syscall_table);
+        if (status != LATTICRA_STATUS_OK) {
+            result->status = status;
+            state_copy(result->state_status, sizeof(result->state_status),
+                "syscall-table-not-ready");
+            state_copy(result->transition_status, sizeof(result->transition_status), "blocked");
+            return status;
+        }
+        result->process_table = result->syscall_table.process_table;
+        result->memory_map = result->process_table.memory_map;
     }
 
     if (request->gate != LATTICRA_KERNEL_STATE_GATE_ALLOW) {
@@ -159,6 +215,8 @@ latticra_status_t latticra_kernel_state_report(
         "external_effect_performed=%d\n"
         "denied=%d\n"
         "memory_map_status=%s\n"
+        "process_table_status=%s\n"
+        "syscall_table_status=%s\n"
         "evidence_level=%u\n",
         result->state_status,
         result->gate_status,
@@ -171,6 +229,8 @@ latticra_status_t latticra_kernel_state_report(
         result->external_effect_performed,
         result->denied,
         result->memory_map.map_status,
+        result->process_table.table_status,
+        result->syscall_table.table_status,
         result->evidence_level);
 
     if (written < 0 || (size_t)written >= buffer_len) {

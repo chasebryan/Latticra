@@ -153,6 +153,17 @@ check_shell_script() {
     fail "$script contains an unsafe broad mutation command"
   fi
 
+  if grep -Eq '^[[:space:]]*cc[[:space:]]' "$script" &&
+    grep -Eq '^[[:space:]]*src/runtime_boundary\.c[[:space:]]*\\[[:space:]]*$' "$script"; then
+    grep -Eq '^[[:space:]]*src/lat_parser\.c[[:space:]]*\\[[:space:]]*$' "$script" ||
+      fail "$script runtime-boundary compile must include src/lat_parser.c for parse-error labels"
+    require_contains 'mktemp -d' "$script"
+    require_contains 'trap '\''rm -rf "$tmpdir"'\'' EXIT INT HUP TERM' "$script"
+    if grep -Eq '(^|[[:space:]])-o[[:space:]]*"?/tmp/latticra|^[[:space:]]*"?/tmp/latticra' "$script"; then
+      fail "$script runtime-boundary compile must use its private mktemp workdir"
+    fi
+  fi
+
   case "$script" in
     scripts/*report-runner.sh)
       if grep -Eq '/tmp/latticra|-o[[:space:]]+/tmp/latticra|>[[:space:]]*/tmp/latticra' "$script"; then
@@ -167,6 +178,15 @@ check_shell_script() {
       fi
       require_contains 'mktemp -d' "$script"
       require_contains 'trap '\''rm -rf "$tmpdir"'\'' EXIT INT HUP TERM' "$script"
+      ;;
+    scripts/test-latticra-seal*.sh|scripts/latticra-seal-*.sh|scripts/demo-latticra-seal.sh)
+      if grep -Eq '/tmp/latticra-seal|-o[[:space:]]+/tmp/latticra-seal|>[[:space:]]*/tmp/latticra-seal' "$script"; then
+        fail "$script must use a private mktemp workdir instead of fixed /tmp/latticra-seal paths"
+      fi
+      if grep -Fq '$tmpdir/latticra-seal' "$script"; then
+        require_contains 'mktemp -d' "$script"
+        require_contains 'trap '\''rm -rf "$tmpdir"'\'' EXIT INT HUP TERM' "$script"
+      fi
       ;;
   esac
 

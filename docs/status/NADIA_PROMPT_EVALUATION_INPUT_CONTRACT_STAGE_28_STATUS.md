@@ -104,6 +104,8 @@ Prompt evaluation, runtime invocation, token generation, and dialogue generation
 
 That later prompt-evaluation runtime handoff contract is the next boundary; Stage-28 only records the prerequisite metadata.
 
+Stage-29 now defines a prompt-evaluation runtime handoff contract that keeps runtime handoff, runtime invocation, prompt evaluation, dialogue generation, token generation, and inference blocked.
+
 ## Validation
 
 ```sh

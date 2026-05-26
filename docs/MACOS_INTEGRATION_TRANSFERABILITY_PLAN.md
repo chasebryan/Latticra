@@ -94,6 +94,7 @@ stage_4_user_local_verification_transcript=future
 stage_4_macos_reset_uninstall_dry_run_contract=present
 stage_4_macos_reset_uninstall_live_target_classifier=present
 stage_4_macos_reset_uninstall_dry_run_planner=present
+stage_4_macos_reset_uninstall_absence_report_contract=present
 stage_5_codesigning_notarization_plan=future
 stage_6_controlled_os_integration_contracts=future
 ```
@@ -223,6 +224,14 @@ scripts/macos-reset-uninstall-dry-run-planner.sh
 docs/status/MACOS_RESET_UNINSTALL_DRY_RUN_PLANNER_STATUS.md
 ```
 
+The Stage 4 macOS reset/uninstall absence-report contract is implemented by:
+
+```text
+docs/MACOS_RESET_UNINSTALL_ABSENCE_REPORT_CONTRACT.md
+scripts/macos-reset-uninstall-absence-report-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_ABSENCE_REPORT_CONTRACT_STATUS.md
+```
+
 ## App Bundle Direction
 
 The macOS Panel should be represented as a managed user-local app bundle:
@@ -340,8 +349,14 @@ macos_install_verified=0
 macos_production_ready=0
 ```
 
+Previous recommended lane now present:
+
+```text
+Add a macOS reset/uninstall absence-report contract
+```
+
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
+Add a macOS reset/uninstall receipt-schema contract for reset/uninstall receipts outside the removed prefix.
 ```

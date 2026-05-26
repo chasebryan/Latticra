@@ -18,10 +18,12 @@ macos_reset_uninstall_dry_run_contract_guard_present=1
 macos_verification_transcript_contract_present=1
 macos_reset_uninstall_live_target_classifier_present=1
 macos_reset_uninstall_dry_run_planner_present=1
+macos_reset_uninstall_absence_report_contract_present=1
 reset_uninstall_dry_run_contract_state=defined-no-effect
 reset_uninstall_dry_run_decision=contract-defined-removal-not-performed
 reset_uninstall_dry_run_required=1
 reset_uninstall_dry_run_evidence_present=0
+absence_report_evidence_present=0
 macos_reset_uninstall_implemented=0
 reset_uninstall_implementation_present=0
 managed_marker_required=1
@@ -81,7 +83,7 @@ macos_reset_uninstall_dry_run_contract: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
+Add a macOS reset/uninstall receipt-schema contract for reset/uninstall receipts outside the removed prefix.
 ```
 
 ## Non-Claims

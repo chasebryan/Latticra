@@ -416,6 +416,14 @@ p:last-child {
   background-size: cover;
 }
 
+.evidence-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.97) 0%, rgba(17, 24, 39, 0.88) 58%, rgba(17, 24, 39, 0.66) 100%),
+    url("latticra-seal-runtime-dry-run-native-demo.png");
+  background-position: center right;
+  background-size: cover;
+}
+
 .page-hero h1,
 .not-found h1 {
   max-width: 860px;
@@ -501,6 +509,104 @@ p:last-child {
 .start-intro p:not(.eyebrow) {
   color: var(--muted);
   font-size: 1.03rem;
+}
+
+.evidence-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: 32px;
+  align-items: end;
+  margin-bottom: 28px;
+}
+
+.evidence-intro p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 1.03rem;
+}
+
+.evidence-rule-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.evidence-rule {
+  min-width: 0;
+  min-height: 160px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.evidence-rule p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.ladder-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.ladder-card {
+  min-width: 0;
+  min-height: 196px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--teal);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.ladder-card span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--ochre);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.ladder-card p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.claim-language-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.claim-language-card {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.claim-language-card h3 {
+  margin-top: 18px;
+}
+
+.claim-language-card ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  color: var(--muted);
+}
+
+.claim-language-card li {
+  margin-bottom: 6px;
+}
+
+.claim-good {
+  border-top: 4px solid var(--green);
+}
+
+.claim-bad {
+  border-top: 4px solid var(--red);
 }
 
 .start-path {
@@ -1243,7 +1349,11 @@ p:last-child {
   .start-path,
   .expectation-grid,
   .start-split,
-  .reader-grid {
+  .reader-grid,
+  .evidence-intro,
+  .evidence-rule-grid,
+  .ladder-grid,
+  .claim-language-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1298,7 +1408,10 @@ p:last-child {
   .next-grid,
   .start-path,
   .expectation-grid,
-  .reader-grid {
+  .reader-grid,
+  .evidence-rule-grid,
+  .ladder-grid,
+  .claim-language-grid {
     grid-template-columns: 1fr;
   }
 

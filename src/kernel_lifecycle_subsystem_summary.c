@@ -26,6 +26,8 @@ static void seed_summary_result(
     result->runtime_entry_allowed = 0;
     result->scheduler_execution_allowed = 0;
     result->memory_allocation_allowed = 0;
+    result->process_spawn_allowed = 0;
+    result->syscall_dispatch_allowed = 0;
     result->no_external_effect_chain = 1;
     result->evidence_level = 11u;
 }
@@ -44,7 +46,7 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_default_request(
     if (status != LATTICRA_STATUS_OK) return status;
 
     request->lifecycle_request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
-    request->lifecycle_request.target_state = LATTICRA_KERNEL_STATE_MEMORY_MAP_READY;
+    request->lifecycle_request.target_state = LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY;
     request->lifecycle_request.max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
 }
@@ -65,11 +67,13 @@ static int lifecycle_ready_for_subsystem(
             return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_SCHEDULER_READY);
         case LATTICRA_KERNEL_SUBSYSTEM_MEMORY:
             return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_MEMORY_MAP_READY);
-        case LATTICRA_KERNEL_SUBSYSTEM_RUNTIME:
         case LATTICRA_KERNEL_SUBSYSTEM_PROCESS:
+            return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY);
         case LATTICRA_KERNEL_SUBSYSTEM_FILESYSTEM:
         case LATTICRA_KERNEL_SUBSYSTEM_NETWORK:
         case LATTICRA_KERNEL_SUBSYSTEM_DEVICE:
+            return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY);
+        case LATTICRA_KERNEL_SUBSYSTEM_RUNTIME:
         case LATTICRA_KERNEL_SUBSYSTEM_SECURITY:
         case LATTICRA_KERNEL_SUBSYSTEM_COUNT:
         default:
@@ -93,13 +97,17 @@ static const char *lifecycle_relation_for(
             return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_MEMORY_MAP_READY) ?
                 "memory-map-ready" : "memory-map-not-ready";
         case LATTICRA_KERNEL_SUBSYSTEM_PROCESS:
-            return "process-report-only";
+            return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY) ?
+                "process-table-ready" : "process-table-not-ready";
         case LATTICRA_KERNEL_SUBSYSTEM_FILESYSTEM:
-            return "filesystem-report-only";
+            return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY) ?
+                "filesystem-syscall-metadata-ready" : "filesystem-syscall-metadata-not-ready";
         case LATTICRA_KERNEL_SUBSYSTEM_NETWORK:
-            return "network-report-only";
+            return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY) ?
+                "network-syscall-metadata-ready" : "network-syscall-metadata-not-ready";
         case LATTICRA_KERNEL_SUBSYSTEM_DEVICE:
-            return "device-report-only";
+            return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY) ?
+                "device-syscall-metadata-ready" : "device-syscall-metadata-not-ready";
         case LATTICRA_KERNEL_SUBSYSTEM_SECURITY:
             return "security-not-production-boundary";
         case LATTICRA_KERNEL_SUBSYSTEM_COUNT:
@@ -181,6 +189,8 @@ static void finalize_summary(
     result->runtime_entry_allowed = 0;
     result->scheduler_execution_allowed = 0;
     result->memory_allocation_allowed = 0;
+    result->process_spawn_allowed = 0;
+    result->syscall_dispatch_allowed = 0;
     result->no_external_effect_chain =
         result->external_effect_performed == 0 && result->registry_no_effect == 1;
 
@@ -188,7 +198,7 @@ static void finalize_summary(
 
     summary_copy(result->summary_status, sizeof(result->summary_status),
         (result->lifecycle_complete == 1 &&
-         result->lifecycle.final_state == LATTICRA_KERNEL_STATE_MEMORY_MAP_READY &&
+         result->lifecycle.final_state == LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY &&
          result->registry_no_effect == 1 &&
          result->external_effect_performed == 0) ?
             "summary-ready" : "summary-incomplete");
@@ -277,6 +287,8 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         "runtime_entry_allowed=%d\n"
         "scheduler_execution_allowed=%d\n"
         "memory_allocation_allowed=%d\n"
+        "process_spawn_allowed=%d\n"
+        "syscall_dispatch_allowed=%d\n"
         "no_external_effect_chain=%d\n"
         "entry_count=%lu\n"
         "evidence_level=%u\n",
@@ -293,6 +305,8 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         result->runtime_entry_allowed,
         result->scheduler_execution_allowed,
         result->memory_allocation_allowed,
+        result->process_spawn_allowed,
+        result->syscall_dispatch_allowed,
         result->no_external_effect_chain,
         (unsigned long)result->entry_count,
         result->evidence_level);

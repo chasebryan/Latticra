@@ -30,7 +30,7 @@ kernel lifecycle rollback plan
 The lifecycle evidence can report a bounded in-memory path ending at:
 
 ```text
-final_state=memory-map-ready
+final_state=syscall-table-ready
 ```
 
 The lifecycle report runner and subsystem summary keep the external-effect posture explicit:
@@ -48,6 +48,8 @@ The merged evidence keeps authority denied:
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
 memory_allocation_allowed=0
+process_spawn_allowed=0
+syscall_dispatch_allowed=0
 ```
 
 The subsystem summary also keeps process, filesystem, network, device, and production-boundary claims denied or report-only.

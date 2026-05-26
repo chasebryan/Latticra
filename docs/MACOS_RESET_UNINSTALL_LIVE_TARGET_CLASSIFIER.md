@@ -83,6 +83,8 @@ managed_target_detected=report-runtime
 unmanaged_target_detected=report-runtime
 reset_uninstall_dry_run_evidence_present=0
 macos_reset_uninstall_dry_run_planner_present=1
+macos_reset_uninstall_absence_report_contract_present=1
+absence_report_evidence_present=0
 macos_reset_uninstall_implemented=0
 ```
 
@@ -139,5 +141,5 @@ This classifier is not macOS reset evidence, macOS uninstall evidence, macOS ins
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
+Add a macOS reset/uninstall receipt-schema contract for reset/uninstall receipts outside the removed prefix.
 ```

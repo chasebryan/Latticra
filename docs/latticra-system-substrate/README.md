@@ -1,8 +1,8 @@
 # The Latticra System Substrate
 
 **Title:** *The Latticra System Substrate: An Effect at Modern Security*<br>
-**Edition:** Working Draft 0.7 — 2026-05-25<br>
-**Role:** Project-level technical handbook for Latticra, Latticra Seal trust-boundary metadata, Latticra Console, Nucleus, Nadia offline AI contracts, Panel, platform install validation lanes, Lat/LIR contract surfaces, receipts, reports, and future runtime-boundary research.
+**Edition:** Working Draft 0.8 — 2026-05-25<br>
+**Role:** Project-level technical handbook for Latticra, Latticra Seal trust-boundary metadata, authority-neutral Ed25519 verification evidence, metadata-only capability gating, Latticra Console, Nucleus, Nadia offline AI contracts, Panel, platform install validation lanes, Lat/LIR contract surfaces, receipts, reports, and future runtime-boundary research.
 
 This handbook supersedes the former standalone **Latticra Seal Documentation Handbook** as the main reader-facing book for the project.
 
@@ -47,7 +47,7 @@ The handbook's core claim is narrower and more useful: Latticra is a substrate f
 
 Latticra Seal remains the verification, reporting, manifest/hash baseline, and policy-boundary lane inside the Latticra ecosystem.
 
-Working Draft 0.7 adds the Seal trust/crypto metadata ladder: signed request metadata, request freshness metadata, verification receipts, crypto verify backend metadata, capability gates, effect decisions, runtime handoff boundaries, and report envelopes. These are documented as metadata and validation surfaces only; they do not claim active signing, cryptographic verification, trust-store behavior, revocation checks, capability enforcement, host effects, network authority, or runtime authority.
+Working Draft 0.8 carries the Seal trust/crypto ladder forward: signed request metadata, request freshness metadata, verification receipts, crypto verify backend metadata, local Ed25519 verify-only results, verified receipt promotion metadata, verified capability gate metadata, effect decisions, runtime handoff boundaries, and report envelopes. The local Ed25519 verifier, verified receipt promotion, and verified capability gate are documented as authority-neutral evidence and metadata-evaluation surfaces; they do not claim signing, trust-store behavior, revocation checks, capability enforcement, host effects, network authority, runtime authority, or production cryptography.
 
 The new System Substrate handbook places Seal in the full project architecture alongside:
 

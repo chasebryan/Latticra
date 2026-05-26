@@ -19,6 +19,7 @@ extern "C" {
 #define LATTICRA_CONSOLE_BOUNDARY_REPORT_MAX 20000u
 #define LATTICRA_CONSOLE_HOST_CONTRACT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_HOST_INVENTORY_REPORT_MAX 12000u
+#define LATTICRA_CONSOLE_HOST_ADAPTER_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_RECEIPT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_OS_CONTRACT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_VM_EVIDENCE_REPORT_MAX 12000u
@@ -101,6 +102,7 @@ typedef struct {
     char host_embedding_status[LATTICRA_CONSOLE_LABEL_MAX];
     char host_embedding_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
     char host_inventory_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
+    char host_adapter_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
     char receipt_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
     char os_base_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
     char vm_evidence_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
@@ -116,6 +118,7 @@ typedef struct {
     int host_embeddable;
     int host_embedding_contract_present;
     int host_inventory_contract_present;
+    int host_adapter_contract_present;
     int receipt_contract_present;
     int os_base_contract_present;
     int vm_evidence_contract_present;
@@ -173,6 +176,10 @@ latticra_status_t latticra_console_host_contract_report(
     size_t buffer_len);
 
 latticra_status_t latticra_console_host_inventory_report(
+    char *buffer,
+    size_t buffer_len);
+
+latticra_status_t latticra_console_host_adapter_report(
     char *buffer,
     size_t buffer_len);
 

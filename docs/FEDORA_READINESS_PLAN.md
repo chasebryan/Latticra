@@ -70,11 +70,13 @@ Known current posture:
 
 ```text
 kernel lifecycle evidence exists
-final_state=memory-map-ready
+final_state=syscall-table-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
 memory_allocation_allowed=0
+process_spawn_allowed=0
+syscall_dispatch_allowed=0
 not bootable
 not installer-ready
 not a Fedora derivative
@@ -85,13 +87,14 @@ This makes the first Fedora-facing target a development package or source packag
 
 ## Phase 1: Fedora build lane
 
-Add a Fedora build/test lane that proves the project compiles with Fedora toolchains.
+The Fedora build/test lane proves the current guarded project foundation compiles with Fedora toolchains.
 
-Suggested future files:
+Current guarded files:
 
 ```text
 scripts/test-fedora-build-lane.sh
 .github/workflows/fedora-build-lane.yml
+.github/workflows/compat-linux.yml
 ```
 
 Initial checks should be conservative:
@@ -105,15 +108,19 @@ no external authority claims added
 
 ## Phase 2: package metadata lane
 
-Add packaging metadata only after the Fedora build lane is clean.
+Packaging metadata is present as a local-only draft after the Fedora build lane.
 
-Suggested future files:
+Current guarded files:
 
 ```text
 packaging/fedora/latticra.spec
 packaging/fedora/README.md
 scripts/test-fedora-spec-static.sh
 .github/workflows/fedora-spec-static.yml
+scripts/test-fedora-local-rpm-static-validation.sh
+.github/workflows/fedora-local-rpm-static-validation.yml
+scripts/test-fedora-rpmlint-static-spec-lane.sh
+.github/workflows/fedora-rpmlint-static-spec-lane.yml
 ```
 
 The first spec should be treated as a local development draft until it passes review.
@@ -207,10 +214,10 @@ claim operating-system completeness
 Recommended next slice:
 
 ```text
-Add Fedora build lane plan
+Keep the Fedora build/spec-static compatibility aliases aligned with the local RPM static validation and rpmlint lanes
 ```
 
-That should define the exact build/test commands for Fedora Linux before adding RPM packaging files.
+That should preserve the current no-artifact, no-submission, local-only package posture while the later local RPM and mock lanes mature.
 
 ## Validation
 

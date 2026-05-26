@@ -78,6 +78,55 @@ static int allowed_transition_changes_state(void) {
     return 0;
 }
 
+static int allowed_process_and_syscall_transitions_are_metadata_only(void) {
+    latticra_kernel_state_request_t request;
+    latticra_kernel_state_result_t result;
+
+    EXPECT_TRUE(latticra_kernel_state_default_request(&request) == LATTICRA_STATUS_OK,
+        "request initialized for process state");
+    request.current_state = LATTICRA_KERNEL_STATE_MEMORY_MAP_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY;
+    request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "process-table transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY,
+        "next process-table-ready");
+    EXPECT_TRUE(strcmp(result.process_table.table_status, "process-table-seed-ready") == 0,
+        "process table ready");
+    EXPECT_TRUE(result.process_table.process_spawn_allowed == 0,
+        "process spawn denied");
+    EXPECT_TRUE(result.process_table.context_switch_allowed == 0,
+        "context switch denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "process transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "process transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "syscall-table transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY,
+        "next syscall-table-ready");
+    EXPECT_TRUE(strcmp(result.syscall_table.table_status, "syscall-table-seed-ready") == 0,
+        "syscall table ready");
+    EXPECT_TRUE(strcmp(result.process_table.table_status, "process-table-seed-ready") == 0,
+        "syscall transition keeps process table ready");
+    EXPECT_TRUE(result.syscall_table.syscall_dispatch_allowed == 0,
+        "syscall dispatch denied");
+    EXPECT_TRUE(result.syscall_table.file_io_allowed == 0,
+        "syscall file I/O denied");
+    EXPECT_TRUE(result.syscall_table.network_allowed == 0,
+        "syscall network denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "syscall transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "syscall transition not denied");
+    return 0;
+}
+
 static int denied_transition_does_not_change_state(void) {
     latticra_kernel_state_request_t request;
     latticra_kernel_state_result_t result;
@@ -167,6 +216,35 @@ static int report_records_state_change(void) {
     return 0;
 }
 
+static int report_records_process_and_syscall_readiness(void) {
+    latticra_kernel_state_request_t request;
+    latticra_kernel_state_result_t result;
+    char report[LATTICRA_KERNEL_STATE_REPORT_MAX];
+
+    EXPECT_TRUE(latticra_kernel_state_default_request(&request) == LATTICRA_STATUS_OK,
+        "request initialized for syscall report");
+    request.current_state = LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY;
+    request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "syscall transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "syscall report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=process-table-ready\n") != 0,
+        "process previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=syscall-table-ready\n") != 0,
+        "syscall next emitted");
+    EXPECT_TRUE(strstr(report, "process_table_status=process-table-seed-ready\n") != 0,
+        "process table emitted");
+    EXPECT_TRUE(strstr(report, "syscall_table_status=syscall-table-seed-ready\n") != 0,
+        "syscall table emitted");
+    EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
+        "syscall report external effect emitted");
+    return 0;
+}
+
 static int null_guards_are_safe(void) {
     latticra_kernel_state_result_t result;
     char report[LATTICRA_KERNEL_STATE_REPORT_MAX];
@@ -189,9 +267,11 @@ static int null_guards_are_safe(void) {
 int main(void) {
     if (default_request_denies_state_change() != 0) return 1;
     if (allowed_transition_changes_state() != 0) return 1;
+    if (allowed_process_and_syscall_transitions_are_metadata_only() != 0) return 1;
     if (denied_transition_does_not_change_state() != 0) return 1;
     if (allowed_noop_is_stable() != 0) return 1;
     if (report_records_state_change() != 0) return 1;
+    if (report_records_process_and_syscall_readiness() != 0) return 1;
     if (null_guards_are_safe() != 0) return 1;
 
     puts("kernel_state: ok");

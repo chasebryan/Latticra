@@ -84,11 +84,11 @@ section "Secret filename scan"
 secret_filename_hits="$(
   find . \
     -path './.git' -prune -o \
-    -path './target' -prune -o \
-    -path './build' -prune -o \
-    -path './dist' -prune -o \
-    -path './node_modules' -prune -o \
-    -path './.venv' -prune -o \
+    -name target -type d -prune -o \
+    -name build -type d -prune -o \
+    -name dist -type d -prune -o \
+    -name node_modules -type d -prune -o \
+    -name .venv -type d -prune -o \
     -type f \( \
       -name '.env' -o \
       -name 'id_rsa' -o \
@@ -136,12 +136,12 @@ if command -v sha256sum >/dev/null 2>&1; then
 
   find . \
     -path './.git' -prune -o \
-    -path './target' -prune -o \
-    -path './build' -prune -o \
-    -path './dist' -prune -o \
-    -path './node_modules' -prune -o \
-    -path './.venv' -prune -o \
-    -path './reports' -prune -o \
+    -name target -type d -prune -o \
+    -name build -type d -prune -o \
+    -name dist -type d -prune -o \
+    -name node_modules -type d -prune -o \
+    -name .venv -type d -prune -o \
+    -name reports -type d -prune -o \
     -type f -print0 \
     | sort -z \
     | xargs -0 -r sha256sum > "$HASH_LIST"

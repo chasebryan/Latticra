@@ -4,5 +4,8 @@ set -eu
 : "${CC:=cc}"
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror}"
 
-$CC $CFLAGS -Iinclude src/seal_signer_invocation.c tests/seal_signer_invocation_invariants.c -o /tmp/latticra-seal-signer-invocation-invariants
-/tmp/latticra-seal-signer-invocation-invariants
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-latticra-seal-signer-invocation.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
+$CC $CFLAGS -Iinclude src/seal_signer_invocation.c tests/seal_signer_invocation_invariants.c -o "$tmpdir/latticra-seal-signer-invocation-invariants"
+"$tmpdir/latticra-seal-signer-invocation-invariants"

@@ -10,15 +10,18 @@ Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
 Latest runtime boundary Lat pipeline comment evidence note: 2026-05-25 CDT
 Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline failure span evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline parse-error evidence propagation note: 2026-05-25 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
 Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
 Latest Seal Ed25519 verify status/public-entry note: 2026-05-25 CDT
 Latest Seal verified receipt promotion status/public-entry note: 2026-05-25 CDT
+Latest Seal verified capability gate status/public-entry note: 2026-05-25 CDT
 Latest Lat pipeline comment metadata integration note: 2026-05-25 CDT
 Latest Lat pipeline diagnostic comment metadata integration note: 2026-05-25 CDT
 Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline failure span evidence propagation note: 2026-05-25 CDT
+Latest Lat pipeline parse-error evidence propagation note: 2026-05-25 CDT
 
 ## Purpose
 
@@ -33,6 +36,8 @@ Latticra Seal crypto verify backend status/public-entry alignment is complete fo
 Latticra Seal Ed25519 verify-only status/public-entry alignment is complete for the existing local provider-backed verification result surface. It does not add new implementation behavior, signing, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, capability enforcement, effect execution, runtime authority, or production cryptography claims.
 
 Latticra Seal verified receipt promotion status/public-entry alignment is complete for the existing evidence-promotion metadata surface. It does not add new implementation behavior, capability authorization, effect execution, runtime authority, signing, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
+
+Latticra Seal verified capability gate status/public-entry alignment is complete for the existing metadata-only gate evaluation surface. It does not add new implementation behavior, capability enforcement, effect execution, runtime authority, signing, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
 
 ## Latest completed planning slice
 
@@ -49,6 +54,18 @@ define the exact future bounded no-effect key parsing API, file paths, record fi
 ## Latest completed implementation slice
 
 ```text
+Lat pipeline parse-error evidence propagation
+```
+
+Purpose completed:
+
+```text
+copy parser error labels from Lat pipeline summaries into Lat pipeline diagnostic reports and runtime-boundary Lat pipeline records/reports so parse-failure reasons remain visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Previous implementation slice
+
+```text
 Lat pipeline failure span evidence propagation
 ```
 
@@ -58,7 +75,7 @@ Purpose completed:
 copy parser diagnostic/module spans into Lat pipeline summaries, Lat pipeline diagnostic reports, and runtime-boundary Lat pipeline records/reports so parse-failure locations remain visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
 Lat parse-failure comment evidence propagation
@@ -361,6 +378,18 @@ map runtime-boundary request families, effect families, authority prerequisites,
 ## Latest completed status/public-entry slice
 
 ```text
+Latticra Seal verified capability gate status/public-entry alignment
+```
+
+Purpose completed:
+
+```text
+publish and guard the existing metadata-only Seal verified capability gate from README/status/foundation entry points while preserving no new implementation behavior, no capability enforcement, no effect execution, no runtime authority, no signing, no key generation, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, and no production cryptography claim
+```
+
+## Previous status/public-entry slice
+
+```text
 Latticra Seal verified receipt promotion status/public-entry alignment
 ```
 
@@ -370,22 +399,10 @@ Purpose completed:
 publish and guard the existing authority-neutral Seal verified receipt promotion metadata from README/status/foundation entry points while preserving evidence promotion only, no new implementation behavior, no capability authorization, no effect execution, no runtime authority, no signing, no key generation, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, and no production cryptography claim
 ```
 
-## Previous status/public-entry slice
-
-```text
-Latticra Seal Ed25519 verify-only status/public-entry alignment
-```
-
-Purpose completed:
-
-```text
-publish and guard the existing local provider-backed Seal Ed25519 verify-only implementation from README/status/foundation entry points while preserving no new implementation behavior, no signing, no key generation, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, no capability enforcement, no effect execution, no runtime authority, and no production cryptography claim
-```
-
 ## Earlier status/public-entry slice
 
 ```text
-Latticra Seal crypto verify backend status/public-entry alignment
+Latticra Seal Ed25519 verify-only status/public-entry alignment
 ```
 
 Purpose completed:

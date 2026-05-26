@@ -24,10 +24,13 @@ macos_commit_gate_command_documented=1
 macos_reset_uninstall_dry_run_command_documented=1
 macos_reset_uninstall_live_target_classifier_command_documented=1
 macos_reset_uninstall_dry_run_planner_command_documented=1
+macos_reset_uninstall_absence_report_contract_command_documented=1
 macos_commit_gate_closed_documented=1
 macos_reset_uninstall_live_target_classifier_present=1
 macos_reset_uninstall_dry_run_planner_present=1
 reset_uninstall_dry_run_planner_transcript_present=1
+macos_reset_uninstall_absence_report_contract_present=1
+absence_report_evidence_present=0
 commit_user_local_managed_artifacts=0
 macos_app_bundle_commit_capable_writer_present=0
 macos_app_bundle_created=0
@@ -75,7 +78,7 @@ macos_readme_installer_usage: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall absence-report contract that defines post-removal verification evidence before any reset/uninstall implementation.
+Add a macOS reset/uninstall receipt-schema contract for reset/uninstall receipts outside the removed prefix.
 ```
 
 ## Non-Claims

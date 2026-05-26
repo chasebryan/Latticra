@@ -40,6 +40,7 @@ require_absent_section() {
 require_file docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
 require_file docs/FEDORA_LOCAL_RPM_VALIDATION_PLAN.md
 require_file packaging/fedora/latticra.spec
+require_file packaging/fedora/README.md
 require_file scripts/test-fedora-local-rpm-spec-skeleton.sh
 require_file scripts/test-fedora-local-rpm-validation-plan.sh
 require_file scripts/test-latticra-no-effect-cli-status-surface.sh
@@ -52,8 +53,15 @@ require_contains 'Status: active static validation lane' docs/FEDORA_LOCAL_RPM_S
 require_contains 'static checks for the local RPM spec skeleton' docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'does not run `rpmbuild`, `rpmlint`, or `mock`' docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'does not create package artifacts' docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
+require_contains 'local packaging README records non-claims' docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'Add rpmlint availability lane' docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'fedora_local_rpm_static_validation: ok' docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
+
+require_contains 'Status: local-only packaging draft' packaging/fedora/README.md
+require_contains 'not a Fedora package submission' packaging/fedora/README.md
+require_contains 'package_artifact_created=0' packaging/fedora/README.md
+require_contains 'fedora_submission_claimed=0' packaging/fedora/README.md
+require_contains 'fedora_approval_claimed=0' packaging/fedora/README.md
 
 require_contains 'latticra_no_effect_cli_status_surface: ok' scripts/test-latticra-no-effect-cli-status-surface.sh
 require_contains 'LATTICRA STATUS REPORT' src/latticra_cli.c

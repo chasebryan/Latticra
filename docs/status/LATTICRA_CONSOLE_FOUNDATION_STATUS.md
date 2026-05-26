@@ -2,7 +2,7 @@
 
 Status: active Stage-0 foundation
 Date: 2026-05-25
-Scope: LC C report surface, Panel installability, local-prefix metadata, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
+Scope: LC C report surface, Panel installability, local-prefix metadata, host-adapter contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
 
 ## Current Evidence
 
@@ -30,6 +30,10 @@ future_host_command_requires_future_gate=1
 future_os_command_requires_future_gate=1
 seal_capability_grants_authority=0
 host_embedding_status=planned
+host_adapter_contract_status=metadata-only-contract
+host_adapter_contract_present=1
+host_adapter_contract_command=lc host-adapter
+host_adapter_contract_profile=lc-host-adapter-v0
 os_base_contract_status=metadata-only-contract
 os_base_contract_present=1
 os_base_contract_command=lc os-contract

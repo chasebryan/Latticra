@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 set -eu
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-latticra-seal-capability-metadata-report-surface.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 require_file() {
   file="$1"
   if [ ! -f "$file" ]; then
@@ -19,7 +22,7 @@ require_contains() {
 }
 
 doc="docs/LATTICRA_SEAL_CAPABILITY_METADATA_REPORT_SURFACE.md"
-report="/tmp/latticra-seal-capability-metadata-report.out"
+report="$tmpdir/latticra-seal-capability-metadata-report.out"
 
 require_file "$doc"
 require_file tests/seal_capability_metadata_report_surface.c
