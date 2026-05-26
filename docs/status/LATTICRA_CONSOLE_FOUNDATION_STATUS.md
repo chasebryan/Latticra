@@ -2,7 +2,7 @@
 
 Status: active Stage-0 foundation
 Date: 2026-05-26
-Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
+Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, session contract, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
 
 ## Current Evidence
 
@@ -27,6 +27,13 @@ standalone_install_profile=lc-standalone-install-v0
 standalone_installer_preset=installer/configs/lc-standalone.installer.toml
 standalone_local_installer_preset=installer/configs/lc-standalone-local.installer.toml
 standalone_local_install_mode=local-prefix-install
+session_contract_status=metadata-only-contract
+session_contract_present=1
+session_contract_command=lc session
+session_contract_profile=lc-session-v0
+runtime_session_created=0
+runtime_process_spawn_allowed=0
+interactive_shell_allowed=0
 substrate_bridge_status=metadata-bound
 command_registry_status=seed-registry
 command_registry_source=c-static-table

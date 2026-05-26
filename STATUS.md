@@ -28,11 +28,15 @@ Latest Lat LIR source-span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR node-kind evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-node evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-node span evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest kernel lifecycle evidence status note: 2026-05-26 CDT
 Latest macOS reset/uninstall live-target classifier note: 2026-05-25 CDT
 Latest macOS reset/uninstall dry-run planner note: 2026-05-25 CDT
 Latest macOS reset/uninstall absence-report contract note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
+Latest Seal capability metadata report surface status note: 2026-05-26 CDT
+Latest Seal product spine note: 2026-05-26 CDT
+Latest Seal product spine status note: 2026-05-26 CDT
 Latest Seal policy decision status/public-entry note: 2026-05-25 CDT
 Latest Seal signed request status/public-entry note: 2026-05-25 CDT
 Latest Seal request freshness status/public-entry note: 2026-05-25 CDT
@@ -40,8 +44,10 @@ Latest Seal parameter schema status/public-entry note: 2026-05-25 CDT
 Latest Seal agentic automation security public-entrypoint note: 2026-05-25 CDT
 Latest Seal status rollup status/public-entry note: 2026-05-25 CDT
 Latest Seal runtime handoff status/public-entry note: 2026-05-25 CDT
+Latest Seal runtime handoff predecessor status alignment note: 2026-05-26 CDT
 Latest Seal runtime handoff report status/public-entry note: 2026-05-25 CDT
 Latest Seal effect decision status/public-entry note: 2026-05-25 CDT
+Latest Seal capability gate predecessor status alignment note: 2026-05-26 CDT
 Latest Seal capability gate status/public-entry note: 2026-05-25 CDT
 Latest Seal verification receipt predecessor status alignment note: 2026-05-26 CDT
 Latest Seal verification receipt status/public-entry note: 2026-05-25 CDT
@@ -92,6 +98,7 @@ Latest Nadia prompt evaluation result release receipt review contract Stage-36 n
 Latest Nadia prompt evaluation result release receipt review disposition contract Stage-37 note: 2026-05-26 CDT
 Latest Nadia prompt evaluation result release receipt review disposition release contract Stage-38 note: 2026-05-26 CDT
 Latest Nadia prompt evaluation result release receipt review disposition release receipt review contract Stage-40 note: 2026-05-26 CDT
+Latest Nadia prompt evaluation result release receipt review disposition release receipt review disposition contract Stage-41 note: 2026-05-26 CDT
 Latest Latticra Console profile preset note: 2026-05-25 CDT
 Latest Latticra Console standalone console install note: 2026-05-26 CDT
 Latest Latticra Console standalone installer preset note: 2026-05-26 CDT
@@ -183,6 +190,7 @@ Latest Lat LIR source-span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR node-kind evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-node evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-node span evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
 Latest Lat model report declaration metadata integration note: 2026-05-25 CDT
 Latest Lat model report clause metadata integration note: 2026-05-25 CDT
@@ -272,7 +280,7 @@ docs/strategy/README.md
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 44% |
+| Overall Latticra system | 45% |
 | Latticra Seal / local evidence layer | 39% |
 | Latticra Panel / local control surface | 31% |
 | Nadia offline AI foundation | 74% |
@@ -285,7 +293,7 @@ docs/strategy/README.md
 | C/C++ foundation direction | 22% |
 | Constrained C++ authority layer | 5% |
 | Nucleus real task execution | 12% |
-| Runtime / operating-system-universe direction | 24% |
+| Runtime / operating-system-universe direction | 25% |
 | Security-hardening implementation | 9% |
 | Public product readiness | 10% |
 
@@ -310,6 +318,7 @@ Seal capability gate status/public-entry alignment
 Seal effect decision status/public-entry alignment
 Seal effect decision predecessor status alignment
 Seal runtime handoff status/public-entry alignment
+Seal runtime handoff predecessor status alignment
 Seal status rollup status/public-entry alignment
 Seal agentic automation security public-entrypoint alignment
 Seal parameter schema status/public-entry alignment
@@ -329,6 +338,7 @@ Nadia prompt evaluation result release receipt review contract Stage-36
 Nadia prompt evaluation result release receipt review disposition contract Stage-37
 Nadia prompt evaluation result release receipt review disposition release contract Stage-38
 Nadia prompt evaluation result release receipt review disposition release receipt review contract Stage-40
+Nadia prompt evaluation result release receipt review disposition release receipt review disposition contract Stage-41
 Runtime boundary Lat pipeline comment evidence integration
 Completion estimate review README/status alignment
 Completion estimate review after runtime-boundary abuse-case fixtures
@@ -386,6 +396,7 @@ Seal verified capability gate status/public-entry alignment
 Seal verified effect decision status/public-entry alignment
 Seal runtime handoff evaluation status/public-entry alignment
 Seal runtime handoff report status/public-entry alignment
+Seal capability gate predecessor status alignment
 Seal key parsing predecessor status alignment
 Seal key parsing status/public-entry alignment
 Seal bounded no-effect key parsing implementation
@@ -448,6 +459,7 @@ Lat LIR source-span evidence propagation
 Lat LIR node-kind evidence propagation
 Lat LIR first-node evidence propagation
 Lat LIR first-node span evidence propagation
+Lat LIR first-edge evidence propagation
 Lat semantic diagnostics refinement
 Lat model normalization implementation
 Lat model report declaration metadata integration
@@ -521,6 +533,9 @@ Kernel lifecycle seed
 Kernel scheduler tick seed
 Kernel run queue seed
 Kernel context switch seed
+Kernel time accounting seed
+Kernel preemption seed
+Kernel scheduler credit seed
 Kernel lifecycle report runner
 Kernel lifecycle subsystem summary
 Kernel lifecycle rollback plan
@@ -1228,6 +1243,104 @@ host_behavior_changed=0
 estimate_adjustment_required=0
 ```
 
+## Current Seal capability gate predecessor status boundary
+
+The Seal capability gate predecessor status alignment ties the existing metadata-only denied capability gate status record to the guarded verification receipt status predecessor while preserving no capability enforcement, no effect execution, no runtime handoff execution, no cryptographic verification, no verified receipt authority, no public-key byte verification, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no revocation lookup, no signing, no signature verification, no signer invocation behavior, no signer process execution, no object sealing, no runtime authority, no host behavior, no network behavior, and no production enforcement claim.
+
+Current capability gate predecessor status fields:
+
+```text
+seal_verification_receipt_status_present=1
+seal_capability_gate_status_present=1
+verification_receipt_predecessor_verification_policy_status_present=1
+capability_gate_predecessor_verification_receipt_status_present=1
+verification_receipt_ready=1
+capability_gate_ready=1
+receipt_state=unverified-metadata
+gate_state=denied-unverified
+verified=0
+authority_usable=0
+receipt_capability_gate_allowed=0
+gate_allowed=0
+capability_enforcement_performed=0
+effect_allowed=0
+effect_performed=0
+runtime_authority_granted=0
+cryptographic_verification_performed=0
+verification_performed=0
+public_key_material_handling=0
+key_material_loaded=0
+private_key_handling=0
+key_generation_performed=0
+hardware_key_used=0
+trust_store_loaded=0
+revocation_lookup_performed=0
+signature_performed=0
+signer_invoked=0
+host_read_performed=0
+host_write_performed=0
+network_performed=0
+capability_enforcement_added=0
+effect_execution_added=0
+runtime_handoff_execution_added=0
+cryptographic_verification_added=0
+verified_receipt_authority_added=0
+key_material_loading_added=0
+private_key_handling_added=0
+object_sealing_added=0
+network_behavior_changed=0
+host_behavior_changed=0
+estimate_adjustment_required=0
+```
+
+## Current Seal runtime handoff predecessor status boundary
+
+The Seal runtime handoff predecessor status alignment ties the existing inactive metadata-only runtime handoff status record to the guarded effect decision status predecessor while preserving no runtime handoff execution, no effect execution, no capability enforcement, no runtime authority, no cryptographic verification, no verified receipt authority, no signing, no public-key byte verification, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no revocation lookup, no signer invocation behavior, no signer process execution, no object sealing, no policy persistence, no host behavior, no network behavior, and no production cryptography claim.
+
+Current runtime handoff predecessor status fields:
+
+```text
+seal_effect_decision_status_present=1
+seal_runtime_handoff_status_present=1
+runtime_handoff_predecessor_effect_decision_status_present=1
+runtime_handoff_ready=1
+decision_state=denied-gate
+handoff_state=denied-decision
+handoff_active=0
+runtime_effect_performed=0
+effect_performed=0
+capability_enforcement_performed=0
+runtime_authority_granted=0
+cryptographic_verification_performed=0
+verification_performed=0
+key_material_loaded=0
+private_key_handling=0
+key_generation_performed=0
+hardware_key_used=0
+trust_store_loaded=0
+revocation_lookup_performed=0
+signature_performed=0
+signer_invoked=0
+host_read_performed=0
+host_write_performed=0
+network_performed=0
+runtime_handoff_status_added=1
+runtime_handoff_execution_added=0
+effect_execution_added=0
+capability_enforcement_added=0
+runtime_authority_added=0
+cryptographic_verification_added=0
+verified_receipt_authority_added=0
+signature_verification_added=0
+public_key_byte_verification_added=0
+key_material_loading_added=0
+private_key_handling_added=0
+object_sealing_added=0
+policy_persistence_added=0
+network_behavior_changed=0
+host_behavior_changed=0
+```
+
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
@@ -1342,11 +1455,13 @@ seal_verification_receipt_status_present=1
 verification_receipt_predecessor_verification_policy_status_present=1
 seal_capability_gate_metadata_present=1
 seal_capability_gate_status_present=1
+capability_gate_predecessor_verification_receipt_status_present=1
 seal_effect_decision_metadata_present=1
 seal_effect_decision_status_present=1
 effect_decision_predecessor_capability_gate_status_present=1
 seal_runtime_handoff_metadata_present=1
 seal_runtime_handoff_status_present=1
+runtime_handoff_predecessor_effect_decision_status_present=1
 seal_runtime_handoff_report_status_present=1
 runtime_handoff_report_ready=1
 runtime_handoff_report_state=ready-report-only
@@ -1413,6 +1528,10 @@ source_refresh_date=2026-05-26
 memory_safety_roadmap_required=1
 memory_safety_roadmap_present=1
 supply_chain_security_baseline_present=1
+cyber_incident_reporting_response_baseline_present=1
+cyber_incident_reporting_response_guard_present=1
+cisa_reporting_channel_documented=1
+fbi_cyber_reporting_channel_documented=1
 zero_trust_runtime_authority_baseline_present=1
 zero_trust_runtime_boundary_required=1
 runtime_boundary_policy_expansion_next=1
@@ -1578,7 +1697,7 @@ The project notes Nucleus announcement README status/index check verifies that t
 
 ## Current runtime boundary refinement boundary
 
-The runtime boundary now carries no-effect Lat pipeline evidence, Lat pipeline first-clause evidence, Lat pipeline first-declaration evidence, Lat pipeline module/count evidence, Lat pipeline stage-summary evidence, Lat pipeline line-comment count and first-comment span evidence, Lat-specific LIR module-summary evidence, Lat-specific LIR source-span evidence, Lat-specific LIR node-kind evidence, Lat-specific LIR first-node evidence, Lat-specific LIR first-node span evidence, Lat-specific LIR no-effect flag evidence, and Lat-specific LIR edge-kind evidence in records and reports. It also reports explicit classification, boundary-domain, authorization-state, evidence-level, and policy-matrix fields for runtime-boundary requests while preserving disabled-by-default behavior and future-gated execution requests.
+The runtime boundary now carries no-effect Lat pipeline evidence, Lat pipeline first-clause evidence, Lat pipeline first-declaration evidence, Lat pipeline module/count evidence, Lat pipeline stage-summary evidence, Lat pipeline line-comment count and first-comment span evidence, Lat-specific LIR module-summary evidence, Lat-specific LIR source-span evidence, Lat-specific LIR node-kind evidence, Lat-specific LIR first-node evidence, Lat-specific LIR first-node span evidence, Lat-specific LIR first-edge evidence, Lat-specific LIR no-effect flag evidence, and Lat-specific LIR edge-kind evidence in records and reports. It also reports explicit classification, boundary-domain, authorization-state, evidence-level, and policy-matrix fields for runtime-boundary requests while preserving disabled-by-default behavior and future-gated execution requests.
 
 ## Current Lat pipeline boundary
 

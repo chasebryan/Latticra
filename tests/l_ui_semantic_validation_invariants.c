@@ -60,6 +60,7 @@ static const char VALID_SOURCE[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -113,6 +114,7 @@ static const char SOURCE_AFTER_TOP_TEXT[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -173,7 +175,7 @@ static int semantic_validation_accepts_current_fixture(void) {
     EXPECT_TRUE(result.error == LATTICRA_L_UI_SEMANTIC_OK, "valid fixture semantic OK");
     EXPECT_STR_EQ(latticra_l_ui_semantic_error_label(result.error), "ok", "semantic OK label");
     EXPECT_TRUE(result.rail_count == 9u, "semantic rail count");
-    EXPECT_TRUE(result.field_count == 23u, "semantic field count");
+    EXPECT_TRUE(result.field_count == 24u, "semantic field count");
     EXPECT_TRUE(result.text_count == 2u, "semantic text count");
     EXPECT_TRUE(latticra_l_ui_semantic_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "semantic report status");
     EXPECT_TRUE(strstr(report, "L-UI SEMANTIC VALIDATION RESULT\n") != 0, "semantic report header");
@@ -259,7 +261,7 @@ static int semantic_validation_rejects_card_count_mismatch(void) {
     latticra_l_ui_ast_result_t ast;
     latticra_l_ui_semantic_result_t result;
     EXPECT_TRUE(parse_valid_ast(&ast) == 0, "card mismatch base parses");
-    ast.card.field_count = 22u;
+    ast.card.field_count = 23u;
     EXPECT_TRUE(validate_ast(&ast, &result) == 0, "card mismatch validates to error");
     EXPECT_TRUE(result.error == LATTICRA_L_UI_SEMANTIC_CARD_COUNT_MISMATCH, "card count mismatch error");
     return 0;

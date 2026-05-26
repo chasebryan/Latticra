@@ -86,7 +86,8 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_default_request(
     if (status != LATTICRA_STATUS_OK) return status;
 
     request->lifecycle_request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
-    request->lifecycle_request.target_state = LATTICRA_KERNEL_STATE_PREEMPTION_READY;
+    request->lifecycle_request.target_state =
+        LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY;
     request->lifecycle_request.max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
 }
@@ -133,6 +134,10 @@ static const char *lifecycle_relation_for(
         case LATTICRA_KERNEL_SUBSYSTEM_RUNTIME:
             return "runtime-not-entered";
         case LATTICRA_KERNEL_SUBSYSTEM_SCHEDULER:
+            if (state_at_or_after(final_state,
+                    LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY)) {
+                return "scheduler-credit-ready";
+            }
             if (state_at_or_after(final_state, LATTICRA_KERNEL_STATE_PREEMPTION_READY)) {
                 return "preemption-ready";
             }
@@ -310,7 +315,8 @@ static void finalize_summary(
 
     summary_copy(result->summary_status, sizeof(result->summary_status),
         (result->lifecycle_complete == 1 &&
-         result->lifecycle.final_state == LATTICRA_KERNEL_STATE_PREEMPTION_READY &&
+         result->lifecycle.final_state ==
+            LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY &&
          result->registry_no_effect == 1 &&
          result->external_effect_performed == 0) ?
             "summary-ready" : "summary-incomplete");

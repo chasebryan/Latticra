@@ -34,6 +34,7 @@ cc $CFLAGS \
   src/kernel_context_switch.c \
   src/kernel_time_accounting.c \
   src/kernel_preemption.c \
+  src/kernel_scheduler_credit.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   tools/kernel_state_machine_report.c \

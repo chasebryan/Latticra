@@ -22,6 +22,7 @@ require_contains() {
 require_file docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 require_file docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 require_file docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_file docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 require_file docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_file docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_file docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
@@ -47,19 +48,23 @@ require_contains 'unexpected_findings_count=0' docs/OPENSUSE_RPMLINT_FINDINGS_CL
 require_contains 'does not' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
-require_contains 'Add openSUSE temporary RPM topdir handoff lane' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+require_contains 'docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+require_contains 'Add openSUSE local RPM build evidence gate contract' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 require_contains 'opensuse_rpmlint_findings_classification: ok' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 
 require_contains 'docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'opensuse_source_archive_reproducibility_contract_present=1' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 require_contains 'opensuse_rpmlint_findings_classification_present=1' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 require_contains 'opensuse_source_archive_fixture_lane_present=1' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'opensuse_rpm_topdir_handoff_lane_present=1' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 require_contains 'opensuse_rpmlint_findings_classification_present=1' packaging/opensuse/README.md
 require_contains 'opensuse_source_archive_reproducibility_contract_present=1' packaging/opensuse/README.md
 require_contains 'opensuse_source_archive_fixture_lane_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_topdir_handoff_lane_present=1' packaging/opensuse/README.md
 require_contains 'docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md' README.md
 require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md' README.md
 require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md' README.md
+require_contains 'docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md' README.md
 
 require_contains 'LOCAL-ONLY openSUSE DRAFT' packaging/opensuse/latticra.spec
 require_contains 'LicenseRef-Latticra-TBD' packaging/opensuse/latticra.spec

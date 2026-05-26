@@ -70,7 +70,7 @@ Known current posture:
 
 ```text
 kernel lifecycle evidence exists
-final_state=preemption-ready
+final_state=scheduler-credit-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0

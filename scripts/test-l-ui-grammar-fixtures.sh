@@ -58,6 +58,7 @@ for binding in \
   'field executed bind preview.executed' \
   'field mutation bind preview.mutation_allowed' \
   'field server bind preview.server_interaction_allowed' \
+  'field network bind preview.network_allowed' \
   'field recovery bind preview.recovery_allowed' \
   'field hardware bind preview.hardware_allowed'
 do

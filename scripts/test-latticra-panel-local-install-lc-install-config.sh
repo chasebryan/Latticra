@@ -18,6 +18,7 @@ standalone_local_receipts="$tmpdir/standalone-local-receipts"
 standalone_local_log="$tmpdir/standalone-local.log"
 standalone_lc_report="$tmpdir/standalone-lc-install-config.txt"
 standalone_contract_report="$tmpdir/standalone-contract.txt"
+standalone_session_report="$tmpdir/standalone-session.txt"
 live_plan="$tmpdir/live-plan.txt"
 live_receipts="$tmpdir/live-receipts"
 lc_report="$tmpdir/lc-install-config.txt"
@@ -37,11 +38,13 @@ grep -Fq 'lc install-config' installer/latticra-installer/src/ui.rs
 grep -Fq '[lc.install]' installer/configs/default.installer.toml
 grep -Fq 'install_profile = "lc-panel-install-v0"' installer/configs/default.installer.toml
 grep -Fq 'standalone_console = true' installer/configs/default.installer.toml
+grep -Fq 'session_contract_profile = "lc-session-v0"' installer/configs/default.installer.toml
 grep -Fq 'allow_external_host_commands = false' installer/configs/default.installer.toml
 grep -Fq 'profile = "lc_standalone"' installer/configs/lc-standalone.installer.toml
 grep -Fq 'install_profile = "lc-standalone-install-v0"' installer/configs/lc-standalone.installer.toml
 grep -Fq 'install_mode = "metadata-only-standalone-console"' installer/configs/lc-standalone.installer.toml
 grep -Fq 'panel_embedded_console = false' installer/configs/lc-standalone.installer.toml
+grep -Fq 'session_contract_profile = "lc-session-v0"' installer/configs/lc-standalone.installer.toml
 grep -Fq 'allow_external_host_commands = false' installer/configs/lc-standalone.installer.toml
 grep -Fq 'dry_run = false' installer/configs/lc-standalone-local.installer.toml
 grep -Fq 'allow_host_mutation = true' installer/configs/lc-standalone-local.installer.toml
@@ -49,8 +52,10 @@ grep -Fq 'install_profile = "lc-standalone-install-v0"' installer/configs/lc-sta
 grep -Fq 'panel_embedded_console = false' installer/configs/lc-standalone-local.installer.toml
 grep -Fq 'LC_INSTALL_PROFILE=$(cfg_section lc.install install_profile lc-panel-install-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_INSTALL_STANDALONE_CONSOLE=$(cfg_section lc.install standalone_console true)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_SESSION_CONTRACT_PROFILE=$(cfg_section lc session_contract_profile lc-session-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC install configuration cannot enable external host commands from the Panel' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc install-config category=core effect=none capability=lc.install.config' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'name=lc session category=core effect=none capability=lc.session.contract' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'install-config|install)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_COMMAND_WRAPPER="$LC_INSTALL_COMMAND_WRAPPER"' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC command wrapper ($LC_COMMAND_WRAPPER)' installer/scripts/latticra-installer-verify.sh
@@ -69,9 +74,11 @@ grep -Fq 'install_command_wrapper=latticra-lc' "$plan"
 grep -Fq 'standalone_console=true' "$plan"
 grep -Fq 'standalone_requires_panel=0' "$plan"
 grep -Fq 'standalone_contract_present=1' "$plan"
+grep -Fq 'session_contract_present=1' "$plan"
 grep -Fq 'allow_external_host_commands=false' "$plan"
 grep -Fq 'lc_install_profile=lc-panel-install-v0' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_standalone_console=true' "$receipt_dir/latest-receipt.txt"
+grep -Fq 'lc_session_contract_present=true' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_allow_external_host_commands=false' "$receipt_dir/latest-receipt.txt"
 grep -Fq '[dry-run] would install LC config profile lc-panel-install-v0' "$run_log"
 
@@ -86,9 +93,11 @@ grep -Fq 'install_profile=lc-standalone-install-v0' "$standalone_plan"
 grep -Fq 'install_mode=metadata-only-standalone-console' "$standalone_plan"
 grep -Fq 'panel_embedded_console=false' "$standalone_plan"
 grep -Fq 'standalone_contract_present=1' "$standalone_plan"
+grep -Fq 'session_contract_present=1' "$standalone_plan"
 grep -Fq 'allow_external_host_commands=false' "$standalone_plan"
 grep -Fq 'lc_install_profile=lc-standalone-install-v0' "$standalone_receipts/latest-receipt.txt"
 grep -Fq 'lc_standalone_requires_panel=false' "$standalone_receipts/latest-receipt.txt"
+grep -Fq 'lc_session_contract_present=true' "$standalone_receipts/latest-receipt.txt"
 grep -Fq '[dry-run] would install LC config profile lc-standalone-install-v0' "$standalone_log"
 grep -Fq '[dry-run] Panel GUI build disabled by config' "$standalone_log"
 grep -Fq '[dry-run] source build disabled by config' "$standalone_log"
@@ -103,6 +112,7 @@ standalone_prefix="$standalone_home/.local/share/latticra"
 test -f "$standalone_prefix/etc/latticra/lc.toml"
 test -f "$standalone_prefix/share/latticra/lc/install/config.toml"
 test -f "$standalone_prefix/share/latticra/lc/standalone/contract.toml"
+test -f "$standalone_prefix/share/latticra/lc/session/contract.toml"
 test -f "$standalone_prefix/share/latticra/lc/profiles/standalone-console.toml"
 test -f "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
 test -x "$standalone_home/.local/bin/latticra"
@@ -117,21 +127,28 @@ grep -Fq 'install_profile=lc-standalone-install-v0' "$standalone_local_plan"
 grep -Fq 'install_mode=metadata-only-standalone-console' "$standalone_local_plan"
 grep -Fq 'panel_embedded_console=false' "$standalone_local_plan"
 grep -Fq 'standalone_contract_present=1' "$standalone_local_plan"
+grep -Fq 'session_contract_present=1' "$standalone_local_plan"
 grep -Fq 'allow_external_host_commands=false' "$standalone_local_plan"
 grep -Fq 'build_gui_installer=false' "$standalone_local_plan"
 grep -Fq 'install_desktop_entry=false' "$standalone_local_plan"
 grep -Fq 'lc_install_profile=lc-standalone-install-v0' "$standalone_local_receipts/latest-receipt.txt"
 grep -Fq 'lc_standalone_console=true' "$standalone_local_receipts/latest-receipt.txt"
 grep -Fq 'lc_standalone_requires_panel=false' "$standalone_local_receipts/latest-receipt.txt"
+grep -Fq 'lc_session_contract_present=true' "$standalone_local_receipts/latest-receipt.txt"
 grep -Fq 'lc_allow_external_host_commands=false' "$standalone_local_receipts/latest-receipt.txt"
 grep -Fq 'install_profile = "lc-standalone-install-v0"' "$standalone_prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'panel_embedded_console = false' "$standalone_prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'standalone_contract_present = true' "$standalone_prefix/share/latticra/lc/install/config.toml"
+grep -Fq 'session_contract_profile = "lc-session-v0"' "$standalone_prefix/share/latticra/lc/install/config.toml"
+grep -Fq 'session_contract_present = true' "$standalone_prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
+grep -Fq 'name=lc session category=core effect=none capability=lc.session.contract' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'command_surface = "lc standalone"' "$standalone_prefix/share/latticra/lc/standalone/contract.toml"
+grep -Fq 'command_surface = "lc session"' "$standalone_prefix/share/latticra/lc/session/contract.toml"
 
 HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" install-config > "$standalone_lc_report"
 HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" standalone > "$standalone_contract_report"
+HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" session > "$standalone_session_report"
 
 grep -Fq 'LATTICRA CONSOLE INSTALL CONFIGURATION' "$standalone_lc_report"
 grep -Fq 'install_profile=lc-standalone-install-v0' "$standalone_lc_report"
@@ -139,6 +156,7 @@ grep -Fq 'standalone_console=true' "$standalone_lc_report"
 grep -Fq 'standalone_requires_panel=0' "$standalone_lc_report"
 grep -Fq 'panel_embedded_console=false' "$standalone_lc_report"
 grep -Fq 'standalone_contract_present=1' "$standalone_lc_report"
+grep -Fq 'session_contract_present=1' "$standalone_lc_report"
 grep -Fq 'allow_external_host_commands=false' "$standalone_lc_report"
 grep -Fq 'host_process_launch_allowed=0' "$standalone_lc_report"
 grep -Fq 'LATTICRA CONSOLE STANDALONE CONTRACT' "$standalone_contract_report"
@@ -146,6 +164,11 @@ grep -Fq 'standalone_console_status=metadata-only-contract' "$standalone_contrac
 grep -Fq 'standalone_requires_panel=0' "$standalone_contract_report"
 grep -Fq 'panel_required_for_runtime=0' "$standalone_contract_report"
 grep -Fq 'host_process_launch_allowed=0' "$standalone_contract_report"
+grep -Fq 'LATTICRA CONSOLE SESSION CONTRACT' "$standalone_session_report"
+grep -Fq 'session_profile=lc-session-v0' "$standalone_session_report"
+grep -Fq 'runtime_session_created=0' "$standalone_session_report"
+grep -Fq 'command_surface=lc session' "$standalone_session_report"
+grep -Fq 'host_process_launch_allowed=0' "$standalone_session_report"
 
 cat > "$live_config" <<LIVECONFIG
 profile = "developer_local"

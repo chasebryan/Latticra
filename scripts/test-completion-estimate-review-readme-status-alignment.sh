@@ -58,7 +58,7 @@ require_contains 'sh scripts/test-completion-estimate-review-readme-status-align
 require_contains 'small guarded report/status alignment only when drift appears' "$doc"
 
 require_contains '[`docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md)' README.md
-require_contains '| Current public estimate | Roughly 44% overall system planning estimate |' README.md
+require_contains '| Current public estimate | Roughly 45% overall system planning estimate |' README.md
 require_contains '| Foundation documents and contracts | Mature relative to implementation; around 94% planning estimate |' README.md
 require_contains '| Public documentation posture | Strong but still evolving; around 91% planning estimate |' README.md
 require_contains 'CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md' README.md
@@ -79,7 +79,7 @@ require_contains 'security_hardening_changed=0' STATUS.md
 require_contains 'public_readiness_changed=0' STATUS.md
 require_contains 'runtime_authority_granted=0' STATUS.md
 require_contains 'Continue small guarded report/status alignment only when drift appears' STATUS.md
-require_contains '| Overall Latticra system | 44% |' STATUS.md
+require_contains '| Overall Latticra system | 45% |' STATUS.md
 require_contains '| Latticra Seal / local evidence layer | 39% |' STATUS.md
 require_contains '| Security-hardening implementation | 9% |' STATUS.md
 require_contains '| Public product readiness | 10% |' STATUS.md
@@ -93,7 +93,7 @@ require_contains 'Completion estimate review README/status alignment' docs/statu
 require_contains 'completion_estimate_review_readme_status_alignment_present=1' docs/status/CURRENT_STATUS.md
 require_contains 'estimate_adjustment_required=0' docs/status/CURRENT_STATUS.md
 require_contains 'Continue small guarded report/status alignment only when drift appears' docs/status/CURRENT_STATUS.md
-require_contains '| Overall Latticra system | 44% |' docs/status/CURRENT_STATUS.md
+require_contains '| Overall Latticra system | 45% |' docs/status/CURRENT_STATUS.md
 require_contains '| Public product readiness | 10% |' docs/status/CURRENT_STATUS.md
 
 require_contains 'COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md' docs/FOUNDATION_INDEX.md

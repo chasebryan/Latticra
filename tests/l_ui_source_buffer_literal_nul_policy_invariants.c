@@ -74,6 +74,7 @@ static const char SOURCE_AFTER_TOP_TEXT[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -184,6 +185,49 @@ static int literal_nul_policy_rejects_text_literal_nul(void) {
     EXPECT_TRUE(parse_literal_nul_source("purpose", strlen("purpose"), text, sizeof(text), &result, source, sizeof(source), &source_len), "text literal NUL parses to result");
     EXPECT_TRUE(result.error == LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING, "text literal NUL rejected");
     (void)source_len;
+    return 0;
+}
+
+static int literal_nul_policy_rejects_bottom_text_literal_nul(void) {
+    char source[4096];
+    static const char bottom_text[] = { 'b', 'o', 't', '\0', 't', 'o', 'm' };
+    latticra_l_ui_parse_result_t result;
+    size_t source_len;
+    EXPECT_TRUE(make_source_binary(
+                    source,
+                    sizeof(source),
+                    "purpose",
+                    strlen("purpose"),
+                    "top",
+                    strlen("top"),
+                    bottom_text,
+                    sizeof(bottom_text),
+                    &source_len),
+        "bottom text literal NUL source builds");
+    EXPECT_TRUE(latticra_l_ui_parse_source(source, source_len, &result) == LATTICRA_STATUS_OK, "bottom text literal NUL parses to result");
+    EXPECT_TRUE(result.error == LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING, "bottom text literal NUL rejected");
+    return 0;
+}
+
+static int literal_nul_policy_rejects_source_buffer_nul_outside_strings(void) {
+    char source[4096];
+    char *newline;
+    size_t nul_index;
+    size_t source_len;
+    latticra_l_ui_parse_result_t result;
+
+    EXPECT_TRUE(make_source(source, sizeof(source), "purpose", "top", "bottom", &source_len), "outside-string NUL source builds");
+    newline = memchr(source, '\n', source_len);
+    EXPECT_TRUE(newline != 0, "source has newline outside strings");
+    nul_index = (size_t)(newline - source);
+    source[nul_index] = '\0';
+
+    EXPECT_TRUE(latticra_l_ui_parse_source(source, source_len, &result) == LATTICRA_STATUS_OK, "outside-string NUL parses to result");
+    EXPECT_TRUE(result.error == LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING, "outside-string NUL rejected");
+    EXPECT_TRUE(result.span.start_offset == nul_index, "outside-string NUL span start");
+    EXPECT_TRUE(result.span.end_offset == nul_index + 1u, "outside-string NUL span end");
+    EXPECT_TRUE(result.line > 0u, "outside-string NUL line one-based");
+    EXPECT_TRUE(result.column > 0u, "outside-string NUL column one-based");
     return 0;
 }
 
@@ -334,6 +378,8 @@ static int literal_nul_policy_is_deterministic(void) {
 int main(void) {
     if (literal_nul_policy_rejects_purpose_literal_nul() != 0) return 1;
     if (literal_nul_policy_rejects_text_literal_nul() != 0) return 1;
+    if (literal_nul_policy_rejects_bottom_text_literal_nul() != 0) return 1;
+    if (literal_nul_policy_rejects_source_buffer_nul_outside_strings() != 0) return 1;
     if (literal_nul_policy_reports_lui0023() != 0) return 1;
     if (literal_nul_policy_span_covers_literal_nul_byte() != 0) return 1;
     if (literal_nul_policy_preserves_no_effect_flags() != 0) return 1;

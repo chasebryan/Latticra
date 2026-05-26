@@ -22,6 +22,7 @@ tests/seal_runtime_handoff_invariants.c
 scripts/test-latticra-seal-runtime-handoff-contract.sh
 scripts/test-latticra-seal-runtime-handoff.sh
 scripts/test-latticra-seal-runtime-handoff-status.sh
+.github/workflows/latticra-seal-runtime-handoff-status.yml
 docs/LATTICRA_SEAL_STATUS_ROLLUP_CONTRACT.md
 docs/LATTICRA_SEAL_STATUS_ROLLUP_IMPLEMENTATION.md
 include/latticra/seal_status_rollup.h
@@ -40,6 +41,7 @@ tests/seal_effect_decision_invariants.c
 scripts/test-latticra-seal-effect-decision-contract.sh
 scripts/test-latticra-seal-effect-decision.sh
 scripts/test-latticra-seal-effect-decision-status.sh
+.github/workflows/latticra-seal-effect-decision-status.yml
 ```
 
 ## Current checkpoint
@@ -55,12 +57,17 @@ seal_runtime_handoff_invariant_test_present=1
 seal_runtime_handoff_runner_present=1
 seal_runtime_handoff_metadata_present=1
 seal_runtime_handoff_status_present=1
+seal_runtime_handoff_status_runner_present=1
+seal_runtime_handoff_status_workflow_present=1
 seal_status_rollup_contract_present=1
 seal_status_rollup_implementation_present=1
 seal_status_rollup_status_present=1
 seal_effect_decision_contract_present=1
 seal_effect_decision_implementation_present=1
 seal_effect_decision_status_present=1
+seal_effect_decision_status_runner_present=1
+seal_effect_decision_status_workflow_present=1
+runtime_handoff_predecessor_effect_decision_status_present=1
 handoff_profile=latticra-seal-runtime-handoff/0.1
 decision_profile=latticra-seal-effect-decision/0.1
 gate_profile=latticra-seal-capability-gate/0.1
@@ -98,6 +105,28 @@ signer_invoked=0
 mode=metadata-only
 status=runtime-handoff-inactive-metadata
 error=ok
+runtime_handoff_status_added=1
+runtime_handoff_execution_added=0
+effect_execution_added=0
+capability_enforcement_added=0
+runtime_authority_added=0
+cryptographic_verification_added=0
+verified_receipt_authority_added=0
+signature_verification_added=0
+public_key_byte_verification_added=0
+key_material_loading_added=0
+private_key_handling_added=0
+key_generation_added=0
+hardware_key_use_added=0
+trust_store_behavior_added=0
+revocation_lookup_added=0
+signing_added=0
+signer_invocation_behavior_added=0
+signer_process_execution_added=0
+object_sealing_added=0
+policy_persistence_added=0
+network_behavior_changed=0
+host_behavior_changed=0
 ```
 
 ## Validation
@@ -128,10 +157,12 @@ seal effect decision status: ok
 
 This status record is documentation/status alignment only.
 
+This refresh adds the runtime handoff status guard workflow and records the guarded effect decision status predecessor without changing the inactive metadata-only runtime handoff implementation.
+
 It does not add runtime execution, runtime authority, effect execution, capability enforcement, cryptographic verification, verified receipt authority, signing, public-key byte verification, public-key trust-store behavior, key material loading, private-key handling, key generation, hardware-key use, revocation lookup, signer invocation behavior, signer process execution, host reads, host writes, network behavior, shell execution, tool execution, policy persistence, object sealing, kernel behavior, production readiness, or authority grants.
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is policy decision status/public-entry alignment.
+The next valid Latticra Seal slice is status rollup status/workflow guard alignment or another narrow status/index alignment follow-up.
 
 That future slice must preserve the no-effect posture and must not implement real policy evaluation, policy enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signature verification, freshness validation, replay detection, authority grants, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, or shell execution.

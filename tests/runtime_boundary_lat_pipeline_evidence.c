@@ -129,6 +129,8 @@ static latticra_lir_module_t lat_lir_module(void) {
     lir.nodes[4].kind = LATTICRA_LIR_NODE_LAT_POLICY;
     lir.nodes[5].kind = LATTICRA_LIR_NODE_LAT_ASSERTION;
     lir.nodes[6].kind = LATTICRA_LIR_NODE_LAT_EFFECT_DECLARATION;
+    lir.edges[0].from_index = 0u;
+    lir.edges[0].to_index = 1u;
     lir.edges[0].edge_kind = LATTICRA_LIR_EDGE_CONTAINS;
     lir.edges[1].edge_kind = LATTICRA_LIR_EDGE_BINDS;
     lir.edges[2].edge_kind = LATTICRA_LIR_EDGE_ANNOTATES;
@@ -248,6 +250,11 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(result.record.lat_lir_annotates_edge_count == 1u, "lat lir annotates edge count copied");
     EXPECT_TRUE(result.record.lat_lir_orders_before_edge_count == 1u, "lat lir orders edge count copied");
     EXPECT_TRUE(result.record.lat_lir_transition_edge_count == 1u, "transition edge count copied");
+    EXPECT_TRUE(result.record.lat_lir_has_first_edge == 1, "lat lir first edge present");
+    EXPECT_TRUE(result.record.lat_lir_first_edge_index == 0u, "lat lir first edge index copied");
+    EXPECT_TRUE(result.record.lat_lir_first_edge_from_index == 0u, "lat lir first edge from copied");
+    EXPECT_TRUE(result.record.lat_lir_first_edge_to_index == 1u, "lat lir first edge to copied");
+    EXPECT_TRUE(result.record.lat_lir_first_edge_kind == LATTICRA_LIR_EDGE_CONTAINS, "lat lir first edge kind copied");
     EXPECT_TRUE(result.record.lat_lir_has_lat_state_nodes == 1, "lat state evidence copied");
     EXPECT_TRUE(result.record.lat_lir_has_lat_transition_nodes == 1, "lat transition evidence copied");
     EXPECT_TRUE(result.record.lat_lir_has_transition_source_edges == 1, "transition source evidence copied");
@@ -571,6 +578,11 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_lir_annotates_edge_count=1\n") != 0, "lat lir annotates edge count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_orders_before_edge_count=1\n") != 0, "lat lir orders edge count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_transition_edge_count=1\n") != 0, "lat lir transition edge count report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_has_first_edge=1\n") != 0, "lat lir first edge present report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_edge_index=0\n") != 0, "lat lir first edge index report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_edge_from_index=0\n") != 0, "lat lir first edge from report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_edge_to_index=1\n") != 0, "lat lir first edge to report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_edge_kind=contains\n") != 0, "lat lir first edge kind report present");
     EXPECT_TRUE(strstr(report, "lat_lir_has_lat_state_nodes=1\n") != 0, "lat state report present");
     EXPECT_TRUE(strstr(report, "lat_lir_has_lat_transition_nodes=1\n") != 0, "lat transition report present");
     EXPECT_TRUE(strstr(report, "lat_lir_has_transition_source_edges=1\n") != 0, "transition source report present");

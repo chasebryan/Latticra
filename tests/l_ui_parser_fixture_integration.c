@@ -62,7 +62,7 @@ static int repository_fixture_parses_successfully(void) {
     EXPECT_TRUE(result.error == LATTICRA_L_UI_PARSE_OK, "repository fixture parse error should be ok");
     EXPECT_STR_EQ(result.card_name, "NucleusPreview", "repository fixture card name");
     EXPECT_TRUE(result.rail_count == 9u, "repository fixture rail count");
-    EXPECT_TRUE(result.field_count == 23u, "repository fixture field count");
+    EXPECT_TRUE(result.field_count == 24u, "repository fixture field count");
     EXPECT_STR_EQ(result.effect, "none", "repository fixture effect");
     EXPECT_STR_EQ(result.boundary, "preview_only", "repository fixture boundary");
     EXPECT_TRUE(result.no_effect == 1, "repository fixture no_effect flag");

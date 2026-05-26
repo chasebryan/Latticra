@@ -167,6 +167,10 @@ The zero-trust runtime authority baseline is recorded in `docs/ZERO_TRUST_RUNTIM
 
 It requires caller identity, resource identity, per-request authorization, least-privilege effect scope, policy decision visibility, denial reason visibility, and audit records before any future runtime authority is considered. Operator confirmation remains metadata-only and must not override denied effects.
 
+The cyber incident reporting and response baseline is recorded in `docs/CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md`.
+
+It documents CISA, FBI, IC3, and joint #StopRansomware reporting paths, evidence-preservation requirements, out-of-band communication expectations, and the future gates required before any incident-response or report-assistance feature exists. Latticra does not report incidents, notify customers, contact law enforcement, collect forensic evidence, or provide incident-response services.
+
 This posture is an allocation of required work, not a compliance claim. It does not certify Latticra, accredit Latticra, make Latticra a production security product, or create a hardened runtime boundary.
 
 ## Contact and attribution

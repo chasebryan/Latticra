@@ -494,6 +494,45 @@ static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_qu
         "preemption transition no external effect");
     EXPECT_TRUE(result.denied == 0,
         "preemption transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_PREEMPTION_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler credit transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY,
+        "next scheduler-credit-ready");
+    EXPECT_TRUE(strcmp(result.scheduler_credit.credit_status,
+            "scheduler-credit-seed-ready") == 0,
+        "scheduler credit ready");
+    EXPECT_TRUE(strcmp(result.preemption.preemption_status,
+            "preemption-seed-ready") == 0,
+        "scheduler credit transition keeps preemption ready");
+    EXPECT_TRUE(strcmp(result.time_accounting.accounting_status,
+            "time-accounting-seed-ready") == 0,
+        "scheduler credit transition keeps time accounting ready");
+    EXPECT_TRUE(result.scheduler_credit.credit_count == 4u,
+        "scheduler credit count");
+    EXPECT_TRUE(result.scheduler_credit.scheduler_credit_update_allowed == 0,
+        "scheduler credit update denied");
+    EXPECT_TRUE(result.scheduler_credit.quota_update_allowed == 0,
+        "scheduler credit quota update denied");
+    EXPECT_TRUE(result.scheduler_credit.cpu_usage_write_allowed == 0,
+        "scheduler credit cpu usage write denied");
+    EXPECT_TRUE(result.scheduler_credit.preemption_allowed == 0,
+        "scheduler credit preemption denied");
+    EXPECT_TRUE(result.scheduler_credit.context_switch_allowed == 0,
+        "scheduler credit context switch denied");
+    EXPECT_TRUE(result.scheduler_credit.dispatch_allowed == 0,
+        "scheduler credit dispatch denied");
+    EXPECT_TRUE(result.scheduler_credit.run_queue_mutation_allowed == 0,
+        "scheduler credit run queue mutation denied");
+    EXPECT_TRUE(result.scheduler_credit.process_wake_allowed == 0,
+        "scheduler credit process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "scheduler credit transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "scheduler credit transition not denied");
     return 0;
 }
 
@@ -806,6 +845,25 @@ static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_
     EXPECT_TRUE(strstr(report,
             "preemption_status=preemption-seed-ready\n") != 0,
         "preemption emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_PREEMPTION_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler credit transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "scheduler credit report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=preemption-ready\n") != 0,
+        "preemption previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=scheduler-credit-ready\n") != 0,
+        "scheduler credit next emitted");
+    EXPECT_TRUE(strstr(report,
+            "preemption_status=preemption-seed-ready\n") != 0,
+        "scheduler credit report preemption emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_credit_status=scheduler-credit-seed-ready\n") != 0,
+        "scheduler credit emitted");
     return 0;
 }
 

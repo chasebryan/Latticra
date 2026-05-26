@@ -34,6 +34,7 @@ docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md
 docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
 docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
+docs/UBUNTU_PACKAGE_LICENSE_PROMOTION_GATE_CONTRACT.md
 scripts/ubuntu-package-notice-inventory.sh
 scripts/test-ubuntu-package-notice-inventory.sh
 scripts/test-ubuntu-doc-payload-license-review-contract.sh
@@ -44,6 +45,7 @@ scripts/test-ubuntu-debian-copyright-notice-mapping-contract.sh
 scripts/test-ubuntu-trademark-notice-boundary-contract.sh
 scripts/test-ubuntu-release-artifact-notice-requirements-contract.sh
 scripts/test-ubuntu-package-notice-promotion-gate-contract.sh
+scripts/test-ubuntu-package-license-promotion-gate-contract.sh
 scripts/test-ubuntu-package-notice-review-contract.sh
 scripts/test-ubuntu-package-license-review-contract.sh
 scripts/test-ubuntu-local-deb-build-transcript-contract.sh
@@ -58,6 +60,7 @@ scripts/test-ubuntu-local-deb-build-transcript-contract.sh
 .github/workflows/ubuntu-trademark-notice-boundary-contract.yml
 .github/workflows/ubuntu-release-artifact-notice-requirements-contract.yml
 .github/workflows/ubuntu-package-notice-promotion-gate-contract.yml
+.github/workflows/ubuntu-package-license-promotion-gate-contract.yml
 .github/workflows/ubuntu-package-notice-review-contract.yml
 .github/workflows/ubuntu-package-license-review-contract.yml
 .github/workflows/ubuntu-local-deb-build-transcript-contract.yml
@@ -103,6 +106,9 @@ release_artifact_notice_requirements_recorded=0
 package_notice_promotion_gate_contract_present=1
 package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
 package_notice_promotion_gate_unblocked=0
+package_license_promotion_gate_contract_present=1
+package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
+package_license_promotion_gate_unblocked=0
 package_license_review_contract_present=1
 package_license_review_status=blocked-pending-formal-review
 package_notice_review_contract_present=1

@@ -146,9 +146,12 @@ check_contains "LC command wrapper metadata" "command_wrapper = \"$LC_COMMAND_WR
 check_contains "LC standalone console metadata" 'standalone_console = true' "$LC_INSTALL_CONFIG"
 check_contains "LC standalone requires Panel disabled" 'standalone_requires_panel = false' "$LC_INSTALL_CONFIG"
 check_contains "LC standalone contract metadata" 'standalone_contract_present = true' "$LC_INSTALL_CONFIG"
+check_contains "LC session contract profile" 'session_contract_profile = "lc-session-v0"' "$LC_INSTALL_CONFIG"
+check_contains "LC session contract metadata" 'session_contract_present = true' "$LC_INSTALL_CONFIG"
 check_contains "LC external host command authority disabled" 'allow_external_host_commands = false' "$LC_INSTALL_CONFIG"
 check_contains "LC install-config registry command" 'name=lc install-config category=core effect=none capability=lc.install.config' "$LC_COMMAND_REGISTRY"
 check_contains "LC standalone registry command" 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' "$LC_COMMAND_REGISTRY"
+check_contains "LC session registry command" 'name=lc session category=core effect=none capability=lc.session.contract' "$LC_COMMAND_REGISTRY"
 check_contains "updater panel-owned config" 'panel_owned = true' "$UPDATER_CONFIG"
 check_contains "updater network authority disabled" 'allow_network_fetch = false' "$UPDATER_CONFIG"
 check_contains "updater apply mode" 'update_apply_mode = "guarded-local-prefix-reinstall"' "$UPDATER_CONFIG"
@@ -196,9 +199,20 @@ if [ -x "$LC_COMMAND" ]; then
     check_contains "LC wrapper standalone enabled" 'standalone_console=true' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper standalone requires Panel denied" 'standalone_requires_panel=0' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper standalone contract present" 'standalone_contract_present=1' "$TMP_DIR/lc-install-config.txt"
+    check_contains "LC wrapper session contract present" 'session_contract_present=1' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-install-config.txt"
   else
     echo "failed: $LC_COMMAND_WRAPPER install-config" >&2
+    failures=$((failures + 1))
+  fi
+
+  if "$LC_COMMAND" session > "$TMP_DIR/lc-session.txt"; then
+    check_contains "LC wrapper session report" 'LATTICRA CONSOLE SESSION CONTRACT' "$TMP_DIR/lc-session.txt"
+    check_contains "LC wrapper session command surface" 'command_surface=lc session' "$TMP_DIR/lc-session.txt"
+    check_contains "LC wrapper session runtime denied" 'runtime_session_created=0' "$TMP_DIR/lc-session.txt"
+    check_contains "LC wrapper session host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-session.txt"
+  else
+    echo "failed: $LC_COMMAND_WRAPPER session" >&2
     failures=$((failures + 1))
   fi
 fi

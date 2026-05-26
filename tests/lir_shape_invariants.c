@@ -60,6 +60,7 @@ static const char VALID_SOURCE[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -113,6 +114,7 @@ static const char SOURCE_AFTER_TOP_TEXT[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -170,9 +172,9 @@ static int lir_shape_accepts_semantically_valid_l_ui_fixture(void) {
     EXPECT_TRUE(lower_valid(&ast, &semantic, &module) == 0, "valid LIR lowers");
     EXPECT_TRUE(module.error == LATTICRA_LIR_OK, "valid LIR OK");
     EXPECT_TRUE(module.source_kind == LATTICRA_LIR_SOURCE_L_UI_CARD, "valid source kind");
-    EXPECT_TRUE(module.node_count == 61u, "valid node count");
-    EXPECT_TRUE(module.edge_count >= 60u, "valid edge count minimum");
-    EXPECT_TRUE(module.binding_count == 23u, "valid binding count");
+    EXPECT_TRUE(module.node_count == 63u, "valid node count");
+    EXPECT_TRUE(module.edge_count >= 62u, "valid edge count minimum");
+    EXPECT_TRUE(module.binding_count == 24u, "valid binding count");
     EXPECT_TRUE(module.text_count == 2u, "valid text count");
     EXPECT_TRUE(latticra_lir_report(&module, report, sizeof(report)) == LATTICRA_STATUS_OK, "valid LIR report builds");
     EXPECT_TRUE(strstr(report, "LATTICRA LIR REPORT\n") != 0, "LIR report header");
@@ -200,7 +202,7 @@ static int lir_shape_rejects_semantic_failed_ast(void) {
     latticra_l_ui_semantic_result_t semantic;
     latticra_lir_module_t module;
     EXPECT_TRUE(latticra_l_ui_parse_ast(VALID_SOURCE, strlen(VALID_SOURCE), &ast) == LATTICRA_STATUS_OK, "semantic failed AST parse status");
-    ast.card.field_count = 22u;
+    ast.card.field_count = 23u;
     EXPECT_TRUE(latticra_l_ui_validate_semantics(&ast, &semantic) == LATTICRA_STATUS_OK, "semantic failed validation status");
     EXPECT_TRUE(semantic.error != LATTICRA_L_UI_SEMANTIC_OK, "semantic failure detected");
     EXPECT_TRUE(latticra_lir_lower_l_ui_ast(&ast, &semantic, &module) == LATTICRA_STATUS_OK, "semantic failed LIR lower status");
@@ -245,8 +247,11 @@ static int lir_shape_preserves_field_nodes(void) {
     EXPECT_TRUE(module.nodes[11].kind == LATTICRA_LIR_NODE_FIELD, "first field kind");
     EXPECT_STR_EQ(module.nodes[11].name, "origin", "first field name");
     EXPECT_STR_EQ(module.nodes[11].binding, "state.origin", "first field binding");
-    EXPECT_TRUE(module.nodes[33].kind == LATTICRA_LIR_NODE_FIELD, "last field kind");
-    EXPECT_STR_EQ(module.nodes[33].name, "hardware", "last field name");
+    EXPECT_TRUE(module.nodes[32].kind == LATTICRA_LIR_NODE_FIELD, "network field kind");
+    EXPECT_STR_EQ(module.nodes[32].name, "network", "network field name");
+    EXPECT_STR_EQ(module.nodes[32].binding, "preview.network_allowed", "network field binding");
+    EXPECT_TRUE(module.nodes[34].kind == LATTICRA_LIR_NODE_FIELD, "last field kind");
+    EXPECT_STR_EQ(module.nodes[34].name, "hardware", "last field name");
     return 0;
 }
 
@@ -255,12 +260,14 @@ static int lir_shape_preserves_binding_nodes(void) {
     latticra_l_ui_semantic_result_t semantic;
     latticra_lir_module_t module;
     EXPECT_TRUE(lower_valid(&ast, &semantic, &module) == 0, "binding nodes lower");
-    EXPECT_TRUE(module.nodes[36].kind == LATTICRA_LIR_NODE_BINDING, "first binding node kind");
-    EXPECT_STR_EQ(module.nodes[36].binding, "state.origin", "first binding node target");
+    EXPECT_TRUE(module.nodes[37].kind == LATTICRA_LIR_NODE_BINDING, "first binding node kind");
+    EXPECT_STR_EQ(module.nodes[37].binding, "state.origin", "first binding node target");
     EXPECT_TRUE(module.bindings[0].field_node_index == 11u, "first binding field index");
     EXPECT_STR_EQ(module.bindings[0].binding_prefix, "state", "first binding prefix");
     EXPECT_TRUE(module.bindings[0].resolved_kind == LATTICRA_LIR_BINDING_STATE_VALUE, "first binding resolved kind");
     EXPECT_TRUE(module.bindings[14].resolved_kind == LATTICRA_LIR_BINDING_PREVIEW_VALUE, "preview binding resolved kind");
+    EXPECT_STR_EQ(module.bindings[21].binding_target, "preview.network_allowed", "network binding target");
+    EXPECT_TRUE(module.bindings[21].field_node_index == 32u, "network binding field index");
     return 0;
 }
 
@@ -275,8 +282,8 @@ static int lir_shape_preserves_text_nodes_with_lengths(void) {
     EXPECT_TRUE(latticra_l_ui_validate_semantics(&ast, &semantic) == LATTICRA_STATUS_OK, "escaped text semantic status");
     EXPECT_TRUE(latticra_lir_lower_l_ui_ast(&ast, &semantic, &module) == LATTICRA_STATUS_OK, "escaped text LIR lower status");
     EXPECT_TRUE(module.error == LATTICRA_LIR_OK, "escaped text LIR OK");
-    EXPECT_TRUE(module.nodes[34].kind == LATTICRA_LIR_NODE_TEXT, "first text node kind");
-    EXPECT_TRUE(module.texts[0].text_node_index == 34u, "first text node index");
+    EXPECT_TRUE(module.nodes[35].kind == LATTICRA_LIR_NODE_TEXT, "first text node kind");
+    EXPECT_TRUE(module.texts[0].text_node_index == 35u, "first text node index");
     EXPECT_TRUE(module.texts[0].value_len == ast.texts[0].value_len, "first text length preserved");
     EXPECT_TRUE(strstr(module.texts[0].escaped_value, "\\x00") != 0, "escaped text preserves NUL representation");
     return 0;
@@ -290,8 +297,8 @@ static int lir_shape_preserves_source_spans(void) {
     EXPECT_TRUE(module.nodes[1].source_span.start_offset == ast.card.span.start_offset, "card span start");
     EXPECT_TRUE(module.nodes[2].source_span.start_offset == ast.rails[0].span.start_offset, "rail span start");
     EXPECT_TRUE(module.nodes[11].source_span.start_offset == ast.fields[0].span.start_offset, "field span start");
-    EXPECT_TRUE(module.nodes[36].source_span.start_offset == ast.fields[0].binding_span.start_offset, "binding span start");
-    EXPECT_TRUE(module.nodes[34].source_span.start_offset == ast.texts[0].span.start_offset, "text span start");
+    EXPECT_TRUE(module.nodes[37].source_span.start_offset == ast.fields[0].binding_span.start_offset, "binding span start");
+    EXPECT_TRUE(module.nodes[35].source_span.start_offset == ast.texts[0].span.start_offset, "text span start");
     return 0;
 }
 

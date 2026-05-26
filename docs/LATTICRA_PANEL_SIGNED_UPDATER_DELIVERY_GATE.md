@@ -105,7 +105,7 @@ latticra_panel_signed_updater_delivery_gate: ok
 ## Next Recommended Lane
 
 ```text
-Add a Panel signed-updater denial transcript that records why signed delivery remains closed without enabling network fetch.
+Add a Panel signed-updater manifest fixture contract that remains local and no-effect.
 ```
 
 ## Non-Claims

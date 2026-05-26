@@ -71,7 +71,7 @@ require_contains 'Completion estimate review after runtime-boundary abuse-case f
 require_contains 'completion_estimate_after_runtime_boundary_abuse_case_fixtures_present=1' STATUS.md
 require_contains 'estimate_adjustment_required=0' STATUS.md
 require_contains 'Continue small guarded report/status alignment only when drift appears' STATUS.md
-require_contains '| Overall Latticra system | 44% |' STATUS.md
+require_contains '| Overall Latticra system | 45% |' STATUS.md
 require_contains '| Latticra Seal / local evidence layer | 39% |' STATUS.md
 require_contains '| Security-hardening implementation | 9% |' STATUS.md
 require_contains '| Public product readiness | 10% |' STATUS.md
@@ -84,7 +84,7 @@ require_contains 'CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md' docs/statu
 require_contains 'completion_estimate_after_runtime_boundary_abuse_case_fixtures_present=1' docs/status/CURRENT_STATUS.md
 require_contains 'estimate_adjustment_required=0' docs/status/CURRENT_STATUS.md
 require_contains 'Continue small guarded report/status alignment only when drift appears' docs/status/CURRENT_STATUS.md
-require_contains '| Overall Latticra system | 44% |' docs/status/CURRENT_STATUS.md
+require_contains '| Overall Latticra system | 45% |' docs/status/CURRENT_STATUS.md
 require_contains '| Public product readiness | 10% |' docs/status/CURRENT_STATUS.md
 
 require_contains 'COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md' docs/FOUNDATION_INDEX.md
@@ -97,7 +97,7 @@ require_contains 'Completion estimate review after runtime-boundary abuse-case f
 require_contains 'Continue small guarded report/status alignment only when drift appears' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md' docs/project_notes/README.md
 
-require_contains 'Current public estimate | Roughly 44% overall system planning estimate' README.md
+require_contains 'Current public estimate | Roughly 45% overall system planning estimate' README.md
 require_contains 'CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md' README.md
 require_contains '| Product readiness | Early; no production platform claimed |' README.md
 require_contains 'sh scripts/test-completion-estimate-review-after-runtime-boundary-abuse-case-fixtures.sh' .github/workflows/runtime-boundary-abuse-case-completion-estimate-review.yml

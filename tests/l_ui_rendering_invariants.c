@@ -60,6 +60,7 @@ static const char VALID_SOURCE[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -107,6 +108,7 @@ static const char ESCAPED_NUL_SOURCE[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -164,7 +166,7 @@ static int l_ui_rendering_accepts_semantically_valid_l_ui_fixture(void) {
     EXPECT_TRUE(render.error == LATTICRA_L_UI_RENDER_OK, "render ok");
     EXPECT_STR_EQ(render.card_name, "NucleusPreview", "render card name");
     EXPECT_TRUE(render.rail_count == 9u, "render rail count");
-    EXPECT_TRUE(render.field_count == 23u, "render field count");
+    EXPECT_TRUE(render.field_count == 24u, "render field count");
     EXPECT_TRUE(render.text_count == 2u, "render text count");
     EXPECT_TRUE(latticra_l_ui_render_report(&render, report, sizeof(report)) == LATTICRA_STATUS_OK, "render report builds");
     EXPECT_TRUE(strstr(report, "LATTICRA L-UI RENDER REPORT\n") != 0, "render report header");

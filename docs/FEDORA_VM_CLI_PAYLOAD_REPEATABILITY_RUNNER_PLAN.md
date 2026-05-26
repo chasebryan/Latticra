@@ -1,15 +1,15 @@
 # Fedora VM CLI Payload Repeatability Runner Plan
 
-Status: planning record
-Scope: plan a future manual disposable Fedora VM repeatability runner for the no-effect CLI RPM payload without implementing or running it.
+Status: implemented runner plan
+Scope: record the manual disposable Fedora VM repeatability runner for the no-effect CLI RPM payload without running it.
 
 ## Purpose
 
 This plan follows the Fedora VM CLI payload repeatability transcript contract.
 
-The future runner should prove repeatability for the already accepted no-effect CLI payload evidence.
+The implemented runner is shaped to prove repeatability for the already accepted no-effect CLI payload evidence.
 
-This plan does not add the runner.
+This plan records the runner.
 
 It does not execute RPM commands.
 
@@ -19,9 +19,9 @@ It does not mutate a host.
 
 It does not widen host install readiness beyond the accepted no-effect CLI payload boundary.
 
-## Future runner path
+## Runner path
 
-A future implementation may add:
+The implementation is:
 
 ```text
 scripts/run-fedora-vm-cli-payload-repeatability-lane.sh
@@ -29,15 +29,16 @@ scripts/run-fedora-vm-cli-payload-repeatability-lane.sh
 
 That script must remain manual-only and must not be called by normal CI.
 
-Any CI workflow for this plan may only run the static guard:
+Any CI workflow for this plan may only run static guards:
 
 ```text
 scripts/test-fedora-vm-cli-payload-repeatability-runner-plan.sh
+scripts/test-fedora-vm-cli-payload-repeatability-runner.sh
 ```
 
 ## Required source records
 
-The future runner must require these records before doing anything else:
+The runner must require these records before doing anything else:
 
 ```text
 docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_CONTRACT.md
@@ -45,6 +46,7 @@ docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_CONTRACT_STATUS.md
 docs/FEDORA_VM_CLI_PAYLOAD_NEXT_VALIDATION_LANE_PLAN.md
 docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md
 packaging/fedora/latticra.spec
+README.md
 src/latticra_cli.c
 scripts/test-latticra-no-effect-cli-status-surface.sh
 scripts/run-fedora-vm-cli-payload-validation-lane.sh
@@ -52,7 +54,7 @@ scripts/run-fedora-vm-cli-payload-validation-lane.sh
 
 ## Required hard gate
 
-The future runner must refuse to proceed unless all of the following are true:
+The runner must refuse to proceed unless all of the following are true:
 
 ```text
 LATTICRA_ALLOW_DISPOSABLE_VM_RPM_VALIDATION=1
@@ -72,17 +74,18 @@ cc_present=1
 sudo_present=1
 ```
 
-The future runner must use `sudo` only for RPM install and RPM removal.
+The runner must use `sudo` only for RPM install and RPM removal.
 
 ## Required command availability
 
-The future runner must require:
+The runner must require:
 
 ```text
 awk
 cat
 cc
 find
+git
 grep
 gzip
 id
@@ -100,7 +103,7 @@ If `sha256sum` is unavailable on a Fedora target, the runner must fail closed ra
 
 ## Planned repeatability sequence
 
-The future runner should perform this sequence only after the hard gate passes:
+The runner performs this sequence only after the hard gate passes:
 
 ```text
 1. Verify disposable Fedora VM target evidence.
@@ -156,7 +159,7 @@ The RPM payload may include:
 
 ## Required report fields
 
-A future successful repeatability runner should emit:
+A successful repeatability runner emits:
 
 ```text
 FEDORA VM CLI PAYLOAD REPEATABILITY LANE
@@ -165,11 +168,19 @@ repeatability_validation_status=ok
 transcript_kind=disposable-vm-cli-payload-repeatability
 prior_cli_payload_evidence_recorded=1
 source_tree_revision_recorded=1
+source_tree_revision=$source_tree_revision
 fedora_os_release_recorded=1
 fedora_kernel_version_recorded=1
+fedora_kernel_version=$(uname -r)
 spec_checksum_recorded=1
+spec_checksum=$spec_checksum
 source_archive_checksum_recorded=1
+source_archive_checksum=$source_archive_checksum
 rpm_nevra_recorded=1
+rpm_nevra=$rpm_nevra
+package_name=$name
+package_version=$version
+package_arch=$rpm_arch
 rpm_payload_listing_recorded=1
 rpm_payload_matches_expected_cli_surfaces=1
 unexpected_runtime_surface_absent=1
@@ -199,7 +210,9 @@ evidence_level=9
 ```text
 fedora_vm_cli_payload_repeatability_transcript_contract_present=1
 fedora_vm_cli_payload_repeatability_runner_plan_present=1
-fedora_vm_cli_payload_repeatability_runner_present=0
+fedora_vm_cli_payload_repeatability_runner_present=1
+repeatability_runner_manual_only=1
+ci_auto_repeatability_validation_allowed=0
 second_disposable_vm_cli_validation_completed=0
 cli_payload_repeatability_evidence_present=0
 host_install_ready_for_cli_payload=1
@@ -212,9 +225,9 @@ immutable_fedora_ready=0
 
 ## Boundary
 
-This plan is not a runner.
+This plan is not a completed repeatability transcript.
 
-It does not add `scripts/run-fedora-vm-cli-payload-repeatability-lane.sh`.
+It does not run `scripts/run-fedora-vm-cli-payload-repeatability-lane.sh`.
 
 It does not run `rpmbuild`.
 
@@ -235,10 +248,10 @@ It does not claim Fedora approval, Fedora distribution readiness, production ins
 ## Next recommended lane
 
 ```text
-Implement manually gated Fedora VM CLI payload repeatability runner
+Capture reviewed Fedora VM CLI payload repeatability transcript evidence
 ```
 
-That future implementation must remain manual-only, must require explicit operator consent, and must preserve all non-claims.
+That future evidence capture must come from a real disposable Fedora VM run, must be operator-reviewed, and must preserve all non-claims.
 
 ## Validation
 

@@ -44,6 +44,8 @@ kernel time accounting guard
 kernel time accounting report runner
 kernel preemption guard
 kernel preemption report runner
+kernel scheduler credit guard
+kernel scheduler credit report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
@@ -56,7 +58,7 @@ kernel lifecycle rollback plan
 The lifecycle evidence can report a bounded in-memory path ending at:
 
 ```text
-final_state=preemption-ready
+final_state=scheduler-credit-ready
 ```
 
 The lifecycle report runner and subsystem summary keep the external-effect posture explicit:
@@ -160,7 +162,7 @@ not installer-ready
 Recommended next work:
 
 ```text
-Add no-effect rollback classifier
+Add no-effect scheduler selection classifier
 ```
 
 That future slice should implement classification/reporting only and continue to require:
@@ -194,6 +196,7 @@ Dedicated workflow lanes keep the kernel table guards visible:
 .github/workflows/kernel-context-switch.yml
 .github/workflows/kernel-time-accounting.yml
 .github/workflows/kernel-preemption.yml
+.github/workflows/kernel-scheduler-credit.yml
 .github/workflows/kernel-process-table.yml
 .github/workflows/kernel-syscall-table.yml
 ```

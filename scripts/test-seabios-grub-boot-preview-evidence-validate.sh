@@ -116,6 +116,7 @@ require_contains 'seabios-grub-boot-preview-evidence-validate.sh' "$installer_re
 require_contains 'boot-preview evidence validation' "$roadmap"
 require_contains 'test-seabios-grub-boot-preview-evidence-validate.sh' Makefile
 require_contains 'boot-evidence-validate:' Makefile
+require_contains 'sh ./scripts/seabios-grub-boot-preview-evidence-validate.sh' Makefile
 
 sh -n "$script"
 sh -n "$test_script"

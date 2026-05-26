@@ -65,6 +65,9 @@ for field in \
   'locked_dependency_builds_required=1' \
   'offline_installer_builds_required=1' \
   'ad_hoc_network_client_commands_forbidden_without_guard=1' \
+  'source_archive_fixture_tracked_unignored_source_view_required=1' \
+  'source_archive_fixture_symlink_refusal_required=1' \
+  'source_archive_fixture_reproducible_metadata_required=1' \
   'release_publishing_authority_granted=0' \
   'production_installer_claim_allowed=0' \
   'production_update_claim_allowed=0' \
@@ -116,6 +119,7 @@ require_contains 'workflow must not use pull_request_target' scripts/test-qualit
 require_contains 'workflow must not consume repository secrets without a dedicated review guard' scripts/test-quality-safety-guards.sh
 require_contains 'workflow must not consume implicit GitHub token surfaces without a dedicated review guard' scripts/test-quality-safety-guards.sh
 require_contains 'workflow must not add ad hoc network client commands without a dedicated review guard' scripts/test-quality-safety-guards.sh
+require_contains 'source archives must use deterministic tar/gzip metadata' scripts/test-quality-safety-guards.sh
 require_contains 'cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml' Makefile
 require_contains 'cargo build --release --locked --offline' installer/scripts/latticra-installer-apply.sh
 require_contains 'SBOM evidence for shipped artifacts' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md

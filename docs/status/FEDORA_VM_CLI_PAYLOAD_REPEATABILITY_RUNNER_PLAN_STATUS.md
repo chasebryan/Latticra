@@ -2,15 +2,15 @@
 
 Status: plan/status alignment
 Date: 2026-05-26
-Scope: status record for the Fedora VM CLI payload repeatability runner plan.
+Scope: status record for the Fedora VM CLI payload repeatability runner plan and manual runner implementation.
 
 ## Summary
 
-Latticra now has a plan for a future manual disposable Fedora VM CLI payload repeatability runner.
+Latticra now has a plan and manually gated runner for disposable Fedora VM CLI payload repeatability validation.
 
-The plan maps the repeatability transcript contract into a future runner shape without implementing it.
+The plan maps the repeatability transcript contract into a runner shape, and the runner is present as a manual-only script.
 
-The planned runner remains gated by:
+The runner remains gated by:
 
 ```text
 LATTICRA_ALLOW_DISPOSABLE_VM_RPM_VALIDATION=1
@@ -29,7 +29,9 @@ LATTICRA_OPERATOR_CONSENT_RECORDED=1
 ```text
 fedora_vm_cli_payload_repeatability_transcript_contract_present=1
 fedora_vm_cli_payload_repeatability_runner_plan_present=1
-fedora_vm_cli_payload_repeatability_runner_present=0
+fedora_vm_cli_payload_repeatability_runner_present=1
+repeatability_runner_manual_only=1
+ci_auto_repeatability_validation_allowed=0
 second_disposable_vm_cli_validation_completed=0
 cli_payload_repeatability_evidence_present=0
 host_install_ready_for_cli_payload=1
@@ -57,9 +59,9 @@ fedora_vm_cli_payload_repeatability_runner_plan: ok
 ## Next recommended lane
 
 ```text
-Implement manually gated Fedora VM CLI payload repeatability runner
+Capture reviewed Fedora VM CLI payload repeatability transcript evidence
 ```
 
 ## Non-claims
 
-This status record is not a runner, not RPM install evidence, not a second disposable Fedora VM validation run, not host mutation, not production readiness, not Fedora approval, not Fedora distribution readiness, not daily-driver safety, not immutable Fedora readiness, not update safety, not recovery safety, not sandboxing, and not a production installer claim.
+This status record is not RPM install evidence, not a second disposable Fedora VM validation run, not host mutation, not production readiness, not Fedora approval, not Fedora distribution readiness, not daily-driver safety, not immutable Fedora readiness, not update safety, not recovery safety, not sandboxing, and not a production installer claim.

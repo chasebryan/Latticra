@@ -47,6 +47,7 @@ run-queue-ready
 context-switch-ready
 time-accounting-ready
 preemption-ready
+scheduler-credit-ready
 ```
 
 ## Controlled effect boundary

@@ -23,6 +23,7 @@ require_file docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_file docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_file docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 require_file docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_file docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 require_file scripts/test-opensuse-rpmlint-osc-availability.sh
 require_file packaging/opensuse/latticra.spec
 require_file packaging/opensuse/latticra.changes
@@ -38,7 +39,8 @@ require_contains 'does not create an Open Build Service project' docs/OPENSUSE_R
 require_contains 'docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
-require_contains 'Add openSUSE temporary RPM topdir handoff lane' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_contains 'docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_contains 'Add openSUSE local RPM build evidence gate contract' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'opensuse_rpmlint_static_spec_lane: ok' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 
 require_contains 'LOCAL-ONLY openSUSE DRAFT' packaging/opensuse/latticra.spec

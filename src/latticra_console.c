@@ -150,6 +150,18 @@ static const latticra_console_command_t lc_commands[] = {
         0
     },
     {
+        "lc session",
+        "lc session",
+        "Inspect the LC session envelope before runtime sessions, shells, or host adapters exist.",
+        "lc.session.contract",
+        LATTICRA_CONSOLE_COMMAND_CORE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
         "lc profiles",
         "lc profiles",
         "Show installed LC configuration profile presets.",
@@ -640,6 +652,8 @@ static void lc_seed_result(
     lc_copy(result->command_registry_status, sizeof(result->command_registry_status), "seed-registry");
     lc_copy(result->standalone_console_status, sizeof(result->standalone_console_status),
         "metadata-only-standalone-contract");
+    lc_copy(result->session_contract_status, sizeof(result->session_contract_status),
+        "metadata-only-contract");
     lc_copy(result->substrate_bridge_status, sizeof(result->substrate_bridge_status), "metadata-bound");
     lc_copy(result->panel_install_status, sizeof(result->panel_install_status), "panel-installable");
     lc_copy(result->host_embedding_status, sizeof(result->host_embedding_status), "planned");
@@ -681,6 +695,7 @@ static void lc_seed_result(
     result->standalone_installable = 1;
     result->standalone_requires_panel = 0;
     result->standalone_contract_present = 1;
+    result->session_contract_present = 1;
     result->command_registry_present = 1;
     result->substrate_bridge_present = 1;
     result->host_embeddable = 1;
@@ -756,6 +771,8 @@ static void lc_finalize(latticra_console_result_t *result) {
     lc_copy(result->command_registry_status, sizeof(result->command_registry_status), "seed-registry-ready");
     lc_copy(result->standalone_console_status, sizeof(result->standalone_console_status),
         "metadata-only-standalone-contract-ready");
+    lc_copy(result->session_contract_status, sizeof(result->session_contract_status),
+        "metadata-only-contract-ready");
     lc_copy(result->substrate_bridge_status, sizeof(result->substrate_bridge_status), "metadata-bound-ready");
     lc_copy(result->host_embedding_contract_status, sizeof(result->host_embedding_contract_status),
         "metadata-only-contract-ready");
@@ -930,6 +947,7 @@ latticra_status_t latticra_console_manpage_report(
         "  latticra-lc commands\n"
         "  latticra-lc install-config\n"
         "  latticra-lc standalone\n"
+        "  latticra-lc session\n"
         "  latticra-lc profiles\n"
         "  latticra-lc receipts\n"
         "  latticra-lc receipt-request\n"
@@ -1077,6 +1095,54 @@ latticra_status_t latticra_console_standalone_contract_report(
         "related_profile_command=lc profiles\n"
         "no_effect=1\n"
         "shell_execution_allowed=0\n"
+        "host_process_launch_allowed=0\n"
+        "host_file_read_allowed=0\n"
+        "host_file_write_allowed=0\n"
+        "host_mutation_allowed=0\n"
+        "network_allowed=0\n"
+        "runtime_enforcement_allowed=0\n"
+        "boot_allowed=0\n"
+        "production_os_claim=0\n");
+    return status;
+}
+
+latticra_status_t latticra_console_session_contract_report(
+    char *buffer,
+    size_t buffer_len) {
+    size_t used = 0u;
+    latticra_status_t status;
+
+    if (buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    buffer[0] = '\0';
+
+    status = lc_appendf(buffer, buffer_len, &used,
+        "LATTICRA CONSOLE SESSION CONTRACT\n"
+        "session_profile=lc-session-v0\n"
+        "session_status=metadata-only-contract\n"
+        "session_contract_present=1\n"
+        "session_kind=operator-base\n"
+        "standalone_compatible=1\n"
+        "panel_embedded_compatible=1\n"
+        "host_embedded_planned=1\n"
+        "session_state_source=metadata-only\n"
+        "session_manifest_present=0\n"
+        "session_manifest_write_allowed=0\n"
+        "runtime_session_created=0\n"
+        "runtime_process_spawn_allowed=0\n"
+        "runtime_invocation_allowed=0\n"
+        "interactive_shell_allowed=0\n"
+        "command_surface=lc session\n"
+        "related_standalone_command=lc standalone\n"
+        "related_substrate_command=lc substrate\n"
+        "related_host_adapter_command=lc host-adapter\n"
+        "related_os_contract_command=lc os-contract\n"
+        "runtime_boundary_required=1\n"
+        "seal_capability_labels_required=1\n"
+        "receipt_required_before_session_runtime=1\n"
+        "promotion_gate=lc_session_contract_before_runtime_or_host_embedding\n"
+        "no_effect=1\n"
+        "file_write_allowed=0\n"
         "host_process_launch_allowed=0\n"
         "host_file_read_allowed=0\n"
         "host_file_write_allowed=0\n"
@@ -1844,6 +1910,8 @@ latticra_status_t latticra_console_receipt_report(
         "host_embedding_contract_receipt_required=1\n"
         "host_inventory_contract_receipt_required=1\n"
         "host_adapter_contract_receipt_required=1\n"
+        "session_contract_receipt_required=1\n"
+        "session_contract_present=1\n"
         "receipt_request_contract_required=1\n"
         "receipt_request_contract_present=1\n"
         "receipt_payload_schema_required=1\n"
@@ -1872,6 +1940,7 @@ latticra_status_t latticra_console_receipt_report(
         "receipt_payload_artifact_review_receipt_draft_command=lc receipt-review-draft\n"
         "receipt_payload_materialization_plan_command=lc receipt-materialization-plan\n"
         "signature_request_binding_command=lc signature-request\n"
+        "session_contract_command=lc session\n"
         "seal_signature_planned=1\n"
         "seal_signature_present=0\n"
         "seal_signing_authority_present=0\n"
@@ -1880,7 +1949,7 @@ latticra_status_t latticra_console_receipt_report(
         "receipt_hash_recorded=0\n"
         "receipt_path_recorded=0\n"
         "receipt_format=metadata-only-contract\n"
-        "receipt_surfaces=profile,host-contract,host-inventory,host-adapter,runtime-boundary\n"
+        "receipt_surfaces=profile,session,host-contract,host-inventory,host-adapter,runtime-boundary\n"
         "promotion_gate=lc_receipts_before_host_adapter_or_os_base\n"
         "command_surface=lc receipts\n"
         "no_effect=1\n"
@@ -2004,6 +2073,7 @@ latticra_status_t latticra_console_report(
         "console_status=%s\n"
         "command_registry_status=%s\n"
         "standalone_console_status=%s\n"
+        "session_contract_status=%s\n"
         "substrate_bridge_status=%s\n"
         "panel_install_status=%s\n"
         "host_embedding_status=%s\n"
@@ -2028,6 +2098,7 @@ latticra_status_t latticra_console_report(
         "standalone_requires_panel=%d\n"
         "standalone_command_wrapper=latticra-lc\n"
         "standalone_contract_present=%d\n"
+        "session_contract_present=%d\n"
         "command_registry_present=%d\n"
         "substrate_bridge_present=%d\n"
         "operator_shell_present=%d\n"
@@ -2077,6 +2148,7 @@ latticra_status_t latticra_console_report(
         result->console_status,
         result->command_registry_status,
         result->standalone_console_status,
+        result->session_contract_status,
         result->substrate_bridge_status,
         result->panel_install_status,
         result->host_embedding_status,
@@ -2100,6 +2172,7 @@ latticra_status_t latticra_console_report(
         result->standalone_installable,
         result->standalone_requires_panel,
         result->standalone_contract_present,
+        result->session_contract_present,
         result->command_registry_present,
         result->substrate_bridge_present,
         result->operator_shell_present,

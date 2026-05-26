@@ -35,6 +35,7 @@ cc $CFLAGS \
   src/kernel_context_switch.c \
   src/kernel_time_accounting.c \
   src/kernel_preemption.c \
+  src/kernel_scheduler_credit.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -46,12 +47,12 @@ cc $CFLAGS \
 grep -Fq 'LATTICRA KERNEL LIFECYCLE REPORT' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'policy_status=gate-allowed' "$report_txt"
-grep -Fq 'final_state=preemption-ready' "$report_txt"
-grep -Fq 'step_count=17' "$report_txt"
-grep -Fq 'state_change_count=17' "$report_txt"
+grep -Fq 'final_state=scheduler-credit-ready' "$report_txt"
+grep -Fq 'step_count=18' "$report_txt"
+grep -Fq 'state_change_count=18' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
-grep -Fq 'machine_log_count=17' "$report_txt"
+grep -Fq 'machine_log_count=18' "$report_txt"
 grep -Fq 'evidence_level=10' "$report_txt"
 grep -Fq 'log[0].from=created' "$report_txt"
 grep -Fq 'log[0].to=initialized' "$report_txt"
@@ -102,5 +103,9 @@ grep -Fq 'log[16].from=time-accounting-ready' "$report_txt"
 grep -Fq 'log[16].to=preemption-ready' "$report_txt"
 grep -Fq 'log[16].state_change_performed=1' "$report_txt"
 grep -Fq 'log[16].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[17].from=preemption-ready' "$report_txt"
+grep -Fq 'log[17].to=scheduler-credit-ready' "$report_txt"
+grep -Fq 'log[17].state_change_performed=1' "$report_txt"
+grep -Fq 'log[17].external_effect_performed=0' "$report_txt"
 
 printf 'kernel_lifecycle_report_runner: ok\n'

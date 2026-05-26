@@ -108,7 +108,7 @@ require_contains 'directory_delete_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
 require_contains 'macos_reset_uninstall_live_runner_interface_contract: ok' "$doc"
-require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial review contract that reviews the closed gate transcript without enabling dispatch or deletion.' "$doc"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial disposition review contract that reviews the no-effect disposition without opening dispatch or deletion.' "$doc"
 
 require_contains 'Status: no-effect reset/uninstall live-runner interface contract status' "$status"
 require_contains 'macos_reset_uninstall_live_runner_interface_contract_present=1' "$status"
@@ -135,7 +135,7 @@ require_contains 'docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_INTERFACE_CONTRACT.md' 
 require_contains 'scripts/macos-reset-uninstall-live-runner-interface-contract.sh' "$transfer_plan"
 require_contains 'docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_INTERFACE_CONTRACT_STATUS.md' "$transfer_plan"
 require_contains 'Current live-runner interface lane now present' "$transfer_plan"
-require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial review contract that reviews the closed gate transcript without enabling dispatch or deletion.' "$transfer_plan"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial disposition review contract that reviews the no-effect disposition without opening dispatch or deletion.' "$transfer_plan"
 
 require_contains 'macos_reset_uninstall_live_runner_interface_contract_present=1' "$transfer_status"
 require_contains 'live_runner_interface_contract_state=defined-no-effect' "$transfer_status"
@@ -144,7 +144,7 @@ require_contains 'live_runner_interface_denial_path_active=1' "$transfer_status"
 require_contains 'live_runner_interface_invocation_enabled=0' "$transfer_status"
 require_contains 'live_runner_interface_handoff_enabled=0' "$transfer_status"
 require_contains 'Current live-runner interface lane' "$transfer_status"
-require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial review contract that reviews the closed gate transcript without enabling dispatch or deletion.' "$transfer_status"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial disposition review contract that reviews the no-effect disposition without opening dispatch or deletion.' "$transfer_status"
 
 require_contains 'macos_reset_uninstall_live_runner_interface_contract_present=1' "$readme"
 require_contains 'sh scripts/macos-reset-uninstall-live-runner-interface-contract.sh' "$readme"
@@ -164,8 +164,8 @@ require_contains 'live_runner_interface_handoff_enabled=0' "$readme_status"
 
 require_contains 'Add a macOS reset/uninstall live-runner no-op prototype contract' "$denial_doc"
 require_contains 'Add a macOS reset/uninstall live-runner no-op prototype contract' "$denial_status"
-require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-review-contract' "$denial_script"
-require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-review-contract' "$preflight_script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-review-contract' "$denial_script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-review-contract' "$preflight_script"
 
 require_contains 'MACOS RESET UNINSTALL LIVE RUNNER INTERFACE CONTRACT' "$script"
 require_contains 'reset_uninstall_live_runner_interface_contract_status=ok' "$script"
@@ -198,7 +198,7 @@ require_contains 'file_delete_performed=0' "$script"
 require_contains 'directory_delete_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-review-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-review-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -226,7 +226,7 @@ require_output_contains "$output" 'directory_delete_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'network_performed=0'
 require_output_contains "$output" 'runtime_authority_granted=0'
-require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-review-contract'
+require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-review-contract'
 
 require_contains 'macos-reset-uninstall-live-runner-interface:' "$makefile"
 require_contains 'sh ./scripts/test-macos-reset-uninstall-live-runner-interface-contract.sh' "$makefile"

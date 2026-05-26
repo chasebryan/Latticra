@@ -25,7 +25,7 @@ require_file src/runtime_boundary.c
 require_file tests/runtime_boundary_lat_pipeline_evidence.c
 require_file scripts/test-runtime-boundary.sh
 
-require_contains 'Status: runtime boundary refinement implementation with Lat pipeline clause, declaration, module/count, stage-summary, parse-error, semantic-error, downstream-stage-error, span, comment, Lat LIR module-summary, Lat LIR source-span, Lat LIR node-kind, Lat LIR first-node, Lat LIR first-node span, Lat LIR no-effect, and Lat LIR edge-kind evidence' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
+require_contains 'Status: runtime boundary refinement implementation with Lat pipeline clause, declaration, module/count, stage-summary, parse-error, semantic-error, downstream-stage-error, span, comment, Lat LIR module-summary, Lat LIR source-span, Lat LIR node-kind, Lat LIR first-node, Lat LIR first-node span, Lat LIR first-edge, Lat LIR no-effect, and Lat LIR edge-kind evidence' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'no-effect runtime-boundary evidence reporting' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_pipeline_status' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_pipeline_parse_error' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
@@ -71,6 +71,7 @@ require_contains 'lat_lir_contains_edge_count' docs/RUNTIME_BOUNDARY_REFINEMENT_
 require_contains 'lat_lir_binds_edge_count' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_annotates_edge_count' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_orders_before_edge_count' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
+require_contains 'lat_lir_first_edge_kind' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'lat_lir_has_transition_source_edges' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'runtime_boundary_reports_lat_pipeline_evidence' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
 require_contains 'does not provide runtime behavior' docs/RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md
@@ -121,6 +122,7 @@ require_contains 'lat_lir_binds_edge_count' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_annotates_edge_count' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_orders_before_edge_count' include/latticra/runtime_boundary.h
 require_contains 'lat_lir_transition_edge_count' include/latticra/runtime_boundary.h
+require_contains 'lat_lir_first_edge_kind' include/latticra/runtime_boundary.h
 require_contains 'lat-pipeline-validate' src/runtime_boundary.c
 require_contains 'lat_pipeline_status=' src/runtime_boundary.c
 require_contains 'lat_pipeline_parse_error=' src/runtime_boundary.c
@@ -166,6 +168,7 @@ require_contains 'lat_lir_contains_edge_count=' src/runtime_boundary.c
 require_contains 'lat_lir_binds_edge_count=' src/runtime_boundary.c
 require_contains 'lat_lir_annotates_edge_count=' src/runtime_boundary.c
 require_contains 'lat_lir_orders_before_edge_count=' src/runtime_boundary.c
+require_contains 'lat_lir_first_edge_kind=' src/runtime_boundary.c
 require_contains 'lat_lir_has_transition_source_edges=' src/runtime_boundary.c
 require_contains 'runtime_boundary_reports_lat_pipeline_evidence' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'runtime_boundary_denies_parse_failed_lat_pipeline_metadata' tests/runtime_boundary_lat_pipeline_evidence.c
@@ -211,6 +214,7 @@ require_contains 'lat_lir_contains_edge_count=1' tests/runtime_boundary_lat_pipe
 require_contains 'lat_lir_binds_edge_count=1' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_annotates_edge_count=1' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'lat_lir_orders_before_edge_count=1' tests/runtime_boundary_lat_pipeline_evidence.c
+require_contains 'lat_lir_first_edge_kind=contains' tests/runtime_boundary_lat_pipeline_evidence.c
 require_contains 'runtime_boundary_keeps_lat_lir_execution_future_gated' tests/runtime_boundary_lat_pipeline_evidence.c
 
 printf 'runtime_boundary_refinement_implementation: ok\n'

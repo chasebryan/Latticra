@@ -122,6 +122,7 @@ require_contains 'seabios-grub-boot-preview-boot-artifact-manifest-validate.sh' 
 require_contains 'boot artifact manifest validation' "$roadmap"
 require_contains 'test-seabios-grub-boot-preview-boot-artifact-manifest-validate.sh' Makefile
 require_contains 'boot-artifact-validate:' Makefile
+require_contains 'sh ./scripts/seabios-grub-boot-preview-boot-artifact-manifest-validate.sh' Makefile
 
 sh -n "$script"
 sh -n "$test_script"

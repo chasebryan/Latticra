@@ -87,6 +87,7 @@ The current baseline includes the follow-on temporary fixture lane. The archive 
 opensuse_source_archive_reproducibility_contract_present=1
 opensuse_rpmlint_findings_classification_present=1
 opensuse_source_archive_fixture_lane_present=1
+opensuse_rpm_topdir_handoff_lane_present=1
 source_archive_policy_recorded=1
 source_archive_name_expected=latticra-0.0.0.tar.gz
 source_archive_root_expected=latticra-0.0.0/
@@ -125,22 +126,25 @@ claim SUSE endorsement
 claim production readiness
 ```
 
-## Follow-On Fixture Lane
+## Follow-On Handoff Lane
 
-Completed follow-on fixture lane:
+Completed follow-on fixture and handoff lanes:
 
 ```text
 docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 scripts/test-opensuse-source-archive-fixture-lane.sh
+scripts/test-opensuse-rpm-topdir-handoff-lane.sh
 .github/workflows/opensuse-source-archive-fixture-lane.yml
+.github/workflows/opensuse-rpm-topdir-handoff-lane.yml
 ```
 
-That lane proves archive shape and reproducibility in a temporary workspace while keeping package build and publication claims blocked.
+Those lanes prove archive shape, reproducibility, and temporary RPM topdir staging while keeping package build and publication claims blocked.
 
 Recommended next slice:
 
 ```text
-Add openSUSE temporary RPM topdir handoff lane that stages the verified source archive without running rpmbuild or osc build.
+Add openSUSE local RPM build evidence gate contract before any rpmbuild or osc build command can run.
 ```
 
 ## Validation

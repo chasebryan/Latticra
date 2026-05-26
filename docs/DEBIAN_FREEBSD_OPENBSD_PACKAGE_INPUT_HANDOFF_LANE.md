@@ -109,6 +109,7 @@ It does not claim Debian archive readiness, Debian sponsorship, FreeBSD official
 ```text
 debian_freebsd_openbsd_package_input_handoff_lane_present=1
 debian_freebsd_openbsd_source_archive_fixture_lane_present=1
+debian_freebsd_openbsd_package_build_gate_contract_present=1
 temporary_package_input_handoff_lane_present=1
 temporary_debian_source_input_staged=1
 temporary_debian_orig_archive_staged=1
@@ -133,15 +134,30 @@ package_readiness_claimed=0
 
 The handoff evidence is temporary package-input staging only. It does not promote the archive to accepted package-build input.
 
-## Next Slice
+## Completed Follow-On Lane
 
-Recommended next slice:
+Completed follow-on lane:
 
 ```text
 Add Debian, FreeBSD, and OpenBSD package-build evidence gate contract before any package build command can run.
 ```
 
-That future lane should define the exact evidence required before `dpkg-buildpackage`, FreeBSD package builds, or OpenBSD package builds are allowed in any validation environment.
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-build-gate-contract.sh
+```
+
+That gate defines the exact evidence required before `dpkg-buildpackage`, FreeBSD package builds, or OpenBSD package builds are allowed in any validation environment.
+
+## Next Slice
+
+Recommended next slice:
+
+```text
+Add Debian, FreeBSD, and OpenBSD package-build environment contract before any package build command can run.
+```
+
+That future lane should document disposable validation environments while keeping `package_build_gate_state=closed-no-effect`.
 
 ## Validation
 

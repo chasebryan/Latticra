@@ -16,19 +16,27 @@ openbsd_port_draft_present=1
 openbsd_port_static_validation_present=1
 debian_freebsd_openbsd_source_archive_contract_present=1
 debian_freebsd_openbsd_package_input_handoff_lane_present=1
+debian_freebsd_openbsd_package_build_gate_contract_present=1
 temporary_openbsd_distfile_staged=1
+package_build_gate_state=closed-no-effect
+openbsd_build_allowed=0
 source_archive_policy_recorded=1
 source_archive_created=0
 source_archive_sha256_recorded=0
 openbsd_distinfo_created=0
+openbsd_make_makesum_run=0
+openbsd_make_plist_run=0
+openbsd_make_package_run=0
 openbsd_ports_tree_submission_claimed=0
 openbsd_ports_review_thread_claimed=0
 openbsd_maintainer_acceptance_claimed=0
 make_package_run=0
 make_plist_run=0
 bulk_build_run=0
+openbsd_bulk_build_run=0
 portcheck_run=0
 package_artifact_created=0
+install_on_host_run=0
 permit_package_enabled=0
 openbsd_official_port_claimed=0
 production_installer_ready=0
@@ -40,14 +48,18 @@ root_installer_ready=0
 ```text
 docs/OPENBSD_PORT_STATIC_VALIDATION.md
 docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md
 packaging/openbsd/README.md
 packaging/openbsd/Makefile
 packaging/openbsd/pkg/DESCR
 packaging/openbsd/pkg/PLIST
 scripts/test-openbsd-port-static-validation.sh
 scripts/test-debian-freebsd-openbsd-source-archive-contract.sh
+scripts/test-debian-freebsd-openbsd-package-build-gate-contract.sh
 .github/workflows/openbsd-port-static-validation.yml
 .github/workflows/debian-freebsd-openbsd-source-archive-contract.yml
+.github/workflows/debian-freebsd-openbsd-package-build-gate-contract.yml
 ```
 
 ## Current Boundary
@@ -58,8 +70,10 @@ The local ports metadata keeps `PERMIT_PACKAGE=No` and `LicenseRef-Latticra-TBD`
 
 The source archive contract records the expected `latticra-0.0.0.tar.gz` distfile and distinfo boundary while keeping archive creation, checksum acceptance, `distinfo`, `PERMIT_PACKAGE=Yes`, package artifacts, and build transcript promotion blocked.
 
+The package-build gate is recorded in `docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md`. It keeps `package_build_gate_state=closed-no-effect`, `openbsd_build_allowed=0`, `openbsd_make_makesum_run=0`, `openbsd_make_plist_run=0`, `openbsd_make_package_run=0`, `portcheck_run=0`, and `openbsd_bulk_build_run=0` until source, checksum, license, redistribution, notice, ports environment, operator authorization, payload inspection, install/remove transcript, and publication non-claim evidence exists.
+
 ## Next Recommended Lane
 
 ```text
-Add an OpenBSD source archive, checksum, and license redistribution contract before accepting PERMIT_PACKAGE=Yes, make plist, make package, portcheck, or bulk build evidence.
+Add an OpenBSD package-build environment contract before accepting PERMIT_PACKAGE=Yes, make plist, make package, portcheck, or bulk build evidence.
 ```
