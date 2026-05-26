@@ -418,14 +418,6 @@ check_makefile_script_refs() {
   done
 }
 
-check_makefile_script_refs() {
-  script_refs="$(grep -Eo '(scripts|installer/scripts)/[A-Za-z0-9._/-]+\.sh' Makefile || :)"
-  for script_ref in $script_refs; do
-    [ -f "$script_ref" ] ||
-      fail "Makefile references missing guard script $script_ref"
-  done
-}
-
 check_shell_script() {
   script="$1"
 
