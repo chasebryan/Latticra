@@ -19,7 +19,7 @@ constexpr authority_flags flags_from_lat(
                            result.execution_allowed != 0,
                            result.mutation_allowed != 0,
                            result.server_allowed != 0,
-                           false,
+                           result.network_allowed != 0,
                            result.recovery_allowed != 0,
                            result.hardware_allowed != 0};
 }
@@ -30,7 +30,7 @@ constexpr authority_flags flags_from_lir(
                            module.execution_allowed != 0,
                            module.mutation_allowed != 0,
                            module.server_allowed != 0,
-                           false,
+                           module.network_allowed != 0,
                            module.recovery_allowed != 0,
                            module.hardware_allowed != 0};
 }

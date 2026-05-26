@@ -27,6 +27,7 @@ generated_artifact_contract='docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRA
 notice_file_contract='docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md'
 copyright_mapping_contract='docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md'
 trademark_contract='docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md'
+release_artifact_contract='docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md'
 license_contract='docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md'
 status='docs/status/UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md'
 workflow='.github/workflows/ubuntu-package-notice-review-contract.yml'
@@ -39,6 +40,7 @@ require_file "$generated_artifact_contract"
 require_file "$notice_file_contract"
 require_file "$copyright_mapping_contract"
 require_file "$trademark_contract"
+require_file "$release_artifact_contract"
 require_file "$license_contract"
 require_file "$status"
 require_file "$workflow"
@@ -66,6 +68,8 @@ require_contains 'ubuntu_debian_copyright_notice_mapping_contract_present=1' "$c
 require_contains 'ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping' "$contract"
 require_contains 'ubuntu_trademark_notice_boundary_contract_present=1' "$contract"
 require_contains 'ubuntu_trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary' "$contract"
+require_contains 'ubuntu_release_artifact_notice_requirements_contract_present=1' "$contract"
+require_contains 'ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements' "$contract"
 require_contains 'third_party_material_inventory_recorded=1' "$contract"
 require_contains 'notice_file_present=0' "$contract"
 require_contains 'documentation_license_decision_present=0' "$contract"
@@ -93,6 +97,9 @@ require_contains 'package_description_endorsement_boundary_reviewed=1' "$contrac
 require_contains 'documentation_trademark_boundary_reviewed=1' "$contract"
 require_contains 'canonical_endorsement_boundary_reviewed=1' "$contract"
 require_contains 'project_identity_downstream_use_boundary_recorded=1' "$contract"
+require_contains 'release_artifact_notice_requirements_recorded=1' "$contract"
+require_contains 'source_package_notice_requirements_recorded=1' "$contract"
+require_contains 'release_notes_notice_requirements_recorded=1' "$contract"
 require_contains 'ubuntu_package_notice_review_contract_present=1' "$contract"
 require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' "$contract"
 require_contains 'ubuntu_package_notice_inventory_present=1' "$contract"
@@ -109,6 +116,8 @@ require_contains 'ubuntu_debian_copyright_notice_mapping_contract_present=1' "$c
 require_contains 'ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping' "$contract"
 require_contains 'ubuntu_trademark_notice_boundary_contract_present=1' "$contract"
 require_contains 'ubuntu_trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary' "$contract"
+require_contains 'ubuntu_release_artifact_notice_requirements_contract_present=1' "$contract"
+require_contains 'ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements' "$contract"
 require_contains 'doc_payload_license_reviewed=0' "$contract"
 require_contains 'doc_payload_license_unresolved=1' "$contract"
 require_contains 'doc_payload_license_decision_recorded=0' "$contract"
@@ -135,6 +144,9 @@ require_contains 'package_description_endorsement_boundary_reviewed=0' "$contrac
 require_contains 'documentation_trademark_boundary_reviewed=0' "$contract"
 require_contains 'canonical_endorsement_boundary_reviewed=0' "$contract"
 require_contains 'project_identity_downstream_use_boundary_recorded=0' "$contract"
+require_contains 'release_artifact_notice_requirements_recorded=0' "$contract"
+require_contains 'source_package_notice_requirements_recorded=0' "$contract"
+require_contains 'release_notes_notice_requirements_recorded=0' "$contract"
 require_contains 'ubuntu_package_license_review_unblocked=0' "$contract"
 require_contains 'ubuntu_lintian_static_metadata_unblocked=0' "$contract"
 require_contains 'ubuntu_local_deb_build_transcript_unblocked=0' "$contract"
@@ -162,6 +174,8 @@ require_contains 'ubuntu_debian_copyright_notice_mapping_contract_present=1' "$s
 require_contains 'ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping' "$status"
 require_contains 'ubuntu_trademark_notice_boundary_contract_present=1' "$status"
 require_contains 'ubuntu_trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary' "$status"
+require_contains 'ubuntu_release_artifact_notice_requirements_contract_present=1' "$status"
+require_contains 'ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements' "$status"
 require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' "$status"
 require_contains 'doc_payload_license_reviewed=0' "$status"
 require_contains 'doc_payload_license_unresolved=1' "$status"
@@ -182,6 +196,9 @@ require_contains 'debian_copyright_license_ref_replaced_or_justified=0' "$status
 require_contains 'trademark_notice_boundary_recorded=0' "$status"
 require_contains 'trademark_policy_applied_to_package_notice=0' "$status"
 require_contains 'canonical_endorsement_boundary_reviewed=0' "$status"
+require_contains 'release_artifact_notice_requirements_recorded=0' "$status"
+require_contains 'source_package_notice_requirements_recorded=0' "$status"
+require_contains 'release_notes_notice_requirements_recorded=0' "$status"
 require_contains 'ubuntu_package_notice_review_unblocked=0' "$status"
 require_contains 'ubuntu_package_license_review_unblocked=0' "$status"
 require_contains 'docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md' "$status"
@@ -194,6 +211,7 @@ require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' "$
 require_contains 'ubuntu_notice_file_decision_contract_present=1' "$notice_file_contract"
 require_contains 'ubuntu_debian_copyright_notice_mapping_contract_present=1' "$copyright_mapping_contract"
 require_contains 'ubuntu_trademark_notice_boundary_contract_present=1' "$trademark_contract"
+require_contains 'ubuntu_release_artifact_notice_requirements_contract_present=1' "$release_artifact_contract"
 require_contains 'documentation scope, and notice obligations' "$license_contract"
 require_contains 'sh scripts/test-ubuntu-package-notice-review-contract.sh' "$workflow"
 

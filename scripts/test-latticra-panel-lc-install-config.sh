@@ -34,6 +34,7 @@ ui='installer/latticra-installer/src/ui.rs'
 config='installer/latticra-installer/src/config.rs'
 apply='installer/scripts/latticra-installer-apply.sh'
 default_config='installer/configs/default.installer.toml'
+standalone_config='installer/configs/lc-standalone.installer.toml'
 local_config='installer/configs/local-prefix-example.installer.toml'
 manifest='installer/manifests/components.toml'
 foundation_doc='docs/LATTICRA_CONSOLE_FOUNDATION.md'
@@ -44,6 +45,7 @@ for file in \
   "$config" \
   "$apply" \
   "$default_config" \
+  "$standalone_config" \
   "$local_config" \
   "$manifest" \
   "$foundation_doc" \
@@ -55,17 +57,28 @@ done
 
 require_contains 'pub struct LatticraConsoleInstallConfig' "$config"
 require_contains 'install: LatticraConsoleInstallConfig' "$config"
+require_contains 'InstallProfile::LcStandalone' "$config"
 require_contains 'LC install configuration cannot enable external host commands from the Panel.' "$config"
 require_contains 'LC command wrapper must be a single command name.' "$config"
 require_contains 'must be a relative path under the install prefix.' "$config"
 require_contains 'LC install configuration' "$ui"
 require_contains 'Install Latticra Console' "$ui"
 require_contains 'Standalone console' "$ui"
+require_contains 'Console only' "$ui"
 require_contains 'External host commands (future; disabled)' "$ui"
 require_contains '[lc.install]' "$default_config"
 require_contains 'install_profile = "lc-panel-install-v0"' "$default_config"
 require_contains 'standalone_console = true' "$default_config"
 require_contains 'allow_external_host_commands = false' "$default_config"
+require_contains 'profile = "lc_standalone"' "$standalone_config"
+require_contains 'profile = "standalone"' "$standalone_config"
+require_contains 'install_profile = "lc-standalone-install-v0"' "$standalone_config"
+require_contains 'install_mode = "metadata-only-standalone-console"' "$standalone_config"
+require_contains 'standalone_console = true' "$standalone_config"
+require_contains 'panel_embedded_console = false' "$standalone_config"
+require_contains 'allow_external_host_commands = false' "$standalone_config"
+require_contains 'build_gui_installer = false' "$standalone_config"
+require_contains 'install_desktop_entry = false' "$standalone_config"
 require_contains '[lc.install]' "$local_config"
 require_contains 'install_user_wrapper = true' "$local_config"
 require_contains 'LC_INSTALL_PROFILE=$(cfg_section lc.install install_profile lc-panel-install-v0)' "$apply"
@@ -83,7 +96,10 @@ require_contains 'share/latticra/lc/standalone' "$manifest"
 require_contains 'LC install metadata records config/share paths and the standalone command wrapper' "$manifest"
 require_contains 'share/latticra/lc/install/config.toml' "$foundation_doc"
 require_contains 'lc.install.command_wrapper' "$foundation_doc"
+require_contains 'installer/configs/lc-standalone.installer.toml' "$foundation_doc"
+require_contains 'lc-standalone-install-v0' "$foundation_doc"
 require_contains 'sh ./scripts/test-latticra-panel-lc-install-config.sh' Makefile
+require_contains 'lc-standalone-dry-run' installer/Makefile
 require_contains 'Validate Latticra Panel LC install configuration' "$workflow"
 
 tmp="$(mktemp -d "${TMPDIR:-/tmp}/latticra-panel-lc-install-config-test.XXXXXX")"
@@ -108,6 +124,32 @@ require_contains 'lc_install_profile=lc-panel-install-v0' "$tmp/receipts/latest-
 require_contains 'lc_standalone_console=true' "$tmp/receipts/latest-receipt.txt"
 require_contains 'lc_standalone_requires_panel=false' "$tmp/receipts/latest-receipt.txt"
 require_contains 'lc_allow_external_host_commands=false' "$tmp/receipts/latest-receipt.txt"
+
+HOME="$tmp/home" sh "$apply" \
+  --config "$standalone_config" \
+  --plan "$tmp/standalone-plan.txt" \
+  --receipt-dir "$tmp/standalone-receipts" > "$tmp/standalone-dry-run.out" 2>&1
+
+require_output_contains '[dry-run] would install LC config profile lc-standalone-install-v0' "$tmp/standalone-dry-run.out"
+require_output_contains '[dry-run] Panel GUI build disabled by config' "$tmp/standalone-dry-run.out"
+require_output_contains '[dry-run] source build disabled by config' "$tmp/standalone-dry-run.out"
+require_output_contains '[dry-run] desktop entry disabled by config' "$tmp/standalone-dry-run.out"
+require_contains 'profile=lc_standalone' "$tmp/standalone-plan.txt"
+require_contains 'profile=standalone' "$tmp/standalone-plan.txt"
+require_contains 'install_profile=lc-standalone-install-v0' "$tmp/standalone-plan.txt"
+require_contains 'install_mode=metadata-only-standalone-console' "$tmp/standalone-plan.txt"
+require_contains 'panel_console_bridge=standalone-optional' "$tmp/standalone-plan.txt"
+require_contains 'host_embedding_profile=not-embedded' "$tmp/standalone-plan.txt"
+require_contains 'standalone_console=true' "$tmp/standalone-plan.txt"
+require_contains 'panel_embedded_console=false' "$tmp/standalone-plan.txt"
+require_contains 'standalone_contract_present=1' "$tmp/standalone-plan.txt"
+require_contains 'allow_external_host_commands=false' "$tmp/standalone-plan.txt"
+require_contains 'build_gui_installer=false' "$tmp/standalone-plan.txt"
+require_contains 'install_desktop_entry=false' "$tmp/standalone-plan.txt"
+require_contains 'lc_install_profile=lc-standalone-install-v0' "$tmp/standalone-receipts/latest-receipt.txt"
+require_contains 'lc_standalone_console=true' "$tmp/standalone-receipts/latest-receipt.txt"
+require_contains 'lc_standalone_requires_panel=false' "$tmp/standalone-receipts/latest-receipt.txt"
+require_contains 'lc_allow_external_host_commands=false' "$tmp/standalone-receipts/latest-receipt.txt"
 
 awk '
   $0 == "allow_external_host_commands = false" {

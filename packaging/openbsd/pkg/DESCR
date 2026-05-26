@@ -1,0 +1,7 @@
+Latticra is an early-stage contract-first systems architecture and language
+project.
+
+This local-only OpenBSD port draft records package shape only and installs
+the no-effect CLI status surface. It is not OpenBSD ports tree submission
+evidence, ports@ review evidence, bulk build evidence, or package readiness
+evidence.

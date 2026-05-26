@@ -6,6 +6,13 @@ This directory contains Fedora-oriented packaging experiments for Latticra.
 
 The current spec is a local-only draft used by static guards. It is not a Fedora package submission, not Fedora approval evidence, not a Copr build record, not a mock build result, and not package-readiness evidence.
 
+## Where this fits
+
+- Documentation hub: [`../../docs/README.md`](../../docs/README.md)
+- Fedora workflow: [`../../docs/FEDORA_DEVELOPER_WORKFLOW.md`](../../docs/FEDORA_DEVELOPER_WORKFLOW.md)
+- Fedora readiness plan: [`../../docs/FEDORA_READINESS_PLAN.md`](../../docs/FEDORA_READINESS_PLAN.md)
+- Current status: [`../../docs/status/CURRENT_STATUS.md`](../../docs/status/CURRENT_STATUS.md)
+
 Current guarded files:
 
 ```text

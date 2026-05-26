@@ -17,10 +17,13 @@ This lane does not require a clean `rpmlint` result yet because the spec remains
 docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
 scripts/test-opensuse-rpmlint-findings-classification.sh
+scripts/test-opensuse-source-archive-reproducibility-contract.sh
 .github/workflows/opensuse-rpmlint-static-spec-lane.yml
 .github/workflows/opensuse-rpmlint-findings-classification.yml
+.github/workflows/opensuse-source-archive-reproducibility-contract.yml
 packaging/opensuse/latticra.spec
 ```
 
@@ -82,10 +85,10 @@ scripts/test-opensuse-rpmlint-findings-classification.sh
 Recommended next slice:
 
 ```text
-Add openSUSE source archive reproducibility contract before accepting package build evidence.
+Add openSUSE source archive fixture lane that creates and inspects a temporary archive without running rpmbuild or osc build.
 ```
 
-That future lane should keep source archive, license, and build evidence separate from `rpmlint` output so the openSUSE package path remains reviewable.
+That future lane should prove archive shape and reproducibility in a temporary workspace while keeping package build and publication claims blocked.
 
 ## Validation
 

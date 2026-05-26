@@ -19,7 +19,9 @@ The classification applies to:
 packaging/opensuse/latticra.spec
 packaging/opensuse/latticra.changes
 docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
+scripts/test-opensuse-source-archive-reproducibility-contract.sh
 ```
 
 ## Expected Draft Finding Classes
@@ -133,13 +135,21 @@ claim production readiness
 
 ## Next Slice
 
+Completed follow-on source archive contract:
+
+```text
+docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+scripts/test-opensuse-source-archive-reproducibility-contract.sh
+.github/workflows/opensuse-source-archive-reproducibility-contract.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE source archive reproducibility contract before accepting package build evidence.
+Add openSUSE source archive fixture lane that creates and inspects a temporary archive without running rpmbuild or osc build.
 ```
 
-That future lane should keep source archive, license, and build evidence separate from `rpmlint` output so the openSUSE package path remains reviewable.
+That future lane should prove archive shape and reproducibility in a temporary workspace while keeping package build and publication claims blocked.
 
 ## Validation
 

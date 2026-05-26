@@ -5,6 +5,7 @@ installer/
   TREE.txt
   configs/
     default.installer.toml
+    lc-standalone.installer.toml
     local-prefix-example.installer.toml
   docs/
     INSTALL_BUTTON_EXECUTION_MODEL.md

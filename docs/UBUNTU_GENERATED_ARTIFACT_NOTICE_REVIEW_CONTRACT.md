@@ -25,6 +25,7 @@ ubuntu_third_party_material_review_contract_present=1
 ubuntu_notice_file_decision_contract_present=1
 ubuntu_debian_copyright_notice_mapping_contract_present=1
 ubuntu_trademark_notice_boundary_contract_present=1
+ubuntu_release_artifact_notice_requirements_contract_present=1
 ubuntu_package_notice_review_contract_present=1
 deb_artifact_created=0
 package_build_performed=0
@@ -79,6 +80,8 @@ The NOTICE file decision remains separate, but it must also be resolved before t
 The Debian copyright notice mapping remains separate, but it must also be resolved before the Ubuntu package notice review can be promoted.
 
 The trademark notice boundary remains separate, but it must also be resolved before the Ubuntu package notice review can be promoted.
+
+The release artifact notice requirements remain separate, but they must also be resolved before the Ubuntu package notice review can be promoted.
 
 This contract is scoped to the Ubuntu local deb draft. It is not evidence that an artifact exists, that an artifact is distributable, or that release notices are complete.
 

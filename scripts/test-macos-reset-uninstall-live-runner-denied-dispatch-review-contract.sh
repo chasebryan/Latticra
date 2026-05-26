@@ -116,7 +116,7 @@ require_contains 'directory_delete_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
 require_contains 'Add a macOS reset/uninstall live-runner denied-dispatch review contract that keeps review-only dispatch denial evidence separate from any effects.' "$doc"
-require_contains 'Add a macOS reset/uninstall live-runner acceptance-gate contract that requires passed preflight, complete evidence, and explicit effect authorization before dispatch.' "$doc"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial transcript contract that records the closed acceptance gate without dispatching effects.' "$doc"
 
 require_contains 'Status: no-effect reset/uninstall live-runner denied-dispatch review contract status' "$status"
 require_contains 'macos_reset_uninstall_live_runner_denied_dispatch_review_contract_present=1' "$status"
@@ -150,7 +150,7 @@ require_contains 'scripts/macos-reset-uninstall-live-runner-denied-dispatch-revi
 require_contains 'docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_DENIED_DISPATCH_REVIEW_CONTRACT_STATUS.md' "$transfer_plan"
 require_contains 'Current live-runner denied-dispatch review lane now present' "$transfer_plan"
 require_contains 'Add a macOS reset/uninstall live-runner denied-dispatch review contract that keeps review-only dispatch denial evidence separate from any effects.' "$transfer_plan"
-require_contains 'Add a macOS reset/uninstall live-runner acceptance-gate contract that requires passed preflight, complete evidence, and explicit effect authorization before dispatch.' "$transfer_plan"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial transcript contract that records the closed acceptance gate without dispatching effects.' "$transfer_plan"
 
 require_contains 'macos_reset_uninstall_live_runner_denied_dispatch_review_contract_present=1' "$transfer_status"
 require_contains 'live_runner_denied_dispatch_review_contract_state=reviewed-no-effect' "$transfer_status"
@@ -158,7 +158,7 @@ require_contains 'live_runner_denied_dispatch_review_stdout_only=1' "$transfer_s
 require_contains 'live_runner_denied_dispatch_review_dispatch_denied=1' "$transfer_status"
 require_contains 'Current live-runner denied-dispatch review lane' "$transfer_status"
 require_contains 'Add a macOS reset/uninstall live-runner denied-dispatch review contract that keeps review-only dispatch denial evidence separate from any effects.' "$transfer_status"
-require_contains 'Add a macOS reset/uninstall live-runner acceptance-gate contract that requires passed preflight, complete evidence, and explicit effect authorization before dispatch.' "$transfer_status"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial transcript contract that records the closed acceptance gate without dispatching effects.' "$transfer_status"
 
 require_contains 'MACOS RESET UNINSTALL LIVE RUNNER DENIED DISPATCH REVIEW CONTRACT' "$script"
 require_contains 'reset_uninstall_live_runner_denied_dispatch_review_contract_status=ok' "$script"
@@ -171,7 +171,7 @@ require_contains 'file_delete_performed=0' "$script"
 require_contains 'directory_delete_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-gate-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-transcript-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -202,10 +202,10 @@ require_output_contains "$output" 'directory_delete_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'network_performed=0'
 require_output_contains "$output" 'runtime_authority_granted=0'
-require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-gate-contract'
+require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-transcript-contract'
 
-require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-gate-contract' "$transcript_script"
-require_contains 'Add a macOS reset/uninstall live-runner acceptance-gate contract that requires passed preflight, complete evidence, and explicit effect authorization before dispatch.' "$transcript_doc"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-transcript-contract' "$transcript_script"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial transcript contract that records the closed acceptance gate without dispatching effects.' "$transcript_doc"
 require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
 require_contains 'persist-credentials: false' "$workflow"
 require_contains 'sh scripts/test-macos-reset-uninstall-live-runner-denied-dispatch-review-contract.sh' "$workflow"

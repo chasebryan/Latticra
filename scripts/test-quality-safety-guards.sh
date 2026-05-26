@@ -21,7 +21,7 @@ require_contains() {
   pattern="$1"
   file="$2"
 
-  grep -Fq "$pattern" "$file" ||
+  grep -Fq -- "$pattern" "$file" ||
     fail "$file must contain: $pattern"
 }
 
@@ -29,7 +29,7 @@ require_line() {
   pattern="$1"
   file="$2"
 
-  grep -Fxq "$pattern" "$file" ||
+  grep -Fxq -- "$pattern" "$file" ||
     fail "$file must contain line: $pattern"
 }
 
@@ -453,6 +453,11 @@ check_shell_script() {
     fail "$script must not use eval"
   fi
 
+  if [ "$script" != "scripts/test-quality-safety-guards.sh" ] &&
+    grep -Fq 'if cd -- "$dir"' "$script"; then
+    fail "$script canonical path helpers must not mutate the caller working directory"
+  fi
+
   if grep -Eq 'curl[^|]*\|[[:space:]]*(sh|bash)|wget[^|]*\|[[:space:]]*(sh|bash)|bash[[:space:]]+<|sh[[:space:]]+<' "$script"; then
     fail "$script must not pipe remote content into a shell"
   fi
@@ -505,6 +510,21 @@ check_shell_script() {
 
     [ -z "$unexpected_package_mutation_lines" ] ||
       fail "$script package-manager mutation commands must stay on the reviewed packaging allowlist"
+  fi
+
+  archive_extract_lines="$(grep -En 'tar[[:space:]]+-C[[:space:]]+[^|]+[[:space:]]+-xf[[:space:]]+-|^[[:space:]]*(unzip|cpio)[[:space:]]' "$script" || :)"
+  if [ -n "$archive_extract_lines" ]; then
+    case "$script" in
+      scripts/test-fedora-source-archive-fixture-lane.sh|scripts/test-fedora-installroot-rpm-mutation-lane.sh|scripts/run-fedora-disposable-vm-local-rpm-validation-lane.sh|scripts/run-fedora-vm-cli-payload-validation-lane.sh)
+        require_contains "find . -path './.git' -prune -o -type l -print" "$script"
+        require_contains "refusing source archive with symlink entry" "$script"
+        require_contains "--exclude='./.git'" "$script"
+        require_contains "--exclude='./*.tar.gz'" "$script"
+        ;;
+      *)
+        fail "$script must not extract archives outside reviewed local source-archive lanes"
+        ;;
+    esac
   fi
 
   if grep -Fq 'mktemp -d' "$script" &&
@@ -661,7 +681,7 @@ done
 check_makefile_script_refs
 
 require_contains "quality-safety-guards:" "Makefile"
-for prereq in quality-worktree quality-safety-guards quality-defensive-threat-model quality-security-standards seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation; do
+for prereq in quality-worktree quality-safety-guards quality-defensive-threat-model quality-security-standards seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation quality-status; do
   require_make_quality_prereq "$prereq"
 done
 require_contains "git diff --check" "Makefile"
@@ -672,7 +692,9 @@ require_contains "sh ./scripts/test-defensive-threat-model-validation.sh" "Makef
 require_contains "quality-security-standards:" "Makefile"
 require_contains "sh ./scripts/test-defensive-threat-model-validation-refinement.sh" "Makefile"
 require_contains "sh ./scripts/test-high-assurance-security-baseline.sh" "Makefile"
+require_contains "sh ./scripts/test-memory-safety-roadmap.sh" "Makefile"
 require_contains "high-assurance-security-baseline:" "Makefile"
+require_contains "memory-safety-roadmap:" "Makefile"
 require_contains "cargo fmt --manifest-path installer/latticra-installer/Cargo.toml -- --check" "Makefile"
 require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" "Makefile"
 require_contains "python3 scripts/check_latticra_panel_ui_design.py" "Makefile"
@@ -686,9 +708,12 @@ require_contains "sh ./scripts/test-seabios-grub-compatibility-contract.sh" "Mak
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-evidence-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-preflight.sh" "Makefile"
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-evidence-template.sh" "Makefile"
+require_contains "sh ./scripts/test-seabios-grub-boot-preview-evidence-validate.sh" "Makefile"
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh" "Makefile"
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-template.sh" "Makefile"
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-validate.sh" "Makefile"
+require_contains "fedora-vm-cli-payload-readme-alignment:" "Makefile"
+require_contains "sh ./scripts/test-fedora-vm-cli-payload-readme-alignment.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-denial-transcript:" "Makefile"
 require_contains "sh ./scripts/test-macos-reset-uninstall-live-denial-transcript-contract.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-runner-interface:" "Makefile"
@@ -705,11 +730,13 @@ require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-recei
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-contract-stage-38.sh" "Makefile"
+require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract-stage-39.sh" "Makefile"
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-contract.sh" "Makefile"
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-contract.sh" "Makefile"
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-contract.sh" "Makefile"
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-contract.sh" "Makefile"
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-contract.sh" "Makefile"
+require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-console-foundation.sh" "Makefile"
 require_contains "sh ./scripts/test-cpp-authority-layer.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-timer-source.sh" "Makefile"
@@ -720,6 +747,10 @@ require_contains "sh ./scripts/test-kernel-run-queue.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-run-queue-report-runner.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-context-switch.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-context-switch-report-runner.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-time-accounting.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-time-accounting-report-runner.sh" "Makefile"
+require_contains "quality-status:" "Makefile"
+require_contains "sh ./scripts/test-current-estimate-table-source-alignment.sh" "Makefile"
 require_contains "make quality" ".github/workflows/quality.yml"
 require_contains "uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" ".github/workflows/quality.yml"
 require_contains "persist-credentials: false" ".github/workflows/quality.yml"
@@ -736,6 +767,7 @@ require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt
 require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh" ".github/workflows/nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.yml"
 require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.sh" ".github/workflows/nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.yml"
 require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-contract-stage-38.sh" ".github/workflows/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-contract-stage-38.yml"
+require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract-stage-39.sh" ".github/workflows/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-contract-stage-39.yml"
 require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" ".github/workflows/latticra-panel-installer.yml"
 require_contains "uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8" ".github/workflows/latticra-panel-installer.yml"
 require_contains "persist-credentials: false" ".github/workflows/latticra-panel-installer.yml"

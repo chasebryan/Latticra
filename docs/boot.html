@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Boot Preview Boundary | Latticra</title>
+  <meta name="description" content="A public overview of Latticra's SeaBIOS and GRUB compatibility boundary, boot-preview evidence fixture, preflight reports, QEMU argv templates, and boot non-claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Boot Preview Boundary">
+  <meta property="og:description" content="SeaBIOS/GRUB compatibility, fixture-only boot-preview records, preflight reports, QEMU argv templates, and no boot authority.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero boot-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Boot preview boundary</p>
+        <p class="eyebrow">Fixture-Only Boot Evidence Lane</p>
+        <h1>Boot Preview Boundary</h1>
+        <p class="page-lede">
+          Latticra has a SeaBIOS and GRUB compatibility boundary plus no-effect boot-preview fixtures. It does not have a bootable image, QEMU run, GRUB installation, disk image, firmware mutation, or production operating-system claim.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell boot-intro">
+        <div>
+          <p class="eyebrow">Boot Rule</p>
+          <h2>Compatible by absence, not by boot execution.</h2>
+        </div>
+        <p>
+          The current Panel installer is compatible with SeaBIOS and GRUB hosts only in the narrow sense that it stays out of the boot path. Boot-preview records define the evidence shape future work must satisfy before any bootable claim can change.
+        </p>
+      </div>
+
+      <div class="content-shell boot-flow" aria-label="Boot-preview evidence flow">
+        <article>
+          <span>01</span>
+          <h3>Installer boundary</h3>
+          <p>User-local Panel installs avoid firmware, partitions, boot sectors, EFI variables, GRUB config, kernels, and initramfs files.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Fixture manifest</h3>
+          <p>The boot-preview manifest records required future fields while preserving bootable_os_ready=false.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Preflight report</h3>
+          <p>Preflight validates the fixture and reports local tool visibility without running QEMU or invoking GRUB.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Evidence templates</h3>
+          <p>Capture and boot-artifact templates name future evidence fields without creating images or writing boot files.</p>
+        </article>
+        <article>
+          <span>05</span>
+          <h3>Promotion gates</h3>
+          <p>Boot status cannot promote until QEMU, serial-log, artifact, checksum, and recovery evidence exist.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Current Snapshot</p>
+        <h2>The boot-preview lane is still blocked fixture evidence.</h2>
+        <p>
+          These fields summarize the safe public posture across the compatibility and boot-preview records.
+        </p>
+      </div>
+      <div class="content-shell report-grid">
+        <article>
+          <span>compatibility_contract</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>installer_boot_safe</span>
+          <strong>by absence</strong>
+        </article>
+        <article>
+          <span>manifest_validated</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>qemu_execution</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>boot_artifact_manifest</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>serial_boot_log</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>bootable_os_ready</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>production_os_claim</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Future Profiles</p>
+        <h2>Every future boot profile needs separate evidence.</h2>
+        <p>
+          The preview lane names targets only so future evidence cannot collapse SeaBIOS, GRUB BIOS, and GRUB UEFI into one vague claim.
+        </p>
+      </div>
+      <div class="content-shell boot-profile-grid">
+        <article>
+          <span>x86_64</span>
+          <h3>SeaBIOS + GRUB preview</h3>
+          <p>Requires QEMU i440fx SeaBIOS evidence, artifact metadata, serial log, and recovery path.</p>
+        </article>
+        <article>
+          <span>x86_64</span>
+          <h3>GRUB 2 BIOS preview</h3>
+          <p>Requires a separate BIOS bootloader profile with no host bootloader mutation.</p>
+        </article>
+        <article>
+          <span>x86_64</span>
+          <h3>GRUB 2 UEFI preview</h3>
+          <p>Requires OVMF/UEFI evidence, EFI system partition metadata, and no firmware writes.</p>
+        </article>
+        <article>
+          <span>operator</span>
+          <h3>QEMU console preview</h3>
+          <p>Requires a reviewed operator-console path before any VM execution evidence can promote.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell boot-split">
+        <div class="section-heading">
+          <p class="eyebrow">Authority Boundary</p>
+          <h2>Templates are not boot artifacts.</h2>
+          <p>
+            The current lane is useful because it names what future evidence must record while refusing to blur the line between a fixture and an executed boot.
+          </p>
+        </div>
+        <div class="boot-table" role="table" aria-label="Boot-preview authority boundary">
+          <div role="row">
+            <span role="cell">Allowed now</span>
+            <p role="cell">Compatibility contract, fixture manifest validation, no-effect preflight, evidence capture template, QEMU argv template, boot artifact manifest template, and blocked manifest validation.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Future evidence</span>
+            <p role="cell">Boot artifact manifest, artifact checksum, profile-specific QEMU run records, serial console boot logs, operator console path, read-only VM evidence, and recovery runbook.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Denied now</span>
+            <p role="cell">QEMU execution, GRUB invocation, disk image creation, ISO creation, firmware mutation, bootloader writes, partition mutation, EFI variable writes, kernel install, initramfs writes, root escalation, network use, host boot changes, and production OS readiness.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Commands</p>
+        <h2>Run boot-preview checks without booting anything.</h2>
+        <p>
+          These guards inspect contracts, fixture posture, templates, and blocked validation. They do not run QEMU or touch host boot state.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Compatibility and preflight</h3>
+          <pre><code>sh scripts/test-seabios-grub-compatibility-contract.sh
+sh scripts/test-seabios-grub-boot-preview-preflight.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Evidence templates</h3>
+          <pre><code>sh scripts/test-seabios-grub-boot-preview-evidence-contract.sh
+sh scripts/test-seabios-grub-boot-preview-evidence-template.sh
+sh scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Artifact manifest gates</h3>
+          <pre><code>sh scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-template.sh
+sh scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-validate.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Read the boot record before repeating a boot claim.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="SEABIOS_GRUB_COMPATIBILITY_CONTRACT.md"><strong>SeaBIOS/GRUB compatibility</strong><span>Installer-safe compatibility boundary, future targets, promotion gates, and non-claims.</span></a>
+        <a href="SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_CONTRACT.md"><strong>Boot-preview evidence</strong><span>Manifest fixture, preview profiles, preflight, evidence templates, QEMU argv template, and blocked claims.</span></a>
+        <a href="SEABIOS_GRUB_BOOT_PREVIEW_PREFLIGHT.md"><strong>Boot preflight</strong><span>No-effect local readiness report and tool visibility without QEMU or GRUB execution.</span></a>
+        <a href="SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_CAPTURE_TEMPLATE.md"><strong>Evidence capture template</strong><span>Future evidence-bundle fields before any boot-preview claim can promote.</span></a>
+        <a href="SEABIOS_GRUB_BOOT_PREVIEW_QEMU_ARGV_TEMPLATE.md"><strong>QEMU argv template</strong><span>Future profile-specific argv record shape while qemu_run_performed remains zero.</span></a>
+        <a href="SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_TEMPLATE.md"><strong>Boot artifact template</strong><span>Future artifact metadata without disk images, kernels, initramfs, or GRUB config.</span></a>
+        <a href="panel.html"><strong>Panel overview</strong><span>How the user-local installer stays out of the host boot path.</span></a>
+        <a href="kernel.html"><strong>Kernel overview</strong><span>Kernel lifecycle evidence and why it is not a bootable OS claim.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra boot preview boundary.</span>
+      <span><a href="validation.html">Open validation</a></span>
+    </div>
+  </footer>
+</body>
+</html>

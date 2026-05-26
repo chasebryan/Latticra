@@ -417,6 +417,46 @@ static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_qu
         "context switch transition no external effect");
     EXPECT_TRUE(result.denied == 0,
         "context switch transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "time accounting transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY,
+        "next time-accounting-ready");
+    EXPECT_TRUE(strcmp(result.time_accounting.accounting_status,
+            "time-accounting-seed-ready") == 0,
+        "time accounting ready");
+    EXPECT_TRUE(strcmp(result.context_switch.switch_status,
+            "context-switch-seed-ready") == 0,
+        "time accounting transition keeps context switch ready");
+    EXPECT_TRUE(strcmp(result.run_queue.queue_status, "run-queue-seed-ready") == 0,
+        "time accounting transition keeps run queue ready");
+    EXPECT_TRUE(result.time_accounting.account_count == 4u,
+        "time accounting count");
+    EXPECT_TRUE(result.time_accounting.time_accounting_allowed == 0,
+        "time accounting denied");
+    EXPECT_TRUE(result.time_accounting.time_read_allowed == 0,
+        "time read denied");
+    EXPECT_TRUE(result.time_accounting.cpu_usage_write_allowed == 0,
+        "cpu usage write denied");
+    EXPECT_TRUE(result.time_accounting.quota_update_allowed == 0,
+        "quota update denied");
+    EXPECT_TRUE(result.time_accounting.scheduler_credit_update_allowed == 0,
+        "scheduler credit update denied");
+    EXPECT_TRUE(result.time_accounting.context_switch_allowed == 0,
+        "time accounting context switch denied");
+    EXPECT_TRUE(result.time_accounting.run_queue_mutation_allowed == 0,
+        "time accounting run queue mutation denied");
+    EXPECT_TRUE(result.time_accounting.preemption_allowed == 0,
+        "time accounting preemption denied");
+    EXPECT_TRUE(result.time_accounting.process_wake_allowed == 0,
+        "time accounting process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "time accounting transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "time accounting transition not denied");
     return 0;
 }
 
@@ -691,6 +731,25 @@ static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_
     EXPECT_TRUE(strstr(report,
             "context_switch_status=context-switch-seed-ready\n") != 0,
         "context switch emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "time accounting transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "time accounting report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=context-switch-ready\n") != 0,
+        "context switch previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=time-accounting-ready\n") != 0,
+        "time accounting next emitted");
+    EXPECT_TRUE(strstr(report,
+            "context_switch_status=context-switch-seed-ready\n") != 0,
+        "time accounting report context switch emitted");
+    EXPECT_TRUE(strstr(report,
+            "time_accounting_status=time-accounting-seed-ready\n") != 0,
+        "time accounting emitted");
     return 0;
 }
 

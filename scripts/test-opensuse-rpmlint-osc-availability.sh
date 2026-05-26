@@ -56,7 +56,8 @@ require_contains 'does not run `rpmbuild`, `osc build`, `spec-cleaner`, or `zypp
 require_contains 'does not create package artifacts' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_contains 'docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_contains 'docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
-require_contains 'Add openSUSE source archive reproducibility contract' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_contains 'Add openSUSE source archive fixture lane' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_contains 'opensuse_rpmlint_osc_availability: ok' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 
 if [ ! -r /etc/os-release ] || ! grep -Eq '^(ID=opensuse|ID_LIKE=.*suse|ID="opensuse|ID_LIKE=".*suse)' /etc/os-release; then

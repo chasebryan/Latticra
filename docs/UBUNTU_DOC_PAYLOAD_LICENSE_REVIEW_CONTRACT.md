@@ -26,6 +26,7 @@ ubuntu_generated_artifact_notice_review_contract_present=1
 ubuntu_notice_file_decision_contract_present=1
 ubuntu_debian_copyright_notice_mapping_contract_present=1
 ubuntu_trademark_notice_boundary_contract_present=1
+ubuntu_release_artifact_notice_requirements_contract_present=1
 ubuntu_package_notice_review_contract_present=1
 ```
 
@@ -81,6 +82,8 @@ The NOTICE file decision remains separate, but it must also be resolved before t
 The Debian copyright notice mapping remains separate, but it must also be resolved before the Ubuntu package notice review can be promoted.
 
 The trademark notice boundary remains separate, but it must also be resolved before the Ubuntu package notice review can be promoted.
+
+The release artifact notice requirements remain separate, but they must also be resolved before the Ubuntu package notice review can be promoted.
 
 This contract is a guardrail for the current `README.md` package payload. It is not a general documentation relicensing decision for the whole repository.
 

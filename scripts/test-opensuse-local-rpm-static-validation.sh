@@ -42,6 +42,7 @@ require_file docs/OPENSUSE_READINESS_PLAN.md
 require_file docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_file docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_file docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+require_file docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 require_file docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 require_file packaging/opensuse/README.md
 require_file packaging/opensuse/latticra.spec
@@ -56,7 +57,8 @@ require_contains 'no Open Build Service publication claim is made' docs/OPENSUSE
 require_contains 'docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
-require_contains 'Add openSUSE source archive reproducibility contract' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_contains 'Add openSUSE source archive fixture lane' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'opensuse_local_rpm_static_validation: ok' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 
 require_contains 'Status: local-only packaging draft' packaging/opensuse/README.md
@@ -66,6 +68,7 @@ require_contains 'not Open Build Service publication evidence' packaging/opensus
 require_contains 'opensuse_rpmlint_osc_availability_lane_present=1' packaging/opensuse/README.md
 require_contains 'opensuse_rpmlint_static_spec_lane_present=1' packaging/opensuse/README.md
 require_contains 'opensuse_rpmlint_findings_classification_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_source_archive_reproducibility_contract_present=1' packaging/opensuse/README.md
 require_contains 'rpm_artifact_created=0' packaging/opensuse/README.md
 require_contains 'osc_build_run=0' packaging/opensuse/README.md
 require_contains 'accepted_rpmlint_transcript_present=0' packaging/opensuse/README.md

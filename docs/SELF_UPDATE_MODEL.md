@@ -1,6 +1,6 @@
 # Latticra Self-Update Model
 
-Status: initial self-update model
+Status: Panel-owned local-checkout updater policy active; signed self-update model still planned
 Scope: signed staged updates, channels, rollback, operator confirmation, and non-claims.
 
 ## Purpose
@@ -143,9 +143,21 @@ No component should perform direct update network behavior outside the signed up
 
 ## First implementation target
 
-The first implementation target is not a working updater.
+The current Panel implementation target is a local-checkout updater policy surface, not signed or networked self-update.
 
-It is:
+It installs and reports:
+
+```text
+etc/latticra/updater.toml
+share/latticra/updater/policy.toml
+latticra updater status
+updater dry-run
+updater apply
+```
+
+The Panel updater reuses the guarded installer engine for a local-prefix reinstall from the current reviewed checkout. It has no network fetch, root, system mutation, boot, or recovery authority. `latticra updater status` reports the configured source strategy, channel, preview/apply commands, receipt setting, guarded apply mode, and disabled authority posture without launching the GUI.
+
+The signed staged update model still needs:
 
 ```text
 update manifest fixture
@@ -157,6 +169,6 @@ validation test
 
 ## Non-claims
 
-This document does not implement self-update.
+This document does not implement signed or networked self-update.
 
-It does not claim safe update execution, secure update delivery, rollback success, boot update safety, or production release readiness.
+The Panel updater does not claim secure update delivery, rollback success, boot update safety, recovery behavior, network fetch authority, root authority, system mutation authority, or production release readiness.

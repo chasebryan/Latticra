@@ -46,6 +46,7 @@ macos_reset_uninstall_live_runner_interface_contract_present=1
 macos_reset_uninstall_live_runner_noop_prototype_contract_present=1
 macos_reset_uninstall_live_runner_denied_dispatch_transcript_contract_present=1
 macos_reset_uninstall_live_runner_denied_dispatch_review_contract_present=1
+macos_reset_uninstall_live_runner_acceptance_gate_contract_present=1
 live_execution_preflight_contract_state=closed-no-effect
 live_execution_preflight_passed=0
 live_execution_preflight_blocking=1
@@ -83,6 +84,15 @@ live_runner_denied_dispatch_review_dispatch_denied=1
 live_runner_denied_dispatch_review_dispatch_performed=0
 live_runner_denied_dispatch_review_deletion_enabled=0
 live_runner_denied_dispatch_review_acceptance_gate_opened=0
+live_runner_acceptance_gate_contract_state=closed-no-effect
+live_runner_acceptance_gate_open=0
+live_runner_acceptance_gate_closed=1
+live_runner_acceptance_gate_dispatch_allowed=0
+live_runner_acceptance_gate_dispatch_enabled=0
+live_runner_acceptance_gate_dispatch_performed=0
+live_runner_acceptance_gate_deletion_enabled=0
+live_runner_acceptance_gate_result_passed_preflight=blocked
+live_runner_acceptance_gate_result_no_dispatch_until_open=met
 live_runner_interface_current_preflight_passed=0
 live_runner_interface_current_decision=deny
 live_runner_interface_dispatch_enabled=0
@@ -125,6 +135,7 @@ macos_reset_uninstall_live_runner_interface_contract_present=1
 macos_reset_uninstall_live_runner_noop_prototype_contract_present=1
 macos_reset_uninstall_live_runner_denied_dispatch_transcript_contract_present=1
 macos_reset_uninstall_live_runner_denied_dispatch_review_contract_present=1
+macos_reset_uninstall_live_runner_acceptance_gate_contract_present=1
 live_execution_preflight_contract_state=closed-no-effect
 live_execution_preflight_passed=0
 live_execution_preflight_blocking=1
@@ -162,6 +173,15 @@ live_runner_denied_dispatch_review_dispatch_denied=1
 live_runner_denied_dispatch_review_dispatch_performed=0
 live_runner_denied_dispatch_review_deletion_enabled=0
 live_runner_denied_dispatch_review_acceptance_gate_opened=0
+live_runner_acceptance_gate_contract_state=closed-no-effect
+live_runner_acceptance_gate_open=0
+live_runner_acceptance_gate_closed=1
+live_runner_acceptance_gate_dispatch_allowed=0
+live_runner_acceptance_gate_dispatch_enabled=0
+live_runner_acceptance_gate_dispatch_performed=0
+live_runner_acceptance_gate_deletion_enabled=0
+live_runner_acceptance_gate_result_passed_preflight=blocked
+live_runner_acceptance_gate_result_no_dispatch_until_open=met
 live_runner_interface_current_preflight_passed=0
 live_runner_interface_current_decision=deny
 live_runner_interface_dispatch_enabled=0
@@ -257,7 +277,13 @@ Add a macOS reset/uninstall evidence-bundle contract that groups implementation-
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner acceptance-gate contract that requires passed preflight, complete evidence, and explicit effect authorization before dispatch.
+Add a macOS reset/uninstall live-runner acceptance-denial transcript contract that records the closed acceptance gate without dispatching effects.
+```
+
+Current live-runner acceptance-gate lane:
+
+```text
+Add a macOS reset/uninstall live-runner acceptance-gate contract that keeps the live runner closed until passed preflight, evidence, authorization, operator intent, and implementation are all present.
 ```
 
 Current live-runner no-op prototype lane:

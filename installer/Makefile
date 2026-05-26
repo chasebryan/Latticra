@@ -1,4 +1,4 @@
-.PHONY: help gui panel build-gui build-panel dry-run local-example install-local verify-local uninstall-local reset-local uninstall-dry-run reset-dry-run fmt tree clean refresh-desktop
+.PHONY: help gui panel build-gui build-panel dry-run lc-standalone-dry-run standalone-dry-run local-example install-local verify-local uninstall-local reset-local uninstall-dry-run reset-dry-run fmt tree clean refresh-desktop
 
 INSTALLER_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 GUI_DIR := $(INSTALLER_DIR)latticra-installer
@@ -15,6 +15,7 @@ help:
 	  "  make -C installer build-gui       Build Latticra Panel release binary" \
 	  "  make -C installer build-panel     Same as build-gui" \
 	  "  make -C installer dry-run         Run guarded dry-install through the real engine" \
+	  "  make -C installer lc-standalone-dry-run Preview standalone LC install" \
 	  "  make -C installer local-example   Run actual guarded user-local install" \
 	  "  make -C installer install-local   Same as local-example" \
 	  "  make -C installer verify-local    Verify the local install" \
@@ -36,6 +37,12 @@ build-gui build-panel:
 dry-run:
 	sh "$(SCRIPT_DIR)/latticra-installer-apply.sh" \
 	  --config "$(CONFIG_DIR)/default.installer.toml" \
+	  --plan "$(PLAN)" \
+	  --receipt-dir "$(RECEIPTS)"
+
+lc-standalone-dry-run standalone-dry-run:
+	sh "$(SCRIPT_DIR)/latticra-installer-apply.sh" \
+	  --config "$(CONFIG_DIR)/lc-standalone.installer.toml" \
 	  --plan "$(PLAN)" \
 	  --receipt-dir "$(RECEIPTS)"
 

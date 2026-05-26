@@ -87,6 +87,9 @@ typedef struct {
     int preemption_allowed;
     int time_accounting_allowed;
     int time_read_allowed;
+    int cpu_usage_write_allowed;
+    int quota_update_allowed;
+    int scheduler_credit_update_allowed;
     int process_wake_allowed;
     int dma_allowed;
     int hardware_effect_allowed;

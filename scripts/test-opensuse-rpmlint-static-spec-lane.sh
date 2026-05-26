@@ -35,7 +35,8 @@ require_contains 'does not run `spec-cleaner`' docs/OPENSUSE_RPMLINT_STATIC_SPEC
 require_contains 'does not create package artifacts' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'does not create an Open Build Service project' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
-require_contains 'Add openSUSE source archive reproducibility contract' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_contains 'Add openSUSE source archive fixture lane' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'opensuse_rpmlint_static_spec_lane: ok' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 
 require_contains 'LOCAL-ONLY openSUSE DRAFT' packaging/opensuse/latticra.spec

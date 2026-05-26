@@ -28,6 +28,7 @@ ubuntu_third_party_material_review_contract_present=1
 ubuntu_generated_artifact_notice_review_contract_present=1
 ubuntu_notice_file_decision_contract_present=1
 ubuntu_trademark_notice_boundary_contract_present=1
+ubuntu_release_artifact_notice_requirements_contract_present=1
 ubuntu_package_notice_review_contract_present=1
 ```
 
@@ -72,6 +73,8 @@ ubuntu_local_deb_build_transcript_unblocked=0
 The Ubuntu package notice review may not be promoted until the local deb payload has a reviewed Debian copyright notice mapping. That review must explain how binary payload, documentation payload, third-party material, generated artifacts, NOTICE-file requirements, and trademark notice boundaries are represented in `packaging/ubuntu/debian/copyright`.
 
 The trademark notice boundary remains separate, but it must also be resolved before the Ubuntu package notice review can be promoted.
+
+The release artifact notice requirements remain separate, but they must also be resolved before the Ubuntu package notice review can be promoted.
 
 This contract is scoped to the Ubuntu local deb draft. It is not a repository-wide license audit or a Debian Policy compliance claim.
 

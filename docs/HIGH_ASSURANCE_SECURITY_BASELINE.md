@@ -55,6 +55,7 @@ high_assurance_security_baseline_present=1
 source_refresh_date=2026-05-26
 official_source_inventory_present=1
 memory_safety_roadmap_required=1
+memory_safety_roadmap_present=1
 zero_trust_runtime_boundary_required=1
 ssdf_secure_development_required=1
 cpg_operational_baseline_required=1
@@ -175,12 +176,14 @@ SECURITY.md
 docs/DEFENSIVE_THREAT_MODEL_VALIDATION.md
 docs/DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md
 docs/RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md
+docs/MEMORY_SAFETY_ROADMAP.md
 docs/security/C_CPP_SECURITY_PROFILE.md
 docs/security/C_ABI_BOUNDARY_POLICY.md
 scripts/test-quality-safety-guards.sh
 scripts/test-defensive-threat-model-validation.sh
 scripts/test-defensive-threat-model-validation-refinement.sh
 scripts/test-high-assurance-security-baseline.sh
+scripts/test-memory-safety-roadmap.sh
 ```
 
 ## Non-Claims

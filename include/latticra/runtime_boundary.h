@@ -280,6 +280,13 @@ typedef struct {
     size_t lat_lir_lat_assertion_node_count;
     size_t lat_lir_lat_requirement_node_count;
     size_t lat_lir_lat_effect_declaration_node_count;
+    int lat_lir_has_first_lat_node;
+    size_t lat_lir_first_lat_node_index;
+    latticra_lir_node_kind_t lat_lir_first_lat_node_kind;
+    char lat_lir_first_lat_node_name[LATTICRA_LIR_NAME_MAX];
+    char lat_lir_first_lat_node_value[LATTICRA_LIR_VALUE_MAX];
+    char lat_lir_first_lat_node_operator[LATTICRA_LIR_NAME_MAX];
+    char lat_lir_first_lat_node_binding[LATTICRA_LIR_BINDING_MAX];
     int lat_lir_no_effect_chain_ok;
     unsigned int lat_lir_evidence_level;
     int lat_lir_no_effect;
