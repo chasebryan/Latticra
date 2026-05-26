@@ -38,9 +38,9 @@ weight_total=100
 Weighted calculation:
 
 ```text
-weighted_sum=4414
+weighted_sum=4426
 weight_total=100
-overall_estimate=round(4414 / 100)=44
+overall_estimate=round(4426 / 100)=44
 ```
 
 ## Rebased Estimate Table
@@ -50,7 +50,7 @@ overall_estimate=round(4414 / 100)=44
 | Overall Latticra system | 39% | 44% |
 | Latticra Seal / local evidence layer | 34% | 39% |
 | Latticra Panel / local control surface | 28% | 31% |
-| Nadia offline AI foundation | 70% | 70% |
+| Nadia offline AI foundation | 70% | 72% |
 | L-UI parser / AST / string foundation | 87% | 87% |
 | Foundation documents and contracts | 92% | 94% |
 | Public documentation posture | 88% | 91% |

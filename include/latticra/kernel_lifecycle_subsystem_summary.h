@@ -80,6 +80,10 @@ typedef struct {
     int dequeue_allowed;
     int dispatch_allowed;
     int context_switch_allowed;
+    int register_save_allowed;
+    int register_restore_allowed;
+    int stack_switch_allowed;
+    int address_space_switch_allowed;
     int preemption_allowed;
     int time_accounting_allowed;
     int time_read_allowed;

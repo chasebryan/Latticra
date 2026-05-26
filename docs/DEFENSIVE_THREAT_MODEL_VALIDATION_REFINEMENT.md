@@ -69,6 +69,12 @@ current_gaps_present=1
 external_source_refresh_checkpoint_present=1
 external_standards_refresh_needed=1
 manual_source_review_required=1
+manual_source_review_completed_for_current_baseline=1
+high_assurance_security_baseline_present=1
+nsa_zero_trust_guideline_observed=1
+nsa_cisa_memory_safe_languages_observed=1
+cisa_fbi_product_security_bad_practices_observed=1
+nist_high_assurance_references_observed=1
 runtime_boundary_policy_expansion_next=1
 abuse_case_fixture_expansion_next=1
 mode=validation-refinement
@@ -101,19 +107,28 @@ external_endorsement_claimed=0
 
 ## External-source refresh checkpoint
 
-Date checked: 2026-05-25
+Date checked: 2026-05-26
 
 The external-source posture remains source-tracking-only.
 
 ```text
-nsa_advisories_page_reachable=1
-nsa_ai_mcp_guidance_observed=1
+nsa_zero_trust_guideline_observed=1
+nsa_cisa_memory_safe_languages_observed=1
 fbi_cyber_page_reachable=1
 fbi_recent_cyber_alerts_observed=1
-cisa_secure_by_design_reference_preserved=1
-cisa_cpg_reference_preserved=1
+cisa_secure_by_design_reference_verified=1
+cisa_fbi_product_security_bad_practices_reference_verified=1
+cisa_cpg_reference_verified=1
+cisa_zero_trust_maturity_model_reference_verified=1
 cisa_kev_reference_preserved=1
-cisa_direct_manual_review_required=1
+nist_csf_2_reference_verified=1
+nist_ssdf_reference_verified=1
+nist_sp_800_53_release_5_2_0_reference_verified=1
+nist_sp_800_160_reference_verified=1
+nist_sp_800_207_reference_verified=1
+fips_140_3_reference_verified=1
+manual_source_review_completed_for_current_baseline=1
+recurring_manual_source_review_required=1
 external_alignment_claim=source-tracking-only
 certification_from_external_alignment=0
 compliance_from_external_alignment=0
@@ -122,13 +137,17 @@ protection_from_external_alignment=0
 
 Observed source posture:
 
-| Source | 2026-05-25 refinement posture | Allowed use | Forbidden use |
+| Source | 2026-05-26 refinement posture | Allowed use | Forbidden use |
 | --- | --- | --- | --- |
-| NSA Cybersecurity Advisories & Guidance | reachable; current listing includes AI, agentic AI, and Model Context Protocol guidance context | source awareness and defensive design input | NSA endorsement, certification, or protection claim |
-| CISA Secure by Design | authoritative URL retained; detailed manual source review remains required | secure-by-design vocabulary input | CISA compliance or product-security claim |
-| CISA Cross-Sector Cybersecurity Performance Goals | authoritative URL retained; detailed manual source review remains required | control-goal vocabulary input | CPG compliance claim |
-| CISA Known Exploited Vulnerabilities Catalog | authoritative URL retained; detailed manual source review remains required | vulnerability-awareness input | remediation guarantee |
-| FBI Cyber | reachable; current page names active cyber threat and reporting context | threat-environment awareness | FBI endorsement, protection claim, or incident-response capability claim |
+| NSA Zero Trust Implementation Guidelines | 2026 Primer, Discovery Phase, Phase One, and Phase Two observed | zero-trust runtime-boundary planning | NSA endorsement, certification, or protection claim |
+| NSA/CISA Memory Safe Languages CSI | 2025 CSI observed | memory-safety roadmap and C/C++ mitigation input | memory-safety guarantee |
+| CISA Secure by Design | official source verified | secure-by-design vocabulary input | CISA compliance or product-security claim |
+| CISA/FBI Product Security Bad Practices | official source verified | bad-practice exclusion list | CISA/FBI endorsement or compliance claim |
+| CISA Cross-Sector Cybersecurity Performance Goals | official source verified | control-goal vocabulary input | CPG compliance claim |
+| CISA Zero Trust Maturity Model | official source verified | zero-trust maturity vocabulary input | zero-trust certification claim |
+| CISA Known Exploited Vulnerabilities Catalog | authoritative URL retained | vulnerability-awareness input | remediation guarantee |
+| FBI Cyber | reachable; 2026 threat and reporting content visible | threat-environment awareness | FBI endorsement, protection claim, or incident-response capability claim |
+| NIST CSF 2.0 / SSDF / SP 800-53 / SP 800-160 / SP 800-207 / FIPS 140-3 | official sources verified | high-assurance vocabulary and allocation input | NIST compliance, FIPS validation, or accreditation claim |
 
 This refinement does not promote any external alignment entry to implementation-backed security status.
 

@@ -44,6 +44,7 @@ interrupt-table-ready
 timer-source-ready
 scheduler-tick-ready
 run-queue-ready
+context-switch-ready
 ```
 
 ## Controlled effect boundary

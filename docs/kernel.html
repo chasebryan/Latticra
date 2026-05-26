@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kernel and State Lattice | Latticra</title>
+  <meta name="description" content="A public overview of Latticra's State Lattice, kernel seed, subsystem registry, state machine, lifecycle runner, and no-external-effect kernel evidence boundary.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Kernel and State Lattice">
+  <meta property="og:description" content="Compiled C kernel identity, state lattice fixtures, lifecycle reports, subsystem summaries, and denied external authority.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero kernel-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Kernel and State Lattice</p>
+        <p class="eyebrow">No-External-Effect Kernel Evidence</p>
+        <h1>Kernel and State Lattice</h1>
+        <p class="page-lede">
+          Latticra's kernel lane is a compiled C evidence surface for identity, state, subsystem posture, and lifecycle reports. It is not bootable, not a production runtime, and not an operating-system replacement.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell kernel-intro">
+        <div>
+          <p class="eyebrow">Kernel Rule</p>
+          <h2>Internal state can be inspected without external effects.</h2>
+        </div>
+        <p>
+          The current kernel evidence allows bounded in-memory state transitions so reports can show a lifecycle path. It still denies filesystem effects, network effects, process execution, runtime entry, hardware behavior, device operation, boot behavior, and production security-boundary claims.
+        </p>
+      </div>
+
+      <div class="content-shell kernel-flow" aria-label="Latticra kernel evidence flow">
+        <article>
+          <span>01</span>
+          <h3>State lattice</h3>
+          <p>Deterministic fixed-size C fixture for origin, route, path, health, risk, lock, and no-effect labels.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Kernel seed</h3>
+          <p>Compiled kernel identity and deterministic report surface with boot and runtime status denied.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Subsystem registry</h3>
+          <p>Metadata entries for boot, runtime, scheduler, memory, process, filesystem, network, device, and security.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>State machine</h3>
+          <p>Sequential in-memory steps through the kernel ladder while external effects remain zero.</p>
+        </article>
+        <article>
+          <span>05</span>
+          <h3>Lifecycle summary</h3>
+          <p>Report-only summary connects lifecycle completion to subsystem readiness and denied authority labels.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Current Snapshot</p>
+        <h2>The kernel lane reports readiness metadata, not runtime authority.</h2>
+        <p>
+          These fields summarize the current evidence posture from the kernel and lifecycle records.
+        </p>
+      </div>
+      <div class="content-shell report-grid">
+        <article>
+          <span>kernel_status</span>
+          <strong>initialized-report-only</strong>
+        </article>
+        <article>
+          <span>boot_status</span>
+          <strong>not-booted</strong>
+        </article>
+        <article>
+          <span>runtime_status</span>
+          <strong>not-entered</strong>
+        </article>
+        <article>
+          <span>no_effect</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>final_state</span>
+          <strong>context-switch-ready</strong>
+        </article>
+        <article>
+          <span>lifecycle_complete</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>external_effect</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>hardware_effect</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Lifecycle Ladder</p>
+        <h2>The sequence is explicit and bounded.</h2>
+        <p>
+          The lifecycle runner can advance a local in-memory state object through an approved sequence ending at context-switch-ready. That path is evidence, not scheduler execution.
+        </p>
+      </div>
+      <div class="content-shell kernel-ladder-grid">
+        <article>
+          <span>Start</span>
+          <h3>created to registry-ready</h3>
+          <p>Initializes the kernel state and proves the subsystem registry metadata surface is ready.</p>
+        </article>
+        <article>
+          <span>Core tables</span>
+          <h3>scheduler to ipc-table</h3>
+          <p>Records scheduler, memory map, process table, syscall table, and IPC table readiness metadata.</p>
+        </article>
+        <article>
+          <span>Namespace</span>
+          <h3>vfs to driver-catalog</h3>
+          <p>Records VFS namespace, device registry, and driver catalog evidence while denying filesystem and device authority.</p>
+        </article>
+        <article>
+          <span>Interrupts</span>
+          <h3>interrupt to scheduler-tick</h3>
+          <p>Records interrupt table, timer-source, and scheduler-tick metadata without arming timers or dispatching interrupts.</p>
+        </article>
+        <article>
+          <span>Target</span>
+          <h3>context-switch-ready</h3>
+          <p>Reports the current lifecycle target while register save, stack switch, dispatch, context switch, and preemption remain denied.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell kernel-split">
+        <div class="section-heading">
+          <p class="eyebrow">Authority Boundary</p>
+          <h2>Internal mutation is not host mutation.</h2>
+          <p>
+            The most important reading rule is the distinction between a bounded in-memory state object and any external or operational behavior.
+          </p>
+        </div>
+        <div class="kernel-table" role="table" aria-label="Kernel current authority boundary">
+          <div role="row">
+            <span role="cell">Allowed now</span>
+            <p role="cell">Fixed-size state lattice reports, kernel identity reports, subsystem registry reports, in-memory state-machine transitions, lifecycle reports, and subsystem summary reports.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Controlled internal state</span>
+            <p role="cell">The lifecycle may report internal state changes such as a completed sequence to context-switch-ready while preserving external_effect_performed=0.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Denied now</span>
+            <p role="cell">Booting, runtime entry, scheduler execution, memory allocation, process spawn, syscall dispatch, filesystem read/write, network I/O, device I/O, interrupts, timer arms, run queue mutation, DMA, hardware effects, sandboxing, and OS replacement.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Commands</p>
+        <h2>Run the kernel evidence as report-only checks.</h2>
+        <p>
+          These commands compile and inspect deterministic C surfaces. They do not boot a kernel or enter runtime behavior.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>State and kernel seed</h3>
+          <pre><code>sh scripts/test-state-lattice.sh
+sh scripts/test-kernel.sh
+sh scripts/test-kernel-report-runner.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>State machine and lifecycle</h3>
+          <pre><code>sh scripts/test-kernel-state-machine.sh
+sh scripts/test-kernel-lifecycle.sh
+sh scripts/test-kernel-lifecycle-report-runner.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Subsystem summary</h3>
+          <pre><code>sh scripts/test-kernel-lifecycle-subsystem-summary.sh
+sh scripts/test-kernel-lifecycle-subsystem-summary-report-runner.sh
+sh scripts/test-kernel-lifecycle-status-alignment.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Trace kernel claims back to exact evidence.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="STATE_LATTICE.md"><strong>State lattice</strong><span>Fixed-size no-effect C fixture, default labels, C policy, invariants, and non-claims.</span></a>
+        <a href="KERNEL_IMPLEMENTATION.md"><strong>Kernel seed</strong><span>Compiled kernel identity, report fields, no-effect posture, and denied boot/runtime behavior.</span></a>
+        <a href="KERNEL_SUBSYSTEM_REGISTRY.md"><strong>Subsystem registry</strong><span>Boot, runtime, scheduler, memory, process, filesystem, network, device, and security metadata.</span></a>
+        <a href="KERNEL_STATE_MACHINE.md"><strong>State machine</strong><span>Bounded in-memory state object, sequential step function, transition log, and report surface.</span></a>
+        <a href="KERNEL_LIFECYCLE_SEED.md"><strong>Lifecycle seed</strong><span>Approved sequence to context-switch-ready with external effects denied.</span></a>
+        <a href="KERNEL_CONTEXT_SWITCH_SEED.md"><strong>Context switch seed</strong><span>Candidate switch metadata with register, stack, and address-space authority denied.</span></a>
+        <a href="KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md"><strong>Subsystem summary</strong><span>Lifecycle-to-registry summary and denied subsystem authority labels.</span></a>
+        <a href="status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md"><strong>Kernel lifecycle status</strong><span>Status alignment, current evidence list, authority posture, rollback planning, and non-claims.</span></a>
+        <a href="runtime.html"><strong>Runtime boundary</strong><span>How kernel evidence stays separate from runtime execution and operational authority.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra kernel and state lattice overview.</span>
+      <span><a href="architecture.html">Open architecture</a></span>
+    </div>
+  </footer>
+</body>
+</html>

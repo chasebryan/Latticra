@@ -78,6 +78,7 @@ opensuse_local_rpm_static_validation_present=1
 opensuse_changes_file_present=1
 opensuse_rpmlint_osc_availability_lane_present=1
 opensuse_rpmlint_static_spec_lane_present=1
+opensuse_rpmlint_findings_classification_present=1
 opensuse_obs_publication_claimed=0
 opensuse_official_package_claimed=0
 suse_endorsement_claimed=0
@@ -139,10 +140,13 @@ Current guarded files:
 ```text
 docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 scripts/test-opensuse-rpmlint-osc-availability.sh
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
+scripts/test-opensuse-rpmlint-findings-classification.sh
 .github/workflows/opensuse-rpmlint-osc-availability.yml
 .github/workflows/opensuse-rpmlint-static-spec-lane.yml
+.github/workflows/opensuse-rpmlint-findings-classification.yml
 ```
 
 Before any Open Build Service publication or submit request can be claimed, the lane needs evidence for:
@@ -179,10 +183,10 @@ claim operating-system completeness
 Recommended next slice:
 
 ```text
-Add openSUSE rpmlint findings classification report.
+Add openSUSE source archive reproducibility contract before accepting package build evidence.
 ```
 
-That should classify expected local-only draft findings separately from unexpected spec findings while keeping the package local-only.
+That should keep source archive, license, and build evidence separate from `rpmlint` output so the openSUSE package path remains reviewable.
 
 ## Validation
 
@@ -193,6 +197,7 @@ sh scripts/test-opensuse-developer-workflow.sh
 sh scripts/test-opensuse-local-rpm-static-validation.sh
 sh scripts/test-opensuse-rpmlint-osc-availability.sh
 sh scripts/test-opensuse-rpmlint-static-spec-lane.sh
+sh scripts/test-opensuse-rpmlint-findings-classification.sh
 ```
 
 Expected output:
@@ -202,4 +207,5 @@ opensuse_developer_workflow: ok
 opensuse_local_rpm_static_validation: ok
 opensuse_rpmlint_osc_availability: ok
 opensuse_rpmlint_static_spec_lane: ok
+opensuse_rpmlint_findings_classification: ok
 ```

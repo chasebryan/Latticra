@@ -16,8 +16,11 @@ This lane does not require a clean `rpmlint` result yet because the spec remains
 ```text
 docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
+scripts/test-opensuse-rpmlint-findings-classification.sh
 .github/workflows/opensuse-rpmlint-static-spec-lane.yml
+.github/workflows/opensuse-rpmlint-findings-classification.yml
 packaging/opensuse/latticra.spec
 ```
 
@@ -68,13 +71,21 @@ It does not claim official openSUSE package status, SUSE endorsement, product re
 
 ## Next Slice
 
+Completed follow-on classification lane:
+
+```text
+docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+scripts/test-opensuse-rpmlint-findings-classification.sh
+.github/workflows/opensuse-rpmlint-findings-classification.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE rpmlint findings classification report.
+Add openSUSE source archive reproducibility contract before accepting package build evidence.
 ```
 
-That future lane may classify expected local-only draft findings separately from unexpected spec findings while keeping the package local-only.
+That future lane should keep source archive, license, and build evidence separate from `rpmlint` output so the openSUSE package path remains reviewable.
 
 ## Validation
 

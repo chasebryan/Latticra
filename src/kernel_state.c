@@ -46,6 +46,8 @@ const char *latticra_kernel_state_label(latticra_kernel_state_kind_t state) {
             return "scheduler-tick-ready";
         case LATTICRA_KERNEL_STATE_RUN_QUEUE_READY:
             return "run-queue-ready";
+        case LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY:
+            return "context-switch-ready";
         default:
             return "unknown";
     }
@@ -83,6 +85,8 @@ static int is_allowed_transition(
         target_state == LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY) return 1;
     if (current_state == LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY &&
         target_state == LATTICRA_KERNEL_STATE_RUN_QUEUE_READY) return 1;
+    if (current_state == LATTICRA_KERNEL_STATE_RUN_QUEUE_READY &&
+        target_state == LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY) return 1;
     return 0;
 }
 
@@ -124,6 +128,10 @@ static int state_requires_scheduler_tick(latticra_kernel_state_kind_t state) {
 
 static int state_requires_run_queue(latticra_kernel_state_kind_t state) {
     return state >= LATTICRA_KERNEL_STATE_RUN_QUEUE_READY;
+}
+
+static int state_requires_context_switch(latticra_kernel_state_kind_t state) {
+    return state >= LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY;
 }
 
 static void seed_result(latticra_kernel_state_result_t *result) {
@@ -192,6 +200,11 @@ latticra_status_t latticra_kernel_state_default_request(
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
     request->run_queue_request.scheduler_tick_request = request->scheduler_tick_request;
+    if (latticra_kernel_context_switch_default_request(&request->context_switch_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->context_switch_request.run_queue_request = request->run_queue_request;
     request->current_state = LATTICRA_KERNEL_STATE_CREATED;
     request->target_state = LATTICRA_KERNEL_STATE_INITIALIZED;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
@@ -222,6 +235,7 @@ latticra_status_t latticra_kernel_state_transition(
     latticra_kernel_timer_source_request_t timer_request;
     latticra_kernel_scheduler_tick_request_t scheduler_tick_request;
     latticra_kernel_run_queue_request_t run_queue_request;
+    latticra_kernel_context_switch_request_t context_switch_request;
 
     if (result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     seed_result(result);
@@ -264,6 +278,8 @@ latticra_status_t latticra_kernel_state_transition(
     scheduler_tick_request.timer_source_request = timer_request;
     run_queue_request = request->run_queue_request;
     run_queue_request.scheduler_tick_request = scheduler_tick_request;
+    context_switch_request = request->context_switch_request;
+    context_switch_request.run_queue_request = run_queue_request;
 
     if (state_requires_process_table(request->target_state)) {
         status = latticra_kernel_process_table_evaluate(&process_request, &result->process_table);
@@ -310,6 +326,7 @@ latticra_status_t latticra_kernel_state_transition(
         timer_request.interrupt_table_request = interrupt_request;
         scheduler_tick_request.timer_source_request = timer_request;
         run_queue_request.scheduler_tick_request = scheduler_tick_request;
+        context_switch_request.run_queue_request = run_queue_request;
     }
 
     if (state_requires_vfs_namespace(request->target_state)) {
@@ -332,6 +349,7 @@ latticra_status_t latticra_kernel_state_transition(
         timer_request.interrupt_table_request = interrupt_request;
         scheduler_tick_request.timer_source_request = timer_request;
         run_queue_request.scheduler_tick_request = scheduler_tick_request;
+        context_switch_request.run_queue_request = run_queue_request;
     }
 
     if (state_requires_device_registry(request->target_state)) {
@@ -354,6 +372,7 @@ latticra_status_t latticra_kernel_state_transition(
         timer_request.interrupt_table_request = interrupt_request;
         scheduler_tick_request.timer_source_request = timer_request;
         run_queue_request.scheduler_tick_request = scheduler_tick_request;
+        context_switch_request.run_queue_request = run_queue_request;
     }
 
     if (state_requires_driver_catalog(request->target_state)) {
@@ -376,6 +395,7 @@ latticra_status_t latticra_kernel_state_transition(
         timer_request.interrupt_table_request = interrupt_request;
         scheduler_tick_request.timer_source_request = timer_request;
         run_queue_request.scheduler_tick_request = scheduler_tick_request;
+        context_switch_request.run_queue_request = run_queue_request;
     }
 
     if (state_requires_interrupt_table(request->target_state)) {
@@ -463,6 +483,30 @@ latticra_status_t latticra_kernel_state_transition(
         result->memory_map = result->process_table.memory_map;
     }
 
+    if (state_requires_context_switch(request->target_state)) {
+        context_switch_request.run_queue_request = run_queue_request;
+        status = latticra_kernel_context_switch_evaluate(&context_switch_request,
+            &result->context_switch);
+        if (status != LATTICRA_STATUS_OK) {
+            result->status = status;
+            state_copy(result->state_status, sizeof(result->state_status),
+                "context-switch-not-ready");
+            state_copy(result->transition_status, sizeof(result->transition_status), "blocked");
+            return status;
+        }
+        result->run_queue = result->context_switch.run_queue;
+        result->scheduler_tick = result->run_queue.scheduler_tick;
+        result->timer_source = result->scheduler_tick.timer_source;
+        result->interrupt_table = result->timer_source.interrupt_table;
+        result->driver_catalog = result->interrupt_table.driver_catalog;
+        result->device_registry = result->driver_catalog.device_registry;
+        result->vfs_namespace = result->device_registry.vfs_namespace;
+        result->ipc_table = result->vfs_namespace.ipc_table;
+        result->syscall_table = result->ipc_table.syscall_table;
+        result->process_table = result->syscall_table.process_table;
+        result->memory_map = result->process_table.memory_map;
+    }
+
     if (request->gate != LATTICRA_KERNEL_STATE_GATE_ALLOW) {
         state_copy(result->gate_status, sizeof(result->gate_status), "deny");
         deny_transition(result, "gate-denied");
@@ -521,6 +565,7 @@ latticra_status_t latticra_kernel_state_report(
         "timer_source_status=%s\n"
         "scheduler_tick_status=%s\n"
         "run_queue_status=%s\n"
+        "context_switch_status=%s\n"
         "evidence_level=%u\n",
         result->state_status,
         result->gate_status,
@@ -543,6 +588,7 @@ latticra_status_t latticra_kernel_state_report(
         result->timer_source.timer_status,
         result->scheduler_tick.tick_status,
         result->run_queue.queue_status,
+        result->context_switch.switch_status,
         result->evidence_level);
 
     if (written < 0 || (size_t)written >= buffer_len) {

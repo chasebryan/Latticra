@@ -131,8 +131,8 @@ img {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 8px 10px;
-  font-size: 0.83rem;
+  gap: 7px 9px;
+  font-size: 0.81rem;
 }
 
 .nav-links a {
@@ -412,6 +412,14 @@ p:last-child {
   background-size: cover;
 }
 
+.kernel-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.98) 0%, rgba(17, 24, 39, 0.9) 58%, rgba(17, 24, 39, 0.62) 100%),
+    url("latticra-seal-runtime-dry-run-native-demo.png");
+  background-position: center right;
+  background-size: cover;
+}
+
 .start-hero {
   background:
     linear-gradient(90deg, rgba(17, 24, 39, 0.97) 0%, rgba(17, 24, 39, 0.86) 58%, rgba(17, 24, 39, 0.66) 100%),
@@ -626,6 +634,7 @@ p:last-child {
 .examples-intro,
 .seal-intro,
 .roadmap-intro,
+.kernel-intro,
 .workbench-intro,
 .panel-intro,
 .console-intro,
@@ -644,6 +653,7 @@ p:last-child {
 .examples-intro p:not(.eyebrow),
 .seal-intro p:not(.eyebrow),
 .roadmap-intro p:not(.eyebrow),
+.kernel-intro p:not(.eyebrow),
 .workbench-intro p:not(.eyebrow),
 .panel-intro p:not(.eyebrow),
 .console-intro p:not(.eyebrow),
@@ -1058,6 +1068,99 @@ p:last-child {
 }
 
 .roadmap-table p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.kernel-flow,
+.kernel-ladder-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.kernel-flow {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.kernel-flow article {
+  min-width: 0;
+  min-height: 212px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--teal);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.kernel-flow span,
+.kernel-ladder-grid span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--ochre);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.kernel-flow p,
+.kernel-ladder-grid p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.kernel-ladder-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.kernel-ladder-grid article {
+  min-width: 0;
+  min-height: 212px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--blue);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.kernel-ladder-grid article:nth-child(3) {
+  border-top-color: var(--violet);
+}
+
+.kernel-ladder-grid article:nth-child(4),
+.kernel-ladder-grid article:nth-child(5) {
+  border-top-color: var(--ochre);
+}
+
+.kernel-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.kernel-table {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.kernel-table div {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.kernel-table div:last-child {
+  border-bottom: 0;
+}
+
+.kernel-table span {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.kernel-table p {
   color: var(--muted);
   font-size: 0.94rem;
 }
@@ -2635,6 +2738,10 @@ p:last-child {
   .roadmap-lane-grid,
   .roadmap-stage-grid,
   .roadmap-split,
+  .kernel-intro,
+  .kernel-flow,
+  .kernel-ladder-grid,
+  .kernel-split,
   .workbench-intro,
   .workbench-flow,
   .workbench-showcase,
@@ -2740,6 +2847,7 @@ p:last-child {
   .example-table div,
   .seal-table div,
   .roadmap-table div,
+  .kernel-table div,
   .workbench-table div,
   .panel-table div,
   .console-table div,

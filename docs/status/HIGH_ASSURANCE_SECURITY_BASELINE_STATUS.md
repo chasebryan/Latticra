@@ -1,0 +1,61 @@
+# Latticra High-Assurance Security Baseline Status
+
+Status: status record for high-assurance security baseline
+Date: 2026-05-26
+
+## Scope
+
+This record tracks the high-assurance security baseline checkpoint created after current NSA, CISA, FBI, and NIST source review.
+
+It does not implement runtime execution, effect execution, host behavior, network behavior, cryptographic enforcement, signing authority, tool execution, shell execution, sandboxing, malware prevention, ransomware prevention, incident response, recovery behavior, certification, accreditation, compliance, production protection, or runtime authority.
+
+## Current fields
+
+```text
+high_assurance_security_baseline_present=1
+high_assurance_security_baseline_status_present=1
+source_refresh_date=2026-05-26
+official_source_inventory_present=1
+nsa_zero_trust_guideline_observed=1
+nsa_cisa_memory_safe_languages_observed=1
+cisa_secure_by_design_observed=1
+cisa_fbi_product_security_bad_practices_observed=1
+cisa_cpg_observed=1
+cisa_zero_trust_maturity_model_observed=1
+fbi_cyber_threat_environment_observed=1
+nist_csf_2_observed=1
+nist_ssdf_observed=1
+nist_sp_800_53_observed=1
+nist_sp_800_160_observed=1
+nist_sp_800_207_observed=1
+fips_140_3_observed=1
+memory_safety_roadmap_required=1
+zero_trust_runtime_boundary_required=1
+ssdf_secure_development_required=1
+cpg_operational_baseline_required=1
+kev_release_review_required=1
+fips_crypto_boundary_required_before_production_crypto=1
+sbom_required_before_production_installer=1
+third_party_security_validation_required_before_security_release=1
+incident_response_plan_required_before_production_service=1
+recurring_source_review_required=1
+implementation_behavior_changed=0
+runtime_authority_granted=0
+security_boundary_claimed=0
+certification_claim_allowed=0
+compliance_claim_allowed=0
+external_endorsement_claimed=0
+production_protection_claim_allowed=0
+```
+
+## Validation
+
+```sh
+sh scripts/test-high-assurance-security-baseline.sh
+```
+
+Expected output:
+
+```text
+high_assurance_security_baseline: ok
+```

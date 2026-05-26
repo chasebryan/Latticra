@@ -32,6 +32,7 @@ require_file docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md
 require_file docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md
+require_file docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
 require_file docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_file packaging/ubuntu/README.md
@@ -59,6 +60,8 @@ require_contains 'ubuntu_notice_file_decision_contract_present=1' "$contract"
 require_contains 'ubuntu_notice_file_decision_status=blocked-pending-notice-file-decision' "$contract"
 require_contains 'ubuntu_debian_copyright_notice_mapping_contract_present=1' "$contract"
 require_contains 'ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping' "$contract"
+require_contains 'ubuntu_trademark_notice_boundary_contract_present=1' "$contract"
+require_contains 'ubuntu_trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary' "$contract"
 require_contains 'dpkg_buildpackage_command_recorded=1' "$contract"
 require_contains 'deb_artifact_digest_recorded=1' "$contract"
 require_contains 'lintian_output_digest_recorded=1' "$contract"
@@ -95,6 +98,8 @@ require_contains 'ubuntu_notice_file_decision_contract_present=1' "$status"
 require_contains 'ubuntu_notice_file_decision_status=blocked-pending-notice-file-decision' "$status"
 require_contains 'ubuntu_debian_copyright_notice_mapping_contract_present=1' "$status"
 require_contains 'ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping' "$status"
+require_contains 'ubuntu_trademark_notice_boundary_contract_present=1' "$status"
+require_contains 'ubuntu_trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary' "$status"
 require_contains 'ubuntu_package_notice_review_contract_present=1' "$status"
 require_contains 'ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review' "$status"
 require_contains 'packaging_license_expression_updated=0' "$status"

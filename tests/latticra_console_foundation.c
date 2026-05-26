@@ -38,6 +38,7 @@ int main(void) {
     char help_report[LATTICRA_CONSOLE_HELP_REPORT_MAX];
     char manpage_report[LATTICRA_CONSOLE_MANPAGE_REPORT_MAX];
     char boundary_report[LATTICRA_CONSOLE_BOUNDARY_REPORT_MAX];
+    char standalone_contract_report[LATTICRA_CONSOLE_STANDALONE_CONTRACT_REPORT_MAX];
     char host_contract_report[LATTICRA_CONSOLE_HOST_CONTRACT_REPORT_MAX];
     char host_inventory_report[LATTICRA_CONSOLE_HOST_INVENTORY_REPORT_MAX];
     char host_adapter_report[LATTICRA_CONSOLE_HOST_ADAPTER_REPORT_MAX];
@@ -74,6 +75,10 @@ int main(void) {
         "result.command_registry_status",
         result.command_registry_status,
         "seed-registry-ready");
+    failures += require_text(
+        "result.standalone_console_status",
+        result.standalone_console_status,
+        "metadata-only-standalone-contract-ready");
     failures += require_text(
         "result.substrate_bridge_status",
         result.substrate_bridge_status,
@@ -143,6 +148,7 @@ int main(void) {
     failures += require_int("result.panel_installable", result.panel_installable, 1);
     failures += require_int("result.standalone_installable", result.standalone_installable, 1);
     failures += require_int("result.standalone_requires_panel", result.standalone_requires_panel, 0);
+    failures += require_int("result.standalone_contract_present", result.standalone_contract_present, 1);
     failures += require_int("result.command_registry_present", result.command_registry_present, 1);
     failures += require_int("result.substrate_bridge_present", result.substrate_bridge_present, 1);
     failures += require_int(
@@ -212,7 +218,7 @@ int main(void) {
         "command_count",
         (int)latticra_console_command_count(),
         (int)result.command_count);
-    failures += require_int("command_count_min", result.command_count >= 21u, 1);
+    failures += require_int("command_count_min", result.command_count >= 22u, 1);
     failures += require_text(
         "standalone profile label",
         latticra_console_profile_label(LATTICRA_CONSOLE_PROFILE_STANDALONE),
@@ -248,6 +254,17 @@ int main(void) {
             "lc.install.config");
         failures += require_int("lc install-config no_effect", command->no_effect, 1);
         failures += require_int("lc install-config host launch", command->launches_host_process, 0);
+    }
+
+    command = latticra_console_find_command("lc standalone");
+    failures += require_int("find lc standalone", command != 0, 1);
+    if (command != 0) {
+        failures += require_text(
+            "lc standalone capability",
+            command->capability_label,
+            "lc.standalone.inspect");
+        failures += require_int("lc standalone no_effect", command->no_effect, 1);
+        failures += require_int("lc standalone host launch", command->launches_host_process, 0);
     }
 
     command = latticra_console_find_command("lc receipts");
@@ -431,6 +448,8 @@ int main(void) {
     failures += require_contains("report", report, "standalone_installable=1");
     failures += require_contains("report", report, "standalone_requires_panel=0");
     failures += require_contains("report", report, "standalone_command_wrapper=latticra-lc");
+    failures += require_contains("report", report, "standalone_console_status=metadata-only-standalone-contract-ready");
+    failures += require_contains("report", report, "standalone_contract_present=1");
     failures += require_contains("report", report, "substrate_bridge_present=1");
     failures += require_contains("report", report, "host_embedding_contract_present=1");
     failures += require_contains("report", report, "host_inventory_contract_present=1");
@@ -553,6 +572,7 @@ int main(void) {
     failures += require_contains("registry_report", registry_report, "command=lc profiles");
     failures += require_contains("registry_report", registry_report, "capability=lc.core.profiles");
     failures += require_contains("registry_report", registry_report, "command=lc install-config");
+    failures += require_contains("registry_report", registry_report, "command=lc standalone");
     failures += require_contains("registry_report", registry_report, "capability=lc.install.config");
     failures += require_contains("registry_report", registry_report, "capability=lc.substrate.inspect");
     failures += require_contains("registry_report", registry_report, "launches_host_process=0");
@@ -566,6 +586,7 @@ int main(void) {
     failures += require_contains("help_report", help_report, "registry_source=c-static-table");
     failures += require_contains("help_report", help_report, "lc substrate");
     failures += require_contains("help_report", help_report, "lc install-config");
+    failures += require_contains("help_report", help_report, "lc standalone");
     failures += require_contains("help_report", help_report, "lc host-contract");
     failures += require_contains("help_report", help_report, "lc host-inventory");
     failures += require_contains("help_report", help_report, "lc host-adapter");
@@ -590,6 +611,7 @@ int main(void) {
     failures += require_contains("manpage_report", manpage_report, "LATTICRA-CONSOLE(1)");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc - Latticra Console");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc install-config");
+    failures += require_contains("manpage_report", manpage_report, "latticra-lc standalone");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc host-contract");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc host-inventory");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc host-adapter");
@@ -639,6 +661,23 @@ int main(void) {
     failures += require_int("lc install-config boundary future gate", boundary.requires_future_gate, 0);
     failures += require_int("lc install-config boundary no effect", boundary.no_effect, 1);
     failures += require_int("lc install-config boundary host mutation allowed", boundary.host_mutation_allowed, 0);
+
+    command = latticra_console_find_command("lc standalone");
+    failures += require_int(
+        "lc standalone boundary",
+        latticra_console_command_boundary_classify(command, &boundary),
+        LATTICRA_STATUS_OK);
+    failures += require_text(
+        "lc standalone seal capability",
+        boundary.seal_capability_label,
+        "seal.capability.report");
+    failures += require_int(
+        "lc standalone runtime kind",
+        boundary.runtime_request_kind,
+        LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK);
+    failures += require_int("lc standalone boundary future gate", boundary.requires_future_gate, 0);
+    failures += require_int("lc standalone boundary no effect", boundary.no_effect, 1);
+    failures += require_int("lc standalone boundary host mutation allowed", boundary.host_mutation_allowed, 0);
 
     command = latticra_console_find_command("lc host-contract");
     failures += require_int(
@@ -919,6 +958,7 @@ int main(void) {
     failures += require_contains("boundary_report", boundary_report, "seal_capability_labels_bound=1");
     failures += require_contains("boundary_report", boundary_report, "command=lc substrate");
     failures += require_contains("boundary_report", boundary_report, "command=lc install-config");
+    failures += require_contains("boundary_report", boundary_report, "command=lc standalone");
     failures += require_contains("boundary_report", boundary_report, "command=lc host-contract");
     failures += require_contains("boundary_report", boundary_report, "command=lc host-inventory");
     failures += require_contains("boundary_report", boundary_report, "command=lc host-adapter");
@@ -938,6 +978,35 @@ int main(void) {
     failures += require_contains("boundary_report", boundary_report, "policy_matrix_cell=future-gated-operation");
     failures += require_contains("boundary_report", boundary_report, "seal_capability=seal.capability.inspect");
     failures += require_contains("boundary_report", boundary_report, "boot_allowed=0");
+
+    failures += require_int(
+        "standalone_contract_report",
+        latticra_console_standalone_contract_report(standalone_contract_report, sizeof(standalone_contract_report)),
+        LATTICRA_STATUS_OK);
+    failures += require_contains(
+        "standalone_contract_report",
+        standalone_contract_report,
+        "LATTICRA CONSOLE STANDALONE CONTRACT");
+    failures += require_contains(
+        "standalone_contract_report",
+        standalone_contract_report,
+        "standalone_console_profile=lc-standalone-console-v0");
+    failures += require_contains(
+        "standalone_contract_report",
+        standalone_contract_report,
+        "standalone_requires_panel=0");
+    failures += require_contains(
+        "standalone_contract_report",
+        standalone_contract_report,
+        "command_surface=lc standalone");
+    failures += require_contains(
+        "standalone_contract_report",
+        standalone_contract_report,
+        "host_process_launch_allowed=0");
+    failures += require_contains(
+        "standalone_contract_report",
+        standalone_contract_report,
+        "production_os_claim=0");
 
     failures += require_int(
         "host_contract_report",

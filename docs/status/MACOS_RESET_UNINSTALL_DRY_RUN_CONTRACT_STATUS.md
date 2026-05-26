@@ -121,7 +121,7 @@ macos_reset_uninstall_dry_run_contract: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner denied-dispatch review contract that keeps review-only dispatch denial evidence separate from any effects.
+Add a macOS reset/uninstall live-runner acceptance-gate contract that requires passed preflight, complete evidence, and explicit effect authorization before dispatch.
 ```
 
 ## Non-Claims

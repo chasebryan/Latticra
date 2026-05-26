@@ -2,19 +2,14 @@ use serde::{Deserialize, Serialize};
 use std::fmt::Write as _;
 use std::path::{Component, Path, PathBuf};
 
-#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]
 pub enum InstallProfile {
+    #[default]
     DeveloperLocal,
     SealReportOnly,
     FedoraValidationVm,
     Custom,
-}
-
-impl Default for InstallProfile {
-    fn default() -> Self {
-        Self::DeveloperLocal
-    }
 }
 
 impl InstallProfile {
@@ -46,20 +41,15 @@ impl InstallProfile {
     }
 }
 
-#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]
 pub enum SealCryptoProfile {
     ReportOnly,
+    #[default]
     Blake2bEd25519,
     XChaCha20Poly1305,
     HybridSeal,
     Custom,
-}
-
-impl Default for SealCryptoProfile {
-    fn default() -> Self {
-        Self::Blake2bEd25519
-    }
 }
 
 impl SealCryptoProfile {
@@ -94,21 +84,16 @@ impl SealCryptoProfile {
     }
 }
 
-#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]
 pub enum LatticraConsoleProfile {
     HostedReference,
+    #[default]
     PanelEmbedded,
     Standalone,
     HostEmbeddedPlanning,
     OsBasePlanning,
     Custom,
-}
-
-impl Default for LatticraConsoleProfile {
-    fn default() -> Self {
-        Self::PanelEmbedded
-    }
 }
 
 impl LatticraConsoleProfile {
@@ -948,6 +933,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "standalone_console_status=metadata-only-standalone-contract"
+    );
+    let _ = writeln!(out, "standalone_contract_present=1");
+    let _ = writeln!(
+        out,
         "panel_embedded_console={}",
         config.lc.install.panel_embedded_console
     );
@@ -1240,11 +1230,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
     let _ = writeln!(
         out,
-        "stage=37-prompt-evaluation-result-release-receipt-review-disposition-contract"
+        "stage=38-prompt-evaluation-result-release-receipt-review-disposition-release-contract"
     );
     let _ = writeln!(
         out,
-        "previous_stage=36-prompt-evaluation-result-release-receipt-review-contract"
+        "previous_stage=37-prompt-evaluation-result-release-receipt-review-disposition-contract"
     );
     let _ = writeln!(
         out,
@@ -2448,6 +2438,46 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(
         out,
         "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_contract_stage=38-prompt-evaluation-result-release-receipt-review-disposition-release-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_result_release_receipt_review_disposition_release_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_contract_status=contract_only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_record_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_decision_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_published=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract=1"
     );
     let _ = writeln!(out, "requires_prompt_evaluation_result_contract=1");
     let _ = writeln!(

@@ -22,6 +22,7 @@ src/seal_key_parsing.c
 tests/seal_key_parsing_invariants.c
 scripts/test-latticra-seal-key-parsing.sh
 scripts/test-latticra-seal-key-parsing-status.sh
+.github/workflows/latticra-seal-key-parsing-status.yml
 docs/LATTICRA_SEAL_VERIFICATION_POLICY_CONTRACT.md
 docs/LATTICRA_SEAL_VERIFICATION_POLICY_IMPLEMENTATION.md
 docs/status/SEAL_VERIFICATION_POLICY_STATUS.md
@@ -45,6 +46,7 @@ tests/seal_public_key_parsing_invariants.c
 scripts/test-latticra-seal-public-key-parsing-contract.sh
 scripts/test-latticra-seal-public-key-parsing.sh
 scripts/test-latticra-seal-public-key-parsing-status.sh
+.github/workflows/latticra-seal-public-key-parsing-status.yml
 ```
 
 ## Current checkpoint
@@ -59,6 +61,8 @@ seal_key_parsing_invariant_test_present=1
 seal_key_parsing_runner_present=1
 seal_key_parsing_metadata_present=1
 seal_key_parsing_status_present=1
+seal_key_parsing_status_runner_present=1
+seal_key_parsing_status_workflow_present=1
 seal_verification_policy_contract_present=1
 seal_verification_policy_implementation_present=1
 seal_verification_policy_status_present=1
@@ -71,6 +75,13 @@ seal_future_key_parsing_implementation_plan_present=1
 seal_public_key_parsing_contract_present=1
 seal_public_key_parsing_implementation_present=1
 seal_public_key_parsing_status_present=1
+seal_public_key_parsing_status_runner_present=1
+seal_public_key_parsing_status_workflow_present=1
+key_parsing_predecessor_public_key_parsing_status_present=1
+readme_links_key_parsing_status=1
+root_status_mentions_key_parsing_status=1
+status_index_links_key_parsing_status=1
+foundation_index_links_key_parsing_status=1
 key_parsing_profile=latticra-seal-key-parsing/0.1
 public_key_parsing_profile=latticra-seal-public-key-parsing/0.1
 key_material_profile=latticra-seal-key-material/0.1
@@ -103,6 +114,23 @@ blocked_reason=none
 mode=metadata-only
 status=key-parsing-metadata
 error=ok
+key_parsing_status_added=1
+key_material_loading_added=0
+private_key_handling_added=0
+key_generation_added=0
+hardware_key_use_added=0
+trust_store_behavior_added=0
+revocation_lookup_added=0
+signing_added=0
+signature_verification_added=0
+signer_invocation_behavior_added=0
+signer_process_execution_added=0
+object_sealing_added=0
+runtime_handoff_execution_added=0
+effect_execution_added=0
+capability_enforcement_added=0
+network_behavior_changed=0
+host_behavior_changed=0
 ```
 
 The second accepted caller-provided public-key byte form is:
@@ -131,6 +159,15 @@ sh scripts/test-latticra-seal-public-key-parsing-status.sh
 Expected output:
 
 ```text
+seal report envelope status: ok
+seal signature request status: ok
+seal signing authorization status: ok
+seal signer handoff status: ok
+seal signer invocation status: ok
+seal signing operation status: ok
+seal key-handling status: ok
+seal key-material status: ok
+seal public-key parsing status: ok
 seal key parsing invariants: ok
 seal key parsing status: ok
 seal verification policy status: ok
@@ -146,10 +183,12 @@ seal public-key parsing status: ok
 
 This status record is documentation/status alignment only.
 
+This refresh adds the key parsing status guard workflow and records the guarded public-key parsing status predecessor without changing the bounded key parsing metadata implementation.
+
 It does not add key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, verification, signer invocation behavior, signer process execution, runtime handoff execution, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, object sealing, kernel behavior, production readiness, or authority grants.
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is status rollup status/public-entry alignment or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is verification policy status/workflow guard alignment or another narrow status/index alignment follow-up.
 
 That future slice must not add runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signer invocation behavior, host behavior, network behavior, object sealing, or kernel behavior unless separately implemented and guarded.

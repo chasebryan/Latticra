@@ -67,6 +67,12 @@ The boot artifact manifest template for future artifact metadata is:
 sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-template.sh
 ```
 
+The boot artifact manifest validation for the current blocked fixture is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
+```
+
 ## Required Non-Effects
 
 The preflight must always report:

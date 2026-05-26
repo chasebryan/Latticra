@@ -105,7 +105,7 @@ static latticra_lir_module_t lat_lir_module(void) {
     lir.source_span.start_column = 1u;
     lir.source_span.end_line = 30u;
     lir.source_span.end_column = 2u;
-    lir.node_count = 4u;
+    lir.node_count = 7u;
     lir.edge_count = 5u;
     lir.binding_count = 2u;
     lir.text_count = 1u;
@@ -116,6 +116,9 @@ static latticra_lir_module_t lat_lir_module(void) {
     lir.nodes[1].kind = LATTICRA_LIR_NODE_LAT_STATE;
     lir.nodes[2].kind = LATTICRA_LIR_NODE_LAT_TRANSITION;
     lir.nodes[3].kind = LATTICRA_LIR_NODE_LAT_REQUIREMENT;
+    lir.nodes[4].kind = LATTICRA_LIR_NODE_LAT_POLICY;
+    lir.nodes[5].kind = LATTICRA_LIR_NODE_LAT_ASSERTION;
+    lir.nodes[6].kind = LATTICRA_LIR_NODE_LAT_EFFECT_DECLARATION;
     lir.edges[0].edge_kind = LATTICRA_LIR_EDGE_CONTAINS;
     lir.edges[1].edge_kind = LATTICRA_LIR_EDGE_BINDS;
     lir.edges[2].edge_kind = LATTICRA_LIR_EDGE_ANNOTATES;
@@ -200,16 +203,23 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(result.record.lat_lir_source_span.start_column == 1u, "lat lir span column copied");
     EXPECT_TRUE(result.record.lat_lir_source_span.end_line == 30u, "lat lir span end line copied");
     EXPECT_TRUE(result.record.lat_lir_source_span.end_column == 2u, "lat lir span end column copied");
-    EXPECT_TRUE(result.record.lat_lir_module_node_count == 4u, "lat lir node count copied");
+    EXPECT_TRUE(result.record.lat_lir_module_node_count == 7u, "lat lir node count copied");
     EXPECT_TRUE(result.record.lat_lir_module_edge_count == 5u, "lat lir edge count copied");
     EXPECT_TRUE(result.record.lat_lir_binding_count == 2u, "lat lir binding count copied");
     EXPECT_TRUE(result.record.lat_lir_text_count == 1u, "lat lir text count copied");
+    EXPECT_TRUE(result.record.lat_lir_lat_state_node_count == 1u, "lat lir state node count copied");
+    EXPECT_TRUE(result.record.lat_lir_lat_policy_node_count == 1u, "lat lir policy node count copied");
+    EXPECT_TRUE(result.record.lat_lir_lat_transition_node_count == 1u, "lat lir transition node count copied");
+    EXPECT_TRUE(result.record.lat_lir_lat_assertion_node_count == 1u, "lat lir assertion node count copied");
+    EXPECT_TRUE(result.record.lat_lir_lat_requirement_node_count == 1u, "lat lir requirement node count copied");
+    EXPECT_TRUE(result.record.lat_lir_lat_effect_declaration_node_count == 1u, "lat lir effect declaration node count copied");
     EXPECT_TRUE(result.record.lat_lir_no_effect_chain_ok == 1, "lat lir no-effect chain copied");
     EXPECT_TRUE(result.record.lat_lir_evidence_level == 2u, "lat lir evidence level copied");
     EXPECT_TRUE(result.record.lat_lir_no_effect == 1, "lat lir no-effect copied");
     EXPECT_TRUE(result.record.lat_lir_execution_allowed == 0, "lat lir execution flag copied");
     EXPECT_TRUE(result.record.lat_lir_mutation_allowed == 0, "lat lir mutation flag copied");
     EXPECT_TRUE(result.record.lat_lir_server_allowed == 0, "lat lir server flag copied");
+    EXPECT_TRUE(result.record.lat_lir_network_allowed == 0, "lat lir network flag copied");
     EXPECT_TRUE(result.record.lat_lir_recovery_allowed == 0, "lat lir recovery flag copied");
     EXPECT_TRUE(result.record.lat_lir_hardware_allowed == 0, "lat lir hardware flag copied");
     EXPECT_TRUE(result.record.lat_lir_contains_edge_count == 1u, "lat lir contains edge count copied");
@@ -403,6 +413,34 @@ static int runtime_boundary_denies_model_failed_lat_pipeline_metadata(void) {
     return 0;
 }
 
+static int runtime_boundary_denies_network_marked_lat_pipeline_metadata(void) {
+    latticra_runtime_boundary_authority_summary_t authority = ok_authority();
+    latticra_lat_pipeline_result_t pipeline = ok_pipeline();
+    latticra_runtime_boundary_request_t request;
+    latticra_runtime_boundary_result_t result;
+    char report[LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX];
+
+    pipeline.network_allowed = 1;
+
+    memset(&request, 0, sizeof(request));
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "runtime-lat-pipeline-network-denied");
+    request.request_kind = LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE;
+    request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
+    request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;
+    request.operator_confirmation = LATTICRA_RUNTIME_BOUNDARY_OPERATOR_NOT_APPLICABLE;
+    request.authority = &authority;
+    request.lat_pipeline = &pipeline;
+
+    EXPECT_TRUE(latticra_runtime_boundary_classify(&request, &result) == LATTICRA_STATUS_OK, "network pipeline classification status ok");
+    EXPECT_TRUE(result.record.policy == LATTICRA_RUNTIME_BOUNDARY_POLICY_DENY, "network pipeline denied");
+    EXPECT_TRUE(result.record.denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_NON_NO_EFFECT_FLAGS, "network pipeline no-effect reason");
+    EXPECT_TRUE(result.network_allowed == 0, "network pipeline boundary remains denied");
+    EXPECT_TRUE(latticra_runtime_boundary_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "network pipeline report status ok");
+    EXPECT_TRUE(strstr(report, "reason=non-no-effect-flags\n") != 0, "network pipeline reason report present");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0, "network pipeline boundary network report present");
+    return 0;
+}
+
 static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     latticra_runtime_boundary_authority_summary_t authority = ok_authority();
     latticra_lat_pipeline_result_t pipeline = ok_pipeline();
@@ -477,16 +515,23 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_lir_span_start_column=1\n") != 0, "lat lir span column report present");
     EXPECT_TRUE(strstr(report, "lat_lir_span_end_line=30\n") != 0, "lat lir span end line report present");
     EXPECT_TRUE(strstr(report, "lat_lir_span_end_column=2\n") != 0, "lat lir span end column report present");
-    EXPECT_TRUE(strstr(report, "lat_lir_module_node_count=4\n") != 0, "lat lir node count report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_module_node_count=7\n") != 0, "lat lir node count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_module_edge_count=5\n") != 0, "lat lir edge count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_binding_count=2\n") != 0, "lat lir binding count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_text_count=1\n") != 0, "lat lir text count report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_lat_state_node_count=1\n") != 0, "lat lir state node count report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_lat_policy_node_count=1\n") != 0, "lat lir policy node count report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_lat_transition_node_count=1\n") != 0, "lat lir transition node count report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_lat_assertion_node_count=1\n") != 0, "lat lir assertion node count report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_lat_requirement_node_count=1\n") != 0, "lat lir requirement node count report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_lat_effect_declaration_node_count=1\n") != 0, "lat lir effect declaration node count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_no_effect_chain_ok=1\n") != 0, "lat lir no-effect chain report present");
     EXPECT_TRUE(strstr(report, "lat_lir_evidence_level=2\n") != 0, "lat lir evidence level report present");
     EXPECT_TRUE(strstr(report, "lat_lir_no_effect=1\n") != 0, "lat lir no-effect report present");
     EXPECT_TRUE(strstr(report, "lat_lir_execution_allowed=0\n") != 0, "lat lir execution flag report present");
     EXPECT_TRUE(strstr(report, "lat_lir_mutation_allowed=0\n") != 0, "lat lir mutation flag report present");
     EXPECT_TRUE(strstr(report, "lat_lir_server_allowed=0\n") != 0, "lat lir server flag report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_network_allowed=0\n") != 0, "lat lir network flag report present");
     EXPECT_TRUE(strstr(report, "lat_lir_recovery_allowed=0\n") != 0, "lat lir recovery flag report present");
     EXPECT_TRUE(strstr(report, "lat_lir_hardware_allowed=0\n") != 0, "lat lir hardware flag report present");
     EXPECT_TRUE(strstr(report, "lat_lir_contains_edge_count=1\n") != 0, "lat lir contains edge count report present");
@@ -528,6 +573,7 @@ int main(void) {
     if (runtime_boundary_denies_failed_lat_pipeline_metadata() != 0) return 1;
     if (runtime_boundary_denies_parse_failed_lat_pipeline_metadata() != 0) return 1;
     if (runtime_boundary_denies_model_failed_lat_pipeline_metadata() != 0) return 1;
+    if (runtime_boundary_denies_network_marked_lat_pipeline_metadata() != 0) return 1;
     if (runtime_boundary_reports_lat_pipeline_evidence() != 0) return 1;
     if (runtime_boundary_keeps_lat_lir_execution_future_gated() != 0) return 1;
 

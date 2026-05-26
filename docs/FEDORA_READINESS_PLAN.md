@@ -70,7 +70,7 @@ Known current posture:
 
 ```text
 kernel lifecycle evidence exists
-final_state=run-queue-ready
+final_state=context-switch-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
@@ -104,6 +104,10 @@ enqueue_allowed=0
 dequeue_allowed=0
 dispatch_allowed=0
 context_switch_allowed=0
+register_save_allowed=0
+register_restore_allowed=0
+stack_switch_allowed=0
+address_space_switch_allowed=0
 preemption_allowed=0
 time_accounting_allowed=0
 time_read_allowed=0

@@ -17,6 +17,7 @@ extern "C" {
 #define LATTICRA_CONSOLE_HELP_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_MANPAGE_REPORT_MAX 20000u
 #define LATTICRA_CONSOLE_BOUNDARY_REPORT_MAX 20000u
+#define LATTICRA_CONSOLE_STANDALONE_CONTRACT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_HOST_CONTRACT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_HOST_INVENTORY_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_HOST_ADAPTER_REPORT_MAX 12000u
@@ -106,6 +107,7 @@ typedef struct {
     char component_key[LATTICRA_CONSOLE_LABEL_MAX];
     char console_status[LATTICRA_CONSOLE_LABEL_MAX];
     char command_registry_status[LATTICRA_CONSOLE_LABEL_MAX];
+    char standalone_console_status[LATTICRA_CONSOLE_LABEL_MAX];
     char substrate_bridge_status[LATTICRA_CONSOLE_LABEL_MAX];
     char panel_install_status[LATTICRA_CONSOLE_LABEL_MAX];
     char host_embedding_status[LATTICRA_CONSOLE_LABEL_MAX];
@@ -132,6 +134,7 @@ typedef struct {
     int panel_installable;
     int standalone_installable;
     int standalone_requires_panel;
+    int standalone_contract_present;
     int command_registry_present;
     int substrate_bridge_present;
     int host_embeddable;
@@ -195,6 +198,10 @@ latticra_status_t latticra_console_command_boundary_classify(
     latticra_console_command_boundary_t *boundary);
 
 latticra_status_t latticra_console_command_boundary_report(
+    char *buffer,
+    size_t buffer_len);
+
+latticra_status_t latticra_console_standalone_contract_report(
     char *buffer,
     size_t buffer_len);
 

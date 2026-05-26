@@ -29,6 +29,7 @@ cc $CFLAGS \
   src/kernel_timer_source.c \
   src/kernel_scheduler_tick.c \
   src/kernel_run_queue.c \
+  src/kernel_context_switch.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \

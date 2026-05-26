@@ -345,6 +345,25 @@ check_workflow() {
     fail "$workflow must not consume implicit GitHub token surfaces without a dedicated review guard"
   fi
 
+  if grep -Eq '^[[:space:]]*(run:[[:space:]]*)?(curl|wget|ssh|scp|sftp|ftp|nc|ncat|telnet)[[:space:]]' "$workflow"; then
+    fail "$workflow must not add ad hoc network client commands without a dedicated review guard"
+  fi
+
+  privilege_lines="$(grep -En '^[[:space:]]*(run:[[:space:]]*)?(sudo|su|doas)[[:space:]]' "$workflow" || :)"
+  if [ -n "$privilege_lines" ]; then
+    case "$workflow" in
+      .github/workflows/quality.yml|.github/workflows/latticra-panel-installer.yml)
+        unexpected_privilege_lines="$(printf '%s\n' "$privilege_lines" | grep -Ev ':[[:space:]]*sudo[[:space:]]+apt-get[[:space:]]+(update|install[[:space:]]+-y)([[:space:]]|\\|$)' || :)"
+        ;;
+      *)
+        fail "$workflow must not add privilege escalation commands outside reviewed bootstrap workflows"
+        ;;
+    esac
+
+    [ -z "$unexpected_privilege_lines" ] ||
+      fail "$workflow privilege escalation commands must stay on the reviewed bootstrap allowlist"
+  fi
+
   package_manager_lines="$(grep -En '(^|[[:space:]])(sudo[[:space:]]+)?(apt-get|apt|dnf|yum|zypper|brew|pip[0-9]*|python[0-9]*[[:space:]]+-m[[:space:]]+pip|npm|pnpm|yarn)([[:space:]]|$)' "$workflow" || :)"
   if [ -n "$package_manager_lines" ]; then
     case "$workflow" in
@@ -438,8 +457,54 @@ check_shell_script() {
     fail "$script must not pipe remote content into a shell"
   fi
 
+  if grep -Eq '^[[:space:]]*(curl|wget|ssh|scp|sftp|ftp|nc|ncat|telnet)[[:space:]]' "$script"; then
+    fail "$script must not add ad hoc network client commands without a dedicated review guard"
+  fi
+
   if grep -Eq 'mktemp[[:space:]]+-u|chmod[[:space:]]+-R[[:space:]]+777|rm[[:space:]]+-rf[[:space:]]+/' "$script"; then
     fail "$script contains an unsafe broad mutation command"
+  fi
+
+  privilege_lines="$(grep -En '^[[:space:]]*(sudo|su|doas)[[:space:]]' "$script" || :)"
+  if [ -n "$privilege_lines" ]; then
+    case "$script" in
+      scripts/test-ubuntu-build-lane.sh|scripts/test-ubuntu-lintian-availability.sh)
+        unexpected_privilege_lines="$(printf '%s\n' "$privilege_lines" | grep -Ev ':[[:space:]]*sudo[[:space:]]+(apt-get[[:space:]]+update|env[[:space:]]+DEBIAN_FRONTEND=noninteractive[[:space:]]+apt-get[[:space:]]+install[[:space:]]+-y[[:space:]]+"\$@")[[:space:]]*$' || :)"
+        ;;
+      scripts/test-opensuse-rpmlint-osc-availability.sh)
+        unexpected_privilege_lines="$(printf '%s\n' "$privilege_lines" | grep -Ev ':[[:space:]]*sudo[[:space:]]+zypper[[:space:]]+--non-interactive[[:space:]]+(refresh|install[[:space:]]+--force-resolution[[:space:]]+"\$@")[[:space:]]*$' || :)"
+        ;;
+      scripts/run-fedora-vm-cli-payload-validation-lane.sh)
+        unexpected_privilege_lines="$(printf '%s\n' "$privilege_lines" | grep -Ev ':[[:space:]]*sudo[[:space:]]+rpm[[:space:]]+(-Uvh[[:space:]]+--nodeps[[:space:]]+"\$rpm_path"|-e[[:space:]]+"\$name")[[:space:]]*$' || :)"
+        ;;
+      *)
+        fail "$script must not add privilege escalation commands outside reviewed packaging lanes"
+        ;;
+    esac
+
+    [ -z "$unexpected_privilege_lines" ] ||
+      fail "$script privilege escalation commands must stay on the reviewed packaging allowlist"
+  fi
+
+  package_manager_mutation_lines="$(grep -En '^[[:space:]]*((sudo[[:space:]]+)?(apt-get|zypper)|env[[:space:]]+DEBIAN_FRONTEND=noninteractive[[:space:]]+apt-get|sudo[[:space:]]+env[[:space:]]+DEBIAN_FRONTEND=noninteractive[[:space:]]+apt-get|sudo[[:space:]]+rpm[[:space:]]+(-Uvh|-e))([[:space:]]|$)' "$script" || :)"
+  if [ -n "$package_manager_mutation_lines" ]; then
+    case "$script" in
+      scripts/test-ubuntu-build-lane.sh|scripts/test-ubuntu-lintian-availability.sh)
+        unexpected_package_mutation_lines="$(printf '%s\n' "$package_manager_mutation_lines" | grep -Ev ':[[:space:]]*(sudo[[:space:]]+)?(apt-get[[:space:]]+update|env[[:space:]]+DEBIAN_FRONTEND=noninteractive[[:space:]]+apt-get[[:space:]]+install[[:space:]]+-y[[:space:]]+"\$@")[[:space:]]*$' || :)"
+        ;;
+      scripts/test-opensuse-rpmlint-osc-availability.sh)
+        unexpected_package_mutation_lines="$(printf '%s\n' "$package_manager_mutation_lines" | grep -Ev ':[[:space:]]*(sudo[[:space:]]+)?zypper[[:space:]]+--non-interactive[[:space:]]+(refresh|install[[:space:]]+--force-resolution[[:space:]]+"\$@")[[:space:]]*$' || :)"
+        ;;
+      scripts/run-fedora-vm-cli-payload-validation-lane.sh)
+        unexpected_package_mutation_lines="$(printf '%s\n' "$package_manager_mutation_lines" | grep -Ev ':[[:space:]]*sudo[[:space:]]+rpm[[:space:]]+(-Uvh[[:space:]]+--nodeps[[:space:]]+"\$rpm_path"|-e[[:space:]]+"\$name")[[:space:]]*$' || :)"
+        ;;
+      *)
+        fail "$script must not add package-manager mutation commands outside reviewed packaging lanes"
+        ;;
+    esac
+
+    [ -z "$unexpected_package_mutation_lines" ] ||
+      fail "$script package-manager mutation commands must stay on the reviewed packaging allowlist"
   fi
 
   if grep -Fq 'mktemp -d' "$script" &&
@@ -596,7 +661,7 @@ done
 check_makefile_script_refs
 
 require_contains "quality-safety-guards:" "Makefile"
-for prereq in quality-worktree quality-safety-guards quality-defensive-threat-model seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation; do
+for prereq in quality-worktree quality-safety-guards quality-defensive-threat-model quality-security-standards seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation; do
   require_make_quality_prereq "$prereq"
 done
 require_contains "git diff --check" "Makefile"
@@ -604,6 +669,10 @@ require_contains "test-quality-safety-guards.sh" "Makefile"
 require_contains "sh ./scripts/test-defensive-threat-model-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-defensive-threat-model-implementation-plan.sh" "Makefile"
 require_contains "sh ./scripts/test-defensive-threat-model-validation.sh" "Makefile"
+require_contains "quality-security-standards:" "Makefile"
+require_contains "sh ./scripts/test-defensive-threat-model-validation-refinement.sh" "Makefile"
+require_contains "sh ./scripts/test-high-assurance-security-baseline.sh" "Makefile"
+require_contains "high-assurance-security-baseline:" "Makefile"
 require_contains "cargo fmt --manifest-path installer/latticra-installer/Cargo.toml -- --check" "Makefile"
 require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" "Makefile"
 require_contains "python3 scripts/check_latticra_panel_ui_design.py" "Makefile"
@@ -619,8 +688,15 @@ require_contains "sh ./scripts/test-seabios-grub-boot-preview-preflight.sh" "Mak
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-evidence-template.sh" "Makefile"
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh" "Makefile"
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-template.sh" "Makefile"
+require_contains "sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-validate.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-denial-transcript:" "Makefile"
 require_contains "sh ./scripts/test-macos-reset-uninstall-live-denial-transcript-contract.sh" "Makefile"
+require_contains "macos-reset-uninstall-live-runner-interface:" "Makefile"
+require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-interface-contract.sh" "Makefile"
+require_contains "macos-reset-uninstall-live-runner-noop-prototype:" "Makefile"
+require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-noop-prototype-contract.sh" "Makefile"
+require_contains "macos-reset-uninstall-live-runner-denied-dispatch-transcript:" "Makefile"
+require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-denied-dispatch-transcript-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-command-surface.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-review-contract-stage-32.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-disposition-contract-stage-33.sh" "Makefile"
@@ -628,10 +704,12 @@ require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-contr
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-contract-stage-35.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh" "Makefile"
 require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.sh" "Makefile"
+require_contains "sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-contract-stage-38.sh" "Makefile"
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-contract.sh" "Makefile"
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-contract.sh" "Makefile"
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-contract.sh" "Makefile"
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-contract.sh" "Makefile"
+require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-console-foundation.sh" "Makefile"
 require_contains "sh ./scripts/test-cpp-authority-layer.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-timer-source.sh" "Makefile"
@@ -640,6 +718,8 @@ require_contains "sh ./scripts/test-kernel-scheduler-tick.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-scheduler-tick-report-runner.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-run-queue.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-run-queue-report-runner.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-context-switch.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-context-switch-report-runner.sh" "Makefile"
 require_contains "make quality" ".github/workflows/quality.yml"
 require_contains "uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" ".github/workflows/quality.yml"
 require_contains "persist-credentials: false" ".github/workflows/quality.yml"
@@ -655,6 +735,7 @@ require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-contrac
 require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt-contract-stage-35.sh" ".github/workflows/nadia-prompt-evaluation-result-release-receipt-contract-stage-35.yml"
 require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh" ".github/workflows/nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.yml"
 require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.sh" ".github/workflows/nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.yml"
+require_contains "sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-contract-stage-38.sh" ".github/workflows/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-contract-stage-38.yml"
 require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" ".github/workflows/latticra-panel-installer.yml"
 require_contains "uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8" ".github/workflows/latticra-panel-installer.yml"
 require_contains "persist-credentials: false" ".github/workflows/latticra-panel-installer.yml"
