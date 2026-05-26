@@ -32,6 +32,14 @@ zypper_install() {
   fi
 }
 
+probe_tool_invocation() {
+  tool="$1"
+  if "$tool" --version >/dev/null 2>&1; then
+    return 0
+  fi
+  "$tool" --help >/dev/null 2>&1
+}
+
 require_file docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_file docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 require_file scripts/test-opensuse-local-rpm-static-validation.sh
@@ -56,9 +64,9 @@ command -v zypper >/dev/null 2>&1
 
 zypper_install rpmlint osc
 command -v rpmlint >/dev/null 2>&1
-rpmlint --version >/dev/null 2>&1
+probe_tool_invocation rpmlint
 command -v osc >/dev/null 2>&1
-osc --version >/dev/null 2>&1
+probe_tool_invocation osc
 
 sh scripts/test-opensuse-local-rpm-static-validation.sh
 

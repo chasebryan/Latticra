@@ -27,10 +27,10 @@ openSUSE environment marker exists
 zypper is available
 rpmlint installs
 rpmlint command is available
-rpmlint version command can run
+rpmlint invocation probe can run
 osc installs
 osc command is available
-osc version command can run
+osc invocation probe can run
 local openSUSE RPM static validation lane remains green
 ```
 
