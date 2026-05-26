@@ -73,6 +73,7 @@ static void result_default(latticra_lat_to_lir_result_t *result) {
     result->no_effect = 1;
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
+    result->network_allowed = 0;
 }
 
 static void module_default(latticra_lir_module_t *module) {
@@ -256,6 +257,7 @@ static void copy_model_summary(
     result->no_effect = model->no_effect;
     result->execution_allowed = model->execution_allowed;
     result->mutation_allowed = model->mutation_allowed;
+    result->network_allowed = model->network_allowed;
 }
 
 static int model_no_effect_ok(const latticra_lat_model_t *model) {
@@ -264,6 +266,7 @@ static int model_no_effect_ok(const latticra_lat_model_t *model) {
            model->execution_allowed == 0 &&
            model->mutation_allowed == 0 &&
            model->server_allowed == 0 &&
+           model->network_allowed == 0 &&
            model->recovery_allowed == 0 &&
            model->hardware_allowed == 0;
 }
@@ -467,7 +470,7 @@ latticra_status_t latticra_lir_lower_lat_model(
     module->execution_allowed = model->execution_allowed;
     module->mutation_allowed = model->mutation_allowed;
     module->server_allowed = model->server_allowed;
-    module->network_allowed = 0;
+    module->network_allowed = model->network_allowed;
     module->recovery_allowed = model->recovery_allowed;
     module->hardware_allowed = model->hardware_allowed;
 
@@ -544,6 +547,7 @@ latticra_status_t latticra_lir_lower_lat_model(
     result->no_effect = model->no_effect;
     result->execution_allowed = model->execution_allowed;
     result->mutation_allowed = model->mutation_allowed;
+    result->network_allowed = model->network_allowed;
     finalize_lir_report_refinement(module);
     return LATTICRA_STATUS_OK;
 
@@ -622,6 +626,7 @@ latticra_status_t latticra_lat_to_lir_report(
         "no_effect=%d\n"
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
+        "network_allowed=%d\n"
         "span_start_offset=%zu\n"
         "span_end_offset=%zu\n"
         "span_start_line=%zu\n"
@@ -656,6 +661,7 @@ latticra_status_t latticra_lat_to_lir_report(
         result->no_effect,
         result->execution_allowed,
         result->mutation_allowed,
+        result->network_allowed,
         result->span.start_offset,
         result->span.end_offset,
         result->span.start_line,

@@ -12,7 +12,7 @@ kernel lifecycle runner
 kernel subsystem registry
 ```
 
-The lifecycle runner can move a local in-memory kernel state machine from `created` to `scheduler-tick-ready` through gated internal state changes.
+The lifecycle runner can move a local in-memory kernel state machine from `created` to `run-queue-ready` through gated internal state changes.
 
 The subsystem registry exposes boot, runtime, scheduler, memory, process, filesystem, network, device, and security subsystem posture.
 
@@ -43,17 +43,17 @@ docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
 The default summary request allows the lifecycle runner to reach:
 
 ```text
-scheduler-tick-ready
+run-queue-ready
 ```
 
 That produces:
 
 ```text
 summary_status=summary-ready
-final_state=scheduler-tick-ready
+final_state=run-queue-ready
 lifecycle_complete=1
-lifecycle_step_count=13
-lifecycle_state_change_count=13
+lifecycle_step_count=14
+lifecycle_state_change_count=14
 external_effect_performed=0
 registry_no_effect=1
 no_external_effect_chain=1
@@ -65,7 +65,7 @@ Expected readiness examples:
 
 ```text
 boot -> boot-sequence-seeded
-scheduler -> scheduler-tick-ready
+scheduler -> run-queue-ready
 memory -> memory-map-ready
 process -> ipc-table-ready
 filesystem -> vfs-namespace-ready
@@ -106,6 +106,9 @@ timer_arm_allowed=0
 timer_disarm_allowed=0
 scheduler_tick_allowed=0
 run_queue_mutation_allowed=0
+enqueue_allowed=0
+dequeue_allowed=0
+dispatch_allowed=0
 context_switch_allowed=0
 preemption_allowed=0
 time_accounting_allowed=0
@@ -165,8 +168,8 @@ kernel_lifecycle_subsystem_summary_report_runner: ok
 The guards verify:
 
 ```text
-default request targets scheduler-tick-ready
-summary reaches scheduler-tick-ready
+default request targets run-queue-ready
+summary reaches run-queue-ready
 summary marks boot/scheduler/memory/process/filesystem as lifecycle-ready metadata
 runtime remains not entered
 runtime entry remains denied
@@ -176,7 +179,7 @@ process spawn remains denied
 syscall dispatch remains denied
 IPC send, receive, and queue mutation remain denied
 filesystem lookup, read, write, and namespace mutation remain denied
-device open, read, write, driver probe, driver load, driver bind, interrupt mask, interrupt unmask, interrupt dispatch, interrupt ack, timer tick, timer arm, timer disarm, scheduler tick, run queue mutation, context switch, preemption, time accounting, time read, process wake, DMA, and hardware effect remain denied
+device open, read, write, driver probe, driver load, driver bind, interrupt mask, interrupt unmask, interrupt dispatch, interrupt ack, timer tick, timer arm, timer disarm, scheduler tick, run queue mutation, enqueue, dequeue, dispatch, context switch, preemption, time accounting, time read, process wake, DMA, and hardware effect remain denied
 network and device authority remain denied
 limited lifecycle summary reports incomplete readiness
 external_effect_performed=0 remains true

@@ -27,8 +27,10 @@ grep -Fq 'LC install configuration' installer/latticra-installer/src/ui.rs
 grep -Fq 'lc install-config' installer/latticra-installer/src/ui.rs
 grep -Fq '[lc.install]' installer/configs/default.installer.toml
 grep -Fq 'install_profile = "lc-panel-install-v0"' installer/configs/default.installer.toml
+grep -Fq 'standalone_console = true' installer/configs/default.installer.toml
 grep -Fq 'allow_external_host_commands = false' installer/configs/default.installer.toml
 grep -Fq 'LC_INSTALL_PROFILE=$(cfg_section lc.install install_profile lc-panel-install-v0)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_INSTALL_STANDALONE_CONSOLE=$(cfg_section lc.install standalone_console true)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC install configuration cannot enable external host commands from the Panel' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc install-config category=core effect=none capability=lc.install.config' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'install-config|install)' installer/scripts/latticra-installer-apply.sh
@@ -46,8 +48,11 @@ grep -Fq 'install_mode=metadata-only-console-foundation' "$plan"
 grep -Fq 'install_config_path=etc/latticra/lc.toml' "$plan"
 grep -Fq 'install_share_path=share/latticra/lc' "$plan"
 grep -Fq 'install_command_wrapper=latticra-lc' "$plan"
+grep -Fq 'standalone_console=true' "$plan"
+grep -Fq 'standalone_requires_panel=0' "$plan"
 grep -Fq 'allow_external_host_commands=false' "$plan"
 grep -Fq 'lc_install_profile=lc-panel-install-v0' "$receipt_dir/latest-receipt.txt"
+grep -Fq 'lc_standalone_console=true' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_allow_external_host_commands=false' "$receipt_dir/latest-receipt.txt"
 grep -Fq '[dry-run] would install LC config profile lc-panel-install-v0' "$run_log"
 
@@ -85,6 +90,7 @@ install_mode = "metadata-only-console-foundation"
 config_path = "etc/latticra/lc.toml"
 share_path = "share/latticra/lc"
 command_wrapper = "$lc_wrapper"
+standalone_console = true
 panel_embedded_console = true
 write_config_file = true
 write_profile_presets = true
@@ -107,10 +113,13 @@ test -x "$home/.local/bin/latticra"
 test -x "$home/.local/bin/$lc_wrapper"
 
 grep -Fq 'install_profile = "lc-panel-install-v0"' "$prefix/share/latticra/lc/install/config.toml"
+grep -Fq 'standalone_console = true' "$prefix/share/latticra/lc/install/config.toml"
+grep -Fq 'standalone_requires_panel = false' "$prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'allow_external_host_commands = false' "$prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'name=lc install-config category=core effect=none capability=lc.install.config' "$prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'lc_install_profile=lc-panel-install-v0' "$live_receipts/latest-receipt.txt"
 grep -Fq "lc_install_command_wrapper=$lc_wrapper" "$live_receipts/latest-receipt.txt"
+grep -Fq 'lc_standalone_console=true' "$live_receipts/latest-receipt.txt"
 
 HOME="$home" "$home/.local/bin/$lc_wrapper" install-config > "$lc_report"
 HOME="$home" "$home/.local/bin/latticra" lc install-config > "$latticra_lc_report"
@@ -123,6 +132,8 @@ fi
 
 grep -Fq 'LATTICRA CONSOLE INSTALL CONFIGURATION' "$lc_report"
 grep -Fq 'install_profile=lc-panel-install-v0' "$lc_report"
+grep -Fq 'standalone_console=true' "$lc_report"
+grep -Fq 'standalone_requires_panel=0' "$lc_report"
 grep -Fq "command_wrapper=$lc_wrapper" "$lc_report"
 grep -Fq 'allow_external_host_commands=false' "$lc_report"
 grep -Fq 'host_process_launch_allowed=0' "$lc_report"

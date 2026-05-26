@@ -141,6 +141,8 @@ int main(void) {
     failures += require_int("result.no_effect", result.no_effect, 1);
     failures += require_int("result.configurable", result.configurable, 1);
     failures += require_int("result.panel_installable", result.panel_installable, 1);
+    failures += require_int("result.standalone_installable", result.standalone_installable, 1);
+    failures += require_int("result.standalone_requires_panel", result.standalone_requires_panel, 0);
     failures += require_int("result.command_registry_present", result.command_registry_present, 1);
     failures += require_int("result.substrate_bridge_present", result.substrate_bridge_present, 1);
     failures += require_int(
@@ -211,6 +213,10 @@ int main(void) {
         (int)latticra_console_command_count(),
         (int)result.command_count);
     failures += require_int("command_count_min", result.command_count >= 21u, 1);
+    failures += require_text(
+        "standalone profile label",
+        latticra_console_profile_label(LATTICRA_CONSOLE_PROFILE_STANDALONE),
+        "standalone");
 
     command = latticra_console_find_command("lc substrate");
     failures += require_int("find lc substrate", command != 0, 1);
@@ -422,6 +428,9 @@ int main(void) {
     failures += require_contains("report", report, "short_name=LC");
     failures += require_contains("report", report, "component_key=latticra_console");
     failures += require_contains("report", report, "panel_installable=1");
+    failures += require_contains("report", report, "standalone_installable=1");
+    failures += require_contains("report", report, "standalone_requires_panel=0");
+    failures += require_contains("report", report, "standalone_command_wrapper=latticra-lc");
     failures += require_contains("report", report, "substrate_bridge_present=1");
     failures += require_contains("report", report, "host_embedding_contract_present=1");
     failures += require_contains("report", report, "host_inventory_contract_present=1");

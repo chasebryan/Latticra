@@ -1,13 +1,13 @@
 # Latticra Console Foundation
 
 Status: Stage-0 foundation
-Scope: LC identity, Panel installability, configurable metadata, substrate bridge, host-embedding plan, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
+Scope: LC identity, standalone and Panel installability, configurable metadata, substrate bridge, host-embedding plan, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
 
 ## Purpose
 
 Latticra Console, shortened to LC, is the planned main operator base for Latticra.
 
-LC should become the primary interaction surface for the Latticra substrate and the surrounding system. It is designed to be configurable and installable through Latticra Panel, embeddable inside a host environment, and eventually capable of growing into an OS-like user environment after explicit evidence gates.
+LC should become the primary interaction surface for the Latticra substrate and the surrounding system. It is designed to be configurable, installable through Latticra Panel, available as a standalone user-local console, embeddable inside a host environment, and eventually capable of growing into an OS-like user environment after explicit evidence gates.
 
 This Stage-0 slice makes LC real without overclaiming authority.
 
@@ -29,6 +29,9 @@ console_name=Latticra Console
 short_name=LC
 component_key=latticra_console
 panel_installable=1
+standalone_installable=1
+standalone_requires_panel=0
+standalone_command_wrapper=latticra-lc
 configurable=1
 profile=panel_embedded
 panel_console_bridge=panel-aware
@@ -79,6 +82,7 @@ share/latticra/lc/install/config.toml
 share/latticra/lc/README.md
 share/latticra/lc/commands/seed-registry.txt
 share/latticra/lc/profiles/hosted-reference.toml
+share/latticra/lc/profiles/standalone-console.toml
 share/latticra/lc/profiles/panel-embedded.toml
 share/latticra/lc/profiles/host-embedded-planning.toml
 share/latticra/lc/profiles/os-base-planning.toml
@@ -106,7 +110,7 @@ The default user-local wrapper is:
 latticra-lc
 ```
 
-Panel installs can rename that direct wrapper with `lc.install.command_wrapper`; the umbrella route remains `latticra lc ...`.
+Panel installs can rename that direct wrapper with `lc.install.command_wrapper`; the wrapper also serves as the standalone LC entrypoint and does not require Panel at runtime. The umbrella route remains `latticra lc ...`.
 
 The umbrella wrapper routes:
 
@@ -210,12 +214,24 @@ require_os_base_contract = true
 require_vm_evidence_contract = true
 require_runtime_boundary_binding = true
 require_seal_capability_labels = true
+
+[lc.install]
+install_profile = "lc-panel-install-v0"
+install_mode = "metadata-only-console-foundation"
+command_wrapper = "latticra-lc"
+standalone_console = true
+standalone_installable = true
+standalone_requires_panel = false
+panel_embedded_console = true
+install_user_wrapper = true
+allow_external_host_commands = false
 ```
 
 The current presets are:
 
 ```text
 hosted_reference -> hosted reference metadata without embedded-host claims
+standalone -> standalone LC wrapper profile without requiring Panel at runtime
 panel_embedded -> default Panel-installed LC operator surface
 host_embedded_planning -> future host-embedding plan with zero host mutation authority
 os_base_planning -> future OS-base plan with zero boot, kernel, or runtime enforcement authority
@@ -227,13 +243,14 @@ Panel exposes the presets in a Latticra Console workspace tab and in the embedde
 ```text
 lc profiles
 lc profile hosted
+lc profile standalone
 lc profile panel
 lc profile host
 lc profile os
 lc profile custom
 ```
 
-The install engine writes the selected profile into `etc/latticra/lc.toml`, writes install metadata into `share/latticra/lc/install/config.toml`, and installs the preset files under `share/latticra/lc/profiles/`. The command wrapper comes from `lc.install.command_wrapper` and defaults to `latticra-lc`. These profiles and install records remain configuration metadata only, and external host commands stay disabled from the Panel.
+The install engine writes the selected profile into `etc/latticra/lc.toml`, writes install metadata into `share/latticra/lc/install/config.toml`, and installs the preset files under `share/latticra/lc/profiles/`. The command wrapper comes from `lc.install.command_wrapper` and defaults to `latticra-lc`. That wrapper is the standalone LC entrypoint when `lc.install.standalone_console = true`; it remains metadata-only and does not require Panel at runtime. These profiles and install records remain configuration metadata only, and external host commands stay disabled from both Panel and standalone LC.
 
 ## Host Embedding Contract
 
@@ -1066,6 +1083,9 @@ runtime_boundary_bound=1
 seal_capability_labels_bound=1
 substrate_bridge_status=metadata-bound-ready
 panel_installable=1
+standalone_installable=1
+standalone_requires_panel=0
+standalone_command_wrapper=latticra-lc
 host_adapter_contract_status=metadata-only-contract-ready
 host_adapter_contract_present=1
 receipt_request_contract_status=metadata-only-contract-ready

@@ -44,6 +44,14 @@ sh scripts/seabios-grub-boot-preview-qemu-argv-template.sh
 
 It prints future profile-specific QEMU argv record placeholders without running QEMU.
 
+The Boot artifact manifest template companion is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-template.sh
+```
+
+It prints future boot artifact metadata placeholders without creating disk images, installing GRUB, or writing boot files.
+
 ## Required Future Evidence Fields
 
 A future completed evidence bundle must record:
@@ -56,6 +64,7 @@ boot_preview_manifest_path
 boot_preview_manifest_sha256
 boot_artifact_manifest_path
 boot_artifact_manifest_sha256
+boot_artifact_manifest_template_path
 disk_image_path
 disk_image_sha256
 artifact_format

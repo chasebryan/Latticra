@@ -67,6 +67,7 @@ static void pipeline_result_default(latticra_lat_pipeline_result_t *result) {
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
     result->server_allowed = 0;
+    result->network_allowed = 0;
     result->recovery_allowed = 0;
     result->hardware_allowed = 0;
 }
@@ -112,29 +113,34 @@ static int no_effect_ok(
            parse_result->execution_allowed == 0 &&
            parse_result->mutation_allowed == 0 &&
            parse_result->server_allowed == 0 &&
+           parse_result->network_allowed == 0 &&
            parse_result->recovery_allowed == 0 &&
            parse_result->hardware_allowed == 0 &&
            semantic_result->no_effect == 1 &&
            semantic_result->execution_allowed == 0 &&
            semantic_result->mutation_allowed == 0 &&
            semantic_result->server_allowed == 0 &&
+           semantic_result->network_allowed == 0 &&
            semantic_result->recovery_allowed == 0 &&
            semantic_result->hardware_allowed == 0 &&
            model_result->no_effect == 1 &&
            model_result->execution_allowed == 0 &&
            model_result->mutation_allowed == 0 &&
            model_result->server_allowed == 0 &&
+           model_result->network_allowed == 0 &&
            model_result->recovery_allowed == 0 &&
            model_result->hardware_allowed == 0 &&
            module->no_effect == 1 &&
            module->execution_allowed == 0 &&
            module->mutation_allowed == 0 &&
            module->server_allowed == 0 &&
+           module->network_allowed == 0 &&
            module->recovery_allowed == 0 &&
            module->hardware_allowed == 0 &&
            lowering_result->no_effect == 1 &&
            lowering_result->execution_allowed == 0 &&
-           lowering_result->mutation_allowed == 0;
+           lowering_result->mutation_allowed == 0 &&
+           lowering_result->network_allowed == 0;
 }
 
 static void summarize_parse_semantic(
@@ -162,6 +168,7 @@ static void summarize_parse_semantic(
     pipeline_result->execution_allowed = parse_result->execution_allowed || semantic_result->execution_allowed;
     pipeline_result->mutation_allowed = parse_result->mutation_allowed || semantic_result->mutation_allowed;
     pipeline_result->server_allowed = parse_result->server_allowed || semantic_result->server_allowed;
+    pipeline_result->network_allowed = parse_result->network_allowed || semantic_result->network_allowed;
     pipeline_result->recovery_allowed = parse_result->recovery_allowed || semantic_result->recovery_allowed;
     pipeline_result->hardware_allowed = parse_result->hardware_allowed || semantic_result->hardware_allowed;
 }
@@ -211,6 +218,7 @@ static void summarize_pipeline(
     pipeline_result->execution_allowed = pipeline_result->execution_allowed || model_result->execution_allowed || module->execution_allowed || lowering_result->execution_allowed;
     pipeline_result->mutation_allowed = pipeline_result->mutation_allowed || model_result->mutation_allowed || module->mutation_allowed || lowering_result->mutation_allowed;
     pipeline_result->server_allowed = pipeline_result->server_allowed || model_result->server_allowed || module->server_allowed;
+    pipeline_result->network_allowed = pipeline_result->network_allowed || model_result->network_allowed || module->network_allowed || lowering_result->network_allowed;
     pipeline_result->recovery_allowed = pipeline_result->recovery_allowed || model_result->recovery_allowed || module->recovery_allowed;
     pipeline_result->hardware_allowed = pipeline_result->hardware_allowed || model_result->hardware_allowed || module->hardware_allowed;
     pipeline_result->no_effect_chain_ok = no_effect_ok(parse_result, semantic_result, model_result, module, lowering_result);
@@ -456,6 +464,7 @@ latticra_status_t latticra_lat_pipeline_report(
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
         "server_allowed=%d\n"
+        "network_allowed=%d\n"
         "recovery_allowed=%d\n"
         "hardware_allowed=%d\n"
         "span_start_offset=%zu\n"
@@ -515,6 +524,7 @@ latticra_status_t latticra_lat_pipeline_report(
         result->execution_allowed,
         result->mutation_allowed,
         result->server_allowed,
+        result->network_allowed,
         result->recovery_allowed,
         result->hardware_allowed,
         result->span.start_offset,

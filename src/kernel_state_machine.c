@@ -72,6 +72,11 @@ latticra_status_t latticra_kernel_state_machine_default_step_request(
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
     request->scheduler_tick_request.timer_source_request = request->timer_source_request;
+    if (latticra_kernel_run_queue_default_request(&request->run_queue_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->run_queue_request.scheduler_tick_request = request->scheduler_tick_request;
     request->target_state = LATTICRA_KERNEL_STATE_INITIALIZED;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
     return LATTICRA_STATUS_OK;
@@ -132,6 +137,7 @@ latticra_status_t latticra_kernel_state_machine_step(
     transition_request.interrupt_table_request = request->interrupt_table_request;
     transition_request.timer_source_request = request->timer_source_request;
     transition_request.scheduler_tick_request = request->scheduler_tick_request;
+    transition_request.run_queue_request = request->run_queue_request;
     transition_request.current_state = machine->current_state;
     transition_request.target_state = request->target_state;
     transition_request.gate = request->gate;

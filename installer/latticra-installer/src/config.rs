@@ -99,6 +99,7 @@ impl SealCryptoProfile {
 pub enum LatticraConsoleProfile {
     HostedReference,
     PanelEmbedded,
+    Standalone,
     HostEmbeddedPlanning,
     OsBasePlanning,
     Custom,
@@ -115,6 +116,7 @@ impl LatticraConsoleProfile {
         match self {
             Self::HostedReference => "hosted_reference",
             Self::PanelEmbedded => "panel_embedded",
+            Self::Standalone => "standalone",
             Self::HostEmbeddedPlanning => "host_embedded_planning",
             Self::OsBasePlanning => "os_base_planning",
             Self::Custom => "custom",
@@ -125,6 +127,7 @@ impl LatticraConsoleProfile {
         match self {
             Self::HostedReference => "Hosted Reference",
             Self::PanelEmbedded => "Panel Embedded",
+            Self::Standalone => "Standalone LC",
             Self::HostEmbeddedPlanning => "Host-Embedded Planning",
             Self::OsBasePlanning => "OS-Base Planning",
             Self::Custom => "Custom LC",
@@ -135,16 +138,18 @@ impl LatticraConsoleProfile {
         match self {
             Self::HostedReference => "Reference LC metadata installed beside the Panel without claiming embedded host behavior.",
             Self::PanelEmbedded => "Default Panel-installed LC profile for operator console workflows and substrate inspection.",
+            Self::Standalone => "Standalone LC wrapper profile that does not require Panel at runtime.",
             Self::HostEmbeddedPlanning => "Planning profile for future host embedding while retaining zero host mutation authority.",
             Self::OsBasePlanning => "Planning profile for the eventual LC OS-base lane without boot, kernel, or runtime enforcement authority.",
             Self::Custom => "Manual LC profile fields are authoritative while the authority floor remains no-effect.",
         }
     }
 
-    pub fn all() -> [LatticraConsoleProfile; 5] {
+    pub fn all() -> [LatticraConsoleProfile; 6] {
         [
             Self::HostedReference,
             Self::PanelEmbedded,
+            Self::Standalone,
             Self::HostEmbeddedPlanning,
             Self::OsBasePlanning,
             Self::Custom,
@@ -188,6 +193,7 @@ pub struct LatticraConsoleInstallConfig {
     pub config_path: String,
     pub share_path: String,
     pub command_wrapper: String,
+    pub standalone_console: bool,
     pub panel_embedded_console: bool,
     pub write_config_file: bool,
     pub write_profile_presets: bool,
@@ -205,6 +211,7 @@ impl Default for LatticraConsoleInstallConfig {
             config_path: "etc/latticra/lc.toml".to_owned(),
             share_path: "share/latticra/lc".to_owned(),
             command_wrapper: "latticra-lc".to_owned(),
+            standalone_console: true,
             panel_embedded_console: true,
             write_config_file: true,
             write_profile_presets: true,
@@ -346,6 +353,12 @@ impl LatticraConsoleConfig {
                 self.panel_bridge = "panel-aware".to_owned();
                 self.host_embedding_profile = "panel-contained".to_owned();
                 self.os_base_profile = "planned-no-boot-authority".to_owned();
+            }
+            LatticraConsoleProfile::Standalone => {
+                self.panel_bridge = "standalone-optional".to_owned();
+                self.host_embedding_profile = "not-embedded".to_owned();
+                self.os_base_profile = "planned-no-boot-authority".to_owned();
+                self.install.standalone_console = true;
             }
             LatticraConsoleProfile::HostEmbeddedPlanning => {
                 self.panel_bridge = "panel-aware".to_owned();
@@ -923,6 +936,18 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "standalone_console={}",
+        config.lc.install.standalone_console
+    );
+    let _ = writeln!(out, "standalone_installable=1");
+    let _ = writeln!(out, "standalone_requires_panel=0");
+    let _ = writeln!(
+        out,
+        "standalone_command_wrapper={}",
+        config.lc.install.command_wrapper
+    );
+    let _ = writeln!(
+        out,
         "panel_embedded_console={}",
         config.lc.install.panel_embedded_console
     );
@@ -1215,11 +1240,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
     let _ = writeln!(
         out,
-        "stage=36-prompt-evaluation-result-release-receipt-review-contract"
+        "stage=37-prompt-evaluation-result-release-receipt-review-disposition-contract"
     );
     let _ = writeln!(
         out,
-        "previous_stage=35-prompt-evaluation-result-release-receipt-contract"
+        "previous_stage=36-prompt-evaluation-result-release-receipt-review-contract"
     );
     let _ = writeln!(
         out,
@@ -2387,6 +2412,42 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(
         out,
         "requires_future_prompt_evaluation_result_release_receipt_review_disposition_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_contract_stage=37-prompt-evaluation-result-release-receipt-review-disposition-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_result_release_receipt_review_disposition_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_contract_status=contract_only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_record_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_decision_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_findings_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_contract=1"
     );
     let _ = writeln!(out, "requires_prompt_evaluation_result_contract=1");
     let _ = writeln!(

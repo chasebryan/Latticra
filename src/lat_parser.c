@@ -57,6 +57,7 @@ static void result_default(latticra_lat_parse_result_t *result) {
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
     result->server_allowed = 0;
+    result->network_allowed = 0;
     result->recovery_allowed = 0;
     result->hardware_allowed = 0;
 }
@@ -760,6 +761,7 @@ latticra_status_t latticra_lat_parse_report(
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
         "server_allowed=%d\n"
+        "network_allowed=%d\n"
         "recovery_allowed=%d\n"
         "hardware_allowed=%d\n"
         "span_start_offset=%zu\n"
@@ -801,6 +803,7 @@ latticra_status_t latticra_lat_parse_report(
         result->execution_allowed,
         result->mutation_allowed,
         result->server_allowed,
+        result->network_allowed,
         result->recovery_allowed,
         result->hardware_allowed,
         result->span.start_offset,

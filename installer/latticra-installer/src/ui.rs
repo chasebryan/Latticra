@@ -14,7 +14,7 @@ const COMPACT_LAYOUT_WIDTH: f32 = 1400.0;
 const NARROW_LAYOUT_WIDTH: f32 = 900.0;
 const RIGHT_PANEL_MAX_WIDTH: f32 = 640.0;
 const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
-    ("status", "Stage-36 status and authority summary"),
+    ("status", "Stage-37 status and authority summary"),
     ("context", "Stage-1 local context-pack metadata"),
     ("runtime", "Stage-2 runtime-profile metadata"),
     ("plan", "Stage-3 prompt-plan workbench metadata"),
@@ -116,6 +116,10 @@ const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
     (
         "prompt-evaluation-result-release-receipt-review",
         "Stage-36 prompt-evaluation result release receipt review contract",
+    ),
+    (
+        "prompt-evaluation-result-release-receipt-review-disposition",
+        "Stage-37 prompt-evaluation result release receipt review disposition contract",
     ),
 ];
 
@@ -635,10 +639,10 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc profile hosted|panel|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
+                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc profile hosted|panel|standalone|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
                 );
                 self.push_console(
-                    "nadia: use `nadia commands` for the full Stage-1 through Stage-36 command map",
+                    "nadia: use `nadia commands` for the full Stage-1 through Stage-37 command map",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -739,6 +743,16 @@ impl LatticraInstallerApp {
                 ));
                 self.push_console(format!(
                     "install_command_wrapper={}",
+                    self.config.lc.install.command_wrapper
+                ));
+                self.push_console(format!(
+                    "standalone_console={}",
+                    self.config.lc.install.standalone_console
+                ));
+                self.push_console("standalone_installable=1");
+                self.push_console("standalone_requires_panel=0");
+                self.push_console(format!(
+                    "standalone_command_wrapper={}",
                     self.config.lc.install.command_wrapper
                 ));
                 self.push_console(format!(
@@ -936,6 +950,16 @@ impl LatticraInstallerApp {
                     self.config.lc.install.command_wrapper
                 ));
                 self.push_console(format!(
+                    "standalone_console={}",
+                    self.config.lc.install.standalone_console
+                ));
+                self.push_console("standalone_installable=1");
+                self.push_console("standalone_requires_panel=0");
+                self.push_console(format!(
+                    "standalone_command_wrapper={}",
+                    self.config.lc.install.command_wrapper
+                ));
+                self.push_console(format!(
                     "panel_embedded_console={}",
                     self.config.lc.install.panel_embedded_console
                 ));
@@ -974,6 +998,9 @@ impl LatticraInstallerApp {
             }
             ["lc", "profile", "panel"] | ["lc", "profile", "panel_embedded"] => {
                 self.apply_lc_profile(LatticraConsoleProfile::PanelEmbedded);
+            }
+            ["lc", "profile", "standalone"] | ["lc", "profile", "standalone_console"] => {
+                self.apply_lc_profile(LatticraConsoleProfile::Standalone);
             }
             ["lc", "profile", "host"] | ["lc", "profile", "host_embedded_planning"] => {
                 self.apply_lc_profile(LatticraConsoleProfile::HostEmbeddedPlanning);
@@ -1953,7 +1980,10 @@ impl LatticraInstallerApp {
                     "prompt_evaluation_result_release_receipt_review_contract_stage=36-prompt-evaluation-result-release-receipt-review-contract",
                 );
                 self.push_console(
-                    "stage=36 prompt-evaluation-result-release-receipt-review-contract; prompt_evaluation_result_release_receipt_review_record_created=0 prompt_evaluation_result_release_receipt_review_decision_recorded=0 runtime_invoked=0",
+                    "prompt_evaluation_result_release_receipt_review_disposition_contract_stage=37-prompt-evaluation-result-release-receipt-review-disposition-contract",
+                );
+                self.push_console(
+                    "stage=37 prompt-evaluation-result-release-receipt-review-disposition-contract; prompt_evaluation_result_release_receipt_review_disposition_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_decision_recorded=0 runtime_invoked=0",
                 );
                 self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
@@ -2443,6 +2473,30 @@ impl LatticraInstallerApp {
                 );
                 self.push_console(
                     "requires_prompt_evaluation_result_release_receipt_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_contract=1",
+                );
+            }
+            ["nadia", "prompt-evaluation-result-release-receipt-review-disposition"]
+            | ["nadia", "evaluation-result-release-receipt-review-disposition"]
+            | ["nadia", "prompt-result-release-receipt-review-disposition"]
+            | ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-contract"] => {
+                self.push_console(
+                    "nadia_prompt_evaluation_result_release_receipt_review_disposition=stage-37-prompt-evaluation-result-release-receipt-review-disposition-contract",
+                );
+                self.push_console(
+                    "panel_command=nadia prompt-evaluation-result-release-receipt-review-disposition",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console(
+                    "installed_cli=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_contract_status=contract_only prompt_evaluation_result_release_receipt_review_disposition_record_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_decision_recorded=0 prompt_evaluation_result_release_receipt_review_disposition_findings_recorded=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_result_release_receipt_review_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_contract=1",
                 );
             }
             ["nadia", "inference-readiness"]
@@ -3043,7 +3097,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-36 prompt-evaluation-result-release-receipt-review contract with metadata-only Console surfaces.",
+            "Stage-37 prompt-evaluation-result-release-receipt-review-disposition contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,
@@ -3147,7 +3201,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.latticra_console,
             "Install Latticra Console",
-            "LC is installed as the Panel-owned operator console and metadata surface.",
+            "LC is installed as a standalone and Panel-embedded operator console metadata surface.",
         );
         labeled_text_field(
             ui,
@@ -3161,6 +3215,12 @@ impl LatticraInstallerApp {
             ui,
             "Command wrapper",
             &mut self.config.lc.install.command_wrapper,
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.install.standalone_console,
+            "Standalone console",
+            "Install LC as a direct user-local console wrapper that does not require Panel at runtime.",
         );
         checkbox_note(
             ui,
@@ -3178,7 +3238,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.lc.install.write_profile_presets,
             "Write profile presets",
-            "Install hosted, Panel, host-planning, and OS-planning profile metadata.",
+            "Install hosted, standalone, Panel, host-planning, and OS-planning profile metadata.",
         );
         checkbox_note(
             ui,

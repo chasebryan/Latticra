@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nadia Offline AI | Latticra</title>
-  <meta name="description" content="A public overview of Nadia, Latticra's offline AI planning lane, including Stage-36 contract-only status, protective boundaries, metadata commands, and non-claims.">
+  <meta name="description" content="A public overview of Nadia, Latticra's offline AI planning lane, including Stage-37 contract-only status, protective boundaries, metadata commands, and non-claims.">
   <meta name="theme-color" content="#f7f8fb">
   <meta property="og:title" content="Nadia Offline AI">
   <meta property="og:description" content="Offline AI planning contracts, local context metadata, protective boundaries, and blocked runtime authority.">
@@ -28,6 +28,7 @@
         <a href="architecture.html">Architecture</a>
         <a href="runtime.html">Runtime</a>
         <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
         <a href="console.html">Console</a>
         <a href="nadia.html">Nadia</a>
         <a href="language.html">Language</a>
@@ -49,7 +50,7 @@
         <p class="eyebrow">Offline AI Planning Lane</p>
         <h1>Nadia</h1>
         <p class="page-lede">
-          Nadia is Latticra's future offline AI companion lane. Today she is a local, contract-only planning surface with Stage-36 metadata and no model runtime, inference, tool execution, source mutation, or network authority.
+          Nadia is Latticra's future offline AI companion lane. Today she is a local, contract-only planning surface with Stage-37 metadata and no model runtime, inference, tool execution, source mutation, or network authority.
         </p>
       </div>
     </section>
@@ -92,9 +93,9 @@
           <p>Tokenizer, artifact, token sequence, context-window, input, runtime handoff, and invocation contracts exist.</p>
         </article>
         <article>
-          <span>31-36</span>
+          <span>31-37</span>
           <h3>Result release chain</h3>
-          <p>Result, review, disposition, release, release-receipt, and release-receipt-review contracts record future evidence requirements without creating results.</p>
+          <p>Result, review, disposition, release, release-receipt, release-receipt-review, and review-disposition contracts record future evidence requirements without creating results.</p>
         </article>
       </div>
     </section>
@@ -102,7 +103,7 @@
     <section class="section-band section-band-muted">
       <div class="content-shell section-heading">
         <p class="eyebrow">Status Snapshot</p>
-        <h2>Stage-36 is present, but authority is still denied.</h2>
+        <h2>Stage-37 is present, but authority is still denied.</h2>
         <p>
           These fields are the public posture to keep in view when reading any Nadia record.
         </p>
@@ -110,7 +111,7 @@
       <div class="content-shell report-grid">
         <article>
           <span>current_stage</span>
-          <strong>36</strong>
+          <strong>37</strong>
         </article>
         <article>
           <span>contract_only</span>
@@ -147,15 +148,15 @@
       <div class="content-shell nadia-split">
         <div class="section-heading">
           <p class="eyebrow">Boundary</p>
-          <h2>The release receipt review contract does not review receipts.</h2>
+          <h2>The release receipt review disposition contract does not decide reviews.</h2>
           <p>
-            Stage-36 records a future prompt-evaluation result release receipt review lane. It does not create review records, record review decisions, record review findings, create release receipts, sign receipts, publish receipts, create release records, read model output, or record generated text.
+            Stage-37 records a future prompt-evaluation result release receipt review disposition lane. It does not create disposition records, record disposition decisions, record disposition findings, create review records, record review decisions, record review findings, create release receipts, sign receipts, publish receipts, create release records, read model output, or record generated text.
           </p>
         </div>
         <div class="nadia-table" role="table" aria-label="Nadia current authority boundary">
           <div role="row">
             <span role="cell">Present</span>
-            <p role="cell">Local identity, context-pack metadata, runtime-profile metadata, prompt plans, safety reports, tool preflight reports, tokenizer contracts, and Stage-36 release-receipt-review-contract metadata.</p>
+            <p role="cell">Local identity, context-pack metadata, runtime-profile metadata, prompt plans, safety reports, tool preflight reports, tokenizer contracts, and Stage-37 release-receipt-review-disposition-contract metadata.</p>
           </div>
           <div role="row">
             <span role="cell">Denied</span>
@@ -163,7 +164,7 @@
           </div>
           <div role="row">
             <span role="cell">Next boundary</span>
-            <p role="cell">A future release-receipt-review disposition contract must name disposition shape, denial fields, safety inheritance, operator review gates, and non-claims before any promotion.</p>
+            <p role="cell">A future release-receipt-review disposition release contract must name release shape, denial fields, safety inheritance, operator review gates, and non-claims before any promotion.</p>
           </div>
         </div>
       </div>
@@ -219,9 +220,9 @@ latticra-nadia tool-preflight
 latticra-nadia prompt-contract</code></pre>
         </article>
         <article class="command-panel">
-          <h3>Latest release receipt review contract</h3>
-          <pre><code>latticra-nadia prompt-evaluation-result-release-receipt-review
-sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh</code></pre>
+          <h3>Latest release receipt review disposition contract</h3>
+          <pre><code>latticra-nadia prompt-evaluation-result-release-receipt-review-disposition
+sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.sh</code></pre>
         </article>
       </div>
     </section>
@@ -237,8 +238,8 @@ sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-s
         <a href="NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md"><strong>Protective boundary</strong><span>Safety restrictions and authority-denial prerequisites.</span></a>
         <a href="NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md"><strong>Tool preflight</strong><span>Report-only tool-authority classification without execution.</span></a>
         <a href="NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md"><strong>Inference readiness</strong><span>Blocked readiness metadata before runtime invocation or inference.</span></a>
-        <a href="NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36.md"><strong>Stage-36 release receipt review contract</strong><span>Latest prompt-evaluation result release receipt review contract and non-claims.</span></a>
-        <a href="status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36_STATUS.md"><strong>Stage-36 status</strong><span>Implementation status record for current release-receipt-review-contract metadata.</span></a>
+        <a href="NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_37.md"><strong>Stage-37 release receipt review disposition contract</strong><span>Latest prompt-evaluation result release receipt review disposition contract and non-claims.</span></a>
+        <a href="status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_37_STATUS.md"><strong>Stage-37 status</strong><span>Implementation status record for current release-receipt-review-disposition metadata.</span></a>
         <a href="workbench.html"><strong>Workbench overview</strong><span>Panel, LC, Nadia, and local operator-surface boundaries.</span></a>
       </div>
     </section>

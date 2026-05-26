@@ -96,7 +96,7 @@ require_contains 'Stage-29: Prompt Evaluation Runtime Handoff Contract' "$founda
 require_contains 'Stage-30: Prompt Evaluation Invocation Contract' "$foundation"
 require_contains 'scripts/nadia-prompt-evaluation-input-contract.sh' "$foundation"
 require_contains 'test-nadia-prompt-evaluation-input-contract-stage-28.sh' "$foundation"
-require_contains 'Before Stage-37 starts' "$foundation"
+require_contains 'Before Stage-38 starts' "$foundation"
 require_contains 'NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28.md' "$foundation_index"
 require_contains 'NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md' "$status_index"
 require_contains 'Nadia prompt evaluation input contract Stage-28 + guardrails' "$foundation_index"

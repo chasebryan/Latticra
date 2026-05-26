@@ -114,6 +114,8 @@ Runtime invocation, prompt evaluation, token generation, inference, review recor
 
 That later prompt-evaluation result release receipt review disposition contract is the next boundary; Stage-36 only records the prerequisite metadata.
 
+Stage-37 now defines that prompt-evaluation result release receipt review disposition contract while preserving the same no-runtime, no-review-recording, no-disposition-recording, no-receipt-signing, and no-inference boundary.
+
 ## Validation
 
 ```sh
