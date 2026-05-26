@@ -286,6 +286,9 @@ check_workflow() {
 
   grep -q '^name:' "$workflow" ||
     fail "$workflow must declare a workflow name"
+  workflow_name_length="$(sed -nE 's/^name:[[:space:]]*//p' "$workflow" | awk 'NR == 1 { print length($0) }')"
+  [ "${workflow_name_length:-0}" -le 100 ] ||
+    fail "$workflow workflow name must be 100 characters or fewer"
   grep -q '^on:' "$workflow" ||
     fail "$workflow must declare triggers"
   grep -Eq '^[[:space:]]*pull_request:' "$workflow" ||
@@ -302,6 +305,26 @@ check_workflow() {
   [ "$runs_on_count" -eq 0 ] ||
     [ "$timeout_count" -ge "$runs_on_count" ] ||
     fail "$workflow must set timeout-minutes for every job"
+
+  long_job_ids="$(awk '
+    /^jobs:[[:space:]]*$/ {
+      in_jobs = 1
+      next
+    }
+    in_jobs && /^[^[:space:]][^:]*:/ {
+      in_jobs = 0
+    }
+    in_jobs && /^  [A-Za-z0-9_-]+:[[:space:]]*$/ {
+      id = $1
+      sub(/:$/, "", id)
+      if (length(id) > 100) {
+        print id
+      }
+    }
+  ' "$workflow")"
+  [ -z "$long_job_ids" ] ||
+    fail "$workflow job ids must be 100 characters or fewer:
+$long_job_ids"
 
   long_timeouts="$(awk '
     /^[[:space:]]*timeout-minutes:[[:space:]]*[0-9]+[[:space:]]*$/ {
