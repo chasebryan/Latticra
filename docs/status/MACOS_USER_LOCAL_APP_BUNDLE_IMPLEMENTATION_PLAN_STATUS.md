@@ -74,7 +74,7 @@ macos_user_local_app_bundle_implementation_plan: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner interface contract that accepts only a passed preflight and keeps deletion disabled otherwise.
+Add a macOS reset/uninstall live-runner denied-dispatch transcript contract that records the no-op runner denial without enabling deletion.
 ```
 
 ## Non-Claims

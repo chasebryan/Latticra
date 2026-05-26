@@ -15,6 +15,7 @@ The contract proves the live implementation plan still cannot delete because the
 ```text
 macos_reset_uninstall_live_execution_preflight_contract_present=1
 macos_reset_uninstall_live_denial_transcript_contract_present=1
+macos_reset_uninstall_live_runner_interface_contract_present=1
 macos_reset_uninstall_live_execution_preflight_contract_guard_present=1
 live_execution_preflight_contract_state=closed-no-effect
 live_execution_preflight_contract_decision=blocked-missing-complete-evidence-bundle-and-effect-authorization
@@ -171,7 +172,13 @@ Add a macOS reset/uninstall live-execution preflight contract that proves the li
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner interface contract that accepts only a passed preflight and keeps deletion disabled otherwise.
+Add a macOS reset/uninstall live-runner denied-dispatch transcript contract that records the no-op runner denial without enabling deletion.
+```
+
+Follow-on no-op prototype lane:
+
+```text
+Add a macOS reset/uninstall live-runner no-op prototype contract that exercises the denied interface path without deleting files.
 ```
 
 ## Non-Claims

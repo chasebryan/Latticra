@@ -13,7 +13,7 @@
         } \
     } while (0)
 
-static int default_request_targets_timer_source_ready(void) {
+static int default_request_targets_scheduler_tick_ready(void) {
     latticra_kernel_lifecycle_subsystem_summary_request_t request;
 
     EXPECT_TRUE(latticra_kernel_lifecycle_subsystem_summary_default_request(&request) ==
@@ -21,8 +21,8 @@ static int default_request_targets_timer_source_ready(void) {
         "default summary request status");
     EXPECT_TRUE(request.lifecycle_request.gate == LATTICRA_KERNEL_STATE_GATE_ALLOW,
         "summary default lifecycle gate allow");
-    EXPECT_TRUE(request.lifecycle_request.target_state == LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY,
-        "summary default target timer-source-ready");
+    EXPECT_TRUE(request.lifecycle_request.target_state == LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY,
+        "summary default target scheduler-tick-ready");
     EXPECT_TRUE(request.lifecycle_request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
         "summary default max steps");
     EXPECT_TRUE(strcmp(request.registry_request.kernel_request.kernel_id, "latticra-kernel-seed") == 0,
@@ -43,14 +43,14 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.summary_status, "summary-ready") == 0,
         "summary ready");
-    EXPECT_TRUE(strcmp(result.final_state, "timer-source-ready") == 0,
-        "summary final state timer-source-ready");
+    EXPECT_TRUE(strcmp(result.final_state, "scheduler-tick-ready") == 0,
+        "summary final state scheduler-tick-ready");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "summary lifecycle complete");
-    EXPECT_TRUE(result.lifecycle_step_count == 12u,
-        "summary twelve lifecycle steps");
-    EXPECT_TRUE(result.lifecycle_state_change_count == 12u,
-        "summary twelve lifecycle state changes");
+    EXPECT_TRUE(result.lifecycle_step_count == 13u,
+        "summary thirteen lifecycle steps");
+    EXPECT_TRUE(result.lifecycle_state_change_count == 13u,
+        "summary thirteen lifecycle state changes");
     EXPECT_TRUE(result.lifecycle_state_mutated == 1,
         "summary lifecycle state mutated internally");
     EXPECT_TRUE(result.external_effect_performed == 0,
@@ -111,10 +111,18 @@ static int summary_reaches_ready_without_authority(void) {
         "summary timer disarm denied");
     EXPECT_TRUE(result.scheduler_tick_allowed == 0,
         "summary scheduler tick denied");
+    EXPECT_TRUE(result.run_queue_mutation_allowed == 0,
+        "summary run queue mutation denied");
+    EXPECT_TRUE(result.context_switch_allowed == 0,
+        "summary context switch denied");
     EXPECT_TRUE(result.preemption_allowed == 0,
         "summary preemption denied");
+    EXPECT_TRUE(result.time_accounting_allowed == 0,
+        "summary time accounting denied");
     EXPECT_TRUE(result.time_read_allowed == 0,
         "summary time read denied");
+    EXPECT_TRUE(result.process_wake_allowed == 0,
+        "summary process wake denied");
     EXPECT_TRUE(result.dma_allowed == 0,
         "summary dma denied");
     EXPECT_TRUE(result.hardware_effect_allowed == 0,
@@ -144,8 +152,8 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.entries[2].name, "scheduler") == 0,
         "summary scheduler entry name");
-    EXPECT_TRUE(strcmp(result.entries[2].lifecycle_relation, "timer-source-ready") == 0,
-        "summary scheduler timer source ready");
+    EXPECT_TRUE(strcmp(result.entries[2].lifecycle_relation, "scheduler-tick-ready") == 0,
+        "summary scheduler tick ready");
     EXPECT_TRUE(strcmp(result.entries[2].authority_status, "scheduler-execution-denied") == 0,
         "summary scheduler authority denied");
     EXPECT_TRUE(result.entries[2].lifecycle_ready == 1,
@@ -243,13 +251,13 @@ static int summary_report_is_deterministic(void) {
         "summary report title");
     EXPECT_TRUE(strstr(report, "summary_status=summary-ready\n") != 0,
         "summary report status");
-    EXPECT_TRUE(strstr(report, "final_state=timer-source-ready\n") != 0,
+    EXPECT_TRUE(strstr(report, "final_state=scheduler-tick-ready\n") != 0,
         "summary report final state");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "summary report lifecycle complete");
-    EXPECT_TRUE(strstr(report, "lifecycle_step_count=12\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_step_count=13\n") != 0,
         "summary report step count");
-    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=12\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=13\n") != 0,
         "summary report state changes");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "summary report external effect");
@@ -307,10 +315,18 @@ static int summary_report_is_deterministic(void) {
         "summary report timer disarm denied");
     EXPECT_TRUE(strstr(report, "scheduler_tick_allowed=0\n") != 0,
         "summary report scheduler tick denied");
+    EXPECT_TRUE(strstr(report, "run_queue_mutation_allowed=0\n") != 0,
+        "summary report run queue mutation denied");
+    EXPECT_TRUE(strstr(report, "context_switch_allowed=0\n") != 0,
+        "summary report context switch denied");
     EXPECT_TRUE(strstr(report, "preemption_allowed=0\n") != 0,
         "summary report preemption denied");
+    EXPECT_TRUE(strstr(report, "time_accounting_allowed=0\n") != 0,
+        "summary report time accounting denied");
     EXPECT_TRUE(strstr(report, "time_read_allowed=0\n") != 0,
         "summary report time read denied");
+    EXPECT_TRUE(strstr(report, "process_wake_allowed=0\n") != 0,
+        "summary report process wake denied");
     EXPECT_TRUE(strstr(report, "dma_allowed=0\n") != 0,
         "summary report dma denied");
     EXPECT_TRUE(strstr(report, "hardware_effect_allowed=0\n") != 0,
@@ -321,7 +337,7 @@ static int summary_report_is_deterministic(void) {
         "summary report entry count");
     EXPECT_TRUE(strstr(report, "subsystem[1].authority_status=runtime-entry-denied\n") != 0,
         "summary report runtime authority");
-    EXPECT_TRUE(strstr(report, "subsystem[2].lifecycle_relation=timer-source-ready\n") != 0,
+    EXPECT_TRUE(strstr(report, "subsystem[2].lifecycle_relation=scheduler-tick-ready\n") != 0,
         "summary report scheduler relation");
     EXPECT_TRUE(strstr(report, "subsystem[3].lifecycle_relation=memory-map-ready\n") != 0,
         "summary report memory relation");
@@ -366,7 +382,7 @@ static int null_guards_are_safe(void) {
 }
 
 int main(void) {
-    if (default_request_targets_timer_source_ready() != 0) return 1;
+    if (default_request_targets_scheduler_tick_ready() != 0) return 1;
     if (summary_reaches_ready_without_authority() != 0) return 1;
     if (summary_respects_lifecycle_step_limit() != 0) return 1;
     if (summary_report_is_deterministic() != 0) return 1;

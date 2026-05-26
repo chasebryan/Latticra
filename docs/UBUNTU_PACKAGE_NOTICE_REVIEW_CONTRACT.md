@@ -24,6 +24,8 @@ ubuntu_third_party_material_review_contract_present=1
 ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review
 ubuntu_generated_artifact_notice_review_contract_present=1
 ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review
+ubuntu_notice_file_decision_contract_present=1
+ubuntu_notice_file_decision_status=blocked-pending-notice-file-decision
 third_party_material_inventory_recorded=1
 notice_file_present=0
 documentation_license_decision_present=0
@@ -46,6 +48,8 @@ doc_payload_license_compatible_with_package=1
 third_party_material_inventory_reviewed=1
 third_party_material_missing_entries=0
 generated_artifact_notice_reviewed=1
+notice_file_required_decision_recorded=1
+notice_file_content_requirements_recorded=1
 notice_file_decision_recorded=1
 debian_copyright_notice_mapping_reviewed=1
 trademark_notice_boundary_recorded=1
@@ -65,6 +69,8 @@ ubuntu_third_party_material_review_contract_present=1
 ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review
 ubuntu_generated_artifact_notice_review_contract_present=1
 ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review
+ubuntu_notice_file_decision_contract_present=1
+ubuntu_notice_file_decision_status=blocked-pending-notice-file-decision
 doc_payload_license_reviewed=0
 doc_payload_license_unresolved=1
 doc_payload_license_decision_recorded=0
@@ -74,7 +80,10 @@ third_party_notice_requirements_recorded=0
 generated_artifact_notice_reviewed=0
 generated_artifact_notice_requirements_recorded=0
 third_party_notice_reviewed=0
+notice_file_present=0
 notice_file_decision_recorded=0
+notice_file_required_decision_recorded=0
+notice_file_content_requirements_recorded=0
 debian_copyright_notice_mapping_reviewed=0
 ubuntu_package_license_review_unblocked=0
 ubuntu_lintian_static_metadata_unblocked=0
@@ -92,6 +101,8 @@ The Ubuntu doc payload license review contract records the unresolved `README.md
 The Ubuntu third-party material review contract records the source, license, compatibility, and notice-requirement evidence required before this notice review can be promoted.
 
 The Ubuntu generated-artifact notice review contract records the generated payload, build artifact, changes-file, build-log, and installed-payload notice evidence required before this notice review can be promoted.
+
+The Ubuntu NOTICE file decision contract records the reviewed decision required before a package can claim NOTICE obligations are satisfied.
 
 ## Non-Claims
 

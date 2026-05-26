@@ -76,6 +76,8 @@ require_contains 'scripts/seabios-grub-boot-preview-evidence-template.sh' "$evid
 require_contains 'scripts/test-seabios-grub-boot-preview-evidence-template.sh' "$evidence_doc"
 require_contains 'evidence capture template' "$preflight_doc"
 require_contains 'scripts/seabios-grub-boot-preview-evidence-template.sh' "$preflight_doc"
+require_contains 'QEMU argv template' "$doc"
+require_contains 'scripts/seabios-grub-boot-preview-qemu-argv-template.sh' "$doc"
 
 require_contains 'SEABIOS GRUB BOOT PREVIEW EVIDENCE CAPTURE TEMPLATE' "$script"
 require_contains 'capture_template_decision=blocked-template-only-no-boot-execution' "$script"

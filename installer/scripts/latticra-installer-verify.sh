@@ -20,6 +20,8 @@ APP_FILE="$HOME/.local/share/applications/latticra-panel.desktop"
 ICON_FILE="$HOME/.local/share/icons/hicolor/256x256/apps/latticra-panel.png"
 LC_INSTALL_CONFIG="$PREFIX/share/latticra/lc/install/config.toml"
 LC_COMMAND_REGISTRY="$PREFIX/share/latticra/lc/commands/seed-registry.txt"
+UPDATER_CONFIG="$PREFIX/etc/latticra/updater.toml"
+UPDATER_POLICY="$PREFIX/share/latticra/updater/policy.toml"
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/latticra-installer-verify.XXXXXX")"
 failures=0
 
@@ -136,14 +138,33 @@ check "desktop entry" "$APP_FILE"
 check "desktop icon" "$ICON_FILE"
 check "LC install config" "$LC_INSTALL_CONFIG"
 check "LC command registry" "$LC_COMMAND_REGISTRY"
+check "updater config" "$UPDATER_CONFIG"
+check "updater policy" "$UPDATER_POLICY"
 
 check_contains "LC install profile metadata" 'install_profile = "lc-panel-install-v0"' "$LC_INSTALL_CONFIG"
 check_contains "LC command wrapper metadata" "command_wrapper = \"$LC_COMMAND_WRAPPER\"" "$LC_INSTALL_CONFIG"
 check_contains "LC external host command authority disabled" 'allow_external_host_commands = false' "$LC_INSTALL_CONFIG"
 check_contains "LC install-config registry command" 'name=lc install-config category=core effect=none capability=lc.install.config' "$LC_COMMAND_REGISTRY"
+check_contains "updater panel-owned config" 'panel_owned = true' "$UPDATER_CONFIG"
+check_contains "updater network authority disabled" 'allow_network_fetch = false' "$UPDATER_CONFIG"
+check_contains "updater apply mode" 'update_apply_mode = "guarded-local-prefix-reinstall"' "$UPDATER_CONFIG"
+check_contains "updater policy name" 'name = "Latticra Panel Updater"' "$UPDATER_POLICY"
+check_contains "updater policy dry-run command" 'preview_command = "updater dry-run"' "$UPDATER_POLICY"
+check_contains "updater policy apply command" 'apply_command = "updater apply"' "$UPDATER_POLICY"
+check_contains "updater policy network authority disabled" 'network_fetch_authority = false' "$UPDATER_POLICY"
 
 if [ -x "$USER_BIN/latticra" ]; then
   "$USER_BIN/latticra" status || failures=$((failures + 1))
+  if "$USER_BIN/latticra" updater status > "$TMP_DIR/updater-status.txt"; then
+    check_contains "updater status report" 'LATTICRA PANEL UPDATER' "$TMP_DIR/updater-status.txt"
+    check_contains "updater status config path" "config=$UPDATER_CONFIG" "$TMP_DIR/updater-status.txt"
+    check_contains "updater status policy path" "policy=$UPDATER_POLICY" "$TMP_DIR/updater-status.txt"
+    check_contains "updater status network authority disabled" 'network_authority=0' "$TMP_DIR/updater-status.txt"
+    check_contains "updater status apply mode" 'update_apply_mode=guarded-local-prefix-reinstall' "$TMP_DIR/updater-status.txt"
+  else
+    echo "failed: latticra updater status" >&2
+    failures=$((failures + 1))
+  fi
 fi
 
 if [ -x "$LC_COMMAND" ]; then

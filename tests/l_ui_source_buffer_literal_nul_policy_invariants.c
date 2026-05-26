@@ -231,6 +231,7 @@ static int literal_nul_policy_preserves_no_effect_flags(void) {
     EXPECT_TRUE(result.execution_allowed == 0, "parse execution denied");
     EXPECT_TRUE(result.mutation_allowed == 0, "parse mutation denied");
     EXPECT_TRUE(result.server_allowed == 0, "parse server denied");
+    EXPECT_TRUE(result.network_allowed == 0, "parse network denied");
     EXPECT_TRUE(result.recovery_allowed == 0, "parse recovery denied");
     EXPECT_TRUE(result.hardware_allowed == 0, "parse hardware denied");
     EXPECT_TRUE(latticra_l_ui_diagnostic_from_parse_result(&result, &diagnostic) == LATTICRA_STATUS_OK, "literal NUL no-effect diagnostic maps");
@@ -238,6 +239,7 @@ static int literal_nul_policy_preserves_no_effect_flags(void) {
     EXPECT_TRUE(diagnostic.execution_allowed == 0, "diagnostic execution denied");
     EXPECT_TRUE(diagnostic.mutation_allowed == 0, "diagnostic mutation denied");
     EXPECT_TRUE(diagnostic.server_allowed == 0, "diagnostic server denied");
+    EXPECT_TRUE(diagnostic.network_allowed == 0, "diagnostic network denied");
     EXPECT_TRUE(diagnostic.recovery_allowed == 0, "diagnostic recovery denied");
     EXPECT_TRUE(diagnostic.hardware_allowed == 0, "diagnostic hardware denied");
     (void)source_len;

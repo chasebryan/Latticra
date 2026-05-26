@@ -304,8 +304,22 @@ static int lir_shape_preserves_no_effect_flags(void) {
     EXPECT_TRUE(module.execution_allowed == 0, "execution denied");
     EXPECT_TRUE(module.mutation_allowed == 0, "mutation denied");
     EXPECT_TRUE(module.server_allowed == 0, "server denied");
+    EXPECT_TRUE(module.network_allowed == 0, "network denied");
     EXPECT_TRUE(module.recovery_allowed == 0, "recovery denied");
     EXPECT_TRUE(module.hardware_allowed == 0, "hardware denied");
+    return 0;
+}
+
+static int lir_shape_rejects_semantic_network_flag(void) {
+    latticra_l_ui_ast_result_t ast;
+    latticra_l_ui_semantic_result_t semantic;
+    latticra_lir_module_t module;
+    EXPECT_TRUE(latticra_l_ui_parse_ast(VALID_SOURCE, strlen(VALID_SOURCE), &ast) == LATTICRA_STATUS_OK, "network LIR AST parse status");
+    EXPECT_TRUE(latticra_l_ui_validate_semantics(&ast, &semantic) == LATTICRA_STATUS_OK, "network LIR semantic status");
+    semantic.network_allowed = 1;
+    EXPECT_TRUE(latticra_lir_lower_l_ui_ast(&ast, &semantic, &module) == LATTICRA_STATUS_OK, "network LIR lower status");
+    EXPECT_TRUE(module.error == LATTICRA_LIR_SEMANTIC_FAILED, "network LIR semantic failed");
+    EXPECT_TRUE(module.network_allowed == 0, "rejected LIR keeps network denied");
     return 0;
 }
 
@@ -448,6 +462,7 @@ int main(void) {
     if (lir_shape_preserves_text_nodes_with_lengths() != 0) return 1;
     if (lir_shape_preserves_source_spans() != 0) return 1;
     if (lir_shape_preserves_no_effect_flags() != 0) return 1;
+    if (lir_shape_rejects_semantic_network_flag() != 0) return 1;
     if (lir_shape_report_is_deterministic() != 0) return 1;
     if (lir_shape_report_rejects_small_buffer() != 0) return 1;
     if (lir_shape_does_not_change_ast_report() != 0) return 1;

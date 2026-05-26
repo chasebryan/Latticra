@@ -1,0 +1,170 @@
+# macOS Reset/Uninstall Live-Runner Interface Contract Status
+
+Status: no-effect reset/uninstall live-runner interface contract status
+Date: 2026-05-26 CDT
+Scope: status checkpoint after adding the macOS reset/uninstall live-runner interface contract.
+
+## Summary
+
+Latticra now has a no-effect macOS reset/uninstall live-runner interface contract.
+
+The contract defines the future runner entrypoint shape and requires a passed live-execution preflight before dispatch. The current preflight is not passed, so dispatch, handoff, deletion, receipt writing, absence-report writing, host mutation, network access, root authority, and runtime authority remain disabled.
+
+## Status Fields
+
+```text
+macos_reset_uninstall_live_runner_interface_contract_present=1
+macos_reset_uninstall_live_runner_interface_contract_guard_present=1
+live_runner_interface_contract_state=defined-no-effect
+live_runner_interface_contract_decision=denied-current-preflight-not-passed
+live_runner_interface_present=1
+live_runner_interface_accepts_only_passed_preflight=1
+live_runner_interface_current_preflight_passed=0
+live_runner_interface_current_decision=deny
+live_runner_interface_dispatch_enabled=0
+live_runner_interface_runner_handoff_enabled=0
+live_runner_interface_preflight_passed=0
+live_runner_interface_denial_path_active=1
+live_runner_interface_invocation_enabled=0
+live_runner_interface_handoff_enabled=0
+live_runner_interface_deletion_enabled=0
+live_runner_interface_receipt_write_enabled=0
+live_runner_interface_absence_write_enabled=0
+live_runner_interface_requires_live_denial_transcript=1
+macos_reset_uninstall_live_denial_transcript_contract_present=1
+macos_reset_uninstall_live_runner_interface_contract_present=1
+live_denial_transcript_contract_state=recorded-no-effect
+live_denial_transcript_recorded=1
+live_denial_transcript_stdout_only=1
+live_denial_transcript_preflight_passed=0
+macos_reset_uninstall_live_execution_preflight_contract_present=1
+live_execution_preflight_contract_state=closed-no-effect
+live_execution_preflight_contract_decision=blocked-missing-complete-evidence-bundle-and-effect-authorization
+live_execution_preflight_passed=0
+live_execution_preflight_blocking=1
+reset_uninstall_live_run_allowed=0
+reset_uninstall_deletion_enabled=0
+managed_target_removal_allowed=0
+managed_target_deletion_enabled=0
+reset_uninstall_receipt_write_enabled=0
+absence_report_write_enabled=0
+macos_reset_uninstall_live_implementation_plan_contract_present=1
+live_implementation_plan_contract_state=defined-no-effect
+live_implementation_plan_execution_enabled=0
+live_implementation_plan_deletion_enabled=0
+live_implementation_plan_preflight_present=1
+live_implementation_plan_preflight_passed=0
+macos_reset_uninstall_evidence_bundle_contract_present=1
+evidence_bundle_contract_state=defined-no-effect
+reset_uninstall_evidence_bundle_complete=0
+evidence_bundle_complete=0
+reset_uninstall_evidence_bundle_valid=0
+reset_uninstall_evidence_bundle_evidence_present=0
+macos_reset_uninstall_effect_authorization_contract_present=1
+effect_authorization_contract_state=closed-no-effect
+effect_authorization_open=0
+reset_uninstall_effect_authorized=0
+macos_reset_uninstall_implementation_gate_contract_present=1
+implementation_gate_contract_state=closed-no-effect
+implementation_gate_open=0
+macos_reset_uninstall_operator_intent_contract_present=1
+operator_intent_contract_state=defined-no-effect
+operator_reset_uninstall_intent_evidence_present=0
+operator_explicit_reset_uninstall_intent_observed=0
+live_runner_interface_schema_version=macos-reset-uninstall-live-runner-interface/1
+live_runner_interface_required_input_count=8
+live_runner_interface_observed_input_count=8
+live_runner_interface_requires_passed_preflight=1
+live_runner_interface_requires_complete_evidence_bundle=1
+live_runner_interface_requires_effect_authorization=1
+live_runner_interface_requires_implementation_gate_open=1
+live_runner_interface_requires_operator_intent_evidence=1
+live_runner_interface_requires_no_unmanaged_targets=1
+live_runner_interface_requires_no_deletion=1
+live_runner_interface_requires_no_network=1
+live_runner_interface_requires_no_root=1
+live_runner_interface_result_passed_preflight=not_met
+live_runner_interface_result_live_denial_transcript=met
+live_runner_interface_result_complete_evidence_bundle=not_met
+live_runner_interface_result_effect_authorization=not_met
+live_runner_interface_result_implementation_gate_open=not_met
+live_runner_interface_result_operator_intent_evidence=not_met
+live_runner_interface_result_no_unmanaged_targets=not_evaluated_contract_only
+live_runner_interface_result_no_deletion=met
+live_runner_interface_result_no_network=met
+live_runner_interface_result_no_root=met
+live_runner_interface_phase_1_status=contract-only
+live_runner_interface_phase_2_status=contract-only
+live_runner_interface_phase_3_status=blocked-preflight-not-passed
+live_runner_interface_phase_4_status=recorded-no-effect
+live_runner_interface_phase_5_status=blocked-no-effect
+reset_uninstall_implementation_present=0
+macos_reset_uninstall_implemented=0
+live_reset_uninstall_runner_present=0
+live_reset_uninstall_runner_enabled=0
+managed_wrapper_removal_performed=0
+managed_app_bundle_removal_performed=0
+managed_application_support_removal_performed=0
+reset_receipt_write_performed=0
+absence_report_run_performed=0
+absence_report_written=0
+file_delete_performed=0
+directory_delete_performed=0
+application_support_write_performed=0
+receipt_write_performed=0
+app_bundle_write_performed=0
+cli_wrapper_write_performed=0
+shell_profile_mutation_performed=0
+host_mutation_performed=0
+network_performed=0
+root_authority=0
+launchagent_authority=0
+keychain_authority=0
+tcc_bypass_authority=0
+endpoint_security_authority=0
+system_extension_authority=0
+network_extension_authority=0
+privileged_helper_authority=0
+runtime_authority_granted=0
+production_installer_ready=0
+```
+
+## Public Meaning
+
+The careful public meaning is:
+
+```text
+Latticra has a no-effect macOS reset/uninstall live-runner interface contract that rejects the current failed preflight before any dispatch can occur.
+```
+
+That does not mean Latticra has live reset execution, live uninstall execution, complete evidence-bundle evidence, effect approval evidence, live approval evidence, a macOS reset implementation, uninstall implementation, installer, commit-capable app bundle writer, verified app bundle, signed build, notarized build, launchd integration, Keychain integration, Endpoint Security integration, System Extension integration, privileged helper, or production security capability.
+
+## Guard Validation
+
+This status record is guarded by:
+
+```sh
+sh scripts/test-macos-reset-uninstall-live-runner-interface-contract.sh
+```
+
+Expected output:
+
+```text
+macos_reset_uninstall_live_runner_interface_contract: ok
+```
+
+## Previous Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner interface contract that accepts only a passed preflight and keeps deletion disabled otherwise.
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner denied-dispatch transcript contract that records the no-op runner denial without enabling deletion.
+```
+
+## Non-Claims
+
+This status record is not macOS reset evidence, macOS uninstall evidence, macOS install evidence, macOS app bundle evidence, live reset execution, live uninstall execution, complete evidence-bundle evidence, receipt evidence, absence verification evidence, operator approval evidence, effect approval evidence, signed app evidence, notarization evidence, launchd evidence, Keychain evidence, Secure Enclave evidence, sandbox evidence, TCC approval evidence, Endpoint Security evidence, System Extension evidence, Network Extension evidence, privileged helper evidence, malware prevention, ransomware prevention, production readiness, Apple platform approval, or runtime authority.

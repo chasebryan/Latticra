@@ -17,6 +17,7 @@ macos_reset_uninstall_evidence_bundle_contract_present=1
 macos_reset_uninstall_live_implementation_plan_contract_present=1
 macos_reset_uninstall_live_execution_preflight_contract_present=1
 macos_reset_uninstall_live_denial_transcript_contract_present=1
+macos_reset_uninstall_live_runner_interface_contract_present=1
 live_execution_preflight_contract_state=closed-no-effect
 live_execution_preflight_passed=0
 live_execution_preflight_blocking=1
@@ -25,6 +26,11 @@ live_denial_transcript_contract_state=recorded-no-effect
 live_denial_transcript_recorded=1
 live_denial_transcript_stdout_only=1
 live_denial_transcript_file_write_enabled=0
+live_runner_interface_contract_state=defined-no-effect
+live_runner_interface_current_preflight_passed=0
+live_runner_interface_current_decision=deny
+live_runner_interface_dispatch_enabled=0
+live_runner_interface_runner_handoff_enabled=0
 live_implementation_plan_contract_state=defined-no-effect
 live_implementation_plan_execution_enabled=0
 live_implementation_plan_deletion_enabled=0
@@ -173,7 +179,7 @@ Add a macOS reset/uninstall evidence-bundle contract that groups implementation-
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner interface contract that accepts only a passed preflight and keeps deletion disabled otherwise.
+Add a macOS reset/uninstall live-runner denied-dispatch transcript contract that records the no-op runner denial without enabling deletion.
 ```
 
 Current completed lane:

@@ -24,6 +24,7 @@ scripts/test-latticra-seal-key-material-contract.sh
 scripts/test-latticra-seal-key-material.sh
 scripts/test-latticra-seal-key-material-status.sh
 scripts/test-latticra-seal-public-key-parsing-contract.sh
+.github/workflows/latticra-seal-key-material-status.yml
 docs/LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md
 docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
 docs/status/SEAL_KEY_HANDLING_STATUS.md
@@ -33,6 +34,7 @@ tests/seal_key_handling_invariants.c
 scripts/test-latticra-seal-key-handling-contract.sh
 scripts/test-latticra-seal-key-handling.sh
 scripts/test-latticra-seal-key-handling-status.sh
+.github/workflows/latticra-seal-key-handling-status.yml
 ```
 
 ## Current checkpoint
@@ -48,10 +50,19 @@ seal_key_material_invariant_test_present=1
 seal_key_material_runner_present=1
 seal_key_material_metadata_present=1
 seal_key_material_status_present=1
+seal_key_material_status_runner_present=1
+seal_key_material_status_workflow_present=1
 seal_public_key_parsing_contract_present=1
 seal_key_handling_contract_present=1
 seal_key_handling_implementation_present=1
 seal_key_handling_status_present=1
+seal_key_handling_status_runner_present=1
+seal_key_handling_status_workflow_present=1
+key_material_predecessor_key_handling_status_present=1
+readme_links_key_material_status=1
+root_status_mentions_key_material_status=1
+status_index_links_key_material_status=1
+foundation_index_links_key_material_status=1
 key_material_profile=latticra-seal-key-material/0.1
 key_handling_profile=latticra-seal-key-handling/0.1
 signing_operation_profile=latticra-seal-signing-operation/0.1
@@ -96,6 +107,24 @@ host_write_performed=0
 network_performed=0
 mode=metadata-only
 status=key-material-metadata
+key_material_status_added=1
+public_key_parsing_added=0
+key_material_loading_added=0
+private_key_handling_added=0
+key_generation_added=0
+hardware_key_use_added=0
+trust_store_behavior_added=0
+revocation_lookup_added=0
+signing_added=0
+signature_verification_added=0
+signer_invocation_behavior_added=0
+signer_process_execution_added=0
+object_sealing_added=0
+runtime_handoff_execution_added=0
+effect_execution_added=0
+capability_enforcement_added=0
+network_behavior_changed=0
+host_behavior_changed=0
 ```
 
 ## Validation
@@ -120,6 +149,13 @@ sh scripts/test-latticra-seal-key-handling-status.sh
 Expected output:
 
 ```text
+seal report envelope status: ok
+seal signature request status: ok
+seal signing authorization status: ok
+seal signer handoff status: ok
+seal signer invocation status: ok
+seal signing operation status: ok
+seal key-handling status: ok
 seal key-material contract: ok
 seal key-material invariants: ok
 seal key-material status: ok
@@ -133,10 +169,12 @@ seal key-handling status: ok
 
 This status record is documentation/status alignment only.
 
+This refresh adds the key-material status guard workflow and records the guarded key-handling status predecessor without changing the key-material implementation.
+
 It does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, verification, signer invocation behavior, signer process execution, runtime handoff execution, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, object sealing, kernel behavior, production readiness, or authority grants.
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is bounded no-effect key parsing implementation or another narrow status/index alignment follow-up.
+The next valid Latticra Seal slice is public-key parsing status/workflow guard alignment or another narrow status/index alignment follow-up.
 
 That future slice must not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, signing, verification, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

@@ -69,6 +69,7 @@ static int repository_fixture_parses_successfully(void) {
     EXPECT_TRUE(result.execution_allowed == 0, "repository fixture execution flag");
     EXPECT_TRUE(result.mutation_allowed == 0, "repository fixture mutation flag");
     EXPECT_TRUE(result.server_allowed == 0, "repository fixture server flag");
+    EXPECT_TRUE(result.network_allowed == 0, "repository fixture network flag");
     EXPECT_TRUE(result.recovery_allowed == 0, "repository fixture recovery flag");
     EXPECT_TRUE(result.hardware_allowed == 0, "repository fixture hardware flag");
 

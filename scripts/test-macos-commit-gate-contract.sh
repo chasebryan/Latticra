@@ -145,7 +145,7 @@ require_contains 'absence_report_evidence_present=0' "$script"
 require_contains 'app_bundle_write_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-live-runner-interface-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-denied-dispatch-transcript-contract' "$script"
 
 output=$(sh "$script")
 require_output_contains "$output" 'MACOS COMMIT GATE CONTRACT'

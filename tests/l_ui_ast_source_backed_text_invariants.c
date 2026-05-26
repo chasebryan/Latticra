@@ -223,6 +223,7 @@ static int source_backed_text_preserves_no_effect_flags(void) {
     EXPECT_TRUE(ast.execution_allowed == 0, "execution flag preserved");
     EXPECT_TRUE(ast.mutation_allowed == 0, "mutation flag preserved");
     EXPECT_TRUE(ast.server_allowed == 0, "server flag preserved");
+    EXPECT_TRUE(ast.network_allowed == 0, "network flag preserved");
     EXPECT_TRUE(ast.recovery_allowed == 0, "recovery flag preserved");
     EXPECT_TRUE(ast.hardware_allowed == 0, "hardware flag preserved");
     return 0;

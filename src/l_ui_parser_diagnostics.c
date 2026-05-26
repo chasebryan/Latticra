@@ -226,6 +226,7 @@ latticra_status_t latticra_l_ui_diagnostic_from_parse_result(
     diagnostic->execution_allowed = parse_result->execution_allowed;
     diagnostic->mutation_allowed = parse_result->mutation_allowed;
     diagnostic->server_allowed = parse_result->server_allowed;
+    diagnostic->network_allowed = parse_result->network_allowed;
     diagnostic->recovery_allowed = parse_result->recovery_allowed;
     diagnostic->hardware_allowed = parse_result->hardware_allowed;
 
@@ -256,6 +257,7 @@ latticra_status_t latticra_l_ui_diagnostic_report(
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
         "server_allowed=%d\n"
+        "network_allowed=%d\n"
         "recovery_allowed=%d\n"
         "hardware_allowed=%d\n"
         "span_start_offset=%zu\n"
@@ -274,6 +276,7 @@ latticra_status_t latticra_l_ui_diagnostic_report(
         diagnostic->execution_allowed,
         diagnostic->mutation_allowed,
         diagnostic->server_allowed,
+        diagnostic->network_allowed,
         diagnostic->recovery_allowed,
         diagnostic->hardware_allowed,
         diagnostic->span.start_offset,

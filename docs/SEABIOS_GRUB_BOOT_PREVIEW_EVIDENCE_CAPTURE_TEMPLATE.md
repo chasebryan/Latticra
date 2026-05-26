@@ -36,6 +36,14 @@ sh scripts/seabios-grub-boot-preview-evidence-template.sh --manifest installer/m
 
 The command emits a deterministic evidence-record template to stdout.
 
+The QEMU argv template companion is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-qemu-argv-template.sh
+```
+
+It prints future profile-specific QEMU argv record placeholders without running QEMU.
+
 ## Required Future Evidence Fields
 
 A future completed evidence bundle must record:
@@ -56,6 +64,7 @@ target_bootloader
 qemu_machine
 qemu_binary
 qemu_argv_record_path
+qemu_argv_template_path
 serial_console_boot_log_path
 serial_console_boot_log_sha256
 boot_result

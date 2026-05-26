@@ -249,6 +249,7 @@ static int valid_parse_returns_no_effect_flags(void) {
     EXPECT_TRUE(result.execution_allowed == 0, "valid parse execution flag");
     EXPECT_TRUE(result.mutation_allowed == 0, "valid parse mutation flag");
     EXPECT_TRUE(result.server_allowed == 0, "valid parse server flag");
+    EXPECT_TRUE(result.network_allowed == 0, "valid parse network flag");
     EXPECT_TRUE(result.recovery_allowed == 0, "valid parse recovery flag");
     EXPECT_TRUE(result.hardware_allowed == 0, "valid parse hardware flag");
     return 0;
@@ -261,6 +262,7 @@ static int error_results_preserve_no_execution_flags(void) {
     EXPECT_TRUE(result.execution_allowed == 0, "error result execution flag");
     EXPECT_TRUE(result.mutation_allowed == 0, "error result mutation flag");
     EXPECT_TRUE(result.server_allowed == 0, "error result server flag");
+    EXPECT_TRUE(result.network_allowed == 0, "error result network flag");
     EXPECT_TRUE(result.recovery_allowed == 0, "error result recovery flag");
     EXPECT_TRUE(result.hardware_allowed == 0, "error result hardware flag");
     return 0;

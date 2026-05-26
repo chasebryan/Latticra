@@ -42,6 +42,8 @@ const char *latticra_kernel_state_label(latticra_kernel_state_kind_t state) {
             return "interrupt-table-ready";
         case LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY:
             return "timer-source-ready";
+        case LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY:
+            return "scheduler-tick-ready";
         default:
             return "unknown";
     }
@@ -75,6 +77,8 @@ static int is_allowed_transition(
         target_state == LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY) return 1;
     if (current_state == LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY &&
         target_state == LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY) return 1;
+    if (current_state == LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY &&
+        target_state == LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY) return 1;
     return 0;
 }
 
@@ -108,6 +112,10 @@ static int state_requires_interrupt_table(latticra_kernel_state_kind_t state) {
 
 static int state_requires_timer_source(latticra_kernel_state_kind_t state) {
     return state >= LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY;
+}
+
+static int state_requires_scheduler_tick(latticra_kernel_state_kind_t state) {
+    return state >= LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY;
 }
 
 static void seed_result(latticra_kernel_state_result_t *result) {
@@ -166,6 +174,11 @@ latticra_status_t latticra_kernel_state_default_request(
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
     request->timer_source_request.interrupt_table_request = request->interrupt_table_request;
+    if (latticra_kernel_scheduler_tick_default_request(&request->scheduler_tick_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->scheduler_tick_request.timer_source_request = request->timer_source_request;
     request->current_state = LATTICRA_KERNEL_STATE_CREATED;
     request->target_state = LATTICRA_KERNEL_STATE_INITIALIZED;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
@@ -194,6 +207,7 @@ latticra_status_t latticra_kernel_state_transition(
     latticra_kernel_driver_catalog_request_t driver_request;
     latticra_kernel_interrupt_table_request_t interrupt_request;
     latticra_kernel_timer_source_request_t timer_request;
+    latticra_kernel_scheduler_tick_request_t scheduler_tick_request;
 
     if (result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     seed_result(result);
@@ -232,6 +246,8 @@ latticra_status_t latticra_kernel_state_transition(
     interrupt_request.driver_catalog_request = driver_request;
     timer_request = request->timer_source_request;
     timer_request.interrupt_table_request = interrupt_request;
+    scheduler_tick_request = request->scheduler_tick_request;
+    scheduler_tick_request.timer_source_request = timer_request;
 
     if (state_requires_process_table(request->target_state)) {
         status = latticra_kernel_process_table_evaluate(&process_request, &result->process_table);
@@ -276,6 +292,7 @@ latticra_status_t latticra_kernel_state_transition(
         driver_request.device_registry_request = device_request;
         interrupt_request.driver_catalog_request = driver_request;
         timer_request.interrupt_table_request = interrupt_request;
+        scheduler_tick_request.timer_source_request = timer_request;
     }
 
     if (state_requires_vfs_namespace(request->target_state)) {
@@ -296,6 +313,7 @@ latticra_status_t latticra_kernel_state_transition(
         driver_request.device_registry_request = device_request;
         interrupt_request.driver_catalog_request = driver_request;
         timer_request.interrupt_table_request = interrupt_request;
+        scheduler_tick_request.timer_source_request = timer_request;
     }
 
     if (state_requires_device_registry(request->target_state)) {
@@ -316,6 +334,7 @@ latticra_status_t latticra_kernel_state_transition(
         driver_request.device_registry_request = device_request;
         interrupt_request.driver_catalog_request = driver_request;
         timer_request.interrupt_table_request = interrupt_request;
+        scheduler_tick_request.timer_source_request = timer_request;
     }
 
     if (state_requires_driver_catalog(request->target_state)) {
@@ -336,6 +355,7 @@ latticra_status_t latticra_kernel_state_transition(
         result->memory_map = result->process_table.memory_map;
         interrupt_request.driver_catalog_request = driver_request;
         timer_request.interrupt_table_request = interrupt_request;
+        scheduler_tick_request.timer_source_request = timer_request;
     }
 
     if (state_requires_interrupt_table(request->target_state)) {
@@ -368,6 +388,28 @@ latticra_status_t latticra_kernel_state_transition(
             state_copy(result->transition_status, sizeof(result->transition_status), "blocked");
             return status;
         }
+        result->interrupt_table = result->timer_source.interrupt_table;
+        result->driver_catalog = result->interrupt_table.driver_catalog;
+        result->device_registry = result->driver_catalog.device_registry;
+        result->vfs_namespace = result->device_registry.vfs_namespace;
+        result->ipc_table = result->vfs_namespace.ipc_table;
+        result->syscall_table = result->ipc_table.syscall_table;
+        result->process_table = result->syscall_table.process_table;
+        result->memory_map = result->process_table.memory_map;
+    }
+
+    if (state_requires_scheduler_tick(request->target_state)) {
+        scheduler_tick_request.timer_source_request = timer_request;
+        status = latticra_kernel_scheduler_tick_evaluate(&scheduler_tick_request,
+            &result->scheduler_tick);
+        if (status != LATTICRA_STATUS_OK) {
+            result->status = status;
+            state_copy(result->state_status, sizeof(result->state_status),
+                "scheduler-tick-not-ready");
+            state_copy(result->transition_status, sizeof(result->transition_status), "blocked");
+            return status;
+        }
+        result->timer_source = result->scheduler_tick.timer_source;
         result->interrupt_table = result->timer_source.interrupt_table;
         result->driver_catalog = result->interrupt_table.driver_catalog;
         result->device_registry = result->driver_catalog.device_registry;
@@ -434,6 +476,7 @@ latticra_status_t latticra_kernel_state_report(
         "driver_catalog_status=%s\n"
         "interrupt_table_status=%s\n"
         "timer_source_status=%s\n"
+        "scheduler_tick_status=%s\n"
         "evidence_level=%u\n",
         result->state_status,
         result->gate_status,
@@ -454,6 +497,7 @@ latticra_status_t latticra_kernel_state_report(
         result->driver_catalog.catalog_status,
         result->interrupt_table.table_status,
         result->timer_source.timer_status,
+        result->scheduler_tick.tick_status,
         result->evidence_level);
 
     if (written < 0 || (size_t)written >= buffer_len) {

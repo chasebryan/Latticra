@@ -30,6 +30,7 @@ cc $CFLAGS \
   src/kernel_driver_catalog.c \
   src/kernel_interrupt_table.c \
   src/kernel_timer_source.c \
+  src/kernel_scheduler_tick.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -41,12 +42,12 @@ cc $CFLAGS \
 
 grep -Fq 'LATTICRA KERNEL LIFECYCLE SUBSYSTEM SUMMARY REPORT' "$report_txt"
 grep -Fq 'summary_status=summary-ready' "$report_txt"
-grep -Fq 'final_state=timer-source-ready' "$report_txt"
+grep -Fq 'final_state=scheduler-tick-ready' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'registry_status=registry-ready' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
-grep -Fq 'lifecycle_step_count=12' "$report_txt"
-grep -Fq 'lifecycle_state_change_count=12' "$report_txt"
+grep -Fq 'lifecycle_step_count=13' "$report_txt"
+grep -Fq 'lifecycle_state_change_count=13' "$report_txt"
 grep -Fq 'lifecycle_state_mutated=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
 grep -Fq 'registry_no_effect=1' "$report_txt"
@@ -77,8 +78,12 @@ grep -Fq 'timer_tick_allowed=0' "$report_txt"
 grep -Fq 'timer_arm_allowed=0' "$report_txt"
 grep -Fq 'timer_disarm_allowed=0' "$report_txt"
 grep -Fq 'scheduler_tick_allowed=0' "$report_txt"
+grep -Fq 'run_queue_mutation_allowed=0' "$report_txt"
+grep -Fq 'context_switch_allowed=0' "$report_txt"
 grep -Fq 'preemption_allowed=0' "$report_txt"
+grep -Fq 'time_accounting_allowed=0' "$report_txt"
 grep -Fq 'time_read_allowed=0' "$report_txt"
+grep -Fq 'process_wake_allowed=0' "$report_txt"
 grep -Fq 'dma_allowed=0' "$report_txt"
 grep -Fq 'hardware_effect_allowed=0' "$report_txt"
 grep -Fq 'no_external_effect_chain=1' "$report_txt"
@@ -87,7 +92,7 @@ grep -Fq 'subsystem[0].name=boot' "$report_txt"
 grep -Fq 'subsystem[0].lifecycle_relation=boot-sequence-seeded' "$report_txt"
 grep -Fq 'subsystem[1].name=runtime' "$report_txt"
 grep -Fq 'subsystem[1].authority_status=runtime-entry-denied' "$report_txt"
-grep -Fq 'subsystem[2].lifecycle_relation=timer-source-ready' "$report_txt"
+grep -Fq 'subsystem[2].lifecycle_relation=scheduler-tick-ready' "$report_txt"
 grep -Fq 'subsystem[2].authority_status=scheduler-execution-denied' "$report_txt"
 grep -Fq 'subsystem[3].lifecycle_relation=memory-map-ready' "$report_txt"
 grep -Fq 'subsystem[3].authority_status=memory-allocation-denied' "$report_txt"

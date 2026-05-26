@@ -83,6 +83,7 @@ static int report_contains_valid_parse_summary(void) {
     EXPECT_TRUE(strstr(report, "execution_allowed=0") != 0, "report execution flag");
     EXPECT_TRUE(strstr(report, "mutation_allowed=0") != 0, "report mutation flag");
     EXPECT_TRUE(strstr(report, "server_allowed=0") != 0, "report server flag");
+    EXPECT_TRUE(strstr(report, "network_allowed=0") != 0, "report network flag");
     EXPECT_TRUE(strstr(report, "recovery_allowed=0") != 0, "report recovery flag");
     EXPECT_TRUE(strstr(report, "hardware_allowed=0") != 0, "report hardware flag");
 
@@ -108,6 +109,7 @@ static int report_contains_error_parse_summary(void) {
     EXPECT_TRUE(strstr(report, "execution_allowed=0") != 0, "error report execution flag");
     EXPECT_TRUE(strstr(report, "mutation_allowed=0") != 0, "error report mutation flag");
     EXPECT_TRUE(strstr(report, "server_allowed=0") != 0, "error report server flag");
+    EXPECT_TRUE(strstr(report, "network_allowed=0") != 0, "error report network flag");
     EXPECT_TRUE(strstr(report, "recovery_allowed=0") != 0, "error report recovery flag");
     EXPECT_TRUE(strstr(report, "hardware_allowed=0") != 0, "error report hardware flag");
 

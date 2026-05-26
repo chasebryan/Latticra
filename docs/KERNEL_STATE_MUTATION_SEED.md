@@ -46,6 +46,7 @@ device-registry-ready
 driver-catalog-ready
 interrupt-table-ready
 timer-source-ready
+scheduler-tick-ready
 ```
 
 Allowed transitions are intentionally sequential:
@@ -63,6 +64,7 @@ vfs-namespace-ready -> device-registry-ready
 device-registry-ready -> driver-catalog-ready
 driver-catalog-ready -> interrupt-table-ready
 interrupt-table-ready -> timer-source-ready
+timer-source-ready -> scheduler-tick-ready
 ```
 
 No-op transitions are allowed when the gate allows them.

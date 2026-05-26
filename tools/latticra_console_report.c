@@ -19,6 +19,7 @@ int main(int argc, char **argv) {
     char receipt_payload_artifact_draft_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_REPORT_MAX];
     char receipt_payload_artifact_review_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_REPORT_MAX];
     char receipt_payload_artifact_review_receipt_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_REPORT_MAX];
+    char receipt_payload_artifact_review_receipt_draft_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_ARTIFACT_REVIEW_RECEIPT_DRAFT_REPORT_MAX];
     char receipt_payload_materialization_plan_report[LATTICRA_CONSOLE_RECEIPT_PAYLOAD_MATERIALIZATION_PLAN_REPORT_MAX];
     char signature_request_binding_report[LATTICRA_CONSOLE_SIGNATURE_REQUEST_BINDING_REPORT_MAX];
     char receipt_report[LATTICRA_CONSOLE_RECEIPT_REPORT_MAX];
@@ -26,7 +27,7 @@ int main(int argc, char **argv) {
     char vm_evidence_report[LATTICRA_CONSOLE_VM_EVIDENCE_REPORT_MAX];
 
     if (argc > 2) {
-        fputs("usage: latticra_console_report [report|registry|help|man|boundary|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
+        fputs("usage: latticra_console_report [report|registry|help|man|boundary|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
         return 64;
     }
 
@@ -187,6 +188,22 @@ int main(int argc, char **argv) {
     }
 
     if (argc == 2 &&
+        (strcmp(argv[1], "receipt-review-draft") == 0 ||
+         strcmp(argv[1], "review-receipt-draft") == 0 ||
+         strcmp(argv[1], "artifact-review-receipt-draft") == 0 ||
+         strcmp(argv[1], "payload-artifact-review-receipt-draft") == 0 ||
+         strcmp(argv[1], "receipt-payload-artifact-review-receipt-draft") == 0)) {
+        if (latticra_console_receipt_payload_artifact_review_receipt_draft_report(
+                receipt_payload_artifact_review_receipt_draft_report,
+                sizeof(receipt_payload_artifact_review_receipt_draft_report)) != LATTICRA_STATUS_OK) {
+            fputs("latticra_console_report: receipt payload artifact review receipt draft report render failed\n", stderr);
+            return 1;
+        }
+        fputs(receipt_payload_artifact_review_receipt_draft_report, stdout);
+        return 0;
+    }
+
+    if (argc == 2 &&
         (strcmp(argv[1], "receipt-materialization-plan") == 0 ||
          strcmp(argv[1], "materialization-plan") == 0 ||
          strcmp(argv[1], "payload-materialization-plan") == 0 ||
@@ -237,7 +254,7 @@ int main(int argc, char **argv) {
     }
 
     if (argc == 2 && strcmp(argv[1], "report") != 0) {
-        fputs("usage: latticra_console_report [report|registry|help|man|boundary|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
+        fputs("usage: latticra_console_report [report|registry|help|man|boundary|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
         return 64;
     }
 
@@ -345,6 +362,16 @@ int main(int argc, char **argv) {
     }
 
     fputs(receipt_payload_artifact_review_receipt_report, stdout);
+    fputc('\n', stdout);
+
+    if (latticra_console_receipt_payload_artifact_review_receipt_draft_report(
+            receipt_payload_artifact_review_receipt_draft_report,
+            sizeof(receipt_payload_artifact_review_receipt_draft_report)) != LATTICRA_STATUS_OK) {
+        fputs("latticra_console_report: receipt payload artifact review receipt draft report render failed\n", stderr);
+        return 1;
+    }
+
+    fputs(receipt_payload_artifact_review_receipt_draft_report, stdout);
     fputc('\n', stdout);
 
     if (latticra_console_receipt_payload_materialization_plan_report(

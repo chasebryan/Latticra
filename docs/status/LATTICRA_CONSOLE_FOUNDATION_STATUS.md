@@ -2,7 +2,7 @@
 
 Status: active Stage-0 foundation
 Date: 2026-05-26
-Scope: LC C report surface, Panel installability, local-prefix metadata, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
+Scope: LC C report surface, Panel installability, local-prefix metadata, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
 
 ## Current Evidence
 
@@ -54,6 +54,10 @@ receipt_payload_artifact_review_receipt_status=metadata-only-receipt-contract
 receipt_payload_artifact_review_receipt_present=1
 receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt
 receipt_payload_artifact_review_receipt_profile=lc-receipt-payload-artifact-review-receipt-v0
+receipt_payload_artifact_review_receipt_draft_status=metadata-only-review-receipt-draft
+receipt_payload_artifact_review_receipt_draft_present=1
+receipt_payload_artifact_review_receipt_draft_command=lc receipt-review-draft
+receipt_payload_artifact_review_receipt_draft_profile=lc-receipt-payload-artifact-review-receipt-draft-v0
 receipt_payload_materialization_plan_status=metadata-only-plan
 receipt_payload_materialization_plan_present=1
 receipt_payload_materialization_plan_command=lc receipt-materialization-plan

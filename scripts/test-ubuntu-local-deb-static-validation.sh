@@ -35,6 +35,7 @@ require_file docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md
 require_file docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md
 require_file packaging/ubuntu/README.md
 require_file packaging/ubuntu/debian/control
 require_file packaging/ubuntu/debian/rules
@@ -59,6 +60,9 @@ require_contains 'third_party_notice_requirements_recorded=0' docs/UBUNTU_LOCAL_
 require_contains 'generated_artifact_notice_review_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'generated_artifact_notice_requirements_recorded=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'notice_file_decision_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'notice_file_decision_status=blocked-pending-notice-file-decision' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'notice_file_present=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'deb_artifact_created=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'ubuntu_archive_ready=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'ubuntu_local_deb_static_validation: ok' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
@@ -75,6 +79,8 @@ require_contains 'third_party_material_review_contract_present=1' packaging/ubun
 require_contains 'third_party_material_review_status=blocked-pending-third-party-material-review' packaging/ubuntu/README.md
 require_contains 'generated_artifact_notice_review_contract_present=1' packaging/ubuntu/README.md
 require_contains 'generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review' packaging/ubuntu/README.md
+require_contains 'notice_file_decision_contract_present=1' packaging/ubuntu/README.md
+require_contains 'notice_file_decision_status=blocked-pending-notice-file-decision' packaging/ubuntu/README.md
 require_contains 'ppa_claimed=0' packaging/ubuntu/README.md
 require_contains 'ubuntu_archive_ready=0' packaging/ubuntu/README.md
 

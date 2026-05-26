@@ -70,7 +70,7 @@ Known current posture:
 
 ```text
 kernel lifecycle evidence exists
-final_state=timer-source-ready
+final_state=scheduler-tick-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
@@ -99,8 +99,12 @@ timer_tick_allowed=0
 timer_arm_allowed=0
 timer_disarm_allowed=0
 scheduler_tick_allowed=0
+run_queue_mutation_allowed=0
+context_switch_allowed=0
 preemption_allowed=0
+time_accounting_allowed=0
 time_read_allowed=0
+process_wake_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0
 not bootable

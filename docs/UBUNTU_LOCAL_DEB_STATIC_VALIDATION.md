@@ -25,6 +25,7 @@ docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md
 docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md
 docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md
+docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
@@ -53,6 +54,10 @@ generated_artifact_notice_review_contract_present=1
 generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review
 generated_artifact_notice_reviewed=0
 generated_artifact_notice_requirements_recorded=0
+notice_file_decision_contract_present=1
+notice_file_decision_status=blocked-pending-notice-file-decision
+notice_file_present=0
+notice_file_decision_recorded=0
 ppa_claimed=0
 ubuntu_archive_ready=0
 production_readiness_claimed=0

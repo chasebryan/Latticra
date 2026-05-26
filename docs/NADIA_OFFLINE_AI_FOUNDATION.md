@@ -111,6 +111,7 @@ share/latticra/nadia/prompt-evaluation-result-review/
 share/latticra/nadia/prompt-evaluation-result-disposition/
 share/latticra/nadia/prompt-evaluation-result-release/
 share/latticra/nadia/prompt-evaluation-result-release-receipt/
+share/latticra/nadia/prompt-evaluation-result-release-receipt-review/
 share/latticra/components/nadia-offline-ai.installed
 bin/latticra-nadia
 ```
@@ -128,7 +129,7 @@ nadia status
 nadia commands
 ```
 
-The `nadia status` command reports whether the Panel configuration has selected the Nadia component and repeats the denied authority posture. The `nadia commands` command lists the Stage-1 through Stage-35 command map. Neither command launches an external host process.
+The `nadia status` command reports whether the Panel configuration has selected the Nadia component and repeats the denied authority posture. The `nadia commands` command lists the Stage-1 through Stage-36 command map. Neither command launches an external host process.
 
 After user-local installation, the CLI surface is:
 
@@ -1319,7 +1320,7 @@ Stage-27 preserves the Stage-26 proof that prompt-token-sequence recording, prom
 
 Before Stage-28 starts, the context-window assembly contract must remain contract-only and keep context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, and tool execution blocked.
 
-Before Stage-36 starts, the context-window assembly contract must remain contract-only and keep context window assembly, prompt evaluation input creation, runtime handoff, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, and tool execution blocked.
+Before Stage-37 starts, the context-window assembly contract must remain contract-only and keep context window assembly, prompt evaluation input creation, runtime handoff, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, and tool execution blocked.
 
 ### Stage-27: Context Window Assembly Contract
 
@@ -1707,7 +1708,7 @@ The current Nadia foundation is not:
 
 ## Promotion Gate
 
-Before Stage-36 starts, Latticra should keep these guards passing:
+Before Stage-37 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -1746,6 +1747,7 @@ sh scripts/test-nadia-prompt-evaluation-result-review-contract-stage-32.sh
 sh scripts/test-nadia-prompt-evaluation-result-disposition-contract-stage-33.sh
 sh scripts/test-nadia-prompt-evaluation-result-release-contract-stage-34.sh
 sh scripts/test-nadia-prompt-evaluation-result-release-receipt-contract-stage-35.sh
+sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh
 ```
 
 Before prompt evaluation result release starts, a separate prompt evaluation result release contract must exist and name prompt-evaluation result disposition metadata, prompt-evaluation result review metadata, prompt-evaluation result metadata, invocation metadata, runtime handoff metadata, evaluation input metadata, context-window assembly denial fields, prompt-token-sequence denial fields, prompt-tokenization denial fields, tokenizer-runtime-attachment denial fields, tokenizer-artifact-binding denial fields, tokenizer-artifact-verification denial fields, tokenizer-artifact-measurement denial fields, tokenizer-artifact-inventory denial fields, tokenizer-manifest denial fields, tokenizer-file denial fields, prompt-materialization denial fields, refusal boundary inheritance, operator review gates, and non-claims.
@@ -1937,4 +1939,60 @@ This stage produces only release-receipt-contract metadata. It does not decide a
 
 ### Stage-36: Prompt Evaluation Result Release Receipt Review Contract
 
-Only after prompt-evaluation result release receipt metadata exists, consider a prompt evaluation result release receipt review contract. The default remains no receipt recording, no receipt signing, no receipt publication, no release recording, no release decision recording, no release publication, no release packaging, no disposition recording, no review recording, no result recording, no model-output recording, no dialogue generation, no runtime invocation, no prompt evaluation, no token generation, no inference, no tools, no source mutation, no network, and no sexual functionality.
+Record prompt-evaluation result release receipt review metadata after prompt-evaluation result release receipt metadata, prompt-evaluation result release metadata, prompt-evaluation result disposition metadata, prompt-evaluation result review metadata, prompt-evaluation result metadata, prompt-evaluation invocation metadata, prompt-evaluation runtime handoff metadata, prompt-evaluation-input metadata, context-window assembly metadata, prompt-token-sequence metadata, prompt-tokenization metadata, tokenizer-runtime-attachment metadata, runtime-invocation metadata, model-load metadata, inference-readiness metadata, local model-registry metadata, awareness-dialogue metadata, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-36 can define future prompt-evaluation result release receipt review disposition requirements, but it cannot create prompt-evaluation result release receipt review records, record review decisions, record review findings, approve receipts, reject receipts, create prompt-evaluation result release receipt records, sign receipts, publish receipts, create prompt-evaluation result release records, record release decisions, publish releases, package releases, apply dispositions, create prompt-evaluation result review records, read model output, record model output, record generated answer text, invoke a runtime, evaluate prompts, generate dialogue, generate tokens, run inference, use tools, mutate source, use the network, or provide sexual user functionality.
+
+```text
+nadia_stage_36_prompt_evaluation_result_release_receipt_review_contract_present=1
+prompt_evaluation_result_release_receipt_review_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-contract.sh
+installed_prompt_evaluation_result_release_receipt_review_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review
+prompt_evaluation_result_release_receipt_review_contract_status=contract_only
+prompt_evaluation_result_release_receipt_review_stage=contract-only
+prompt_evaluation_result_release_receipt_review_authority=0
+prompt_evaluation_result_release_receipt_review_allowed=0
+prompt_evaluation_result_release_receipt_review_recorded=0
+prompt_evaluation_result_release_receipt_review_created=0
+prompt_evaluation_result_release_receipt_review_performed=0
+prompt_evaluation_result_release_receipt_review_metadata_present=1
+prompt_evaluation_result_release_receipt_review_family=operator-reviewed-prompt-evaluation-result-release-receipt-review
+prompt_evaluation_result_release_receipt_review_format=contract-only-offline-evaluation-result-release-receipt-review
+prompt_evaluation_result_release_receipt_review_decision=blocked_contract_only
+prompt_evaluation_result_release_receipt_review_evidence_present=1
+prompt_evaluation_result_release_receipt_review_source_policy=operator-reviewed-offline
+prompt_evaluation_result_release_receipt_review_plan_recorded=1
+prompt_evaluation_result_release_receipt_review_method_planned=offline-prompt-evaluation-result-release-receipt-review-policy-review
+prompt_evaluation_result_release_receipt_review_result_recorded=0
+prompt_evaluation_result_release_receipt_review_runtime_invoked=0
+requires_prompt_evaluation_result_release_receipt_contract=1
+requires_prompt_evaluation_result_release_contract=1
+requires_prompt_evaluation_result_disposition_contract=1
+requires_prompt_evaluation_result_review_contract=1
+requires_prompt_evaluation_result_contract=1
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_contract=1
+prompt_evaluation_result_release_receipt_review_promotion_allowed=0
+prompt_evaluation_result_release_receipt_review_record_created=0
+prompt_evaluation_result_release_receipt_review_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_approval_recorded=0
+prompt_evaluation_result_release_receipt_review_rejection_recorded=0
+prompt_evaluation_result_release_receipt_review_findings_recorded=0
+prompt_evaluation_result_release_receipt_review_applied=0
+prompt_evaluation_result_release_receipt_record_created=0
+prompt_evaluation_result_release_receipt_signed=0
+prompt_evaluation_result_release_receipt_published=0
+prompt_evaluation_result_release_receipt_packaged=0
+prompt_evaluation_result_release_record_created=0
+prompt_evaluation_result_release_decision_recorded=0
+prompt_evaluation_result_model_output_recorded=0
+prompt_evaluation_result_output_text_recorded=0
+runtime_invoked=0
+prompt_evaluated=0
+token_generation_performed=0
+inference_performed=0
+qa_dialogue_generated=0
+answer_text_generated=0
+```
+
+This stage produces only release-receipt-review-contract metadata. It does not decide a review, create a review record, approve a receipt, reject a receipt, create a receipt, sign a receipt, publish a receipt, create release records, read model output, record model output, generate dialogue, or make Nadia usable as a runtime assistant.
+
+### Stage-37: Prompt Evaluation Result Release Receipt Review Disposition Contract
+
+Only after prompt-evaluation result release receipt review metadata exists, consider a prompt evaluation result release receipt review disposition contract. The default remains no review disposition recording, no review decision recording, no review findings recording, no receipt recording, no receipt signing, no receipt publication, no release recording, no release decision recording, no release publication, no release packaging, no result recording, no model-output recording, no dialogue generation, no runtime invocation, no prompt evaluation, no token generation, no inference, no tools, no source mutation, no network, and no sexual functionality.

@@ -266,7 +266,13 @@ typedef struct {
     size_t lat_pipeline_comment_count;
     latticra_lat_source_span_t lat_pipeline_first_comment_span;
     latticra_lir_source_kind_t lat_lir_source_kind;
+    char lat_lir_module_name[LATTICRA_LIR_NAME_MAX];
+    latticra_lir_report_classification_t lat_lir_report_classification;
+    latticra_lir_shape_kind_t lat_lir_shape_kind;
     size_t lat_lir_module_node_count;
+    size_t lat_lir_module_edge_count;
+    size_t lat_lir_binding_count;
+    size_t lat_lir_text_count;
     int lat_lir_no_effect_chain_ok;
     unsigned int lat_lir_evidence_level;
     int lat_lir_no_effect;

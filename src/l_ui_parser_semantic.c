@@ -115,6 +115,7 @@ static void semantic_default(latticra_l_ui_semantic_result_t *result) {
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
     result->server_allowed = 0;
+    result->network_allowed = 0;
     result->recovery_allowed = 0;
     result->hardware_allowed = 0;
 }
@@ -131,6 +132,7 @@ static void copy_ast_summary(
     result->execution_allowed = ast->execution_allowed;
     result->mutation_allowed = ast->mutation_allowed;
     result->server_allowed = ast->server_allowed;
+    result->network_allowed = ast->network_allowed;
     result->recovery_allowed = ast->recovery_allowed;
     result->hardware_allowed = ast->hardware_allowed;
 }
@@ -221,7 +223,8 @@ latticra_status_t latticra_l_ui_validate_semantics(
     }
 
     if (ast->no_effect != 1 || ast->execution_allowed != 0 || ast->mutation_allowed != 0 ||
-        ast->server_allowed != 0 || ast->recovery_allowed != 0 || ast->hardware_allowed != 0) {
+        ast->server_allowed != 0 || ast->network_allowed != 0 ||
+        ast->recovery_allowed != 0 || ast->hardware_allowed != 0) {
         return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_CARD_COUNT_MISMATCH, 0u, 0u, 0u, &ast->card.span);
     }
 
@@ -298,6 +301,7 @@ latticra_status_t latticra_l_ui_semantic_report(
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
         "server_allowed=%d\n"
+        "network_allowed=%d\n"
         "recovery_allowed=%d\n"
         "hardware_allowed=%d\n"
         "span_start_offset=%zu\n"
@@ -323,6 +327,7 @@ latticra_status_t latticra_l_ui_semantic_report(
         result->execution_allowed,
         result->mutation_allowed,
         result->server_allowed,
+        result->network_allowed,
         result->recovery_allowed,
         result->hardware_allowed,
         result->span.start_offset,

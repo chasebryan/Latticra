@@ -76,6 +76,7 @@ opensuse_panel_prerequisites_documented=1
 opensuse_local_rpm_draft_present=1
 opensuse_local_rpm_static_validation_present=1
 opensuse_changes_file_present=1
+opensuse_rpmlint_osc_availability_lane_present=1
 opensuse_obs_publication_claimed=0
 opensuse_official_package_claimed=0
 suse_endorsement_claimed=0
@@ -130,6 +131,16 @@ The first openSUSE RPM draft is only a packaging-shape and maintenance record un
 
 ## Phase 4: Open Build Service Readiness Lane
 
+The first Open Build Service readiness slice is tool availability only.
+
+Current guarded files:
+
+```text
+docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+scripts/test-opensuse-rpmlint-osc-availability.sh
+.github/workflows/opensuse-rpmlint-osc-availability.yml
+```
+
 Before any Open Build Service publication or submit request can be claimed, the lane needs evidence for:
 
 ```text
@@ -164,10 +175,10 @@ claim operating-system completeness
 Recommended next slice:
 
 ```text
-Keep the openSUSE local RPM spec and .changes draft aligned with the no-effect CLI payload, then add only static rpmlint/osc availability checks before any package build or Open Build Service evidence is claimed.
+Add openSUSE rpmlint static spec lane for packaging/opensuse/latticra.spec with expected local-only draft findings classified separately.
 ```
 
-That should preserve the local-only openSUSE maintenance posture while the package path matures.
+That should preserve the local-only openSUSE maintenance posture while the package path matures beyond tool availability.
 
 ## Validation
 
@@ -176,6 +187,7 @@ Run:
 ```sh
 sh scripts/test-opensuse-developer-workflow.sh
 sh scripts/test-opensuse-local-rpm-static-validation.sh
+sh scripts/test-opensuse-rpmlint-osc-availability.sh
 ```
 
 Expected output:
@@ -183,4 +195,5 @@ Expected output:
 ```text
 opensuse_developer_workflow: ok
 opensuse_local_rpm_static_validation: ok
+opensuse_rpmlint_osc_availability: ok
 ```
