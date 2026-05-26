@@ -36,6 +36,10 @@ kernel timer source guard
 kernel timer source report runner
 kernel scheduler tick guard
 kernel scheduler tick report runner
+kernel run queue guard
+kernel run queue report runner
+kernel context switch guard
+kernel context switch report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
@@ -48,7 +52,7 @@ kernel lifecycle rollback plan
 The lifecycle evidence can report a bounded in-memory path ending at:
 
 ```text
-final_state=scheduler-tick-ready
+final_state=context-switch-ready
 ```
 
 The lifecycle report runner and subsystem summary keep the external-effect posture explicit:
@@ -91,7 +95,14 @@ timer_arm_allowed=0
 timer_disarm_allowed=0
 scheduler_tick_allowed=0
 run_queue_mutation_allowed=0
+enqueue_allowed=0
+dequeue_allowed=0
+dispatch_allowed=0
 context_switch_allowed=0
+register_save_allowed=0
+register_restore_allowed=0
+stack_switch_allowed=0
+address_space_switch_allowed=0
 preemption_allowed=0
 time_accounting_allowed=0
 time_read_allowed=0
@@ -142,15 +153,15 @@ not installer-ready
 Recommended next work:
 
 ```text
-Add no-effect rollback classifier
+Add preemption metadata seed
 ```
 
-That future slice should implement classification/reporting only and continue to require:
+That future slice should implement reporting only and continue to require:
 
 ```text
 external_effect_performed=0
-persistence_allowed=0
-recovery_authority_allowed=0
+preemption_allowed=0
+time_accounting_allowed=0
 runtime_entry_allowed=0
 ```
 
@@ -172,6 +183,8 @@ Dedicated workflow lanes keep the kernel table guards visible:
 .github/workflows/kernel-interrupt-table.yml
 .github/workflows/kernel-timer-source.yml
 .github/workflows/kernel-scheduler-tick.yml
+.github/workflows/kernel-run-queue.yml
+.github/workflows/kernel-context-switch.yml
 .github/workflows/kernel-process-table.yml
 .github/workflows/kernel-syscall-table.yml
 ```

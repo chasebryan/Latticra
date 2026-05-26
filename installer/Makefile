@@ -1,4 +1,4 @@
-.PHONY: help gui panel build-gui build-panel dry-run local-example install-local verify-local uninstall-local reset-local uninstall-dry-run reset-dry-run fmt tree clean refresh-desktop
+.PHONY: help gui panel build-gui build-panel dry-run lc-standalone-dry-run standalone-dry-run lc-standalone-local standalone-local local-example install-local verify-local verify-lc-standalone verify-standalone uninstall-local reset-local uninstall-dry-run reset-dry-run fmt tree clean refresh-desktop
 
 INSTALLER_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 GUI_DIR := $(INSTALLER_DIR)latticra-installer
@@ -15,9 +15,12 @@ help:
 	  "  make -C installer build-gui       Build Latticra Panel release binary" \
 	  "  make -C installer build-panel     Same as build-gui" \
 	  "  make -C installer dry-run         Run guarded dry-install through the real engine" \
+	  "  make -C installer lc-standalone-dry-run Preview standalone LC install" \
+	  "  make -C installer lc-standalone-local   Run guarded standalone LC local install" \
 	  "  make -C installer local-example   Run actual guarded user-local install" \
 	  "  make -C installer install-local   Same as local-example" \
 	  "  make -C installer verify-local    Verify the local install" \
+	  "  make -C installer verify-lc-standalone Verify standalone LC local install" \
 	  "  make -C installer reset-local     Reset managed local install for reinstall" \
 	  "  make -C installer uninstall-local Uninstall managed local install" \
 	  "  make -C installer reset-dry-run   Preview managed local reset" \
@@ -39,6 +42,18 @@ dry-run:
 	  --plan "$(PLAN)" \
 	  --receipt-dir "$(RECEIPTS)"
 
+lc-standalone-dry-run standalone-dry-run:
+	sh "$(SCRIPT_DIR)/latticra-installer-apply.sh" \
+	  --config "$(CONFIG_DIR)/lc-standalone.installer.toml" \
+	  --plan "$(PLAN)" \
+	  --receipt-dir "$(RECEIPTS)"
+
+lc-standalone-local standalone-local:
+	sh "$(SCRIPT_DIR)/latticra-installer-apply.sh" \
+	  --config "$(CONFIG_DIR)/lc-standalone-local.installer.toml" \
+	  --plan "$(PLAN)" \
+	  --receipt-dir "$(RECEIPTS)"
+
 local-example install-local:
 	sh "$(SCRIPT_DIR)/latticra-installer-apply.sh" \
 	  --config "$(CONFIG_DIR)/local-prefix-example.installer.toml" \
@@ -47,6 +62,10 @@ local-example install-local:
 
 verify-local:
 	sh "$(SCRIPT_DIR)/latticra-installer-verify.sh" \
+	  --prefix "$(HOME)/.local/share/latticra"
+
+verify-lc-standalone verify-standalone:
+	sh "$(SCRIPT_DIR)/latticra-installer-verify-lc-standalone.sh" \
 	  --prefix "$(HOME)/.local/share/latticra"
 
 uninstall-local:

@@ -52,6 +52,7 @@ typedef struct {
     int no_effect;
     int execution_allowed;
     int mutation_allowed;
+    int network_allowed;
     unsigned int evidence_level;
 } latticra_lat_to_lir_diagnostic_result_t;
 

@@ -17,8 +17,8 @@ static int default_request_is_denied(void) {
 
     EXPECT_TRUE(latticra_kernel_lifecycle_default_request(&request) == LATTICRA_STATUS_OK,
         "default request status");
-    EXPECT_TRUE(request.target_state == LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY,
-        "default target scheduler-tick-ready");
+    EXPECT_TRUE(request.target_state == LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY,
+        "default target context-switch-ready");
     EXPECT_TRUE(request.gate == LATTICRA_KERNEL_STATE_GATE_DENY,
         "default gate deny");
     EXPECT_TRUE(request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
@@ -43,7 +43,7 @@ static int default_request_is_denied(void) {
     return 0;
 }
 
-static int allowed_lifecycle_reaches_scheduler_tick_ready(void) {
+static int allowed_lifecycle_reaches_context_switch_ready(void) {
     latticra_kernel_lifecycle_request_t request;
     latticra_kernel_lifecycle_result_t result;
 
@@ -57,18 +57,18 @@ static int allowed_lifecycle_reaches_scheduler_tick_ready(void) {
         "lifecycle complete");
     EXPECT_TRUE(strcmp(result.policy_status, "gate-allowed") == 0,
         "policy gate allowed");
-    EXPECT_TRUE(result.final_state == LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY,
-        "final state scheduler-tick-ready");
-    EXPECT_TRUE(result.step_count == 13u,
-        "thirteen steps to scheduler-tick-ready");
-    EXPECT_TRUE(result.state_change_count == 13u,
-        "thirteen state changes");
+    EXPECT_TRUE(result.final_state == LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY,
+        "final state context-switch-ready");
+    EXPECT_TRUE(result.step_count == 15u,
+        "fifteen steps to context-switch-ready");
+    EXPECT_TRUE(result.state_change_count == 15u,
+        "fifteen state changes");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "complete flag set");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "external effects absent");
-    EXPECT_TRUE(result.machine.log_count == 13u,
-        "machine log has thirteen entries");
+    EXPECT_TRUE(result.machine.log_count == 15u,
+        "machine log has fifteen entries");
     EXPECT_TRUE(result.machine.log[0].from_state == LATTICRA_KERNEL_STATE_CREATED,
         "log zero from created");
     EXPECT_TRUE(result.machine.log[0].to_state == LATTICRA_KERNEL_STATE_INITIALIZED,
@@ -92,6 +92,14 @@ static int allowed_lifecycle_reaches_scheduler_tick_ready(void) {
     EXPECT_TRUE(result.machine.log[12].to_state == LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY,
         "log twelve to scheduler-tick-ready");
     EXPECT_TRUE(result.machine.log[12].state_change_performed == 1,
+        "scheduler tick step changed state");
+    EXPECT_TRUE(result.machine.log[13].to_state == LATTICRA_KERNEL_STATE_RUN_QUEUE_READY,
+        "log thirteen to run-queue-ready");
+    EXPECT_TRUE(result.machine.log[13].state_change_performed == 1,
+        "run queue step changed state");
+    EXPECT_TRUE(result.machine.log[14].to_state == LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY,
+        "log fourteen to context-switch-ready");
+    EXPECT_TRUE(result.machine.log[14].state_change_performed == 1,
         "last step changed state");
     return 0;
 }
@@ -194,17 +202,17 @@ static int lifecycle_report_is_deterministic(void) {
         "lifecycle status emitted");
     EXPECT_TRUE(strstr(report, "policy_status=gate-allowed\n") != 0,
         "policy status emitted");
-    EXPECT_TRUE(strstr(report, "final_state=scheduler-tick-ready\n") != 0,
+    EXPECT_TRUE(strstr(report, "final_state=context-switch-ready\n") != 0,
         "final state emitted");
-    EXPECT_TRUE(strstr(report, "step_count=13\n") != 0,
+    EXPECT_TRUE(strstr(report, "step_count=15\n") != 0,
         "step count emitted");
-    EXPECT_TRUE(strstr(report, "state_change_count=13\n") != 0,
+    EXPECT_TRUE(strstr(report, "state_change_count=15\n") != 0,
         "state change count emitted");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "complete flag emitted");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "external effect emitted");
-    EXPECT_TRUE(strstr(report, "machine_log_count=13\n") != 0,
+    EXPECT_TRUE(strstr(report, "machine_log_count=15\n") != 0,
         "machine log count emitted");
     EXPECT_TRUE(strstr(report, "log[0].from=created\n") != 0,
         "log zero from emitted");
@@ -225,8 +233,16 @@ static int lifecycle_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "log[11].to=timer-source-ready\n") != 0,
         "log timer source to emitted");
     EXPECT_TRUE(strstr(report, "log[12].to=scheduler-tick-ready\n") != 0,
-        "log final to emitted");
+        "log scheduler tick to emitted");
     EXPECT_TRUE(strstr(report, "log[12].state_change_performed=1\n") != 0,
+        "log scheduler tick change emitted");
+    EXPECT_TRUE(strstr(report, "log[13].to=run-queue-ready\n") != 0,
+        "log run queue to emitted");
+    EXPECT_TRUE(strstr(report, "log[13].state_change_performed=1\n") != 0,
+        "log run queue change emitted");
+    EXPECT_TRUE(strstr(report, "log[14].to=context-switch-ready\n") != 0,
+        "log final to emitted");
+    EXPECT_TRUE(strstr(report, "log[14].state_change_performed=1\n") != 0,
         "log final change emitted");
     return 0;
 }
@@ -252,7 +268,7 @@ static int null_guards_are_safe(void) {
 
 int main(void) {
     if (default_request_is_denied() != 0) return 1;
-    if (allowed_lifecycle_reaches_scheduler_tick_ready() != 0) return 1;
+    if (allowed_lifecycle_reaches_context_switch_ready() != 0) return 1;
     if (lifecycle_can_stop_at_intermediate_target() != 0) return 1;
     if (lifecycle_can_stop_at_process_table_ready() != 0) return 1;
     if (lifecycle_respects_step_limit() != 0) return 1;

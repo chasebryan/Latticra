@@ -1,0 +1,49 @@
+name: Supply Chain Security Baseline
+
+on:
+  pull_request:
+    paths:
+      - "SECURITY.md"
+      - "Makefile"
+      - "docs/SUPPLY_CHAIN_SECURITY_BASELINE.md"
+      - "docs/FOUNDATION_INDEX.md"
+      - "docs/security.html"
+      - "docs/status/SUPPLY_CHAIN_SECURITY_BASELINE_STATUS.md"
+      - "docs/status/README.md"
+      - "docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md"
+      - "scripts/test-supply-chain-security-baseline.sh"
+      - "scripts/test-quality-safety-guards.sh"
+      - "scripts/test-fedora-source-archive-fixture-lane.sh"
+      - ".github/workflows/supply-chain-security-baseline.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "SECURITY.md"
+      - "Makefile"
+      - "docs/SUPPLY_CHAIN_SECURITY_BASELINE.md"
+      - "docs/FOUNDATION_INDEX.md"
+      - "docs/security.html"
+      - "docs/status/SUPPLY_CHAIN_SECURITY_BASELINE_STATUS.md"
+      - "docs/status/README.md"
+      - "docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md"
+      - "scripts/test-supply-chain-security-baseline.sh"
+      - "scripts/test-quality-safety-guards.sh"
+      - "scripts/test-fedora-source-archive-fixture-lane.sh"
+      - ".github/workflows/supply-chain-security-baseline.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  supply-chain-security-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - name: Validate supply chain security baseline
+        run: sh scripts/test-supply-chain-security-baseline.sh

@@ -9,8 +9,19 @@ REPORT_DIR="reports"
 REPORT="$REPORT_DIR/latticra-seal-report.txt"
 HASH_LIST="$REPORT_DIR/latticra-seal-file-hashes.txt"
 
-mkdir -p "$REPORT_DIR"
+if [[ -L "$REPORT_DIR" ]]; then
+  printf 'refusing symlink report directory: %s\n' "$REPORT_DIR" >&2
+  exit 2
+fi
+
+if [[ -e "$REPORT_DIR" && ! -d "$REPORT_DIR" ]]; then
+  printf 'refusing non-directory report path: %s\n' "$REPORT_DIR" >&2
+  exit 2
+fi
+
+mkdir -p -m 700 "$REPORT_DIR"
 : > "$REPORT"
+chmod 600 "$REPORT"
 
 fail=0
 warn=0

@@ -79,9 +79,11 @@ share/latticra/lc/install/config.toml
 share/latticra/lc/README.md
 share/latticra/lc/commands/seed-registry.txt
 share/latticra/lc/profiles/hosted-reference.toml
+share/latticra/lc/profiles/standalone-console.toml
 share/latticra/lc/profiles/panel-embedded.toml
 share/latticra/lc/profiles/host-embedded-planning.toml
 share/latticra/lc/profiles/os-base-planning.toml
+share/latticra/lc/standalone/contract.toml
 share/latticra/lc/substrate
 share/latticra/lc/host-embedding/contract.toml
 share/latticra/lc/host-inventory/contract.toml
@@ -108,6 +110,16 @@ latticra-lc
 
 Panel installs can rename that direct wrapper with `lc.install.command_wrapper`; the umbrella route remains `latticra lc ...`.
 
+LC can also be installed as a standalone local console:
+
+```text
+installer/configs/lc-standalone.installer.toml
+installer/configs/lc-standalone-local.installer.toml
+installer/scripts/latticra-installer-verify-lc-standalone.sh
+```
+
+The standalone lane uses `lc-standalone-install-v0`, writes `share/latticra/lc/standalone/contract.toml`, keeps `standalone_requires_panel = false`, disables Panel embedding, and preserves the same no-effect host/network/runtime/boot authority floor.
+
 The umbrella wrapper routes:
 
 ```text
@@ -127,6 +139,7 @@ uninstall
 clear
 lc status
 lc commands
+lc standalone
 lc profiles
 lc receipts
 lc receipt-request

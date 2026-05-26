@@ -200,6 +200,7 @@ static int lat_to_lir_preserves_no_effect_flags(void) {
     EXPECT_TRUE(lowering.no_effect == 1, "result no effect");
     EXPECT_TRUE(lowering.execution_allowed == 0, "result execution flag");
     EXPECT_TRUE(lowering.mutation_allowed == 0, "result mutation flag");
+    EXPECT_TRUE(lowering.network_allowed == 0, "result network flag");
     return 0;
 }
 

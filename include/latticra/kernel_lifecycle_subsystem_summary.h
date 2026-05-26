@@ -76,7 +76,14 @@ typedef struct {
     int timer_disarm_allowed;
     int scheduler_tick_allowed;
     int run_queue_mutation_allowed;
+    int enqueue_allowed;
+    int dequeue_allowed;
+    int dispatch_allowed;
     int context_switch_allowed;
+    int register_save_allowed;
+    int register_restore_allowed;
+    int stack_switch_allowed;
+    int address_space_switch_allowed;
     int preemption_allowed;
     int time_accounting_allowed;
     int time_read_allowed;

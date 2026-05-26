@@ -148,10 +148,17 @@ check_contains "LC install-config registry command" 'name=lc install-config cate
 check_contains "updater panel-owned config" 'panel_owned = true' "$UPDATER_CONFIG"
 check_contains "updater network authority disabled" 'allow_network_fetch = false' "$UPDATER_CONFIG"
 check_contains "updater apply mode" 'update_apply_mode = "guarded-local-prefix-reinstall"' "$UPDATER_CONFIG"
+check_contains "updater signed delivery gate closed" 'signed_delivery_gate = "closed"' "$UPDATER_CONFIG"
+check_contains "updater signed manifest required" 'signed_manifest_required = true' "$UPDATER_CONFIG"
+check_contains "updater signed manifest absent" 'signed_manifest_present = false' "$UPDATER_CONFIG"
+check_contains "updater signed apply disabled" 'signed_update_apply_allowed = false' "$UPDATER_CONFIG"
 check_contains "updater policy name" 'name = "Latticra Panel Updater"' "$UPDATER_POLICY"
 check_contains "updater policy dry-run command" 'preview_command = "updater dry-run"' "$UPDATER_POLICY"
 check_contains "updater policy apply command" 'apply_command = "updater apply"' "$UPDATER_POLICY"
 check_contains "updater policy network authority disabled" 'network_fetch_authority = false' "$UPDATER_POLICY"
+check_contains "updater policy signed delivery gate closed" 'signed_delivery_gate = "closed"' "$UPDATER_POLICY"
+check_contains "updater policy signed manifest required" 'signed_manifest_required = true' "$UPDATER_POLICY"
+check_contains "updater policy signed apply disabled" 'signed_update_apply_allowed = false' "$UPDATER_POLICY"
 
 if [ -x "$USER_BIN/latticra" ]; then
   "$USER_BIN/latticra" status || failures=$((failures + 1))
@@ -161,6 +168,11 @@ if [ -x "$USER_BIN/latticra" ]; then
     check_contains "updater status policy path" "policy=$UPDATER_POLICY" "$TMP_DIR/updater-status.txt"
     check_contains "updater status network authority disabled" 'network_authority=0' "$TMP_DIR/updater-status.txt"
     check_contains "updater status apply mode" 'update_apply_mode=guarded-local-prefix-reinstall' "$TMP_DIR/updater-status.txt"
+    check_contains "updater status signed delivery gate closed" 'signed_delivery_gate=closed' "$TMP_DIR/updater-status.txt"
+    check_contains "updater status signed manifest required" 'signed_manifest_required=1' "$TMP_DIR/updater-status.txt"
+    check_contains "updater status signed manifest absent" 'signed_manifest_present=0' "$TMP_DIR/updater-status.txt"
+    check_contains "updater status signed apply disabled" 'signed_update_apply_allowed=0' "$TMP_DIR/updater-status.txt"
+    check_contains "updater status signed delivery not ready" 'signed_update_delivery_ready=0' "$TMP_DIR/updater-status.txt"
   else
     echo "failed: latticra updater status" >&2
     failures=$((failures + 1))

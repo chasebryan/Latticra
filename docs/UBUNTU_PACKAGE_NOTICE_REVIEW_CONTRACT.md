@@ -26,6 +26,8 @@ ubuntu_generated_artifact_notice_review_contract_present=1
 ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review
 ubuntu_notice_file_decision_contract_present=1
 ubuntu_notice_file_decision_status=blocked-pending-notice-file-decision
+ubuntu_debian_copyright_notice_mapping_contract_present=1
+ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping
 third_party_material_inventory_recorded=1
 notice_file_present=0
 documentation_license_decision_present=0
@@ -71,6 +73,8 @@ ubuntu_generated_artifact_notice_review_contract_present=1
 ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review
 ubuntu_notice_file_decision_contract_present=1
 ubuntu_notice_file_decision_status=blocked-pending-notice-file-decision
+ubuntu_debian_copyright_notice_mapping_contract_present=1
+ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping
 doc_payload_license_reviewed=0
 doc_payload_license_unresolved=1
 doc_payload_license_decision_recorded=0
@@ -85,6 +89,7 @@ notice_file_decision_recorded=0
 notice_file_required_decision_recorded=0
 notice_file_content_requirements_recorded=0
 debian_copyright_notice_mapping_reviewed=0
+debian_copyright_doc_payload_mapping_reviewed=0
 ubuntu_package_license_review_unblocked=0
 ubuntu_lintian_static_metadata_unblocked=0
 ubuntu_local_deb_build_transcript_unblocked=0
@@ -103,6 +108,8 @@ The Ubuntu third-party material review contract records the source, license, com
 The Ubuntu generated-artifact notice review contract records the generated payload, build artifact, changes-file, build-log, and installed-payload notice evidence required before this notice review can be promoted.
 
 The Ubuntu NOTICE file decision contract records the reviewed decision required before a package can claim NOTICE obligations are satisfied.
+
+The Ubuntu Debian copyright notice mapping contract records the reviewed mapping required before `debian/copyright` can claim notice obligations are reflected in package metadata.
 
 ## Non-Claims
 

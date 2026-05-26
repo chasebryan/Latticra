@@ -466,6 +466,7 @@ LC_INSTALL_MODE=$(cfg_section lc.install install_mode metadata-only-console-foun
 LC_INSTALL_CONFIG_PATH=$(cfg_section lc.install config_path etc/latticra/lc.toml)
 LC_INSTALL_SHARE_PATH=$(cfg_section lc.install share_path share/latticra/lc)
 LC_INSTALL_COMMAND_WRAPPER=$(cfg_section lc.install command_wrapper latticra-lc)
+LC_INSTALL_STANDALONE_CONSOLE=$(cfg_section lc.install standalone_console true)
 LC_INSTALL_PANEL_EMBEDDED_CONSOLE=$(cfg_section lc.install panel_embedded_console true)
 LC_INSTALL_WRITE_CONFIG_FILE=$(cfg_section lc.install write_config_file true)
 LC_INSTALL_WRITE_PROFILE_PRESETS=$(cfg_section lc.install write_profile_presets true)
@@ -582,6 +583,19 @@ network_authority=0
 root_authority=0
 system_mutation_authority=0
 update_apply_mode=guarded-local-prefix-reinstall
+signed_delivery_gate=closed
+signed_manifest_required=1
+signed_manifest_present=0
+manifest_signature_verified=0
+artifact_hash_verified=0
+artifact_signature_verified=0
+rollback_plan_required=1
+rollback_plan_present=0
+operator_confirmation_required=1
+operator_confirmation_observed=0
+signed_update_apply_allowed=0
+network_self_update_ready=0
+signed_update_delivery_ready=0
 
 [components]
 latticra_console=$LATTICRA_CONSOLE
@@ -605,6 +619,10 @@ install_mode=$LC_INSTALL_MODE
 install_config_path=$LC_INSTALL_CONFIG_PATH
 install_share_path=$LC_INSTALL_SHARE_PATH
 install_command_wrapper=$LC_INSTALL_COMMAND_WRAPPER
+standalone_console=$LC_INSTALL_STANDALONE_CONSOLE
+standalone_installable=1
+standalone_requires_panel=0
+standalone_contract_present=1
 panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE
 write_config_file=$LC_INSTALL_WRITE_CONFIG_FILE
 write_profile_presets=$LC_INSTALL_WRITE_PROFILE_PRESETS
@@ -696,8 +714,8 @@ public_name=Nadia
 interactive_name=Nadia
 implementation_name=Nadia Witness Foundation
 documentation_code_name=Nadia Witness Foundation
-stage=36-prompt-evaluation-result-release-receipt-review-contract
-previous_stage=35-prompt-evaluation-result-release-receipt-contract
+stage=37-prompt-evaluation-result-release-receipt-review-disposition-contract
+previous_stage=36-prompt-evaluation-result-release-receipt-review-contract
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -1395,6 +1413,30 @@ prompt_evaluation_result_release_receipt_review_applied=0
 requires_prompt_evaluation_result_release_receipt_contract=1
 requires_future_prompt_evaluation_result_release_receipt_review_disposition_contract=1
 prompt_evaluation_result_release_receipt_review_promotion_allowed=0
+prompt_evaluation_result_release_receipt_review_disposition_contract_stage=37-prompt-evaluation-result-release-receipt-review-disposition-contract
+prompt_evaluation_result_release_receipt_review_disposition_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-contract.sh
+installed_prompt_evaluation_result_release_receipt_review_disposition_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition
+prompt_evaluation_result_release_receipt_review_disposition_stage=contract-only
+prompt_evaluation_result_release_receipt_review_disposition_contract_status=contract_only
+prompt_evaluation_result_release_receipt_review_disposition_authority=0
+prompt_evaluation_result_release_receipt_review_disposition_allowed=0
+prompt_evaluation_result_release_receipt_review_disposition_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_created=0
+prompt_evaluation_result_release_receipt_review_disposition_performed=0
+prompt_evaluation_result_release_receipt_review_disposition_metadata_present=1
+prompt_evaluation_result_release_receipt_review_disposition_family=operator-reviewed-prompt-evaluation-result-release-receipt-review-disposition
+prompt_evaluation_result_release_receipt_review_disposition_format=contract-only-offline-evaluation-result-release-receipt-review-disposition
+prompt_evaluation_result_release_receipt_review_disposition_decision=blocked_contract_only
+prompt_evaluation_result_release_receipt_review_disposition_plan_recorded=1
+prompt_evaluation_result_release_receipt_review_disposition_result_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_runtime_invoked=0
+prompt_evaluation_result_release_receipt_review_disposition_record_created=0
+prompt_evaluation_result_release_receipt_review_disposition_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_findings_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_applied=0
+requires_prompt_evaluation_result_release_receipt_review_contract=1
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_contract=1
+prompt_evaluation_result_release_receipt_review_disposition_promotion_allowed=0
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -1429,18 +1471,47 @@ PLANFILE
 log "[plan] $PLAN"
 
 if bool_true "$DRY_RUN"; then
+  DRY_RUN_WRAPPER_LIST="latticra"
+  if bool_true "$LAT_TOOLING"; then
+    DRY_RUN_WRAPPER_LIST="$DRY_RUN_WRAPPER_LIST, lat"
+  fi
+  if bool_true "$LATTICRA_CONSOLE" && bool_true "$LC_INSTALL_USER_WRAPPER"; then
+    DRY_RUN_WRAPPER_LIST="$DRY_RUN_WRAPPER_LIST, $LC_INSTALL_COMMAND_WRAPPER"
+  fi
+  if bool_true "$SEAL_REPORT_ONLY"; then
+    DRY_RUN_WRAPPER_LIST="$DRY_RUN_WRAPPER_LIST, latticra-seal"
+  fi
+  if bool_true "$NADIA_OFFLINE_AI"; then
+    DRY_RUN_WRAPPER_LIST="$DRY_RUN_WRAPPER_LIST, latticra-nadia"
+  fi
+  if bool_true "$BUILD_GUI_INSTALLER"; then
+    DRY_RUN_WRAPPER_LIST="$DRY_RUN_WRAPPER_LIST, latticra-panel"
+  fi
+
   phase 5 "dry-run prefix layout"
   log "[dry-run] would create $PREFIX"
-  log "[dry-run] would install payload tree to $PAYLOAD_DIR"
+  if bool_true "$INSTALL_PAYLOAD_TREE"; then
+    log "[dry-run] would install payload tree to $PAYLOAD_DIR"
+  else
+    log "[dry-run] would skip payload tree install"
+  fi
   log "[dry-run] would install user commands in $USER_BIN"
   log "[dry-run] would install LC config profile $LC_INSTALL_PROFILE"
-  log "[dry-run] would install Nadia offline AI foundation when enabled"
-  log "[dry-run] would build/copy Latticra Panel when cargo is available"
+  if bool_true "$NADIA_OFFLINE_AI"; then
+    log "[dry-run] would install Nadia offline AI foundation"
+  else
+    log "[dry-run] would skip Nadia offline AI foundation"
+  fi
+  if bool_true "$BUILD_GUI_INSTALLER"; then
+    log "[dry-run] would build/copy Latticra Panel when cargo is available"
+  else
+    log "[dry-run] would skip Latticra Panel build/copy"
+  fi
   log "[dry-run] updater would reuse guarded installer engine from $UPDATER_SOURCE_STRATEGY"
   phase 6 "dry-run build project"
   log "[dry-run] would try Cargo/CMake/Make builds when configured"
   phase 7 "dry-run install wrappers"
-  log "[dry-run] would write latticra, lat, $LC_INSTALL_COMMAND_WRAPPER, latticra-seal, latticra-nadia, latticra-panel commands"
+  log "[dry-run] would write $DRY_RUN_WRAPPER_LIST commands"
   phase 8 "dry-run desktop integration"
   log "[dry-run] would write desktop entry when configured"
   phase 9 "dry-run manifest"
@@ -1464,9 +1535,24 @@ updater_allow_network_fetch=$UPDATER_ALLOW_NETWORK_FETCH
 updater_require_dry_run_before_apply=$UPDATER_REQUIRE_DRY_RUN_BEFORE_APPLY
 updater_reuse_installer_engine=$UPDATER_REUSE_INSTALLER_ENGINE
 updater_write_update_receipt=$UPDATER_WRITE_UPDATE_RECEIPT
+updater_signed_delivery_gate=closed
+updater_signed_manifest_required=true
+updater_signed_manifest_present=false
+updater_manifest_signature_verified=false
+updater_artifact_hash_verified=false
+updater_artifact_signature_verified=false
+updater_rollback_plan_required=true
+updater_rollback_plan_present=false
+updater_operator_confirmation_required=true
+updater_operator_confirmation_observed=false
+updater_signed_update_apply_allowed=false
+updater_network_self_update_ready=false
+updater_signed_update_delivery_ready=false
 lc_install_profile=$LC_INSTALL_PROFILE
 lc_install_mode=$LC_INSTALL_MODE
 lc_install_user_wrapper=$LC_INSTALL_USER_WRAPPER
+lc_standalone_console=$LC_INSTALL_STANDALONE_CONSOLE
+lc_standalone_requires_panel=false
 lc_allow_external_host_commands=$LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS
 plan_file=$PLAN
 config=$CONFIG
@@ -1581,6 +1667,19 @@ network_authority = false
 root_authority = false
 system_mutation_authority = false
 update_apply_mode = "guarded-local-prefix-reinstall"
+signed_delivery_gate = "closed"
+signed_manifest_required = true
+signed_manifest_present = false
+manifest_signature_verified = false
+artifact_hash_verified = false
+artifact_signature_verified = false
+rollback_plan_required = true
+rollback_plan_present = false
+operator_confirmation_required = true
+operator_confirmation_observed = false
+signed_update_apply_allowed = false
+network_self_update_ready = false
+signed_update_delivery_ready = false
 UPDATERCONF
 
 write_file "$PREFIX/share/latticra/updater/policy.toml" 0644 <<UPDATERPOLICY
@@ -1595,6 +1694,19 @@ root_authority = false
 system_mutation_authority = false
 uses_guarded_installer_engine = $UPDATER_REUSE_INSTALLER_ENGINE
 dry_run_required_before_apply = $UPDATER_REQUIRE_DRY_RUN_BEFORE_APPLY
+signed_delivery_gate = "closed"
+signed_manifest_required = true
+signed_manifest_present = false
+manifest_signature_verified = false
+artifact_hash_verified = false
+artifact_signature_verified = false
+rollback_plan_required = true
+rollback_plan_present = false
+operator_confirmation_required = true
+operator_confirmation_observed = false
+signed_update_apply_allowed = false
+network_self_update_ready = false
+signed_update_delivery_ready = false
 UPDATERPOLICY
 
 if bool_true "$CREATE_COMPONENT_MARKERS"; then
@@ -1739,6 +1851,9 @@ install_mode = "$LC_INSTALL_MODE"
 config_path = "$LC_INSTALL_CONFIG_PATH"
 share_path = "$LC_INSTALL_SHARE_PATH"
 command_wrapper = "$LC_INSTALL_COMMAND_WRAPPER"
+standalone_console = $LC_INSTALL_STANDALONE_CONSOLE
+standalone_requires_panel = false
+standalone_contract_present = true
 panel_embedded_console = $LC_INSTALL_PANEL_EMBEDDED_CONSOLE
 write_config_file = $LC_INSTALL_WRITE_CONFIG_FILE
 write_profile_presets = $LC_INSTALL_WRITE_PROFILE_PRESETS
@@ -1799,6 +1914,45 @@ host_mutation_allowed = false
 network_allowed = false
 runtime_enforcement_allowed = false
 boot_allowed = false
+LCPROFILE
+  write_file "$PREFIX/share/latticra/lc/profiles/standalone-console.toml" 0644 <<'LCPROFILE'
+profile = "standalone"
+label = "Standalone LC"
+panel_console_bridge = "standalone-optional"
+command_registry_profile = "c-static-table"
+substrate_bridge_profile = "metadata-bound"
+host_embedding_profile = "not-embedded"
+host_embedding_contract_profile = "lc-host-embedding-v0"
+host_inventory_contract_profile = "lc-host-inventory-v0"
+host_adapter_contract_profile = "lc-host-adapter-v0"
+receipt_request_contract_profile = "lc-receipt-request-v0"
+receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
+receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
+receipt_payload_artifact_review_profile = "lc-receipt-payload-artifact-review-v0"
+receipt_payload_artifact_review_receipt_profile = "lc-receipt-payload-artifact-review-receipt-v0"
+receipt_payload_artifact_review_receipt_draft_profile = "lc-receipt-payload-artifact-review-receipt-draft-v0"
+receipt_payload_materialization_plan_profile = "lc-receipt-payload-materialization-plan-v0"
+signature_request_binding_profile = "lc-signature-request-binding-v0"
+receipt_contract_profile = "lc-receipts-v0"
+os_base_contract_profile = "lc-os-base-v0"
+vm_evidence_contract_profile = "lc-vm-evidence-v0"
+os_base_profile = "planned-no-boot-authority"
+standalone_console = true
+standalone_requires_panel = false
+panel_embedded_console = false
+report_only = true
+host_embedding_contract_required = true
+read_only_host_inventory_contract_required = true
+profile_receipt_required = true
+runtime_boundary_binding_required = true
+seal_capability_labels_required = true
+execution_allowed = false
+host_process_launch_allowed = false
+host_mutation_allowed = false
+network_allowed = false
+runtime_enforcement_allowed = false
+boot_allowed = false
+production_os_claim = false
 LCPROFILE
   write_file "$PREFIX/share/latticra/lc/profiles/panel-embedded.toml" 0644 <<'LCPROFILE'
 profile = "panel_embedded"
@@ -2755,6 +2909,31 @@ requirements before OS-base promotion, and it does not launch VMs, access a
 hypervisor, open or write disk images, capture snapshots, or grant boot
 authority.
 LCREADME
+  write_file "$PREFIX/share/latticra/lc/standalone/contract.toml" 0644 <<LCCONTRACT
+contract_profile = "lc-standalone-console-v0"
+contract_status = "metadata-only-contract"
+standalone_console = $LC_INSTALL_STANDALONE_CONSOLE
+standalone_installable = true
+standalone_requires_panel = false
+standalone_command_wrapper = "$LC_INSTALL_COMMAND_WRAPPER"
+standalone_profile_file = "profiles/standalone-console.toml"
+panel_embedded_console = $LC_INSTALL_PANEL_EMBEDDED_CONSOLE
+panel_required_for_runtime = false
+command_surface = "lc standalone"
+related_install_config_command = "lc install-config"
+related_profile_command = "lc profiles"
+promotion_gate = "lc_standalone_console_before_effectful_host_or_os_authority"
+no_effect = true
+shell_execution_allowed = false
+host_process_launch_allowed = false
+host_file_read_allowed = false
+host_file_write_allowed = false
+host_mutation_allowed = false
+network_allowed = false
+runtime_enforcement_allowed = false
+boot_allowed = false
+production_os_claim = false
+LCCONTRACT
   write_file "$PREFIX/share/latticra/lc/commands/seed-registry.txt" 0644 <<'LCCOMMANDS'
 name=help category=core effect=none capability=lc.core.help
 name=status category=core effect=none capability=lc.core.status
@@ -2767,6 +2946,7 @@ name=clear category=panel effect=local-metadata capability=lc.panel.clear
 name=lc status category=core effect=none capability=lc.core.status
 name=lc commands category=core effect=none capability=lc.core.registry
 name=lc install-config category=core effect=none capability=lc.install.config
+name=lc standalone category=core effect=none capability=lc.standalone.inspect
 name=lc profiles category=core effect=none capability=lc.core.profiles
 name=lc receipts category=core effect=none capability=lc.receipts.inspect
 name=lc receipt-request category=core effect=none capability=lc.receipt.request
@@ -2843,7 +3023,8 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/prompt-evaluation-result-disposition" \
     "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release" \
     "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt" \
-    "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt-review"
+    "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt-review" \
+    "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt-review-disposition"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia Witness Foundation"
@@ -2851,9 +3032,9 @@ public_name = "Nadia"
 interactive_name = "Nadia"
 implementation_name = "Nadia Witness Foundation"
 documentation_code_name = "Nadia Witness Foundation"
-stage = "36-prompt-evaluation-result-release-receipt-review-contract"
-previous_stage = "35-prompt-evaluation-result-release-receipt-contract"
-mode = "offline-prompt-evaluation-result-release-receipt-review-contract"
+stage = "37-prompt-evaluation-result-release-receipt-review-disposition-contract"
+previous_stage = "36-prompt-evaluation-result-release-receipt-review-contract"
+mode = "offline-prompt-evaluation-result-release-receipt-review-disposition-contract"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -3536,6 +3717,30 @@ prompt_evaluation_result_release_receipt_review_applied = false
 requires_prompt_evaluation_result_release_receipt_contract = true
 requires_future_prompt_evaluation_result_release_receipt_review_disposition_contract = true
 prompt_evaluation_result_release_receipt_review_promotion_allowed = false
+prompt_evaluation_result_release_receipt_review_disposition_contract_stage = "37-prompt-evaluation-result-release-receipt-review-disposition-contract"
+prompt_evaluation_result_release_receipt_review_disposition_contract_command = "scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-contract.sh"
+installed_prompt_evaluation_result_release_receipt_review_disposition_contract_command = "latticra-nadia prompt-evaluation-result-release-receipt-review-disposition"
+prompt_evaluation_result_release_receipt_review_disposition_stage = "contract-only"
+prompt_evaluation_result_release_receipt_review_disposition_contract_status = "contract_only"
+prompt_evaluation_result_release_receipt_review_disposition_authority = false
+prompt_evaluation_result_release_receipt_review_disposition_allowed = false
+prompt_evaluation_result_release_receipt_review_disposition_recorded = false
+prompt_evaluation_result_release_receipt_review_disposition_created = false
+prompt_evaluation_result_release_receipt_review_disposition_performed = false
+prompt_evaluation_result_release_receipt_review_disposition_metadata_present = true
+prompt_evaluation_result_release_receipt_review_disposition_family = "operator-reviewed-prompt-evaluation-result-release-receipt-review-disposition"
+prompt_evaluation_result_release_receipt_review_disposition_format = "contract-only-offline-evaluation-result-release-receipt-review-disposition"
+prompt_evaluation_result_release_receipt_review_disposition_decision = "blocked_contract_only"
+prompt_evaluation_result_release_receipt_review_disposition_plan_recorded = true
+prompt_evaluation_result_release_receipt_review_disposition_result_recorded = false
+prompt_evaluation_result_release_receipt_review_disposition_runtime_invoked = false
+prompt_evaluation_result_release_receipt_review_disposition_record_created = false
+prompt_evaluation_result_release_receipt_review_disposition_decision_recorded = false
+prompt_evaluation_result_release_receipt_review_disposition_findings_recorded = false
+prompt_evaluation_result_release_receipt_review_disposition_applied = false
+requires_prompt_evaluation_result_release_receipt_review_contract = true
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_contract = true
+prompt_evaluation_result_release_receipt_review_disposition_promotion_allowed = false
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -3556,13 +3761,13 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-36 prompt-evaluation result release receipt review contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-37 prompt-evaluation result release receipt review disposition contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, tokenization-boundary, tokenizer-specification, tokenizer-manifest, tokenizer-artifact-inventory, tokenizer-artifact-measurement, tokenizer-artifact-verification, tokenizer-artifact-binding, tokenizer-runtime-attachment, prompt-tokenization, prompt-token-sequence, context-window-assembly, prompt-evaluation-input, prompt-evaluation-runtime-handoff, prompt-evaluation-invocation, prompt-evaluation-result, prompt-evaluation-result-review, prompt-evaluation-result-disposition, prompt-evaluation-result-release, prompt-evaluation-result-release-receipt, prompt-evaluation-result-release-receipt-review, and productivity-ledger paths.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, tokenization-boundary, tokenizer-specification, tokenizer-manifest, tokenizer-artifact-inventory, tokenizer-artifact-measurement, tokenizer-artifact-verification, tokenizer-artifact-binding, tokenizer-runtime-attachment, prompt-tokenization, prompt-token-sequence, context-window-assembly, prompt-evaluation-input, prompt-evaluation-runtime-handoff, prompt-evaluation-invocation, prompt-evaluation-result, prompt-evaluation-result-review, prompt-evaluation-result-disposition, prompt-evaluation-result-release, prompt-evaluation-result-release-receipt, prompt-evaluation-result-release-receipt-review, prompt-evaluation-result-release-receipt-review-disposition, and productivity-ledger paths.
 
-It can generate local context packs when the operator runs latticra-nadia context-pack and contract metadata when the operator runs latticra-nadia prompt-evaluation-result-release-receipt-review. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, create prompt tokens, record prompt token sequences, record prompt token IDs, record prompt token order, record prompt token offsets, assemble context windows, create prompt evaluation inputs, create prompt evaluation runtime handoff requests, create prompt evaluation invocation requests, create prompt evaluation result records, create prompt evaluation result review records, create prompt evaluation result disposition records, create release records, record review decisions, record review findings, record disposition decisions, record release decisions, publish releases, package releases, create release receipts, record release receipts, record release receipt reviews, sign receipts, publish receipts, record model output, perform runtime handoff, invoke runtimes, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn runtime processes, create runtime sessions, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source. Prompt-evaluation-input metadata records future prompt evaluation runtime handoff requirements, prompt-evaluation-runtime-handoff metadata records future prompt evaluation invocation requirements, prompt-evaluation-invocation metadata records future prompt evaluation result requirements, prompt-evaluation-result metadata records future prompt evaluation result review requirements, prompt-evaluation-result-review metadata records future prompt evaluation result disposition requirements, prompt-evaluation-result-disposition metadata records future prompt evaluation result release requirements, prompt-evaluation-result-release metadata records future prompt evaluation result release receipt requirements, prompt-evaluation-result-release-receipt metadata records future prompt evaluation result release receipt review requirements, and prompt-evaluation-result-release-receipt-review metadata records future prompt evaluation result release receipt review disposition requirements; none grants prompt evaluation, dialogue generation, inference, runtime handoff, runtime invocation, or tool execution authority.
+It can generate local context packs when the operator runs latticra-nadia context-pack and contract metadata when the operator runs latticra-nadia prompt-evaluation-result-release-receipt-review-disposition. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, create prompt tokens, record prompt token sequences, record prompt token IDs, record prompt token order, record prompt token offsets, assemble context windows, create prompt evaluation inputs, create prompt evaluation runtime handoff requests, create prompt evaluation invocation requests, create prompt evaluation result records, create prompt evaluation result review records, create prompt evaluation result disposition records, create release records, record review decisions, record review findings, record review disposition decisions, record review disposition findings, record disposition decisions, record release decisions, publish releases, package releases, create release receipts, record release receipts, record release receipt reviews, record release receipt review dispositions, sign receipts, publish receipts, record model output, perform runtime handoff, invoke runtimes, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn runtime processes, create runtime sessions, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source. Prompt-evaluation-input metadata records future prompt evaluation runtime handoff requirements, prompt-evaluation-runtime-handoff metadata records future prompt evaluation invocation requirements, prompt-evaluation-invocation metadata records future prompt evaluation result requirements, prompt-evaluation-result metadata records future prompt evaluation result review requirements, prompt-evaluation-result-review metadata records future prompt evaluation result disposition requirements, prompt-evaluation-result-disposition metadata records future prompt evaluation result release requirements, prompt-evaluation-result-release metadata records future prompt evaluation result release receipt requirements, prompt-evaluation-result-release-receipt metadata records future prompt evaluation result release receipt review requirements, prompt-evaluation-result-release-receipt-review metadata records future prompt evaluation result release receipt review disposition requirements, and prompt-evaluation-result-release-receipt-review-disposition metadata records future prompt evaluation result release receipt review disposition release requirements; none grants prompt evaluation, dialogue generation, inference, runtime handoff, runtime invocation, or tool execution authority.
 NADIAREADME
 fi
 
@@ -3620,6 +3825,19 @@ case "\${1:-status}" in
         echo "reuse_installer_engine=$UPDATER_REUSE_INSTALLER_ENGINE"
         echo "write_update_receipt=$UPDATER_WRITE_UPDATE_RECEIPT"
         echo "update_apply_mode=guarded-local-prefix-reinstall"
+        echo "signed_delivery_gate=closed"
+        echo "signed_manifest_required=1"
+        echo "signed_manifest_present=0"
+        echo "manifest_signature_verified=0"
+        echo "artifact_hash_verified=0"
+        echo "artifact_signature_verified=0"
+        echo "rollback_plan_required=1"
+        echo "rollback_plan_present=0"
+        echo "operator_confirmation_required=1"
+        echo "operator_confirmation_observed=0"
+        echo "signed_update_apply_allowed=0"
+        echo "network_self_update_ready=0"
+        echo "signed_update_delivery_ready=0"
         echo "network_authority=0"
         echo "root_authority=0"
         echo "system_mutation_authority=0"
@@ -3767,6 +3985,7 @@ render_lc_man() {
   echo "  \$LC_COMMAND_WRAPPER help"
   echo "  \$LC_COMMAND_WRAPPER commands"
   echo "  \$LC_COMMAND_WRAPPER install-config"
+  echo "  \$LC_COMMAND_WRAPPER standalone"
   echo "  \$LC_COMMAND_WRAPPER profiles"
   echo "  \$LC_COMMAND_WRAPPER receipts"
   echo "  \$LC_COMMAND_WRAPPER receipt-request"
@@ -3879,6 +4098,10 @@ case "\${1:-status}" in
     echo "install_config_path=$LC_INSTALL_CONFIG_PATH"
     echo "install_share_path=$LC_INSTALL_SHARE_PATH"
     echo "install_command_wrapper=$LC_INSTALL_COMMAND_WRAPPER"
+    echo "standalone_console=$LC_INSTALL_STANDALONE_CONSOLE"
+    echo "standalone_installable=1"
+    echo "standalone_requires_panel=0"
+    echo "standalone_contract_present=1"
     echo "panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE"
     echo "write_config_file=$LC_INSTALL_WRITE_CONFIG_FILE"
     echo "write_profile_presets=$LC_INSTALL_WRITE_PROFILE_PRESETS"
@@ -3986,6 +4209,9 @@ case "\${1:-status}" in
     echo "config_path=$LC_INSTALL_CONFIG_PATH"
     echo "share_path=$LC_INSTALL_SHARE_PATH"
     echo "command_wrapper=$LC_INSTALL_COMMAND_WRAPPER"
+    echo "standalone_console=$LC_INSTALL_STANDALONE_CONSOLE"
+    echo "standalone_requires_panel=0"
+    echo "standalone_contract_present=1"
     echo "panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE"
     echo "write_config_file=$LC_INSTALL_WRITE_CONFIG_FILE"
     echo "write_profile_presets=$LC_INSTALL_WRITE_PROFILE_PRESETS"
@@ -4001,6 +4227,40 @@ case "\${1:-status}" in
     echo "network_allowed=0"
     echo "runtime_enforcement_allowed=0"
     echo "boot_allowed=0"
+    ;;
+  standalone|standalone-contract|lc-standalone)
+    echo "LATTICRA CONSOLE STANDALONE CONTRACT"
+    echo "standalone_console_profile=lc-standalone-console-v0"
+    echo "standalone_console_status=metadata-only-contract"
+    echo "standalone_contract_file=\$LC_DIR/standalone/contract.toml"
+    echo "standalone_contract_present=1"
+    echo "standalone_console=$LC_INSTALL_STANDALONE_CONSOLE"
+    echo "standalone_installable=1"
+    echo "standalone_requires_panel=0"
+    echo "standalone_command_wrapper=$LC_INSTALL_COMMAND_WRAPPER"
+    echo "standalone_profile_file=profiles/standalone-console.toml"
+    echo "panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE"
+    echo "panel_required_for_runtime=0"
+    echo "config_path=$LC_INSTALL_CONFIG_PATH"
+    echo "share_path=$LC_INSTALL_SHARE_PATH"
+    echo "command_registry_required=1"
+    echo "runtime_boundary_required=1"
+    echo "seal_capability_labels_required=1"
+    echo "profile_receipt_required=1"
+    echo "promotion_gate=lc_standalone_console_before_effectful_host_or_os_authority"
+    echo "command_surface=lc standalone"
+    echo "related_install_config_command=lc install-config"
+    echo "related_profile_command=lc profiles"
+    echo "no_effect=1"
+    echo "shell_execution_allowed=0"
+    echo "host_process_launch_allowed=0"
+    echo "host_file_read_allowed=0"
+    echo "host_file_write_allowed=0"
+    echo "host_mutation_allowed=0"
+    echo "network_allowed=0"
+    echo "runtime_enforcement_allowed=0"
+    echo "boot_allowed=0"
+    echo "production_os_claim=0"
     ;;
   profiles)
     if [ -d "\$LC_DIR/profiles" ]; then
@@ -4790,7 +5050,7 @@ case "\${1:-status}" in
     echo "\$LC_DIR"
     ;;
   *)
-    echo "usage: \$LC_COMMAND_WRAPPER {status|help|man|boundary|commands|install-config|substrate|host|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence|os|path}" >&2
+    echo "usage: \$LC_COMMAND_WRAPPER {status|help|man|boundary|commands|install-config|standalone|substrate|host|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence|os|path}" >&2
     exit 64
     ;;
 esac
@@ -4846,7 +5106,7 @@ render_nadia_commands() {
   echo "NADIA COMMAND SURFACE"
   echo "wrapper=latticra-nadia"
   echo "component=Nadia offline AI foundation"
-  echo "command=status stage=36 output=stdout authority=metadata-only-status"
+  echo "command=status stage=37 output=stdout authority=metadata-only-status"
   echo "command=context-pack stage=1 output=\$NADIA_DIR/context-packs authority=local-context-metadata"
   echo "command=runtime-profile stage=2 output=\$NADIA_DIR/runtime-profiles authority=runtime-profile-metadata"
   echo "command=prompt-plan stage=3 output=\$NADIA_DIR/prompt-plans authority=prompt-plan-metadata"
@@ -4883,6 +5143,7 @@ render_nadia_commands() {
   echo "command=prompt-evaluation-result-release stage=34 output=\$NADIA_DIR/prompt-evaluation-result-release authority=prompt-evaluation-result-release-contract-metadata"
   echo "command=prompt-evaluation-result-release-receipt stage=35 output=\$NADIA_DIR/prompt-evaluation-result-release-receipt authority=prompt-evaluation-result-release-receipt-contract-metadata"
   echo "command=prompt-evaluation-result-release-receipt-review stage=36 output=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review authority=prompt-evaluation-result-release-receipt-review-contract-metadata"
+  echo "command=prompt-evaluation-result-release-receipt-review-disposition stage=37 output=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition authority=prompt-evaluation-result-release-receipt-review-disposition-contract-metadata"
   echo "command=path stage=0 output=\$NADIA_DIR authority=path-report"
   echo "network_authority=0"
   echo "tool_execution_authority=0"
@@ -4905,9 +5166,9 @@ case "\${1:-status}" in
     echo "interactive_name=Nadia"
     echo "implementation_name=Nadia Witness Foundation"
     echo "documentation_code_name=Nadia Witness Foundation"
-    echo "stage=36-prompt-evaluation-result-release-receipt-review-contract"
-    echo "previous_stage=35-prompt-evaluation-result-release-receipt-contract"
-    echo "mode=offline-prompt-evaluation-result-release-receipt-review-contract"
+    echo "stage=37-prompt-evaluation-result-release-receipt-review-disposition-contract"
+    echo "previous_stage=36-prompt-evaluation-result-release-receipt-review-contract"
+    echo "mode=offline-prompt-evaluation-result-release-receipt-review-disposition-contract"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "commands_command=latticra-nadia commands"
@@ -4948,6 +5209,7 @@ case "\${1:-status}" in
     echo "prompt_evaluation_result_release_contracts=\$NADIA_DIR/prompt-evaluation-result-release"
     echo "prompt_evaluation_result_release_receipt_contracts=\$NADIA_DIR/prompt-evaluation-result-release-receipt"
     echo "prompt_evaluation_result_release_receipt_review_contracts=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_contracts=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "prompt_plan_command=latticra-nadia prompt-plan"
@@ -5628,6 +5890,30 @@ case "\${1:-status}" in
     echo "requires_prompt_evaluation_result_release_receipt_contract=1"
     echo "requires_future_prompt_evaluation_result_release_receipt_review_disposition_contract=1"
     echo "prompt_evaluation_result_release_receipt_review_promotion_allowed=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_contract_stage=37-prompt-evaluation-result-release-receipt-review-disposition-contract"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition"
+    echo "installed_prompt_evaluation_result_release_receipt_review_disposition_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_stage=contract-only"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_contract_status=contract_only"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_authority=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_allowed=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_created=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_performed=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_metadata_present=1"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_family=operator-reviewed-prompt-evaluation-result-release-receipt-review-disposition"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_format=contract-only-offline-evaluation-result-release-receipt-review-disposition"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_decision=blocked_contract_only"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_plan_recorded=1"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_result_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_runtime_invoked=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_record_created=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_decision_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_findings_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_applied=0"
+    echo "requires_prompt_evaluation_result_release_receipt_review_contract=1"
+    echo "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_contract=1"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_promotion_allowed=0"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -6155,11 +6441,25 @@ case "\${1:-status}" in
       --prompt-evaluation-result-release-receipt "\$NADIA_DIR/prompt-evaluation-result-release-receipt/latest-prompt-evaluation-result-release-receipt-contract.txt" \
       --output "\$NADIA_DIR/prompt-evaluation-result-release-receipt-review"
     ;;
+  prompt-evaluation-result-release-receipt-review-disposition|evaluation-result-release-receipt-review-disposition|result-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-contract)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-contract.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia prompt-evaluation result release receipt review disposition contract script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --prompt-evaluation-result-release-receipt-review "\$NADIA_DIR/prompt-evaluation-result-release-receipt-review/latest-prompt-evaluation-result-release-receipt-review-contract.txt" \
+      --output "\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|commands|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|tokenizer-specification|tokenizer-manifest|tokenizer-artifact-inventory|tokenizer-artifact-measurement|tokenizer-artifact-verification|tokenizer-artifact-binding|tokenizer-runtime-attachment|prompt-tokenization|prompt-token-sequence|context-window-assembly|prompt-evaluation-input|prompt-evaluation-runtime-handoff|prompt-evaluation-invocation|prompt-evaluation-result|prompt-evaluation-result-review|prompt-evaluation-result-disposition|prompt-evaluation-result-release|prompt-evaluation-result-release-receipt|prompt-evaluation-result-release-receipt-review|path}" >&2
+    echo "usage: latticra-nadia {status|commands|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|tokenizer-specification|tokenizer-manifest|tokenizer-artifact-inventory|tokenizer-artifact-measurement|tokenizer-artifact-verification|tokenizer-artifact-binding|tokenizer-runtime-attachment|prompt-tokenization|prompt-token-sequence|context-window-assembly|prompt-evaluation-input|prompt-evaluation-runtime-handoff|prompt-evaluation-invocation|prompt-evaluation-result|prompt-evaluation-result-review|prompt-evaluation-result-disposition|prompt-evaluation-result-release|prompt-evaluation-result-release-receipt|prompt-evaluation-result-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition|path}" >&2
     exit 64
     ;;
 esac
@@ -6286,12 +6586,27 @@ updater_allow_network_fetch=$UPDATER_ALLOW_NETWORK_FETCH
 updater_require_dry_run_before_apply=$UPDATER_REQUIRE_DRY_RUN_BEFORE_APPLY
 updater_reuse_installer_engine=$UPDATER_REUSE_INSTALLER_ENGINE
 updater_write_update_receipt=$UPDATER_WRITE_UPDATE_RECEIPT
+updater_signed_delivery_gate=closed
+updater_signed_manifest_required=true
+updater_signed_manifest_present=false
+updater_manifest_signature_verified=false
+updater_artifact_hash_verified=false
+updater_artifact_signature_verified=false
+updater_rollback_plan_required=true
+updater_rollback_plan_present=false
+updater_operator_confirmation_required=true
+updater_operator_confirmation_observed=false
+updater_signed_update_apply_allowed=false
+updater_network_self_update_ready=false
+updater_signed_update_delivery_ready=false
 lc_install_profile=$LC_INSTALL_PROFILE
 lc_install_mode=$LC_INSTALL_MODE
 lc_install_config_path=$LC_INSTALL_CONFIG_PATH
 lc_install_share_path=$LC_INSTALL_SHARE_PATH
 lc_install_command_wrapper=$LC_INSTALL_COMMAND_WRAPPER
 lc_install_user_wrapper=$LC_INSTALL_USER_WRAPPER
+lc_standalone_console=$LC_INSTALL_STANDALONE_CONSOLE
+lc_standalone_requires_panel=false
 lc_allow_external_host_commands=$LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS
 
 component_manifest=$MANIFEST

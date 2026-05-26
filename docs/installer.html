@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Installer Readiness Boundary | Latticra</title>
+  <meta name="description" content="A public overview of Latticra installer readiness boundaries, disposable VM CLI payload evidence, local artifact manifest fixtures, production installer gates, and non-claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Installer Readiness Boundary">
+  <meta property="og:description" content="Disposable VM CLI payload evidence, local artifact manifest fixtures, production installer gates, and blocked release claims.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero installer-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Installer readiness boundary</p>
+        <p class="eyebrow">Release Gate and Artifact Manifest Boundary</p>
+        <h1>Installer readiness boundary</h1>
+        <p class="page-lede">
+          Latticra has narrow disposable VM evidence for the no-effect CLI payload and a local artifact manifest fixture. That is not production installer readiness, Fedora distribution readiness, daily-driver readiness, immutable Fedora readiness, or a release artifact claim.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell installer-intro">
+        <div>
+          <p class="eyebrow">Installer Rule</p>
+          <h2>A validated payload is not a production installer.</h2>
+        </div>
+        <p>
+          The current evidence proves a narrow package lifecycle in a disposable Fedora VM for <code>/usr/bin/latticra</code> and <code>/usr/share/doc/latticra/README.md</code>. Production installer readiness requires reproducible artifacts, checksums, signatures, SBOMs, target declarations, preflight guards, install and uninstall transcripts, rollback evidence, and multi-VM validation.
+        </p>
+      </div>
+
+      <div class="content-shell installer-flow" aria-label="Installer readiness flow">
+        <article>
+          <span>01</span>
+          <h3>Payload evidence</h3>
+          <p>The CLI RPM payload has disposable Fedora VM validation with install, command, removal, and absence evidence.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Manifest fixture</h3>
+          <p>A committed local artifact manifest fixture records payload shape while checksums, signatures, and SBOM evidence remain blocked.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Production contract</h3>
+          <p>The readiness contract lists the gates required before the production installer readiness flag can ever become true.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Target gates</h3>
+          <p>Daily-driver, immutable Fedora, production host, and Fedora distribution claims require separate reviewed evidence.</p>
+        </article>
+        <article>
+          <span>05</span>
+          <h3>Release blocker</h3>
+          <p>No artifact is published as a production installer until signing, SBOM, recovery, rollback, and validation evidence exist.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell installer-showcase">
+        <div class="showcase-copy">
+          <p class="eyebrow">Current Evidence</p>
+          <h2>The strongest current claim is CLI payload validation in a disposable VM.</h2>
+          <p>
+            The validated payload remains small: a no-effect CLI binary and README documentation. The fixture manifest records that shape for review without turning it into a generated release artifact.
+          </p>
+          <div class="status-row" aria-label="Installer posture summary">
+            <span class="status-pill status-present">VM payload evidence</span>
+            <span class="status-pill status-guarded">manifest fixture</span>
+            <span class="status-pill status-blocked">not production</span>
+          </div>
+        </div>
+        <figure class="showcase-figure installer-figure">
+          <img src="assets/latticra-panel.png" alt="Latticra Panel local workbench for install planning and evidence review.">
+          <figcaption>Panel is still the local workbench; production installer release gates remain closed.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Current Snapshot</p>
+        <h2>The readiness flags stay deliberately narrow.</h2>
+        <p>
+          These fields are the public shorthand for the current installer boundary.
+        </p>
+      </div>
+      <div class="content-shell report-grid">
+        <article>
+          <span>disposable_vm_cli_validation</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>host_install_ready_for_cli_payload</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>artifact_manifest_fixture</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>artifact_checksum_recorded</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>artifact_signature_recorded</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>installer_sbom_recorded</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>daily_driver_install_ready</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>production_installer_ready</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell installer-split">
+        <div class="section-heading">
+          <p class="eyebrow">Gate Matrix</p>
+          <h2>Production readiness requires release-grade evidence.</h2>
+          <p>
+            The current project can preserve its narrow installer evidence and still block public release wording until the production gates are satisfied.
+          </p>
+        </div>
+        <div class="installer-table" role="table" aria-label="Installer readiness gate matrix">
+          <div role="row">
+            <span role="cell">Allowed now</span>
+            <p role="cell">Reference the disposable Fedora VM CLI payload evidence, local artifact manifest fixture, and current non-production status records.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Fixture only</span>
+            <p role="cell">The local manifest fixture may record payload shape and blocked readiness fields, but it is not a generated release artifact or production package.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Required before release</span>
+            <p role="cell">Reproducible artifact, checksum, signature, documented public key, SBOM, supported and unsupported targets, preflight guard, consent, install transcript, uninstall transcript, rollback path, recovery runbook, and multi-VM validation.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Blocked claims</span>
+            <p role="cell">Production installer readiness, Fedora approval, Fedora distribution readiness, daily-driver readiness, immutable Fedora readiness, update safety, recovery safety, security hardening, and OS replacement.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Commands</p>
+        <h2>Run readiness checks without releasing anything.</h2>
+        <p>
+          These guards inspect contracts, fixture posture, and evidence records. They do not build, sign, publish, install, uninstall, upgrade, or rollback a production installer.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Production boundary</h3>
+          <pre><code>sh scripts/test-production-installer-readiness-contract.sh
+sh scripts/test-local-installer-artifact-manifest-contract.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Manifest fixture</h3>
+          <pre><code>sh scripts/test-local-artifact-manifest-fixture.sh
+sed -n '1,120p' fixtures/artifact/local-artifact-manifest.txt</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Payload evidence</h3>
+          <pre><code>sh scripts/test-fedora-vm-cli-payload-validation-evidence-status.sh
+sh scripts/test-fedora-vm-cli-transcript-contract.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Read these before repeating an installer claim.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="PRODUCTION_INSTALLER_READINESS_CONTRACT.md"><strong>Production installer readiness</strong><span>Evidence gates required before production installer readiness can ever be claimed.</span></a>
+        <a href="LOCAL_INSTALLER_ARTIFACT_MANIFEST_CONTRACT.md"><strong>Installer artifact manifest</strong><span>Required manifest fields, payload declaration, checksum, signature, SBOM, target, and non-claim boundaries.</span></a>
+        <a href="LOCAL_ARTIFACT_MANIFEST_FIXTURE.md"><strong>Local artifact fixture</strong><span>Committed fixture for the no-effect CLI RPM payload without generated release artifact claims.</span></a>
+        <a href="status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md"><strong>Fedora VM CLI evidence</strong><span>Disposable VM CLI payload validation, install and removal evidence, and readiness non-claims.</span></a>
+        <a href="FEDORA_VM_CLI_TRANSCRIPT_CONTRACT.md"><strong>VM transcript contract</strong><span>Required package lifecycle, command, removal, and absence transcript fields.</span></a>
+        <a href="validation.html"><strong>Local validation</strong><span>Panel install evidence, package guards, disposable VM gates, and validation non-claims.</span></a>
+        <a href="workbench.html"><strong>Workbench</strong><span>Panel, Console, Nadia, and local authority boundaries.</span></a>
+        <a href="evidence.html"><strong>Evidence model</strong><span>Promotion levels, claim boundaries, and exact source records.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra installer readiness boundary.</span>
+      <span><a href="validation.html">Open validation</a></span>
+    </div>
+  </footer>
+</body>
+</html>

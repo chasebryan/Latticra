@@ -105,6 +105,7 @@ require_contains 'seabios-grub-boot-preview-evidence-template.sh' "$installer_re
 require_contains 'boot-preview evidence capture template' "$roadmap"
 require_contains 'test-seabios-grub-boot-preview-evidence-template.sh' Makefile
 require_contains 'boot-evidence-template:' Makefile
+require_contains 'sh ./scripts/seabios-grub-boot-preview-evidence-template.sh' Makefile
 
 sh -n "$script"
 sh -n "$test_script"

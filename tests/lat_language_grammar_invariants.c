@@ -283,6 +283,7 @@ static int lat_grammar_preserves_no_effect_flags(void) {
     EXPECT_TRUE(result.execution_allowed == 0, "execution denied");
     EXPECT_TRUE(result.mutation_allowed == 0, "mutation denied");
     EXPECT_TRUE(result.server_allowed == 0, "server denied");
+    EXPECT_TRUE(result.network_allowed == 0, "network denied");
     EXPECT_TRUE(result.recovery_allowed == 0, "recovery denied");
     EXPECT_TRUE(result.hardware_allowed == 0, "hardware denied");
     return 0;

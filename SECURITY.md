@@ -16,6 +16,8 @@ no hardware effect before an explicit gate
 no recovery behavior before rollback and failure behavior are documented
 ```
 
+The current repository supply-chain posture is documented in [`docs/SUPPLY_CHAIN_SECURITY_BASELINE.md`](docs/SUPPLY_CHAIN_SECURITY_BASELINE.md). That baseline keeps workflow authority narrow, rejects unreviewed token and secret surfaces, and treats source archive generation as a reviewed, deterministic, symlink-refusing path.
+
 ## Supported versions
 
 Latticra does not currently publish stable production releases.
@@ -152,6 +154,14 @@ Security-relevant changes should prefer:
 - source-span clarity;
 - explicit non-claims;
 - clear rollback or failure behavior when mutation is ever introduced.
+
+## Zero-trust runtime authority posture
+
+The zero-trust runtime authority baseline is recorded in `docs/ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md`.
+
+It requires caller identity, resource identity, per-request authorization, least-privilege effect scope, policy decision visibility, denial reason visibility, and audit records before any future runtime authority is considered. Operator confirmation remains metadata-only and must not override denied effects.
+
+This is not a zero-trust certification, compliance claim, runtime protection claim, production security claim, or external endorsement.
 
 ## Contact and attribution
 

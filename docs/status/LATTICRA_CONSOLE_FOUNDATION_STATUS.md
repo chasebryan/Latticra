@@ -2,7 +2,7 @@
 
 Status: active Stage-0 foundation
 Date: 2026-05-26
-Scope: LC C report surface, Panel installability, local-prefix metadata, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
+Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
 
 ## Current Evidence
 
@@ -15,6 +15,15 @@ latticra_console_install_marker_present=1
 latticra_console_wrapper_present=1
 latticra_console_configurable=1
 panel_installable=1
+standalone_installable=1
+standalone_requires_panel=0
+standalone_command_wrapper=latticra-lc
+standalone_contract_present=1
+standalone_contract_command=lc standalone
+standalone_contract_profile=lc-standalone-console-v0
+standalone_installer_preset=installer/configs/lc-standalone.installer.toml
+standalone_local_installer_preset=installer/configs/lc-standalone-local.installer.toml
+standalone_local_verifier=installer/scripts/latticra-installer-verify-lc-standalone.sh
 substrate_bridge_status=metadata-bound
 command_registry_status=seed-registry
 command_registry_source=c-static-table

@@ -53,17 +53,20 @@ Completed follow-on availability lane:
 
 ```text
 docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 scripts/test-opensuse-rpmlint-osc-availability.sh
+scripts/test-opensuse-rpmlint-static-spec-lane.sh
 .github/workflows/opensuse-rpmlint-osc-availability.yml
+.github/workflows/opensuse-rpmlint-static-spec-lane.yml
 ```
 
 Recommended next slice:
 
 ```text
-Add openSUSE rpmlint static spec lane for packaging/opensuse/latticra.spec with expected local-only draft findings classified separately.
+Add openSUSE rpmlint findings classification record before accepting any lint transcript as package readiness evidence.
 ```
 
-That future lane should inspect the spec without creating package artifacts, running `osc build`, publishing to Open Build Service, or claiming package readiness.
+That future lane should separate expected local-only draft findings from unexpected blockers while keeping package readiness blocked.
 
 ## Validation
 

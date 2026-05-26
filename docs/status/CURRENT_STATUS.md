@@ -9,6 +9,7 @@ Latest completion estimate review after runtime-boundary abuse-case fixtures not
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest runtime boundary policy expansion after threat-model note: 2026-05-25 CDT
 Latest runtime boundary abuse-case fixture expansion note: 2026-05-25 CDT
+Latest zero-trust runtime authority baseline note: 2026-05-26 CDT
 Latest runtime boundary Lat pipeline comment evidence note: 2026-05-25 CDT
 Latest Lat parse-failure comment evidence propagation note: 2026-05-25 CDT
 Latest Lat pipeline failure span evidence propagation note: 2026-05-25 CDT
@@ -22,10 +23,13 @@ Latest Lat pipeline first-clause evidence propagation note: 2026-05-25 CDT
 Latest Lat LIR edge-kind evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR no-effect evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR module-summary evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR source-span evidence propagation note: 2026-05-26 CDT
 Latest macOS reset/uninstall live-target classifier note: 2026-05-25 CDT
 Latest macOS reset/uninstall dry-run planner note: 2026-05-25 CDT
 Latest macOS reset/uninstall absence-report contract note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
+Latest Seal capability metadata report surface status note: 2026-05-26 CDT
+Latest Seal product spine note: 2026-05-26 CDT
 Latest Seal policy decision status/public-entry note: 2026-05-25 CDT
 Latest Seal signed request status/public-entry note: 2026-05-25 CDT
 Latest Seal request freshness status/public-entry note: 2026-05-25 CDT
@@ -35,6 +39,7 @@ Latest Seal status rollup status/public-entry note: 2026-05-25 CDT
 Latest Seal runtime handoff status/public-entry note: 2026-05-25 CDT
 Latest Seal runtime handoff report status/public-entry note: 2026-05-25 CDT
 Latest Seal effect decision status/public-entry note: 2026-05-25 CDT
+Latest Seal effect decision predecessor status alignment note: 2026-05-26 CDT
 Latest Seal capability gate status/public-entry note: 2026-05-25 CDT
 Latest Seal verification receipt status/public-entry note: 2026-05-25 CDT
 Latest Seal crypto verify backend status/public-entry note: 2026-05-25 CDT
@@ -79,7 +84,7 @@ Latest Nadia prompt evaluation result review contract Stage-32 note: 2026-05-25 
 Latest Nadia prompt evaluation result disposition contract Stage-33 note: 2026-05-25 CDT
 Latest Nadia prompt evaluation result release contract Stage-34 note: 2026-05-25 CDT
 Latest Nadia prompt evaluation result release receipt contract Stage-35 note: 2026-05-26 CDT
-Latest Nadia prompt evaluation result release receipt review contract Stage-36 note: 2026-05-26 CDT
+Latest Nadia prompt evaluation result release receipt review disposition contract Stage-37 note: 2026-05-26 CDT
 Latest Latticra Console profile preset note: 2026-05-25 CDT
 Latest Latticra Console host-embedding contract note: 2026-05-25 CDT
 Latest Latticra Console read-only host inventory contract note: 2026-05-25 CDT
@@ -107,6 +112,7 @@ Latest Seal key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal bounded key parsing implementation note: 2026-05-25 CDT
 Latest Seal future key parsing implementation plan note: 2026-05-25 CDT
 Latest Seal future key parsing implementation contract note: 2026-05-25 CDT
+Latest Seal public-key parsing predecessor status alignment note: 2026-05-26 CDT
 Latest Seal public-key parsing status/public-entry note: 2026-05-25 CDT
 Latest Seal public-key parsing implementation note: 2026-05-25 CDT
 Latest Seal public-key parsing contract note: 2026-05-25 CDT
@@ -157,6 +163,7 @@ Latest Lat pipeline first-clause evidence propagation note: 2026-05-25 CDT
 Latest Lat LIR edge-kind evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR no-effect evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR module-summary evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR source-span evidence propagation note: 2026-05-26 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
 Latest Lat model report declaration metadata integration note: 2026-05-25 CDT
 Latest Lat model report clause metadata integration note: 2026-05-25 CDT
@@ -288,6 +295,7 @@ The repository currently emphasizes:
 - Nadia prompt evaluation result release contract Stage-34 before release recording, release decision recording, release publication, release packaging, release receipt creation, disposition recording, result-review recording, result recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution;
 - Nadia prompt evaluation result release receipt contract Stage-35 before receipt recording, receipt signing, receipt publication, release recording, release decision recording, release publication, release packaging, disposition recording, result-review recording, result recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution;
 - Nadia prompt evaluation result release receipt review contract Stage-36 before review recording, review decision recording, review findings recording, receipt recording, receipt signing, receipt publication, release recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution;
+- Nadia prompt evaluation result release receipt review disposition contract Stage-37 before review-disposition recording, disposition decision recording, disposition findings recording, receipt signing, receipt publication, release recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution;
 - L-UI rendering implementation;
 - L-UI rendering detailed report refinement;
 - L-UI rendering README/status alignment;
@@ -311,8 +319,11 @@ The repository currently emphasizes:
 - Runtime boundary domain matrix report integration;
 - Runtime boundary Lat pipeline comment evidence integration;
 - Latticra Seal README status row alignment;
+- Latticra Seal capability metadata report surface status alignment;
+- Latticra Seal product spine direction;
 - Latticra Seal capability gate status/public-entry alignment;
 - Latticra Seal effect decision status/public-entry alignment;
+- Latticra Seal effect decision predecessor status alignment;
 - Latticra Seal runtime handoff status/public-entry alignment;
 - Latticra Seal runtime handoff report status/public-entry alignment;
 - Latticra Seal status rollup status/public-entry alignment;
@@ -338,6 +349,7 @@ The repository currently emphasizes:
 - Latticra Seal bounded no-effect key parsing implementation;
 - Latticra Seal future key parsing implementation plan;
 - Latticra Seal future key parsing implementation contract;
+- Latticra Seal public-key parsing predecessor status alignment;
 - Latticra Seal public-key parsing status/public-entry alignment;
 - Latticra Seal public-key parsing metadata implementation;
 - Latticra Seal public-key parsing boundary contract;
@@ -395,6 +407,7 @@ The repository currently emphasizes:
 - Lat LIR edge-kind evidence propagation;
 - Lat LIR no-effect evidence propagation;
 - Lat LIR module-summary evidence propagation;
+- Lat LIR source-span evidence propagation;
 - Runtime boundary Lat pipeline comment evidence integration;
 - Lat semantic validation foundation;
 - Lat model normalization implementation;
@@ -446,7 +459,7 @@ The Lat pipeline composes source parsing, semantic validation, Lat model normali
 
 The Lat pipeline lowering diagnostic integration extends the companion pipeline diagnostic surface with parser line-comment count and first-comment span metadata, optional Lat-to-LIR diagnostic class, lowering error, model error, LIR error, model counts, transition source metadata, first lowered declaration metadata, first lowered clause metadata, and failure flags while preserving the older evaluator for existing callers.
 
-The Lat pipeline report refinement adds deterministic stage-summary metadata for last completed stage, failed stage, per-stage OK flags, model normalization status, no-effect-chain status, evidence level, parser line-comment count plus first-comment span metadata, first lowered declaration kind/name/source/index/clause metadata, and first lowered clause role/effect/name/operator/value/node metadata. The current runtime-boundary Lat LIR module-summary, Lat LIR no-effect, Lat LIR edge-kind, first-clause, first-declaration, module/count, and stage-summary evidence propagation copies LIR module name, report classification, shape kind, core LIR counts, LIR no-effect flags, LIR contains/binds/annotates/orders-before/transition edge counts, first lowered clause metadata, first lowered declaration metadata, module identity, parser counts, model counts, and stage-summary metadata into runtime-boundary Lat pipeline records/reports so boundary denials and approvals preserve the same audit shape without changing no-effect behavior.
+The Lat pipeline report refinement adds deterministic stage-summary metadata for last completed stage, failed stage, per-stage OK flags, model normalization status, no-effect-chain status, evidence level, parser line-comment count plus first-comment span metadata, first lowered declaration kind/name/source/index/clause metadata, and first lowered clause role/effect/name/operator/value/node metadata. The current runtime-boundary Lat LIR source-span, Lat LIR module-summary, Lat LIR no-effect, Lat LIR edge-kind, first-clause, first-declaration, module/count, and stage-summary evidence propagation copies LIR source-span metadata, LIR module name, report classification, shape kind, core LIR counts, LIR no-effect flags, LIR contains/binds/annotates/orders-before/transition edge counts, first lowered clause metadata, first lowered declaration metadata, module identity, parser counts, model counts, and stage-summary metadata into runtime-boundary Lat pipeline records/reports so boundary denials and approvals preserve the same audit shape without changing no-effect behavior.
 
 The Lat pipeline diagnostic integration refinement adds a companion diagnostic integration surface that combines pipeline error/stage state with parser line-comment count and first-comment span metadata, Lat semantic diagnostic class, semantic error, diagnostic count, first-diagnostic indices, model-stage classification, optional Lat-to-LIR diagnostic metadata, first lowered declaration metadata, and first lowered clause role/effect/name/operator/value/node metadata while preserving no-execution behavior.
 
@@ -500,7 +513,7 @@ The Nucleus report-only announcement README alignment makes the no-new-announcem
 
 The project notes Nucleus announcement README status/index check verifies that the project-note body alignment after the Nucleus announcement README alignment is represented from root status, detailed current status, the status index, and the foundation index without changing implementation behavior or completion estimates.
 
-The Runtime boundary refinement implementation reports Lat pipeline evidence, Lat pipeline line-comment count and first-comment span evidence, Lat-specific LIR module-summary evidence, Lat-specific LIR no-effect evidence, and Lat-specific LIR edge-kind evidence at the runtime boundary while preserving disabled-by-default, no-effect classification behavior.
+The Runtime boundary refinement implementation reports Lat pipeline evidence, Lat pipeline line-comment count and first-comment span evidence, Lat-specific LIR source-span evidence, Lat-specific LIR module-summary evidence, Lat-specific LIR no-effect evidence, and Lat-specific LIR edge-kind evidence at the runtime boundary while preserving disabled-by-default, no-effect classification behavior.
 
 The Runtime boundary report refinement adds explicit report classification, boundary-domain labeling, authorization-state labeling, and evidence-level reporting so boundary intent is visible without granting runtime authority.
 
@@ -839,6 +852,46 @@ The Latticra Seal public-key parsing implementation adds bounded C metadata for 
 
 The Latticra Seal public-key parsing status record makes the metadata-only implementation visible from public entry points while preserving no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store loading, no revocation lookup, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
 
+The Latticra Seal public-key parsing predecessor status alignment ties that metadata-only status record to the guarded key-material status predecessor while preserving no public-key parsing, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no revocation lookup, no signing, no signature verification, no signer invocation behavior, no signer process execution, no object sealing, no runtime handoff execution, no capability enforcement, no runtime authority, no host behavior, no network behavior, and no production cryptography claim.
+
+Current public-key parsing predecessor status fields:
+
+```text
+seal_key_material_status_present=1
+seal_public_key_parsing_status_present=1
+key_material_predecessor_key_handling_status_present=1
+public_key_parsing_predecessor_key_material_status_present=1
+key_material_ready=1
+key_material_state=key-material-metadata-only
+public_key_parsing_ready=1
+public_key_parsing_state=public-key-parsing-metadata-only
+signature_performed=0
+verification_performed=0
+signer_invoked=0
+public_key_parsed=0
+key_material_loaded=0
+private_key_handling=0
+key_generation_performed=0
+hardware_key_used=0
+trust_store_loaded=0
+revocation_lookup_performed=0
+runtime_authority_granted=0
+host_read_performed=0
+host_write_performed=0
+network_performed=0
+public_key_parsing_added=0
+key_material_loading_added=0
+private_key_handling_added=0
+signing_added=0
+signature_verification_added=0
+signer_invocation_behavior_added=0
+object_sealing_added=0
+runtime_handoff_execution_added=0
+network_behavior_changed=0
+host_behavior_changed=0
+estimate_adjustment_required=0
+```
+
 The Latticra Seal future key parsing implementation contract defines the next planning boundary after public-key parsing status readiness while preserving no public-key parsing implementation, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store loading, no revocation lookup, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
 
 The Latticra Seal future key parsing implementation plan defines the exact future bounded no-effect key parsing API, file paths, record fields, accepted public-key byte formats, failure behavior, report shape, and tests while still adding no parser code, no key material loading, no private-key handling, no signing, no verification, no host behavior, no network behavior, and no runtime authority in this slice.
@@ -1063,6 +1116,53 @@ The Latticra Seal capability gate status record makes the existing metadata-only
 
 The Latticra Seal effect decision status record makes the existing metadata-only denied effect decision implementation visible from public entry points while preserving no effect execution, no capability enforcement, no runtime handoff execution, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, and no runtime authority.
 
+effect_decision_predecessor_capability_gate_status_present=1
+
+The Latticra Seal effect decision predecessor status alignment ties that denied effect decision status record to the guarded capability gate status predecessor while preserving no effect execution, no capability enforcement, no runtime authority, no runtime handoff execution, no cryptographic verification, no verified receipt authority, no public-key byte verification, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no revocation lookup, no signing, no signature verification, no signer invocation behavior, no signer process execution, no object sealing, no host behavior, no network behavior, and no production cryptography claim.
+
+Current effect decision predecessor status fields:
+
+```text
+seal_capability_gate_status_present=1
+seal_effect_decision_status_present=1
+effect_decision_predecessor_capability_gate_status_present=1
+capability_gate_ready=1
+gate_state=denied-unverified
+effect_decision_ready=1
+decision_state=denied-gate
+gate_allowed=0
+effect_allowed=0
+effect_performed=0
+host_read_performed=0
+host_write_performed=0
+network_performed=0
+runtime_authority_granted=0
+capability_enforcement_performed=0
+runtime_handoff_performed=0
+cryptographic_verification_performed=0
+verification_performed=0
+key_material_loaded=0
+private_key_handling=0
+key_generation_performed=0
+hardware_key_used=0
+trust_store_loaded=0
+revocation_lookup_performed=0
+signature_performed=0
+signer_invoked=0
+effect_execution_added=0
+capability_enforcement_added=0
+runtime_authority_added=0
+runtime_handoff_execution_added=0
+cryptographic_verification_added=0
+verified_receipt_authority_added=0
+key_material_loading_added=0
+private_key_handling_added=0
+object_sealing_added=0
+network_behavior_changed=0
+host_behavior_changed=0
+estimate_adjustment_required=0
+```
+
 The Latticra Seal runtime handoff status record makes the existing inactive metadata-only runtime handoff implementation visible from public entry points while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no signing, no host behavior, no network behavior, and no runtime authority.
 
 The Latticra Seal runtime handoff report status/public-entry alignment makes the existing metadata-only runtime handoff report implementation visible from public entry points while preserving no runtime handoff execution, no effect execution, no capability enforcement, no signing, no host behavior, no network behavior, and no runtime authority.
@@ -1088,6 +1188,10 @@ The Latticra Seal signed request status record makes the existing report-only si
 The Latticra Seal policy decision status record makes the existing report-only policy decision contract, metadata implementation, and deterministic report surface visible from public entry points while preserving no real policy evaluation, no policy enforcement, no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signature verification, no freshness validation, no replay detection, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, and no runtime authority.
 
 The Latticra Seal README status row alignment keeps the compact README Seal row and Seal current-posture summary aligned with the current public status checkpoint while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, no production enforcement, no public-readiness promotion, no security-hardening implementation, and no runtime authority.
+
+The Latticra Seal capability metadata report surface status record makes the existing deterministic capability candidate report visible as a current Seal checkpoint while preserving no runtime execution, no effect execution, no capability enforcement, no host behavior, no network behavior, no production security-product claim, and no runtime authority.
+
+The Latticra Seal product spine defines the earned path from observe, verify, decide, and handoff metadata toward future enforcement while keeping current production security-product readiness, effect execution, capability enforcement, and runtime authority at zero.
 
 Alignment record:
 
@@ -1194,6 +1298,7 @@ Latticra Seal signing operation metadata implementation
 Latticra Seal signing operation contract
 Latticra Seal README status row alignment
 Latticra Seal effect decision status/public-entry alignment
+Latticra Seal effect decision predecessor status alignment
 Latticra Seal runtime handoff status/public-entry alignment
 Latticra Seal status rollup status/public-entry alignment
 Latticra Seal agentic automation security public-entrypoint alignment
@@ -1343,7 +1448,7 @@ Latticra does not currently provide:
 
 Latticra is being built toward a defensive, auditable, open systems architecture.
 
-The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat grammar report metadata integration, Lat grammar line-comment metadata refinement, Lat grammar unsupported block-comment rejection refinement, Lat model normalization, Lat model report declaration metadata integration, Lat model report clause metadata integration, Lat-to-LIR declaration metadata refinement, Lat-to-LIR metadata lowering, Lat-to-LIR diagnostic refinement, Lat-to-LIR diagnostic declaration metadata integration, LIR report refinement, Lat pipeline reporting, Lat pipeline lowering diagnostic integration, Lat pipeline diagnostic declaration metadata integration, Lat pipeline diagnostic clause metadata integration, Lat pipeline report declaration metadata integration, Lat pipeline report clause metadata integration, Lat pipeline comment metadata integration, Lat pipeline diagnostic comment metadata integration, Lat parse-failure comment evidence propagation, Lat pipeline failure span evidence propagation, Lat pipeline parse-error evidence propagation, Lat pipeline semantic-error evidence propagation, Lat pipeline downstream stage-error evidence propagation, Lat pipeline stage-summary evidence propagation, Lat pipeline module/count evidence propagation, Lat pipeline first-declaration evidence propagation, Lat pipeline first-clause evidence propagation, Lat LIR edge-kind evidence propagation, Lat LIR no-effect evidence propagation, Lat LIR module-summary evidence propagation, Runtime boundary Lat pipeline comment evidence integration, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic main test audit, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
+The long-term goal is to make unsafe behavior harder to hide and easier to inspect through contract-driven source handling, explicit effects, deterministic diagnostics, operator-visible state, constrained substrate behavior, governed authority layers, deterministic rendering surfaces, denied-by-default task boundaries, Nucleus task report refinement, Nucleus task no-effect report alignment, Nucleus task report-only execution refinement, explicit runtime boundaries, runtime boundary domain matrix refinement, runtime boundary domain matrix report integration, Lat semantic validation, Lat semantic diagnostics refinement, Lat grammar report metadata integration, Lat grammar line-comment metadata refinement, Lat grammar unsupported block-comment rejection refinement, Lat model normalization, Lat model report declaration metadata integration, Lat model report clause metadata integration, Lat-to-LIR declaration metadata refinement, Lat-to-LIR metadata lowering, Lat-to-LIR diagnostic refinement, Lat-to-LIR diagnostic declaration metadata integration, LIR report refinement, Lat pipeline reporting, Lat pipeline lowering diagnostic integration, Lat pipeline diagnostic declaration metadata integration, Lat pipeline diagnostic clause metadata integration, Lat pipeline report declaration metadata integration, Lat pipeline report clause metadata integration, Lat pipeline comment metadata integration, Lat pipeline diagnostic comment metadata integration, Lat parse-failure comment evidence propagation, Lat pipeline failure span evidence propagation, Lat pipeline parse-error evidence propagation, Lat pipeline semantic-error evidence propagation, Lat pipeline downstream stage-error evidence propagation, Lat pipeline stage-summary evidence propagation, Lat pipeline module/count evidence propagation, Lat pipeline first-declaration evidence propagation, Lat pipeline first-clause evidence propagation, Lat LIR edge-kind evidence propagation, Lat LIR no-effect evidence propagation, Lat LIR module-summary evidence propagation, Lat LIR source-span evidence propagation, Runtime boundary Lat pipeline comment evidence integration, Lat pipeline report refinement, Lat pipeline diagnostic integration refinement, Lat pipeline diagnostic main test audit, Lat-specific LIR refinement, runtime boundary evidence reporting, runtime boundary report refinement, and runtime boundary policy matrix refinement.
 
 This is a mission direction, not a current security guarantee.
 
@@ -1360,7 +1465,7 @@ Latticra Seal future key parsing implementation contract
 Latest completed status/public-entry slice:
 
 ```text
-Latticra Seal key-material predecessor status alignment
+Latticra Seal public-key parsing predecessor status alignment
 ```
 
 ## Previous status/public-entry slice
@@ -1368,7 +1473,7 @@ Latticra Seal key-material predecessor status alignment
 Previous status/public-entry slice:
 
 ```text
-Latticra Seal key-handling predecessor status alignment
+Latticra Seal key-material predecessor status alignment
 ```
 
 ## Earlier status/public-entry slice
@@ -1376,7 +1481,7 @@ Latticra Seal key-handling predecessor status alignment
 Earlier status/public-entry slice:
 
 ```text
-Latticra Seal runtime handoff evaluation status/public-entry alignment
+Latticra Seal key-handling predecessor status alignment
 ```
 
 ## Latest completed implementation slice
@@ -1384,12 +1489,20 @@ Latticra Seal runtime handoff evaluation status/public-entry alignment
 Latest completed implementation slice:
 
 ```text
-Lat LIR module-summary evidence propagation
+Lat LIR source-span evidence propagation
 ```
 
 ## Previous implementation slice
 
 Previous implementation slice:
+
+```text
+Lat LIR module-summary evidence propagation
+```
+
+## Earlier implementation slice
+
+Earlier implementation slice:
 
 ```text
 Lat LIR no-effect evidence propagation

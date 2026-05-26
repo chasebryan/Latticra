@@ -78,7 +78,7 @@ static int allowed_transition_changes_state(void) {
     return 0;
 }
 
-static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_and_tick_transitions_are_metadata_only(void) {
+static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_queue_and_context_transitions_are_metadata_only(void) {
     latticra_kernel_state_request_t request;
     latticra_kernel_state_result_t result;
 
@@ -340,6 +340,78 @@ static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_and_tic
         "scheduler tick transition no external effect");
     EXPECT_TRUE(result.denied == 0,
         "scheduler tick transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUN_QUEUE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "run queue transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_RUN_QUEUE_READY,
+        "next run-queue-ready");
+    EXPECT_TRUE(strcmp(result.run_queue.queue_status, "run-queue-seed-ready") == 0,
+        "run queue ready");
+    EXPECT_TRUE(strcmp(result.scheduler_tick.tick_status, "scheduler-tick-seed-ready") == 0,
+        "run queue transition keeps scheduler tick ready");
+    EXPECT_TRUE(strcmp(result.timer_source.timer_status, "timer-source-seed-ready") == 0,
+        "run queue transition keeps timer source ready");
+    EXPECT_TRUE(result.run_queue.queue_count == 4u,
+        "run queue count");
+    EXPECT_TRUE(result.run_queue.run_queue_mutation_allowed == 0,
+        "run queue mutation denied");
+    EXPECT_TRUE(result.run_queue.enqueue_allowed == 0,
+        "run queue enqueue denied");
+    EXPECT_TRUE(result.run_queue.dequeue_allowed == 0,
+        "run queue dequeue denied");
+    EXPECT_TRUE(result.run_queue.dispatch_allowed == 0,
+        "run queue dispatch denied");
+    EXPECT_TRUE(result.run_queue.context_switch_allowed == 0,
+        "run queue context switch denied");
+    EXPECT_TRUE(result.run_queue.preemption_allowed == 0,
+        "run queue preemption denied");
+    EXPECT_TRUE(result.run_queue.time_accounting_allowed == 0,
+        "run queue time accounting denied");
+    EXPECT_TRUE(result.run_queue.process_wake_allowed == 0,
+        "run queue process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "run queue transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "run queue transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUN_QUEUE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "context switch transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY,
+        "next context-switch-ready");
+    EXPECT_TRUE(strcmp(result.context_switch.switch_status,
+            "context-switch-seed-ready") == 0,
+        "context switch ready");
+    EXPECT_TRUE(strcmp(result.run_queue.queue_status, "run-queue-seed-ready") == 0,
+        "context switch transition keeps run queue ready");
+    EXPECT_TRUE(strcmp(result.scheduler_tick.tick_status,
+            "scheduler-tick-seed-ready") == 0,
+        "context switch transition keeps scheduler tick ready");
+    EXPECT_TRUE(result.context_switch.switch_count == 4u,
+        "context switch count");
+    EXPECT_TRUE(result.context_switch.context_switch_allowed == 0,
+        "context switch denied");
+    EXPECT_TRUE(result.context_switch.register_save_allowed == 0,
+        "register save denied");
+    EXPECT_TRUE(result.context_switch.register_restore_allowed == 0,
+        "register restore denied");
+    EXPECT_TRUE(result.context_switch.stack_switch_allowed == 0,
+        "stack switch denied");
+    EXPECT_TRUE(result.context_switch.address_space_switch_allowed == 0,
+        "address space switch denied");
+    EXPECT_TRUE(result.context_switch.dispatch_allowed == 0,
+        "context switch dispatch denied");
+    EXPECT_TRUE(result.context_switch.run_queue_mutation_allowed == 0,
+        "context switch run queue mutation denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "context switch transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "context switch transition not denied");
     return 0;
 }
 
@@ -432,7 +504,7 @@ static int report_records_state_change(void) {
     return 0;
 }
 
-static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_and_tick_readiness(void) {
+static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_queue_and_context_readiness(void) {
     latticra_kernel_state_request_t request;
     latticra_kernel_state_result_t result;
     char report[LATTICRA_KERNEL_STATE_REPORT_MAX];
@@ -579,6 +651,40 @@ static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_
         "scheduler tick report timer source emitted");
     EXPECT_TRUE(strstr(report, "scheduler_tick_status=scheduler-tick-seed-ready\n") != 0,
         "scheduler tick emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUN_QUEUE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "run queue transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "run queue report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=scheduler-tick-ready\n") != 0,
+        "scheduler tick previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=run-queue-ready\n") != 0,
+        "run queue next emitted");
+    EXPECT_TRUE(strstr(report, "scheduler_tick_status=scheduler-tick-seed-ready\n") != 0,
+        "run queue report scheduler tick emitted");
+    EXPECT_TRUE(strstr(report, "run_queue_status=run-queue-seed-ready\n") != 0,
+        "run queue emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUN_QUEUE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "context switch transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "context switch report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=run-queue-ready\n") != 0,
+        "run queue previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=context-switch-ready\n") != 0,
+        "context switch next emitted");
+    EXPECT_TRUE(strstr(report, "run_queue_status=run-queue-seed-ready\n") != 0,
+        "context switch report run queue emitted");
+    EXPECT_TRUE(strstr(report, "context_switch_status=context-switch-seed-ready\n") != 0,
+        "context switch emitted");
     return 0;
 }
 
@@ -604,11 +710,11 @@ static int null_guards_are_safe(void) {
 int main(void) {
     if (default_request_denies_state_change() != 0) return 1;
     if (allowed_transition_changes_state() != 0) return 1;
-    if (allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_and_tick_transitions_are_metadata_only() != 0) return 1;
+    if (allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_queue_and_context_transitions_are_metadata_only() != 0) return 1;
     if (denied_transition_does_not_change_state() != 0) return 1;
     if (allowed_noop_is_stable() != 0) return 1;
     if (report_records_state_change() != 0) return 1;
-    if (report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_and_tick_readiness() != 0) return 1;
+    if (report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_queue_and_context_readiness() != 0) return 1;
     if (null_guards_are_safe() != 0) return 1;
 
     puts("kernel_state: ok");

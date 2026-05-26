@@ -26,6 +26,7 @@ ubuntu_doc_payload_license_review_contract_present=1
 ubuntu_third_party_material_review_contract_present=1
 ubuntu_generated_artifact_notice_review_contract_present=1
 ubuntu_package_notice_review_contract_present=1
+ubuntu_debian_copyright_notice_mapping_contract_present=1
 ```
 
 The current repository has no root `NOTICE` file and no reviewed package decision saying whether one is required for the Ubuntu local deb draft.
@@ -55,6 +56,8 @@ notice_file_install_path_reviewed=0
 notice_file_packaging_mapping_reviewed=0
 notice_file_absence_justification_recorded=0
 notice_file_missing_required_entries=0
+ubuntu_debian_copyright_notice_mapping_contract_present=1
+ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping
 ubuntu_package_notice_review_unblocked=0
 ubuntu_package_license_review_unblocked=0
 ubuntu_lintian_static_metadata_unblocked=0
@@ -64,6 +67,8 @@ ubuntu_local_deb_build_transcript_unblocked=0
 ## Relationship To Notice Review
 
 The Ubuntu package notice review may not be promoted until the package has a reviewed `NOTICE` file decision. That decision may later require a file or record why no file is required, but this contract does not make that decision.
+
+The Ubuntu Debian copyright notice mapping contract records the follow-on mapping checkpoint for this decision in `packaging/ubuntu/debian/copyright`.
 
 This contract is scoped to the Ubuntu local deb draft. It is not a repository-wide release notice decision.
 

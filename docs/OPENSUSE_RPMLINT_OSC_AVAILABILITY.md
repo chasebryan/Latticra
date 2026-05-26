@@ -13,9 +13,12 @@ The current goal is only to prove that `rpmlint` and `osc` can be installed and 
 
 ```text
 docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 scripts/test-opensuse-rpmlint-osc-availability.sh
+scripts/test-opensuse-rpmlint-static-spec-lane.sh
 .github/workflows/opensuse-rpmlint-osc-availability.yml
+.github/workflows/opensuse-rpmlint-static-spec-lane.yml
 ```
 
 ## Checks
@@ -47,10 +50,10 @@ It does not create package artifacts, create an Open Build Service project, publ
 Recommended next slice:
 
 ```text
-Add openSUSE rpmlint static spec lane for packaging/opensuse/latticra.spec with expected local-only draft findings classified separately.
+Add openSUSE rpmlint findings classification record before accepting any lint transcript as package readiness evidence.
 ```
 
-That future lane may run `rpmlint packaging/opensuse/latticra.spec` inside openSUSE and capture expected findings without requiring a clean lint result or promoting the package.
+That future lane should separate expected local-only draft findings from unexpected blockers while keeping package readiness blocked.
 
 ## Validation
 

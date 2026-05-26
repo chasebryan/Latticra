@@ -105,6 +105,7 @@ require_contains 'seabios-grub-boot-preview-preflight.sh' "$installer_readme"
 require_contains 'boot-preview preflight report' "$roadmap"
 require_contains 'test-seabios-grub-boot-preview-preflight.sh' Makefile
 require_contains 'boot-preview-preflight:' Makefile
+require_contains 'sh ./scripts/seabios-grub-boot-preview-preflight.sh' Makefile
 
 output=$(sh "$script")
 require_output_contains "$output" 'SEABIOS GRUB BOOT PREVIEW PREFLIGHT'

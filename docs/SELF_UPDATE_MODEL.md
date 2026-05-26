@@ -1,6 +1,6 @@
 # Latticra Self-Update Model
 
-Status: initial self-update model
+Status: Panel-owned local-checkout updater policy active; signed updater delivery gate closed
 Scope: signed staged updates, channels, rollback, operator confirmation, and non-claims.
 
 ## Purpose
@@ -14,6 +14,43 @@ Self-update is a real-system capability and therefore requires contracts, effect
 No silent self-updates.
 
 Every update path must be inspectable, signed, staged, and reversible where possible.
+
+## Current Panel-Owned Updater Surface
+
+Panel-owned local-checkout updater policy is active.
+
+The current implemented updater surface is the Latticra Panel updater. It is limited to a reviewed local checkout and a guarded local-prefix reinstall flow:
+
+```text
+latticra_panel_updater_present=1
+latticra_panel_updater_owned=1
+updater_current_source_strategy=current-source-checkout
+updater_current_update_channel=local-checkout
+updater_current_apply_mode=guarded-local-prefix-reinstall
+updater_network_fetch_enabled=0
+network_fetch_authority=0
+root_authority=0
+system_mutation_authority=0
+```
+
+The signed delivery gate is still closed:
+
+```text
+signed_updater_delivery_gate_state=closed
+signed_update_delivery_ready=0
+network_self_update_ready=0
+remote_update_repository_trust=0
+signed_manifest_required=1
+signed_manifest_present=0
+manifest_signature_verified=0
+artifact_hash_verified=0
+artifact_signature_verified=0
+rollback_plan_required=1
+rollback_plan_present=0
+operator_confirmation_required=1
+operator_confirmation_observed=0
+signed_update_apply_allowed=0
+```
 
 ## Update channels
 
@@ -141,22 +178,23 @@ Update server interaction must pass through the Server Gateway.
 
 No component should perform direct update network behavior outside the signed update model.
 
-## First implementation target
+## Current Implementation Target
 
-The first implementation target is not a working updater.
+The current implementation target is not signed or network-delivered update execution.
 
 It is:
 
 ```text
-update manifest fixture
-update state fixture
+Panel updater local-checkout policy
+non-launching updater status report
+closed signed updater delivery gate
 signature-required marker
-rollback visibility marker
-validation test
+rollback-required marker
+validation guard
 ```
 
 ## Non-claims
 
 This document does not implement self-update.
 
-It does not claim safe update execution, secure update delivery, rollback success, boot update safety, or production release readiness.
+It does not claim signed update delivery, network self-update, safe update execution, secure update delivery, rollback success, boot update safety, or production release readiness.

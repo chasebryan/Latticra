@@ -202,6 +202,7 @@ static int lat_semantic_preserves_no_effect_flags(void) {
     EXPECT_TRUE(semantic.execution_allowed == 0, "execution denied");
     EXPECT_TRUE(semantic.mutation_allowed == 0, "mutation denied");
     EXPECT_TRUE(semantic.server_allowed == 0, "server denied");
+    EXPECT_TRUE(semantic.network_allowed == 0, "network denied");
     EXPECT_TRUE(semantic.recovery_allowed == 0, "recovery denied");
     EXPECT_TRUE(semantic.hardware_allowed == 0, "hardware denied");
     return 0;

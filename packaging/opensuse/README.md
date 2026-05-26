@@ -16,13 +16,16 @@ docs/OPENSUSE_READINESS_PLAN.md
 docs/OPENSUSE_DEVELOPER_WORKFLOW.md
 docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 scripts/test-opensuse-developer-workflow.sh
 scripts/test-opensuse-local-rpm-static-validation.sh
 scripts/test-opensuse-rpmlint-osc-availability.sh
+scripts/test-opensuse-rpmlint-static-spec-lane.sh
 .github/workflows/opensuse-developer-workflow.yml
 .github/workflows/opensuse-local-rpm-static-validation.yml
 .github/workflows/opensuse-rpmlint-osc-availability.yml
+.github/workflows/opensuse-rpmlint-static-spec-lane.yml
 ```
 
 The static lane preserves:
@@ -31,6 +34,7 @@ The static lane preserves:
 local_only_draft=1
 opensuse_maintenance_lane_present=1
 opensuse_rpmlint_osc_availability_lane_present=1
+opensuse_rpmlint_static_spec_lane_present=1
 rpm_artifact_created=0
 rpmbuild_run_required=0
 osc_build_run=0

@@ -64,6 +64,11 @@ installed_listing="$workdir/installed.list"
 mkdir -p "$rpmtop/BUILD" "$rpmtop/BUILDROOT" "$rpmtop/RPMS" "$rpmtop/SOURCES" "$rpmtop/SPECS" "$rpmtop/SRPMS"
 mkdir -p "$source_root" "$installroot/var/lib/rpm"
 
+symlink_entry="$(find . -path './.git' -prune -o -type l -print | sed -n '1p')"
+if [ -n "$symlink_entry" ]; then
+  fail "refusing source archive with symlink entry: $symlink_entry"
+fi
+
 tar \
   --exclude='./.git' \
   --exclude='./.rpmwork' \

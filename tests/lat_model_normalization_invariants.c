@@ -201,6 +201,7 @@ static int lat_model_preserves_no_effect_flags(void) {
     EXPECT_TRUE(model.execution_allowed == 0, "model execution flag");
     EXPECT_TRUE(model.mutation_allowed == 0, "model mutation flag");
     EXPECT_TRUE(model.server_allowed == 0, "model server flag");
+    EXPECT_TRUE(model.network_allowed == 0, "model network flag");
     EXPECT_TRUE(model.recovery_allowed == 0, "model recovery flag");
     EXPECT_TRUE(model.hardware_allowed == 0, "model hardware flag");
     return 0;

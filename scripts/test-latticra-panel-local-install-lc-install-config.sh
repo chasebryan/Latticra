@@ -5,10 +5,15 @@ tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-panel-lc-install-config.XXXXXX")"
 trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
 
 home="$tmpdir/home"
+standalone_home="$tmpdir/standalone-home"
 plan="$tmpdir/install-plan.txt"
 receipt_dir="$tmpdir/receipts"
 run_log="$tmpdir/run.log"
 live_config="$tmpdir/live.installer.toml"
+standalone_plan="$tmpdir/standalone-plan.txt"
+standalone_receipts="$tmpdir/standalone-receipts"
+standalone_log="$tmpdir/standalone.log"
+standalone_verify_log="$tmpdir/standalone-verify.log"
 live_plan="$tmpdir/live-plan.txt"
 live_receipts="$tmpdir/live-receipts"
 lc_report="$tmpdir/lc-install-config.txt"
@@ -19,7 +24,7 @@ lc_usage="$tmpdir/lc-usage.txt"
 verify_log="$tmpdir/verify.log"
 lc_wrapper="latticra-console-custom"
 bad_config="$tmpdir/bad.installer.toml"
-mkdir -p "$home"
+mkdir -p "$home" "$standalone_home"
 
 grep -Fq 'pub struct LatticraConsoleInstallConfig' installer/latticra-installer/src/config.rs
 grep -Fq 'pub install: LatticraConsoleInstallConfig' installer/latticra-installer/src/config.rs
@@ -28,13 +33,21 @@ grep -Fq 'lc install-config' installer/latticra-installer/src/ui.rs
 grep -Fq '[lc.install]' installer/configs/default.installer.toml
 grep -Fq 'install_profile = "lc-panel-install-v0"' installer/configs/default.installer.toml
 grep -Fq 'allow_external_host_commands = false' installer/configs/default.installer.toml
+grep -Fq 'profile = "lc_standalone"' installer/configs/lc-standalone-local.installer.toml
+grep -Fq 'install_profile = "lc-standalone-install-v0"' installer/configs/lc-standalone-local.installer.toml
+grep -Fq 'standalone_console = true' installer/configs/lc-standalone-local.installer.toml
+grep -Fq 'panel_embedded_console = false' installer/configs/lc-standalone-local.installer.toml
 grep -Fq 'LC_INSTALL_PROFILE=$(cfg_section lc.install install_profile lc-panel-install-v0)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_INSTALL_STANDALONE_CONSOLE=$(cfg_section lc.install standalone_console true)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC install configuration cannot enable external host commands from the Panel' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc install-config category=core effect=none capability=lc.install.config' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'install-config|install)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'standalone|standalone-contract|lc-standalone)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_COMMAND_WRAPPER="$LC_INSTALL_COMMAND_WRAPPER"' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC command wrapper ($LC_COMMAND_WRAPPER)' installer/scripts/latticra-installer-verify.sh
 grep -Fq 'LC install-config registry command' installer/scripts/latticra-installer-verify.sh
+grep -Fq 'Latticra standalone LC verification: ok' installer/scripts/latticra-installer-verify-lc-standalone.sh
 
 HOME="$home" sh installer/scripts/latticra-installer-apply.sh \
   --config installer/configs/default.installer.toml \
@@ -50,6 +63,43 @@ grep -Fq 'allow_external_host_commands=false' "$plan"
 grep -Fq 'lc_install_profile=lc-panel-install-v0' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_allow_external_host_commands=false' "$receipt_dir/latest-receipt.txt"
 grep -Fq '[dry-run] would install LC config profile lc-panel-install-v0' "$run_log"
+
+HOME="$standalone_home" sh installer/scripts/latticra-installer-apply.sh \
+  --config installer/configs/lc-standalone-local.installer.toml \
+  --plan "$standalone_plan" \
+  --receipt-dir "$standalone_receipts" > "$standalone_log"
+
+standalone_prefix="$standalone_home/.local/share/latticra"
+test -f "$standalone_prefix/share/latticra/lc/install/config.toml"
+test -f "$standalone_prefix/share/latticra/lc/standalone/contract.toml"
+test -f "$standalone_prefix/share/latticra/lc/profiles/standalone-console.toml"
+test -x "$standalone_home/.local/bin/latticra"
+test -x "$standalone_home/.local/bin/latticra-lc"
+test ! -e "$standalone_home/.local/bin/latticra-panel"
+test ! -e "$standalone_home/.local/share/applications/latticra-panel.desktop"
+
+grep -Fq 'mode=local-prefix-install' "$standalone_plan"
+grep -Fq 'profile=lc_standalone' "$standalone_plan"
+grep -Fq 'profile=standalone' "$standalone_plan"
+grep -Fq 'install_profile=lc-standalone-install-v0' "$standalone_plan"
+grep -Fq 'standalone_console=true' "$standalone_plan"
+grep -Fq 'standalone_requires_panel=0' "$standalone_plan"
+grep -Fq 'standalone_contract_present=1' "$standalone_plan"
+grep -Fq 'panel_embedded_console=false' "$standalone_plan"
+grep -Fq 'lc_install_profile=lc-standalone-install-v0' "$standalone_receipts/latest-receipt.txt"
+grep -Fq 'lc_standalone_console=true' "$standalone_receipts/latest-receipt.txt"
+grep -Fq 'lc_standalone_requires_panel=false' "$standalone_receipts/latest-receipt.txt"
+grep -Fq 'install_profile = "lc-standalone-install-v0"' "$standalone_prefix/share/latticra/lc/install/config.toml"
+grep -Fq 'standalone_contract_present = true' "$standalone_prefix/share/latticra/lc/install/config.toml"
+grep -Fq 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
+
+HOME="$standalone_home" sh installer/scripts/latticra-installer-verify-lc-standalone.sh \
+  --prefix "$standalone_prefix" > "$standalone_verify_log"
+
+grep -Fq 'ok: LC wrapper standalone install profile' "$standalone_verify_log"
+grep -Fq 'ok: LC wrapper Panel runtime denied' "$standalone_verify_log"
+grep -Fq 'ok: absent Latticra Panel launcher' "$standalone_verify_log"
+grep -Fq 'Latticra standalone LC verification: ok' "$standalone_verify_log"
 
 cat > "$live_config" <<LIVECONFIG
 profile = "developer_local"

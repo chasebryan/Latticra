@@ -1,8 +1,8 @@
-.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly nadia-prompt-evaluation-input nadia-prompt-evaluation-runtime-handoff nadia-prompt-evaluation-invocation nadia-prompt-evaluation-result nadia-prompt-evaluation-result-review nadia-prompt-evaluation-result-disposition nadia-prompt-evaluation-result-release nadia-prompt-evaluation-result-release-receipt nadia-prompt-evaluation-result-release-receipt-review
+.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly nadia-prompt-evaluation-input nadia-prompt-evaluation-runtime-handoff nadia-prompt-evaluation-invocation nadia-prompt-evaluation-result nadia-prompt-evaluation-result-review nadia-prompt-evaluation-result-disposition nadia-prompt-evaluation-result-release nadia-prompt-evaluation-result-release-receipt nadia-prompt-evaluation-result-release-receipt-review nadia-prompt-evaluation-result-release-receipt-review-disposition
 
-.PHONY: quality quality-worktree quality-safety-guards quality-defensive-threat-model quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation boot-compatibility boot-preview-preflight boot-evidence-template boot-qemu-argv-template macos-reset-uninstall-live-denial-transcript nadia-commands
+.PHONY: quality quality-worktree quality-safety-guards quality-security-standards quality-defensive-threat-model quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation zero-trust-runtime-authority-baseline boot-compatibility boot-preview-preflight boot-evidence-template boot-qemu-argv-template macos-reset-uninstall-live-denial-transcript macos-reset-uninstall-live-runner-denied-dispatch-transcript nadia-commands
 
-quality: quality-worktree quality-safety-guards quality-defensive-threat-model seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-nadia quality-c-foundation
+quality: quality-worktree quality-safety-guards quality-security-standards quality-defensive-threat-model seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation
 
 quality-worktree:
 	git diff --check
@@ -12,6 +12,10 @@ quality-safety-guards:
 	trap 'rm -rf "$$tmp"' EXIT INT HUP TERM; \
 	cp ./scripts/test-quality-safety-guards.sh "$$tmp/test-quality-safety-guards.sh"; \
 	LATTICRA_ROOT="$$(pwd)" sh "$$tmp/test-quality-safety-guards.sh"
+
+quality-security-standards:
+	sh ./scripts/test-supply-chain-security-baseline.sh
+	sh ./scripts/test-zero-trust-runtime-authority-baseline.sh
 
 quality-defensive-threat-model:
 	sh ./scripts/test-defensive-threat-model-contract.sh
@@ -30,6 +34,7 @@ quality-panel-installer:
 	sh ./scripts/test-latticra-panel-local-install-public-entrypoint-alignment.sh
 	sh ./scripts/test-latticra-panel-local-uninstall-reset.sh
 	sh ./scripts/test-latticra-panel-updater.sh
+	sh ./scripts/test-latticra-panel-signed-updater-delivery-gate.sh
 
 quality-installer-readiness:
 	sh ./scripts/test-production-installer-readiness-contract.sh
@@ -41,6 +46,31 @@ quality-installer-readiness:
 	sh ./scripts/test-seabios-grub-boot-preview-evidence-template.sh
 	sh ./scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh
 
+quality-packaging-static:
+	sh ./scripts/test-fedora-readiness-plan.sh
+	sh ./scripts/test-fedora-developer-workflow.sh
+	sh ./scripts/test-fedora-local-rpm-spec-skeleton.sh
+	sh ./scripts/test-fedora-local-rpm-spec-draft-plan.sh
+	sh ./scripts/test-fedora-local-rpm-static-validation.sh
+	sh ./scripts/test-fedora-vm-cli-payload-next-validation-lane-plan.sh
+	sh ./scripts/test-fedora-source-archive-fixture-lane.sh
+	sh ./scripts/test-ubuntu-developer-workflow.sh
+	sh ./scripts/test-ubuntu-local-deb-static-validation.sh
+	sh ./scripts/test-ubuntu-package-notice-inventory.sh
+	sh ./scripts/test-ubuntu-doc-payload-license-review-contract.sh
+	sh ./scripts/test-ubuntu-package-notice-review-contract.sh
+	sh ./scripts/test-ubuntu-package-license-review-contract.sh
+	sh ./scripts/test-ubuntu-debian-copyright-notice-mapping-contract.sh
+	sh ./scripts/test-ubuntu-generated-artifact-notice-review-contract.sh
+	sh ./scripts/test-ubuntu-notice-file-decision-contract.sh
+	sh ./scripts/test-ubuntu-third-party-material-review-contract.sh
+	sh ./scripts/test-ubuntu-local-deb-build-transcript-contract.sh
+	sh ./scripts/test-debian-freebsd-openbsd-source-archive-contract.sh
+	sh ./scripts/test-debian-freebsd-openbsd-source-archive-fixture-lane.sh
+	sh ./scripts/test-debian-freebsd-openbsd-package-input-handoff-lane.sh
+	sh ./scripts/test-opensuse-developer-workflow.sh
+	sh ./scripts/test-opensuse-local-rpm-static-validation.sh
+
 quality-nadia:
 	sh ./scripts/test-nadia-command-surface.sh
 	sh ./scripts/test-nadia-prompt-evaluation-result-review-contract-stage-32.sh
@@ -48,6 +78,7 @@ quality-nadia:
 	sh ./scripts/test-nadia-prompt-evaluation-result-release-contract-stage-34.sh
 	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-contract-stage-35.sh
 	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-contract-stage-36.sh
+	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.sh
 
 quality-c-foundation:
 	sh ./scripts/test-latticra-console-foundation.sh
@@ -56,6 +87,13 @@ quality-c-foundation:
 	sh ./scripts/test-kernel-timer-source-report-runner.sh
 	sh ./scripts/test-kernel-scheduler-tick.sh
 	sh ./scripts/test-kernel-scheduler-tick-report-runner.sh
+	sh ./scripts/test-kernel-run-queue.sh
+	sh ./scripts/test-kernel-run-queue-report-runner.sh
+	sh ./scripts/test-kernel-context-switch.sh
+	sh ./scripts/test-kernel-context-switch-report-runner.sh
+
+zero-trust-runtime-authority-baseline:
+	sh ./scripts/test-zero-trust-runtime-authority-baseline.sh
 
 boot-compatibility:
 	sh ./scripts/test-seabios-grub-compatibility-contract.sh
@@ -75,6 +113,9 @@ boot-qemu-argv-template:
 
 macos-reset-uninstall-live-denial-transcript:
 	sh ./scripts/test-macos-reset-uninstall-live-denial-transcript-contract.sh
+
+macos-reset-uninstall-live-runner-denied-dispatch-transcript:
+	sh ./scripts/test-macos-reset-uninstall-live-runner-denied-dispatch-transcript-contract.sh
 
 nadia-commands:
 	sh ./scripts/test-nadia-command-surface.sh
@@ -193,12 +234,15 @@ nadia-prompt-evaluation-result-release-receipt:
 nadia-prompt-evaluation-result-release-receipt-review:
 	sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-contract.sh
 
+nadia-prompt-evaluation-result-release-receipt-review-disposition:
+	sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-contract.sh
+
 .PHONY: seal-policy-denials
 
 seal-policy-denials:
 	bash ./scripts/test-latticra-seal-policy-denials.sh
 
-.PHONY: seal-cli seal-run
+.PHONY: seal-cli seal-run seal-cli-hardening
 
 PKG_CONFIG ?= pkg-config
 SEAL_CFLAGS ?= -Wall -Wextra -O2 -std=c11
@@ -214,6 +258,9 @@ seal-cli:
 
 seal-run: seal-cli
 	./build/latticra-seal
+
+seal-cli-hardening:
+	sh ./scripts/test-latticra-seal-cli-output-hardening.sh
 
 .PHONY: seal-check seal-manifest seal-report seal-version
 

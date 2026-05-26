@@ -186,12 +186,14 @@ static int lat_to_lir_diagnostic_reports_no_effect_issue(void) {
     EXPECT_TRUE(normalize_foundation(&parse, &semantic, &model) == 0, "effect issue normalized");
     model.no_effect = 0;
     model.execution_allowed = 1;
+    model.network_allowed = 1;
     EXPECT_TRUE(latticra_lir_lower_lat_model(&model, &module, &lowering) == LATTICRA_STATUS_OK, "effect lower status");
     EXPECT_TRUE(latticra_lat_to_lir_diagnostics_evaluate(&lowering, &module, &diagnostic) == LATTICRA_STATUS_OK, "effect diagnostic evaluate");
     EXPECT_TRUE(diagnostic.diagnostic_class == LATTICRA_LAT_TO_LIR_DIAGNOSTIC_EFFECT_CHECK, "effect diagnostic class");
     EXPECT_TRUE(diagnostic.no_effect_issue == 1, "effect issue flag");
     EXPECT_TRUE(diagnostic.no_effect == 0, "effect no-effect copied");
     EXPECT_TRUE(diagnostic.execution_allowed == 1, "effect execution copied");
+    EXPECT_TRUE(diagnostic.network_allowed == 1, "effect network copied");
     EXPECT_TRUE(diagnostic.evidence_level == 1u, "effect evidence level");
     return 0;
 }

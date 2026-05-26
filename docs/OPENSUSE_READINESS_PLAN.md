@@ -77,6 +77,7 @@ opensuse_local_rpm_draft_present=1
 opensuse_local_rpm_static_validation_present=1
 opensuse_changes_file_present=1
 opensuse_rpmlint_osc_availability_lane_present=1
+opensuse_rpmlint_static_spec_lane_present=1
 opensuse_obs_publication_claimed=0
 opensuse_official_package_claimed=0
 suse_endorsement_claimed=0
@@ -131,14 +132,17 @@ The first openSUSE RPM draft is only a packaging-shape and maintenance record un
 
 ## Phase 4: Open Build Service Readiness Lane
 
-The first Open Build Service readiness slice is tool availability only.
+The first Open Build Service readiness slices are tool availability and static spec lint only.
 
 Current guarded files:
 
 ```text
 docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 scripts/test-opensuse-rpmlint-osc-availability.sh
+scripts/test-opensuse-rpmlint-static-spec-lane.sh
 .github/workflows/opensuse-rpmlint-osc-availability.yml
+.github/workflows/opensuse-rpmlint-static-spec-lane.yml
 ```
 
 Before any Open Build Service publication or submit request can be claimed, the lane needs evidence for:
@@ -175,10 +179,10 @@ claim operating-system completeness
 Recommended next slice:
 
 ```text
-Add openSUSE rpmlint static spec lane for packaging/opensuse/latticra.spec with expected local-only draft findings classified separately.
+Add openSUSE rpmlint findings classification record before accepting any lint transcript as package readiness evidence.
 ```
 
-That should preserve the local-only openSUSE maintenance posture while the package path matures beyond tool availability.
+That should separate expected local-only draft findings from unexpected blockers while keeping package readiness blocked.
 
 ## Validation
 
@@ -188,6 +192,7 @@ Run:
 sh scripts/test-opensuse-developer-workflow.sh
 sh scripts/test-opensuse-local-rpm-static-validation.sh
 sh scripts/test-opensuse-rpmlint-osc-availability.sh
+sh scripts/test-opensuse-rpmlint-static-spec-lane.sh
 ```
 
 Expected output:
@@ -196,4 +201,5 @@ Expected output:
 opensuse_developer_workflow: ok
 opensuse_local_rpm_static_validation: ok
 opensuse_rpmlint_osc_availability: ok
+opensuse_rpmlint_static_spec_lane: ok
 ```

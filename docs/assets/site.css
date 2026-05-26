@@ -504,6 +504,16 @@ p:last-child {
   background-size: 500px auto;
 }
 
+.installer-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.98) 0%, rgba(17, 24, 39, 0.9) 56%, rgba(17, 24, 39, 0.62) 100%),
+    url("latticra-panel.png");
+  background-color: #111827;
+  background-position: right 44px center;
+  background-repeat: no-repeat;
+  background-size: 500px auto;
+}
+
 .evidence-hero {
   background:
     linear-gradient(90deg, rgba(17, 24, 39, 0.97) 0%, rgba(17, 24, 39, 0.88) 58%, rgba(17, 24, 39, 0.66) 100%),
@@ -668,6 +678,7 @@ p:last-child {
   color: var(--ochre);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-weight: 900;
+  overflow-wrap: anywhere;
 }
 
 .language-step p,
@@ -1185,6 +1196,7 @@ p:last-child {
   color: var(--ochre);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-weight: 900;
+  overflow-wrap: anywhere;
 }
 
 .console-flow p,
@@ -1660,6 +1672,105 @@ p:last-child {
   font-size: 0.94rem;
 }
 
+.installer-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.installer-intro p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.installer-intro code {
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: rgba(47, 125, 106, 0.12);
+  color: var(--ink);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+}
+
+.installer-flow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.installer-flow article {
+  min-width: 0;
+  min-height: 218px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--ochre);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.installer-flow span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--red);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.installer-flow p {
+  color: var(--muted);
+  font-size: 0.92rem;
+  overflow-wrap: anywhere;
+}
+
+.installer-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(300px, 1.18fr);
+  gap: 30px;
+  align-items: center;
+}
+
+.installer-figure img {
+  width: min(420px, 100%);
+  margin-inline: auto;
+  object-fit: contain;
+}
+
+.installer-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.installer-table {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.installer-table div {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.installer-table div:last-child {
+  border-bottom: 0;
+}
+
+.installer-table span {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.installer-table p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
 .evidence-rule-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1877,7 +1988,7 @@ p:last-child {
 .flow-step::after {
   position: absolute;
   top: 48px;
-  right: -10px;
+  right: 0;
   width: 10px;
   height: 1px;
   background: var(--border-strong);
@@ -2384,6 +2495,8 @@ p:last-child {
   color: #e5e7eb;
   font-size: 0.83rem;
   line-height: 1.5;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 
 .command-panel code {
@@ -2538,7 +2651,11 @@ p:last-child {
   .validation-flow,
   .validation-showcase,
   .validation-lane-grid,
-  .validation-split {
+  .validation-split,
+  .installer-intro,
+  .installer-flow,
+  .installer-showcase,
+  .installer-split {
     grid-template-columns: 1fr;
   }
 
@@ -2598,7 +2715,8 @@ p:last-child {
   .ladder-grid,
   .claim-language-grid,
   .nadia-principle-grid,
-  .validation-lane-grid {
+  .validation-lane-grid,
+  .installer-flow {
     grid-template-columns: 1fr;
   }
 
@@ -2615,7 +2733,8 @@ p:last-child {
   .console-table div,
   .nadia-table div,
   .runtime-table div,
-  .security-table div {
+  .security-table div,
+  .installer-table div {
     grid-template-columns: 1fr;
     gap: 8px;
   }

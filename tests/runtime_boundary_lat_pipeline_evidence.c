@@ -106,6 +106,12 @@ static latticra_lir_module_t lat_lir_module(void) {
     lir.no_effect_chain_ok = 1;
     lir.evidence_level = 2u;
     lir.no_effect = 1;
+    lir.source_span.start_offset = 14u;
+    lir.source_span.end_offset = 220u;
+    lir.source_span.start_line = 2u;
+    lir.source_span.start_column = 1u;
+    lir.source_span.end_line = 13u;
+    lir.source_span.end_column = 2u;
     lir.nodes[0].kind = LATTICRA_LIR_NODE_MODULE;
     lir.nodes[1].kind = LATTICRA_LIR_NODE_LAT_STATE;
     lir.nodes[2].kind = LATTICRA_LIR_NODE_LAT_TRANSITION;
@@ -190,6 +196,12 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(strcmp(result.record.lat_lir_module_name, "RuntimeEvidenceModule") == 0, "lat lir module name copied");
     EXPECT_TRUE(result.record.lat_lir_report_classification == LATTICRA_LIR_REPORT_MATERIALIZED, "lat lir report classification copied");
     EXPECT_TRUE(result.record.lat_lir_shape_kind == LATTICRA_LIR_SHAPE_LAT_MODULE_GRAPH, "lat lir shape kind copied");
+    EXPECT_TRUE(result.record.lat_lir_source_span.start_offset == 14u, "lat lir source span start offset copied");
+    EXPECT_TRUE(result.record.lat_lir_source_span.end_offset == 220u, "lat lir source span end offset copied");
+    EXPECT_TRUE(result.record.lat_lir_source_span.start_line == 2u, "lat lir source span start line copied");
+    EXPECT_TRUE(result.record.lat_lir_source_span.start_column == 1u, "lat lir source span start column copied");
+    EXPECT_TRUE(result.record.lat_lir_source_span.end_line == 13u, "lat lir source span end line copied");
+    EXPECT_TRUE(result.record.lat_lir_source_span.end_column == 2u, "lat lir source span end column copied");
     EXPECT_TRUE(result.record.lat_lir_module_node_count == 4u, "lat lir node count copied");
     EXPECT_TRUE(result.record.lat_lir_module_edge_count == 5u, "lat lir edge count copied");
     EXPECT_TRUE(result.record.lat_lir_binding_count == 2u, "lat lir binding count copied");
@@ -463,6 +475,12 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_lir_module_name=RuntimeEvidenceModule\n") != 0, "lat lir module name report present");
     EXPECT_TRUE(strstr(report, "lat_lir_report_classification=materialized\n") != 0, "lat lir report classification report present");
     EXPECT_TRUE(strstr(report, "lat_lir_shape_kind=lat-module-graph\n") != 0, "lat lir shape report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_source_span_start_offset=14\n") != 0, "lat lir span start offset report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_source_span_end_offset=220\n") != 0, "lat lir span end offset report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_source_span_start_line=2\n") != 0, "lat lir span start line report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_source_span_start_column=1\n") != 0, "lat lir span start column report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_source_span_end_line=13\n") != 0, "lat lir span end line report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_source_span_end_column=2\n") != 0, "lat lir span end column report present");
     EXPECT_TRUE(strstr(report, "lat_lir_module_node_count=4\n") != 0, "lat lir node count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_module_edge_count=5\n") != 0, "lat lir edge count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_binding_count=2\n") != 0, "lat lir binding count report present");
