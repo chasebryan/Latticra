@@ -27,6 +27,34 @@ Latticra follows these principles:
 9. External input is validated.
 10. Security claims require evidence.
 
+## 2A. Memory-safety roadmap alignment
+
+Latticra aligns its C/C++ posture with current NSA/CISA memory-safe-language guidance and CISA/FBI product-security bad-practice guidance.
+
+This does not mean existing substrate code must be rewritten all at once. It does mean the project must keep a visible memory-safety roadmap and prefer a memory-safe implementation language for new high-risk components.
+
+Required allocation:
+
+```text
+memory_safety_roadmap_required=1
+memory_safe_language_preferred_for_new_high_risk_components=1
+restricted_c_cpp_profile_required_for_existing_substrate=1
+unsafe_exception_record_required=1
+sanitizer_or_static_analysis_path_required=1
+fuzzing_required_before_parser_security_boundary_claim=1
+```
+
+High-risk components include:
+
+- network-facing code;
+- cryptographic key handling;
+- parsers for untrusted external input;
+- installer or host-mutation authority;
+- update, recovery, rollback, boot, hardware, or agentic automation authority;
+- IPC, privilege, capability, or policy-enforcement boundaries.
+
+When a high-risk component remains in C or C++, it must use the restricted profile in this document, keep unsafe behavior isolated, document why a memory-safe alternative is not used, and add targeted tests for malformed input, length boundaries, ownership, lifetime, and failure behavior.
+
 ## 3. Allowed C++ patterns in trusted core
 
 The following patterns are preferred:
@@ -195,6 +223,22 @@ A dependency requires:
 - replacement/removal plan if the dependency becomes unsuitable.
 
 Trusted core dependencies should be rare.
+
+## 12A. CISA/FBI product-security bad-practice exclusions
+
+The trusted core and future infrastructure surfaces must exclude the following classes unless an explicit exception contract exists:
+
+- no hardcoded default passwords, tokens, or private keys;
+- no command injection surface through implicit shells;
+- no direct SQL string construction if a database layer is ever introduced;
+- no cross-site scripting exposure if web UI or rendered HTML input becomes dynamic;
+- no directory traversal in installer, package, update, recovery, or artifact paths;
+- no known-insecure or deprecated cryptographic algorithms for production data protection;
+- no unmanaged third-party dependency with unknown maintenance or security status;
+- no production claim for memory-unsafe high-risk code without a memory-safety roadmap;
+- no security release with known exploitable vulnerabilities lacking mitigation notes.
+
+Cryptographic code has an additional rule: production cryptography requires a documented module boundary and a FIPS 140-3 applicability decision before any FIPS, federal, or high-assurance cryptographic claim is allowed.
 
 ## 13. Build and analysis expectations
 

@@ -21,6 +21,7 @@ require_contains() {
 
 require_file docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_file docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_file docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 require_file scripts/test-opensuse-rpmlint-osc-availability.sh
 require_file packaging/opensuse/latticra.spec
 require_file packaging/opensuse/latticra.changes
@@ -33,7 +34,8 @@ require_contains 'does not run `osc build`' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LA
 require_contains 'does not run `spec-cleaner`' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'does not create package artifacts' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'does not create an Open Build Service project' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
-require_contains 'Add openSUSE rpmlint findings classification report' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_contains 'docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_contains 'Add openSUSE source archive reproducibility contract' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'opensuse_rpmlint_static_spec_lane: ok' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 
 require_contains 'LOCAL-ONLY openSUSE DRAFT' packaging/opensuse/latticra.spec

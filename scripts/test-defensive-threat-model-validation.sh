@@ -117,18 +117,35 @@ do
 done
 
 for external in \
-  'NSA Cybersecurity Advisories & Guidance' \
-  'https://www.nsa.gov/Press-Room/Cybersecurity-Advisories-Guidance/' \
+  'NSA Zero Trust Implementation Guidelines' \
+  'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4393480/nsa-releases-phase-one-and-phase-two-of-the-zero-trust-implementation-guidelines/' \
+  'NSA/CISA Memory Safe Languages CSI' \
+  'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4223298/nsa-and-cisa-release-csi-highlighting-importance-of-memory-safe-languages-in-so/' \
   'CISA Secure by Design' \
   'https://www.cisa.gov/securebydesign' \
+  'CISA/FBI Product Security Bad Practices' \
+  'https://www.cisa.gov/resources-tools/resources/product-security-bad-practices' \
   'CISA Cross-Sector Cybersecurity Performance Goals' \
-  'https://www.cisa.gov/cross-sector-cybersecurity-performance-goals' \
+  'https://www.cisa.gov/cybersecurity-performance-goals' \
+  'CISA Zero Trust Maturity Model' \
+  'https://www.cisa.gov/zero-trust-maturity-model' \
   'CISA Known Exploited Vulnerabilities Catalog' \
   'https://www.cisa.gov/known-exploited-vulnerabilities-catalog' \
   'FBI Cyber' \
   'https://www.fbi.gov/investigate/cyber' \
-  'Date checked: 2026-05-17' \
-  'fetcher returned 403' \
+  'NIST Cybersecurity Framework 2.0' \
+  'https://www.nist.gov/cyberframework' \
+  'NIST SP 800-218 SSDF' \
+  'https://csrc.nist.gov/pubs/sp/800/218/final' \
+  'NIST SP 800-53 Rev. 5' \
+  'https://csrc.nist.gov/Pubs/sp/800/53/r5/upd1/Final' \
+  'NIST SP 800-160 Vol. 2 Rev. 1' \
+  'https://csrc.nist.gov/pubs/sp/800/160/v2/r1/final' \
+  'NIST SP 800-207 Zero Trust Architecture' \
+  'https://www.nist.gov/publications/zero-trust-architecture-0' \
+  'FIPS 140-3' \
+  'https://csrc.nist.gov/pubs/fips/140-3/final' \
+  'Date checked: 2026-05-26' \
   'manual source review' \
   'certification/compliance/protection'
 do
@@ -172,8 +189,14 @@ done
 for gap in \
   'defensive_threat_model_validation_refinement_present=1' \
   'external_source_refresh_checkpoint_present=1' \
-  'external_source_refresh_date=2026-05-25' \
+  'external_source_refresh_date=2026-05-26' \
   'manual_source_review_required=1' \
+  'manual_source_review_completed_for_current_baseline=1' \
+  'high_assurance_security_baseline_present=1' \
+  'nsa_zero_trust_guideline_observed=1' \
+  'nsa_cisa_memory_safe_languages_observed=1' \
+  'cisa_fbi_product_security_bad_practices_observed=1' \
+  'nist_high_assurance_references_observed=1' \
   'runtime_boundary_policy_expansion_next=1' \
   'abuse_case_fixture_expansion_next=1' \
   'certification_from_external_alignment=0' \
@@ -181,7 +204,7 @@ for gap in \
   'protection_from_external_alignment=0' \
   'security_controls_added=0' \
   'runtime_authority_granted=0' \
-  'external standards ledger needs recurring manual review' \
+  'external standards ledger needs recurring manual review before release' \
   'runtime boundary source needs fuller policy expansion' \
   'abuse-case mapping needs broader fixture coverage' \
   'external advisory-by-advisory mapping is not complete' \

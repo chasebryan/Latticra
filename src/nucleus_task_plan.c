@@ -43,6 +43,7 @@ static void default_record(latticra_nucleus_task_plan_record_t *record) {
     record->execution_allowed = 0;
     record->mutation_allowed = 0;
     record->server_allowed = 0;
+    record->network_allowed = 0;
     record->recovery_allowed = 0;
     record->hardware_allowed = 0;
     record->evidence_level = 0u;
@@ -57,6 +58,7 @@ static void default_result(latticra_nucleus_task_plan_result_t *result) {
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
     result->server_allowed = 0;
+    result->network_allowed = 0;
     result->recovery_allowed = 0;
     result->hardware_allowed = 0;
 }
@@ -79,6 +81,7 @@ static int result_flags_no_effect(const latticra_nucleus_task_result_t *task) {
            task->execution_allowed == 0 &&
            task->mutation_allowed == 0 &&
            task->server_allowed == 0 &&
+           task->network_allowed == 0 &&
            task->recovery_allowed == 0 &&
            task->hardware_allowed == 0;
 }
@@ -88,6 +91,7 @@ static int record_flags_no_effect(const latticra_nucleus_task_result_t *task) {
            task->record.executed == 0 &&
            task->record.mutation_allowed == 0 &&
            task->record.server_interaction_allowed == 0 &&
+           task->record.network_allowed == 0 &&
            task->record.recovery_allowed == 0 &&
            task->record.hardware_allowed == 0;
 }
@@ -125,6 +129,7 @@ static void set_blocked(latticra_nucleus_task_plan_result_t *result,
     result->record.execution_allowed = 0;
     result->record.mutation_allowed = 0;
     result->record.server_allowed = 0;
+    result->record.network_allowed = 0;
     result->record.recovery_allowed = 0;
     result->record.hardware_allowed = 0;
 }
@@ -244,6 +249,7 @@ latticra_status_t latticra_nucleus_task_plan_report(const latticra_nucleus_task_
         !appendf(buffer, buffer_len, &used, "execution_allowed=%d\n", record->execution_allowed) ||
         !appendf(buffer, buffer_len, &used, "mutation_allowed=%d\n", record->mutation_allowed) ||
         !appendf(buffer, buffer_len, &used, "server_allowed=%d\n", record->server_allowed) ||
+        !appendf(buffer, buffer_len, &used, "network_allowed=%d\n", record->network_allowed) ||
         !appendf(buffer, buffer_len, &used, "recovery_allowed=%d\n", record->recovery_allowed) ||
         !appendf(buffer, buffer_len, &used, "hardware_allowed=%d\n", record->hardware_allowed) ||
         !appendf(buffer, buffer_len, &used, "evidence_level=%u\n", record->evidence_level)) {

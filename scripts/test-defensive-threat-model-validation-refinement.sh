@@ -63,6 +63,12 @@ require_contains 'current_gaps_present=1' "$doc"
 require_contains 'external_source_refresh_checkpoint_present=1' "$doc"
 require_contains 'external_standards_refresh_needed=1' "$doc"
 require_contains 'manual_source_review_required=1' "$doc"
+require_contains 'manual_source_review_completed_for_current_baseline=1' "$doc"
+require_contains 'high_assurance_security_baseline_present=1' "$doc"
+require_contains 'nsa_zero_trust_guideline_observed=1' "$doc"
+require_contains 'nsa_cisa_memory_safe_languages_observed=1' "$doc"
+require_contains 'cisa_fbi_product_security_bad_practices_observed=1' "$doc"
+require_contains 'nist_high_assurance_references_observed=1' "$doc"
 require_contains 'runtime_boundary_policy_expansion_next=1' "$doc"
 require_contains 'abuse_case_fixture_expansion_next=1' "$doc"
 require_contains 'mode=validation-refinement' "$doc"
@@ -91,10 +97,15 @@ require_contains 'sandbox_claim_allowed=0' "$doc"
 require_contains 'production_protection_claim_allowed=0' "$doc"
 require_contains 'production_readiness_claimed=0' "$doc"
 require_contains 'external_endorsement_claimed=0' "$doc"
-require_contains 'Date checked: 2026-05-25' "$doc"
-require_contains 'nsa_ai_mcp_guidance_observed=1' "$doc"
+require_contains 'Date checked: 2026-05-26' "$doc"
+require_contains 'nsa_zero_trust_guideline_observed=1' "$doc"
+require_contains 'nsa_cisa_memory_safe_languages_observed=1' "$doc"
 require_contains 'fbi_recent_cyber_alerts_observed=1' "$doc"
-require_contains 'cisa_direct_manual_review_required=1' "$doc"
+require_contains 'cisa_fbi_product_security_bad_practices_reference_verified=1' "$doc"
+require_contains 'cisa_zero_trust_maturity_model_reference_verified=1' "$doc"
+require_contains 'nist_sp_800_53_release_5_2_0_reference_verified=1' "$doc"
+require_contains 'fips_140_3_reference_verified=1' "$doc"
+require_contains 'recurring_manual_source_review_required=1' "$doc"
 require_contains 'external_alignment_claim=source-tracking-only' "$doc"
 require_contains 'certification_from_external_alignment=0' "$doc"
 require_contains 'compliance_from_external_alignment=0' "$doc"
@@ -107,10 +118,12 @@ require_contains 'runtime boundary policy expansion after threat-model validatio
 require_contains 'defensive_threat_model_contract_present=1' README.md
 require_contains 'defensive_threat_model_validation_present=1' README.md
 require_contains 'defensive_threat_model_validation_refinement_present=1' README.md
+require_contains 'high_assurance_security_baseline_present=1' README.md
 require_contains 'docs/DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md' README.md
 require_contains 'Defensive threat model validation refinement' STATUS.md
 require_contains 'Runtime boundary policy expansion after threat-model validation' STATUS.md
 require_contains 'defensive_threat_model_validation_refinement_present=1' STATUS.md
+require_contains 'high_assurance_security_baseline_present=1' STATUS.md
 require_contains 'DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md' docs/status/README.md
 require_contains 'defensive_threat_model_validation_refinement_present=1' docs/status/README.md
 require_contains 'Defensive threat model validation refinement' docs/status/CURRENT_STATUS.md

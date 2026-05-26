@@ -2,8 +2,12 @@ from pathlib import Path
 
 ui = Path("installer/latticra-installer/src/ui.rs")
 readme = Path("installer/README.md")
+cargo_toml = Path("installer/latticra-installer/Cargo.toml")
+components_manifest = Path("installer/manifests/components.toml")
 
 checks = [
+    (cargo_toml, 'version = "0.5.0"', 'Panel v0.5.0 package version'),
+    (components_manifest, 'version = "0.5.0"', 'Panel v0.5.0 component manifest'),
     (ui, 'const PANEL_BUILD: &str = "gui-workbench";', 'build identity'),
     (ui, 'const SEAL_PNG: &[u8] = include_bytes!("../assets/latticra-panel.png");', 'embedded image'),
     (ui, 'fn ensure_texture(&mut self, ctx: &egui::Context)', 'texture function'),
@@ -13,6 +17,10 @@ checks = [
     (ui, 'fn show_fluid_install_button(&mut self, ui: &mut egui::Ui)', 'install button'),
     (ui, 'fn show_console_panel(&mut self, ui: &mut egui::Ui)', 'console function'),
     (ui, 'fn show_right_evidence_panel(&mut self, ui: &mut egui::Ui)', 'right evidence'),
+    (ui, 'fn show_install_run_monitor(&mut self, ui: &mut egui::Ui, compact: bool)', 'install run monitor'),
+    (ui, 'RUNNING_EVIDENCE_MAX_HEIGHT', 'running evidence priority'),
+    (ui, 'RUNNING_CONSOLE_MAX_HEIGHT', 'running console restraint'),
+    (ui, 'self.show_plan_over_log = false;', 'engine log focus'),
     (ui, 'fn blend(a: egui::Color32, b: egui::Color32, t: f32) -> egui::Color32', 'blend helper'),
     (ui, 'WorkspaceTab::Dashboard', 'dashboard tab'),
     (ui, 'WorkspaceTab::Components', 'components tab'),

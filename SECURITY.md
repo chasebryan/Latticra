@@ -153,6 +153,14 @@ Security-relevant changes should prefer:
 - explicit non-claims;
 - clear rollback or failure behavior when mutation is ever introduced.
 
+## High-assurance standards posture
+
+The current high-assurance standards checkpoint is recorded in `docs/HIGH_ASSURANCE_SECURITY_BASELINE.md`.
+
+That baseline tracks current NSA, CISA, FBI, and NIST security guidance as source input for Latticra security work. It requires memory-safety roadmap discipline, zero-trust runtime-boundary prerequisites, SSDF-style secure development evidence, CPG-inspired operational readiness gates, KEV-aware release review, SBOM evidence before production installer claims, and a FIPS 140-3 cryptographic module boundary decision before any production cryptography claim.
+
+This posture is an allocation of required work, not a compliance claim. It does not certify Latticra, accredit Latticra, make Latticra a production security product, or create a hardened runtime boundary.
+
 ## Contact and attribution
 
 Use GitHub private vulnerability reporting or the repository security advisory flow when available.

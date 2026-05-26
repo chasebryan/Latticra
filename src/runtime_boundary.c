@@ -562,11 +562,25 @@ static void copy_lat_lir_evidence(const latticra_lir_module_t *lir, latticra_run
     result->record.lat_lir_execution_allowed = lir->execution_allowed;
     result->record.lat_lir_mutation_allowed = lir->mutation_allowed;
     result->record.lat_lir_server_allowed = lir->server_allowed;
+    result->record.lat_lir_network_allowed = lir->network_allowed;
     result->record.lat_lir_recovery_allowed = lir->recovery_allowed;
     result->record.lat_lir_hardware_allowed = lir->hardware_allowed;
     for (index = 0u; index < lir->node_count && index < LATTICRA_LIR_NODE_MAX; index++) {
-        if (lir->nodes[index].kind == LATTICRA_LIR_NODE_LAT_STATE) result->record.lat_lir_has_lat_state_nodes = 1;
-        if (lir->nodes[index].kind == LATTICRA_LIR_NODE_LAT_TRANSITION) result->record.lat_lir_has_lat_transition_nodes = 1;
+        if (lir->nodes[index].kind == LATTICRA_LIR_NODE_LAT_STATE) {
+            result->record.lat_lir_lat_state_node_count += 1u;
+            result->record.lat_lir_has_lat_state_nodes = 1;
+        } else if (lir->nodes[index].kind == LATTICRA_LIR_NODE_LAT_POLICY) {
+            result->record.lat_lir_lat_policy_node_count += 1u;
+        } else if (lir->nodes[index].kind == LATTICRA_LIR_NODE_LAT_TRANSITION) {
+            result->record.lat_lir_lat_transition_node_count += 1u;
+            result->record.lat_lir_has_lat_transition_nodes = 1;
+        } else if (lir->nodes[index].kind == LATTICRA_LIR_NODE_LAT_ASSERTION) {
+            result->record.lat_lir_lat_assertion_node_count += 1u;
+        } else if (lir->nodes[index].kind == LATTICRA_LIR_NODE_LAT_REQUIREMENT) {
+            result->record.lat_lir_lat_requirement_node_count += 1u;
+        } else if (lir->nodes[index].kind == LATTICRA_LIR_NODE_LAT_EFFECT_DECLARATION) {
+            result->record.lat_lir_lat_effect_declaration_node_count += 1u;
+        }
     }
     for (index = 0u; index < lir->edge_count && index < LATTICRA_LIR_EDGE_MAX; index++) {
         if (lir->edges[index].edge_kind == LATTICRA_LIR_EDGE_CONTAINS) {
@@ -630,6 +644,7 @@ static int lat_pipeline_ok(const latticra_lat_pipeline_result_t *lat_pipeline) {
            lat_pipeline->execution_allowed == 0 &&
            lat_pipeline->mutation_allowed == 0 &&
            lat_pipeline->server_allowed == 0 &&
+           lat_pipeline->network_allowed == 0 &&
            lat_pipeline->recovery_allowed == 0 &&
            lat_pipeline->hardware_allowed == 0;
 }
@@ -712,7 +727,7 @@ latticra_status_t latticra_runtime_boundary_classify(const latticra_runtime_boun
     if (request->request_kind == LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE && !lat_pipeline_ok(request->lat_pipeline)) {
         if (request->lat_pipeline != 0 && request->lat_pipeline->error == LATTICRA_LAT_PIPELINE_PARSE_NOT_OK) result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_PARSER_FAILED;
         else if (request->lat_pipeline != 0 && (request->lat_pipeline->error == LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK || request->lat_pipeline->error == LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_VALID)) result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_SEMANTIC_FAILED;
-        else if (request->lat_pipeline != 0 && request->lat_pipeline->error == LATTICRA_LAT_PIPELINE_NO_EFFECT_VIOLATION) result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_NON_NO_EFFECT_FLAGS;
+        else if (request->lat_pipeline != 0 && (request->lat_pipeline->error == LATTICRA_LAT_PIPELINE_NO_EFFECT_VIOLATION || request->lat_pipeline->network_allowed != 0)) result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_NON_NO_EFFECT_FLAGS;
         else result->record.denial = LATTICRA_RUNTIME_BOUNDARY_DENIAL_LIR_FAILED;
         finalize_report_refinement_metadata(request, result);
         return LATTICRA_STATUS_OK;
@@ -741,13 +756,24 @@ latticra_status_t latticra_runtime_boundary_classify(const latticra_runtime_boun
     return LATTICRA_STATUS_OK;
 }
 
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverlength-strings"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Woverlength-strings"
+#endif
+
 latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_boundary_result_t *result, char *buffer, size_t buffer_len) {
     int written;
+    size_t offset;
+    int extra;
+    size_t used;
     if (result == 0 || buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
     buffer[0] = '\0';
     written = snprintf(buffer, buffer_len,
-        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nallowed_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nreport_classification=%s\nboundary_domain=%s\nauthorization_state=%s\nevidence_level=%u\npolicy_matrix_cell=%s\nmatrix_effect_allowed=%d\nmatrix_mode_allowed=%d\nmatrix_requires_authority=%d\nmatrix_requires_future_gate=%d\nauthority_status=%d\nauthority_status_label=%s\nauthority_validator=%s\nauthority_requested_effect=%s\nauthority_reason=%s\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_network_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\ntask_executed=%d\ntask_mutation_allowed=%d\ntask_server_interaction_allowed=%d\ntask_network_allowed=%d\ntask_recovery_allowed=%d\ntask_hardware_allowed=%d\nrender_status=%d\nrender_error=%d\nlat_status=%d\nlat_error=%d\nlir_status=%d\nlir_error=%d\nlat_pipeline_status=%d\nlat_pipeline_error=%s\nlat_pipeline_parse_error=%s\nlat_pipeline_span_start_offset=%lu\nlat_pipeline_span_end_offset=%lu\nlat_pipeline_span_start_line=%lu\nlat_pipeline_span_start_column=%lu\nlat_pipeline_span_end_line=%lu\nlat_pipeline_span_end_column=%lu\nlat_pipeline_semantic_error=%s\nlat_pipeline_model_error=%s\nlat_pipeline_lowering_error=%s\nlat_pipeline_lir_error=%s\nlat_pipeline_last_completed_stage=%s\nlat_pipeline_failed_stage=%s\nlat_pipeline_parse_ok=%d\nlat_pipeline_semantic_ok=%d\nlat_pipeline_model_ok=%d\nlat_pipeline_lowering_ok=%d\nlat_pipeline_lir_ok=%d\nlat_pipeline_no_effect_chain_ok=%d\nlat_pipeline_evidence_level=%u\nlat_pipeline_semantic_valid=%d\nlat_pipeline_module_name=%s\nlat_pipeline_source_len=%lu\nlat_pipeline_declaration_count=%lu\nlat_pipeline_clause_count=%lu\nlat_pipeline_model_declaration_count=%lu\nlat_pipeline_model_clause_count=%lu\nlat_pipeline_first_declaration_node_index=%lu\nlat_pipeline_first_declaration_kind=%s\nlat_pipeline_first_declaration_name=%s\nlat_pipeline_first_declaration_source=%s\nlat_pipeline_first_declaration_parse_index=%lu\nlat_pipeline_first_declaration_first_clause_index=%lu\nlat_pipeline_first_declaration_clause_count=%lu\nlat_pipeline_first_declaration_source_index=%lu\nlat_pipeline_first_transition_source_index=%lu\nlat_pipeline_first_clause_node_index=%lu\nlat_pipeline_first_clause_role=%s\nlat_pipeline_first_clause_effect=%s\nlat_pipeline_first_clause_name=%s\nlat_pipeline_first_clause_operator=%s\nlat_pipeline_first_clause_value=%s\nlat_pipeline_node_count=%lu\nlat_pipeline_edge_count=%lu\nlat_pipeline_comment_count=%lu\nlat_pipeline_first_comment_start_offset=%lu\nlat_pipeline_first_comment_end_offset=%lu\nlat_pipeline_first_comment_start_line=%lu\nlat_pipeline_first_comment_start_column=%lu\nlat_pipeline_first_comment_end_line=%lu\nlat_pipeline_first_comment_end_column=%lu\nlat_lir_source_kind=%s\nlat_lir_module_name=%s\nlat_lir_report_classification=%s\nlat_lir_shape_kind=%s\nlat_lir_span_start_offset=%lu\nlat_lir_span_end_offset=%lu\nlat_lir_span_start_line=%lu\nlat_lir_span_start_column=%lu\nlat_lir_span_end_line=%lu\nlat_lir_span_end_column=%lu\nlat_lir_module_node_count=%lu\nlat_lir_module_edge_count=%lu\nlat_lir_binding_count=%lu\nlat_lir_text_count=%lu\nlat_lir_no_effect_chain_ok=%d\nlat_lir_evidence_level=%u\nlat_lir_no_effect=%d\nlat_lir_execution_allowed=%d\nlat_lir_mutation_allowed=%d\nlat_lir_server_allowed=%d\nlat_lir_recovery_allowed=%d\nlat_lir_hardware_allowed=%d\nlat_lir_contains_edge_count=%lu\nlat_lir_binds_edge_count=%lu\nlat_lir_annotates_edge_count=%lu\nlat_lir_orders_before_edge_count=%lu\nlat_lir_transition_edge_count=%lu\nlat_lir_has_lat_state_nodes=%d\nlat_lir_has_lat_transition_nodes=%d\nlat_lir_has_transition_source_edges=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
+        "LATTICRA RUNTIME BOUNDARY REPORT\nruntime_id=%s\nrecord_count=%lu\nrequest=%s\nrequested_effect=%s\nallowed_effect=%s\nmode=%s\npolicy=%s\nreason=%s\ngate=%s\noperator_confirmation=%s\nreport_classification=%s\nboundary_domain=%s\nauthorization_state=%s\nevidence_level=%u\npolicy_matrix_cell=%s\nmatrix_effect_allowed=%d\nmatrix_mode_allowed=%d\nmatrix_requires_authority=%d\nmatrix_requires_future_gate=%d\n",
         result->record.runtime_id,
         (unsigned long)result->record_count,
         latticra_runtime_boundary_request_kind_label(result->record.request_kind),
@@ -766,7 +792,14 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         result->record.matrix_effect_allowed,
         result->record.matrix_mode_allowed,
         result->record.matrix_requires_authority,
-        result->record.matrix_requires_future_gate,
+        result->record.matrix_requires_future_gate);
+    if (written < 0 || (size_t)written >= buffer_len) {
+        buffer[0] = '\0';
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    offset = (size_t)written;
+    written = snprintf(buffer + offset, buffer_len - offset,
+        "authority_status=%d\nauthority_status_label=%s\nauthority_validator=%s\nauthority_requested_effect=%s\nauthority_reason=%s\nauthority_no_effect=%d\nauthority_execution_allowed=%d\nauthority_mutation_allowed=%d\nauthority_server_allowed=%d\nauthority_network_allowed=%d\nauthority_recovery_allowed=%d\nauthority_hardware_allowed=%d\ntask_policy=%s\ntask_reason=%s\ntask_executed=%d\ntask_mutation_allowed=%d\ntask_server_interaction_allowed=%d\ntask_network_allowed=%d\ntask_recovery_allowed=%d\ntask_hardware_allowed=%d\nrender_status=%d\nrender_error=%d\nlat_status=%d\nlat_error=%d\nlir_status=%d\nlir_error=%d\nlat_pipeline_status=%d\nlat_pipeline_error=%s\nlat_pipeline_parse_error=%s\nlat_pipeline_span_start_offset=%lu\nlat_pipeline_span_end_offset=%lu\nlat_pipeline_span_start_line=%lu\nlat_pipeline_span_start_column=%lu\nlat_pipeline_span_end_line=%lu\nlat_pipeline_span_end_column=%lu\nlat_pipeline_semantic_error=%s\nlat_pipeline_model_error=%s\nlat_pipeline_lowering_error=%s\nlat_pipeline_lir_error=%s\nlat_pipeline_last_completed_stage=%s\nlat_pipeline_failed_stage=%s\nlat_pipeline_parse_ok=%d\nlat_pipeline_semantic_ok=%d\nlat_pipeline_model_ok=%d\nlat_pipeline_lowering_ok=%d\nlat_pipeline_lir_ok=%d\nlat_pipeline_no_effect_chain_ok=%d\nlat_pipeline_evidence_level=%u\nlat_pipeline_semantic_valid=%d\nlat_pipeline_module_name=%s\nlat_pipeline_source_len=%lu\n",
         (int)result->record.authority.status,
         result->record.authority.status_label,
         result->record.authority.validator_label,
@@ -817,7 +850,14 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         result->record.lat_pipeline_evidence_level,
         result->record.lat_pipeline_semantic_valid,
         result->record.lat_pipeline_module_name,
-        (unsigned long)result->record.lat_pipeline_source_len,
+        (unsigned long)result->record.lat_pipeline_source_len);
+    if (written < 0 || (size_t)written >= buffer_len - offset) {
+        buffer[0] = '\0';
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    offset += (size_t)written;
+    written = snprintf(buffer + offset, buffer_len - offset,
+        "lat_pipeline_declaration_count=%lu\nlat_pipeline_clause_count=%lu\nlat_pipeline_model_declaration_count=%lu\nlat_pipeline_model_clause_count=%lu\nlat_pipeline_first_declaration_node_index=%lu\nlat_pipeline_first_declaration_kind=%s\nlat_pipeline_first_declaration_name=%s\nlat_pipeline_first_declaration_source=%s\nlat_pipeline_first_declaration_parse_index=%lu\nlat_pipeline_first_declaration_first_clause_index=%lu\nlat_pipeline_first_declaration_clause_count=%lu\nlat_pipeline_first_declaration_source_index=%lu\nlat_pipeline_first_transition_source_index=%lu\nlat_pipeline_first_clause_node_index=%lu\nlat_pipeline_first_clause_role=%s\nlat_pipeline_first_clause_effect=%s\nlat_pipeline_first_clause_name=%s\nlat_pipeline_first_clause_operator=%s\nlat_pipeline_first_clause_value=%s\nlat_pipeline_node_count=%lu\nlat_pipeline_edge_count=%lu\nlat_pipeline_comment_count=%lu\nlat_pipeline_first_comment_start_offset=%lu\nlat_pipeline_first_comment_end_offset=%lu\nlat_pipeline_first_comment_start_line=%lu\nlat_pipeline_first_comment_start_column=%lu\nlat_pipeline_first_comment_end_line=%lu\nlat_pipeline_first_comment_end_column=%lu\n",
         (unsigned long)result->record.lat_pipeline_declaration_count,
         (unsigned long)result->record.lat_pipeline_clause_count,
         (unsigned long)result->record.lat_pipeline_model_declaration_count,
@@ -845,7 +885,14 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         (unsigned long)result->record.lat_pipeline_first_comment_span.start_line,
         (unsigned long)result->record.lat_pipeline_first_comment_span.start_column,
         (unsigned long)result->record.lat_pipeline_first_comment_span.end_line,
-        (unsigned long)result->record.lat_pipeline_first_comment_span.end_column,
+        (unsigned long)result->record.lat_pipeline_first_comment_span.end_column);
+    if (written < 0 || (size_t)written >= buffer_len - offset) {
+        buffer[0] = '\0';
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    offset += (size_t)written;
+    written = snprintf(buffer + offset, buffer_len - offset,
+        "lat_lir_source_kind=%s\nlat_lir_module_name=%s\nlat_lir_report_classification=%s\nlat_lir_shape_kind=%s\nlat_lir_span_start_offset=%lu\nlat_lir_span_end_offset=%lu\nlat_lir_span_start_line=%lu\nlat_lir_span_start_column=%lu\nlat_lir_span_end_line=%lu\nlat_lir_span_end_column=%lu\nlat_lir_module_node_count=%lu\nlat_lir_module_edge_count=%lu\nlat_lir_binding_count=%lu\nlat_lir_text_count=%lu\nlat_lir_no_effect_chain_ok=%d\nlat_lir_evidence_level=%u\nlat_lir_no_effect=%d\nlat_lir_execution_allowed=%d\nlat_lir_mutation_allowed=%d\nlat_lir_server_allowed=%d\nlat_lir_network_allowed=%d\nlat_lir_recovery_allowed=%d\nlat_lir_hardware_allowed=%d\nlat_lir_contains_edge_count=%lu\nlat_lir_binds_edge_count=%lu\nlat_lir_annotates_edge_count=%lu\nlat_lir_orders_before_edge_count=%lu\nlat_lir_transition_edge_count=%lu\nlat_lir_has_lat_state_nodes=%d\nlat_lir_has_lat_transition_nodes=%d\nlat_lir_has_transition_source_edges=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
         runtime_lir_source_kind_label(result->record.lat_lir_source_kind),
         result->record.lat_lir_module_name,
         runtime_lir_report_classification_label(result->record.lat_lir_report_classification),
@@ -866,6 +913,7 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         result->record.lat_lir_execution_allowed,
         result->record.lat_lir_mutation_allowed,
         result->record.lat_lir_server_allowed,
+        result->record.lat_lir_network_allowed,
         result->record.lat_lir_recovery_allowed,
         result->record.lat_lir_hardware_allowed,
         (unsigned long)result->record.lat_lir_contains_edge_count,
@@ -893,9 +941,28 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         (unsigned long)result->record.source_span.start_column,
         (unsigned long)result->record.source_span.end_line,
         (unsigned long)result->record.source_span.end_column);
-    if (written < 0 || (size_t)written >= buffer_len) {
+    if (written < 0 || (size_t)written >= buffer_len - offset) {
+        buffer[0] = '\0';
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    used = offset + (size_t)written;
+    extra = snprintf(buffer + used, buffer_len - used,
+        "lat_lir_lat_state_node_count=%lu\nlat_lir_lat_policy_node_count=%lu\nlat_lir_lat_transition_node_count=%lu\nlat_lir_lat_assertion_node_count=%lu\nlat_lir_lat_requirement_node_count=%lu\nlat_lir_lat_effect_declaration_node_count=%lu\n",
+        (unsigned long)result->record.lat_lir_lat_state_node_count,
+        (unsigned long)result->record.lat_lir_lat_policy_node_count,
+        (unsigned long)result->record.lat_lir_lat_transition_node_count,
+        (unsigned long)result->record.lat_lir_lat_assertion_node_count,
+        (unsigned long)result->record.lat_lir_lat_requirement_node_count,
+        (unsigned long)result->record.lat_lir_lat_effect_declaration_node_count);
+    if (extra < 0 || used + (size_t)extra >= buffer_len) {
         buffer[0] = '\0';
         return LATTICRA_STATUS_BUFFER_TOO_SMALL;
     }
     return LATTICRA_STATUS_OK;
 }
+
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif

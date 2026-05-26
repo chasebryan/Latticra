@@ -48,6 +48,7 @@ interrupt-table-ready
 timer-source-ready
 scheduler-tick-ready
 run-queue-ready
+context-switch-ready
 ```
 
 Allowed transitions are intentionally sequential:
@@ -67,6 +68,7 @@ driver-catalog-ready -> interrupt-table-ready
 interrupt-table-ready -> timer-source-ready
 timer-source-ready -> scheduler-tick-ready
 scheduler-tick-ready -> run-queue-ready
+run-queue-ready -> context-switch-ready
 ```
 
 No-op transitions are allowed when the gate allows them.

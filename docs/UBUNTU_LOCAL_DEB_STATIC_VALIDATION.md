@@ -27,6 +27,7 @@ docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md
 docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md
 docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md
+docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
@@ -62,6 +63,9 @@ notice_file_decision_recorded=0
 debian_copyright_notice_mapping_contract_present=1
 debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping
 debian_copyright_notice_mapping_reviewed=0
+trademark_notice_boundary_contract_present=1
+trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary
+trademark_notice_boundary_recorded=0
 ppa_claimed=0
 ubuntu_archive_ready=0
 production_readiness_claimed=0

@@ -13,6 +13,7 @@ The graphical panel uses one shared `InstallerConfig` model, generates the same 
 - Plan and receipt evidence before action
 - Embedded panel-aware console instead of a separate TUI
 - Adaptive maximized/resizable layout for Fedora workstations and smaller screens
+- v0.5.0 keeps the selected workspace stable while installation runs, adds a focused run monitor, and promotes live evidence above the console only during an active engine operation
 
 ## Profiles
 
@@ -121,6 +122,7 @@ nadia prompt-evaluation-result-release
 nadia prompt-evaluation-result-release-receipt
 nadia prompt-evaluation-result-release-receipt-review
 nadia prompt-evaluation-result-release-receipt-review-disposition
+nadia prompt-evaluation-result-release-receipt-review-disposition-release
 profile guided
 profile seal
 profile fedora
@@ -133,10 +135,10 @@ The console exists inside the GUI so users can stay in one coherent Latticra con
 
 LC is the standalone and Panel-installable console foundation for substrate interaction, host embedding planning, and future OS-base work. Its current Panel and standalone commands are metadata-only and do not execute external host commands.
 
-Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, Stage-11, Stage-12, Stage-13, Stage-14, Stage-15, Stage-16, Stage-17, Stage-18, Stage-19, Stage-20, Stage-21, Stage-22, Stage-23, Stage-24, Stage-25, Stage-26, Stage-27, Stage-28, Stage-29, Stage-30, Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, and Stage-37 console surfaces are metadata-only inside the Panel and do not launch an external host process or model runtime.
+Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, Stage-11, Stage-12, Stage-13, Stage-14, Stage-15, Stage-16, Stage-17, Stage-18, Stage-19, Stage-20, Stage-21, Stage-22, Stage-23, Stage-24, Stage-25, Stage-26, Stage-27, Stage-28, Stage-29, Stage-30, Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, and Stage-38 console surfaces are metadata-only inside the Panel and do not launch an external host process or model runtime.
 
-Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, and Stage-37 console surfaces are metadata-only result, review, disposition, release, release receipt, release receipt review, and release receipt review disposition surfaces inside the Panel.
+Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, and Stage-38 console surfaces are metadata-only result, review, disposition, release, release receipt, release receipt review, release receipt review disposition, and release receipt review disposition release surfaces inside the Panel.
 
-Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, and Stage-37 console surfaces are metadata-only and remain covered by the Stage-37 metadata-only console posture.
+Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, and Stage-38 console surfaces are metadata-only and remain covered by the Stage-38 metadata-only console posture.
 
-Nadia's Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, and Stage-37 console surfaces are metadata-only and remain covered by the Stage-37 metadata-only console posture.
+Nadia's Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, and Stage-38 console surfaces are metadata-only and remain covered by the Stage-38 metadata-only console posture.

@@ -34,6 +34,16 @@ Optional manifest override:
 sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-template.sh --manifest installer/manifests/seabios-grub-boot-preview.toml
 ```
 
+## Boot artifact manifest validation
+
+The current fixture is checked by:
+
+```sh
+sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
+```
+
+The validation gate rejects premature bootable, GRUB, QEMU, or production OS claims while keeping the artifact manifest incomplete.
+
 ## Required Future Manifest Fields
 
 A future completed boot artifact manifest must record:

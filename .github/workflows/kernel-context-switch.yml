@@ -1,0 +1,26 @@
+name: Kernel context switch
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  kernel-context-switch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - name: Run kernel context switch guard
+        run: sh scripts/test-kernel-context-switch.sh
+
+      - name: Run kernel context switch report runner
+        run: sh scripts/test-kernel-context-switch-report-runner.sh

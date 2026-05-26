@@ -26,6 +26,7 @@ doc_license_contract='docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md'
 third_party_contract='docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md'
 generated_artifact_contract='docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md'
 copyright_mapping_contract='docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md'
+trademark_contract='docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md'
 license_contract='docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md'
 readiness='docs/UBUNTU_READINESS_PLAN.md'
 workflow='.github/workflows/ubuntu-notice-file-decision-contract.yml'
@@ -37,6 +38,7 @@ require_file "$doc_license_contract"
 require_file "$third_party_contract"
 require_file "$generated_artifact_contract"
 require_file "$copyright_mapping_contract"
+require_file "$trademark_contract"
 require_file "$license_contract"
 require_file "$readiness"
 require_file "$workflow"
@@ -58,6 +60,7 @@ require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$contra
 require_contains 'ubuntu_third_party_material_review_contract_present=1' "$contract"
 require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' "$contract"
 require_contains 'ubuntu_debian_copyright_notice_mapping_contract_present=1' "$contract"
+require_contains 'ubuntu_trademark_notice_boundary_contract_present=1' "$contract"
 require_contains 'notice_file_decision_recorded=1' "$contract"
 require_contains 'notice_file_required_decision_recorded=1' "$contract"
 require_contains 'notice_file_content_requirements_recorded=1' "$contract"
@@ -100,6 +103,7 @@ require_contains 'ubuntu_notice_file_decision_contract_present=1' "$doc_license_
 require_contains 'ubuntu_notice_file_decision_contract_present=1' "$third_party_contract"
 require_contains 'ubuntu_notice_file_decision_contract_present=1' "$generated_artifact_contract"
 require_contains 'ubuntu_debian_copyright_notice_mapping_contract_present=1' "$copyright_mapping_contract"
+require_contains 'ubuntu_trademark_notice_boundary_contract_present=1' "$trademark_contract"
 require_contains 'ubuntu_notice_file_decision_contract_present=1' "$license_contract"
 require_contains 'ubuntu_notice_file_decision_contract_present=1' "$readiness"
 require_contains 'docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md' README.md

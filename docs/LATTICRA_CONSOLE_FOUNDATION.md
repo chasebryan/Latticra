@@ -86,6 +86,7 @@ share/latticra/lc/profiles/standalone-console.toml
 share/latticra/lc/profiles/panel-embedded.toml
 share/latticra/lc/profiles/host-embedded-planning.toml
 share/latticra/lc/profiles/os-base-planning.toml
+share/latticra/lc/standalone/contract.toml
 share/latticra/lc/substrate
 share/latticra/lc/host-embedding/contract.toml
 share/latticra/lc/host-inventory/contract.toml
@@ -131,6 +132,7 @@ uninstall
 clear
 lc status
 lc commands
+lc standalone
 lc profiles
 lc receipts
 lc receipt-request
@@ -251,6 +253,52 @@ lc profile custom
 ```
 
 The install engine writes the selected profile into `etc/latticra/lc.toml`, writes install metadata into `share/latticra/lc/install/config.toml`, and installs the preset files under `share/latticra/lc/profiles/`. The command wrapper comes from `lc.install.command_wrapper` and defaults to `latticra-lc`. That wrapper is the standalone LC entrypoint when `lc.install.standalone_console = true`; it remains metadata-only and does not require Panel at runtime. These profiles and install records remain configuration metadata only, and external host commands stay disabled from both Panel and standalone LC.
+
+## Standalone Contract
+
+LC now installs and reports a standalone console contract before standalone use can gain any effectful host or OS authority:
+
+```text
+standalone_console_profile=lc-standalone-console-v0
+standalone_console_status=metadata-only-contract
+standalone_contract_present=1
+standalone_console=1
+standalone_installable=1
+standalone_requires_panel=0
+standalone_command_wrapper=latticra-lc
+standalone_profile_file=profiles/standalone-console.toml
+panel_embedded_console=1
+panel_required_for_runtime=0
+config_path=etc/latticra/lc.toml
+share_path=share/latticra/lc
+command_registry_required=1
+runtime_boundary_required=1
+seal_capability_labels_required=1
+profile_receipt_required=1
+promotion_gate=lc_standalone_console_before_effectful_host_or_os_authority
+command_surface=lc standalone
+related_install_config_command=lc install-config
+related_profile_command=lc profiles
+no_effect=1
+shell_execution_allowed=0
+host_process_launch_allowed=0
+host_file_read_allowed=0
+host_file_write_allowed=0
+host_mutation_allowed=0
+network_allowed=0
+runtime_enforcement_allowed=0
+boot_allowed=0
+production_os_claim=0
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report standalone
+latticra-lc standalone
+```
+
+The standalone contract does not launch a shell, launch host processes, read or write host files, mutate the host, use the network, enforce runtime policy, boot hardware, or claim production OS status.
 
 ## Host Embedding Contract
 
@@ -1020,6 +1068,7 @@ Stage-0 command bindings use these rules:
 
 ```text
 core, panel, and substrate inspection -> authority-check / validation-only
+lc standalone -> authority-check / validation-only
 lc receipts -> authority-check / validation-only
 lc receipt-request -> authority-check / validation-only
 lc receipt-payload -> authority-check / validation-only
@@ -1081,6 +1130,10 @@ command_registry_no_effect=1
 command_registry_host_process_launch_allowed=0
 runtime_boundary_bound=1
 seal_capability_labels_bound=1
+standalone_console_status=metadata-only-standalone-contract-ready
+standalone_contract_present=1
+standalone_installable=1
+standalone_requires_panel=0
 substrate_bridge_status=metadata-bound-ready
 panel_installable=1
 standalone_installable=1

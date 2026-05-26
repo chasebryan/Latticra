@@ -145,8 +145,10 @@ check_contains "LC install profile metadata" 'install_profile = "lc-panel-instal
 check_contains "LC command wrapper metadata" "command_wrapper = \"$LC_COMMAND_WRAPPER\"" "$LC_INSTALL_CONFIG"
 check_contains "LC standalone console metadata" 'standalone_console = true' "$LC_INSTALL_CONFIG"
 check_contains "LC standalone requires Panel disabled" 'standalone_requires_panel = false' "$LC_INSTALL_CONFIG"
+check_contains "LC standalone contract metadata" 'standalone_contract_present = true' "$LC_INSTALL_CONFIG"
 check_contains "LC external host command authority disabled" 'allow_external_host_commands = false' "$LC_INSTALL_CONFIG"
 check_contains "LC install-config registry command" 'name=lc install-config category=core effect=none capability=lc.install.config' "$LC_COMMAND_REGISTRY"
+check_contains "LC standalone registry command" 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' "$LC_COMMAND_REGISTRY"
 check_contains "updater panel-owned config" 'panel_owned = true' "$UPDATER_CONFIG"
 check_contains "updater network authority disabled" 'allow_network_fetch = false' "$UPDATER_CONFIG"
 check_contains "updater apply mode" 'update_apply_mode = "guarded-local-prefix-reinstall"' "$UPDATER_CONFIG"
@@ -154,6 +156,8 @@ check_contains "updater policy name" 'name = "Latticra Panel Updater"' "$UPDATER
 check_contains "updater policy dry-run command" 'preview_command = "updater dry-run"' "$UPDATER_POLICY"
 check_contains "updater policy apply command" 'apply_command = "updater apply"' "$UPDATER_POLICY"
 check_contains "updater policy network authority disabled" 'network_fetch_authority = false' "$UPDATER_POLICY"
+check_contains "updater policy receipt setting" 'write_update_receipt = true' "$UPDATER_POLICY"
+check_contains "updater policy apply mode" 'update_apply_mode = "guarded-local-prefix-reinstall"' "$UPDATER_POLICY"
 
 if [ -x "$USER_BIN/latticra" ]; then
   "$USER_BIN/latticra" status || failures=$((failures + 1))
@@ -161,6 +165,9 @@ if [ -x "$USER_BIN/latticra" ]; then
     check_contains "updater status report" 'LATTICRA PANEL UPDATER' "$TMP_DIR/updater-status.txt"
     check_contains "updater status config path" "config=$UPDATER_CONFIG" "$TMP_DIR/updater-status.txt"
     check_contains "updater status policy path" "policy=$UPDATER_POLICY" "$TMP_DIR/updater-status.txt"
+    check_contains "updater status dry-run command" 'preview_command=updater dry-run' "$TMP_DIR/updater-status.txt"
+    check_contains "updater status apply command" 'apply_command=updater apply' "$TMP_DIR/updater-status.txt"
+    check_contains "updater status network fetch authority disabled" 'network_fetch_authority=0' "$TMP_DIR/updater-status.txt"
     check_contains "updater status network authority disabled" 'network_authority=0' "$TMP_DIR/updater-status.txt"
     check_contains "updater status apply mode" 'update_apply_mode=guarded-local-prefix-reinstall' "$TMP_DIR/updater-status.txt"
   else
@@ -176,6 +183,7 @@ if [ -x "$LC_COMMAND" ]; then
     check_contains "LC wrapper command name" "command_wrapper=$LC_COMMAND_WRAPPER" "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper standalone enabled" 'standalone_console=true' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper standalone requires Panel denied" 'standalone_requires_panel=0' "$TMP_DIR/lc-install-config.txt"
+    check_contains "LC wrapper standalone contract present" 'standalone_contract_present=1' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-install-config.txt"
   else
     echo "failed: $LC_COMMAND_WRAPPER install-config" >&2

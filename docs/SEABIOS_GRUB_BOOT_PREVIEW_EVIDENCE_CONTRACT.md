@@ -164,6 +164,26 @@ disk_image_created=0
 bootable_os_ready=0
 ```
 
+## Boot artifact manifest validation
+
+The no-effect boot artifact manifest validation gate is:
+
+```sh
+sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
+```
+
+It classifies the current fixture and rejects premature bootable, GRUB, QEMU, or production OS claims before a future artifact manifest can be accepted.
+
+```text
+seabios_grub_boot_preview_boot_artifact_manifest_validation_present=1
+boot_artifact_manifest_validation_mode=no-effect-readiness-check
+boot_artifact_manifest_validation_decision=blocked-fixture-only-incomplete
+boot_artifact_manifest_candidate_ready=0
+boot_artifact_manifest_present=0
+bootable_os_ready=0
+production_os_claim=0
+```
+
 ## QEMU argv template
 
 The no-effect QEMU argv template is:
@@ -194,6 +214,7 @@ sh scripts/test-seabios-grub-boot-preview-preflight.sh
 sh scripts/test-seabios-grub-boot-preview-evidence-template.sh
 sh scripts/test-seabios-grub-boot-preview-qemu-argv-template.sh
 sh scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-template.sh
+sh scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
 ```
 
 Expected output:

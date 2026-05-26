@@ -47,6 +47,7 @@ readme_status='docs/status/MACOS_README_INSTALLER_USAGE_STATUS.md'
 transfer_plan='docs/MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md'
 transfer_status='docs/status/MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md'
 noop_script='scripts/macos-reset-uninstall-live-runner-noop-prototype-contract.sh'
+makefile='Makefile'
 
 require_file "$doc"
 require_file "$status"
@@ -58,6 +59,7 @@ require_file "$readme_status"
 require_file "$transfer_plan"
 require_file "$transfer_status"
 require_file "$noop_script"
+require_file "$makefile"
 
 require_contains 'Status: no-effect macOS reset/uninstall live-runner denied-dispatch transcript contract' "$doc"
 require_contains 'sh scripts/macos-reset-uninstall-live-runner-denied-dispatch-transcript-contract.sh' "$doc"
@@ -99,7 +101,7 @@ require_contains 'directory_delete_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
 require_contains 'Add a macOS reset/uninstall live-runner denied-dispatch transcript contract that records the no-op runner denial without enabling deletion.' "$doc"
-require_contains 'Add a macOS reset/uninstall live-runner denied-dispatch review contract that keeps review-only dispatch denial evidence separate from any effects.' "$doc"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-gate contract that requires passed preflight, complete evidence, and explicit effect authorization before dispatch.' "$doc"
 
 require_contains 'Status: no-effect reset/uninstall live-runner denied-dispatch transcript contract status' "$status"
 require_contains 'macos_reset_uninstall_live_runner_denied_dispatch_transcript_contract_present=1' "$status"
@@ -131,7 +133,7 @@ require_contains 'scripts/macos-reset-uninstall-live-runner-denied-dispatch-tran
 require_contains 'docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_DENIED_DISPATCH_TRANSCRIPT_CONTRACT_STATUS.md' "$transfer_plan"
 require_contains 'Current live-runner denied-dispatch transcript lane now present' "$transfer_plan"
 require_contains 'Add a macOS reset/uninstall live-runner denied-dispatch transcript contract that records the no-op runner denial without enabling deletion.' "$transfer_plan"
-require_contains 'Add a macOS reset/uninstall live-runner denied-dispatch review contract that keeps review-only dispatch denial evidence separate from any effects.' "$transfer_plan"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-gate contract that requires passed preflight, complete evidence, and explicit effect authorization before dispatch.' "$transfer_plan"
 
 require_contains 'macos_reset_uninstall_live_runner_denied_dispatch_transcript_contract_present=1' "$transfer_status"
 require_contains 'live_runner_denied_dispatch_transcript_contract_state=recorded-no-effect' "$transfer_status"
@@ -139,7 +141,7 @@ require_contains 'live_runner_denied_dispatch_transcript_stdout_only=1' "$transf
 require_contains 'live_runner_denied_dispatch_transcript_dispatch_denied=1' "$transfer_status"
 require_contains 'Current live-runner denied-dispatch transcript lane' "$transfer_status"
 require_contains 'Add a macOS reset/uninstall live-runner denied-dispatch transcript contract that records the no-op runner denial without enabling deletion.' "$transfer_status"
-require_contains 'Add a macOS reset/uninstall live-runner denied-dispatch review contract that keeps review-only dispatch denial evidence separate from any effects.' "$transfer_status"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-gate contract that requires passed preflight, complete evidence, and explicit effect authorization before dispatch.' "$transfer_status"
 
 require_contains 'MACOS RESET UNINSTALL LIVE RUNNER DENIED DISPATCH TRANSCRIPT CONTRACT' "$script"
 require_contains 'reset_uninstall_live_runner_denied_dispatch_transcript_contract_status=ok' "$script"
@@ -151,7 +153,7 @@ require_contains 'file_delete_performed=0' "$script"
 require_contains 'directory_delete_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-live-runner-denied-dispatch-review-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-gate-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -178,8 +180,10 @@ require_output_contains "$output" 'directory_delete_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'network_performed=0'
 require_output_contains "$output" 'runtime_authority_granted=0'
-require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-denied-dispatch-review-contract'
+require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-gate-contract'
 
+require_contains 'macos-reset-uninstall-live-runner-denied-dispatch-transcript:' "$makefile"
+require_contains 'sh ./scripts/test-macos-reset-uninstall-live-runner-denied-dispatch-transcript-contract.sh' "$makefile"
 require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
 require_contains 'persist-credentials: false' "$workflow"
 require_contains 'sh scripts/test-macos-reset-uninstall-live-runner-denied-dispatch-transcript-contract.sh' "$workflow"
