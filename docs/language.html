@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lat, LIR, and L-UI | Latticra</title>
+  <meta name="description" content="A public guide to the Latticra Lat, LIR, and L-UI no-effect declaration, representation, parsing, and reporting lane.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Lat, LIR, and L-UI">
+  <meta property="og:description" content="No-effect declaration, representation, parser, lowering, and report boundaries for Latticra language work.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="language.html">Language</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="seal.html">Seal</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero language-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Lat, LIR, and L-UI</p>
+        <p class="eyebrow">Declaration and Representation</p>
+        <h1>Lat, LIR, and L-UI</h1>
+        <p class="page-lede">
+          The language lane turns bounded declarations into validated metadata and deterministic reports. It does not execute declarations or grant authority.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell language-intro">
+        <div>
+          <p class="eyebrow">Pipeline Boundary</p>
+          <h2>Parse, validate, lower, report.</h2>
+        </div>
+        <p>
+          The current Lat pipeline composes grammar parsing, semantic validation, Lat-to-LIR lowering, and pipeline reporting while preserving no-effect flags.
+        </p>
+      </div>
+
+      <div class="content-shell language-flow" aria-label="Language pipeline flow">
+        <article class="language-step">
+          <span>01</span>
+          <h3>Lat source</h3>
+          <p>Caller-provided in-memory source bytes, not file I/O.</p>
+        </article>
+        <article class="language-step">
+          <span>02</span>
+          <h3>Parser</h3>
+          <p>Grammar checks, stable errors, source spans, and bounded summaries.</p>
+        </article>
+        <article class="language-step">
+          <span>03</span>
+          <h3>Semantic validation</h3>
+          <p>Deterministic validation before lowering metadata.</p>
+        </article>
+        <article class="language-step">
+          <span>04</span>
+          <h3>LIR lowering</h3>
+          <p>Bounded module, node, edge, and metadata shape.</p>
+        </article>
+        <article class="language-step">
+          <span>05</span>
+          <h3>Report</h3>
+          <p>Status labels, counts, no-effect flags, and source-span metadata.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Layer Roles</p>
+        <h2>Each language layer has a narrow job.</h2>
+        <p>
+          The stack separates declaration language, intermediate representation, and operator-facing surfaces.
+        </p>
+      </div>
+      <div class="content-shell language-card-grid">
+        <article class="language-card language-card-lat">
+          <h3>Lat</h3>
+          <p>Contract and declaration language direction for system intent, validation, and metadata lowering.</p>
+          <a href="LAT_LANGUAGE_GRAMMAR_CONTRACT.md">Lat grammar contract</a>
+        </article>
+        <article class="language-card language-card-lir">
+          <h3>LIR</h3>
+          <p>Small explicit intermediate representation between validated declarations and future implementation stages.</p>
+          <a href="LIR_SHAPE_CONTRACT.md">LIR shape contract</a>
+        </article>
+        <article class="language-card language-card-ui">
+          <h3>L-UI</h3>
+          <p>Operator-visible declaration and reporting surface with parser, source-span, and validation records.</p>
+          <a href="L_UI_PARSER.md">L-UI parser</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell architecture-split">
+        <div class="section-heading">
+          <p class="eyebrow">No-Effect Contract</p>
+          <h2>The language lane is not an executor.</h2>
+          <p>
+            Current language work preserves disabled execution, mutation, server, recovery, and hardware behavior.
+          </p>
+        </div>
+        <div class="architecture-table" role="table" aria-label="Language no-effect boundary">
+          <div role="row">
+            <span role="cell">Allowed now</span>
+            <p role="cell">Parsing, semantic validation, lowering metadata, diagnostics, source spans, counts, and deterministic reports.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Forbidden now</span>
+            <p role="cell">Lat execution, Lat compilation, Lat interpretation, LIR execution, command behavior, file I/O, network I/O, host mutation, and hardware behavior.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Status flags</span>
+            <p role="cell">no_effect=1, execution_allowed=0, mutation_allowed=0, server_allowed=0, recovery_allowed=0, hardware_allowed=0.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Reports</p>
+        <h2>Reports are deterministic orientation surfaces.</h2>
+        <p>
+          Current reports expose status, error labels, module metadata, declaration counts, node and edge counts, semantic validity, no-effect flags, and source-span metadata.
+        </p>
+      </div>
+      <div class="content-shell language-report-grid">
+        <article>stable error labels</article>
+        <article>module metadata</article>
+        <article>declaration counts</article>
+        <article>node and edge counts</article>
+        <article>semantic validity</article>
+        <article>no-effect flags</article>
+        <article>source spans</article>
+        <article>small-buffer failures</article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Checks</p>
+        <h2>Run focused language guards when working on this lane.</h2>
+        <p>
+          These checks are local validation and regression surfaces. They do not enable language execution.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Lat pipeline</h3>
+          <pre><code>sh scripts/test-lat-pipeline.sh
+sh scripts/test-lat-specific-lir-refinement.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>L-UI parser</h3>
+          <pre><code>sh scripts/test-l-ui-parser.sh
+sh scripts/test-l-ui-parser-source-span.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>L-UI rendering</h3>
+          <pre><code>sh scripts/test-l-ui-rendering.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Use the exact contracts for implementation work.</h2>
+        <p>
+          This page summarizes the lane for readers. The source records remain authoritative.
+        </p>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="LAT_PIPELINE_CONTRACT.md"><strong>Lat Pipeline</strong><span>Parse, validate, lower, and report boundary.</span></a>
+        <a href="LAT_TO_LIR_LOWERING_CONTRACT.md"><strong>Lat to LIR</strong><span>Lowering metadata and compatibility expectations.</span></a>
+        <a href="LIR_SHAPE_CONTRACT.md"><strong>LIR Shape</strong><span>Intermediate representation objects, nodes, edges, and flags.</span></a>
+        <a href="L_UI_PARSER.md"><strong>L-UI Parser</strong><span>Parser API, source spans, error labels, and reports.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra language and representation guide.</span>
+      <span><a href="architecture.html">Open system architecture</a></span>
+    </div>
+  </footer>
+</body>
+</html>

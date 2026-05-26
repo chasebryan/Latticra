@@ -3,6 +3,9 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-lat-pipeline.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 cc $CFLAGS \
   -Iinclude \
   src/lat_parser.c \
@@ -12,9 +15,9 @@ cc $CFLAGS \
   src/lat_to_lir.c \
   src/lat_pipeline.c \
   tests/lat_pipeline_invariants.c \
-  -o /tmp/latticra-lat-pipeline-invariants
+  -o "$tmpdir/latticra-lat-pipeline-invariants"
 
-/tmp/latticra-lat-pipeline-invariants
+"$tmpdir/latticra-lat-pipeline-invariants"
 
 cc $CFLAGS \
   -Iinclude \
@@ -25,9 +28,9 @@ cc $CFLAGS \
   src/lat_to_lir.c \
   src/lat_pipeline.c \
   tests/lat_pipeline_hardening_invariants.c \
-  -o /tmp/latticra-lat-pipeline-hardening-invariants
+  -o "$tmpdir/latticra-lat-pipeline-hardening-invariants"
 
-/tmp/latticra-lat-pipeline-hardening-invariants
+"$tmpdir/latticra-lat-pipeline-hardening-invariants"
 
 cc $CFLAGS \
   -Iinclude \
@@ -38,9 +41,9 @@ cc $CFLAGS \
   src/lat_to_lir.c \
   src/lat_pipeline.c \
   tests/lat_pipeline_report_refinement.c \
-  -o /tmp/latticra-lat-pipeline-report-refinement
+  -o "$tmpdir/latticra-lat-pipeline-report-refinement"
 
-/tmp/latticra-lat-pipeline-report-refinement
+"$tmpdir/latticra-lat-pipeline-report-refinement"
 
 cc $CFLAGS \
   -Iinclude \
@@ -55,6 +58,6 @@ cc $CFLAGS \
   src/lat_pipeline_diagnostics_eval.c \
   src/lat_pipeline_diagnostics_report.c \
   tests/lat_pipeline_diagnostic_integration_refinement.c \
-  -o /tmp/latticra-lat-pipeline-diagnostic-integration-refinement
+  -o "$tmpdir/latticra-lat-pipeline-diagnostic-integration-refinement"
 
-/tmp/latticra-lat-pipeline-diagnostic-integration-refinement
+"$tmpdir/latticra-lat-pipeline-diagnostic-integration-refinement"

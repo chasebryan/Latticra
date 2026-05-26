@@ -1,4 +1,4 @@
-.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly nadia-prompt-evaluation-input nadia-prompt-evaluation-runtime-handoff
+.PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly nadia-prompt-evaluation-input nadia-prompt-evaluation-runtime-handoff nadia-prompt-evaluation-invocation
 
 .PHONY: quality quality-worktree quality-safety-guards quality-defensive-threat-model quality-rust-installer quality-panel-installer quality-c-foundation
 
@@ -21,6 +21,8 @@ quality-rust-installer:
 
 quality-panel-installer:
 	python3 scripts/check_latticra_panel_ui_design.py
+	sh ./scripts/test-latticra-panel-lc-install-config.sh
+	sh ./scripts/test-latticra-panel-updater.sh
 	sh ./scripts/test-latticra-panel-local-install-evidence-status.sh
 	sh ./scripts/test-latticra-panel-local-install-public-entrypoint-alignment.sh
 	sh ./scripts/test-latticra-panel-local-uninstall-reset.sh
@@ -121,6 +123,9 @@ nadia-prompt-evaluation-input:
 
 nadia-prompt-evaluation-runtime-handoff:
 	sh ./scripts/nadia-prompt-evaluation-runtime-handoff-contract.sh
+
+nadia-prompt-evaluation-invocation:
+	sh ./scripts/nadia-prompt-evaluation-invocation-contract.sh
 
 .PHONY: seal-policy-denials
 

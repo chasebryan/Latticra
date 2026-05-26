@@ -429,6 +429,7 @@ LC_HOST_EMBEDDING_PROFILE=$(cfg_section lc host_embedding_profile panel-containe
 LC_HOST_EMBEDDING_CONTRACT_PROFILE=$(cfg_section lc host_embedding_contract_profile lc-host-embedding-v0)
 LC_HOST_INVENTORY_CONTRACT_PROFILE=$(cfg_section lc host_inventory_contract_profile lc-host-inventory-v0)
 LC_HOST_ADAPTER_CONTRACT_PROFILE=$(cfg_section lc host_adapter_contract_profile lc-host-adapter-v0)
+LC_RECEIPT_REQUEST_CONTRACT_PROFILE=$(cfg_section lc receipt_request_contract_profile lc-receipt-request-v0)
 LC_RECEIPT_CONTRACT_PROFILE=$(cfg_section lc receipt_contract_profile lc-receipts-v0)
 LC_OS_BASE_CONTRACT_PROFILE=$(cfg_section lc os_base_contract_profile lc-os-base-v0)
 LC_VM_EVIDENCE_CONTRACT_PROFILE=$(cfg_section lc vm_evidence_contract_profile lc-vm-evidence-v0)
@@ -441,10 +442,23 @@ LC_REQUIRE_PROFILE_RECEIPT=$(cfg_section lc require_profile_receipt true)
 LC_REQUIRE_HOST_CONTRACT_RECEIPT=$(cfg_section lc require_host_contract_receipt true)
 LC_REQUIRE_HOST_INVENTORY_RECEIPT=$(cfg_section lc require_host_inventory_receipt true)
 LC_REQUIRE_HOST_ADAPTER_CONTRACT=$(cfg_section lc require_host_adapter_contract true)
+LC_REQUIRE_RECEIPT_REQUEST_CONTRACT=$(cfg_section lc require_receipt_request_contract true)
 LC_REQUIRE_OS_BASE_CONTRACT=$(cfg_section lc require_os_base_contract true)
 LC_REQUIRE_VM_EVIDENCE_CONTRACT=$(cfg_section lc require_vm_evidence_contract true)
 LC_REQUIRE_RUNTIME_BOUNDARY_BINDING=$(cfg_section lc require_runtime_boundary_binding true)
 LC_REQUIRE_SEAL_CAPABILITY_LABELS=$(cfg_section lc require_seal_capability_labels true)
+LC_INSTALL_PROFILE=$(cfg_section lc.install install_profile lc-panel-install-v0)
+LC_INSTALL_MODE=$(cfg_section lc.install install_mode metadata-only-console-foundation)
+LC_INSTALL_CONFIG_PATH=$(cfg_section lc.install config_path etc/latticra/lc.toml)
+LC_INSTALL_SHARE_PATH=$(cfg_section lc.install share_path share/latticra/lc)
+LC_INSTALL_COMMAND_WRAPPER=$(cfg_section lc.install command_wrapper latticra-lc)
+LC_INSTALL_PANEL_EMBEDDED_CONSOLE=$(cfg_section lc.install panel_embedded_console true)
+LC_INSTALL_WRITE_CONFIG_FILE=$(cfg_section lc.install write_config_file true)
+LC_INSTALL_WRITE_PROFILE_PRESETS=$(cfg_section lc.install write_profile_presets true)
+LC_INSTALL_WRITE_COMMAND_REGISTRY=$(cfg_section lc.install write_command_registry true)
+LC_INSTALL_WRITE_CONTRACT_FILES=$(cfg_section lc.install write_contract_files true)
+LC_INSTALL_USER_WRAPPER=$(cfg_section lc.install install_user_wrapper true)
+LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS=$(cfg_section lc.install allow_external_host_commands false)
 
 CREATE_PREFIX_LAYOUT=$(cfg create_prefix_layout true)
 CREATE_COMPONENT_MARKERS=$(cfg create_component_markers true)
@@ -488,6 +502,10 @@ fi
 
 if bool_true "$UPDATER_ALLOW_NETWORK_FETCH"; then
   fail "updater network fetch authority is not implemented in this installer" 78
+fi
+
+if bool_true "$LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS"; then
+  fail "LC install configuration cannot enable external host commands from the Panel" 78
 fi
 
 phase 2 "load component manifest"
@@ -550,6 +568,18 @@ short_name=LC
 component_selected=$LATTICRA_CONSOLE
 configurable=1
 panel_installable=1
+install_profile=$LC_INSTALL_PROFILE
+install_mode=$LC_INSTALL_MODE
+config_path=$LC_INSTALL_CONFIG_PATH
+share_path=$LC_INSTALL_SHARE_PATH
+command_wrapper=$LC_INSTALL_COMMAND_WRAPPER
+panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE
+write_config_file=$LC_INSTALL_WRITE_CONFIG_FILE
+write_profile_presets=$LC_INSTALL_WRITE_PROFILE_PRESETS
+write_command_registry=$LC_INSTALL_WRITE_COMMAND_REGISTRY
+write_contract_files=$LC_INSTALL_WRITE_CONTRACT_FILES
+install_user_wrapper=$LC_INSTALL_USER_WRAPPER
+allow_external_host_commands=$LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS
 profile=$LC_PROFILE
 panel_console_bridge=$LC_PANEL_BRIDGE
 command_registry_profile=$LC_COMMAND_REGISTRY_PROFILE
@@ -558,6 +588,7 @@ host_embedding_profile=$LC_HOST_EMBEDDING_PROFILE
 host_embedding_contract_profile=$LC_HOST_EMBEDDING_CONTRACT_PROFILE
 host_inventory_contract_profile=$LC_HOST_INVENTORY_CONTRACT_PROFILE
 host_adapter_contract_profile=$LC_HOST_ADAPTER_CONTRACT_PROFILE
+receipt_request_contract_profile=$LC_RECEIPT_REQUEST_CONTRACT_PROFILE
 receipt_contract_profile=$LC_RECEIPT_CONTRACT_PROFILE
 os_base_contract_profile=$LC_OS_BASE_CONTRACT_PROFILE
 vm_evidence_contract_profile=$LC_VM_EVIDENCE_CONTRACT_PROFILE
@@ -569,6 +600,7 @@ profile_receipt_required=$LC_REQUIRE_PROFILE_RECEIPT
 host_contract_receipt_required=$LC_REQUIRE_HOST_CONTRACT_RECEIPT
 host_inventory_receipt_required=$LC_REQUIRE_HOST_INVENTORY_RECEIPT
 host_adapter_contract_required=$LC_REQUIRE_HOST_ADAPTER_CONTRACT
+receipt_request_contract_required=$LC_REQUIRE_RECEIPT_REQUEST_CONTRACT
 os_base_contract_required=$LC_REQUIRE_OS_BASE_CONTRACT
 vm_evidence_contract_required=$LC_REQUIRE_VM_EVIDENCE_CONTRACT
 runtime_boundary_binding_required=$LC_REQUIRE_RUNTIME_BOUNDARY_BINDING
@@ -579,9 +611,12 @@ host_embedding_status=$LC_HOST_EMBEDDING_PROFILE
 host_embedding_contract_status=metadata-only-contract
 host_inventory_contract_status=metadata-only-contract
 host_adapter_contract_status=metadata-only-contract
+receipt_request_contract_status=metadata-only-contract
 receipt_contract_status=metadata-only-contract
 os_base_contract_status=metadata-only-contract
 vm_evidence_contract_status=metadata-only-contract
+seal_signature_request_ready=0
+seal_signature_request_present=0
 seal_signature_present=0
 receipt_signed=0
 os_base_status=$LC_OS_BASE_PROFILE
@@ -601,7 +636,7 @@ public_name=Nadia
 interactive_name=Nadia
 implementation_name=Nadia Witness Foundation
 documentation_code_name=Nadia Witness Foundation
-stage=29-prompt-evaluation-runtime-handoff-contract
+stage=30-prompt-evaluation-invocation-contract
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -1123,6 +1158,28 @@ runtime_invocation_requested=0
 requires_prompt_evaluation_input_contract=1
 requires_future_prompt_evaluation_invocation_contract=1
 prompt_evaluation_runtime_handoff_promotion_allowed=0
+prompt_evaluation_invocation_contract_stage=30-prompt-evaluation-invocation-contract
+prompt_evaluation_invocation_contract_command=scripts/nadia-prompt-evaluation-invocation-contract.sh
+installed_prompt_evaluation_invocation_contract_command=latticra-nadia prompt-evaluation-invocation
+prompt_evaluation_invocation_stage=contract-only
+prompt_evaluation_invocation_contract_status=contract_only
+prompt_evaluation_invocation_authority=0
+prompt_evaluation_invocation_allowed=0
+prompt_evaluation_invocation_performed=0
+prompt_evaluation_invocation_metadata_present=1
+prompt_evaluation_invocation_family=operator-reviewed-prompt-evaluation-invocation
+prompt_evaluation_invocation_format=contract-only-offline-evaluation-invocation
+prompt_evaluation_invocation_decision=blocked_contract_only
+prompt_evaluation_invocation_plan_recorded=1
+prompt_evaluation_invocation_result_recorded=0
+prompt_evaluation_invocation_runtime_invoked=0
+prompt_evaluation_invocation_request_created=0
+prompt_evaluation_invocation_request_submitted=0
+prompt_evaluation_invocation_request_scheduled=0
+prompt_evaluation_invocation_request_queued=0
+requires_prompt_evaluation_runtime_handoff_contract=1
+requires_future_prompt_evaluation_result_contract=1
+prompt_evaluation_invocation_promotion_allowed=0
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -1161,6 +1218,7 @@ if bool_true "$DRY_RUN"; then
   log "[dry-run] would create $PREFIX"
   log "[dry-run] would install payload tree to $PAYLOAD_DIR"
   log "[dry-run] would install user commands in $USER_BIN"
+  log "[dry-run] would install LC config profile $LC_INSTALL_PROFILE"
   log "[dry-run] would install Nadia offline AI foundation when enabled"
   log "[dry-run] would build/copy Latticra Panel when cargo is available"
   log "[dry-run] updater would reuse guarded installer engine from $UPDATER_SOURCE_STRATEGY"
@@ -1184,6 +1242,10 @@ mode=$MODE
 result=ok
 install_prefix=$PREFIX
 dry_run=true
+lc_install_profile=$LC_INSTALL_PROFILE
+lc_install_mode=$LC_INSTALL_MODE
+lc_install_user_wrapper=$LC_INSTALL_USER_WRAPPER
+lc_allow_external_host_commands=$LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS
 updater_panel_owned=1
 updater_source_strategy=$UPDATER_SOURCE_STRATEGY
 updater_update_channel=$UPDATER_UPDATE_CHANNEL
@@ -1215,7 +1277,9 @@ if bool_true "$CREATE_PREFIX_LAYOUT"; then
     "$PREFIX/share/latticra/lc/commands" \
     "$PREFIX/share/latticra/lc/host-adapter" \
     "$PREFIX/share/latticra/lc/host-embedding" \
+    "$PREFIX/share/latticra/lc/install" \
     "$PREFIX/share/latticra/lc/profiles" \
+    "$PREFIX/share/latticra/lc/receipt-request" \
     "$PREFIX/share/latticra/lc/substrate" \
     "$PREFIX/share/latticra/lir-contracts" \
     "$PREFIX/share/latticra/receipts" \
@@ -1349,10 +1413,13 @@ fi
 if bool_true "$LATTICRA_CONSOLE"; then
   mkdir -p \
     "$PREFIX/share/latticra/lc/commands" \
+    "$PREFIX/share/latticra/lc/host-adapter" \
     "$PREFIX/share/latticra/lc/host-embedding" \
     "$PREFIX/share/latticra/lc/host-inventory" \
+    "$PREFIX/share/latticra/lc/install" \
     "$PREFIX/share/latticra/lc/os-base" \
     "$PREFIX/share/latticra/lc/profiles" \
+    "$PREFIX/share/latticra/lc/receipt-request" \
     "$PREFIX/share/latticra/lc/receipts" \
     "$PREFIX/share/latticra/lc/substrate" \
     "$PREFIX/share/latticra/lc/vm-evidence"
@@ -1360,7 +1427,19 @@ if bool_true "$LATTICRA_CONSOLE"; then
 name = "Latticra Console"
 short_name = "LC"
 component_key = "latticra_console"
-mode = "metadata-only-console-foundation"
+mode = "$LC_INSTALL_MODE"
+install_profile = "$LC_INSTALL_PROFILE"
+install_mode = "$LC_INSTALL_MODE"
+config_path = "$LC_INSTALL_CONFIG_PATH"
+share_path = "$LC_INSTALL_SHARE_PATH"
+command_wrapper = "$LC_INSTALL_COMMAND_WRAPPER"
+panel_embedded_console = $LC_INSTALL_PANEL_EMBEDDED_CONSOLE
+write_config_file = $LC_INSTALL_WRITE_CONFIG_FILE
+write_profile_presets = $LC_INSTALL_WRITE_PROFILE_PRESETS
+write_command_registry = $LC_INSTALL_WRITE_COMMAND_REGISTRY
+write_contract_files = $LC_INSTALL_WRITE_CONTRACT_FILES
+install_user_wrapper = $LC_INSTALL_USER_WRAPPER
+allow_external_host_commands = $LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS
 profile = "$LC_PROFILE"
 panel_console_bridge = "$LC_PANEL_BRIDGE"
 command_registry_profile = "$LC_COMMAND_REGISTRY_PROFILE"
@@ -1369,6 +1448,7 @@ host_embedding_profile = "$LC_HOST_EMBEDDING_PROFILE"
 host_embedding_contract_profile = "$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
 host_inventory_contract_profile = "$LC_HOST_INVENTORY_CONTRACT_PROFILE"
 host_adapter_contract_profile = "$LC_HOST_ADAPTER_CONTRACT_PROFILE"
+receipt_request_contract_profile = "$LC_RECEIPT_REQUEST_CONTRACT_PROFILE"
 receipt_contract_profile = "$LC_RECEIPT_CONTRACT_PROFILE"
 os_base_contract_profile = "$LC_OS_BASE_CONTRACT_PROFILE"
 vm_evidence_contract_profile = "$LC_VM_EVIDENCE_CONTRACT_PROFILE"
@@ -1380,6 +1460,7 @@ profile_receipt_required = $LC_REQUIRE_PROFILE_RECEIPT
 host_contract_receipt_required = $LC_REQUIRE_HOST_CONTRACT_RECEIPT
 host_inventory_receipt_required = $LC_REQUIRE_HOST_INVENTORY_RECEIPT
 host_adapter_contract_required = $LC_REQUIRE_HOST_ADAPTER_CONTRACT
+receipt_request_contract_required = $LC_REQUIRE_RECEIPT_REQUEST_CONTRACT
 os_base_contract_required = $LC_REQUIRE_OS_BASE_CONTRACT
 vm_evidence_contract_required = $LC_REQUIRE_VM_EVIDENCE_CONTRACT
 runtime_boundary_binding_required = $LC_REQUIRE_RUNTIME_BOUNDARY_BINDING
@@ -1390,9 +1471,12 @@ host_embedding_status = "$LC_HOST_EMBEDDING_PROFILE"
 host_embedding_contract_status = "metadata-only-contract"
 host_inventory_contract_status = "metadata-only-contract"
 host_adapter_contract_status = "metadata-only-contract"
+receipt_request_contract_status = "metadata-only-contract"
 receipt_contract_status = "metadata-only-contract"
 os_base_contract_status = "metadata-only-contract"
 vm_evidence_contract_status = "metadata-only-contract"
+seal_signature_request_ready = false
+seal_signature_request_present = false
 seal_signature_present = false
 receipt_signed = false
 os_base_status = "$LC_OS_BASE_PROFILE"
@@ -1407,6 +1491,27 @@ runtime_enforcement_allowed = false
 boot_allowed = false
 future_os_base_claim = "planned_not_claimed"
 LCCONF
+  write_file "$PREFIX/share/latticra/lc/install/config.toml" 0644 <<LCINSTALL
+install_profile = "$LC_INSTALL_PROFILE"
+install_mode = "$LC_INSTALL_MODE"
+component_key = "latticra_console"
+component_selected = $LATTICRA_CONSOLE
+config_path = "$LC_INSTALL_CONFIG_PATH"
+share_path = "$LC_INSTALL_SHARE_PATH"
+command_wrapper = "$LC_INSTALL_COMMAND_WRAPPER"
+panel_embedded_console = $LC_INSTALL_PANEL_EMBEDDED_CONSOLE
+write_config_file = $LC_INSTALL_WRITE_CONFIG_FILE
+write_profile_presets = $LC_INSTALL_WRITE_PROFILE_PRESETS
+write_command_registry = $LC_INSTALL_WRITE_COMMAND_REGISTRY
+write_contract_files = $LC_INSTALL_WRITE_CONTRACT_FILES
+install_user_wrapper = $LC_INSTALL_USER_WRAPPER
+allow_external_host_commands = $LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS
+external_host_process_launch_allowed = false
+host_mutation_allowed = false
+network_allowed = false
+runtime_enforcement_allowed = false
+boot_allowed = false
+LCINSTALL
   write_file "$PREFIX/share/latticra/lc/profiles/hosted-reference.toml" 0644 <<'LCPROFILE'
 profile = "hosted_reference"
 label = "Hosted Reference"
@@ -1417,6 +1522,7 @@ host_embedding_profile = "not-embedded"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 host_adapter_contract_profile = "lc-host-adapter-v0"
+receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
 vm_evidence_contract_profile = "lc-vm-evidence-v0"
@@ -1428,6 +1534,7 @@ profile_receipt_required = true
 host_contract_receipt_required = true
 host_inventory_receipt_required = true
 host_adapter_contract_required = true
+receipt_request_contract_required = true
 os_base_contract_required = true
 vm_evidence_contract_required = true
 runtime_boundary_binding_required = true
@@ -1448,6 +1555,7 @@ host_embedding_profile = "panel-contained"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 host_adapter_contract_profile = "lc-host-adapter-v0"
+receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
 vm_evidence_contract_profile = "lc-vm-evidence-v0"
@@ -1459,6 +1567,7 @@ profile_receipt_required = true
 host_contract_receipt_required = true
 host_inventory_receipt_required = true
 host_adapter_contract_required = true
+receipt_request_contract_required = true
 os_base_contract_required = true
 vm_evidence_contract_required = true
 runtime_boundary_binding_required = true
@@ -1479,6 +1588,7 @@ host_embedding_profile = "host-embedded-planning"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 host_adapter_contract_profile = "lc-host-adapter-v0"
+receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
 vm_evidence_contract_profile = "lc-vm-evidence-v0"
@@ -1490,6 +1600,7 @@ profile_receipt_required = true
 host_contract_receipt_required = true
 host_inventory_receipt_required = true
 host_adapter_contract_required = true
+receipt_request_contract_required = true
 os_base_contract_required = true
 vm_evidence_contract_required = true
 runtime_boundary_binding_required = true
@@ -1510,6 +1621,7 @@ host_embedding_profile = "host-embedded-planning"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 host_adapter_contract_profile = "lc-host-adapter-v0"
+receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
 vm_evidence_contract_profile = "lc-vm-evidence-v0"
@@ -1521,6 +1633,7 @@ profile_receipt_required = true
 host_contract_receipt_required = true
 host_inventory_receipt_required = true
 host_adapter_contract_required = true
+receipt_request_contract_required = true
 os_base_contract_required = true
 vm_evidence_contract_required = true
 runtime_boundary_binding_required = true
@@ -1617,6 +1730,41 @@ network_allowed = false
 runtime_enforcement_allowed = false
 boot_allowed = false
 LC_HOST_ADAPTER
+  write_file "$PREFIX/share/latticra/lc/receipt-request/contract.toml" 0644 <<LC_RECEIPT_REQUEST
+contract_name = "Latticra Console Seal Receipt Request Contract"
+request_profile = "$LC_RECEIPT_REQUEST_CONTRACT_PROFILE"
+request_contract_status = "metadata-only"
+request_contract_present = true
+receipt_contract_profile = "$LC_RECEIPT_CONTRACT_PROFILE"
+signature_request_profile = "latticra-seal-signature-request/0.1"
+requested_receipt_profile = "latticra-seal-verified-receipt/0.1"
+requested_capability = "verified-receipt-report"
+requested_surfaces = "profile,host-contract,host-inventory,host-adapter,runtime-boundary"
+receipt_payload_profile = "$LC_RECEIPT_CONTRACT_PROFILE"
+receipt_payload_hash_recorded = false
+receipt_payload_path_recorded = false
+seal_signature_planned = true
+seal_signature_request_ready = false
+seal_signature_request_present = false
+seal_signing_authority_present = false
+seal_signer_handoff_allowed = false
+seal_signing_operation_allowed = false
+receipt_write_allowed = false
+receipt_signed = false
+receipt_verification_allowed = false
+promotion_gate = "lc_receipt_request_review_before_signing"
+command_surface = "lc receipt-request"
+related_contract_command = "lc receipts"
+no_effect = true
+file_write_allowed = false
+host_process_launch_allowed = false
+host_file_read_allowed = false
+host_file_write_allowed = false
+host_mutation_allowed = false
+network_allowed = false
+runtime_enforcement_allowed = false
+boot_allowed = false
+LC_RECEIPT_REQUEST
   write_file "$PREFIX/share/latticra/lc/receipts/contract.toml" 0644 <<LC_RECEIPTS
 contract_name = "Latticra Console Receipt Contract"
 receipt_profile = "$LC_RECEIPT_CONTRACT_PROFILE"
@@ -1625,8 +1773,12 @@ profile_receipt_required = $LC_REQUIRE_PROFILE_RECEIPT
 host_embedding_contract_receipt_required = $LC_REQUIRE_HOST_CONTRACT_RECEIPT
 host_inventory_contract_receipt_required = $LC_REQUIRE_HOST_INVENTORY_RECEIPT
 host_adapter_contract_receipt_required = $LC_REQUIRE_HOST_ADAPTER_CONTRACT
+receipt_request_contract_required = $LC_REQUIRE_RECEIPT_REQUEST_CONTRACT
+receipt_request_contract_present = true
 runtime_boundary_receipt_required = true
 seal_capability_labels_required = true
+signature_request_profile = "latticra-seal-signature-request/0.1"
+receipt_request_command = "lc receipt-request"
 seal_signature_planned = true
 seal_signature_present = false
 seal_signing_authority_present = false
@@ -1746,6 +1898,11 @@ requirements for profile, host-contract, host-inventory, host-adapter, and
 Runtime Boundary receipts. It does not sign receipts or grant Seal signing
 authority.
 
+The LC receipt-request lane includes a contract file at
+share/latticra/lc/receipt-request/contract.toml. It records the future Seal
+signature request profile and requested verified-receipt capability, but it does
+not write receipts, invoke a signer, perform a signature, or verify a receipt.
+
 The OS-base lane includes a planning contract at
 share/latticra/lc/os-base/contract.toml. It records the evidence required before
 LC can advance toward boot-adjacent work, and it grants no boot, kernel,
@@ -1771,6 +1928,7 @@ name=lc status category=core effect=none capability=lc.core.status
 name=lc commands category=core effect=none capability=lc.core.registry
 name=lc profiles category=core effect=none capability=lc.core.profiles
 name=lc receipts category=core effect=none capability=lc.receipts.inspect
+name=lc receipt-request category=core effect=none capability=lc.receipt.request
 name=lc substrate category=substrate effect=none capability=lc.substrate.inspect
 name=lc host category=host effect=future-gated capability=lc.host.inspect
 name=lc host-contract category=host effect=none capability=lc.host.contract
@@ -1830,7 +1988,8 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/prompt-token-sequence" \
     "$PREFIX/share/latticra/nadia/context-window-assembly" \
     "$PREFIX/share/latticra/nadia/prompt-evaluation-input" \
-    "$PREFIX/share/latticra/nadia/prompt-evaluation-runtime-handoff"
+    "$PREFIX/share/latticra/nadia/prompt-evaluation-runtime-handoff" \
+    "$PREFIX/share/latticra/nadia/prompt-evaluation-invocation"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia Witness Foundation"
@@ -1838,8 +1997,8 @@ public_name = "Nadia"
 interactive_name = "Nadia"
 implementation_name = "Nadia Witness Foundation"
 documentation_code_name = "Nadia Witness Foundation"
-stage = "29-prompt-evaluation-runtime-handoff-contract"
-mode = "offline-prompt-evaluation-runtime-handoff-contract"
+stage = "30-prompt-evaluation-invocation-contract"
+mode = "offline-prompt-evaluation-invocation-contract"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -2348,6 +2507,28 @@ runtime_invocation_requested = false
 requires_prompt_evaluation_input_contract = true
 requires_future_prompt_evaluation_invocation_contract = true
 prompt_evaluation_runtime_handoff_promotion_allowed = false
+prompt_evaluation_invocation_contract_stage = "30-prompt-evaluation-invocation-contract"
+prompt_evaluation_invocation_contract_command = "scripts/nadia-prompt-evaluation-invocation-contract.sh"
+installed_prompt_evaluation_invocation_contract_command = "latticra-nadia prompt-evaluation-invocation"
+prompt_evaluation_invocation_stage = "contract-only"
+prompt_evaluation_invocation_contract_status = "contract_only"
+prompt_evaluation_invocation_authority = false
+prompt_evaluation_invocation_allowed = false
+prompt_evaluation_invocation_performed = false
+prompt_evaluation_invocation_metadata_present = true
+prompt_evaluation_invocation_family = "operator-reviewed-prompt-evaluation-invocation"
+prompt_evaluation_invocation_format = "contract-only-offline-evaluation-invocation"
+prompt_evaluation_invocation_decision = "blocked_contract_only"
+prompt_evaluation_invocation_plan_recorded = true
+prompt_evaluation_invocation_result_recorded = false
+prompt_evaluation_invocation_runtime_invoked = false
+prompt_evaluation_invocation_request_created = false
+prompt_evaluation_invocation_request_submitted = false
+prompt_evaluation_invocation_request_scheduled = false
+prompt_evaluation_invocation_request_queued = false
+requires_prompt_evaluation_runtime_handoff_contract = true
+requires_future_prompt_evaluation_result_contract = true
+prompt_evaluation_invocation_promotion_allowed = false
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -2368,13 +2549,13 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-29 prompt-evaluation runtime handoff contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-30 prompt-evaluation invocation contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, tokenization-boundary, tokenizer-specification, tokenizer-manifest, tokenizer-artifact-inventory, tokenizer-artifact-measurement, tokenizer-artifact-verification, tokenizer-artifact-binding, tokenizer-runtime-attachment, prompt-tokenization, prompt-token-sequence, context-window-assembly, prompt-evaluation-input, prompt-evaluation-runtime-handoff, and productivity-ledger paths.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, tokenization-boundary, tokenizer-specification, tokenizer-manifest, tokenizer-artifact-inventory, tokenizer-artifact-measurement, tokenizer-artifact-verification, tokenizer-artifact-binding, tokenizer-runtime-attachment, prompt-tokenization, prompt-token-sequence, context-window-assembly, prompt-evaluation-input, prompt-evaluation-runtime-handoff, prompt-evaluation-invocation, and productivity-ledger paths.
 
-It can generate local context packs when the operator runs latticra-nadia context-pack and contract metadata when the operator runs latticra-nadia prompt-evaluation-runtime-handoff. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, create prompt tokens, record prompt token sequences, record prompt token IDs, record prompt token order, record prompt token offsets, assemble context windows, create prompt evaluation inputs, create prompt evaluation runtime handoff requests, perform runtime handoff, invoke runtimes, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn runtime processes, create runtime sessions, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source. Prompt-evaluation-input metadata records future prompt evaluation runtime handoff requirements, and prompt-evaluation-runtime-handoff metadata records future prompt evaluation invocation requirements; neither grants prompt evaluation, dialogue generation, inference, runtime handoff, runtime invocation, or tool execution authority.
+It can generate local context packs when the operator runs latticra-nadia context-pack and contract metadata when the operator runs latticra-nadia prompt-evaluation-invocation. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, create prompt tokens, record prompt token sequences, record prompt token IDs, record prompt token order, record prompt token offsets, assemble context windows, create prompt evaluation inputs, create prompt evaluation runtime handoff requests, create prompt evaluation invocation requests, perform runtime handoff, invoke runtimes, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn runtime processes, create runtime sessions, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source. Prompt-evaluation-input metadata records future prompt evaluation runtime handoff requirements, prompt-evaluation-runtime-handoff metadata records future prompt evaluation invocation requirements, and prompt-evaluation-invocation metadata records future prompt evaluation result requirements; none grants prompt evaluation, dialogue generation, inference, runtime handoff, runtime invocation, or tool execution authority.
 NADIAREADME
 fi
 
@@ -2498,7 +2679,7 @@ echo "payload=\$PREFIX/lib/latticra"
 echo "No compiled lat binary was found yet."
 LATWRAP
 
-  if bool_true "$LATTICRA_CONSOLE"; then
+  if bool_true "$LATTICRA_CONSOLE" && bool_true "$LC_INSTALL_USER_WRAPPER"; then
     write_managed_file "$USER_BIN/latticra-lc" 0755 <<LCWRAP
 #!/usr/bin/env sh
 # LATTICRA_INSTALLER_MANAGED=1
@@ -2546,6 +2727,7 @@ render_lc_man() {
   echo "  latticra-lc commands"
   echo "  latticra-lc profiles"
   echo "  latticra-lc receipts"
+  echo "  latticra-lc receipt-request"
   echo "  latticra-lc substrate"
   echo "  latticra-lc host"
   echo "  latticra-lc host-contract"
@@ -2643,6 +2825,18 @@ case "\${1:-status}" in
     echo "commands=\$LC_DIR/commands/seed-registry.txt"
     echo "configurable=1"
     echo "panel_installable=1"
+    echo "install_profile=$LC_INSTALL_PROFILE"
+    echo "install_mode=$LC_INSTALL_MODE"
+    echo "config_path=$LC_INSTALL_CONFIG_PATH"
+    echo "share_path=$LC_INSTALL_SHARE_PATH"
+    echo "command_wrapper=$LC_INSTALL_COMMAND_WRAPPER"
+    echo "panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE"
+    echo "write_config_file=$LC_INSTALL_WRITE_CONFIG_FILE"
+    echo "write_profile_presets=$LC_INSTALL_WRITE_PROFILE_PRESETS"
+    echo "write_command_registry=$LC_INSTALL_WRITE_COMMAND_REGISTRY"
+    echo "write_contract_files=$LC_INSTALL_WRITE_CONTRACT_FILES"
+    echo "install_user_wrapper=$LC_INSTALL_USER_WRAPPER"
+    echo "allow_external_host_commands=$LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS"
     echo "profile=$LC_PROFILE"
     echo "panel_console_bridge=$LC_PANEL_BRIDGE"
     echo "command_registry_profile=$LC_COMMAND_REGISTRY_PROFILE"
@@ -2651,6 +2845,7 @@ case "\${1:-status}" in
     echo "host_embedding_contract_profile=$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
     echo "host_inventory_contract_profile=$LC_HOST_INVENTORY_CONTRACT_PROFILE"
     echo "host_adapter_contract_profile=$LC_HOST_ADAPTER_CONTRACT_PROFILE"
+    echo "receipt_request_contract_profile=$LC_RECEIPT_REQUEST_CONTRACT_PROFILE"
     echo "receipt_contract_profile=$LC_RECEIPT_CONTRACT_PROFILE"
     echo "os_base_contract_profile=$LC_OS_BASE_CONTRACT_PROFILE"
     echo "vm_evidence_contract_profile=$LC_VM_EVIDENCE_CONTRACT_PROFILE"
@@ -2662,6 +2857,7 @@ case "\${1:-status}" in
     echo "host_contract_receipt_required=$LC_REQUIRE_HOST_CONTRACT_RECEIPT"
     echo "host_inventory_receipt_required=$LC_REQUIRE_HOST_INVENTORY_RECEIPT"
     echo "host_adapter_contract_required=$LC_REQUIRE_HOST_ADAPTER_CONTRACT"
+    echo "receipt_request_contract_required=$LC_REQUIRE_RECEIPT_REQUEST_CONTRACT"
     echo "os_base_contract_required=$LC_REQUIRE_OS_BASE_CONTRACT"
     echo "vm_evidence_contract_required=$LC_REQUIRE_VM_EVIDENCE_CONTRACT"
     echo "runtime_boundary_binding_required=$LC_REQUIRE_RUNTIME_BOUNDARY_BINDING"
@@ -2672,9 +2868,12 @@ case "\${1:-status}" in
     echo "host_embedding_contract_status=metadata-only-contract"
     echo "host_inventory_contract_status=metadata-only-contract"
     echo "host_adapter_contract_status=metadata-only-contract"
+    echo "receipt_request_contract_status=metadata-only-contract"
     echo "receipt_contract_status=metadata-only-contract"
     echo "os_base_contract_status=metadata-only-contract"
     echo "vm_evidence_contract_status=metadata-only-contract"
+    echo "seal_signature_request_ready=0"
+    echo "seal_signature_request_present=0"
     echo "seal_signature_present=0"
     echo "receipt_signed=0"
     echo "os_base_status=$LC_OS_BASE_PROFILE"
@@ -2726,8 +2925,12 @@ case "\${1:-status}" in
     echo "host_embedding_contract_receipt_required=$LC_REQUIRE_HOST_CONTRACT_RECEIPT"
     echo "host_inventory_contract_receipt_required=$LC_REQUIRE_HOST_INVENTORY_RECEIPT"
     echo "host_adapter_contract_receipt_required=1"
+    echo "receipt_request_contract_required=1"
+    echo "receipt_request_contract_present=1"
     echo "runtime_boundary_receipt_required=1"
     echo "seal_capability_labels_required=1"
+    echo "signature_request_profile=latticra-seal-signature-request/0.1"
+    echo "receipt_request_command=lc receipt-request"
     echo "seal_signature_planned=1"
     echo "seal_signature_present=0"
     echo "seal_signing_authority_present=0"
@@ -2739,6 +2942,42 @@ case "\${1:-status}" in
     echo "receipt_surfaces=profile,host-contract,host-inventory,host-adapter,runtime-boundary"
     echo "promotion_gate=lc_receipts_before_host_adapter_or_os_base"
     echo "command_surface=lc receipts"
+    echo "no_effect=1"
+    echo "file_write_allowed=0"
+    echo "host_process_launch_allowed=0"
+    echo "host_file_read_allowed=0"
+    echo "host_file_write_allowed=0"
+    echo "host_mutation_allowed=0"
+    echo "network_allowed=0"
+    echo "runtime_enforcement_allowed=0"
+    echo "boot_allowed=0"
+    ;;
+  receipt-request|seal-receipt-request)
+    echo "LATTICRA CONSOLE SEAL RECEIPT REQUEST CONTRACT"
+    echo "request_profile=$LC_RECEIPT_REQUEST_CONTRACT_PROFILE"
+    echo "request_contract_status=metadata-only"
+    echo "contract_file=\$LC_DIR/receipt-request/contract.toml"
+    echo "request_contract_present=1"
+    echo "receipt_contract_profile=$LC_RECEIPT_CONTRACT_PROFILE"
+    echo "signature_request_profile=latticra-seal-signature-request/0.1"
+    echo "requested_receipt_profile=latticra-seal-verified-receipt/0.1"
+    echo "requested_capability=verified-receipt-report"
+    echo "requested_surfaces=profile,host-contract,host-inventory,host-adapter,runtime-boundary"
+    echo "receipt_payload_profile=$LC_RECEIPT_CONTRACT_PROFILE"
+    echo "receipt_payload_hash_recorded=0"
+    echo "receipt_payload_path_recorded=0"
+    echo "seal_signature_planned=1"
+    echo "seal_signature_request_ready=0"
+    echo "seal_signature_request_present=0"
+    echo "seal_signing_authority_present=0"
+    echo "seal_signer_handoff_allowed=0"
+    echo "seal_signing_operation_allowed=0"
+    echo "receipt_write_allowed=0"
+    echo "receipt_signed=0"
+    echo "receipt_verification_allowed=0"
+    echo "promotion_gate=lc_receipt_request_review_before_signing"
+    echo "command_surface=lc receipt-request"
+    echo "related_contract_command=lc receipts"
     echo "no_effect=1"
     echo "file_write_allowed=0"
     echo "host_process_launch_allowed=0"
@@ -2939,7 +3178,7 @@ case "\${1:-status}" in
     echo "\$LC_DIR"
     ;;
   *)
-    echo "usage: latticra-lc {status|help|man|boundary|commands|substrate|host|host-contract|host-inventory|host-adapter|receipts|os-contract|vm-evidence|os|path}" >&2
+    echo "usage: latticra-lc {status|help|man|boundary|commands|substrate|host|host-contract|host-inventory|host-adapter|receipt-request|receipts|os-contract|vm-evidence|os|path}" >&2
     exit 64
     ;;
 esac
@@ -3001,8 +3240,8 @@ case "\${1:-status}" in
     echo "interactive_name=Nadia"
     echo "implementation_name=Nadia Witness Foundation"
     echo "documentation_code_name=Nadia Witness Foundation"
-    echo "stage=29-prompt-evaluation-runtime-handoff-contract"
-    echo "mode=offline-prompt-evaluation-runtime-handoff-contract"
+    echo "stage=30-prompt-evaluation-invocation-contract"
+    echo "mode=offline-prompt-evaluation-invocation-contract"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "context_packs=\$NADIA_DIR/context-packs"
@@ -3035,6 +3274,7 @@ case "\${1:-status}" in
     echo "context_window_assembly_contracts=\$NADIA_DIR/context-window-assembly"
     echo "prompt_evaluation_input_contracts=\$NADIA_DIR/prompt-evaluation-input"
     echo "prompt_evaluation_runtime_handoff_contracts=\$NADIA_DIR/prompt-evaluation-runtime-handoff"
+    echo "prompt_evaluation_invocation_contracts=\$NADIA_DIR/prompt-evaluation-invocation"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "prompt_plan_command=latticra-nadia prompt-plan"
@@ -3539,6 +3779,28 @@ case "\${1:-status}" in
     echo "requires_prompt_evaluation_input_contract=1"
     echo "requires_future_prompt_evaluation_invocation_contract=1"
     echo "prompt_evaluation_runtime_handoff_promotion_allowed=0"
+    echo "prompt_evaluation_invocation_contract_stage=30-prompt-evaluation-invocation-contract"
+    echo "prompt_evaluation_invocation_contract_command=latticra-nadia prompt-evaluation-invocation"
+    echo "installed_prompt_evaluation_invocation_contract_command=latticra-nadia prompt-evaluation-invocation"
+    echo "prompt_evaluation_invocation_stage=contract-only"
+    echo "prompt_evaluation_invocation_contract_status=contract_only"
+    echo "prompt_evaluation_invocation_authority=0"
+    echo "prompt_evaluation_invocation_allowed=0"
+    echo "prompt_evaluation_invocation_performed=0"
+    echo "prompt_evaluation_invocation_metadata_present=1"
+    echo "prompt_evaluation_invocation_family=operator-reviewed-prompt-evaluation-invocation"
+    echo "prompt_evaluation_invocation_format=contract-only-offline-evaluation-invocation"
+    echo "prompt_evaluation_invocation_decision=blocked_contract_only"
+    echo "prompt_evaluation_invocation_plan_recorded=1"
+    echo "prompt_evaluation_invocation_result_recorded=0"
+    echo "prompt_evaluation_invocation_runtime_invoked=0"
+    echo "prompt_evaluation_invocation_request_created=0"
+    echo "prompt_evaluation_invocation_request_submitted=0"
+    echo "prompt_evaluation_invocation_request_scheduled=0"
+    echo "prompt_evaluation_invocation_request_queued=0"
+    echo "requires_prompt_evaluation_runtime_handoff_contract=1"
+    echo "requires_future_prompt_evaluation_result_contract=1"
+    echo "prompt_evaluation_invocation_promotion_allowed=0"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -3968,11 +4230,25 @@ case "\${1:-status}" in
       --prompt-evaluation-input "\$NADIA_DIR/prompt-evaluation-input/latest-prompt-evaluation-input-contract.txt" \
       --output "\$NADIA_DIR/prompt-evaluation-runtime-handoff"
     ;;
+  prompt-evaluation-invocation|evaluation-invocation|prompt-invocation|prompt-evaluation-invocation-contract)
+    shift || true
+    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-prompt-evaluation-invocation-contract.sh"
+    if [ ! -f "\$SCRIPT" ]; then
+      echo "Nadia prompt-evaluation invocation contract script not found: \$SCRIPT" >&2
+      exit 66
+    fi
+    if [ "\$#" -gt 0 ]; then
+      exec sh "\$SCRIPT" "\$@"
+    fi
+    exec sh "\$SCRIPT" \
+      --prompt-evaluation-runtime-handoff "\$NADIA_DIR/prompt-evaluation-runtime-handoff/latest-prompt-evaluation-runtime-handoff-contract.txt" \
+      --output "\$NADIA_DIR/prompt-evaluation-invocation"
+    ;;
   path)
     echo "\$NADIA_DIR"
     ;;
   *)
-    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|tokenizer-specification|tokenizer-manifest|tokenizer-artifact-inventory|tokenizer-artifact-measurement|tokenizer-artifact-verification|tokenizer-artifact-binding|tokenizer-runtime-attachment|prompt-tokenization|prompt-token-sequence|context-window-assembly|prompt-evaluation-input|prompt-evaluation-runtime-handoff|path}" >&2
+    echo "usage: latticra-nadia {status|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|tokenizer-specification|tokenizer-manifest|tokenizer-artifact-inventory|tokenizer-artifact-measurement|tokenizer-artifact-verification|tokenizer-artifact-binding|tokenizer-runtime-attachment|prompt-tokenization|prompt-token-sequence|context-window-assembly|prompt-evaluation-input|prompt-evaluation-runtime-handoff|prompt-evaluation-invocation|path}" >&2
     exit 64
     ;;
 esac
@@ -4092,6 +4368,13 @@ allow_network_effect=$ALLOW_NETWORK_EFFECT
 require_component_manifest=$REQUIRE_COMPONENT_MANIFEST
 require_artifact_measurements=$REQUIRE_ARTIFACT_MEASUREMENTS
 require_verification_policy_metadata=$REQUIRE_VERIFICATION_POLICY_METADATA
+lc_install_profile=$LC_INSTALL_PROFILE
+lc_install_mode=$LC_INSTALL_MODE
+lc_install_config_path=$LC_INSTALL_CONFIG_PATH
+lc_install_share_path=$LC_INSTALL_SHARE_PATH
+lc_install_command_wrapper=$LC_INSTALL_COMMAND_WRAPPER
+lc_install_user_wrapper=$LC_INSTALL_USER_WRAPPER
+lc_allow_external_host_commands=$LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS
 updater_panel_owned=1
 updater_source_strategy=$UPDATER_SOURCE_STRATEGY
 updater_update_channel=$UPDATER_UPDATE_CHANNEL

@@ -95,6 +95,8 @@ stage_4_macos_reset_uninstall_dry_run_contract=present
 stage_4_macos_reset_uninstall_live_target_classifier=present
 stage_4_macos_reset_uninstall_dry_run_planner=present
 stage_4_macos_reset_uninstall_absence_report_contract=present
+stage_4_macos_reset_uninstall_receipt_schema_contract=present
+stage_4_macos_reset_uninstall_implementation_gate_contract=present
 stage_5_codesigning_notarization_plan=future
 stage_6_controlled_os_integration_contracts=future
 ```
@@ -232,6 +234,22 @@ scripts/macos-reset-uninstall-absence-report-contract.sh
 docs/status/MACOS_RESET_UNINSTALL_ABSENCE_REPORT_CONTRACT_STATUS.md
 ```
 
+The Stage 4 macOS reset/uninstall receipt-schema contract is implemented by:
+
+```text
+docs/MACOS_RESET_UNINSTALL_RECEIPT_SCHEMA_CONTRACT.md
+scripts/macos-reset-uninstall-receipt-schema-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_RECEIPT_SCHEMA_CONTRACT_STATUS.md
+```
+
+The Stage 4 macOS reset/uninstall implementation-gate contract is implemented by:
+
+```text
+docs/MACOS_RESET_UNINSTALL_IMPLEMENTATION_GATE_CONTRACT.md
+scripts/macos-reset-uninstall-implementation-gate-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_IMPLEMENTATION_GATE_CONTRACT_STATUS.md
+```
+
 ## App Bundle Direction
 
 The macOS Panel should be represented as a managed user-local app bundle:
@@ -352,11 +370,11 @@ macos_production_ready=0
 Previous recommended lane now present:
 
 ```text
-Add a macOS reset/uninstall absence-report contract
+Add a macOS reset/uninstall implementation-gate contract that keeps deletion disabled until receipt, absence, planner, classifier, and operator intent evidence exist.
 ```
 
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall receipt-schema contract for reset/uninstall receipts outside the removed prefix.
+Add a macOS reset/uninstall operator-intent contract for explicit future live reset/uninstall approval evidence.
 ```

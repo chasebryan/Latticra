@@ -1,7 +1,7 @@
 # Latticra Console Foundation
 
 Status: Stage-0 foundation
-Scope: LC identity, Panel installability, configurable metadata, substrate bridge, host-embedding plan, host-adapter contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
+Scope: LC identity, Panel installability, configurable metadata, substrate bridge, host-embedding plan, host-adapter contract, Seal receipt-request contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
 
 ## Purpose
 
@@ -38,6 +38,7 @@ host_embedding_profile=panel-contained
 host_embedding_contract_profile=lc-host-embedding-v0
 host_inventory_contract_profile=lc-host-inventory-v0
 host_adapter_contract_profile=lc-host-adapter-v0
+receipt_request_contract_profile=lc-receipt-request-v0
 receipt_contract_profile=lc-receipts-v0
 os_base_contract_profile=lc-os-base-v0
 vm_evidence_contract_profile=lc-vm-evidence-v0
@@ -49,6 +50,7 @@ profile_receipt_required=true
 host_contract_receipt_required=true
 host_inventory_receipt_required=true
 host_adapter_contract_required=true
+receipt_request_contract_required=true
 os_base_contract_required=true
 vm_evidence_contract_required=true
 runtime_boundary_binding_required=true
@@ -69,6 +71,7 @@ share/latticra/lc/substrate
 share/latticra/lc/host-embedding/contract.toml
 share/latticra/lc/host-inventory/contract.toml
 share/latticra/lc/host-adapter/contract.toml
+share/latticra/lc/receipt-request/contract.toml
 share/latticra/lc/receipts/contract.toml
 share/latticra/lc/os-base/contract.toml
 share/latticra/lc/vm-evidence/contract.toml
@@ -102,6 +105,7 @@ lc status
 lc commands
 lc profiles
 lc receipts
+lc receipt-request
 lc substrate
 lc host
 lc host-contract
@@ -143,6 +147,7 @@ host_embedding_profile = "panel-contained"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 host_adapter_contract_profile = "lc-host-adapter-v0"
+receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
 vm_evidence_contract_profile = "lc-vm-evidence-v0"
@@ -155,6 +160,7 @@ require_profile_receipt = true
 require_host_contract_receipt = true
 require_host_inventory_receipt = true
 require_host_adapter_contract = true
+require_receipt_request_contract = true
 require_os_base_contract = true
 require_vm_evidence_contract = true
 require_runtime_boundary_binding = true
@@ -328,8 +334,12 @@ profile_receipt_required=1
 host_embedding_contract_receipt_required=1
 host_inventory_contract_receipt_required=1
 host_adapter_contract_receipt_required=1
+receipt_request_contract_required=1
+receipt_request_contract_present=1
 runtime_boundary_receipt_required=1
 seal_capability_labels_required=1
+signature_request_profile=latticra-seal-signature-request/0.1
+receipt_request_command=lc receipt-request
 receipt_surfaces=profile,host-contract,host-inventory,host-adapter,runtime-boundary
 promotion_gate=lc_receipts_before_host_adapter_or_os_base
 ```
@@ -352,6 +362,52 @@ receipt_signed=0
 receipt_hash_recorded=0
 receipt_path_recorded=0
 file_write_allowed=0
+```
+
+## Seal Receipt Request Contract
+
+LC now installs and reports a metadata-only request contract for the future Seal-signed LC receipt path:
+
+```text
+request_profile=lc-receipt-request-v0
+request_contract_status=metadata-only
+request_contract_present=1
+receipt_contract_profile=lc-receipts-v0
+signature_request_profile=latticra-seal-signature-request/0.1
+requested_receipt_profile=latticra-seal-verified-receipt/0.1
+requested_capability=verified-receipt-report
+requested_surfaces=profile,host-contract,host-inventory,host-adapter,runtime-boundary
+receipt_payload_profile=lc-receipts-v0
+receipt_payload_hash_recorded=0
+receipt_payload_path_recorded=0
+promotion_gate=lc_receipt_request_review_before_signing
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report receipt-request
+latticra-lc receipt-request
+```
+
+The request contract is a bridge to Seal metadata only. It explicitly denies signing and file authority:
+
+```text
+seal_signature_planned=1
+seal_signature_request_ready=0
+seal_signature_request_present=0
+seal_signing_authority_present=0
+seal_signer_handoff_allowed=0
+seal_signing_operation_allowed=0
+receipt_write_allowed=0
+receipt_signed=0
+receipt_verification_allowed=0
+file_write_allowed=0
+host_process_launch_allowed=0
+host_mutation_allowed=0
+network_allowed=0
+runtime_enforcement_allowed=0
+boot_allowed=0
 ```
 
 ## OS-Base Planning Contract
@@ -487,6 +543,7 @@ Stage-0 command bindings use these rules:
 ```text
 core, panel, and substrate inspection -> authority-check / validation-only
 lc receipts -> authority-check / validation-only
+lc receipt-request -> authority-check / validation-only
 lc host-contract -> authority-check / validation-only
 lc host-inventory -> authority-check / validation-only
 lc host-adapter -> authority-check / validation-only
@@ -543,6 +600,8 @@ substrate_bridge_status=metadata-bound-ready
 panel_installable=1
 host_adapter_contract_status=metadata-only-contract-ready
 host_adapter_contract_present=1
+receipt_request_contract_status=metadata-only-contract-ready
+receipt_request_contract_present=1
 os_base_contract_status=metadata-only-contract-ready
 os_base_contract_present=1
 vm_evidence_contract_status=metadata-only-contract-ready
@@ -574,6 +633,7 @@ LC Stage-0 does not:
 
 ## Next Slices
 
-1. Add the first Seal-signed LC receipt path only after signing authority is implemented and gated.
-2. Add a host-adapter artifact schema only after the host-adapter contract is receipted.
-3. Add a VM evidence artifact schema only after the VM evidence contract is receipted.
+1. Bind the LC receipt-request contract to a Seal signature-request artifact only after signing authority is implemented and gated.
+2. Add the first Seal-signed LC receipt path only after the receipt request is reviewed and receipted.
+3. Add a host-adapter artifact schema only after the host-adapter contract is receipted.
+4. Add a VM evidence artifact schema only after the VM evidence contract is receipted.

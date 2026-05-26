@@ -21,8 +21,8 @@ static int default_request_targets_syscall_table_ready(void) {
         "default summary request status");
     EXPECT_TRUE(request.lifecycle_request.gate == LATTICRA_KERNEL_STATE_GATE_ALLOW,
         "summary default lifecycle gate allow");
-    EXPECT_TRUE(request.lifecycle_request.target_state == LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY,
-        "summary default target syscall-table-ready");
+    EXPECT_TRUE(request.lifecycle_request.target_state == LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY,
+        "summary default target vfs-namespace-ready");
     EXPECT_TRUE(request.lifecycle_request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
         "summary default max steps");
     EXPECT_TRUE(strcmp(request.registry_request.kernel_request.kernel_id, "latticra-kernel-seed") == 0,
@@ -43,14 +43,14 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.summary_status, "summary-ready") == 0,
         "summary ready");
-    EXPECT_TRUE(strcmp(result.final_state, "syscall-table-ready") == 0,
-        "summary final state syscall-table-ready");
+    EXPECT_TRUE(strcmp(result.final_state, "vfs-namespace-ready") == 0,
+        "summary final state vfs-namespace-ready");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "summary lifecycle complete");
-    EXPECT_TRUE(result.lifecycle_step_count == 6u,
-        "summary six lifecycle steps");
-    EXPECT_TRUE(result.lifecycle_state_change_count == 6u,
-        "summary six lifecycle state changes");
+    EXPECT_TRUE(result.lifecycle_step_count == 8u,
+        "summary eight lifecycle steps");
+    EXPECT_TRUE(result.lifecycle_state_change_count == 8u,
+        "summary eight lifecycle state changes");
     EXPECT_TRUE(result.lifecycle_state_mutated == 1,
         "summary lifecycle state mutated internally");
     EXPECT_TRUE(result.external_effect_performed == 0,
@@ -67,6 +67,18 @@ static int summary_reaches_ready_without_authority(void) {
         "summary process spawn denied");
     EXPECT_TRUE(result.syscall_dispatch_allowed == 0,
         "summary syscall dispatch denied");
+    EXPECT_TRUE(result.ipc_send_allowed == 0,
+        "summary ipc send denied");
+    EXPECT_TRUE(result.ipc_receive_allowed == 0,
+        "summary ipc receive denied");
+    EXPECT_TRUE(result.filesystem_lookup_allowed == 0,
+        "summary filesystem lookup denied");
+    EXPECT_TRUE(result.filesystem_read_allowed == 0,
+        "summary filesystem read denied");
+    EXPECT_TRUE(result.filesystem_write_allowed == 0,
+        "summary filesystem write denied");
+    EXPECT_TRUE(result.namespace_mutation_allowed == 0,
+        "summary namespace mutation denied");
     EXPECT_TRUE(result.no_external_effect_chain == 1,
         "summary no external effect chain");
     EXPECT_TRUE(result.entry_count == LATTICRA_KERNEL_SUBSYSTEM_COUNT,
@@ -110,14 +122,14 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.entries[4].authority_status, "process-execution-denied") == 0,
         "summary process authority denied");
-    EXPECT_TRUE(strcmp(result.entries[4].lifecycle_relation, "process-table-ready") == 0,
-        "summary process table ready");
+    EXPECT_TRUE(strcmp(result.entries[4].lifecycle_relation, "ipc-table-ready") == 0,
+        "summary ipc table ready");
     EXPECT_TRUE(result.entries[4].lifecycle_ready == 1,
         "summary process lifecycle ready");
     EXPECT_TRUE(strcmp(result.entries[5].authority_status, "filesystem-denied") == 0,
         "summary filesystem authority denied");
-    EXPECT_TRUE(strcmp(result.entries[5].lifecycle_relation, "filesystem-syscall-metadata-ready") == 0,
-        "summary filesystem syscall metadata ready");
+    EXPECT_TRUE(strcmp(result.entries[5].lifecycle_relation, "vfs-namespace-ready") == 0,
+        "summary filesystem vfs namespace ready");
     EXPECT_TRUE(result.entries[5].lifecycle_ready == 1,
         "summary filesystem lifecycle ready");
     EXPECT_TRUE(strcmp(result.entries[6].authority_status, "network-denied") == 0,
@@ -191,13 +203,13 @@ static int summary_report_is_deterministic(void) {
         "summary report title");
     EXPECT_TRUE(strstr(report, "summary_status=summary-ready\n") != 0,
         "summary report status");
-    EXPECT_TRUE(strstr(report, "final_state=syscall-table-ready\n") != 0,
+    EXPECT_TRUE(strstr(report, "final_state=vfs-namespace-ready\n") != 0,
         "summary report final state");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "summary report lifecycle complete");
-    EXPECT_TRUE(strstr(report, "lifecycle_step_count=6\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_step_count=8\n") != 0,
         "summary report step count");
-    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=6\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=8\n") != 0,
         "summary report state changes");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "summary report external effect");
@@ -211,6 +223,18 @@ static int summary_report_is_deterministic(void) {
         "summary report process spawn denied");
     EXPECT_TRUE(strstr(report, "syscall_dispatch_allowed=0\n") != 0,
         "summary report syscall dispatch denied");
+    EXPECT_TRUE(strstr(report, "ipc_send_allowed=0\n") != 0,
+        "summary report ipc send denied");
+    EXPECT_TRUE(strstr(report, "ipc_receive_allowed=0\n") != 0,
+        "summary report ipc receive denied");
+    EXPECT_TRUE(strstr(report, "filesystem_lookup_allowed=0\n") != 0,
+        "summary report filesystem lookup denied");
+    EXPECT_TRUE(strstr(report, "filesystem_read_allowed=0\n") != 0,
+        "summary report filesystem read denied");
+    EXPECT_TRUE(strstr(report, "filesystem_write_allowed=0\n") != 0,
+        "summary report filesystem write denied");
+    EXPECT_TRUE(strstr(report, "namespace_mutation_allowed=0\n") != 0,
+        "summary report namespace mutation denied");
     EXPECT_TRUE(strstr(report, "no_external_effect_chain=1\n") != 0,
         "summary report no external effect chain");
     EXPECT_TRUE(strstr(report, "entry_count=9\n") != 0,
@@ -221,8 +245,10 @@ static int summary_report_is_deterministic(void) {
         "summary report scheduler relation");
     EXPECT_TRUE(strstr(report, "subsystem[3].lifecycle_relation=memory-map-ready\n") != 0,
         "summary report memory relation");
-    EXPECT_TRUE(strstr(report, "subsystem[4].lifecycle_relation=process-table-ready\n") != 0,
-        "summary report process relation");
+    EXPECT_TRUE(strstr(report, "subsystem[4].lifecycle_relation=ipc-table-ready\n") != 0,
+        "summary report ipc relation");
+    EXPECT_TRUE(strstr(report, "subsystem[5].lifecycle_relation=vfs-namespace-ready\n") != 0,
+        "summary report vfs relation");
     EXPECT_TRUE(strstr(report, "subsystem[6].lifecycle_relation=network-syscall-metadata-ready\n") != 0,
         "summary report network relation");
     return 0;

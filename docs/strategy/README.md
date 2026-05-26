@@ -1,7 +1,7 @@
 # Latticra Strategy Index
 
 Status: active strategy index
-Last updated: 2026-05-25 19:51 CDT
+Last updated: 2026-05-25 20:25 CDT
 Scope: dated strategy records, mission alignment, review cadence, and quality expectations.
 
 ## Purpose
@@ -42,6 +42,18 @@ Latest strategy posture refresh:
 
 ```text
 2026-05-25-1951-cdt-strategy-posture-refresh.md
+```
+
+Latest capability promotion gate map:
+
+```text
+2026-05-25-2017-cdt-capability-promotion-gate-map.md
+```
+
+Latest capability promotion packet template:
+
+```text
+2026-05-25-2025-cdt-capability-promotion-packet-template.md
 ```
 
 Current operating rule:

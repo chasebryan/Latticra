@@ -51,13 +51,19 @@ require_contains 'Fedora endorsement' docs/FEDORA_READINESS_PLAN.md
 require_contains 'Fedora allowed license posture' docs/FEDORA_READINESS_PLAN.md
 require_contains 'BuildRequires completeness' docs/FEDORA_READINESS_PLAN.md
 require_contains 'mock build readiness' docs/FEDORA_READINESS_PLAN.md
-require_contains 'final_state=syscall-table-ready' docs/FEDORA_READINESS_PLAN.md
+require_contains 'final_state=vfs-namespace-ready' docs/FEDORA_READINESS_PLAN.md
 require_contains 'external_effect_performed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'scheduler_execution_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'memory_allocation_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'process_spawn_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'syscall_dispatch_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'ipc_send_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'ipc_receive_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'filesystem_lookup_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'filesystem_read_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'filesystem_write_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'namespace_mutation_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'not bootable' docs/FEDORA_READINESS_PLAN.md
 require_contains 'not a Fedora derivative' docs/FEDORA_READINESS_PLAN.md
 require_contains 'Phase 1: Fedora build lane' docs/FEDORA_READINESS_PLAN.md

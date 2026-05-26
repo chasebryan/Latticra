@@ -29,6 +29,10 @@ static latticra_lat_pipeline_result_t ok_pipeline(void) {
     pipeline.status = LATTICRA_STATUS_OK;
     pipeline.error = LATTICRA_LAT_PIPELINE_OK;
     pipeline.parse_error = LATTICRA_LAT_PARSE_OK;
+    pipeline.semantic_error = LATTICRA_LAT_SEMANTIC_OK;
+    pipeline.model_error = LATTICRA_LAT_MODEL_OK;
+    pipeline.lowering_error = LATTICRA_LAT_TO_LIR_OK;
+    pipeline.lir_error = LATTICRA_LIR_OK;
     strcpy(pipeline.module_name, "RuntimeEvidenceModule");
     pipeline.source_len = 256u;
     pipeline.span.start_offset = 25u;
@@ -100,6 +104,10 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(result.record.lat_pipeline_parse_error == LATTICRA_LAT_PARSE_OK, "pipeline parse error copied");
     EXPECT_TRUE(result.record.lat_pipeline_span.start_line == 2u, "pipeline span line copied");
     EXPECT_TRUE(result.record.lat_pipeline_span.start_column == 1u, "pipeline span column copied");
+    EXPECT_TRUE(result.record.lat_pipeline_semantic_error == LATTICRA_LAT_SEMANTIC_OK, "pipeline semantic error copied");
+    EXPECT_TRUE(result.record.lat_pipeline_model_error == LATTICRA_LAT_MODEL_OK, "pipeline model error copied");
+    EXPECT_TRUE(result.record.lat_pipeline_lowering_error == LATTICRA_LAT_TO_LIR_OK, "pipeline lowering error copied");
+    EXPECT_TRUE(result.record.lat_pipeline_lir_error == LATTICRA_LIR_OK, "pipeline lir error copied");
     EXPECT_TRUE(result.record.lat_pipeline_semantic_valid == 1, "pipeline semantic valid copied");
     EXPECT_TRUE(result.record.lat_pipeline_source_len == 256u, "pipeline source length copied");
     EXPECT_TRUE(result.record.lat_pipeline_node_count == 29u, "pipeline node count copied");
@@ -121,8 +129,10 @@ static int runtime_boundary_denies_failed_lat_pipeline_metadata(void) {
     latticra_lat_pipeline_result_t pipeline = ok_pipeline();
     latticra_runtime_boundary_request_t request;
     latticra_runtime_boundary_result_t result;
+    char report[LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX];
 
     pipeline.error = LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK;
+    pipeline.semantic_error = LATTICRA_LAT_SEMANTIC_UNKNOWN_TRANSITION_SOURCE;
     pipeline.semantic_valid = 0;
     pipeline.span.start_offset = 54u;
     pipeline.span.end_offset = 54u;
@@ -153,10 +163,14 @@ static int runtime_boundary_denies_failed_lat_pipeline_metadata(void) {
     EXPECT_TRUE(result.record.lat_pipeline_error == LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_OK, "failed pipeline error copied");
     EXPECT_TRUE(result.record.lat_pipeline_span.start_line == 3u, "failed pipeline span line copied");
     EXPECT_TRUE(result.record.lat_pipeline_span.start_column == 3u, "failed pipeline span column copied");
+    EXPECT_TRUE(result.record.lat_pipeline_semantic_error == LATTICRA_LAT_SEMANTIC_UNKNOWN_TRANSITION_SOURCE, "failed semantic error copied");
     EXPECT_TRUE(result.record.lat_pipeline_semantic_valid == 0, "failed semantic flag copied");
     EXPECT_TRUE(result.record.lat_pipeline_comment_count == 1u, "failed pipeline comment count copied");
     EXPECT_TRUE(result.record.lat_pipeline_first_comment_span.start_line == 1u, "failed pipeline comment line copied");
     EXPECT_TRUE(result.record.lat_pipeline_first_comment_span.start_column == 1u, "failed pipeline comment column copied");
+    EXPECT_TRUE(latticra_runtime_boundary_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "failed pipeline report status ok");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_error=semantic_not_ok\n") != 0, "failed pipeline error report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_semantic_error=unknown_transition_source\n") != 0, "failed semantic error report present");
     return 0;
 }
 
@@ -210,6 +224,43 @@ static int runtime_boundary_denies_parse_failed_lat_pipeline_metadata(void) {
     return 0;
 }
 
+static int runtime_boundary_denies_model_failed_lat_pipeline_metadata(void) {
+    latticra_runtime_boundary_authority_summary_t authority = ok_authority();
+    latticra_lat_pipeline_result_t pipeline = ok_pipeline();
+    latticra_runtime_boundary_request_t request;
+    latticra_runtime_boundary_result_t result;
+    char report[LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX];
+
+    pipeline.error = LATTICRA_LAT_PIPELINE_MODEL_NOT_OK;
+    pipeline.model_error = LATTICRA_LAT_MODEL_UNSUPPORTED_CLAUSE;
+    pipeline.lowering_error = LATTICRA_LAT_TO_LIR_MODEL_NOT_OK;
+    pipeline.lir_error = LATTICRA_LIR_UNSUPPORTED_NODE_KIND;
+
+    memset(&request, 0, sizeof(request));
+    strcpy(request.runtime_id, "runtime-lat-pipeline-model-failed");
+    request.request_kind = LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE;
+    request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
+    request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;
+    request.operator_confirmation = LATTICRA_RUNTIME_BOUNDARY_OPERATOR_NOT_APPLICABLE;
+    request.authority = &authority;
+    request.lat_pipeline = &pipeline;
+
+    EXPECT_TRUE(latticra_runtime_boundary_classify(&request, &result) == LATTICRA_STATUS_OK, "model failed pipeline classification status ok");
+    EXPECT_TRUE(result.record.policy == LATTICRA_RUNTIME_BOUNDARY_POLICY_DENY, "model failed pipeline denied");
+    EXPECT_TRUE(result.record.denial == LATTICRA_RUNTIME_BOUNDARY_DENIAL_LIR_FAILED, "model failed pipeline downstream reason");
+    EXPECT_TRUE(result.record.lat_pipeline_error == LATTICRA_LAT_PIPELINE_MODEL_NOT_OK, "model failed pipeline error copied");
+    EXPECT_TRUE(result.record.lat_pipeline_model_error == LATTICRA_LAT_MODEL_UNSUPPORTED_CLAUSE, "model failed model error copied");
+    EXPECT_TRUE(result.record.lat_pipeline_lowering_error == LATTICRA_LAT_TO_LIR_MODEL_NOT_OK, "model failed lowering error copied");
+    EXPECT_TRUE(result.record.lat_pipeline_lir_error == LATTICRA_LIR_UNSUPPORTED_NODE_KIND, "model failed lir error copied");
+
+    EXPECT_TRUE(latticra_runtime_boundary_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "model failed pipeline report status ok");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_error=model_not_ok\n") != 0, "model failed pipeline error report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_model_error=unsupported_clause\n") != 0, "model failed model error report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_lowering_error=model_not_ok\n") != 0, "model failed lowering error report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_lir_error=unsupported_node_kind\n") != 0, "model failed lir error report present");
+    return 0;
+}
+
 static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     latticra_runtime_boundary_authority_summary_t authority = ok_authority();
     latticra_lat_pipeline_result_t pipeline = ok_pipeline();
@@ -236,6 +287,10 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_pipeline_parse_error=ok\n") != 0, "pipeline parse error report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_span_start_line=2\n") != 0, "pipeline span line report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_span_start_column=1\n") != 0, "pipeline span column report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_semantic_error=ok\n") != 0, "pipeline semantic error report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_model_error=ok\n") != 0, "pipeline model error report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_lowering_error=ok\n") != 0, "pipeline lowering error report present");
+    EXPECT_TRUE(strstr(report, "lat_pipeline_lir_error=ok\n") != 0, "pipeline lir error report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_semantic_valid=1\n") != 0, "pipeline semantic report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_source_len=256\n") != 0, "pipeline source length report present");
     EXPECT_TRUE(strstr(report, "lat_pipeline_node_count=29\n") != 0, "pipeline node count report present");
@@ -279,6 +334,7 @@ int main(void) {
     if (runtime_boundary_allows_valid_lat_pipeline_metadata() != 0) return 1;
     if (runtime_boundary_denies_failed_lat_pipeline_metadata() != 0) return 1;
     if (runtime_boundary_denies_parse_failed_lat_pipeline_metadata() != 0) return 1;
+    if (runtime_boundary_denies_model_failed_lat_pipeline_metadata() != 0) return 1;
     if (runtime_boundary_reports_lat_pipeline_evidence() != 0) return 1;
     if (runtime_boundary_keeps_lat_lir_execution_future_gated() != 0) return 1;
 

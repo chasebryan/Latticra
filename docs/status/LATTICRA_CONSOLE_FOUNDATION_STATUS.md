@@ -1,8 +1,8 @@
 # Latticra Console Foundation Status
 
 Status: active Stage-0 foundation
-Date: 2026-05-25
-Scope: LC C report surface, Panel installability, local-prefix metadata, host-adapter contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
+Date: 2026-05-26
+Scope: LC C report surface, Panel installability, local-prefix metadata, host-adapter contract, Seal receipt-request contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
 
 ## Current Evidence
 
@@ -34,6 +34,12 @@ host_adapter_contract_status=metadata-only-contract
 host_adapter_contract_present=1
 host_adapter_contract_command=lc host-adapter
 host_adapter_contract_profile=lc-host-adapter-v0
+receipt_request_contract_status=metadata-only-contract
+receipt_request_contract_present=1
+receipt_request_contract_command=lc receipt-request
+receipt_request_contract_profile=lc-receipt-request-v0
+seal_signature_request_present=0
+receipt_write_allowed=0
 os_base_contract_status=metadata-only-contract
 os_base_contract_present=1
 os_base_contract_command=lc os-contract

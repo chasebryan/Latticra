@@ -182,14 +182,95 @@ impl Default for Components {
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(default)]
+pub struct LatticraConsoleInstallConfig {
+    pub install_profile: String,
+    pub install_mode: String,
+    pub config_path: String,
+    pub share_path: String,
+    pub command_wrapper: String,
+    pub panel_embedded_console: bool,
+    pub write_config_file: bool,
+    pub write_profile_presets: bool,
+    pub write_command_registry: bool,
+    pub write_contract_files: bool,
+    pub install_user_wrapper: bool,
+    pub allow_external_host_commands: bool,
+}
+
+impl Default for LatticraConsoleInstallConfig {
+    fn default() -> Self {
+        Self {
+            install_profile: "lc-panel-install-v0".to_owned(),
+            install_mode: "metadata-only-console-foundation".to_owned(),
+            config_path: "etc/latticra/lc.toml".to_owned(),
+            share_path: "share/latticra/lc".to_owned(),
+            command_wrapper: "latticra-lc".to_owned(),
+            panel_embedded_console: true,
+            write_config_file: true,
+            write_profile_presets: true,
+            write_command_registry: true,
+            write_contract_files: true,
+            install_user_wrapper: true,
+            allow_external_host_commands: false,
+        }
+    }
+}
+
+impl LatticraConsoleInstallConfig {
+    fn validate(&self) -> Result<(), String> {
+        if self.install_profile.trim().is_empty() {
+            return Err("LC install profile must not be empty.".to_owned());
+        }
+        if self.install_mode.trim().is_empty() {
+            return Err("LC install mode must not be empty.".to_owned());
+        }
+        if self.config_path.trim().is_empty() {
+            return Err("LC config path must not be empty.".to_owned());
+        }
+        if self.share_path.trim().is_empty() {
+            return Err("LC share path must not be empty.".to_owned());
+        }
+        if self.command_wrapper.trim().is_empty() {
+            return Err("LC command wrapper must not be empty.".to_owned());
+        }
+        if self.command_wrapper.contains('/')
+            || self.command_wrapper.split_whitespace().count() != 1
+        {
+            return Err("LC command wrapper must be a single command name.".to_owned());
+        }
+        for (label, raw_path) in [
+            ("LC config path", self.config_path.as_str()),
+            ("LC share path", self.share_path.as_str()),
+        ] {
+            let path = Path::new(raw_path);
+            if path.is_absolute() || path_has_parent_reference(path) {
+                return Err(format!(
+                    "{label} must be a relative path under the install prefix."
+                ));
+            }
+        }
+        if self.allow_external_host_commands {
+            return Err(
+                "LC install configuration cannot enable external host commands from the Panel."
+                    .to_owned(),
+            );
+        }
+        Ok(())
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(default)]
 pub struct LatticraConsoleConfig {
     pub profile: LatticraConsoleProfile,
+    pub install: LatticraConsoleInstallConfig,
     pub command_registry_profile: String,
     pub substrate_bridge_profile: String,
     pub host_embedding_profile: String,
     pub host_embedding_contract_profile: String,
     pub host_inventory_contract_profile: String,
     pub host_adapter_contract_profile: String,
+    pub receipt_request_contract_profile: String,
     pub receipt_contract_profile: String,
     pub os_base_contract_profile: String,
     pub vm_evidence_contract_profile: String,
@@ -202,6 +283,7 @@ pub struct LatticraConsoleConfig {
     pub require_host_contract_receipt: bool,
     pub require_host_inventory_receipt: bool,
     pub require_host_adapter_contract: bool,
+    pub require_receipt_request_contract: bool,
     pub require_os_base_contract: bool,
     pub require_vm_evidence_contract: bool,
     pub require_runtime_boundary_binding: bool,
@@ -212,12 +294,14 @@ impl Default for LatticraConsoleConfig {
     fn default() -> Self {
         let mut config = Self {
             profile: LatticraConsoleProfile::default(),
+            install: LatticraConsoleInstallConfig::default(),
             command_registry_profile: "c-static-table".to_owned(),
             substrate_bridge_profile: "metadata-bound".to_owned(),
             host_embedding_profile: "panel-contained".to_owned(),
             host_embedding_contract_profile: "lc-host-embedding-v0".to_owned(),
             host_inventory_contract_profile: "lc-host-inventory-v0".to_owned(),
             host_adapter_contract_profile: "lc-host-adapter-v0".to_owned(),
+            receipt_request_contract_profile: "lc-receipt-request-v0".to_owned(),
             receipt_contract_profile: "lc-receipts-v0".to_owned(),
             os_base_contract_profile: "lc-os-base-v0".to_owned(),
             vm_evidence_contract_profile: "lc-vm-evidence-v0".to_owned(),
@@ -230,6 +314,7 @@ impl Default for LatticraConsoleConfig {
             require_host_contract_receipt: true,
             require_host_inventory_receipt: true,
             require_host_adapter_contract: true,
+            require_receipt_request_contract: true,
             require_os_base_contract: true,
             require_vm_evidence_contract: true,
             require_runtime_boundary_binding: true,
@@ -271,6 +356,7 @@ impl LatticraConsoleConfig {
         self.host_embedding_contract_profile = "lc-host-embedding-v0".to_owned();
         self.host_inventory_contract_profile = "lc-host-inventory-v0".to_owned();
         self.host_adapter_contract_profile = "lc-host-adapter-v0".to_owned();
+        self.receipt_request_contract_profile = "lc-receipt-request-v0".to_owned();
         self.receipt_contract_profile = "lc-receipts-v0".to_owned();
         self.os_base_contract_profile = "lc-os-base-v0".to_owned();
         self.vm_evidence_contract_profile = "lc-vm-evidence-v0".to_owned();
@@ -281,6 +367,7 @@ impl LatticraConsoleConfig {
         self.require_host_contract_receipt = true;
         self.require_host_inventory_receipt = true;
         self.require_host_adapter_contract = true;
+        self.require_receipt_request_contract = true;
         self.require_os_base_contract = true;
         self.require_vm_evidence_contract = true;
         self.require_runtime_boundary_binding = true;
@@ -594,6 +681,7 @@ impl InstallerConfig {
 
     pub fn can_execute(&self) -> Result<(), String> {
         validate_user_local_install_prefix(&self.install_prefix)?;
+        self.lc.install.validate()?;
 
         if self.safety.dry_run {
             return Ok(());
@@ -624,6 +712,7 @@ impl InstallerConfig {
 
     pub fn can_reset(&self) -> Result<(), String> {
         validate_user_local_install_prefix(&self.install_prefix)?;
+        self.lc.install.validate()?;
 
         if self.safety.allow_network_effect {
             return Err(
@@ -750,6 +839,46 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(out, "configurable=1");
     let _ = writeln!(out, "panel_installable=1");
+    let _ = writeln!(out, "install_profile={}", config.lc.install.install_profile);
+    let _ = writeln!(out, "install_mode={}", config.lc.install.install_mode);
+    let _ = writeln!(out, "config_path={}", config.lc.install.config_path);
+    let _ = writeln!(out, "share_path={}", config.lc.install.share_path);
+    let _ = writeln!(out, "command_wrapper={}", config.lc.install.command_wrapper);
+    let _ = writeln!(
+        out,
+        "panel_embedded_console={}",
+        config.lc.install.panel_embedded_console
+    );
+    let _ = writeln!(
+        out,
+        "write_config_file={}",
+        config.lc.install.write_config_file
+    );
+    let _ = writeln!(
+        out,
+        "write_profile_presets={}",
+        config.lc.install.write_profile_presets
+    );
+    let _ = writeln!(
+        out,
+        "write_command_registry={}",
+        config.lc.install.write_command_registry
+    );
+    let _ = writeln!(
+        out,
+        "write_contract_files={}",
+        config.lc.install.write_contract_files
+    );
+    let _ = writeln!(
+        out,
+        "install_user_wrapper={}",
+        config.lc.install.install_user_wrapper
+    );
+    let _ = writeln!(
+        out,
+        "allow_external_host_commands={}",
+        config.lc.install.allow_external_host_commands
+    );
     let _ = writeln!(out, "profile={}", config.lc.profile.key());
     let _ = writeln!(out, "profile_label={}", config.lc.profile.label());
     let _ = writeln!(out, "panel_console_bridge={}", config.lc.panel_bridge);
@@ -782,6 +911,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         out,
         "host_adapter_contract_profile={}",
         config.lc.host_adapter_contract_profile
+    );
+    let _ = writeln!(
+        out,
+        "receipt_request_contract_profile={}",
+        config.lc.receipt_request_contract_profile
     );
     let _ = writeln!(
         out,
@@ -832,6 +966,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "receipt_request_contract_required={}",
+        config.lc.require_receipt_request_contract
+    );
+    let _ = writeln!(
+        out,
         "os_base_contract_required={}",
         config.lc.require_os_base_contract
     );
@@ -864,7 +1003,13 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "host_embedding_contract_status=metadata-only-contract");
     let _ = writeln!(out, "host_inventory_contract_status=metadata-only-contract");
     let _ = writeln!(out, "host_adapter_contract_status=metadata-only-contract");
+    let _ = writeln!(
+        out,
+        "receipt_request_contract_status=metadata-only-contract"
+    );
     let _ = writeln!(out, "receipt_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "seal_signature_request_ready=0");
+    let _ = writeln!(out, "seal_signature_request_present=0");
     let _ = writeln!(out, "os_base_contract_status=metadata-only-contract");
     let _ = writeln!(out, "vm_evidence_contract_status=metadata-only-contract");
     let _ = writeln!(out, "seal_signature_present=0");
@@ -885,7 +1030,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "interactive_name=Nadia");
     let _ = writeln!(out, "implementation_name=Nadia Witness Foundation");
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
-    let _ = writeln!(out, "stage=29-prompt-evaluation-runtime-handoff-contract");
+    let _ = writeln!(out, "stage=30-prompt-evaluation-invocation-contract");
     let _ = writeln!(
         out,
         "component_selected={}",
@@ -1801,6 +1946,49 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "requires_future_prompt_evaluation_invocation_contract=1"
     );
     let _ = writeln!(out, "prompt_evaluation_runtime_handoff_promotion_allowed=0");
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_invocation_contract_stage=30-prompt-evaluation-invocation-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_invocation_contract_command=scripts/nadia-prompt-evaluation-invocation-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_invocation_contract_command=latticra-nadia prompt-evaluation-invocation"
+    );
+    let _ = writeln!(out, "prompt_evaluation_invocation_stage=contract-only");
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_invocation_contract_status=contract_only"
+    );
+    let _ = writeln!(out, "prompt_evaluation_invocation_authority=0");
+    let _ = writeln!(out, "prompt_evaluation_invocation_allowed=0");
+    let _ = writeln!(out, "prompt_evaluation_invocation_performed=0");
+    let _ = writeln!(out, "prompt_evaluation_invocation_metadata_present=1");
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_invocation_family=operator-reviewed-prompt-evaluation-invocation"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_invocation_format=contract-only-offline-evaluation-invocation"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_invocation_decision=blocked_contract_only"
+    );
+    let _ = writeln!(out, "prompt_evaluation_invocation_plan_recorded=1");
+    let _ = writeln!(out, "prompt_evaluation_invocation_result_recorded=0");
+    let _ = writeln!(out, "prompt_evaluation_invocation_runtime_invoked=0");
+    let _ = writeln!(out, "prompt_evaluation_invocation_request_created=0");
+    let _ = writeln!(out, "prompt_evaluation_invocation_request_submitted=0");
+    let _ = writeln!(out, "prompt_evaluation_invocation_request_scheduled=0");
+    let _ = writeln!(out, "prompt_evaluation_invocation_request_queued=0");
+    let _ = writeln!(out, "requires_prompt_evaluation_runtime_handoff_contract=1");
+    let _ = writeln!(out, "requires_future_prompt_evaluation_result_contract=1");
+    let _ = writeln!(out, "prompt_evaluation_invocation_promotion_allowed=0");
     let _ = writeln!(out, "requires_context_pack=1");
     let _ = writeln!(out, "requires_runtime_profile=1");
     let _ = writeln!(out, "human_dignity_principle=1");

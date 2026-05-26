@@ -131,5 +131,5 @@ This alignment is not macOS installation, macOS app bundle evidence, signed app 
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall receipt-schema contract for reset/uninstall receipts outside the removed prefix.
+Add a macOS reset/uninstall operator-intent contract for explicit future live reset/uninstall approval evidence.
 ```

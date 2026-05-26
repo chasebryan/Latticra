@@ -19,6 +19,7 @@ host_embedding_profile = "panel-contained"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 host_adapter_contract_profile = "lc-host-adapter-v0"
+receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_contract_profile = "lc-receipts-v0"
 os_base_contract_profile = "lc-os-base-v0"
 vm_evidence_contract_profile = "lc-vm-evidence-v0"
@@ -31,10 +32,25 @@ require_profile_receipt = true
 require_host_contract_receipt = true
 require_host_inventory_receipt = true
 require_host_adapter_contract = true
+require_receipt_request_contract = true
 require_os_base_contract = true
 require_vm_evidence_contract = true
 require_runtime_boundary_binding = true
 require_seal_capability_labels = true
+
+[lc.install]
+install_profile = "lc-panel-install-v0"
+install_mode = "metadata-only-console-foundation"
+config_path = "etc/latticra/lc.toml"
+share_path = "share/latticra/lc"
+command_wrapper = "latticra-lc"
+panel_embedded_console = true
+write_config_file = true
+write_profile_presets = true
+write_command_registry = true
+write_contract_files = true
+install_user_wrapper = true
+allow_external_host_commands = false
 
 [safety]
 dry_run = true

@@ -424,6 +424,22 @@ p:last-child {
   background-size: cover;
 }
 
+.seal-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.97) 0%, rgba(17, 24, 39, 0.86) 58%, rgba(17, 24, 39, 0.62) 100%),
+    url("latticra-seal-runtime-dry-run-native-demo.png");
+  background-position: center right;
+  background-size: cover;
+}
+
+.language-hero {
+  background:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.97) 0%, rgba(17, 24, 39, 0.88) 58%, rgba(17, 24, 39, 0.66) 100%),
+    url("latticra-seal-runtime-dry-run-native-demo.png");
+  background-position: center right;
+  background-size: cover;
+}
+
 .page-hero h1,
 .not-found h1 {
   max-width: 860px;
@@ -522,6 +538,154 @@ p:last-child {
 .evidence-intro p:not(.eyebrow) {
   color: var(--muted);
   font-size: 1.03rem;
+}
+
+.seal-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: 32px;
+  align-items: end;
+  margin-bottom: 24px;
+}
+
+.seal-intro p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 1.03rem;
+}
+
+.language-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: 32px;
+  align-items: end;
+  margin-bottom: 28px;
+}
+
+.language-intro p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 1.03rem;
+}
+
+.language-flow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.language-step {
+  min-width: 0;
+  min-height: 194px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--blue);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.language-step span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--ochre);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+}
+
+.language-step p {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.language-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.language-card {
+  min-width: 0;
+  min-height: 216px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.language-card p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.language-card a {
+  display: inline-flex;
+  margin-top: 8px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.language-card a:hover {
+  text-decoration: underline;
+}
+
+.language-card-lat { border-top: 4px solid var(--blue); }
+.language-card-lir { border-top: 4px solid var(--ochre); }
+.language-card-ui { border-top: 4px solid var(--violet); }
+
+.language-report-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.language-report-grid article {
+  min-width: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--muted-strong);
+  font-weight: 900;
+}
+
+.seal-status-row {
+  margin-top: 0;
+}
+
+.seal-layer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.seal-layer {
+  min-width: 0;
+  min-height: 178px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--green);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.seal-layer p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.blocked-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.blocked-grid article {
+  min-width: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--red);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--red);
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 .evidence-rule-grid {
@@ -1353,7 +1517,14 @@ p:last-child {
   .evidence-intro,
   .evidence-rule-grid,
   .ladder-grid,
-  .claim-language-grid {
+  .claim-language-grid,
+  .seal-intro,
+  .seal-layer-grid,
+  .blocked-grid,
+  .language-intro,
+  .language-flow,
+  .language-card-grid,
+  .language-report-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1411,7 +1582,12 @@ p:last-child {
   .reader-grid,
   .evidence-rule-grid,
   .ladder-grid,
-  .claim-language-grid {
+  .claim-language-grid,
+  .seal-layer-grid,
+  .blocked-grid,
+  .language-flow,
+  .language-card-grid,
+  .language-report-grid {
     grid-template-columns: 1fr;
   }
 

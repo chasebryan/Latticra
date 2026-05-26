@@ -24,6 +24,8 @@ cc $CFLAGS \
   src/kernel_memory_map.c \
   src/kernel_process_table.c \
   src/kernel_syscall_table.c \
+  src/kernel_ipc_table.c \
+  src/kernel_vfs_namespace.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -35,12 +37,12 @@ cc $CFLAGS \
 
 grep -Fq 'LATTICRA KERNEL LIFECYCLE SUBSYSTEM SUMMARY REPORT' "$report_txt"
 grep -Fq 'summary_status=summary-ready' "$report_txt"
-grep -Fq 'final_state=syscall-table-ready' "$report_txt"
+grep -Fq 'final_state=vfs-namespace-ready' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'registry_status=registry-ready' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
-grep -Fq 'lifecycle_step_count=6' "$report_txt"
-grep -Fq 'lifecycle_state_change_count=6' "$report_txt"
+grep -Fq 'lifecycle_step_count=8' "$report_txt"
+grep -Fq 'lifecycle_state_change_count=8' "$report_txt"
 grep -Fq 'lifecycle_state_mutated=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
 grep -Fq 'registry_no_effect=1' "$report_txt"
@@ -49,6 +51,12 @@ grep -Fq 'scheduler_execution_allowed=0' "$report_txt"
 grep -Fq 'memory_allocation_allowed=0' "$report_txt"
 grep -Fq 'process_spawn_allowed=0' "$report_txt"
 grep -Fq 'syscall_dispatch_allowed=0' "$report_txt"
+grep -Fq 'ipc_send_allowed=0' "$report_txt"
+grep -Fq 'ipc_receive_allowed=0' "$report_txt"
+grep -Fq 'filesystem_lookup_allowed=0' "$report_txt"
+grep -Fq 'filesystem_read_allowed=0' "$report_txt"
+grep -Fq 'filesystem_write_allowed=0' "$report_txt"
+grep -Fq 'namespace_mutation_allowed=0' "$report_txt"
 grep -Fq 'no_external_effect_chain=1' "$report_txt"
 grep -Fq 'entry_count=9' "$report_txt"
 grep -Fq 'subsystem[0].name=boot' "$report_txt"
@@ -59,9 +67,9 @@ grep -Fq 'subsystem[2].lifecycle_relation=scheduler-ready-metadata' "$report_txt
 grep -Fq 'subsystem[2].authority_status=scheduler-execution-denied' "$report_txt"
 grep -Fq 'subsystem[3].lifecycle_relation=memory-map-ready' "$report_txt"
 grep -Fq 'subsystem[3].authority_status=memory-allocation-denied' "$report_txt"
-grep -Fq 'subsystem[4].lifecycle_relation=process-table-ready' "$report_txt"
+grep -Fq 'subsystem[4].lifecycle_relation=ipc-table-ready' "$report_txt"
 grep -Fq 'subsystem[4].authority_status=process-execution-denied' "$report_txt"
-grep -Fq 'subsystem[5].lifecycle_relation=filesystem-syscall-metadata-ready' "$report_txt"
+grep -Fq 'subsystem[5].lifecycle_relation=vfs-namespace-ready' "$report_txt"
 grep -Fq 'subsystem[6].authority_status=network-denied' "$report_txt"
 grep -Fq 'subsystem[6].lifecycle_relation=network-syscall-metadata-ready' "$report_txt"
 grep -Fq 'subsystem[7].authority_status=device-denied' "$report_txt"

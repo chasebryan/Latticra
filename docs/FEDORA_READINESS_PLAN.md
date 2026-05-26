@@ -70,13 +70,19 @@ Known current posture:
 
 ```text
 kernel lifecycle evidence exists
-final_state=syscall-table-ready
+final_state=vfs-namespace-ready
 external_effect_performed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
 memory_allocation_allowed=0
 process_spawn_allowed=0
 syscall_dispatch_allowed=0
+ipc_send_allowed=0
+ipc_receive_allowed=0
+filesystem_lookup_allowed=0
+filesystem_read_allowed=0
+filesystem_write_allowed=0
+namespace_mutation_allowed=0
 not bootable
 not installer-ready
 not a Fedora derivative

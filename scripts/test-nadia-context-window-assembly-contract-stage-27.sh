@@ -95,7 +95,7 @@ require_contains 'Stage-29: Prompt Evaluation Runtime Handoff Contract' "$founda
 require_contains 'scripts/nadia-context-window-assembly-contract.sh' "$foundation"
 require_contains 'test-nadia-context-window-assembly-contract-stage-27.sh' "$foundation"
 require_contains 'Before Stage-28 starts' "$foundation"
-require_contains 'Before Stage-30 starts' "$foundation"
+require_contains 'Before Stage-31 starts' "$foundation"
 require_contains 'NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md' "$foundation_index"
 require_contains 'NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md' "$status_index"
 require_contains 'Nadia context window assembly contract Stage-27 + guardrails' "$foundation_index"

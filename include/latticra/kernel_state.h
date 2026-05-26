@@ -1,7 +1,7 @@
 #ifndef LATTICRA_KERNEL_STATE_H
 #define LATTICRA_KERNEL_STATE_H
 
-#include "latticra/kernel_syscall_table.h"
+#include "latticra/kernel_vfs_namespace.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,7 +17,9 @@ typedef enum {
     LATTICRA_KERNEL_STATE_SCHEDULER_READY = 3,
     LATTICRA_KERNEL_STATE_MEMORY_MAP_READY = 4,
     LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY = 5,
-    LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY = 6
+    LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY = 6,
+    LATTICRA_KERNEL_STATE_IPC_TABLE_READY = 7,
+    LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY = 8
 } latticra_kernel_state_kind_t;
 
 typedef enum {
@@ -29,6 +31,8 @@ typedef struct {
     latticra_kernel_memory_map_request_t memory_map_request;
     latticra_kernel_process_table_request_t process_table_request;
     latticra_kernel_syscall_table_request_t syscall_table_request;
+    latticra_kernel_ipc_table_request_t ipc_table_request;
+    latticra_kernel_vfs_namespace_request_t vfs_namespace_request;
     latticra_kernel_state_kind_t current_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
@@ -43,6 +47,8 @@ typedef struct {
     latticra_kernel_memory_map_result_t memory_map;
     latticra_kernel_process_table_result_t process_table;
     latticra_kernel_syscall_table_result_t syscall_table;
+    latticra_kernel_ipc_table_result_t ipc_table;
+    latticra_kernel_vfs_namespace_result_t vfs_namespace;
     latticra_kernel_state_kind_t previous_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_kind_t next_state;

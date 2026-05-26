@@ -21,6 +21,8 @@ cc $CFLAGS \
   src/kernel_memory_map.c \
   src/kernel_process_table.c \
   src/kernel_syscall_table.c \
+  src/kernel_ipc_table.c \
+  src/kernel_vfs_namespace.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   tests/kernel_state_machine.c \

@@ -41,6 +41,7 @@ int main(void) {
     char host_contract_report[LATTICRA_CONSOLE_HOST_CONTRACT_REPORT_MAX];
     char host_inventory_report[LATTICRA_CONSOLE_HOST_INVENTORY_REPORT_MAX];
     char host_adapter_report[LATTICRA_CONSOLE_HOST_ADAPTER_REPORT_MAX];
+    char receipt_request_report[LATTICRA_CONSOLE_RECEIPT_REQUEST_REPORT_MAX];
     char receipt_report[LATTICRA_CONSOLE_RECEIPT_REPORT_MAX];
     char os_contract_report[LATTICRA_CONSOLE_OS_CONTRACT_REPORT_MAX];
     char vm_evidence_report[LATTICRA_CONSOLE_VM_EVIDENCE_REPORT_MAX];
@@ -82,6 +83,10 @@ int main(void) {
         result.host_adapter_contract_status,
         "metadata-only-contract-ready");
     failures += require_text(
+        "result.receipt_request_contract_status",
+        result.receipt_request_contract_status,
+        "metadata-only-contract-ready");
+    failures += require_text(
         "result.receipt_contract_status",
         result.receipt_contract_status,
         "metadata-only-contract-ready");
@@ -115,6 +120,10 @@ int main(void) {
         result.host_adapter_contract_present,
         1);
     failures += require_int(
+        "result.receipt_request_contract_present",
+        result.receipt_request_contract_present,
+        1);
+    failures += require_int(
         "result.receipt_contract_present",
         result.receipt_contract_present,
         1);
@@ -137,7 +146,7 @@ int main(void) {
         "command_count",
         (int)latticra_console_command_count(),
         (int)result.command_count);
-    failures += require_int("command_count_min", result.command_count >= 13u, 1);
+    failures += require_int("command_count_min", result.command_count >= 14u, 1);
 
     command = latticra_console_find_command("lc substrate");
     failures += require_int("find lc substrate", command != 0, 1);
@@ -169,6 +178,17 @@ int main(void) {
             "lc.receipts.inspect");
         failures += require_int("lc receipts no_effect", command->no_effect, 1);
         failures += require_int("lc receipts host launch", command->launches_host_process, 0);
+    }
+
+    command = latticra_console_find_command("lc receipt-request");
+    failures += require_int("find lc receipt-request", command != 0, 1);
+    if (command != 0) {
+        failures += require_text(
+            "lc receipt-request capability",
+            command->capability_label,
+            "lc.receipt.request");
+        failures += require_int("lc receipt-request no_effect", command->no_effect, 1);
+        failures += require_int("lc receipt-request host launch", command->launches_host_process, 0);
     }
 
     command = latticra_console_find_command("lc os");
@@ -254,6 +274,7 @@ int main(void) {
     failures += require_contains("report", report, "host_embedding_contract_present=1");
     failures += require_contains("report", report, "host_inventory_contract_present=1");
     failures += require_contains("report", report, "host_adapter_contract_present=1");
+    failures += require_contains("report", report, "receipt_request_contract_present=1");
     failures += require_contains("report", report, "receipt_contract_present=1");
     failures += require_contains("report", report, "os_base_contract_present=1");
     failures += require_contains("report", report, "vm_evidence_contract_present=1");
@@ -269,6 +290,10 @@ int main(void) {
         "report",
         report,
         "host_adapter_contract_status=metadata-only-contract-ready");
+    failures += require_contains(
+        "report",
+        report,
+        "receipt_request_contract_status=metadata-only-contract-ready");
     failures += require_contains(
         "report",
         report,
@@ -309,6 +334,8 @@ int main(void) {
     failures += require_contains("registry_report", registry_report, "capability=lc.host.adapter");
     failures += require_contains("registry_report", registry_report, "command=lc receipts");
     failures += require_contains("registry_report", registry_report, "capability=lc.receipts.inspect");
+    failures += require_contains("registry_report", registry_report, "command=lc receipt-request");
+    failures += require_contains("registry_report", registry_report, "capability=lc.receipt.request");
     failures += require_contains("registry_report", registry_report, "command=lc os-contract");
     failures += require_contains("registry_report", registry_report, "capability=lc.os.contract");
     failures += require_contains("registry_report", registry_report, "command=lc vm-evidence");
@@ -330,6 +357,7 @@ int main(void) {
     failures += require_contains("help_report", help_report, "lc host-inventory");
     failures += require_contains("help_report", help_report, "lc host-adapter");
     failures += require_contains("help_report", help_report, "lc receipts");
+    failures += require_contains("help_report", help_report, "lc receipt-request");
     failures += require_contains("help_report", help_report, "lc os-contract");
     failures += require_contains("help_report", help_report, "lc vm-evidence");
     failures += require_contains("help_report", help_report, "capability=lc.substrate.inspect");
@@ -345,6 +373,7 @@ int main(void) {
     failures += require_contains("manpage_report", manpage_report, "latticra-lc host-inventory");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc host-adapter");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc receipts");
+    failures += require_contains("manpage_report", manpage_report, "latticra-lc receipt-request");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc os-contract");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc vm-evidence");
     failures += require_contains("manpage_report", manpage_report, "lc os");
@@ -440,6 +469,23 @@ int main(void) {
     failures += require_int("lc receipts boundary no effect", boundary.no_effect, 1);
     failures += require_int("lc receipts boundary host mutation allowed", boundary.host_mutation_allowed, 0);
 
+    command = latticra_console_find_command("lc receipt-request");
+    failures += require_int(
+        "lc receipt-request boundary",
+        latticra_console_command_boundary_classify(command, &boundary),
+        LATTICRA_STATUS_OK);
+    failures += require_text(
+        "lc receipt-request seal capability",
+        boundary.seal_capability_label,
+        "seal.capability.report");
+    failures += require_int(
+        "lc receipt-request runtime kind",
+        boundary.runtime_request_kind,
+        LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK);
+    failures += require_int("lc receipt-request boundary future gate", boundary.requires_future_gate, 0);
+    failures += require_int("lc receipt-request boundary no effect", boundary.no_effect, 1);
+    failures += require_int("lc receipt-request boundary host mutation allowed", boundary.host_mutation_allowed, 0);
+
     command = latticra_console_find_command("lc os-contract");
     failures += require_int(
         "lc os-contract boundary",
@@ -506,6 +552,7 @@ int main(void) {
     failures += require_contains("boundary_report", boundary_report, "command=lc host-inventory");
     failures += require_contains("boundary_report", boundary_report, "command=lc host-adapter");
     failures += require_contains("boundary_report", boundary_report, "command=lc receipts");
+    failures += require_contains("boundary_report", boundary_report, "command=lc receipt-request");
     failures += require_contains("boundary_report", boundary_report, "runtime_request=authority-check");
     failures += require_contains("boundary_report", boundary_report, "command=lc os-contract");
     failures += require_contains("boundary_report", boundary_report, "command=lc vm-evidence");
@@ -599,6 +646,39 @@ int main(void) {
         "promotion_gate=host_adapter_contract_receipts_and_inventory");
 
     failures += require_int(
+        "receipt_request_report",
+        latticra_console_receipt_request_report(receipt_request_report, sizeof(receipt_request_report)),
+        LATTICRA_STATUS_OK);
+    failures += require_contains(
+        "receipt_request_report",
+        receipt_request_report,
+        "LATTICRA CONSOLE SEAL RECEIPT REQUEST CONTRACT");
+    failures += require_contains(
+        "receipt_request_report",
+        receipt_request_report,
+        "request_profile=lc-receipt-request-v0");
+    failures += require_contains(
+        "receipt_request_report",
+        receipt_request_report,
+        "signature_request_profile=latticra-seal-signature-request/0.1");
+    failures += require_contains(
+        "receipt_request_report",
+        receipt_request_report,
+        "requested_receipt_profile=latticra-seal-verified-receipt/0.1");
+    failures += require_contains(
+        "receipt_request_report",
+        receipt_request_report,
+        "seal_signature_request_present=0");
+    failures += require_contains(
+        "receipt_request_report",
+        receipt_request_report,
+        "receipt_write_allowed=0");
+    failures += require_contains(
+        "receipt_request_report",
+        receipt_request_report,
+        "promotion_gate=lc_receipt_request_review_before_signing");
+
+    failures += require_int(
         "receipt_report",
         latticra_console_receipt_report(receipt_report, sizeof(receipt_report)),
         LATTICRA_STATUS_OK);
@@ -618,6 +698,14 @@ int main(void) {
         "receipt_report",
         receipt_report,
         "host_adapter_contract_receipt_required=1");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
+        "receipt_request_contract_required=1");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
+        "signature_request_profile=latticra-seal-signature-request/0.1");
     failures += require_contains(
         "receipt_report",
         receipt_report,

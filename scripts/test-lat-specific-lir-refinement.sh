@@ -3,6 +3,9 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-lat-specific-lir-refinement.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 cc $CFLAGS \
   -Iinclude \
   src/lat_parser.c \
@@ -11,6 +14,6 @@ cc $CFLAGS \
   src/lir.c \
   src/lat_to_lir.c \
   tests/lat_specific_lir_refinement_invariants.c \
-  -o /tmp/latticra-lat-specific-lir-refinement-invariants
+  -o "$tmpdir/latticra-lat-specific-lir-refinement-invariants"
 
-/tmp/latticra-lat-specific-lir-refinement-invariants
+"$tmpdir/latticra-lat-specific-lir-refinement-invariants"

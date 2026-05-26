@@ -3,6 +3,9 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-lat-to-lir-lowering.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 cc $CFLAGS \
   -Iinclude \
   src/lat_parser.c \
@@ -11,9 +14,9 @@ cc $CFLAGS \
   src/lir.c \
   src/lat_to_lir.c \
   tests/lat_to_lir_lowering_invariants.c \
-  -o /tmp/latticra-lat-to-lir-lowering-invariants
+  -o "$tmpdir/latticra-lat-to-lir-lowering-invariants"
 
-/tmp/latticra-lat-to-lir-lowering-invariants
+"$tmpdir/latticra-lat-to-lir-lowering-invariants"
 
 cc $CFLAGS \
   -Iinclude \
@@ -23,9 +26,9 @@ cc $CFLAGS \
   src/lir.c \
   src/lat_to_lir.c \
   tests/lat_to_lir_clause_metadata_refinement.c \
-  -o /tmp/latticra-lat-to-lir-clause-metadata-refinement
+  -o "$tmpdir/latticra-lat-to-lir-clause-metadata-refinement"
 
-/tmp/latticra-lat-to-lir-clause-metadata-refinement
+"$tmpdir/latticra-lat-to-lir-clause-metadata-refinement"
 
 cc $CFLAGS \
   -Iinclude \
@@ -36,6 +39,6 @@ cc $CFLAGS \
   src/lat_to_lir.c \
   src/lat_to_lir_diagnostics.c \
   tests/lat_to_lir_diagnostic_refinement.c \
-  -o /tmp/latticra-lat-to-lir-diagnostic-refinement
+  -o "$tmpdir/latticra-lat-to-lir-diagnostic-refinement"
 
-/tmp/latticra-lat-to-lir-diagnostic-refinement
+"$tmpdir/latticra-lat-to-lir-diagnostic-refinement"

@@ -105,6 +105,7 @@ share/latticra/nadia/prompt-token-sequence/
 share/latticra/nadia/context-window-assembly/
 share/latticra/nadia/prompt-evaluation-input/
 share/latticra/nadia/prompt-evaluation-runtime-handoff/
+share/latticra/nadia/prompt-evaluation-invocation/
 share/latticra/components/nadia-offline-ai.installed
 bin/latticra-nadia
 ```
@@ -1488,7 +1489,66 @@ See [`NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29.md`](NADIA_PROMP
 
 ### Stage-30: Prompt Evaluation Invocation Contract
 
-Only after prompt-evaluation runtime handoff metadata, prompt-evaluation-input metadata, context-window assembly metadata, prompt-token-sequence metadata, prompt-tokenization metadata, tokenizer-runtime-attachment metadata, tokenizer-artifact-binding metadata, tokenizer-artifact-verification metadata, tokenizer-artifact-measurement metadata, tokenizer-artifact-inventory metadata, tokenizer-manifest metadata, tokenizer-specification metadata, tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a prompt evaluation invocation contract. The default remains no runtime invocation, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
+Record prompt-evaluation invocation metadata after prompt-evaluation runtime handoff metadata, prompt-evaluation-input metadata, context-window assembly metadata, prompt-token-sequence metadata, prompt-tokenization metadata, tokenizer-runtime-attachment metadata, tokenizer-artifact-binding metadata, tokenizer-artifact-verification metadata, tokenizer-artifact-measurement metadata, tokenizer-artifact-inventory metadata, tokenizer-manifest metadata, tokenizer-specification metadata, tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-30 can define future prompt-evaluation result review requirements, but it cannot create prompt-evaluation invocation requests, schedule invocation requests, submit invocation requests, invoke a runtime, create runtime sessions, evaluate prompts, generate dialogue, generate tokens, run inference, or use the network.
+
+```text
+nadia_stage_30_prompt_evaluation_invocation_contract_present=1
+prompt_evaluation_invocation_contract_command=scripts/nadia-prompt-evaluation-invocation-contract.sh
+installed_prompt_evaluation_invocation_contract_command=latticra-nadia prompt-evaluation-invocation
+prompt_evaluation_invocation_contract_status=contract_only
+prompt_evaluation_invocation_stage=contract-only
+prompt_evaluation_invocation_authority=0
+prompt_evaluation_invocation_allowed=0
+prompt_evaluation_invocation_performed=0
+prompt_evaluation_invocation_metadata_present=1
+prompt_evaluation_invocation_family=operator-reviewed-prompt-evaluation-invocation
+prompt_evaluation_invocation_format=contract-only-offline-evaluation-invocation
+prompt_evaluation_invocation_decision=blocked_contract_only
+prompt_evaluation_invocation_evidence_present=1
+prompt_evaluation_invocation_source_policy=operator-reviewed-offline
+prompt_evaluation_invocation_plan_recorded=1
+prompt_evaluation_invocation_method_planned=offline-prompt-evaluation-invocation-policy-review
+prompt_evaluation_invocation_result_recorded=0
+prompt_evaluation_invocation_runtime_invoked=0
+requires_prompt_evaluation_runtime_handoff_contract=1
+requires_prompt_evaluation_input_contract=1
+requires_context_window_assembly_contract=1
+requires_prompt_token_sequence_contract=1
+requires_prompt_tokenization_contract=1
+requires_tokenizer_runtime_attachment_contract=1
+requires_runtime_invocation_contract=1
+requires_model_load_contract=1
+requires_inference_readiness_contract=1
+requires_local_model_registry_contract=1
+requires_prompt_materialization_contract=1
+requires_prompt_receipt_contract=1
+requires_future_prompt_evaluation_result_contract=1
+prompt_evaluation_invocation_promotion_allowed=0
+prompt_evaluation_invocation_request_created=0
+prompt_evaluation_invocation_request_validated=0
+prompt_evaluation_invocation_request_serialized=0
+prompt_evaluation_invocation_request_submitted=0
+prompt_evaluation_invocation_request_scheduled=0
+prompt_evaluation_invocation_request_queued=0
+prompt_evaluation_invocation_runtime_selected=0
+prompt_evaluation_invocation_model_selected=0
+runtime_handoff_created=0
+runtime_invocation_requested=0
+runtime_session_created=0
+runtime_invoked=0
+prompt_evaluated=0
+token_generation_performed=0
+inference_performed=0
+qa_dialogue_generated=0
+sexual_request_refusal=always
+manipulation_resistance=required
+```
+
+See [`NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md`](NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md).
+
+### Stage-31: Prompt Evaluation Result Contract
+
+Only after prompt-evaluation invocation metadata, prompt-evaluation runtime handoff metadata, prompt-evaluation-input metadata, context-window assembly metadata, prompt-token-sequence metadata, prompt-tokenization metadata, tokenizer-runtime-attachment metadata, runtime-invocation metadata, model-load metadata, inference-readiness metadata, local model-registry metadata, awareness-dialogue metadata, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present, consider a prompt evaluation result contract. The default remains no runtime invocation, no prompt evaluation, no token generation, no inference, no tool execution, no source mutation, no network authority, and no sexual user functionality.
 
 ## Non-Claims
 
@@ -1507,7 +1567,7 @@ The current Nadia foundation is not:
 
 ## Promotion Gate
 
-Before Stage-30 starts, Latticra should keep these guards passing:
+Before Stage-31 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -1540,6 +1600,7 @@ sh scripts/test-nadia-prompt-token-sequence-contract-stage-26.sh
 sh scripts/test-nadia-context-window-assembly-contract-stage-27.sh
 sh scripts/test-nadia-prompt-evaluation-input-contract-stage-28.sh
 sh scripts/test-nadia-prompt-evaluation-runtime-handoff-contract-stage-29.sh
+sh scripts/test-nadia-prompt-evaluation-invocation-contract-stage-30.sh
 ```
 
-Before prompt evaluation invocation starts, a separate prompt evaluation invocation contract must exist and name runtime handoff metadata, evaluation input metadata, context-window assembly denial fields, prompt-token-sequence denial fields, prompt-tokenization denial fields, tokenizer-runtime-attachment denial fields, tokenizer-artifact-binding denial fields, tokenizer-artifact-verification denial fields, tokenizer-artifact-measurement denial fields, tokenizer-artifact-inventory denial fields, tokenizer-manifest denial fields, tokenizer-file denial fields, prompt-materialization denial fields, refusal boundary inheritance, operator review gates, and non-claims.
+Before prompt evaluation result handling starts, a separate prompt evaluation result contract must exist and name invocation metadata, runtime handoff metadata, evaluation input metadata, context-window assembly denial fields, prompt-token-sequence denial fields, prompt-tokenization denial fields, tokenizer-runtime-attachment denial fields, tokenizer-artifact-binding denial fields, tokenizer-artifact-verification denial fields, tokenizer-artifact-measurement denial fields, tokenizer-artifact-inventory denial fields, tokenizer-manifest denial fields, tokenizer-file denial fields, prompt-materialization denial fields, refusal boundary inheritance, operator review gates, and non-claims.

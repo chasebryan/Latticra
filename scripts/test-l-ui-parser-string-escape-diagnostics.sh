@@ -3,12 +3,15 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-l-ui-parser-string-escape-diagnostics.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 cc $CFLAGS \
   -Iinclude \
   src/l_ui_parser.c \
   src/l_ui_parser_ast.c \
   src/l_ui_parser_diagnostics.c \
   tests/l_ui_parser_string_escape_diagnostics_invariants.c \
-  -o /tmp/latticra-l-ui-parser-string-escape-diagnostics-invariants
+  -o "$tmpdir/latticra-l-ui-parser-string-escape-diagnostics-invariants"
 
-/tmp/latticra-l-ui-parser-string-escape-diagnostics-invariants
+"$tmpdir/latticra-l-ui-parser-string-escape-diagnostics-invariants"

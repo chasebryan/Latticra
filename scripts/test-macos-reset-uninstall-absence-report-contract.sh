@@ -78,7 +78,7 @@ require_contains 'directory_delete_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
 require_contains 'macos_reset_uninstall_absence_report_contract: ok' "$doc"
-require_contains 'Add a macOS reset/uninstall receipt-schema contract' "$doc"
+require_contains 'Add a macOS reset/uninstall operator-intent contract' "$doc"
 
 require_contains 'Status: no-effect reset/uninstall absence-report contract status' "$status"
 require_contains 'macos_reset_uninstall_absence_report_contract_present=1' "$status"
@@ -115,7 +115,7 @@ require_contains 'file_delete_performed=0' "$script"
 require_contains 'directory_delete_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-receipt-schema-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-operator-intent-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -141,7 +141,7 @@ require_output_contains "$output" 'directory_delete_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'network_performed=0'
 require_output_contains "$output" 'runtime_authority_granted=0'
-require_output_contains "$output" 'next_lane=macos-reset-uninstall-receipt-schema-contract'
+require_output_contains "$output" 'next_lane=macos-reset-uninstall-operator-intent-contract'
 
 require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
 require_contains 'sh scripts/test-macos-reset-uninstall-absence-report-contract.sh' "$workflow"

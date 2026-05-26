@@ -104,6 +104,8 @@ Runtime invocation, prompt evaluation, token generation, and dialogue generation
 
 That later prompt-evaluation invocation contract is the next boundary; Stage-29 only records the prerequisite metadata.
 
+Stage-30 now defines a prompt-evaluation invocation contract that keeps invocation request creation, runtime invocation, prompt evaluation, dialogue generation, token generation, and inference blocked.
+
 ## Validation
 
 ```sh

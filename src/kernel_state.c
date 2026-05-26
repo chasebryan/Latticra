@@ -30,6 +30,10 @@ const char *latticra_kernel_state_label(latticra_kernel_state_kind_t state) {
             return "process-table-ready";
         case LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY:
             return "syscall-table-ready";
+        case LATTICRA_KERNEL_STATE_IPC_TABLE_READY:
+            return "ipc-table-ready";
+        case LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY:
+            return "vfs-namespace-ready";
         default:
             return "unknown";
     }
@@ -51,6 +55,10 @@ static int is_allowed_transition(
         target_state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY) return 1;
     if (current_state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY &&
         target_state == LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY) return 1;
+    if (current_state == LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY &&
+        target_state == LATTICRA_KERNEL_STATE_IPC_TABLE_READY) return 1;
+    if (current_state == LATTICRA_KERNEL_STATE_IPC_TABLE_READY &&
+        target_state == LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY) return 1;
     return 0;
 }
 
@@ -60,6 +68,14 @@ static int state_requires_process_table(latticra_kernel_state_kind_t state) {
 
 static int state_requires_syscall_table(latticra_kernel_state_kind_t state) {
     return state >= LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY;
+}
+
+static int state_requires_ipc_table(latticra_kernel_state_kind_t state) {
+    return state >= LATTICRA_KERNEL_STATE_IPC_TABLE_READY;
+}
+
+static int state_requires_vfs_namespace(latticra_kernel_state_kind_t state) {
+    return state >= LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY;
 }
 
 static void seed_result(latticra_kernel_state_result_t *result) {
@@ -93,6 +109,14 @@ latticra_status_t latticra_kernel_state_default_request(
             LATTICRA_STATUS_OK) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
+    if (latticra_kernel_ipc_table_default_request(&request->ipc_table_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (latticra_kernel_vfs_namespace_default_request(&request->vfs_namespace_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
     request->current_state = LATTICRA_KERNEL_STATE_CREATED;
     request->target_state = LATTICRA_KERNEL_STATE_INITIALIZED;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
@@ -115,6 +139,8 @@ latticra_status_t latticra_kernel_state_transition(
     latticra_status_t status;
     latticra_kernel_process_table_request_t process_request;
     latticra_kernel_syscall_table_request_t syscall_request;
+    latticra_kernel_ipc_table_request_t ipc_request;
+    latticra_kernel_vfs_namespace_request_t vfs_request;
 
     if (result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     seed_result(result);
@@ -163,6 +189,39 @@ latticra_status_t latticra_kernel_state_transition(
             state_copy(result->transition_status, sizeof(result->transition_status), "blocked");
             return status;
         }
+        result->process_table = result->syscall_table.process_table;
+        result->memory_map = result->process_table.memory_map;
+    }
+
+    if (state_requires_ipc_table(request->target_state)) {
+        ipc_request = request->ipc_table_request;
+        ipc_request.syscall_table_request = syscall_request;
+        status = latticra_kernel_ipc_table_evaluate(&ipc_request, &result->ipc_table);
+        if (status != LATTICRA_STATUS_OK) {
+            result->status = status;
+            state_copy(result->state_status, sizeof(result->state_status),
+                "ipc-table-not-ready");
+            state_copy(result->transition_status, sizeof(result->transition_status), "blocked");
+            return status;
+        }
+        result->syscall_table = result->ipc_table.syscall_table;
+        result->process_table = result->syscall_table.process_table;
+        result->memory_map = result->process_table.memory_map;
+    }
+
+    if (state_requires_vfs_namespace(request->target_state)) {
+        vfs_request = request->vfs_namespace_request;
+        vfs_request.ipc_table_request = ipc_request;
+        status = latticra_kernel_vfs_namespace_evaluate(&vfs_request, &result->vfs_namespace);
+        if (status != LATTICRA_STATUS_OK) {
+            result->status = status;
+            state_copy(result->state_status, sizeof(result->state_status),
+                "vfs-namespace-not-ready");
+            state_copy(result->transition_status, sizeof(result->transition_status), "blocked");
+            return status;
+        }
+        result->ipc_table = result->vfs_namespace.ipc_table;
+        result->syscall_table = result->ipc_table.syscall_table;
         result->process_table = result->syscall_table.process_table;
         result->memory_map = result->process_table.memory_map;
     }
@@ -217,6 +276,8 @@ latticra_status_t latticra_kernel_state_report(
         "memory_map_status=%s\n"
         "process_table_status=%s\n"
         "syscall_table_status=%s\n"
+        "ipc_table_status=%s\n"
+        "vfs_namespace_status=%s\n"
         "evidence_level=%u\n",
         result->state_status,
         result->gate_status,
@@ -231,6 +292,8 @@ latticra_status_t latticra_kernel_state_report(
         result->memory_map.map_status,
         result->process_table.table_status,
         result->syscall_table.table_status,
+        result->ipc_table.table_status,
+        result->vfs_namespace.namespace_status,
         result->evidence_level);
 
     if (written < 0 || (size_t)written >= buffer_len) {
