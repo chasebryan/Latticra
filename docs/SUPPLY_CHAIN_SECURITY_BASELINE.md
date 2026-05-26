@@ -28,6 +28,9 @@ implicit_github_token_use_requires_dedicated_review=1
 locked_dependency_builds_required=1
 offline_installer_builds_required=1
 ad_hoc_network_client_commands_forbidden_without_guard=1
+source_archive_fixture_tracked_unignored_source_view_required=1
+source_archive_fixture_symlink_refusal_required=1
+source_archive_fixture_reproducible_metadata_required=1
 release_publishing_authority_granted=0
 production_installer_claim_allowed=0
 production_update_claim_allowed=0
@@ -47,6 +50,7 @@ external_endorsement_claimed=0
 | Secrets and tokens | workflow secret and implicit token use are blocked without a dedicated guard | `scripts/test-quality-safety-guards.sh` |
 | Workflow network clients | ad hoc `curl`, `wget`, SSH, FTP, and netcat-style commands are blocked without a dedicated guard | `scripts/test-quality-safety-guards.sh` |
 | Package-manager mutation | package-manager use is limited to reviewed workflow/script allowlists | `scripts/test-quality-safety-guards.sh` |
+| Source archive fixtures | package source archives require tracked/unignored source selection, symlink refusal, and deterministic tar/gzip metadata | `scripts/test-quality-safety-guards.sh` |
 | Rust installer dependency use | local quality uses `cargo check --locked` | `Makefile` |
 | Live installer build path | installer apply script requires locked offline Cargo builds | `installer/scripts/latticra-installer-apply.sh` |
 | Local installer artifacts | SBOM path is explicit and currently `none` for non-production fixtures | `docs/LOCAL_INSTALLER_ARTIFACT_MANIFEST_CONTRACT.md` |

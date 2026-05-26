@@ -21,7 +21,7 @@ const RUNNING_PROGRESS_MAX_WIDTH: f32 = 520.0;
 const RUNNING_RECENT_LOG_MAX_HEIGHT: f32 = 180.0;
 const RUNNING_MONITOR_WIDE_WIDTH: f32 = 980.0;
 const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
-    ("status", "Stage-40 status and authority summary"),
+    ("status", "Stage-41 status and authority summary"),
     ("context", "Stage-1 local context-pack metadata"),
     ("runtime", "Stage-2 runtime-profile metadata"),
     ("plan", "Stage-3 prompt-plan workbench metadata"),
@@ -139,6 +139,10 @@ const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
     (
         "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review",
         "Stage-40 prompt-evaluation result release receipt review disposition release receipt review contract",
+    ),
+    (
+        "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition",
+        "Stage-41 prompt-evaluation result release receipt review disposition release receipt review disposition contract",
     ),
 ];
 
@@ -655,10 +659,10 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc profile hosted|panel|standalone|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
+                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc session, lc profile hosted|panel|standalone|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
                 );
                 self.push_console(
-                    "nadia: use `nadia commands` for the full Stage-1 through Stage-40 command map",
+                    "nadia: use `nadia commands` for the full Stage-1 through Stage-41 command map",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -774,6 +778,12 @@ impl LatticraInstallerApp {
                 self.push_console("standalone_console_status=metadata-only-standalone-contract");
                 self.push_console("standalone_contract_present=1");
                 self.push_console(format!(
+                    "session_contract_profile={}",
+                    self.config.lc.session_contract_profile
+                ));
+                self.push_console("session_contract_status=metadata-only-contract");
+                self.push_console("session_contract_present=1");
+                self.push_console(format!(
                     "command_registry_profile={}",
                     self.config.lc.command_registry_profile
                 ));
@@ -800,6 +810,11 @@ impl LatticraInstallerApp {
                     self.config.lc.host_adapter_contract_profile
                 ));
                 self.push_console("host_adapter_contract_status=metadata-only-contract");
+                self.push_console(format!(
+                    "session_contract_profile={}",
+                    self.config.lc.session_contract_profile
+                ));
+                self.push_console("session_contract_status=metadata-only-contract");
                 self.push_console(format!(
                     "receipt_request_contract_profile={}",
                     self.config.lc.receipt_request_contract_profile
@@ -898,6 +913,10 @@ impl LatticraInstallerApp {
                     self.config.lc.require_host_adapter_contract
                 ));
                 self.push_console(format!(
+                    "session_contract_required={}",
+                    self.config.lc.require_session_contract
+                ));
+                self.push_console(format!(
                     "receipt_request_contract_required={}",
                     self.config.lc.require_receipt_request_contract
                 ));
@@ -978,6 +997,7 @@ impl LatticraInstallerApp {
                     self.config.lc.install.command_wrapper
                 ));
                 self.push_console("standalone_contract_present=1");
+                self.push_console("session_contract_present=1");
                 self.push_console(format!(
                     "panel_embedded_console={}",
                     self.config.lc.install.panel_embedded_console
@@ -1031,7 +1051,7 @@ impl LatticraInstallerApp {
                 self.apply_lc_profile(LatticraConsoleProfile::Custom);
             }
             ["lc", "commands"] | ["console", "commands"] => {
-                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc install-config,lc standalone,lc profiles,lc receipts,lc receipt-request,lc receipt-payload,lc receipt-artifact,lc receipt-artifact-review,lc receipt-review-receipt,lc receipt-review-draft,lc receipt-materialization-plan,lc signature-request,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
+                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc install-config,lc standalone,lc session,lc profiles,lc receipts,lc receipt-request,lc receipt-payload,lc receipt-artifact,lc receipt-artifact-review,lc receipt-review-receipt,lc receipt-review-draft,lc receipt-materialization-plan,lc signature-request,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
                 self.push_console("registry_authority=metadata-only external_host_processes=0");
             }
             ["lc", "standalone"] | ["console", "standalone"] | ["lc", "standalone-contract"] => {
@@ -1052,6 +1072,28 @@ impl LatticraInstallerApp {
                 self.push_console("command_surface=lc standalone");
                 self.push_console(
                     "shell_execution_allowed=0 host_process_launch_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 production_os_claim=0",
+                );
+            }
+            ["lc", "session"] | ["console", "session"] | ["lc", "session-contract"] => {
+                self.push_console("lc.session=Latticra Console session contract");
+                self.push_console(format!(
+                    "session_profile={}",
+                    self.config.lc.session_contract_profile
+                ));
+                self.push_console("session_status=metadata-only-contract");
+                self.push_console("session_contract_present=1");
+                self.push_console("session_kind=operator-base");
+                self.push_console(
+                    "standalone_compatible=1 panel_embedded_compatible=1 host_embedded_planned=1",
+                );
+                self.push_console("session_manifest_present=0 session_manifest_write_allowed=0");
+                self.push_console("runtime_session_created=0 runtime_process_spawn_allowed=0 runtime_invocation_allowed=0 interactive_shell_allowed=0");
+                self.push_console("command_surface=lc session");
+                self.push_console(
+                    "promotion_gate=lc_session_contract_before_runtime_or_host_embedding",
+                );
+                self.push_console(
+                    "host_process_launch_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 production_os_claim=0",
                 );
             }
             ["lc", "receipts"]
@@ -2037,6 +2079,12 @@ impl LatticraInstallerApp {
                     "stage=40 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-contract; prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_signed=0 runtime_invoked=0",
                 );
                 self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_contract_stage=41-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-contract",
+                );
+                self.push_console(
+                    "stage=41 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-contract; prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_decision_recorded=0 runtime_invoked=0",
+                );
+                self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
                 );
             }
@@ -2623,6 +2671,31 @@ impl LatticraInstallerApp {
                 );
                 self.push_console(
                     "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_contract=1",
+                );
+            }
+            ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition"]
+            | ["nadia", "evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition"]
+            | ["nadia", "prompt-result-release-receipt-review-disposition-release-receipt-review-disposition"]
+            | ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-contract"] =>
+            {
+                self.push_console(
+                    "nadia_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition=stage-41-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-contract",
+                );
+                self.push_console(
+                    "panel_command=nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console(
+                    "installed_cli=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_contract_status=contract_only prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_record_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_decision_recorded=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_findings_recorded=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1",
                 );
             }
             ["nadia", "inference-readiness"]
@@ -3222,7 +3295,7 @@ impl LatticraInstallerApp {
             ui,
             &mut self.config.components.nadia_offline_ai,
             "Nadia offline AI foundation",
-            "Stage-40 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review contract with metadata-only Console surfaces.",
+            "Stage-41 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition contract with metadata-only Console surfaces.",
         );
         checkbox_note(
             ui,
@@ -3428,6 +3501,11 @@ impl LatticraInstallerApp {
         );
         labeled_text_field(
             ui,
+            "Session contract",
+            &mut self.config.lc.session_contract_profile,
+        );
+        labeled_text_field(
+            ui,
             "Receipt request",
             &mut self.config.lc.receipt_request_contract_profile,
         );
@@ -3530,6 +3608,12 @@ impl LatticraInstallerApp {
             &mut self.config.lc.require_host_adapter_contract,
             "Require host-adapter contract",
             "Future Host embedding must prove the adapter contract before any adapter can exist.",
+        );
+        checkbox_note(
+            ui,
+            &mut self.config.lc.require_session_contract,
+            "Require session contract",
+            "LC sessions must prove this metadata envelope before any runtime session, shell, or host adapter can exist.",
         );
         checkbox_note(
             ui,
@@ -4116,39 +4200,70 @@ impl LatticraInstallerApp {
 
     fn show_evidence(&mut self, ui: &mut egui::Ui) {
         ui.heading("Plan, receipts, and evidence");
-        ui.horizontal(|ui| {
-            if ui
-                .selectable_label(self.show_plan_over_log, "Plan preview")
-                .clicked()
-            {
+        ui.horizontal_wrapped(|ui| {
+            status_chip(
+                ui,
+                "view",
+                if self.show_plan_over_log {
+                    "plan"
+                } else {
+                    "log"
+                },
+            );
+            status_chip(ui, "plan_lines", &line_count(&self.plan).to_string());
+            status_chip(ui, "log_lines", &self.logs.len().to_string());
+            status_chip(ui, "phase", &self.phase_title);
+        });
+        ui.add_space(6.0);
+        ui.horizontal_wrapped(|ui| {
+            let plan_button = egui::Button::new("Plan preview")
+                .selected(self.show_plan_over_log)
+                .fill(if self.show_plan_over_log {
+                    soft_blue()
+                } else {
+                    soft_surface()
+                });
+            if ui.add(plan_button).clicked() {
                 self.show_plan_over_log = true;
             }
-            if ui
-                .selectable_label(!self.show_plan_over_log, "Engine log")
-                .clicked()
-            {
+
+            let log_button = egui::Button::new("Engine log")
+                .selected(!self.show_plan_over_log)
+                .fill(if !self.show_plan_over_log {
+                    soft_blue()
+                } else {
+                    soft_surface()
+                });
+            if ui.add(log_button).clicked() {
                 self.show_plan_over_log = false;
             }
+
             if ui.button("Refresh plan").clicked() {
                 self.refresh_plan();
             }
         });
+        ui.add_space(8.0);
 
-        egui::ScrollArea::vertical()
-            .id_salt("latticra_evidence_panel")
-            .max_height(ui.available_height().max(260.0))
-            .stick_to_bottom(!self.show_plan_over_log)
-            .show(ui, |ui| {
-                if self.show_plan_over_log {
-                    ui.monospace(&self.plan);
-                } else if self.logs.is_empty() {
-                    ui.monospace("No engine run yet.");
-                } else {
-                    for line in &self.logs {
-                        ui.monospace(line);
-                    }
-                }
-            });
+        let max_height = ui.available_height().max(320.0);
+        if self.show_plan_over_log {
+            show_record_text(
+                ui,
+                "latticra_evidence_plan_record",
+                &self.plan,
+                "plan=empty",
+                max_height,
+                false,
+            );
+        } else {
+            show_record_lines(
+                ui,
+                "latticra_evidence_log_record",
+                &self.logs,
+                "engine_log=waiting",
+                max_height,
+                true,
+            );
+        }
     }
 
     fn show_install_run_monitor(&mut self, ui: &mut egui::Ui, compact: bool) {
@@ -4257,16 +4372,8 @@ impl LatticraInstallerApp {
         }
 
         let start = self.logs.len().saturating_sub(max_lines);
-        for line in &self.logs[start..] {
-            ui.add(
-                egui::Label::new(
-                    egui::RichText::new(line)
-                        .monospace()
-                        .small()
-                        .color(egui::Color32::from_rgb(160, 230, 255)),
-                )
-                .extend(),
-            );
+        for (offset, line) in self.logs[start..].iter().enumerate() {
+            record_line(ui, start + offset + 1, line, record_line_color(line));
         }
     }
 
@@ -4535,27 +4642,31 @@ impl LatticraInstallerApp {
 
             if self.install_state != InstallState::Running {
                 ui.add_space(6.0);
-                ui.horizontal_wrapped(|ui| {
-                    for command in [
-                        "help",
-                        "status",
-                        "updater",
-                        "updater dry-run",
-                        "pwd",
-                        "plan",
-                        "dry-run",
-                        "reset",
-                        "uninstall",
-                        "mode dry",
-                        "mode local",
-                        "clear",
-                    ] {
-                        if ui.button(command).clicked() {
-                            self.console_input = command.to_owned();
-                            self.run_console_command();
-                        }
-                    }
-                });
+                egui::CollapsingHeader::new("Command shortcuts")
+                    .default_open(false)
+                    .show(ui, |ui| {
+                        ui.horizontal_wrapped(|ui| {
+                            for command in [
+                                "help",
+                                "status",
+                                "updater",
+                                "updater dry-run",
+                                "pwd",
+                                "plan",
+                                "dry-run",
+                                "reset",
+                                "uninstall",
+                                "mode dry",
+                                "mode local",
+                                "clear",
+                            ] {
+                                if ui.button(command).clicked() {
+                                    self.console_input = command.to_owned();
+                                    self.run_console_command();
+                                }
+                            }
+                        });
+                    });
             }
         });
     }
@@ -4572,14 +4683,49 @@ impl LatticraInstallerApp {
     }
 
     fn show_right_evidence_panel(&mut self, ui: &mut egui::Ui) {
-        ui.group(|ui| {
-            ui.horizontal(|ui| {
-                ui.heading("Live evidence");
-                ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    if ui.button("plan/log").clicked() {
-                        self.show_plan_over_log = !self.show_plan_over_log;
-                    }
-                });
+        panel_card().show(ui, |ui| {
+            ui.horizontal_wrapped(|ui| {
+                ui.heading(egui::RichText::new("Live evidence").color(ink()));
+                status_chip(
+                    ui,
+                    "view",
+                    if self.show_plan_over_log {
+                        "plan"
+                    } else {
+                        "log"
+                    },
+                );
+                status_chip(ui, "log_lines", &self.logs.len().to_string());
+            });
+            ui.horizontal_wrapped(|ui| {
+                if ui
+                    .add(
+                        egui::Button::new("Plan")
+                            .selected(self.show_plan_over_log)
+                            .fill(if self.show_plan_over_log {
+                                soft_blue()
+                            } else {
+                                soft_surface()
+                            }),
+                    )
+                    .clicked()
+                {
+                    self.show_plan_over_log = true;
+                }
+                if ui
+                    .add(
+                        egui::Button::new("Log")
+                            .selected(!self.show_plan_over_log)
+                            .fill(if !self.show_plan_over_log {
+                                soft_blue()
+                            } else {
+                                soft_surface()
+                            }),
+                    )
+                    .clicked()
+                {
+                    self.show_plan_over_log = false;
+                }
             });
             if self.install_state == InstallState::Running {
                 ui.add(egui::ProgressBar::new(self.progress()).show_percentage());
@@ -4593,32 +4739,29 @@ impl LatticraInstallerApp {
                 );
             }
 
-            let evidence_width = ui.available_width();
             let evidence_height = if self.install_state == InstallState::Running {
                 RUNNING_EVIDENCE_MAX_HEIGHT
             } else {
                 IDLE_EVIDENCE_MAX_HEIGHT
             };
             if self.show_plan_over_log {
-                egui::ScrollArea::vertical()
-                    .id_salt("latticra_right_evidence_plan")
-                    .max_width(evidence_width)
-                    .max_height(evidence_height)
-                    .show(ui, |ui| {
-                        ui.add(
-                            egui::Label::new(egui::RichText::new(&self.plan).monospace()).wrap(),
-                        );
-                    });
+                show_record_text(
+                    ui,
+                    "latticra_right_evidence_plan",
+                    &self.plan,
+                    "plan=empty",
+                    evidence_height,
+                    false,
+                );
             } else {
-                egui::ScrollArea::both()
-                    .id_salt("latticra_right_evidence_log")
-                    .max_width(evidence_width)
-                    .max_height(evidence_height)
-                    .stick_to_bottom(true)
-                    .auto_shrink([false, false])
-                    .show(ui, |ui| {
-                        self.show_engine_log_lines(ui, self.logs.len().max(1))
-                    });
+                show_record_lines(
+                    ui,
+                    "latticra_right_evidence_log",
+                    &self.logs,
+                    "engine_log=waiting",
+                    evidence_height,
+                    true,
+                );
             }
         });
     }
@@ -4788,6 +4931,119 @@ fn warning_note(ui: &mut egui::Ui, title: &str, body: &str) {
             ui.label(egui::RichText::new(title).strong().color(amber()));
             ui.add(egui::Label::new(egui::RichText::new(body).small().color(ink())).wrap());
         });
+}
+
+fn show_record_text(
+    ui: &mut egui::Ui,
+    id_salt: &'static str,
+    text: &str,
+    empty_line: &str,
+    max_height: f32,
+    stick_to_bottom: bool,
+) {
+    let lines: Vec<&str> = text.lines().collect();
+    record_frame().show(ui, |ui| {
+        egui::ScrollArea::both()
+            .id_salt(id_salt)
+            .max_height(max_height)
+            .stick_to_bottom(stick_to_bottom)
+            .auto_shrink([false, false])
+            .show(ui, |ui| {
+                if lines.is_empty() {
+                    record_line(ui, 1, empty_line, muted());
+                    return;
+                }
+
+                for (index, line) in lines.iter().enumerate() {
+                    record_line(ui, index + 1, line, record_line_color(line));
+                }
+            });
+    });
+}
+
+fn show_record_lines(
+    ui: &mut egui::Ui,
+    id_salt: &'static str,
+    lines: &[String],
+    empty_line: &str,
+    max_height: f32,
+    stick_to_bottom: bool,
+) {
+    record_frame().show(ui, |ui| {
+        egui::ScrollArea::both()
+            .id_salt(id_salt)
+            .max_height(max_height)
+            .stick_to_bottom(stick_to_bottom)
+            .auto_shrink([false, false])
+            .show(ui, |ui| {
+                if lines.is_empty() {
+                    record_line(ui, 1, empty_line, muted());
+                    return;
+                }
+
+                for (index, line) in lines.iter().enumerate() {
+                    record_line(ui, index + 1, line, record_line_color(line));
+                }
+            });
+    });
+}
+
+fn record_frame() -> egui::Frame {
+    egui::Frame::NONE
+        .fill(egui::Color32::from_rgb(6, 10, 18))
+        .stroke(egui::Stroke::new(1.0, egui::Color32::from_rgb(45, 90, 130)))
+        .corner_radius(egui::CornerRadius::same(8))
+        .inner_margin(egui::Margin::same(8))
+}
+
+fn record_line(ui: &mut egui::Ui, number: usize, line: &str, color: egui::Color32) {
+    ui.horizontal(|ui| {
+        ui.add_sized(
+            [34.0, 18.0],
+            egui::Label::new(
+                egui::RichText::new(format!("{number:>3}"))
+                    .monospace()
+                    .small()
+                    .color(egui::Color32::from_rgb(92, 123, 142)),
+            ),
+        );
+        ui.add(
+            egui::Label::new(egui::RichText::new(line).monospace().small().color(color)).extend(),
+        );
+    });
+}
+
+fn record_line_color(line: &str) -> egui::Color32 {
+    let lower = line.to_ascii_lowercase();
+    if lower.contains("engine_failure")
+        || lower.contains("blocked")
+        || lower.contains("error")
+        || lower.contains("failed")
+    {
+        return egui::Color32::from_rgb(255, 166, 142);
+    }
+
+    if lower.starts_with("phase ") || lower.contains("completed successfully") {
+        return egui::Color32::from_rgb(155, 217, 255);
+    }
+
+    if lower.contains("authority=0")
+        || lower.contains("network=0")
+        || lower.contains("root=0")
+        || lower.contains("allowed=0")
+    {
+        return egui::Color32::from_rgb(143, 232, 210);
+    }
+
+    if lower.contains("receipt") || lower.contains("evidence") || lower.contains("plan") {
+        return egui::Color32::from_rgb(246, 206, 139);
+    }
+
+    egui::Color32::from_rgb(190, 220, 232)
+}
+
+fn line_count(text: &str) -> usize {
+    text.lines().count()
 }
 
 fn ink() -> egui::Color32 {

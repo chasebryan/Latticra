@@ -60,6 +60,7 @@ static const char VALID_FIXTURE[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -113,6 +114,7 @@ static const char SOURCE_AFTER_TOP_TEXT[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -209,7 +211,7 @@ static int source_backed_text_preserves_ast_counts(void) {
     EXPECT_TRUE(make_source(source, sizeof(source), "count purpose", "count top", "count bottom"), "count source builds");
     EXPECT_TRUE(latticra_l_ui_parse_ast(source, strlen(source), &ast) == LATTICRA_STATUS_OK, "count AST parse status");
     EXPECT_TRUE(ast.rail_count == 9u, "rail count preserved");
-    EXPECT_TRUE(ast.field_count == 23u, "field count preserved");
+    EXPECT_TRUE(ast.field_count == 24u, "field count preserved");
     EXPECT_TRUE(ast.text_count == 2u, "text count preserved");
     return 0;
 }

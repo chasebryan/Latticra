@@ -72,6 +72,8 @@ ubuntu_release_artifact_notice_requirements_contract_present=1
 ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements
 ubuntu_package_notice_promotion_gate_contract_present=1
 ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
+ubuntu_package_license_promotion_gate_contract_present=1
+ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
 ubuntu_package_notice_review_contract_present=1
 ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 ubuntu_package_license_review_unblocked=0
@@ -111,6 +113,8 @@ ubuntu_release_artifact_notice_requirements_contract_present=1
 ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements
 ubuntu_package_notice_promotion_gate_contract_present=1
 ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
+ubuntu_package_license_promotion_gate_contract_present=1
+ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
 ubuntu_package_notice_review_contract_present=1
 ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 license_expression_candidate_recorded=1
@@ -126,6 +130,8 @@ ubuntu_local_deb_build_transcript_unblocked=0
 The Ubuntu lintian availability lane may run because it only proves tool availability.
 
 The Ubuntu static metadata lint lane and local deb build transcript evidence remain blocked until this contract is promoted by a reviewed packaging-license decision.
+
+The Ubuntu package license promotion gate aggregates this contract with the package notice promotion gate before static lint or build transcript evidence can advance.
 
 ## Non-Claims
 

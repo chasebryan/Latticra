@@ -30,6 +30,7 @@ docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md
 docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
 docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
+docs/UBUNTU_PACKAGE_LICENSE_PROMOTION_GATE_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
@@ -74,6 +75,9 @@ release_artifact_notice_requirements_recorded=0
 package_notice_promotion_gate_contract_present=1
 package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
 package_notice_promotion_gate_unblocked=0
+package_license_promotion_gate_contract_present=1
+package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
+package_license_promotion_gate_unblocked=0
 ppa_claimed=0
 ubuntu_archive_ready=0
 production_readiness_claimed=0
@@ -113,7 +117,7 @@ claim production readiness
 
 ## Next Recommended Lane
 
-Promote the Ubuntu package license expression only after documentation licensing and notice obligations are reviewed.
+Review the Ubuntu package license promotion gate before lintian/static metadata, build transcript evidence, or package license expression promotion advances.
 
 ## Validation
 

@@ -17,8 +17,8 @@ static int default_request_is_denied(void) {
 
     EXPECT_TRUE(latticra_kernel_lifecycle_default_request(&request) == LATTICRA_STATUS_OK,
         "default request status");
-    EXPECT_TRUE(request.target_state == LATTICRA_KERNEL_STATE_PREEMPTION_READY,
-        "default target preemption-ready");
+    EXPECT_TRUE(request.target_state == LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY,
+        "default target scheduler-credit-ready");
     EXPECT_TRUE(request.gate == LATTICRA_KERNEL_STATE_GATE_DENY,
         "default gate deny");
     EXPECT_TRUE(request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
@@ -43,7 +43,7 @@ static int default_request_is_denied(void) {
     return 0;
 }
 
-static int allowed_lifecycle_reaches_preemption_ready(void) {
+static int allowed_lifecycle_reaches_scheduler_credit_ready(void) {
     latticra_kernel_lifecycle_request_t request;
     latticra_kernel_lifecycle_result_t result;
 
@@ -57,18 +57,18 @@ static int allowed_lifecycle_reaches_preemption_ready(void) {
         "lifecycle complete");
     EXPECT_TRUE(strcmp(result.policy_status, "gate-allowed") == 0,
         "policy gate allowed");
-    EXPECT_TRUE(result.final_state == LATTICRA_KERNEL_STATE_PREEMPTION_READY,
-        "final state preemption-ready");
-    EXPECT_TRUE(result.step_count == 17u,
-        "seventeen steps to preemption-ready");
-    EXPECT_TRUE(result.state_change_count == 17u,
-        "seventeen state changes");
+    EXPECT_TRUE(result.final_state == LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY,
+        "final state scheduler-credit-ready");
+    EXPECT_TRUE(result.step_count == 18u,
+        "eighteen steps to scheduler-credit-ready");
+    EXPECT_TRUE(result.state_change_count == 18u,
+        "eighteen state changes");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "complete flag set");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "external effects absent");
-    EXPECT_TRUE(result.machine.log_count == 17u,
-        "machine log has seventeen entries");
+    EXPECT_TRUE(result.machine.log_count == 18u,
+        "machine log has eighteen entries");
     EXPECT_TRUE(result.machine.log[0].from_state == LATTICRA_KERNEL_STATE_CREATED,
         "log zero from created");
     EXPECT_TRUE(result.machine.log[0].to_state == LATTICRA_KERNEL_STATE_INITIALIZED,
@@ -108,6 +108,10 @@ static int allowed_lifecycle_reaches_preemption_ready(void) {
     EXPECT_TRUE(result.machine.log[16].to_state == LATTICRA_KERNEL_STATE_PREEMPTION_READY,
         "log sixteen to preemption-ready");
     EXPECT_TRUE(result.machine.log[16].state_change_performed == 1,
+        "preemption step changed state");
+    EXPECT_TRUE(result.machine.log[17].to_state == LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY,
+        "log seventeen to scheduler-credit-ready");
+    EXPECT_TRUE(result.machine.log[17].state_change_performed == 1,
         "last step changed state");
     return 0;
 }
@@ -210,17 +214,17 @@ static int lifecycle_report_is_deterministic(void) {
         "lifecycle status emitted");
     EXPECT_TRUE(strstr(report, "policy_status=gate-allowed\n") != 0,
         "policy status emitted");
-    EXPECT_TRUE(strstr(report, "final_state=preemption-ready\n") != 0,
+    EXPECT_TRUE(strstr(report, "final_state=scheduler-credit-ready\n") != 0,
         "final state emitted");
-    EXPECT_TRUE(strstr(report, "step_count=17\n") != 0,
+    EXPECT_TRUE(strstr(report, "step_count=18\n") != 0,
         "step count emitted");
-    EXPECT_TRUE(strstr(report, "state_change_count=17\n") != 0,
+    EXPECT_TRUE(strstr(report, "state_change_count=18\n") != 0,
         "state change count emitted");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "complete flag emitted");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "external effect emitted");
-    EXPECT_TRUE(strstr(report, "machine_log_count=17\n") != 0,
+    EXPECT_TRUE(strstr(report, "machine_log_count=18\n") != 0,
         "machine log count emitted");
     EXPECT_TRUE(strstr(report, "log[0].from=created\n") != 0,
         "log zero from emitted");
@@ -257,8 +261,12 @@ static int lifecycle_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "log[15].state_change_performed=1\n") != 0,
         "log time accounting change emitted");
     EXPECT_TRUE(strstr(report, "log[16].to=preemption-ready\n") != 0,
-        "log final to emitted");
+        "log preemption to emitted");
     EXPECT_TRUE(strstr(report, "log[16].state_change_performed=1\n") != 0,
+        "log preemption change emitted");
+    EXPECT_TRUE(strstr(report, "log[17].to=scheduler-credit-ready\n") != 0,
+        "log final to emitted");
+    EXPECT_TRUE(strstr(report, "log[17].state_change_performed=1\n") != 0,
         "log final change emitted");
     return 0;
 }
@@ -284,7 +292,7 @@ static int null_guards_are_safe(void) {
 
 int main(void) {
     if (default_request_is_denied() != 0) return 1;
-    if (allowed_lifecycle_reaches_preemption_ready() != 0) return 1;
+    if (allowed_lifecycle_reaches_scheduler_credit_ready() != 0) return 1;
     if (lifecycle_can_stop_at_intermediate_target() != 0) return 1;
     if (lifecycle_can_stop_at_process_table_ready() != 0) return 1;
     if (lifecycle_respects_step_limit() != 0) return 1;

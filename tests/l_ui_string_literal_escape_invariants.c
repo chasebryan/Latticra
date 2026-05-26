@@ -74,6 +74,7 @@ static const char SOURCE_AFTER_TOP_TEXT[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -389,7 +390,7 @@ static int string_escape_does_not_change_parse_source_summary(void) {
     EXPECT_TRUE(latticra_l_ui_parse_source(source, source_len, &result) == LATTICRA_STATUS_OK, "parse source status");
     EXPECT_TRUE(result.error == LATTICRA_L_UI_PARSE_OK, "parse source remains structural OK");
     EXPECT_TRUE(result.rail_count == 9u, "parse source rail count unchanged");
-    EXPECT_TRUE(result.field_count == 23u, "parse source field count unchanged");
+    EXPECT_TRUE(result.field_count == 24u, "parse source field count unchanged");
     EXPECT_STR_EQ(result.effect, "none", "parse source effect unchanged");
     EXPECT_STR_EQ(result.boundary, "preview_only", "parse source boundary unchanged");
     return 0;

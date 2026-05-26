@@ -286,6 +286,15 @@ static int runtime_lir_node_kind_is_lat(latticra_lir_node_kind_t kind) {
            kind == LATTICRA_LIR_NODE_LAT_EFFECT_DECLARATION;
 }
 
+static const char *runtime_lir_edge_kind_label(latticra_lir_edge_kind_t kind) {
+    if (kind == LATTICRA_LIR_EDGE_CONTAINS) return "contains";
+    if (kind == LATTICRA_LIR_EDGE_BINDS) return "binds";
+    if (kind == LATTICRA_LIR_EDGE_ANNOTATES) return "annotates";
+    if (kind == LATTICRA_LIR_EDGE_ORDERS_BEFORE) return "orders_before";
+    if (kind == LATTICRA_LIR_EDGE_TRANSITIONS_FROM) return "transitions_from";
+    return "unknown";
+}
+
 static const char *runtime_lir_report_classification_label(latticra_lir_report_classification_t classification) {
     if (classification == LATTICRA_LIR_REPORT_MATERIALIZED) return "materialized";
     if (classification == LATTICRA_LIR_REPORT_REJECTED) return "rejected";
@@ -633,6 +642,13 @@ static void copy_lat_lir_evidence(const latticra_lir_module_t *lir, latticra_run
         }
     }
     for (index = 0u; index < lir->edge_count && index < LATTICRA_LIR_EDGE_MAX; index++) {
+        if (result->record.lat_lir_has_first_edge == 0) {
+            result->record.lat_lir_has_first_edge = 1;
+            result->record.lat_lir_first_edge_index = index;
+            result->record.lat_lir_first_edge_from_index = lir->edges[index].from_index;
+            result->record.lat_lir_first_edge_to_index = lir->edges[index].to_index;
+            result->record.lat_lir_first_edge_kind = lir->edges[index].edge_kind;
+        }
         if (lir->edges[index].edge_kind == LATTICRA_LIR_EDGE_CONTAINS) {
             result->record.lat_lir_contains_edge_count += 1u;
         } else if (lir->edges[index].edge_kind == LATTICRA_LIR_EDGE_BINDS) {
@@ -997,7 +1013,7 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
     }
     used = offset + (size_t)written;
     extra = snprintf(buffer + used, buffer_len - used,
-        "lat_lir_lat_state_node_count=%lu\nlat_lir_lat_policy_node_count=%lu\nlat_lir_lat_transition_node_count=%lu\nlat_lir_lat_assertion_node_count=%lu\nlat_lir_lat_requirement_node_count=%lu\nlat_lir_lat_effect_declaration_node_count=%lu\nlat_lir_has_first_lat_node=%d\nlat_lir_first_lat_node_index=%lu\nlat_lir_first_lat_node_kind=%s\nlat_lir_first_lat_node_name=%s\nlat_lir_first_lat_node_value=%s\nlat_lir_first_lat_node_operator=%s\nlat_lir_first_lat_node_binding=%s\nlat_lir_first_lat_node_span_start_offset=%lu\nlat_lir_first_lat_node_span_end_offset=%lu\nlat_lir_first_lat_node_span_start_line=%lu\nlat_lir_first_lat_node_span_start_column=%lu\nlat_lir_first_lat_node_span_end_line=%lu\nlat_lir_first_lat_node_span_end_column=%lu\n",
+        "lat_lir_lat_state_node_count=%lu\nlat_lir_lat_policy_node_count=%lu\nlat_lir_lat_transition_node_count=%lu\nlat_lir_lat_assertion_node_count=%lu\nlat_lir_lat_requirement_node_count=%lu\nlat_lir_lat_effect_declaration_node_count=%lu\nlat_lir_has_first_lat_node=%d\nlat_lir_first_lat_node_index=%lu\nlat_lir_first_lat_node_kind=%s\nlat_lir_first_lat_node_name=%s\nlat_lir_first_lat_node_value=%s\nlat_lir_first_lat_node_operator=%s\nlat_lir_first_lat_node_binding=%s\nlat_lir_first_lat_node_span_start_offset=%lu\nlat_lir_first_lat_node_span_end_offset=%lu\nlat_lir_first_lat_node_span_start_line=%lu\nlat_lir_first_lat_node_span_start_column=%lu\nlat_lir_first_lat_node_span_end_line=%lu\nlat_lir_first_lat_node_span_end_column=%lu\nlat_lir_has_first_edge=%d\nlat_lir_first_edge_index=%lu\nlat_lir_first_edge_from_index=%lu\nlat_lir_first_edge_to_index=%lu\nlat_lir_first_edge_kind=%s\n",
         (unsigned long)result->record.lat_lir_lat_state_node_count,
         (unsigned long)result->record.lat_lir_lat_policy_node_count,
         (unsigned long)result->record.lat_lir_lat_transition_node_count,
@@ -1016,7 +1032,12 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         (unsigned long)result->record.lat_lir_first_lat_node_span.start_line,
         (unsigned long)result->record.lat_lir_first_lat_node_span.start_column,
         (unsigned long)result->record.lat_lir_first_lat_node_span.end_line,
-        (unsigned long)result->record.lat_lir_first_lat_node_span.end_column);
+        (unsigned long)result->record.lat_lir_first_lat_node_span.end_column,
+        result->record.lat_lir_has_first_edge,
+        (unsigned long)result->record.lat_lir_first_edge_index,
+        (unsigned long)result->record.lat_lir_first_edge_from_index,
+        (unsigned long)result->record.lat_lir_first_edge_to_index,
+        runtime_lir_edge_kind_label(result->record.lat_lir_first_edge_kind));
     if (extra < 0 || used + (size_t)extra >= buffer_len) {
         buffer[0] = '\0';
         return LATTICRA_STATUS_BUFFER_TOO_SMALL;

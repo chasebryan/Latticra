@@ -43,6 +43,8 @@ ubuntu_release_artifact_notice_requirements_contract_present=1
 ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements
 ubuntu_package_notice_promotion_gate_contract_present=1
 ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites
+ubuntu_package_license_promotion_gate_contract_present=1
+ubuntu_package_license_promotion_gate_status=blocked-pending-package-license-prerequisites
 ubuntu_package_notice_review_contract_present=1
 ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 license_expression_candidate_recorded=1
@@ -119,6 +121,7 @@ docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md
 docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
 docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
+docs/UBUNTU_PACKAGE_LICENSE_PROMOTION_GATE_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
@@ -143,6 +146,7 @@ scripts/test-ubuntu-debian-copyright-notice-mapping-contract.sh
 scripts/test-ubuntu-trademark-notice-boundary-contract.sh
 scripts/test-ubuntu-release-artifact-notice-requirements-contract.sh
 scripts/test-ubuntu-package-notice-promotion-gate-contract.sh
+scripts/test-ubuntu-package-license-promotion-gate-contract.sh
 scripts/test-ubuntu-package-notice-review-contract.sh
 scripts/test-ubuntu-package-license-review-contract.sh
 scripts/test-ubuntu-local-deb-build-transcript-contract.sh
@@ -155,6 +159,7 @@ scripts/test-ubuntu-local-deb-build-transcript-contract.sh
 .github/workflows/ubuntu-trademark-notice-boundary-contract.yml
 .github/workflows/ubuntu-release-artifact-notice-requirements-contract.yml
 .github/workflows/ubuntu-package-notice-promotion-gate-contract.yml
+.github/workflows/ubuntu-package-license-promotion-gate-contract.yml
 .github/workflows/ubuntu-package-notice-review-contract.yml
 ```
 
@@ -193,10 +198,12 @@ The Ubuntu release artifact notice requirements contract records that source pac
 
 The Ubuntu package notice promotion gate records the aggregate blocked state across all package notice prerequisites before package license promotion can proceed.
 
+The Ubuntu package license promotion gate records the aggregate blocked state across package notice and package license prerequisites before lintian/static metadata or build transcript evidence can proceed.
+
 The Ubuntu package notice inventory records the current local-deb draft payload facts without promoting the review. The Ubuntu package notice review contract records the unresolved documentation-license and notice obligations that must be settled before the package license review can be promoted.
 
 ## Next Recommended Lane
 
 ```text
-Review the Ubuntu package notice promotion gate contract, then promote the Ubuntu package notice review only after documentation licensing, third-party notices, generated-artifact notices, NOTICE requirements, Debian copyright mapping, trademark boundaries, and release-artifact notices are decided.
+Review the Ubuntu package license promotion gate contract, then advance lintian/static metadata only after package notice and package license prerequisites are reviewed.
 ```

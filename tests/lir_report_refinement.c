@@ -60,6 +60,7 @@ static const char VALID_SOURCE[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -97,8 +98,8 @@ static int lir_report_refinement_reports_materialized_l_ui_shape(void) {
     EXPECT_TRUE(module.error == LATTICRA_LIR_OK, "materialized lir ok");
     EXPECT_TRUE(module.report_classification == LATTICRA_LIR_REPORT_MATERIALIZED, "materialized classification");
     EXPECT_TRUE(module.shape_kind == LATTICRA_LIR_SHAPE_L_UI_CARD_GRAPH, "l-ui graph shape");
-    EXPECT_TRUE(module.contains_edge_count == 35u, "contains edge count");
-    EXPECT_TRUE(module.binds_edge_count == 23u, "binds edge count");
+    EXPECT_TRUE(module.contains_edge_count == 36u, "contains edge count");
+    EXPECT_TRUE(module.binds_edge_count == 24u, "binds edge count");
     EXPECT_TRUE(module.annotates_edge_count == 2u, "annotates edge count");
     EXPECT_TRUE(module.orders_before_edge_count == 0u, "orders edge count");
     EXPECT_TRUE(module.transitions_from_edge_count == 0u, "transition edge count");
@@ -109,8 +110,8 @@ static int lir_report_refinement_reports_materialized_l_ui_shape(void) {
     EXPECT_TRUE(latticra_lir_report(&module, report, sizeof(report)) == LATTICRA_STATUS_OK, "materialized report");
     EXPECT_TRUE(strstr(report, "report_classification=materialized\n") != 0, "classification report field");
     EXPECT_TRUE(strstr(report, "shape_kind=l-ui-card-graph\n") != 0, "shape report field");
-    EXPECT_TRUE(strstr(report, "contains_edge_count=35\n") != 0, "contains count report field");
-    EXPECT_TRUE(strstr(report, "binds_edge_count=23\n") != 0, "binds count report field");
+    EXPECT_TRUE(strstr(report, "contains_edge_count=36\n") != 0, "contains count report field");
+    EXPECT_TRUE(strstr(report, "binds_edge_count=24\n") != 0, "binds count report field");
     EXPECT_TRUE(strstr(report, "annotates_edge_count=2\n") != 0, "annotates count report field");
     EXPECT_TRUE(strstr(report, "no_effect_chain_ok=1\n") != 0, "no-effect chain report field");
     EXPECT_TRUE(strstr(report, "evidence_level=2\n") != 0, "evidence report field");

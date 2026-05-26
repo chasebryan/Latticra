@@ -190,7 +190,7 @@ Add a macOS reset/uninstall live-denial transcript contract that records the fai
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner acceptance-denial review contract that reviews the closed gate transcript without enabling dispatch or deletion.
+Add a macOS reset/uninstall live-runner acceptance-denial disposition review contract that reviews the no-effect disposition without opening dispatch or deletion.
 ```
 
 Follow-on no-op prototype lane:

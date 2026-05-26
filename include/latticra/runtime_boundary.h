@@ -302,6 +302,11 @@ typedef struct {
     size_t lat_lir_annotates_edge_count;
     size_t lat_lir_orders_before_edge_count;
     size_t lat_lir_transition_edge_count;
+    int lat_lir_has_first_edge;
+    size_t lat_lir_first_edge_index;
+    size_t lat_lir_first_edge_from_index;
+    size_t lat_lir_first_edge_to_index;
+    latticra_lir_edge_kind_t lat_lir_first_edge_kind;
     int lat_lir_has_lat_state_nodes;
     int lat_lir_has_lat_transition_nodes;
     int lat_lir_has_transition_source_edges;

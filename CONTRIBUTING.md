@@ -61,6 +61,12 @@ Before changing safety guards, CI workflows, shell checks, or quality gates, run
 make quality-safety-guards
 ```
 
+Before changing distro packaging metadata, package-readiness docs, or local package handoff lanes, run:
+
+```sh
+make quality-packaging-static
+```
+
 Before submitting broader code or installer changes, run:
 
 ```sh

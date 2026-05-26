@@ -26,6 +26,8 @@ opensuse_rpmlint_static_spec_lane_present=1
 opensuse_rpmlint_findings_classification_present=1
 opensuse_source_archive_reproducibility_contract_present=1
 opensuse_source_archive_fixture_lane_present=1
+opensuse_rpm_topdir_handoff_lane_present=1
+temporary_rpm_topdir_handoff_lane_present=1
 rpm_artifact_created=0
 rpm_installed_on_host=0
 osc_build_run=0
@@ -41,6 +43,12 @@ source_archive_reproducible=1
 source_archive_generated_twice=1
 source_archive_repeated_sha256_match=1
 source_archive_accepted_for_build=0
+temporary_rpm_topdir_created=1
+temporary_rpm_sources_archive_staged=1
+temporary_rpm_specs_spec_staged=1
+temporary_rpm_specs_changes_staged=1
+temporary_rpm_source_sha256_preserved=1
+temporary_rpm_source_listing_preserved=1
 spec_cleaner_run=0
 rpmlint_package_readiness_claimed=0
 opensuse_obs_publication_claimed=0
@@ -63,6 +71,7 @@ docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 packaging/opensuse/README.md
 packaging/opensuse/latticra.spec
@@ -74,6 +83,7 @@ scripts/test-opensuse-rpmlint-static-spec-lane.sh
 scripts/test-opensuse-rpmlint-findings-classification.sh
 scripts/test-opensuse-source-archive-reproducibility-contract.sh
 scripts/test-opensuse-source-archive-fixture-lane.sh
+scripts/test-opensuse-rpm-topdir-handoff-lane.sh
 .github/workflows/opensuse-developer-workflow.yml
 .github/workflows/opensuse-local-rpm-static-validation.yml
 .github/workflows/opensuse-rpmlint-osc-availability.yml
@@ -81,6 +91,7 @@ scripts/test-opensuse-source-archive-fixture-lane.sh
 .github/workflows/opensuse-rpmlint-findings-classification.yml
 .github/workflows/opensuse-source-archive-reproducibility-contract.yml
 .github/workflows/opensuse-source-archive-fixture-lane.yml
+.github/workflows/opensuse-rpm-topdir-handoff-lane.yml
 ```
 
 ## Public Entry Points
@@ -110,8 +121,10 @@ The openSUSE source archive reproducibility contract records the expected `Sourc
 
 The openSUSE source archive fixture lane creates two temporary archive fixtures, compares their SHA-256 values, and inspects the archive listing. It does not create persistent source RPM or binary RPM artifacts, run `rpmbuild`, run `osc build`, publish to Open Build Service, or claim package readiness.
 
+The openSUSE RPM topdir handoff lane stages the verified temporary source archive and local-only spec files into a disposable RPM topdir. It does not run `rpmbuild`, run `osc build`, create source RPM or binary RPM artifacts, publish to Open Build Service, or claim package readiness.
+
 ## Next Recommended Lane
 
 ```text
-Add openSUSE temporary RPM topdir handoff lane that stages the verified source archive without running rpmbuild or osc build.
+Add openSUSE local RPM build evidence gate contract before any rpmbuild or osc build command can run.
 ```

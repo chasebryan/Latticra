@@ -39,6 +39,7 @@ int main(void) {
     char manpage_report[LATTICRA_CONSOLE_MANPAGE_REPORT_MAX];
     char boundary_report[LATTICRA_CONSOLE_BOUNDARY_REPORT_MAX];
     char standalone_contract_report[LATTICRA_CONSOLE_STANDALONE_CONTRACT_REPORT_MAX];
+    char session_contract_report[LATTICRA_CONSOLE_SESSION_CONTRACT_REPORT_MAX];
     char host_contract_report[LATTICRA_CONSOLE_HOST_CONTRACT_REPORT_MAX];
     char host_inventory_report[LATTICRA_CONSOLE_HOST_INVENTORY_REPORT_MAX];
     char host_adapter_report[LATTICRA_CONSOLE_HOST_ADAPTER_REPORT_MAX];
@@ -79,6 +80,10 @@ int main(void) {
         "result.standalone_console_status",
         result.standalone_console_status,
         "metadata-only-standalone-contract-ready");
+    failures += require_text(
+        "result.session_contract_status",
+        result.session_contract_status,
+        "metadata-only-contract-ready");
     failures += require_text(
         "result.substrate_bridge_status",
         result.substrate_bridge_status,
@@ -149,6 +154,7 @@ int main(void) {
     failures += require_int("result.standalone_installable", result.standalone_installable, 1);
     failures += require_int("result.standalone_requires_panel", result.standalone_requires_panel, 0);
     failures += require_int("result.standalone_contract_present", result.standalone_contract_present, 1);
+    failures += require_int("result.session_contract_present", result.session_contract_present, 1);
     failures += require_int("result.command_registry_present", result.command_registry_present, 1);
     failures += require_int("result.substrate_bridge_present", result.substrate_bridge_present, 1);
     failures += require_int(
@@ -265,6 +271,17 @@ int main(void) {
             "lc.standalone.inspect");
         failures += require_int("lc standalone no_effect", command->no_effect, 1);
         failures += require_int("lc standalone host launch", command->launches_host_process, 0);
+    }
+
+    command = latticra_console_find_command("lc session");
+    failures += require_int("find lc session", command != 0, 1);
+    if (command != 0) {
+        failures += require_text(
+            "lc session capability",
+            command->capability_label,
+            "lc.session.contract");
+        failures += require_int("lc session no_effect", command->no_effect, 1);
+        failures += require_int("lc session host launch", command->launches_host_process, 0);
     }
 
     command = latticra_console_find_command("lc receipts");
@@ -450,6 +467,8 @@ int main(void) {
     failures += require_contains("report", report, "standalone_command_wrapper=latticra-lc");
     failures += require_contains("report", report, "standalone_console_status=metadata-only-standalone-contract-ready");
     failures += require_contains("report", report, "standalone_contract_present=1");
+    failures += require_contains("report", report, "session_contract_status=metadata-only-contract-ready");
+    failures += require_contains("report", report, "session_contract_present=1");
     failures += require_contains("report", report, "substrate_bridge_present=1");
     failures += require_contains("report", report, "host_embedding_contract_present=1");
     failures += require_contains("report", report, "host_inventory_contract_present=1");
@@ -573,6 +592,8 @@ int main(void) {
     failures += require_contains("registry_report", registry_report, "capability=lc.core.profiles");
     failures += require_contains("registry_report", registry_report, "command=lc install-config");
     failures += require_contains("registry_report", registry_report, "command=lc standalone");
+    failures += require_contains("registry_report", registry_report, "command=lc session");
+    failures += require_contains("registry_report", registry_report, "capability=lc.session.contract");
     failures += require_contains("registry_report", registry_report, "capability=lc.install.config");
     failures += require_contains("registry_report", registry_report, "capability=lc.substrate.inspect");
     failures += require_contains("registry_report", registry_report, "launches_host_process=0");
@@ -587,6 +608,7 @@ int main(void) {
     failures += require_contains("help_report", help_report, "lc substrate");
     failures += require_contains("help_report", help_report, "lc install-config");
     failures += require_contains("help_report", help_report, "lc standalone");
+    failures += require_contains("help_report", help_report, "lc session");
     failures += require_contains("help_report", help_report, "lc host-contract");
     failures += require_contains("help_report", help_report, "lc host-inventory");
     failures += require_contains("help_report", help_report, "lc host-adapter");
@@ -612,6 +634,7 @@ int main(void) {
     failures += require_contains("manpage_report", manpage_report, "latticra-lc - Latticra Console");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc install-config");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc standalone");
+    failures += require_contains("manpage_report", manpage_report, "latticra-lc session");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc host-contract");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc host-inventory");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc host-adapter");
@@ -678,6 +701,23 @@ int main(void) {
     failures += require_int("lc standalone boundary future gate", boundary.requires_future_gate, 0);
     failures += require_int("lc standalone boundary no effect", boundary.no_effect, 1);
     failures += require_int("lc standalone boundary host mutation allowed", boundary.host_mutation_allowed, 0);
+
+    command = latticra_console_find_command("lc session");
+    failures += require_int(
+        "lc session boundary",
+        latticra_console_command_boundary_classify(command, &boundary),
+        LATTICRA_STATUS_OK);
+    failures += require_text(
+        "lc session seal capability",
+        boundary.seal_capability_label,
+        "seal.capability.report");
+    failures += require_int(
+        "lc session runtime kind",
+        boundary.runtime_request_kind,
+        LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK);
+    failures += require_int("lc session boundary future gate", boundary.requires_future_gate, 0);
+    failures += require_int("lc session boundary no effect", boundary.no_effect, 1);
+    failures += require_int("lc session boundary host mutation allowed", boundary.host_mutation_allowed, 0);
 
     command = latticra_console_find_command("lc host-contract");
     failures += require_int(
@@ -959,6 +999,7 @@ int main(void) {
     failures += require_contains("boundary_report", boundary_report, "command=lc substrate");
     failures += require_contains("boundary_report", boundary_report, "command=lc install-config");
     failures += require_contains("boundary_report", boundary_report, "command=lc standalone");
+    failures += require_contains("boundary_report", boundary_report, "command=lc session");
     failures += require_contains("boundary_report", boundary_report, "command=lc host-contract");
     failures += require_contains("boundary_report", boundary_report, "command=lc host-inventory");
     failures += require_contains("boundary_report", boundary_report, "command=lc host-adapter");
@@ -1006,6 +1047,39 @@ int main(void) {
     failures += require_contains(
         "standalone_contract_report",
         standalone_contract_report,
+        "production_os_claim=0");
+
+    failures += require_int(
+        "session_contract_report",
+        latticra_console_session_contract_report(session_contract_report, sizeof(session_contract_report)),
+        LATTICRA_STATUS_OK);
+    failures += require_contains(
+        "session_contract_report",
+        session_contract_report,
+        "LATTICRA CONSOLE SESSION CONTRACT");
+    failures += require_contains(
+        "session_contract_report",
+        session_contract_report,
+        "session_profile=lc-session-v0");
+    failures += require_contains(
+        "session_contract_report",
+        session_contract_report,
+        "runtime_session_created=0");
+    failures += require_contains(
+        "session_contract_report",
+        session_contract_report,
+        "runtime_process_spawn_allowed=0");
+    failures += require_contains(
+        "session_contract_report",
+        session_contract_report,
+        "command_surface=lc session");
+    failures += require_contains(
+        "session_contract_report",
+        session_contract_report,
+        "host_process_launch_allowed=0");
+    failures += require_contains(
+        "session_contract_report",
+        session_contract_report,
         "production_os_claim=0");
 
     failures += require_int(
@@ -1733,6 +1807,14 @@ int main(void) {
         "receipt_report",
         receipt_report,
         "host_adapter_contract_receipt_required=1");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
+        "session_contract_receipt_required=1");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
+        "session_contract_command=lc session");
     failures += require_contains(
         "receipt_report",
         receipt_report,

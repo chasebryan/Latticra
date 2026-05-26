@@ -74,6 +74,7 @@ sh scripts/test-ubuntu-debian-copyright-notice-mapping-contract.sh
 sh scripts/test-ubuntu-trademark-notice-boundary-contract.sh
 sh scripts/test-ubuntu-release-artifact-notice-requirements-contract.sh
 sh scripts/test-ubuntu-package-notice-promotion-gate-contract.sh
+sh scripts/test-ubuntu-package-license-promotion-gate-contract.sh
 ```
 
 openSUSE no-effect validation:
@@ -91,6 +92,7 @@ sh scripts/test-opensuse-rpmlint-static-spec-lane.sh
 sh scripts/test-opensuse-rpmlint-findings-classification.sh
 sh scripts/test-opensuse-source-archive-reproducibility-contract.sh
 sh scripts/test-opensuse-source-archive-fixture-lane.sh
+sh scripts/test-opensuse-rpm-topdir-handoff-lane.sh
 ```
 
 ## Run

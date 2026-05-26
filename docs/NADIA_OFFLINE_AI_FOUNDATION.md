@@ -133,7 +133,7 @@ nadia status
 nadia commands
 ```
 
-The `nadia status` command reports whether the Panel configuration has selected the Nadia component and repeats the denied authority posture. The `nadia commands` command lists the Stage-1 through Stage-40 command map. Neither command launches an external host process.
+The `nadia status` command reports whether the Panel configuration has selected the Nadia component and repeats the denied authority posture. The `nadia commands` command lists the Stage-1 through Stage-41 command map. Neither command launches an external host process.
 
 After user-local installation, the CLI surface is:
 
@@ -1326,6 +1326,8 @@ Before Stage-28 starts, the context-window assembly contract must remain contrac
 
 Before Stage-41 starts, the context-window assembly contract must remain contract-only and keep context window assembly, prompt evaluation input creation, runtime handoff, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, and tool execution blocked.
 
+Before Stage-42 starts, the context-window assembly contract must remain contract-only and keep context window assembly, prompt evaluation input creation, runtime handoff, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, and tool execution blocked.
+
 ### Stage-27: Context Window Assembly Contract
 
 Record context-window assembly metadata after prompt-token-sequence metadata, prompt-tokenization metadata, tokenizer-runtime-attachment metadata, tokenizer-artifact-binding metadata, tokenizer-artifact-verification metadata, tokenizer-artifact-measurement metadata, tokenizer-artifact-inventory metadata, tokenizer-manifest metadata, tokenizer-specification metadata, tokenization-boundary metadata, prompt-evaluation handoff metadata, awareness-dialogue metadata, prompt-materialization metadata, prompt-receipt metadata, model-load metadata, runtime-invocation metadata, inference-readiness metadata, local model-registry metadata, prompt-evaluation contracts, protective-safety refusal behavior, runtime-profile metadata, and tool-denial behavior are present. Stage-27 can define future prompt-evaluation-input review requirements, but it cannot read prompt text, assemble context windows, create prompt evaluation inputs, attach tokenizers to a runtime, create runtime sessions, evaluate prompts, generate dialogue, generate tokens, run inference, or use the network.
@@ -1712,7 +1714,7 @@ The current Nadia foundation is not:
 
 ## Promotion Gate
 
-Before Stage-41 starts, Latticra should keep these guards passing:
+Before Stage-42 starts, Latticra should keep these guards passing:
 
 ```sh
 sh scripts/test-nadia-offline-ai-stage-0.sh
@@ -2160,7 +2162,7 @@ prompt_evaluation_result_release_receipt_review_disposition_release_receipt_revi
 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_decision_recorded=0
 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_findings_recorded=0
 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_applied=0
-requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_contract=1
+requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract=1
 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_contract=1
 runtime_invoked=0
 prompt_evaluated=0
@@ -2169,3 +2171,30 @@ inference_performed=0
 ```
 
 This stage produces only release-receipt-review-disposition-release-receipt-review contract metadata. It does not create a review record, record a review decision, record review findings, apply a disposition, emit a receipt, sign a receipt, publish a receipt, read model output, record model output, generate dialogue, or make Nadia usable as a runtime assistant.
+
+### Stage-41: Prompt Evaluation Result Release Receipt Review Disposition Release Receipt Review Disposition Contract
+
+Record prompt-evaluation result release receipt review disposition release receipt review disposition metadata after prompt-evaluation result release receipt review disposition release receipt review metadata exists. Stage-41 can define future prompt-evaluation result release receipt review disposition release receipt review disposition release requirements, but it cannot create release-receipt-review-disposition records, record review decisions, record review findings, apply review dispositions, emit receipts, sign receipts, publish receipts, package receipts, read model output, record model output, record generated answer text, invoke a runtime, evaluate prompts, generate dialogue, generate tokens, run inference, use tools, mutate source, use the network, or provide sexual user functionality.
+
+```text
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-contract.sh
+installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_contract_status=contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_stage=contract-only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_authority=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_allowed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_record_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_findings_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_applied=0
+requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_contract=1
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1
+runtime_invoked=0
+prompt_evaluated=0
+token_generation_performed=0
+inference_performed=0
+```
+
+This stage produces only release-receipt-review-disposition-release-receipt-review-disposition contract metadata. It does not create a review-disposition record, record a review decision, record review findings, apply a disposition, emit a receipt, sign a receipt, publish a receipt, read model output, record model output, generate dialogue, or make Nadia usable as a runtime assistant.

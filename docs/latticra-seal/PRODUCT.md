@@ -131,6 +131,13 @@ The product path should now prioritize:
 6. A signed receipt proof path that remains verification-only until trust-root and revocation boundaries are implemented.
 7. A future enforcement preflight contract that keeps enforce mode closed until all predecessor evidence is present.
 
+Current completed product-spine checkpoint:
+
+```text
+seal_product_spine_status_present=1
+product_spine_changes_authority=0
+```
+
 ## Non-Claims
 
 The product target does not change current authority.

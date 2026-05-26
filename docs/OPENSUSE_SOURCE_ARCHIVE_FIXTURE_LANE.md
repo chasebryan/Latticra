@@ -101,6 +101,7 @@ source_archive_excludes_rpm_artifacts=1
 source_archive_symlink_policy_checked=1
 source_archive_path_safety_checked=1
 source_archive_accepted_for_build=0
+opensuse_rpm_topdir_handoff_lane_present=1
 rpmbuild_run=0
 osc_build_run=0
 rpm_artifact_created=0
@@ -152,13 +153,21 @@ It does not claim official openSUSE package status, SUSE endorsement, Open Build
 
 ## Next Slice
 
+Completed follow-on RPM topdir handoff lane:
+
+```text
+docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
+scripts/test-opensuse-rpm-topdir-handoff-lane.sh
+.github/workflows/opensuse-rpm-topdir-handoff-lane.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE temporary RPM topdir handoff lane that stages the verified source archive without running rpmbuild or osc build.
+Add openSUSE local RPM build evidence gate contract before any rpmbuild or osc build command can run.
 ```
 
-That future lane should prove the temporary source archive can be staged into RPM build input paths while package build and publication claims remain blocked.
+That future lane should define the exact evidence required before the temporary RPM topdir can be used by `rpmbuild`, `osc build`, or Open Build Service validation.
 
 ## Validation
 

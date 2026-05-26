@@ -31,6 +31,7 @@ require_file docs/DEFENSIVE_THREAT_MODEL_VALIDATION.md
 require_file docs/DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md
 require_file docs/MEMORY_SAFETY_ROADMAP.md
 require_file docs/SUPPLY_CHAIN_SECURITY_BASELINE.md
+require_file docs/CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md
 require_file docs/security/C_CPP_SECURITY_PROFILE.md
 require_file docs/security/C_ABI_BOUNDARY_POLICY.md
 require_file docs/status/README.md
@@ -39,6 +40,7 @@ require_file scripts/test-defensive-threat-model-validation.sh
 require_file scripts/test-defensive-threat-model-validation-refinement.sh
 require_file scripts/test-memory-safety-roadmap.sh
 require_file scripts/test-supply-chain-security-baseline.sh
+require_file scripts/test-cyber-incident-reporting-response-baseline.sh
 require_file scripts/test-quality-safety-guards.sh
 
 require_contains 'Status: high-assurance security baseline checkpoint' "$doc"
@@ -53,6 +55,7 @@ require_contains 'CISA Cross-Sector Cybersecurity Performance Goals' "$doc"
 require_contains 'CISA Zero Trust Maturity Model v2' "$doc"
 require_contains 'CISA Known Exploited Vulnerabilities Catalog' "$doc"
 require_contains 'FBI Cyber' "$doc"
+require_contains 'CISA/FBI/NSA/MS-ISAC #StopRansomware Guide' "$doc"
 require_contains 'NIST Cybersecurity Framework 2.0' "$doc"
 require_contains 'NIST SP 800-218 SSDF v1.1' "$doc"
 require_contains 'NIST SP 800-53 Rev. 5, Release 5.2.0' "$doc"
@@ -70,6 +73,7 @@ for field in \
   'ssdf_secure_development_required=1' \
   'cpg_operational_baseline_required=1' \
   'supply_chain_security_baseline_present=1' \
+  'cyber_incident_reporting_response_baseline_present=1' \
   'kev_release_review_required=1' \
   'fips_crypto_boundary_required_before_production_crypto=1' \
   'sbom_required_before_production_installer=1' \
@@ -92,16 +96,22 @@ for allocation in \
   'new network-facing code -> memory-safe language preferred' \
   'new cryptographic key-handling code -> memory-safe language preferred' \
   'new parser for untrusted external input -> memory-safe language preferred or restricted C profile with fuzzing and exception record' \
+  'buffer overflow, format-string, off-by-one, use-after-free' \
   'strcpy' \
   'system()' \
+  'operator_identity_known=1' \
+  'workload_or_service_identity_known=1' \
+  'device_or_host_integrity_context_known=1' \
   'request_kind_known=1' \
   'unknown_request_denied=1' \
   'future_gate_denied_until_contract=1' \
   'SBOM evidence for shipped artifacts' \
   'KEV/NVD review or documented offline exception before release' \
+  'software update and patch integrity, authenticity, validation, and rollback evidence before any mutating update lane' \
   'defined cryptographic module boundary' \
   'FIPS 140-3 applicability decision' \
   'assign a named cybersecurity owner' \
+  'publish a cyber incident reporting and response baseline before any incident-response feature' \
   'schedule table-top or third-party validation before security release'
 do
   require_contains "$allocation" "$doc"
@@ -116,13 +126,16 @@ require_contains 'High-assurance standards posture' SECURITY.md
 require_contains 'docs/HIGH_ASSURANCE_SECURITY_BASELINE.md' SECURITY.md
 require_contains 'docs/MEMORY_SAFETY_ROADMAP.md' SECURITY.md
 require_contains 'docs/SUPPLY_CHAIN_SECURITY_BASELINE.md' SECURITY.md
+require_contains 'docs/CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md' SECURITY.md
 require_contains 'high_assurance_security_baseline_present=1' README.md
 require_contains 'memory_safety_roadmap_present=1' README.md
 require_contains 'supply_chain_security_baseline_present=1' README.md
+require_contains 'cyber_incident_reporting_response_baseline_present=1' README.md
 require_contains 'source_refresh_date=2026-05-26' README.md
 require_contains 'high_assurance_security_baseline_present=1' STATUS.md
 require_contains 'memory_safety_roadmap_present=1' STATUS.md
 require_contains 'supply_chain_security_baseline_present=1' STATUS.md
+require_contains 'cyber_incident_reporting_response_baseline_present=1' STATUS.md
 require_contains 'High-assurance security baseline' docs/status/README.md
 require_contains 'HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md' docs/status/README.md
 require_contains 'Latest high-assurance security baseline note: 2026-05-26 CDT' docs/status/CURRENT_STATUS.md
@@ -131,6 +144,7 @@ require_contains 'HIGH_ASSURANCE_SECURITY_BASELINE.md' docs/security.html
 require_contains 'sh ./scripts/test-high-assurance-security-baseline.sh' Makefile
 require_contains 'sh ./scripts/test-memory-safety-roadmap.sh' Makefile
 require_contains 'sh ./scripts/test-supply-chain-security-baseline.sh' Makefile
+require_contains 'sh ./scripts/test-cyber-incident-reporting-response-baseline.sh' Makefile
 require_contains 'quality-security-standards:' Makefile
 require_contains 'quality-security-standards' Makefile
 require_contains 'test-high-assurance-security-baseline.sh' scripts/test-quality-safety-guards.sh

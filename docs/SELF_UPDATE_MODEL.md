@@ -46,6 +46,10 @@ rollback_plan_present=0
 operator_confirmation_required=1
 operator_confirmation_observed=0
 signed_update_apply_allowed=0
+signed_updater_denial_transcript_present=1
+signed_updater_denial_decision=deny-signed-update-delivery
+signed_updater_denial_transcript_stdout_only=1
+signed_updater_denial_transcript_file_write_enabled=0
 ```
 
 This is not a signed updater, not a remote update client, not a network self-update path, and not production update readiness.
@@ -197,6 +201,7 @@ The signed staged update model still needs:
 ```text
 update manifest fixture
 update state fixture
+no-effect signed updater denial transcript
 signature-required marker
 rollback visibility marker
 validation test

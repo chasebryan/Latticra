@@ -113,6 +113,7 @@ PY
 }
 
 require_file docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_file docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 require_file docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 require_file docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 require_file docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
@@ -135,13 +136,18 @@ require_contains 'does not run `osc build`' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE
 require_contains 'does not create source RPM artifacts' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'does not create binary RPM artifacts' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'does not install Latticra' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
-require_contains 'Add openSUSE temporary RPM topdir handoff lane' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_contains 'docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_contains 'Add openSUSE local RPM build evidence gate contract' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'opensuse_source_archive_fixture_lane: ok' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 
 require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md' docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+require_contains 'docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md' docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 require_contains 'opensuse_source_archive_fixture_lane_present=1' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'opensuse_rpm_topdir_handoff_lane_present=1' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 require_contains 'opensuse_source_archive_fixture_lane_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_topdir_handoff_lane_present=1' packaging/opensuse/README.md
 require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md' README.md
+require_contains 'docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md' README.md
 
 require_contains 'Source0:        %{name}-%{version}.tar.gz' packaging/opensuse/latticra.spec
 require_contains '%autosetup -n %{name}-%{version}' packaging/opensuse/latticra.spec

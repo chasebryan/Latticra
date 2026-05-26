@@ -477,14 +477,15 @@ latticra_status_t latticra_l_ui_parse_ast(
     static const char *field_names[] = {
         "origin", "route", "axis", "path", "breadcrumb", "trace", "health", "risk", "lock",
         "dark_phase", "safe_portal", "rollback", "host", "external", "requested", "request",
-        "policy", "reason", "executed", "mutation", "server", "recovery", "hardware"
+        "policy", "reason", "executed", "mutation", "server", "network", "recovery", "hardware"
     };
     static const char *bindings[] = {
         "state.origin", "state.route", "state.axis", "state.path", "state.breadcrumb", "state.trace",
         "state.health", "state.risk", "state.lock", "state.dark_phase", "state.safe_portal",
         "state.rollback", "state.host_effect", "state.external_effect", "preview.requested_effect",
         "preview.request", "preview.policy", "preview.reason", "preview.executed", "preview.mutation_allowed",
-        "preview.server_interaction_allowed", "preview.recovery_allowed", "preview.hardware_allowed"
+        "preview.server_interaction_allowed", "preview.network_allowed", "preview.recovery_allowed",
+        "preview.hardware_allowed"
     };
     size_t index;
 
@@ -494,7 +495,7 @@ latticra_status_t latticra_l_ui_parse_ast(
     if (status != LATTICRA_STATUS_OK) return status;
     ast->parse_result = parse_result;
     if (parse_result.error != LATTICRA_L_UI_PARSE_OK) return LATTICRA_STATUS_OK;
-    if (LATTICRA_L_UI_AST_RAIL_MAX < 9u || LATTICRA_L_UI_AST_FIELD_MAX < 23u || LATTICRA_L_UI_AST_TEXT_MAX < 2u) {
+    if (LATTICRA_L_UI_AST_RAIL_MAX < 9u || LATTICRA_L_UI_AST_FIELD_MAX < 24u || LATTICRA_L_UI_AST_TEXT_MAX < 2u) {
         return ast_internal_error(ast, &parse_result);
     }
 
@@ -515,7 +516,7 @@ latticra_status_t latticra_l_ui_parse_ast(
     copy_literal(ast->card.boundary, sizeof(ast->card.boundary), "preview_only");
     span_for_card(source, source_len, &ast->card.span);
     ast->card.rail_count = 9u;
-    ast->card.field_count = 23u;
+    ast->card.field_count = 24u;
     ast->card.text_count = 2u;
 
     fill_rail(ast, 0u, "top", 0u, 0u, 0u, 1u, source, source_len);
@@ -525,15 +526,15 @@ latticra_status_t latticra_l_ui_parse_ast(
     fill_rail(ast, 4u, "gates", 10u, 2u, 0u, 0u, source, source_len);
     fill_rail(ast, 5u, "effects", 12u, 3u, 0u, 0u, source, source_len);
     fill_rail(ast, 6u, "policy", 15u, 3u, 0u, 0u, source, source_len);
-    fill_rail(ast, 7u, "execution", 18u, 5u, 0u, 0u, source, source_len);
-    fill_rail(ast, 8u, "bottom", 23u, 0u, 1u, 1u, source, source_len);
+    fill_rail(ast, 7u, "execution", 18u, 6u, 0u, 0u, source, source_len);
+    fill_rail(ast, 8u, "bottom", 24u, 0u, 1u, 1u, source, source_len);
 
-    for (index = 0u; index < 23u; index++) fill_field(ast, index, field_names[index], bindings[index], source, source_len);
+    for (index = 0u; index < 24u; index++) fill_field(ast, index, field_names[index], bindings[index], source, source_len);
     fill_text(ast, 0u, extracted_top_text, extracted_top_text_len, &top_text_span);
     fill_text(ast, 1u, extracted_bottom_text, extracted_bottom_text_len, &bottom_text_span);
 
     ast->rail_count = 9u;
-    ast->field_count = 23u;
+    ast->field_count = 24u;
     ast->text_count = 2u;
     ast->no_effect = 1;
     ast->execution_allowed = 0;

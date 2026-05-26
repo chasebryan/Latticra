@@ -201,5 +201,5 @@ network_extension_authority=0
 privileged_helper_authority=0
 runtime_authority_granted=0
 production_installer_ready=0
-next_lane=macos-reset-uninstall-live-runner-acceptance-denial-review-contract
+next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-review-contract
 REPORT

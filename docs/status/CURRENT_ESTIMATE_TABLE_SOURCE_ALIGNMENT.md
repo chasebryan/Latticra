@@ -39,7 +39,7 @@ runtime_authority_granted=0
 ## Current Public Estimate Table
 
 ```text
-Overall Latticra system: 44%
+Overall Latticra system: 45%
 Latticra Seal / local evidence layer: 39%
 Latticra Panel / local control surface: 31%
 Nadia offline AI foundation: 74%
@@ -52,7 +52,7 @@ LIR / Intermediate Representation: 24%
 C/C++ foundation direction: 22%
 Constrained C++ authority layer: 5%
 Nucleus real task execution: 12%
-Runtime / operating-system-universe direction: 24%
+Runtime / operating-system-universe direction: 25%
 Security-hardening implementation: 9%
 Public product readiness: 10%
 ```

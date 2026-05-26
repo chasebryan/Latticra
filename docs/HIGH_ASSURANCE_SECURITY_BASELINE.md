@@ -37,6 +37,7 @@ Date checked: 2026-05-26
 | CISA Zero Trust Maturity Model v2 | Mature zero trust uses identity, devices, networks, applications/workloads, and data pillars with visibility, analytics, automation, orchestration, and governance. | Treat each Latticra request as a per-request policy decision; preserve deny-by-default behavior for network, host, recovery, boot, and tool authority. |
 | CISA Known Exploited Vulnerabilities Catalog | Internet-facing exploited vulnerabilities need timely mitigation or compensating controls. | Before any internet-facing asset exists, create a KEV review gate; current project has no internet-facing runtime authority. |
 | FBI Cyber | The active threat environment includes ransomware, nation-state targeting, critical infrastructure risk, rapidly changing IOCs/TTPs, and reporting through FBI/IC3 paths. | Keep the threat model defensive, keep reports private, add incident-reporting paths, and avoid offensive payload, persistence, exfiltration, and evasion content. |
+| CISA/FBI/NSA/MS-ISAC #StopRansomware Guide | Ransomware and data-extortion preparation, prevention, response, evidence preservation, out-of-band communications, and federal contact paths must be planned before incidents. | Keep incident-response authority denied, document reporting paths, preserve evidence requirements, and require operator/legal review before notification or reporting assistance. |
 | NIST Cybersecurity Framework 2.0 | Govern, Identify, Protect, Detect, Respond, and Recover provide current cybersecurity risk-management functions. | Map future infrastructure readiness to CSF 2.0 functions before production claims. |
 | NIST SP 800-218 SSDF v1.1 | Secure development should prepare the organization, protect software, produce well-secured software, and respond to vulnerabilities. | Keep tests, threat-model docs, protected source/build processes, vulnerability handling, and root-cause-driven fixes in the quality gate. |
 | NIST SP 800-53 Rev. 5, Release 5.2.0 | Control families cover access, audit, configuration, identification, incident response, risk assessment, system acquisition, system integrity, and supply-chain risk management. | Use SP 800-53 as the high-assurance control vocabulary for future production profiles, not as a current compliance claim. |
@@ -45,6 +46,13 @@ Date checked: 2026-05-26
 | FIPS 140-3 | Federal cryptographic module security requirements define validated module expectations and security levels. | No production cryptography or FIPS claim is allowed until a cryptographic module boundary, validation path, key lifecycle, and dependency review exist. |
 
 Authoritative URLs for this checkpoint are preserved in `docs/DEFENSIVE_THREAT_MODEL_VALIDATION.md`.
+
+Tracked follow-on guidance for this checkpoint:
+
+- CISA/FBI Secure by Design Alert: Eliminating Buffer Overflow Vulnerabilities sharpens the retained-C/C++ posture toward buffer-overflow-class defect reduction, adversarial testing, and memory-safe implementation preference for new high-risk surfaces.
+- CISA Secure by Design Alert: Eliminating OS Command Injection Vulnerabilities reinforces the existing `system()`/`popen()` exclusions and keeps shell authority centralized behind reviewed boundaries.
+- CISA The Case for Memory Safe Roadmaps reinforces the requirement for a component-by-component migration or mitigation record instead of a generic memory-safety aspiration.
+- NIST SP 800-207A and NIST SP 1800-35 provide secondary zero-trust implementation detail for future workload, service, and device-integrity-aware authority surfaces.
 
 ## Required Allocations
 
@@ -60,6 +68,7 @@ zero_trust_runtime_boundary_required=1
 ssdf_secure_development_required=1
 cpg_operational_baseline_required=1
 supply_chain_security_baseline_present=1
+cyber_incident_reporting_response_baseline_present=1
 kev_release_review_required=1
 fips_crypto_boundary_required_before_production_crypto=1
 sbom_required_before_production_installer=1
@@ -86,7 +95,7 @@ new network-facing code -> memory-safe language preferred
 new cryptographic key-handling code -> memory-safe language preferred
 new parser for untrusted external input -> memory-safe language preferred or restricted C profile with fuzzing and exception record
 new installer or host-mutation authority -> memory-safe language preferred
-existing C/C++ substrate -> strict profile, bounded buffers, no unsafe string APIs, narrow ownership, sanitizer/static-analysis path
+existing C/C++ substrate -> strict profile, bounded buffers, no unsafe string APIs, explicit review of buffer overflow, format-string, off-by-one, use-after-free, and lifetime hazards, sanitizer/static-analysis path
 C/C++ unsafe exception -> documented exception with lifetime, buffer, failure, test, and reviewer fields
 ```
 
@@ -96,7 +105,8 @@ Short-term mitigations:
 - keep `system()` and `popen()` forbidden in source roots;
 - keep shell authority centralized and guarded in installer code;
 - keep pointer, buffer, lifetime, and ownership rules explicit at C ABI boundaries;
-- keep parser and source-buffer invariants tested with malformed and boundary inputs;
+- keep parser and source-buffer invariants tested with malformed, boundary-length, truncation, and hostile-input cases;
+- keep retained C/C++ high-risk paths covered by regression tests for buffer-overflow-class, format-string, off-by-one, and lifetime faults where practical;
 - require fuzzing or a documented exception before any parser is promoted to a security boundary.
 
 Long-term direction:
@@ -114,7 +124,10 @@ No future runtime, agentic automation, network, host I/O, update, recovery, boot
 request_kind_known=1
 requested_effect_known=1
 caller_context_known=1
+operator_identity_known=1
 asset_or_resource_identity_known=1
+workload_or_service_identity_known=1
+device_or_host_integrity_context_known=1
 mode_matches_request_family=1
 authority_prerequisites_satisfied=1
 operator_confirmation_is_metadata_only=1
@@ -136,6 +149,7 @@ Before a production installer, production package, internet-facing service, or p
 - pinned CI actions and read-only workflow permissions;
 - locked dependency builds where the package manager supports it;
 - no ad hoc network client commands in workflows without a dedicated review guard;
+- software update and patch integrity, authenticity, validation, and rollback evidence before any mutating update lane;
 - third-party component update plan for supported product lifetime;
 - vulnerability disclosure route and triage process.
 
@@ -164,6 +178,7 @@ Before any production service, hosted system, or critical infrastructure deploym
 - require MFA/SSO for privileged accounts;
 - collect security-relevant logs without leaking secrets;
 - define incident response and vulnerability disclosure procedures;
+- publish a cyber incident reporting and response baseline before any incident-response feature;
 - define backup, restore, and recovery evidence;
 - schedule table-top or third-party validation before security release;
 - maintain recurring NSA/CISA/FBI/NIST source review.
@@ -179,6 +194,7 @@ docs/DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md
 docs/RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md
 docs/MEMORY_SAFETY_ROADMAP.md
 docs/SUPPLY_CHAIN_SECURITY_BASELINE.md
+docs/CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md
 docs/security/C_CPP_SECURITY_PROFILE.md
 docs/security/C_ABI_BOUNDARY_POLICY.md
 scripts/test-quality-safety-guards.sh
@@ -187,6 +203,7 @@ scripts/test-defensive-threat-model-validation-refinement.sh
 scripts/test-high-assurance-security-baseline.sh
 scripts/test-memory-safety-roadmap.sh
 scripts/test-supply-chain-security-baseline.sh
+scripts/test-cyber-incident-reporting-response-baseline.sh
 ```
 
 ## Non-Claims

@@ -44,6 +44,7 @@ local_report_generation=1
 manifest_hash_baseline=1
 policy_regression_lane=1
 product_spine_present=1
+product_spine_status_present=1
 panel_bridge_planning=1
 runtime_enforcement=0
 network_operation=0

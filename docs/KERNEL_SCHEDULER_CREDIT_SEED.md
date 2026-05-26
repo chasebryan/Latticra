@@ -1,0 +1,76 @@
+# Kernel Scheduler Credit Seed
+
+Status: controlled scheduler credit metadata seed
+Scope: report-only bridge from preemption decision metadata to scheduler credit intent.
+
+## Purpose
+
+This slice connects the preemption seed to deterministic scheduler credit metadata.
+
+It does not update scheduler credits, write CPU usage, update quotas, read time, preempt execution, dispatch work, switch contexts, mutate run queues, wake processes, persist state, or touch hardware. It records candidate credit declarations that future scheduler work can refine behind explicit authority gates.
+
+## Files
+
+```text
+include/latticra/kernel_scheduler_credit.h
+src/kernel_scheduler_credit.c
+tests/kernel_scheduler_credit.c
+tools/kernel_scheduler_credit_report.c
+scripts/test-kernel-scheduler-credit.sh
+scripts/test-kernel-scheduler-credit-report-runner.sh
+.github/workflows/kernel-scheduler-credit.yml
+docs/KERNEL_SCHEDULER_CREDIT_SEED.md
+```
+
+## Current Posture
+
+The default request evaluates the preemption seed and emits:
+
+```text
+credit_status=scheduler-credit-seed-ready
+preemption_status=preemption-seed-ready
+time_accounting_status=time-accounting-seed-ready
+context_switch_status=context-switch-seed-ready
+run_queue_status=run-queue-seed-ready
+scheduler_tick_status=scheduler-tick-seed-ready
+timer_source_status=timer-source-seed-ready
+credit_count=4
+no_effect=1
+```
+
+Authority remains denied:
+
+```text
+scheduler_credit_update_allowed=0
+quota_update_allowed=0
+cpu_usage_write_allowed=0
+time_accounting_allowed=0
+time_read_allowed=0
+preemption_allowed=0
+context_switch_allowed=0
+dispatch_allowed=0
+run_queue_mutation_allowed=0
+process_wake_allowed=0
+hardware_effect_allowed=0
+host_effect_allowed=0
+```
+
+## Validation
+
+Run:
+
+```sh
+sh scripts/test-kernel-scheduler-credit.sh
+sh scripts/test-kernel-scheduler-credit-report-runner.sh
+```
+
+Expected output:
+
+```text
+kernel_scheduler_credit: ok
+kernel_scheduler_credit_report_runner: ok
+```
+
+## Non-claims
+
+This slice does not schedule execution, mutate run queues, perform context switches, read clocks, account CPU time, update quotas, update scheduler credits, preempt execution, wake processes, dispatch interrupts, perform I/O, boot hardware, or replace an operating system.

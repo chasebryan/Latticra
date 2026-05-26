@@ -167,13 +167,16 @@ static int sequential_steps_advance_ladder(void) {
     request.target_state = LATTICRA_KERNEL_STATE_PREEMPTION_READY;
     EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
         "time accounting ready to preemption ready");
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "preemption ready to scheduler credit ready");
 
-    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_PREEMPTION_READY,
-        "machine reaches preemption ready");
-    EXPECT_TRUE(strcmp(machine.machine_status, "preemption-ready") == 0,
-        "machine status preemption ready");
-    EXPECT_TRUE(machine.log_count == 17u,
-        "seventeen transitions logged");
+    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY,
+        "machine reaches scheduler credit ready");
+    EXPECT_TRUE(strcmp(machine.machine_status, "scheduler-credit-ready") == 0,
+        "machine status scheduler credit ready");
+    EXPECT_TRUE(machine.log_count == 18u,
+        "eighteen transitions logged");
     EXPECT_TRUE(machine.external_effect_performed == 0,
         "sequence external effects absent");
     EXPECT_TRUE(machine.log[4].to_state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY,
@@ -202,6 +205,8 @@ static int sequential_steps_advance_ladder(void) {
         "log time accounting ready");
     EXPECT_TRUE(machine.log[16].to_state == LATTICRA_KERNEL_STATE_PREEMPTION_READY,
         "log preemption ready");
+    EXPECT_TRUE(machine.log[17].to_state == LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY,
+        "log scheduler credit ready");
     return 0;
 }
 

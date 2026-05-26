@@ -57,25 +57,28 @@ docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 scripts/test-opensuse-rpmlint-osc-availability.sh
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
 scripts/test-opensuse-rpmlint-findings-classification.sh
 scripts/test-opensuse-source-archive-reproducibility-contract.sh
 scripts/test-opensuse-source-archive-fixture-lane.sh
+scripts/test-opensuse-rpm-topdir-handoff-lane.sh
 .github/workflows/opensuse-rpmlint-osc-availability.yml
 .github/workflows/opensuse-rpmlint-static-spec-lane.yml
 .github/workflows/opensuse-rpmlint-findings-classification.yml
 .github/workflows/opensuse-source-archive-reproducibility-contract.yml
 .github/workflows/opensuse-source-archive-fixture-lane.yml
+.github/workflows/opensuse-rpm-topdir-handoff-lane.yml
 ```
 
 Recommended next slice:
 
 ```text
-Add openSUSE temporary RPM topdir handoff lane that stages the verified source archive without running rpmbuild or osc build.
+Add openSUSE local RPM build evidence gate contract before any rpmbuild or osc build command can run.
 ```
 
-That future lane should prove archive shape and reproducibility in a temporary workspace while keeping package build and publication claims blocked.
+That future lane should define the exact evidence required before the temporary RPM topdir can be used by `rpmbuild`, `osc build`, or Open Build Service validation.
 
 ## Validation
 

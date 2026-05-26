@@ -1,7 +1,7 @@
 # Latticra Console Foundation
 
 Status: Stage-0 foundation
-Scope: LC identity, standalone and Panel installability, configurable metadata, substrate bridge, host-embedding plan, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
+Scope: LC identity, standalone and Panel installability, configurable metadata, session contract, substrate bridge, host-embedding plan, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
 
 ## Purpose
 
@@ -41,6 +41,7 @@ host_embedding_profile=panel-contained
 host_embedding_contract_profile=lc-host-embedding-v0
 host_inventory_contract_profile=lc-host-inventory-v0
 host_adapter_contract_profile=lc-host-adapter-v0
+session_contract_profile=lc-session-v0
 receipt_request_contract_profile=lc-receipt-request-v0
 receipt_payload_schema_profile=lc-receipt-payload-schema-v0
 receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0
@@ -60,6 +61,7 @@ profile_receipt_required=true
 host_contract_receipt_required=true
 host_inventory_receipt_required=true
 host_adapter_contract_required=true
+session_contract_required=true
 receipt_request_contract_required=true
 receipt_payload_schema_required=true
 receipt_payload_artifact_draft_required=true
@@ -87,6 +89,7 @@ share/latticra/lc/profiles/panel-embedded.toml
 share/latticra/lc/profiles/host-embedded-planning.toml
 share/latticra/lc/profiles/os-base-planning.toml
 share/latticra/lc/standalone/contract.toml
+share/latticra/lc/session/contract.toml
 share/latticra/lc/substrate
 share/latticra/lc/host-embedding/contract.toml
 share/latticra/lc/host-inventory/contract.toml
@@ -132,6 +135,8 @@ installer/scripts/latticra-installer-verify-lc-standalone.sh
 
 The standalone lane uses `lc-standalone-install-v0`, writes `share/latticra/lc/standalone/contract.toml`, keeps `standalone_requires_panel = false`, disables Panel embedding, and preserves the same no-effect host/network/runtime/boot authority floor.
 
+The LC session lane writes `share/latticra/lc/session/contract.toml` and exposes `lc session`. It defines the future operator-base session envelope for standalone, Panel-embedded, and Host-embedded LC while keeping runtime session creation, shell launch, host process launch, host mutation, network, runtime enforcement, boot, and production OS authority denied.
+
 The umbrella wrapper routes:
 
 ```text
@@ -152,6 +157,7 @@ clear
 lc status
 lc commands
 lc standalone
+lc session
 lc profiles
 lc receipts
 lc receipt-request
@@ -203,6 +209,7 @@ host_embedding_profile = "panel-contained"
 host_embedding_contract_profile = "lc-host-embedding-v0"
 host_inventory_contract_profile = "lc-host-inventory-v0"
 host_adapter_contract_profile = "lc-host-adapter-v0"
+session_contract_profile = "lc-session-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -223,6 +230,7 @@ require_profile_receipt = true
 require_host_contract_receipt = true
 require_host_inventory_receipt = true
 require_host_adapter_contract = true
+require_session_contract = true
 require_receipt_request_contract = true
 require_receipt_payload_schema = true
 require_receipt_payload_artifact_draft = true
@@ -318,6 +326,43 @@ latticra-lc standalone
 ```
 
 The standalone contract does not launch a shell, launch host processes, read or write host files, mutate the host, use the network, enforce runtime policy, boot hardware, or claim production OS status.
+
+## Session Contract
+
+LC now installs and reports a session contract before the Console can claim any runtime-session or host-adapter behavior:
+
+```text
+session_profile=lc-session-v0
+session_status=metadata-only-contract
+session_contract_present=1
+session_kind=operator-base
+standalone_compatible=1
+panel_embedded_compatible=1
+host_embedded_planned=1
+session_manifest_present=0
+session_manifest_write_allowed=0
+runtime_session_created=0
+runtime_process_spawn_allowed=0
+runtime_invocation_allowed=0
+interactive_shell_allowed=0
+promotion_gate=lc_session_contract_before_runtime_or_host_embedding
+command_surface=lc session
+host_process_launch_allowed=0
+host_mutation_allowed=0
+network_allowed=0
+runtime_enforcement_allowed=0
+boot_allowed=0
+production_os_claim=0
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report session
+latticra-lc session
+```
+
+The session contract is an operator-base envelope only. It does not create a runtime session, launch an interactive shell, spawn host processes, invoke runtimes, write session manifests, mutate the host, use the network, enforce runtime policy, boot hardware, or claim production OS status.
 
 ## Host Embedding Contract
 
@@ -1088,6 +1133,7 @@ Stage-0 command bindings use these rules:
 ```text
 core, panel, and substrate inspection -> authority-check / validation-only
 lc standalone -> authority-check / validation-only
+lc session -> authority-check / validation-only
 lc receipts -> authority-check / validation-only
 lc receipt-request -> authority-check / validation-only
 lc receipt-payload -> authority-check / validation-only
@@ -1151,6 +1197,8 @@ runtime_boundary_bound=1
 seal_capability_labels_bound=1
 standalone_console_status=metadata-only-standalone-contract-ready
 standalone_contract_present=1
+session_contract_status=metadata-only-contract-ready
+session_contract_present=1
 standalone_installable=1
 standalone_requires_panel=0
 substrate_bridge_status=metadata-bound-ready

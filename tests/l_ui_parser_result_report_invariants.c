@@ -52,6 +52,7 @@ static const char VALID_FIXTURE[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -76,7 +77,7 @@ static int report_contains_valid_parse_summary(void) {
     EXPECT_TRUE(strstr(report, "column=1") != 0, "report column");
     EXPECT_TRUE(strstr(report, "card_name=NucleusPreview") != 0, "report card name");
     EXPECT_TRUE(strstr(report, "rail_count=9") != 0, "report rail count");
-    EXPECT_TRUE(strstr(report, "field_count=23") != 0, "report field count");
+    EXPECT_TRUE(strstr(report, "field_count=24") != 0, "report field count");
     EXPECT_TRUE(strstr(report, "effect=none") != 0, "report effect");
     EXPECT_TRUE(strstr(report, "boundary=preview_only") != 0, "report boundary");
     EXPECT_TRUE(strstr(report, "no_effect=1") != 0, "report no effect");

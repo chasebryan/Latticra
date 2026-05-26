@@ -52,6 +52,8 @@ const char *latticra_kernel_state_label(latticra_kernel_state_kind_t state) {
             return "time-accounting-ready";
         case LATTICRA_KERNEL_STATE_PREEMPTION_READY:
             return "preemption-ready";
+        case LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY:
+            return "scheduler-credit-ready";
         default:
             return "unknown";
     }
@@ -95,6 +97,8 @@ static int is_allowed_transition(
         target_state == LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY) return 1;
     if (current_state == LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY &&
         target_state == LATTICRA_KERNEL_STATE_PREEMPTION_READY) return 1;
+    if (current_state == LATTICRA_KERNEL_STATE_PREEMPTION_READY &&
+        target_state == LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY) return 1;
     return 0;
 }
 
@@ -148,6 +152,10 @@ static int state_requires_time_accounting(latticra_kernel_state_kind_t state) {
 
 static int state_requires_preemption(latticra_kernel_state_kind_t state) {
     return state >= LATTICRA_KERNEL_STATE_PREEMPTION_READY;
+}
+
+static int state_requires_scheduler_credit(latticra_kernel_state_kind_t state) {
+    return state >= LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY;
 }
 
 static void seed_result(latticra_kernel_state_result_t *result) {
@@ -231,6 +239,11 @@ latticra_status_t latticra_kernel_state_default_request(
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
     request->preemption_request.time_accounting_request = request->time_accounting_request;
+    if (latticra_kernel_scheduler_credit_default_request(
+            &request->scheduler_credit_request) != LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->scheduler_credit_request.preemption_request = request->preemption_request;
     request->current_state = LATTICRA_KERNEL_STATE_CREATED;
     request->target_state = LATTICRA_KERNEL_STATE_INITIALIZED;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
@@ -264,6 +277,7 @@ latticra_status_t latticra_kernel_state_transition(
     latticra_kernel_context_switch_request_t context_switch_request;
     latticra_kernel_time_accounting_request_t time_accounting_request;
     latticra_kernel_preemption_request_t preemption_request;
+    latticra_kernel_scheduler_credit_request_t scheduler_credit_request;
 
     if (result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     seed_result(result);
@@ -312,6 +326,8 @@ latticra_status_t latticra_kernel_state_transition(
     time_accounting_request.context_switch_request = context_switch_request;
     preemption_request = request->preemption_request;
     preemption_request.time_accounting_request = time_accounting_request;
+    scheduler_credit_request = request->scheduler_credit_request;
+    scheduler_credit_request.preemption_request = preemption_request;
 
     if (state_requires_process_table(request->target_state)) {
         status = latticra_kernel_process_table_evaluate(&process_request, &result->process_table);
@@ -590,6 +606,33 @@ latticra_status_t latticra_kernel_state_transition(
         result->memory_map = result->process_table.memory_map;
     }
 
+    if (state_requires_scheduler_credit(request->target_state)) {
+        scheduler_credit_request.preemption_request = preemption_request;
+        status = latticra_kernel_scheduler_credit_evaluate(
+            &scheduler_credit_request, &result->scheduler_credit);
+        if (status != LATTICRA_STATUS_OK) {
+            result->status = status;
+            state_copy(result->state_status, sizeof(result->state_status),
+                "scheduler-credit-not-ready");
+            state_copy(result->transition_status, sizeof(result->transition_status), "blocked");
+            return status;
+        }
+        result->preemption = result->scheduler_credit.preemption;
+        result->time_accounting = result->preemption.time_accounting;
+        result->context_switch = result->time_accounting.context_switch;
+        result->run_queue = result->context_switch.run_queue;
+        result->scheduler_tick = result->run_queue.scheduler_tick;
+        result->timer_source = result->scheduler_tick.timer_source;
+        result->interrupt_table = result->timer_source.interrupt_table;
+        result->driver_catalog = result->interrupt_table.driver_catalog;
+        result->device_registry = result->driver_catalog.device_registry;
+        result->vfs_namespace = result->device_registry.vfs_namespace;
+        result->ipc_table = result->vfs_namespace.ipc_table;
+        result->syscall_table = result->ipc_table.syscall_table;
+        result->process_table = result->syscall_table.process_table;
+        result->memory_map = result->process_table.memory_map;
+    }
+
     if (request->gate != LATTICRA_KERNEL_STATE_GATE_ALLOW) {
         state_copy(result->gate_status, sizeof(result->gate_status), "deny");
         deny_transition(result, "gate-denied");
@@ -651,6 +694,7 @@ latticra_status_t latticra_kernel_state_report(
         "context_switch_status=%s\n"
         "time_accounting_status=%s\n"
         "preemption_status=%s\n"
+        "scheduler_credit_status=%s\n"
         "evidence_level=%u\n",
         result->state_status,
         result->gate_status,
@@ -676,6 +720,7 @@ latticra_status_t latticra_kernel_state_report(
         result->context_switch.switch_status,
         result->time_accounting.accounting_status,
         result->preemption.preemption_status,
+        result->scheduler_credit.credit_status,
         result->evidence_level);
 
     if (written < 0 || (size_t)written >= buffer_len) {

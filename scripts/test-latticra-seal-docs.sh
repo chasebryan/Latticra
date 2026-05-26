@@ -25,10 +25,13 @@ grep -q "network_authority=0" docs/latticra-seal/STATUS.md
 grep -q "runtime_enforcement_authority=0" docs/latticra-seal/STATUS.md
 grep -q "next_generation_security_product_target=1" docs/latticra-seal/STATUS.md
 grep -q "product_spine_present=1" docs/latticra-seal/STATUS.md
+grep -q "product_spine_status_present=1" docs/latticra-seal/STATUS.md
 grep -q "make seal-policy-denials" docs/latticra-seal/POLICY.md
 grep -q "report-only" docs/latticra-seal/REPORTS.md
 grep -q "production_security_product=0" docs/latticra-seal/PRODUCT.md
 grep -q "runtime_authority_granted=0" docs/latticra-seal/PRODUCT.md
 grep -q "seal_capability_metadata_report=1" docs/latticra-seal/PRODUCT.md
+grep -q "seal_product_spine_status_present=1" docs/latticra-seal/PRODUCT.md
+grep -q "product_spine_changes_authority=0" docs/latticra-seal/PRODUCT.md
 
 echo "latticra_seal_docs: ok"
