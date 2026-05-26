@@ -200,6 +200,24 @@ static int lat_to_lir_preserves_no_effect_flags(void) {
     EXPECT_TRUE(lowering.no_effect == 1, "result no effect");
     EXPECT_TRUE(lowering.execution_allowed == 0, "result execution flag");
     EXPECT_TRUE(lowering.mutation_allowed == 0, "result mutation flag");
+    EXPECT_TRUE(lowering.network_allowed == 0, "result network flag");
+    return 0;
+}
+
+static int lat_to_lir_rejects_model_network_flag(void) {
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lat_model_t model;
+    latticra_lir_module_t module;
+    latticra_lat_to_lir_result_t lowering;
+    EXPECT_TRUE(latticra_lat_parse_source(FOUNDATION_MODEL, strlen(FOUNDATION_MODEL), &parse) == LATTICRA_STATUS_OK, "network model parse status OK");
+    EXPECT_TRUE(latticra_lat_validate_module(&parse, &semantic) == LATTICRA_STATUS_OK, "network model semantic status OK");
+    EXPECT_TRUE(latticra_lat_model_normalize_module(&parse, &semantic, &model) == LATTICRA_STATUS_OK, "network model normalization status OK");
+    model.network_allowed = 1;
+    EXPECT_TRUE(latticra_lir_lower_lat_model(&model, &module, &lowering) == LATTICRA_STATUS_OK, "network model lowering status OK");
+    EXPECT_TRUE(lowering.error == LATTICRA_LAT_TO_LIR_NO_EFFECT_VIOLATION, "network model lowering rejected");
+    EXPECT_TRUE(lowering.network_allowed == 1, "network model lowering copied");
+    EXPECT_TRUE(module.network_allowed == 0, "rejected module network denied");
     return 0;
 }
 
@@ -227,6 +245,7 @@ static int lat_to_lir_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(one, "first_declaration_clause_count=9\n") != 0, "report first declaration clause count");
     EXPECT_TRUE(strstr(one, "first_declaration_source_index=") != 0, "report first declaration source index");
     EXPECT_TRUE(strstr(one, "first_transition_source_index=0\n") != 0, "report transition source");
+    EXPECT_TRUE(strstr(one, "network_allowed=0\n") != 0, "report network denied");
     return 0;
 }
 
@@ -262,6 +281,7 @@ int main(void) {
     if (lat_to_lir_rejects_parse_error() != 0) return 1;
     if (lat_to_lir_rejects_semantic_error() != 0) return 1;
     if (lat_to_lir_preserves_no_effect_flags() != 0) return 1;
+    if (lat_to_lir_rejects_model_network_flag() != 0) return 1;
     if (lat_to_lir_report_is_deterministic() != 0) return 1;
     if (lat_to_lir_report_rejects_small_buffer() != 0) return 1;
     if (lat_to_lir_error_labels_are_stable() != 0) return 1;

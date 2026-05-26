@@ -53,6 +53,7 @@ typedef struct {
     int no_effect;
     int execution_allowed;
     int mutation_allowed;
+    int network_allowed;
 } latticra_lat_to_lir_result_t;
 
 const char *latticra_lat_to_lir_error_label(latticra_lat_to_lir_error_t error);

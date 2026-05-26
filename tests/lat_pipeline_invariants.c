@@ -280,6 +280,7 @@ static int lat_pipeline_preserves_no_effect_flags(void) {
     EXPECT_TRUE(pipeline.execution_allowed == 0, "pipeline execution flag");
     EXPECT_TRUE(pipeline.mutation_allowed == 0, "pipeline mutation flag");
     EXPECT_TRUE(pipeline.server_allowed == 0, "pipeline server flag");
+    EXPECT_TRUE(pipeline.network_allowed == 0, "pipeline network flag");
     EXPECT_TRUE(pipeline.recovery_allowed == 0, "pipeline recovery flag");
     EXPECT_TRUE(pipeline.hardware_allowed == 0, "pipeline hardware flag");
     return 0;
@@ -317,6 +318,7 @@ static int lat_pipeline_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(one, "first_clause_operator==\n") != 0, "first clause operator in report");
     EXPECT_TRUE(strstr(one, "first_clause_value=0/0\n") != 0, "first clause value in report");
     EXPECT_TRUE(strstr(one, "lowering_error=ok\n") != 0, "lowering ok in report");
+    EXPECT_TRUE(strstr(one, "network_allowed=0\n") != 0, "pipeline report network denied");
     return 0;
 }
 

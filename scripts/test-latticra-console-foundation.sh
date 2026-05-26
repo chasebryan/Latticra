@@ -152,6 +152,9 @@ grep -Fq 'os_base_contract_present=1' "$report_txt"
 grep -Fq 'vm_evidence_contract_status=metadata-only-contract-ready' "$report_txt"
 grep -Fq 'vm_evidence_contract_present=1' "$report_txt"
 grep -Fq 'panel_installable=1' "$report_txt"
+grep -Fq 'standalone_installable=1' "$report_txt"
+grep -Fq 'standalone_requires_panel=0' "$report_txt"
+grep -Fq 'standalone_command_wrapper=latticra-lc' "$report_txt"
 grep -Fq 'future_os_base_claim=planned_not_claimed' "$report_txt"
 grep -Fq 'execution_allowed=0' "$report_txt"
 grep -Fq 'network_allowed=0' "$report_txt"
@@ -427,15 +430,17 @@ grep -Fq '[components.latticra_console]' installer/manifests/components.toml
 grep -Fq 'bin/<lc.install.command_wrapper>' installer/manifests/components.toml
 grep -Fq 'share/latticra/lc/install/config.toml' installer/manifests/components.toml
 grep -Fq 'share/latticra/lc/host-inventory' installer/manifests/components.toml
-grep -Fq 'LC install metadata records config/share paths and the command wrapper' installer/manifests/components.toml
+grep -Fq 'LC install metadata records config/share paths and the standalone command wrapper' installer/manifests/components.toml
 grep -Fq 'latticra_console = true' installer/configs/default.installer.toml
 grep -Fq 'latticra_console = true' installer/configs/local-prefix-example.installer.toml
 grep -Fq 'pub latticra_console: bool' installer/latticra-installer/src/config.rs
 grep -Fq 'pub struct LatticraConsoleConfig' installer/latticra-installer/src/config.rs
 grep -Fq 'LatticraConsoleProfile::PanelEmbedded' installer/latticra-installer/src/config.rs
+grep -Fq 'Self::Standalone => "standalone"' installer/latticra-installer/src/config.rs
 grep -Fq 'Latticra Console (LC)' installer/latticra-installer/src/ui.rs
 grep -Fq 'WorkspaceTab::Console' installer/latticra-installer/src/ui.rs
 grep -Fq 'profile = "panel_embedded"' installer/configs/default.installer.toml
+grep -Fq 'standalone_console = true' installer/configs/default.installer.toml
 grep -Fq '[lc.install]' installer/configs/default.installer.toml
 grep -Fq 'install_profile = "lc-panel-install-v0"' installer/configs/default.installer.toml
 grep -Fq 'allow_external_host_commands = false' installer/configs/default.installer.toml
@@ -460,6 +465,7 @@ grep -Fq 'os_base_contract_profile = "lc-os-base-v0"' installer/configs/default.
 grep -Fq 'vm_evidence_contract_profile = "lc-vm-evidence-v0"' installer/configs/default.installer.toml
 grep -Fq 'LATTICRA_CONSOLE=$(cfg latticra_console true)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_PROFILE=$(cfg_section lc profile panel_embedded)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_INSTALL_STANDALONE_CONSOLE=$(cfg_section lc.install standalone_console true)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_INSTALL_PROFILE=$(cfg_section lc.install install_profile lc-panel-install-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS=$(cfg_section lc.install allow_external_host_commands false)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_HOST_EMBEDDING_CONTRACT_PROFILE=$(cfg_section lc host_embedding_contract_profile lc-host-embedding-v0)' installer/scripts/latticra-installer-apply.sh
@@ -477,6 +483,7 @@ grep -Fq 'LC_RECEIPT_CONTRACT_PROFILE=$(cfg_section lc receipt_contract_profile 
 grep -Fq 'LC_OS_BASE_CONTRACT_PROFILE=$(cfg_section lc os_base_contract_profile lc-os-base-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_VM_EVIDENCE_CONTRACT_PROFILE=$(cfg_section lc vm_evidence_contract_profile lc-vm-evidence-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'profiles/hosted-reference.toml' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'profiles/standalone-console.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'host-embedding/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'host-inventory/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'host-adapter/contract.toml' installer/scripts/latticra-installer-apply.sh
@@ -500,6 +507,9 @@ grep -Fq 'Latticra Console Foundation' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Panel Profile Presets' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'share/latticra/lc/install/config.toml' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'lc.install.command_wrapper' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'panel_embedded -> default Panel-installed LC operator surface' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'host_embedded_planning -> future host-embedding plan with zero host mutation authority' docs/LATTICRA_CONSOLE_FOUNDATION.md
+grep -Fq 'os_base_planning -> future OS-base plan with zero boot, kernel, or runtime enforcement authority' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'The default user-local wrapper is:' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Panel installs can rename that direct wrapper with `lc.install.command_wrapper`' docs/LATTICRA_CONSOLE_FOUNDATION.md
 grep -Fq 'Host Embedding Contract' docs/LATTICRA_CONSOLE_FOUNDATION.md

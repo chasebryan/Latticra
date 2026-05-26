@@ -411,6 +411,8 @@ const char *latticra_console_profile_label(latticra_console_profile_t profile) {
             return "host-embedded-planning";
         case LATTICRA_CONSOLE_PROFILE_OS_BASE_PLANNING:
             return "os-base-planning";
+        case LATTICRA_CONSOLE_PROFILE_STANDALONE:
+            return "standalone";
         default:
             return "unknown";
     }
@@ -662,6 +664,8 @@ static void lc_seed_result(
     result->no_effect = 1;
     result->configurable = 1;
     result->panel_installable = 1;
+    result->standalone_installable = 1;
+    result->standalone_requires_panel = 0;
     result->command_registry_present = 1;
     result->substrate_bridge_present = 1;
     result->host_embeddable = 1;
@@ -928,10 +932,10 @@ latticra_status_t latticra_console_manpage_report(
         "  latticra-lc os\n"
         "\n"
         "DESCRIPTION\n"
-        "  LC is the configurable Panel-installable console foundation for\n"
-        "  Latticra substrate interaction, host embedding planning, and future\n"
-        "  OS-base work. This Stage-0 manpage is rendered from the C command\n"
-        "  registry and is metadata-only.\n"
+        "  LC is the configurable Panel-installable and standalone console\n"
+        "  foundation for Latticra substrate interaction, host embedding\n"
+        "  planning, and future OS-base work. This Stage-0 manpage is rendered\n"
+        "  from the C command registry and is metadata-only.\n"
         "\n"
         "COMMANDS\n");
     if (status != LATTICRA_STATUS_OK) return status;
@@ -1956,6 +1960,9 @@ latticra_status_t latticra_console_report(
         "os_base_status=%s\n"
         "configurable=%d\n"
         "panel_installable=%d\n"
+        "standalone_installable=%d\n"
+        "standalone_requires_panel=%d\n"
+        "standalone_command_wrapper=latticra-lc\n"
         "command_registry_present=%d\n"
         "substrate_bridge_present=%d\n"
         "operator_shell_present=%d\n"
@@ -2024,6 +2031,8 @@ latticra_status_t latticra_console_report(
         result->os_base_status,
         result->configurable,
         result->panel_installable,
+        result->standalone_installable,
+        result->standalone_requires_panel,
         result->command_registry_present,
         result->substrate_bridge_present,
         result->operator_shell_present,

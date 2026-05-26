@@ -36,7 +36,8 @@ typedef enum {
     LATTICRA_CONSOLE_PROFILE_HOSTED_REFERENCE = 0,
     LATTICRA_CONSOLE_PROFILE_PANEL_EMBEDDED = 1,
     LATTICRA_CONSOLE_PROFILE_HOST_EMBEDDED = 2,
-    LATTICRA_CONSOLE_PROFILE_OS_BASE_PLANNING = 3
+    LATTICRA_CONSOLE_PROFILE_OS_BASE_PLANNING = 3,
+    LATTICRA_CONSOLE_PROFILE_STANDALONE = 4
 } latticra_console_profile_t;
 
 typedef enum {
@@ -129,6 +130,8 @@ typedef struct {
     int no_effect;
     int configurable;
     int panel_installable;
+    int standalone_installable;
+    int standalone_requires_panel;
     int command_registry_present;
     int substrate_bridge_present;
     int host_embeddable;

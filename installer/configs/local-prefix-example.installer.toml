@@ -58,6 +58,7 @@ install_mode = "metadata-only-console-foundation"
 config_path = "etc/latticra/lc.toml"
 share_path = "share/latticra/lc"
 command_wrapper = "latticra-lc"
+standalone_console = true
 panel_embedded_console = true
 write_config_file = true
 write_profile_presets = true

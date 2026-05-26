@@ -51,6 +51,9 @@ static void seed_summary_result(
     result->timer_disarm_allowed = 0;
     result->scheduler_tick_allowed = 0;
     result->run_queue_mutation_allowed = 0;
+    result->enqueue_allowed = 0;
+    result->dequeue_allowed = 0;
+    result->dispatch_allowed = 0;
     result->context_switch_allowed = 0;
     result->preemption_allowed = 0;
     result->time_accounting_allowed = 0;
@@ -76,7 +79,7 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_default_request(
     if (status != LATTICRA_STATUS_OK) return status;
 
     request->lifecycle_request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
-    request->lifecycle_request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY;
+    request->lifecycle_request.target_state = LATTICRA_KERNEL_STATE_RUN_QUEUE_READY;
     request->lifecycle_request.max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
 }
@@ -123,6 +126,9 @@ static const char *lifecycle_relation_for(
         case LATTICRA_KERNEL_SUBSYSTEM_RUNTIME:
             return "runtime-not-entered";
         case LATTICRA_KERNEL_SUBSYSTEM_SCHEDULER:
+            if (state_at_or_after(final_state, LATTICRA_KERNEL_STATE_RUN_QUEUE_READY)) {
+                return "run-queue-ready";
+            }
             if (state_at_or_after(final_state, LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY)) {
                 return "scheduler-tick-ready";
             }
@@ -264,6 +270,9 @@ static void finalize_summary(
     result->timer_disarm_allowed = 0;
     result->scheduler_tick_allowed = 0;
     result->run_queue_mutation_allowed = 0;
+    result->enqueue_allowed = 0;
+    result->dequeue_allowed = 0;
+    result->dispatch_allowed = 0;
     result->context_switch_allowed = 0;
     result->preemption_allowed = 0;
     result->time_accounting_allowed = 0;
@@ -278,7 +287,7 @@ static void finalize_summary(
 
     summary_copy(result->summary_status, sizeof(result->summary_status),
         (result->lifecycle_complete == 1 &&
-         result->lifecycle.final_state == LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY &&
+         result->lifecycle.final_state == LATTICRA_KERNEL_STATE_RUN_QUEUE_READY &&
          result->registry_no_effect == 1 &&
          result->external_effect_performed == 0) ?
             "summary-ready" : "summary-incomplete");
@@ -392,6 +401,9 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         "timer_disarm_allowed=%d\n"
         "scheduler_tick_allowed=%d\n"
         "run_queue_mutation_allowed=%d\n"
+        "enqueue_allowed=%d\n"
+        "dequeue_allowed=%d\n"
+        "dispatch_allowed=%d\n"
         "context_switch_allowed=%d\n"
         "preemption_allowed=%d\n"
         "time_accounting_allowed=%d\n"
@@ -440,6 +452,9 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         result->timer_disarm_allowed,
         result->scheduler_tick_allowed,
         result->run_queue_mutation_allowed,
+        result->enqueue_allowed,
+        result->dequeue_allowed,
+        result->dispatch_allowed,
         result->context_switch_allowed,
         result->preemption_allowed,
         result->time_accounting_allowed,

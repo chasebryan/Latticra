@@ -25,6 +25,7 @@ notice_contract='docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md'
 doc_license_contract='docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md'
 third_party_contract='docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md'
 notice_file_contract='docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md'
+copyright_mapping_contract='docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md'
 license_contract='docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md'
 readiness='docs/UBUNTU_READINESS_PLAN.md'
 workflow='.github/workflows/ubuntu-generated-artifact-notice-review-contract.yml'
@@ -35,6 +36,7 @@ require_file "$notice_contract"
 require_file "$doc_license_contract"
 require_file "$third_party_contract"
 require_file "$notice_file_contract"
+require_file "$copyright_mapping_contract"
 require_file "$license_contract"
 require_file "$readiness"
 require_file "$workflow"
@@ -55,6 +57,7 @@ require_contains 'ubuntu_package_notice_inventory_present=1' "$contract"
 require_contains 'ubuntu_doc_payload_license_review_contract_present=1' "$contract"
 require_contains 'ubuntu_third_party_material_review_contract_present=1' "$contract"
 require_contains 'ubuntu_notice_file_decision_contract_present=1' "$contract"
+require_contains 'ubuntu_debian_copyright_notice_mapping_contract_present=1' "$contract"
 require_contains 'deb_artifact_created=0' "$contract"
 require_contains 'package_build_performed=0' "$contract"
 require_contains 'generated_artifact_notice_reviewed=1' "$contract"
@@ -103,6 +106,7 @@ require_contains 'generated_artifact_notice_reviewed=1' "$notice_contract"
 require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' "$doc_license_contract"
 require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' "$third_party_contract"
 require_contains 'ubuntu_notice_file_decision_contract_present=1' "$notice_file_contract"
+require_contains 'ubuntu_debian_copyright_notice_mapping_contract_present=1' "$copyright_mapping_contract"
 require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' "$license_contract"
 require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' "$readiness"
 require_contains 'docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md' README.md

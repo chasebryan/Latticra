@@ -35,6 +35,8 @@ ubuntu_generated_artifact_notice_review_contract_present=1
 ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review
 ubuntu_notice_file_decision_contract_present=1
 ubuntu_notice_file_decision_status=blocked-pending-notice-file-decision
+ubuntu_debian_copyright_notice_mapping_contract_present=1
+ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping
 ubuntu_package_notice_review_contract_present=1
 ubuntu_package_notice_review_status=blocked-pending-doc-license-and-notice-review
 license_expression_candidate_recorded=1
@@ -45,6 +47,12 @@ doc_payload_license_reviewed=0
 doc_payload_license_unresolved=1
 doc_payload_license_decision_recorded=0
 debian_copyright_doc_payload_mapping_reviewed=0
+debian_copyright_binary_payload_mapping_reviewed=0
+debian_copyright_third_party_notice_mapping_reviewed=0
+debian_copyright_generated_artifact_notice_mapping_reviewed=0
+debian_copyright_notice_file_mapping_reviewed=0
+debian_copyright_trademark_notice_boundary_reviewed=0
+debian_copyright_license_ref_replaced_or_justified=0
 third_party_material_inventory_recorded=1
 third_party_material_inventory_reviewed=0
 third_party_material_source_records_present=0
@@ -92,6 +100,7 @@ docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md
 docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md
+docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md
 docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
@@ -112,6 +121,7 @@ scripts/test-ubuntu-doc-payload-license-review-contract.sh
 scripts/test-ubuntu-third-party-material-review-contract.sh
 scripts/test-ubuntu-generated-artifact-notice-review-contract.sh
 scripts/test-ubuntu-notice-file-decision-contract.sh
+scripts/test-ubuntu-debian-copyright-notice-mapping-contract.sh
 scripts/test-ubuntu-package-notice-review-contract.sh
 scripts/test-ubuntu-package-license-review-contract.sh
 scripts/test-ubuntu-local-deb-build-transcript-contract.sh
@@ -120,6 +130,7 @@ scripts/test-ubuntu-local-deb-build-transcript-contract.sh
 .github/workflows/ubuntu-third-party-material-review-contract.yml
 .github/workflows/ubuntu-generated-artifact-notice-review-contract.yml
 .github/workflows/ubuntu-notice-file-decision-contract.yml
+.github/workflows/ubuntu-debian-copyright-notice-mapping-contract.yml
 .github/workflows/ubuntu-package-notice-review-contract.yml
 ```
 
@@ -150,10 +161,12 @@ The Ubuntu generated-artifact notice review contract records that generated-arti
 
 The Ubuntu NOTICE file decision contract records that the package still needs a reviewed decision about whether a `NOTICE` file is required and how it would be mapped into the local deb payload.
 
+The Ubuntu Debian copyright notice mapping contract records that the local deb payload still needs a reviewed mapping into `packaging/ubuntu/debian/copyright` before package notice promotion.
+
 The Ubuntu package notice inventory records the current local-deb draft payload facts without promoting the review. The Ubuntu package notice review contract records the unresolved documentation-license and notice obligations that must be settled before the package license review can be promoted.
 
 ## Next Recommended Lane
 
 ```text
-Review the Ubuntu NOTICE file decision contract, then promote the Ubuntu package notice review only after documentation licensing, third-party notices, generated-artifact notices, NOTICE requirements, and Debian copyright mapping are decided.
+Review the Ubuntu Debian copyright notice mapping contract, then promote the Ubuntu package notice review only after documentation licensing, third-party notices, generated-artifact notices, NOTICE requirements, and Debian copyright mapping are decided.
 ```

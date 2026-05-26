@@ -47,6 +47,9 @@ require_file .github/workflows/kernel-timer-source.yml
 require_file scripts/test-kernel-scheduler-tick.sh
 require_file scripts/test-kernel-scheduler-tick-report-runner.sh
 require_file .github/workflows/kernel-scheduler-tick.yml
+require_file scripts/test-kernel-run-queue.sh
+require_file scripts/test-kernel-run-queue-report-runner.sh
+require_file .github/workflows/kernel-run-queue.yml
 require_file scripts/test-kernel-process-table.sh
 require_file scripts/test-kernel-process-table-report-runner.sh
 require_file .github/workflows/kernel-process-table.yml
@@ -76,13 +79,15 @@ require_contains 'kernel timer source guard' docs/status/KERNEL_LIFECYCLE_EVIDEN
 require_contains 'kernel timer source report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel scheduler tick guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel scheduler tick report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel run queue guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel run queue report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel process table guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel process table report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel syscall table guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel syscall table report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel lifecycle subsystem summary' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel lifecycle rollback plan' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
-require_contains 'final_state=scheduler-tick-ready' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'final_state=run-queue-ready' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'external_effect_performed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'no_external_effect_chain=1' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'runtime_entry_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
@@ -113,6 +118,9 @@ require_contains 'timer_arm_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STA
 require_contains 'timer_disarm_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'scheduler_tick_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'run_queue_mutation_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'enqueue_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'dequeue_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'dispatch_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'context_switch_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'preemption_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'time_accounting_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
@@ -128,6 +136,7 @@ require_contains '.github/workflows/kernel-driver-catalog.yml' docs/status/KERNE
 require_contains '.github/workflows/kernel-interrupt-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-timer-source.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-scheduler-tick.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-run-queue.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-process-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-syscall-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 
@@ -147,11 +156,13 @@ require_contains 'kernel timer source guard' docs/status/README.md
 require_contains 'kernel timer source report runner' docs/status/README.md
 require_contains 'kernel scheduler tick guard' docs/status/README.md
 require_contains 'kernel scheduler tick report runner' docs/status/README.md
+require_contains 'kernel run queue guard' docs/status/README.md
+require_contains 'kernel run queue report runner' docs/status/README.md
 require_contains 'kernel process table guard' docs/status/README.md
 require_contains 'kernel process table report runner' docs/status/README.md
 require_contains 'kernel syscall table guard' docs/status/README.md
 require_contains 'kernel syscall table report runner' docs/status/README.md
-require_contains 'final_state=scheduler-tick-ready' docs/status/README.md
+require_contains 'final_state=run-queue-ready' docs/status/README.md
 require_contains 'external_effect_performed=0' docs/status/README.md
 require_contains 'runtime_entry_allowed=0' docs/status/README.md
 require_contains 'scheduler_execution_allowed=0' docs/status/README.md
@@ -181,6 +192,9 @@ require_contains 'timer_arm_allowed=0' docs/status/README.md
 require_contains 'timer_disarm_allowed=0' docs/status/README.md
 require_contains 'scheduler_tick_allowed=0' docs/status/README.md
 require_contains 'run_queue_mutation_allowed=0' docs/status/README.md
+require_contains 'enqueue_allowed=0' docs/status/README.md
+require_contains 'dequeue_allowed=0' docs/status/README.md
+require_contains 'dispatch_allowed=0' docs/status/README.md
 require_contains 'context_switch_allowed=0' docs/status/README.md
 require_contains 'preemption_allowed=0' docs/status/README.md
 require_contains 'time_accounting_allowed=0' docs/status/README.md
@@ -202,6 +216,8 @@ require_contains 'sh scripts/test-kernel-timer-source.sh' .github/workflows/kern
 require_contains 'sh scripts/test-kernel-timer-source-report-runner.sh' .github/workflows/kernel-timer-source.yml
 require_contains 'sh scripts/test-kernel-scheduler-tick.sh' .github/workflows/kernel-scheduler-tick.yml
 require_contains 'sh scripts/test-kernel-scheduler-tick-report-runner.sh' .github/workflows/kernel-scheduler-tick.yml
+require_contains 'sh scripts/test-kernel-run-queue.sh' .github/workflows/kernel-run-queue.yml
+require_contains 'sh scripts/test-kernel-run-queue-report-runner.sh' .github/workflows/kernel-run-queue.yml
 require_contains 'sh scripts/test-kernel-process-table.sh' .github/workflows/kernel-process-table.yml
 require_contains 'sh scripts/test-kernel-process-table-report-runner.sh' .github/workflows/kernel-process-table.yml
 require_contains 'sh scripts/test-kernel-syscall-table.sh' .github/workflows/kernel-syscall-table.yml
