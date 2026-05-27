@@ -6596,7 +6596,7 @@ impl eframe::App for LatticraInstallerApp {
         self.ensure_texture(&ctx);
         self.drain_events();
         let screen_width = ctx.content_rect().width();
-        let compact = screen_width < COMPACT_LAYOUT_WIDTH;
+        let compact = should_use_compact_workspace(screen_width, fedora_desktop_runtime());
         let narrow = screen_width < NARROW_LAYOUT_WIDTH;
 
         if self.install_state == InstallState::Running {
@@ -6836,6 +6836,34 @@ fn apply_panel_theme(ctx: &egui::Context) {
 
     style.visuals = visuals;
     ctx.set_global_style(style);
+}
+
+fn should_use_compact_workspace(screen_width: f32, fedora_desktop: bool) -> bool {
+    screen_width < COMPACT_LAYOUT_WIDTH || fedora_desktop
+}
+
+fn fedora_desktop_runtime() -> bool {
+    cfg!(target_os = "linux") && os_release_is_fedora("/etc/os-release")
+}
+
+fn os_release_is_fedora(path: &str) -> bool {
+    std::fs::read_to_string(path)
+        .map(|content| os_release_content_is_fedora(&content))
+        .unwrap_or(false)
+}
+
+fn os_release_content_is_fedora(content: &str) -> bool {
+    content.lines().any(|line| {
+        let Some((key, value)) = line.split_once('=') else {
+            return false;
+        };
+        if key != "ID" && key != "ID_LIKE" {
+            return false;
+        }
+
+        let value = value.trim().trim_matches('"').trim_matches('\'');
+        value.split_whitespace().any(|part| part == "fedora")
+    })
 }
 
 fn panel_card() -> egui::Frame {
@@ -8106,6 +8134,39 @@ mod tests {
         assert!(!sanitized.safety.allow_network_effect);
         assert!(!sanitized.updater.allow_network_fetch);
         assert!(!sanitized.lc.install.allow_external_host_commands);
+    }
+
+    #[test]
+    fn compact_workspace_keeps_macos_width_rule_when_not_fedora() {
+        assert!(should_use_compact_workspace(
+            COMPACT_LAYOUT_WIDTH - 1.0,
+            false
+        ));
+        assert!(!should_use_compact_workspace(
+            COMPACT_LAYOUT_WIDTH + 240.0,
+            false
+        ));
+    }
+
+    #[test]
+    fn compact_workspace_is_forced_for_fedora() {
+        assert!(should_use_compact_workspace(
+            COMPACT_LAYOUT_WIDTH + 240.0,
+            true
+        ));
+    }
+
+    #[test]
+    fn os_release_detects_fedora_id() {
+        assert!(os_release_content_is_fedora(
+            "NAME=\"Fedora Linux\"\nID=fedora\nVERSION_ID=42\n"
+        ));
+        assert!(os_release_content_is_fedora(
+            "NAME=\"Fedora Remix\"\nID=custom\nID_LIKE=\"rhel fedora\"\n"
+        ));
+        assert!(!os_release_content_is_fedora(
+            "NAME=\"Ubuntu\"\nID=ubuntu\nID_LIKE=debian\n"
+        ));
     }
 
     #[test]

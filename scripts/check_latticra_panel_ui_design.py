@@ -19,6 +19,8 @@ checks = [
     (ui, 'fn show_right_evidence_panel(&mut self, ui: &mut egui::Ui)', 'right evidence'),
     (ui, 'fn show_install_run_monitor(&mut self, ui: &mut egui::Ui, compact: bool)', 'install run monitor'),
     (ui, 'const COMPACT_LAYOUT_WIDTH: f32 = 1600.0;', 'less crowded responsive rail threshold'),
+    (ui, 'fn should_use_compact_workspace(screen_width: f32, fedora_desktop: bool) -> bool', 'Fedora compact workspace guard'),
+    (ui, 'fn os_release_content_is_fedora(content: &str) -> bool', 'Fedora desktop detector'),
     (ui, 'fn show_hero_primary_actions(&mut self, ui: &mut egui::Ui)', 'first-screen primary actions'),
     (ui, 'Plan first. Dry-run second. Install after evidence.', 'first-screen purpose copy'),
     (ui, 'fn chip_value_width(value: &str) -> f32', 'bounded readable status chips'),
