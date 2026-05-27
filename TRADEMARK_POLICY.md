@@ -21,7 +21,7 @@ project slogans, marks, and distinctive visual identity
 ## Code license boundary
 
 Software and documentation licenses do not grant trademark, branding, endorsement, or official-project identity rights.
-This includes AGPL-3.0-or-later, Apache-2.0, and CC-BY-4.0.
+Software and documentation licenses, including AGPL-3.0-or-later, Apache-2.0, and CC-BY-4.0, do not grant trademark, branding, endorsement, or official-project identity rights.
 
 A fork may use the code according to the applicable code license, but it may not present itself as the official Latticra project unless authorized.
 
