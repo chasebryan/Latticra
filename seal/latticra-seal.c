@@ -561,7 +561,7 @@ static void collect_files(
 
     if (!dir) {
         char msg[512];
-        snprintf(msg, sizeof(msg), "could not open directory: %s", dir_path);
+        snprintf(msg, sizeof(msg), "could not open directory: %.400s", dir_path);
         fail_run(run, msg);
         return;
     }
@@ -586,7 +586,7 @@ static void collect_files(
 
         if (lstat(path, &st) != 0) {
             char msg[512];
-            snprintf(msg, sizeof(msg), "could not stat path: %s", path);
+            snprintf(msg, sizeof(msg), "could not stat path: %.400s", path);
             fail_run(run, msg);
             continue;
         }
@@ -613,11 +613,11 @@ static void collect_files(
             }
         } else if (S_ISLNK(st.st_mode)) {
             char msg[512];
-            snprintf(msg, sizeof(msg), "refusing symlink in digest scope: %s", visible_path(path));
+            snprintf(msg, sizeof(msg), "refusing symlink in digest scope: %.400s", visible_path(path));
             fail_run(run, msg);
         } else {
             char msg[512];
-            snprintf(msg, sizeof(msg), "refusing non-regular path in digest scope: %s", visible_path(path));
+            snprintf(msg, sizeof(msg), "refusing non-regular path in digest scope: %.400s", visible_path(path));
             fail_run(run, msg);
         }
     }
@@ -1497,10 +1497,10 @@ static void check_required_files(SealRun *run, const char *manifest) {
 
     for (size_t i = 0; i < required.len; i++) {
         if (file_exists(required.items[i])) {
-            snprintf(msg, sizeof(msg), "required file exists: %s", required.items[i]);
+            snprintf(msg, sizeof(msg), "required file exists: %.400s", required.items[i]);
             pass(run, msg);
         } else {
-            snprintf(msg, sizeof(msg), "required file missing: %s", required.items[i]);
+            snprintf(msg, sizeof(msg), "required file missing: %.400s", required.items[i]);
             fail_run(run, msg);
         }
     }
@@ -1653,7 +1653,7 @@ static void check_policy_denials(SealRun *run, const char *manifest) {
 
         if (denied_secret_filename(path, &filename_patterns)) {
             char msg[512];
-            snprintf(msg, sizeof(msg), "possible secret-bearing filename: %s", visible_path(path));
+            snprintf(msg, sizeof(msg), "possible secret-bearing filename: %.400s", visible_path(path));
             fail_run(run, msg);
             filename_hits++;
         }
@@ -1662,12 +1662,12 @@ static void check_policy_denials(SealRun *run, const char *manifest) {
 
         if (file_contains_secret_marker(path, &content_markers, &read_ok)) {
             char msg[512];
-            snprintf(msg, sizeof(msg), "possible secret content marker in: %s", visible_path(path));
+            snprintf(msg, sizeof(msg), "possible secret content marker in: %.400s", visible_path(path));
             fail_run(run, msg);
             content_hits++;
         } else if (!read_ok) {
             char msg[512];
-            snprintf(msg, sizeof(msg), "could not inspect file for policy markers: %s", visible_path(path));
+            snprintf(msg, sizeof(msg), "could not inspect file for policy markers: %.400s", visible_path(path));
             fail_run(run, msg);
             inspect_failures++;
         }
@@ -1755,7 +1755,7 @@ static void write_digest_summary(SealRun *run, const char *manifest) {
 
         if (!sha256_file(list.items[i], hex)) {
             char msg[512];
-            snprintf(msg, sizeof(msg), "could not hash file: %s", visible_path(list.items[i]));
+            snprintf(msg, sizeof(msg), "could not hash file: %.400s", visible_path(list.items[i]));
             fail_run(run, msg);
             continue;
         }
