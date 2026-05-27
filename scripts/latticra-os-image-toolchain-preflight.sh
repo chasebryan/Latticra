@@ -49,6 +49,17 @@ sha_tool_available() {
   fi
 }
 
+grub_mkrescue_binary() {
+  for candidate in "${GRUB_MKRESCUE:-}" grub-mkrescue x86_64-elf-grub-mkrescue; do
+    [ -n "$candidate" ] || continue
+    if command -v "$candidate" >/dev/null 2>&1; then
+      command -v "$candidate"
+      return
+    fi
+  done
+  printf 'missing\n'
+}
+
 MANIFEST="installer/manifests/latticra-os-image-release.toml"
 
 while [ "$#" -gt 0 ]; do
@@ -84,7 +95,9 @@ require_manifest_field 'production_os_claim = false'
 QEMU_IMG_AVAILABLE=$(tool_available qemu-img)
 QEMU_SYSTEM_X86_64_AVAILABLE=$(tool_available qemu-system-x86_64)
 XORRISO_AVAILABLE=$(tool_available xorriso)
-GRUB_MKRESCUE_AVAILABLE=$(tool_available grub-mkrescue)
+GRUB_MKRESCUE_BINARY=$(grub_mkrescue_binary)
+GRUB_MKRESCUE_AVAILABLE=0
+[ "$GRUB_MKRESCUE_BINARY" != "missing" ] && GRUB_MKRESCUE_AVAILABLE=1
 TAR_AVAILABLE=$(tool_available tar)
 GZIP_AVAILABLE=$(tool_available gzip)
 CPIO_AVAILABLE=$(tool_available cpio)
@@ -123,7 +136,7 @@ qemu_system_x86_64_path=$(tool_path qemu-system-x86_64)
 xorriso_available=$XORRISO_AVAILABLE
 xorriso_path=$(tool_path xorriso)
 grub_mkrescue_available=$GRUB_MKRESCUE_AVAILABLE
-grub_mkrescue_path=$(tool_path grub-mkrescue)
+grub_mkrescue_path=$GRUB_MKRESCUE_BINARY
 tar_available=$TAR_AVAILABLE
 gzip_available=$GZIP_AVAILABLE
 cpio_available=$CPIO_AVAILABLE

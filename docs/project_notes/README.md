@@ -62,6 +62,12 @@ Latest Seal product-surface note: Latticra Seal Panel dashboard planning checkpo
 
 Latest Seal product-surface note: Latticra Seal Panel dashboard view-model contract uses `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT_STATUS.md` with predecessor `docs/status/SEAL_PANEL_DASHBOARD_PLANNING_STATUS.md`.
 
+Latest Seal product-surface note: Latticra Seal Panel dashboard view-model implementation plan uses `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md` with predecessor `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT_STATUS.md`.
+
+Latest Seal product-surface note: Latticra Seal Panel dashboard view-model implementation uses `docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md` with predecessor `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md`.
+
+Latest Seal product-surface note: Latticra Seal Panel dashboard view-model surface/status uses `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_STATUS.md` with predecessor `docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md`.
+
 Latest Seal predecessor note: Latticra Seal capability gate predecessor status alignment uses `docs/status/SEAL_CAPABILITY_GATE_STATUS.md` with predecessor `docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md`.
 
 - `STATUS.md`
@@ -125,6 +131,9 @@ Latest Seal predecessor note: Latticra Seal capability gate predecessor status a
 - `docs/status/SEAL_PANEL_DASHBOARD_PLANNING_STATUS.md`
 - `docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT.md`
 - `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT_STATUS.md`
+- `docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN.md`
+- `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md`
+- `docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md`
 - `docs/status/SEAL_POLICY_DECISION_PUBLIC_ENTRYPOINT_ALIGNMENT.md`
 - `docs/status/SEAL_README_STATUS_ROW_ALIGNMENT.md`
 - `docs/status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`

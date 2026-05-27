@@ -108,6 +108,26 @@ ubuntu_launchpad_build_result_evidence_contract_present=1
 ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence
 ubuntu_publication_non_claim_review_contract_present=1
 ubuntu_publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence
+ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1
+ubuntu_publication_promotion_blocker_matrix_contract_present=1
+publication_promotion_blocker_matrix_state=blocked-no-effect
+ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1
+ubuntu_publication_evidence_intake_denial_contract_present=1
+ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1
+ubuntu_publication_evidence_intake_denial_review_contract_present=1
+publication_evidence_intake_denial_state=denied-no-effect
+publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+publication_evidence_denial_review_present=1
+publication_evidence_denial_review_decision=uphold-denial
+publication_evidence_denial_re_request_allowed=0
+ubuntu_publication_evidence_intake_denied=1
+ubuntu_publication_evidence_intake_denial_upheld=1
+ubuntu_publication_evidence_intake_allowed=0
+ubuntu_publication_evidence_intake_requested=0
+publication_transcript_intake_accepted=0
+ppa_creation_evidence_accepted=0
+launchpad_publication_evidence_accepted=0
+ubuntu_archive_submission_evidence_accepted=0
 ubuntu_ppa_archive_publication_gate_contract_present=1
 ubuntu_ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence
 ubuntu_package_notice_review_contract_present=1
@@ -141,6 +161,10 @@ ubuntu_publication_non_claim_review_unblocked=0
 publication_scope_recorded=0
 publication_target_type_recorded=0
 publication_claims_reviewed=0
+ubuntu_publication_promotion_blocker_matrix_unblocked=0
+ubuntu_publication_promotion_blocked=1
+ubuntu_platform_publication_evidence_accepted=0
+ubuntu_publication_result_promoted=0
 ubuntu_publication_gate_unblocked=0
 ppa_claimed=0
 ubuntu_archive_ready=0
@@ -225,6 +249,9 @@ docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md
 docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md
 docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md
 docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
 docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md
 scripts/ubuntu-package-notice-inventory.sh
 scripts/test-ubuntu-package-notice-inventory.sh
@@ -247,6 +274,9 @@ scripts/test-ubuntu-source-package-evidence-contract.sh
 scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh
 scripts/test-ubuntu-launchpad-build-result-evidence-contract.sh
 scripts/test-ubuntu-publication-non-claim-review-contract.sh
+scripts/test-ubuntu-ppa-archive-publication-promotion-blocker-matrix-contract.sh
+scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-contract.sh
+scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh
 scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 .github/workflows/ubuntu-package-notice-inventory.yml
 .github/workflows/ubuntu-doc-payload-license-review-contract.yml
@@ -268,6 +298,9 @@ scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 .github/workflows/ubuntu-upload-signing-authority-evidence-contract.yml
 .github/workflows/ubuntu-launchpad-build-result-evidence-contract.yml
 .github/workflows/ubuntu-publication-non-claim-review-contract.yml
+.github/workflows/ubuntu-ppa-archive-publication-promotion-blocker-matrix-contract.yml
+.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-contract.yml
+.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.yml
 .github/workflows/ubuntu-ppa-archive-publication-gate-contract.yml
 ```
 
@@ -298,7 +331,7 @@ claim operating-system completeness
 Recommended next slice:
 
 ```text
-Review the Ubuntu publication non-claim review contract, then keep PPA/archive publication promotion blocked until Launchpad build result evidence and publication non-claims are reviewed.
+Review the Ubuntu publication evidence intake denial disposition before any reviewed PPA/archive publication evidence denial can be closed or re-requested.
 ```
 
 That should preserve the current no-artifact, no-submission, local-only Ubuntu package posture while the local deb path matures.

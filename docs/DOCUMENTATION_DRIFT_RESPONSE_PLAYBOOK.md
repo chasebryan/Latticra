@@ -1,8 +1,8 @@
 # Documentation Drift Response Playbook
 
 Status: active documentation drift-response playbook
-Last updated: 2026-05-26 CDT
-Scope: public wording drift, status mirror drift, estimate drift, non-claim drift, link drift, platform posture drift, security wording drift, stale evidence, and claim demotion.
+Last updated: 2026-05-27 CDT
+Scope: public wording drift, status mirror drift, estimate drift, non-claim drift, link drift, platform posture drift, security wording drift, stale evidence, lifecycle drift, superseded records, and claim demotion.
 
 ## Purpose
 
@@ -14,6 +14,14 @@ Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) to 
 
 Use [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) when the drift affects subsystem landing pages or subsystem public summaries.
 
+Use [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md) when the drift affects static public HTML pages.
+
+Use [`DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md`](DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md) when multiple records disagree and the winning source is unclear.
+
+Use [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) when the drift involves stale, superseded, archived, planning, draft, local-only, no-effect, report-only, or blocked records.
+
+Use [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) when the drift may have been caused by reviewing too few surfaces or updating too many surfaces mechanically.
+
 This playbook does not promote claims. It narrows or aligns documentation until the evidence supports stronger wording.
 
 ## Drift Types
@@ -22,7 +30,9 @@ This playbook does not promote claims. It narrows or aligns documentation until 
 | --- | --- | --- |
 | Link drift | A local link is broken or points to the wrong record. | Fix the link or remove it if no source exists. |
 | Source-record drift | A public statement has no source record. | Narrow or remove the statement until a source record exists. |
+| Source-authority drift | Two records disagree and reviewers are unsure which one wins. | Apply the documentation source authority order, then align mirrors. |
 | Status mirror drift | `README.md`, `STATUS.md`, `docs/status/CURRENT_STATUS.md`, or public HTML pages disagree. | Use the narrowest current status wording and align mirrors. |
+| Public-site mirror drift | Static HTML is stronger than source Markdown or lacks a source route. | Narrow the HTML to the source record or remove the unsupported wording. |
 | Estimate drift | Estimate values differ across public tables or static pages. | Treat the current estimate source record as authoritative and run the estimate alignment guard. |
 | Non-claim drift | A public page drops a required non-claim or weakens blocked language. | Restore the non-claim near the claim it constrains. |
 | Product-copy drift | Product-facing wording implies production, approval, security, or runtime authority. | Replace it with wording from the claims ledger and style guide. |
@@ -31,6 +41,8 @@ This playbook does not promote claims. It narrows or aligns documentation until 
 | Subsystem landing-page drift | A subsystem page omits current posture, evidence spine, validation, non-claims, stop signals, or mirrors. | Restore the required shape from the subsystem documentation standard. |
 | Validation drift | A guard fails because the docs and expected public posture disagree. | Fix the docs or mirrors; do not edit the guard for convenience. |
 | Stale evidence | A record relies on older evidence contradicted by newer status. | Demote the public wording to the latest supported status. |
+| Freshness or lifecycle drift | A stale, superseded, archived, planning, draft, local-only, no-effect, report-only, or blocked record drives public wording as if it were current authority. | Apply the freshness lifecycle policy, add a lifecycle boundary or supersession block, then align public mirrors. |
+| Impact-radius drift | A change affected reader understanding but only the touched file was reviewed, or a local-only edit was expanded mechanically without a claim reason. | Apply the impact radius guide, identify missed or unnecessary surfaces, then align only the surfaces whose reader-facing claim changed. |
 
 ## Response Order
 
@@ -38,14 +50,18 @@ When drift appears:
 
 1. Read the public surface that contains the questionable wording.
 2. Find the source record through [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md).
-3. Check allowed and blocked wording in [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
-4. Check terminology in [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
-5. Score broad surface health with [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) when the drift affects findability, reader routes, public/source consistency, security posture, platform posture, estimates, or subsystem landing pages.
-6. Compare subsystem landing-page drift against [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md).
-7. Select validation commands with [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
-8. Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) if public wording, mirrors, estimates, platform posture, security wording, or non-claims change.
-9. Update only the surfaces whose reader-facing claim changed.
-10. Run the selected validation checks.
+3. Apply [`DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md`](DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md) if records disagree.
+4. Apply [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) if stale, superseded, archived, planning, draft, local-only, no-effect, report-only, or blocked records are involved.
+5. Apply [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) when the change may have missed affected surfaces or touched unrelated mirrors.
+6. Check allowed and blocked wording in [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
+7. Check terminology in [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
+8. Score broad surface health with [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) when the drift affects findability, reader routes, public/source consistency, security posture, platform posture, estimates, freshness, lifecycle state, impact radius, or subsystem landing pages.
+9. Compare subsystem landing-page drift against [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md).
+10. Compare static HTML drift against [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md).
+11. Select validation commands with [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
+12. Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) if public wording, mirrors, estimates, platform posture, security wording, lifecycle state, impact radius, stale handling, supersession, or non-claims change.
+13. Update only the surfaces whose reader-facing claim changed.
+14. Run the selected validation checks.
 
 ## Demotion Rule
 
@@ -72,11 +88,13 @@ Examples:
 | Situation | Action | Validation |
 | --- | --- | --- |
 | Public page is broader than status. | Narrow the public page to the status record. | Public-entry guard and link check. |
+| Static HTML is broader than source Markdown. | Narrow the HTML to the source record and preserve a source link. | HTML href check, local link check, and public-entry guard. |
 | Status record is broader than implementation evidence. | Narrow the status record and public mirrors. | Exact source guard plus public-entry guard. |
 | Estimate mirror differs. | Update mirror from the estimate source record. | Estimate source-alignment guard. |
 | Platform docs omit local-only status. | Add local-only and no-approval wording. | Platform workflow guard plus exact platform guard. |
 | Security docs overpromise. | Restore non-claims and source-tracked wording. | Exact security or threat-model guard. |
 | Subsystem landing page omits the evidence spine. | Restore current posture, evidence spine, validation, non-claims, stop signals, and mirrors from the subsystem standard. | Exact subsystem guard plus local link check and public-entry guard. |
+| Superseded or stale record drives public wording. | Add a lifecycle boundary or supersession block, route to current authority, and demote public wording if needed. | Local link check, review packet outcome, and selected public-entry guard. |
 | Source record is missing. | Remove or block the claim until the source record exists. | Link check and review packet outcome. |
 | Validation command is missing. | Mark the claim blocked for missing validation. | Review packet outcome `blocked_missing_validation`. |
 

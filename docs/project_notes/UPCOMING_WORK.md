@@ -25,17 +25,21 @@ Latest Lat pipeline first-clause evidence propagation note: 2026-05-25 CDT
 Latest Lat LIR edge-kind evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR no-effect evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR module-summary evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR module label evidence propagation note: 2026-05-27 CDT
 Latest Lat LIR source-span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR node-kind evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-node evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first-node topology evidence propagation note: 2026-05-27 CDT
 Latest Lat LIR first-node span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-node evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-node topology evidence propagation note: 2026-05-27 CDT
 Latest Lat LIR first transition-node span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge endpoint evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge endpoint payload evidence propagation note: 2026-05-27 CDT
+Latest Lat LIR first transition-source edge endpoint topology evidence propagation note: 2026-05-27 CDT
 Latest Lat LIR first transition-source edge endpoint span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge span evidence propagation note: 2026-05-26 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
@@ -57,9 +61,9 @@ Latest Seal runtime handoff predecessor status alignment note: 2026-05-26 CDT
 Latest Seal runtime handoff report status/public-entry note: 2026-05-25 CDT
 Latest Seal report envelope status/public-entry note: 2026-05-25 CDT
 Latest Seal signature request predecessor status alignment note: 2026-05-25 CDT
-Latest Seal signing authorization predecessor status alignment note: 2026-05-25 CDT
-Latest Seal signer handoff predecessor status alignment note: 2026-05-25 CDT
-Latest Seal signer invocation predecessor status alignment note: 2026-05-25 CDT
+Latest Seal signing authorization predecessor status alignment note: 2026-05-27 CDT
+Latest Seal signer handoff predecessor status alignment note: 2026-05-27 CDT
+Latest Seal signer invocation predecessor status alignment note: 2026-05-27 CDT
 Latest Seal signing operation predecessor status alignment note: 2026-05-26 CDT
 Latest Seal key-handling predecessor status alignment note: 2026-05-26 CDT
 Latest Seal key-material predecessor status alignment note: 2026-05-26 CDT
@@ -82,17 +86,21 @@ Latest Lat pipeline first-clause evidence propagation note: 2026-05-25 CDT
 Latest Lat LIR edge-kind evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR no-effect evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR module-summary evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR module label evidence propagation note: 2026-05-27 CDT
 Latest Lat LIR source-span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR node-kind evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-node evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first-node topology evidence propagation note: 2026-05-27 CDT
 Latest Lat LIR first-node span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-node evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-node topology evidence propagation note: 2026-05-27 CDT
 Latest Lat LIR first transition-node span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge endpoint evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge endpoint payload evidence propagation note: 2026-05-27 CDT
+Latest Lat LIR first transition-source edge endpoint topology evidence propagation note: 2026-05-27 CDT
 Latest Lat LIR first transition-source edge endpoint span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge span evidence propagation note: 2026-05-26 CDT
 Latest Seal capability metadata report surface status note: 2026-05-26 CDT
@@ -108,6 +116,9 @@ Latest Seal local capability registry schema implementation note: 2026-05-26 CDT
 Latest Seal local capability registry schema surface/status note: 2026-05-26 CDT
 Latest Seal Panel dashboard planning checkpoint note: 2026-05-26 CDT
 Latest Seal Panel dashboard view-model contract note: 2026-05-27 CDT
+Latest Seal Panel dashboard view-model implementation plan note: 2026-05-27 CDT
+Latest Seal Panel dashboard view-model implementation note: 2026-05-27 CDT
+Latest Seal Panel dashboard view-model surface/status note: 2026-05-27 CDT
 
 ## Purpose
 
@@ -137,11 +148,11 @@ Latticra Seal report envelope status/public-entry alignment is complete for the 
 
 Latticra Seal signature request predecessor status alignment is complete for the existing metadata-only signature request status surface. It does not add signing, signature verification, object sealing, runtime handoff execution, capability enforcement, runtime authority, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
 
-Latticra Seal signing authorization predecessor status alignment is complete for the existing metadata-only signing authorization status surface. It does not add signing, signature verification, object sealing, runtime handoff execution, capability enforcement, runtime authority, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
+Latticra Seal signing authorization predecessor status alignment is complete for the existing metadata-only signing authorization status surface with crypto graduation evidence preserved when present. It does not add signing, signature verification, object sealing, runtime handoff execution, capability enforcement, runtime authority, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
 
-Latticra Seal signer handoff predecessor status alignment is complete for the existing metadata-only signer handoff status surface. It does not add signing, signature verification, signer invocation behavior, object sealing, runtime handoff execution, capability enforcement, runtime authority, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
+Latticra Seal signer handoff predecessor status alignment is complete for the existing metadata-only signer handoff status surface with crypto graduation evidence preserved when present. It does not add signing, signature verification, signer invocation behavior, object sealing, runtime handoff execution, capability enforcement, runtime authority, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
 
-Latticra Seal signer invocation predecessor status alignment is complete for the existing metadata-only signer invocation status surface. It does not add signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, capability enforcement, runtime authority, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
+Latticra Seal signer invocation predecessor status alignment is complete for the existing metadata-only signer invocation status surface with crypto graduation evidence preserved when present. It does not add signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, capability enforcement, runtime authority, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
 
 Latticra Seal signing operation predecessor status alignment is complete for the existing metadata-only signing operation status surface. It does not add signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, capability enforcement, runtime authority, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
 
@@ -181,22 +192,28 @@ Latticra Seal Panel dashboard planning checkpoint is complete for the future rea
 
 Latticra Seal Panel dashboard view-model contract is complete for the future read-only operator dashboard surface. It does not add dashboard view-model implementation, report file loading, host scanning, Panel UI rendering, tool execution, policy enforcement, capability enforcement, cryptographic verification, signature verification, runtime execution, runtime authority, effect execution, host behavior, network behavior, or production enforcement claims.
 
+Latticra Seal Panel dashboard view-model implementation plan is complete for the future no-effect C view-model slice. It does not add C implementation, dashboard view-model implementation, report file loading, host scanning, Panel UI rendering, tool execution, policy enforcement, capability enforcement, cryptographic verification, signature verification, runtime execution, runtime authority, effect execution, host behavior, network behavior, or production enforcement claims.
+
+Latticra Seal Panel dashboard view-model implementation is complete for the bounded no-effect C view-model slice. It does not add Panel UI rendering, report file loading, host scanning, tool execution, policy enforcement, capability enforcement, cryptographic verification, signature verification, runtime execution, runtime authority, effect execution, host behavior, network behavior, or production enforcement claims.
+
+Latticra Seal Panel dashboard view-model surface/status is complete for the deterministic local report-only dashboard surface. It does not add Panel UI rendering, report file loading, host scanning, tool execution, policy enforcement, capability enforcement, cryptographic verification, signature verification, runtime execution, runtime authority, effect execution, host behavior, network behavior, or production enforcement claims.
+
 ## Latest completed planning slice
 
 ```text
-Latticra Seal Panel dashboard view-model contract
+Latticra Seal Panel dashboard view-model surface/status
 ```
 
 Purpose completed:
 
 ```text
-define exact future dashboard row fields, required row IDs, missing/malformed/stale source behavior, and denied-by-default display semantics while preserving no dashboard view model implementation, no report loading, no host scanning, no Panel UI rendering, no network behavior, no capability enforcement, no effects, and no runtime authority
+expose deterministic local report-only dashboard rows while preserving no Panel UI rendering, no report loading, no host scanning, no network behavior, no capability enforcement, no effects, and no runtime authority
 ```
 
 ## Latest completed implementation slice
 
 ```text
-Latticra Seal local capability registry schema report surface/status checkpoint
+Latticra Seal Panel dashboard view-model surface/status
 ```
 
 Purpose completed:
@@ -215,6 +232,54 @@ Purpose completed:
 
 ```text
 add bounded local schema records, deterministic validation, a default descriptive fixture entry, and negative-case invariants while preserving no registry loader, no registry file access, no tool execution, no host mutation, no network behavior, no capability enforcement, no effects, and no runtime authority
+```
+
+## Earlier implementation slice
+
+```text
+Lat LIR first transition-source edge endpoint topology evidence propagation
+```
+
+Purpose completed:
+
+```text
+copy the first Lat-specific LIR transition-source edge endpoint node parent indices, first-child indices, and child counts into runtime-boundary records/reports so boundary evidence keeps endpoint graph topology visible for the first Lat-derived transition-source relationship while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Earlier implementation slice
+
+```text
+Lat LIR first transition-node topology evidence propagation
+```
+
+Purpose completed:
+
+```text
+copy the first Lat-specific LIR transition node parent index, first-child index, and child count into runtime-boundary records/reports so boundary evidence keeps the first Lat-derived transition node graph topology visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Earlier implementation slice
+
+```text
+Lat LIR first-node topology evidence propagation
+```
+
+Purpose completed:
+
+```text
+copy the first Lat-specific LIR node parent index, first-child index, and child count into runtime-boundary records/reports so boundary evidence keeps the first Lat-derived node graph topology visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Earlier implementation slice
+
+```text
+Lat LIR module label evidence propagation
+```
+
+Purpose completed:
+
+```text
+copy Lat-specific LIR card, effect, and boundary labels into runtime-boundary records/reports so boundary evidence keeps the module no-effect posture labels visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
 ## Earlier implementation slice
@@ -772,6 +837,8 @@ implement bounded no-effect Lat model normalization after semantic validation, w
 ## Earlier Lat implementation slice
 
 ```text
+Latticra Seal future key parsing implementation contract
+Latticra Seal future key parsing implementation plan
 Latticra Seal bounded no-effect key parsing implementation
 ```
 
@@ -1273,7 +1340,7 @@ runtime_authority_granted=0
 completion_estimate_review_required=0
 ```
 
-Current estimate table source alignment is the source-map cleanup for the public estimate table. Current estimate mathematical rebase is the latest planning-estimate update for that table, moving the overall value to a weighted 45% after Nadia Stage-43 prompt-evaluation release-receipt contract-chain evidence, kernel lifecycle scheduler-credit/scheduler-selection-ready evidence, vulnerability-management release-gate baseline coverage, and documentation review/style/cohesion route coverage while changing no implementation behavior, product-security posture, public readiness, product readiness, or runtime authority.
+Current estimate table source alignment is the source-map cleanup for the public estimate table. Current estimate mathematical rebase is the latest planning-estimate update for that table, moving the overall value to a weighted 45% after Panel signed-updater fixture and Seal dashboard view-model evidence, Nadia Stage-43 prompt-evaluation release-receipt contract-chain evidence, kernel lifecycle scheduler-credit/scheduler-selection-ready evidence, vulnerability-management release-gate baseline coverage, documentation review/style/cohesion route coverage, and visual theorem/presentation foundation coverage while changing no implementation behavior, product-security posture, public readiness, product readiness, or runtime authority.
 
 Recommended next slice:
 

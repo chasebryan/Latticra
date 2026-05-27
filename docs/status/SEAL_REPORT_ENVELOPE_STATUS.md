@@ -147,4 +147,4 @@ It does not add cryptographic signing, signature verification, private-key handl
 
 No completion-estimate review is required from this status/public-entry alignment.
 
-The next downstream Latticra Seal checkpoint is signature request or policy decision report propagation from ready crypto-graduation-gated sealed report-envelope metadata, signature request status/public-entry alignment, or another narrow status/index alignment follow-up. Any future work must remain no-signing unless separately contracted, implemented, and guarded.
+The signature request status/public-entry alignment now provides the predecessor for the next downstream Latticra Seal checkpoint: signing authorization or policy decision report propagation from ready crypto-graduation-gated signature request metadata, signing authorization status/workflow guard alignment, or another narrow status/index alignment follow-up. Any future work must remain no-signing unless separately contracted, implemented, and guarded.

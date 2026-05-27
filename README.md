@@ -32,7 +32,7 @@ Planning estimates are not release promises, product-readiness metrics, or secur
 | Edge edition checkpoint | `v0.1.1edge` |
 | Current public estimate | Roughly 45% overall system planning estimate |
 | Estimate source | Current public estimate table below, mirrored from `STATUS.md` and `docs/status/CURRENT_STATUS.md` |
-| Foundation documents and contracts | Mature relative to implementation; around 94% planning estimate |
+| Foundation documents and contracts | Mature relative to implementation; around 95% planning estimate |
 | Public documentation posture | Strong but still evolving; around 92% planning estimate |
 | Latticra Seal | Report-only runtime gate path through local evidence, receipts, and denied-by-default boundaries |
 | Product readiness | Early; no production platform claimed |
@@ -46,10 +46,10 @@ Current public estimate table, as summarized by [`STATUS.md`](STATUS.md) and [`d
 | --- | --- |
 | Overall Latticra system | 45% |
 | Latticra Seal / local evidence layer | 39% |
-| Latticra Panel / local control surface | 31% |
+| Latticra Panel / local control surface | 32% |
 | Nadia offline AI foundation | 75% |
 | L-UI parser / AST / string foundation | 87% |
-| Foundation documents and contracts | 94% |
+| Foundation documents and contracts | 95% |
 | Public documentation posture | 92% |
 | Strategy/status/funding framework | 63% |
 | Lat / Latticra Programming Language | 27% |
@@ -75,6 +75,8 @@ The latest estimate hold review is [`docs/status/COMPLETION_ESTIMATE_REVIEW_AFTE
 | Install, run, update, or remove the current user-local Panel | [Quick Start Cheat Sheet](docs/QUICK_START_CHEATSHEET.md) |
 | Understand the current public posture | [Status](STATUS.md) and [current status record](docs/status/CURRENT_STATUS.md) |
 | Browse the full documentation set | [Documentation Hub](docs/README.md) |
+| Choose a reading path by role | [Documentation Reader Journey Map](docs/DOCUMENTATION_READER_JOURNEY_MAP.md) |
+| Read the generated v0.1.0 reference manual | [Reference Manual](docs/latticra-reference-manual/README.md) |
 | Read the project handbook | [The Latticra System Substrate](docs/latticra-system-substrate/README.md) |
 | Review the main evidence and architecture index | [Foundation Index](docs/FOUNDATION_INDEX.md) |
 | Use the guarded local Panel workbench | [Latticra Panel](installer/README.md) |
@@ -133,7 +135,7 @@ Latticra Panel is the GUI-first local installer and first-run control workbench 
 | Nucleus and Runtime Boundary | Report-only task boundaries and denied-by-default classification | [supervisor architecture](docs/SUPERVISOR_ARCHITECTURE.md), [runtime boundary contract](docs/RUNTIME_BOUNDARY_CONTRACT.md) |
 | Nadia offline AI | Contract-only local AI foundation records; no model execution or tool authority | [Nadia foundation](docs/NADIA_OFFLINE_AI_FOUNDATION.md), [Nadia status index](docs/status/README.md) |
 | Platform packaging lanes | Local-only Fedora, Ubuntu, Debian, openSUSE, FreeBSD, and OpenBSD package/port draft records | [Fedora](packaging/fedora/README.md), [Ubuntu](packaging/ubuntu/README.md), [Debian](packaging/debian/README.md), [openSUSE](packaging/opensuse/README.md), [FreeBSD](packaging/freebsd/README.md), [OpenBSD](packaging/openbsd/README.md) |
-| Kernel lifecycle evidence | No-effect kernel lifecycle path reaches `runtime-entry-frame-ready` with guarded scheduler run-entry, runtime-entry admission, and runtime-entry frame metadata | [kernel lifecycle status](docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md), [runtime entry frame seed](docs/KERNEL_RUNTIME_ENTRY_FRAME_SEED.md) |
+| Kernel lifecycle evidence | No-effect kernel lifecycle path reaches `runtime-entry-address-space-view-ready` with guarded scheduler run-entry, runtime-entry admission, frame, register-view, stack-view, and address-space-view metadata | [kernel lifecycle status](docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md), [runtime entry address-space-view seed](docs/KERNEL_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_SEED.md) |
 
 <details>
 <summary>Guard compatibility appendix: status markers and platform evidence</summary>
@@ -188,8 +190,11 @@ nadia_stage_32_prompt_evaluation_result_review_contract_present=1
 latticra-nadia prompt-evaluation-result-review
 nadia_stage_33_prompt_evaluation_result_disposition_contract_present=1
 latticra-nadia prompt-evaluation-result-disposition
-nadia_stage_48_contract_only_foundation_present=1
+nadia_stage_51_contract_only_foundation_present=1
 latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
 nadia commands
 latticra-nadia commands
 ```
@@ -219,9 +224,15 @@ kernel_scheduler_activation_guard_present=1
 kernel_scheduler_run_entry_guard_present=1
 kernel_runtime_entry_admission_guard_present=1
 kernel_runtime_entry_frame_guard_present=1
+kernel_runtime_entry_register_view_guard_present=1
+kernel_runtime_entry_stack_view_guard_present=1
+kernel_runtime_entry_address_space_view_guard_present=1
 kernel_process_table_guard_present=1
 kernel_syscall_table_guard_present=1
-final_state=runtime-entry-frame-ready
+final_state=runtime-entry-address-space-view-ready
+runtime_entry_address_space_view_allowed=0
+runtime_entry_stack_view_allowed=0
+runtime_entry_register_view_allowed=0
 runtime_entry_frame_allowed=0
 runtime_entry_admission_allowed=0
 runtime_entry_allowed=0
@@ -246,6 +257,9 @@ docs/KERNEL_SCHEDULER_ACTIVATION_SEED.md
 docs/KERNEL_SCHEDULER_RUN_ENTRY_SEED.md
 docs/KERNEL_RUNTIME_ENTRY_ADMISSION_SEED.md
 docs/KERNEL_RUNTIME_ENTRY_FRAME_SEED.md
+docs/KERNEL_RUNTIME_ENTRY_REGISTER_VIEW_SEED.md
+docs/KERNEL_RUNTIME_ENTRY_STACK_VIEW_SEED.md
+docs/KERNEL_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_SEED.md
 docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 ```
 
@@ -263,16 +277,31 @@ debian_freebsd_openbsd_package_publication_non_claim_review_contract_present=1
 debian_freebsd_openbsd_package_validation_promotion_blocker_matrix_contract_present=1
 debian_freebsd_openbsd_package_build_evidence_intake_denial_contract_present=1
 debian_freebsd_openbsd_package_build_evidence_intake_denial_review_contract_present=1
+debian_freebsd_openbsd_package_build_evidence_intake_denial_disposition_contract_present=1
+debian_freebsd_openbsd_package_build_evidence_intake_denial_disposition_closeout_contract_present=1
+debian_freebsd_openbsd_package_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1
 package_build_gate_state=closed-no-effect
 validation_promotion_blocker_matrix_state=blocked-no-effect
 build_evidence_intake_denial_state=denied-no-effect
 build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_disposition_state=closed-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect
 debian_build_allowed=0
 freebsd_build_allowed=0
 openbsd_build_allowed=0
 platform_build_evidence_intake_allowed=0
 platform_build_evidence_intake_denied=1
 denial_review_present=1
+denial_disposition_present=1
+denial_disposition_closeout_present=1
+denial_archive_gate_present=1
+denial_archive_gate_state=closed-no-effect
+denial_closed=1
+denial_archived=0
+denial_archive_allowed=0
+denial_archive_record_write_allowed=0
+denial_archive_record_written=0
 denial_re_request_allowed=0
 single_platform_build_lane_opened=0
 platform_build_evidence_accepted=0
@@ -286,7 +315,7 @@ openbsd_validation_result_promoted=0
 package_readiness_claimed=0
 ```
 
-Relevant Debian, FreeBSD, and OpenBSD records: [source archive](docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md), [input handoff](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md), [build gate](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md), [build environment](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_ENVIRONMENT_CONTRACT.md), [artifact naming](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_ARTIFACT_NAMING_CONTRACT.md), [payload inspection](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md), [install/remove transcript](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md), [publication non-claim review](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md), [validation promotion blocker matrix](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md), [build-evidence intake denial](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md), and [build-evidence intake denial review](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md).
+Relevant Debian, FreeBSD, and OpenBSD records: [source archive](docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md), [input handoff](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md), [build gate](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md), [build environment](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_ENVIRONMENT_CONTRACT.md), [artifact naming](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_ARTIFACT_NAMING_CONTRACT.md), [payload inspection](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md), [install/remove transcript](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md), [publication non-claim review](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md), [validation promotion blocker matrix](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md), [build-evidence intake denial](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md), [build-evidence intake denial review](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md), [build-evidence intake denial disposition](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md), [build-evidence intake denial disposition closeout](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md), and [build-evidence intake denial disposition closeout archive gate](docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md).
 
 ## Documentation entry points
 
@@ -302,7 +331,7 @@ Relevant Debian, FreeBSD, and OpenBSD records: [source archive](docs/DEBIAN_FREE
 
 ## openSUSE integration and maintenance
 
-openSUSE prerequisites: this lane has the same purpose as the Fedora and Ubuntu tracks, but stays local-only for openSUSE RPM integration and maintenance. It records package-shape, lint, source archive, build-gate, environment, artifact, payload, install/remove, OBS non-claim, and validation-promotion blocker evidence without creating RPM artifacts, running OBS publication, accepting build evidence, or claiming an official openSUSE package.
+openSUSE prerequisites: this lane has the same purpose as the Fedora and Ubuntu tracks, but stays local-only for openSUSE RPM integration and maintenance. It records package-shape, lint, source archive, build-gate, environment, artifact, payload, install/remove, OBS non-claim, validation-promotion blocker, build-evidence intake denial, denial review, denial disposition, and denial disposition closeout evidence without creating RPM artifacts, running OBS publication, accepting build evidence, or claiming an official openSUSE package.
 
 ```text
 docs/OPENSUSE_DEVELOPER_WORKFLOW.md
@@ -322,6 +351,9 @@ docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
 docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
 docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
+docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md
+docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md
 docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 packaging/opensuse/README.md
 ```
@@ -343,6 +375,9 @@ sh scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
 sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
 sh scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh
 sh scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh
+sh scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh
+sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-contract.sh
+sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh
 ```
 
 ## Fedora and local RPM work
@@ -391,6 +426,23 @@ publication_review_reviewed=0
 publication_review_approved_by_validator=0
 repeatability_evidence_published_by_validator=0
 promotion_allowed_by_publication_review_validator_alone=0
+fedora_vm_cli_payload_repeatability_publication_receipt_template_present=1
+publication_receipt_template_mode=no-effect-template
+publication_receipt_template_complete=0
+fedora_vm_cli_payload_repeatability_publication_receipt_validator_present=1
+publication_receipt_validation_mode=no-effect-validation
+publication_receipt_candidate_valid=0
+publication_receipt_reviewed=0
+publication_receipt_accepted_by_validator=0
+fedora_vm_cli_payload_repeatability_publication_receipt_acceptance_contract_present=1
+fedora_vm_cli_payload_repeatability_publication_receipt_acceptance_template_present=1
+publication_receipt_acceptance_template_mode=no-effect-template
+publication_receipt_acceptance_template_complete=0
+publication_receipt_accepted=0
+publication_receipt_written_by_validator=0
+promotion_allowed_by_publication_receipt_validator_alone=0
+publication_receipt_written=0
+publication_receipt_attached=0
 repeatability_evidence_publication_requested=0
 operator_publication_review_completed=0
 repeatability_evidence_publication_approved=0
@@ -410,7 +462,7 @@ The current local spec builds a no-effect CLI binary from `src/latticra_cli.c` a
 
 A reviewed disposable Fedora VM CLI payload validation transcript has been accepted for the bounded no-effect payload. That evidence covers local RPM build, package installation inside a disposable Fedora VM, CLI `--status`, `--version`, `--report`, invalid-command validation, RPM removal, and post-removal absence proof.
 
-The repeatability evidence acceptance contract is present, but no evidence status is written or accepted. The repeatability evidence status template is present and does not write or accept evidence. The repeatability evidence status review validator is present and does not write or promote evidence. The repeatability evidence publication gate is present and does not publish evidence. The repeatability publication review template is present and does not approve or publish evidence. The repeatability publication review validator is present and does not approve or publish evidence.
+The repeatability evidence acceptance contract is present, but no evidence status is written or accepted. The repeatability evidence status template is present and does not write or accept evidence. The repeatability evidence status review validator is present and does not write or promote evidence. The repeatability evidence publication gate is present and does not publish evidence. The repeatability publication review template is present and does not approve or publish evidence. The repeatability publication review validator is present and does not approve or publish evidence. The repeatability publication receipt template is present and does not write a receipt or publish evidence. The repeatability publication receipt validator is present and does not accept a receipt or publish evidence. The repeatability publication receipt acceptance contract is present and does not accept a receipt or publish evidence. The repeatability publication receipt acceptance template is present and does not write or accept a receipt.
 
 This supports `host_install_ready_for_cli_payload=1` only for the bounded CLI payload above. It does not claim production installer readiness, Fedora approval, Fedora distribution readiness, immutable Fedora readiness, daily-driver readiness, security capability, update safety, recovery safety, sandboxing, malware prevention, ransomware prevention, or operating-system replacement readiness.
 
@@ -432,6 +484,10 @@ docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_EVIDENCE_STATUS_REVIEW_VALIDATOR.md
 docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_EVIDENCE_PUBLICATION_GATE.md
 docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_REVIEW_TEMPLATE.md
 docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_REVIEW_VALIDATOR.md
+docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_TEMPLATE.md
+docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_VALIDATOR.md
+docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_ACCEPTANCE_CONTRACT.md
+docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_ACCEPTANCE_TEMPLATE.md
 docs/status/FEDORA_VM_CLI_PAYLOAD_VALIDATION_EVIDENCE_STATUS.md
 docs/status/FEDORA_VM_CLI_PAYLOAD_README_ALIGNMENT_STATUS.md
 docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_RUNNER_STATUS.md
@@ -444,6 +500,10 @@ docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_EVIDENCE_STATUS_REVIEW_VALIDATOR
 docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_EVIDENCE_PUBLICATION_GATE_STATUS.md
 docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_REVIEW_TEMPLATE_STATUS.md
 docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_REVIEW_VALIDATOR_STATUS.md
+docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_TEMPLATE_STATUS.md
+docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_VALIDATOR_STATUS.md
+docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_ACCEPTANCE_CONTRACT_STATUS.md
+docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_ACCEPTANCE_TEMPLATE_STATUS.md
 ```
 
 ### Ubuntu prerequisites
@@ -455,6 +515,9 @@ sh scripts/test-ubuntu-build-lane.sh
 sh scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh
 sh scripts/test-ubuntu-launchpad-build-result-evidence-contract.sh
 sh scripts/test-ubuntu-publication-non-claim-review-contract.sh
+sh scripts/test-ubuntu-ppa-archive-publication-promotion-blocker-matrix-contract.sh
+sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-contract.sh
+sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh
 ```
 
 ## Ubuntu and local deb work
@@ -470,6 +533,26 @@ ubuntu_launchpad_build_result_evidence_contract_present=1
 ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence
 ubuntu_publication_non_claim_review_contract_present=1
 ubuntu_publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence
+ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1
+ubuntu_publication_promotion_blocker_matrix_contract_present=1
+publication_promotion_blocker_matrix_state=blocked-no-effect
+ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1
+ubuntu_publication_evidence_intake_denial_contract_present=1
+ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1
+ubuntu_publication_evidence_intake_denial_review_contract_present=1
+publication_evidence_intake_denial_state=denied-no-effect
+publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+publication_evidence_denial_review_present=1
+publication_evidence_denial_review_decision=uphold-denial
+publication_evidence_denial_re_request_allowed=0
+ubuntu_publication_evidence_intake_denied=1
+ubuntu_publication_evidence_intake_denial_upheld=1
+ubuntu_publication_evidence_intake_allowed=0
+ubuntu_publication_evidence_intake_requested=0
+ubuntu_publication_transcript_intake_accepted=0
+ubuntu_ppa_creation_evidence_accepted=0
+publication_transcript_intake_accepted=0
+ppa_creation_evidence_accepted=0
 ubuntu_ppa_archive_publication_gate_contract_present=1
 ubuntu_ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence
 deb_removed_from_host=0
@@ -484,6 +567,10 @@ launchpad_binary_artifact_listing_recorded=0
 ubuntu_publication_non_claim_review_unblocked=0
 publication_scope_recorded=0
 publication_claims_reviewed=0
+ubuntu_publication_promotion_blocker_matrix_unblocked=0
+ubuntu_publication_promotion_blocked=1
+ubuntu_platform_publication_evidence_accepted=0
+ubuntu_publication_result_promoted=0
 ubuntu_publication_gate_unblocked=0
 ```
 
@@ -491,11 +578,20 @@ Ubuntu records: [docs/UBUNTU_DEVELOPER_WORKFLOW.md](docs/UBUNTU_DEVELOPER_WORKFL
 
 Publication non-claim review: [docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md](docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md).
 
+Publication promotion blocker matrix: [docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md](docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md).
+
+Publication evidence intake denial: [docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md](docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md).
+
+Publication evidence intake denial review: [docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md](docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md).
+
 ## macOS Reset/Uninstall Markers
 
 ```sh
 sh scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-contract.sh
 sh scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-contract.sh
+sh scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-contract.sh
+sh scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-contract.sh
+sh scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review-contract.sh
 ```
 
 ```text
@@ -517,6 +613,14 @@ live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_clos
 live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_deletion_enabled=0
 live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_audit_review_opened=0
 docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_CONTRACT.md
+macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_contract_present=1
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_contract_state=reviewed-no-effect-closeout-audit-review-disposition-closeout-audit
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_stdout_only=1
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_file_write_enabled=0
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_dispatch_enabled=0
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_deletion_enabled=0
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_opened=0
+docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_CONTRACT.md
 ```
 
 ## Security Baseline Markers
@@ -541,6 +645,7 @@ backup_recovery_resilience_baseline_present=1
 secure_configuration_change_management_baseline_present=1
 network_exposure_remote_access_baseline_present=1
 data_classification_protection_baseline_present=1
+ai_agentic_automation_security_baseline_present=1
 zero_trust_runtime_authority_baseline_present=1
 zero_trust_runtime_authority_guard_present=1
 per_request_authorization_required=1
@@ -554,6 +659,9 @@ These compact markers preserve the guarded Seal README/status-row assertions aft
 ```text
 | Latticra Seal | Report-only runtime gate path, sealed report-envelope metadata/status, signature/signing/key/public-key/bounded-key parsing metadata/status, metadata-only verification policy/status, metadata-only verification receipt/status, metadata-only unverified receipt/status, metadata-only denied capability gate/status, metadata-only denied effect decision/status, inactive metadata-only runtime handoff/status, metadata-only status rollup/status, report-only agentic automation security metadata/status/report surface/public-entrypoint alignment, report-only parameter schema metadata/report surface/status-public-entry alignment, report-only policy decision metadata/status/report-surface public-entry alignment, and core negative-test evidence for AI-era tool-boundary planning; no production enforcement |
 Trust-boundary, request-boundary, policy-boundary, tool-boundary, and crypto-profile planning.
+SEAL_CORE_EVIDENCE_STATUS.md
+SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md
+Latticra Seal now has a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning.
 ```
 
 ## Seal Status Markers
@@ -579,11 +687,26 @@ docs/LATTICRA_SEAL_REPORT_ENVELOPE_IMPLEMENTATION.md
 docs/status/SEAL_REPORT_ENVELOPE_STATUS.md
 SEAL_SIGNATURE_REQUEST_STATUS.md
 seal_signature_request_status_present=1
+signature_request_crypto_graduation_gate_present=1
+signature_request_crypto_graduation_gate_passed=1
+signature_request_standard_expectations_met=1
+signature_request_authority_promotion_allowed=0
 signature-request status record now ties that metadata-only checkpoint to the guarded report-envelope status predecessor
 SEAL_SIGNING_AUTHORIZATION_STATUS.md
+latticra_seal_signing_authorization_contract_present=1
+latticra_seal_signing_authorization_metadata_present=1
 latticra_seal_signing_authorization_status_present=1
+seal_signing_authorization_contract_present=1
+seal_signing_authorization_metadata_present=1
 seal_signing_authorization_status_present=1
+signing_authorization_crypto_graduation_gate_present=1
+signing_authorization_crypto_graduation_gate_passed=1
+signing_authorization_standard_expectations_met=1
+signing_authorization_authority_promotion_allowed=0
 signing-authorization status record now ties that metadata-only checkpoint to the guarded signature-request status predecessor
+signing-authorization status record now preserves crypto graduation evidence from the guarded signature-request predecessor without adding signing authority
+LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md
+LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md
 LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md
 LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md
 LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md
@@ -605,11 +728,21 @@ seal_signing_operation_contract_present=1
 SEAL_SIGNER_HANDOFF_STATUS.md
 latticra_seal_signer_handoff_status_present=1
 signer-handoff status record now ties that metadata-only checkpoint to the guarded signing-authorization status predecessor
+signer-handoff status record now preserves crypto graduation evidence from the guarded signing-authorization predecessor without invoking a signer
+signer_handoff_crypto_graduation_gate_present=1
+signer_handoff_crypto_graduation_gate_passed=1
+signer_handoff_standard_expectations_met=1
+signer_handoff_authority_promotion_allowed=0
 seal_signer_handoff_status_present=1
 LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
 latticra_seal_signing_operation_metadata_present=1
 seal_signing_operation_metadata_present=1
 signer-invocation status record now ties that metadata-only checkpoint to the guarded signer-handoff status predecessor
+signer-invocation status record now preserves crypto graduation evidence from the guarded signer-handoff predecessor without invoking a signer
+signer_invocation_crypto_graduation_gate_present=1
+signer_invocation_crypto_graduation_gate_passed=1
+signer_invocation_standard_expectations_met=1
+signer_invocation_authority_promotion_allowed=0
 SEAL_SIGNING_OPERATION_STATUS.md
 LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md
 LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
@@ -639,7 +772,13 @@ seal_key_material_status_present=1
 seal_key_material_metadata_present=1
 SEAL_PUBLIC_KEY_PARSING_STATUS.md
 LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md
+LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_CONTRACT.md
+LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md
 LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md
+latticra_seal_future_key_parsing_implementation_contract_present=1
+latticra_seal_future_key_parsing_implementation_plan_present=1
+seal_future_key_parsing_implementation_contract_present=1
+seal_future_key_parsing_implementation_plan_present=1
 public-key parsing status record now ties that metadata-only checkpoint to the guarded key-material status predecessor
 SEAL_KEY_PARSING_STATUS.md
 SEAL_VERIFICATION_POLICY_STATUS.md
@@ -775,9 +914,27 @@ seal_status_rollup_metadata_present=1
 seal_status_rollup_status_present=1
 status_rollup_predecessor_runtime_handoff_status_present=1
 agentic automation security status record now ties that report-only automation checkpoint to the guarded status rollup status predecessor
+latticra_seal_agentic_automation_security_metadata_present=1
 latticra_seal_agentic_automation_security_status_present=1
+latticra_seal_agentic_automation_security_index_alignment_present=1
+latticra_seal_agentic_automation_security_report_surface_present=1
+latticra_seal_agentic_automation_security_public_entrypoint_alignment_present=1
 agentic_automation_security_predecessor_status_rollup_status_present=1
+seal_agentic_automation_security_metadata_present=1
 seal_agentic_automation_security_status_present=1
+seal_agentic_automation_security_index_alignment_present=1
+seal_agentic_automation_security_report_surface_present=1
+seal_agentic_automation_security_public_entrypoint_alignment_present=1
+report-only agentic automation security metadata
+operator-visible deterministic agentic automation security report surface
+docs/LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_CONTRACT.md
+docs/LATTICRA_SEAL_MCP_ALIGNMENT_PLAN.md
+docs/LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_IMPLEMENTATION.md
+docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_STATUS.md
+docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_INDEX_ALIGNMENT.md
+docs/LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_REPORT_SURFACE.md
+docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_REPORT_SURFACE_STATUS.md
+docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md
 parameter schema status record now ties that report-only parameter checkpoint to the guarded agentic automation security status predecessor
 latticra_seal_parameter_schema_contract_present=1
 latticra_seal_parameter_schema_metadata_present=1
@@ -827,11 +984,13 @@ latticra_seal_policy_decision_metadata_present=1
 latticra_seal_policy_decision_report_surface_present=1
 latticra_seal_policy_decision_report_surface_status_present=1
 latticra_seal_policy_decision_status_present=1
+latticra_seal_policy_decision_public_entrypoint_alignment_present=1
 seal_policy_decision_contract_present=1
 seal_policy_decision_metadata_present=1
 seal_policy_decision_report_surface_present=1
 seal_policy_decision_report_surface_status_present=1
 seal_policy_decision_status_present=1
+seal_policy_decision_public_entrypoint_alignment_present=1
 policy_decision_predecessor_signed_request_status_present=1
 report-only policy decision metadata
 operator-visible deterministic policy decision report surface
@@ -841,6 +1000,47 @@ docs/LATTICRA_SEAL_POLICY_DECISION_IMPLEMENTATION.md
 docs/LATTICRA_SEAL_POLICY_DECISION_REPORT_SURFACE.md
 docs/status/SEAL_POLICY_DECISION_STATUS.md
 docs/status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md
+docs/status/SEAL_POLICY_DECISION_PUBLIC_ENTRYPOINT_ALIGNMENT.md
+report-only runtime dry-run path with operator-visible denial reporting
+latticra_seal_runtime_dry_run_metadata_present=1
+latticra_seal_runtime_dry_run_report_surface_present=1
+seal_runtime_dry_run_metadata_present=1
+seal_runtime_dry_run_report_surface_present=1
+operator_visible_runtime_dry_run_report=1
+runtime_dry_run_status_index_alignment_present=1
+blocked_reason=default-deny-dry-run
+would_execute_tool=0
+would_read_host=0
+would_write_host=0
+would_use_network=0
+would_grant_runtime_authority=0
+runtime_authority_granted=0
+docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_CONTRACT.md
+docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_IMPLEMENTATION.md
+docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE.md
+docs/status/SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE_STATUS.md
+docs/status/SEAL_RUNTIME_DRY_RUN_STATUS_INDEX_ALIGNMENT.md
+docs/status/SEAL_RUNTIME_DRY_RUN_PUBLIC_ENTRYPOINT_ALIGNMENT.md
+report-only runtime dry-run and guarded allowlist candidate-denial paths
+latticra_seal_guarded_allowlist_metadata_present=1
+latticra_seal_guarded_allowlist_report_surface_present=1
+seal_guarded_allowlist_metadata_present=1
+seal_guarded_allowlist_report_surface_present=1
+operator_visible_guarded_allowlist_report=1
+guarded_allowlist_status_index_alignment_present=1
+known_fixture_tool_candidate_visible=1
+allow_candidate_grants_authority=0
+allow_candidate_executes_tool=0
+allow_candidate_reads_host=0
+allow_candidate_writes_host=0
+allow_candidate_uses_network=0
+docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_CONTRACT.md
+docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_IMPLEMENTATION_PLAN.md
+docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_IMPLEMENTATION.md
+docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_REPORT_SURFACE.md
+docs/status/SEAL_GUARDED_ALLOWLIST_REPORT_SURFACE_STATUS.md
+docs/status/SEAL_GUARDED_ALLOWLIST_STATUS_INDEX_ALIGNMENT.md
+docs/status/SEAL_GUARDED_ALLOWLIST_PUBLIC_ENTRYPOINT_ALIGNMENT.md
 latticra_seal_operator_receipt_report_status_present=1
 seal_operator_receipt_report_status_present=1
 operator_receipt_report_predecessor_policy_decision_status_present=1
@@ -877,6 +1077,29 @@ Seal Panel dashboard view-model contract
 Panel dashboard view-model contract status record now ties that future read-only view-model contract to the guarded Panel dashboard planning status predecessor
 docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT.md
 docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT_STATUS.md
+latticra_seal_panel_dashboard_view_model_implementation_plan_present=1
+latticra_seal_panel_dashboard_view_model_implementation_plan_status_present=1
+seal_panel_dashboard_view_model_implementation_plan_present=1
+seal_panel_dashboard_view_model_implementation_plan_status_present=1
+panel_dashboard_view_model_implementation_plan_predecessor_contract_status_present=1
+Seal Panel dashboard view-model implementation plan
+Panel dashboard view-model implementation-plan status record now ties that future no-effect C plan to the guarded view-model contract status predecessor
+docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN.md
+docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md
+latticra_seal_panel_dashboard_view_model_implementation_present=1
+seal_panel_dashboard_view_model_implementation_present=1
+Seal Panel dashboard view-model implementation
+Panel dashboard view-model implementation now maps caller-provided report strings into fixed-capacity denied-by-default rows without Panel UI, report loading, host scanning, network behavior, effects, or runtime authority
+docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md
+latticra_seal_panel_dashboard_view_model_surface_present=1
+latticra_seal_panel_dashboard_view_model_status_present=1
+seal_panel_dashboard_view_model_status_present=1
+seal_panel_dashboard_view_model_surface_present=1
+panel_dashboard_view_model_predecessor_implementation_plan_status_present=1
+Seal Panel dashboard view-model surface/status
+Panel dashboard view-model surface/status now ties the deterministic local report-only rows to the guarded implementation-plan status predecessor without Panel UI, report loading, host scanning, network behavior, effects, or runtime authority
+docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SURFACE.md
+docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_STATUS.md
 ```
 
 </details>
@@ -1291,6 +1514,36 @@ live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_clos
 live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_dispatch_enabled=0
 live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_deletion_enabled=0
 live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_audit_review_opened=0
+
+sh scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-contract.sh
+docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_CONTRACT.md
+macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_contract_present=1
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_contract_state=reviewed-no-effect-closeout-audit-review-disposition-closeout-audit
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_stdout_only=1
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_file_write_enabled=0
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_dispatch_enabled=0
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_deletion_enabled=0
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_opened=0
+
+sh scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-contract.sh
+docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CONTRACT.md
+macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_contract_present=1
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_contract_state=disposed-no-effect-closeout-audit-review-disposition-closeout-audit-review
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_stdout_only=1
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_file_write_enabled=0
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_dispatch_enabled=0
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_deletion_enabled=0
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_disposition_review_opened=0
+
+sh scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review-contract.sh
+docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW_CONTRACT.md
+macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_review_contract_present=1
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_review_contract_state=reviewed-no-effect-closeout-audit-review-disposition-closeout-audit-review-disposition
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_review_stdout_only=1
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_review_file_write_enabled=0
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_review_dispatch_enabled=0
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_review_deletion_enabled=0
+live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_review_closeout_opened=0
 ```
 
 </details>

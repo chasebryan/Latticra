@@ -2,13 +2,13 @@
 
 Status: status record for Latticra Seal signing authorization metadata
 Source: local follow-up slice
-Scope: status and public-entry alignment after the metadata-only Seal signing authorization implementation. This record does not implement signing, signature verification, key generation, private-key handling, trust-store loading, revocation lookup, object sealing, runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
+Scope: status and public-entry alignment after the metadata-only Seal signing authorization implementation, now carrying crypto graduation metadata forward when present on ready signature-request metadata. This record does not implement signing, signature verification, key generation, private-key handling, trust-store loading, revocation lookup, object sealing, runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
 
 ## Purpose
 
 This status record makes the Latticra Seal signing authorization metadata implementation visible as a current project checkpoint.
 
-It records that the implementation is bounded, deterministic, metadata-only, unsigned, and no-effect.
+It records that the implementation is bounded, deterministic, metadata-only, unsigned, no-effect, and crypto-graduation-evidence preserving when that evidence is present on the signature-request predecessor.
 
 ## Reviewed files
 
@@ -22,6 +22,7 @@ docs/LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
 docs/status/SEAL_SIGNER_INVOCATION_STATUS.md
 docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md
+docs/status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md
 include/latticra/seal_signing_authorization.h
 include/latticra/seal_signer_handoff.h
 include/latticra/seal_signer_invocation.h
@@ -79,6 +80,7 @@ seal_signature_request_implementation_present=1
 seal_signature_request_status_present=1
 seal_signature_request_status_runner_present=1
 seal_signature_request_status_workflow_present=1
+seal_crypto_graduation_gate_status_present=1
 signing_authorization_predecessor_signature_request_status_present=1
 readme_links_signing_authorization_status=1
 root_status_mentions_signing_authorization_status=1
@@ -86,8 +88,17 @@ status_index_links_signing_authorization_status=1
 foundation_index_links_signing_authorization_status=1
 signing_authorization_profile=latticra-seal-signing-authorization/0.1
 signature_request_profile=latticra-seal-signature-request/0.1
+crypto_graduation_profile=latticra-seal-crypto-graduation-gate/0.1
+assurance_baseline_profile=latticra-cryptographic-assurance-key-management/0.1
+crypto_graduation_gate_state=graduated-authority-neutral
 requested_signature=Ed25519-development
 requested_signing_authorization=metadata-only
+crypto_graduation_gate_present=1
+crypto_graduation_gate_passed=1
+standard_expectations_met=1
+local_verify_graduated=1
+receipt_promotion_graduated=1
+authority_promotion_allowed=0
 signature_request_state=requested-metadata-only
 signature_request_ready=1
 signing_authorization_state=authorized-metadata-only
@@ -169,10 +180,12 @@ This status record is documentation/status alignment only.
 
 This refresh adds an explicit status guard workflow and records the signature-request status predecessor without changing the signing-authorization implementation.
 
+This refresh also records that crypto-bound signature request metadata remains passed, standards-aligned, and authority-neutral when signing authorization metadata is produced.
+
 It does not add signing, verification, private-key handling, key generation, trust-store behavior, revocation lookup, runtime handoff execution, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, object sealing, kernel behavior, production readiness, or authority grants.
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is signer handoff status/workflow guard alignment or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
+The next valid Latticra Seal slice is signer invocation or policy decision report propagation from ready crypto-graduation-gated signer handoff metadata, signer handoff status/workflow guard alignment, or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
 
 That future slice must not add signing, verification, private-key handling, key generation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

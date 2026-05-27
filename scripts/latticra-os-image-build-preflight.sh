@@ -41,6 +41,17 @@ sha_tool_available() {
   fi
 }
 
+grub_mkrescue_binary() {
+  for candidate in "${GRUB_MKRESCUE:-}" grub-mkrescue x86_64-elf-grub-mkrescue; do
+    [ -n "$candidate" ] || continue
+    if command -v "$candidate" >/dev/null 2>&1; then
+      command -v "$candidate"
+      return
+    fi
+  done
+  printf 'missing\n'
+}
+
 shell_quote() {
   awk -v value="$1" 'BEGIN {
     gsub(/\047/, "\047\\\047\047", value)
@@ -109,6 +120,7 @@ require_manifest_field 'os_image_build_preflight_present = true'
 require_manifest_field 'os_image_build_recipe_template_present = true'
 require_manifest_field 'os_image_build_execution_allowed = false'
 require_manifest_field 'os_image_input_bundle_manifest_template_present = true'
+require_manifest_field 'os_image_input_bundle_manifest_generator_present = true'
 require_manifest_field 'os_image_input_bundle_manifest_validation_present = true'
 require_manifest_field 'os_image_input_bundle_manifest_candidate_present = false'
 require_manifest_field 'os_image_input_bundle_ready_for_build_preflight = false'
@@ -134,7 +146,9 @@ INPUT_MANIFEST_PRESENT=0
 
 QEMU_IMG_AVAILABLE=$(tool_available qemu-img)
 XORRISO_AVAILABLE=$(tool_available xorriso)
-GRUB_MKRESCUE_AVAILABLE=$(tool_available grub-mkrescue)
+GRUB_MKRESCUE_BINARY=$(grub_mkrescue_binary)
+GRUB_MKRESCUE_AVAILABLE=0
+[ "$GRUB_MKRESCUE_BINARY" != "missing" ] && GRUB_MKRESCUE_AVAILABLE=1
 TAR_AVAILABLE=$(tool_available tar)
 GZIP_AVAILABLE=$(tool_available gzip)
 SHA256_TOOL_AVAILABLE=$(sha_tool_available)
@@ -167,6 +181,7 @@ INPUT_MANIFEST_Q=$(shell_quote "$INPUT_MANIFEST")
 ISO_Q=$(shell_quote "$OUTPUT_DIR/latticra-x86_64.iso")
 VM_Q=$(shell_quote "$OUTPUT_DIR/latticra-x86_64.qcow2")
 MANIFEST_Q=$(shell_quote "$OUTPUT_DIR/manifest.txt")
+GRUB_MKRESCUE_Q=$(shell_quote "$GRUB_MKRESCUE_BINARY")
 
 cat <<REPORT
 LATTICRA OS IMAGE BUILD PREFLIGHT
@@ -180,6 +195,7 @@ os_image_toolchain_preflight_present=1
 input_bundle_manifest_path=$INPUT_MANIFEST
 input_bundle_manifest_present=$INPUT_MANIFEST_PRESENT
 input_bundle_manifest_required=1
+input_bundle_manifest_generator_present=1
 kernel_image_input_path=$KERNEL
 kernel_image_input_present=$KERNEL_PRESENT
 initramfs_input_path=$INITRAMFS
@@ -191,6 +207,7 @@ output_dir_present=$OUTPUT_DIR_PRESENT
 qemu_img_available=$QEMU_IMG_AVAILABLE
 xorriso_available=$XORRISO_AVAILABLE
 grub_mkrescue_available=$GRUB_MKRESCUE_AVAILABLE
+grub_mkrescue_path=$GRUB_MKRESCUE_BINARY
 tar_available=$TAR_AVAILABLE
 gzip_available=$GZIP_AVAILABLE
 sha256_tool_available=$SHA256_TOOL_AVAILABLE
@@ -203,7 +220,7 @@ future_input_bundle_validation_command=sh scripts/latticra-os-image-input-bundle
 future_stage_rootfs_command=tar -xf $ROOTFS_Q -C '<staging-rootfs>'
 future_kernel_install_command=install -m 0644 $KERNEL_Q '<staging-boot>/vmlinuz-latticra'
 future_initramfs_install_command=install -m 0644 $INITRAMFS_Q '<staging-boot>/initramfs-latticra.img'
-future_iso_build_command=grub-mkrescue -o $ISO_Q '<staging-iso-root>'
+future_iso_build_command=$GRUB_MKRESCUE_Q -o $ISO_Q '<staging-iso-root>'
 future_vm_image_create_command=qemu-img create -f qcow2 $VM_Q 16G
 future_artifact_manifest_path=$MANIFEST_Q
 future_artifact_manifest_validation_command=sh scripts/latticra-os-image-artifact-manifest-validate.sh --artifact-manifest $MANIFEST_Q

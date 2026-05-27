@@ -51,6 +51,7 @@ require_file scripts/test-latticra-seal-signing-operation-contract.sh
 require_file docs/LATTICRA_SEAL_SIGNATURE_REQUEST_CONTRACT.md
 require_file docs/LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md
 require_file docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md
+require_file docs/status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md
 require_file scripts/test-latticra-seal-signature-request-status.sh
 require_file .github/workflows/latticra-seal-signature-request-status.yml
 require_file .github/workflows/latticra-seal-signing-authorization-status.yml
@@ -92,6 +93,7 @@ require_contains 'seal_signature_request_implementation_present=1' "$status_file
 require_contains 'seal_signature_request_status_present=1' "$status_file"
 require_contains 'seal_signature_request_status_runner_present=1' "$status_file"
 require_contains 'seal_signature_request_status_workflow_present=1' "$status_file"
+require_contains 'seal_crypto_graduation_gate_status_present=1' "$status_file"
 require_contains 'signing_authorization_predecessor_signature_request_status_present=1' "$status_file"
 require_contains 'readme_links_signing_authorization_status=1' "$status_file"
 require_contains 'root_status_mentions_signing_authorization_status=1' "$status_file"
@@ -99,8 +101,17 @@ require_contains 'status_index_links_signing_authorization_status=1' "$status_fi
 require_contains 'foundation_index_links_signing_authorization_status=1' "$status_file"
 require_contains 'signing_authorization_profile=latticra-seal-signing-authorization/0.1' "$status_file"
 require_contains 'signature_request_profile=latticra-seal-signature-request/0.1' "$status_file"
+require_contains 'crypto_graduation_profile=latticra-seal-crypto-graduation-gate/0.1' "$status_file"
+require_contains 'assurance_baseline_profile=latticra-cryptographic-assurance-key-management/0.1' "$status_file"
+require_contains 'crypto_graduation_gate_state=graduated-authority-neutral' "$status_file"
 require_contains 'requested_signature=Ed25519-development' "$status_file"
 require_contains 'requested_signing_authorization=metadata-only' "$status_file"
+require_contains 'crypto_graduation_gate_present=1' "$status_file"
+require_contains 'crypto_graduation_gate_passed=1' "$status_file"
+require_contains 'standard_expectations_met=1' "$status_file"
+require_contains 'local_verify_graduated=1' "$status_file"
+require_contains 'receipt_promotion_graduated=1' "$status_file"
+require_contains 'authority_promotion_allowed=0' "$status_file"
 require_contains 'signature_request_state=requested-metadata-only' "$status_file"
 require_contains 'signature_request_ready=1' "$status_file"
 require_contains 'signing_authorization_state=authorized-metadata-only' "$status_file"
@@ -133,10 +144,20 @@ require_contains 'host_behavior_changed=0' "$status_file"
 require_contains 'seal signing authorization status: ok' "$status_file"
 require_contains 'signer handoff status/workflow guard alignment' "$status_file"
 
+require_contains 'DENIED_CRYPTO_GRADUATION_GATE' include/latticra/seal_signing_authorization.h
+require_contains 'denied-crypto-graduation-gate' src/seal_signing_authorization.c
+require_contains 'crypto_graduation_gate_present=%u' src/seal_signing_authorization.c
+require_contains 'standard_expectations_met=%u' src/seal_signing_authorization.c
+
 require_contains 'SEAL_SIGNING_AUTHORIZATION_STATUS.md' README.md
 require_contains 'latticra_seal_signing_authorization_status_present=1' README.md
 require_contains 'seal_signing_authorization_status_present=1' README.md
+require_contains 'signing_authorization_crypto_graduation_gate_present=1' README.md
+require_contains 'signing_authorization_crypto_graduation_gate_passed=1' README.md
+require_contains 'signing_authorization_standard_expectations_met=1' README.md
+require_contains 'signing_authorization_authority_promotion_allowed=0' README.md
 require_contains 'signing-authorization status record now ties that metadata-only checkpoint to the guarded signature-request status predecessor' README.md
+require_contains 'signing-authorization status record now preserves crypto graduation evidence from the guarded signature-request predecessor without adding signing authority' README.md
 require_contains 'LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md' README.md
 require_contains 'LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md' README.md
 require_contains 'LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md' README.md
@@ -159,6 +180,10 @@ require_contains 'Seal signing authorization status/public-entry alignment' STAT
 require_contains 'Seal signing authorization predecessor status alignment' STATUS.md
 require_contains 'seal_signing_authorization_status_present=1' STATUS.md
 require_contains 'signing_authorization_predecessor_signature_request_status_present=1' STATUS.md
+require_contains 'signing_authorization_crypto_graduation_gate_present=1' STATUS.md
+require_contains 'signing_authorization_crypto_graduation_gate_passed=1' STATUS.md
+require_contains 'signing_authorization_standard_expectations_met=1' STATUS.md
+require_contains 'signing_authorization_authority_promotion_allowed=0' STATUS.md
 require_contains 'Seal signer handoff contract' STATUS.md
 require_contains 'Seal signer handoff metadata implementation' STATUS.md
 require_contains 'Seal signer handoff status/public-entry alignment' STATUS.md
@@ -176,6 +201,10 @@ require_contains 'seal_signing_operation_contract_present=1' STATUS.md
 require_contains 'SEAL_SIGNING_AUTHORIZATION_STATUS.md' docs/status/README.md
 require_contains 'seal_signing_authorization_status_present=1' docs/status/README.md
 require_contains 'signing_authorization_predecessor_signature_request_status_present=1' docs/status/README.md
+require_contains 'signing_authorization_crypto_graduation_gate_present=1' docs/status/README.md
+require_contains 'signing_authorization_crypto_graduation_gate_passed=1' docs/status/README.md
+require_contains 'signing_authorization_standard_expectations_met=1' docs/status/README.md
+require_contains 'signing_authorization_authority_promotion_allowed=0' docs/status/README.md
 require_contains 'seal_signer_handoff_contract_present=1' docs/status/README.md
 require_contains 'seal_signer_handoff_metadata_present=1' docs/status/README.md
 require_contains 'seal_signer_handoff_status_present=1' docs/status/README.md
@@ -186,6 +215,10 @@ require_contains 'seal_signing_operation_contract_present=1' docs/status/README.
 require_contains 'Latticra Seal signing authorization status/public-entry alignment' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal signing authorization predecessor status alignment' docs/status/CURRENT_STATUS.md
 require_contains 'signing_authorization_predecessor_signature_request_status_present=1' docs/status/CURRENT_STATUS.md
+require_contains 'signing_authorization_crypto_graduation_gate_present=1' docs/status/CURRENT_STATUS.md
+require_contains 'signing_authorization_crypto_graduation_gate_passed=1' docs/status/CURRENT_STATUS.md
+require_contains 'signing_authorization_standard_expectations_met=1' docs/status/CURRENT_STATUS.md
+require_contains 'signing_authorization_authority_promotion_allowed=0' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal signer handoff contract' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal signer handoff metadata implementation' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal signer handoff status/public-entry alignment' docs/status/CURRENT_STATUS.md
@@ -195,6 +228,7 @@ require_contains 'Latticra Seal signer invocation status/public-entry alignment'
 require_contains 'Latticra Seal signing operation contract' docs/status/CURRENT_STATUS.md
 require_contains 'SEAL_SIGNING_AUTHORIZATION_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal signing authorization predecessor status alignment' docs/FOUNDATION_INDEX.md
+require_contains 'crypto graduation evidence carry-forward' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md' docs/FOUNDATION_INDEX.md
 require_contains 'SEAL_SIGNER_HANDOFF_STATUS.md' docs/FOUNDATION_INDEX.md

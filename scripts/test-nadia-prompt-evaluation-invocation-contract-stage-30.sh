@@ -131,6 +131,12 @@ require_contains 'prompt_evaluated=0' "$invocation_script"
 require_contains 'token_generation_performed=0' "$invocation_script"
 require_contains 'inference_performed=0' "$invocation_script"
 require_contains 'outside Nadia prompt-evaluation-invocation boundary' "$invocation_script"
+require_contains 'write_file "$OUT_DIR/latest-prompt-evaluation-invocation-contract.txt" < "$REPORT"' "$invocation_script"
+require_contains 'refusing to overwrite symlink report:' "$invocation_script"
+if grep -Fq 'cp "$REPORT" "$OUT_DIR/latest-prompt-evaluation-invocation-contract.txt"' "$invocation_script"; then
+  printf 'nadia prompt evaluation invocation contract stage 30: latest report must use guarded write_file\n' >&2
+  exit 1
+fi
 
 tmp_root="${TMPDIR:-/tmp}"
 tmp_root="${tmp_root%/}"
@@ -283,6 +289,26 @@ require_contains 'manipulation_resistance=required' "$report"
 require_contains 'network_authority=0' "$report"
 require_contains 'tool_execution_performed=0' "$report"
 require_contains 'source_mutation_authority=0' "$report"
+
+symlink_out="$tmpdir/latticra-nadia-stage30-symlink-out"
+symlink_stdout="$tmpdir/latticra-nadia-stage30-symlink.out"
+symlink_target="$tmpdir/latticra-nadia-stage30-outside-target.txt"
+mkdir -p "$symlink_out"
+printf '%s\n' outside >"$symlink_target"
+ln -s "$symlink_target" "$symlink_out/latest-prompt-evaluation-invocation-contract.txt"
+
+if NADIA_PROMPT_EVALUATION_INVOCATION_TIMESTAMP=stage30-symlink sh "$invocation_script" \
+  --prompt-evaluation-runtime-handoff "$handoff" \
+  --request-class awareness-education \
+  --invocation-family operator-reviewed-prompt-evaluation-invocation \
+  --invocation-format contract-only-offline-evaluation-invocation \
+  --output "$symlink_out" >"$symlink_stdout" 2>&1; then
+  printf 'nadia prompt evaluation invocation contract stage 30: symlink latest report was overwritten\n' >&2
+  exit 1
+fi
+require_contains 'refusing to overwrite symlink report:' "$symlink_stdout"
+grep -Fqx outside "$symlink_target"
+test -L "$symlink_out/latest-prompt-evaluation-invocation-contract.txt"
 
 if sh "$invocation_script" \
   --prompt-evaluation-runtime-handoff "$handoff" \

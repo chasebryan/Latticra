@@ -19,12 +19,18 @@ debian_freebsd_openbsd_package_publication_non_claim_review_contract_present=1
 debian_freebsd_openbsd_package_validation_promotion_blocker_matrix_contract_present=1
 debian_freebsd_openbsd_package_build_evidence_intake_denial_contract_present=1
 debian_freebsd_openbsd_package_build_evidence_intake_denial_review_contract_present=1
+debian_freebsd_openbsd_package_build_evidence_intake_denial_disposition_contract_present=1
+debian_freebsd_openbsd_package_build_evidence_intake_denial_disposition_closeout_contract_present=1
+debian_freebsd_openbsd_package_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1
 install_remove_transcript_contract_present=1
 install_remove_transcript_contract_state=specified-no-effect
 publication_non_claim_review_contract_state=specified-no-effect
 validation_promotion_blocker_matrix_state=blocked-no-effect
 build_evidence_intake_denial_state=denied-no-effect
 build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_disposition_state=closed-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect
 package_build_gate_state=closed-no-effect
 payload_inspection_contract_state=specified-no-effect
 install_remove_disposable_environment_required=1
@@ -39,6 +45,15 @@ package_artifact_created=0
 package_payload_accepted=0
 publication_non_claim_review_present=1
 platform_build_evidence_intake_denied=1
+denial_disposition_present=1
+denial_disposition_closeout_present=1
+denial_archive_gate_present=1
+denial_archive_gate_state=closed-no-effect
+denial_closed=1
+denial_archived=0
+denial_archive_allowed=0
+denial_archive_record_write_allowed=0
+denial_archive_record_written=0
 denial_re_request_allowed=0
 platform_build_evidence_accepted=0
 package_readiness_claimed=0
@@ -204,6 +219,9 @@ docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
 ```
 
 The package-build gate remains closed. This install/remove transcript contract only defines the evidence future disposable validation environments must produce after package artifacts exist and payload inspection evidence is accepted.
@@ -268,15 +286,60 @@ scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-review-
 
 That lane reviews and upholds denied build-evidence intake while keeping package builds and readiness blocked.
 
-## Next Slice
+## Completed Follow-On Lane
 
-Recommended next slice:
+Completed follow-on lane:
 
 ```text
 Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial disposition contract before any reviewed denial can be closed or re-requested.
 ```
 
-That future lane should record the reviewed denial disposition while keeping package builds and readiness blocked.
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-disposition-contract.sh
+```
+
+That lane records the reviewed denial disposition while keeping package builds and readiness blocked.
+
+## Completed Follow-On Lane
+
+Completed follow-on lane:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial disposition closeout contract before any disposed denial can be archived or re-requested.
+```
+
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-disposition-closeout-contract.sh
+```
+
+That lane closes out the no-effect disposition while keeping archive, package builds, and readiness blocked.
+
+## Completed Follow-On Lane
+
+Completed follow-on lane:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial disposition closeout archive gate contract before any closed-out denial can be archived or re-requested.
+```
+
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-disposition-closeout-archive-gate-contract.sh
+```
+
+That lane closes the archive and re-request gate while preserving package build and readiness blockers.
+
+## Next Slice
+
+Recommended next slice:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial disposition closeout archive gate review contract before any archive gate can be relaxed or re-requested.
+```
+
+That future lane should review the closed archive gate while preserving package build and readiness blockers.
 
 ## Validation
 

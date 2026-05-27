@@ -1,7 +1,7 @@
 # Latticra Strategy Index
 
 Status: active strategy index
-Last updated: 2026-05-27 02:09 CDT
+Last updated: 2026-05-27 07:34 CDT
 Scope: dated strategy records, mission alignment, review cadence, and quality expectations.
 
 ## Purpose
@@ -186,6 +186,42 @@ Latest Nucleus effect-contract and runtime-denial acceptance checklist:
 
 ```text
 2026-05-27-0209-cdt-nucleus-effect-contract-runtime-denial-acceptance-checklist.md
+```
+
+Latest Nucleus effect-contract and runtime-denial evidence bundle template:
+
+```text
+2026-05-27-0538-cdt-nucleus-effect-contract-runtime-denial-evidence-bundle-template.md
+```
+
+Latest Nucleus effect-contract and runtime-denial non-claim review template:
+
+```text
+2026-05-27-0543-cdt-nucleus-effect-contract-runtime-denial-non-claim-review-template.md
+```
+
+Latest Nucleus effect-contract and runtime-denial public-entrypoint review template:
+
+```text
+2026-05-27-0548-cdt-nucleus-effect-contract-runtime-denial-public-entrypoint-review-template.md
+```
+
+Latest Nucleus effect-contract and runtime-denial estimate-impact review template:
+
+```text
+2026-05-27-0551-cdt-nucleus-effect-contract-runtime-denial-estimate-impact-review-template.md
+```
+
+Latest Nucleus effect-contract and runtime-denial review package index:
+
+```text
+2026-05-27-0611-cdt-nucleus-effect-contract-runtime-denial-review-package-index.md
+```
+
+Latest Nucleus effect-contract and runtime-denial planning completion checkpoint:
+
+```text
+2026-05-27-0734-cdt-nucleus-effect-contract-runtime-denial-planning-completion-checkpoint.md
 ```
 
 Current operating rule:

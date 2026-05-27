@@ -51,8 +51,11 @@ require_contains 'Fedora endorsement' docs/FEDORA_READINESS_PLAN.md
 require_contains 'Fedora allowed license posture' docs/FEDORA_READINESS_PLAN.md
 require_contains 'BuildRequires completeness' docs/FEDORA_READINESS_PLAN.md
 require_contains 'mock build readiness' docs/FEDORA_READINESS_PLAN.md
-require_contains 'final_state=runtime-entry-frame-ready' docs/FEDORA_READINESS_PLAN.md
+require_contains 'final_state=runtime-entry-address-space-view-ready' docs/FEDORA_READINESS_PLAN.md
 require_contains 'external_effect_performed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_address_space_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_stack_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_register_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_frame_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_admission_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_allowed=0' docs/FEDORA_READINESS_PLAN.md

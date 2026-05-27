@@ -42,6 +42,11 @@ panel_dashboard_planning_checkpoint=1
 panel_dashboard_planning_status=1
 panel_dashboard_view_model_contract=1
 panel_dashboard_view_model_contract_status=1
+panel_dashboard_view_model_implementation_plan=1
+panel_dashboard_view_model_implementation_plan_status=1
+panel_dashboard_view_model_implementation=1
+panel_dashboard_view_model_surface=1
+panel_dashboard_view_model_status=1
 operator_visible_reports=1
 production_security_product=0
 runtime_authority_granted=0
@@ -128,8 +133,8 @@ seal_runtime_dry_run_report=1
 seal_operator_receipt_report=1
 seal_local_capability_registry_schema=report-surface
 seal_panel_status_surface=planning-checkpoint
-seal_panel_dashboard=view-model-contract
-seal_panel_dashboard_view_model=contract
+seal_panel_dashboard=view-model-report-surface
+seal_panel_dashboard_view_model=report-surface
 seal_receipt_bundle=partial-local
 seal_operator_review_queue=planned
 ```
@@ -147,11 +152,14 @@ Completed recent checkpoints:
 7. A deterministic local capability registry schema report surface and status checkpoint.
 8. A Panel-visible Seal dashboard planning checkpoint that defines future read-only evidence display without UI implementation or authority.
 9. A Seal Panel dashboard view-model contract that defines exact rows, field labels, missing-source behavior, and denied-by-default display semantics before implementation.
+10. A Seal Panel dashboard view-model implementation plan that defines exact future C files, fixed-capacity types, deterministic fixtures, validation, and report output before implementation.
+11. A bounded no-effect Seal Panel dashboard view-model implementation that maps caller-provided report strings into fixed-capacity denied-by-default rows.
+12. A Seal Panel dashboard view-model report surface/status checkpoint that exposes the deterministic fixture without Panel UI, root, network, host scanning, or runtime authority.
 
 The product path should now prioritize:
 
-1. A Seal Panel dashboard view-model implementation plan that maps the contract into a deterministic no-effect fixture without root, network, host scanning, or runtime authority.
-2. A signed receipt proof path that remains verification-only until trust-root and revocation boundaries are implemented.
+1. A signed receipt proof path that remains verification-only until trust-root and revocation boundaries are implemented.
+2. A Seal Panel UI integration contract that stays read-only and consumes the report surface without launching authority.
 3. A future enforcement preflight contract that keeps enforce mode closed until all predecessor evidence is present.
 
 Current completed product-spine checkpoint:
@@ -173,6 +181,11 @@ panel_dashboard_planning_checkpoint_present=1
 panel_dashboard_planning_status_present=1
 panel_dashboard_view_model_contract_present=1
 panel_dashboard_view_model_contract_status_present=1
+panel_dashboard_view_model_implementation_plan_present=1
+panel_dashboard_view_model_implementation_plan_status_present=1
+panel_dashboard_view_model_implementation_present=1
+panel_dashboard_view_model_surface_present=1
+panel_dashboard_view_model_status_present=1
 ```
 
 ## Non-Claims

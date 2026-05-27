@@ -140,6 +140,27 @@ latticra_status_t latticra_kernel_state_machine_default_step_request(
     }
     request->runtime_entry_frame_request.runtime_entry_admission_request =
         request->runtime_entry_admission_request;
+    if (latticra_kernel_runtime_entry_register_view_default_request(
+            &request->runtime_entry_register_view_request) != LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_register_view_request.runtime_entry_frame_request =
+        request->runtime_entry_frame_request;
+    if (latticra_kernel_runtime_entry_stack_view_default_request(
+            &request->runtime_entry_stack_view_request) != LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_stack_view_request.
+        runtime_entry_register_view_request =
+        request->runtime_entry_register_view_request;
+    if (latticra_kernel_runtime_entry_address_space_view_default_request(
+            &request->runtime_entry_address_space_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_address_space_view_request.
+        runtime_entry_stack_view_request =
+        request->runtime_entry_stack_view_request;
     request->target_state = LATTICRA_KERNEL_STATE_INITIALIZED;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
     return LATTICRA_STATUS_OK;
@@ -221,6 +242,12 @@ latticra_status_t latticra_kernel_state_machine_step(
         request->runtime_entry_admission_request;
     transition_request.runtime_entry_frame_request =
         request->runtime_entry_frame_request;
+    transition_request.runtime_entry_register_view_request =
+        request->runtime_entry_register_view_request;
+    transition_request.runtime_entry_stack_view_request =
+        request->runtime_entry_stack_view_request;
+    transition_request.runtime_entry_address_space_view_request =
+        request->runtime_entry_address_space_view_request;
     transition_request.current_state = machine->current_state;
     transition_request.target_state = request->target_state;
     transition_request.gate = request->gate;

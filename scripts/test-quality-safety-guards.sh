@@ -33,6 +33,15 @@ require_line() {
     fail "$file must contain line: $pattern"
 }
 
+fixed_latticra_tmp_lines() {
+  pattern="$1"
+  file="$2"
+
+  grep -En "$pattern" "$file" |
+    grep -Ev 'mktemp[[:space:]]+-d[[:space:]]+"?/tmp/latticra[^"[:space:]]*[.]XXXXXX' ||
+    :
+}
+
 require_make_quality_prereq() {
   prereq="$1"
   quality_line="$(grep -E '^quality:' Makefile || :)"
@@ -265,7 +274,7 @@ check_no_c_test_fixed_latticra_tmp() {
 
   find tests -type f -name '*.c' |
     while IFS= read -r source; do
-      if grep -Eq '/tmp/latticra|/private/tmp/latticra' "$source"; then
+      if [ -n "$(fixed_latticra_tmp_lines '/tmp/latticra|/private/tmp/latticra' "$source")" ]; then
         fail "$source must use private temp fixtures or repository-relative strings instead of fixed /tmp/latticra paths"
       fi
     done
@@ -276,7 +285,7 @@ check_no_doc_fixed_latticra_tmp() {
     [ -e "$doc_root" ] || continue
     find "$doc_root" \( -name '*.md' -o -name '*.html' \) -type f |
       while IFS= read -r doc; do
-        if grep -Eq '/tmp/latticra|/private/tmp/latticra' "$doc"; then
+        if [ -n "$(fixed_latticra_tmp_lines '/tmp/latticra|/private/tmp/latticra' "$doc")" ]; then
           fail "$doc must show private mktemp workdirs instead of fixed /tmp/latticra paths"
         fi
       done
@@ -668,7 +677,7 @@ check_shell_script() {
   fi
 
   if [ "$script" != "scripts/test-quality-safety-guards.sh" ]; then
-    if grep -Eq '/tmp/latticra|/private/tmp/latticra|-o[[:space:]]+/tmp/latticra|>[[:space:]]*/tmp/latticra' "$script"; then
+    if [ -n "$(fixed_latticra_tmp_lines '/tmp/latticra|/private/tmp/latticra|-o[[:space:]]+/tmp/latticra|>[[:space:]]*/tmp/latticra' "$script")" ]; then
       fail "$script must use a private mktemp workdir instead of fixed /tmp/latticra paths"
     fi
   fi
@@ -686,14 +695,14 @@ check_shell_script() {
 
   case "$script" in
     scripts/*report-runner.sh)
-      if grep -Eq '/tmp/latticra|-o[[:space:]]+/tmp/latticra|>[[:space:]]*/tmp/latticra' "$script"; then
+      if [ -n "$(fixed_latticra_tmp_lines '/tmp/latticra|-o[[:space:]]+/tmp/latticra|>[[:space:]]*/tmp/latticra' "$script")" ]; then
         fail "$script must use a private mktemp workdir instead of fixed /tmp/latticra paths"
       fi
       require_contains 'mktemp -d' "$script"
       require_contains 'trap '\''rm -rf "$tmpdir"'\'' EXIT INT HUP TERM' "$script"
       ;;
     scripts/test-kernel.sh|scripts/test-kernel-lifecycle.sh|scripts/test-kernel-lifecycle-subsystem-summary.sh|scripts/test-kernel-memory-map.sh|scripts/test-kernel-scheduler.sh|scripts/test-kernel-state.sh|scripts/test-kernel-state-machine.sh|scripts/test-kernel-subsystem-registry.sh)
-      if grep -Eq '/tmp/latticra|-o[[:space:]]+/tmp/latticra|>[[:space:]]*/tmp/latticra' "$script"; then
+      if [ -n "$(fixed_latticra_tmp_lines '/tmp/latticra|-o[[:space:]]+/tmp/latticra|>[[:space:]]*/tmp/latticra' "$script")" ]; then
         fail "$script must use a private mktemp workdir instead of fixed /tmp/latticra paths"
       fi
       require_contains 'mktemp -d' "$script"
@@ -705,7 +714,8 @@ check_shell_script() {
       fi
       if grep -Fq '$tmpdir/latticra-seal' "$script"; then
         require_contains 'mktemp -d' "$script"
-        require_contains 'trap '\''rm -rf "$tmpdir"'\'' EXIT INT HUP TERM' "$script"
+        grep -Eq 'trap[[:space:]].*(rm -rf|cleanup)' "$script" ||
+          fail "$script must register a cleanup trap for mktemp workdirs"
       fi
       ;;
     scripts/test-l-ui-*.sh|scripts/test-lat-*.sh|scripts/test-lat-to-lir-*.sh|scripts/test-lir-*.sh)
@@ -855,6 +865,9 @@ require_contains "sh ./scripts/test-supply-chain-security-baseline.sh" "Makefile
 require_contains "sh ./scripts/test-secret-material-guard.sh" "Makefile"
 require_contains "sh ./scripts/test-report-redaction-boundary.sh" "Makefile"
 require_contains "sh ./scripts/test-installer-engine-log-sanitization.sh" "Makefile"
+require_contains "sh ./scripts/test-installer-engine-event-boundary.sh" "Makefile"
+require_contains "sh ./scripts/test-installer-ui-event-ingestion-sanitization.sh" "Makefile"
+require_contains "sh ./scripts/test-installer-ui-status-boundary.sh" "Makefile"
 require_contains "sh ./scripts/test-installer-config-authority-allowlist.sh" "Makefile"
 require_contains "sh ./scripts/test-installer-ui-artifact-authority.sh" "Makefile"
 require_contains "sh ./scripts/test-installer-console-output-authority.sh" "Makefile"
@@ -870,12 +883,16 @@ require_contains "sh ./scripts/test-backup-recovery-resilience-baseline.sh" "Mak
 require_contains "sh ./scripts/test-secure-configuration-change-management-baseline.sh" "Makefile"
 require_contains "sh ./scripts/test-network-exposure-remote-access-baseline.sh" "Makefile"
 require_contains "sh ./scripts/test-data-classification-protection-baseline.sh" "Makefile"
+require_contains "sh ./scripts/test-ai-agentic-automation-security-baseline.sh" "Makefile"
 require_contains "high-assurance-security-baseline:" "Makefile"
 require_contains "memory-safety-roadmap:" "Makefile"
 require_contains "supply-chain-security-baseline:" "Makefile"
 require_contains "secret-material-guard:" "Makefile"
 require_contains "report-redaction-boundary:" "Makefile"
 require_contains "installer-engine-log-sanitization:" "Makefile"
+require_contains "installer-engine-event-boundary:" "Makefile"
+require_contains "installer-ui-event-ingestion-sanitization:" "Makefile"
+require_contains "installer-ui-status-boundary:" "Makefile"
 require_contains "installer-config-authority-allowlist:" "Makefile"
 require_contains "installer-ui-artifact-authority:" "Makefile"
 require_contains "installer-console-output-authority:" "Makefile"
@@ -891,6 +908,7 @@ require_contains "backup-recovery-resilience-baseline:" "Makefile"
 require_contains "secure-configuration-change-management-baseline:" "Makefile"
 require_contains "network-exposure-remote-access-baseline:" "Makefile"
 require_contains "data-classification-protection-baseline:" "Makefile"
+require_contains "ai-agentic-automation-security-baseline:" "Makefile"
 require_contains "cargo fmt --manifest-path installer/latticra-installer/Cargo.toml -- --check" "Makefile"
 require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" "Makefile"
 require_contains "python3 scripts/check_latticra_panel_ui_design.py" "Makefile"
@@ -923,6 +941,8 @@ require_contains "latticra-panel-signed-updater-state-transition-denial-disposit
 require_contains "sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition.sh" "Makefile"
 require_contains "latticra-panel-signed-updater-state-transition-denial-disposition-review:" "Makefile"
 require_contains "sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-review.sh" "Makefile"
+require_contains "latticra-panel-signed-updater-state-transition-denial-disposition-closeout:" "Makefile"
+require_contains "sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout.sh" "Makefile"
 require_contains "sh ./scripts/test-production-installer-readiness-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-local-installer-artifact-manifest-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-local-artifact-manifest-fixture.sh" "Makefile"
@@ -976,6 +996,10 @@ require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-evidence
 require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-evidence-publication-gate.sh" "Makefile"
 require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-publication-review-template.sh" "Makefile"
 require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-publication-review-validator.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-template.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-validator.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-template.sh" "Makefile"
 require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-transcript-template.sh" "Makefile"
 require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-transcript-review-validator.sh" "Makefile"
 require_contains "sh ./scripts/test-ubuntu-developer-workflow.sh" "Makefile"
@@ -1003,6 +1027,9 @@ require_contains "sh ./scripts/test-opensuse-rpm-install-remove-transcript-contr
 require_contains "sh ./scripts/test-opensuse-obs-publication-non-claim-review-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh" "Makefile"
 require_contains "fedora-vm-cli-payload-repeatability-runner-plan:" "Makefile"
 require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-runner-plan.sh" "Makefile"
 require_contains "fedora-vm-cli-payload-repeatability-runner:" "Makefile"
@@ -1021,6 +1048,14 @@ require_contains "fedora-vm-cli-payload-repeatability-publication-review-templat
 require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-publication-review-template.sh" "Makefile"
 require_contains "fedora-vm-cli-payload-repeatability-publication-review-validator:" "Makefile"
 require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-publication-review-validator.sh" "Makefile"
+require_contains "fedora-vm-cli-payload-repeatability-publication-receipt-template:" "Makefile"
+require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-template.sh" "Makefile"
+require_contains "fedora-vm-cli-payload-repeatability-publication-receipt-validator:" "Makefile"
+require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-validator.sh" "Makefile"
+require_contains "fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-contract:" "Makefile"
+require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-contract.sh" "Makefile"
+require_contains "fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-template:" "Makefile"
+require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-template.sh" "Makefile"
 require_contains "fedora-vm-cli-payload-repeatability-transcript-template:" "Makefile"
 require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-transcript-template.sh" "Makefile"
 require_contains "fedora-vm-cli-payload-repeatability-transcript-review-validator:" "Makefile"
@@ -1048,6 +1083,12 @@ require_contains "opensuse-rpm-validation-promotion-blocker-matrix-contract:" "M
 require_contains "sh ./scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh" "Makefile"
 require_contains "opensuse-rpm-build-evidence-intake-denial-contract:" "Makefile"
 require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh" "Makefile"
+require_contains "opensuse-rpm-build-evidence-intake-denial-review-contract:" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh" "Makefile"
+require_contains "opensuse-rpm-build-evidence-intake-denial-disposition-contract:" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-contract.sh" "Makefile"
+require_contains "opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract:" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-denial-transcript:" "Makefile"
 require_contains "sh ./scripts/test-macos-reset-uninstall-live-denial-transcript-contract.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-runner-interface:" "Makefile"
@@ -1084,6 +1125,16 @@ require_contains "macos-reset-uninstall-live-runner-acceptance-denial-dispositio
 require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-contract.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit:" "Makefile"
 require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-contract.sh" "Makefile"
+require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review:" "Makefile"
+require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-contract.sh" "Makefile"
+require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition:" "Makefile"
+require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-contract.sh" "Makefile"
+require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review:" "Makefile"
+require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review-contract.sh" "Makefile"
+require_contains "latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit:" "Makefile"
+require_contains "sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit.sh" "Makefile"
+require_contains "latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review:" "Makefile"
+require_contains "sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review.sh" "Makefile"
 require_contains "quality-macos:" "Makefile"
 require_contains "sh ./scripts/test-macos-readme-installer-usage.sh" "Makefile"
 require_contains "sh ./scripts/test-macos-integration-transferability.sh" "Makefile"
@@ -1148,6 +1199,12 @@ require_contains "sh ./scripts/test-kernel-runtime-entry-admission.sh" "Makefile
 require_contains "sh ./scripts/test-kernel-runtime-entry-admission-report-runner.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-runtime-entry-frame.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-runtime-entry-frame-report-runner.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-runtime-entry-register-view.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-runtime-entry-register-view-report-runner.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-runtime-entry-stack-view.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-runtime-entry-stack-view-report-runner.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-runtime-entry-address-space-view.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-runtime-entry-address-space-view-report-runner.sh" "Makefile"
 require_contains "quality-status:" "Makefile"
 require_contains "sh ./scripts/test-current-estimate-table-source-alignment.sh" "Makefile"
 require_contains "make quality" ".github/workflows/quality.yml"
@@ -1184,6 +1241,10 @@ require_contains "sh scripts/test-fedora-vm-cli-payload-repeatability-evidence-s
 require_contains "sh scripts/test-fedora-vm-cli-payload-repeatability-evidence-publication-gate.sh" ".github/workflows/fedora-vm-cli-payload-repeatability-evidence-publication-gate.yml"
 require_contains "sh scripts/test-fedora-vm-cli-payload-repeatability-publication-review-template.sh" ".github/workflows/fedora-vm-cli-payload-repeatability-publication-review-template.yml"
 require_contains "sh scripts/test-fedora-vm-cli-payload-repeatability-publication-review-validator.sh" ".github/workflows/fedora-vm-cli-payload-repeatability-publication-review-validator.yml"
+require_contains "sh scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-template.sh" ".github/workflows/fedora-vm-cli-payload-repeatability-publication-receipt-template.yml"
+require_contains "sh scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-validator.sh" ".github/workflows/fedora-vm-cli-payload-repeatability-publication-receipt-validator.yml"
+require_contains "sh scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-contract.sh" ".github/workflows/fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-contract.yml"
+require_contains "sh scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-template.sh" ".github/workflows/fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-template.yml"
 require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" ".github/workflows/latticra-panel-installer.yml"
 require_contains "uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8" ".github/workflows/latticra-panel-installer.yml"
 require_contains "persist-credentials: false" ".github/workflows/latticra-panel-installer.yml"

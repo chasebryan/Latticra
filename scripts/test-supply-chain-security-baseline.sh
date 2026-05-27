@@ -41,6 +41,9 @@ require_file scripts/test-quality-safety-guards.sh
 require_file scripts/test-secret-material-guard.sh
 require_file scripts/test-report-redaction-boundary.sh
 require_file scripts/test-installer-engine-log-sanitization.sh
+require_file scripts/test-installer-engine-event-boundary.sh
+require_file scripts/test-installer-ui-event-ingestion-sanitization.sh
+require_file scripts/test-installer-ui-status-boundary.sh
 require_file scripts/test-installer-config-authority-allowlist.sh
 require_file scripts/test-installer-ui-artifact-authority.sh
 require_file scripts/test-installer-console-output-authority.sh
@@ -79,6 +82,13 @@ for field in \
   'installer_engine_log_redaction_required=1' \
   'installer_engine_log_sanitization_required=1' \
   'installer_engine_log_line_length_cap_required=1' \
+  'installer_engine_event_boundary_sanitization_required=1' \
+  'installer_engine_failure_event_sanitization_required=1' \
+  'installer_ui_event_ingestion_sanitization_required=1' \
+  'installer_ui_evidence_log_redaction_required=1' \
+  'installer_ui_status_event_sanitization_required=1' \
+  'installer_ui_status_boundary_required=1' \
+  'installer_ui_direct_status_assignment_forbidden=1' \
   'installer_config_authority_slug_allowlist_required=1' \
   'installer_command_wrapper_strict_name_required=1' \
   'installer_ui_artifact_authority_guard_required=1' \
@@ -155,13 +165,27 @@ require_contains 'sh ./scripts/test-secret-material-guard.sh' Makefile
 require_contains 'secret-material-guard:' Makefile
 require_contains 'whole process environments' scripts/test-report-redaction-boundary.sh
 require_contains 'sanitize child stdout before forwarding install logs' scripts/test-report-redaction-boundary.sh
-require_contains 'sanitize_log_line(&line)' installer/latticra-installer/src/engine.rs
+require_contains 'sanitize_log_line(line.as_ref())' installer/latticra-installer/src/engine.rs
 require_contains 'sh ./scripts/test-report-redaction-boundary.sh' Makefile
 require_contains 'report-redaction-boundary:' Makefile
 require_contains 'installer_engine_log_sanitization: ok' scripts/test-installer-engine-log-sanitization.sh
 require_contains 'sanitize_log_line_escapes_control_characters' installer/latticra-installer/src/engine.rs
 require_contains 'sh ./scripts/test-installer-engine-log-sanitization.sh' Makefile
 require_contains 'installer-engine-log-sanitization:' Makefile
+require_contains 'installer_engine_event_boundary: ok' scripts/test-installer-engine-event-boundary.sh
+require_contains 'send_log_sanitizes_internal_engine_events' installer/latticra-installer/src/engine.rs
+require_contains 'send_failure_sanitizes_engine_failure_events' installer/latticra-installer/src/engine.rs
+require_contains 'sh ./scripts/test-installer-engine-event-boundary.sh' Makefile
+require_contains 'installer-engine-event-boundary:' Makefile
+require_contains 'installer_ui_event_ingestion_sanitization: ok' scripts/test-installer-ui-event-ingestion-sanitization.sh
+require_contains 'engine_log_event_is_sanitized_before_evidence_and_status' installer/latticra-installer/src/ui.rs
+require_contains 'engine_failure_event_is_sanitized_before_status_and_evidence' installer/latticra-installer/src/ui.rs
+require_contains 'sh ./scripts/test-installer-ui-event-ingestion-sanitization.sh' Makefile
+require_contains 'installer-ui-event-ingestion-sanitization:' Makefile
+require_contains 'installer_ui_status_boundary: ok' scripts/test-installer-ui-status-boundary.sh
+require_contains 'status_setter_redacts_and_escapes_direct_status_updates' installer/latticra-installer/src/ui.rs
+require_contains 'sh ./scripts/test-installer-ui-status-boundary.sh' Makefile
+require_contains 'installer-ui-status-boundary:' Makefile
 require_contains 'installer_config_authority_allowlist: ok' scripts/test-installer-config-authority-allowlist.sh
 require_contains 'validate_authority_slug("LC install profile"' installer/latticra-installer/src/config.rs
 require_contains 'valid_authority_slug()' installer/scripts/latticra-installer-apply.sh

@@ -82,6 +82,175 @@ constexpr authority_source_span span_from_l_ui(
                                  span.end_column};
 }
 
+constexpr bool authority_status_is_known(const authority_status status) noexcept {
+    switch (status) {
+    case authority_status::ok:
+    case authority_status::null_argument:
+    case authority_status::invalid_input:
+    case authority_status::capacity_exceeded:
+    case authority_status::policy_denied:
+    case authority_status::unsupported_effect:
+    case authority_status::unsupported_boundary:
+    case authority_status::not_authorized:
+    case authority_status::internal_error:
+        return true;
+    }
+    return false;
+}
+
+constexpr bool authority_effect_is_known(const authority_effect effect) noexcept {
+    switch (effect) {
+    case authority_effect::none:
+    case authority_effect::read:
+    case authority_effect::local_mutation:
+    case authority_effect::host_mutation:
+    case authority_effect::network:
+    case authority_effect::hardware:
+    case authority_effect::boot:
+    case authority_effect::recovery:
+    case authority_effect::external:
+    case authority_effect::unknown:
+        return true;
+    }
+    return false;
+}
+
+constexpr authority_effect canonical_authority_effect(
+    const authority_effect effect) noexcept {
+    return authority_effect_is_known(effect) ? effect : authority_effect::unknown;
+}
+
+constexpr bool authority_validator_is_known(
+    const authority_validator validator) noexcept {
+    switch (validator) {
+    case authority_validator::naming:
+    case authority_validator::source_span:
+    case authority_validator::no_effect:
+    case authority_validator::effect:
+    case authority_validator::boundary:
+    case authority_validator::state_shape:
+    case authority_validator::lir_shape:
+    case authority_validator::lat_parse_result:
+        return true;
+    }
+    return false;
+}
+
+constexpr bool lat_declaration_kind_is_known(
+    const latticra_lat_declaration_kind_t kind) noexcept {
+    switch (kind) {
+    case LATTICRA_LAT_DECLARATION_STATE:
+    case LATTICRA_LAT_DECLARATION_POLICY:
+    case LATTICRA_LAT_DECLARATION_TRANSITION:
+    case LATTICRA_LAT_DECLARATION_ASSERTION:
+    case LATTICRA_LAT_DECLARATION_EFFECT:
+    case LATTICRA_LAT_DECLARATION_UNKNOWN:
+        return true;
+    }
+    return false;
+}
+
+constexpr bool lat_effect_is_known(const latticra_lat_effect_t effect) noexcept {
+    switch (effect) {
+    case LATTICRA_LAT_EFFECT_NONE:
+    case LATTICRA_LAT_EFFECT_READ:
+    case LATTICRA_LAT_EFFECT_LOCAL_MUTATION:
+    case LATTICRA_LAT_EFFECT_HOST_MUTATION:
+    case LATTICRA_LAT_EFFECT_NETWORK:
+    case LATTICRA_LAT_EFFECT_HARDWARE:
+    case LATTICRA_LAT_EFFECT_BOOT:
+    case LATTICRA_LAT_EFFECT_RECOVERY:
+    case LATTICRA_LAT_EFFECT_EXTERNAL:
+    case LATTICRA_LAT_EFFECT_UNKNOWN:
+        return true;
+    }
+    return false;
+}
+
+constexpr bool lir_source_kind_is_known(
+    const latticra_lir_source_kind_t kind) noexcept {
+    switch (kind) {
+    case LATTICRA_LIR_SOURCE_UNKNOWN:
+    case LATTICRA_LIR_SOURCE_L_UI_CARD:
+    case LATTICRA_LIR_SOURCE_LAT_MODULE:
+    case LATTICRA_LIR_SOURCE_INTERNAL_FIXTURE:
+        return true;
+    }
+    return false;
+}
+
+constexpr bool lir_node_kind_is_known(
+    const latticra_lir_node_kind_t kind) noexcept {
+    switch (kind) {
+    case LATTICRA_LIR_NODE_MODULE:
+    case LATTICRA_LIR_NODE_CARD:
+    case LATTICRA_LIR_NODE_RAIL:
+    case LATTICRA_LIR_NODE_FIELD:
+    case LATTICRA_LIR_NODE_TEXT:
+    case LATTICRA_LIR_NODE_BINDING:
+    case LATTICRA_LIR_NODE_EFFECT:
+    case LATTICRA_LIR_NODE_BOUNDARY:
+    case LATTICRA_LIR_NODE_UNKNOWN:
+    case LATTICRA_LIR_NODE_LAT_STATE:
+    case LATTICRA_LIR_NODE_LAT_POLICY:
+    case LATTICRA_LIR_NODE_LAT_TRANSITION:
+    case LATTICRA_LIR_NODE_LAT_ASSERTION:
+    case LATTICRA_LIR_NODE_LAT_REQUIREMENT:
+    case LATTICRA_LIR_NODE_LAT_EFFECT_DECLARATION:
+        return true;
+    }
+    return false;
+}
+
+constexpr bool lir_edge_kind_is_known(
+    const latticra_lir_edge_kind_t kind) noexcept {
+    switch (kind) {
+    case LATTICRA_LIR_EDGE_CONTAINS:
+    case LATTICRA_LIR_EDGE_BINDS:
+    case LATTICRA_LIR_EDGE_ANNOTATES:
+    case LATTICRA_LIR_EDGE_ORDERS_BEFORE:
+    case LATTICRA_LIR_EDGE_UNKNOWN:
+    case LATTICRA_LIR_EDGE_TRANSITIONS_FROM:
+        return true;
+    }
+    return false;
+}
+
+constexpr bool lir_binding_kind_is_known(
+    const latticra_lir_resolved_binding_kind_t kind) noexcept {
+    switch (kind) {
+    case LATTICRA_LIR_BINDING_STATE_VALUE:
+    case LATTICRA_LIR_BINDING_PREVIEW_VALUE:
+    case LATTICRA_LIR_BINDING_UNSUPPORTED:
+        return true;
+    }
+    return false;
+}
+
+constexpr bool lir_report_classification_is_known(
+    const latticra_lir_report_classification_t classification) noexcept {
+    switch (classification) {
+    case LATTICRA_LIR_REPORT_EMPTY:
+    case LATTICRA_LIR_REPORT_MATERIALIZED:
+    case LATTICRA_LIR_REPORT_REJECTED:
+    case LATTICRA_LIR_REPORT_INVALID:
+        return true;
+    }
+    return false;
+}
+
+constexpr bool lir_shape_kind_is_known(
+    const latticra_lir_shape_kind_t kind) noexcept {
+    switch (kind) {
+    case LATTICRA_LIR_SHAPE_UNKNOWN:
+    case LATTICRA_LIR_SHAPE_L_UI_CARD_GRAPH:
+    case LATTICRA_LIR_SHAPE_LAT_MODULE_GRAPH:
+    case LATTICRA_LIR_SHAPE_INTERNAL_FIXTURE_GRAPH:
+        return true;
+    }
+    return false;
+}
+
 constexpr bool span_is_ordered(const authority_source_span span) noexcept {
     if (span.start_offset > span.end_offset) {
         return false;
@@ -91,6 +260,87 @@ constexpr bool span_is_ordered(const authority_source_span span) noexcept {
     }
     if (span.start_line == span.end_line &&
         span.start_column > span.end_column) {
+        return false;
+    }
+    return true;
+}
+
+constexpr bool span_offsets_are_bounded(const authority_source_span span,
+                                        const std::size_t source_max) noexcept {
+    return span.start_offset <= source_max && span.end_offset <= source_max;
+}
+
+constexpr bool index_is_bounded(const std::size_t index,
+                                const std::size_t count) noexcept {
+    return index < count;
+}
+
+constexpr bool range_is_bounded(const std::size_t first,
+                                const std::size_t count,
+                                const std::size_t total) noexcept {
+    if (first > total) {
+        return false;
+    }
+    if (count == 0u) {
+        return true;
+    }
+    return count <= total - first;
+}
+
+constexpr bool sum_would_exceed(const std::size_t left,
+                                const std::size_t right,
+                                const std::size_t limit) noexcept {
+    return left > limit || right > limit - left;
+}
+
+constexpr bool lat_module_kind_counts_are_bounded(
+    const latticra_lat_ast_module_t &module,
+    const std::size_t declaration_count) noexcept {
+    std::size_t total = 0u;
+    if (sum_would_exceed(total, module.state_count, declaration_count)) {
+        return false;
+    }
+    total += module.state_count;
+    if (sum_would_exceed(total, module.policy_count, declaration_count)) {
+        return false;
+    }
+    total += module.policy_count;
+    if (sum_would_exceed(total, module.transition_count, declaration_count)) {
+        return false;
+    }
+    total += module.transition_count;
+    if (sum_would_exceed(total, module.assertion_count, declaration_count)) {
+        return false;
+    }
+    total += module.assertion_count;
+    if (sum_would_exceed(total, module.effect_count, declaration_count)) {
+        return false;
+    }
+    return true;
+}
+
+constexpr bool lir_edge_kind_counts_are_bounded(
+    const latticra_lir_module_t &module) noexcept {
+    std::size_t total = 0u;
+    if (sum_would_exceed(total, module.contains_edge_count, module.edge_count)) {
+        return false;
+    }
+    total += module.contains_edge_count;
+    if (sum_would_exceed(total, module.binds_edge_count, module.edge_count)) {
+        return false;
+    }
+    total += module.binds_edge_count;
+    if (sum_would_exceed(total, module.annotates_edge_count, module.edge_count)) {
+        return false;
+    }
+    total += module.annotates_edge_count;
+    if (sum_would_exceed(total, module.orders_before_edge_count,
+                         module.edge_count)) {
+        return false;
+    }
+    total += module.orders_before_edge_count;
+    if (sum_would_exceed(total, module.transitions_from_edge_count,
+                         module.edge_count)) {
         return false;
     }
     return true;
@@ -200,6 +450,23 @@ bool char_array_is_nul_padded(const std::array<char, Size> &source) noexcept {
     return found_terminator;
 }
 
+template <std::size_t Size>
+bool char_array_matches_c_string(const std::array<char, Size> &source,
+                                 const char *expected) noexcept {
+    if (expected == nullptr) {
+        return false;
+    }
+
+    std::size_t index = 0u;
+    while (expected[index] != '\0') {
+        if (index >= Size || source[index] != expected[index]) {
+            return false;
+        }
+        ++index;
+    }
+    return index < Size && source[index] == '\0';
+}
+
 bool record_text_fields_are_nul_padded(
     const authority_audit_record &record) noexcept {
     return char_array_is_nul_padded(record.policy_name) &&
@@ -214,6 +481,13 @@ bool record_text_fields_are_line_safe(
            !char_array_has_line_break_before_terminator(record.source_identity) &&
            !char_array_has_line_break_before_terminator(record.validator_name) &&
            !char_array_has_line_break_before_terminator(record.denial_reason);
+}
+
+bool record_canonical_names_match(
+    const authority_audit_record &record) noexcept {
+    return char_array_matches_c_string(record.policy_name, "cpp_authority") &&
+           char_array_matches_c_string(record.validator_name,
+                                       authority_validator_label(record.validator));
 }
 
 void reset_report(authority_audit_report &report) noexcept {
@@ -343,6 +617,30 @@ bool append_record_line_prefix(char *buffer,
            append_c_string(buffer, buffer_len, offset, "].") &&
            append_c_string(buffer, buffer_len, offset, field) &&
            append_char(buffer, buffer_len, offset, '=');
+}
+
+bool append_record_bool_line(char *buffer,
+                             const std::size_t buffer_len,
+                             std::size_t &offset,
+                             const std::size_t record_index,
+                             const char *field,
+                             const bool value) noexcept {
+    return append_record_line_prefix(buffer, buffer_len, offset, record_index,
+                                     field) &&
+           append_bool(buffer, buffer_len, offset, value) &&
+           append_char(buffer, buffer_len, offset, '\n');
+}
+
+bool append_record_size_line(char *buffer,
+                             const std::size_t buffer_len,
+                             std::size_t &offset,
+                             const std::size_t record_index,
+                             const char *field,
+                             const std::size_t value) noexcept {
+    return append_record_line_prefix(buffer, buffer_len, offset, record_index,
+                                     field) &&
+           append_size(buffer, buffer_len, offset, value) &&
+           append_char(buffer, buffer_len, offset, '\n');
 }
 
 void clear_output(char *buffer, const std::size_t buffer_len) noexcept {
@@ -490,8 +788,29 @@ authority_status validate_lat_parse_result(
                           span_from_lat(lat_result.span));
     }
 
-    if (!span_is_ordered(span_from_lat(lat_result.span)) ||
-        !span_is_ordered(span_from_lat(lat_result.module.span))) {
+    if (lat_result.module.declaration_count > lat_result.declaration_count) {
+        return add_record(report,
+                          authority_status::invalid_input,
+                          authority_validator::lat_parse_result,
+                          authority_effect::none,
+                          "lat_module_declaration_count_out_of_bounds",
+                          span_from_lat(lat_result.module.span));
+    }
+
+    if (!lat_module_kind_counts_are_bounded(lat_result.module,
+                                            lat_result.declaration_count)) {
+        return add_record(report,
+                          authority_status::invalid_input,
+                          authority_validator::lat_parse_result,
+                          authority_effect::none,
+                          "lat_module_kind_counts_out_of_bounds",
+                          span_from_lat(lat_result.module.span));
+    }
+
+    const authority_source_span result_span = span_from_lat(lat_result.span);
+    const authority_source_span module_span = span_from_lat(lat_result.module.span);
+
+    if (!span_is_ordered(result_span) || !span_is_ordered(module_span)) {
         return add_record(report,
                           authority_status::invalid_input,
                           authority_validator::source_span,
@@ -500,26 +819,83 @@ authority_status validate_lat_parse_result(
                           span_from_lat(lat_result.span));
     }
 
+    if (!span_offsets_are_bounded(result_span, LATTICRA_LAT_SOURCE_MAX) ||
+        !span_offsets_are_bounded(module_span, LATTICRA_LAT_SOURCE_MAX)) {
+        return add_record(report,
+                          authority_status::invalid_input,
+                          authority_validator::source_span,
+                          authority_effect::none,
+                          "lat_source_span_out_of_bounds",
+                          span_from_lat(lat_result.span));
+    }
+
     for (std::size_t index = 0u; index < lat_result.declaration_count; ++index) {
-        if (!span_is_ordered(span_from_lat(lat_result.declarations[index].span))) {
+        const authority_source_span declaration_span =
+            span_from_lat(lat_result.declarations[index].span);
+        if (!lat_declaration_kind_is_known(lat_result.declarations[index].kind)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::lat_parse_result,
+                              authority_effect::none,
+                              "lat_declaration_kind_out_of_vocabulary",
+                              declaration_span);
+        }
+        if (!span_is_ordered(declaration_span)) {
             return add_record(report,
                               authority_status::invalid_input,
                               authority_validator::source_span,
                               authority_effect::none,
                               "lat_declaration_span_unordered",
-                              span_from_lat(lat_result.declarations[index].span));
+                              declaration_span);
+        }
+        if (!span_offsets_are_bounded(declaration_span, LATTICRA_LAT_SOURCE_MAX)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::source_span,
+                              authority_effect::none,
+                              "lat_declaration_span_out_of_bounds",
+                              declaration_span);
+        }
+        if (!range_is_bounded(lat_result.declarations[index].first_clause_index,
+                              lat_result.declarations[index].clause_count,
+                              lat_result.clause_count)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::lat_parse_result,
+                              authority_effect::none,
+                              "lat_declaration_clause_range_out_of_bounds",
+                              declaration_span);
         }
     }
 
     for (std::size_t index = 0u; index < lat_result.clause_count; ++index) {
+        const authority_source_span clause_span =
+            span_from_lat(lat_result.clauses[index].span);
+        if (!lat_effect_is_known(lat_result.clauses[index].effect)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::lat_parse_result,
+                              authority_effect::unknown,
+                              "lat_clause_effect_out_of_vocabulary",
+                              clause_span);
+        }
+
         const authority_effect effect = effect_from_lat(lat_result.clauses[index].effect);
-        if (!span_is_ordered(span_from_lat(lat_result.clauses[index].span))) {
+        if (!span_is_ordered(clause_span)) {
             return add_record(report,
                               authority_status::invalid_input,
                               authority_validator::source_span,
                               effect,
                               "lat_clause_span_unordered",
-                              span_from_lat(lat_result.clauses[index].span));
+                              clause_span);
+        }
+        if (!span_offsets_are_bounded(clause_span, LATTICRA_LAT_SOURCE_MAX)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::source_span,
+                              effect,
+                              "lat_clause_span_out_of_bounds",
+                              clause_span);
         }
     }
 
@@ -567,45 +943,169 @@ authority_status validate_lir_shape(const latticra_lir_module_t &lir_module,
                           span_from_l_ui(lir_module.source_span));
     }
 
-    if (!span_is_ordered(span_from_l_ui(lir_module.source_span))) {
+    if (!lir_source_kind_is_known(lir_module.source_kind) ||
+        !lir_report_classification_is_known(lir_module.report_classification) ||
+        !lir_shape_kind_is_known(lir_module.shape_kind)) {
+        return add_record(report,
+                          authority_status::invalid_input,
+                          authority_validator::lir_shape,
+                          authority_effect::none,
+                          "lir_module_enum_out_of_vocabulary",
+                          span_from_l_ui(lir_module.source_span));
+    }
+
+    if (!lir_edge_kind_counts_are_bounded(lir_module)) {
+        return add_record(report,
+                          authority_status::invalid_input,
+                          authority_validator::lir_shape,
+                          authority_effect::none,
+                          "lir_edge_kind_counts_out_of_bounds",
+                          span_from_l_ui(lir_module.source_span));
+    }
+
+    const authority_source_span module_span = span_from_l_ui(lir_module.source_span);
+
+    if (!span_is_ordered(module_span)) {
         return add_record(report,
                           authority_status::invalid_input,
                           authority_validator::source_span,
                           authority_effect::none,
                           "lir_source_span_unordered",
-                          span_from_l_ui(lir_module.source_span));
+                          module_span);
+    }
+
+    if (!span_offsets_are_bounded(module_span, LATTICRA_L_UI_SOURCE_MAX)) {
+        return add_record(report,
+                          authority_status::invalid_input,
+                          authority_validator::source_span,
+                          authority_effect::none,
+                          "lir_source_span_out_of_bounds",
+                          module_span);
     }
 
     for (std::size_t index = 0u; index < lir_module.node_count; ++index) {
-        if (!span_is_ordered(span_from_l_ui(lir_module.nodes[index].source_span))) {
+        const authority_source_span node_span =
+            span_from_l_ui(lir_module.nodes[index].source_span);
+        if (!lir_node_kind_is_known(lir_module.nodes[index].kind)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::lir_shape,
+                              authority_effect::none,
+                              "lir_node_kind_out_of_vocabulary",
+                              node_span);
+        }
+        if (!span_is_ordered(node_span)) {
             return add_record(report,
                               authority_status::invalid_input,
                               authority_validator::source_span,
                               authority_effect::none,
                               "lir_node_span_unordered",
-                              span_from_l_ui(lir_module.nodes[index].source_span));
+                              node_span);
+        }
+        if (!span_offsets_are_bounded(node_span, LATTICRA_L_UI_SOURCE_MAX)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::source_span,
+                              authority_effect::none,
+                              "lir_node_span_out_of_bounds",
+                              node_span);
+        }
+        if (!index_is_bounded(lir_module.nodes[index].parent_index,
+                              lir_module.node_count)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::lir_shape,
+                              authority_effect::none,
+                              "lir_node_parent_index_out_of_bounds",
+                              node_span);
+        }
+        if (!range_is_bounded(lir_module.nodes[index].first_child_index,
+                              lir_module.nodes[index].child_count,
+                              lir_module.node_count)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::lir_shape,
+                              authority_effect::none,
+                              "lir_node_child_range_out_of_bounds",
+                              node_span);
         }
     }
 
     for (std::size_t index = 0u; index < lir_module.edge_count; ++index) {
-        if (!span_is_ordered(span_from_l_ui(lir_module.edges[index].source_span))) {
+        const authority_source_span edge_span =
+            span_from_l_ui(lir_module.edges[index].source_span);
+        if (!lir_edge_kind_is_known(lir_module.edges[index].edge_kind)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::lir_shape,
+                              authority_effect::none,
+                              "lir_edge_kind_out_of_vocabulary",
+                              edge_span);
+        }
+        if (!span_is_ordered(edge_span)) {
             return add_record(report,
                               authority_status::invalid_input,
                               authority_validator::source_span,
                               authority_effect::none,
                               "lir_edge_span_unordered",
-                              span_from_l_ui(lir_module.edges[index].source_span));
+                              edge_span);
+        }
+        if (!span_offsets_are_bounded(edge_span, LATTICRA_L_UI_SOURCE_MAX)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::source_span,
+                              authority_effect::none,
+                              "lir_edge_span_out_of_bounds",
+                              edge_span);
+        }
+        if (!index_is_bounded(lir_module.edges[index].from_index,
+                              lir_module.node_count) ||
+            !index_is_bounded(lir_module.edges[index].to_index,
+                              lir_module.node_count)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::lir_shape,
+                              authority_effect::none,
+                              "lir_edge_node_index_out_of_bounds",
+                              edge_span);
         }
     }
 
     for (std::size_t index = 0u; index < lir_module.binding_count; ++index) {
-        if (!span_is_ordered(span_from_l_ui(lir_module.bindings[index].source_span))) {
+        const authority_source_span binding_span =
+            span_from_l_ui(lir_module.bindings[index].source_span);
+        if (!lir_binding_kind_is_known(lir_module.bindings[index].resolved_kind)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::lir_shape,
+                              authority_effect::none,
+                              "lir_binding_kind_out_of_vocabulary",
+                              binding_span);
+        }
+        if (!span_is_ordered(binding_span)) {
             return add_record(report,
                               authority_status::invalid_input,
                               authority_validator::source_span,
                               authority_effect::none,
                               "lir_binding_span_unordered",
-                              span_from_l_ui(lir_module.bindings[index].source_span));
+                              binding_span);
+        }
+        if (!span_offsets_are_bounded(binding_span, LATTICRA_L_UI_SOURCE_MAX)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::source_span,
+                              authority_effect::none,
+                              "lir_binding_span_out_of_bounds",
+                              binding_span);
+        }
+        if (!index_is_bounded(lir_module.bindings[index].field_node_index,
+                              lir_module.node_count)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::lir_shape,
+                              authority_effect::none,
+                              "lir_binding_node_index_out_of_bounds",
+                              binding_span);
         }
     }
 
@@ -618,13 +1118,32 @@ authority_status validate_lir_shape(const latticra_lir_module_t &lir_module,
                               "lir_text_length_exceeded",
                               span_from_l_ui(lir_module.texts[index].source_span));
         }
-        if (!span_is_ordered(span_from_l_ui(lir_module.texts[index].source_span))) {
+        const authority_source_span text_span =
+            span_from_l_ui(lir_module.texts[index].source_span);
+        if (!span_is_ordered(text_span)) {
             return add_record(report,
                               authority_status::invalid_input,
                               authority_validator::source_span,
                               authority_effect::none,
                               "lir_text_span_unordered",
-                              span_from_l_ui(lir_module.texts[index].source_span));
+                              text_span);
+        }
+        if (!span_offsets_are_bounded(text_span, LATTICRA_L_UI_SOURCE_MAX)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::source_span,
+                              authority_effect::none,
+                              "lir_text_span_out_of_bounds",
+                              text_span);
+        }
+        if (!index_is_bounded(lir_module.texts[index].text_node_index,
+                              lir_module.node_count)) {
+            return add_record(report,
+                              authority_status::invalid_input,
+                              authority_validator::lir_shape,
+                              authority_effect::none,
+                              "lir_text_node_index_out_of_bounds",
+                              text_span);
         }
     }
 
@@ -645,7 +1164,7 @@ authority_status classify_effect_request(const authority_request &request,
         return add_record(report,
                           authority_status::capacity_exceeded,
                           authority_validator::boundary,
-                          request.requested_effect,
+                          canonical_authority_effect(request.requested_effect),
                           "source_identity_too_large",
                           authority_source_span{});
     }
@@ -654,7 +1173,7 @@ authority_status classify_effect_request(const authority_request &request,
         return add_record(report,
                           authority_status::invalid_input,
                           authority_validator::boundary,
-                          request.requested_effect,
+                          canonical_authority_effect(request.requested_effect),
                           "source_identity_contains_nul",
                           authority_source_span{});
     }
@@ -663,9 +1182,19 @@ authority_status classify_effect_request(const authority_request &request,
         return add_record(report,
                           authority_status::invalid_input,
                           authority_validator::boundary,
-                          request.requested_effect,
+                          canonical_authority_effect(request.requested_effect),
                           "source_identity_contains_line_break",
                           authority_source_span{});
+    }
+
+    if (!authority_effect_is_known(request.requested_effect)) {
+        return add_record(report,
+                          authority_status::invalid_input,
+                          authority_validator::effect,
+                          authority_effect::unknown,
+                          "requested_effect_out_of_vocabulary",
+                          authority_source_span{},
+                          request.source_identity);
     }
 
     if (!flags_are_no_effect(report.flags)) {
@@ -752,6 +1281,10 @@ authority_status render_authority_audit_report(
         return authority_status::capacity_exceeded;
     }
 
+    if (!authority_status_is_known(report.status)) {
+        return authority_status::invalid_input;
+    }
+
     std::size_t offset = 0u;
 
     const bool ok =
@@ -792,6 +1325,13 @@ authority_status render_authority_audit_report(
 
     for (std::size_t index = 0u; index < report.record_count; ++index) {
         const authority_audit_record &record = report.records[index];
+        if (!authority_status_is_known(record.status) ||
+            !authority_validator_is_known(record.validator) ||
+            !authority_effect_is_known(record.requested_effect)) {
+            clear_output(buffer, buffer_len);
+            return authority_status::invalid_input;
+        }
+
         if (!record_text_fields_are_terminated(record)) {
             clear_output(buffer, buffer_len);
             return authority_status::invalid_input;
@@ -803,6 +1343,11 @@ authority_status render_authority_audit_report(
         }
 
         if (!record_text_fields_are_line_safe(record)) {
+            clear_output(buffer, buffer_len);
+            return authority_status::invalid_input;
+        }
+
+        if (!record_canonical_names_match(record)) {
             clear_output(buffer, buffer_len);
             return authority_status::invalid_input;
         }
@@ -828,6 +1373,26 @@ authority_status render_authority_audit_report(
             append_c_string(buffer, buffer_len, offset,
                             authority_effect_label(record.requested_effect)) &&
             append_char(buffer, buffer_len, offset, '\n') &&
+            append_record_bool_line(buffer, buffer_len, offset, index,
+                                    "no_effect", record.flags.no_effect) &&
+            append_record_bool_line(buffer, buffer_len, offset, index,
+                                    "execution_allowed",
+                                    record.flags.execution_allowed) &&
+            append_record_bool_line(buffer, buffer_len, offset, index,
+                                    "mutation_allowed",
+                                    record.flags.mutation_allowed) &&
+            append_record_bool_line(buffer, buffer_len, offset, index,
+                                    "server_allowed",
+                                    record.flags.server_allowed) &&
+            append_record_bool_line(buffer, buffer_len, offset, index,
+                                    "network_allowed",
+                                    record.flags.network_allowed) &&
+            append_record_bool_line(buffer, buffer_len, offset, index,
+                                    "recovery_allowed",
+                                    record.flags.recovery_allowed) &&
+            append_record_bool_line(buffer, buffer_len, offset, index,
+                                    "hardware_allowed",
+                                    record.flags.hardware_allowed) &&
             append_record_line_prefix(buffer, buffer_len, offset, index,
                                       "result") &&
             append_c_string(buffer, buffer_len, offset,
@@ -838,14 +1403,20 @@ authority_status render_authority_audit_report(
             append_c_string(buffer, buffer_len, offset,
                             record.denial_reason.data()) &&
             append_char(buffer, buffer_len, offset, '\n') &&
-            append_record_line_prefix(buffer, buffer_len, offset, index,
-                                      "span_start_offset") &&
-            append_size(buffer, buffer_len, offset, record.span.start_offset) &&
-            append_char(buffer, buffer_len, offset, '\n') &&
-            append_record_line_prefix(buffer, buffer_len, offset, index,
-                                      "span_end_offset") &&
-            append_size(buffer, buffer_len, offset, record.span.end_offset) &&
-            append_char(buffer, buffer_len, offset, '\n');
+            append_record_size_line(buffer, buffer_len, offset, index,
+                                    "span_start_offset",
+                                    record.span.start_offset) &&
+            append_record_size_line(buffer, buffer_len, offset, index,
+                                    "span_end_offset", record.span.end_offset) &&
+            append_record_size_line(buffer, buffer_len, offset, index,
+                                    "span_start_line", record.span.start_line) &&
+            append_record_size_line(buffer, buffer_len, offset, index,
+                                    "span_start_column",
+                                    record.span.start_column) &&
+            append_record_size_line(buffer, buffer_len, offset, index,
+                                    "span_end_line", record.span.end_line) &&
+            append_record_size_line(buffer, buffer_len, offset, index,
+                                    "span_end_column", record.span.end_column);
 
         if (!record_ok) {
             clear_output(buffer, buffer_len);

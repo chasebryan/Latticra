@@ -70,8 +70,11 @@ Known current posture:
 
 ```text
 kernel lifecycle evidence exists
-final_state=runtime-entry-frame-ready
+final_state=runtime-entry-address-space-view-ready
 external_effect_performed=0
+runtime_entry_address_space_view_allowed=0
+runtime_entry_stack_view_allowed=0
+runtime_entry_register_view_allowed=0
 runtime_entry_frame_allowed=0
 runtime_entry_admission_allowed=0
 runtime_entry_allowed=0

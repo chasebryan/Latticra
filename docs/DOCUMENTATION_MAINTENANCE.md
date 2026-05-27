@@ -1,8 +1,8 @@
 # Documentation Maintenance
 
 Status: active documentation maintenance guide
-Last updated: 2026-05-26 CDT
-Scope: public documentation entry points, status mirrors, estimate sources, static HTML mirrors, platform guides, and documentation-only validation.
+Last updated: 2026-05-27 CDT
+Scope: public documentation entry points, status records, status mirrors, estimate sources, static HTML mirrors, platform guides, change-impact radius, and documentation-only validation.
 
 ## Purpose
 
@@ -16,7 +16,12 @@ Use it when a change affects public wording, capability posture, estimates, plat
 | --- | --- | --- |
 | Project identity and broad non-claims | [`../README.md`](../README.md), [`REAL_SYSTEM_CONTRACT.md`](REAL_SYSTEM_CONTRACT.md), [`NON_CLAIMS.md`](NON_CLAIMS.md) | [`map.html`](map.html), [`latticra-system-substrate/README.md`](latticra-system-substrate/README.md), [`latticra/DOCUMENTATION_MAP.md`](latticra/DOCUMENTATION_MAP.md) |
 | Current status and estimates | [`../STATUS.md`](../STATUS.md), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), [`status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md), [`status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) | [`../README.md`](../README.md), [`status.html`](status.html), [`roadmap.html`](roadmap.html), [`index.html`](index.html) |
+| Documentation source authority | [`DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md`](DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md) | Review packets, public summaries, static HTML pages, source records, and status mirrors |
+| Documentation freshness and lifecycle | [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) | Public summaries, status records, source records, superseded records, archive boundaries, review packets, and static HTML pages |
+| Documentation change impact radius | [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) | Review packets, public entry points, source records, status records, static HTML pages, validation paths, and non-claims |
+| Documentation status records | [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md), [`status/README.md`](status/README.md) | [`../STATUS.md`](../STATUS.md), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), public summaries, static HTML pages, source records, and status-index entries |
 | Documentation navigation | [`README.md`](README.md), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md) | [`../README.md`](../README.md), [`map.html`](map.html), [`project_notes/README.md`](project_notes/README.md) |
+| Public site mirrors | [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md) | Static HTML pages under `docs/`, source Markdown records, status records, estimate records |
 | Documentation health | [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html), review packets |
 | Subsystem landing-page standard | [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) | Subsystem README files, subsystem public HTML pages, [`README.md`](README.md), [`map.html`](map.html), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md) |
 | Documentation traceability | [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html), review packets |
@@ -49,7 +54,17 @@ Do not update every file mechanically. Update only the files whose reader-facing
 
 Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) when a public-entry change needs an explicit record of touched surfaces, source records, claim classification, mirrors, validation commands, and rollback or demotion path.
 
+Use [`DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md`](DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md) when two documentation records disagree about the same claim, estimate, status, mirror, or non-claim boundary.
+
+Use [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) when status labels, `Last updated` dates, stale records, superseded records, archive boundaries, or lifecycle states change.
+
+Use [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) before deciding that a change only needs local review or that it must expand to public entries, source records, status records, mirrors, validation paths, or non-claims.
+
+Use [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) before creating or updating a status record, status-index entry, status mirror, estimate record, or public-entry alignment status note.
+
 Use [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) when a public-entry change needs a source-record, mirror, validation, or non-claim lookup.
+
+Use [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md) when static HTML pages under `docs/` change.
 
 Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) when a broad public-entry change needs a repeatable health check for findability, claim safety, traceability, validation, reader routes, platform posture, security posture, estimate hygiene, or public/source consistency.
 

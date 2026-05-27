@@ -203,6 +203,10 @@ The data classification and protection baseline is recorded in `docs/DATA_CLASSI
 
 It keeps sensitive-data collection, PII collection, telemetry export, data storage, analytics, encryption-at-rest, DLP, data retention, data deletion, breach-notification, privacy, customer-data handling, and production data-protection claims blocked until data inventory, data classification, information type categorization, sensitive-data flows, PII review, minimization, purpose, access controls, encryption decisions, retention, disposal, backup protection, report/log redaction, secret/PII scanning, DLP planning, incident handoff, and exception ownership are recorded. Latticra does not implement data collection, PII collection, telemetry export, data storage, analytics, encryption at rest, DLP, privacy engineering, data purge, retention enforcement, breach notification, or data authority.
 
+The AI and agentic automation security baseline is recorded in `docs/AI_AGENTIC_AUTOMATION_SECURITY_BASELINE.md`.
+
+It keeps model loading, prompt evaluation, inference, training, fine-tuning, model downloads, external AI service calls, MCP behavior, agentic planning, tool invocation, autonomous effects, production AI behavior, AI security claims, and AI safety claims blocked until AI system inventory, model/component provenance, external model review, prompt/context boundaries, tool invocation policy, agentic authority policy, human approval, sensitive-data review, adversarial testing, monitoring, update rollback, incident handoff, and exception ownership are recorded. Latticra does not implement model execution, prompt evaluation, MCP behavior, AI-agent execution, tool execution, autonomous action, external AI service calls, or AI runtime authority.
+
 This posture is an allocation of required work, not a compliance claim. It does not certify Latticra, accredit Latticra, make Latticra a production security product, or create a hardened runtime boundary.
 
 ## Contact and attribution

@@ -26,6 +26,9 @@ source_package_contract='docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md'
 upload_signing_contract='docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md'
 launchpad_build_contract='docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md'
 publication_non_claim_contract='docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md'
+blocker_matrix_contract='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md'
+intake_denial_contract='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md'
+intake_denial_review_contract='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md'
 static_validation='docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md'
 readiness='docs/UBUNTU_READINESS_PLAN.md'
 workflow='.github/workflows/ubuntu-ppa-archive-publication-gate-contract.yml'
@@ -37,6 +40,9 @@ require_file "$source_package_contract"
 require_file "$upload_signing_contract"
 require_file "$launchpad_build_contract"
 require_file "$publication_non_claim_contract"
+require_file "$blocker_matrix_contract"
+require_file "$intake_denial_contract"
+require_file "$intake_denial_review_contract"
 require_file "$static_validation"
 require_file "$readiness"
 require_file "$workflow"
@@ -59,6 +65,8 @@ require_contains 'ubuntu_launchpad_build_result_evidence_contract_present=1' "$c
 require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=1' "$contract"
 require_contains 'ubuntu_publication_non_claim_review_contract_present=1' "$contract"
 require_contains 'ubuntu_publication_non_claim_review_unblocked=1' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1' "$contract"
+require_contains 'ubuntu_publication_promotion_blocker_matrix_unblocked=1' "$contract"
 require_contains 'ubuntu_install_remove_evidence_unblocked=1' "$contract"
 require_contains 'local_deb_build_transcript_accepted=1' "$contract"
 require_contains 'deb_artifact_created=1' "$contract"
@@ -106,6 +114,26 @@ require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=0' "$contract
 require_contains 'ubuntu_publication_non_claim_review_contract_present=1' "$contract"
 require_contains 'ubuntu_publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence' "$contract"
 require_contains 'ubuntu_publication_non_claim_review_unblocked=0' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1' "$contract"
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' "$contract"
+require_contains 'ubuntu_publication_promotion_blocker_matrix_unblocked=0' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_contract_present=1' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_review_contract_present=1' "$contract"
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' "$contract"
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' "$contract"
+require_contains 'publication_evidence_denial_review_present=1' "$contract"
+require_contains 'publication_evidence_denial_review_decision=uphold-denial' "$contract"
+require_contains 'publication_evidence_denial_re_request_allowed=0' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_allowed=0' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_requested=0' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denied=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' "$contract"
+require_contains 'publication_transcript_intake_accepted=0' "$contract"
+require_contains 'ppa_creation_evidence_accepted=0' "$contract"
+require_contains 'launchpad_publication_evidence_accepted=0' "$contract"
+require_contains 'ubuntu_archive_submission_evidence_accepted=0' "$contract"
 require_contains 'ubuntu_install_remove_evidence_unblocked=0' "$contract"
 require_contains 'local_deb_build_transcript_accepted=0' "$contract"
 require_contains 'deb_artifact_created=0' "$contract"
@@ -139,6 +167,9 @@ require_contains 'production_installer_claim_absence_reviewed=0' "$contract"
 require_contains 'root_installer_claim_absence_reviewed=0' "$contract"
 require_contains 'publication_readiness_non_claims_reviewed=0' "$contract"
 require_contains 'publication_non_claims_reviewed=0' "$contract"
+require_contains 'ubuntu_publication_promotion_blocked=1' "$contract"
+require_contains 'ubuntu_platform_publication_evidence_accepted=0' "$contract"
+require_contains 'ubuntu_publication_result_promoted=0' "$contract"
 require_contains 'ubuntu_publication_gate_unblocked=0' "$contract"
 require_contains 'ppa_created=0' "$contract"
 require_contains 'ppa_claimed=0' "$contract"
@@ -164,6 +195,20 @@ require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=0' "$status"
 require_contains 'ubuntu_publication_non_claim_review_contract_present=1' "$status"
 require_contains 'ubuntu_publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence' "$status"
 require_contains 'ubuntu_publication_non_claim_review_unblocked=0' "$status"
+require_contains 'ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1' "$status"
+require_contains 'ubuntu_publication_promotion_blocker_matrix_contract_present=1' "$status"
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' "$status"
+require_contains 'ubuntu_publication_promotion_blocker_matrix_unblocked=0' "$status"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' "$status"
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' "$status"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' "$status"
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' "$status"
+require_contains 'publication_evidence_denial_re_request_allowed=0' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denied=1' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' "$status"
+require_contains 'ubuntu_publication_promotion_blocked=1' "$status"
+require_contains 'ubuntu_platform_publication_evidence_accepted=0' "$status"
+require_contains 'ubuntu_publication_result_promoted=0' "$status"
 require_contains 'source_package_created=0' "$status"
 require_contains 'source_package_digest_recorded=0' "$status"
 require_contains 'dsc_digest_recorded=0' "$status"
@@ -206,6 +251,15 @@ require_contains '.github/workflows/ubuntu-launchpad-build-result-evidence-contr
 require_contains 'docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' "$status"
 require_contains 'scripts/test-ubuntu-publication-non-claim-review-contract.sh' "$status"
 require_contains '.github/workflows/ubuntu-publication-non-claim-review-contract.yml' "$status"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md' "$status"
+require_contains 'scripts/test-ubuntu-ppa-archive-publication-promotion-blocker-matrix-contract.sh' "$status"
+require_contains '.github/workflows/ubuntu-ppa-archive-publication-promotion-blocker-matrix-contract.yml' "$status"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md' "$status"
+require_contains 'scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-contract.sh' "$status"
+require_contains '.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-contract.yml' "$status"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md' "$status"
+require_contains 'scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh' "$status"
+require_contains '.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.yml' "$status"
 
 require_contains 'ubuntu_ppa_archive_publication_gate_contract_present=1' "$install_remove_contract"
 require_contains 'ubuntu_ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence' "$install_remove_contract"
@@ -218,11 +272,22 @@ require_contains 'ubuntu_launchpad_build_result_evidence_contract_present=1' "$l
 require_contains 'ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence' "$launchpad_build_contract"
 require_contains 'ubuntu_publication_non_claim_review_contract_present=1' "$publication_non_claim_contract"
 require_contains 'ubuntu_publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence' "$publication_non_claim_contract"
+require_contains 'ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1' "$blocker_matrix_contract"
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' "$blocker_matrix_contract"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' "$intake_denial_contract"
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' "$intake_denial_contract"
+require_contains "$intake_denial_contract" "$contract"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' "$intake_denial_review_contract"
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' "$intake_denial_review_contract"
+require_contains "$intake_denial_review_contract" "$contract"
 
 require_contains 'docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md' "$static_validation"
 require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' "$static_validation"
 require_contains 'docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md' "$static_validation"
 require_contains 'docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' "$static_validation"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md' "$static_validation"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md' "$static_validation"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md' "$static_validation"
 require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' "$static_validation"
 require_contains 'source_package_evidence_contract_present=1' "$static_validation"
 require_contains 'source_package_evidence_status=blocked-pending-accepted-build-transcript' "$static_validation"
@@ -231,6 +296,15 @@ require_contains 'launchpad_build_result_evidence_contract_present=1' "$static_v
 require_contains 'launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence' "$static_validation"
 require_contains 'publication_non_claim_review_contract_present=1' "$static_validation"
 require_contains 'publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence' "$static_validation"
+require_contains 'ppa_archive_publication_promotion_blocker_matrix_contract_present=1' "$static_validation"
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' "$static_validation"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' "$static_validation"
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' "$static_validation"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' "$static_validation"
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' "$static_validation"
+require_contains 'publication_evidence_denial_re_request_allowed=0' "$static_validation"
+require_contains 'ubuntu_publication_evidence_intake_denied=1' "$static_validation"
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' "$static_validation"
 require_contains 'ppa_archive_publication_gate_contract_present=1' "$static_validation"
 require_contains 'ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence' "$static_validation"
 require_contains 'ubuntu_publication_gate_unblocked=0' "$static_validation"
@@ -247,21 +321,40 @@ require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=0' "$readines
 require_contains 'ubuntu_publication_non_claim_review_contract_present=1' "$readiness"
 require_contains 'ubuntu_publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence' "$readiness"
 require_contains 'ubuntu_publication_non_claim_review_unblocked=0' "$readiness"
+require_contains 'ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1' "$readiness"
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' "$readiness"
+require_contains 'ubuntu_publication_promotion_blocker_matrix_unblocked=0' "$readiness"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' "$readiness"
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' "$readiness"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' "$readiness"
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' "$readiness"
+require_contains 'publication_evidence_denial_re_request_allowed=0' "$readiness"
+require_contains 'ubuntu_publication_evidence_intake_denied=1' "$readiness"
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' "$readiness"
 require_contains 'ubuntu_publication_gate_unblocked=0' "$readiness"
 require_contains 'docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md' "$readiness"
 require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' "$readiness"
 require_contains 'docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md' "$readiness"
 require_contains 'docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' "$readiness"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md' "$readiness"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md' "$readiness"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md' "$readiness"
 require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' "$readiness"
 require_contains 'scripts/test-ubuntu-source-package-evidence-contract.sh' "$readiness"
 require_contains 'scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh' "$readiness"
 require_contains 'scripts/test-ubuntu-launchpad-build-result-evidence-contract.sh' "$readiness"
 require_contains 'scripts/test-ubuntu-publication-non-claim-review-contract.sh' "$readiness"
+require_contains 'scripts/test-ubuntu-ppa-archive-publication-promotion-blocker-matrix-contract.sh' "$readiness"
+require_contains 'scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-contract.sh' "$readiness"
+require_contains 'scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh' "$readiness"
 require_contains 'scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh' "$readiness"
 require_contains '.github/workflows/ubuntu-source-package-evidence-contract.yml' "$readiness"
 require_contains '.github/workflows/ubuntu-upload-signing-authority-evidence-contract.yml' "$readiness"
 require_contains '.github/workflows/ubuntu-launchpad-build-result-evidence-contract.yml' "$readiness"
 require_contains '.github/workflows/ubuntu-publication-non-claim-review-contract.yml' "$readiness"
+require_contains '.github/workflows/ubuntu-ppa-archive-publication-promotion-blocker-matrix-contract.yml' "$readiness"
+require_contains '.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-contract.yml' "$readiness"
+require_contains '.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.yml' "$readiness"
 require_contains '.github/workflows/ubuntu-ppa-archive-publication-gate-contract.yml' "$readiness"
 
 require_contains 'ubuntu_source_package_evidence_contract_present=1' README.md
@@ -272,21 +365,37 @@ require_contains 'ubuntu_launchpad_build_result_evidence_contract_present=1' REA
 require_contains 'ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence' README.md
 require_contains 'ubuntu_publication_non_claim_review_contract_present=1' README.md
 require_contains 'ubuntu_publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence' README.md
+require_contains 'ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1' README.md
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' README.md
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' README.md
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' README.md
+require_contains 'publication_evidence_denial_re_request_allowed=0' README.md
+require_contains 'ubuntu_publication_evidence_intake_denied=1' README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' README.md
 require_contains 'ubuntu_ppa_archive_publication_gate_contract_present=1' README.md
 require_contains 'ubuntu_ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence' README.md
 require_contains 'ubuntu_source_package_evidence_unblocked=0' README.md
 require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=0' README.md
 require_contains 'ubuntu_publication_non_claim_review_unblocked=0' README.md
+require_contains 'ubuntu_publication_promotion_blocker_matrix_unblocked=0' README.md
 require_contains 'ubuntu_publication_gate_unblocked=0' README.md
 require_contains 'docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md' packaging/ubuntu/README.md
 require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' packaging/ubuntu/README.md
 require_contains 'docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md' packaging/ubuntu/README.md
 require_contains 'docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' packaging/ubuntu/README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md' packaging/ubuntu/README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md' packaging/ubuntu/README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md' packaging/ubuntu/README.md
 require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' packaging/ubuntu/README.md
 require_contains 'source_package_evidence_contract_present=1' packaging/ubuntu/README.md
 require_contains 'source_package_evidence_status=blocked-pending-accepted-build-transcript' packaging/ubuntu/README.md
@@ -295,12 +404,24 @@ require_contains 'launchpad_build_result_evidence_contract_present=1' packaging/
 require_contains 'launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence' packaging/ubuntu/README.md
 require_contains 'publication_non_claim_review_contract_present=1' packaging/ubuntu/README.md
 require_contains 'publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence' packaging/ubuntu/README.md
+require_contains 'ppa_archive_publication_promotion_blocker_matrix_contract_present=1' packaging/ubuntu/README.md
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' packaging/ubuntu/README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' packaging/ubuntu/README.md
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' packaging/ubuntu/README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' packaging/ubuntu/README.md
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' packaging/ubuntu/README.md
+require_contains 'publication_evidence_denial_re_request_allowed=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denied=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' packaging/ubuntu/README.md
 require_contains 'ppa_archive_publication_gate_contract_present=1' packaging/ubuntu/README.md
 require_contains 'ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence' packaging/ubuntu/README.md
 require_contains 'launchpad_upload_run=0' packaging/ubuntu/README.md
 require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=0' packaging/ubuntu/README.md
 require_contains 'sh scripts/test-ubuntu-launchpad-build-result-evidence-contract.sh' docs/QUICK_START_CHEATSHEET.md
 require_contains 'sh scripts/test-ubuntu-publication-non-claim-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-promotion-blocker-matrix-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
 require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh' docs/QUICK_START_CHEATSHEET.md
 require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh' "$workflow"
 require_contains 'Ubuntu PPA Archive Publication Gate Contract' "$workflow"

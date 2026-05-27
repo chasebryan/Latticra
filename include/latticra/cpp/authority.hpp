@@ -4,9 +4,7 @@
 #include <array>
 #include <cstddef>
 #include <cstdint>
-#include <span>
 #include <string_view>
-#include <type_traits>
 
 extern "C" {
 #include "latticra/lat_parser.h"

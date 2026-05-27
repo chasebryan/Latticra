@@ -36,6 +36,9 @@ require_file docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
 require_file docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 require_file docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
 require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md
 require_file docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 require_file docs/QUICK_START_CHEATSHEET.md
 require_file README.md
@@ -57,6 +60,9 @@ require_file scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
 require_file scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
 require_file scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh
 require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh
 require_file .github/workflows/opensuse-developer-workflow.yml
 require_file .github/workflows/opensuse-rpmlint-osc-availability.yml
 require_file .github/workflows/opensuse-rpmlint-static-spec-lane.yml
@@ -72,6 +78,9 @@ require_file .github/workflows/opensuse-rpm-install-remove-transcript-contract.y
 require_file .github/workflows/opensuse-obs-publication-non-claim-review-contract.yml
 require_file .github/workflows/opensuse-rpm-validation-promotion-blocker-matrix-contract.yml
 require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-review-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.yml
 
 require_contains 'Status: developer workflow record' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
 require_contains 'local openSUSE Linux commands for productive Latticra development' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
@@ -87,6 +96,9 @@ require_contains 'sh scripts/test-opensuse-rpm-install-remove-transcript-contrac
 require_contains 'sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
 require_contains 'sh scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
 require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
 require_contains 'opensuse_developer_workflow: ok' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
 
 require_contains 'Status: planning and maintenance record' docs/OPENSUSE_READINESS_PLAN.md
@@ -111,6 +123,9 @@ require_contains 'opensuse_rpm_install_remove_transcript_contract_present=1' doc
 require_contains 'opensuse_obs_publication_non_claim_review_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_rpm_validation_promotion_blocker_matrix_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_rpm_build_evidence_intake_denial_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_review_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_obs_publication_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_official_package_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'suse_endorsement_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
@@ -143,6 +158,12 @@ require_contains 'Status: active RPM validation promotion blocker matrix contrac
 require_contains 'opensuse_rpm_validation_promotion_blocker_matrix_contract_present=1' docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
 require_contains 'Status: active RPM build-evidence intake denial contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
 require_contains 'opensuse_rpm_build_evidence_intake_denial_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial review contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_review_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition closeout contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md
 
 require_contains 'openSUSE prerequisites' README.md
 require_contains '## openSUSE integration and maintenance' README.md
@@ -163,6 +184,9 @@ require_contains 'docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md' READM
 require_contains 'docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' README.md
 require_contains 'docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md' README.md
 require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md' README.md
 require_contains 'packaging/opensuse/README.md' README.md
 require_contains 'sh scripts/test-opensuse-developer-workflow.sh' README.md
 require_contains 'sh scripts/test-opensuse-local-rpm-static-validation.sh' README.md
@@ -180,6 +204,9 @@ require_contains 'sh scripts/test-opensuse-rpm-install-remove-transcript-contrac
 require_contains 'sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh' README.md
 require_contains 'sh scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh' README.md
 require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh' README.md
 
 require_contains 'openSUSE prerequisites:' docs/QUICK_START_CHEATSHEET.md
 require_contains 'sudo zypper install -y rust cargo make gcc pkgconf' docs/QUICK_START_CHEATSHEET.md
@@ -190,6 +217,9 @@ require_contains 'sh scripts/test-opensuse-rpm-install-remove-transcript-contrac
 require_contains 'sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
 require_contains 'sh scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh' docs/QUICK_START_CHEATSHEET.md
 require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh' docs/QUICK_START_CHEATSHEET.md
 require_contains 'openSUSE:' installer/README.md
 
 require_contains 'Status: local-only packaging draft' packaging/opensuse/README.md
@@ -212,5 +242,14 @@ require_contains 'opensuse_platform_build_evidence_accepted=0' packaging/opensus
 require_contains 'opensuse_rpm_build_evidence_intake_denial_contract_present=1' packaging/opensuse/README.md
 require_contains 'build_evidence_intake_denial_state=denied-no-effect' packaging/opensuse/README.md
 require_contains 'opensuse_build_evidence_intake_denied=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_review_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_review_state=reviewed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_state=closed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_closed=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_allowed=0' packaging/opensuse/README.md
+require_contains 'denial_re_request_allowed=0' packaging/opensuse/README.md
 
 printf 'opensuse_developer_workflow: ok\n'

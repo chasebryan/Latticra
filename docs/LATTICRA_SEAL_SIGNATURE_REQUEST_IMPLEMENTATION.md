@@ -9,6 +9,8 @@ This document records the first Latticra Seal signature request metadata impleme
 
 The implementation consumes sealed report-envelope metadata and classifies whether the requested metadata-only signature request remains eligible for a future signing path.
 
+When sealed report-envelope metadata carries crypto graduation metadata, the signature request copies that evidence forward and requires it to remain passed, standard-aligned, and authority-neutral.
+
 The signature-request surface is request classification, not signing and not verification.
 
 ## Added files
@@ -53,6 +55,12 @@ The implementation:
 
 ```text
 accepts sealed report-envelope metadata
+copies crypto graduation gate metadata when present
+requires crypto_graduation_gate_passed=1 when crypto_graduation_gate_present=1
+requires standard_expectations_met=1 when crypto_graduation_gate_present=1
+requires local_verify_graduated=1 when crypto_graduation_gate_present=1
+requires receipt_promotion_graduated=1 when crypto_graduation_gate_present=1
+requires authority_promotion_allowed=0 when crypto_graduation_gate_present=1
 requires envelope_ready=1
 requires envelope_state=sealed-report-only or envelope_state=sealed-evaluate-only
 requires signature_performed=0
@@ -66,6 +74,26 @@ accepts requested signature metadata
 classifies Ed25519-development as signature_request_state=requested-metadata-only
 sets signature_request_ready=1 only for metadata-only sealed report/evaluate envelope surfaces
 renders deterministic signature request metadata
+```
+
+Crypto-bound signature request metadata records:
+
+```text
+crypto_graduation_profile=latticra-seal-crypto-graduation-gate/0.1
+assurance_baseline_profile=latticra-cryptographic-assurance-key-management/0.1
+crypto_graduation_gate_state=graduated-authority-neutral
+crypto_graduation_gate_present=1
+crypto_graduation_gate_passed=1
+standard_expectations_met=1
+local_verify_graduated=1
+receipt_promotion_graduated=1
+authority_promotion_allowed=0
+signature_request_state=requested-metadata-only
+signature_request_ready=1
+signature_performed=0
+verification_performed=0
+private_key_handling=0
+runtime_authority_granted=0
 ```
 
 ## Effect and runtime boundary
@@ -94,6 +122,8 @@ The implementation fails closed:
 null output -> LATTICRA_STATUS_NULL_ARGUMENT
 null report envelope -> invalid-input
 invalid report envelope -> invalid-envelope
+failed crypto graduation gate evidence -> denied-crypto-graduation-gate
+authority-bearing crypto graduation evidence -> denied-crypto-graduation-gate
 envelope_ready=0 -> denied-envelope
 envelope_state not sealed-report-only or sealed-evaluate-only -> denied-envelope
 missing requested signature -> missing-requested-signature
@@ -151,6 +181,6 @@ seal signature request invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is bounded no-effect key parsing implementation or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
+The next valid Latticra Seal slice is signer handoff or policy decision report propagation from ready crypto-graduation-gated signing authorization metadata, still without signing unless separately implemented and guarded.
 
 That future slice must not add private-key handling, signing, verification, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately contracted, implemented, and guarded.

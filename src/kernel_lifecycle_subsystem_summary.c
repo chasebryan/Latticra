@@ -23,6 +23,22 @@ static void seed_summary_result(
     result->status = LATTICRA_STATUS_OK;
     summary_copy(result->summary_status, sizeof(result->summary_status), "pending");
     summary_copy(result->final_state, sizeof(result->final_state), "created");
+    summary_copy(result->nucleus_coupling_status,
+        sizeof(result->nucleus_coupling_status), "pending");
+    summary_copy(result->os_readiness_status, sizeof(result->os_readiness_status),
+        "os-metadata-pending");
+    result->nucleus_coupling_ready = 0;
+    result->nucleus_no_effect_chain_ok = 0;
+    result->nucleus_boot_allowed = 0;
+    result->nucleus_runtime_entry_allowed = 0;
+    result->nucleus_scheduler_run_entry_allowed = 0;
+    result->nucleus_context_switch_allowed = 0;
+    result->nucleus_register_save_allowed = 0;
+    result->nucleus_register_restore_allowed = 0;
+    result->nucleus_host_effect_allowed = 0;
+    result->runtime_entry_address_space_view_allowed = 0;
+    result->runtime_entry_stack_view_allowed = 0;
+    result->runtime_entry_register_view_allowed = 0;
     result->runtime_entry_frame_allowed = 0;
     result->runtime_entry_admission_allowed = 0;
     result->runtime_entry_allowed = 0;
@@ -95,7 +111,7 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_default_request(
 
     request->lifecycle_request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
     request->lifecycle_request.target_state =
-        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY;
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY;
     request->lifecycle_request.max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
 }
@@ -140,6 +156,18 @@ static const char *lifecycle_relation_for(
             return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_INITIALIZED) ?
                 "boot-sequence-seeded" : "boot-sequence-not-ready";
         case LATTICRA_KERNEL_SUBSYSTEM_RUNTIME:
+            if (state_at_or_after(final_state,
+                    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY)) {
+                return "runtime-entry-address-space-view-ready";
+            }
+            if (state_at_or_after(final_state,
+                    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY)) {
+                return "runtime-entry-stack-view-ready";
+            }
+            if (state_at_or_after(final_state,
+                    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY)) {
+                return "runtime-entry-register-view-ready";
+            }
             if (state_at_or_after(final_state,
                     LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY)) {
                 return "runtime-entry-frame-ready";
@@ -287,10 +315,46 @@ static void fill_summary_entries(
     }
 }
 
+static latticra_status_t evaluate_nucleus_coupling(
+    latticra_kernel_lifecycle_subsystem_summary_result_t *result) {
+    latticra_nucleus_task_plan_result_t plan;
+    latticra_kernel_runtime_entry_register_view_request_t register_view_request;
+    latticra_kernel_runtime_entry_register_view_result_t register_view;
+    latticra_nucleus_kernel_coupling_request_t coupling_request;
+    latticra_status_t status;
+
+    status = latticra_nucleus_kernel_coupling_default_nucleus_plan(&plan);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    status = latticra_kernel_runtime_entry_register_view_default_request(
+        &register_view_request);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    status = latticra_kernel_runtime_entry_register_view_evaluate(
+        &register_view_request, &register_view);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    status = latticra_nucleus_kernel_coupling_default_request(&coupling_request);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    coupling_request.nucleus_plan = &plan;
+    coupling_request.kernel_registry = &result->registry;
+    coupling_request.runtime_register_view = &register_view;
+    return latticra_nucleus_kernel_coupling_evaluate(
+        &coupling_request, &result->nucleus_coupling);
+}
+
 static void finalize_summary(
     latticra_kernel_lifecycle_subsystem_summary_result_t *result) {
+    const latticra_nucleus_kernel_coupling_record_t *coupling =
+        &result->nucleus_coupling.record;
+
     summary_copy(result->final_state, sizeof(result->final_state),
         latticra_kernel_state_label(result->lifecycle.final_state));
+    summary_copy(result->nucleus_coupling_status,
+        sizeof(result->nucleus_coupling_status), coupling->readiness_status);
+    summary_copy(result->os_readiness_status, sizeof(result->os_readiness_status),
+        coupling->os_readiness_status);
 
     result->lifecycle_step_count = result->lifecycle.step_count;
     result->lifecycle_state_change_count = result->lifecycle.state_change_count;
@@ -299,6 +363,22 @@ static void finalize_summary(
     result->external_effect_performed = result->lifecycle.external_effect_performed;
     result->network_allowed = result->lifecycle.network_allowed;
     result->registry_no_effect = result->registry.no_effect;
+    result->nucleus_coupling_ready =
+        coupling->classification ==
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_REPORT_ONLY_READY &&
+        coupling->denial == LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_OK;
+    result->nucleus_no_effect_chain_ok = coupling->no_effect_chain_ok;
+    result->nucleus_boot_allowed = coupling->boot_allowed;
+    result->nucleus_runtime_entry_allowed = coupling->runtime_entry_allowed;
+    result->nucleus_scheduler_run_entry_allowed =
+        coupling->scheduler_run_entry_allowed;
+    result->nucleus_context_switch_allowed = coupling->context_switch_allowed;
+    result->nucleus_register_save_allowed = coupling->register_save_allowed;
+    result->nucleus_register_restore_allowed = coupling->register_restore_allowed;
+    result->nucleus_host_effect_allowed = coupling->host_effect_allowed;
+    result->runtime_entry_address_space_view_allowed = 0;
+    result->runtime_entry_stack_view_allowed = 0;
+    result->runtime_entry_register_view_allowed = 0;
     result->runtime_entry_frame_allowed = 0;
     result->runtime_entry_admission_allowed = 0;
     result->runtime_entry_allowed = 0;
@@ -354,15 +434,25 @@ static void finalize_summary(
     result->no_external_effect_chain =
         result->external_effect_performed == 0 &&
         result->network_allowed == 0 &&
-        result->registry_no_effect == 1;
+        result->registry_no_effect == 1 &&
+        result->nucleus_no_effect_chain_ok == 1 &&
+        result->nucleus_boot_allowed == 0 &&
+        result->nucleus_runtime_entry_allowed == 0 &&
+        result->nucleus_scheduler_run_entry_allowed == 0 &&
+        result->nucleus_context_switch_allowed == 0 &&
+        result->nucleus_register_save_allowed == 0 &&
+        result->nucleus_register_restore_allowed == 0 &&
+        result->nucleus_host_effect_allowed == 0;
 
     fill_summary_entries(result);
 
     summary_copy(result->summary_status, sizeof(result->summary_status),
         (result->lifecycle_complete == 1 &&
          result->lifecycle.final_state ==
-            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY &&
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY &&
          result->registry_no_effect == 1 &&
+         result->nucleus_coupling_ready == 1 &&
+         strcmp(result->os_readiness_status, "os-metadata-ready") == 0 &&
          result->external_effect_performed == 0 &&
          result->network_allowed == 0) ?
             "summary-ready" : "summary-incomplete");
@@ -393,6 +483,14 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_evaluate(
     if (status != LATTICRA_STATUS_OK) {
         result->status = status;
         summary_copy(result->summary_status, sizeof(result->summary_status), "registry-failed");
+        return status;
+    }
+
+    status = evaluate_nucleus_coupling(result);
+    if (status != LATTICRA_STATUS_OK) {
+        result->status = status;
+        summary_copy(result->summary_status, sizeof(result->summary_status),
+            "nucleus-coupling-failed");
         return status;
     }
 
@@ -451,6 +549,20 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         "lifecycle_network_allowed=%d\n"
         "machine_network_allowed=%d\n"
         "registry_no_effect=%d\n"
+        "nucleus_coupling_status=%s\n"
+        "os_readiness_status=%s\n"
+        "nucleus_coupling_ready=%d\n"
+        "nucleus_no_effect_chain_ok=%d\n"
+        "nucleus_boot_allowed=%d\n"
+        "nucleus_runtime_entry_allowed=%d\n"
+        "nucleus_scheduler_run_entry_allowed=%d\n"
+        "nucleus_context_switch_allowed=%d\n"
+        "nucleus_register_save_allowed=%d\n"
+        "nucleus_register_restore_allowed=%d\n"
+        "nucleus_host_effect_allowed=%d\n"
+        "runtime_entry_address_space_view_allowed=%d\n"
+        "runtime_entry_stack_view_allowed=%d\n"
+        "runtime_entry_register_view_allowed=%d\n"
         "runtime_entry_frame_allowed=%d\n"
         "runtime_entry_admission_allowed=%d\n"
         "runtime_entry_allowed=%d\n"
@@ -519,6 +631,20 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         result->lifecycle.network_allowed,
         result->lifecycle.machine.network_allowed,
         result->registry_no_effect,
+        result->nucleus_coupling_status,
+        result->os_readiness_status,
+        result->nucleus_coupling_ready,
+        result->nucleus_no_effect_chain_ok,
+        result->nucleus_boot_allowed,
+        result->nucleus_runtime_entry_allowed,
+        result->nucleus_scheduler_run_entry_allowed,
+        result->nucleus_context_switch_allowed,
+        result->nucleus_register_save_allowed,
+        result->nucleus_register_restore_allowed,
+        result->nucleus_host_effect_allowed,
+        result->runtime_entry_address_space_view_allowed,
+        result->runtime_entry_stack_view_allowed,
+        result->runtime_entry_register_view_allowed,
         result->runtime_entry_frame_allowed,
         result->runtime_entry_admission_allowed,
         result->runtime_entry_allowed,

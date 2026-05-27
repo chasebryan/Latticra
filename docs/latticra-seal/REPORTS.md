@@ -52,6 +52,34 @@ seal_operator_receipt_report=1
 
 The operator receipt report is a bundled denied metadata receipt. It does not grant authority, execute tools, read or write host data, use the network, or perform effects.
 
+## Local integrity report files
+
+The default `make seal` path uses the native CLI and writes:
+
+```text
+reports/latticra-seal-cli-report.txt
+reports/latticra-seal-cli-hashes.txt
+```
+
+The native CLI validates that the `[report]` output declarations in
+`latticra.seal` match these generated artifact paths before it returns PASS.
+It refuses symlinked, non-directory, or group/world-writable report directories
+before writing evidence artifacts.
+
+`latticra-seal baseline` promotes the generated hash list into
+`latticra.seal.lock` through a temporary lockfile, and refuses symlinked or
+non-regular lock paths.
+`latticra-seal verify` treats the lockfile as canonical: entries must use the
+native two-space hash/path separator, project-relative safe paths, and strict
+path sort order.
+
+The legacy shell smoke lane remains available through `make seal-smoke` and writes:
+
+```text
+reports/latticra-seal-report.txt
+reports/latticra-seal-file-hashes.txt
+```
+
 ## Report modes
 
 ### report-only

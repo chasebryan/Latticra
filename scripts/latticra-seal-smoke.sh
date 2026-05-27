@@ -124,6 +124,16 @@ fi
 
 section "Secret content marker scan"
 
+secret_content_pattern="$(
+  printf '%s|%s|%s|%s|%s|%s' \
+    "$(printf '%s%s%s' 'BEGIN ' 'PRIVATE' ' KEY')" \
+    "$(printf '%s%s%s' 'BEGIN ' 'RSA PRIVATE' ' KEY')" \
+    "$(printf '%s%s%s' 'BEGIN ' 'OPENSSH PRIVATE' ' KEY')" \
+    "$(printf '%s%s' 'OPENAI' '_API_KEY=')" \
+    "$(printf '%s%s' 'GITHUB' '_TOKEN=')" \
+    "$(printf '%s%s' 'AWS' '_SECRET_ACCESS_KEY=')"
+)"
+
 secret_content_hits="$(
   grep -RIlE \
     --exclude-dir=.git \
@@ -140,7 +150,7 @@ secret_content_hits="$(
     --exclude-dir=reports \
     --exclude='latticra.seal' \
     --exclude='latticra-seal-smoke.sh' \
-    'BEGIN PRIVATE KEY|BEGIN RSA PRIVATE KEY|BEGIN OPENSSH PRIVATE KEY|OPENAI_API_KEY=|GITHUB_TOKEN=|AWS_SECRET_ACCESS_KEY=' \
+    "$secret_content_pattern" \
     . 2>/dev/null || true
 )"
 

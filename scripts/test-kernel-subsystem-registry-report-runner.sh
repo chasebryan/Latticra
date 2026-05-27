@@ -35,6 +35,7 @@ grep -Fq 'subsystem[2].name=scheduler' "$report_txt"
 grep -Fq 'subsystem[3].name=memory' "$report_txt"
 grep -Fq 'subsystem[8].name=security' "$report_txt"
 grep -Fq 'subsystem[6].network_allowed=0' "$report_txt"
+grep -Fq 'subsystem[6].no_effect=1' "$report_txt"
 grep -Fq 'no_effect=1' "$report_txt"
 
 printf 'kernel_subsystem_registry_report_runner: ok\n'

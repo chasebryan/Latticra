@@ -12,7 +12,7 @@ extern "C" {
 #define LATTICRA_RUNTIME_BOUNDARY_LABEL_MAX 64u
 #define LATTICRA_RUNTIME_BOUNDARY_REASON_MAX 128u
 #define LATTICRA_RUNTIME_BOUNDARY_SOURCE_IDENTITY_MAX 128u
-#define LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX 8192u
+#define LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX 16384u
 #define LATTICRA_RUNTIME_BOUNDARY_RECORD_MAX 16u
 
 typedef enum {
@@ -267,6 +267,9 @@ typedef struct {
     latticra_lat_source_span_t lat_pipeline_first_comment_span;
     latticra_lir_source_kind_t lat_lir_source_kind;
     char lat_lir_module_name[LATTICRA_LIR_NAME_MAX];
+    char lat_lir_card_name[LATTICRA_LIR_NAME_MAX];
+    char lat_lir_effect[LATTICRA_LIR_NAME_MAX];
+    char lat_lir_boundary[LATTICRA_LIR_NAME_MAX];
     latticra_lir_report_classification_t lat_lir_report_classification;
     latticra_lir_shape_kind_t lat_lir_shape_kind;
     latticra_l_ui_source_span_t lat_lir_source_span;
@@ -287,6 +290,9 @@ typedef struct {
     char lat_lir_first_lat_node_value[LATTICRA_LIR_VALUE_MAX];
     char lat_lir_first_lat_node_operator[LATTICRA_LIR_NAME_MAX];
     char lat_lir_first_lat_node_binding[LATTICRA_LIR_BINDING_MAX];
+    size_t lat_lir_first_lat_node_parent_index;
+    size_t lat_lir_first_lat_node_first_child_index;
+    size_t lat_lir_first_lat_node_child_count;
     latticra_l_ui_source_span_t lat_lir_first_lat_node_span;
     int lat_lir_has_first_transition_node;
     size_t lat_lir_first_transition_node_index;
@@ -295,6 +301,9 @@ typedef struct {
     char lat_lir_first_transition_node_value[LATTICRA_LIR_VALUE_MAX];
     char lat_lir_first_transition_node_operator[LATTICRA_LIR_NAME_MAX];
     char lat_lir_first_transition_node_binding[LATTICRA_LIR_BINDING_MAX];
+    size_t lat_lir_first_transition_node_parent_index;
+    size_t lat_lir_first_transition_node_first_child_index;
+    size_t lat_lir_first_transition_node_child_count;
     latticra_l_ui_source_span_t lat_lir_first_transition_node_span;
     int lat_lir_no_effect_chain_ok;
     unsigned int lat_lir_evidence_level;
@@ -326,12 +335,18 @@ typedef struct {
     char lat_lir_first_transition_source_edge_from_node_value[LATTICRA_LIR_VALUE_MAX];
     char lat_lir_first_transition_source_edge_from_node_operator[LATTICRA_LIR_NAME_MAX];
     char lat_lir_first_transition_source_edge_from_node_binding[LATTICRA_LIR_BINDING_MAX];
+    size_t lat_lir_first_transition_source_edge_from_node_parent_index;
+    size_t lat_lir_first_transition_source_edge_from_node_first_child_index;
+    size_t lat_lir_first_transition_source_edge_from_node_child_count;
     latticra_l_ui_source_span_t lat_lir_first_transition_source_edge_from_node_span;
     latticra_lir_node_kind_t lat_lir_first_transition_source_edge_to_node_kind;
     char lat_lir_first_transition_source_edge_to_node_name[LATTICRA_LIR_NAME_MAX];
     char lat_lir_first_transition_source_edge_to_node_value[LATTICRA_LIR_VALUE_MAX];
     char lat_lir_first_transition_source_edge_to_node_operator[LATTICRA_LIR_NAME_MAX];
     char lat_lir_first_transition_source_edge_to_node_binding[LATTICRA_LIR_BINDING_MAX];
+    size_t lat_lir_first_transition_source_edge_to_node_parent_index;
+    size_t lat_lir_first_transition_source_edge_to_node_first_child_index;
+    size_t lat_lir_first_transition_source_edge_to_node_child_count;
     latticra_l_ui_source_span_t lat_lir_first_transition_source_edge_to_node_span;
     latticra_l_ui_source_span_t lat_lir_first_transition_source_edge_span;
     int lat_lir_has_lat_state_nodes;

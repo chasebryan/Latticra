@@ -46,6 +46,25 @@ Policy should deny:
 
 The policy regression lane should prove that unsafe or unsupported states are denied.
 
+The native CLI reads filename deny patterns from
+`[policy.deny_filenames].patterns` and content marker parts from
+`[policy.deny_contents].pattern_parts` in `latticra.seal`. Missing, duplicate,
+or malformed deny policy arrays must fail closed. Missing or doubled comma
+separators are malformed. Filename deny patterns must not include path
+separators, control characters, backslashes, bare `*`, or multiple wildcards.
+
+The native CLI reads required file paths from
+`[policy.required_files].paths` in `latticra.seal`. Missing, duplicate, or
+malformed required-file arrays must fail closed. Required-file paths must stay
+relative to the project root and must not include `.` or `..` segments,
+wildcards, control characters, backslashes, absolute paths, or directory paths.
+
+The native CLI also reads `[paths].include` and `[paths].exclude` from
+`latticra.seal` before policy and digest scans. Unsupported path scopes must
+fail closed. Exclude patterns must stay relative to the project root and must
+not include `.` or `..` path segments, control characters, backslashes,
+absolute paths, or multiple wildcards.
+
 Expected local command:
 
 ```sh

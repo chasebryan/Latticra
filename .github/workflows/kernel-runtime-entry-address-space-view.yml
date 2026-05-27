@@ -1,0 +1,26 @@
+name: Kernel runtime entry address space view
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  kernel-runtime-entry-address-space-view:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - name: Run kernel runtime-entry address-space-view guard
+        run: sh scripts/test-kernel-runtime-entry-address-space-view.sh
+
+      - name: Run kernel runtime-entry address-space-view report runner
+        run: sh scripts/test-kernel-runtime-entry-address-space-view-report-runner.sh

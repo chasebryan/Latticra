@@ -106,6 +106,12 @@ require_contains 'prompt_evaluated=0' "$handoff_script"
 require_contains 'token_generation_performed=0' "$handoff_script"
 require_contains 'inference_performed=0' "$handoff_script"
 require_contains 'outside Nadia prompt-evaluation-runtime-handoff boundary' "$handoff_script"
+require_contains 'write_file "$OUT_DIR/latest-prompt-evaluation-runtime-handoff-contract.txt" < "$REPORT"' "$handoff_script"
+require_contains 'refusing to overwrite symlink report:' "$handoff_script"
+if grep -Fq 'cp "$REPORT" "$OUT_DIR/latest-prompt-evaluation-runtime-handoff-contract.txt"' "$handoff_script"; then
+  printf 'nadia prompt evaluation runtime handoff contract stage 29: latest report must use guarded write_file\n' >&2
+  exit 1
+fi
 
 require_contains 'prompt-evaluation-runtime-handoff' "$apply_script"
 require_contains 'scripts/nadia-prompt-evaluation-runtime-handoff-contract.sh' "$apply_script"
@@ -263,6 +269,26 @@ require_contains 'inference_performed=0' "$report"
 require_contains 'qa_dialogue_generated=0' "$report"
 require_contains 'sexual_request_refusal=always' "$report"
 require_contains 'manipulation_resistance=required' "$report"
+
+symlink_out="$tmpdir/latticra-nadia-stage29-symlink-out"
+symlink_stdout="$tmpdir/latticra-nadia-stage29-symlink.out"
+symlink_target="$tmpdir/latticra-nadia-stage29-outside-target.txt"
+mkdir -p "$symlink_out"
+printf '%s\n' outside >"$symlink_target"
+ln -s "$symlink_target" "$symlink_out/latest-prompt-evaluation-runtime-handoff-contract.txt"
+
+if NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_TIMESTAMP=stage29-symlink sh "$handoff_script" \
+  --prompt-evaluation-input "$input" \
+  --request-class awareness-education \
+  --handoff-family operator-reviewed-prompt-evaluation-runtime-handoff \
+  --handoff-format contract-only-offline-runtime-handoff \
+  --output "$symlink_out" >"$symlink_stdout" 2>&1; then
+  printf 'nadia prompt evaluation runtime handoff contract stage 29: symlink latest report was overwritten\n' >&2
+  exit 1
+fi
+require_contains 'refusing to overwrite symlink report:' "$symlink_stdout"
+grep -Fqx outside "$symlink_target"
+test -L "$symlink_out/latest-prompt-evaluation-runtime-handoff-contract.txt"
 
 if sh "$handoff_script" \
   --prompt-evaluation-input "$input" \

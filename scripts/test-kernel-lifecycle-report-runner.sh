@@ -43,6 +43,9 @@ cc $CFLAGS \
   src/kernel_scheduler_run_entry.c \
   src/kernel_runtime_entry_admission.c \
   src/kernel_runtime_entry_frame.c \
+  src/kernel_runtime_entry_register_view.c \
+  src/kernel_runtime_entry_stack_view.c \
+  src/kernel_runtime_entry_address_space_view.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -54,14 +57,14 @@ cc $CFLAGS \
 grep -Fq 'LATTICRA KERNEL LIFECYCLE REPORT' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'policy_status=gate-allowed' "$report_txt"
-grep -Fq 'final_state=runtime-entry-frame-ready' "$report_txt"
-grep -Fq 'step_count=25' "$report_txt"
-grep -Fq 'state_change_count=25' "$report_txt"
+grep -Fq 'final_state=runtime-entry-address-space-view-ready' "$report_txt"
+grep -Fq 'step_count=28' "$report_txt"
+grep -Fq 'state_change_count=28' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
 grep -Fq 'network_allowed=0' "$report_txt"
 grep -Fq 'machine_network_allowed=0' "$report_txt"
-grep -Fq 'machine_log_count=25' "$report_txt"
+grep -Fq 'machine_log_count=28' "$report_txt"
 grep -Fq 'evidence_level=10' "$report_txt"
 grep -Fq 'log[0].from=created' "$report_txt"
 grep -Fq 'log[0].to=initialized' "$report_txt"
@@ -146,5 +149,17 @@ grep -Fq 'log[24].from=runtime-entry-admission-ready' "$report_txt"
 grep -Fq 'log[24].to=runtime-entry-frame-ready' "$report_txt"
 grep -Fq 'log[24].state_change_performed=1' "$report_txt"
 grep -Fq 'log[24].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[25].from=runtime-entry-frame-ready' "$report_txt"
+grep -Fq 'log[25].to=runtime-entry-register-view-ready' "$report_txt"
+grep -Fq 'log[25].state_change_performed=1' "$report_txt"
+grep -Fq 'log[25].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[26].from=runtime-entry-register-view-ready' "$report_txt"
+grep -Fq 'log[26].to=runtime-entry-stack-view-ready' "$report_txt"
+grep -Fq 'log[26].state_change_performed=1' "$report_txt"
+grep -Fq 'log[26].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[27].from=runtime-entry-stack-view-ready' "$report_txt"
+grep -Fq 'log[27].to=runtime-entry-address-space-view-ready' "$report_txt"
+grep -Fq 'log[27].state_change_performed=1' "$report_txt"
+grep -Fq 'log[27].external_effect_performed=0' "$report_txt"
 
 printf 'kernel_lifecycle_report_runner: ok\n'

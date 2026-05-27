@@ -33,6 +33,17 @@ tool_available() {
   fi
 }
 
+grub_mkrescue_binary() {
+  for candidate in "${GRUB_MKRESCUE:-}" grub-mkrescue x86_64-elf-grub-mkrescue; do
+    [ -n "$candidate" ] || continue
+    if command -v "$candidate" >/dev/null 2>&1; then
+      command -v "$candidate"
+      return
+    fi
+  done
+  printf 'missing\n'
+}
+
 MANIFEST="installer/manifests/latticra-os-image-release.toml"
 
 while [ "$#" -gt 0 ]; do
@@ -65,6 +76,14 @@ require_manifest_field 'os_image_artifact_manifest_validation_present = true'
 require_manifest_field 'os_image_artifact_manifest_candidate_present = false'
 require_manifest_field 'os_image_build_preflight_present = true'
 require_manifest_field 'os_image_build_execution_allowed = false'
+require_manifest_field 'os_image_input_bundle_manifest_generator_present = true'
+require_manifest_field 'boot_seed_contract_present = true'
+require_manifest_field 'boot_seed_source_present = true'
+require_manifest_field 'boot_seed_build_script_present = true'
+require_manifest_field 'boot_seed_qemu_smoke_script_present = true'
+require_manifest_field 'boot_seed_vm_image_build_script_present = true'
+require_manifest_field 'boot_seed_vm_qcow2_artifact_present = false'
+require_manifest_field 'boot_seed_full_os_ready = false'
 require_manifest_field 'os_image_toolchain_contract_present = true'
 require_manifest_field 'os_image_toolchain_preflight_present = true'
 require_manifest_field 'os_image_toolchain_ready = false'
@@ -89,7 +108,9 @@ require_manifest_field 'profile = "x86_64-qemu-iso"'
 QEMU_SYSTEM_X86_64_AVAILABLE=$(tool_available qemu-system-x86_64)
 QEMU_IMG_AVAILABLE=$(tool_available qemu-img)
 XORRISO_AVAILABLE=$(tool_available xorriso)
-GRUB_MKRESCUE_AVAILABLE=$(tool_available grub-mkrescue)
+GRUB_MKRESCUE_BINARY=$(grub_mkrescue_binary)
+GRUB_MKRESCUE_AVAILABLE=0
+[ "$GRUB_MKRESCUE_BINARY" != "missing" ] && GRUB_MKRESCUE_AVAILABLE=1
 DD_AVAILABLE=$(tool_available dd)
 
 cat <<REPORT
@@ -108,6 +129,14 @@ os_image_artifact_manifest_validation_present=1
 os_image_artifact_manifest_candidate_present=0
 os_image_build_preflight_present=1
 os_image_build_execution_allowed=0
+os_image_input_bundle_manifest_generator_present=1
+boot_seed_contract_present=1
+boot_seed_source_present=1
+boot_seed_build_script_present=1
+boot_seed_qemu_smoke_script_present=1
+boot_seed_vm_image_build_script_present=1
+boot_seed_vm_qcow2_artifact_present=0
+boot_seed_full_os_ready=0
 os_image_toolchain_preflight_present=1
 os_image_toolchain_ready=0
 usb_write_command_template_present=1
@@ -123,6 +152,7 @@ qemu_system_x86_64_available=$QEMU_SYSTEM_X86_64_AVAILABLE
 qemu_img_available=$QEMU_IMG_AVAILABLE
 xorriso_available=$XORRISO_AVAILABLE
 grub_mkrescue_available=$GRUB_MKRESCUE_AVAILABLE
+grub_mkrescue_path=$GRUB_MKRESCUE_BINARY
 dd_available=$DD_AVAILABLE
 hardware_install_ready=0
 full_os_install_ready=0

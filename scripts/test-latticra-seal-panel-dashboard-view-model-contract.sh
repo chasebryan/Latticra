@@ -86,7 +86,9 @@ require_contains 'stale_source_default_decision=deny' "$contract"
 require_contains 'unknown_source_default_decision=deny' "$contract"
 require_contains 'operator_review_required_for_any_missing_source=1' "$contract"
 require_contains 'authority_absent_for_all_rows=1' "$contract"
-require_contains 'The next valid Latticra Seal slice is a Seal Panel dashboard view-model implementation plan or a signed receipt proof path.' "$contract"
+require_contains 'docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN.md' "$contract"
+require_contains 'docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md' "$contract"
+require_contains 'The next valid Latticra Seal slice is a signed receipt proof path that remains verification-only until trust-root and revocation boundaries are implemented.' "$contract"
 require_contains 'sh scripts/test-latticra-seal-panel-dashboard-view-model-contract.sh' .github/workflows/latticra-seal-panel-dashboard-view-model-contract.yml
 require_contains 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' .github/workflows/latticra-seal-panel-dashboard-view-model-contract.yml
 

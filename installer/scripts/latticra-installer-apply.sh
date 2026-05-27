@@ -456,6 +456,10 @@ mode=$MODE
 production_installer_ready=0
 root_authority=0
 network_authority=0
+network_authority_denied=1
+network_fetch_authority=0
+network_fetch_authority_denied=1
+network_performed=0
 runtime_enforcement_authority=0
 MARKER
 }
@@ -494,6 +498,8 @@ LC_PACKAGES_CONTRACT_PROFILE=$(cfg_section lc packages_contract_profile lc-packa
 LC_INIT_CONTRACT_PROFILE=$(cfg_section lc init_contract_profile lc-init-v0)
 LC_SERVICES_CONTRACT_PROFILE=$(cfg_section lc services_contract_profile lc-services-v0)
 LC_SERVICE_SCHEMA_CONTRACT_PROFILE=$(cfg_section lc service_schema_contract_profile lc-service-schema-v0)
+LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE=$(cfg_section lc service_definitions_contract_profile lc-service-definitions-v0)
+LC_SERVICE_PLAN_CONTRACT_PROFILE=$(cfg_section lc service_plan_contract_profile lc-service-plan-v0)
 LC_RECEIPT_REQUEST_CONTRACT_PROFILE=$(cfg_section lc receipt_request_contract_profile lc-receipt-request-v0)
 LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE=$(cfg_section lc receipt_payload_schema_profile lc-receipt-payload-schema-v0)
 LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE=$(cfg_section lc receipt_payload_artifact_draft_profile lc-receipt-payload-artifact-draft-v0)
@@ -522,6 +528,8 @@ LC_REQUIRE_PACKAGES_CONTRACT=$(cfg_section lc require_packages_contract true)
 LC_REQUIRE_INIT_CONTRACT=$(cfg_section lc require_init_contract true)
 LC_REQUIRE_SERVICES_CONTRACT=$(cfg_section lc require_services_contract true)
 LC_REQUIRE_SERVICE_SCHEMA_CONTRACT=$(cfg_section lc require_service_schema_contract true)
+LC_REQUIRE_SERVICE_DEFINITIONS_CONTRACT=$(cfg_section lc require_service_definitions_contract true)
+LC_REQUIRE_SERVICE_PLAN_CONTRACT=$(cfg_section lc require_service_plan_contract true)
 LC_REQUIRE_RECEIPT_REQUEST_CONTRACT=$(cfg_section lc require_receipt_request_contract true)
 LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA=$(cfg_section lc require_receipt_payload_schema true)
 LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT=$(cfg_section lc require_receipt_payload_artifact_draft true)
@@ -613,6 +621,8 @@ for authority_field in \
   "LC init_contract_profile=$LC_INIT_CONTRACT_PROFILE" \
   "LC services_contract_profile=$LC_SERVICES_CONTRACT_PROFILE" \
   "LC service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE" \
+  "LC service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE" \
+  "LC service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE" \
   "LC receipt_request_contract_profile=$LC_RECEIPT_REQUEST_CONTRACT_PROFILE" \
   "LC receipt_payload_schema_profile=$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE" \
   "LC receipt_payload_artifact_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE" \
@@ -681,6 +691,7 @@ payload_dir=$PAYLOAD_DIR
 production_installer_ready=0
 root_authority=0
 network_authority=0
+network_authority_denied=1
 runtime_enforcement_authority=0
 
 [updater]
@@ -692,6 +703,8 @@ require_dry_run_before_apply=$UPDATER_REQUIRE_DRY_RUN_BEFORE_APPLY
 reuse_installer_engine=$UPDATER_REUSE_INSTALLER_ENGINE
 write_update_receipt=$UPDATER_WRITE_UPDATE_RECEIPT
 network_authority=0
+network_fetch_authority=0
+network_fetch_authority_denied=1
 root_authority=0
 system_mutation_authority=0
 update_apply_mode=guarded-local-prefix-reinstall
@@ -761,6 +774,12 @@ services_contract_present=1
 service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE
 service_schema_contract_status=metadata-only-contract
 service_schema_contract_present=1
+service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE
+service_definitions_contract_status=metadata-only-contract
+service_definitions_contract_present=1
+service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE
+service_plan_contract_status=metadata-only-contract
+service_plan_contract_present=1
 panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE
 write_config_file=$LC_INSTALL_WRITE_CONFIG_FILE
 write_profile_presets=$LC_INSTALL_WRITE_PROFILE_PRESETS
@@ -783,6 +802,8 @@ packages_contract_profile=$LC_PACKAGES_CONTRACT_PROFILE
 init_contract_profile=$LC_INIT_CONTRACT_PROFILE
 services_contract_profile=$LC_SERVICES_CONTRACT_PROFILE
 service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE
+service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE
+service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE
 receipt_request_contract_profile=$LC_RECEIPT_REQUEST_CONTRACT_PROFILE
 receipt_payload_schema_profile=$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE
 receipt_payload_artifact_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE
@@ -810,6 +831,8 @@ packages_contract_required=$LC_REQUIRE_PACKAGES_CONTRACT
 init_contract_required=$LC_REQUIRE_INIT_CONTRACT
 services_contract_required=$LC_REQUIRE_SERVICES_CONTRACT
 service_schema_contract_required=$LC_REQUIRE_SERVICE_SCHEMA_CONTRACT
+service_definitions_contract_required=$LC_REQUIRE_SERVICE_DEFINITIONS_CONTRACT
+service_plan_contract_required=$LC_REQUIRE_SERVICE_PLAN_CONTRACT
 receipt_request_contract_required=$LC_REQUIRE_RECEIPT_REQUEST_CONTRACT
 receipt_payload_schema_required=$LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA
 receipt_payload_artifact_draft_required=$LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT
@@ -836,6 +859,8 @@ packages_contract_status=metadata-only-contract
 init_contract_status=metadata-only-contract
 services_contract_status=metadata-only-contract
 service_schema_contract_status=metadata-only-contract
+service_definitions_contract_status=metadata-only-contract
+service_plan_contract_status=metadata-only-contract
 receipt_request_contract_status=metadata-only-contract
 receipt_payload_schema_status=metadata-only-schema
 receipt_payload_artifact_draft_status=metadata-only-draft
@@ -875,8 +900,8 @@ public_name=Nadia
 interactive_name=Nadia
 implementation_name=Nadia Witness Foundation
 documentation_code_name=Nadia Witness Foundation
-stage=48-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract
-previous_stage=47-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract
+stage=51-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract
+previous_stage=50-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract
 component_selected=$NADIA_OFFLINE_AI
 context_engine_stage=1-local-context-engine
 context_pack_command=scripts/nadia-context-pack.sh
@@ -1797,6 +1822,54 @@ prompt_evaluation_result_release_receipt_review_disposition_release_receipt_revi
 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_findings_recorded=0
 requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract=1
 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_stage=49-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract.sh
+installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_stage=contract-only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_status=contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_authority=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_allowed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_performed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_record_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_findings_recorded=0
+requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_stage=50-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract.sh
+installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_stage=contract-only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_status=contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_authority=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_allowed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_performed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_record_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_published=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_created=0
+requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract=1
+command=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt stage=51
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_stage=51-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract.sh
+installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_stage=contract-only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_status=contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_authority=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_allowed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_performed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_record_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_published=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_signed=0
+requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1
 requires_context_pack=1
 requires_runtime_profile=1
 human_dignity_principle=1
@@ -1880,10 +1953,17 @@ mode=$MODE
 result=ok
 install_prefix=$PREFIX
 dry_run=true
+production_installer_ready=0
+root_authority=0
+network_authority=0
+network_authority_denied=1
+runtime_enforcement_authority=0
 updater_panel_owned=1
 updater_source_strategy=$UPDATER_SOURCE_STRATEGY
 updater_update_channel=$UPDATER_UPDATE_CHANNEL
 updater_allow_network_fetch=$UPDATER_ALLOW_NETWORK_FETCH
+updater_network_fetch_authority=0
+updater_network_fetch_authority_denied=1
 updater_require_dry_run_before_apply=$UPDATER_REQUIRE_DRY_RUN_BEFORE_APPLY
 updater_reuse_installer_engine=$UPDATER_REUSE_INSTALLER_ENGINE
 updater_write_update_receipt=$UPDATER_WRITE_UPDATE_RECEIPT
@@ -1918,8 +1998,14 @@ lc_init_contract_profile=$LC_INIT_CONTRACT_PROFILE
 lc_init_contract_present=true
 lc_services_contract_profile=$LC_SERVICES_CONTRACT_PROFILE
 lc_services_contract_present=true
+lc_service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE
+lc_service_plan_contract_present=true
 lc_service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE
 lc_service_schema_contract_present=true
+lc_service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE
+lc_service_definitions_contract_present=true
+lc_service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE
+lc_service_plan_contract_present=true
 lc_install_user_wrapper=$LC_INSTALL_USER_WRAPPER
 lc_allow_external_host_commands=$LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS
 plan_file=$PLAN
@@ -2154,6 +2240,8 @@ packages_contract_profile = "$LC_PACKAGES_CONTRACT_PROFILE"
 init_contract_profile = "$LC_INIT_CONTRACT_PROFILE"
 services_contract_profile = "$LC_SERVICES_CONTRACT_PROFILE"
 service_schema_contract_profile = "$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
+service_definitions_contract_profile = "$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
+service_plan_contract_profile = "$LC_SERVICE_PLAN_CONTRACT_PROFILE"
 receipt_request_contract_profile = "$LC_RECEIPT_REQUEST_CONTRACT_PROFILE"
 receipt_payload_schema_profile = "$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
 receipt_payload_artifact_draft_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE"
@@ -2181,6 +2269,8 @@ packages_contract_required = $LC_REQUIRE_PACKAGES_CONTRACT
 init_contract_required = $LC_REQUIRE_INIT_CONTRACT
 services_contract_required = $LC_REQUIRE_SERVICES_CONTRACT
 service_schema_contract_required = $LC_REQUIRE_SERVICE_SCHEMA_CONTRACT
+service_definitions_contract_required = $LC_REQUIRE_SERVICE_DEFINITIONS_CONTRACT
+service_plan_contract_required = $LC_REQUIRE_SERVICE_PLAN_CONTRACT
 receipt_request_contract_required = $LC_REQUIRE_RECEIPT_REQUEST_CONTRACT
 receipt_payload_schema_required = $LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA
 receipt_payload_artifact_draft_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT
@@ -2207,6 +2297,7 @@ packages_contract_status = "metadata-only-contract"
 init_contract_status = "metadata-only-contract"
 services_contract_status = "metadata-only-contract"
 service_schema_contract_status = "metadata-only-contract"
+service_definitions_contract_status = "metadata-only-contract"
 receipt_request_contract_status = "metadata-only-contract"
 receipt_payload_schema_status = "metadata-only-schema"
 receipt_payload_artifact_draft_status = "metadata-only-draft"
@@ -2255,9 +2346,13 @@ packages_contract_present = true
 init_contract_profile = "$LC_INIT_CONTRACT_PROFILE"
 services_contract_profile = "$LC_SERVICES_CONTRACT_PROFILE"
 service_schema_contract_profile = "$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
+service_definitions_contract_profile = "$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
+service_plan_contract_profile = "$LC_SERVICE_PLAN_CONTRACT_PROFILE"
 init_contract_present = true
 services_contract_present = true
 service_schema_contract_present = true
+service_definitions_contract_present = true
+service_plan_contract_present = true
 panel_embedded_console = $LC_INSTALL_PANEL_EMBEDDED_CONSOLE
 write_config_file = $LC_INSTALL_WRITE_CONFIG_FILE
 write_profile_presets = $LC_INSTALL_WRITE_PROFILE_PRESETS
@@ -2299,9 +2394,13 @@ packages_contract_present = true
 init_contract_profile = "$LC_INIT_CONTRACT_PROFILE"
 services_contract_profile = "$LC_SERVICES_CONTRACT_PROFILE"
 service_schema_contract_profile = "$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
+service_definitions_contract_profile = "$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
+service_plan_contract_profile = "$LC_SERVICE_PLAN_CONTRACT_PROFILE"
 init_contract_present = true
 services_contract_present = true
 service_schema_contract_present = true
+service_definitions_contract_present = true
+service_plan_contract_present = true
 panel_embedded_console = $LC_INSTALL_PANEL_EMBEDDED_CONSOLE
 write_config_file = $LC_INSTALL_WRITE_CONFIG_FILE
 write_profile_presets = $LC_INSTALL_WRITE_PROFILE_PRESETS
@@ -2334,6 +2433,8 @@ packages_contract_profile = "lc-packages-v0"
 init_contract_profile = "lc-init-v0"
 services_contract_profile = "lc-services-v0"
 service_schema_contract_profile = "lc-service-schema-v0"
+service_definitions_contract_profile = "lc-service-definitions-v0"
+service_plan_contract_profile = "lc-service-plan-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2361,6 +2462,8 @@ packages_contract_required = true
 init_contract_required = true
 services_contract_required = true
 service_schema_contract_required = true
+service_definitions_contract_required = true
+service_plan_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -2400,6 +2503,8 @@ packages_contract_profile = "lc-packages-v0"
 init_contract_profile = "lc-init-v0"
 services_contract_profile = "lc-services-v0"
 service_schema_contract_profile = "lc-service-schema-v0"
+service_definitions_contract_profile = "lc-service-definitions-v0"
+service_plan_contract_profile = "lc-service-plan-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2427,6 +2532,8 @@ packages_contract_required = true
 init_contract_required = true
 services_contract_required = true
 service_schema_contract_required = true
+service_definitions_contract_required = true
+service_plan_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -2463,6 +2570,8 @@ packages_contract_profile = "lc-packages-v0"
 init_contract_profile = "lc-init-v0"
 services_contract_profile = "lc-services-v0"
 service_schema_contract_profile = "lc-service-schema-v0"
+service_definitions_contract_profile = "lc-service-definitions-v0"
+service_plan_contract_profile = "lc-service-plan-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2490,6 +2599,8 @@ packages_contract_required = true
 init_contract_required = true
 services_contract_required = true
 service_schema_contract_required = true
+service_definitions_contract_required = true
+service_plan_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -2526,6 +2637,8 @@ packages_contract_profile = "lc-packages-v0"
 init_contract_profile = "lc-init-v0"
 services_contract_profile = "lc-services-v0"
 service_schema_contract_profile = "lc-service-schema-v0"
+service_definitions_contract_profile = "lc-service-definitions-v0"
+service_plan_contract_profile = "lc-service-plan-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2553,6 +2666,8 @@ packages_contract_required = true
 init_contract_required = true
 services_contract_required = true
 service_schema_contract_required = true
+service_definitions_contract_required = true
+service_plan_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -2589,6 +2704,8 @@ packages_contract_profile = "lc-packages-v0"
 init_contract_profile = "lc-init-v0"
 services_contract_profile = "lc-services-v0"
 service_schema_contract_profile = "lc-service-schema-v0"
+service_definitions_contract_profile = "lc-service-definitions-v0"
+service_plan_contract_profile = "lc-service-plan-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2616,6 +2733,8 @@ packages_contract_required = true
 init_contract_required = true
 services_contract_required = true
 service_schema_contract_required = true
+service_definitions_contract_required = true
+service_plan_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -2965,6 +3084,8 @@ service_health_check_allowed = false
 process_supervision_allowed = false
 pid1_claim_allowed = false
 service_schema_contract_required = true
+service_definitions_contract_required = true
+service_plan_contract_required = true
 init_contract_required = true
 rootfs_contract_required = true
 packages_contract_required = true
@@ -2977,6 +3098,8 @@ seal_capability_labels_required = true
 receipt_required_before_service_registry_runtime = true
 command_surface = "lc services"
 related_service_schema_command = "lc service-schema"
+related_service_definitions_command = "lc service-definitions"
+related_service_plan_command = "lc service-plan"
 related_init_command = "lc init"
 related_packages_command = "lc packages"
 related_rootfs_command = "lc rootfs"
@@ -3027,6 +3150,7 @@ service_restart_allowed = false
 service_reload_allowed = false
 service_health_check_allowed = false
 process_supervision_allowed = false
+service_definitions_contract_required = true
 services_contract_required = true
 init_contract_required = true
 rootfs_contract_required = true
@@ -3040,6 +3164,7 @@ seal_capability_labels_required = true
 receipt_required_before_service_schema_runtime = true
 command_surface = "lc service-schema"
 related_services_command = "lc services"
+related_service_definitions_command = "lc service-definitions"
 related_init_command = "lc init"
 related_os_contract_command = "lc os-contract"
 promotion_gate = "lc_service_schema_contract_before_service_definition_validation"
@@ -3055,6 +3180,133 @@ runtime_enforcement_allowed = false
 boot_allowed = false
 production_os_claim = false
 LC_SERVICE_SCHEMA_CONTRACT
+  write_file "$PREFIX/share/latticra/lc/services/definitions.toml" 0644 <<LC_SERVICE_DEFINITIONS_CONTRACT
+contract_name = "Latticra Console Service Definitions Contract"
+contract_profile = "$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
+contract_status = "metadata-only"
+service_definitions_contract_present = true
+service_definitions_kind = "lc-service-definition-stubs-envelope"
+service_definitions_root = "$LC_INSTALL_SHARE_PATH/services"
+service_definitions_state_source = "metadata-only"
+service_definitions_file = "definitions.toml"
+service_definitions_artifact_present = true
+service_definitions_read_allowed = false
+service_definitions_write_allowed = false
+service_definition_stub_count = 0
+service_definition_stub_catalog_present = true
+service_definition_stub_materialized = false
+service_definition_stub_read_allowed = false
+service_definition_stub_write_allowed = false
+service_definition_validation_allowed = false
+service_definition_activation_allowed = false
+service_dependency_resolution_allowed = false
+service_authority_binding_allowed = false
+service_registry_write_allowed = false
+service_manifest_write_allowed = false
+service_enable_allowed = false
+service_disable_allowed = false
+service_start_allowed = false
+service_stop_allowed = false
+service_restart_allowed = false
+service_reload_allowed = false
+service_health_check_allowed = false
+process_supervision_allowed = false
+service_schema_contract_required = true
+services_contract_required = true
+init_contract_required = true
+rootfs_contract_required = true
+packages_contract_required = true
+namespace_contract_required = true
+workspace_contract_required = true
+session_contract_required = true
+os_base_contract_required = true
+runtime_boundary_required = true
+seal_capability_labels_required = true
+receipt_required_before_service_definitions_runtime = true
+command_surface = "lc service-definitions"
+related_service_schema_command = "lc service-schema"
+related_services_command = "lc services"
+related_service_plan_command = "lc service-plan"
+related_init_command = "lc init"
+related_os_contract_command = "lc os-contract"
+promotion_gate = "lc_service_definitions_contract_before_service_definition_materialization"
+no_effect = true
+file_read_allowed = false
+file_write_allowed = false
+host_process_launch_allowed = false
+host_file_read_allowed = false
+host_file_write_allowed = false
+host_mutation_allowed = false
+network_allowed = false
+runtime_enforcement_allowed = false
+boot_allowed = false
+production_os_claim = false
+LC_SERVICE_DEFINITIONS_CONTRACT
+  write_file "$PREFIX/share/latticra/lc/services/plan.toml" 0644 <<LC_SERVICE_PLAN_CONTRACT
+contract_name = "Latticra Console Service Plan Contract"
+contract_profile = "$LC_SERVICE_PLAN_CONTRACT_PROFILE"
+contract_status = "metadata-only"
+service_plan_contract_present = true
+service_plan_kind = "lc-service-activation-plan-envelope"
+service_plan_root = "$LC_INSTALL_SHARE_PATH/services"
+service_plan_state_source = "metadata-only"
+service_plan_file = "plan.toml"
+service_plan_artifact_present = true
+service_plan_created = false
+service_plan_read_allowed = false
+service_plan_write_allowed = false
+service_plan_materialized = false
+service_plan_materialization_allowed = false
+service_plan_review_required = true
+service_definition_input_allowed = false
+service_definition_stub_materialized = false
+service_definition_validation_allowed = false
+service_dependency_resolution_allowed = false
+service_startup_order_resolution_allowed = false
+service_authority_binding_allowed = false
+service_activation_allowed = false
+service_registry_write_allowed = false
+service_manifest_write_allowed = false
+service_enable_allowed = false
+service_disable_allowed = false
+service_start_allowed = false
+service_stop_allowed = false
+service_restart_allowed = false
+service_reload_allowed = false
+service_health_check_allowed = false
+process_supervision_allowed = false
+service_definitions_contract_required = true
+service_schema_contract_required = true
+services_contract_required = true
+init_contract_required = true
+rootfs_contract_required = true
+packages_contract_required = true
+namespace_contract_required = true
+workspace_contract_required = true
+session_contract_required = true
+os_base_contract_required = true
+runtime_boundary_required = true
+seal_capability_labels_required = true
+receipt_required_before_service_plan_runtime = true
+command_surface = "lc service-plan"
+related_service_definitions_command = "lc service-definitions"
+related_service_schema_command = "lc service-schema"
+related_services_command = "lc services"
+related_init_command = "lc init"
+related_os_contract_command = "lc os-contract"
+promotion_gate = "lc_service_plan_contract_before_dependency_resolution_or_activation"
+no_effect = true
+file_read_allowed = false
+file_write_allowed = false
+host_process_launch_allowed = false
+host_file_read_allowed = false
+host_file_write_allowed = false
+host_mutation_allowed = false
+network_allowed = false
+runtime_enforcement_allowed = false
+boot_allowed = false
+production_os_claim = false
+LC_SERVICE_PLAN_CONTRACT
   write_file "$PREFIX/share/latticra/lc/host-embedding/contract.toml" 0644 <<LC_HOST_CONTRACT
 contract_name = "Latticra Console Host Embedding Contract"
 contract_profile = "$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
@@ -3150,7 +3402,7 @@ receipt_contract_profile = "$LC_RECEIPT_CONTRACT_PROFILE"
 signature_request_profile = "latticra-seal-signature-request/0.1"
 requested_receipt_profile = "latticra-seal-verified-receipt/0.1"
 requested_capability = "verified-receipt-report"
-requested_surfaces = "profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,host-contract,host-inventory,host-adapter,runtime-boundary"
+requested_surfaces = "profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary"
 receipt_payload_schema_profile = "$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
 receipt_payload_schema_required = $LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA
 receipt_payload_schema_present = true
@@ -3682,6 +3934,10 @@ services_contract_receipt_required = $LC_REQUIRE_SERVICES_CONTRACT
 services_contract_present = true
 service_schema_contract_receipt_required = $LC_REQUIRE_SERVICE_SCHEMA_CONTRACT
 service_schema_contract_present = true
+service_definitions_contract_receipt_required = $LC_REQUIRE_SERVICE_DEFINITIONS_CONTRACT
+service_definitions_contract_present = true
+service_plan_contract_receipt_required = $LC_REQUIRE_SERVICE_PLAN_CONTRACT
+service_plan_contract_present = true
 receipt_request_contract_required = $LC_REQUIRE_RECEIPT_REQUEST_CONTRACT
 receipt_request_contract_present = true
 receipt_payload_schema_required = $LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA
@@ -3718,6 +3974,8 @@ packages_contract_command = "lc packages"
 init_contract_command = "lc init"
 services_contract_command = "lc services"
 service_schema_contract_command = "lc service-schema"
+service_definitions_contract_command = "lc service-definitions"
+service_plan_contract_command = "lc service-plan"
 seal_signature_planned = true
 seal_signature_present = false
 seal_signing_authority_present = false
@@ -3726,7 +3984,7 @@ receipt_signed = false
 receipt_hash_recorded = false
 receipt_path_recorded = false
 receipt_format = "metadata-only-contract"
-receipt_surfaces = "profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,host-contract,host-inventory,host-adapter,runtime-boundary"
+receipt_surfaces = "profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary"
 promotion_gate = "lc_receipts_before_host_adapter_or_os_base"
 command_surface = "lc receipts"
 no_effect = true
@@ -3874,6 +4132,16 @@ share/latticra/lc/services/definition-schema.toml. It names the future service
 definition envelope before validation, dependency resolution, service authority
 binding, registry writes, or service control are allowed.
 
+The LC service definitions lane includes a contract file at
+share/latticra/lc/services/definitions.toml. It records the future service
+definition stub catalog before any service definition is materialized, read,
+validated, activated, written into a registry, or used for service control.
+
+The LC service plan lane includes a contract file at
+share/latticra/lc/services/plan.toml. It records the future service activation
+plan envelope before dependency resolution, startup ordering, activation,
+service starts, or process supervision are allowed.
+
 The host-embedding lane includes a contract file at
 share/latticra/lc/host-embedding/contract.toml. That contract is an evidence
 gate only; it does not grant host adapter, file, process, network, runtime, or
@@ -3973,6 +4241,8 @@ name=lc packages category=core effect=none capability=lc.packages.contract
 name=lc init category=core effect=none capability=lc.init.contract
 name=lc services category=core effect=none capability=lc.services.contract
 name=lc service-schema category=core effect=none capability=lc.service.schema.contract
+name=lc service-definitions category=core effect=none capability=lc.service.definitions.contract
+name=lc service-plan category=core effect=none capability=lc.service.plan.contract
 name=lc profiles category=core effect=none capability=lc.core.profiles
 name=lc receipts category=core effect=none capability=lc.receipts.inspect
 name=lc receipt-request category=core effect=none capability=lc.receipt.request
@@ -4061,7 +4331,10 @@ if bool_true "$NADIA_OFFLINE_AI"; then
     "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition" \
     "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release" \
     "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt" \
-    "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review"
+    "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review" \
+    "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition" \
+    "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release" \
+    "$PREFIX/share/latticra/nadia/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt"
   write_file "$PREFIX/etc/latticra/nadia.toml" 0644 <<'NADIACONF'
 name = "Nadia"
 system_name = "Latticra Nadia Witness Foundation"
@@ -4069,9 +4342,9 @@ public_name = "Nadia"
 interactive_name = "Nadia"
 implementation_name = "Nadia Witness Foundation"
 documentation_code_name = "Nadia Witness Foundation"
-stage = "48-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract"
-previous_stage = "47-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"
-mode = "offline-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract"
+stage = "51-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"
+previous_stage = "50-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract"
+mode = "offline-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"
 console_bridge = "panel-aware"
 productivity_ledger = "operator-reviewed-local"
 context_engine_stage = "1-local-context-engine"
@@ -4975,6 +5248,53 @@ prompt_evaluation_result_release_receipt_review_disposition_release_receipt_revi
 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_findings_recorded = false
 requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract = true
 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract = true
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_stage = "49-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract"
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_command = "scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract.sh"
+installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_command = "latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition"
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_stage = "contract-only"
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_status = "contract_only"
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_authority = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_allowed = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_recorded = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_created = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_performed = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_record_created = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_decision_recorded = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_findings_recorded = false
+requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract = true
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract = true
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_stage = "50-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract"
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_command = "scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract.sh"
+installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_command = "latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release"
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_stage = "contract-only"
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_status = "contract_only"
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_authority = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_allowed = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_recorded = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_created = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_performed = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_record_created = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_decision_recorded = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_published = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_created = false
+requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract = true
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract = true
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_stage = "51-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_command = "scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract.sh"
+installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_command = "latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt"
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_stage = "contract-only"
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_status = "contract_only"
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_authority = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_allowed = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_recorded = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_created = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_performed = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_record_created = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_decision_recorded = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_published = false
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_signed = false
+requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract = true
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract = true
 human_dignity_principle = true
 survivor_witness_respect = true
 community_awareness_posture = true
@@ -4995,13 +5315,13 @@ NADIACONF
   write_file "$PREFIX/share/latticra/nadia/README.md" 0644 <<'NADIAREADME'
 # Nadia Offline AI Foundation
 
-Nadia is the offline AI foundation for Latticra, currently installed through the Stage-48 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
+Nadia is the offline AI foundation for Latticra, currently installed through the Stage-51 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release receipt contract metadata lane. Documentation and code identify this implementation as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
 
 The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, and harm-aware development visible in the system direction.
 
-This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, tokenization-boundary, tokenizer-specification, tokenizer-manifest, tokenizer-artifact-inventory, tokenizer-artifact-measurement, tokenizer-artifact-verification, tokenizer-artifact-binding, tokenizer-runtime-attachment, prompt-tokenization, prompt-token-sequence, context-window-assembly, prompt-evaluation-input, prompt-evaluation-runtime-handoff, prompt-evaluation-invocation, prompt-evaluation-result, prompt-evaluation-result-review, prompt-evaluation-result-disposition, prompt-evaluation-result-release, prompt-evaluation-result-release-receipt, prompt-evaluation-result-release-receipt-review, prompt-evaluation-result-release-receipt-review-disposition, prompt-evaluation-result-release-receipt-review-disposition-release, prompt-evaluation-result-release-receipt-review-disposition-release-receipt, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review, and productivity-ledger paths.
+This installed component reserves local context-pack, runtime-profile, prompt-plan, mode-validation, protective-safety, tool-preflight, prompt-contract, model-registry, inference-readiness, runtime-invocation, model-load, prompt-receipt, prompt-materialization, awareness-dialogue, prompt-evaluation-handoff, tokenization-boundary, tokenizer-specification, tokenizer-manifest, tokenizer-artifact-inventory, tokenizer-artifact-measurement, tokenizer-artifact-verification, tokenizer-artifact-binding, tokenizer-runtime-attachment, prompt-tokenization, prompt-token-sequence, context-window-assembly, prompt-evaluation-input, prompt-evaluation-runtime-handoff, prompt-evaluation-invocation, prompt-evaluation-result, prompt-evaluation-result-review, prompt-evaluation-result-disposition, prompt-evaluation-result-release, prompt-evaluation-result-release-receipt, prompt-evaluation-result-release-receipt-review, prompt-evaluation-result-release-receipt-review-disposition, prompt-evaluation-result-release-receipt-review-disposition-release, prompt-evaluation-result-release-receipt-review-disposition-release-receipt, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition, and productivity-ledger paths.
 
-It can generate local context packs when the operator runs latticra-nadia context-pack and contract metadata when the operator runs latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, create prompt tokens, record prompt token sequences, record prompt token IDs, record prompt token order, record prompt token offsets, assemble context windows, create prompt evaluation inputs, create prompt evaluation runtime handoff requests, create prompt evaluation invocation requests, create prompt evaluation result records, create prompt evaluation result review records, create prompt evaluation result disposition records, create release records, record review decisions, record review findings, record review dispositions, record disposition decisions, record disposition findings, disposition-release receipt review decisions, publish disposition releases, package disposition releases, create disposition-release receipts, record disposition-release receipt records, emit disposition-release receipts, sign receipts, publish receipts, package receipts, record release decisions, publish releases, package releases, create release receipts, record release receipts, record release receipt reviews, record release receipt review dispositions, record model output, perform runtime handoff, invoke runtimes, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn runtime processes, create runtime sessions, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source. Prompt-evaluation-input metadata records future prompt evaluation runtime handoff requirements, prompt-evaluation-runtime-handoff metadata records future prompt evaluation invocation requirements, prompt-evaluation-invocation metadata records future prompt evaluation result requirements, prompt-evaluation-result metadata records future prompt evaluation result review requirements, prompt-evaluation-result-review metadata records future prompt evaluation result disposition requirements, prompt-evaluation-result-disposition metadata records future prompt evaluation result release requirements, prompt-evaluation-result-release metadata records future prompt evaluation result release receipt requirements, prompt-evaluation-result-release-receipt metadata records future prompt evaluation result release receipt review requirements, prompt-evaluation-result-release-receipt-review metadata records future prompt evaluation result release receipt review disposition requirements, prompt-evaluation-result-release-receipt-review-disposition metadata records future prompt evaluation result release receipt review disposition release requirements, prompt-evaluation-result-release-receipt-review-disposition-release metadata records future prompt evaluation result release receipt review disposition release receipt requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt metadata records future prompt evaluation result release receipt review disposition release receipt review requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review metadata records future prompt evaluation result release receipt review disposition release receipt review disposition requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt requirements, and prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review requirements, and prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition requirements; none grants prompt evaluation, dialogue generation, inference, runtime handoff, runtime invocation, or tool execution authority.
+It can generate local context packs when the operator runs latticra-nadia context-pack and contract metadata when the operator runs latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt. It does not provide sexual user functionality, generate dialogue, receive prompt text, read prompt text, read prompt sources, allocate prompt buffers, tokenize prompts, create prompt tokens, record prompt token sequences, record prompt token IDs, record prompt token order, record prompt token offsets, assemble context windows, create prompt evaluation inputs, create prompt evaluation runtime handoff requests, create prompt evaluation invocation requests, create prompt evaluation result records, create prompt evaluation result review records, create prompt evaluation result disposition records, create release records, record review decisions, record review findings, record review dispositions, record disposition decisions, record disposition findings, disposition-release receipt review decisions, publish disposition releases, package disposition releases, create disposition-release receipts, record disposition-release receipt records, emit disposition-release receipts, sign receipts, publish receipts, package receipts, record release decisions, publish releases, package releases, create release receipts, record release receipts, record release receipt reviews, record release receipt review dispositions, record model output, perform runtime handoff, invoke runtimes, materialize prompts, evaluate prompts, select models, open model files, map model weights, install model weights, load model weights, spawn runtime processes, create runtime sessions, generate tokens, run inference, execute tools, use the network, train or distill a model, or mutate source. Prompt-evaluation-input metadata records future prompt evaluation runtime handoff requirements, prompt-evaluation-runtime-handoff metadata records future prompt evaluation invocation requirements, prompt-evaluation-invocation metadata records future prompt evaluation result requirements, prompt-evaluation-result metadata records future prompt evaluation result review requirements, prompt-evaluation-result-review metadata records future prompt evaluation result disposition requirements, prompt-evaluation-result-disposition metadata records future prompt evaluation result release requirements, prompt-evaluation-result-release metadata records future prompt evaluation result release receipt requirements, prompt-evaluation-result-release-receipt metadata records future prompt evaluation result release receipt review requirements, prompt-evaluation-result-release-receipt-review metadata records future prompt evaluation result release receipt review disposition requirements, prompt-evaluation-result-release-receipt-review-disposition metadata records future prompt evaluation result release receipt review disposition release requirements, prompt-evaluation-result-release-receipt-review-disposition-release metadata records future prompt evaluation result release receipt review disposition release receipt requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt metadata records future prompt evaluation result release receipt review disposition release receipt review requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review metadata records future prompt evaluation result release receipt review disposition release receipt review disposition requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition requirements, prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release requirements, and prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt requirements; none grants prompt evaluation, dialogue generation, inference, runtime handoff, runtime invocation, or tool execution authority.
 NADIAREADME
 fi
 
@@ -5076,7 +5396,9 @@ case "\${1:-status}" in
         echo "network_self_update_ready=0"
         echo "signed_update_delivery_ready=0"
         echo "network_fetch_authority=0"
+        echo "network_fetch_authority_denied=1"
         echo "network_authority=0"
+        echo "network_authority_denied=1"
         echo "root_authority=0"
         echo "system_mutation_authority=0"
         ;;
@@ -5086,6 +5408,7 @@ case "\${1:-status}" in
         echo "updater_source_strategy=$UPDATER_SOURCE_STRATEGY"
         echo "updater_update_channel=$UPDATER_UPDATE_CHANNEL"
         echo "network_authority=0"
+        echo "network_authority_denied=1"
         exec "\$HOME/.local/bin/latticra-panel"
         ;;
       dry-run|preview|apply)
@@ -5093,6 +5416,7 @@ case "\${1:-status}" in
         echo "requested_action=\$UPDATER_ACTION"
         echo "Open Latticra Panel and use the Updater workspace."
         echo "network_authority=0"
+        echo "network_authority_denied=1"
         exec "\$HOME/.local/bin/latticra-panel"
         ;;
       *)
@@ -5232,6 +5556,8 @@ render_lc_man() {
   echo "  \$LC_COMMAND_WRAPPER init"
   echo "  \$LC_COMMAND_WRAPPER services"
   echo "  \$LC_COMMAND_WRAPPER service-schema"
+  echo "  \$LC_COMMAND_WRAPPER service-definitions"
+  echo "  \$LC_COMMAND_WRAPPER service-plan"
   echo "  \$LC_COMMAND_WRAPPER profiles"
   echo "  \$LC_COMMAND_WRAPPER receipts"
   echo "  \$LC_COMMAND_WRAPPER receipt-request"
@@ -5368,12 +5694,18 @@ case "\${1:-status}" in
     echo "init_contract_profile=$LC_INIT_CONTRACT_PROFILE"
     echo "services_contract_profile=$LC_SERVICES_CONTRACT_PROFILE"
     echo "service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
+    echo "service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
+    echo "service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE"
     echo "init_contract_status=metadata-only-contract"
     echo "services_contract_status=metadata-only-contract"
     echo "service_schema_contract_status=metadata-only-contract"
+    echo "service_definitions_contract_status=metadata-only-contract"
+    echo "service_plan_contract_status=metadata-only-contract"
     echo "init_contract_present=1"
     echo "services_contract_present=1"
     echo "service_schema_contract_present=1"
+    echo "service_definitions_contract_present=1"
+    echo "service_plan_contract_present=1"
     echo "panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE"
     echo "write_config_file=$LC_INSTALL_WRITE_CONFIG_FILE"
     echo "write_profile_presets=$LC_INSTALL_WRITE_PROFILE_PRESETS"
@@ -5397,6 +5729,8 @@ case "\${1:-status}" in
     echo "init_contract_profile=$LC_INIT_CONTRACT_PROFILE"
     echo "services_contract_profile=$LC_SERVICES_CONTRACT_PROFILE"
     echo "service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
+    echo "service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
+    echo "service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE"
     echo "receipt_request_contract_profile=$LC_RECEIPT_REQUEST_CONTRACT_PROFILE"
     echo "receipt_payload_schema_profile=$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
     echo "receipt_payload_artifact_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE"
@@ -5424,6 +5758,8 @@ case "\${1:-status}" in
     echo "init_contract_required=$LC_REQUIRE_INIT_CONTRACT"
     echo "services_contract_required=$LC_REQUIRE_SERVICES_CONTRACT"
     echo "service_schema_contract_required=$LC_REQUIRE_SERVICE_SCHEMA_CONTRACT"
+    echo "service_definitions_contract_required=$LC_REQUIRE_SERVICE_DEFINITIONS_CONTRACT"
+    echo "service_plan_contract_required=$LC_REQUIRE_SERVICE_PLAN_CONTRACT"
     echo "receipt_request_contract_required=$LC_REQUIRE_RECEIPT_REQUEST_CONTRACT"
     echo "receipt_payload_schema_required=$LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA"
     echo "receipt_payload_artifact_draft_required=$LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT"
@@ -5450,6 +5786,8 @@ case "\${1:-status}" in
     echo "init_contract_status=metadata-only-contract"
     echo "services_contract_status=metadata-only-contract"
     echo "service_schema_contract_status=metadata-only-contract"
+    echo "service_definitions_contract_status=metadata-only-contract"
+    echo "service_plan_contract_status=metadata-only-contract"
     echo "receipt_request_contract_status=metadata-only-contract"
     echo "receipt_payload_schema_status=metadata-only-schema"
     echo "receipt_payload_artifact_draft_status=metadata-only-draft"
@@ -5522,9 +5860,13 @@ case "\${1:-status}" in
     echo "init_contract_profile=$LC_INIT_CONTRACT_PROFILE"
     echo "services_contract_profile=$LC_SERVICES_CONTRACT_PROFILE"
     echo "service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
+    echo "service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
+    echo "service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE"
     echo "init_contract_present=1"
     echo "services_contract_present=1"
     echo "service_schema_contract_present=1"
+    echo "service_definitions_contract_present=1"
+    echo "service_plan_contract_present=1"
     echo "panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE"
     echo "write_config_file=$LC_INSTALL_WRITE_CONFIG_FILE"
     echo "write_profile_presets=$LC_INSTALL_WRITE_PROFILE_PRESETS"
@@ -5880,6 +6222,8 @@ case "\${1:-status}" in
     echo "process_supervision_allowed=0"
     echo "pid1_claim_allowed=0"
     echo "service_schema_contract_required=1"
+    echo "service_definitions_contract_required=1"
+    echo "service_plan_contract_required=1"
     echo "init_contract_required=1"
     echo "rootfs_contract_required=1"
     echo "packages_contract_required=1"
@@ -5892,6 +6236,8 @@ case "\${1:-status}" in
     echo "receipt_required_before_service_registry_runtime=1"
     echo "command_surface=lc services"
     echo "related_service_schema_command=lc service-schema"
+    echo "related_service_definitions_command=lc service-definitions"
+    echo "related_service_plan_command=lc service-plan"
     echo "related_init_command=lc init"
     echo "related_packages_command=lc packages"
     echo "related_rootfs_command=lc rootfs"
@@ -5943,6 +6289,7 @@ case "\${1:-status}" in
     echo "service_reload_allowed=0"
     echo "service_health_check_allowed=0"
     echo "process_supervision_allowed=0"
+    echo "service_definitions_contract_required=1"
     echo "services_contract_required=1"
     echo "init_contract_required=1"
     echo "rootfs_contract_required=1"
@@ -5956,9 +6303,139 @@ case "\${1:-status}" in
     echo "receipt_required_before_service_schema_runtime=1"
     echo "command_surface=lc service-schema"
     echo "related_services_command=lc services"
+    echo "related_service_definitions_command=lc service-definitions"
     echo "related_init_command=lc init"
     echo "related_os_contract_command=lc os-contract"
     echo "promotion_gate=lc_service_schema_contract_before_service_definition_validation"
+    echo "no_effect=1"
+    echo "file_read_allowed=0"
+    echo "file_write_allowed=0"
+    echo "host_process_launch_allowed=0"
+    echo "host_file_read_allowed=0"
+    echo "host_file_write_allowed=0"
+    echo "host_mutation_allowed=0"
+    echo "network_allowed=0"
+    echo "runtime_enforcement_allowed=0"
+    echo "boot_allowed=0"
+    echo "production_os_claim=0"
+    ;;
+  service-definitions|service-definitions-contract|service-definition-stubs|lc-service-definitions)
+    echo "LATTICRA CONSOLE SERVICE DEFINITIONS CONTRACT"
+    echo "service_definitions_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
+    echo "service_definitions_status=metadata-only-contract"
+    echo "service_definitions_contract_file=\$LC_DIR/services/definitions.toml"
+    echo "service_definitions_contract_present=1"
+    echo "service_definitions_kind=lc-service-definition-stubs-envelope"
+    echo "service_definitions_root=\$LC_DIR/services"
+    echo "service_definitions_state_source=metadata-only"
+    echo "service_definitions_file=definitions.toml"
+    echo "service_definitions_artifact_present=1"
+    echo "service_definitions_read_allowed=0"
+    echo "service_definitions_write_allowed=0"
+    echo "service_definition_stub_count=0"
+    echo "service_definition_stub_catalog_present=1"
+    echo "service_definition_stub_materialized=0"
+    echo "service_definition_stub_read_allowed=0"
+    echo "service_definition_stub_write_allowed=0"
+    echo "service_definition_validation_allowed=0"
+    echo "service_definition_activation_allowed=0"
+    echo "service_dependency_resolution_allowed=0"
+    echo "service_authority_binding_allowed=0"
+    echo "service_registry_write_allowed=0"
+    echo "service_manifest_write_allowed=0"
+    echo "service_enable_allowed=0"
+    echo "service_disable_allowed=0"
+    echo "service_start_allowed=0"
+    echo "service_stop_allowed=0"
+    echo "service_restart_allowed=0"
+    echo "service_reload_allowed=0"
+    echo "service_health_check_allowed=0"
+    echo "process_supervision_allowed=0"
+    echo "service_schema_contract_required=1"
+    echo "services_contract_required=1"
+    echo "init_contract_required=1"
+    echo "rootfs_contract_required=1"
+    echo "packages_contract_required=1"
+    echo "namespace_contract_required=1"
+    echo "workspace_contract_required=1"
+    echo "session_contract_required=1"
+    echo "os_base_contract_required=1"
+    echo "runtime_boundary_required=1"
+    echo "seal_capability_labels_required=1"
+    echo "receipt_required_before_service_definitions_runtime=1"
+    echo "command_surface=lc service-definitions"
+    echo "related_service_schema_command=lc service-schema"
+    echo "related_services_command=lc services"
+    echo "related_service_plan_command=lc service-plan"
+    echo "related_init_command=lc init"
+    echo "related_os_contract_command=lc os-contract"
+    echo "promotion_gate=lc_service_definitions_contract_before_service_definition_materialization"
+    echo "no_effect=1"
+    echo "file_read_allowed=0"
+    echo "file_write_allowed=0"
+    echo "host_process_launch_allowed=0"
+    echo "host_file_read_allowed=0"
+    echo "host_file_write_allowed=0"
+    echo "host_mutation_allowed=0"
+    echo "network_allowed=0"
+    echo "runtime_enforcement_allowed=0"
+    echo "boot_allowed=0"
+    echo "production_os_claim=0"
+    ;;
+  service-plan|service-plan-contract|service-activation-plan|lc-service-plan)
+    echo "LATTICRA CONSOLE SERVICE PLAN CONTRACT"
+    echo "service_plan_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE"
+    echo "service_plan_status=metadata-only-contract"
+    echo "service_plan_contract_file=\$LC_DIR/services/plan.toml"
+    echo "service_plan_contract_present=1"
+    echo "service_plan_kind=lc-service-activation-plan-envelope"
+    echo "service_plan_root=\$LC_DIR/services"
+    echo "service_plan_state_source=metadata-only"
+    echo "service_plan_file=plan.toml"
+    echo "service_plan_artifact_present=1"
+    echo "service_plan_created=0"
+    echo "service_plan_read_allowed=0"
+    echo "service_plan_write_allowed=0"
+    echo "service_plan_materialized=0"
+    echo "service_plan_materialization_allowed=0"
+    echo "service_plan_review_required=1"
+    echo "service_definition_input_allowed=0"
+    echo "service_definition_stub_materialized=0"
+    echo "service_definition_validation_allowed=0"
+    echo "service_dependency_resolution_allowed=0"
+    echo "service_startup_order_resolution_allowed=0"
+    echo "service_authority_binding_allowed=0"
+    echo "service_activation_allowed=0"
+    echo "service_registry_write_allowed=0"
+    echo "service_manifest_write_allowed=0"
+    echo "service_enable_allowed=0"
+    echo "service_disable_allowed=0"
+    echo "service_start_allowed=0"
+    echo "service_stop_allowed=0"
+    echo "service_restart_allowed=0"
+    echo "service_reload_allowed=0"
+    echo "service_health_check_allowed=0"
+    echo "process_supervision_allowed=0"
+    echo "service_definitions_contract_required=1"
+    echo "service_schema_contract_required=1"
+    echo "services_contract_required=1"
+    echo "init_contract_required=1"
+    echo "rootfs_contract_required=1"
+    echo "packages_contract_required=1"
+    echo "namespace_contract_required=1"
+    echo "workspace_contract_required=1"
+    echo "session_contract_required=1"
+    echo "os_base_contract_required=1"
+    echo "runtime_boundary_required=1"
+    echo "seal_capability_labels_required=1"
+    echo "receipt_required_before_service_plan_runtime=1"
+    echo "command_surface=lc service-plan"
+    echo "related_service_definitions_command=lc service-definitions"
+    echo "related_service_schema_command=lc service-schema"
+    echo "related_services_command=lc services"
+    echo "related_init_command=lc init"
+    echo "related_os_contract_command=lc os-contract"
+    echo "promotion_gate=lc_service_plan_contract_before_dependency_resolution_or_activation"
     echo "no_effect=1"
     echo "file_read_allowed=0"
     echo "file_write_allowed=0"
@@ -6007,6 +6484,10 @@ case "\${1:-status}" in
     echo "services_contract_present=1"
     echo "service_schema_contract_receipt_required=1"
     echo "service_schema_contract_present=1"
+    echo "service_definitions_contract_receipt_required=1"
+    echo "service_definitions_contract_present=1"
+    echo "service_plan_contract_receipt_required=1"
+    echo "service_plan_contract_present=1"
     echo "receipt_request_contract_required=1"
     echo "receipt_request_contract_present=1"
     echo "receipt_payload_schema_required=1"
@@ -6043,6 +6524,8 @@ case "\${1:-status}" in
     echo "init_contract_command=lc init"
     echo "services_contract_command=lc services"
     echo "service_schema_contract_command=lc service-schema"
+    echo "service_definitions_contract_command=lc service-definitions"
+    echo "service_plan_contract_command=lc service-plan"
     echo "seal_signature_planned=1"
     echo "seal_signature_present=0"
     echo "seal_signing_authority_present=0"
@@ -6051,7 +6534,7 @@ case "\${1:-status}" in
     echo "receipt_hash_recorded=0"
     echo "receipt_path_recorded=0"
     echo "receipt_format=metadata-only-contract"
-    echo "receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,host-contract,host-inventory,host-adapter,runtime-boundary"
+    echo "receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary"
     echo "promotion_gate=lc_receipts_before_host_adapter_or_os_base"
     echo "command_surface=lc receipts"
     echo "no_effect=1"
@@ -6074,7 +6557,7 @@ case "\${1:-status}" in
     echo "signature_request_profile=latticra-seal-signature-request/0.1"
     echo "requested_receipt_profile=latticra-seal-verified-receipt/0.1"
     echo "requested_capability=verified-receipt-report"
-    echo "requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,host-contract,host-inventory,host-adapter,runtime-boundary"
+    echo "requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary"
     echo "receipt_payload_schema_profile=$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
     echo "receipt_payload_schema_required=1"
     echo "receipt_payload_schema_present=1"
@@ -6783,7 +7266,7 @@ case "\${1:-status}" in
     echo "\$LC_DIR"
     ;;
   *)
-    echo "usage: \$LC_COMMAND_WRAPPER {status|help|man|boundary|commands|install-config|standalone|session|workspace|namespace|rootfs|packages|init|services|service-schema|substrate|host|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence|os|path}" >&2
+    echo "usage: \$LC_COMMAND_WRAPPER {status|help|man|boundary|commands|install-config|standalone|session|workspace|namespace|rootfs|packages|init|services|service-schema|service-definitions|service-plan|substrate|host|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence|os|path}" >&2
     exit 64
     ;;
 esac
@@ -6839,7 +7322,8 @@ render_nadia_commands() {
   echo "NADIA COMMAND SURFACE"
   echo "wrapper=latticra-nadia"
   echo "component=Nadia offline AI foundation"
-  echo "command=status stage=48 output=stdout authority=metadata-only-status"
+  echo "command=status stage=50 output=stdout authority=metadata-only-status"
+  echo "command=status stage=51 output=stdout authority=metadata-only-status"
   echo "command=context-pack stage=1 output=\$NADIA_DIR/context-packs authority=local-context-metadata"
   echo "command=runtime-profile stage=2 output=\$NADIA_DIR/runtime-profiles authority=runtime-profile-metadata"
   echo "command=prompt-plan stage=3 output=\$NADIA_DIR/prompt-plans authority=prompt-plan-metadata"
@@ -6888,6 +7372,9 @@ render_nadia_commands() {
   echo "command=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release stage=46 output=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release authority=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract-metadata"
   echo "command=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt stage=47 output=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt authority=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract-metadata"
   echo "command=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review stage=48 output=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review authority=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract-metadata"
+  echo "command=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition stage=49 output=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition authority=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract-metadata"
+  echo "command=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release stage=50 output=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release authority=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract-metadata"
+  echo "command=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt stage=51 output=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt authority=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract-metadata"
   echo "command=path stage=0 output=\$NADIA_DIR authority=path-report"
   echo "network_authority=0"
   echo "tool_execution_authority=0"
@@ -6910,9 +7397,9 @@ case "\${1:-status}" in
     echo "interactive_name=Nadia"
     echo "implementation_name=Nadia Witness Foundation"
     echo "documentation_code_name=Nadia Witness Foundation"
-    echo "stage=48-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract"
-    echo "previous_stage=47-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"
-    echo "mode=offline-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract"
+    echo "stage=51-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"
+    echo "previous_stage=50-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract"
+    echo "mode=offline-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "commands_command=latticra-nadia commands"
@@ -6965,6 +7452,9 @@ case "\${1:-status}" in
     echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contracts=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release"
     echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contracts=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt"
     echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contracts=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contracts=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contracts=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contracts=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt"
     echo "context_pack_command=latticra-nadia context-pack"
     echo "runtime_profile_command=latticra-nadia runtime-profile"
     echo "prompt_plan_command=latticra-nadia prompt-plan"
@@ -7850,6 +8340,47 @@ case "\${1:-status}" in
     echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_findings_recorded=0"
     echo "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract=1"
     echo "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_stage=49-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition"
+    echo "installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_stage=contract-only"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_status=contract_only"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_allowed=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_created=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_record_created=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_decision_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_findings_recorded=0"
+    echo "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1"
+    echo "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_stage=50-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release"
+    echo "installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_stage=contract-only"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_status=contract_only"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_allowed=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_created=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_record_created=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_decision_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_published=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_created=0"
+    echo "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1"
+    echo "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract=1"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_stage=51-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt"
+    echo "installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_stage=contract-only"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_status=contract_only"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_allowed=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_created=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_record_created=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_decision_recorded=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_published=0"
+    echo "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_signed=0"
+    echo "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1"
+    echo "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1"
     echo "human_dignity_principle=1"
     echo "survivor_witness_respect=1"
     echo "community_awareness_posture=1"
@@ -8545,11 +9076,68 @@ case "\${1:-status}" in
 	      --prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt "\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt/latest-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract.txt" \
 	      --output "\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review"
 	    ;;
+	  # command=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition stage=49
+	  # prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_stage=49-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract
+	  # installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition
+	  # prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_record_created=0
+	  # requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1
+	  prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition|evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition|result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract)
+	    shift || true
+	    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract.sh"
+	    if [ ! -f "\$SCRIPT" ]; then
+	      echo "Nadia prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition contract script not found: \$SCRIPT" >&2
+	      exit 66
+	    fi
+	    if [ "\$#" -gt 0 ]; then
+	      exec sh "\$SCRIPT" "\$@"
+	    fi
+	    exec sh "\$SCRIPT" \
+	      --prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review "\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review/latest-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract.txt" \
+	      --output "\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition"
+	    ;;
+	  # command=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release stage=50
+	  # prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_stage=50-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract
+	  # installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release
+	  # prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_record_created=0
+	  # requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract=1
+	  prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release|evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release|result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract)
+	    shift || true
+	    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract.sh"
+	    if [ ! -f "\$SCRIPT" ]; then
+	      echo "Nadia prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release contract script not found: \$SCRIPT" >&2
+	      exit 66
+	    fi
+	    if [ "\$#" -gt 0 ]; then
+	      exec sh "\$SCRIPT" "\$@"
+	    fi
+	    exec sh "\$SCRIPT" \
+	      --prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition "\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition/latest-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract.txt" \
+	      --output "\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release"
+	    ;;
+	  # command=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt stage=51
+	  # prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_stage=51-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract
+	  # installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
+	  # prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_record_created=0
+	  # requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1
+	  prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt|evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt|result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract)
+	    shift || true
+	    SCRIPT="\$PREFIX/lib/latticra/scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract.sh"
+	    if [ ! -f "\$SCRIPT" ]; then
+	      echo "Nadia prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release receipt contract script not found: \$SCRIPT" >&2
+	      exit 66
+	    fi
+	    if [ "\$#" -gt 0 ]; then
+	      exec sh "\$SCRIPT" "\$@"
+	    fi
+	    exec sh "\$SCRIPT" \
+	      --prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release "\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release/latest-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract.txt" \
+	      --output "\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt"
+	    ;;
 	  path)
 	    echo "\$NADIA_DIR"
 	    ;;
 	  *)
-	    echo "usage: latticra-nadia {status|commands|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|tokenizer-specification|tokenizer-manifest|tokenizer-artifact-inventory|tokenizer-artifact-measurement|tokenizer-artifact-verification|tokenizer-artifact-binding|tokenizer-runtime-attachment|prompt-tokenization|prompt-token-sequence|context-window-assembly|prompt-evaluation-input|prompt-evaluation-runtime-handoff|prompt-evaluation-invocation|prompt-evaluation-result|prompt-evaluation-result-review|prompt-evaluation-result-disposition|prompt-evaluation-result-release|prompt-evaluation-result-release-receipt|prompt-evaluation-result-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review|path}" >&2
+	    echo "usage: latticra-nadia {status|commands|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|tokenizer-specification|tokenizer-manifest|tokenizer-artifact-inventory|tokenizer-artifact-measurement|tokenizer-artifact-verification|tokenizer-artifact-binding|tokenizer-runtime-attachment|prompt-tokenization|prompt-token-sequence|context-window-assembly|prompt-evaluation-input|prompt-evaluation-runtime-handoff|prompt-evaluation-invocation|prompt-evaluation-result|prompt-evaluation-result-review|prompt-evaluation-result-disposition|prompt-evaluation-result-release|prompt-evaluation-result-release-receipt|prompt-evaluation-result-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt|path}" >&2
 	    exit 64
 	    ;;
 esac
@@ -8662,6 +9250,7 @@ user_bin=$USER_BIN
 production_installer_ready=0
 root_authority=0
 network_authority=0
+network_authority_denied=1
 runtime_enforcement_authority=0
 
 dry_run=$DRY_RUN
@@ -8674,6 +9263,8 @@ updater_panel_owned=1
 updater_source_strategy=$UPDATER_SOURCE_STRATEGY
 updater_update_channel=$UPDATER_UPDATE_CHANNEL
 updater_allow_network_fetch=$UPDATER_ALLOW_NETWORK_FETCH
+updater_network_fetch_authority=0
+updater_network_fetch_authority_denied=1
 updater_require_dry_run_before_apply=$UPDATER_REQUIRE_DRY_RUN_BEFORE_APPLY
 updater_reuse_installer_engine=$UPDATER_REUSE_INSTALLER_ENGINE
 updater_write_update_receipt=$UPDATER_WRITE_UPDATE_RECEIPT
@@ -8713,6 +9304,10 @@ lc_services_contract_profile=$LC_SERVICES_CONTRACT_PROFILE
 lc_services_contract_present=true
 lc_service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE
 lc_service_schema_contract_present=true
+lc_service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE
+lc_service_definitions_contract_present=true
+lc_service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE
+lc_service_plan_contract_present=true
 lc_install_user_wrapper=$LC_INSTALL_USER_WRAPPER
 lc_allow_external_host_commands=$LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS
 

@@ -21,6 +21,8 @@ packages_txt="$tmpdir/latticra-console-packages.txt"
 init_txt="$tmpdir/latticra-console-init.txt"
 services_txt="$tmpdir/latticra-console-services.txt"
 service_schema_txt="$tmpdir/latticra-console-service-schema.txt"
+service_definitions_txt="$tmpdir/latticra-console-service-definitions.txt"
+service_plan_txt="$tmpdir/latticra-console-service-plan.txt"
 host_contract_txt="$tmpdir/latticra-console-host-contract.txt"
 host_inventory_txt="$tmpdir/latticra-console-host-inventory.txt"
 host_adapter_txt="$tmpdir/latticra-console-host-adapter.txt"
@@ -79,6 +81,8 @@ cc $CFLAGS \
 "$report_bin" init > "$init_txt"
 "$report_bin" services > "$services_txt"
 "$report_bin" service-schema > "$service_schema_txt"
+"$report_bin" service-definitions > "$service_definitions_txt"
+"$report_bin" service-plan > "$service_plan_txt"
 "$report_bin" host-contract > "$host_contract_txt"
 "$report_bin" host-inventory > "$host_inventory_txt"
 "$report_bin" host-adapter > "$host_adapter_txt"
@@ -125,6 +129,10 @@ grep -Fq 'command=lc services' "$report_txt"
 grep -Fq 'capability=lc.services.contract' "$report_txt"
 grep -Fq 'command=lc service-schema' "$report_txt"
 grep -Fq 'capability=lc.service.schema.contract' "$report_txt"
+grep -Fq 'command=lc service-definitions' "$report_txt"
+grep -Fq 'capability=lc.service.definitions.contract' "$report_txt"
+grep -Fq 'command=lc service-plan' "$report_txt"
+grep -Fq 'capability=lc.service.plan.contract' "$report_txt"
 grep -Fq 'command=lc profiles' "$report_txt"
 grep -Fq 'capability=lc.core.profiles' "$report_txt"
 grep -Fq 'command=lc host-contract' "$report_txt"
@@ -209,6 +217,8 @@ grep -Fq 'services_contract_status=metadata-only-contract-ready' "$report_txt"
 grep -Fq 'services_contract_present=1' "$report_txt"
 grep -Fq 'service_schema_contract_status=metadata-only-contract-ready' "$report_txt"
 grep -Fq 'service_schema_contract_present=1' "$report_txt"
+grep -Fq 'service_definitions_contract_status=metadata-only-contract-ready' "$report_txt"
+grep -Fq 'service_definitions_contract_present=1' "$report_txt"
 grep -Fq 'future_os_base_claim=planned_not_claimed' "$report_txt"
 grep -Fq 'execution_allowed=0' "$report_txt"
 grep -Fq 'network_allowed=0' "$report_txt"
@@ -227,6 +237,8 @@ grep -Fq 'lc packages' "$help_txt"
 grep -Fq 'lc init' "$help_txt"
 grep -Fq 'lc services' "$help_txt"
 grep -Fq 'lc service-schema' "$help_txt"
+grep -Fq 'lc service-definitions' "$help_txt"
+grep -Fq 'lc service-plan' "$help_txt"
 grep -Fq 'lc profiles' "$help_txt"
 grep -Fq 'lc receipts' "$help_txt"
 grep -Fq 'lc host-contract' "$help_txt"
@@ -257,6 +269,8 @@ grep -Fq 'latticra-lc packages' "$man_txt"
 grep -Fq 'latticra-lc init' "$man_txt"
 grep -Fq 'latticra-lc services' "$man_txt"
 grep -Fq 'latticra-lc service-schema' "$man_txt"
+grep -Fq 'latticra-lc service-definitions' "$man_txt"
+grep -Fq 'latticra-lc service-plan' "$man_txt"
 grep -Fq 'latticra-lc host-contract' "$man_txt"
 grep -Fq 'latticra-lc host-inventory' "$man_txt"
 grep -Fq 'latticra-lc host-adapter' "$man_txt"
@@ -285,6 +299,8 @@ grep -Fq 'command=lc packages' "$boundary_txt"
 grep -Fq 'command=lc init' "$boundary_txt"
 grep -Fq 'command=lc services' "$boundary_txt"
 grep -Fq 'command=lc service-schema' "$boundary_txt"
+grep -Fq 'command=lc service-definitions' "$boundary_txt"
+grep -Fq 'command=lc service-plan' "$boundary_txt"
 grep -Fq 'command=lc substrate' "$boundary_txt"
 grep -Fq 'command=lc host-contract' "$boundary_txt"
 grep -Fq 'command=lc host-inventory' "$boundary_txt"
@@ -377,8 +393,12 @@ grep -Fq 'service_enable_allowed=0' "$services_txt"
 grep -Fq 'process_supervision_allowed=0' "$services_txt"
 grep -Fq 'init_contract_required=1' "$services_txt"
 grep -Fq 'service_schema_contract_required=1' "$services_txt"
+grep -Fq 'service_definitions_contract_required=1' "$services_txt"
+grep -Fq 'service_plan_contract_required=1' "$services_txt"
 grep -Fq 'command_surface=lc services' "$services_txt"
 grep -Fq 'related_service_schema_command=lc service-schema' "$services_txt"
+grep -Fq 'related_service_definitions_command=lc service-definitions' "$services_txt"
+grep -Fq 'related_service_plan_command=lc service-plan' "$services_txt"
 grep -Fq 'host_process_launch_allowed=0' "$services_txt"
 grep -Fq 'production_os_claim=0' "$services_txt"
 grep -Fq 'LATTICRA CONSOLE SERVICE SCHEMA CONTRACT' "$service_schema_txt"
@@ -388,9 +408,37 @@ grep -Fq 'service_schema_file=definition-schema.toml' "$service_schema_txt"
 grep -Fq 'service_definition_write_allowed=0' "$service_schema_txt"
 grep -Fq 'service_definition_validation_allowed=0' "$service_schema_txt"
 grep -Fq 'service_start_allowed=0' "$service_schema_txt"
+grep -Fq 'service_definitions_contract_required=1' "$service_schema_txt"
 grep -Fq 'command_surface=lc service-schema' "$service_schema_txt"
+grep -Fq 'related_service_definitions_command=lc service-definitions' "$service_schema_txt"
 grep -Fq 'host_process_launch_allowed=0' "$service_schema_txt"
 grep -Fq 'production_os_claim=0' "$service_schema_txt"
+grep -Fq 'LATTICRA CONSOLE SERVICE DEFINITIONS CONTRACT' "$service_definitions_txt"
+grep -Fq 'service_definitions_profile=lc-service-definitions-v0' "$service_definitions_txt"
+grep -Fq 'service_definitions_contract_present=1' "$service_definitions_txt"
+grep -Fq 'service_definitions_file=definitions.toml' "$service_definitions_txt"
+grep -Fq 'service_definition_stub_count=0' "$service_definitions_txt"
+grep -Fq 'service_definition_stub_write_allowed=0' "$service_definitions_txt"
+grep -Fq 'service_definition_validation_allowed=0' "$service_definitions_txt"
+grep -Fq 'service_start_allowed=0' "$service_definitions_txt"
+grep -Fq 'service_schema_contract_required=1' "$service_definitions_txt"
+grep -Fq 'command_surface=lc service-definitions' "$service_definitions_txt"
+grep -Fq 'related_service_plan_command=lc service-plan' "$service_definitions_txt"
+grep -Fq 'host_process_launch_allowed=0' "$service_definitions_txt"
+grep -Fq 'production_os_claim=0' "$service_definitions_txt"
+grep -Fq 'LATTICRA CONSOLE SERVICE PLAN CONTRACT' "$service_plan_txt"
+grep -Fq 'service_plan_profile=lc-service-plan-v0' "$service_plan_txt"
+grep -Fq 'service_plan_contract_present=1' "$service_plan_txt"
+grep -Fq 'service_plan_file=plan.toml' "$service_plan_txt"
+grep -Fq 'service_plan_created=0' "$service_plan_txt"
+grep -Fq 'service_plan_materialization_allowed=0' "$service_plan_txt"
+grep -Fq 'service_dependency_resolution_allowed=0' "$service_plan_txt"
+grep -Fq 'service_activation_allowed=0' "$service_plan_txt"
+grep -Fq 'service_start_allowed=0' "$service_plan_txt"
+grep -Fq 'service_definitions_contract_required=1' "$service_plan_txt"
+grep -Fq 'command_surface=lc service-plan' "$service_plan_txt"
+grep -Fq 'host_process_launch_allowed=0' "$service_plan_txt"
+grep -Fq 'production_os_claim=0' "$service_plan_txt"
 grep -Fq 'production_os_claim=0' "$rootfs_txt"
 grep -Fq 'LATTICRA CONSOLE HOST EMBEDDING CONTRACT' "$host_contract_txt"
 grep -Fq 'contract_profile=lc-host-embedding-v0' "$host_contract_txt"
@@ -431,7 +479,7 @@ grep -Fq 'payload_artifact_present=0' "$receipt_request_txt"
 grep -Fq 'signature_request_binding_profile=lc-signature-request-binding-v0' "$receipt_request_txt"
 grep -Fq 'signature_request_profile=latticra-seal-signature-request/0.1' "$receipt_request_txt"
 grep -Fq 'requested_receipt_profile=latticra-seal-verified-receipt/0.1' "$receipt_request_txt"
-grep -Fq 'requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,host-contract,host-inventory,host-adapter,runtime-boundary' "$receipt_request_txt"
+grep -Fq 'requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary' "$receipt_request_txt"
 grep -Fq 'seal_signature_request_present=0' "$receipt_request_txt"
 grep -Fq 'receipt_write_allowed=0' "$receipt_request_txt"
 grep -Fq 'promotion_gate=lc_receipt_request_review_before_signing' "$receipt_request_txt"
@@ -584,7 +632,11 @@ grep -Fq 'services_contract_receipt_required=1' "$receipts_txt"
 grep -Fq 'services_contract_command=lc services' "$receipts_txt"
 grep -Fq 'service_schema_contract_receipt_required=1' "$receipts_txt"
 grep -Fq 'service_schema_contract_command=lc service-schema' "$receipts_txt"
-grep -Fq 'receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,host-contract,host-inventory,host-adapter,runtime-boundary' "$receipts_txt"
+grep -Fq 'service_definitions_contract_receipt_required=1' "$receipts_txt"
+grep -Fq 'service_definitions_contract_command=lc service-definitions' "$receipts_txt"
+grep -Fq 'service_plan_contract_receipt_required=1' "$receipts_txt"
+grep -Fq 'service_plan_contract_command=lc service-plan' "$receipts_txt"
+grep -Fq 'receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary' "$receipts_txt"
 grep -Fq 'receipt_request_contract_required=1' "$receipts_txt"
 grep -Fq 'receipt_payload_schema_required=1' "$receipts_txt"
 grep -Fq 'receipt_payload_artifact_draft_required=1' "$receipts_txt"
@@ -623,6 +675,8 @@ grep -Fq 'share/latticra/lc/rootfs' installer/manifests/components.toml
 grep -Fq 'share/latticra/lc/packages' installer/manifests/components.toml
 grep -Fq 'share/latticra/lc/init' installer/manifests/components.toml
 grep -Fq 'share/latticra/lc/services' installer/manifests/components.toml
+grep -Fq 'share/latticra/lc/services/definitions.toml' installer/manifests/components.toml
+grep -Fq 'share/latticra/lc/services/plan.toml' installer/manifests/components.toml
 grep -Fq 'share/latticra/lc/host-inventory' installer/manifests/components.toml
 grep -Fq 'LC install metadata records config/share paths and the standalone command wrapper' installer/manifests/components.toml
 grep -Fq 'latticra_console = true' installer/configs/default.installer.toml
@@ -643,6 +697,8 @@ grep -Fq 'pub packages_contract_profile: String' installer/latticra-installer/sr
 grep -Fq 'pub init_contract_profile: String' installer/latticra-installer/src/config.rs
 grep -Fq 'pub services_contract_profile: String' installer/latticra-installer/src/config.rs
 grep -Fq 'pub service_schema_contract_profile: String' installer/latticra-installer/src/config.rs
+grep -Fq 'pub service_definitions_contract_profile: String' installer/latticra-installer/src/config.rs
+grep -Fq 'pub service_plan_contract_profile: String' installer/latticra-installer/src/config.rs
 grep -Fq 'LatticraConsoleProfile::PanelEmbedded' installer/latticra-installer/src/config.rs
 grep -Fq 'Self::Standalone => "standalone"' installer/latticra-installer/src/config.rs
 grep -Fq 'InstallProfile::LcStandalone' installer/latticra-installer/src/config.rs
@@ -673,6 +729,10 @@ grep -Fq 'services_contract_profile = "lc-services-v0"' installer/configs/defaul
 grep -Fq 'require_services_contract = true' installer/configs/default.installer.toml
 grep -Fq 'service_schema_contract_profile = "lc-service-schema-v0"' installer/configs/default.installer.toml
 grep -Fq 'require_service_schema_contract = true' installer/configs/default.installer.toml
+grep -Fq 'service_definitions_contract_profile = "lc-service-definitions-v0"' installer/configs/default.installer.toml
+grep -Fq 'require_service_definitions_contract = true' installer/configs/default.installer.toml
+grep -Fq 'service_plan_contract_profile = "lc-service-plan-v0"' installer/configs/default.installer.toml
+grep -Fq 'require_service_plan_contract = true' installer/configs/default.installer.toml
 grep -Fq 'receipt_request_contract_profile = "lc-receipt-request-v0"' installer/configs/default.installer.toml
 grep -Fq 'receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"' installer/configs/default.installer.toml
 grep -Fq 'receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"' installer/configs/default.installer.toml
@@ -713,6 +773,8 @@ grep -Fq 'LC_PACKAGES_CONTRACT_PROFILE=$(cfg_section lc packages_contract_profil
 grep -Fq 'LC_INIT_CONTRACT_PROFILE=$(cfg_section lc init_contract_profile lc-init-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_SERVICES_CONTRACT_PROFILE=$(cfg_section lc services_contract_profile lc-services-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_SERVICE_SCHEMA_CONTRACT_PROFILE=$(cfg_section lc service_schema_contract_profile lc-service-schema-v0)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE=$(cfg_section lc service_definitions_contract_profile lc-service-definitions-v0)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_SERVICE_PLAN_CONTRACT_PROFILE=$(cfg_section lc service_plan_contract_profile lc-service-plan-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc session category=core effect=none capability=lc.session.contract' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'session/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc workspace category=core effect=none capability=lc.workspace.contract' installer/scripts/latticra-installer-apply.sh
@@ -729,6 +791,10 @@ grep -Fq 'name=lc services category=core effect=none capability=lc.services.cont
 grep -Fq 'services/contract.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc service-schema category=core effect=none capability=lc.service.schema.contract' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'services/definition-schema.toml' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'name=lc service-definitions category=core effect=none capability=lc.service.definitions.contract' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'services/definitions.toml' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'name=lc service-plan category=core effect=none capability=lc.service.plan.contract' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'services/plan.toml' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_RECEIPT_REQUEST_CONTRACT_PROFILE=$(cfg_section lc receipt_request_contract_profile lc-receipt-request-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE=$(cfg_section lc receipt_payload_schema_profile lc-receipt-payload-schema-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE=$(cfg_section lc receipt_payload_artifact_draft_profile lc-receipt-payload-artifact-draft-v0)' installer/scripts/latticra-installer-apply.sh
@@ -809,6 +875,18 @@ grep -Fq 'services_contract_present=1' "$status_file"
 grep -Fq 'services_contract_command=lc services' "$status_file"
 grep -Fq 'service_schema_contract_present=1' "$status_file"
 grep -Fq 'service_schema_contract_command=lc service-schema' "$status_file"
+grep -Fq 'service_definitions_contract_status=metadata-only-contract' "$status_file"
+grep -Fq 'service_definitions_contract_present=1' "$status_file"
+grep -Fq 'service_definitions_contract_command=lc service-definitions' "$status_file"
+grep -Fq 'service_definitions_contract_profile=lc-service-definitions-v0' "$status_file"
+grep -Fq 'service_definitions_file=definitions.toml' "$status_file"
+grep -Fq 'service_definition_stub_count=0' "$status_file"
+grep -Fq 'service_plan_contract_status=metadata-only-contract' "$status_file"
+grep -Fq 'service_plan_contract_present=1' "$status_file"
+grep -Fq 'service_plan_contract_command=lc service-plan' "$status_file"
+grep -Fq 'service_plan_contract_profile=lc-service-plan-v0' "$status_file"
+grep -Fq 'service_plan_file=plan.toml' "$status_file"
+grep -Fq 'service_plan_created=0' "$status_file"
 grep -Fq 'host_adapter_contract_present=1' "$status_file"
 grep -Fq 'receipt_payload_schema_present=1' "$status_file"
 grep -Fq 'receipt_payload_artifact_draft_present=1' "$status_file"

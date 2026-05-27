@@ -365,14 +365,16 @@ public_claim_overstates_runtime=1
 Recommended next planning move:
 
 ```text
-create the Nucleus effect-contract and runtime-denial evidence bundle template
+create the Nucleus effect-contract and runtime-denial non-claim review template
 ```
 
 Reason:
 
 ```text
-the acceptance criteria now define what must be reviewed; the next useful
-planning artifact is a reusable bundle shape for future evidence
+the acceptance criteria and evidence bundle shape now define what must be
+reviewed; the next useful planning artifact is the review form that prevents
+contract-only runtime-denial evidence from becoming execution, runtime,
+security, or product claims
 ```
 
 ## Non-claims

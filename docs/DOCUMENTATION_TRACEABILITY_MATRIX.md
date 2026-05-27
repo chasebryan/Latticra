@@ -1,8 +1,8 @@
 # Documentation Traceability Matrix
 
 Status: active documentation traceability matrix
-Last updated: 2026-05-26 CDT
-Scope: public entry points, source records, mirrors, validation guards, non-claims, product surfaces, installer docs, package docs, security docs, and subsystem maps.
+Last updated: 2026-05-27 CDT
+Scope: public entry points, source records, status records, mirrors, validation guards, non-claims, product surfaces, installer docs, package docs, security docs, subsystem maps, and change-impact radius.
 
 ## Purpose
 
@@ -34,9 +34,14 @@ If that path is missing, keep the claim narrow or remove it until a source recor
 | --- | --- | --- | --- | --- |
 | Reader journeys | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html) | [`DOCUMENTATION_READER_JOURNEY_MAP.md`](DOCUMENTATION_READER_JOURNEY_MAP.md), [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md) | Local link check and public-entry guard | Audience routes must not imply capability promotion. |
 | Documentation health | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html), review packets | [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md), [`DOCUMENTATION_READER_JOURNEY_MAP.md`](DOCUMENTATION_READER_JOURNEY_MAP.md), [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md) | Local link check, public-entry guard, and selected review packet validation | Health scoring must not become capability evidence. |
+| Documentation source authority | Public summaries, source records, status records, review packets, public HTML, and governance files | [`DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md`](DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md), [`NON_CLAIMS.md`](NON_CLAIMS.md), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) | Local link check and selected drift-response validation | The narrowest current source record wins until conflicts are resolved. |
+| Documentation freshness and lifecycle | Public summaries, status records, source records, stale records, superseded records, archives, review packets, and public HTML | [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md), [`DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md`](DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md), current source record | Local link check, review packet outcome, and selected drift-response validation | Stale, superseded, archived, planning, draft, local-only, no-effect, or report-only records must not drive public claims beyond current authority. |
+| Documentation change impact radius | Touched files, source records, status mirrors, public summaries, public HTML, validation paths, non-claims, and review packets | [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md), changed source record, [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) | Radius-specific checks from the impact guide and validation playbook | Review radius must expand when reader understanding could change and stay contained when meaning does not change. |
+| Documentation status records | Status records, status index, current status, root status shortcut, public status pages, estimate records, and public-entry alignment notes | [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md), [`status/README.md`](status/README.md), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) | Local link check, public-entry guard, estimate guard when estimates change, exact source guard when named | Status records must separate current posture, evidence, validation, mirrors, non-claims, next work, and boundary. |
 | Project identity | [`../README.md`](../README.md), [`index.html`](index.html), [`map.html`](map.html) | [`REAL_SYSTEM_CONTRACT.md`](REAL_SYSTEM_CONTRACT.md), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), [`README.md`](README.md) | [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md), `git diff --check` | [`NON_CLAIMS.md`](NON_CLAIMS.md), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) |
 | Current status and estimates | [`../README.md`](../README.md), [`../STATUS.md`](../STATUS.md), [`status.html`](status.html), [`roadmap.html`](roadmap.html) | [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), [`status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) | `sh scripts/test-current-estimate-table-source-alignment.sh` | Estimates are planning posture, not release promises. |
 | Documentation navigation | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html) | [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) | Local link check, `git diff --check` | Navigation must not imply capability promotion. |
+| Public site mirrors | Static HTML pages under `docs/` | [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md), source Markdown record, status or validation record | HTML href check, local link check for touched Markdown, public-entry guard | Public HTML must not be stronger than source Markdown. |
 | Subsystem landing pages | [`README.md`](README.md), [`map.html`](map.html), subsystem README files, subsystem public HTML pages | [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), subsystem contract, subsystem status record | Local link check, public-entry guard, exact subsystem guard | Subsystem progress must not imply product readiness or authority expansion. |
 | Product-facing wording | [`../README.md`](../README.md), [`index.html`](index.html), [`start.html`](start.html), [`validation.html`](validation.html) | [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md), [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md) | [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) | Product copy must stay evidence-bound and non-production. |
 | Public claim language | All public Markdown and HTML summaries | [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md), [`EVIDENCE_LADDER.md`](EVIDENCE_LADDER.md), [`NON_CLAIMS.md`](NON_CLAIMS.md) | Claim review packet outcome when wording changes | Unsupported adjacent claims stay blocked. |
@@ -60,9 +65,13 @@ Treat these as documentation drift:
 
 - a public page names a capability without a source record;
 - a status record and public page use different posture words;
+- a public HTML page is stronger than the source Markdown record;
 - a platform README omits local-only or no-effect boundaries;
 - a security page uses "secure", "safe", "hardened", "protection", or "prevention" without a supporting source record;
 - an estimate appears in public HTML but not in the current estimate source records;
+- a stale, superseded, archived, planning, draft, local-only, no-effect, or report-only record is used as current public authority without a lifecycle boundary;
+- a change that affects reader understanding is reviewed only locally, or a local-only edit is expanded mechanically without a source, mirror, or claim reason;
+- a status record omits current posture, evidence, validation, mirrors, non-claims, next valid work, or boundary;
 - a subsystem landing page omits the evidence spine, guard, status record, non-claims, or stop signals required by [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md);
 - a quick-start path omits reset, cleanup, or non-claim context for a runnable local path.
 
@@ -72,13 +81,17 @@ When drift is found:
 
 1. Identify the topic row in this matrix.
 2. Read the source records before editing public wording.
-3. Check [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) and [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
-4. Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) to mark watch or failing dimensions before editing broad public surfaces.
-5. Use [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) to choose a narrowing, alignment, or demotion path.
-6. Use [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) to choose the narrowest relevant validation commands.
-7. Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) when wording, mirrors, estimates, status, platform posture, or non-claims change.
-8. Run the selected validation commands.
-9. Update only the public surfaces whose reader-facing claim actually changed.
+3. Use [`DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md`](DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md) when records disagree.
+4. Use [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) when stale, superseded, archived, planning, draft, local-only, no-effect, report-only, or blocked records are involved.
+5. Use [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) to decide whether the review stays local or expands to source records, mirrors, validation paths, public HTML, status, or non-claims.
+6. Use [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) when status records, status-index entries, status mirrors, estimate records, or public-entry alignment notes change.
+7. Check [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) and [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
+8. Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) to mark watch or failing dimensions before editing broad public surfaces.
+9. Use [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) to choose a narrowing, alignment, or demotion path.
+10. Use [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) to choose the narrowest relevant validation commands.
+11. Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) when wording, mirrors, estimates, status, platform posture, or non-claims change.
+12. Run the selected validation commands.
+13. Update only the public surfaces whose reader-facing claim actually changed.
 
 ## Boundary
 

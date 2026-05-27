@@ -51,7 +51,9 @@ require_contains 'os_image_toolchain_ready=0' "$doc"
 require_contains 'qemu-img' "$doc"
 require_contains 'qemu-system-x86_64' "$doc"
 require_contains 'xorriso' "$doc"
-require_contains 'grub-mkrescue' "$doc"
+require_contains 'grub-mkrescue compatible binary' "$doc"
+require_contains 'x86_64-elf-grub-mkrescue' "$doc"
+require_contains 'grub_mkrescue_path=<path-or-missing>' "$doc"
 require_contains 'tool_install_performed=0' "$doc"
 require_contains 'package_manager_invoked=0' "$doc"
 require_contains 'network_performed=0' "$doc"
@@ -67,7 +69,9 @@ require_contains 'preflight_decision=toolchain-readiness-report-no-install' "$sc
 require_contains 'qemu_img_available=' "$script"
 require_contains 'qemu_system_x86_64_available=' "$script"
 require_contains 'xorriso_available=' "$script"
+require_contains 'x86_64-elf-grub-mkrescue' "$script"
 require_contains 'grub_mkrescue_available=' "$script"
+require_contains 'grub_mkrescue_path=' "$script"
 require_contains 'os_image_toolchain_ready=' "$script"
 require_contains 'tool_install_performed=0' "$script"
 require_contains 'package_manager_invoked=0' "$script"
@@ -90,6 +94,7 @@ require_output_contains "$output" 'qemu_img_available='
 require_output_contains "$output" 'qemu_system_x86_64_available='
 require_output_contains "$output" 'xorriso_available='
 require_output_contains "$output" 'grub_mkrescue_available='
+require_output_contains "$output" 'grub_mkrescue_path='
 require_output_contains "$output" 'tar_available='
 require_output_contains "$output" 'gzip_available='
 require_output_contains "$output" 'cpio_available='

@@ -13,7 +13,8 @@
         } \
     } while (0)
 
-static int default_request_targets_runtime_entry_frame_ready(void) {
+static int default_request_targets_runtime_entry_address_space_view_ready(
+    void) {
     latticra_kernel_lifecycle_subsystem_summary_request_t request;
 
     EXPECT_TRUE(latticra_kernel_lifecycle_subsystem_summary_default_request(&request) ==
@@ -22,8 +23,8 @@ static int default_request_targets_runtime_entry_frame_ready(void) {
     EXPECT_TRUE(request.lifecycle_request.gate == LATTICRA_KERNEL_STATE_GATE_ALLOW,
         "summary default lifecycle gate allow");
     EXPECT_TRUE(request.lifecycle_request.target_state ==
-            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY,
-        "summary default target runtime-entry-frame-ready");
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY,
+        "summary default target runtime-entry-address-space-view-ready");
     EXPECT_TRUE(request.lifecycle_request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
         "summary default max steps");
     EXPECT_TRUE(strcmp(request.registry_request.kernel_request.kernel_id, "latticra-kernel-seed") == 0,
@@ -44,14 +45,15 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.summary_status, "summary-ready") == 0,
         "summary ready");
-    EXPECT_TRUE(strcmp(result.final_state, "runtime-entry-frame-ready") == 0,
-        "summary final state runtime-entry-frame-ready");
+    EXPECT_TRUE(strcmp(result.final_state,
+            "runtime-entry-address-space-view-ready") == 0,
+        "summary final state runtime-entry-address-space-view-ready");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "summary lifecycle complete");
-    EXPECT_TRUE(result.lifecycle_step_count == 25u,
-        "summary twenty five lifecycle steps");
-    EXPECT_TRUE(result.lifecycle_state_change_count == 25u,
-        "summary twenty five lifecycle state changes");
+    EXPECT_TRUE(result.lifecycle_step_count == 28u,
+        "summary twenty eight lifecycle steps");
+    EXPECT_TRUE(result.lifecycle_state_change_count == 28u,
+        "summary twenty eight lifecycle state changes");
     EXPECT_TRUE(result.lifecycle_state_mutated == 1,
         "summary lifecycle state mutated internally");
     EXPECT_TRUE(result.external_effect_performed == 0,
@@ -64,6 +66,35 @@ static int summary_reaches_ready_without_authority(void) {
         "summary machine network denied");
     EXPECT_TRUE(result.registry_no_effect == 1,
         "summary registry no effect");
+    EXPECT_TRUE(strcmp(result.nucleus_coupling_status,
+            "nucleus-kernel-coupling-ready") == 0,
+        "summary nucleus coupling ready status");
+    EXPECT_TRUE(strcmp(result.os_readiness_status, "os-metadata-ready") == 0,
+        "summary os readiness metadata ready");
+    EXPECT_TRUE(result.nucleus_coupling_ready == 1,
+        "summary nucleus coupling ready");
+    EXPECT_TRUE(result.nucleus_no_effect_chain_ok == 1,
+        "summary nucleus no-effect chain");
+    EXPECT_TRUE(result.nucleus_boot_allowed == 0,
+        "summary nucleus boot denied");
+    EXPECT_TRUE(result.nucleus_runtime_entry_allowed == 0,
+        "summary nucleus runtime entry denied");
+    EXPECT_TRUE(result.nucleus_scheduler_run_entry_allowed == 0,
+        "summary nucleus scheduler run entry denied");
+    EXPECT_TRUE(result.nucleus_context_switch_allowed == 0,
+        "summary nucleus context switch denied");
+    EXPECT_TRUE(result.nucleus_register_save_allowed == 0,
+        "summary nucleus register save denied");
+    EXPECT_TRUE(result.nucleus_register_restore_allowed == 0,
+        "summary nucleus register restore denied");
+    EXPECT_TRUE(result.nucleus_host_effect_allowed == 0,
+        "summary nucleus host effect denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view_allowed == 0,
+        "summary runtime entry address space view denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view_allowed == 0,
+        "summary runtime entry stack view denied");
+    EXPECT_TRUE(result.runtime_entry_register_view_allowed == 0,
+        "summary runtime entry register view denied");
     EXPECT_TRUE(result.runtime_entry_frame_allowed == 0,
         "summary runtime entry frame denied");
     EXPECT_TRUE(result.runtime_entry_admission_allowed == 0,
@@ -185,8 +216,8 @@ static int summary_reaches_ready_without_authority(void) {
     EXPECT_TRUE(strcmp(result.entries[1].name, "runtime") == 0,
         "summary runtime entry name");
     EXPECT_TRUE(strcmp(result.entries[1].lifecycle_relation,
-            "runtime-entry-frame-ready") == 0,
-        "summary runtime frame relation");
+            "runtime-entry-address-space-view-ready") == 0,
+        "summary runtime address space view relation");
     EXPECT_TRUE(strcmp(result.entries[1].authority_status, "runtime-entry-denied") == 0,
         "summary runtime authority denied");
     EXPECT_TRUE(result.entries[1].lifecycle_ready == 0,
@@ -263,6 +294,13 @@ static int summary_respects_lifecycle_step_limit(void) {
         "limited summary lifecycle incomplete");
     EXPECT_TRUE(result.lifecycle_step_count == 2u,
         "limited summary two steps");
+    EXPECT_TRUE(strcmp(result.nucleus_coupling_status,
+            "nucleus-kernel-coupling-ready") == 0,
+        "limited summary nucleus coupling ready status");
+    EXPECT_TRUE(strcmp(result.os_readiness_status, "os-metadata-ready") == 0,
+        "limited summary os metadata ready");
+    EXPECT_TRUE(result.nucleus_coupling_ready == 1,
+        "limited summary nucleus coupling ready");
     EXPECT_TRUE(result.entries[0].lifecycle_ready == 1,
         "limited summary boot ready");
     EXPECT_TRUE(result.entries[2].lifecycle_ready == 0,
@@ -299,13 +337,14 @@ static int summary_report_is_deterministic(void) {
         "summary report title");
     EXPECT_TRUE(strstr(report, "summary_status=summary-ready\n") != 0,
         "summary report status");
-    EXPECT_TRUE(strstr(report, "final_state=runtime-entry-frame-ready\n") != 0,
+    EXPECT_TRUE(strstr(report,
+            "final_state=runtime-entry-address-space-view-ready\n") != 0,
         "summary report final state");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "summary report lifecycle complete");
-    EXPECT_TRUE(strstr(report, "lifecycle_step_count=25\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_step_count=28\n") != 0,
         "summary report step count");
-    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=25\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=28\n") != 0,
         "summary report state changes");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "summary report external effect");
@@ -315,6 +354,38 @@ static int summary_report_is_deterministic(void) {
         "summary report lifecycle network denied");
     EXPECT_TRUE(strstr(report, "machine_network_allowed=0\n") != 0,
         "summary report machine network denied");
+    EXPECT_TRUE(strstr(report, "registry_no_effect=1\n") != 0,
+        "summary report registry no effect");
+    EXPECT_TRUE(strstr(report,
+            "nucleus_coupling_status=nucleus-kernel-coupling-ready\n") != 0,
+        "summary report nucleus coupling ready");
+    EXPECT_TRUE(strstr(report, "os_readiness_status=os-metadata-ready\n") != 0,
+        "summary report os readiness metadata ready");
+    EXPECT_TRUE(strstr(report, "nucleus_coupling_ready=1\n") != 0,
+        "summary report nucleus coupling ready flag");
+    EXPECT_TRUE(strstr(report, "nucleus_no_effect_chain_ok=1\n") != 0,
+        "summary report nucleus no-effect chain");
+    EXPECT_TRUE(strstr(report, "nucleus_boot_allowed=0\n") != 0,
+        "summary report nucleus boot denied");
+    EXPECT_TRUE(strstr(report, "nucleus_runtime_entry_allowed=0\n") != 0,
+        "summary report nucleus runtime entry denied");
+    EXPECT_TRUE(strstr(report, "nucleus_scheduler_run_entry_allowed=0\n") != 0,
+        "summary report nucleus scheduler run entry denied");
+    EXPECT_TRUE(strstr(report, "nucleus_context_switch_allowed=0\n") != 0,
+        "summary report nucleus context switch denied");
+    EXPECT_TRUE(strstr(report, "nucleus_register_save_allowed=0\n") != 0,
+        "summary report nucleus register save denied");
+    EXPECT_TRUE(strstr(report, "nucleus_register_restore_allowed=0\n") != 0,
+        "summary report nucleus register restore denied");
+    EXPECT_TRUE(strstr(report, "nucleus_host_effect_allowed=0\n") != 0,
+        "summary report nucleus host effect denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_address_space_view_allowed=0\n") != 0,
+        "summary report runtime address space view denied");
+    EXPECT_TRUE(strstr(report, "runtime_entry_stack_view_allowed=0\n") != 0,
+        "summary report runtime stack view denied");
+    EXPECT_TRUE(strstr(report, "runtime_entry_register_view_allowed=0\n") != 0,
+        "summary report runtime register view denied");
     EXPECT_TRUE(strstr(report, "runtime_entry_frame_allowed=0\n") != 0,
         "summary report runtime frame denied");
     EXPECT_TRUE(strstr(report, "runtime_entry_admission_allowed=0\n") != 0,
@@ -426,7 +497,7 @@ static int summary_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "subsystem[1].authority_status=runtime-entry-denied\n") != 0,
         "summary report runtime authority");
     EXPECT_TRUE(strstr(report,
-            "subsystem[1].lifecycle_relation=runtime-entry-frame-ready\n") != 0,
+            "subsystem[1].lifecycle_relation=runtime-entry-address-space-view-ready\n") != 0,
         "summary report runtime relation");
     EXPECT_TRUE(strstr(report, "subsystem[2].lifecycle_relation=scheduler-run-entry-ready\n") != 0,
         "summary report scheduler relation");
@@ -475,7 +546,10 @@ static int null_guards_are_safe(void) {
 }
 
 int main(void) {
-    if (default_request_targets_runtime_entry_frame_ready() != 0) return 1;
+    if (default_request_targets_runtime_entry_address_space_view_ready()
+            != 0) {
+        return 1;
+    }
     if (summary_reaches_ready_without_authority() != 0) return 1;
     if (summary_respects_lifecycle_step_limit() != 0) return 1;
     if (summary_report_is_deterministic() != 0) return 1;

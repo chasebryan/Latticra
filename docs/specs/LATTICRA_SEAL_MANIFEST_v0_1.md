@@ -60,11 +60,27 @@ For v0.1:
     digest_encoding = "hex"
     trust_boundary = "project-root"
 
+The native Seal CLI validates the declared mode, unsigned status, digest
+algorithm, digest encoding, canonicalization string, and trust boundary before
+emitting a passing report. seal configuration fields must fail closed when
+missing, duplicate, malformed, or unsupported.
+
 ## Paths Section
 
 The paths section defines what the scanner should include and exclude.
 
 The v0.1 default includes the project root and excludes generated directories, dependency directories, temporary files, and generated reports.
+
+The native Seal CLI reads `[paths].include` and `[paths].exclude` before
+policy and digest scans. The supported v0.1 include scope is the project root
+(`"."`). Exclude entries may be exact filenames, exact relative paths, simple
+`*` wildcard prefix/suffix patterns, or directory patterns ending in `/`.
+Missing, duplicate, malformed, or unsupported path scope must fail closed.
+String arrays must use explicit comma separators; missing or doubled separators
+are malformed.
+Exclude entries must stay relative to the project root and must not contain
+absolute paths, `.` or `..` path segments, control characters, backslashes, or
+multiple wildcards.
 
 ## Policy Section
 
@@ -79,14 +95,51 @@ Initial policy checks include:
 - denying obvious committed token markers
 - optionally warning about oversized files
 
+The native Seal CLI reads required file paths from
+`[policy.required_files].paths`. Missing, duplicate, or malformed required-file
+arrays must fail closed, and every declared required file must exist as a
+regular file. Required-file paths must be project-relative regular-file paths;
+absolute paths, directory paths, wildcards, `.` or `..` segments, control
+characters, and backslashes are malformed.
+
+Content-denial marker examples should be represented as split `pattern_parts`
+metadata in the manifest so the manifest does not itself contain a complete
+denied marker string.
+
+The native Seal CLI reads deny filename patterns from
+`[policy.deny_filenames].patterns` and deny content markers from
+`[policy.deny_contents].pattern_parts`. Missing, duplicate, or malformed deny
+policy arrays must fail closed.
+Nested content marker arrays must also use explicit comma separators.
+Filename deny patterns must be filename patterns, not path patterns; `/`,
+backslashes, control characters, bare `*`, and multiple wildcards are
+malformed.
+
 ## Report Section
 
 The report section defines where generated Seal reports should be written.
 
-Default outputs:
+Default native CLI outputs:
+
+    reports/latticra-seal-cli-report.txt
+    reports/latticra-seal-cli-hashes.txt
+
+Native hash lists and `latticra.seal.lock` baselines are canonical artifacts:
+each entry uses lowercase SHA-256 hex, two spaces, and a project-relative safe
+path. Baseline entries must already be sorted by path; verification must reject
+malformed, unsafe, duplicate, or unsorted baseline entries instead of
+normalizing them.
+
+Legacy smoke-lane outputs retained for compatibility:
 
     reports/latticra-seal-report.txt
     reports/latticra-seal-file-hashes.txt
+
+The native Seal CLI validates `[report].default_output`,
+`[report].hash_list_output`, `[report].legacy_smoke_output`,
+`[report].legacy_smoke_hash_list_output`, and the report inclusion booleans
+before returning PASS. These declarations must match the actual CLI report
+surface so manifest metadata cannot drift away from generated artifacts.
 
 ## Proof Section
 

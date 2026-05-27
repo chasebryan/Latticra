@@ -76,6 +76,10 @@ The final render command is:
 
     scripts/render-latticra-academic-presentation.sh render
 
+The current final MP4 is linked from the root README and lives at:
+
+    build/presentation/latticra-academic/video/latticra-academic-presentation.mp4
+
 For Piper voiceover, provide a voice model if it is not already configured:
 
     PIPER_MODEL=/path/to/voice.onnx scripts/render-latticra-academic-presentation.sh render

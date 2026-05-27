@@ -42,6 +42,9 @@ require_file docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md
 require_file docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md
 require_file docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md
 require_file docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md
 require_file docs/QUICK_START_CHEATSHEET.md
 require_file README.md
@@ -99,6 +102,18 @@ require_contains 'ubuntu_launchpad_build_result_evidence_contract_present=1' doc
 require_contains 'ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_publication_non_claim_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_promotion_blocker_matrix_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_re_request_allowed=0' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denied=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_ppa_archive_publication_gate_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_package_notice_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
@@ -135,7 +150,12 @@ require_contains 'docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' README.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
 
 require_contains 'Ubuntu prerequisites:' docs/QUICK_START_CHEATSHEET.md
 require_contains 'sudo apt-get install -y rustc cargo make gcc pkg-config' docs/QUICK_START_CHEATSHEET.md

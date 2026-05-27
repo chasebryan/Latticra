@@ -119,6 +119,9 @@ stage_4_macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout
 stage_4_macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_review_contract=present
 stage_4_macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_contract=present
 stage_4_macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_contract=present
+stage_4_macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_contract=present
+stage_4_macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_contract=present
+stage_4_macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_review_contract=present
 stage_5_codesigning_notarization_plan=future
 stage_6_controlled_os_integration_contracts=future
 ```
@@ -448,6 +451,30 @@ scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout
 docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_CONTRACT_STATUS.md
 ```
 
+The Stage 4 macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review contract is implemented by:
+
+```text
+docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_CONTRACT.md
+scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_CONTRACT_STATUS.md
+```
+
+The Stage 4 macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition contract is implemented by:
+
+```text
+docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CONTRACT.md
+scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CONTRACT_STATUS.md
+```
+
+The Stage 4 macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition review contract is implemented by:
+
+```text
+docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW_CONTRACT.md
+scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW_CONTRACT_STATUS.md
+```
+
 ## App Bundle Direction
 
 The macOS Panel should be represented as a managed user-local app bundle:
@@ -688,8 +715,35 @@ scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout
 docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_CONTRACT_STATUS.md
 ```
 
-## Next Recommended Lane
+Current live-runner acceptance-denial disposition closeout audit review disposition closeout audit review lane now present:
 
 ```text
 Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review contract that reviews the no-effect closeout audit review disposition closeout audit without opening dispatch or deletion.
+docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_CONTRACT.md
+scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_CONTRACT_STATUS.md
+```
+
+Current live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition lane now present:
+
+```text
+Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition contract that records the reviewed no-effect closeout audit review disposition closeout audit as a no-effect disposition without opening dispatch or deletion.
+docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CONTRACT.md
+scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CONTRACT_STATUS.md
+```
+
+Current live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition review lane now present:
+
+```text
+Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition review contract that reviews the no-effect closeout audit review disposition closeout audit review disposition without opening dispatch or deletion.
+docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW_CONTRACT.md
+scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review-contract.sh
+docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW_CONTRACT_STATUS.md
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout contract that closes the reviewed no-effect closeout audit review disposition closeout audit review disposition without opening dispatch or deletion.
 ```

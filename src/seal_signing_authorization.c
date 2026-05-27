@@ -41,6 +41,8 @@ const char *latticra_seal_signing_authorization_error_label(
         return "denied-host-effect";
     case LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_NETWORK_EFFECT:
         return "denied-network-effect";
+    case LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_CRYPTO_GRADUATION_GATE:
+        return "denied-crypto-graduation-gate";
     default:
         return "unknown";
     }
@@ -56,6 +58,13 @@ static void authorization_init(latticra_seal_signing_authorization_t *authorizat
         authorization->signing_authorization_state,
         sizeof(authorization->signing_authorization_state),
         "denied-signature-request");
+    copy_literal(authorization->crypto_graduation_gate_state, sizeof(authorization->crypto_graduation_gate_state), "not-required");
+    authorization->crypto_graduation_gate_present = 0u;
+    authorization->crypto_graduation_gate_passed = 0u;
+    authorization->standard_expectations_met = 0u;
+    authorization->local_verify_graduated = 0u;
+    authorization->receipt_promotion_graduated = 0u;
+    authorization->authority_promotion_allowed = 0u;
     copy_literal(authorization->mode, sizeof(authorization->mode), "metadata-only");
     authorization->signature_request_ready = 0u;
     authorization->signing_authorization_ready = 0u;
@@ -90,6 +99,9 @@ static void copy_request_metadata(
     copy_literal(out->message_digest_algorithm, sizeof(out->message_digest_algorithm), request->message_digest_algorithm);
     copy_literal(out->message_digest_hex, sizeof(out->message_digest_hex), request->message_digest_hex);
     copy_literal(out->public_key_identity_label, sizeof(out->public_key_identity_label), request->public_key_identity_label);
+    copy_literal(out->crypto_graduation_profile, sizeof(out->crypto_graduation_profile), request->crypto_graduation_profile);
+    copy_literal(out->assurance_baseline_profile, sizeof(out->assurance_baseline_profile), request->assurance_baseline_profile);
+    copy_literal(out->crypto_graduation_gate_state, sizeof(out->crypto_graduation_gate_state), request->crypto_graduation_gate_state);
     copy_literal(out->requested_capability, sizeof(out->requested_capability), request->requested_capability);
     copy_literal(out->requested_effect, sizeof(out->requested_effect), request->requested_effect);
     copy_literal(out->requested_handoff, sizeof(out->requested_handoff), request->requested_handoff);
@@ -98,6 +110,12 @@ static void copy_request_metadata(
     copy_literal(out->requested_signature, sizeof(out->requested_signature), request->requested_signature);
     copy_literal(out->requested_signing_authorization, sizeof(out->requested_signing_authorization), requested_signing_authorization);
     copy_literal(out->requested_scope, sizeof(out->requested_scope), request->requested_scope);
+    out->crypto_graduation_gate_present = request->crypto_graduation_gate_present;
+    out->crypto_graduation_gate_passed = request->crypto_graduation_gate_passed;
+    out->standard_expectations_met = request->standard_expectations_met;
+    out->local_verify_graduated = request->local_verify_graduated;
+    out->receipt_promotion_graduated = request->receipt_promotion_graduated;
+    out->authority_promotion_allowed = request->authority_promotion_allowed;
     copy_literal(out->signature_request_state, sizeof(out->signature_request_state), request->signature_request_state);
     out->signature_request_ready = request->signature_request_ready;
     out->signature_performed = request->signature_performed;
@@ -131,6 +149,19 @@ latticra_status_t latticra_seal_signing_authorization_from_request(
         out->error = LATTICRA_SEAL_SIGNING_AUTHORIZATION_INVALID_SIGNATURE_REQUEST;
         copy_literal(out->signing_authorization_state, sizeof(out->signing_authorization_state), "denied-signature-request");
         copy_literal(out->status, sizeof(out->status), "invalid-signature-request");
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (request->crypto_graduation_gate_present != 0u &&
+        (request->crypto_graduation_gate_passed != 1u ||
+         request->standard_expectations_met != 1u ||
+         request->local_verify_graduated != 1u ||
+         request->receipt_promotion_graduated != 1u ||
+         request->authority_promotion_allowed != 0u ||
+         strcmp(request->crypto_graduation_gate_state, "graduated-authority-neutral") != 0)) {
+        out->error = LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_CRYPTO_GRADUATION_GATE;
+        copy_literal(out->signing_authorization_state, sizeof(out->signing_authorization_state), "denied-crypto-graduation-gate");
+        copy_literal(out->status, sizeof(out->status), "denied-crypto-graduation-gate");
         return LATTICRA_STATUS_OK;
     }
 
@@ -261,6 +292,9 @@ latticra_status_t latticra_seal_signing_authorization_render(
         "message_digest_algorithm=%s\n"
         "message_digest_hex=%s\n"
         "public_key_identity_label=%s\n"
+        "crypto_graduation_profile=%s\n"
+        "assurance_baseline_profile=%s\n"
+        "crypto_graduation_gate_state=%s\n"
         "requested_capability=%s\n"
         "requested_effect=%s\n"
         "requested_handoff=%s\n"
@@ -269,6 +303,12 @@ latticra_status_t latticra_seal_signing_authorization_render(
         "requested_signature=%s\n"
         "requested_signing_authorization=%s\n"
         "requested_scope=%s\n"
+        "crypto_graduation_gate_present=%u\n"
+        "crypto_graduation_gate_passed=%u\n"
+        "standard_expectations_met=%u\n"
+        "local_verify_graduated=%u\n"
+        "receipt_promotion_graduated=%u\n"
+        "authority_promotion_allowed=%u\n"
         "signature_request_state=%s\n"
         "signature_request_ready=%u\n"
         "signing_authorization_state=%s\n"
@@ -300,6 +340,9 @@ latticra_status_t latticra_seal_signing_authorization_render(
         authorization->message_digest_algorithm,
         authorization->message_digest_hex,
         authorization->public_key_identity_label,
+        authorization->crypto_graduation_profile,
+        authorization->assurance_baseline_profile,
+        authorization->crypto_graduation_gate_state,
         authorization->requested_capability,
         authorization->requested_effect,
         authorization->requested_handoff,
@@ -308,6 +351,12 @@ latticra_status_t latticra_seal_signing_authorization_render(
         authorization->requested_signature,
         authorization->requested_signing_authorization,
         authorization->requested_scope,
+        authorization->crypto_graduation_gate_present,
+        authorization->crypto_graduation_gate_passed,
+        authorization->standard_expectations_met,
+        authorization->local_verify_graduated,
+        authorization->receipt_promotion_graduated,
+        authorization->authority_promotion_allowed,
         authorization->signature_request_state,
         authorization->signature_request_ready,
         authorization->signing_authorization_state,

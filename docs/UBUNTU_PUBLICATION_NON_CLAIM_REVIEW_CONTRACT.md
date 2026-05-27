@@ -75,6 +75,9 @@ root_installer_claim_absence_reviewed=0
 publication_readiness_non_claims_reviewed=0
 publication_non_claims_reviewed=0
 ubuntu_publication_non_claim_review_unblocked=0
+ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1
+publication_promotion_blocker_matrix_state=blocked-no-effect
+ubuntu_publication_promotion_blocker_matrix_unblocked=0
 ppa_created=0
 ppa_claimed=0
 ubuntu_archive_submission_claimed=0
@@ -87,7 +90,7 @@ root_installer_ready=0
 
 ## Relationship To Publication
 
-The Ubuntu PPA/archive publication gate must not unblock until this publication non-claim review contract is unblocked alongside source package evidence, upload/signing authority evidence, Launchpad build result evidence, install/remove evidence, and package review gates.
+The Ubuntu PPA/archive publication promotion blocker matrix is downstream of this contract and is recorded in `docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md`. The Ubuntu PPA/archive publication gate must not unblock until this publication non-claim review contract is unblocked alongside source package evidence, upload/signing authority evidence, Launchpad build result evidence, install/remove evidence, and package review gates.
 
 This contract is intentionally closed today. It records the future publication-claim review shape without running upload commands, creating publication targets, or publishing artifacts.
 

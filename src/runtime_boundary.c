@@ -585,6 +585,9 @@ static void copy_lat_lir_evidence(const latticra_lir_module_t *lir, latticra_run
     if (lir == 0) return;
     result->record.lat_lir_source_kind = lir->source_kind;
     (void)snprintf(result->record.lat_lir_module_name, sizeof(result->record.lat_lir_module_name), "%s", lir->module_name);
+    (void)snprintf(result->record.lat_lir_card_name, sizeof(result->record.lat_lir_card_name), "%s", lir->card_name);
+    (void)snprintf(result->record.lat_lir_effect, sizeof(result->record.lat_lir_effect), "%s", lir->effect);
+    (void)snprintf(result->record.lat_lir_boundary, sizeof(result->record.lat_lir_boundary), "%s", lir->boundary);
     result->record.lat_lir_report_classification = lir->report_classification;
     result->record.lat_lir_shape_kind = lir->shape_kind;
     result->record.lat_lir_source_span = lir->source_span;
@@ -607,6 +610,9 @@ static void copy_lat_lir_evidence(const latticra_lir_module_t *lir, latticra_run
             result->record.lat_lir_has_first_lat_node = 1;
             result->record.lat_lir_first_lat_node_index = index;
             result->record.lat_lir_first_lat_node_kind = lir->nodes[index].kind;
+            result->record.lat_lir_first_lat_node_parent_index = lir->nodes[index].parent_index;
+            result->record.lat_lir_first_lat_node_first_child_index = lir->nodes[index].first_child_index;
+            result->record.lat_lir_first_lat_node_child_count = lir->nodes[index].child_count;
             result->record.lat_lir_first_lat_node_span = lir->nodes[index].source_span;
             (void)snprintf(result->record.lat_lir_first_lat_node_name,
                            sizeof(result->record.lat_lir_first_lat_node_name),
@@ -630,6 +636,9 @@ static void copy_lat_lir_evidence(const latticra_lir_module_t *lir, latticra_run
             result->record.lat_lir_has_first_transition_node = 1;
             result->record.lat_lir_first_transition_node_index = index;
             result->record.lat_lir_first_transition_node_kind = lir->nodes[index].kind;
+            result->record.lat_lir_first_transition_node_parent_index = lir->nodes[index].parent_index;
+            result->record.lat_lir_first_transition_node_first_child_index = lir->nodes[index].first_child_index;
+            result->record.lat_lir_first_transition_node_child_count = lir->nodes[index].child_count;
             result->record.lat_lir_first_transition_node_span = lir->nodes[index].source_span;
             (void)snprintf(result->record.lat_lir_first_transition_node_name,
                            sizeof(result->record.lat_lir_first_transition_node_name),
@@ -696,6 +705,9 @@ static void copy_lat_lir_evidence(const latticra_lir_module_t *lir, latticra_run
                     lir->edges[index].from_index < LATTICRA_LIR_NODE_MAX) {
                     size_t from_index = lir->edges[index].from_index;
                     result->record.lat_lir_first_transition_source_edge_from_node_kind = lir->nodes[from_index].kind;
+                    result->record.lat_lir_first_transition_source_edge_from_node_parent_index = lir->nodes[from_index].parent_index;
+                    result->record.lat_lir_first_transition_source_edge_from_node_first_child_index = lir->nodes[from_index].first_child_index;
+                    result->record.lat_lir_first_transition_source_edge_from_node_child_count = lir->nodes[from_index].child_count;
                     result->record.lat_lir_first_transition_source_edge_from_node_span = lir->nodes[from_index].source_span;
                     (void)snprintf(result->record.lat_lir_first_transition_source_edge_from_node_name,
                                    sizeof(result->record.lat_lir_first_transition_source_edge_from_node_name),
@@ -718,6 +730,9 @@ static void copy_lat_lir_evidence(const latticra_lir_module_t *lir, latticra_run
                     lir->edges[index].to_index < LATTICRA_LIR_NODE_MAX) {
                     size_t to_index = lir->edges[index].to_index;
                     result->record.lat_lir_first_transition_source_edge_to_node_kind = lir->nodes[to_index].kind;
+                    result->record.lat_lir_first_transition_source_edge_to_node_parent_index = lir->nodes[to_index].parent_index;
+                    result->record.lat_lir_first_transition_source_edge_to_node_first_child_index = lir->nodes[to_index].first_child_index;
+                    result->record.lat_lir_first_transition_source_edge_to_node_child_count = lir->nodes[to_index].child_count;
                     result->record.lat_lir_first_transition_source_edge_to_node_span = lir->nodes[to_index].source_span;
                     (void)snprintf(result->record.lat_lir_first_transition_source_edge_to_node_name,
                                    sizeof(result->record.lat_lir_first_transition_source_edge_to_node_name),
@@ -1036,9 +1051,12 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
     }
     offset += (size_t)written;
     written = snprintf(buffer + offset, buffer_len - offset,
-        "lat_lir_source_kind=%s\nlat_lir_module_name=%s\nlat_lir_report_classification=%s\nlat_lir_shape_kind=%s\nlat_lir_span_start_offset=%lu\nlat_lir_span_end_offset=%lu\nlat_lir_span_start_line=%lu\nlat_lir_span_start_column=%lu\nlat_lir_span_end_line=%lu\nlat_lir_span_end_column=%lu\nlat_lir_module_node_count=%lu\nlat_lir_module_edge_count=%lu\nlat_lir_binding_count=%lu\nlat_lir_text_count=%lu\nlat_lir_no_effect_chain_ok=%d\nlat_lir_evidence_level=%u\nlat_lir_no_effect=%d\nlat_lir_execution_allowed=%d\nlat_lir_mutation_allowed=%d\nlat_lir_server_allowed=%d\nlat_lir_network_allowed=%d\nlat_lir_recovery_allowed=%d\nlat_lir_hardware_allowed=%d\nlat_lir_contains_edge_count=%lu\nlat_lir_binds_edge_count=%lu\nlat_lir_annotates_edge_count=%lu\nlat_lir_orders_before_edge_count=%lu\nlat_lir_transition_edge_count=%lu\nlat_lir_has_lat_state_nodes=%d\nlat_lir_has_lat_transition_nodes=%d\nlat_lir_has_transition_source_edges=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
+        "lat_lir_source_kind=%s\nlat_lir_module_name=%s\nlat_lir_card_name=%s\nlat_lir_effect=%s\nlat_lir_boundary=%s\nlat_lir_report_classification=%s\nlat_lir_shape_kind=%s\nlat_lir_span_start_offset=%lu\nlat_lir_span_end_offset=%lu\nlat_lir_span_start_line=%lu\nlat_lir_span_start_column=%lu\nlat_lir_span_end_line=%lu\nlat_lir_span_end_column=%lu\nlat_lir_module_node_count=%lu\nlat_lir_module_edge_count=%lu\nlat_lir_binding_count=%lu\nlat_lir_text_count=%lu\nlat_lir_no_effect_chain_ok=%d\nlat_lir_evidence_level=%u\nlat_lir_no_effect=%d\nlat_lir_execution_allowed=%d\nlat_lir_mutation_allowed=%d\nlat_lir_server_allowed=%d\nlat_lir_network_allowed=%d\nlat_lir_recovery_allowed=%d\nlat_lir_hardware_allowed=%d\nlat_lir_contains_edge_count=%lu\nlat_lir_binds_edge_count=%lu\nlat_lir_annotates_edge_count=%lu\nlat_lir_orders_before_edge_count=%lu\nlat_lir_transition_edge_count=%lu\nlat_lir_has_lat_state_nodes=%d\nlat_lir_has_lat_transition_nodes=%d\nlat_lir_has_transition_source_edges=%d\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nfile_io_allowed=%d\nnetwork_allowed=%d\nserver_allowed=%d\nrecovery_allowed=%d\nrollback_allowed=%d\nhardware_allowed=%d\nboot_allowed=%d\nsource_identity=%s\nspan_start_offset=%lu\nspan_end_offset=%lu\nspan_start_line=%lu\nspan_start_column=%lu\nspan_end_line=%lu\nspan_end_column=%lu\n",
         runtime_lir_source_kind_label(result->record.lat_lir_source_kind),
         result->record.lat_lir_module_name,
+        result->record.lat_lir_card_name,
+        result->record.lat_lir_effect,
+        result->record.lat_lir_boundary,
         runtime_lir_report_classification_label(result->record.lat_lir_report_classification),
         runtime_lir_shape_kind_label(result->record.lat_lir_shape_kind),
         (unsigned long)result->record.lat_lir_source_span.start_offset,
@@ -1091,7 +1109,7 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
     }
     used = offset + (size_t)written;
     extra = snprintf(buffer + used, buffer_len - used,
-        "lat_lir_lat_state_node_count=%lu\nlat_lir_lat_policy_node_count=%lu\nlat_lir_lat_transition_node_count=%lu\nlat_lir_lat_assertion_node_count=%lu\nlat_lir_lat_requirement_node_count=%lu\nlat_lir_lat_effect_declaration_node_count=%lu\nlat_lir_has_first_lat_node=%d\nlat_lir_first_lat_node_index=%lu\nlat_lir_first_lat_node_kind=%s\nlat_lir_first_lat_node_name=%s\nlat_lir_first_lat_node_value=%s\nlat_lir_first_lat_node_operator=%s\nlat_lir_first_lat_node_binding=%s\nlat_lir_first_lat_node_span_start_offset=%lu\nlat_lir_first_lat_node_span_end_offset=%lu\nlat_lir_first_lat_node_span_start_line=%lu\nlat_lir_first_lat_node_span_start_column=%lu\nlat_lir_first_lat_node_span_end_line=%lu\nlat_lir_first_lat_node_span_end_column=%lu\nlat_lir_has_first_transition_node=%d\nlat_lir_first_transition_node_index=%lu\nlat_lir_first_transition_node_kind=%s\nlat_lir_first_transition_node_name=%s\nlat_lir_first_transition_node_value=%s\nlat_lir_first_transition_node_operator=%s\nlat_lir_first_transition_node_binding=%s\nlat_lir_first_transition_node_span_start_offset=%lu\nlat_lir_first_transition_node_span_end_offset=%lu\nlat_lir_first_transition_node_span_start_line=%lu\nlat_lir_first_transition_node_span_start_column=%lu\nlat_lir_first_transition_node_span_end_line=%lu\nlat_lir_first_transition_node_span_end_column=%lu\nlat_lir_has_first_edge=%d\nlat_lir_first_edge_index=%lu\nlat_lir_first_edge_from_index=%lu\nlat_lir_first_edge_to_index=%lu\nlat_lir_first_edge_kind=%s\nlat_lir_first_edge_span_start_offset=%lu\nlat_lir_first_edge_span_end_offset=%lu\nlat_lir_first_edge_span_start_line=%lu\nlat_lir_first_edge_span_start_column=%lu\nlat_lir_first_edge_span_end_line=%lu\nlat_lir_first_edge_span_end_column=%lu\nlat_lir_has_first_transition_source_edge=%d\nlat_lir_first_transition_source_edge_index=%lu\nlat_lir_first_transition_source_edge_from_index=%lu\nlat_lir_first_transition_source_edge_to_index=%lu\nlat_lir_first_transition_source_edge_kind=%s\nlat_lir_first_transition_source_edge_from_node_kind=%s\nlat_lir_first_transition_source_edge_from_node_name=%s\nlat_lir_first_transition_source_edge_from_node_value=%s\nlat_lir_first_transition_source_edge_from_node_operator=%s\nlat_lir_first_transition_source_edge_from_node_binding=%s\nlat_lir_first_transition_source_edge_from_node_span_start_offset=%lu\nlat_lir_first_transition_source_edge_from_node_span_end_offset=%lu\nlat_lir_first_transition_source_edge_from_node_span_start_line=%lu\nlat_lir_first_transition_source_edge_from_node_span_start_column=%lu\nlat_lir_first_transition_source_edge_from_node_span_end_line=%lu\nlat_lir_first_transition_source_edge_from_node_span_end_column=%lu\nlat_lir_first_transition_source_edge_to_node_kind=%s\nlat_lir_first_transition_source_edge_to_node_name=%s\nlat_lir_first_transition_source_edge_to_node_value=%s\nlat_lir_first_transition_source_edge_to_node_operator=%s\nlat_lir_first_transition_source_edge_to_node_binding=%s\nlat_lir_first_transition_source_edge_to_node_span_start_offset=%lu\nlat_lir_first_transition_source_edge_to_node_span_end_offset=%lu\nlat_lir_first_transition_source_edge_to_node_span_start_line=%lu\nlat_lir_first_transition_source_edge_to_node_span_start_column=%lu\nlat_lir_first_transition_source_edge_to_node_span_end_line=%lu\nlat_lir_first_transition_source_edge_to_node_span_end_column=%lu\nlat_lir_first_transition_source_edge_span_start_offset=%lu\nlat_lir_first_transition_source_edge_span_end_offset=%lu\nlat_lir_first_transition_source_edge_span_start_line=%lu\nlat_lir_first_transition_source_edge_span_start_column=%lu\nlat_lir_first_transition_source_edge_span_end_line=%lu\nlat_lir_first_transition_source_edge_span_end_column=%lu\n",
+        "lat_lir_lat_state_node_count=%lu\nlat_lir_lat_policy_node_count=%lu\nlat_lir_lat_transition_node_count=%lu\nlat_lir_lat_assertion_node_count=%lu\nlat_lir_lat_requirement_node_count=%lu\nlat_lir_lat_effect_declaration_node_count=%lu\nlat_lir_has_first_lat_node=%d\nlat_lir_first_lat_node_index=%lu\nlat_lir_first_lat_node_kind=%s\nlat_lir_first_lat_node_name=%s\nlat_lir_first_lat_node_value=%s\nlat_lir_first_lat_node_operator=%s\nlat_lir_first_lat_node_binding=%s\nlat_lir_first_lat_node_parent_index=%lu\nlat_lir_first_lat_node_first_child_index=%lu\nlat_lir_first_lat_node_child_count=%lu\nlat_lir_first_lat_node_span_start_offset=%lu\nlat_lir_first_lat_node_span_end_offset=%lu\nlat_lir_first_lat_node_span_start_line=%lu\nlat_lir_first_lat_node_span_start_column=%lu\nlat_lir_first_lat_node_span_end_line=%lu\nlat_lir_first_lat_node_span_end_column=%lu\nlat_lir_has_first_transition_node=%d\nlat_lir_first_transition_node_index=%lu\nlat_lir_first_transition_node_kind=%s\nlat_lir_first_transition_node_name=%s\nlat_lir_first_transition_node_value=%s\nlat_lir_first_transition_node_operator=%s\nlat_lir_first_transition_node_binding=%s\nlat_lir_first_transition_node_parent_index=%lu\nlat_lir_first_transition_node_first_child_index=%lu\nlat_lir_first_transition_node_child_count=%lu\nlat_lir_first_transition_node_span_start_offset=%lu\nlat_lir_first_transition_node_span_end_offset=%lu\nlat_lir_first_transition_node_span_start_line=%lu\nlat_lir_first_transition_node_span_start_column=%lu\nlat_lir_first_transition_node_span_end_line=%lu\nlat_lir_first_transition_node_span_end_column=%lu\nlat_lir_has_first_edge=%d\nlat_lir_first_edge_index=%lu\nlat_lir_first_edge_from_index=%lu\nlat_lir_first_edge_to_index=%lu\nlat_lir_first_edge_kind=%s\nlat_lir_first_edge_span_start_offset=%lu\nlat_lir_first_edge_span_end_offset=%lu\nlat_lir_first_edge_span_start_line=%lu\nlat_lir_first_edge_span_start_column=%lu\nlat_lir_first_edge_span_end_line=%lu\nlat_lir_first_edge_span_end_column=%lu\nlat_lir_has_first_transition_source_edge=%d\nlat_lir_first_transition_source_edge_index=%lu\nlat_lir_first_transition_source_edge_from_index=%lu\nlat_lir_first_transition_source_edge_to_index=%lu\nlat_lir_first_transition_source_edge_kind=%s\nlat_lir_first_transition_source_edge_from_node_kind=%s\nlat_lir_first_transition_source_edge_from_node_name=%s\nlat_lir_first_transition_source_edge_from_node_value=%s\nlat_lir_first_transition_source_edge_from_node_operator=%s\nlat_lir_first_transition_source_edge_from_node_binding=%s\nlat_lir_first_transition_source_edge_from_node_parent_index=%lu\nlat_lir_first_transition_source_edge_from_node_first_child_index=%lu\nlat_lir_first_transition_source_edge_from_node_child_count=%lu\nlat_lir_first_transition_source_edge_from_node_span_start_offset=%lu\nlat_lir_first_transition_source_edge_from_node_span_end_offset=%lu\nlat_lir_first_transition_source_edge_from_node_span_start_line=%lu\nlat_lir_first_transition_source_edge_from_node_span_start_column=%lu\nlat_lir_first_transition_source_edge_from_node_span_end_line=%lu\nlat_lir_first_transition_source_edge_from_node_span_end_column=%lu\nlat_lir_first_transition_source_edge_to_node_kind=%s\nlat_lir_first_transition_source_edge_to_node_name=%s\nlat_lir_first_transition_source_edge_to_node_value=%s\nlat_lir_first_transition_source_edge_to_node_operator=%s\nlat_lir_first_transition_source_edge_to_node_binding=%s\nlat_lir_first_transition_source_edge_to_node_parent_index=%lu\nlat_lir_first_transition_source_edge_to_node_first_child_index=%lu\nlat_lir_first_transition_source_edge_to_node_child_count=%lu\nlat_lir_first_transition_source_edge_to_node_span_start_offset=%lu\nlat_lir_first_transition_source_edge_to_node_span_end_offset=%lu\nlat_lir_first_transition_source_edge_to_node_span_start_line=%lu\nlat_lir_first_transition_source_edge_to_node_span_start_column=%lu\nlat_lir_first_transition_source_edge_to_node_span_end_line=%lu\nlat_lir_first_transition_source_edge_to_node_span_end_column=%lu\nlat_lir_first_transition_source_edge_span_start_offset=%lu\nlat_lir_first_transition_source_edge_span_end_offset=%lu\nlat_lir_first_transition_source_edge_span_start_line=%lu\nlat_lir_first_transition_source_edge_span_start_column=%lu\nlat_lir_first_transition_source_edge_span_end_line=%lu\nlat_lir_first_transition_source_edge_span_end_column=%lu\n",
         (unsigned long)result->record.lat_lir_lat_state_node_count,
         (unsigned long)result->record.lat_lir_lat_policy_node_count,
         (unsigned long)result->record.lat_lir_lat_transition_node_count,
@@ -1105,6 +1123,9 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         result->record.lat_lir_first_lat_node_value,
         result->record.lat_lir_first_lat_node_operator,
         result->record.lat_lir_first_lat_node_binding,
+        (unsigned long)result->record.lat_lir_first_lat_node_parent_index,
+        (unsigned long)result->record.lat_lir_first_lat_node_first_child_index,
+        (unsigned long)result->record.lat_lir_first_lat_node_child_count,
         (unsigned long)result->record.lat_lir_first_lat_node_span.start_offset,
         (unsigned long)result->record.lat_lir_first_lat_node_span.end_offset,
         (unsigned long)result->record.lat_lir_first_lat_node_span.start_line,
@@ -1118,6 +1139,9 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         result->record.lat_lir_first_transition_node_value,
         result->record.lat_lir_first_transition_node_operator,
         result->record.lat_lir_first_transition_node_binding,
+        (unsigned long)result->record.lat_lir_first_transition_node_parent_index,
+        (unsigned long)result->record.lat_lir_first_transition_node_first_child_index,
+        (unsigned long)result->record.lat_lir_first_transition_node_child_count,
         (unsigned long)result->record.lat_lir_first_transition_node_span.start_offset,
         (unsigned long)result->record.lat_lir_first_transition_node_span.end_offset,
         (unsigned long)result->record.lat_lir_first_transition_node_span.start_line,
@@ -1145,6 +1169,9 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         result->record.lat_lir_first_transition_source_edge_from_node_value,
         result->record.lat_lir_first_transition_source_edge_from_node_operator,
         result->record.lat_lir_first_transition_source_edge_from_node_binding,
+        (unsigned long)result->record.lat_lir_first_transition_source_edge_from_node_parent_index,
+        (unsigned long)result->record.lat_lir_first_transition_source_edge_from_node_first_child_index,
+        (unsigned long)result->record.lat_lir_first_transition_source_edge_from_node_child_count,
         (unsigned long)result->record.lat_lir_first_transition_source_edge_from_node_span.start_offset,
         (unsigned long)result->record.lat_lir_first_transition_source_edge_from_node_span.end_offset,
         (unsigned long)result->record.lat_lir_first_transition_source_edge_from_node_span.start_line,
@@ -1156,6 +1183,9 @@ latticra_status_t latticra_runtime_boundary_report(const latticra_runtime_bounda
         result->record.lat_lir_first_transition_source_edge_to_node_value,
         result->record.lat_lir_first_transition_source_edge_to_node_operator,
         result->record.lat_lir_first_transition_source_edge_to_node_binding,
+        (unsigned long)result->record.lat_lir_first_transition_source_edge_to_node_parent_index,
+        (unsigned long)result->record.lat_lir_first_transition_source_edge_to_node_first_child_index,
+        (unsigned long)result->record.lat_lir_first_transition_source_edge_to_node_child_count,
         (unsigned long)result->record.lat_lir_first_transition_source_edge_to_node_span.start_offset,
         (unsigned long)result->record.lat_lir_first_transition_source_edge_to_node_span.end_offset,
         (unsigned long)result->record.lat_lir_first_transition_source_edge_to_node_span.start_line,

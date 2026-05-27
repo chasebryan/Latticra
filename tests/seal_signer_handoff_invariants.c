@@ -34,6 +34,7 @@ static latticra_seal_signing_authorization_t fixture_authorization(const char *m
         "%s",
         "aaaabbbbccccddddeeeeffff0000111122223333444455556666777788889999");
     (void)snprintf(authorization.public_key_identity_label, sizeof(authorization.public_key_identity_label), "%s", "rfc8032-test-key");
+    (void)snprintf(authorization.crypto_graduation_gate_state, sizeof(authorization.crypto_graduation_gate_state), "%s", "not-required");
     (void)snprintf(authorization.requested_capability, sizeof(authorization.requested_capability), "%s", "verified-receipt-report");
     (void)snprintf(authorization.requested_effect, sizeof(authorization.requested_effect), "%s", mode != 0 ? mode : "report-only");
     (void)snprintf(authorization.requested_handoff, sizeof(authorization.requested_handoff), "%s", mode != 0 ? mode : "report-only");
@@ -68,6 +69,32 @@ static latticra_seal_signing_authorization_t fixture_authorization(const char *m
     return authorization;
 }
 
+static latticra_seal_signing_authorization_t fixture_crypto_bound_authorization(const char *mode) {
+    latticra_seal_signing_authorization_t authorization = fixture_authorization(mode);
+    (void)snprintf(
+        authorization.crypto_graduation_profile,
+        sizeof(authorization.crypto_graduation_profile),
+        "%s",
+        "latticra-seal-crypto-graduation-gate/0.1");
+    (void)snprintf(
+        authorization.assurance_baseline_profile,
+        sizeof(authorization.assurance_baseline_profile),
+        "%s",
+        "latticra-cryptographic-assurance-key-management/0.1");
+    (void)snprintf(
+        authorization.crypto_graduation_gate_state,
+        sizeof(authorization.crypto_graduation_gate_state),
+        "%s",
+        "graduated-authority-neutral");
+    authorization.crypto_graduation_gate_present = 1u;
+    authorization.crypto_graduation_gate_passed = 1u;
+    authorization.standard_expectations_met = 1u;
+    authorization.local_verify_graduated = 1u;
+    authorization.receipt_promotion_graduated = 1u;
+    authorization.authority_promotion_allowed = 0u;
+    return authorization;
+}
+
 static int handoff_allows_report_only_metadata(void) {
     latticra_seal_signing_authorization_t authorization = fixture_authorization("report-only");
     latticra_seal_signer_handoff_t handoff;
@@ -90,6 +117,7 @@ static int handoff_allows_report_only_metadata(void) {
     EXPECT_TRUE(strcmp(handoff.message_digest_algorithm, "SHA-256") == 0, "digest algorithm");
     EXPECT_TRUE(strcmp(handoff.message_digest_hex, authorization.message_digest_hex) == 0, "digest hex");
     EXPECT_TRUE(strcmp(handoff.public_key_identity_label, "rfc8032-test-key") == 0, "public key identity");
+    EXPECT_TRUE(strcmp(handoff.crypto_graduation_gate_state, "not-required") == 0, "crypto gate legacy");
     EXPECT_TRUE(strcmp(handoff.requested_capability, "verified-receipt-report") == 0, "requested capability");
     EXPECT_TRUE(strcmp(handoff.requested_effect, "report-only") == 0, "requested effect");
     EXPECT_TRUE(strcmp(handoff.requested_handoff, "report-only") == 0, "requested handoff");
@@ -99,6 +127,8 @@ static int handoff_allows_report_only_metadata(void) {
     EXPECT_TRUE(strcmp(handoff.requested_signing_authorization, "metadata-only") == 0, "requested authorization");
     EXPECT_TRUE(strcmp(handoff.requested_signer_handoff, "metadata-only") == 0, "requested signer handoff");
     EXPECT_TRUE(strcmp(handoff.requested_scope, "local-fixture-scope") == 0, "requested scope");
+    EXPECT_TRUE(handoff.crypto_graduation_gate_present == 0u, "crypto present legacy");
+    EXPECT_TRUE(handoff.standard_expectations_met == 0u, "standard legacy");
     EXPECT_TRUE(strcmp(handoff.signature_request_state, "requested-metadata-only") == 0, "request state");
     EXPECT_TRUE(handoff.signature_request_ready == 1u, "request ready");
     EXPECT_TRUE(strcmp(handoff.signing_authorization_state, "authorized-metadata-only") == 0, "authorization state");
@@ -133,6 +163,42 @@ static int handoff_allows_report_only_metadata(void) {
     EXPECT_TRUE(strstr(rendered, "trust_store_loaded=0") != 0, "render trust store");
     EXPECT_TRUE(strstr(rendered, "revocation_lookup_performed=0") != 0, "render revocation");
     EXPECT_TRUE(strstr(rendered, "runtime_authority_granted=0") != 0, "render runtime");
+    return 0;
+}
+
+static int handoff_carries_crypto_graduation_evidence(void) {
+    latticra_seal_signing_authorization_t authorization = fixture_crypto_bound_authorization("report-only");
+    latticra_seal_signer_handoff_t handoff;
+    char rendered[LATTICRA_SEAL_SIGNER_HANDOFF_RENDER_MAX];
+
+    EXPECT_TRUE(
+        latticra_seal_signer_handoff_from_authorization(&authorization, "metadata-only", &handoff) == LATTICRA_STATUS_OK,
+        "crypto handoff status");
+    EXPECT_TRUE(handoff.error == LATTICRA_SEAL_SIGNER_HANDOFF_OK, "crypto handoff ok");
+    EXPECT_TRUE(strcmp(handoff.crypto_graduation_profile, "latticra-seal-crypto-graduation-gate/0.1") == 0, "crypto profile");
+    EXPECT_TRUE(strcmp(handoff.assurance_baseline_profile, "latticra-cryptographic-assurance-key-management/0.1") == 0, "assurance profile");
+    EXPECT_TRUE(strcmp(handoff.crypto_graduation_gate_state, "graduated-authority-neutral") == 0, "crypto state");
+    EXPECT_TRUE(handoff.crypto_graduation_gate_present == 1u, "crypto present");
+    EXPECT_TRUE(handoff.crypto_graduation_gate_passed == 1u, "crypto passed");
+    EXPECT_TRUE(handoff.standard_expectations_met == 1u, "standards");
+    EXPECT_TRUE(handoff.local_verify_graduated == 1u, "local verify");
+    EXPECT_TRUE(handoff.receipt_promotion_graduated == 1u, "receipt promotion");
+    EXPECT_TRUE(handoff.authority_promotion_allowed == 0u, "authority promotion");
+    EXPECT_TRUE(handoff.signer_handoff_ready == 1u, "crypto handoff ready");
+    EXPECT_TRUE(strcmp(handoff.signer_handoff_state, "handoff-metadata-only") == 0, "crypto handoff state");
+    EXPECT_TRUE(handoff.signature_performed == 0u, "crypto signature");
+    EXPECT_TRUE(handoff.verification_performed == 0u, "crypto verification");
+    EXPECT_TRUE(handoff.signer_invoked == 0u, "crypto signer invoked");
+    EXPECT_TRUE(handoff.private_key_handling == 0u, "crypto private key");
+    EXPECT_TRUE(handoff.key_generation_performed == 0u, "crypto key generation");
+    EXPECT_TRUE(handoff.runtime_authority_granted == 0u, "crypto runtime");
+    EXPECT_TRUE(handoff.host_read_performed == 0u, "crypto host read");
+    EXPECT_TRUE(handoff.host_write_performed == 0u, "crypto host write");
+    EXPECT_TRUE(handoff.network_performed == 0u, "crypto network");
+    EXPECT_TRUE(latticra_seal_signer_handoff_render(&handoff, rendered, sizeof(rendered)) == LATTICRA_STATUS_OK, "crypto render");
+    EXPECT_TRUE(strstr(rendered, "crypto_graduation_gate_present=1") != 0, "render crypto present");
+    EXPECT_TRUE(strstr(rendered, "standard_expectations_met=1") != 0, "render standard");
+    EXPECT_TRUE(strstr(rendered, "authority_promotion_allowed=0") != 0, "render authority promotion");
     return 0;
 }
 
@@ -252,6 +318,15 @@ static int handoff_fails_closed(void) {
     authorization.network_performed = 1u;
     EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(&authorization, "metadata-only", &handoff) == LATTICRA_STATUS_OK, "network status");
     EXPECT_TRUE(handoff.error == LATTICRA_SEAL_SIGNER_HANDOFF_DENIED_NETWORK_EFFECT, "network error");
+    authorization = fixture_crypto_bound_authorization("report-only");
+    authorization.standard_expectations_met = 0u;
+    EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(&authorization, "metadata-only", &handoff) == LATTICRA_STATUS_OK, "failed crypto gate status");
+    EXPECT_TRUE(handoff.error == LATTICRA_SEAL_SIGNER_HANDOFF_DENIED_CRYPTO_GRADUATION_GATE, "failed crypto gate error");
+    EXPECT_TRUE(strcmp(handoff.signer_handoff_state, "denied-crypto-graduation-gate") == 0, "failed crypto gate state");
+    authorization = fixture_crypto_bound_authorization("report-only");
+    authorization.authority_promotion_allowed = 1u;
+    EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(&authorization, "metadata-only", &handoff) == LATTICRA_STATUS_OK, "authority crypto gate status");
+    EXPECT_TRUE(handoff.error == LATTICRA_SEAL_SIGNER_HANDOFF_DENIED_CRYPTO_GRADUATION_GATE, "authority crypto gate error");
     EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(&authorization, "metadata-only", 0) == LATTICRA_STATUS_NULL_ARGUMENT, "null output");
     EXPECT_TRUE(latticra_seal_signer_handoff_is_metadata_only(0) == 0, "null helper");
     EXPECT_TRUE(latticra_seal_signer_handoff_render(&handoff, tiny, sizeof(tiny)) == LATTICRA_STATUS_BUFFER_TOO_SMALL, "small render");
@@ -263,6 +338,9 @@ static int handoff_fails_closed(void) {
 
 int main(void) {
     if (handoff_allows_report_only_metadata() != 0) {
+        return 1;
+    }
+    if (handoff_carries_crypto_graduation_evidence() != 0) {
         return 1;
     }
     if (handoff_allows_evaluate_only_metadata() != 0) {

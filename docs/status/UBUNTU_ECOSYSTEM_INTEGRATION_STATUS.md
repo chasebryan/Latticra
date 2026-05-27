@@ -59,6 +59,26 @@ ubuntu_launchpad_build_result_evidence_contract_present=1
 ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence
 ubuntu_publication_non_claim_review_contract_present=1
 ubuntu_publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence
+ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1
+ubuntu_publication_promotion_blocker_matrix_contract_present=1
+publication_promotion_blocker_matrix_state=blocked-no-effect
+ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1
+ubuntu_publication_evidence_intake_denial_contract_present=1
+ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1
+ubuntu_publication_evidence_intake_denial_review_contract_present=1
+publication_evidence_intake_denial_state=denied-no-effect
+publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+publication_evidence_denial_review_present=1
+publication_evidence_denial_review_decision=uphold-denial
+publication_evidence_denial_re_request_allowed=0
+ubuntu_publication_evidence_intake_allowed=0
+ubuntu_publication_evidence_intake_requested=0
+ubuntu_publication_evidence_intake_denied=1
+ubuntu_publication_evidence_intake_denial_upheld=1
+ubuntu_publication_transcript_intake_accepted=0
+ubuntu_ppa_creation_evidence_accepted=0
+ubuntu_launchpad_publication_evidence_accepted=0
+ubuntu_archive_submission_evidence_accepted=0
 ubuntu_ppa_archive_publication_gate_contract_present=1
 ubuntu_ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence
 ubuntu_package_notice_review_contract_present=1
@@ -176,6 +196,14 @@ root_installer_claim_absence_reviewed=0
 publication_readiness_non_claims_reviewed=0
 publication_non_claims_reviewed=0
 ubuntu_publication_non_claim_review_unblocked=0
+ubuntu_publication_promotion_blocker_matrix_unblocked=0
+ubuntu_publication_promotion_blocked=1
+ubuntu_platform_publication_evidence_accepted=0
+publication_transcript_intake_accepted=0
+ppa_creation_evidence_accepted=0
+launchpad_publication_evidence_accepted=0
+ubuntu_archive_submission_evidence_accepted=0
+ubuntu_publication_result_promoted=0
 ubuntu_publication_gate_unblocked=0
 ppa_created=0
 launchpad_upload_run=0
@@ -231,6 +259,9 @@ docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md
 docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md
 docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md
 docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
 docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md
 packaging/ubuntu/README.md
 packaging/ubuntu/debian/control
@@ -264,6 +295,9 @@ scripts/test-ubuntu-source-package-evidence-contract.sh
 scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh
 scripts/test-ubuntu-launchpad-build-result-evidence-contract.sh
 scripts/test-ubuntu-publication-non-claim-review-contract.sh
+scripts/test-ubuntu-ppa-archive-publication-promotion-blocker-matrix-contract.sh
+scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-contract.sh
+scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh
 scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 .github/workflows/ubuntu-package-notice-inventory.yml
 .github/workflows/ubuntu-doc-payload-license-review-contract.yml
@@ -283,6 +317,9 @@ scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 .github/workflows/ubuntu-upload-signing-authority-evidence-contract.yml
 .github/workflows/ubuntu-launchpad-build-result-evidence-contract.yml
 .github/workflows/ubuntu-publication-non-claim-review-contract.yml
+.github/workflows/ubuntu-ppa-archive-publication-promotion-blocker-matrix-contract.yml
+.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-contract.yml
+.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.yml
 .github/workflows/ubuntu-ppa-archive-publication-gate-contract.yml
 ```
 
@@ -337,6 +374,12 @@ The Ubuntu Launchpad build result evidence contract records the future Launchpad
 
 The Ubuntu publication non-claim review contract records the future PPA, Ubuntu archive, sponsorship, Canonical endorsement, production installer, and root installer non-claim review shape while keeping publication promotion blocked.
 
+The Ubuntu PPA/archive publication promotion blocker matrix records the aggregate blocked state across package review, local build, install/remove, source package, upload/signing, Launchpad build result, and publication non-claim columns before publication evidence can be accepted.
+
+The Ubuntu publication evidence intake denial contract records that PPA creation, archive submission, Launchpad publication evidence, and publication transcript intake remain denied while the publication promotion blocker matrix is closed.
+
+The Ubuntu publication evidence intake denial review contract records that the denial is reviewed and upheld while publication evidence re-requests remain blocked.
+
 The Ubuntu PPA/archive publication gate records the future upload, signing, Launchpad, and archive-submission evidence shape while keeping `debsign`, `dput`, PPA creation, Launchpad upload, Ubuntu archive submission, and publication readiness blocked.
 
 The Ubuntu package notice inventory records the current local-deb draft payload facts without promoting the review. The Ubuntu package notice review contract records the remaining notice obligations that must be settled before package promotion can proceed.
@@ -344,5 +387,5 @@ The Ubuntu package notice inventory records the current local-deb draft payload 
 ## Next Recommended Lane
 
 ```text
-Review the Ubuntu publication non-claim review contract, then keep PPA/archive publication promotion blocked until Launchpad build result evidence and publication non-claims are reviewed.
+Review the Ubuntu publication evidence intake denial disposition before any reviewed PPA/archive publication evidence denial can be closed or re-requested.
 ```

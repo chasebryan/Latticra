@@ -34,6 +34,7 @@ require_file docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
 require_file docs/status/SEAL_SIGNER_INVOCATION_STATUS.md
 require_file docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md
 require_file docs/status/SEAL_REPORT_ENVELOPE_STATUS.md
+require_file docs/status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md
 require_file include/latticra/seal_signature_request.h
 require_file include/latticra/seal_signing_authorization.h
 require_file include/latticra/seal_signer_handoff.h
@@ -106,13 +107,23 @@ require_contains 'seal_report_envelope_implementation_present=1' "$status_file"
 require_contains 'seal_report_envelope_runner_present=1' "$status_file"
 require_contains 'seal_report_envelope_status_present=1' "$status_file"
 require_contains 'seal_report_envelope_status_runner_present=1' "$status_file"
+require_contains 'seal_crypto_graduation_gate_status_present=1' "$status_file"
 require_contains 'signature_request_predecessor_report_envelope_status_present=1' "$status_file"
 require_contains 'readme_links_signature_request_status=1' "$status_file"
 require_contains 'root_status_mentions_signature_request_status=1' "$status_file"
 require_contains 'status_index_links_signature_request_status=1' "$status_file"
 require_contains 'foundation_index_links_signature_request_status=1' "$status_file"
 require_contains 'signature_request_profile=latticra-seal-signature-request/0.1' "$status_file"
+require_contains 'crypto_graduation_profile=latticra-seal-crypto-graduation-gate/0.1' "$status_file"
+require_contains 'assurance_baseline_profile=latticra-cryptographic-assurance-key-management/0.1' "$status_file"
+require_contains 'crypto_graduation_gate_state=graduated-authority-neutral' "$status_file"
 require_contains 'requested_signature=Ed25519-development' "$status_file"
+require_contains 'crypto_graduation_gate_present=1' "$status_file"
+require_contains 'crypto_graduation_gate_passed=1' "$status_file"
+require_contains 'standard_expectations_met=1' "$status_file"
+require_contains 'local_verify_graduated=1' "$status_file"
+require_contains 'receipt_promotion_graduated=1' "$status_file"
+require_contains 'authority_promotion_allowed=0' "$status_file"
 require_contains 'signature_request_state=requested-metadata-only' "$status_file"
 require_contains 'signature_request_ready=1' "$status_file"
 require_contains 'signature_performed=0' "$status_file"
@@ -140,6 +151,10 @@ require_contains 'host_behavior_changed=0' "$status_file"
 require_contains 'seal signature request status: ok' "$status_file"
 require_contains 'seal report envelope status: ok' "$status_file"
 require_contains 'signing authorization status/workflow guard alignment' "$status_file"
+require_contains 'DENIED_CRYPTO_GRADUATION_GATE' include/latticra/seal_signature_request.h
+require_contains 'crypto_graduation_gate_present=%u' src/seal_signature_request.c
+require_contains 'standard_expectations_met=%u' src/seal_signature_request.c
+require_contains 'denied-crypto-graduation-gate' src/seal_signature_request.c
 
 require_contains 'SEAL_SIGNATURE_REQUEST_STATUS.md' README.md
 require_contains 'seal_signature_request_status_present=1' README.md

@@ -41,10 +41,10 @@ runtime_authority_granted=0
 ```text
 Overall Latticra system: 45%
 Latticra Seal / local evidence layer: 39%
-Latticra Panel / local control surface: 31%
+Latticra Panel / local control surface: 32%
 Nadia offline AI foundation: 75%
 L-UI parser / AST / string foundation: 87%
-Foundation documents and contracts: 94%
+Foundation documents and contracts: 95%
 Public documentation posture: 92%
 Strategy/status/funding framework: 63%
 Lat / Latticra Programming Language: 27%

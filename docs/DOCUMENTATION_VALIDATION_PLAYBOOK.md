@@ -1,14 +1,14 @@
 # Documentation Validation Playbook
 
 Status: active documentation validation playbook
-Last updated: 2026-05-26 CDT
-Scope: documentation-only validation commands, link checks, public-entry checks, estimate checks, subsystem guards, platform guards, and failure handling.
+Last updated: 2026-05-27 CDT
+Scope: documentation-only validation commands, link checks, public-entry checks, status-record checks, impact-radius checks, freshness and lifecycle checks, estimate checks, subsystem guards, platform guards, and failure handling.
 
 ## Purpose
 
 This playbook explains which validation checks to run for documentation-only changes.
 
-Use it with [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md), [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md), [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md), [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md), and [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
+Use it with [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md), [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md), [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md), [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md), [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md), [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md), [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md), and [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
 
 Validation should prove only the documentation claim being made. It should not be used to imply production readiness, security guarantees, installer authority, package approval, runtime authority, or product readiness.
 
@@ -18,7 +18,10 @@ Validation should prove only the documentation claim being made. It should not b
 | --- | --- | --- |
 | Hygiene | Any documentation file changes. | `git diff --check`, trailing-whitespace check. |
 | Local links | New or changed Markdown links. | Local Markdown link sanity check over touched files. |
-| Public entry | README, docs hub, map, public site pages, status index, project notes, or strategy docs change. | `sh scripts/test-project-strategy-status-framework.sh`. |
+| Status records | Status record, status-index entry, current-status mirror, estimate source, or public-entry alignment status note changes. | Apply [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md), local link check, public-entry guard when public mirrors change, estimate guard when values change, and exact source guard when named. |
+| Impact radius | A change might affect mirrors, source records, public HTML, status, non-claims, validation paths, or reader routes. | Apply [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) and run the checks for the selected radius. |
+| Public entry | README, docs hub, map, public site pages, status index, project notes, or strategy docs change. | `sh scripts/test-project-strategy-status-framework.sh` plus [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md) review when static HTML changes. |
+| Freshness and lifecycle | Status labels, `Last updated` dates, stale records, superseded records, archive boundaries, or lifecycle state change. | Local link check plus [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) review and a review packet outcome when public wording changes. |
 | Estimate mirror | Completion estimates or public estimate tables change. | `sh scripts/test-current-estimate-table-source-alignment.sh`. |
 | Seal docs | Seal README, Seal status, Seal public wording, or Seal source records change. | `sh scripts/test-latticra-seal-docs.sh` plus exact Seal guard. |
 | Platform docs | Fedora, Ubuntu, openSUSE, Debian, FreeBSD, OpenBSD, macOS, installer, or package posture changes. | Platform workflow guard plus exact platform guard. |
@@ -35,6 +38,8 @@ sh scripts/test-project-strategy-status-framework.sh
 ```
 
 Add a local link check for changed Markdown files when links are added or moved.
+
+Add an HTML `href` existence check when static public pages change.
 
 ## Local Link Check
 
@@ -109,7 +114,7 @@ For security wording changes, validate:
 When a documentation validation fails:
 
 1. Read the failing message before editing.
-2. Identify whether the failure is link drift, mirror drift, status drift, guard expectation drift, or claim drift.
+2. Identify whether the failure is link drift, mirror drift, status drift, freshness drift, lifecycle drift, guard expectation drift, or claim drift.
 3. Fix the documentation source or mirror that is wrong.
 4. Do not weaken non-claims to make a public summary sound better.
 5. Do not edit guard scripts for documentation-only convenience.
@@ -127,6 +132,12 @@ Use `blocked_public_entry_drift` when public pages and source records disagree.
 Use `accepted_navigation_only` only when links or route ordering changed without changing claims.
 
 Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) to record watch or failing dimensions before choosing validation for broad route, public HTML, platform, security, estimate, or subsystem landing-page changes.
+
+Use [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) to record date, lifecycle, stale-review, supersession, or archive boundaries before treating an older record as current public authority.
+
+Use [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) when deciding whether validation should stay at hygiene/link level or expand to public-entry, estimate, platform, security, Seal, subsystem, or exact source guards.
+
+Use [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) when validating status record shape, status-index discoverability, current-status mirrors, public-entry alignment, non-claims, and boundary language.
 
 ## Boundary
 

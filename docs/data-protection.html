@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Classification and Protection | Latticra</title>
+  <meta name="description" content="A public overview of Latticra data classification and protection gates for data inventory, sensitive-data flows, PII review, minimization, retention, disposal, redaction, DLP planning, exceptions, and customer-data non-claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Data Classification and Protection">
+  <meta property="og:description" content="Data inventory, classification, sensitive-data flow mapping, PII review, minimization, retention, disposal, backup protection, redaction, DLP planning, and no customer-data claims.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero security-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Data classification and protection</p>
+        <p class="eyebrow">Inventory, PII Review, Redaction, DLP Planning, and Non-Claims</p>
+        <h1>Data classification and protection</h1>
+        <p class="page-lede">
+          Latticra records data inventory, classification, sensitive-data flow mapping, PII review, minimization, retention, disposal, encryption and access-control planning, backup data protection, log/report redaction, DLP planning, and exception requirements before hosted services, telemetry export, data storage services, analytics, customer-data handling, or production data-protection claims can promote. It does not collect sensitive data, collect PII, export telemetry, store customer data, run analytics, enforce retention, purge data, provide breach notification, or grant data authority.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell security-intro">
+        <div>
+          <p class="eyebrow">Current Rule</p>
+          <h2>Data records are not data authority.</h2>
+        </div>
+        <p>
+          The baseline names the evidence a future data-handling lane would need: data inventory, data owner, classification, information type categorization, sensitive-data flows, PII presence and confidentiality review, minimization, purpose, access controls, encryption decisions, retention, disposal, backup protection, redaction, secret/PII scanning, DLP planning, incident handoff, and expiring exceptions.
+        </p>
+      </div>
+
+      <div class="content-shell security-rule-grid" aria-label="Data classification protection overview">
+        <article>
+          <span>01</span>
+          <h3>Inventory and classification</h3>
+          <p>Data items, owners, information types, classifications, and sensitive-data flows must be recorded before data claims expand.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Minimization and PII review</h3>
+          <p>PII presence, confidentiality impact, collection purpose, and minimization review are required before handling language promotes.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Retention and protection</h3>
+          <p>Access controls, encryption decisions, retention periods, disposal processes, and backup data protection must be explicit.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Redaction, DLP, and exceptions</h3>
+          <p>Log/report redaction, secret and PII scanning, DLP planning, incident handoff, exception owner, and exception expiration are required.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Current Snapshot</p>
+        <h2>The baseline blocks customer-data claims until evidence exists.</h2>
+        <p>
+          These fields describe required records and closed behavior. They are not proof of sensitive-data collection, PII processing, telemetry export, storage services, analytics, encryption-at-rest operation, DLP, purge execution, retention enforcement, or privacy compliance.
+        </p>
+      </div>
+      <div class="content-shell report-grid" aria-label="Data classification protection status snapshot">
+        <article>
+          <span>data_classification_protection_baseline</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>data_inventory_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>data_classification_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>sensitive_data_flow_map_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>secret_pii_log_redaction_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>sensitive_data_collection_added</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>telemetry_export_added</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>customer_data_handling_claim_allowed</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell security-split">
+        <div class="section-heading">
+          <p class="eyebrow">Promotion Gate</p>
+          <h2>No customer-data wording can promote without data-handling evidence.</h2>
+          <p>
+            Data language affects hosted-service, telemetry, analytics, logging, backup, crypto, identity, incident, and compliance expectations. The current record keeps that language precise: source-tracked planning is present, while data collection and production data authority remain closed.
+          </p>
+        </div>
+        <div class="security-table" role="table" aria-label="Data classification protection promotion gate">
+          <div role="row">
+            <span role="cell">Present now</span>
+            <p role="cell">Baseline record, status record, guard script, high-assurance allocation, logging and redaction context, backup data-protection context, cryptographic sensitive-data review context, identity credential/secret context, network data-flow context, secure configuration secret-review context, and metadata-only data posture.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Required before promotion</span>
+            <p role="cell">Data inventory, data owner, data classification, information type categorization, sensitive-data flow map, PII presence review, PII confidentiality impact, minimization review, collection purpose, access controls, encryption-at-rest decision, encryption-in-transit decision, retention period, disposal process, backup data protection, log/report redaction, secret marker and PII scan, DLP plan, incident response handoff, exception owner, exception expiration, and operator-visible non-claims.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Denied now</span>
+            <p role="cell">Sensitive-data collection, PII collection, telemetry export, customer-data handling claims, data-storage service claims, analytics claims, encryption-at-rest claims, DLP claims, privacy compliance claims, breach-notification claims, retention enforcement, purge execution, and production data-protection claims.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Latticra Boundary</p>
+        <h2>Data-related records remain no-effect metadata.</h2>
+        <p>
+          Latticra can record data-handling requirements and guard report boundaries. It does not collect sensitive data, collect PII, export telemetry, provide a data storage service, run DLP, purge data, enforce retention, or grant data authority.
+        </p>
+      </div>
+      <div class="content-shell security-effect-grid">
+        <article class="effect-guarded">
+          <span>Metadata</span>
+          <h3>Data inventory</h3>
+          <p>Inventory, classification, flow mapping, minimization, retention, and disposal records are planning evidence only.</p>
+        </article>
+        <article class="effect-guarded">
+          <span>Guarded</span>
+          <h3>Report redaction</h3>
+          <p>Report and log redaction boundaries are checked before data-handling language can expand.</p>
+        </article>
+        <article class="effect-guarded">
+          <span>Guarded</span>
+          <h3>Secret material</h3>
+          <p>Secret material checks support the data baseline without creating a data-processing or credential-storage service.</p>
+        </article>
+        <article class="effect-blocked">
+          <span>Closed</span>
+          <h3>Data runtime</h3>
+          <p>No sensitive-data collection, PII collection, telemetry export, storage service, analytics, DLP runtime, purge runtime, or data authority is added.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Commands</p>
+        <h2>Validate data requirements without handling customer data.</h2>
+        <p>
+          These checks validate records and local guardrails. They do not collect PII, export telemetry, store data, run analytics, enforce retention, purge data, operate DLP, or send breach notifications.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Data baseline</h3>
+          <pre><code>sh scripts/test-data-classification-protection-baseline.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Redaction and secret guards</h3>
+          <pre><code>sh scripts/test-secret-material-guard.sh
+sh scripts/test-report-redaction-boundary.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Security context</h3>
+          <pre><code>sh scripts/test-high-assurance-security-baseline.sh
+sh scripts/test-security-logging-monitoring-baseline.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Use exact records before repeating data wording.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="DATA_CLASSIFICATION_PROTECTION_BASELINE.md"><strong>Data classification and protection baseline</strong><span>Data inventory, classification, sensitive-data flows, PII review, minimization, retention, disposal, redaction, DLP planning, and no customer-data claims.</span></a>
+        <a href="status/DATA_CLASSIFICATION_PROTECTION_BASELINE_STATUS.md"><strong>Data baseline status</strong><span>Status fields and expected guard output for the data classification and protection baseline.</span></a>
+        <a href="HIGH_ASSURANCE_SECURITY_BASELINE.md"><strong>High-assurance baseline</strong><span>Source-tracked security posture and data classification/protection control allocation.</span></a>
+        <a href="SECURITY_LOGGING_MONITORING_BASELINE.md"><strong>Security logging baseline</strong><span>Log/report redaction, retention, disposal, telemetry blockers, and no monitoring-service claims.</span></a>
+        <a href="BACKUP_RECOVERY_RESILIENCE_BASELINE.md"><strong>Backup and recovery baseline</strong><span>Backup data protection, recovery planning, restore testing, rollback planning, and recovery non-claims.</span></a>
+        <a href="CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md"><strong>Cryptographic assurance baseline</strong><span>Sensitive-data handling, side-channel review, key lifecycle, randomness, and no production crypto claims.</span></a>
+        <a href="IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md"><strong>Identity and access baseline</strong><span>Credential/secret storage review, privileged access, MFA planning, and no hosted identity claims.</span></a>
+        <a href="NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE.md"><strong>Network exposure baseline</strong><span>Network data-flow mapping, remote access, RMM, DNS/TLS lifecycle, and no network-service claims.</span></a>
+        <a href="SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md"><strong>Secure configuration baseline</strong><span>Configuration secret review, secure baseline records, drift planning, exceptions, and no hardening claims.</span></a>
+        <a href="security/C_CPP_SECURITY_PROFILE.md"><strong>C/C++ security profile</strong><span>User-facing report redaction and sensitive-internals handling expectations.</span></a>
+        <a href="security.html"><strong>Security overview</strong><span>Safe testing, effect gates, runtime boundary, and security non-claims.</span></a>
+        <a href="security-logging.html"><strong>Security logging and monitoring</strong><span>Redaction, retention, telemetry blockers, event-source inventory, and no detection-service claims.</span></a>
+        <a href="backup-recovery.html"><strong>Backup and recovery resilience</strong><span>Backup protection, restore testing, recovery prioritization, rollback planning, and recovery non-claims.</span></a>
+        <a href="crypto-assurance.html"><strong>Cryptographic assurance</strong><span>Key lifecycle, sensitive-data handling, randomness, and no production crypto authority.</span></a>
+        <a href="identity-access.html"><strong>Identity and access management</strong><span>Credential handling, privileged access, MFA planning, and hosted-access non-claims.</span></a>
+        <a href="network-exposure.html"><strong>Network exposure and remote access</strong><span>Data-flow mapping, internet exposure, remote access, RMM, DNS/TLS lifecycle, and no network-service claims.</span></a>
+        <a href="configuration-change.html"><strong>Secure configuration and change management</strong><span>Secret review, change control, drift planning, exception records, and hardening non-claims.</span></a>
+        <a href="evidence.html"><strong>Evidence model</strong><span>Promotion levels, public claim boundaries, and exact source records.</span></a>
+        <a href="status/README.md"><strong>Status index</strong><span>Detailed status records and current public status navigation.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra data classification and protection.</span>
+      <span><a href="security.html">Open security overview</a></span>
+    </div>
+  </footer>
+</body>
+</html>

@@ -5,6 +5,7 @@
 
 #include "latticra/kernel_lifecycle.h"
 #include "latticra/kernel_subsystem_registry.h"
+#include "latticra/nucleus_kernel_coupling.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,8 +39,11 @@ typedef struct {
     latticra_status_t status;
     char summary_status[LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX];
     char final_state[LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX];
+    char nucleus_coupling_status[LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX];
+    char os_readiness_status[LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX];
     latticra_kernel_lifecycle_result_t lifecycle;
     latticra_kernel_subsystem_registry_result_t registry;
+    latticra_nucleus_kernel_coupling_result_t nucleus_coupling;
     latticra_kernel_lifecycle_subsystem_summary_entry_t entries[
         LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_ENTRY_MAX];
     size_t entry_count;
@@ -50,6 +54,18 @@ typedef struct {
     int external_effect_performed;
     int network_allowed;
     int registry_no_effect;
+    int nucleus_coupling_ready;
+    int nucleus_no_effect_chain_ok;
+    int nucleus_boot_allowed;
+    int nucleus_runtime_entry_allowed;
+    int nucleus_scheduler_run_entry_allowed;
+    int nucleus_context_switch_allowed;
+    int nucleus_register_save_allowed;
+    int nucleus_register_restore_allowed;
+    int nucleus_host_effect_allowed;
+    int runtime_entry_address_space_view_allowed;
+    int runtime_entry_stack_view_allowed;
+    int runtime_entry_register_view_allowed;
     int runtime_entry_frame_allowed;
     int runtime_entry_admission_allowed;
     int runtime_entry_allowed;

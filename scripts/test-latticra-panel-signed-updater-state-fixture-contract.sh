@@ -155,7 +155,7 @@ require_contains 'state_transition_execution_allowed=0' "$script"
 require_contains 'state_transition_execution_performed=0' "$script"
 require_contains 'signed_update_apply_allowed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
-require_contains 'next_lane=panel-signed-updater-state-transition-denial-disposition-closeout' "$script"
+require_contains 'next_lane=panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition' "$script"
 
 require_contains 'LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_CONTRACT_STATUS.md' "$index"
 require_contains 'signed updater state fixture contract status' "$index"
@@ -166,22 +166,22 @@ require_contains 'state_transition_execution_allowed=0' "$self_update"
 require_contains 'state_transition_execution_performed=0' "$self_update"
 require_contains 'local signed updater state fixture contract' "$self_update"
 
-require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout' "$gate_script"
-require_contains 'Panel signed-updater state transition denial disposition closeout' "$gate_doc"
-require_contains 'Panel signed-updater state transition denial disposition closeout' "$gate_status"
-require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout' "$gate_test"
-require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout' "$denial_script"
-require_contains 'Panel signed-updater state transition denial disposition closeout' "$denial_doc"
-require_contains 'Panel signed-updater state transition denial disposition closeout' "$denial_status"
-require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout' "$denial_test"
-require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout' "$manifest_contract_script"
-require_contains 'Panel signed-updater state transition denial disposition closeout' "$manifest_contract_doc"
-require_contains 'Panel signed-updater state transition denial disposition closeout' "$manifest_contract_status"
-require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout' "$manifest_contract_test"
-require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout' "$manifest_validation_script"
-require_contains 'Panel signed-updater state transition denial disposition closeout' "$manifest_validation_doc"
-require_contains 'Panel signed-updater state transition denial disposition closeout' "$manifest_validation_status"
-require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout' "$manifest_validation_test"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition' "$gate_script"
+require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition' "$gate_doc"
+require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition' "$gate_status"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition' "$gate_test"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition' "$denial_script"
+require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition' "$denial_doc"
+require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition' "$denial_status"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition' "$denial_test"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition' "$manifest_contract_script"
+require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition' "$manifest_contract_doc"
+require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition' "$manifest_contract_status"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition' "$manifest_contract_test"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition' "$manifest_validation_script"
+require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition' "$manifest_validation_doc"
+require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition' "$manifest_validation_status"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition' "$manifest_validation_test"
 
 require_contains 'sh ./scripts/test-latticra-panel-signed-updater-state-fixture-contract.sh' "$makefile"
 require_contains 'docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_CONTRACT.md' "$workflow"
@@ -217,7 +217,7 @@ require_output_contains "$output" 'signed_update_apply_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'root_authority=0'
 require_output_contains "$output" 'production_update_ready=0'
-require_output_contains "$output" 'next_lane=panel-signed-updater-state-transition-denial-disposition-closeout'
+require_output_contains "$output" 'next_lane=panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition'
 
 sh scripts/test-latticra-panel-signed-updater-manifest-fixture-validation.sh
 

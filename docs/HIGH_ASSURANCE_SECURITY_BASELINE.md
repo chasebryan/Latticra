@@ -25,6 +25,7 @@ backup, recovery, and cyber resilience requirements
 secure configuration and change management requirements
 network exposure and remote access requirements
 data classification and protection requirements
+AI and agentic automation security requirements
 incident-response and disclosure requirements
 non-claims that remain closed
 ```
@@ -72,6 +73,12 @@ Date checked: 2026-05-26
 | NIST SP 800-53 Rev. 5, Release 5.2.0 | Control families cover access, audit, configuration, identification, incident response, risk assessment, system acquisition, system integrity, and supply-chain risk management. | Use SP 800-53 as the high-assurance control vocabulary for future production profiles, not as a current compliance claim. |
 | NIST SP 800-160 Vol. 2 Rev. 1 | Cyber-resilient systems should anticipate, withstand, recover from, and adapt to adverse conditions and attacks. | Keep rollback, recovery, degraded-mode, auditability, and no-hidden-effect requirements ahead of any mutating infrastructure behavior. |
 | NIST SP 800-207 Zero Trust Architecture | Zero trust removes implicit trust and makes access decisions resource-focused and least-privilege. | Runtime and agentic automation authority must remain per-request, least-privilege, auditable, and denied unless prerequisites pass. |
+| NSA/CISA/FBI and partners Deploying AI Systems Securely | Secure AI deployment requires secure configuration, monitoring, resilience, component review, and operational controls for externally developed AI systems. | Keep model loading, inference, and external AI component use denied until AI inventory, provenance, evaluation, monitoring, rollback, and incident handoff evidence exists. |
+| CISA and NCSC Guidelines for Secure AI System Development | AI systems should be secure by design across design, development, deployment, and operation. | Require secure-by-design AI lifecycle evidence before prompt evaluation, model execution, tool use, or AI product claims. |
+| NSA AISC MCP Security Design Considerations for AI-Driven Automation | MCP and agentic tool integration introduce dynamic tool invocation, implicit trust, context-sharing, serialization, and agent misuse risks. | Keep MCP behavior and AI tool invocation denied until tool catalog, permissions, context-sharing scope, authorization policy, and abuse-case tests are recorded. |
+| NSA/CISA and partners Careful Adoption of Agentic AI Services | Agentic AI increases privilege, design, behavior, structure, and accountability risks and requires governance, monitoring, human oversight, and incremental deployment. | Require human approval, accountability records, authority boundaries, monitoring, and rollback evidence before agentic planning or autonomous effects. |
+| NIST AI RMF 1.0 and NIST AI 600-1 Generative AI Profile | AI risk management should map, measure, manage, and govern AI risks across the lifecycle, with generative AI risk-profile considerations. | Require AI risk mapping, adversarial testing, prompt/output abuse-case review, data governance, and monitoring before AI feature promotion. |
+| NIST SP 800-218A AI SSDF Community Profile | Secure development practices extend to generative AI and dual-use foundation model contexts. | Require AI component provenance, protected development artifacts, vulnerability response, and lifecycle assurance before AI release claims. |
 | FIPS 140-3 | Federal cryptographic module security requirements define validated module expectations and security levels. | No production cryptography or FIPS claim is allowed until a cryptographic module boundary, validation path, key lifecycle, and dependency review exist. |
 | NIST SP 800-57 Part 1 Rev. 5, SP 800-131A Rev. 2, and SP 800-90 series | Key management, algorithm transition, and random-bit generation guidance define required cryptographic planning vocabulary. | Require a cryptographic assurance and key-management baseline before signing authority, key storage, entropy use, FIPS, or production crypto claims. |
 | NSA/CISA/NIST post-quantum guidance and NSA CNSA 2.0 | High-assurance systems should inventory cryptography and plan migration toward quantum-resistant algorithms without premature deployment claims. | Require post-quantum inventory and migration planning before long-lived confidentiality or national-security-oriented cryptographic claims. |
@@ -113,6 +120,7 @@ backup_recovery_resilience_baseline_present=1
 secure_configuration_change_management_baseline_present=1
 network_exposure_remote_access_baseline_present=1
 data_classification_protection_baseline_present=1
+ai_agentic_automation_security_baseline_present=1
 kev_release_review_required=1
 fips_crypto_boundary_required_before_production_crypto=1
 phishing_resistant_mfa_required_before_remote_privileged_access=1
@@ -121,6 +129,7 @@ backup_restore_recovery_evidence_required_before_hosted_service=1
 secure_configuration_change_control_required_before_hosted_service=1
 network_exposure_review_required_before_hosted_service=1
 data_classification_review_required_before_hosted_service=1
+ai_agentic_automation_security_required_before_model_or_tool_authority=1
 sbom_required_before_production_installer=1
 third_party_security_validation_required_before_security_release=1
 incident_response_plan_required_before_production_service=1
@@ -340,6 +349,8 @@ Before any production service, hosted system, or critical infrastructure deploym
 - define secure configuration baseline and change-control evidence;
 - define network exposure and remote-access evidence;
 - define data classification and protection evidence;
+- define AI system inventory, model provenance, prompt/context boundaries, and agentic tool-authority evidence;
+- require AI adversarial testing, monitoring, rollback, human oversight, and incident handoff before model, MCP, tool, or autonomous-effect claims;
 - require MFA/SSO for privileged accounts;
 - require phishing-resistant MFA planning for remote and privileged access;
 - prohibit shared administrative accounts and default credentials;
@@ -373,6 +384,7 @@ docs/BACKUP_RECOVERY_RESILIENCE_BASELINE.md
 docs/SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md
 docs/NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE.md
 docs/DATA_CLASSIFICATION_PROTECTION_BASELINE.md
+docs/AI_AGENTIC_AUTOMATION_SECURITY_BASELINE.md
 docs/security/C_CPP_SECURITY_PROFILE.md
 docs/security/C_ABI_BOUNDARY_POLICY.md
 scripts/test-quality-safety-guards.sh
@@ -391,6 +403,7 @@ scripts/test-backup-recovery-resilience-baseline.sh
 scripts/test-secure-configuration-change-management-baseline.sh
 scripts/test-network-exposure-remote-access-baseline.sh
 scripts/test-data-classification-protection-baseline.sh
+scripts/test-ai-agentic-automation-security-baseline.sh
 ```
 
 ## Non-Claims

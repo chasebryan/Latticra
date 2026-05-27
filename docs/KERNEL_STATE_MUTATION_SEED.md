@@ -59,6 +59,9 @@ scheduler-activation-ready
 scheduler-run-entry-ready
 runtime-entry-admission-ready
 runtime-entry-frame-ready
+runtime-entry-register-view-ready
+runtime-entry-stack-view-ready
+runtime-entry-address-space-view-ready
 ```
 
 Allowed transitions are intentionally sequential:
@@ -89,6 +92,9 @@ scheduler-handoff-ready -> scheduler-activation-ready
 scheduler-activation-ready -> scheduler-run-entry-ready
 scheduler-run-entry-ready -> runtime-entry-admission-ready
 runtime-entry-admission-ready -> runtime-entry-frame-ready
+runtime-entry-frame-ready -> runtime-entry-register-view-ready
+runtime-entry-register-view-ready -> runtime-entry-stack-view-ready
+runtime-entry-stack-view-ready -> runtime-entry-address-space-view-ready
 ```
 
 No-op transitions are allowed when the gate allows them.

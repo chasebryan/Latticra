@@ -29,13 +29,18 @@ const PROFILE_CARD_TWO_COLUMN_WIDTH: f32 = CARD_GRID_TWO_COLUMN_WIDTH;
 const RUNNING_CONSOLE_MAX_HEIGHT: f32 = 220.0;
 const IDLE_CONSOLE_MAX_HEIGHT: f32 = 520.0;
 const CONSOLE_MAX_LINE_CHARS: usize = 1024;
+const EVIDENCE_MAX_LINE_CHARS: usize = 2048;
+const STATUS_MAX_LINE_CHARS: usize = 512;
 const RUNNING_EVIDENCE_MAX_HEIGHT: f32 = 420.0;
 const IDLE_EVIDENCE_MAX_HEIGHT: f32 = 220.0;
 const RUNNING_PROGRESS_MAX_WIDTH: f32 = 520.0;
 const RUNNING_RECENT_LOG_MAX_HEIGHT: f32 = 180.0;
 const RUNNING_MONITOR_WIDE_WIDTH: f32 = 980.0;
 const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
-    ("status", "Stage-48 status and authority summary"),
+    (
+        "status",
+        "Stage-50 status and authority summary; Stage-51 status and authority summary",
+    ),
     ("context", "Stage-1 local context-pack metadata"),
     ("runtime", "Stage-2 runtime-profile metadata"),
     ("plan", "Stage-3 prompt-plan workbench metadata"),
@@ -186,6 +191,18 @@ const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
         "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review",
         "Stage-48 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review contract",
     ),
+    (
+        "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition",
+        "Stage-49 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition contract",
+    ),
+    (
+        "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release",
+        "Stage-50 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release contract",
+    ),
+    (
+        "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt",
+        "Stage-51 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release receipt contract",
+    ),
 ];
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -235,6 +252,7 @@ pub struct LatticraInstallerApp {
     console_input: String,
     terminal_cwd: String,
     show_plan_over_log: bool,
+    show_about_panel: bool,
     active_tab: WorkspaceTab,
     seal_texture: Option<egui::TextureHandle>,
     rx: Option<Receiver<InstallEvent>>,
@@ -269,6 +287,7 @@ impl Default for LatticraInstallerApp {
             console_input: String::new(),
             terminal_cwd,
             show_plan_over_log: true,
+            show_about_panel: false,
             active_tab: WorkspaceTab::Dashboard,
             seal_texture: None,
             rx: None,
@@ -303,7 +322,9 @@ impl LatticraInstallerApp {
                 ));
             }
             Err(err) => {
-                self.status = format!("Could not decode embedded Latticra Seal image: {err}");
+                self.set_status(format!(
+                    "Could not decode embedded Latticra Seal image: {err}"
+                ));
             }
         }
     }
@@ -315,6 +336,23 @@ impl LatticraInstallerApp {
             let drain_count = self.console_lines.len() - 360;
             self.console_lines.drain(0..drain_count);
         }
+    }
+
+    fn set_status(&mut self, status: impl Into<String>) {
+        let status = status.into();
+        self.status = sanitize_status_line(&status);
+    }
+
+    fn push_evidence_log(&mut self, line: impl Into<String>) -> String {
+        let raw_line = line.into();
+        let sanitized_line = sanitize_evidence_line(&raw_line);
+        self.logs.push(sanitized_line.clone());
+        if self.logs.len() > 500 {
+            let drain_count = self.logs.len() - 500;
+            self.logs.drain(0..drain_count);
+        }
+
+        sanitized_line
     }
 
     fn push_nadia_commands(&mut self) {
@@ -353,7 +391,7 @@ impl LatticraInstallerApp {
         self.config.apply_profile_defaults();
         self.guarded_local_ack = false;
         self.refresh_plan();
-        self.status = format!("Applied {} defaults.", self.config.profile.label());
+        self.set_status(format!("Applied {} defaults.", self.config.profile.label()));
         self.push_console(format!("profile -> {}", self.config.profile.label()));
     }
 
@@ -361,10 +399,10 @@ impl LatticraInstallerApp {
         self.config.seal.crypto_profile = profile;
         self.config.seal.apply_crypto_profile_defaults();
         self.refresh_plan();
-        self.status = format!(
+        self.set_status(format!(
             "Seal crypto profile set to {}.",
             self.config.seal.crypto_profile.label()
-        );
+        ));
         self.push_console(format!(
             "seal.crypto_profile -> {}",
             self.config.seal.crypto_profile.label()
@@ -375,7 +413,10 @@ impl LatticraInstallerApp {
         self.config.lc.profile = profile;
         self.config.lc.apply_profile_defaults();
         self.refresh_plan();
-        self.status = format!("LC profile set to {}.", self.config.lc.profile.label());
+        self.set_status(format!(
+            "LC profile set to {}.",
+            self.config.lc.profile.label()
+        ));
         self.push_console(format!("lc.profile -> {}", self.config.lc.profile.label()));
     }
 
@@ -384,7 +425,7 @@ impl LatticraInstallerApp {
         self.config.safety.allow_host_mutation = false;
         self.guarded_local_ack = false;
         self.refresh_plan();
-        self.status = "Mode set to dry-install. Host writes are disabled.".to_owned();
+        self.set_status("Mode set to dry-install. Host writes are disabled.");
         self.push_console("mode -> dry-install");
     }
 
@@ -392,16 +433,16 @@ impl LatticraInstallerApp {
         self.config.safety.dry_run = false;
         self.config.safety.allow_host_mutation = true;
         self.refresh_plan();
-        self.status = "Mode set to guarded local-prefix install.".to_owned();
+        self.set_status("Mode set to guarded local-prefix install.");
         self.push_console("mode -> guarded local-prefix install");
     }
 
     fn request_guarded_local_mode(&mut self) {
         if !self.guarded_local_ack {
             self.active_tab = WorkspaceTab::Authority;
-            self.status =
-                "Guarded local mode is locked until the Authority acknowledgement is checked."
-                    .to_owned();
+            self.set_status(
+                "Guarded local mode is locked until the Authority acknowledgement is checked.",
+            );
             self.push_console(
                 "blocked: guarded local mode requires Authority acknowledgement first",
             );
@@ -417,14 +458,14 @@ impl LatticraInstallerApp {
                 self.config = config;
                 match write_ui_artifact(UI_CONFIG_ARTIFACT, toml.as_bytes()) {
                     Ok(_) => {
-                        self.status = "Saved latticra-installer-config.toml".to_owned();
+                        self.set_status("Saved latticra-installer-config.toml");
                         self.push_console("saved latticra-installer-config.toml");
                     }
-                    Err(err) => self.status = format!("Could not save config: {err}"),
+                    Err(err) => self.set_status(format!("Could not save config: {err}")),
                 }
             }
             Err(err) => {
-                self.status = format!("Could not save config: {err}");
+                self.set_status(format!("Could not save config: {err}"));
                 self.push_console(format!("blocked config save: {err}"));
             }
         }
@@ -437,15 +478,15 @@ impl LatticraInstallerApp {
                 self.plan = plan;
                 match write_ui_artifact(UI_PLAN_ARTIFACT, self.plan.as_bytes()) {
                     Ok(_) => {
-                        self.status = "Wrote latticra-installer-plan.txt".to_owned();
+                        self.set_status("Wrote latticra-installer-plan.txt");
                         self.push_console("wrote latticra-installer-plan.txt");
                     }
-                    Err(err) => self.status = format!("Could not write plan: {err}"),
+                    Err(err) => self.set_status(format!("Could not write plan: {err}")),
                 }
             }
             Err(err) => {
                 self.plan = blocked_ui_plan(&err);
-                self.status = format!("Could not write plan: {err}");
+                self.set_status(format!("Could not write plan: {err}"));
                 self.push_console(format!("blocked plan write: {err}"));
             }
         }
@@ -468,14 +509,14 @@ impl LatticraInstallerApp {
                 self.active_operation = intent;
                 self.install_state = InstallState::Running;
                 let label = self.operation_label();
-                self.status = format!("Starting {label}...");
+                self.set_status(format!("Starting {label}..."));
                 self.push_console(format!("launching {label}"));
                 self.rx = Some(engine::launch(self.config.clone()));
                 self.show_plan_over_log = false;
             }
             Err(err) => {
                 self.install_state = InstallState::Failed;
-                self.status = err.clone();
+                self.set_status(err.clone());
                 self.push_console(format!("blocked: {err}"));
             }
         }
@@ -484,7 +525,7 @@ impl LatticraInstallerApp {
     fn start_update_dry_run(&mut self) {
         if !self.config.updater.reuse_installer_engine {
             self.install_state = InstallState::Failed;
-            self.status = "Updater currently requires reuse_installer_engine=true.".to_owned();
+            self.set_status("Updater currently requires reuse_installer_engine=true.");
             self.push_console("blocked: updater requires guarded installer engine reuse");
             self.active_tab = WorkspaceTab::Updater;
             return;
@@ -496,7 +537,7 @@ impl LatticraInstallerApp {
         self.config.updater.allow_network_fetch = false;
         self.last_update_dry_run_ok = false;
         self.refresh_plan();
-        self.status = "Starting updater dry-run from the current checkout.".to_owned();
+        self.set_status("Starting updater dry-run from the current checkout.");
         self.push_console("updater: dry-run preview requested");
         self.start_install_with_intent(OperationIntent::UpdateDryRun);
     }
@@ -504,7 +545,7 @@ impl LatticraInstallerApp {
     fn start_update_apply(&mut self) {
         if !self.config.updater.reuse_installer_engine {
             self.install_state = InstallState::Failed;
-            self.status = "Updater currently requires reuse_installer_engine=true.".to_owned();
+            self.set_status("Updater currently requires reuse_installer_engine=true.");
             self.push_console("blocked: updater requires guarded installer engine reuse");
             self.active_tab = WorkspaceTab::Updater;
             return;
@@ -512,8 +553,9 @@ impl LatticraInstallerApp {
 
         if !self.guarded_local_ack {
             self.install_state = InstallState::Failed;
-            self.status =
-                "Updater apply requires the guarded local-write acknowledgement first.".to_owned();
+            self.set_status(
+                "Updater apply requires the guarded local-write acknowledgement first.",
+            );
             self.push_console(
                 "blocked: updater apply requires guarded local-write acknowledgement",
             );
@@ -523,9 +565,9 @@ impl LatticraInstallerApp {
 
         if self.config.updater.require_dry_run_before_apply && !self.last_update_dry_run_ok {
             self.install_state = InstallState::Failed;
-            self.status =
-                "Updater apply requires a successful updater dry-run in this Panel session."
-                    .to_owned();
+            self.set_status(
+                "Updater apply requires a successful updater dry-run in this Panel session.",
+            );
             self.push_console("blocked: updater apply requires successful updater dry-run first");
             self.active_tab = WorkspaceTab::Updater;
             return;
@@ -536,7 +578,7 @@ impl LatticraInstallerApp {
         self.config.safety.allow_network_effect = false;
         self.config.updater.allow_network_fetch = false;
         self.refresh_plan();
-        self.status = "Starting guarded updater apply from the current checkout.".to_owned();
+        self.set_status("Starting guarded updater apply from the current checkout.");
         self.push_console("updater: guarded local-prefix apply requested");
         self.start_install_with_intent(OperationIntent::UpdateApply);
     }
@@ -553,14 +595,14 @@ impl LatticraInstallerApp {
                 self.active_operation = OperationIntent::Removal;
                 self.install_state = InstallState::Running;
                 let mode_label = operation.mode_label(self.config.safety.dry_run);
-                self.status = format!("Starting {mode_label}...");
+                self.set_status(format!("Starting {mode_label}..."));
                 self.push_console(format!("launching {mode_label}"));
                 self.rx = Some(engine::launch_removal(self.config.clone(), operation));
                 self.show_plan_over_log = false;
             }
             Err(err) => {
                 self.install_state = InstallState::Failed;
-                self.status = err.clone();
+                self.set_status(err.clone());
                 self.push_console(format!("blocked: {err}"));
             }
         }
@@ -588,20 +630,16 @@ impl LatticraInstallerApp {
             match event {
                 InstallEvent::Started => {
                     self.install_state = InstallState::Running;
-                    self.status = "Engine started.".to_owned();
+                    self.set_status("Engine started.");
                     self.push_console("engine: started");
                 }
                 InstallEvent::Log(line) => {
+                    let line = self.push_evidence_log(line);
                     if let Some((index, total, title)) = parse_phase_line(&line) {
                         self.phase_index = index;
                         self.phase_total = total.max(1);
                         self.phase_title = title.clone();
-                        self.status = format!("{title}...");
-                    }
-                    self.logs.push(line.clone());
-                    if self.logs.len() > 500 {
-                        let drain_count = self.logs.len() - 500;
-                        self.logs.drain(0..drain_count);
+                        self.set_status(format!("{title}..."));
                     }
                 }
                 InstallEvent::Finished { success, code } => {
@@ -613,23 +651,24 @@ impl LatticraInstallerApp {
                             self.last_update_dry_run_ok = true;
                         }
                         let label = self.operation_label();
-                        self.status = format!("{label} completed successfully.");
+                        self.set_status(format!("{label} completed successfully."));
                         self.push_console(format!("engine: {label} completed successfully"));
                     } else {
                         self.install_state = InstallState::Failed;
-                        self.status = format!(
+                        self.set_status(format!(
                             "Engine exited unsuccessfully{}.",
                             code.map(|code| format!(" with code {code}"))
                                 .unwrap_or_default()
-                        );
+                        ));
                         self.push_console(format!("engine: {}", self.status));
                     }
                 }
                 InstallEvent::Failed(err) => {
                     clear_rx = true;
                     self.install_state = InstallState::Failed;
-                    self.status = err.clone();
-                    self.logs.push(format!("ENGINE_FAILURE: {err}"));
+                    let status = sanitize_status_line(&err);
+                    self.set_status(status);
+                    self.push_evidence_log(format!("ENGINE_FAILURE: {err}"));
                     self.push_console(format!("ENGINE_FAILURE: {err}"));
                 }
             }
@@ -695,7 +734,7 @@ impl LatticraInstallerApp {
                 Some(config)
             }
             Err(err) => {
-                self.status = format!("Console command blocked: {err}");
+                self.set_status(format!("Console command blocked: {err}"));
                 self.push_console(format!(
                     "blocked: console command requires valid authority fields: {err}"
                 ));
@@ -783,10 +822,10 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc session, lc workspace, lc namespace, lc rootfs, lc packages, lc init, lc services, lc service-schema, lc profile hosted|panel|standalone|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
+                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc session, lc workspace, lc namespace, lc rootfs, lc packages, lc init, lc services, lc service-schema, lc service-definitions, lc service-plan, lc profile hosted|panel|standalone|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
                 );
                 self.push_console(
-                    "nadia: use `nadia commands` for the full Stage-1 through Stage-48 command map",
+                    "nadia: use `nadia commands` for the full Stage-1 through Stage-51 command map",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -950,6 +989,18 @@ impl LatticraInstallerApp {
                 self.push_console("service_schema_contract_status=metadata-only-contract");
                 self.push_console("service_schema_contract_present=1");
                 self.push_console(format!(
+                    "service_definitions_contract_profile={}",
+                    self.config.lc.service_definitions_contract_profile
+                ));
+                self.push_console("service_definitions_contract_status=metadata-only-contract");
+                self.push_console("service_definitions_contract_present=1");
+                self.push_console(format!(
+                    "service_plan_contract_profile={}",
+                    self.config.lc.service_plan_contract_profile
+                ));
+                self.push_console("service_plan_contract_status=metadata-only-contract");
+                self.push_console("service_plan_contract_present=1");
+                self.push_console(format!(
                     "command_registry_profile={}",
                     self.config.lc.command_registry_profile
                 ));
@@ -1016,6 +1067,16 @@ impl LatticraInstallerApp {
                     self.config.lc.service_schema_contract_profile
                 ));
                 self.push_console("service_schema_contract_status=metadata-only-contract");
+                self.push_console(format!(
+                    "service_definitions_contract_profile={}",
+                    self.config.lc.service_definitions_contract_profile
+                ));
+                self.push_console("service_definitions_contract_status=metadata-only-contract");
+                self.push_console(format!(
+                    "service_plan_contract_profile={}",
+                    self.config.lc.service_plan_contract_profile
+                ));
+                self.push_console("service_plan_contract_status=metadata-only-contract");
                 self.push_console(format!(
                     "receipt_request_contract_profile={}",
                     self.config.lc.receipt_request_contract_profile
@@ -1146,6 +1207,14 @@ impl LatticraInstallerApp {
                     self.config.lc.require_service_schema_contract
                 ));
                 self.push_console(format!(
+                    "service_definitions_contract_required={}",
+                    self.config.lc.require_service_definitions_contract
+                ));
+                self.push_console(format!(
+                    "service_plan_contract_required={}",
+                    self.config.lc.require_service_plan_contract
+                ));
+                self.push_console(format!(
                     "receipt_request_contract_required={}",
                     self.config.lc.require_receipt_request_contract
                 ));
@@ -1235,6 +1304,11 @@ impl LatticraInstallerApp {
                 self.push_console("services_contract_present=1");
                 self.push_console("service_schema_contract_present=1");
                 self.push_console(format!(
+                    "service_definitions_contract_profile={}",
+                    self.config.lc.service_definitions_contract_profile
+                ));
+                self.push_console("service_definitions_contract_present=1");
+                self.push_console(format!(
                     "panel_embedded_console={}",
                     self.config.lc.install.panel_embedded_console
                 ));
@@ -1287,7 +1361,7 @@ impl LatticraInstallerApp {
                 self.apply_lc_profile(LatticraConsoleProfile::Custom);
             }
             ["lc", "commands"] | ["console", "commands"] => {
-                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc install-config,lc standalone,lc session,lc workspace,lc namespace,lc rootfs,lc packages,lc init,lc services,lc service-schema,lc profiles,lc receipts,lc receipt-request,lc receipt-payload,lc receipt-artifact,lc receipt-artifact-review,lc receipt-review-receipt,lc receipt-review-draft,lc receipt-materialization-plan,lc signature-request,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
+                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc install-config,lc standalone,lc session,lc workspace,lc namespace,lc rootfs,lc packages,lc init,lc services,lc service-schema,lc service-definitions,lc service-plan,lc profiles,lc receipts,lc receipt-request,lc receipt-payload,lc receipt-artifact,lc receipt-artifact-review,lc receipt-review-receipt,lc receipt-review-draft,lc receipt-materialization-plan,lc signature-request,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
                 self.push_console("registry_authority=metadata-only external_host_processes=0");
             }
             ["lc", "standalone"] | ["console", "standalone"] | ["lc", "standalone-contract"] => {
@@ -1525,7 +1599,7 @@ impl LatticraInstallerApp {
                 );
                 self.push_console("service_health_check_allowed=0 process_supervision_allowed=0");
                 self.push_console(
-                    "pid1_claim_allowed=0 service_schema_contract_required=1 init_contract_required=1",
+                    "pid1_claim_allowed=0 service_schema_contract_required=1 service_definitions_contract_required=1 service_plan_contract_required=1 init_contract_required=1",
                 );
                 self.push_console(
                     "rootfs_contract_required=1 packages_contract_required=1 namespace_contract_required=1",
@@ -1533,6 +1607,8 @@ impl LatticraInstallerApp {
                 self.push_console("os_base_contract_required=1 runtime_boundary_required=1");
                 self.push_console("command_surface=lc services");
                 self.push_console("related_service_schema_command=lc service-schema");
+                self.push_console("related_service_definitions_command=lc service-definitions");
+                self.push_console("related_service_plan_command=lc service-plan");
                 self.push_console("related_init_command=lc init");
                 self.push_console(
                     "promotion_gate=lc_services_contract_before_service_registry_or_supervision",
@@ -1581,7 +1657,7 @@ impl LatticraInstallerApp {
                 );
                 self.push_console("service_health_check_allowed=0 process_supervision_allowed=0");
                 self.push_console(
-                    "services_contract_required=1 init_contract_required=1 rootfs_contract_required=1 packages_contract_required=1",
+                    "service_definitions_contract_required=1 services_contract_required=1 init_contract_required=1 rootfs_contract_required=1 packages_contract_required=1",
                 );
                 self.push_console(
                     "namespace_contract_required=1 workspace_contract_required=1 session_contract_required=1",
@@ -1590,9 +1666,134 @@ impl LatticraInstallerApp {
                 self.push_console("receipt_required_before_service_schema_runtime=1");
                 self.push_console("command_surface=lc service-schema");
                 self.push_console("related_services_command=lc services");
+                self.push_console("related_service_definitions_command=lc service-definitions");
                 self.push_console("related_init_command=lc init");
                 self.push_console(
                     "promotion_gate=lc_service_schema_contract_before_service_definition_validation",
+                );
+                self.push_console(
+                    "host_process_launch_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 production_os_claim=0",
+                );
+            }
+            ["lc", "service-definitions"]
+            | ["console", "service-definitions"]
+            | ["lc", "service-definitions-contract"]
+            | ["lc", "service-definition-stubs"] => {
+                self.push_console(
+                    "lc.service_definitions=Latticra Console service definitions contract",
+                );
+                self.push_console(format!(
+                    "service_definitions_profile={}",
+                    self.config.lc.service_definitions_contract_profile
+                ));
+                self.push_console("service_definitions_status=metadata-only-contract");
+                self.push_console("service_definitions_contract_present=1");
+                self.push_console("service_definitions_kind=lc-service-definition-stubs-envelope");
+                self.push_console("service_definitions_root=share/latticra/lc/services");
+                self.push_console("service_definitions_file=definitions.toml");
+                self.push_console("service_definitions_artifact_present=1");
+                self.push_console(
+                    "service_definitions_read_allowed=0 service_definitions_write_allowed=0",
+                );
+                self.push_console("service_definition_stub_count=0");
+                self.push_console("service_definition_stub_catalog_present=1");
+                self.push_console("service_definition_stub_materialized=0");
+                self.push_console(
+                    "service_definition_stub_read_allowed=0 service_definition_stub_write_allowed=0",
+                );
+                self.push_console("service_definition_validation_allowed=0");
+                self.push_console("service_definition_activation_allowed=0");
+                self.push_console("service_dependency_resolution_allowed=0");
+                self.push_console("service_authority_binding_allowed=0");
+                self.push_console(
+                    "service_registry_write_allowed=0 service_manifest_write_allowed=0",
+                );
+                self.push_console(
+                    "service_enable_allowed=0 service_disable_allowed=0 service_start_allowed=0",
+                );
+                self.push_console(
+                    "service_stop_allowed=0 service_restart_allowed=0 service_reload_allowed=0",
+                );
+                self.push_console("service_health_check_allowed=0 process_supervision_allowed=0");
+                self.push_console(
+                    "service_schema_contract_required=1 services_contract_required=1",
+                );
+                self.push_console(
+                    "init_contract_required=1 rootfs_contract_required=1 packages_contract_required=1",
+                );
+                self.push_console(
+                    "namespace_contract_required=1 workspace_contract_required=1 session_contract_required=1",
+                );
+                self.push_console("os_base_contract_required=1 runtime_boundary_required=1");
+                self.push_console("receipt_required_before_service_definitions_runtime=1");
+                self.push_console("command_surface=lc service-definitions");
+                self.push_console("related_service_schema_command=lc service-schema");
+                self.push_console("related_services_command=lc services");
+                self.push_console("related_service_plan_command=lc service-plan");
+                self.push_console("related_init_command=lc init");
+                self.push_console(
+                    "promotion_gate=lc_service_definitions_contract_before_service_definition_materialization",
+                );
+                self.push_console(
+                    "host_process_launch_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 production_os_claim=0",
+                );
+            }
+            ["lc", "service-plan"]
+            | ["console", "service-plan"]
+            | ["lc", "service-plan-contract"]
+            | ["lc", "service-activation-plan"] => {
+                self.push_console("lc.service_plan=Latticra Console service plan contract");
+                self.push_console(format!(
+                    "service_plan_profile={}",
+                    self.config.lc.service_plan_contract_profile
+                ));
+                self.push_console("service_plan_status=metadata-only-contract");
+                self.push_console("service_plan_contract_present=1");
+                self.push_console("service_plan_kind=lc-service-activation-plan-envelope");
+                self.push_console("service_plan_root=share/latticra/lc/services");
+                self.push_console("service_plan_file=plan.toml");
+                self.push_console("service_plan_artifact_present=1");
+                self.push_console("service_plan_created=0");
+                self.push_console("service_plan_read_allowed=0 service_plan_write_allowed=0");
+                self.push_console(
+                    "service_plan_materialized=0 service_plan_materialization_allowed=0",
+                );
+                self.push_console("service_plan_review_required=1");
+                self.push_console("service_definition_input_allowed=0");
+                self.push_console("service_definition_validation_allowed=0");
+                self.push_console("service_dependency_resolution_allowed=0");
+                self.push_console("service_startup_order_resolution_allowed=0");
+                self.push_console(
+                    "service_authority_binding_allowed=0 service_activation_allowed=0",
+                );
+                self.push_console(
+                    "service_registry_write_allowed=0 service_manifest_write_allowed=0",
+                );
+                self.push_console(
+                    "service_enable_allowed=0 service_disable_allowed=0 service_start_allowed=0",
+                );
+                self.push_console(
+                    "service_stop_allowed=0 service_restart_allowed=0 service_reload_allowed=0",
+                );
+                self.push_console("service_health_check_allowed=0 process_supervision_allowed=0");
+                self.push_console(
+                    "service_definitions_contract_required=1 service_schema_contract_required=1 services_contract_required=1",
+                );
+                self.push_console(
+                    "init_contract_required=1 rootfs_contract_required=1 packages_contract_required=1",
+                );
+                self.push_console(
+                    "namespace_contract_required=1 workspace_contract_required=1 session_contract_required=1",
+                );
+                self.push_console("os_base_contract_required=1 runtime_boundary_required=1");
+                self.push_console("receipt_required_before_service_plan_runtime=1");
+                self.push_console("command_surface=lc service-plan");
+                self.push_console("related_service_definitions_command=lc service-definitions");
+                self.push_console("related_service_schema_command=lc service-schema");
+                self.push_console("related_services_command=lc services");
+                self.push_console("related_init_command=lc init");
+                self.push_console(
+                    "promotion_gate=lc_service_plan_contract_before_dependency_resolution_or_activation",
                 );
                 self.push_console(
                     "host_process_launch_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 production_os_claim=0",
@@ -1672,6 +1873,18 @@ impl LatticraInstallerApp {
                 self.push_console("service_schema_contract_present=1");
                 self.push_console("service_schema_contract_command=lc service-schema");
                 self.push_console(format!(
+                    "service_definitions_contract_receipt_required={}",
+                    self.config.lc.require_service_definitions_contract
+                ));
+                self.push_console("service_definitions_contract_present=1");
+                self.push_console("service_definitions_contract_command=lc service-definitions");
+                self.push_console(format!(
+                    "service_plan_contract_receipt_required={}",
+                    self.config.lc.require_service_plan_contract
+                ));
+                self.push_console("service_plan_contract_present=1");
+                self.push_console("service_plan_contract_command=lc service-plan");
+                self.push_console(format!(
                     "receipt_request_contract_required={}",
                     self.config.lc.require_receipt_request_contract
                 ));
@@ -1733,7 +1946,7 @@ impl LatticraInstallerApp {
                 self.push_console(
                     "seal_signature_present=0 seal_signing_authority_present=0 receipt_signed=0",
                 );
-                self.push_console("receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,host-contract,host-inventory,host-adapter,runtime-boundary");
+                self.push_console("receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary");
                 self.push_console(
                     "file_write_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0",
                 );
@@ -1814,7 +2027,7 @@ impl LatticraInstallerApp {
                 self.push_console("signature_request_profile=latticra-seal-signature-request/0.1");
                 self.push_console("requested_receipt_profile=latticra-seal-verified-receipt/0.1");
                 self.push_console("requested_capability=verified-receipt-report");
-                self.push_console("requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,host-contract,host-inventory,host-adapter,runtime-boundary");
+                self.push_console("requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary");
                 self.push_console("seal_signature_request_ready=0 seal_signature_request_present=0 seal_signing_authority_present=0");
                 self.push_console("seal_signer_handoff_allowed=0 seal_signing_operation_allowed=0 receipt_write_allowed=0 receipt_signed=0");
                 self.push_console(
@@ -2678,6 +2891,18 @@ impl LatticraInstallerApp {
                     "stage=48 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract; prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_findings_recorded=0 runtime_invoked=0",
                 );
                 self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_stage=49-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract",
+                );
+                self.push_console(
+                    "stage=49 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract; prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_findings_recorded=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_stage=50-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract",
+                );
+                self.push_console(
+                    "stage=50 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract; prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_published=0 runtime_invoked=0",
+                );
+                self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
                 );
             }
@@ -3466,6 +3691,81 @@ impl LatticraInstallerApp {
                     "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1",
                 );
             }
+            ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition"]
+            | ["nadia", "evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition"]
+            | ["nadia", "prompt-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition"]
+            | ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract"] =>
+            {
+                self.push_console(
+                    "nadia_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition=stage-49-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract",
+                );
+                self.push_console(
+                    "panel_command=nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console(
+                    "installed_cli=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_status=contract_only prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_record_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_decision_recorded=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_findings_recorded=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1",
+                );
+            }
+            ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release"]
+            | ["nadia", "evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release"]
+            | ["nadia", "prompt-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release"]
+            | ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract"] =>
+            {
+                self.push_console(
+                    "nadia_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release=stage-50-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract",
+                );
+                self.push_console(
+                    "panel_command=nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console(
+                    "installed_cli=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_status=contract_only prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_record_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_decision_recorded=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_published=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract=1",
+                );
+            }
+            ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt"]
+            | ["nadia", "evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt"]
+            | ["nadia", "prompt-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt"]
+            | ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"] =>
+            {
+                self.push_console(
+                    "nadia_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt=stage-51-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract",
+                );
+                self.push_console(
+                    "panel_command=nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console(
+                    "installed_cli=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_status=contract_only prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_record_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_decision_recorded=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_published=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1",
+                );
+            }
             ["nadia", "inference-readiness"]
             | ["nadia", "readiness"]
             | ["nadia", "inference-contract"] => {
@@ -3683,6 +3983,9 @@ impl LatticraInstallerApp {
                 status_chip(ui, "root", "0");
                 status_chip(ui, "network", "0");
                 status_chip(ui, "runtime", "0");
+                if ui.button("About").clicked() {
+                    self.show_about_panel = true;
+                }
             });
             return;
         }
@@ -3701,6 +4004,9 @@ impl LatticraInstallerApp {
                 )
                 .color(muted()),
             );
+            if ui.button("About").clicked() {
+                self.show_about_panel = true;
+            }
         });
         ui.horizontal_wrapped(|ui| {
             status_chip(ui, "mode", self.config.execution_mode_label());
@@ -3838,7 +4144,7 @@ impl LatticraInstallerApp {
         self.refresh_plan();
         let content_width = ui.available_width();
         egui::ScrollArea::vertical()
-            .id_salt("latticra_main_workbench")
+            .id_salt("latticra_main_workbench_v1")
             .auto_shrink([false, false])
             .show(ui, |ui| {
                 ui.set_width(content_width);
@@ -4076,6 +4382,8 @@ impl LatticraInstallerApp {
         ui.add_space(8.0);
         self.show_dashboard_summary(ui);
         ui.add_space(12.0);
+        self.show_dashboard_runway(ui);
+        ui.add_space(12.0);
 
         let profiles = InstallProfile::all();
         if ui.available_width() < PROFILE_CARD_TWO_COLUMN_WIDTH {
@@ -4131,6 +4439,101 @@ impl LatticraInstallerApp {
                 );
             });
         }
+    }
+
+    fn show_dashboard_runway(&mut self, ui: &mut egui::Ui) {
+        let running = self.install_state == InstallState::Running;
+        let has_evidence = !self.logs.is_empty();
+        let local_ready = !self.config.safety.dry_run && self.guarded_local_ack;
+        let local_locked = !self.config.safety.dry_run && !self.guarded_local_ack;
+        let plan_blocker = self.panel_can_write_artifacts().err();
+        let can_write_plan = plan_blocker.is_none();
+
+        panel_card_with_stroke(workspace_tab_accent(WorkspaceTab::Procedure)).show(ui, |ui| {
+            ui.horizontal_wrapped(|ui| {
+                ui.heading(
+                    egui::RichText::new("Safe-run runway")
+                        .size(18.0)
+                        .color(ink()),
+                );
+                status_chip(ui, "next", self.next_action_label());
+                status_chip(
+                    ui,
+                    "evidence",
+                    if has_evidence { "available" } else { "waiting" },
+                );
+                status_chip(
+                    ui,
+                    "local_ack",
+                    if self.guarded_local_ack { "1" } else { "0" },
+                );
+            });
+            ui.add_space(6.0);
+
+            dashboard_runway_step(
+                ui,
+                "01",
+                "Plan",
+                "Installer intent is rendered before execution.",
+                if has_evidence {
+                    ProcedureState::Done
+                } else {
+                    ProcedureState::Current
+                },
+            );
+            dashboard_runway_step(
+                ui,
+                "02",
+                "Dry-Install",
+                "Engine behavior is validated with root=0 network=0 runtime=0.",
+                if running {
+                    ProcedureState::Current
+                } else if has_evidence {
+                    ProcedureState::Done
+                } else {
+                    ProcedureState::Ready
+                },
+            );
+            dashboard_runway_step(
+                ui,
+                "03",
+                "Guarded local",
+                "Local-prefix writes stay behind the acknowledgement gate.",
+                if local_ready {
+                    ProcedureState::Done
+                } else if local_locked {
+                    ProcedureState::Locked
+                } else {
+                    ProcedureState::Pending
+                },
+            );
+
+            ui.add_space(6.0);
+            ui.horizontal_wrapped(|ui| {
+                let plan_response = ui
+                    .add_enabled(
+                        can_write_plan,
+                        egui::Button::new("Generate plan")
+                            .fill(soft_blue())
+                            .stroke(egui::Stroke::new(1.0, blue())),
+                    )
+                    .on_disabled_hover_text(plan_blocker.as_deref().unwrap_or("Plan ready"));
+                if plan_response.clicked() {
+                    self.write_plan();
+                    self.active_tab = WorkspaceTab::Evidence;
+                    self.show_plan_over_log = true;
+                }
+                if ui.button("Open next surface").clicked() {
+                    self.open_next_surface();
+                }
+                if ui.button("Review evidence").clicked() {
+                    self.active_tab = WorkspaceTab::Evidence;
+                }
+                if ui.button("Authority gates").clicked() {
+                    self.active_tab = WorkspaceTab::Authority;
+                }
+            });
+        });
     }
 
     fn profile_card(
@@ -4382,7 +4785,7 @@ impl LatticraInstallerApp {
         if components_changed {
             self.config.profile = InstallProfile::Custom;
             self.refresh_plan();
-            self.status = "Component selection marked as Custom.".to_owned();
+            self.set_status("Component selection marked as Custom.");
             self.push_console("components -> custom");
         }
     }
@@ -4408,7 +4811,7 @@ impl LatticraInstallerApp {
                 status_chip(
                     ui,
                     "contracts",
-                    &format!("{}/{}", selected_lc_contract_count(&self.config.lc), 26),
+                    &format!("{}/{}", selected_lc_contract_count(&self.config.lc), 28),
                 );
                 status_chip(
                     ui,
@@ -4633,6 +5036,16 @@ impl LatticraInstallerApp {
                     );
                     labeled_text_field(
                         ui,
+                        "Service definitions",
+                        &mut self.config.lc.service_definitions_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Service plan",
+                        &mut self.config.lc.service_plan_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
                         "Receipt request",
                         &mut self.config.lc.receipt_request_contract_profile,
                     );
@@ -4709,7 +5122,7 @@ impl LatticraInstallerApp {
                         status_chip(
                             ui,
                             "enabled",
-                            &format!("{}/{}", selected_lc_contract_count(&self.config.lc), 26),
+                            &format!("{}/{}", selected_lc_contract_count(&self.config.lc), 28),
                         );
                         status_chip(ui, "runtime", "0");
                     });
@@ -4802,6 +5215,18 @@ impl LatticraInstallerApp {
                         &mut self.config.lc.require_service_schema_contract,
                         "Require service schema",
                         "LC service definitions must prove this schema contract before validation, dependency resolution, or service control can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_service_definitions_contract,
+                        "Require service definitions",
+                        "LC service definition stubs must prove this metadata contract before materialization, validation, activation, or service control can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_service_plan_contract,
+                        "Require service plan",
+                        "LC service activation planning must prove this metadata contract before dependency resolution, startup ordering, activation, or process supervision can exist.",
                     );
                     let _ = behavior_toggle_row(
                         ui,
@@ -4944,7 +5369,7 @@ impl LatticraInstallerApp {
                 if ui.button("Reapply profile defaults").clicked() {
                     self.config.seal.apply_crypto_profile_defaults();
                     self.refresh_plan();
-                    self.status = "Reapplied Seal profile defaults.".to_owned();
+                    self.set_status("Reapplied Seal profile defaults.");
                     self.push_console("seal.profile_defaults -> reapplied");
                 }
             });
@@ -5069,7 +5494,7 @@ impl LatticraInstallerApp {
             }
             self.config.seal.crypto_profile = SealCryptoProfile::Custom;
             self.refresh_plan();
-            self.status = "Seal parameters marked as Custom.".to_owned();
+            self.set_status("Seal parameters marked as Custom.");
         }
     }
 
@@ -5212,7 +5637,7 @@ impl LatticraInstallerApp {
             }
             self.config.profile = InstallProfile::Custom;
             self.refresh_plan();
-            self.status = "Authority gates marked as Custom.".to_owned();
+            self.set_status("Authority gates marked as Custom.");
         }
     }
 
@@ -5257,9 +5682,9 @@ impl LatticraInstallerApp {
                 .changed();
             if ack_changed && !self.guarded_local_ack && !self.config.safety.dry_run {
                 self.set_mode_dry();
-                self.status =
-                    "Guarded local mode returned to dry-run because acknowledgement was cleared."
-                        .to_owned();
+                self.set_status(
+                    "Guarded local mode returned to dry-run because acknowledgement was cleared.",
+                );
                 self.push_console("mode -> dry-install; guarded local acknowledgement cleared");
             }
 
@@ -5401,7 +5826,7 @@ impl LatticraInstallerApp {
             }
             self.config.profile = InstallProfile::Custom;
             self.refresh_plan();
-            self.status = "Delivery settings marked as Custom.".to_owned();
+            self.set_status("Delivery settings marked as Custom.");
         }
     }
 
@@ -5678,7 +6103,7 @@ impl LatticraInstallerApp {
             }
             self.config.profile = InstallProfile::Custom;
             self.refresh_plan();
-            self.status = "Updater settings marked as Custom.".to_owned();
+            self.set_status("Updater settings marked as Custom.");
         }
 
         let apply_blocker =
@@ -5763,48 +6188,7 @@ impl LatticraInstallerApp {
 
     fn show_evidence(&mut self, ui: &mut egui::Ui) {
         ui.heading("Plan, receipts, and evidence");
-        ui.horizontal_wrapped(|ui| {
-            status_chip(
-                ui,
-                "view",
-                if self.show_plan_over_log {
-                    "plan"
-                } else {
-                    "log"
-                },
-            );
-            status_chip(ui, "plan_lines", &line_count(&self.plan).to_string());
-            status_chip(ui, "log_lines", &self.logs.len().to_string());
-            status_chip(ui, "phase", &self.phase_title);
-        });
-        ui.add_space(6.0);
-        ui.horizontal_wrapped(|ui| {
-            let plan_button = egui::Button::new("Plan preview")
-                .selected(self.show_plan_over_log)
-                .fill(if self.show_plan_over_log {
-                    soft_blue()
-                } else {
-                    soft_surface()
-                });
-            if ui.add(plan_button).clicked() {
-                self.show_plan_over_log = true;
-            }
-
-            let log_button = egui::Button::new("Engine log")
-                .selected(!self.show_plan_over_log)
-                .fill(if !self.show_plan_over_log {
-                    soft_blue()
-                } else {
-                    soft_surface()
-                });
-            if ui.add(log_button).clicked() {
-                self.show_plan_over_log = false;
-            }
-
-            if ui.button("Refresh plan").clicked() {
-                self.refresh_plan();
-            }
-        });
+        self.show_evidence_cockpit(ui);
         ui.add_space(8.0);
 
         let max_height = ui.available_height().max(320.0);
@@ -5827,6 +6211,107 @@ impl LatticraInstallerApp {
                 true,
             );
         }
+    }
+
+    fn show_evidence_cockpit(&mut self, ui: &mut egui::Ui) {
+        let blocker_count = evidence_blocker_count(&self.logs);
+        let outcome = evidence_outcome_label(self.install_state, self.logs.is_empty());
+        let accent = evidence_outcome_color(self.install_state, blocker_count);
+        let latest_plan = latest_evidence_value(&self.logs, "ENGINE: plan=").map(str::to_owned);
+        let latest_receipt = latest_evidence_value(&self.logs, "RECEIPT: ").map(str::to_owned);
+
+        panel_card_with_stroke(accent).show(ui, |ui| {
+            ui.horizontal_wrapped(|ui| {
+                ui.heading(
+                    egui::RichText::new("Evidence cockpit")
+                        .size(18.0)
+                        .color(ink()),
+                );
+                colored_status_chip(ui, "outcome", outcome, accent);
+                status_chip(
+                    ui,
+                    "view",
+                    if self.show_plan_over_log {
+                        "plan"
+                    } else {
+                        "log"
+                    },
+                );
+                status_chip(ui, "plan_lines", &line_count(&self.plan).to_string());
+                status_chip(ui, "log_lines", &self.logs.len().to_string());
+                if blocker_count > 0 {
+                    colored_status_chip(ui, "blockers", &blocker_count.to_string(), red());
+                } else {
+                    status_chip(ui, "blockers", "0");
+                }
+            });
+            ui.add(
+                egui::Label::new(
+                    egui::RichText::new(evidence_outcome_note(
+                        self.install_state,
+                        self.logs.is_empty(),
+                    ))
+                    .small()
+                    .color(muted()),
+                )
+                .wrap(),
+            );
+            ui.add_space(6.0);
+            ui.horizontal_wrapped(|ui| {
+                status_chip(ui, "phase", &self.phase_title);
+                status_chip(
+                    ui,
+                    "receipt",
+                    if latest_receipt.is_some() {
+                        "available"
+                    } else {
+                        "waiting"
+                    },
+                );
+                status_chip(ui, "root", "0");
+                status_chip(ui, "network", "0");
+                status_chip(ui, "runtime", "0");
+            });
+
+            if let Some(path) = latest_plan {
+                evidence_path_row(ui, "plan", &path, blue());
+            }
+            if let Some(path) = latest_receipt {
+                evidence_path_row(ui, "receipt", &path, green());
+            }
+
+            ui.add_space(6.0);
+            ui.horizontal_wrapped(|ui| {
+                let plan_button = egui::Button::new("Plan preview")
+                    .selected(self.show_plan_over_log)
+                    .fill(if self.show_plan_over_log {
+                        soft_blue()
+                    } else {
+                        soft_surface()
+                    });
+                if ui.add(plan_button).clicked() {
+                    self.show_plan_over_log = true;
+                }
+
+                let log_button = egui::Button::new("Engine log")
+                    .selected(!self.show_plan_over_log)
+                    .fill(if !self.show_plan_over_log {
+                        soft_blue()
+                    } else {
+                        soft_surface()
+                    });
+                if ui.add(log_button).clicked() {
+                    self.show_plan_over_log = false;
+                }
+
+                if ui.button("Refresh plan").clicked() {
+                    self.refresh_plan();
+                }
+                if ui.button("Open procedure").clicked() {
+                    self.active_tab = WorkspaceTab::Procedure;
+                }
+            });
+        });
     }
 
     fn show_install_run_monitor(&mut self, ui: &mut egui::Ui, compact: bool) {
@@ -6562,6 +7047,89 @@ impl LatticraInstallerApp {
         });
     }
 
+    fn show_about_window(&mut self, ctx: &egui::Context) {
+        if !self.show_about_panel {
+            return;
+        }
+
+        let mut open = self.show_about_panel;
+        let mut close_requested = false;
+        egui::Window::new(format!("Latticra Panel v{PANEL_VERSION}"))
+            .collapsible(false)
+            .resizable(false)
+            .default_width(460.0)
+            .open(&mut open)
+            .show(ctx, |ui| {
+                ui.heading(egui::RichText::new("Latticra Panel").color(ink()));
+                ui.horizontal_wrapped(|ui| {
+                    status_chip(ui, "version", PANEL_VERSION);
+                    status_chip(ui, "build", PANEL_BUILD);
+                    status_chip(ui, "active", workspace_tab_key(self.active_tab));
+                    status_chip(ui, "next", self.next_action_label());
+                });
+                ui.add_space(6.0);
+                ui.add(
+                    egui::Label::new(
+                        egui::RichText::new(
+                            "Guided local workbench for planning, dry-run evidence, receipts, and guarded user-local installs.",
+                        )
+                        .color(muted()),
+                    )
+                    .wrap(),
+                );
+                ui.add_space(8.0);
+                ui.label(
+                    egui::RichText::new("Authority floor")
+                        .small()
+                        .strong()
+                        .color(amber()),
+                );
+                ui.horizontal_wrapped(|ui| {
+                    status_chip(ui, "production_ready", "0");
+                    status_chip(ui, "root", "0");
+                    status_chip(ui, "network", "0");
+                    status_chip(ui, "runtime", "0");
+                    status_chip(ui, "external_host", "0");
+                });
+                ui.add_space(8.0);
+                ui.label(
+                    egui::RichText::new("Current configuration")
+                        .small()
+                        .strong()
+                        .color(teal()),
+                );
+                ui.horizontal_wrapped(|ui| {
+                    status_chip(ui, "profile", self.config.profile.label());
+                    status_chip(ui, "mode", self.config.execution_mode_label());
+                    status_chip(ui, "seal", self.config.seal.crypto_profile.label());
+                    status_chip(ui, "lc", self.config.lc.profile.key());
+                });
+                ui.add_space(8.0);
+                ui.horizontal_wrapped(|ui| {
+                    if ui.button("Evidence").clicked() {
+                        self.active_tab = WorkspaceTab::Evidence;
+                        close_requested = true;
+                    }
+                    if ui.button("Authority").clicked() {
+                        self.active_tab = WorkspaceTab::Authority;
+                        close_requested = true;
+                    }
+                    if ui.button("Procedure").clicked() {
+                        self.active_tab = WorkspaceTab::Procedure;
+                        close_requested = true;
+                    }
+                    if ui.button("Close").clicked() {
+                        close_requested = true;
+                    }
+                });
+            });
+
+        if close_requested {
+            open = false;
+        }
+        self.show_about_panel = open;
+    }
+
     fn show_status_bar(&mut self, ui: &mut egui::Ui) {
         ui.horizontal_wrapped(|ui| {
             ui.monospace(
@@ -6658,6 +7226,8 @@ impl eframe::App for LatticraInstallerApp {
         egui::CentralPanel::default().show_inside(root_ui, |ui| {
             self.show_main_workbench(ui, compact);
         });
+
+        self.show_about_window(&ctx);
     }
 }
 
@@ -6702,12 +7272,24 @@ fn blocked_ui_plan(error: &str) -> String {
 }
 
 fn sanitize_console_line(line: &str) -> String {
+    sanitize_display_line(line, CONSOLE_MAX_LINE_CHARS)
+}
+
+fn sanitize_evidence_line(line: &str) -> String {
+    sanitize_display_line(line, EVIDENCE_MAX_LINE_CHARS)
+}
+
+fn sanitize_status_line(line: &str) -> String {
+    sanitize_display_line(line, STATUS_MAX_LINE_CHARS)
+}
+
+fn sanitize_display_line(line: &str, max_chars: usize) -> String {
     let redacted = engine::redact_log_line(line);
     let mut sanitized = String::new();
-    let mut truncated = false;
+    let mut truncated = line.chars().count() > max_chars;
 
     for (index, ch) in redacted.chars().enumerate() {
-        if index >= CONSOLE_MAX_LINE_CHARS {
+        if index >= max_chars {
             truncated = true;
             break;
         }
@@ -7083,6 +7665,73 @@ fn console_line_color(line: &str) -> egui::Color32 {
     }
 
     egui::Color32::from_rgb(190, 220, 232)
+}
+
+fn evidence_outcome_label(state: InstallState, logs_empty: bool) -> &'static str {
+    match state {
+        InstallState::Running => "running",
+        InstallState::Complete => "complete",
+        InstallState::Failed => "blocked",
+        InstallState::Idle if logs_empty => "waiting",
+        InstallState::Idle => "available",
+    }
+}
+
+fn evidence_outcome_note(state: InstallState, logs_empty: bool) -> &'static str {
+    match state {
+        InstallState::Running => {
+            "Engine output is streaming here; keep the log view open for live detail."
+        }
+        InstallState::Complete => {
+            "The last run completed; review the receipt path and plan before changing authority."
+        }
+        InstallState::Failed => {
+            "The last run stopped on a blocker; review highlighted log lines before retrying."
+        }
+        InstallState::Idle if logs_empty => {
+            "No engine evidence yet; generate a plan or run Dry-Install to begin the receipt trail."
+        }
+        InstallState::Idle => "Evidence from the last run is available for review.",
+    }
+}
+
+fn evidence_outcome_color(state: InstallState, blocker_count: usize) -> egui::Color32 {
+    if blocker_count > 0 || state == InstallState::Failed {
+        return red();
+    }
+
+    match state {
+        InstallState::Running => blue(),
+        InstallState::Complete => green(),
+        InstallState::Idle => teal(),
+        InstallState::Failed => red(),
+    }
+}
+
+fn evidence_blocker_count(logs: &[String]) -> usize {
+    logs.iter()
+        .filter(|line| {
+            let lower = line.to_ascii_lowercase();
+            lower.contains("engine_failure")
+                || lower.contains("blocked")
+                || lower.contains("error")
+                || lower.contains("failed")
+        })
+        .count()
+}
+
+fn latest_evidence_value<'a>(logs: &'a [String], prefix: &str) -> Option<&'a str> {
+    logs.iter()
+        .rev()
+        .find_map(|line| line.strip_prefix(prefix).map(str::trim))
+        .filter(|value| !value.is_empty())
+}
+
+fn evidence_path_row(ui: &mut egui::Ui, label: &str, path: &str, accent: egui::Color32) {
+    ui.horizontal_wrapped(|ui| {
+        colored_status_chip(ui, label, "latest", accent);
+        ui.add(egui::Label::new(egui::RichText::new(path).monospace().small().color(ink())).wrap());
+    });
 }
 
 fn install_state_label(state: InstallState) -> &'static str {
@@ -7775,6 +8424,8 @@ fn selected_lc_contract_count(lc: &LatticraConsoleConfig) -> usize {
         lc.require_init_contract,
         lc.require_services_contract,
         lc.require_service_schema_contract,
+        lc.require_service_definitions_contract,
+        lc.require_service_plan_contract,
         lc.require_receipt_request_contract,
         lc.require_receipt_payload_schema,
         lc.require_receipt_payload_artifact_draft,
@@ -7926,6 +8577,27 @@ fn procedure_row(ui: &mut egui::Ui, number: &str, title: &str, body: &str, state
         });
     });
     ui.add_space(4.0);
+}
+
+fn dashboard_runway_step(
+    ui: &mut egui::Ui,
+    number: &str,
+    title: &str,
+    body: &str,
+    state: ProcedureState,
+) {
+    ui.horizontal_wrapped(|ui| {
+        status_chip(ui, "step", number);
+        colored_status_chip(
+            ui,
+            "state",
+            procedure_state_label(state),
+            procedure_state_color(state),
+        );
+        ui.label(egui::RichText::new(title).strong().color(ink()));
+    });
+    ui.add(egui::Label::new(egui::RichText::new(body).small().color(muted())).wrap());
+    ui.add_space(6.0);
 }
 
 fn procedure_state_label(state: ProcedureState) -> &'static str {
@@ -8283,6 +8955,95 @@ mod tests {
             .console_lines
             .iter()
             .any(|line| line.contains(&format!("{}{}[redacted]", "OPENAI", "_API_KEY="))));
+    }
+
+    #[test]
+    fn evidence_line_sanitizer_escapes_control_characters() {
+        let line = sanitize_evidence_line("ok\nbad\r\x1B[2J\tend\0");
+
+        assert_eq!(line, "ok\\nbad\\r\\x1B[2J\\tend\\x00");
+    }
+
+    #[test]
+    fn status_line_sanitizer_redacts_and_truncates_event_text() {
+        let oversized = format!(
+            "{}{}{}{}{}",
+            "OPENAI",
+            "_API_KEY=",
+            "sk-proj-",
+            "secret12345678901234567890",
+            "a".repeat(STATUS_MAX_LINE_CHARS + 16)
+        );
+        let line = sanitize_status_line(&oversized);
+
+        assert!(line.contains(&format!("{}{}[redacted]", "OPENAI", "_API_KEY=")));
+        assert!(!line.contains("secret12345678901234567890"));
+        assert!(line.ends_with("...[truncated]"));
+    }
+
+    #[test]
+    fn status_setter_redacts_and_escapes_direct_status_updates() {
+        let mut app = LatticraInstallerApp::default();
+        app.set_status(format!(
+            "blocked\n{}{}{}{}",
+            "OPENAI", "_API_KEY=", "sk-proj-", "secret12345678901234567890"
+        ));
+
+        assert!(app.status.contains("\\n"));
+        assert!(!app.status.contains('\n'));
+        assert!(app
+            .status
+            .contains(&format!("{}{}[redacted]", "OPENAI", "_API_KEY=")));
+        assert!(!app.status.contains("secret12345678901234567890"));
+    }
+
+    #[test]
+    fn engine_log_event_is_sanitized_before_evidence_and_status() {
+        let mut app = LatticraInstallerApp::default();
+        let (tx, rx) = std::sync::mpsc::channel();
+        app.rx = Some(rx);
+        tx.send(InstallEvent::Log(format!(
+            "PHASE 1/3: configure\n{}{}{}{}",
+            "OPENAI", "_API_KEY=", "sk-proj-", "secret12345678901234567890"
+        )))
+        .expect("send log event");
+
+        app.drain_events();
+
+        assert_eq!(app.logs.len(), 1);
+        assert!(app.logs[0].contains("\\n"));
+        assert!(!app.logs[0].contains('\n'));
+        assert!(app.logs[0].contains(&format!("{}{}[redacted]", "OPENAI", "_API_KEY=")));
+        assert!(!app.logs[0].contains("secret12345678901234567890"));
+        assert!(app.status.contains("\\n"));
+        assert!(!app.status.contains('\n'));
+        assert!(!app.status.contains("secret12345678901234567890"));
+    }
+
+    #[test]
+    fn engine_failure_event_is_sanitized_before_status_and_evidence() {
+        let mut app = LatticraInstallerApp::default();
+        let (tx, rx) = std::sync::mpsc::channel();
+        app.rx = Some(rx);
+        tx.send(InstallEvent::Failed(format!(
+            "failed\r{}{}{}{}",
+            "GITHUB", "_TOKEN=", "github_pat_", "abcdefghijklmnopqrstuvwxyz1234567890"
+        )))
+        .expect("send failure event");
+
+        app.drain_events();
+
+        assert!(app.rx.is_none());
+        assert!(app.status.contains("\\r"));
+        assert!(!app.status.contains('\r'));
+        assert!(app
+            .status
+            .contains(&format!("{}{}[redacted]", "GITHUB", "_TOKEN=")));
+        assert!(!app.status.contains("abcdefghijklmnopqrstuvwxyz1234567890"));
+        assert_eq!(app.logs.len(), 1);
+        assert!(app.logs[0].contains("ENGINE_FAILURE:"));
+        assert!(!app.logs[0].contains('\r'));
+        assert!(!app.logs[0].contains("abcdefghijklmnopqrstuvwxyz1234567890"));
     }
 
     #[test]

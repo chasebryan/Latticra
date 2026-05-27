@@ -1,14 +1,14 @@
 # Documentation Style Guide
 
 Status: active documentation style guide
-Last updated: 2026-05-26 CDT
+Last updated: 2026-05-27 CDT
 Scope: public Markdown, public HTML copy, status records, installer docs, package docs, subsystem landing pages, strategy records, and review packets.
 
 ## Purpose
 
 This guide keeps Latticra documentation consistent at the wording level.
 
-Use it with [`DOCUMENTATION_GLOSSARY.md`](DOCUMENTATION_GLOSSARY.md), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md), [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md), [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md), and [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md).
+Use it with [`DOCUMENTATION_GLOSSARY.md`](DOCUMENTATION_GLOSSARY.md), [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md), [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md), [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md), [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md), and [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md).
 
 This guide does not decide whether a claim is true. It decides how true claims should be written once the source records support them.
 
@@ -86,6 +86,10 @@ Scope: public documentation entry points and related records.
 ```
 
 Use concrete dates for review snapshots and status records. Use `CDT` for current local documentation timestamps when the record is tied to the project working context.
+
+Use [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) before changing status labels, `Last updated` dates, stale wording, superseded wording, archive wording, or lifecycle boundaries.
+
+Use [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) before changing status-record fields, status-index entries, public status mirrors, estimate records, or public-entry alignment status notes.
 
 Do not use vague status labels such as:
 

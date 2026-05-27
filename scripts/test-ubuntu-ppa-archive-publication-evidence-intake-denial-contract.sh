@@ -1,0 +1,187 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+require_file() {
+  file="$1"
+  if [ ! -f "$file" ]; then
+    printf 'ubuntu ppa/archive publication evidence intake denial contract: missing file: %s\n' "$file" >&2
+    exit 1
+  fi
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  if ! grep -Fq -- "$pattern" "$file"; then
+    printf 'ubuntu ppa/archive publication evidence intake denial contract: missing required pattern in %s: %s\n' "$file" "$pattern" >&2
+    exit 1
+  fi
+}
+
+require_no_ubuntu_artifacts() {
+  dir="$1"
+  if find "$dir" \( -name '*.deb' -o -name '*.dsc' -o -name '*.changes' -o -name '*.build' -o -name '*.buildinfo' \) -print | grep -q .; then
+    printf 'ubuntu ppa/archive publication evidence intake denial contract: unexpected Ubuntu package artifact under %s\n' "$dir" >&2
+    exit 1
+  fi
+}
+
+contract='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md'
+review_contract='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md'
+matrix_contract='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md'
+publication_gate='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md'
+static_validation='docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md'
+readiness='docs/UBUNTU_READINESS_PLAN.md'
+status='docs/status/UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md'
+workflow='.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-contract.yml'
+review_workflow='.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.yml'
+
+require_file "$contract"
+require_file "$review_contract"
+require_file "$matrix_contract"
+require_file "$publication_gate"
+require_file "$static_validation"
+require_file "$readiness"
+require_file "$status"
+require_file "$workflow"
+require_file "$review_workflow"
+require_file README.md
+require_file docs/QUICK_START_CHEATSHEET.md
+require_file packaging/ubuntu/README.md
+
+require_contains 'Status: no-effect publication evidence intake denial contract' "$contract"
+require_contains 'documentation-only and static' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_contract_present=1' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_review_contract_present=1' "$contract"
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' "$contract"
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' "$contract"
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_gate_state=closed-no-effect' "$contract"
+require_contains 'publication_evidence_denial_review_present=1' "$contract"
+require_contains 'publication_evidence_denial_review_decision=uphold-denial' "$contract"
+require_contains 'publication_evidence_denial_re_request_allowed=0' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_allowed=0' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_requested=0' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denied=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' "$contract"
+require_contains 'ubuntu_platform_publication_evidence_accepted=0' "$contract"
+require_contains 'publication_transcript_intake_accepted=0' "$contract"
+require_contains 'ppa_creation_evidence_accepted=0' "$contract"
+require_contains 'launchpad_publication_evidence_accepted=0' "$contract"
+require_contains 'ubuntu_archive_submission_evidence_accepted=0' "$contract"
+require_contains 'publication_result_evidence_accepted=0' "$contract"
+require_contains 'publication_result_promoted=0' "$contract"
+require_contains 'ubuntu_publication_result_promoted=0' "$contract"
+require_contains 'ubuntu_publication_ready=0' "$contract"
+require_contains 'package_readiness_claimed=0' "$contract"
+
+require_contains 'publication_evidence_denial_reason=publication-promotion-blocker-matrix-closed' "$contract"
+require_contains 'denial_review_required_before_re_request=1' "$contract"
+require_contains 'publication_evidence_denial_review_present=1' "$contract"
+require_contains 'publication_evidence_denial_review_decision=uphold-denial' "$contract"
+require_contains 'publication_evidence_denial_re_request_allowed=0' "$contract"
+require_contains 'publication_evidence_intake_request_identifier' "$contract"
+require_contains 'ubuntu_target_series' "$contract"
+require_contains 'requested_publication_evidence_kind' "$contract"
+require_contains 'requested_publication_action' "$contract"
+require_contains 'submitted_publication_transcript_reference' "$contract"
+require_contains 'publication_promotion_blocker_matrix_reference' "$contract"
+require_contains 'denial_decision' "$contract"
+require_contains 'denial_reason' "$contract"
+require_contains 'denial_reviewer' "$contract"
+
+require_contains 'ubuntu_publication_evidence_intake_denial_review_present=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' "$contract"
+require_contains 'ubuntu_publication_denial_re_request_allowed=0' "$contract"
+require_contains 'ubuntu_publication_transcript_intake_accepted=0' "$contract"
+require_contains 'ubuntu_ppa_creation_evidence_accepted=0' "$contract"
+require_contains 'ubuntu_launchpad_publication_evidence_accepted=0' "$contract"
+require_contains 'ubuntu_archive_submission_evidence_accepted=0' "$contract"
+require_contains 'ubuntu_publication_result_evidence_accepted=0' "$contract"
+require_contains 'debsign_run=0' "$contract"
+require_contains 'dput_run=0' "$contract"
+require_contains 'launchpad_upload_run=0' "$contract"
+require_contains 'ppa_created=0' "$contract"
+require_contains 'ppa_claimed=0' "$contract"
+require_contains 'ubuntu_archive_submission_claimed=0' "$contract"
+
+require_contains 'request publication evidence' "$contract"
+require_contains 'accept publication evidence' "$contract"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md' "$contract"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md' "$contract"
+require_contains 'scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh' "$contract"
+require_contains '.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.yml' "$contract"
+require_contains 'Add an Ubuntu publication evidence intake denial disposition contract' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract: ok' "$contract"
+
+require_contains "$contract" "$review_contract"
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' "$review_contract"
+require_contains 'publication_evidence_denial_review_decision=uphold-denial' "$review_contract"
+require_contains "$contract" "$matrix_contract"
+require_contains "$contract" "$publication_gate"
+require_contains "$contract" "$static_validation"
+require_contains "$contract" "$readiness"
+require_contains "$contract" "$status"
+require_contains "$contract" packaging/ubuntu/README.md
+require_contains "$contract" README.md
+require_contains "$review_contract" "$matrix_contract"
+require_contains "$review_contract" "$publication_gate"
+require_contains "$review_contract" "$static_validation"
+require_contains "$review_contract" "$readiness"
+require_contains "$review_contract" "$status"
+require_contains "$review_contract" packaging/ubuntu/README.md
+require_contains "$review_contract" README.md
+
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denial_contract_present=1' "$status"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denial_review_contract_present=1' "$status"
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' "$status"
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' "$status"
+require_contains 'publication_evidence_denial_re_request_allowed=0' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denied=1' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' "$status"
+require_contains 'ubuntu_publication_evidence_intake_allowed=0' "$status"
+require_contains 'ubuntu_publication_transcript_intake_accepted=0' "$status"
+require_contains 'ubuntu_ppa_creation_evidence_accepted=0' "$status"
+require_contains 'ubuntu_launchpad_publication_evidence_accepted=0' "$status"
+require_contains 'ubuntu_archive_submission_evidence_accepted=0' "$status"
+
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_review_contract_present=1' packaging/ubuntu/README.md
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' packaging/ubuntu/README.md
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' packaging/ubuntu/README.md
+require_contains 'publication_evidence_denial_re_request_allowed=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denied=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_allowed=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_transcript_intake_accepted=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_ppa_creation_evidence_accepted=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_launchpad_publication_evidence_accepted=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_archive_submission_evidence_accepted=0' packaging/ubuntu/README.md
+
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_contract_present=1' README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_review_contract_present=1' README.md
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' README.md
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' README.md
+require_contains 'publication_evidence_denial_re_request_allowed=0' README.md
+require_contains 'ubuntu_publication_evidence_intake_denied=1' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md' README.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'Ubuntu PPA Archive Publication Evidence Intake Denial Contract' "$workflow"
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-contract.sh' "$workflow"
+require_contains 'Ubuntu PPA Archive Publication Evidence Intake Denial Review Contract' "$review_workflow"
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh' "$review_workflow"
+
+require_no_ubuntu_artifacts packaging/ubuntu
+
+printf 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract: ok\n'

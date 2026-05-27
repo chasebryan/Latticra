@@ -65,7 +65,7 @@ require_contains 'docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md' docs/OPENSUSE_R
 require_contains 'docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 require_contains 'docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 require_contains 'scripts/test-opensuse-rpm-install-remove-transcript-contract.sh' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
-require_contains 'Add openSUSE RPM build-evidence intake denial review contract' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate contract' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 require_contains 'opensuse_rpmlint_findings_classification: ok' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
 
 require_contains 'docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md

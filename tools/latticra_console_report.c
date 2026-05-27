@@ -20,6 +20,8 @@ int main(int argc, char **argv) {
     char init_contract_report[LATTICRA_CONSOLE_INIT_CONTRACT_REPORT_MAX];
     char services_contract_report[LATTICRA_CONSOLE_SERVICES_CONTRACT_REPORT_MAX];
     char service_schema_contract_report[LATTICRA_CONSOLE_SERVICE_SCHEMA_CONTRACT_REPORT_MAX];
+    char service_definitions_contract_report[LATTICRA_CONSOLE_SERVICE_DEFINITIONS_CONTRACT_REPORT_MAX];
+    char service_plan_contract_report[LATTICRA_CONSOLE_SERVICE_PLAN_CONTRACT_REPORT_MAX];
     char host_contract_report[LATTICRA_CONSOLE_HOST_CONTRACT_REPORT_MAX];
     char host_inventory_report[LATTICRA_CONSOLE_HOST_INVENTORY_REPORT_MAX];
     char host_adapter_report[LATTICRA_CONSOLE_HOST_ADAPTER_REPORT_MAX];
@@ -36,7 +38,7 @@ int main(int argc, char **argv) {
     char vm_evidence_report[LATTICRA_CONSOLE_VM_EVIDENCE_REPORT_MAX];
 
     if (argc > 2) {
-        fputs("usage: latticra_console_report [report|registry|help|man|boundary|standalone|session|workspace|namespace|rootfs|packages|init|services|service-schema|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
+        fputs("usage: latticra_console_report [report|registry|help|man|boundary|standalone|session|workspace|namespace|rootfs|packages|init|services|service-schema|service-definitions|service-plan|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
         return 64;
     }
 
@@ -212,6 +214,36 @@ int main(int argc, char **argv) {
             return 1;
         }
         fputs(service_schema_contract_report, stdout);
+        return 0;
+    }
+
+    if (argc == 2 &&
+        (strcmp(argv[1], "service-definitions") == 0 ||
+         strcmp(argv[1], "service-definitions-contract") == 0 ||
+         strcmp(argv[1], "service-definition-stubs") == 0 ||
+         strcmp(argv[1], "lc-service-definitions") == 0)) {
+        if (latticra_console_service_definitions_contract_report(
+                service_definitions_contract_report,
+                sizeof(service_definitions_contract_report)) != LATTICRA_STATUS_OK) {
+            fputs("latticra_console_report: service definitions contract report render failed\n", stderr);
+            return 1;
+        }
+        fputs(service_definitions_contract_report, stdout);
+        return 0;
+    }
+
+    if (argc == 2 &&
+        (strcmp(argv[1], "service-plan") == 0 ||
+         strcmp(argv[1], "service-plan-contract") == 0 ||
+         strcmp(argv[1], "service-activation-plan") == 0 ||
+         strcmp(argv[1], "lc-service-plan") == 0)) {
+        if (latticra_console_service_plan_contract_report(
+                service_plan_contract_report,
+                sizeof(service_plan_contract_report)) != LATTICRA_STATUS_OK) {
+            fputs("latticra_console_report: service plan contract report render failed\n", stderr);
+            return 1;
+        }
+        fputs(service_plan_contract_report, stdout);
         return 0;
     }
 
@@ -392,7 +424,7 @@ int main(int argc, char **argv) {
     }
 
     if (argc == 2 && strcmp(argv[1], "report") != 0) {
-        fputs("usage: latticra_console_report [report|registry|help|man|boundary|standalone|session|workspace|namespace|rootfs|packages|init|services|service-schema|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
+        fputs("usage: latticra_console_report [report|registry|help|man|boundary|standalone|session|workspace|namespace|rootfs|packages|init|services|service-schema|service-definitions|service-plan|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
         return 64;
     }
 
@@ -516,6 +548,26 @@ int main(int argc, char **argv) {
     }
 
     fputs(service_schema_contract_report, stdout);
+    fputc('\n', stdout);
+
+    if (latticra_console_service_definitions_contract_report(
+            service_definitions_contract_report,
+            sizeof(service_definitions_contract_report)) != LATTICRA_STATUS_OK) {
+        fputs("latticra_console_report: service definitions contract report render failed\n", stderr);
+        return 1;
+    }
+
+    fputs(service_definitions_contract_report, stdout);
+    fputc('\n', stdout);
+
+    if (latticra_console_service_plan_contract_report(
+            service_plan_contract_report,
+            sizeof(service_plan_contract_report)) != LATTICRA_STATUS_OK) {
+        fputs("latticra_console_report: service plan contract report render failed\n", stderr);
+        return 1;
+    }
+
+    fputs(service_plan_contract_report, stdout);
     fputc('\n', stdout);
 
     if (latticra_console_host_contract_report(host_contract_report, sizeof(host_contract_report)) != LATTICRA_STATUS_OK) {

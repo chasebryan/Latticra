@@ -18,6 +18,14 @@ os_image_artifact_manifest_validation_present=1
 os_image_artifact_manifest_candidate_present=0
 os_image_build_preflight_present=1
 os_image_build_execution_allowed=0
+os_image_input_bundle_manifest_generator_present=1
+boot_seed_contract_present=1
+boot_seed_source_present=1
+boot_seed_build_script_present=1
+boot_seed_qemu_smoke_script_present=1
+boot_seed_vm_image_build_script_present=1
+boot_seed_vm_qcow2_artifact_present=0
+boot_seed_full_os_ready=0
 os_image_toolchain_preflight_present=1
 os_image_toolchain_ready=0
 usb_write_command_template_present=1
@@ -128,6 +136,22 @@ Preflight the future local image build inputs:
 ```sh
 sh scripts/latticra-os-image-toolchain-preflight.sh
 sh scripts/latticra-os-image-build-preflight.sh
+```
+
+Build and smoke-test the minimal boot seed:
+
+```sh
+sh scripts/latticra-boot-seed-build.sh --output-dir build/boot-seed
+sh scripts/latticra-boot-seed-qemu-smoke.sh --iso build/boot-seed/latticra-boot-seed.iso --output-dir build/boot-seed/qemu-smoke
+sh scripts/latticra-boot-seed-vm-image-build.sh --kernel build/boot-seed/latticra-boot-seed.elf --output-dir build/boot-seed
+sh scripts/latticra-boot-seed-qemu-smoke.sh --disk-image build/boot-seed/latticra-boot-seed.qcow2 --format qcow2 --output-dir build/boot-seed/vm-qemu-smoke
+```
+
+Generate the future input bundle manifest from already-built kernel, initramfs,
+and rootfs files:
+
+```sh
+sh scripts/latticra-os-image-input-bundle-from-files.sh --kernel build/os-image/kernel --initramfs build/os-image/initramfs.img --rootfs build/os-image/rootfs.tar --operator-recovery-path docs/recovery.md
 ```
 
 Generate the artifact manifest template:
@@ -282,6 +306,14 @@ os_image_artifact_manifest_validation_present=1
 os_image_artifact_manifest_candidate_present=0
 os_image_build_preflight_present=1
 os_image_build_execution_allowed=0
+os_image_input_bundle_manifest_generator_present=1
+boot_seed_contract_present=1
+boot_seed_source_present=1
+boot_seed_build_script_present=1
+boot_seed_qemu_smoke_script_present=1
+boot_seed_vm_image_build_script_present=1
+boot_seed_vm_qcow2_artifact_present=0
+boot_seed_full_os_ready=0
 os_image_toolchain_preflight_present=1
 os_image_toolchain_ready=0
 vm_image_artifact_present=0

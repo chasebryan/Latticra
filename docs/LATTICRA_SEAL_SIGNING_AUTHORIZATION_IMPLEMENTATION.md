@@ -1,13 +1,15 @@
 # Latticra Seal Signing Authorization Implementation
 
-Status: initial signing authorization metadata implementation
-Scope: bounded C metadata surface for classifying Seal signing authorization after ready signature request metadata. This slice does not add signing, signature verification, key generation, private-key handling, trust-store loading, revocation lookup, runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, object sealing, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
+Status: signing authorization metadata implementation with crypto graduation evidence carry-forward
+Scope: bounded C metadata surface for classifying Seal signing authorization after ready signature request metadata, including read-only crypto graduation evidence when the signature request carries it. This slice does not add signing, signature verification, key generation, private-key handling, trust-store loading, revocation lookup, runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, object sealing, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
 
 ## Purpose
 
 This document records the first Latticra Seal signing authorization metadata implementation.
 
 The implementation consumes ready signature request metadata and classifies whether the request remains eligible for a future metadata-only signing path.
+
+When signature request metadata carries crypto graduation metadata, the signing authorization copies that evidence forward and requires it to remain passed, standard-aligned, locally graduated, receipt-promotion graduated, and authority-neutral.
 
 It is signing-path classification only.
 
@@ -58,6 +60,13 @@ The implementation:
 accepts signature request metadata
 requires signature_request_ready=1
 requires signature_request_state=requested-metadata-only
+copies crypto graduation gate metadata when present
+requires crypto_graduation_gate_passed=1 when crypto_graduation_gate_present=1
+requires standard_expectations_met=1 when crypto_graduation_gate_present=1
+requires local_verify_graduated=1 when crypto_graduation_gate_present=1
+requires receipt_promotion_graduated=1 when crypto_graduation_gate_present=1
+requires authority_promotion_allowed=0 when crypto_graduation_gate_present=1
+requires crypto_graduation_gate_state=graduated-authority-neutral when crypto_graduation_gate_present=1
 requires requested_signature=Ed25519-development
 accepts requested_signing_authorization=metadata-only
 classifies the result as signing_authorization_state=authorized-metadata-only
@@ -100,6 +109,26 @@ mode=metadata-only
 status=signing-authorization-metadata
 ```
 
+Crypto-bound signing authorization metadata records:
+
+```text
+crypto_graduation_profile=latticra-seal-crypto-graduation-gate/0.1
+assurance_baseline_profile=latticra-cryptographic-assurance-key-management/0.1
+crypto_graduation_gate_state=graduated-authority-neutral
+crypto_graduation_gate_present=1
+crypto_graduation_gate_passed=1
+standard_expectations_met=1
+local_verify_graduated=1
+receipt_promotion_graduated=1
+authority_promotion_allowed=0
+signing_authorization_state=authorized-metadata-only
+signing_authorization_ready=1
+signature_performed=0
+verification_performed=0
+private_key_handling=0
+runtime_authority_granted=0
+```
+
 ## Failure behavior
 
 The implementation fails closed for:
@@ -108,6 +137,8 @@ The implementation fails closed for:
 null output
 null signature request
 invalid signature request
+failed crypto graduation gate evidence
+authority-bearing crypto graduation evidence
 signature_request_ready=0
 signature_request_state not requested-metadata-only
 missing requested signature
@@ -146,6 +177,6 @@ seal signing authorization invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is bounded no-effect key parsing implementation or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
+The next valid Latticra Seal planning slice is signer invocation or policy decision report propagation from ready crypto-graduation-gated signer handoff metadata, bounded no-effect key parsing implementation, or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
 
 That future slice must not add private-key handling, signing, verification, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately contracted, implemented, and guarded.

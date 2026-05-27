@@ -1,0 +1,217 @@
+# Ubuntu PPA Archive Publication Evidence Intake Denial Contract
+
+Status: no-effect publication evidence intake denial contract
+Scope: define denial of Ubuntu PPA/archive publication evidence intake while the publication promotion blocker matrix is closed.
+
+## Purpose
+
+This contract records how Ubuntu PPA/archive publication evidence must be refused until the publication promotion blocker matrix opens.
+
+The goal is narrow: no PPA creation, archive submission, Launchpad publication evidence, publication transcript, publication result, or publication readiness evidence may be requested or accepted while the matrix remains blocked.
+
+This contract is documentation-only and static. It does not run `dpkg-buildpackage`, `debuild`, `lintian`, `sbuild`, `pbuilder`, `debsign`, `dput`, or Launchpad commands. It does not request publication evidence, accept publication evidence, create package artifacts, upload to Launchpad, create a PPA, submit to Ubuntu, publish packages, promote publication results, or claim package readiness.
+
+## Current Intake Denial State
+
+```text
+ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1
+ubuntu_publication_evidence_intake_denial_contract_present=1
+ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1
+ubuntu_publication_evidence_intake_denial_review_contract_present=1
+publication_evidence_intake_denial_state=denied-no-effect
+publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+publication_promotion_blocker_matrix_state=blocked-no-effect
+ubuntu_ppa_archive_publication_gate_state=closed-no-effect
+publication_evidence_denial_review_present=1
+publication_evidence_denial_review_decision=uphold-denial
+publication_evidence_denial_re_request_allowed=0
+ubuntu_publication_evidence_intake_allowed=0
+ubuntu_publication_evidence_intake_requested=0
+ubuntu_publication_evidence_intake_denied=1
+ubuntu_publication_evidence_intake_denial_upheld=1
+ubuntu_platform_publication_evidence_accepted=0
+publication_transcript_intake_accepted=0
+ppa_creation_evidence_accepted=0
+launchpad_publication_evidence_accepted=0
+ubuntu_archive_submission_evidence_accepted=0
+publication_result_evidence_accepted=0
+publication_result_promoted=0
+ubuntu_publication_result_promoted=0
+ubuntu_publication_ready=0
+package_readiness_claimed=0
+production_installer_ready=0
+root_installer_ready=0
+```
+
+## Denial Reason Matrix
+
+Current publication-evidence intake denial is required because:
+
+```text
+publication_evidence_denial_reason=publication-promotion-blocker-matrix-closed
+notice_license_column_state=blocked
+lintian_static_metadata_column_state=blocked
+local_build_column_state=blocked
+install_remove_column_state=blocked
+source_package_column_state=blocked
+upload_signing_column_state=blocked
+launchpad_build_result_column_state=blocked
+publication_non_claim_column_state=specified
+promotion_column_state=blocked
+denial_review_required_before_re_request=1
+publication_evidence_denial_review_present=1
+publication_evidence_denial_review_decision=uphold-denial
+publication_evidence_denial_re_request_allowed=0
+```
+
+A future publication-evidence intake request must record:
+
+```text
+publication_evidence_intake_request_identifier
+ubuntu_target_series
+requested_publication_evidence_kind
+requested_publication_action
+submitted_publication_transcript_reference
+source_package_digest
+dsc_digest
+changes_file_digest
+launchpad_upload_url
+launchpad_build_result_reference
+operator_authorization_reference
+publication_promotion_blocker_matrix_reference
+denial_decision
+denial_reason
+denial_reviewer
+status_page_update_reference
+```
+
+The only current decision allowed by this contract is denial.
+
+## Ubuntu Intake Denial
+
+Current Ubuntu PPA/archive publication evidence intake remains denied:
+
+```text
+ubuntu_publication_evidence_intake_allowed=0
+ubuntu_publication_evidence_intake_requested=0
+ubuntu_publication_evidence_intake_denied=1
+ubuntu_publication_evidence_intake_denial_review_present=1
+ubuntu_publication_evidence_intake_denial_upheld=1
+ubuntu_publication_denial_re_request_allowed=0
+ubuntu_platform_publication_evidence_accepted=0
+ubuntu_publication_transcript_intake_accepted=0
+ubuntu_ppa_creation_evidence_accepted=0
+ubuntu_launchpad_publication_evidence_accepted=0
+ubuntu_archive_submission_evidence_accepted=0
+ubuntu_publication_result_evidence_accepted=0
+debsign_run=0
+dput_run=0
+launchpad_upload_run=0
+ppa_created=0
+ppa_claimed=0
+ubuntu_archive_submission_claimed=0
+ubuntu_publication_result_promoted=0
+ubuntu_publication_ready=0
+```
+
+Ubuntu PPA creation, archive submission, Launchpad publication, publication transcript, publication result, and package readiness evidence may not be requested, received, accepted, summarized as successful, or used to open Ubuntu publication promotion while the blocker matrix is closed.
+
+## Current Blockers
+
+Publication-evidence intake remains denied under this blocker state:
+
+```text
+publication_promotion_blocker_matrix_state=blocked-no-effect
+package_notice_promotion_gate_unblocked=0
+package_license_promotion_gate_unblocked=0
+ubuntu_lintian_static_metadata_unblocked=0
+local_deb_build_transcript_accepted=0
+ubuntu_install_remove_evidence_unblocked=0
+ubuntu_source_package_evidence_unblocked=0
+ubuntu_upload_signing_authority_evidence_unblocked=0
+ubuntu_launchpad_build_result_evidence_unblocked=0
+ubuntu_publication_non_claim_review_unblocked=0
+ubuntu_platform_publication_evidence_accepted=0
+ubuntu_publication_result_promoted=0
+```
+
+## Command Boundary
+
+This contract does not:
+
+```text
+run dpkg-buildpackage
+run debuild
+run lintian
+run sbuild
+run pbuilder
+run debsign
+run dput
+run Launchpad commands
+request publication evidence
+accept publication evidence
+create deb artifacts
+create source package artifacts
+upload packages
+create a PPA
+submit to Ubuntu
+publish packages
+promote publication results
+claim package readiness
+```
+
+## Relationship To Existing Lanes
+
+This contract depends on:
+
+```text
+docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
+docs/UBUNTU_PACKAGE_LICENSE_PROMOTION_GATE_CONTRACT.md
+docs/UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md
+docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md
+docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
+docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md
+docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md
+docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md
+docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md
+```
+
+The Ubuntu PPA/archive publication gate remains closed. This intake denial contract only records that publication evidence cannot be requested or accepted until the publication promotion blocker matrix opens in a future lane.
+
+## Completed Follow-On Slice
+
+Publication evidence intake denial review is now recorded by:
+
+```text
+docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
+scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh
+.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.yml
+```
+
+That follow-on lane reviews and upholds the denied publication-evidence intake state while keeping PPA/archive publication evidence re-requests blocked.
+
+## Next Slice
+
+Recommended next slice:
+
+```text
+Add an Ubuntu publication evidence intake denial disposition contract before any reviewed denial can be closed or re-requested.
+```
+
+That future lane should close the upheld denial without accepting Ubuntu publication evidence or opening PPA/archive publication promotion.
+
+## Validation
+
+Run:
+
+```sh
+sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-contract.sh
+```
+
+Expected output:
+
+```text
+ubuntu_ppa_archive_publication_evidence_intake_denial_contract: ok
+```

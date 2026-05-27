@@ -17,8 +17,9 @@ static int default_request_is_denied(void) {
 
     EXPECT_TRUE(latticra_kernel_lifecycle_default_request(&request) == LATTICRA_STATUS_OK,
         "default request status");
-    EXPECT_TRUE(request.target_state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY,
-        "default target runtime-entry-frame-ready");
+    EXPECT_TRUE(request.target_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY,
+        "default target runtime-entry-address-space-view-ready");
     EXPECT_TRUE(request.gate == LATTICRA_KERNEL_STATE_GATE_DENY,
         "default gate deny");
     EXPECT_TRUE(request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
@@ -45,7 +46,8 @@ static int default_request_is_denied(void) {
     return 0;
 }
 
-static int allowed_lifecycle_reaches_runtime_entry_frame_ready(void) {
+static int allowed_lifecycle_reaches_runtime_entry_address_space_view_ready(
+    void) {
     latticra_kernel_lifecycle_request_t request;
     latticra_kernel_lifecycle_result_t result;
 
@@ -59,12 +61,13 @@ static int allowed_lifecycle_reaches_runtime_entry_frame_ready(void) {
         "lifecycle complete");
     EXPECT_TRUE(strcmp(result.policy_status, "gate-allowed") == 0,
         "policy gate allowed");
-    EXPECT_TRUE(result.final_state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY,
-        "final state runtime-entry-frame-ready");
-    EXPECT_TRUE(result.step_count == 25u,
-        "twenty five steps to runtime-entry-frame-ready");
-    EXPECT_TRUE(result.state_change_count == 25u,
-        "twenty five state changes");
+    EXPECT_TRUE(result.final_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY,
+        "final state runtime-entry-address-space-view-ready");
+    EXPECT_TRUE(result.step_count == 28u,
+        "twenty eight steps to runtime-entry-address-space-view-ready");
+    EXPECT_TRUE(result.state_change_count == 28u,
+        "twenty eight state changes");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "complete flag set");
     EXPECT_TRUE(result.external_effect_performed == 0,
@@ -73,8 +76,8 @@ static int allowed_lifecycle_reaches_runtime_entry_frame_ready(void) {
         "lifecycle network denied");
     EXPECT_TRUE(result.machine.network_allowed == 0,
         "machine network denied");
-    EXPECT_TRUE(result.machine.log_count == 25u,
-        "machine log has twenty five entries");
+    EXPECT_TRUE(result.machine.log_count == 28u,
+        "machine log has twenty eight entries");
     EXPECT_TRUE(result.machine.log[0].from_state == LATTICRA_KERNEL_STATE_CREATED,
         "log zero from created");
     EXPECT_TRUE(result.machine.log[0].to_state == LATTICRA_KERNEL_STATE_INITIALIZED,
@@ -150,6 +153,24 @@ static int allowed_lifecycle_reaches_runtime_entry_frame_ready(void) {
     EXPECT_TRUE(result.machine.log[24].to_state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY,
         "log twenty four to runtime-entry-frame-ready");
     EXPECT_TRUE(result.machine.log[24].state_change_performed == 1,
+        "runtime entry frame step changed state");
+    EXPECT_TRUE(result.machine.log[25].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY,
+        "log twenty five to runtime-entry-register-view-ready");
+    EXPECT_TRUE(result.machine.log[25].state_change_performed == 1,
+        "runtime entry register view step changed state");
+    EXPECT_TRUE(result.machine.log[26].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY,
+        "log twenty six to runtime-entry-stack-view-ready");
+    EXPECT_TRUE(result.machine.log[26].state_change_performed == 1,
+        "runtime entry stack view step changed state");
+    EXPECT_TRUE(result.machine.log[27].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY,
+        "log twenty seven from runtime-entry-stack-view-ready");
+    EXPECT_TRUE(result.machine.log[27].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY,
+        "log twenty seven to runtime-entry-address-space-view-ready");
+    EXPECT_TRUE(result.machine.log[27].state_change_performed == 1,
         "last step changed state");
     return 0;
 }
@@ -258,11 +279,12 @@ static int lifecycle_report_is_deterministic(void) {
         "lifecycle status emitted");
     EXPECT_TRUE(strstr(report, "policy_status=gate-allowed\n") != 0,
         "policy status emitted");
-    EXPECT_TRUE(strstr(report, "final_state=runtime-entry-frame-ready\n") != 0,
+    EXPECT_TRUE(strstr(report,
+            "final_state=runtime-entry-address-space-view-ready\n") != 0,
         "final state emitted");
-    EXPECT_TRUE(strstr(report, "step_count=25\n") != 0,
+    EXPECT_TRUE(strstr(report, "step_count=28\n") != 0,
         "step count emitted");
-    EXPECT_TRUE(strstr(report, "state_change_count=25\n") != 0,
+    EXPECT_TRUE(strstr(report, "state_change_count=28\n") != 0,
         "state change count emitted");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "complete flag emitted");
@@ -272,7 +294,7 @@ static int lifecycle_report_is_deterministic(void) {
         "network flag emitted");
     EXPECT_TRUE(strstr(report, "machine_network_allowed=0\n") != 0,
         "machine network flag emitted");
-    EXPECT_TRUE(strstr(report, "machine_log_count=25\n") != 0,
+    EXPECT_TRUE(strstr(report, "machine_log_count=28\n") != 0,
         "machine log count emitted");
     EXPECT_TRUE(strstr(report, "log[0].from=created\n") != 0,
         "log zero from emitted");
@@ -345,8 +367,24 @@ static int lifecycle_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "log[23].state_change_performed=1\n") != 0,
         "log runtime admission change emitted");
     EXPECT_TRUE(strstr(report, "log[24].to=runtime-entry-frame-ready\n") != 0,
-        "log final to emitted");
+        "log runtime frame to emitted");
     EXPECT_TRUE(strstr(report, "log[24].state_change_performed=1\n") != 0,
+        "log runtime frame change emitted");
+    EXPECT_TRUE(strstr(report, "log[25].to=runtime-entry-register-view-ready\n") != 0,
+        "log register view to emitted");
+    EXPECT_TRUE(strstr(report, "log[25].state_change_performed=1\n") != 0,
+        "log register view change emitted");
+    EXPECT_TRUE(strstr(report, "log[26].to=runtime-entry-stack-view-ready\n") != 0,
+        "log stack view to emitted");
+    EXPECT_TRUE(strstr(report, "log[26].state_change_performed=1\n") != 0,
+        "log stack view change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[27].from=runtime-entry-stack-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[27].to=runtime-entry-address-space-view-ready\n") != 0,
+        "log final to emitted");
+    EXPECT_TRUE(strstr(report, "log[27].state_change_performed=1\n") != 0,
         "log final change emitted");
     return 0;
 }
@@ -372,7 +410,10 @@ static int null_guards_are_safe(void) {
 
 int main(void) {
     if (default_request_is_denied() != 0) return 1;
-    if (allowed_lifecycle_reaches_runtime_entry_frame_ready() != 0) return 1;
+    if (allowed_lifecycle_reaches_runtime_entry_address_space_view_ready()
+            != 0) {
+        return 1;
+    }
     if (lifecycle_can_stop_at_intermediate_target() != 0) return 1;
     if (lifecycle_can_stop_at_process_table_ready() != 0) return 1;
     if (lifecycle_respects_step_limit() != 0) return 1;

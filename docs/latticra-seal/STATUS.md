@@ -1,6 +1,6 @@
 # Latticra Seal Status
 
-Status: early evidence-bound verification layer  
+Status: early evidence-bound verification layer
 Scope: local report-only verification, manifest/hash baseline, policy regression, and Panel integration planning.
 
 ## Current classification
@@ -31,6 +31,9 @@ Known current evidence includes:
 - operator-visible local capability registry schema report surface and status checkpoint
 - Panel-visible Seal dashboard planning checkpoint before any Panel UI or view-model implementation
 - Seal Panel dashboard view-model contract before any view-model implementation, report loading, or Panel UI rendering
+- Seal Panel dashboard view-model implementation plan before any C implementation, report parsing, report loading, host scanning, or Panel UI rendering
+- bounded no-effect Seal Panel dashboard view-model implementation with caller-provided report strings only
+- Seal Panel dashboard view-model report surface/status checkpoint with deterministic local fixture output only
 
 ## Current authority limits
 
@@ -65,6 +68,11 @@ panel_dashboard_planning_checkpoint_present=1
 panel_dashboard_planning_status_present=1
 panel_dashboard_view_model_contract_present=1
 panel_dashboard_view_model_contract_status_present=1
+panel_dashboard_view_model_implementation_plan_present=1
+panel_dashboard_view_model_implementation_plan_status_present=1
+panel_dashboard_view_model_implementation_present=1
+panel_dashboard_view_model_surface_present=1
+panel_dashboard_view_model_status_present=1
 panel_bridge_planning=1
 runtime_enforcement=0
 network_operation=0

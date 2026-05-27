@@ -22,6 +22,7 @@ os_image_input_source_manifest_validation_present=1
 os_image_input_source_manifest_candidate_present=0
 os_image_input_source_ready_for_input_bundle=0
 os_image_input_bundle_manifest_template_present=1
+os_image_input_bundle_manifest_generator_present=1
 os_image_input_bundle_manifest_validation_present=1
 os_image_input_bundle_manifest_candidate_present=0
 os_image_input_bundle_ready_for_build_preflight=0
@@ -125,6 +126,17 @@ bootable_os_ready=0
 production_os_claim=0
 ```
 
+For existing kernel/initramfs/rootfs files, the generator prints the same
+manifest shape with measured checksums:
+
+```sh
+sh scripts/latticra-os-image-input-bundle-from-files.sh --kernel build/os-image/kernel --initramfs build/os-image/initramfs.img --rootfs build/os-image/rootfs.tar --operator-recovery-path docs/recovery.md > build/os-image/input-bundle.txt
+```
+
+The generator reads supplied files and prints metadata only. It does not create
+inputs, write manifests by itself, build images, invoke GRUB, run qemu-img, run
+QEMU, write USB media, or mutate the host.
+
 The validator may prove path and checksum consistency, but it must preserve:
 
 ```text
@@ -143,11 +155,15 @@ The preflight reports local visibility for:
 ```text
 qemu-img
 xorriso
-grub-mkrescue
+grub-mkrescue compatible binary
 tar
 gzip
 sha256sum or shasum
 ```
+
+The compatible GRUB rescue binary may resolve to `grub-mkrescue` or
+`x86_64-elf-grub-mkrescue`, and the preflight reports the selected path as
+`grub_mkrescue_path=<path-or-missing>`.
 
 Missing tools must block the build recipe from being marked ready.
 
@@ -174,6 +190,12 @@ sh scripts/latticra-os-image-input-source-validate.sh
 sh scripts/latticra-os-image-input-source-validate.sh --source-manifest build/os-image/input-source-map.txt
 ```
 
+Generate a checksum bundle manifest from already-built inputs:
+
+```sh
+sh scripts/latticra-os-image-input-bundle-from-files.sh --kernel build/os-image/kernel --initramfs build/os-image/initramfs.img --rootfs build/os-image/rootfs.tar --operator-recovery-path docs/recovery.md
+```
+
 Validate the current fixture or a future input bundle manifest:
 
 ```sh
@@ -190,7 +212,7 @@ sh scripts/latticra-os-image-build-preflight.sh --kernel build/os-image/kernel -
 The preflight prints future command shapes, including:
 
 ```text
-future_iso_build_command=grub-mkrescue ...
+future_iso_build_command=<grub-mkrescue-compatible-binary> ...
 future_vm_image_create_command=qemu-img create ...
 future_input_bundle_validation_command=sh scripts/latticra-os-image-input-bundle-validate.sh ...
 future_input_source_validation_command=sh scripts/latticra-os-image-input-source-validate.sh ...
@@ -248,6 +270,7 @@ sh scripts/test-latticra-os-image-build-preflight.sh
 sh scripts/test-latticra-os-image-input-source-template.sh
 sh scripts/test-latticra-os-image-input-source-validate.sh
 sh scripts/test-latticra-os-image-input-bundle-template.sh
+sh scripts/test-latticra-os-image-input-bundle-from-files.sh
 sh scripts/test-latticra-os-image-input-bundle-validate.sh
 ```
 

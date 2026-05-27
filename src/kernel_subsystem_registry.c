@@ -69,7 +69,7 @@ static void fill_entry(
     registry_copy(entry->status, sizeof(entry->status), status);
     registry_copy(entry->effect_boundary, sizeof(entry->effect_boundary), "no-effect");
     entry->network_allowed = network_allowed;
-    entry->no_effect = 1;
+    entry->no_effect = network_allowed == 0;
     entry->active = 0;
     entry->evidence_level = evidence_level;
 }
@@ -123,7 +123,7 @@ latticra_status_t latticra_kernel_subsystem_registry_evaluate(
     fill_entries(result);
 
     result->network_allowed = result->kernel.network_allowed;
-    result->no_effect = result->kernel.no_effect;
+    result->no_effect = result->kernel.no_effect && result->network_allowed == 0;
     registry_copy(result->registry_status, sizeof(result->registry_status),
         result->no_effect ? "registry-ready" : "registry-blocked");
     return result->status;

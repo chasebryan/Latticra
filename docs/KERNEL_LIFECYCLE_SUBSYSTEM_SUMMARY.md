@@ -1,26 +1,31 @@
 # Kernel Lifecycle Subsystem Summary
 
-Status: controlled lifecycle-to-subsystem summary
-Scope: report-only integration between the kernel lifecycle runner and the kernel subsystem registry.
+Status: controlled lifecycle-to-subsystem summary with nucleus-first coupling
+Scope: report-only integration between the kernel lifecycle runner, kernel subsystem registry, and nucleus-kernel coupling gate.
 
 ## Purpose
 
-This slice connects two existing kernel evidence surfaces:
+This slice connects three existing evidence surfaces:
 
 ```text
 kernel lifecycle runner
 kernel subsystem registry
+nucleus-kernel coupling gate
 ```
 
-The lifecycle runner can move a local in-memory kernel state machine from `created` to `runtime-entry-frame-ready` through gated internal state changes.
+The lifecycle runner can move a local in-memory kernel state machine from `created` to `runtime-entry-address-space-view-ready` through gated internal state changes.
 
 The subsystem registry exposes boot, runtime, scheduler, memory, process, filesystem, network, device, and security subsystem posture.
+
+The nucleus-kernel coupling gate requires a no-effect nucleus task plan before
+the summary may claim OS-readiness metadata.
 
 The summary combines those surfaces into one deterministic report so the project can answer:
 
 ```text
 Which kernel subsystems are lifecycle-ready?
 Which subsystems still deny authority?
+Did the nucleus approve only no-effect coupling evidence?
 Did the lifecycle stay externally inert?
 Is the registry still no-effect?
 ```
@@ -43,19 +48,23 @@ docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
 The default summary request allows the lifecycle runner to reach:
 
 ```text
-runtime-entry-frame-ready
+runtime-entry-address-space-view-ready
 ```
 
 That produces:
 
 ```text
 summary_status=summary-ready
-final_state=runtime-entry-frame-ready
+final_state=runtime-entry-address-space-view-ready
 lifecycle_complete=1
-lifecycle_step_count=25
-lifecycle_state_change_count=25
+lifecycle_step_count=28
+lifecycle_state_change_count=28
 external_effect_performed=0
 registry_no_effect=1
+nucleus_coupling_status=nucleus-kernel-coupling-ready
+os_readiness_status=os-metadata-ready
+nucleus_coupling_ready=1
+nucleus_no_effect_chain_ok=1
 no_external_effect_chain=1
 ```
 
@@ -66,7 +75,7 @@ Expected readiness examples:
 ```text
 boot -> boot-sequence-seeded
 scheduler -> scheduler-run-entry-ready
-runtime -> runtime-entry-frame-ready
+runtime -> runtime-entry-address-space-view-ready
 memory -> memory-map-ready
 process -> ipc-table-ready
 filesystem -> vfs-namespace-ready
@@ -78,6 +87,9 @@ security -> security-not-production-boundary
 Authority remains denied:
 
 ```text
+runtime_entry_address_space_view_allowed=0
+runtime_entry_stack_view_allowed=0
+runtime_entry_register_view_allowed=0
 runtime_entry_frame_allowed=0
 runtime_entry_admission_allowed=0
 runtime_entry_allowed=0
@@ -130,6 +142,13 @@ scheduler_credit_update_allowed=0
 process_wake_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0
+nucleus_boot_allowed=0
+nucleus_runtime_entry_allowed=0
+nucleus_scheduler_run_entry_allowed=0
+nucleus_context_switch_allowed=0
+nucleus_register_save_allowed=0
+nucleus_register_restore_allowed=0
+nucleus_host_effect_allowed=0
 ```
 
 Subsystem authority labels include:
@@ -161,7 +180,9 @@ external_effect_performed=0
 no_external_effect_chain=1
 ```
 
-This is a summary/reporting slice only. It does not expand kernel authority or claim product readiness.
+This is a summary/reporting slice only. It does not expand kernel authority,
+enter runtime, perform a context switch, save or restore registers, or claim
+product readiness.
 
 ## Validation
 
@@ -182,11 +203,13 @@ kernel_lifecycle_subsystem_summary_report_runner: ok
 The guards verify:
 
 ```text
-default request targets runtime-entry-frame-ready
-summary reaches runtime-entry-frame-ready
+default request targets runtime-entry-address-space-view-ready
+summary reaches runtime-entry-address-space-view-ready
 summary marks boot/scheduler/memory/process/filesystem as lifecycle-ready metadata
-runtime frame metadata is ready while runtime remains not entered
-runtime entry frame, admission, and runtime entry remain denied
+runtime address-space-view metadata is ready while runtime remains not entered
+runtime entry address-space view, stack view, register view, frame, admission, and runtime entry remain denied
+nucleus-kernel coupling reports os-metadata-ready only with no-effect evidence
+nucleus boot, runtime entry, scheduler run entry, context switch, register save, register restore, and host effect remain denied
 scheduler execution remains denied
 memory allocation remains denied
 process spawn remains denied

@@ -13,6 +13,7 @@ cc $CFLAGS \
   src/state_lattice.c \
   src/nucleus_preview.c \
   src/nucleus_task.c \
+  src/nucleus_task_plan.c \
   src/lat_parser.c \
   src/runtime_boundary.c \
   src/system_bootstrap.c \
@@ -41,6 +42,10 @@ cc $CFLAGS \
   src/kernel_scheduler_run_entry.c \
   src/kernel_runtime_entry_admission.c \
   src/kernel_runtime_entry_frame.c \
+  src/kernel_runtime_entry_register_view.c \
+  src/kernel_runtime_entry_stack_view.c \
+  src/kernel_runtime_entry_address_space_view.c \
+  src/nucleus_kernel_coupling.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \

@@ -28,6 +28,7 @@ require_no_rpm_artifacts() {
 }
 
 contract='docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md'
+review_contract='docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md'
 matrix_contract='docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md'
 obs_contract='docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md'
 install_remove_contract='docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md'
@@ -37,6 +38,7 @@ environment_contract='docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md'
 gate_contract='docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md'
 
 require_file "$contract"
+require_file "$review_contract"
 require_file "$matrix_contract"
 require_file "$obs_contract"
 require_file "$install_remove_contract"
@@ -122,9 +124,10 @@ require_contains 'opensuse_obs_publication_claimed=0' "$contract"
 require_contains 'request build evidence' "$contract"
 require_contains 'accept build evidence' "$contract"
 require_contains 'docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md' "$contract"
-require_contains 'Add openSUSE RPM build-evidence intake denial review contract' "$contract"
+require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate contract' "$contract"
 require_contains 'opensuse_rpm_build_evidence_intake_denial_contract: ok' "$contract"
 
+require_contains "$review_contract" "$contract"
 require_contains "$contract" "$matrix_contract"
 require_contains "$contract" "$obs_contract"
 require_contains "$contract" "$install_remove_contract"

@@ -72,6 +72,7 @@ static int registry_evaluates_kernel_subsystems(void) {
     EXPECT_TRUE(entry != 0, "network entry");
     EXPECT_TRUE(strcmp(entry->status, "disabled") == 0, "network remains disabled");
     EXPECT_TRUE(entry->network_allowed == 0, "network entry network denied");
+    EXPECT_TRUE(entry->no_effect == 1, "network entry remains no-effect");
 
     entry = find_entry(&result, LATTICRA_KERNEL_SUBSYSTEM_DEVICE);
     EXPECT_TRUE(entry != 0, "device entry");
@@ -121,6 +122,8 @@ static int registry_report_is_deterministic(void) {
         "network emitted");
     EXPECT_TRUE(strstr(report, "subsystem[6].network_allowed=0\n") != 0,
         "network entry network emitted");
+    EXPECT_TRUE(strstr(report, "subsystem[6].no_effect=1\n") != 0,
+        "network entry no-effect emitted");
     EXPECT_TRUE(strstr(report, "subsystem[7].name=device\n") != 0,
         "device emitted");
     EXPECT_TRUE(strstr(report, "subsystem[8].name=security\n") != 0,

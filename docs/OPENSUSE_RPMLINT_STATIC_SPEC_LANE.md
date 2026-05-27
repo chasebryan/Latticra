@@ -135,10 +135,10 @@ scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
 Recommended next slice:
 
 ```text
-Add openSUSE RPM build-evidence intake denial review contract before any denial can be re-requested.
+Add openSUSE RPM build-evidence intake denial disposition closeout archive gate contract before any closed-out denial can be archived or re-requested.
 ```
 
-That future lane should define review fields for denied build-evidence intake while keeping RPM builds and readiness blocked.
+That future lane should keep archiving and re-request blocked while preserving RPM build and readiness blockers.
 
 ## Validation
 

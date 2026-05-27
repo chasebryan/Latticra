@@ -15,6 +15,7 @@ cc $CFLAGS \
   src/state_lattice.c \
   src/nucleus_preview.c \
   src/nucleus_task.c \
+  src/nucleus_task_plan.c \
   src/lat_parser.c \
   src/runtime_boundary.c \
   src/system_bootstrap.c \
@@ -43,6 +44,10 @@ cc $CFLAGS \
   src/kernel_scheduler_run_entry.c \
   src/kernel_runtime_entry_admission.c \
   src/kernel_runtime_entry_frame.c \
+  src/kernel_runtime_entry_register_view.c \
+  src/kernel_runtime_entry_stack_view.c \
+  src/kernel_runtime_entry_address_space_view.c \
+  src/nucleus_kernel_coupling.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -54,18 +59,32 @@ cc $CFLAGS \
 
 grep -Fq 'LATTICRA KERNEL LIFECYCLE SUBSYSTEM SUMMARY REPORT' "$report_txt"
 grep -Fq 'summary_status=summary-ready' "$report_txt"
-grep -Fq 'final_state=runtime-entry-frame-ready' "$report_txt"
+grep -Fq 'final_state=runtime-entry-address-space-view-ready' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'registry_status=registry-ready' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
-grep -Fq 'lifecycle_step_count=25' "$report_txt"
-grep -Fq 'lifecycle_state_change_count=25' "$report_txt"
+grep -Fq 'lifecycle_step_count=28' "$report_txt"
+grep -Fq 'lifecycle_state_change_count=28' "$report_txt"
 grep -Fq 'lifecycle_state_mutated=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
 grep -Fq 'network_allowed=0' "$report_txt"
 grep -Fq 'lifecycle_network_allowed=0' "$report_txt"
 grep -Fq 'machine_network_allowed=0' "$report_txt"
 grep -Fq 'registry_no_effect=1' "$report_txt"
+grep -Fq 'nucleus_coupling_status=nucleus-kernel-coupling-ready' "$report_txt"
+grep -Fq 'os_readiness_status=os-metadata-ready' "$report_txt"
+grep -Fq 'nucleus_coupling_ready=1' "$report_txt"
+grep -Fq 'nucleus_no_effect_chain_ok=1' "$report_txt"
+grep -Fq 'nucleus_boot_allowed=0' "$report_txt"
+grep -Fq 'nucleus_runtime_entry_allowed=0' "$report_txt"
+grep -Fq 'nucleus_scheduler_run_entry_allowed=0' "$report_txt"
+grep -Fq 'nucleus_context_switch_allowed=0' "$report_txt"
+grep -Fq 'nucleus_register_save_allowed=0' "$report_txt"
+grep -Fq 'nucleus_register_restore_allowed=0' "$report_txt"
+grep -Fq 'nucleus_host_effect_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_address_space_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_stack_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_register_view_allowed=0' "$report_txt"
 grep -Fq 'runtime_entry_frame_allowed=0' "$report_txt"
 grep -Fq 'runtime_entry_admission_allowed=0' "$report_txt"
 grep -Fq 'runtime_entry_allowed=0' "$report_txt"
@@ -123,7 +142,7 @@ grep -Fq 'entry_count=9' "$report_txt"
 grep -Fq 'subsystem[0].name=boot' "$report_txt"
 grep -Fq 'subsystem[0].lifecycle_relation=boot-sequence-seeded' "$report_txt"
 grep -Fq 'subsystem[1].name=runtime' "$report_txt"
-grep -Fq 'subsystem[1].lifecycle_relation=runtime-entry-frame-ready' "$report_txt"
+grep -Fq 'subsystem[1].lifecycle_relation=runtime-entry-address-space-view-ready' "$report_txt"
 grep -Fq 'subsystem[1].authority_status=runtime-entry-denied' "$report_txt"
 grep -Fq 'subsystem[2].lifecycle_relation=scheduler-run-entry-ready' "$report_txt"
 grep -Fq 'subsystem[2].authority_status=scheduler-execution-denied' "$report_txt"

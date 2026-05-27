@@ -111,6 +111,6 @@ require_contains 'turning registry entries into effect grants' "$plan"
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md' "$plan"
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md' "$plan"
 require_contains 'docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md' "$plan"
-require_contains 'The next valid Latticra Seal slice is a Seal Panel dashboard view-model implementation plan or a signed receipt proof path.' "$plan"
+require_contains 'The next valid Latticra Seal slice is a signed receipt proof path that remains verification-only until trust-root and revocation boundaries are implemented.' "$plan"
 
 printf 'latticra seal local capability registry schema implementation plan: ok\n'

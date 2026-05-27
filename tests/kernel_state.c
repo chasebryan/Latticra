@@ -818,6 +818,151 @@ static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_qu
         "runtime entry frame transition no external effect");
     EXPECT_TRUE(result.denied == 0,
         "runtime entry frame transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry register view transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY,
+        "next runtime-entry-register-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_register_view.register_view_status,
+            "runtime-entry-register-view-seed-ready") == 0,
+        "runtime entry register view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_frame.frame_status,
+            "runtime-entry-frame-seed-ready") == 0,
+        "runtime entry register view keeps frame ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_admission.admission_status,
+            "runtime-entry-admission-seed-ready") == 0,
+        "runtime entry register view keeps admission ready");
+    EXPECT_TRUE(result.runtime_entry_register_view.register_view_count == 4u,
+        "runtime entry register view count");
+    EXPECT_TRUE(result.runtime_entry_register_view.runtime_entry_register_view_allowed == 0,
+        "runtime entry register view denied");
+    EXPECT_TRUE(result.runtime_entry_register_view.runtime_entry_frame_allowed == 0,
+        "runtime entry register view frame denied");
+    EXPECT_TRUE(result.runtime_entry_register_view.runtime_entry_allowed == 0,
+        "runtime entry denied at register view");
+    EXPECT_TRUE(result.runtime_entry_register_view.context_switch_allowed == 0,
+        "runtime entry register view context switch denied");
+    EXPECT_TRUE(result.runtime_entry_register_view.register_save_allowed == 0,
+        "runtime entry register view register save denied");
+    EXPECT_TRUE(result.runtime_entry_register_view.register_restore_allowed == 0,
+        "runtime entry register view register restore denied");
+    EXPECT_TRUE(result.runtime_entry_register_view.stack_switch_allowed == 0,
+        "runtime entry register view stack switch denied");
+    EXPECT_TRUE(result.runtime_entry_register_view.address_space_switch_allowed == 0,
+        "runtime entry register view address space switch denied");
+    EXPECT_TRUE(result.runtime_entry_register_view.no_effect == 1,
+        "runtime entry register view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry register view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry register view transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry stack view transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY,
+        "next runtime-entry-stack-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_stack_view.stack_view_status,
+            "runtime-entry-stack-view-seed-ready") == 0,
+        "runtime entry stack view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_register_view.register_view_status,
+            "runtime-entry-register-view-seed-ready") == 0,
+        "runtime entry stack view keeps register view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_frame.frame_status,
+            "runtime-entry-frame-seed-ready") == 0,
+        "runtime entry stack view keeps frame ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_admission.admission_status,
+            "runtime-entry-admission-seed-ready") == 0,
+        "runtime entry stack view keeps admission ready");
+    EXPECT_TRUE(result.runtime_entry_stack_view.stack_view_count == 4u,
+        "runtime entry stack view count");
+    EXPECT_TRUE(result.runtime_entry_stack_view.runtime_entry_stack_view_allowed == 0,
+        "runtime entry stack view denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.runtime_entry_register_view_allowed == 0,
+        "runtime entry stack view register view denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.runtime_entry_frame_allowed == 0,
+        "runtime entry stack view frame denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.runtime_entry_allowed == 0,
+        "runtime entry denied at stack view");
+    EXPECT_TRUE(result.runtime_entry_stack_view.context_switch_allowed == 0,
+        "runtime entry stack view context switch denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.register_save_allowed == 0,
+        "runtime entry stack view register save denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.register_restore_allowed == 0,
+        "runtime entry stack view register restore denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.stack_switch_allowed == 0,
+        "runtime entry stack view stack switch denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.address_space_switch_allowed == 0,
+        "runtime entry stack view address space switch denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.no_effect == 1,
+        "runtime entry stack view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry stack view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry stack view transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry address space view transition evaluates");
+    EXPECT_TRUE(result.next_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY,
+        "next runtime-entry-address-space-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_address_space_view.
+            address_space_view_status,
+            "runtime-entry-address-space-view-seed-ready") == 0,
+        "runtime entry address space view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_stack_view.stack_view_status,
+            "runtime-entry-stack-view-seed-ready") == 0,
+        "runtime entry address space view keeps stack view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_register_view.register_view_status,
+            "runtime-entry-register-view-seed-ready") == 0,
+        "runtime entry address space view keeps register view ready");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            address_space_view_count == 4u,
+        "runtime entry address space view count");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            runtime_entry_address_space_view_allowed == 0,
+        "runtime entry address space view denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            runtime_entry_stack_view_allowed == 0,
+        "runtime entry address space view stack view denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            runtime_entry_register_view_allowed == 0,
+        "runtime entry address space view register view denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            runtime_entry_allowed == 0,
+        "runtime entry denied at address space view");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            context_switch_allowed == 0,
+        "runtime entry address space view context switch denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            stack_switch_allowed == 0,
+        "runtime entry address space view stack switch denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            address_space_switch_allowed == 0,
+        "runtime entry address space view address space switch denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            page_table_write_allowed == 0,
+        "runtime entry address space view page table write denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.tlb_flush_allowed == 0,
+        "runtime entry address space view tlb flush denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.mmu_update_allowed == 0,
+        "runtime entry address space view mmu update denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.no_effect == 1,
+        "runtime entry address space view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry address space view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry address space view transition not denied");
     return 0;
 }
 
@@ -1296,6 +1441,67 @@ static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_
     EXPECT_TRUE(strstr(report,
             "runtime_entry_frame_status=runtime-entry-frame-seed-ready\n") != 0,
         "runtime entry frame emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry register view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "runtime entry register view report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=runtime-entry-frame-ready\n") != 0,
+        "runtime entry frame previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=runtime-entry-register-view-ready\n") != 0,
+        "runtime entry register view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_frame_status=runtime-entry-frame-seed-ready\n") != 0,
+        "runtime entry register view report frame emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_register_view_status=runtime-entry-register-view-seed-ready\n") != 0,
+        "runtime entry register view emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry stack view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "runtime entry stack view report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=runtime-entry-register-view-ready\n") != 0,
+        "runtime entry register view previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=runtime-entry-stack-view-ready\n") != 0,
+        "runtime entry stack view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_register_view_status=runtime-entry-register-view-seed-ready\n") != 0,
+        "runtime entry stack view report register view emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_stack_view_status=runtime-entry-stack-view-seed-ready\n") != 0,
+        "runtime entry stack view emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry address space view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry address space view report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=runtime-entry-stack-view-ready\n") != 0,
+        "runtime entry stack view previous emitted");
+    EXPECT_TRUE(strstr(report,
+            "next_state=runtime-entry-address-space-view-ready\n") != 0,
+        "runtime entry address space view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_stack_view_status=runtime-entry-stack-view-seed-ready\n") != 0,
+        "runtime entry address space view report stack view emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_address_space_view_status=runtime-entry-address-space-view-seed-ready\n") != 0,
+        "runtime entry address space view emitted");
     return 0;
 }
 

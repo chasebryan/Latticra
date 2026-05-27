@@ -186,13 +186,43 @@ scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh
 
 That lane refuses `rpmbuild`, `osc build`, `rpmlint`, source RPM, binary RPM, and transcript intake while the blocker matrix is closed.
 
+Completed follow-on RPM build-evidence intake denial review contract:
+
+```text
+docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
+scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh
+.github/workflows/opensuse-rpm-build-evidence-intake-denial-review-contract.yml
+```
+
+That lane upholds the denied intake state while keeping build-evidence re-requests blocked.
+
+Completed follow-on RPM build-evidence intake denial disposition contract:
+
+```text
+docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md
+scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-contract.sh
+.github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-contract.yml
+```
+
+That lane closes the upheld denial without accepting openSUSE build evidence or opening RPM builds.
+
+Completed follow-on RPM build-evidence intake denial disposition closeout contract:
+
+```text
+docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md
+scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh
+.github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.yml
+```
+
+That lane closes out the no-effect disposition while keeping archive, re-request, build, and readiness blockers in place.
+
 Recommended next slice:
 
 ```text
-Add openSUSE RPM build-evidence intake denial review contract before any denial can be re-requested.
+Add openSUSE RPM build-evidence intake denial disposition closeout archive gate contract before any closed-out denial can be archived or re-requested.
 ```
 
-That future lane should define review fields for denied build-evidence intake while keeping RPM builds and readiness blocked.
+That future lane should keep archiving and re-request blocked while preserving RPM build and readiness blockers.
 
 ## Validation
 

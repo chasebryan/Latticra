@@ -125,7 +125,7 @@ require_contains 'post_remove_package_state' "$contract"
 require_contains 'scriptlet_effect_review' "$contract"
 require_contains 'host_mutation_review' "$contract"
 require_contains 'obs_publication_non_claim_review_present=1' "$contract"
-require_contains 'Add openSUSE RPM build-evidence intake denial review contract' "$contract"
+require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate contract' "$contract"
 require_contains 'opensuse_rpm_install_remove_transcript_contract: ok' "$contract"
 
 require_contains "$contract" "$payload_contract"

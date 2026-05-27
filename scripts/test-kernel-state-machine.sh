@@ -40,6 +40,9 @@ cc $CFLAGS \
   src/kernel_scheduler_run_entry.c \
   src/kernel_runtime_entry_admission.c \
   src/kernel_runtime_entry_frame.c \
+  src/kernel_runtime_entry_register_view.c \
+  src/kernel_runtime_entry_stack_view.c \
+  src/kernel_runtime_entry_address_space_view.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   tests/kernel_state_machine.c \

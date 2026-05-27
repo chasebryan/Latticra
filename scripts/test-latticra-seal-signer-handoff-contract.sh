@@ -78,7 +78,7 @@ require_contains 'host_read_performed=0' "$contract"
 require_contains 'host_write_performed=0' "$contract"
 require_contains 'network_performed=0' "$contract"
 require_contains 'signer handoff metadata implementation' "$contract"
-require_contains 'Status: initial signer handoff metadata implementation' docs/LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md
+require_contains 'Status: signer handoff metadata implementation with crypto graduation evidence carry-forward' docs/LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md
 require_contains 'latticra_seal_signer_handoff_t' docs/LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md
 require_contains 'latticra_seal_signer_handoff_from_authorization' docs/LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md
 require_contains 'signer_handoff_profile=latticra-seal-signer-handoff/0.1' docs/LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md

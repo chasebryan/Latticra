@@ -253,6 +253,8 @@ pub struct LatticraConsoleConfig {
     pub init_contract_profile: String,
     pub services_contract_profile: String,
     pub service_schema_contract_profile: String,
+    pub service_definitions_contract_profile: String,
+    pub service_plan_contract_profile: String,
     pub receipt_request_contract_profile: String,
     pub receipt_payload_schema_profile: String,
     pub receipt_payload_artifact_draft_profile: String,
@@ -281,6 +283,8 @@ pub struct LatticraConsoleConfig {
     pub require_init_contract: bool,
     pub require_services_contract: bool,
     pub require_service_schema_contract: bool,
+    pub require_service_definitions_contract: bool,
+    pub require_service_plan_contract: bool,
     pub require_receipt_request_contract: bool,
     pub require_receipt_payload_schema: bool,
     pub require_receipt_payload_artifact_draft: bool,
@@ -314,6 +318,8 @@ impl Default for LatticraConsoleConfig {
             init_contract_profile: "lc-init-v0".to_owned(),
             services_contract_profile: "lc-services-v0".to_owned(),
             service_schema_contract_profile: "lc-service-schema-v0".to_owned(),
+            service_definitions_contract_profile: "lc-service-definitions-v0".to_owned(),
+            service_plan_contract_profile: "lc-service-plan-v0".to_owned(),
             receipt_request_contract_profile: "lc-receipt-request-v0".to_owned(),
             receipt_payload_schema_profile: "lc-receipt-payload-schema-v0".to_owned(),
             receipt_payload_artifact_draft_profile: "lc-receipt-payload-artifact-draft-v0"
@@ -347,6 +353,8 @@ impl Default for LatticraConsoleConfig {
             require_init_contract: true,
             require_services_contract: true,
             require_service_schema_contract: true,
+            require_service_definitions_contract: true,
+            require_service_plan_contract: true,
             require_receipt_request_contract: true,
             require_receipt_payload_schema: true,
             require_receipt_payload_artifact_draft: true,
@@ -410,6 +418,8 @@ impl LatticraConsoleConfig {
         self.init_contract_profile = "lc-init-v0".to_owned();
         self.services_contract_profile = "lc-services-v0".to_owned();
         self.service_schema_contract_profile = "lc-service-schema-v0".to_owned();
+        self.service_definitions_contract_profile = "lc-service-definitions-v0".to_owned();
+        self.service_plan_contract_profile = "lc-service-plan-v0".to_owned();
         self.receipt_request_contract_profile = "lc-receipt-request-v0".to_owned();
         self.receipt_payload_schema_profile = "lc-receipt-payload-schema-v0".to_owned();
         self.receipt_payload_artifact_draft_profile =
@@ -441,6 +451,8 @@ impl LatticraConsoleConfig {
         self.require_init_contract = true;
         self.require_services_contract = true;
         self.require_service_schema_contract = true;
+        self.require_service_definitions_contract = true;
+        self.require_service_plan_contract = true;
         self.require_receipt_request_contract = true;
         self.require_receipt_payload_schema = true;
         self.require_receipt_payload_artifact_draft = true;
@@ -514,6 +526,14 @@ impl LatticraConsoleConfig {
             (
                 "LC service schema contract profile",
                 self.service_schema_contract_profile.as_str(),
+            ),
+            (
+                "LC service definitions contract profile",
+                self.service_definitions_contract_profile.as_str(),
+            ),
+            (
+                "LC service plan contract profile",
+                self.service_plan_contract_profile.as_str(),
             ),
             (
                 "LC receipt request contract profile",
@@ -935,10 +955,11 @@ impl InstallerConfig {
         Ok(())
     }
 
-    pub fn can_write_artifacts(&self) -> Result<(), String> {
-        validate_user_local_install_prefix(&self.install_prefix)?;
-        self.validate_authority_fields()?;
+    pub fn network_authority_denied(&self) -> bool {
+        !self.safety.allow_network_effect && !self.updater.allow_network_fetch
+    }
 
+    fn reject_network_authority(&self) -> Result<(), String> {
         if self.safety.allow_network_effect {
             return Err(
                 "Network authority is not implemented in this installer. Disable allow_network_effect."
@@ -952,6 +973,14 @@ impl InstallerConfig {
                     .to_owned(),
             );
         }
+
+        Ok(())
+    }
+
+    pub fn can_write_artifacts(&self) -> Result<(), String> {
+        validate_user_local_install_prefix(&self.install_prefix)?;
+        self.validate_authority_fields()?;
+        self.reject_network_authority()?;
 
         Ok(())
     }
@@ -1033,6 +1062,8 @@ impl InstallerConfig {
         }
 
         self.behavior = InstallBehavior::default();
+        self.safety.allow_network_effect = false;
+        self.updater.allow_network_fetch = false;
         if matches!(self.profile, InstallProfile::LcStandalone) {
             self.behavior.build_gui_installer = false;
             self.behavior.build_latticra_from_source = false;
@@ -1097,10 +1128,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "host_install_authority={}",
         u8::from(!config.safety.dry_run && config.safety.allow_host_mutation)
     );
+    let _ = writeln!(out, "network_authority=0");
     let _ = writeln!(
         out,
-        "network_authority={}",
-        u8::from(!config.safety.dry_run && config.safety.allow_network_effect)
+        "network_authority_denied={}",
+        u8::from(config.network_authority_denied())
     );
     let _ = writeln!(out, "runtime_enforcement_authority=0");
     let _ = writeln!(out);
@@ -1129,6 +1161,12 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         config.updater.write_update_receipt
     );
     let _ = writeln!(out, "network_authority=0");
+    let _ = writeln!(out, "network_fetch_authority=0");
+    let _ = writeln!(
+        out,
+        "network_fetch_authority_denied={}",
+        u8::from(!config.updater.allow_network_fetch)
+    );
     let _ = writeln!(out, "root_authority=0");
     let _ = writeln!(out, "system_mutation_authority=0");
     let _ = writeln!(out, "update_apply_mode=guarded-local-prefix-reinstall");
@@ -1262,6 +1300,23 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "service_schema_contract_present=1");
     let _ = writeln!(
         out,
+        "service_definitions_contract_profile={}",
+        config.lc.service_definitions_contract_profile
+    );
+    let _ = writeln!(
+        out,
+        "service_definitions_contract_status=metadata-only-contract"
+    );
+    let _ = writeln!(out, "service_definitions_contract_present=1");
+    let _ = writeln!(
+        out,
+        "service_plan_contract_profile={}",
+        config.lc.service_plan_contract_profile
+    );
+    let _ = writeln!(out, "service_plan_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "service_plan_contract_present=1");
+    let _ = writeln!(
+        out,
         "panel_embedded_console={}",
         config.lc.install.panel_embedded_console
     );
@@ -1367,6 +1422,16 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         out,
         "service_schema_contract_profile={}",
         config.lc.service_schema_contract_profile
+    );
+    let _ = writeln!(
+        out,
+        "service_definitions_contract_profile={}",
+        config.lc.service_definitions_contract_profile
+    );
+    let _ = writeln!(
+        out,
+        "service_plan_contract_profile={}",
+        config.lc.service_plan_contract_profile
     );
     let _ = writeln!(
         out,
@@ -1499,6 +1564,16 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "service_definitions_contract_required={}",
+        config.lc.require_service_definitions_contract
+    );
+    let _ = writeln!(
+        out,
+        "service_plan_contract_required={}",
+        config.lc.require_service_plan_contract
+    );
+    let _ = writeln!(
+        out,
         "receipt_request_contract_required={}",
         config.lc.require_receipt_request_contract
     );
@@ -1583,6 +1658,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "service_schema_contract_status=metadata-only-contract");
     let _ = writeln!(
         out,
+        "service_definitions_contract_status=metadata-only-contract"
+    );
+    let _ = writeln!(out, "service_plan_contract_status=metadata-only-contract");
+    let _ = writeln!(
+        out,
         "receipt_request_contract_status=metadata-only-contract"
     );
     let _ = writeln!(out, "receipt_payload_schema_status=metadata-only-schema");
@@ -1642,11 +1722,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
     let _ = writeln!(
         out,
-        "stage=48-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract"
+        "stage=51-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"
     );
     let _ = writeln!(
         out,
-        "previous_stage=47-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"
+        "previous_stage=50-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract"
     );
     let _ = writeln!(
         out,
@@ -3423,6 +3503,194 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         out,
         "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1"
     );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_stage=49-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_stage=contract-only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_status=contract_only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_authority=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_allowed=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_performed=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_record_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_decision_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_findings_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_stage=50-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_stage=contract-only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_status=contract_only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_authority=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_allowed=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_performed=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_record_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_decision_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_published=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_stage=51-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_stage=contract-only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_status=contract_only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_authority=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_allowed=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_performed=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_record_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_decision_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_published=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_signed=0"
+    );
+    let _ = writeln!(
+        out,
+        "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1"
+    );
     let _ = writeln!(out, "requires_prompt_evaluation_result_contract=1");
     let _ = writeln!(
         out,
@@ -3475,11 +3743,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         "would_mutate_host={}",
         u8::from(!config.safety.dry_run && config.safety.allow_host_mutation)
     );
-    let _ = writeln!(
-        out,
-        "would_use_network={}",
-        u8::from(!config.safety.dry_run && config.safety.allow_network_effect)
-    );
+    let _ = writeln!(out, "would_use_network=0");
     let _ = writeln!(
         out,
         "require_component_manifest={}",
@@ -3577,6 +3841,63 @@ mod tests {
         InstallerConfig::default()
             .validate_authority_fields()
             .unwrap();
+    }
+
+    #[test]
+    fn installer_rejects_system_network_authority() {
+        let mut config = InstallerConfig::default();
+        config.safety.allow_network_effect = true;
+
+        let error = config.reject_network_authority().unwrap_err();
+        assert!(error.contains("Network authority is not implemented"));
+    }
+
+    #[test]
+    fn installer_rejects_updater_network_fetch_authority() {
+        let mut config = InstallerConfig::default();
+        config.updater.allow_network_fetch = true;
+
+        let error = config.reject_network_authority().unwrap_err();
+        assert!(error.contains("Updater network fetch is not implemented"));
+    }
+
+    #[test]
+    fn profile_defaults_force_network_authority_floor() {
+        for profile in InstallProfile::all() {
+            let mut config = InstallerConfig::default();
+            config.profile = profile;
+            config.safety.allow_network_effect = true;
+            config.updater.allow_network_fetch = true;
+
+            config.apply_profile_defaults();
+
+            assert!(
+                config.network_authority_denied(),
+                "profile preserved network authority: {profile:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn render_plan_reports_network_authority_floor() {
+        let mut config = InstallerConfig::default();
+        config.safety.dry_run = false;
+        config.safety.allow_host_mutation = true;
+        config.safety.allow_network_effect = true;
+        config.updater.allow_network_fetch = true;
+
+        let plan = render_plan(&config);
+        assert!(plan.contains("host_install_authority=1\n"));
+        assert!(plan.contains("network_authority=0\n"));
+        assert!(plan.contains("network_authority_denied=0\n"));
+        assert!(plan.contains("allow_network_fetch=true\n"));
+        assert!(plan.contains("network_fetch_authority=0\n"));
+        assert!(plan.contains("network_fetch_authority_denied=0\n"));
+        assert!(plan.contains("would_use_network=0\n"));
+
+        let default_plan = render_plan(&InstallerConfig::default());
+        assert!(default_plan.contains("network_authority_denied=1\n"));
+        assert!(default_plan.contains("network_fetch_authority_denied=1\n"));
     }
 
     #[test]

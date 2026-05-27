@@ -302,6 +302,10 @@ icon_dir=$ICON_DIR
 lc_command_wrapper=$LC_COMMAND_WRAPPER
 root_authority=0
 network_authority=0
+network_authority_denied=1
+network_fetch_authority=0
+network_fetch_authority_denied=1
+network_performed=0
 runtime_enforcement_authority=0
 production_installer_ready=0
 
@@ -451,6 +455,11 @@ log "Latticra Panel $OPERATION"
 log "operation=$OPERATION"
 log "mode=$MODE"
 log "prefix=$PREFIX"
+log "network_authority=0"
+log "network_authority_denied=1"
+log "network_fetch_authority=0"
+log "network_fetch_authority_denied=1"
+log "network_performed=0"
 
 phase 1 "remove managed command wrappers"
 for command in $COMMAND_WRAPPERS; do

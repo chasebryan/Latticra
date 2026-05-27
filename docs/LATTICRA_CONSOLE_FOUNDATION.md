@@ -1,7 +1,7 @@
 # Latticra Console Foundation
 
 Status: Stage-0 foundation
-Scope: LC identity, standalone and Panel installability, configurable metadata, session contract, workspace contract, namespace contract, rootfs contract, packages contract, init contract, services contract, substrate bridge, host-embedding plan, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
+Scope: LC identity, standalone and Panel installability, configurable metadata, session contract, workspace contract, namespace contract, rootfs contract, packages contract, init contract, services contract, service schema contract, service definitions contract, service plan contract, substrate bridge, host-embedding plan, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
 
 ## Purpose
 
@@ -49,6 +49,8 @@ packages_contract_profile=lc-packages-v0
 init_contract_profile=lc-init-v0
 services_contract_profile=lc-services-v0
 service_schema_contract_profile=lc-service-schema-v0
+service_definitions_contract_profile=lc-service-definitions-v0
+service_plan_contract_profile=lc-service-plan-v0
 receipt_request_contract_profile=lc-receipt-request-v0
 receipt_payload_schema_profile=lc-receipt-payload-schema-v0
 receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0
@@ -76,6 +78,8 @@ packages_contract_required=true
 init_contract_required=true
 services_contract_required=true
 service_schema_contract_required=true
+service_definitions_contract_required=true
+service_plan_contract_required=true
 receipt_request_contract_required=true
 receipt_payload_schema_required=true
 receipt_payload_artifact_draft_required=true
@@ -110,6 +114,9 @@ share/latticra/lc/rootfs/contract.toml
 share/latticra/lc/packages/contract.toml
 share/latticra/lc/init/contract.toml
 share/latticra/lc/services/contract.toml
+share/latticra/lc/services/definition-schema.toml
+share/latticra/lc/services/definitions.toml
+share/latticra/lc/services/plan.toml
 share/latticra/lc/substrate
 share/latticra/lc/host-embedding/contract.toml
 share/latticra/lc/host-inventory/contract.toml
@@ -171,6 +178,10 @@ The LC services lane writes `share/latticra/lc/services/contract.toml` and expos
 
 The LC service schema lane writes `share/latticra/lc/services/definition-schema.toml` and exposes `lc service-schema`. It names the future service definition shape while keeping definition reads, writes, validation, dependency resolution, authority binding, service control, host mutation, network, runtime enforcement, boot, and production OS authority denied.
 
+The LC service definitions lane writes `share/latticra/lc/services/definitions.toml` and exposes `lc service-definitions`. It names the future service definition stub catalog while keeping service definition reads, writes, validation, materialization, activation, service control, host mutation, network, runtime enforcement, boot, and production OS authority denied.
+
+The LC service plan lane writes `share/latticra/lc/services/plan.toml` and exposes `lc service-plan`. It names the future service activation plan envelope while keeping dependency resolution, startup ordering, activation, service control, process supervision, host mutation, network, runtime enforcement, boot, and production OS authority denied.
+
 The umbrella wrapper routes:
 
 ```text
@@ -199,6 +210,8 @@ lc packages
 lc init
 lc services
 lc service-schema
+lc service-definitions
+lc service-plan
 lc profiles
 lc receipts
 lc receipt-request
@@ -257,6 +270,9 @@ rootfs_contract_profile = "lc-rootfs-v0"
 packages_contract_profile = "lc-packages-v0"
 init_contract_profile = "lc-init-v0"
 services_contract_profile = "lc-services-v0"
+service_schema_contract_profile = "lc-service-schema-v0"
+service_definitions_contract_profile = "lc-service-definitions-v0"
+service_plan_contract_profile = "lc-service-plan-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -284,6 +300,9 @@ require_rootfs_contract = true
 require_packages_contract = true
 require_init_contract = true
 require_services_contract = true
+require_service_schema_contract = true
+require_service_definitions_contract = true
+require_service_plan_contract = true
 require_receipt_request_contract = true
 require_receipt_payload_schema = true
 require_receipt_payload_artifact_draft = true
@@ -687,6 +706,7 @@ service_restart_allowed=0
 service_reload_allowed=0
 service_health_check_allowed=0
 process_supervision_allowed=0
+service_definitions_contract_required=1
 services_contract_required=1
 init_contract_required=1
 rootfs_contract_required=1
@@ -699,6 +719,7 @@ runtime_boundary_required=1
 receipt_required_before_service_schema_runtime=1
 command_surface=lc service-schema
 related_services_command=lc services
+related_service_definitions_command=lc service-definitions
 host_process_launch_allowed=0
 host_mutation_allowed=0
 network_allowed=0
@@ -709,6 +730,159 @@ promotion_gate=lc_service_schema_contract_before_service_definition_validation
 ```
 
 The service schema contract is metadata only. It does not read or write service definitions, validate definitions, resolve dependencies, bind authority, write service registries, mutate manifests, start services, supervise processes, mutate the host, use the network, enforce runtime policy, boot hardware, or claim production OS status.
+
+## Service Definitions Contract
+
+LC now exposes a service definitions contract before service definition stubs, validation, materialization, activation, or service control exist:
+
+```text
+service_definitions_profile=lc-service-definitions-v0
+service_definitions_status=metadata-only-contract
+service_definitions_contract_present=1
+service_definitions_kind=lc-service-definition-stubs-envelope
+service_definitions_root=share/latticra/lc/services
+service_definitions_state_source=metadata-only
+service_definitions_file=definitions.toml
+service_definitions_artifact_present=1
+service_definitions_read_allowed=0
+service_definitions_write_allowed=0
+service_definition_stub_count=0
+service_definition_stub_catalog_present=1
+service_definition_stub_materialized=0
+service_definition_stub_read_allowed=0
+service_definition_stub_write_allowed=0
+service_definition_validation_allowed=0
+service_definition_activation_allowed=0
+service_dependency_resolution_allowed=0
+service_authority_binding_allowed=0
+service_registry_write_allowed=0
+service_manifest_write_allowed=0
+service_enable_allowed=0
+service_disable_allowed=0
+service_start_allowed=0
+service_stop_allowed=0
+service_restart_allowed=0
+service_reload_allowed=0
+service_health_check_allowed=0
+process_supervision_allowed=0
+service_schema_contract_required=1
+services_contract_required=1
+init_contract_required=1
+rootfs_contract_required=1
+packages_contract_required=1
+namespace_contract_required=1
+workspace_contract_required=1
+session_contract_required=1
+os_base_contract_required=1
+runtime_boundary_required=1
+seal_capability_labels_required=1
+receipt_required_before_service_definitions_runtime=1
+command_surface=lc service-definitions
+related_service_schema_command=lc service-schema
+related_services_command=lc services
+related_service_plan_command=lc service-plan
+related_init_command=lc init
+related_os_contract_command=lc os-contract
+promotion_gate=lc_service_definitions_contract_before_service_definition_materialization
+no_effect=1
+file_read_allowed=0
+file_write_allowed=0
+host_process_launch_allowed=0
+host_file_read_allowed=0
+host_file_write_allowed=0
+host_mutation_allowed=0
+network_allowed=0
+runtime_enforcement_allowed=0
+boot_allowed=0
+production_os_claim=0
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report service-definitions
+latticra-lc service-definitions
+```
+
+The service definitions contract is metadata only. It does not read or write service definitions, materialize stubs, validate definitions, activate services, resolve dependencies, bind authority, write service registries, mutate manifests, start services, supervise processes, mutate the host, use the network, enforce runtime policy, boot hardware, or claim production OS status.
+
+## Service Plan Contract
+
+LC now exposes a service plan contract before service dependency resolution, startup ordering, activation, or supervision exist:
+
+```text
+service_plan_profile=lc-service-plan-v0
+service_plan_status=metadata-only-contract
+service_plan_contract_present=1
+service_plan_kind=lc-service-activation-plan-envelope
+service_plan_root=share/latticra/lc/services
+service_plan_state_source=metadata-only
+service_plan_file=plan.toml
+service_plan_artifact_present=1
+service_plan_created=0
+service_plan_read_allowed=0
+service_plan_write_allowed=0
+service_plan_materialized=0
+service_plan_materialization_allowed=0
+service_plan_review_required=1
+service_definition_input_allowed=0
+service_definition_stub_materialized=0
+service_definition_validation_allowed=0
+service_dependency_resolution_allowed=0
+service_startup_order_resolution_allowed=0
+service_authority_binding_allowed=0
+service_activation_allowed=0
+service_registry_write_allowed=0
+service_manifest_write_allowed=0
+service_enable_allowed=0
+service_disable_allowed=0
+service_start_allowed=0
+service_stop_allowed=0
+service_restart_allowed=0
+service_reload_allowed=0
+service_health_check_allowed=0
+process_supervision_allowed=0
+service_definitions_contract_required=1
+service_schema_contract_required=1
+services_contract_required=1
+init_contract_required=1
+rootfs_contract_required=1
+packages_contract_required=1
+namespace_contract_required=1
+workspace_contract_required=1
+session_contract_required=1
+os_base_contract_required=1
+runtime_boundary_required=1
+seal_capability_labels_required=1
+receipt_required_before_service_plan_runtime=1
+command_surface=lc service-plan
+related_service_definitions_command=lc service-definitions
+related_service_schema_command=lc service-schema
+related_services_command=lc services
+related_init_command=lc init
+related_os_contract_command=lc os-contract
+promotion_gate=lc_service_plan_contract_before_dependency_resolution_or_activation
+no_effect=1
+file_read_allowed=0
+file_write_allowed=0
+host_process_launch_allowed=0
+host_file_read_allowed=0
+host_file_write_allowed=0
+host_mutation_allowed=0
+network_allowed=0
+runtime_enforcement_allowed=0
+boot_allowed=0
+production_os_claim=0
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report service-plan
+latticra-lc service-plan
+```
+
+The service plan contract is metadata only. It does not read service definitions, materialize a plan, resolve dependencies, compute startup order, bind authority, activate services, write service registries, mutate manifests, start services, supervise processes, mutate the host, use the network, enforce runtime policy, boot hardware, or claim production OS status.
 
 ## Services Contract
 
@@ -742,6 +916,8 @@ service_health_check_allowed=0
 process_supervision_allowed=0
 pid1_claim_allowed=0
 service_schema_contract_required=1
+service_definitions_contract_required=1
+service_plan_contract_required=1
 init_contract_required=1
 rootfs_contract_required=1
 packages_contract_required=1
@@ -753,6 +929,8 @@ runtime_boundary_required=1
 receipt_required_before_service_registry_runtime=1
 command_surface=lc services
 related_service_schema_command=lc service-schema
+related_service_definitions_command=lc service-definitions
+related_service_plan_command=lc service-plan
 related_init_command=lc init
 host_process_launch_allowed=0
 host_mutation_allowed=0
@@ -770,6 +948,10 @@ latticra_console_report services
 latticra-lc services
 latticra_console_report service-schema
 latticra-lc service-schema
+latticra_console_report service-definitions
+latticra-lc service-definitions
+latticra_console_report service-plan
+latticra-lc service-plan
 ```
 
 The services contract is metadata only. It does not read or write service registries, write manifests, define services, enable services, start or stop services, reload services, perform health checks, supervise processes, mutate the host, use the network, enforce runtime policy, boot hardware, or claim production OS status.
@@ -932,6 +1114,10 @@ init_contract_receipt_required=1
 init_contract_present=1
 services_contract_receipt_required=1
 services_contract_present=1
+service_definitions_contract_receipt_required=1
+service_definitions_contract_present=1
+service_plan_contract_receipt_required=1
+service_plan_contract_present=1
 receipt_request_contract_required=1
 receipt_request_contract_present=1
 receipt_payload_schema_required=1
@@ -964,7 +1150,9 @@ packages_contract_command=lc packages
 init_contract_command=lc init
 services_contract_command=lc services
 service_schema_contract_command=lc service-schema
-receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,host-contract,host-inventory,host-adapter,runtime-boundary
+service_definitions_contract_command=lc service-definitions
+service_plan_contract_command=lc service-plan
+receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary
 promotion_gate=lc_receipts_before_host_adapter_or_os_base
 ```
 
@@ -1000,7 +1188,7 @@ receipt_contract_profile=lc-receipts-v0
 signature_request_profile=latticra-seal-signature-request/0.1
 requested_receipt_profile=latticra-seal-verified-receipt/0.1
 requested_capability=verified-receipt-report
-requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,host-contract,host-inventory,host-adapter,runtime-boundary
+requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary
 receipt_payload_schema_profile=lc-receipt-payload-schema-v0
 receipt_payload_schema_required=1
 receipt_payload_schema_present=1
@@ -1573,6 +1761,8 @@ lc packages -> authority-check / validation-only
 lc init -> authority-check / validation-only
 lc services -> authority-check / validation-only
 lc service-schema -> authority-check / validation-only
+lc service-definitions -> authority-check / validation-only
+lc service-plan -> authority-check / validation-only
 lc receipts -> authority-check / validation-only
 lc receipt-request -> authority-check / validation-only
 lc receipt-payload -> authority-check / validation-only

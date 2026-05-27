@@ -55,6 +55,9 @@ scheduler-activation-ready
 scheduler-run-entry-ready
 runtime-entry-admission-ready
 runtime-entry-frame-ready
+runtime-entry-register-view-ready
+runtime-entry-stack-view-ready
+runtime-entry-address-space-view-ready
 ```
 
 ## Controlled effect boundary

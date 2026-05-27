@@ -61,8 +61,8 @@ require_contains 'Overall Latticra system: 45%' "$record"
 require_contains 'Nadia offline AI foundation: 75%' "$record"
 require_contains 'Public product readiness: 10%' "$record"
 require_contains 'sh scripts/test-current-estimate-table-source-alignment.sh' "$record"
-require_contains 'weighted_sum=4481' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
-require_contains 'overall_estimate=round(4481 / 100)=45' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
+require_contains 'weighted_sum=4499' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
+require_contains 'overall_estimate=round(4499 / 100)=45' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
 require_contains '| Nadia offline AI foundation | 70% | 75% |' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
 require_contains '| Runtime / operating-system-universe direction | 19% | 26% |' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
 
@@ -76,10 +76,10 @@ require_contains 'The latest estimate hold review is [`docs/status/COMPLETION_ES
 for file in README.md STATUS.md docs/status/CURRENT_STATUS.md; do
   require_contains '| Overall Latticra system | 45% |' "$file"
   require_contains '| Latticra Seal / local evidence layer | 39% |' "$file"
-  require_contains '| Latticra Panel / local control surface | 31% |' "$file"
+  require_contains '| Latticra Panel / local control surface | 32% |' "$file"
   require_contains '| Nadia offline AI foundation | 75% |' "$file"
   require_contains '| L-UI parser / AST / string foundation | 87% |' "$file"
-  require_contains '| Foundation documents and contracts | 94% |' "$file"
+  require_contains '| Foundation documents and contracts | 95% |' "$file"
   require_contains '| Public documentation posture | 92% |' "$file"
   require_contains '| Strategy/status/funding framework | 63% |' "$file"
   require_contains '| Lat / Latticra Programming Language | 27% |' "$file"

@@ -99,6 +99,8 @@ static latticra_lir_module_t lat_lir_module(void) {
     lir.report_classification = LATTICRA_LIR_REPORT_MATERIALIZED;
     lir.shape_kind = LATTICRA_LIR_SHAPE_LAT_MODULE_GRAPH;
     copy_text(lir.module_name, sizeof(lir.module_name), "RuntimeEvidenceModule");
+    copy_text(lir.effect, sizeof(lir.effect), "none");
+    copy_text(lir.boundary, sizeof(lir.boundary), "lat_semantic_only");
     lir.source_span.start_offset = 25u;
     lir.source_span.end_offset = 256u;
     lir.source_span.start_line = 2u;
@@ -118,6 +120,9 @@ static latticra_lir_module_t lat_lir_module(void) {
     copy_text(lir.nodes[1].value, sizeof(lir.nodes[1].value), "root");
     copy_text(lir.nodes[1].operator_text, sizeof(lir.nodes[1].operator_text), "=");
     copy_text(lir.nodes[1].binding, sizeof(lir.nodes[1].binding), "lat.state.root");
+    lir.nodes[1].parent_index = 0u;
+    lir.nodes[1].first_child_index = 3u;
+    lir.nodes[1].child_count = 1u;
     lir.nodes[1].source_span.start_offset = 31u;
     lir.nodes[1].source_span.end_offset = 64u;
     lir.nodes[1].source_span.start_line = 3u;
@@ -129,6 +134,9 @@ static latticra_lir_module_t lat_lir_module(void) {
     copy_text(lir.nodes[2].value, sizeof(lir.nodes[2].value), "RootCell");
     copy_text(lir.nodes[2].operator_text, sizeof(lir.nodes[2].operator_text), "from");
     copy_text(lir.nodes[2].binding, sizeof(lir.nodes[2].binding), "lat.transition.boot");
+    lir.nodes[2].parent_index = 0u;
+    lir.nodes[2].first_child_index = 6u;
+    lir.nodes[2].child_count = 1u;
     lir.nodes[2].source_span.start_offset = 80u;
     lir.nodes[2].source_span.end_offset = 96u;
     lir.nodes[2].source_span.start_line = 4u;
@@ -233,6 +241,9 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(result.record.lat_pipeline_first_comment_span.start_column == 1u, "pipeline comment column copied");
     EXPECT_TRUE(result.record.lat_lir_source_kind == LATTICRA_LIR_SOURCE_LAT_MODULE, "lat lir source kind copied");
     EXPECT_TRUE(strcmp(result.record.lat_lir_module_name, "RuntimeEvidenceModule") == 0, "lat lir module name copied");
+    EXPECT_TRUE(strcmp(result.record.lat_lir_card_name, "") == 0, "lat lir card name copied");
+    EXPECT_TRUE(strcmp(result.record.lat_lir_effect, "none") == 0, "lat lir effect copied");
+    EXPECT_TRUE(strcmp(result.record.lat_lir_boundary, "lat_semantic_only") == 0, "lat lir boundary copied");
     EXPECT_TRUE(result.record.lat_lir_report_classification == LATTICRA_LIR_REPORT_MATERIALIZED, "lat lir report classification copied");
     EXPECT_TRUE(result.record.lat_lir_shape_kind == LATTICRA_LIR_SHAPE_LAT_MODULE_GRAPH, "lat lir shape kind copied");
     EXPECT_TRUE(result.record.lat_lir_source_span.start_line == 2u, "lat lir span line copied");
@@ -256,6 +267,9 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_lat_node_value, "root") == 0, "lat lir first node value copied");
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_lat_node_operator, "=") == 0, "lat lir first node operator copied");
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_lat_node_binding, "lat.state.root") == 0, "lat lir first node binding copied");
+    EXPECT_TRUE(result.record.lat_lir_first_lat_node_parent_index == 0u, "lat lir first node parent copied");
+    EXPECT_TRUE(result.record.lat_lir_first_lat_node_first_child_index == 3u, "lat lir first node first child copied");
+    EXPECT_TRUE(result.record.lat_lir_first_lat_node_child_count == 1u, "lat lir first node child count copied");
     EXPECT_TRUE(result.record.lat_lir_first_lat_node_span.start_line == 3u, "lat lir first node span line copied");
     EXPECT_TRUE(result.record.lat_lir_first_lat_node_span.start_column == 5u, "lat lir first node span column copied");
     EXPECT_TRUE(result.record.lat_lir_first_lat_node_span.end_line == 3u, "lat lir first node span end line copied");
@@ -267,6 +281,9 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_transition_node_value, "RootCell") == 0, "lat lir first transition node value copied");
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_transition_node_operator, "from") == 0, "lat lir first transition node operator copied");
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_transition_node_binding, "lat.transition.boot") == 0, "lat lir first transition node binding copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_node_parent_index == 0u, "lat lir first transition node parent copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_node_first_child_index == 6u, "lat lir first transition node first child copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_node_child_count == 1u, "lat lir first transition node child count copied");
     EXPECT_TRUE(result.record.lat_lir_first_transition_node_span.start_offset == 80u, "lat lir first transition node span start copied");
     EXPECT_TRUE(result.record.lat_lir_first_transition_node_span.end_offset == 96u, "lat lir first transition node span end copied");
     EXPECT_TRUE(result.record.lat_lir_first_transition_node_span.start_line == 4u, "lat lir first transition node span line copied");
@@ -311,6 +328,9 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_transition_source_edge_from_node_value, "RootCell") == 0, "first transition source edge from node value copied");
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_transition_source_edge_from_node_operator, "from") == 0, "first transition source edge from node operator copied");
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_transition_source_edge_from_node_binding, "lat.transition.boot") == 0, "first transition source edge from node binding copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_from_node_parent_index == 0u, "first transition source edge from node parent copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_from_node_first_child_index == 6u, "first transition source edge from node first child copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_from_node_child_count == 1u, "first transition source edge from node child count copied");
     EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_from_node_span.start_offset == 80u, "first transition source edge from node span start copied");
     EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_from_node_span.end_offset == 96u, "first transition source edge from node span end copied");
     EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_from_node_span.start_line == 4u, "first transition source edge from node span line copied");
@@ -322,6 +342,9 @@ static int runtime_boundary_allows_valid_lat_pipeline_metadata(void) {
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_transition_source_edge_to_node_value, "root") == 0, "first transition source edge to node value copied");
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_transition_source_edge_to_node_operator, "=") == 0, "first transition source edge to node operator copied");
     EXPECT_TRUE(strcmp(result.record.lat_lir_first_transition_source_edge_to_node_binding, "lat.state.root") == 0, "first transition source edge to node binding copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_to_node_parent_index == 0u, "first transition source edge to node parent copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_to_node_first_child_index == 3u, "first transition source edge to node first child copied");
+    EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_to_node_child_count == 1u, "first transition source edge to node child count copied");
     EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_to_node_span.start_offset == 31u, "first transition source edge to node span start copied");
     EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_to_node_span.end_offset == 64u, "first transition source edge to node span end copied");
     EXPECT_TRUE(result.record.lat_lir_first_transition_source_edge_to_node_span.start_line == 3u, "first transition source edge to node span line copied");
@@ -613,6 +636,9 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_pipeline_first_comment_start_column=1\n") != 0, "pipeline comment column report present");
     EXPECT_TRUE(strstr(report, "lat_lir_source_kind=lat_module\n") != 0, "lat lir source kind report present");
     EXPECT_TRUE(strstr(report, "lat_lir_module_name=RuntimeEvidenceModule\n") != 0, "lat lir module name report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_card_name=\n") != 0, "lat lir card name report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_effect=none\n") != 0, "lat lir effect report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_boundary=lat_semantic_only\n") != 0, "lat lir boundary report present");
     EXPECT_TRUE(strstr(report, "lat_lir_report_classification=materialized\n") != 0, "lat lir report classification report present");
     EXPECT_TRUE(strstr(report, "lat_lir_shape_kind=lat-module-graph\n") != 0, "lat lir shape report present");
     EXPECT_TRUE(strstr(report, "lat_lir_span_start_line=2\n") != 0, "lat lir span line report present");
@@ -636,6 +662,9 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_value=root\n") != 0, "lat lir first node value report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_operator==\n") != 0, "lat lir first node operator report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_binding=lat.state.root\n") != 0, "lat lir first node binding report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_parent_index=0\n") != 0, "lat lir first node parent report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_first_child_index=3\n") != 0, "lat lir first node first child report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_child_count=1\n") != 0, "lat lir first node child count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_span_start_line=3\n") != 0, "lat lir first node span line report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_span_start_column=5\n") != 0, "lat lir first node span column report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_lat_node_span_end_line=3\n") != 0, "lat lir first node span end line report present");
@@ -647,6 +676,9 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_node_value=RootCell\n") != 0, "lat lir first transition node value report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_node_operator=from\n") != 0, "lat lir first transition node operator report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_node_binding=lat.transition.boot\n") != 0, "lat lir first transition node binding report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_node_parent_index=0\n") != 0, "lat lir first transition node parent report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_node_first_child_index=6\n") != 0, "lat lir first transition node first child report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_node_child_count=1\n") != 0, "lat lir first transition node child count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_node_span_start_offset=80\n") != 0, "lat lir first transition node span start report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_node_span_end_offset=96\n") != 0, "lat lir first transition node span end report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_node_span_start_line=4\n") != 0, "lat lir first transition node span line report present");
@@ -691,6 +723,9 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_from_node_value=RootCell\n") != 0, "first transition source edge from node value report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_from_node_operator=from\n") != 0, "first transition source edge from node operator report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_from_node_binding=lat.transition.boot\n") != 0, "first transition source edge from node binding report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_from_node_parent_index=0\n") != 0, "first transition source edge from node parent report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_from_node_first_child_index=6\n") != 0, "first transition source edge from node first child report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_from_node_child_count=1\n") != 0, "first transition source edge from node child count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_from_node_span_start_offset=80\n") != 0, "first transition source edge from node span start report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_from_node_span_end_offset=96\n") != 0, "first transition source edge from node span end report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_from_node_span_start_line=4\n") != 0, "first transition source edge from node span line report present");
@@ -702,6 +737,9 @@ static int runtime_boundary_reports_lat_pipeline_evidence(void) {
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_to_node_value=root\n") != 0, "first transition source edge to node value report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_to_node_operator==\n") != 0, "first transition source edge to node operator report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_to_node_binding=lat.state.root\n") != 0, "first transition source edge to node binding report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_to_node_parent_index=0\n") != 0, "first transition source edge to node parent report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_to_node_first_child_index=3\n") != 0, "first transition source edge to node first child report present");
+    EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_to_node_child_count=1\n") != 0, "first transition source edge to node child count report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_to_node_span_start_offset=31\n") != 0, "first transition source edge to node span start report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_to_node_span_end_offset=64\n") != 0, "first transition source edge to node span end report present");
     EXPECT_TRUE(strstr(report, "lat_lir_first_transition_source_edge_to_node_span_start_line=3\n") != 0, "first transition source edge to node span line report present");

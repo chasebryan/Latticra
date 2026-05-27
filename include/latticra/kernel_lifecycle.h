@@ -9,7 +9,7 @@ extern "C" {
 
 #define LATTICRA_KERNEL_LIFECYCLE_LABEL_MAX 64u
 #define LATTICRA_KERNEL_LIFECYCLE_REPORT_MAX 16384u
-#define LATTICRA_KERNEL_LIFECYCLE_STEP_MAX 25u
+#define LATTICRA_KERNEL_LIFECYCLE_STEP_MAX 28u
 
 typedef struct {
     latticra_kernel_state_kind_t target_state;

@@ -64,7 +64,7 @@ pub fn launch(config: InstallerConfig) -> Receiver<InstallEvent> {
     thread::spawn(move || {
         let _ = tx.send(InstallEvent::Started);
         if let Err(err) = run_engine(config, &tx) {
-            let _ = tx.send(InstallEvent::Failed(err));
+            send_failure(&tx, err);
         }
     });
     rx
@@ -78,10 +78,37 @@ pub fn launch_removal(
     thread::spawn(move || {
         let _ = tx.send(InstallEvent::Started);
         if let Err(err) = run_removal_engine(config, operation, &tx) {
-            let _ = tx.send(InstallEvent::Failed(err));
+            send_failure(&tx, err);
         }
     });
     rx
+}
+
+fn send_log(tx: &Sender<InstallEvent>, line: impl AsRef<str>) {
+    let _ = tx.send(InstallEvent::Log(sanitize_log_line(line.as_ref())));
+}
+
+fn send_failure(tx: &Sender<InstallEvent>, err: impl AsRef<str>) {
+    let _ = tx.send(InstallEvent::Failed(sanitize_log_line(err.as_ref())));
+}
+
+fn send_network_authority_evidence(tx: &Sender<InstallEvent>, config: &InstallerConfig) {
+    send_log(tx, "ENGINE: network_authority=0");
+    send_log(
+        tx,
+        format!(
+            "ENGINE: network_authority_denied={}",
+            u8::from(config.network_authority_denied())
+        ),
+    );
+    send_log(tx, "ENGINE: network_fetch_authority=0");
+    send_log(
+        tx,
+        format!(
+            "ENGINE: network_fetch_authority_denied={}",
+            u8::from(!config.updater.allow_network_fetch)
+        ),
+    );
 }
 
 fn run_engine(config: InstallerConfig, tx: &Sender<InstallEvent>) -> Result<(), String> {
@@ -102,18 +129,10 @@ fn run_engine(config: InstallerConfig, tx: &Sender<InstallEvent>) -> Result<(), 
 
     let script = trusted_installer_script(&installer_root, APPLY_SCRIPT)?;
 
-    let _ = tx.send(InstallEvent::Log(format!(
-        "ENGINE: config={}",
-        config_path.display()
-    )));
-    let _ = tx.send(InstallEvent::Log(format!(
-        "ENGINE: plan={}",
-        plan_path.display()
-    )));
-    let _ = tx.send(InstallEvent::Log(format!(
-        "ENGINE: apply_script={}",
-        script.display()
-    )));
+    send_log(tx, format!("ENGINE: config={}", config_path.display()));
+    send_log(tx, format!("ENGINE: plan={}", plan_path.display()));
+    send_log(tx, format!("ENGINE: apply_script={}", script.display()));
+    send_network_authority_evidence(tx, &config);
 
     let child = Command::new(SYSTEM_SHELL)
         .current_dir(&installer_root)
@@ -145,18 +164,19 @@ fn run_removal_engine(
     })?;
     let script = trusted_installer_script(&installer_root, UNINSTALL_SCRIPT)?;
 
-    let _ = tx.send(InstallEvent::Log(format!(
-        "ENGINE: removal_script={}",
-        script.display()
-    )));
-    let _ = tx.send(InstallEvent::Log(format!(
-        "ENGINE: removal_mode={}",
-        operation.mode_label(config.safety.dry_run)
-    )));
-    let _ = tx.send(InstallEvent::Log(format!(
-        "ENGINE: removal_prefix={}",
-        config.install_prefix
-    )));
+    send_log(tx, format!("ENGINE: removal_script={}", script.display()));
+    send_network_authority_evidence(tx, &config);
+    send_log(
+        tx,
+        format!(
+            "ENGINE: removal_mode={}",
+            operation.mode_label(config.safety.dry_run)
+        ),
+    );
+    send_log(
+        tx,
+        format!("ENGINE: removal_prefix={}", config.install_prefix),
+    );
 
     let mut command = Command::new(SYSTEM_SHELL);
     command
@@ -188,12 +208,10 @@ fn stream_child(mut child: std::process::Child, tx: &Sender<InstallEvent>) -> Re
             for line in reader.lines() {
                 match line {
                     Ok(line) => {
-                        let _ = tx.send(InstallEvent::Log(sanitize_log_line(&line)));
+                        send_log(&tx, line);
                     }
                     Err(err) => {
-                        let _ = tx.send(InstallEvent::Log(format!(
-                            "ENGINE: stdout read error: {err}"
-                        )));
+                        send_log(&tx, format!("ENGINE: stdout read error: {err}"));
                     }
                 }
             }
@@ -207,15 +225,10 @@ fn stream_child(mut child: std::process::Child, tx: &Sender<InstallEvent>) -> Re
             for line in reader.lines() {
                 match line {
                     Ok(line) => {
-                        let _ = tx.send(InstallEvent::Log(format!(
-                            "stderr: {}",
-                            sanitize_log_line(&line)
-                        )));
+                        send_log(&tx, format!("stderr: {line}"));
                     }
                     Err(err) => {
-                        let _ = tx.send(InstallEvent::Log(format!(
-                            "ENGINE: stderr read error: {err}"
-                        )));
+                        send_log(&tx, format!("ENGINE: stderr read error: {err}"));
                     }
                 }
             }
@@ -750,6 +763,77 @@ mod tests {
 
         assert!(line.ends_with("...[truncated]"));
         assert!(line.len() < oversized.len());
+    }
+
+    #[test]
+    fn send_log_sanitizes_internal_engine_events() {
+        let (tx, rx) = channel();
+        send_log(
+            &tx,
+            format!(
+                "ENGINE: note=ok\n{}{}{}{}",
+                "OPENAI", "_API_KEY=", "sk-proj-", "secret12345678901234567890"
+            ),
+        );
+
+        match rx.recv().expect("receive event") {
+            InstallEvent::Log(line) => {
+                assert!(line.contains("\\n"));
+                assert!(!line.contains('\n'));
+                assert!(line.contains(&format!("{}{}[redacted]", "OPENAI", "_API_KEY=")));
+                assert!(!line.contains("secret12345678901234567890"));
+            }
+            event => panic!("expected log event, got {event:?}"),
+        }
+    }
+
+    #[test]
+    fn send_failure_sanitizes_engine_failure_events() {
+        let (tx, rx) = channel();
+        send_failure(
+            &tx,
+            format!(
+                "failed\r{}{}{}{}",
+                "GITHUB", "_TOKEN=", "github_pat_", "abcdefghijklmnopqrstuvwxyz1234567890"
+            ),
+        );
+
+        match rx.recv().expect("receive event") {
+            InstallEvent::Failed(line) => {
+                assert!(line.contains("\\r"));
+                assert!(!line.contains('\r'));
+                assert!(line.contains(&format!("{}{}[redacted]", "GITHUB", "_TOKEN=")));
+                assert!(!line.contains("abcdefghijklmnopqrstuvwxyz1234567890"));
+            }
+            event => panic!("expected failed event, got {event:?}"),
+        }
+    }
+
+    #[test]
+    fn send_network_authority_evidence_reports_denied_floor() {
+        let (tx, rx) = channel();
+        send_network_authority_evidence(&tx, &InstallerConfig::default());
+
+        let mut lines = Vec::new();
+        for _ in 0..4 {
+            match rx.recv().expect("receive network evidence event") {
+                InstallEvent::Log(line) => lines.push(line),
+                event => panic!("expected log event, got {event:?}"),
+            }
+        }
+
+        assert!(lines
+            .iter()
+            .any(|line| line == "ENGINE: network_authority=0"));
+        assert!(lines
+            .iter()
+            .any(|line| line == "ENGINE: network_authority_denied=1"));
+        assert!(lines
+            .iter()
+            .any(|line| line == "ENGINE: network_fetch_authority=0"));
+        assert!(lines
+            .iter()
+            .any(|line| line == "ENGINE: network_fetch_authority_denied=1"));
     }
 
     #[test]

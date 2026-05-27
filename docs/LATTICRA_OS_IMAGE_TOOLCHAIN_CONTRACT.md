@@ -30,7 +30,7 @@ The build and test lanes require visibility for:
 qemu-img
 qemu-system-x86_64
 xorriso
-grub-mkrescue
+grub-mkrescue compatible binary
 tar
 gzip
 cpio
@@ -39,6 +39,10 @@ sed
 find
 sha256sum or shasum
 ```
+
+The GRUB rescue tool may be provided as `grub-mkrescue` on Linux hosts or
+`x86_64-elf-grub-mkrescue` on Homebrew-based macOS hosts. The preflight reports
+the resolved path as `grub_mkrescue_path=<path-or-missing>`.
 
 The current toolchain may be partially present. Missing required tools must keep:
 

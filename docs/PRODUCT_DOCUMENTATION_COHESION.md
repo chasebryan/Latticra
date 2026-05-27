@@ -1,7 +1,7 @@
 # Product Documentation Cohesion
 
 Status: active product-documentation cohesion guide
-Last updated: 2026-05-26 CDT
+Last updated: 2026-05-27 CDT
 Scope: public README, documentation hub, static site pages, installer docs, package docs, security docs, status records, subsystem maps, and reader routes.
 
 ## Purpose
@@ -24,6 +24,16 @@ Use [`DOCUMENTATION_GLOSSARY.md`](DOCUMENTATION_GLOSSARY.md) when product copy d
 Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) before broad product-surface changes to score findability, current status visibility, claim safety, traceability, validation, reader-route fitness, public/source consistency, and non-claim proximity.
 
 Use [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) before creating or refreshing subsystem landing pages so subsystem progress does not imply product readiness.
+
+Use [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md) before changing static public pages so HTML summaries remain mirrors of source Markdown.
+
+Use [`DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md`](DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md) when product-facing wording disagrees with source records, status, non-claims, or public mirrors.
+
+Use [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) when product-facing wording depends on stale, superseded, archived, planning, draft, local-only, no-effect, report-only, or blocked records.
+
+Use [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) when deciding whether a product-facing wording change stays local or must expand to public entries, source records, mirrors, status records, validation paths, or non-claims.
+
+Use [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) when product-facing copy depends on status records, status-index entries, status mirrors, estimate records, or public-entry alignment status notes.
 
 ## Cohesion Promise
 
@@ -101,9 +111,12 @@ Use this route for someone changing documentation or product posture:
 6. [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md)
 7. [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md)
 8. [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md)
-9. [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md)
-10. The relevant subsystem contract and status record
-11. The exact guard named by that record
+9. [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md)
+10. [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md)
+11. [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md)
+12. [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md)
+13. The relevant subsystem contract and status record
+14. The exact guard named by that record
 
 The route should prevent documentation from getting ahead of implementation or validation evidence.
 
@@ -168,14 +181,19 @@ Run this review when public wording changes:
 3. Does the status record use the same posture words?
 4. Does the page say what is blocked?
 5. Does the validation path prove the narrow claim?
-6. Does [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) identify the source record, mirror, validation, and non-claim boundary?
-7. Does [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) identify the narrowest relevant checks?
-8. Does [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) identify the correct narrowing or demotion path if records disagree?
-9. Does the change preserve the documentation-only boundary if no implementation changed?
-10. Does the wording follow [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md)?
-11. Does [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) leave every relevant dimension healthy or explicitly handled as a watch/failing item?
-12. Does [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) apply because a subsystem landing page or subsystem public summary changed?
-13. Does the change need a [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) outcome label?
+6. Does [`DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md`](DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md) identify which record wins if records disagree?
+7. Does [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) identify the source record, mirror, validation, and non-claim boundary?
+8. Does [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) identify the narrowest relevant checks?
+9. Does [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) identify the correct narrowing or demotion path if records disagree?
+10. Does [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) identify whether any stale, superseded, archived, planning, draft, local-only, no-effect, report-only, or blocked record is involved?
+11. Does [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) identify which public entries, source records, mirrors, validation paths, status records, or non-claims need review?
+12. Does [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) apply because status records, status mirrors, status-index entries, estimates, or public-entry alignment notes changed?
+13. Does the change preserve the documentation-only boundary if no implementation changed?
+14. Does the wording follow [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md)?
+15. Does [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) leave every relevant dimension healthy or explicitly handled as a watch/failing item?
+16. Does [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) apply because a subsystem landing page or subsystem public summary changed?
+17. Does [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md) apply because a static public HTML page changed?
+18. Does the change need a [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) outcome label?
 
 ## Maintenance Boundary
 

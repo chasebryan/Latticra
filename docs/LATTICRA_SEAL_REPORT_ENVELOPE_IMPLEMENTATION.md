@@ -175,6 +175,6 @@ seal report envelope invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is signature request or policy decision report propagation from ready crypto-graduation-gated sealed report-envelope metadata.
+The next valid Latticra Seal planning slice is signing authorization or policy decision report propagation from ready crypto-graduation-gated signature request metadata.
 
 That future slice must remain contract-first and must not add private-key handling, signing, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately contracted, implemented, and guarded.

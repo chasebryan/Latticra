@@ -14,7 +14,7 @@ extern "C" {
 #define LATTICRA_SEAL_SIGNATURE_REQUEST_ALGORITHM_MAX 32u
 #define LATTICRA_SEAL_SIGNATURE_REQUEST_STATE_MAX 64u
 #define LATTICRA_SEAL_SIGNATURE_REQUEST_DIGEST_MAX 65u
-#define LATTICRA_SEAL_SIGNATURE_REQUEST_RENDER_MAX 4096u
+#define LATTICRA_SEAL_SIGNATURE_REQUEST_RENDER_MAX 8192u
 
 typedef enum {
     LATTICRA_SEAL_SIGNATURE_REQUEST_OK = 0,
@@ -25,7 +25,8 @@ typedef enum {
     LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_UNKNOWN_SIGNATURE = 5,
     LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_RUNTIME_AUTHORITY = 6,
     LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_HOST_EFFECT = 7,
-    LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_NETWORK_EFFECT = 8
+    LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_NETWORK_EFFECT = 8,
+    LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_CRYPTO_GRADUATION_GATE = 9
 } latticra_seal_signature_request_error_t;
 
 typedef struct {
@@ -40,6 +41,9 @@ typedef struct {
     char message_digest_algorithm[LATTICRA_SEAL_SIGNATURE_REQUEST_ALGORITHM_MAX];
     char message_digest_hex[LATTICRA_SEAL_SIGNATURE_REQUEST_DIGEST_MAX];
     char public_key_identity_label[LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX];
+    char crypto_graduation_profile[LATTICRA_SEAL_SIGNATURE_REQUEST_PROFILE_MAX];
+    char assurance_baseline_profile[LATTICRA_SEAL_SIGNATURE_REQUEST_PROFILE_MAX];
+    char crypto_graduation_gate_state[LATTICRA_SEAL_SIGNATURE_REQUEST_STATE_MAX];
     char requested_capability[LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX];
     char requested_effect[LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX];
     char requested_handoff[LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX];
@@ -47,6 +51,12 @@ typedef struct {
     char requested_envelope[LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX];
     char requested_signature[LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX];
     char requested_scope[LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX];
+    unsigned crypto_graduation_gate_present;
+    unsigned crypto_graduation_gate_passed;
+    unsigned standard_expectations_met;
+    unsigned local_verify_graduated;
+    unsigned receipt_promotion_graduated;
+    unsigned authority_promotion_allowed;
     char envelope_state[LATTICRA_SEAL_SIGNATURE_REQUEST_STATE_MAX];
     unsigned envelope_ready;
     char signature_request_state[LATTICRA_SEAL_SIGNATURE_REQUEST_STATE_MAX];
