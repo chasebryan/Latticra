@@ -10,6 +10,8 @@ This playbook defines what to do when Latticra documentation disagrees with itse
 
 Use it when a public page, source record, status mirror, estimate table, package README, installer guide, security page, or subsystem landing page appears to overstate, understate, or contradict the current evidence.
 
+Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) to classify broad documentation health issues before choosing the drift response.
+
 This playbook does not promote claims. It narrows or aligns documentation until the evidence supports stronger wording.
 
 ## Drift Types
@@ -35,10 +37,11 @@ When drift appears:
 2. Find the source record through [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md).
 3. Check allowed and blocked wording in [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
 4. Check terminology in [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
-5. Select validation commands with [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
-6. Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) if public wording, mirrors, estimates, platform posture, security wording, or non-claims change.
-7. Update only the surfaces whose reader-facing claim changed.
-8. Run the selected validation checks.
+5. Score broad surface health with [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) when the drift affects findability, reader routes, public/source consistency, security posture, platform posture, estimates, or subsystem landing pages.
+6. Select validation commands with [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
+7. Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) if public wording, mirrors, estimates, platform posture, security wording, or non-claims change.
+8. Update only the surfaces whose reader-facing claim changed.
+9. Run the selected validation checks.
 
 ## Demotion Rule
 

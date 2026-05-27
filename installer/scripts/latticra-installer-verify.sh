@@ -25,6 +25,7 @@ LC_NAMESPACE_CONTRACT="$PREFIX/share/latticra/lc/namespace/contract.toml"
 LC_ROOTFS_CONTRACT="$PREFIX/share/latticra/lc/rootfs/contract.toml"
 LC_PACKAGES_CONTRACT="$PREFIX/share/latticra/lc/packages/contract.toml"
 LC_INIT_CONTRACT="$PREFIX/share/latticra/lc/init/contract.toml"
+LC_SERVICES_CONTRACT="$PREFIX/share/latticra/lc/services/contract.toml"
 UPDATER_CONFIG="$PREFIX/etc/latticra/updater.toml"
 UPDATER_POLICY="$PREFIX/share/latticra/updater/policy.toml"
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/latticra-installer-verify.XXXXXX")"
@@ -148,6 +149,7 @@ check "LC namespace contract" "$LC_NAMESPACE_CONTRACT"
 check "LC rootfs contract" "$LC_ROOTFS_CONTRACT"
 check "LC packages contract" "$LC_PACKAGES_CONTRACT"
 check "LC init contract" "$LC_INIT_CONTRACT"
+check "LC services contract" "$LC_SERVICES_CONTRACT"
 check "updater config" "$UPDATER_CONFIG"
 check "updater policy" "$UPDATER_POLICY"
 
@@ -168,6 +170,8 @@ check_contains "LC packages contract profile" 'packages_contract_profile = "lc-p
 check_contains "LC packages contract metadata" 'packages_contract_present = true' "$LC_INSTALL_CONFIG"
 check_contains "LC init contract profile" 'init_contract_profile = "lc-init-v0"' "$LC_INSTALL_CONFIG"
 check_contains "LC init contract metadata" 'init_contract_present = true' "$LC_INSTALL_CONFIG"
+check_contains "LC services contract profile" 'services_contract_profile = "lc-services-v0"' "$LC_INSTALL_CONFIG"
+check_contains "LC services contract metadata" 'services_contract_present = true' "$LC_INSTALL_CONFIG"
 check_contains "LC external host command authority disabled" 'allow_external_host_commands = false' "$LC_INSTALL_CONFIG"
 check_contains "LC install-config registry command" 'name=lc install-config category=core effect=none capability=lc.install.config' "$LC_COMMAND_REGISTRY"
 check_contains "LC standalone registry command" 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' "$LC_COMMAND_REGISTRY"
@@ -177,6 +181,7 @@ check_contains "LC namespace registry command" 'name=lc namespace category=core 
 check_contains "LC rootfs registry command" 'name=lc rootfs category=core effect=none capability=lc.rootfs.contract' "$LC_COMMAND_REGISTRY"
 check_contains "LC packages registry command" 'name=lc packages category=core effect=none capability=lc.packages.contract' "$LC_COMMAND_REGISTRY"
 check_contains "LC init registry command" 'name=lc init category=core effect=none capability=lc.init.contract' "$LC_COMMAND_REGISTRY"
+check_contains "LC services registry command" 'name=lc services category=core effect=none capability=lc.services.contract' "$LC_COMMAND_REGISTRY"
 check_contains "LC workspace command surface" 'command_surface = "lc workspace"' "$LC_WORKSPACE_CONTRACT"
 check_contains "LC workspace mount denied" 'workspace_mount_allowed = false' "$LC_WORKSPACE_CONTRACT"
 check_contains "LC workspace host process denied" 'host_process_launch_allowed = false' "$LC_WORKSPACE_CONTRACT"
@@ -201,6 +206,12 @@ check_contains "LC init PID 1 denied" 'pid1_claim_allowed = false' "$LC_INIT_CON
 check_contains "LC init service start denied" 'service_start_allowed = false' "$LC_INIT_CONTRACT"
 check_contains "LC init process supervision denied" 'process_supervision_allowed = false' "$LC_INIT_CONTRACT"
 check_contains "LC init host process denied" 'host_process_launch_allowed = false' "$LC_INIT_CONTRACT"
+check_contains "LC services command surface" 'command_surface = "lc services"' "$LC_SERVICES_CONTRACT"
+check_contains "LC services registry write denied" 'service_registry_write_allowed = false' "$LC_SERVICES_CONTRACT"
+check_contains "LC services start denied" 'service_start_allowed = false' "$LC_SERVICES_CONTRACT"
+check_contains "LC services enable denied" 'service_enable_allowed = false' "$LC_SERVICES_CONTRACT"
+check_contains "LC services process supervision denied" 'process_supervision_allowed = false' "$LC_SERVICES_CONTRACT"
+check_contains "LC services host process denied" 'host_process_launch_allowed = false' "$LC_SERVICES_CONTRACT"
 check_contains "updater panel-owned config" 'panel_owned = true' "$UPDATER_CONFIG"
 check_contains "updater network authority disabled" 'allow_network_fetch = false' "$UPDATER_CONFIG"
 check_contains "updater apply mode" 'update_apply_mode = "guarded-local-prefix-reinstall"' "$UPDATER_CONFIG"
@@ -254,6 +265,7 @@ if [ -x "$LC_COMMAND" ]; then
     check_contains "LC wrapper rootfs contract present" 'rootfs_contract_present=1' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper packages contract present" 'packages_contract_present=1' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper init contract present" 'init_contract_present=1' "$TMP_DIR/lc-install-config.txt"
+    check_contains "LC wrapper services contract present" 'services_contract_present=1' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-install-config.txt"
   else
     echo "failed: $LC_COMMAND_WRAPPER install-config" >&2
@@ -326,6 +338,19 @@ if [ -x "$LC_COMMAND" ]; then
     check_contains "LC wrapper init host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-init.txt"
   else
     echo "failed: $LC_COMMAND_WRAPPER init" >&2
+    failures=$((failures + 1))
+  fi
+
+  if "$LC_COMMAND" services > "$TMP_DIR/lc-services.txt"; then
+    check_contains "LC wrapper services report" 'LATTICRA CONSOLE SERVICES CONTRACT' "$TMP_DIR/lc-services.txt"
+    check_contains "LC wrapper services command surface" 'command_surface=lc services' "$TMP_DIR/lc-services.txt"
+    check_contains "LC wrapper services registry write denied" 'service_registry_write_allowed=0' "$TMP_DIR/lc-services.txt"
+    check_contains "LC wrapper services start denied" 'service_start_allowed=0' "$TMP_DIR/lc-services.txt"
+    check_contains "LC wrapper services enable denied" 'service_enable_allowed=0' "$TMP_DIR/lc-services.txt"
+    check_contains "LC wrapper services process supervision denied" 'process_supervision_allowed=0' "$TMP_DIR/lc-services.txt"
+    check_contains "LC wrapper services host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-services.txt"
+  else
+    echo "failed: $LC_COMMAND_WRAPPER services" >&2
     failures=$((failures + 1))
   fi
 fi

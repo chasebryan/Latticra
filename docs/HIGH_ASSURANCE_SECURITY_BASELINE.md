@@ -23,6 +23,7 @@ identity, credential, and access management requirements
 security logging, monitoring, and detection requirements
 backup, recovery, and cyber resilience requirements
 secure configuration and change management requirements
+network exposure and remote access requirements
 incident-response and disclosure requirements
 non-claims that remain closed
 ```
@@ -45,6 +46,10 @@ Date checked: 2026-05-26
 | CISA/FBI/NSA international Best Practices for Event Logging and Threat Detection | Event logging supports continued operations and resilience through visibility, detection, and investigation across cloud, enterprise, mobile, and OT environments. | Require a security logging, monitoring, and detection baseline before hosted services, telemetry export, SIEM integration, or detection claims. |
 | CISA Logging Made Easy and CISA logging guidance | Centralized log management, user activity visibility, alerting, and regular review improve threat detection. | Require event-source inventory, log centralization/export planning, redaction, triage ownership, and incident handoff before monitoring claims. |
 | CISA Zero Trust Maturity Model v2 | Mature zero trust uses identity, devices, networks, applications/workloads, and data pillars with visibility, analytics, automation, orchestration, and governance. | Treat each Latticra request as a per-request policy decision; preserve deny-by-default behavior for network, host, recovery, boot, and tool authority. |
+| NSA Zero Trust Network and Environment Pillar | Network/environment zero trust requires segmentation, visibility, policy enforcement, and maturity planning for network flows and access. | Require network exposure and remote-access evidence before service-listener, remote administration, ingress/egress, segmentation, or hosted network claims. |
+| NSA Network Infrastructure Security Guide | Network infrastructure should be hardened with secure management, inventory, management-plane separation, routing/switching hygiene, and monitored administration. | Keep network infrastructure work metadata-only until device, service, firewall, route, management, and exception evidence exists. |
+| CISA/NSA/FBI Guide to Securing Remote Access Software | Remote access software needs inventory, MFA, device posture, least privilege, monitoring, and secure configuration. | Block remote access and remote administration claims until inventory, phishing-resistant MFA path, device posture, logs, and owner evidence are recorded. |
+| CISA/NSA/MS-ISAC Remote Monitoring and Management Software Advisory | RMM tools are abused when unapproved, unmanaged, or insufficiently monitored. | Require approved RMM inventory, allowlisting, unauthorized RMM detection planning, and incident handoff before any RMM claim. |
 | NIST SP 800-63-4 Digital Identity Guidelines | Current digital identity guidance covers identity proofing, authentication, authenticator management, federation, and assertions. | Use SP 800-63-4 vocabulary for future operator identity, account lifecycle, MFA, SSO/federation, and authentication non-claims. |
 | CISA/NSA/FBI/MS-ISAC Phishing Guidance | Phishing-resistant MFA and social-engineering-resistant account processes reduce account-compromise risk. | Require phishing-resistant MFA planning and help-desk identity verification before privileged or remote access claims. |
 | CISA Known Exploited Vulnerabilities Catalog | Internet-facing exploited vulnerabilities need timely mitigation or compensating controls. | Before any internet-facing asset exists, create a KEV review gate; current project has no internet-facing runtime authority. |
@@ -56,6 +61,8 @@ Date checked: 2026-05-26
 | NIST SP 800-34 Rev. 1 and SP 800-184 | Contingency planning and cybersecurity event recovery require business impact analysis, recovery strategy, playbooks, realistic testing, and continuous improvement. | Require recovery scope, RTO/RPO, restore testing, rollback, recovery authorization, and lessons-learned evidence before recoverability claims. |
 | NIST SP 800-128 | Security-focused configuration management uses baseline configuration, configuration control, monitoring, and SecCM practices to manage risk. | Require configuration item inventory, baseline configuration, owner, change record, testing, rollback, and drift-detection evidence before configuration claims. |
 | NIST SP 800-70 Rev. 5 | Security configuration checklists help configure products to a risk posture, verify configuration, identify unauthorized change, and produce posture artifacts. | Require checklist evidence and unauthorized-change detection planning before secure configuration, hardening, or scanning claims. |
+| NIST SP 800-41 Rev. 1 | Firewall policy requires planned architecture, rule review, ingress and egress filtering, lifecycle maintenance, and monitoring. | Require firewall policy, inbound owner, outbound egress, segmentation, and rule-review evidence before network control claims. |
+| NIST SP 800-207A | Zero-trust access in multi-location environments uses policy decisions, service/workload identity, and distributed access control. | Keep service access and workload network authority denied until per-request policy evidence exists. |
 | NIST SP 800-92 and SP 800-92 Rev. 1 draft | Log management requires planning for generation, transmission, storage, access, analysis, retention, and disposal. | Use SP 800-92 vocabulary for future audit-event selection, log lifecycle, retention, access, and disposal evidence. |
 | NIST SP 800-218 SSDF v1.1 | Secure development should prepare the organization, protect software, produce well-secured software, and respond to vulnerabilities. | Keep tests, threat-model docs, protected source/build processes, vulnerability handling, and root-cause-driven fixes in the quality gate. |
 | NIST SP 800-53 Rev. 5, Release 5.2.0 | Control families cover access, audit, configuration, identification, incident response, risk assessment, system acquisition, system integrity, and supply-chain risk management. | Use SP 800-53 as the high-assurance control vocabulary for future production profiles, not as a current compliance claim. |
@@ -95,12 +102,14 @@ identity_credential_access_management_baseline_present=1
 security_logging_monitoring_baseline_present=1
 backup_recovery_resilience_baseline_present=1
 secure_configuration_change_management_baseline_present=1
+network_exposure_remote_access_baseline_present=1
 kev_release_review_required=1
 fips_crypto_boundary_required_before_production_crypto=1
 phishing_resistant_mfa_required_before_remote_privileged_access=1
 security_event_logging_required_before_hosted_service=1
 backup_restore_recovery_evidence_required_before_hosted_service=1
 secure_configuration_change_control_required_before_hosted_service=1
+network_exposure_review_required_before_hosted_service=1
 sbom_required_before_production_installer=1
 third_party_security_validation_required_before_security_release=1
 incident_response_plan_required_before_production_service=1
@@ -270,6 +279,27 @@ No future hosted service, production runtime, production installer, production p
 - owner and expiration for configuration exceptions;
 - operator-visible configuration non-claims.
 
+## Network Exposure and Remote Access Requirements
+
+No future hosted service, internet-facing service, production runtime, production installer, production package, infrastructure automation lane, remote administration path, remote access software claim, RMM claim, service-listener claim, ingress/egress control claim, firewall policy claim, segmentation claim, DNS/TLS service claim, or production network claim may be promoted until Latticra has:
+
+- network asset inventory and owners;
+- network data-flow map;
+- internet-exposed service inventory;
+- inbound port, protocol, and owner record;
+- outbound egress policy;
+- firewall policy review;
+- segmentation boundary record;
+- remote access tool inventory and approved remote access path;
+- phishing-resistant MFA or exception record for remote access;
+- device posture requirement;
+- approved RMM allowlist and unauthorized RMM detection plan;
+- DNS resolver policy and TLS certificate lifecycle record;
+- network log-source inventory and flow visibility plan;
+- incident handoff path;
+- owner and expiration for network exceptions;
+- operator-visible network non-claims.
+
 ## Operational Security Requirements
 
 Before any production service, hosted system, or critical infrastructure deployment:
@@ -277,6 +307,7 @@ Before any production service, hosted system, or critical infrastructure deploym
 - assign a named cybersecurity owner;
 - maintain asset inventory and data-flow inventory;
 - define secure configuration baseline and change-control evidence;
+- define network exposure and remote-access evidence;
 - require MFA/SSO for privileged accounts;
 - require phishing-resistant MFA planning for remote and privileged access;
 - prohibit shared administrative accounts and default credentials;
@@ -308,6 +339,7 @@ docs/IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md
 docs/SECURITY_LOGGING_MONITORING_BASELINE.md
 docs/BACKUP_RECOVERY_RESILIENCE_BASELINE.md
 docs/SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md
+docs/NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE.md
 docs/security/C_CPP_SECURITY_PROFILE.md
 docs/security/C_ABI_BOUNDARY_POLICY.md
 scripts/test-quality-safety-guards.sh
@@ -324,6 +356,7 @@ scripts/test-identity-credential-access-management-baseline.sh
 scripts/test-security-logging-monitoring-baseline.sh
 scripts/test-backup-recovery-resilience-baseline.sh
 scripts/test-secure-configuration-change-management-baseline.sh
+scripts/test-network-exposure-remote-access-baseline.sh
 ```
 
 ## Non-Claims

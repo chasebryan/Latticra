@@ -82,10 +82,10 @@ scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
 Recommended next slice:
 
 ```text
-Add openSUSE RPM validation promotion blocker matrix before any package validation result can be accepted.
+Add openSUSE RPM build-evidence intake denial contract before any local build lane can open.
 ```
 
-That future lane should tie source, environment, artifact, payload, install/remove, and OBS non-claim records together while keeping RPM builds and readiness blocked.
+That future lane should define how build evidence intake is refused until the blocker matrix opens, while keeping RPM builds and readiness blocked.
 
 ## Validation
 

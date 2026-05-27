@@ -88,6 +88,7 @@ opensuse_rpm_artifact_naming_contract_present=1
 opensuse_rpm_payload_inspection_contract_present=1
 opensuse_rpm_install_remove_transcript_contract_present=1
 opensuse_obs_publication_non_claim_review_contract_present=1
+opensuse_rpm_validation_promotion_blocker_matrix_contract_present=1
 opensuse_obs_publication_claimed=0
 opensuse_official_package_claimed=0
 suse_endorsement_claimed=0
@@ -159,6 +160,7 @@ docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
 docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
 docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
 docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
 scripts/test-opensuse-rpmlint-osc-availability.sh
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
 scripts/test-opensuse-rpmlint-findings-classification.sh
@@ -171,6 +173,7 @@ scripts/test-opensuse-rpm-artifact-naming-contract.sh
 scripts/test-opensuse-rpm-payload-inspection-contract.sh
 scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
 scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
+scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh
 .github/workflows/opensuse-rpmlint-osc-availability.yml
 .github/workflows/opensuse-rpmlint-static-spec-lane.yml
 .github/workflows/opensuse-rpmlint-findings-classification.yml
@@ -183,6 +186,7 @@ scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
 .github/workflows/opensuse-rpm-payload-inspection-contract.yml
 .github/workflows/opensuse-rpm-install-remove-transcript-contract.yml
 .github/workflows/opensuse-obs-publication-non-claim-review-contract.yml
+.github/workflows/opensuse-rpm-validation-promotion-blocker-matrix-contract.yml
 ```
 
 Before any Open Build Service publication or submit request can be claimed, the lane needs evidence for:
@@ -201,6 +205,7 @@ RPM artifact naming contract
 RPM payload inspection contract
 RPM install/remove transcript contract
 OBS publication non-claim review contract
+RPM validation promotion blocker matrix
 package artifact inspection
 install/remove behavior transcript
 ```
@@ -227,10 +232,10 @@ claim operating-system completeness
 Recommended next slice:
 
 ```text
-Add openSUSE RPM validation promotion blocker matrix before any package validation result can be accepted.
+Add openSUSE RPM build-evidence intake denial contract before any local build lane can open.
 ```
 
-That should tie source, environment, artifact, payload, install/remove, and OBS non-claim records together while keeping RPM builds and readiness blocked.
+That should define how build evidence intake is refused until the blocker matrix opens, while keeping RPM builds and readiness blocked.
 
 ## Validation
 
@@ -251,6 +256,7 @@ sh scripts/test-opensuse-rpm-artifact-naming-contract.sh
 sh scripts/test-opensuse-rpm-payload-inspection-contract.sh
 sh scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
 sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
+sh scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh
 ```
 
 Expected output:
@@ -270,4 +276,5 @@ opensuse_rpm_artifact_naming_contract: ok
 opensuse_rpm_payload_inspection_contract: ok
 opensuse_rpm_install_remove_transcript_contract: ok
 opensuse_obs_publication_non_claim_review_contract: ok
+opensuse_rpm_validation_promotion_blocker_matrix_contract: ok
 ```

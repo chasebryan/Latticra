@@ -39,6 +39,9 @@ installer_ui_artifact_authority_guard_required=1
 installer_ui_artifact_write_validation_required=1
 installer_console_output_authority_guard_required=1
 installer_console_config_reflection_denial_required=1
+installer_console_control_character_sanitization_required=1
+installer_console_secret_redaction_required=1
+installer_console_line_length_cap_required=1
 locked_dependency_builds_required=1
 offline_installer_builds_required=1
 ad_hoc_network_client_commands_forbidden_without_guard=1
@@ -67,6 +70,7 @@ external_endorsement_claimed=0
 | Installer config authority labels | profile, strategy, channel, and command-wrapper values are constrained to reviewed ASCII slug/name allowlists before rendering or install | `scripts/test-installer-config-authority-allowlist.sh` |
 | Installer UI artifacts | Panel save/plan paths validate and sanitize authority fields before writing config or plan artifacts | `scripts/test-installer-ui-artifact-authority.sh` |
 | Installer console output | Panel console report commands validate authority fields before reflecting config-derived values | `scripts/test-installer-console-output-authority.sh` |
+| Installer console display | Panel console lines are escaped, redacted, and length-bounded before rendering | `scripts/test-installer-console-display-sanitization.sh` |
 | Workflow network clients | ad hoc `curl`, `wget`, SSH, FTP, and netcat-style commands are blocked without a dedicated guard | `scripts/test-quality-safety-guards.sh` |
 | Package-manager mutation | package-manager use is limited to reviewed workflow/script allowlists | `scripts/test-quality-safety-guards.sh` |
 | Source archive fixtures | package source archives require tracked/unignored source selection, symlink refusal, and deterministic tar/gzip metadata | `scripts/test-quality-safety-guards.sh` |
@@ -157,4 +161,5 @@ sh scripts/test-report-redaction-boundary.sh
 sh scripts/test-installer-config-authority-allowlist.sh
 sh scripts/test-installer-ui-artifact-authority.sh
 sh scripts/test-installer-console-output-authority.sh
+sh scripts/test-installer-console-display-sanitization.sh
 ```

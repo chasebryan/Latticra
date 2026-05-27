@@ -24,6 +24,7 @@ standalone_namespace_report="$tmpdir/standalone-namespace.txt"
 standalone_rootfs_report="$tmpdir/standalone-rootfs.txt"
 standalone_packages_report="$tmpdir/standalone-packages.txt"
 standalone_init_report="$tmpdir/standalone-init.txt"
+standalone_services_report="$tmpdir/standalone-services.txt"
 live_plan="$tmpdir/live-plan.txt"
 live_receipts="$tmpdir/live-receipts"
 lc_report="$tmpdir/lc-install-config.txt"
@@ -50,7 +51,13 @@ receipt_symlink_plan="$tmpdir/receipt-symlink-plan.txt"
 receipt_symlink_dir="$tmpdir/receipt-symlink-receipts"
 receipt_latest_target="$tmpdir/receipt-latest-target.txt"
 receipt_symlink_log="$tmpdir/receipt-symlink.log"
-mkdir -p "$home" "$standalone_home" "$plan_symlink_home" "$receipt_symlink_home"
+icon_symlink_home="$tmpdir/icon-symlink-home"
+icon_symlink_config="$tmpdir/icon-symlink.installer.toml"
+icon_symlink_plan="$tmpdir/icon-symlink-plan.txt"
+icon_symlink_receipts="$tmpdir/icon-symlink-receipts"
+icon_symlink_log="$tmpdir/icon-symlink.log"
+icon_symlink_target="$tmpdir/icon-symlink-target.png"
+mkdir -p "$home" "$standalone_home" "$plan_symlink_home" "$receipt_symlink_home" "$icon_symlink_home"
 
 grep -Fq 'pub struct LatticraConsoleInstallConfig' installer/latticra-installer/src/config.rs
 grep -Fq 'pub install: LatticraConsoleInstallConfig' installer/latticra-installer/src/config.rs
@@ -65,6 +72,7 @@ grep -Fq 'namespace_contract_profile = "lc-namespace-v0"' installer/configs/defa
 grep -Fq 'rootfs_contract_profile = "lc-rootfs-v0"' installer/configs/default.installer.toml
 grep -Fq 'packages_contract_profile = "lc-packages-v0"' installer/configs/default.installer.toml
 grep -Fq 'init_contract_profile = "lc-init-v0"' installer/configs/default.installer.toml
+grep -Fq 'services_contract_profile = "lc-services-v0"' installer/configs/default.installer.toml
 grep -Fq 'allow_external_host_commands = false' installer/configs/default.installer.toml
 grep -Fq 'profile = "lc_standalone"' installer/configs/lc-standalone.installer.toml
 grep -Fq 'install_profile = "lc-standalone-install-v0"' installer/configs/lc-standalone.installer.toml
@@ -76,6 +84,7 @@ grep -Fq 'namespace_contract_profile = "lc-namespace-v0"' installer/configs/lc-s
 grep -Fq 'rootfs_contract_profile = "lc-rootfs-v0"' installer/configs/lc-standalone.installer.toml
 grep -Fq 'packages_contract_profile = "lc-packages-v0"' installer/configs/lc-standalone.installer.toml
 grep -Fq 'init_contract_profile = "lc-init-v0"' installer/configs/lc-standalone.installer.toml
+grep -Fq 'services_contract_profile = "lc-services-v0"' installer/configs/lc-standalone.installer.toml
 grep -Fq 'allow_external_host_commands = false' installer/configs/lc-standalone.installer.toml
 grep -Fq 'dry_run = false' installer/configs/lc-standalone-local.installer.toml
 grep -Fq 'allow_host_mutation = true' installer/configs/lc-standalone-local.installer.toml
@@ -89,6 +98,7 @@ grep -Fq 'LC_NAMESPACE_CONTRACT_PROFILE=$(cfg_section lc namespace_contract_prof
 grep -Fq 'LC_ROOTFS_CONTRACT_PROFILE=$(cfg_section lc rootfs_contract_profile lc-rootfs-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_PACKAGES_CONTRACT_PROFILE=$(cfg_section lc packages_contract_profile lc-packages-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_INIT_CONTRACT_PROFILE=$(cfg_section lc init_contract_profile lc-init-v0)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_SERVICES_CONTRACT_PROFILE=$(cfg_section lc services_contract_profile lc-services-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC install configuration cannot enable external host commands from the Panel' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc install-config category=core effect=none capability=lc.install.config' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc session category=core effect=none capability=lc.session.contract' installer/scripts/latticra-installer-apply.sh
@@ -97,6 +107,7 @@ grep -Fq 'name=lc namespace category=core effect=none capability=lc.namespace.co
 grep -Fq 'name=lc rootfs category=core effect=none capability=lc.rootfs.contract' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc packages category=core effect=none capability=lc.packages.contract' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc init category=core effect=none capability=lc.init.contract' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'name=lc services category=core effect=none capability=lc.services.contract' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'install-config|install)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_COMMAND_WRAPPER="$LC_INSTALL_COMMAND_WRAPPER"' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC command wrapper ($LC_COMMAND_WRAPPER)' installer/scripts/latticra-installer-verify.sh
@@ -150,6 +161,7 @@ grep -Fq 'namespace_contract_present=1' "$plan"
 grep -Fq 'rootfs_contract_present=1' "$plan"
 grep -Fq 'packages_contract_present=1' "$plan"
 grep -Fq 'init_contract_present=1' "$plan"
+grep -Fq 'services_contract_present=1' "$plan"
 grep -Fq 'allow_external_host_commands=false' "$plan"
 grep -Fq 'lc_install_profile=lc-panel-install-v0' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_standalone_console=true' "$receipt_dir/latest-receipt.txt"
@@ -159,6 +171,7 @@ grep -Fq 'lc_namespace_contract_present=true' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_rootfs_contract_present=true' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_packages_contract_present=true' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_init_contract_present=true' "$receipt_dir/latest-receipt.txt"
+grep -Fq 'lc_services_contract_present=true' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_allow_external_host_commands=false' "$receipt_dir/latest-receipt.txt"
 grep -Fq '[dry-run] would install LC config profile lc-panel-install-v0' "$run_log"
 
@@ -179,6 +192,7 @@ grep -Fq 'namespace_contract_present=1' "$standalone_plan"
 grep -Fq 'rootfs_contract_present=1' "$standalone_plan"
 grep -Fq 'packages_contract_present=1' "$standalone_plan"
 grep -Fq 'init_contract_present=1' "$standalone_plan"
+grep -Fq 'services_contract_present=1' "$standalone_plan"
 grep -Fq 'allow_external_host_commands=false' "$standalone_plan"
 grep -Fq 'lc_install_profile=lc-standalone-install-v0' "$standalone_receipts/latest-receipt.txt"
 grep -Fq 'lc_standalone_requires_panel=false' "$standalone_receipts/latest-receipt.txt"
@@ -188,6 +202,7 @@ grep -Fq 'lc_namespace_contract_present=true' "$standalone_receipts/latest-recei
 grep -Fq 'lc_rootfs_contract_present=true' "$standalone_receipts/latest-receipt.txt"
 grep -Fq 'lc_packages_contract_present=true' "$standalone_receipts/latest-receipt.txt"
 grep -Fq 'lc_init_contract_present=true' "$standalone_receipts/latest-receipt.txt"
+grep -Fq 'lc_services_contract_present=true' "$standalone_receipts/latest-receipt.txt"
 grep -Fq 'lc_rootfs_contract_present=true' "$standalone_receipts/latest-receipt.txt"
 grep -Fq '[dry-run] would install LC config profile lc-standalone-install-v0' "$standalone_log"
 grep -Fq '[dry-run] Panel GUI build disabled by config' "$standalone_log"
@@ -209,6 +224,7 @@ test -f "$standalone_prefix/share/latticra/lc/namespace/contract.toml"
 test -f "$standalone_prefix/share/latticra/lc/rootfs/contract.toml"
 test -f "$standalone_prefix/share/latticra/lc/packages/contract.toml"
 test -f "$standalone_prefix/share/latticra/lc/init/contract.toml"
+test -f "$standalone_prefix/share/latticra/lc/services/contract.toml"
 test -f "$standalone_prefix/share/latticra/lc/profiles/standalone-console.toml"
 test -f "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
 test -x "$standalone_home/.local/bin/latticra"
@@ -229,6 +245,7 @@ grep -Fq 'namespace_contract_present=1' "$standalone_local_plan"
 grep -Fq 'rootfs_contract_present=1' "$standalone_local_plan"
 grep -Fq 'packages_contract_present=1' "$standalone_local_plan"
 grep -Fq 'init_contract_present=1' "$standalone_local_plan"
+grep -Fq 'services_contract_present=1' "$standalone_local_plan"
 grep -Fq 'allow_external_host_commands=false' "$standalone_local_plan"
 grep -Fq 'build_gui_installer=false' "$standalone_local_plan"
 grep -Fq 'install_desktop_entry=false' "$standalone_local_plan"
@@ -241,6 +258,7 @@ grep -Fq 'lc_namespace_contract_present=true' "$standalone_local_receipts/latest
 grep -Fq 'lc_rootfs_contract_present=true' "$standalone_local_receipts/latest-receipt.txt"
 grep -Fq 'lc_packages_contract_present=true' "$standalone_local_receipts/latest-receipt.txt"
 grep -Fq 'lc_init_contract_present=true' "$standalone_local_receipts/latest-receipt.txt"
+grep -Fq 'lc_services_contract_present=true' "$standalone_local_receipts/latest-receipt.txt"
 grep -Fq 'lc_allow_external_host_commands=false' "$standalone_local_receipts/latest-receipt.txt"
 grep -Fq 'install_profile = "lc-standalone-install-v0"' "$standalone_prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'panel_embedded_console = false' "$standalone_prefix/share/latticra/lc/install/config.toml"
@@ -257,6 +275,8 @@ grep -Fq 'packages_contract_profile = "lc-packages-v0"' "$standalone_prefix/shar
 grep -Fq 'packages_contract_present = true' "$standalone_prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'init_contract_profile = "lc-init-v0"' "$standalone_prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'init_contract_present = true' "$standalone_prefix/share/latticra/lc/install/config.toml"
+grep -Fq 'services_contract_profile = "lc-services-v0"' "$standalone_prefix/share/latticra/lc/install/config.toml"
+grep -Fq 'services_contract_present = true' "$standalone_prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'name=lc session category=core effect=none capability=lc.session.contract' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'name=lc workspace category=core effect=none capability=lc.workspace.contract' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
@@ -264,6 +284,7 @@ grep -Fq 'name=lc namespace category=core effect=none capability=lc.namespace.co
 grep -Fq 'name=lc rootfs category=core effect=none capability=lc.rootfs.contract' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'name=lc packages category=core effect=none capability=lc.packages.contract' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'name=lc init category=core effect=none capability=lc.init.contract' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
+grep -Fq 'name=lc services category=core effect=none capability=lc.services.contract' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'command_surface = "lc standalone"' "$standalone_prefix/share/latticra/lc/standalone/contract.toml"
 grep -Fq 'command_surface = "lc session"' "$standalone_prefix/share/latticra/lc/session/contract.toml"
 grep -Fq 'command_surface = "lc workspace"' "$standalone_prefix/share/latticra/lc/workspace/contract.toml"
@@ -271,6 +292,7 @@ grep -Fq 'command_surface = "lc namespace"' "$standalone_prefix/share/latticra/l
 grep -Fq 'command_surface = "lc rootfs"' "$standalone_prefix/share/latticra/lc/rootfs/contract.toml"
 grep -Fq 'command_surface = "lc packages"' "$standalone_prefix/share/latticra/lc/packages/contract.toml"
 grep -Fq 'command_surface = "lc init"' "$standalone_prefix/share/latticra/lc/init/contract.toml"
+grep -Fq 'command_surface = "lc services"' "$standalone_prefix/share/latticra/lc/services/contract.toml"
 
 HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" install-config > "$standalone_lc_report"
 HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" standalone > "$standalone_contract_report"
@@ -280,6 +302,7 @@ HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" namespace > "$
 HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" rootfs > "$standalone_rootfs_report"
 HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" packages > "$standalone_packages_report"
 HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" init > "$standalone_init_report"
+HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" services > "$standalone_services_report"
 
 grep -Fq 'LATTICRA CONSOLE INSTALL CONFIGURATION' "$standalone_lc_report"
 grep -Fq 'install_profile=lc-standalone-install-v0' "$standalone_lc_report"
@@ -293,6 +316,7 @@ grep -Fq 'namespace_contract_present=1' "$standalone_lc_report"
 grep -Fq 'rootfs_contract_present=1' "$standalone_lc_report"
 grep -Fq 'packages_contract_present=1' "$standalone_lc_report"
 grep -Fq 'init_contract_present=1' "$standalone_lc_report"
+grep -Fq 'services_contract_present=1' "$standalone_lc_report"
 grep -Fq 'allow_external_host_commands=false' "$standalone_lc_report"
 grep -Fq 'host_process_launch_allowed=0' "$standalone_lc_report"
 grep -Fq 'LATTICRA CONSOLE STANDALONE CONTRACT' "$standalone_contract_report"
@@ -339,6 +363,14 @@ grep -Fq 'service_start_allowed=0' "$standalone_init_report"
 grep -Fq 'process_supervision_allowed=0' "$standalone_init_report"
 grep -Fq 'command_surface=lc init' "$standalone_init_report"
 grep -Fq 'host_process_launch_allowed=0' "$standalone_init_report"
+grep -Fq 'LATTICRA CONSOLE SERVICES CONTRACT' "$standalone_services_report"
+grep -Fq 'services_profile=lc-services-v0' "$standalone_services_report"
+grep -Fq 'service_registry_write_allowed=0' "$standalone_services_report"
+grep -Fq 'service_start_allowed=0' "$standalone_services_report"
+grep -Fq 'service_enable_allowed=0' "$standalone_services_report"
+grep -Fq 'process_supervision_allowed=0' "$standalone_services_report"
+grep -Fq 'command_surface=lc services' "$standalone_services_report"
+grep -Fq 'host_process_launch_allowed=0' "$standalone_services_report"
 
 cat > "$live_config" <<LIVECONFIG
 profile = "developer_local"
@@ -398,6 +430,7 @@ test -f "$prefix/share/latticra/lc/namespace/contract.toml"
 test -f "$prefix/share/latticra/lc/rootfs/contract.toml"
 test -f "$prefix/share/latticra/lc/packages/contract.toml"
 test -f "$prefix/share/latticra/lc/init/contract.toml"
+test -f "$prefix/share/latticra/lc/services/contract.toml"
 test -f "$prefix/share/latticra/lc/commands/seed-registry.txt"
 test -x "$home/.local/bin/latticra"
 test -x "$home/.local/bin/$lc_wrapper"
@@ -416,6 +449,8 @@ grep -Fq 'packages_contract_present = true' "$prefix/share/latticra/lc/install/c
 grep -Fq 'command_surface = "lc packages"' "$prefix/share/latticra/lc/packages/contract.toml"
 grep -Fq 'init_contract_present = true' "$prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'command_surface = "lc init"' "$prefix/share/latticra/lc/init/contract.toml"
+grep -Fq 'services_contract_present = true' "$prefix/share/latticra/lc/install/config.toml"
+grep -Fq 'command_surface = "lc services"' "$prefix/share/latticra/lc/services/contract.toml"
 grep -Fq 'allow_external_host_commands = false' "$prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'name=lc install-config category=core effect=none capability=lc.install.config' "$prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'name=lc workspace category=core effect=none capability=lc.workspace.contract' "$prefix/share/latticra/lc/commands/seed-registry.txt"
@@ -423,6 +458,7 @@ grep -Fq 'name=lc namespace category=core effect=none capability=lc.namespace.co
 grep -Fq 'name=lc rootfs category=core effect=none capability=lc.rootfs.contract' "$prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'name=lc packages category=core effect=none capability=lc.packages.contract' "$prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'name=lc init category=core effect=none capability=lc.init.contract' "$prefix/share/latticra/lc/commands/seed-registry.txt"
+grep -Fq 'name=lc services category=core effect=none capability=lc.services.contract' "$prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'lc_install_profile=lc-panel-install-v0' "$live_receipts/latest-receipt.txt"
 grep -Fq "lc_install_command_wrapper=$lc_wrapper" "$live_receipts/latest-receipt.txt"
 grep -Fq 'lc_standalone_console=true' "$live_receipts/latest-receipt.txt"
@@ -431,6 +467,7 @@ grep -Fq 'lc_namespace_contract_present=true' "$live_receipts/latest-receipt.txt
 grep -Fq 'lc_rootfs_contract_present=true' "$live_receipts/latest-receipt.txt"
 grep -Fq 'lc_packages_contract_present=true' "$live_receipts/latest-receipt.txt"
 grep -Fq 'lc_init_contract_present=true' "$live_receipts/latest-receipt.txt"
+grep -Fq 'lc_services_contract_present=true' "$live_receipts/latest-receipt.txt"
 
 HOME="$home" "$home/.local/bin/$lc_wrapper" install-config > "$lc_report"
 HOME="$home" "$home/.local/bin/latticra" lc install-config > "$latticra_lc_report"
@@ -451,6 +488,7 @@ grep -Fq 'namespace_contract_present=1' "$lc_report"
 grep -Fq 'rootfs_contract_present=1' "$lc_report"
 grep -Fq 'packages_contract_present=1' "$lc_report"
 grep -Fq 'init_contract_present=1' "$lc_report"
+grep -Fq 'services_contract_present=1' "$lc_report"
 grep -Fq "command_wrapper=$lc_wrapper" "$lc_report"
 grep -Fq 'allow_external_host_commands=false' "$lc_report"
 grep -Fq 'host_process_launch_allowed=0' "$lc_report"
@@ -488,12 +526,14 @@ grep -Fq 'ok: LC namespace registry command' "$verify_log"
 grep -Fq 'ok: LC rootfs registry command' "$verify_log"
 grep -Fq 'ok: LC packages registry command' "$verify_log"
 grep -Fq 'ok: LC init registry command' "$verify_log"
+grep -Fq 'ok: LC services registry command' "$verify_log"
 grep -Fq 'ok: LC wrapper install-config report' "$verify_log"
 grep -Fq 'ok: LC wrapper workspace report' "$verify_log"
 grep -Fq 'ok: LC wrapper namespace report' "$verify_log"
 grep -Fq 'ok: LC wrapper rootfs report' "$verify_log"
 grep -Fq 'ok: LC wrapper packages report' "$verify_log"
 grep -Fq 'ok: LC wrapper init report' "$verify_log"
+grep -Fq 'ok: LC wrapper services report' "$verify_log"
 grep -Fq 'ok: latticra lc install-config matches LC command wrapper install-config' "$verify_log"
 grep -Fq 'ok: updater config' "$verify_log"
 grep -Fq 'ok: updater policy' "$verify_log"
@@ -515,6 +555,30 @@ if HOME="$home" sh installer/scripts/latticra-installer-apply.sh \
 fi
 
 grep -Fq 'LC install configuration cannot enable external host commands from the Panel' "$tmpdir/bad.log"
+
+sed \
+  -e "s|install_prefix = \"$home/.local/share/latticra\"|install_prefix = \"$icon_symlink_home/.local/share/latticra\"|" \
+  -e 's/install_desktop_entry = false/install_desktop_entry = true/' \
+  "$live_config" > "$icon_symlink_config"
+mkdir -p \
+  "$icon_symlink_home/.local/share/latticra/bin" \
+  "$icon_symlink_home/.local/share/icons/hicolor/256x256/apps"
+printf '%s\n' '#!/usr/bin/env sh' 'exit 0' > "$icon_symlink_home/.local/share/latticra/bin/latticra-panel"
+chmod 0755 "$icon_symlink_home/.local/share/latticra/bin/latticra-panel"
+printf '%s\n' 'outside' > "$icon_symlink_target"
+ln -s "$icon_symlink_target" "$icon_symlink_home/.local/share/icons/hicolor/256x256/apps/latticra-panel.png"
+
+if HOME="$icon_symlink_home" sh installer/scripts/latticra-installer-apply.sh \
+  --config "$icon_symlink_config" \
+  --plan "$icon_symlink_plan" \
+  --receipt-dir "$icon_symlink_receipts" > "$icon_symlink_log" 2>&1; then
+  echo "expected symlink icon write to be refused" >&2
+  exit 1
+fi
+
+grep -Fq 'refusing to overwrite symlink file:' "$icon_symlink_log"
+grep -Fqx 'outside' "$icon_symlink_target"
+test -L "$icon_symlink_home/.local/share/icons/hicolor/256x256/apps/latticra-panel.png"
 
 sed "s|install_prefix = \"$home/.local/share/latticra\"|install_prefix = \"$symlink_home/.local/share/latticra\"|" \
   "$live_config" > "$symlink_config"

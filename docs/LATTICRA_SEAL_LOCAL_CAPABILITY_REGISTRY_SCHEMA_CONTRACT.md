@@ -265,6 +265,12 @@ The local capability registry schema implementation plan is now represented by `
 
 The local capability registry schema implementation is now represented by `docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md`.
 
-The next valid Latticra Seal slice is a deterministic local capability registry schema report surface or a Panel-visible Seal dashboard planning checkpoint.
+The local capability registry schema surface is now represented by `docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md`.
+
+The local capability registry schema status checkpoint is now represented by `docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md`.
+
+The Panel-visible Seal dashboard planning checkpoint is now represented by `docs/LATTICRA_SEAL_PANEL_DASHBOARD_PLANNING_CHECKPOINT.md`, with status in `docs/status/SEAL_PANEL_DASHBOARD_PLANNING_STATUS.md`.
+
+The next valid Latticra Seal slice is a Seal Panel dashboard view-model contract or a signed receipt proof path.
 
 That future slice must preserve the no-effect posture and must not perform effects or grant authority.

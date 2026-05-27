@@ -58,6 +58,9 @@ upload_exit_status_recorded=0
 launchpad_upload_run=0
 source_package_uploaded=0
 ubuntu_upload_signing_authority_evidence_unblocked=0
+ubuntu_launchpad_build_result_evidence_contract_present=1
+ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence
+ubuntu_launchpad_build_result_evidence_unblocked=0
 ppa_created=0
 ppa_claimed=0
 ubuntu_archive_submission_claimed=0
@@ -69,7 +72,7 @@ root_installer_ready=0
 
 ## Relationship To Publication
 
-The Ubuntu PPA/archive publication gate must not unblock until this upload/signing authority evidence contract is unblocked alongside source package evidence, install/remove evidence, Launchpad build evidence, and non-claim review.
+The Ubuntu Launchpad build result evidence contract is downstream of this contract. The Ubuntu PPA/archive publication gate must not unblock until this upload/signing authority evidence contract is unblocked alongside source package evidence, install/remove evidence, Launchpad build result evidence, and non-claim review.
 
 This contract is intentionally closed today. It records the future upload authority and signing evidence shape without signing, uploading, or publishing artifacts.
 

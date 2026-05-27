@@ -104,6 +104,8 @@ ubuntu_source_package_evidence_contract_present=1
 ubuntu_source_package_evidence_status=blocked-pending-accepted-build-transcript
 ubuntu_upload_signing_authority_evidence_contract_present=1
 ubuntu_upload_signing_authority_evidence_status=blocked-pending-source-package-evidence
+ubuntu_launchpad_build_result_evidence_contract_present=1
+ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence
 ubuntu_ppa_archive_publication_gate_contract_present=1
 ubuntu_ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence
 ubuntu_package_notice_review_contract_present=1
@@ -126,9 +128,13 @@ ppa_or_archive_target_reviewed=0
 gpg_signing_key_fingerprint_recorded=0
 upload_command_non_claims_reviewed=0
 ubuntu_upload_signing_authority_evidence_unblocked=0
+ubuntu_launchpad_build_result_evidence_unblocked=0
 debsign_command_recorded=0
 dput_command_recorded=0
 launchpad_upload_run=0
+launchpad_upload_url_recorded=0
+launchpad_build_result_recorded=0
+launchpad_binary_artifact_listing_recorded=0
 ubuntu_publication_gate_unblocked=0
 ppa_claimed=0
 ubuntu_archive_ready=0
@@ -211,6 +217,7 @@ docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
 docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md
 docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md
+docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md
 docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md
 scripts/ubuntu-package-notice-inventory.sh
 scripts/test-ubuntu-package-notice-inventory.sh
@@ -231,6 +238,7 @@ scripts/test-ubuntu-local-deb-build-transcript-acceptance-gate-contract.sh
 scripts/test-ubuntu-local-deb-install-remove-evidence-contract.sh
 scripts/test-ubuntu-source-package-evidence-contract.sh
 scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh
+scripts/test-ubuntu-launchpad-build-result-evidence-contract.sh
 scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 .github/workflows/ubuntu-package-notice-inventory.yml
 .github/workflows/ubuntu-doc-payload-license-review-contract.yml
@@ -250,6 +258,7 @@ scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 .github/workflows/ubuntu-local-deb-install-remove-evidence-contract.yml
 .github/workflows/ubuntu-source-package-evidence-contract.yml
 .github/workflows/ubuntu-upload-signing-authority-evidence-contract.yml
+.github/workflows/ubuntu-launchpad-build-result-evidence-contract.yml
 .github/workflows/ubuntu-ppa-archive-publication-gate-contract.yml
 ```
 
@@ -280,7 +289,7 @@ claim operating-system completeness
 Recommended next slice:
 
 ```text
-Review the Ubuntu upload/signing authority evidence contract, then keep signing and upload evidence blocked until source package evidence is reviewed.
+Review the Ubuntu Launchpad build result evidence contract, then keep Launchpad upload, build result, and publication evidence blocked until upload/signing authority evidence is reviewed.
 ```
 
 That should preserve the current no-artifact, no-submission, local-only Ubuntu package posture while the local deb path matures.

@@ -56,6 +56,7 @@ documentation_change_review_packet:
   non_claims_preserved:
   public_claims_ledger_checked:
   product_documentation_cohesion_checked:
+  documentation_health_scorecard_checked:
   documentation_traceability_matrix_checked:
   documentation_validation_playbook_checked:
   documentation_drift_response_playbook_checked:
@@ -75,14 +76,15 @@ documentation_change_review_packet:
 3. Compare the wording against [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
 4. Compare the reader route against [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md).
 5. Compare audience-specific paths against [`DOCUMENTATION_READER_JOURNEY_MAP.md`](DOCUMENTATION_READER_JOURNEY_MAP.md) when routes change.
-6. Compare source records, mirrors, validation, and non-claim boundaries against [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md).
-7. Select validation commands with [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
-8. Choose a drift-response, narrowing, or demotion path with [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) when records disagree.
-9. Compare terminology, headings, dates, and replacement wording against [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
-10. Compare mirror requirements against [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md).
-11. Confirm that adjacent non-claims remain visible.
-12. Run the narrowest relevant validation commands.
-13. Name how to demote or roll back the wording if the evidence changes.
+6. Score broad route, public HTML, platform, security, estimate, or subsystem landing-page changes with [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md).
+7. Compare source records, mirrors, validation, and non-claim boundaries against [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md).
+8. Select validation commands with [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
+9. Choose a drift-response, narrowing, or demotion path with [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) when records disagree.
+10. Compare terminology, headings, dates, and replacement wording against [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
+11. Compare mirror requirements against [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md).
+12. Confirm that adjacent non-claims remain visible.
+13. Run the narrowest relevant validation commands.
+14. Name how to demote or roll back the wording if the evidence changes.
 
 ## Claim Classification
 

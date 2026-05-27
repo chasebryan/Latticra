@@ -15,6 +15,10 @@ latticra_os_image_build_recipe_contract_present=1
 os_image_build_preflight_present=1
 os_image_build_recipe_template_present=1
 os_image_build_execution_allowed=0
+os_image_input_source_manifest_template_present=1
+os_image_input_source_manifest_validation_present=1
+os_image_input_source_manifest_candidate_present=0
+os_image_input_source_ready_for_input_bundle=0
 os_image_input_bundle_manifest_template_present=1
 os_image_input_bundle_manifest_validation_present=1
 os_image_input_bundle_manifest_candidate_present=0
@@ -43,6 +47,20 @@ rootfs_input_path=<recorded>
 output_dir=<recorded>
 ```
 
+Before those inputs are accepted, a source manifest must identify the reviewed producers:
+
+```text
+input_source_manifest_path=<recorded>
+kernel_source_kind=<external-reviewed-kernel-or-latticra-boot-kernel>
+kernel_source_path=<recorded>
+kernel_boot_protocol=<recorded-or-none>
+kernel_bootable_claim=0
+initramfs_source_kind=<recorded>
+initramfs_source_path=<recorded>
+rootfs_source_kind=<recorded>
+rootfs_source_path=<recorded>
+```
+
 The current default local paths are placeholders:
 
 ```text
@@ -53,6 +71,37 @@ artifacts/os-images/local-candidate/
 ```
 
 ## Input Bundle Manifest Boundary
+
+The input source manifest prevents the build lane from treating ordinary Latticra C report modules or CLI binaries as a bootable kernel:
+
+```text
+LATTICRA OS IMAGE INPUT SOURCE MANIFEST
+manifest_version=1
+source_kind=os-image-input-sources
+source_commit=<recorded>
+kernel_source_kind=<external-reviewed-kernel-or-latticra-boot-kernel>
+kernel_source_path=<path>
+kernel_boot_protocol=<recorded-or-none>
+kernel_bootable_claim=0
+initramfs_source_kind=<recorded>
+initramfs_source_path=<path>
+rootfs_source_kind=<recorded>
+rootfs_source_path=<path>
+input_bundle_output_path=<recorded>
+operator_recovery_path=<recorded-or-none>
+bootable_os_ready=0
+production_os_claim=0
+```
+
+The validator may mark the source map ready for input-bundle preflight, but it must preserve:
+
+```text
+os_image_input_source_ready_for_input_bundle=<0-or-1>
+kernel_bootable_claim=0
+os_image_build_execution_allowed=0
+bootable_os_ready=0
+production_os_claim=0
+```
 
 The input bundle manifest is the reviewable handoff into the image build lane:
 
@@ -111,7 +160,15 @@ sh scripts/latticra-os-image-build-preflight.sh
 Generate the input bundle manifest template:
 
 ```sh
+sh scripts/latticra-os-image-input-source-template.sh
 sh scripts/latticra-os-image-input-bundle-template.sh
+```
+
+Validate the current source fixture or a future input source manifest:
+
+```sh
+sh scripts/latticra-os-image-input-source-validate.sh
+sh scripts/latticra-os-image-input-source-validate.sh --source-manifest build/os-image/input-source-map.txt
 ```
 
 Validate the current fixture or a future input bundle manifest:
@@ -133,6 +190,7 @@ The preflight prints future command shapes, including:
 future_iso_build_command=grub-mkrescue ...
 future_vm_image_create_command=qemu-img create ...
 future_input_bundle_validation_command=sh scripts/latticra-os-image-input-bundle-validate.sh ...
+future_input_source_validation_command=sh scripts/latticra-os-image-input-source-validate.sh ...
 future_artifact_manifest_validation_command=sh scripts/latticra-os-image-artifact-manifest-validate.sh ...
 ```
 
@@ -157,6 +215,7 @@ Before a future implementation may run the recipe, reviewed evidence must show:
 kernel_image_input_present=1
 initramfs_input_present=1
 rootfs_input_present=1
+os_image_input_source_ready_for_input_bundle=1
 os_image_input_bundle_ready_for_build_preflight=1
 qemu_img_available=1
 xorriso_available=1
@@ -183,6 +242,8 @@ This contract is guarded by:
 
 ```sh
 sh scripts/test-latticra-os-image-build-preflight.sh
+sh scripts/test-latticra-os-image-input-source-template.sh
+sh scripts/test-latticra-os-image-input-source-validate.sh
 sh scripts/test-latticra-os-image-input-bundle-template.sh
 sh scripts/test-latticra-os-image-input-bundle-validate.sh
 ```
@@ -191,6 +252,8 @@ Expected output:
 
 ```text
 latticra_os_image_build_preflight: ok
+latticra_os_image_input_source_template: ok
+latticra_os_image_input_source_validate: ok
 latticra_os_image_input_bundle_template: ok
 latticra_os_image_input_bundle_validate: ok
 ```

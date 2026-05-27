@@ -110,7 +110,7 @@ latticra_panel_signed_updater_manifest_fixture_contract: ok
 ## Next Recommended Lane
 
 ```text
-Add Panel signed-updater state transition denial disposition without enabling transition execution or update apply.
+Add Panel signed-updater state transition denial disposition review without enabling transition execution or update apply.
 ```
 
 ## Non-Claims

@@ -8,7 +8,7 @@ Scope: user, operator, reviewer, contributor, packager, security reviewer, subsy
 
 This map keeps Latticra documentation usable for different readers without weakening the evidence boundary.
 
-Use it with [`README.md`](README.md), [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md), [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md), and [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
+Use it with the root [`README.md`](../README.md), this documentation hub [`README.md`](README.md), [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md), [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md), [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md), and [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
 
 The goal is simple: each reader should know where to start, what they can safely conclude, where to find proof, and which claims remain blocked.
 
@@ -19,7 +19,7 @@ The goal is simple: each reader should know where to start, what they can safely
 | New local user | [`../README.md`](../README.md), [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md), [`start.html`](start.html) | [`../installer/README.md`](../installer/README.md), [`NON_CLAIMS.md`](NON_CLAIMS.md) | Reader can identify guarded user-local paths and cleanup/reset expectations. | Any expectation of root install, daily-driver install, production runtime, or broad host management. |
 | Operator | [`../STATUS.md`](../STATUS.md), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), [`validation.html`](validation.html) | Relevant installer, platform, or subsystem source record | Operator can identify current posture, runnable checks, denied effects, and required evidence. | Any unclear effect boundary, missing reset path, or missing non-claim near a runnable path. |
 | Reviewer | [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md), [`NON_CLAIMS.md`](NON_CLAIMS.md) | [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md), [`EVIDENCE_LADDER.md`](EVIDENCE_LADDER.md) | Reviewer can trace public wording to source evidence and blocked adjacent claims. | Public wording lacks a source record, validation path, or non-claim boundary. |
-| Contributor | [`README.md`](README.md), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) | [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md), [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) | Contributor can change docs without broadening claims or breaking mirrors. | Change would require implementation evidence, guard changes, or stronger public wording. |
+| Contributor | [`../README.md`](../README.md), [`README.md`](README.md), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) | [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md), [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) | Contributor can change docs without broadening claims or breaking mirrors. | Change would require implementation evidence, guard changes, or stronger public wording. |
 | Packager or platform reviewer | [`validation.html`](validation.html), platform README or workflow record | [`PRODUCTION_INSTALLER_READINESS_CONTRACT.md`](PRODUCTION_INSTALLER_READINESS_CONTRACT.md), [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) | Reviewer can identify local-only package posture and platform-specific blockers. | Any implied Fedora approval, Ubuntu archive readiness, Debian archive readiness, FreeBSD official port, OpenBSD official port, openSUSE official package, or production installability. |
 | Security reviewer | [`../SECURITY.md`](../SECURITY.md), [`security.html`](security.html), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) | [`DEFENSIVE_THREAT_MODEL_CONTRACT.md`](DEFENSIVE_THREAT_MODEL_CONTRACT.md), [`HIGH_ASSURANCE_SECURITY_BASELINE.md`](HIGH_ASSURANCE_SECURITY_BASELINE.md), [`ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md`](ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md) | Reviewer can separate defensive planning from security guarantees. | Any claim of malware prevention, ransomware prevention, hardened sandboxing, certification, or production protection. |
 | Subsystem implementer | [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md) | Relevant contract, implementation plan, implementation record, status record, and guard | Implementer can find the exact boundary and validation path before editing. | Missing contract, missing guard, or implementation language that outruns status. |
@@ -46,6 +46,8 @@ A reader journey is healthy when:
 - non-claims are near the claims they constrain;
 - validation commands are named where evidence matters;
 - the route does not require reading the full repository before making a narrow safe decision.
+
+For broader health review, score the route with [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md).
 
 ## Friction Signals
 

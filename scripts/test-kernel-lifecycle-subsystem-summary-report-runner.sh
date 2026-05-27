@@ -41,6 +41,7 @@ cc $CFLAGS \
   src/kernel_scheduler_handoff.c \
   src/kernel_scheduler_activation.c \
   src/kernel_scheduler_run_entry.c \
+  src/kernel_runtime_entry_admission.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -52,18 +53,19 @@ cc $CFLAGS \
 
 grep -Fq 'LATTICRA KERNEL LIFECYCLE SUBSYSTEM SUMMARY REPORT' "$report_txt"
 grep -Fq 'summary_status=summary-ready' "$report_txt"
-grep -Fq 'final_state=scheduler-run-entry-ready' "$report_txt"
+grep -Fq 'final_state=runtime-entry-admission-ready' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'registry_status=registry-ready' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
-grep -Fq 'lifecycle_step_count=23' "$report_txt"
-grep -Fq 'lifecycle_state_change_count=23' "$report_txt"
+grep -Fq 'lifecycle_step_count=24' "$report_txt"
+grep -Fq 'lifecycle_state_change_count=24' "$report_txt"
 grep -Fq 'lifecycle_state_mutated=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
 grep -Fq 'network_allowed=0' "$report_txt"
 grep -Fq 'lifecycle_network_allowed=0' "$report_txt"
 grep -Fq 'machine_network_allowed=0' "$report_txt"
 grep -Fq 'registry_no_effect=1' "$report_txt"
+grep -Fq 'runtime_entry_admission_allowed=0' "$report_txt"
 grep -Fq 'runtime_entry_allowed=0' "$report_txt"
 grep -Fq 'scheduler_execution_allowed=0' "$report_txt"
 grep -Fq 'scheduler_selection_allowed=0' "$report_txt"
@@ -119,6 +121,7 @@ grep -Fq 'entry_count=9' "$report_txt"
 grep -Fq 'subsystem[0].name=boot' "$report_txt"
 grep -Fq 'subsystem[0].lifecycle_relation=boot-sequence-seeded' "$report_txt"
 grep -Fq 'subsystem[1].name=runtime' "$report_txt"
+grep -Fq 'subsystem[1].lifecycle_relation=runtime-entry-admission-ready' "$report_txt"
 grep -Fq 'subsystem[1].authority_status=runtime-entry-denied' "$report_txt"
 grep -Fq 'subsystem[2].lifecycle_relation=scheduler-run-entry-ready' "$report_txt"
 grep -Fq 'subsystem[2].authority_status=scheduler-execution-denied' "$report_txt"
@@ -129,6 +132,7 @@ grep -Fq 'subsystem[4].authority_status=process-execution-denied' "$report_txt"
 grep -Fq 'subsystem[5].lifecycle_relation=vfs-namespace-ready' "$report_txt"
 grep -Fq 'subsystem[6].authority_status=network-denied' "$report_txt"
 grep -Fq 'subsystem[6].lifecycle_relation=network-syscall-metadata-ready' "$report_txt"
+grep -Fq 'subsystem[6].network_allowed=0' "$report_txt"
 grep -Fq 'subsystem[7].authority_status=device-denied' "$report_txt"
 grep -Fq 'subsystem[7].lifecycle_relation=interrupt-table-ready' "$report_txt"
 grep -Fq 'subsystem[8].authority_status=not-production-boundary' "$report_txt"

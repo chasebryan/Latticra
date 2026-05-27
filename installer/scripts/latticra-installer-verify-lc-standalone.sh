@@ -25,6 +25,7 @@ LC_NAMESPACE_CONTRACT="$PREFIX/share/latticra/lc/namespace/contract.toml"
 LC_ROOTFS_CONTRACT="$PREFIX/share/latticra/lc/rootfs/contract.toml"
 LC_PACKAGES_CONTRACT="$PREFIX/share/latticra/lc/packages/contract.toml"
 LC_INIT_CONTRACT="$PREFIX/share/latticra/lc/init/contract.toml"
+LC_SERVICES_CONTRACT="$PREFIX/share/latticra/lc/services/contract.toml"
 LC_PROFILE="$PREFIX/share/latticra/lc/profiles/standalone-console.toml"
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/latticra-lc-standalone-verify.XXXXXX")"
 failures=0
@@ -90,6 +91,7 @@ check "LC namespace contract" "$LC_NAMESPACE_CONTRACT"
 check "LC rootfs contract" "$LC_ROOTFS_CONTRACT"
 check "LC packages contract" "$LC_PACKAGES_CONTRACT"
 check "LC init contract" "$LC_INIT_CONTRACT"
+check "LC services contract" "$LC_SERVICES_CONTRACT"
 check "LC standalone profile" "$LC_PROFILE"
 check_exec "latticra command" "$USER_BIN/latticra"
 check_exec "LC command wrapper" "$USER_BIN/latticra-lc"
@@ -113,6 +115,8 @@ check_contains "packages contract profile" 'packages_contract_profile = "lc-pack
 check_contains "packages contract present" 'packages_contract_present = true' "$LC_CONFIG"
 check_contains "init contract profile" 'init_contract_profile = "lc-init-v0"' "$LC_CONFIG"
 check_contains "init contract present" 'init_contract_present = true' "$LC_CONFIG"
+check_contains "services contract profile" 'services_contract_profile = "lc-services-v0"' "$LC_CONFIG"
+check_contains "services contract present" 'services_contract_present = true' "$LC_CONFIG"
 check_contains "Panel embedding disabled" 'panel_embedded_console = false' "$LC_CONFIG"
 check_contains "external host commands disabled" 'allow_external_host_commands = false' "$LC_CONFIG"
 check_contains "standalone registry command" 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' "$LC_REGISTRY"
@@ -122,6 +126,7 @@ check_contains "namespace registry command" 'name=lc namespace category=core eff
 check_contains "rootfs registry command" 'name=lc rootfs category=core effect=none capability=lc.rootfs.contract' "$LC_REGISTRY"
 check_contains "packages registry command" 'name=lc packages category=core effect=none capability=lc.packages.contract' "$LC_REGISTRY"
 check_contains "init registry command" 'name=lc init category=core effect=none capability=lc.init.contract' "$LC_REGISTRY"
+check_contains "services registry command" 'name=lc services category=core effect=none capability=lc.services.contract' "$LC_REGISTRY"
 check_contains "standalone command surface" 'command_surface = "lc standalone"' "$LC_CONTRACT"
 check_contains "standalone host process denial" 'host_process_launch_allowed = false' "$LC_CONTRACT"
 check_contains "standalone network denial" 'network_allowed = false' "$LC_CONTRACT"
@@ -153,6 +158,12 @@ check_contains "init PID 1 denied" 'pid1_claim_allowed = false' "$LC_INIT_CONTRA
 check_contains "init service start denied" 'service_start_allowed = false' "$LC_INIT_CONTRACT"
 check_contains "init process supervision denied" 'process_supervision_allowed = false' "$LC_INIT_CONTRACT"
 check_contains "init host process denied" 'host_process_launch_allowed = false' "$LC_INIT_CONTRACT"
+check_contains "services command surface" 'command_surface = "lc services"' "$LC_SERVICES_CONTRACT"
+check_contains "services registry write denied" 'service_registry_write_allowed = false' "$LC_SERVICES_CONTRACT"
+check_contains "services start denied" 'service_start_allowed = false' "$LC_SERVICES_CONTRACT"
+check_contains "services enable denied" 'service_enable_allowed = false' "$LC_SERVICES_CONTRACT"
+check_contains "services process supervision denied" 'process_supervision_allowed = false' "$LC_SERVICES_CONTRACT"
+check_contains "services host process denied" 'host_process_launch_allowed = false' "$LC_SERVICES_CONTRACT"
 
 if [ -x "$USER_BIN/latticra-lc" ]; then
   if "$USER_BIN/latticra-lc" install-config > "$TMP_DIR/install-config.txt"; then
@@ -165,6 +176,7 @@ if [ -x "$USER_BIN/latticra-lc" ]; then
     check_contains "LC wrapper rootfs contract present" 'rootfs_contract_present=1' "$TMP_DIR/install-config.txt"
     check_contains "LC wrapper packages contract present" 'packages_contract_present=1' "$TMP_DIR/install-config.txt"
     check_contains "LC wrapper init contract present" 'init_contract_present=1' "$TMP_DIR/install-config.txt"
+    check_contains "LC wrapper services contract present" 'services_contract_present=1' "$TMP_DIR/install-config.txt"
     check_contains "LC wrapper Panel embedding disabled" 'panel_embedded_console=false' "$TMP_DIR/install-config.txt"
     check_contains "LC wrapper host process denial" 'host_process_launch_allowed=0' "$TMP_DIR/install-config.txt"
   else
@@ -256,6 +268,20 @@ if [ -x "$USER_BIN/latticra-lc" ]; then
     check_contains "LC wrapper init production OS claim denied" 'production_os_claim=0' "$TMP_DIR/init.txt"
   else
     echo "failed: latticra-lc init" >&2
+    failures=$((failures + 1))
+  fi
+
+  if "$USER_BIN/latticra-lc" services > "$TMP_DIR/services.txt"; then
+    check_contains "LC wrapper services report" 'LATTICRA CONSOLE SERVICES CONTRACT' "$TMP_DIR/services.txt"
+    check_contains "LC wrapper services command surface" 'command_surface=lc services' "$TMP_DIR/services.txt"
+    check_contains "LC wrapper services registry write denied" 'service_registry_write_allowed=0' "$TMP_DIR/services.txt"
+    check_contains "LC wrapper services start denied" 'service_start_allowed=0' "$TMP_DIR/services.txt"
+    check_contains "LC wrapper services enable denied" 'service_enable_allowed=0' "$TMP_DIR/services.txt"
+    check_contains "LC wrapper services process supervision denied" 'process_supervision_allowed=0' "$TMP_DIR/services.txt"
+    check_contains "LC wrapper services host process denied" 'host_process_launch_allowed=0' "$TMP_DIR/services.txt"
+    check_contains "LC wrapper services production OS claim denied" 'production_os_claim=0' "$TMP_DIR/services.txt"
+  else
+    echo "failed: latticra-lc services" >&2
     failures=$((failures + 1))
   fi
 fi

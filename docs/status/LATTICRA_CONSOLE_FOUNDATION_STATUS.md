@@ -2,7 +2,7 @@
 
 Status: active Stage-0 foundation
 Date: 2026-05-26
-Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, session contract, workspace contract, namespace contract, rootfs contract, packages contract, init contract, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
+Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, session contract, workspace contract, namespace contract, rootfs contract, packages contract, init contract, services contract, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
 
 ## Current Evidence
 
@@ -69,6 +69,13 @@ init_contract_profile=lc-init-v0
 pid1_claim_allowed=0
 service_start_allowed=0
 process_supervision_allowed=0
+services_contract_status=metadata-only-contract
+services_contract_present=1
+services_contract_command=lc services
+services_contract_profile=lc-services-v0
+service_registry_write_allowed=0
+service_enable_allowed=0
+service_reload_allowed=0
 host_path_projection_allowed=0
 namespace_mutation_allowed=0
 substrate_bridge_status=metadata-bound

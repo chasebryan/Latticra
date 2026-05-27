@@ -88,6 +88,8 @@ require_contains 'docs/status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md' "$plan"
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_CONTRACT.md' "$plan"
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION_PLAN.md' "$plan"
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md' "$plan"
-require_contains 'The next valid Latticra Seal slice is a deterministic local capability registry schema report surface or a Panel-visible Seal dashboard planning checkpoint.' "$plan"
+require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md' "$plan"
+require_contains 'docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md' "$plan"
+require_contains 'The next valid Latticra Seal slice is a Seal Panel dashboard view-model contract or a signed receipt proof path.' "$plan"
 
 printf 'latticra seal operator receipt report implementation plan: ok\n'

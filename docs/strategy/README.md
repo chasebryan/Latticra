@@ -1,7 +1,7 @@
 # Latticra Strategy Index
 
 Status: active strategy index
-Last updated: 2026-05-26 20:19 CDT
+Last updated: 2026-05-26 21:34 CDT
 Scope: dated strategy records, mission alignment, review cadence, and quality expectations.
 
 ## Purpose
@@ -174,6 +174,12 @@ Latest Console read-only host inventory planning completion checkpoint:
 
 ```text
 2026-05-26-2019-cdt-console-read-only-host-inventory-planning-completion-checkpoint.md
+```
+
+Latest Nucleus effect-contract and runtime-denial workflow packet:
+
+```text
+2026-05-26-2134-cdt-nucleus-effect-contract-runtime-denial-workflow-packet.md
 ```
 
 Current operating rule:

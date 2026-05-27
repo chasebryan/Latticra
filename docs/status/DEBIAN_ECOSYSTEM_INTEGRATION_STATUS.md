@@ -25,6 +25,7 @@ debian_freebsd_openbsd_package_payload_inspection_contract_present=1
 debian_freebsd_openbsd_package_install_remove_transcript_contract_present=1
 debian_freebsd_openbsd_package_publication_non_claim_review_contract_present=1
 debian_freebsd_openbsd_package_validation_promotion_blocker_matrix_contract_present=1
+debian_freebsd_openbsd_package_build_evidence_intake_denial_contract_present=1
 temporary_debian_source_input_staged=1
 temporary_debian_orig_archive_staged=1
 temporary_debian_debian_dir_overlay_staged=1
@@ -35,6 +36,7 @@ payload_inspection_contract_state=specified-no-effect
 install_remove_transcript_contract_state=specified-no-effect
 publication_non_claim_review_contract_state=specified-no-effect
 validation_promotion_blocker_matrix_state=blocked-no-effect
+build_evidence_intake_denial_state=denied-no-effect
 debian_build_allowed=0
 debian_clean_build_environment_documented=1
 debian_build_environment_provisioned=0
@@ -64,7 +66,14 @@ debian_mentors_upload_run=0
 debian_archive_upload_run=0
 debian_debsign_run=0
 debian_dput_run=0
+platform_build_evidence_intake_allowed=0
+platform_build_evidence_intake_denied=1
+build_transcript_intake_accepted=0
+single_platform_build_lane_opened=0
 platform_build_evidence_accepted=0
+debian_build_evidence_intake_allowed=0
+debian_build_evidence_intake_denied=1
+debian_build_transcript_intake_accepted=0
 debian_validation_promotion_blocked=1
 debian_platform_build_evidence_accepted=0
 package_validation_result_promoted=0
@@ -104,6 +113,7 @@ docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
 packaging/debian/README.md
 packaging/debian/debian/control
 packaging/debian/debian/rules
@@ -120,6 +130,7 @@ scripts/test-debian-freebsd-openbsd-package-payload-inspection-contract.sh
 scripts/test-debian-freebsd-openbsd-package-install-remove-transcript-contract.sh
 scripts/test-debian-freebsd-openbsd-package-publication-non-claim-review-contract.sh
 scripts/test-debian-freebsd-openbsd-package-validation-promotion-blocker-matrix-contract.sh
+scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-contract.sh
 .github/workflows/debian-local-deb-static-validation.yml
 .github/workflows/debian-freebsd-openbsd-source-archive-contract.yml
 .github/workflows/debian-freebsd-openbsd-package-build-gate-contract.yml
@@ -129,6 +140,7 @@ scripts/test-debian-freebsd-openbsd-package-validation-promotion-blocker-matrix-
 .github/workflows/debian-freebsd-openbsd-package-install-remove-transcript-contract.yml
 .github/workflows/debian-freebsd-openbsd-package-publication-non-claim-review-contract.yml
 .github/workflows/debian-freebsd-openbsd-package-validation-promotion-blocker-matrix-contract.yml
+.github/workflows/debian-freebsd-openbsd-package-build-evidence-intake-denial-contract.yml
 ```
 
 ## Current Boundary
@@ -153,8 +165,10 @@ The package publication non-claim review contract is recorded in `docs/DEBIAN_FR
 
 The package validation promotion blocker matrix is recorded in `docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md`. It ties Debian source, environment, artifact, payload, install/remove, and publication non-claim blockers together while keeping `debian_platform_build_evidence_accepted=0` and `debian_validation_result_promoted=0`.
 
+The package build-evidence intake denial contract is recorded in `docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md`. It refuses Debian build-evidence intake while keeping `debian_build_evidence_intake_denied=1`, `debian_build_transcript_intake_accepted=0`, and `debian_platform_build_evidence_accepted=0`.
+
 ## Next Recommended Lane
 
 ```text
-Add a Debian package build-evidence intake denial contract before any Debian build lane can open.
+Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial review contract before any denied Debian build-evidence request can be re-requested.
 ```

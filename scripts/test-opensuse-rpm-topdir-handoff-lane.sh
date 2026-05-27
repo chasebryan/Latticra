@@ -147,7 +147,7 @@ require_contains 'docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md' docs/OPENSUSE_R
 require_contains 'docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md' docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 require_contains 'docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md' docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 require_contains 'scripts/test-opensuse-rpm-install-remove-transcript-contract.sh' docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
-require_contains 'Add openSUSE RPM validation promotion blocker matrix' docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
+require_contains 'Add openSUSE RPM build-evidence intake denial contract' docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 require_contains 'opensuse_rpm_topdir_handoff_lane: ok' docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 
 require_contains 'docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md

@@ -40,6 +40,7 @@ docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
 docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md
 docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md
+docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md
 docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md
 scripts/ubuntu-package-notice-inventory.sh
 scripts/test-ubuntu-package-notice-inventory.sh
@@ -60,6 +61,7 @@ scripts/test-ubuntu-local-deb-build-transcript-acceptance-gate-contract.sh
 scripts/test-ubuntu-local-deb-install-remove-evidence-contract.sh
 scripts/test-ubuntu-source-package-evidence-contract.sh
 scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh
+scripts/test-ubuntu-launchpad-build-result-evidence-contract.sh
 scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 .github/workflows/ubuntu-local-deb-static-validation.yml
 .github/workflows/ubuntu-lintian-availability.yml
@@ -81,6 +83,7 @@ scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 .github/workflows/ubuntu-local-deb-install-remove-evidence-contract.yml
 .github/workflows/ubuntu-source-package-evidence-contract.yml
 .github/workflows/ubuntu-upload-signing-authority-evidence-contract.yml
+.github/workflows/ubuntu-launchpad-build-result-evidence-contract.yml
 .github/workflows/ubuntu-ppa-archive-publication-gate-contract.yml
 ```
 
@@ -160,6 +163,12 @@ ppa_or_archive_target_reviewed=0
 gpg_signing_key_fingerprint_recorded=0
 upload_command_non_claims_reviewed=0
 ubuntu_upload_signing_authority_evidence_unblocked=0
+launchpad_build_result_evidence_contract_present=1
+launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence
+launchpad_upload_url_recorded=0
+launchpad_build_result_recorded=0
+launchpad_binary_artifact_listing_recorded=0
+ubuntu_launchpad_build_result_evidence_unblocked=0
 ppa_archive_publication_gate_contract_present=1
 ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence
 source_package_created=0

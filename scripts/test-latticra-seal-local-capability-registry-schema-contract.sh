@@ -23,6 +23,8 @@ contract="docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_CONTRACT.md"
 require_file "$contract"
 require_file docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION_PLAN.md
 require_file docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
+require_file docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md
+require_file docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md
 require_file docs/latticra-seal/PRODUCT.md
 require_file docs/status/SEAL_PRODUCT_SPINE_STATUS.md
 require_file docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md
@@ -84,6 +86,8 @@ require_contains 'This contract does not authorize a registry loader.' "$contrac
 require_contains 'a separate capability enforcement and runtime authority contract would be required' "$contract"
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION_PLAN.md' "$contract"
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md' "$contract"
-require_contains 'The next valid Latticra Seal slice is a deterministic local capability registry schema report surface or a Panel-visible Seal dashboard planning checkpoint.' "$contract"
+require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md' "$contract"
+require_contains 'docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md' "$contract"
+require_contains 'The next valid Latticra Seal slice is a Seal Panel dashboard view-model contract or a signed receipt proof path.' "$contract"
 
 printf 'latticra seal local capability registry schema contract: ok\n'

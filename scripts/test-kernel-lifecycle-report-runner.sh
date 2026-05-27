@@ -41,6 +41,7 @@ cc $CFLAGS \
   src/kernel_scheduler_handoff.c \
   src/kernel_scheduler_activation.c \
   src/kernel_scheduler_run_entry.c \
+  src/kernel_runtime_entry_admission.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -52,14 +53,14 @@ cc $CFLAGS \
 grep -Fq 'LATTICRA KERNEL LIFECYCLE REPORT' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'policy_status=gate-allowed' "$report_txt"
-grep -Fq 'final_state=scheduler-run-entry-ready' "$report_txt"
-grep -Fq 'step_count=23' "$report_txt"
-grep -Fq 'state_change_count=23' "$report_txt"
+grep -Fq 'final_state=runtime-entry-admission-ready' "$report_txt"
+grep -Fq 'step_count=24' "$report_txt"
+grep -Fq 'state_change_count=24' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
 grep -Fq 'network_allowed=0' "$report_txt"
 grep -Fq 'machine_network_allowed=0' "$report_txt"
-grep -Fq 'machine_log_count=23' "$report_txt"
+grep -Fq 'machine_log_count=24' "$report_txt"
 grep -Fq 'evidence_level=10' "$report_txt"
 grep -Fq 'log[0].from=created' "$report_txt"
 grep -Fq 'log[0].to=initialized' "$report_txt"
@@ -136,5 +137,9 @@ grep -Fq 'log[22].from=scheduler-activation-ready' "$report_txt"
 grep -Fq 'log[22].to=scheduler-run-entry-ready' "$report_txt"
 grep -Fq 'log[22].state_change_performed=1' "$report_txt"
 grep -Fq 'log[22].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[23].from=scheduler-run-entry-ready' "$report_txt"
+grep -Fq 'log[23].to=runtime-entry-admission-ready' "$report_txt"
+grep -Fq 'log[23].state_change_performed=1' "$report_txt"
+grep -Fq 'log[23].external_effect_performed=0' "$report_txt"
 
 printf 'kernel_lifecycle_report_runner: ok\n'

@@ -35,4 +35,4 @@ user_local_prefix_allowed=1
 dry_run_first_posture=1
 ```
 
-The installer documentation must stay aligned with the root documentation hub at [`../../docs/README.md`](../../docs/README.md), the root status shortcut at [`../../STATUS.md`](../../STATUS.md), and the detailed current status record at [`../../docs/status/CURRENT_STATUS.md`](../../docs/status/CURRENT_STATUS.md).
+The installer documentation must stay aligned with the root public README at [`../../README.md`](../../README.md), the documentation hub at [`../../docs/README.md`](../../docs/README.md), the root status shortcut at [`../../STATUS.md`](../../STATUS.md), and the detailed current status record at [`../../docs/status/CURRENT_STATUS.md`](../../docs/status/CURRENT_STATUS.md).

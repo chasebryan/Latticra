@@ -740,6 +740,43 @@ static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_qu
         "scheduler run entry transition no external effect");
     EXPECT_TRUE(result.denied == 0,
         "scheduler run entry transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry admission transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY,
+        "next runtime-entry-admission-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_admission.admission_status,
+            "runtime-entry-admission-seed-ready") == 0,
+        "runtime entry admission ready");
+    EXPECT_TRUE(strcmp(result.scheduler_run_entry.run_entry_status,
+            "scheduler-run-entry-seed-ready") == 0,
+        "runtime entry admission keeps scheduler run-entry ready");
+    EXPECT_TRUE(strcmp(result.scheduler_activation.activation_status,
+            "scheduler-activation-seed-ready") == 0,
+        "runtime entry admission keeps scheduler activation ready");
+    EXPECT_TRUE(result.runtime_entry_admission.admission_count == 4u,
+        "runtime entry admission count");
+    EXPECT_TRUE(result.runtime_entry_admission.runtime_entry_admission_allowed == 0,
+        "runtime entry admission denied");
+    EXPECT_TRUE(result.runtime_entry_admission.runtime_entry_allowed == 0,
+        "runtime entry denied");
+    EXPECT_TRUE(result.runtime_entry_admission.scheduler_run_entry_allowed == 0,
+        "runtime entry admission run-entry denied");
+    EXPECT_TRUE(result.runtime_entry_admission.dispatch_allowed == 0,
+        "runtime entry admission dispatch denied");
+    EXPECT_TRUE(result.runtime_entry_admission.run_queue_mutation_allowed == 0,
+        "runtime entry admission run queue mutation denied");
+    EXPECT_TRUE(result.runtime_entry_admission.context_switch_allowed == 0,
+        "runtime entry admission context switch denied");
+    EXPECT_TRUE(result.runtime_entry_admission.no_effect == 1,
+        "runtime entry admission no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry admission transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry admission transition not denied");
     return 0;
 }
 
@@ -1180,6 +1217,25 @@ static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_
     EXPECT_TRUE(strstr(report,
             "scheduler_run_entry_status=scheduler-run-entry-seed-ready\n") != 0,
         "scheduler run entry emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry admission transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "runtime entry admission report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=scheduler-run-entry-ready\n") != 0,
+        "scheduler run-entry previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=runtime-entry-admission-ready\n") != 0,
+        "runtime entry admission next emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_run_entry_status=scheduler-run-entry-seed-ready\n") != 0,
+        "runtime entry admission report run-entry emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_admission_status=runtime-entry-admission-seed-ready\n") != 0,
+        "runtime entry admission emitted");
     return 0;
 }
 

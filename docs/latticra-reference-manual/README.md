@@ -18,4 +18,4 @@ Scope: canonical documentation sources in the current working tree.
 
 ## Root README Link
 
-The root README links to this manual package from the top handbook links, Start Here, and Main Documentation.
+The root README links to this manual package from Start Here, Main Documentation, and the repository map. The documentation hub links to this manual from First Routes and Core Public Documents.

@@ -70,8 +70,9 @@ Known current posture:
 
 ```text
 kernel lifecycle evidence exists
-final_state=scheduler-run-entry-ready
+final_state=runtime-entry-admission-ready
 external_effect_performed=0
+runtime_entry_admission_allowed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
 scheduler_selection_allowed=0

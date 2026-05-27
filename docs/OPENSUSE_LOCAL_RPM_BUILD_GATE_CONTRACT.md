@@ -216,13 +216,21 @@ scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
 .github/workflows/opensuse-obs-publication-non-claim-review-contract.yml
 ```
 
+Completed follow-on RPM validation promotion blocker matrix contract:
+
+```text
+docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh
+.github/workflows/opensuse-rpm-validation-promotion-blocker-matrix-contract.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE RPM validation promotion blocker matrix before any package validation result can be accepted.
+Add openSUSE RPM build-evidence intake denial contract before any local build lane can open.
 ```
 
-That future lane should tie source, environment, artifact, payload, install/remove, and OBS non-claim records together while keeping RPM builds and readiness blocked.
+That future lane should define how build evidence intake is refused until the blocker matrix opens, while keeping RPM builds and readiness blocked.
 
 ## Validation
 

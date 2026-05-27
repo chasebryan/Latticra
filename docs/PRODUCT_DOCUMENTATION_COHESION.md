@@ -21,6 +21,8 @@ Use [`DOCUMENTATION_READER_JOURNEY_MAP.md`](DOCUMENTATION_READER_JOURNEY_MAP.md)
 
 Use [`DOCUMENTATION_GLOSSARY.md`](DOCUMENTATION_GLOSSARY.md) when product copy depends on shared terms such as no-effect, report-only, guarded user-local, local-only, public status, drift, demotion, or product readiness.
 
+Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) before broad product-surface changes to score findability, current status visibility, claim safety, traceability, validation, reader-route fitness, public/source consistency, and non-claim proximity.
+
 ## Cohesion Promise
 
 All product-facing documentation should describe Latticra as:
@@ -169,7 +171,8 @@ Run this review when public wording changes:
 8. Does [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) identify the correct narrowing or demotion path if records disagree?
 9. Does the change preserve the documentation-only boundary if no implementation changed?
 10. Does the wording follow [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md)?
-11. Does the change need a [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) outcome label?
+11. Does [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) leave every relevant dimension healthy or explicitly handled as a watch/failing item?
+12. Does the change need a [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) outcome label?
 
 ## Maintenance Boundary
 

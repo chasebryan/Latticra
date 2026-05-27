@@ -8,7 +8,7 @@ Scope: documentation-only validation commands, link checks, public-entry checks,
 
 This playbook explains which validation checks to run for documentation-only changes.
 
-Use it with [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md), [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md), [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md), and [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
+Use it with [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md), [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md), [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md), [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md), and [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
 
 Validation should prove only the documentation claim being made. It should not be used to imply production readiness, security guarantees, installer authority, package approval, runtime authority, or product readiness.
 
@@ -125,6 +125,8 @@ Use `blocked_missing_validation` when a claim would require a guard or evidence 
 Use `blocked_public_entry_drift` when public pages and source records disagree.
 
 Use `accepted_navigation_only` only when links or route ordering changed without changing claims.
+
+Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) to record watch or failing dimensions before choosing validation for broad route, public HTML, platform, security, estimate, or subsystem landing-page changes.
 
 ## Boundary
 

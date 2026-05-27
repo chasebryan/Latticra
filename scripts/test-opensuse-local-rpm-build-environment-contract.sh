@@ -135,7 +135,7 @@ require_contains 'rpm_artifact_naming_contract_present=1' "$contract"
 require_contains 'rpm_payload_inspection_contract_present=1' "$contract"
 require_contains 'rpm_install_remove_transcript_contract_present=1' "$contract"
 require_contains 'obs_publication_non_claim_review_present=1' "$contract"
-require_contains 'Add openSUSE RPM validation promotion blocker matrix' "$contract"
+require_contains 'Add openSUSE RPM build-evidence intake denial contract' "$contract"
 require_contains 'opensuse_local_rpm_build_environment_contract: ok' "$contract"
 
 require_contains "$contract" "$gate_contract"

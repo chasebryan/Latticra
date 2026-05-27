@@ -38,6 +38,7 @@ cc $CFLAGS \
   src/kernel_scheduler_handoff.c \
   src/kernel_scheduler_activation.c \
   src/kernel_scheduler_run_entry.c \
+  src/kernel_runtime_entry_admission.c \
   src/kernel_state.c \
   tests/kernel_state.c \
   -o "$bin"

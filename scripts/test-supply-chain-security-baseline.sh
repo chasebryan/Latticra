@@ -43,6 +43,7 @@ require_file scripts/test-report-redaction-boundary.sh
 require_file scripts/test-installer-config-authority-allowlist.sh
 require_file scripts/test-installer-ui-artifact-authority.sh
 require_file scripts/test-installer-console-output-authority.sh
+require_file scripts/test-installer-console-display-sanitization.sh
 require_file installer/scripts/latticra-installer-apply.sh
 
 require_contains 'Status: supply-chain security baseline' "$doc"
@@ -81,6 +82,9 @@ for field in \
   'installer_ui_artifact_write_validation_required=1' \
   'installer_console_output_authority_guard_required=1' \
   'installer_console_config_reflection_denial_required=1' \
+  'installer_console_control_character_sanitization_required=1' \
+  'installer_console_secret_redaction_required=1' \
+  'installer_console_line_length_cap_required=1' \
   'locked_dependency_builds_required=1' \
   'offline_installer_builds_required=1' \
   'ad_hoc_network_client_commands_forbidden_without_guard=1' \
@@ -166,6 +170,11 @@ require_contains 'console_report_config' installer/latticra-installer/src/ui.rs
 require_contains 'console_config_report_blocks_invalid_authority_without_reflection' installer/latticra-installer/src/ui.rs
 require_contains 'sh ./scripts/test-installer-console-output-authority.sh' Makefile
 require_contains 'installer-console-output-authority:' Makefile
+require_contains 'installer_console_display_sanitization: ok' scripts/test-installer-console-display-sanitization.sh
+require_contains 'sanitize_console_line' installer/latticra-installer/src/ui.rs
+require_contains 'pub(crate) fn redact_log_line' installer/latticra-installer/src/engine.rs
+require_contains 'sh ./scripts/test-installer-console-display-sanitization.sh' Makefile
+require_contains 'installer-console-display-sanitization:' Makefile
 require_contains 'source archives must use deterministic tar/gzip metadata' scripts/test-quality-safety-guards.sh
 require_contains 'cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml' Makefile
 require_contains 'cargo build --release --locked --offline' installer/scripts/latticra-installer-apply.sh

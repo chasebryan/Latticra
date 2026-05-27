@@ -92,7 +92,7 @@ require_contains '.github/workflows/opensuse-local-rpm-build-environment-contrac
 require_contains '.github/workflows/opensuse-rpm-artifact-naming-contract.yml' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains '.github/workflows/opensuse-rpm-payload-inspection-contract.yml' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains '.github/workflows/opensuse-rpm-install-remove-transcript-contract.yml' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
-require_contains 'Add openSUSE RPM validation promotion blocker matrix' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_contains 'Add openSUSE RPM build-evidence intake denial contract' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 require_contains 'opensuse_local_rpm_static_validation: ok' docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
 
 require_contains 'Status: local-only packaging draft' packaging/opensuse/README.md

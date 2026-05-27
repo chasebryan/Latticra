@@ -239,7 +239,7 @@ fn stream_child(mut child: std::process::Child, tx: &Sender<InstallEvent>) -> Re
     Ok(())
 }
 
-fn redact_log_line(line: &str) -> String {
+pub(crate) fn redact_log_line(line: &str) -> String {
     if line.contains("-----BEGIN ") && line.contains("PRIVATE KEY-----") {
         return PRIVATE_KEY_MARKER_REDACTION.to_owned();
     }

@@ -164,12 +164,34 @@ bool char_array_is_terminated(const std::array<char, Size> &source) noexcept {
     return false;
 }
 
+template <std::size_t Size>
+bool char_array_has_line_break_before_terminator(
+    const std::array<char, Size> &source) noexcept {
+    for (std::size_t index = 0u; index < Size; ++index) {
+        if (source[index] == '\0') {
+            return false;
+        }
+        if (source[index] == '\n' || source[index] == '\r') {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool record_text_fields_are_terminated(
     const authority_audit_record &record) noexcept {
     return char_array_is_terminated(record.policy_name) &&
            char_array_is_terminated(record.source_identity) &&
            char_array_is_terminated(record.validator_name) &&
            char_array_is_terminated(record.denial_reason);
+}
+
+bool record_text_fields_are_line_safe(
+    const authority_audit_record &record) noexcept {
+    return !char_array_has_line_break_before_terminator(record.policy_name) &&
+           !char_array_has_line_break_before_terminator(record.source_identity) &&
+           !char_array_has_line_break_before_terminator(record.validator_name) &&
+           !char_array_has_line_break_before_terminator(record.denial_reason);
 }
 
 void reset_report(authority_audit_report &report) noexcept {
@@ -749,6 +771,11 @@ authority_status render_authority_audit_report(
     for (std::size_t index = 0u; index < report.record_count; ++index) {
         const authority_audit_record &record = report.records[index];
         if (!record_text_fields_are_terminated(record)) {
+            clear_output(buffer, buffer_len);
+            return authority_status::invalid_input;
+        }
+
+        if (!record_text_fields_are_line_safe(record)) {
             clear_output(buffer, buffer_len);
             return authority_status::invalid_input;
         }

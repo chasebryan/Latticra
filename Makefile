@@ -1,26 +1,32 @@
 .PHONY: seal latticra-console nadia-context nadia-runtime nadia-plan nadia-mode nadia-ledger nadia-safety nadia-tool nadia-prompt-contract nadia-model-registry nadia-inference-readiness nadia-runtime-invocation nadia-model-load nadia-prompt-receipt nadia-prompt-materialization nadia-awareness-dialogue nadia-prompt-evaluation-handoff nadia-tokenization-boundary nadia-tokenizer-specification nadia-tokenizer-manifest nadia-tokenizer-artifact-inventory nadia-tokenizer-artifact-measurement nadia-tokenizer-artifact-verification nadia-tokenizer-artifact-binding nadia-tokenizer-runtime-attachment nadia-prompt-tokenization nadia-prompt-token-sequence nadia-context-window-assembly nadia-prompt-evaluation-input nadia-prompt-evaluation-runtime-handoff nadia-prompt-evaluation-invocation nadia-prompt-evaluation-result nadia-prompt-evaluation-result-review nadia-prompt-evaluation-result-disposition nadia-prompt-evaluation-result-release nadia-prompt-evaluation-result-release-receipt nadia-prompt-evaluation-result-release-receipt-review nadia-prompt-evaluation-result-release-receipt-review-disposition nadia-prompt-evaluation-result-release-receipt-review-disposition-release nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review
 .PHONY: nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition
 .PHONY: nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release
+.PHONY: nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
 
 .PHONY: quality quality-worktree quality-safety-guards quality-defensive-threat-model quality-security-standards quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation quality-macos quality-status boot-compatibility boot-preview-preflight boot-evidence-template boot-evidence-validate boot-qemu-argv-template boot-artifact-template boot-artifact-validate fedora-vm-cli-payload-readme-alignment fedora-vm-cli-payload-repeatability-runner-plan fedora-vm-cli-payload-repeatability-runner fedora-vm-cli-payload-repeatability-evidence-review-gate fedora-vm-cli-payload-repeatability-evidence-acceptance-contract fedora-vm-cli-payload-repeatability-evidence-status-template fedora-vm-cli-payload-repeatability-evidence-status-review-validator fedora-vm-cli-payload-repeatability-evidence-publication-gate fedora-vm-cli-payload-repeatability-transcript-template fedora-vm-cli-payload-repeatability-transcript-review-validator fedora-vm-cli-payload-repeatability-transcript-contract debian-freebsd-openbsd-package-input-handoff-lane ubuntu-lintian-static-metadata-contract ubuntu-local-deb-build-transcript-acceptance-gate-contract opensuse-local-rpm-build-gate-contract opensuse-local-rpm-build-environment-contract macos-reset-uninstall-live-denial-transcript macos-reset-uninstall-live-runner-interface macos-reset-uninstall-live-runner-noop-prototype macos-reset-uninstall-live-runner-denied-dispatch-transcript macos-reset-uninstall-live-runner-denied-dispatch-review macos-reset-uninstall-live-runner-acceptance-gate macos-reset-uninstall-live-runner-acceptance-denial-transcript macos-reset-uninstall-live-runner-acceptance-denial-review macos-reset-uninstall-live-runner-acceptance-denial-disposition macos-reset-uninstall-live-runner-acceptance-denial-disposition-review macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition nadia-commands high-assurance-security-baseline memory-safety-roadmap supply-chain-security-baseline zero-trust-runtime-authority-baseline cyber-incident-reporting-response-baseline vulnerability-management-release-gate-baseline cryptographic-assurance-key-management-baseline latticra-panel-signed-updater-delivery-gate
+.PHONY: fedora-vm-cli-payload-repeatability-publication-review-template
 .PHONY: secret-material-guard
 .PHONY: identity-credential-access-management-baseline
 .PHONY: security-logging-monitoring-baseline
 .PHONY: backup-recovery-resilience-baseline
 .PHONY: secure-configuration-change-management-baseline
+.PHONY: network-exposure-remote-access-baseline
 .PHONY: report-redaction-boundary
 .PHONY: installer-config-authority-allowlist
 .PHONY: installer-ui-artifact-authority
 .PHONY: installer-console-output-authority
+.PHONY: installer-console-display-sanitization
 .PHONY: opensuse-rpm-artifact-naming-contract
 .PHONY: opensuse-rpm-payload-inspection-contract
 .PHONY: opensuse-rpm-install-remove-transcript-contract
 .PHONY: opensuse-obs-publication-non-claim-review-contract
-.PHONY: os-image-release-readiness os-image-release-preflight os-image-build-preflight os-image-input-bundle-template os-image-input-bundle-validate os-image-artifact-manifest-template os-image-artifact-manifest-validate os-image-usb-write-command os-image-vm-test-command
-.PHONY: os-image-release-readiness os-image-release-preflight os-image-input-bundle-template os-image-input-bundle-validate os-image-artifact-manifest-template os-image-artifact-manifest-validate os-image-usb-write-command os-image-vm-test-command
+.PHONY: opensuse-rpm-validation-promotion-blocker-matrix-contract
+.PHONY: os-image-release-readiness os-image-release-preflight os-image-build-preflight os-image-input-source-template os-image-input-source-validate os-image-input-bundle-template os-image-input-bundle-validate os-image-artifact-manifest-template os-image-artifact-manifest-validate os-image-usb-write-command os-image-vm-test-command
+.PHONY: os-image-release-readiness os-image-release-preflight os-image-input-source-template os-image-input-source-validate os-image-input-bundle-template os-image-input-bundle-validate os-image-artifact-manifest-template os-image-artifact-manifest-validate os-image-usb-write-command os-image-vm-test-command
 .PHONY: os-image-release-readiness os-image-release-preflight os-image-artifact-manifest-template os-image-artifact-manifest-validate os-image-usb-write-command os-image-vm-test-command
 .PHONY: macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition
 .PHONY: macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-review
+.PHONY: macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout
 
 .PHONY: latticra-panel-signed-updater-manifest-fixture-contract
 .PHONY: latticra-panel-signed-updater-manifest-fixture-validation
@@ -28,12 +34,14 @@
 .PHONY: latticra-panel-signed-updater-state-fixture-validation
 .PHONY: latticra-panel-signed-updater-state-transition-denial-transcript
 .PHONY: latticra-panel-signed-updater-state-transition-denial-review
+.PHONY: latticra-panel-signed-updater-state-transition-denial-disposition
 
 OS_IMAGE_VERSION ?= local-candidate
 OS_IMAGE_ISO ?= artifacts/os-images/$(OS_IMAGE_VERSION)/latticra-x86_64.iso
 OS_IMAGE_VM ?= artifacts/os-images/$(OS_IMAGE_VERSION)/latticra-x86_64.qcow2
 OS_IMAGE_USB_DEVICE ?= /dev/sdX
 OS_IMAGE_ARTIFACT_MANIFEST ?=
+OS_IMAGE_INPUT_SOURCE_MANIFEST ?=
 OS_IMAGE_INPUT_MANIFEST ?=
 OS_IMAGE_KERNEL ?= build/os-image/kernel
 OS_IMAGE_INITRAMFS ?= build/os-image/initramfs.img
@@ -66,6 +74,7 @@ quality-security-standards:
 	sh ./scripts/test-installer-config-authority-allowlist.sh
 	sh ./scripts/test-installer-ui-artifact-authority.sh
 	sh ./scripts/test-installer-console-output-authority.sh
+	sh ./scripts/test-installer-console-display-sanitization.sh
 	sh ./scripts/test-zero-trust-runtime-authority-baseline.sh
 	sh ./scripts/test-cyber-incident-reporting-response-baseline.sh
 	sh ./scripts/test-vulnerability-management-release-gate-baseline.sh
@@ -75,6 +84,7 @@ quality-security-standards:
 	sh ./scripts/test-security-logging-monitoring-baseline.sh
 	sh ./scripts/test-backup-recovery-resilience-baseline.sh
 	sh ./scripts/test-secure-configuration-change-management-baseline.sh
+	sh ./scripts/test-network-exposure-remote-access-baseline.sh
 
 quality-rust-installer:
 	cargo fmt --manifest-path installer/latticra-installer/Cargo.toml -- --check
@@ -96,6 +106,7 @@ quality-panel-installer:
 	sh ./scripts/test-latticra-panel-signed-updater-state-fixture-validation.sh
 	sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-transcript.sh
 	sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-review.sh
+	sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition.sh
 
 quality-installer-readiness:
 	sh ./scripts/test-production-installer-readiness-contract.sh
@@ -111,6 +122,8 @@ quality-installer-readiness:
 	sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-validate.sh
 	sh ./scripts/test-latticra-os-image-release-readiness-contract.sh
 	sh ./scripts/test-latticra-os-image-build-preflight.sh
+	sh ./scripts/test-latticra-os-image-input-source-template.sh
+	sh ./scripts/test-latticra-os-image-input-source-validate.sh
 	sh ./scripts/test-latticra-os-image-input-bundle-template.sh
 	sh ./scripts/test-latticra-os-image-input-bundle-validate.sh
 	sh ./scripts/test-latticra-os-image-artifact-manifest-template.sh
@@ -134,6 +147,7 @@ quality-packaging-static:
 	sh ./scripts/test-fedora-vm-cli-payload-repeatability-evidence-status-template.sh
 	sh ./scripts/test-fedora-vm-cli-payload-repeatability-evidence-status-review-validator.sh
 	sh ./scripts/test-fedora-vm-cli-payload-repeatability-evidence-publication-gate.sh
+	sh ./scripts/test-fedora-vm-cli-payload-repeatability-publication-review-template.sh
 	sh ./scripts/test-fedora-vm-cli-payload-repeatability-transcript-template.sh
 	sh ./scripts/test-fedora-vm-cli-payload-repeatability-transcript-review-validator.sh
 	sh ./scripts/test-ubuntu-developer-workflow.sh
@@ -160,6 +174,7 @@ quality-packaging-static:
 	sh ./scripts/test-opensuse-rpm-payload-inspection-contract.sh
 	sh ./scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
 	sh ./scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
+	sh ./scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh
 
 quality-nadia:
 	sh ./scripts/test-nadia-command-surface.sh
@@ -178,6 +193,7 @@ quality-nadia:
 	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract-stage-44.sh
 	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract-stage-45.sh
 	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract-stage-46.sh
+	sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract-stage-47.sh
 
 quality-c-foundation:
 	sh ./scripts/test-latticra-console-foundation.sh
@@ -206,6 +222,8 @@ quality-c-foundation:
 	sh ./scripts/test-kernel-scheduler-activation-report-runner.sh
 	sh ./scripts/test-kernel-scheduler-run-entry.sh
 	sh ./scripts/test-kernel-scheduler-run-entry-report-runner.sh
+	sh ./scripts/test-kernel-runtime-entry-admission.sh
+	sh ./scripts/test-kernel-runtime-entry-admission-report-runner.sh
 
 quality-macos:
 	sh ./scripts/test-macos-readme-installer-usage.sh
@@ -220,6 +238,7 @@ quality-macos:
 	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-contract.sh
 	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-contract.sh
 	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-review-contract.sh
+	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-contract.sh
 
 quality-status:
 	sh ./scripts/test-current-estimate-table-source-alignment.sh
@@ -255,6 +274,8 @@ boot-artifact-validate:
 os-image-release-readiness:
 	sh ./scripts/test-latticra-os-image-release-readiness-contract.sh
 	sh ./scripts/test-latticra-os-image-build-preflight.sh
+	sh ./scripts/test-latticra-os-image-input-source-template.sh
+	sh ./scripts/test-latticra-os-image-input-source-validate.sh
 	sh ./scripts/test-latticra-os-image-input-bundle-template.sh
 	sh ./scripts/test-latticra-os-image-input-bundle-validate.sh
 	sh ./scripts/test-latticra-os-image-artifact-manifest-template.sh
@@ -270,6 +291,16 @@ os-image-build-preflight:
 	  sh ./scripts/latticra-os-image-build-preflight.sh --input-manifest "$(OS_IMAGE_INPUT_MANIFEST)" --kernel "$(OS_IMAGE_KERNEL)" --initramfs "$(OS_IMAGE_INITRAMFS)" --rootfs "$(OS_IMAGE_ROOTFS)" --output-dir "$(OS_IMAGE_OUTPUT_DIR)"; \
 	else \
 	  sh ./scripts/latticra-os-image-build-preflight.sh --kernel "$(OS_IMAGE_KERNEL)" --initramfs "$(OS_IMAGE_INITRAMFS)" --rootfs "$(OS_IMAGE_ROOTFS)" --output-dir "$(OS_IMAGE_OUTPUT_DIR)"; \
+	fi
+
+os-image-input-source-template:
+	sh ./scripts/latticra-os-image-input-source-template.sh
+
+os-image-input-source-validate:
+	if [ -n "$(OS_IMAGE_INPUT_SOURCE_MANIFEST)" ]; then \
+	  sh ./scripts/latticra-os-image-input-source-validate.sh --source-manifest "$(OS_IMAGE_INPUT_SOURCE_MANIFEST)"; \
+	else \
+	  sh ./scripts/latticra-os-image-input-source-validate.sh; \
 	fi
 
 os-image-input-bundle-template:
@@ -322,6 +353,9 @@ fedora-vm-cli-payload-repeatability-evidence-status-review-validator:
 fedora-vm-cli-payload-repeatability-evidence-publication-gate:
 	sh ./scripts/test-fedora-vm-cli-payload-repeatability-evidence-publication-gate.sh
 
+fedora-vm-cli-payload-repeatability-publication-review-template:
+	sh ./scripts/test-fedora-vm-cli-payload-repeatability-publication-review-template.sh
+
 fedora-vm-cli-payload-repeatability-transcript-template:
 	sh ./scripts/test-fedora-vm-cli-payload-repeatability-transcript-template.sh
 
@@ -357,6 +391,9 @@ opensuse-rpm-install-remove-transcript-contract:
 
 opensuse-obs-publication-non-claim-review-contract:
 	sh ./scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
+
+opensuse-rpm-validation-promotion-blocker-matrix-contract:
+	sh ./scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh
 
 macos-reset-uninstall-live-denial-transcript:
 	sh ./scripts/test-macos-reset-uninstall-live-denial-transcript-contract.sh
@@ -403,6 +440,9 @@ macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-r
 macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-review:
 	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-review-contract.sh
 
+macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout:
+	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-contract.sh
+
 nadia-commands:
 	sh ./scripts/test-nadia-command-surface.sh
 
@@ -429,6 +469,9 @@ installer-ui-artifact-authority:
 
 installer-console-output-authority:
 	sh ./scripts/test-installer-console-output-authority.sh
+
+installer-console-display-sanitization:
+	sh ./scripts/test-installer-console-display-sanitization.sh
 
 zero-trust-runtime-authority-baseline:
 	sh ./scripts/test-zero-trust-runtime-authority-baseline.sh
@@ -459,6 +502,9 @@ backup-recovery-resilience-baseline:
 secure-configuration-change-management-baseline:
 	sh ./scripts/test-secure-configuration-change-management-baseline.sh
 
+network-exposure-remote-access-baseline:
+	sh ./scripts/test-network-exposure-remote-access-baseline.sh
+
 latticra-panel-signed-updater-delivery-gate:
 	sh ./scripts/test-latticra-panel-signed-updater-delivery-gate.sh
 
@@ -479,6 +525,9 @@ latticra-panel-signed-updater-state-transition-denial-transcript:
 
 latticra-panel-signed-updater-state-transition-denial-review:
 	sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-review.sh
+
+latticra-panel-signed-updater-state-transition-denial-disposition:
+	sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition.sh
 
 seal:
 	./scripts/latticra-seal-smoke.sh
@@ -623,6 +672,9 @@ nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receip
 
 nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release:
 	sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract.sh
+
+nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt:
+	sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract.sh
 
 .PHONY: seal-policy-denials
 

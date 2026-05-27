@@ -157,7 +157,7 @@ Security-relevant changes should prefer:
 
 The current high-assurance standards checkpoint is recorded in `docs/HIGH_ASSURANCE_SECURITY_BASELINE.md`.
 
-That baseline tracks current NSA, CISA, FBI, and NIST security guidance as source input for Latticra security work. It requires memory-safety roadmap discipline, zero-trust runtime-boundary prerequisites, SSDF-style secure development evidence, CPG-inspired operational readiness gates, KEV-aware release review, SBOM evidence before production installer claims, a FIPS 140-3 cryptographic module boundary decision before any production cryptography claim, identity/access evidence before privileged or remote access claims, logging/detection evidence before hosted-service or monitoring claims, recovery evidence before backup, restore, rollback, failover, or continuity claims, and secure configuration/change-control evidence before hosted-service or hardening claims.
+That baseline tracks current NSA, CISA, FBI, and NIST security guidance as source input for Latticra security work. It requires memory-safety roadmap discipline, zero-trust runtime-boundary prerequisites, SSDF-style secure development evidence, CPG-inspired operational readiness gates, KEV-aware release review, SBOM evidence before production installer claims, a FIPS 140-3 cryptographic module boundary decision before any production cryptography claim, identity/access evidence before privileged or remote access claims, logging/detection evidence before hosted-service or monitoring claims, recovery evidence before backup, restore, rollback, failover, or continuity claims, secure configuration/change-control evidence before hosted-service or hardening claims, and network exposure/remote-access evidence before internet-facing or remote-administration claims.
 
 The component-level memory-safety roadmap is recorded in `docs/MEMORY_SAFETY_ROADMAP.md`.
 
@@ -194,6 +194,10 @@ It keeps backup, restore, rollback, failover, disaster-recovery, ransomware-reco
 The secure configuration and change management baseline is recorded in `docs/SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md`.
 
 It keeps secure-default, configuration hardening, configuration scanning, drift-detection, infrastructure-as-code, hosted-service configuration, and production configuration claims blocked until configuration item inventory, secure baseline configuration, checklist evidence, default-credential absence review, approved change record, risk review, test evidence, rollback plan, drift-detection plan, secret review, configuration-change logging, and exception ownership are recorded. Latticra does not implement host configuration mutation, infrastructure configuration mutation, configuration enforcement, configuration scanning, drift detection, change approval workflow, rollback execution, or configuration authority.
+
+The network exposure and remote access baseline is recorded in `docs/NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE.md`.
+
+It keeps internet-facing service, remote administration, remote access software, RMM, service-listener, network client, firewall policy, segmentation, ingress/egress control, DNS/TLS service, and production network claims blocked until network asset inventory, internet exposure inventory, inbound owner records, egress policy, firewall policy review, segmentation boundaries, remote access tool inventory, MFA/device posture, RMM allowlisting, unauthorized RMM detection, DNS/TLS lifecycle, network log sources, flow visibility, incident handoff, and exception ownership are recorded. Latticra does not implement network access, service listeners, network clients, DNS, TLS, firewall changes, routing changes, remote access, RMM tooling, segmentation, scanning, or network authority.
 
 This posture is an allocation of required work, not a compliance claim. It does not certify Latticra, accredit Latticra, make Latticra a production security product, or create a hardened runtime boundary.
 

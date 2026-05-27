@@ -12,7 +12,7 @@ kernel lifecycle runner
 kernel subsystem registry
 ```
 
-The lifecycle runner can move a local in-memory kernel state machine from `created` to `scheduler-run-entry-ready` through gated internal state changes.
+The lifecycle runner can move a local in-memory kernel state machine from `created` to `runtime-entry-admission-ready` through gated internal state changes.
 
 The subsystem registry exposes boot, runtime, scheduler, memory, process, filesystem, network, device, and security subsystem posture.
 
@@ -43,17 +43,17 @@ docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
 The default summary request allows the lifecycle runner to reach:
 
 ```text
-scheduler-run-entry-ready
+runtime-entry-admission-ready
 ```
 
 That produces:
 
 ```text
 summary_status=summary-ready
-final_state=scheduler-run-entry-ready
+final_state=runtime-entry-admission-ready
 lifecycle_complete=1
-lifecycle_step_count=23
-lifecycle_state_change_count=23
+lifecycle_step_count=24
+lifecycle_state_change_count=24
 external_effect_performed=0
 registry_no_effect=1
 no_external_effect_chain=1
@@ -66,18 +66,19 @@ Expected readiness examples:
 ```text
 boot -> boot-sequence-seeded
 scheduler -> scheduler-run-entry-ready
+runtime -> runtime-entry-admission-ready
 memory -> memory-map-ready
 process -> ipc-table-ready
 filesystem -> vfs-namespace-ready
 network -> network-syscall-metadata-ready
 device -> interrupt-table-ready
-runtime -> runtime-not-entered
 security -> security-not-production-boundary
 ```
 
 Authority remains denied:
 
 ```text
+runtime_entry_admission_allowed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
 scheduler_selection_allowed=0
@@ -180,11 +181,11 @@ kernel_lifecycle_subsystem_summary_report_runner: ok
 The guards verify:
 
 ```text
-default request targets scheduler-run-entry-ready
-summary reaches scheduler-run-entry-ready
+default request targets runtime-entry-admission-ready
+summary reaches runtime-entry-admission-ready
 summary marks boot/scheduler/memory/process/filesystem as lifecycle-ready metadata
-runtime remains not entered
-runtime entry remains denied
+runtime admission metadata is ready while runtime remains not entered
+runtime entry admission and runtime entry remain denied
 scheduler execution remains denied
 memory allocation remains denied
 process spawn remains denied

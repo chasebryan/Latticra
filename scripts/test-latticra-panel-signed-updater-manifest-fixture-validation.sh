@@ -134,7 +134,7 @@ require_contains 'trusted_signed_manifest_present=0' "$script"
 require_contains 'signed_update_apply_allowed=0' "$script"
 require_contains 'network_fetch_attempted=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
-require_contains 'next_lane=panel-signed-updater-state-transition-denial-disposition' "$script"
+require_contains 'next_lane=panel-signed-updater-state-transition-denial-disposition-review' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'curl ' "$script"
 require_not_contains 'wget ' "$script"
@@ -142,10 +142,10 @@ require_not_contains 'sudo ' "$script"
 
 require_contains 'LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_VALIDATION_STATUS.md' "$index"
 require_contains 'signed updater manifest fixture validation status' "$index"
-require_contains 'Panel signed-updater state transition denial disposition' "$contract_doc"
-require_contains 'Panel signed-updater state transition denial disposition' "$contract_status"
-require_contains 'Panel signed-updater state transition denial disposition' "$delivery_status"
-require_contains 'Panel signed-updater state transition denial disposition' "$denial_status"
+require_contains 'Panel signed-updater state transition denial disposition review' "$contract_doc"
+require_contains 'Panel signed-updater state transition denial disposition review' "$contract_status"
+require_contains 'Panel signed-updater state transition denial disposition review' "$delivery_status"
+require_contains 'Panel signed-updater state transition denial disposition review' "$denial_status"
 require_contains 'signed_updater_manifest_fixture_contract_present=1' "$self_update"
 require_contains 'local signed updater manifest fixture contract' "$self_update"
 require_contains 'signed_updater_manifest_fixture_validation_present=1' "$self_update"
@@ -183,7 +183,7 @@ require_output_contains "$output" 'network_fetch_authority=0'
 require_output_contains "$output" 'network_fetch_attempted=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'production_update_ready=0'
-require_output_contains "$output" 'next_lane=panel-signed-updater-state-transition-denial-disposition'
+require_output_contains "$output" 'next_lane=panel-signed-updater-state-transition-denial-disposition-review'
 
 sh scripts/test-latticra-panel-signed-updater-manifest-fixture-contract.sh
 

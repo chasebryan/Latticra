@@ -40,6 +40,8 @@ const char *latticra_seal_runtime_handoff_report_error_label(
         return "denied-host-effect";
     case LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DENIED_NETWORK_EFFECT:
         return "denied-network-effect";
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DENIED_CRYPTO_GRADUATION_GATE:
+        return "denied-crypto-graduation-gate";
     default:
         return "unknown";
     }
@@ -48,7 +50,14 @@ const char *latticra_seal_runtime_handoff_report_error_label(
 static void report_init(latticra_seal_runtime_handoff_report_t *report) {
     memset(report, 0, sizeof(*report));
     copy_literal(report->report_profile, sizeof(report->report_profile), "latticra-seal-runtime-handoff-report/0.1");
+    copy_literal(report->crypto_graduation_gate_state, sizeof(report->crypto_graduation_gate_state), "not-required");
     copy_literal(report->report_state, sizeof(report->report_state), "denied-evaluation");
+    report->crypto_graduation_gate_present = 0u;
+    report->crypto_graduation_gate_passed = 0u;
+    report->standard_expectations_met = 0u;
+    report->local_verify_graduated = 0u;
+    report->receipt_promotion_graduated = 0u;
+    report->authority_promotion_allowed = 0u;
     report->verified = 0u;
     report->authority_usable = 0u;
     report->receipt_capability_gate_allowed = 0u;
@@ -78,11 +87,20 @@ static void copy_evaluation_metadata(
     copy_literal(out->message_digest_algorithm, sizeof(out->message_digest_algorithm), evaluation->message_digest_algorithm);
     copy_literal(out->message_digest_hex, sizeof(out->message_digest_hex), evaluation->message_digest_hex);
     copy_literal(out->public_key_identity_label, sizeof(out->public_key_identity_label), evaluation->public_key_identity_label);
+    copy_literal(out->crypto_graduation_profile, sizeof(out->crypto_graduation_profile), evaluation->crypto_graduation_profile);
+    copy_literal(out->assurance_baseline_profile, sizeof(out->assurance_baseline_profile), evaluation->assurance_baseline_profile);
+    copy_literal(out->crypto_graduation_gate_state, sizeof(out->crypto_graduation_gate_state), evaluation->crypto_graduation_gate_state);
     copy_literal(out->requested_capability, sizeof(out->requested_capability), evaluation->requested_capability);
     copy_literal(out->requested_effect, sizeof(out->requested_effect), evaluation->requested_effect);
     copy_literal(out->requested_handoff, sizeof(out->requested_handoff), evaluation->requested_handoff);
     copy_literal(out->requested_report, sizeof(out->requested_report), requested_report);
     copy_literal(out->requested_scope, sizeof(out->requested_scope), evaluation->requested_scope);
+    out->crypto_graduation_gate_present = evaluation->crypto_graduation_gate_present;
+    out->crypto_graduation_gate_passed = evaluation->crypto_graduation_gate_passed;
+    out->standard_expectations_met = evaluation->standard_expectations_met;
+    out->local_verify_graduated = evaluation->local_verify_graduated;
+    out->receipt_promotion_graduated = evaluation->receipt_promotion_graduated;
+    out->authority_promotion_allowed = evaluation->authority_promotion_allowed;
     out->verified = evaluation->verified;
     out->authority_usable = evaluation->authority_usable;
     out->receipt_capability_gate_allowed = evaluation->receipt_capability_gate_allowed;
@@ -123,6 +141,19 @@ latticra_status_t latticra_seal_runtime_handoff_report_from_evaluation(
         out->error = LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_INVALID_EVALUATION;
         copy_literal(out->report_state, sizeof(out->report_state), "denied-evaluation");
         copy_literal(out->status, sizeof(out->status), "invalid-evaluation");
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (evaluation->crypto_graduation_gate_present != 0u &&
+        (evaluation->crypto_graduation_gate_passed != 1u ||
+         evaluation->standard_expectations_met != 1u ||
+         evaluation->local_verify_graduated != 1u ||
+         evaluation->receipt_promotion_graduated != 1u ||
+         evaluation->authority_promotion_allowed != 0u ||
+         strcmp(evaluation->crypto_graduation_gate_state, "graduated-authority-neutral") != 0)) {
+        out->error = LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DENIED_CRYPTO_GRADUATION_GATE;
+        copy_literal(out->report_state, sizeof(out->report_state), "denied-crypto-graduation-gate");
+        copy_literal(out->status, sizeof(out->status), "denied-crypto-graduation-gate");
         return LATTICRA_STATUS_OK;
     }
 
@@ -244,11 +275,20 @@ latticra_status_t latticra_seal_runtime_handoff_report_render(
         "message_digest_algorithm=%s\n"
         "message_digest_hex=%s\n"
         "public_key_identity_label=%s\n"
+        "crypto_graduation_profile=%s\n"
+        "assurance_baseline_profile=%s\n"
+        "crypto_graduation_gate_state=%s\n"
         "requested_capability=%s\n"
         "requested_effect=%s\n"
         "requested_handoff=%s\n"
         "requested_report=%s\n"
         "requested_scope=%s\n"
+        "crypto_graduation_gate_present=%u\n"
+        "crypto_graduation_gate_passed=%u\n"
+        "standard_expectations_met=%u\n"
+        "local_verify_graduated=%u\n"
+        "receipt_promotion_graduated=%u\n"
+        "authority_promotion_allowed=%u\n"
         "verified=%u\n"
         "authority_usable=%u\n"
         "receipt_capability_gate_allowed=%u\n"
@@ -277,11 +317,20 @@ latticra_status_t latticra_seal_runtime_handoff_report_render(
         report->message_digest_algorithm,
         report->message_digest_hex,
         report->public_key_identity_label,
+        report->crypto_graduation_profile,
+        report->assurance_baseline_profile,
+        report->crypto_graduation_gate_state,
         report->requested_capability,
         report->requested_effect,
         report->requested_handoff,
         report->requested_report,
         report->requested_scope,
+        report->crypto_graduation_gate_present,
+        report->crypto_graduation_gate_passed,
+        report->standard_expectations_met,
+        report->local_verify_graduated,
+        report->receipt_promotion_graduated,
+        report->authority_promotion_allowed,
         report->verified,
         report->authority_usable,
         report->receipt_capability_gate_allowed,

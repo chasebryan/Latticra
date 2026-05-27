@@ -33,6 +33,8 @@ require_file docs/LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_CONTRACT.md
 require_file docs/LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_IMPLEMENTATION.md
 require_file docs/LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_CONTRACT.md
 require_file docs/LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_IMPLEMENTATION.md
+require_file docs/status/SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md
+require_file docs/status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md
 require_file include/latticra/seal_runtime_handoff_report.h
 require_file src/seal_runtime_handoff_report.c
 require_file tests/seal_runtime_handoff_report_invariants.c
@@ -51,6 +53,8 @@ require_contains 'seal_runtime_handoff_report_status_present=1' "$status_file"
 require_contains 'seal_runtime_handoff_evaluation_contract_present=1' "$status_file"
 require_contains 'seal_runtime_handoff_evaluation_implementation_present=1' "$status_file"
 require_contains 'seal_runtime_handoff_evaluation_runner_present=1' "$status_file"
+require_contains 'seal_runtime_handoff_evaluation_status_present=1' "$status_file"
+require_contains 'seal_crypto_graduation_gate_status_present=1' "$status_file"
 require_contains 'readme_links_runtime_handoff_report_contract=1' "$status_file"
 require_contains 'readme_links_runtime_handoff_report_implementation=1' "$status_file"
 require_contains 'readme_links_runtime_handoff_report_status=1' "$status_file"
@@ -66,11 +70,20 @@ require_contains 'receipt_profile=latticra-seal-verified-receipt/0.1' "$status_f
 require_contains 'verify_profile=latticra-seal-ed25519-verify/0.1' "$status_file"
 require_contains 'message_digest_algorithm=SHA-256' "$status_file"
 require_contains 'public_key_identity_label=rfc8032-test-key' "$status_file"
+require_contains 'crypto_graduation_profile=latticra-seal-crypto-graduation-gate/0.1' "$status_file"
+require_contains 'assurance_baseline_profile=latticra-cryptographic-assurance-key-management/0.1' "$status_file"
+require_contains 'crypto_graduation_gate_state=graduated-authority-neutral' "$status_file"
 require_contains 'requested_capability=verified-receipt-report' "$status_file"
 require_contains 'requested_effect=report-only' "$status_file"
 require_contains 'requested_handoff=report-only' "$status_file"
 require_contains 'requested_report=report-only' "$status_file"
 require_contains 'requested_scope=local-fixture-scope' "$status_file"
+require_contains 'crypto_graduation_gate_present=1' "$status_file"
+require_contains 'crypto_graduation_gate_passed=1' "$status_file"
+require_contains 'standard_expectations_met=1' "$status_file"
+require_contains 'local_verify_graduated=1' "$status_file"
+require_contains 'receipt_promotion_graduated=1' "$status_file"
+require_contains 'authority_promotion_allowed=0' "$status_file"
 require_contains 'verified=1' "$status_file"
 require_contains 'authority_usable=0' "$status_file"
 require_contains 'receipt_capability_gate_allowed=0' "$status_file"
@@ -104,6 +117,10 @@ require_contains 'host_behavior_changed=0' "$status_file"
 require_contains 'seal runtime handoff report status: ok' "$status_file"
 require_contains 'seal runtime handoff report invariants: ok' "$status_file"
 require_contains 'sealed report envelope status/public-entry alignment' "$status_file"
+require_contains 'DENIED_CRYPTO_GRADUATION_GATE' include/latticra/seal_runtime_handoff_report.h
+require_contains 'crypto_graduation_gate_present=%u' src/seal_runtime_handoff_report.c
+require_contains 'standard_expectations_met=%u' src/seal_runtime_handoff_report.c
+require_contains 'denied-crypto-graduation-gate' src/seal_runtime_handoff_report.c
 
 require_contains 'runtime handoff report metadata/status' README.md
 require_contains 'seal_runtime_handoff_report_contract_present=1' README.md

@@ -22,6 +22,7 @@ require_contains() {
 contract='docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md'
 status='docs/status/UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md'
 source_package_contract='docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md'
+launchpad_build_contract='docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md'
 publication_gate='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md'
 static_validation='docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md'
 readiness='docs/UBUNTU_READINESS_PLAN.md'
@@ -30,6 +31,7 @@ workflow='.github/workflows/ubuntu-upload-signing-authority-evidence-contract.ym
 require_file "$contract"
 require_file "$status"
 require_file "$source_package_contract"
+require_file "$launchpad_build_contract"
 require_file "$publication_gate"
 require_file "$static_validation"
 require_file "$readiness"
@@ -75,6 +77,9 @@ require_contains 'upload_exit_status_recorded=0' "$contract"
 require_contains 'launchpad_upload_run=0' "$contract"
 require_contains 'source_package_uploaded=0' "$contract"
 require_contains 'ubuntu_upload_signing_authority_evidence_unblocked=0' "$contract"
+require_contains 'ubuntu_launchpad_build_result_evidence_contract_present=1' "$contract"
+require_contains 'ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence' "$contract"
+require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=0' "$contract"
 require_contains 'ppa_created=0' "$contract"
 require_contains 'ppa_claimed=0' "$contract"
 require_contains 'ubuntu_archive_submission_claimed=0' "$contract"
@@ -92,40 +97,69 @@ require_contains 'ppa_or_archive_target_reviewed=0' "$status"
 require_contains 'gpg_signing_key_fingerprint_recorded=0' "$status"
 require_contains 'upload_command_non_claims_reviewed=0' "$status"
 require_contains 'ubuntu_upload_signing_authority_evidence_unblocked=0' "$status"
+require_contains 'ubuntu_launchpad_build_result_evidence_contract_present=1' "$status"
+require_contains 'ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence' "$status"
+require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=0' "$status"
 require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' "$status"
 require_contains 'scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh' "$status"
 require_contains '.github/workflows/ubuntu-upload-signing-authority-evidence-contract.yml' "$status"
+require_contains 'docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md' "$status"
+require_contains 'scripts/test-ubuntu-launchpad-build-result-evidence-contract.sh' "$status"
+require_contains '.github/workflows/ubuntu-launchpad-build-result-evidence-contract.yml' "$status"
 
 require_contains 'ubuntu_upload_signing_authority_evidence_contract_present=1' "$source_package_contract"
 require_contains 'ubuntu_upload_signing_authority_evidence_status=blocked-pending-source-package-evidence' "$source_package_contract"
 require_contains 'ubuntu_upload_signing_authority_evidence_unblocked=0' "$source_package_contract"
 
+require_contains 'ubuntu_launchpad_build_result_evidence_contract_present=1' "$launchpad_build_contract"
+require_contains 'ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence' "$launchpad_build_contract"
+require_contains 'ubuntu_upload_signing_authority_evidence_unblocked=1' "$launchpad_build_contract"
+require_contains 'ubuntu_upload_signing_authority_evidence_unblocked=0' "$launchpad_build_contract"
+
 require_contains 'ubuntu_upload_signing_authority_evidence_contract_present=1' "$publication_gate"
 require_contains 'ubuntu_upload_signing_authority_evidence_unblocked=1' "$publication_gate"
 require_contains 'ubuntu_upload_signing_authority_evidence_status=blocked-pending-source-package-evidence' "$publication_gate"
 require_contains 'ubuntu_upload_signing_authority_evidence_unblocked=0' "$publication_gate"
+require_contains 'ubuntu_launchpad_build_result_evidence_contract_present=1' "$publication_gate"
 
 require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' "$static_validation"
+require_contains 'docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md' "$static_validation"
 require_contains 'upload_signing_authority_evidence_contract_present=1' "$static_validation"
 require_contains 'upload_signing_authority_evidence_status=blocked-pending-source-package-evidence' "$static_validation"
 require_contains 'ubuntu_upload_signing_authority_evidence_unblocked=0' "$static_validation"
+require_contains 'launchpad_build_result_evidence_contract_present=1' "$static_validation"
+require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=0' "$static_validation"
 
 require_contains 'ubuntu_upload_signing_authority_evidence_contract_present=1' "$readiness"
 require_contains 'ubuntu_upload_signing_authority_evidence_status=blocked-pending-source-package-evidence' "$readiness"
 require_contains 'ubuntu_upload_signing_authority_evidence_unblocked=0' "$readiness"
+require_contains 'ubuntu_launchpad_build_result_evidence_contract_present=1' "$readiness"
+require_contains 'ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence' "$readiness"
+require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=0' "$readiness"
 require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' "$readiness"
+require_contains 'docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md' "$readiness"
 require_contains 'scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh' "$readiness"
+require_contains 'scripts/test-ubuntu-launchpad-build-result-evidence-contract.sh' "$readiness"
 require_contains '.github/workflows/ubuntu-upload-signing-authority-evidence-contract.yml' "$readiness"
+require_contains '.github/workflows/ubuntu-launchpad-build-result-evidence-contract.yml' "$readiness"
 
 require_contains 'ubuntu_upload_signing_authority_evidence_contract_present=1' README.md
 require_contains 'ubuntu_upload_signing_authority_evidence_status=blocked-pending-source-package-evidence' README.md
 require_contains 'ubuntu_upload_signing_authority_evidence_unblocked=0' README.md
+require_contains 'ubuntu_launchpad_build_result_evidence_contract_present=1' README.md
+require_contains 'ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence' README.md
+require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=0' README.md
 require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' packaging/ubuntu/README.md
+require_contains 'docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md' packaging/ubuntu/README.md
 require_contains 'upload_signing_authority_evidence_contract_present=1' packaging/ubuntu/README.md
 require_contains 'upload_signing_authority_evidence_status=blocked-pending-source-package-evidence' packaging/ubuntu/README.md
 require_contains 'gpg_signing_key_fingerprint_recorded=0' packaging/ubuntu/README.md
+require_contains 'launchpad_build_result_evidence_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=0' packaging/ubuntu/README.md
 require_contains 'sh scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-launchpad-build-result-evidence-contract.sh' docs/QUICK_START_CHEATSHEET.md
 require_contains 'sh scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh' "$workflow"
 require_contains 'Ubuntu Upload Signing Authority Evidence Contract' "$workflow"
 

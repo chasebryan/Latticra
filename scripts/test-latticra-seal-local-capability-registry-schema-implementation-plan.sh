@@ -23,6 +23,8 @@ plan="docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION_PLAN.md
 require_file "$plan"
 require_file docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_CONTRACT.md
 require_file docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
+require_file docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md
+require_file docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md
 require_file scripts/test-latticra-seal-local-capability-registry-schema-contract.sh
 require_file docs/latticra-seal/PRODUCT.md
 require_file docs/status/SEAL_PRODUCT_SPINE_STATUS.md
@@ -107,6 +109,8 @@ require_contains 'remote registry loading' "$plan"
 require_contains 'turning registry entries into execution grants' "$plan"
 require_contains 'turning registry entries into effect grants' "$plan"
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md' "$plan"
-require_contains 'The next valid Latticra Seal slice is a deterministic local capability registry schema report surface or a Panel-visible Seal dashboard planning checkpoint.' "$plan"
+require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md' "$plan"
+require_contains 'docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md' "$plan"
+require_contains 'The next valid Latticra Seal slice is a Seal Panel dashboard view-model contract or a signed receipt proof path.' "$plan"
 
 printf 'latticra seal local capability registry schema implementation plan: ok\n'

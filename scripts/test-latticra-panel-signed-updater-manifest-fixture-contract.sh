@@ -126,7 +126,7 @@ require_contains 'trusted_signed_manifest_present=0' "$script"
 require_contains 'signed_manifest_present=0' "$script"
 require_contains 'signed_update_apply_allowed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
-require_contains 'next_lane=panel-signed-updater-state-transition-denial-disposition' "$script"
+require_contains 'next_lane=panel-signed-updater-state-transition-denial-disposition-review' "$script"
 
 require_contains 'LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_CONTRACT_STATUS.md' "$index"
 require_contains 'signed updater manifest fixture contract' "$index"
@@ -137,14 +137,14 @@ require_contains 'manifest_fixture_trusted_for_apply=0' "$self_update"
 require_contains 'trusted_signed_manifest_present=0' "$self_update"
 require_contains 'local signed updater manifest fixture contract' "$self_update"
 
-require_contains 'panel-signed-updater-state-transition-denial-disposition' "$gate_script"
-require_contains 'Panel signed-updater state transition denial disposition' "$gate_doc"
-require_contains 'Panel signed-updater state transition denial disposition' "$gate_status"
-require_contains 'panel-signed-updater-state-transition-denial-disposition' "$gate_test"
-require_contains 'panel-signed-updater-state-transition-denial-disposition' "$denial_script"
-require_contains 'Panel signed-updater state transition denial disposition' "$denial_doc"
-require_contains 'Panel signed-updater state transition denial disposition' "$denial_status"
-require_contains 'panel-signed-updater-state-transition-denial-disposition' "$denial_test"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-review' "$gate_script"
+require_contains 'Panel signed-updater state transition denial disposition review' "$gate_doc"
+require_contains 'Panel signed-updater state transition denial disposition review' "$gate_status"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-review' "$gate_test"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-review' "$denial_script"
+require_contains 'Panel signed-updater state transition denial disposition review' "$denial_doc"
+require_contains 'Panel signed-updater state transition denial disposition review' "$denial_status"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-review' "$denial_test"
 
 require_contains 'sh ./scripts/test-latticra-panel-signed-updater-manifest-fixture-contract.sh' "$makefile"
 require_contains 'docs/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_CONTRACT.md' "$workflow"
@@ -180,7 +180,7 @@ require_output_contains "$output" 'signed_update_apply_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'root_authority=0'
 require_output_contains "$output" 'production_update_ready=0'
-require_output_contains "$output" 'next_lane=panel-signed-updater-state-transition-denial-disposition'
+require_output_contains "$output" 'next_lane=panel-signed-updater-state-transition-denial-disposition-review'
 
 sh scripts/test-latticra-panel-signed-updater-denial-transcript.sh
 

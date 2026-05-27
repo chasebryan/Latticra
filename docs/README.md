@@ -20,6 +20,7 @@ Latticra keeps a large evidence trail on purpose: status records, contracts, imp
 | Contributor | [Contributing](../CONTRIBUTING.md) | [Foundation Index](FOUNDATION_INDEX.md), [Documentation Maintenance](DOCUMENTATION_MAINTENANCE.md) |
 | Packager | Platform README below | Platform workflow or validation lane below |
 | Security reviewer | [Security Policy](../SECURITY.md) | [High-Assurance Security Baseline](HIGH_ASSURANCE_SECURITY_BASELINE.md), [Defensive Threat Model](DEFENSIVE_THREAT_MODEL_CONTRACT.md) |
+| Reference reader | [Reference Manual](latticra-reference-manual/README.md) | [PDF edition](latticra-reference-manual/the-latticra-reference-manual-v0.1.0.pdf), [editable Markdown](latticra-reference-manual/the-latticra-reference-manual-v0.1.0.md), [source manifest](latticra-reference-manual/source-manifest.json) |
 | Handbook reader | [System Substrate README](latticra-system-substrate/README.md) | [System Substrate PDF](latticra-system-substrate/the-latticra-system-substrate.pdf), [Foundation Index](FOUNDATION_INDEX.md) |
 
 ## Core Public Documents
@@ -31,9 +32,11 @@ Latticra keeps a large evidence trail on purpose: status records, contracts, imp
 | [Status](../STATUS.md) | Public status shortcut and estimate mirror |
 | [Current Status](status/CURRENT_STATUS.md) | Current progress, estimates, and next priorities |
 | [Foundation Index](FOUNDATION_INDEX.md) | Exhaustive architecture, implementation, guard, status, and evidence index |
+| [Reference Manual](latticra-reference-manual/README.md) | Generated v0.1.0 book assembled from the current documentation corpus |
 | [System Substrate handbook landing page](latticra-system-substrate/README.md) | Project-level long-form technical handbook |
 | [Documentation Reader Journey Map](DOCUMENTATION_READER_JOURNEY_MAP.md) | Audience-specific reading routes and stop signals |
 | [Documentation Glossary](DOCUMENTATION_GLOSSARY.md) | Shared vocabulary for evidence, validation, posture, platform, and readiness terms |
+| [Documentation Health Scorecard](DOCUMENTATION_HEALTH_SCORECARD.md) | Repeatable rubric for findability, claim safety, traceability, validation, reader routes, and public/source consistency |
 | [Public Claims Ledger](PUBLIC_CLAIMS_LEDGER.md) | Current public claims and blocked adjacent claims |
 | [Non-Claims](NON_CLAIMS.md) | Claims Latticra explicitly does not make |
 | [Real System Contract](REAL_SYSTEM_CONTRACT.md) | Project identity, real-system boundary, evidence rules, and non-claims |
@@ -63,10 +66,10 @@ All platform lanes are local-only or no-effect unless a source record explicitly
 | --- | --- | --- |
 | Fedora | [packaging/fedora README](../packaging/fedora/README.md) | [Fedora developer workflow](FEDORA_DEVELOPER_WORKFLOW.md), [Fedora readiness plan](FEDORA_READINESS_PLAN.md), [local RPM static validation](FEDORA_LOCAL_RPM_STATIC_VALIDATION.md), [VM CLI payload validation lane](FEDORA_VM_CLI_PAYLOAD_VALIDATION_LANE.md) |
 | Ubuntu | [packaging/ubuntu README](../packaging/ubuntu/README.md) | [Ubuntu developer workflow](UBUNTU_DEVELOPER_WORKFLOW.md), [Ubuntu readiness plan](UBUNTU_READINESS_PLAN.md), [local deb static validation](UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md), [lintian static metadata contract](UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md) |
-| Debian | [packaging/debian README](../packaging/debian/README.md) | [Debian local deb static validation](DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md), [source archive contract](DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md), [package build gate](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md), [install/remove transcript](DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md) |
-| openSUSE | [packaging/opensuse README](../packaging/opensuse/README.md) | [openSUSE developer workflow](OPENSUSE_DEVELOPER_WORKFLOW.md), [openSUSE readiness plan](OPENSUSE_READINESS_PLAN.md), [local RPM static validation](OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md), [OBS non-claim review](OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md) |
-| FreeBSD | [packaging/freebsd README](../packaging/freebsd/README.md) | [FreeBSD port static validation](FREEBSD_PORT_STATIC_VALIDATION.md), [source archive fixture lane](DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md), [package input handoff lane](DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md) |
-| OpenBSD | [packaging/openbsd README](../packaging/openbsd/README.md) | [OpenBSD port static validation](OPENBSD_PORT_STATIC_VALIDATION.md), [source archive fixture lane](DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md), [publication non-claim review](DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md) |
+| Debian | [packaging/debian README](../packaging/debian/README.md) | [Debian local deb static validation](DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md), [source archive contract](DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md), [package build gate](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md), [build-evidence intake denial](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md) |
+| openSUSE | [packaging/opensuse README](../packaging/opensuse/README.md) | [openSUSE developer workflow](OPENSUSE_DEVELOPER_WORKFLOW.md), [openSUSE readiness plan](OPENSUSE_READINESS_PLAN.md), [local RPM static validation](OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md), [validation blocker matrix](OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md) |
+| FreeBSD | [packaging/freebsd README](../packaging/freebsd/README.md) | [FreeBSD port static validation](FREEBSD_PORT_STATIC_VALIDATION.md), [source archive fixture lane](DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md), [build-evidence intake denial](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md) |
+| OpenBSD | [packaging/openbsd README](../packaging/openbsd/README.md) | [OpenBSD port static validation](OPENBSD_PORT_STATIC_VALIDATION.md), [source archive fixture lane](DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md), [build-evidence intake denial](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md) |
 | macOS | [macOS integration transferability plan](MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md) | [app bundle writer dry run](MACOS_APP_BUNDLE_WRITER_DRY_RUN.md), [commit gate contract](MACOS_COMMIT_GATE_CONTRACT.md), [reset/uninstall dry-run contract](MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT.md), [verification transcript contract](MACOS_VERIFICATION_TRANSCRIPT_CONTRACT.md) |
 
 openSUSE RPM maintenance records:
@@ -77,6 +80,7 @@ openSUSE RPM maintenance records:
 - [OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md](OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md)
 - [OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md](OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md)
 - [OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md](OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md)
+- [OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md](OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md)
 
 Shared Debian, FreeBSD, and OpenBSD package/port records:
 
@@ -89,6 +93,7 @@ Shared Debian, FreeBSD, and OpenBSD package/port records:
 - [DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md](DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md)
 - [DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md](DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md)
 - [DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md](DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md)
+- [DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md)
 
 ## Security and Assurance
 
@@ -112,6 +117,7 @@ Use these before changing public wording, navigation, claim posture, mirrored es
 | [Product Documentation Cohesion](PRODUCT_DOCUMENTATION_COHESION.md) | Product-facing copy, reader routes, public site resources, and subsystem landing pages |
 | [Documentation Maintenance](DOCUMENTATION_MAINTENANCE.md) | Public entry points, status mirrors, static HTML summaries, and documentation-only validation |
 | [Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.md) | Canonical terms, date style, headings, link style, and claim wording |
+| [Documentation Health Scorecard](DOCUMENTATION_HEALTH_SCORECARD.md) | Findability, current status, claim safety, traceability, validation, reader-route, platform, security, estimate, and subsystem landing-page checks |
 | [Documentation Traceability Matrix](DOCUMENTATION_TRACEABILITY_MATRIX.md) | Mapping public surfaces to source records, validation, mirrors, and non-claims |
 | [Documentation Validation Playbook](DOCUMENTATION_VALIDATION_PLAYBOOK.md) | Hygiene, link, public-entry, estimate, platform, subsystem, and claim-promotion checks |
 | [Documentation Drift Response Playbook](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) | Mirror drift, stale evidence, non-claim drift, and claim demotion |
@@ -132,6 +138,7 @@ Use these before changing public wording, navigation, claim posture, mirrored es
 - Keep this hub as the route map for deeper docs.
 - Keep [Foundation Index](FOUNDATION_INDEX.md) evidence-heavy and exhaustive.
 - Keep [Status](../STATUS.md), [Current Status](status/CURRENT_STATUS.md), and status mirrors aligned when public posture changes.
+- Use [Documentation Health Scorecard](DOCUMENTATION_HEALTH_SCORECARD.md) before broad public, route, platform, security, estimate, or subsystem landing-page changes.
 - Keep non-claims near any security, packaging, installer, runtime, or OS-adjacent wording.
 - Do not promote production runtime, host protection, package approval, certification, or OS replacement claims without implementation evidence, tests, status records, and public-entry alignment.
 

@@ -35,6 +35,7 @@ Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge endpoint evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-source edge endpoint span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge span evidence propagation note: 2026-05-26 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
@@ -90,6 +91,7 @@ Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge endpoint evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-source edge endpoint span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge span evidence propagation note: 2026-05-26 CDT
 Latest Seal capability metadata report surface status note: 2026-05-26 CDT
 Latest Seal product spine note: 2026-05-26 CDT
@@ -101,6 +103,8 @@ Latest Seal operator receipt report surface/status note: 2026-05-26 CDT
 Latest Seal local capability registry schema contract note: 2026-05-26 CDT
 Latest Seal local capability registry schema implementation plan note: 2026-05-26 CDT
 Latest Seal local capability registry schema implementation note: 2026-05-26 CDT
+Latest Seal local capability registry schema surface/status note: 2026-05-26 CDT
+Latest Seal Panel dashboard planning checkpoint note: 2026-05-26 CDT
 
 ## Purpose
 
@@ -168,19 +172,35 @@ Latticra Seal policy decision predecessor status alignment is complete for the e
 
 Latticra Seal operator receipt report predecessor status alignment is complete for the existing denied report-only operator receipt status surface. It does not add receipt file writes, tool execution, policy enforcement, capability enforcement, cryptographic verification, signature verification, freshness validation, replay detection, runtime execution, runtime authority, effect execution, verified receipt authority, key material loading, private-key handling, object sealing, host behavior, network behavior, or production enforcement claims.
 
+Latticra Seal local capability registry schema surface/status is complete for the existing no-effect local schema implementation. It does not add registry loading, registry file reads, registry file writes, tool execution, policy enforcement, capability enforcement, cryptographic verification, signature verification, runtime execution, runtime authority, effect execution, host behavior, network behavior, or production enforcement claims.
+
+Latticra Seal Panel dashboard planning checkpoint is complete for the future read-only operator dashboard surface. It does not add Panel UI implementation, dashboard view-model implementation, report file loading, host scanning, tool execution, policy enforcement, capability enforcement, cryptographic verification, signature verification, runtime execution, runtime authority, effect execution, host behavior, network behavior, or production enforcement claims.
+
 ## Latest completed planning slice
 
 ```text
-Latticra Seal local capability registry schema implementation plan
+Latticra Seal Panel dashboard planning checkpoint
 ```
 
 Purpose completed:
 
 ```text
-define exact future local capability registry schema header, source, tests, report shape, enum labels, capacity, fixture, and negative-case behavior while preserving no registry loader, no file reads, no tool execution, no host mutation, no network behavior, no capability enforcement, no effects, and no runtime authority
+define the future read-only Seal dashboard shape, source rows, absent-authority fields, and acceptance gates while preserving no Panel UI implementation, no dashboard view model, no report loading, no host scanning, no network behavior, no capability enforcement, no effects, and no runtime authority
 ```
 
 ## Latest completed implementation slice
+
+```text
+Latticra Seal local capability registry schema report surface/status checkpoint
+```
+
+Purpose completed:
+
+```text
+render the no-effect local capability registry schema through a deterministic local report runner and status checkpoint while preserving no registry loader, no registry file access, no tool execution beyond local fixture compilation, no host mutation, no network behavior, no capability enforcement, no effects, and no runtime authority
+```
+
+## Previous implementation slice
 
 ```text
 Latticra Seal local capability registry schema implementation
@@ -192,16 +212,28 @@ Purpose completed:
 add bounded local schema records, deterministic validation, a default descriptive fixture entry, and negative-case invariants while preserving no registry loader, no registry file access, no tool execution, no host mutation, no network behavior, no capability enforcement, no effects, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
 
 ```text
-Latticra Seal operator receipt report surface/status
+Lat LIR first transition-source edge endpoint span evidence propagation
 ```
 
 Purpose completed:
 
 ```text
-render the no-effect operator receipt report through a deterministic local report runner and status checkpoint while preserving no receipt file writes, no tool execution, no host mutation, no network behavior, no capability enforcement, no effects, and no runtime authority
+copy the first Lat-specific LIR transition-source edge endpoint node source-span offsets/lines/columns into runtime-boundary records/reports so boundary evidence keeps the first Lat-derived transition-source relationship endpoint locations visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Earlier implementation slice
+
+```text
+Lat LIR first transition-source edge endpoint evidence propagation
+```
+
+Purpose completed:
+
+```text
+copy the first Lat-specific LIR transition-source edge endpoint node kinds and names into runtime-boundary records/reports so boundary evidence keeps the first Lat-derived transition-source relationship endpoints visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
 ## Earlier implementation slice

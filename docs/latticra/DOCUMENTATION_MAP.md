@@ -8,13 +8,13 @@ Scope: reader routes, foundation documents, C/C++ direction, security profile, A
 
 This map records how the Latticra documentation set is meant to fit together.
 
-For the shortest reader route, start with [`../README.md`](../README.md). For the exhaustive architecture and operations index, use [`../FOUNDATION_INDEX.md`](../FOUNDATION_INDEX.md). This file explains the relationship between those layers and the older C/C++ foundation package that originally lived here.
+For the public front door, start with [`../../README.md`](../../README.md). For the deeper documentation route, use [`../README.md`](../README.md). For the exhaustive architecture and operations index, use [`../FOUNDATION_INDEX.md`](../FOUNDATION_INDEX.md). This file explains the relationship between those layers and the older C/C++ foundation package that originally lived here.
 
 ## Documentation Layers
 
 | Layer | Purpose | Primary entry |
 | --- | --- | --- |
-| Reader hub | Short route through the whole documentation set | [`../README.md`](../README.md) |
+| Documentation hub | Deeper route through the whole documentation set | [`../README.md`](../README.md) |
 | Public project overview | Product identity, current status, quick start, and non-claims | [`../../README.md`](../../README.md) |
 | Live status | Current public posture, estimates, status records, announcements | [`../../STATUS.md`](../../STATUS.md), [`../status/CURRENT_STATUS.md`](../status/CURRENT_STATUS.md), [`../status/README.md`](../status/README.md) |
 | Foundation index | Full project operations, architecture, implementation, and guard index | [`../FOUNDATION_INDEX.md`](../FOUNDATION_INDEX.md) |

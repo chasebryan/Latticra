@@ -148,7 +148,7 @@ require_contains 'docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md' docs/OPENSUSE_S
 require_contains 'docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'scripts/test-opensuse-rpm-install-remove-transcript-contract.sh' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
-require_contains 'Add openSUSE RPM validation promotion blocker matrix' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_contains 'Add openSUSE RPM build-evidence intake denial contract' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'opensuse_source_archive_fixture_lane: ok' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 
 require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md' docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md

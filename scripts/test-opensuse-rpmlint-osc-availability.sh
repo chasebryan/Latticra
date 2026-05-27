@@ -72,7 +72,7 @@ require_contains 'docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md' docs/OPENSUS
 require_contains 'docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_contains 'scripts/test-opensuse-rpm-install-remove-transcript-contract.sh' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_contains '.github/workflows/opensuse-rpm-install-remove-transcript-contract.yml' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
-require_contains 'Add openSUSE RPM validation promotion blocker matrix' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_contains 'Add openSUSE RPM build-evidence intake denial contract' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 require_contains 'opensuse_rpmlint_osc_availability: ok' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
 
 if [ ! -r /etc/os-release ] || ! grep -Eq '^(ID=opensuse|ID_LIKE=.*suse|ID="opensuse|ID_LIKE=".*suse)' /etc/os-release; then

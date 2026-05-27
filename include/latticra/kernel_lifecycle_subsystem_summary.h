@@ -29,6 +29,7 @@ typedef struct {
     char effect_boundary[LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX];
     int lifecycle_ready;
     int authority_allowed;
+    int network_allowed;
     int no_effect;
     unsigned int evidence_level;
 } latticra_kernel_lifecycle_subsystem_summary_entry_t;
@@ -49,6 +50,7 @@ typedef struct {
     int external_effect_performed;
     int network_allowed;
     int registry_no_effect;
+    int runtime_entry_admission_allowed;
     int runtime_entry_allowed;
     int scheduler_execution_allowed;
     int scheduler_selection_allowed;

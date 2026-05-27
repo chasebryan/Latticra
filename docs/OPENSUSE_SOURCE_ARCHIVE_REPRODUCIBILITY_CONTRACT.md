@@ -167,7 +167,7 @@ Those lanes prove archive shape, reproducibility, temporary RPM topdir staging, 
 Recommended next slice:
 
 ```text
-Add openSUSE RPM validation promotion blocker matrix before any package validation result can be accepted.
+Add openSUSE RPM build-evidence intake denial contract before any local build lane can open.
 ```
 
 ## Validation

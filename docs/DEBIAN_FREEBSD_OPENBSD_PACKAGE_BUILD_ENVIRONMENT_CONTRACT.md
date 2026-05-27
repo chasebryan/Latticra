@@ -20,12 +20,14 @@ debian_freebsd_openbsd_package_payload_inspection_contract_present=1
 debian_freebsd_openbsd_package_install_remove_transcript_contract_present=1
 debian_freebsd_openbsd_package_publication_non_claim_review_contract_present=1
 debian_freebsd_openbsd_package_validation_promotion_blocker_matrix_contract_present=1
+debian_freebsd_openbsd_package_build_evidence_intake_denial_contract_present=1
 package_build_environment_contract_state=specified-no-effect
 artifact_naming_contract_state=specified-no-effect
 payload_inspection_contract_state=specified-no-effect
 install_remove_transcript_contract_state=specified-no-effect
 publication_non_claim_review_contract_state=specified-no-effect
 validation_promotion_blocker_matrix_state=blocked-no-effect
+build_evidence_intake_denial_state=denied-no-effect
 package_build_gate_state=closed-no-effect
 debian_clean_build_environment_documented=1
 freebsd_ports_environment_documented=1
@@ -43,6 +45,7 @@ package_build_command_allowed=0
 package_artifact_created=0
 install_on_host_run=0
 publication_non_claim_review_present=1
+platform_build_evidence_intake_denied=1
 platform_build_evidence_accepted=0
 package_readiness_claimed=0
 ```
@@ -200,6 +203,7 @@ docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
 ```
 
 The package-build gate remains closed. This environment contract only records what future disposable validation environments must prove before a platform-specific build lane can request authorization.
@@ -279,15 +283,30 @@ scripts/test-debian-freebsd-openbsd-package-validation-promotion-blocker-matrix-
 
 That lane ties source, environment, artifact, payload, install/remove, and publication non-claim blockers together while keeping platform build evidence acceptance and validation promotion blocked.
 
-## Next Slice
+## Completed Follow-On Lane
 
-Recommended next slice:
+Completed follow-on lane:
 
 ```text
 Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial contract before any single-platform build lane can open.
 ```
 
-That future lane should define how build evidence intake is refused until the blocker matrix opens, while keeping package builds and readiness blocked.
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-contract.sh
+```
+
+That lane defines how build evidence intake is refused until the blocker matrix opens, while keeping package builds and readiness blocked.
+
+## Next Slice
+
+Recommended next slice:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial review contract before any denial can be re-requested.
+```
+
+That future lane should review denied intake requests while keeping package builds and readiness blocked.
 
 ## Validation
 

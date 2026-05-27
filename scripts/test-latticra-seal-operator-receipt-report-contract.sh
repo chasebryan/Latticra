@@ -80,7 +80,9 @@ require_contains 'docs/status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md' "$contract
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_CONTRACT.md' "$contract"
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION_PLAN.md' "$contract"
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md' "$contract"
-require_contains 'Panel-visible Seal dashboard planning checkpoint' "$contract"
-require_contains 'local capability registry schema report surface' "$contract"
+require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md' "$contract"
+require_contains 'docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md' "$contract"
+require_contains 'Seal Panel dashboard view-model contract' "$contract"
+require_contains 'signed receipt proof path' "$contract"
 
 printf 'latticra seal operator receipt report contract: ok\n'
