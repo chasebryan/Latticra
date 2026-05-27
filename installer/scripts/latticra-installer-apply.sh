@@ -2013,11 +2013,15 @@ if bool_true "$BUILD_LATTICRA_FROM_SOURCE"; then
       install_file_from_source "$exe" "$PREFIX/bin/$name" 0755 binary
     done
   elif [ -f "$REPO_ROOT/Makefile" ]; then
-    log "[make] building repo root with default Makefile target"
-    (cd "$REPO_ROOT" && make)
-    for dir in "$REPO_ROOT/bin" "$REPO_ROOT/build" "$REPO_ROOT/target/release"; do
-      install_built_executables_from_dir "$dir"
-    done
+    if grep -Eq '^[[:space:]]*build([[:space:]]|:)' "$REPO_ROOT/Makefile"; then
+      log "[make] building repo root with explicit build target"
+      (cd "$REPO_ROOT" && make build)
+      for dir in "$REPO_ROOT/bin" "$REPO_ROOT/build" "$REPO_ROOT/target/release"; do
+        install_built_executables_from_dir "$dir"
+      done
+    else
+      log "[skip] repo root Makefile has no explicit build target; default target not run during install"
+    fi
   else
     log "[skip] no Cargo.toml, CMakeLists.txt, or Makefile found at repo root"
   fi
