@@ -1,6 +1,7 @@
 #include "latticra/cpp/authority.hpp"
 
 #include <cstddef>
+#include <cstring>
 #include <type_traits>
 
 namespace {
@@ -47,6 +48,18 @@ bool contains_text(const char *haystack, const char *needle) noexcept {
         }
     }
     return false;
+}
+
+template <typename Enum>
+Enum unchecked_enum_value(const int raw) noexcept {
+    static_assert(std::is_enum_v<Enum>);
+    using Storage = std::underlying_type_t<Enum>;
+    static_assert(sizeof(Enum) == sizeof(Storage));
+
+    const Storage storage = static_cast<Storage>(raw);
+    Enum value{};
+    std::memcpy(&value, &storage, sizeof(value));
+    return value;
 }
 
 latticra_lat_source_span_t ordered_lat_span() noexcept {
@@ -640,7 +653,7 @@ void cpp_authority_layer_rejects_lat_declaration_kind_out_of_vocabulary()
     result.module.declaration_count = 1u;
     result.declarations[0].span = ordered_lat_span();
     result.declarations[0].kind =
-        static_cast<latticra_lat_declaration_kind_t>(255);
+        unchecked_enum_value<latticra_lat_declaration_kind_t>(255);
 
     const latticra::authority_status status =
         latticra::validate_lat_parse_result(result, report);
@@ -656,7 +669,8 @@ void cpp_authority_layer_rejects_lat_clause_effect_out_of_vocabulary()
     latticra_lat_parse_result_t result = valid_lat_result();
     result.clause_count = 1u;
     result.clauses[0].span = ordered_lat_span();
-    result.clauses[0].effect = static_cast<latticra_lat_effect_t>(255);
+    result.clauses[0].effect =
+        unchecked_enum_value<latticra_lat_effect_t>(255);
 
     const latticra::authority_status status =
         latticra::validate_lat_parse_result(result, report);
@@ -993,7 +1007,8 @@ void cpp_authority_layer_rejects_lir_edge_kind_counts_out_of_bounds()
 void cpp_authority_layer_rejects_lir_module_enum_out_of_vocabulary() noexcept {
     latticra::authority_audit_report report{};
     latticra_lir_module_t module = valid_lir_module();
-    module.source_kind = static_cast<latticra_lir_source_kind_t>(255);
+    module.source_kind =
+        unchecked_enum_value<latticra_lir_source_kind_t>(255);
 
     const latticra::authority_status status =
         latticra::validate_lir_shape(module, report);
@@ -1007,7 +1022,8 @@ void cpp_authority_layer_rejects_lir_node_kind_out_of_vocabulary() noexcept {
     latticra::authority_audit_report report{};
     latticra_lir_module_t module = valid_lir_module();
     module.node_count = 1u;
-    module.nodes[0].kind = static_cast<latticra_lir_node_kind_t>(255);
+    module.nodes[0].kind =
+        unchecked_enum_value<latticra_lir_node_kind_t>(255);
 
     const latticra::authority_status status =
         latticra::validate_lir_shape(module, report);
@@ -1022,7 +1038,8 @@ void cpp_authority_layer_rejects_lir_edge_kind_out_of_vocabulary() noexcept {
     latticra_lir_module_t module = valid_lir_module();
     module.node_count = 1u;
     module.edge_count = 1u;
-    module.edges[0].edge_kind = static_cast<latticra_lir_edge_kind_t>(255);
+    module.edges[0].edge_kind =
+        unchecked_enum_value<latticra_lir_edge_kind_t>(255);
 
     const latticra::authority_status status =
         latticra::validate_lir_shape(module, report);
@@ -1039,7 +1056,7 @@ void cpp_authority_layer_rejects_lir_binding_kind_out_of_vocabulary()
     module.node_count = 1u;
     module.binding_count = 1u;
     module.bindings[0].resolved_kind =
-        static_cast<latticra_lir_resolved_binding_kind_t>(255);
+        unchecked_enum_value<latticra_lir_resolved_binding_kind_t>(255);
 
     const latticra::authority_status status =
         latticra::validate_lir_shape(module, report);
