@@ -6,8 +6,9 @@
 
 > “The simulacrum is never what hides the truth.” — Jean Baudrillard
 
-**Featured handbook:** [The Latticra System Substrate PDF](docs/latticra-system-substrate/the-latticra-system-substrate.pdf)  
-**Editable handbook:** [The Latticra System Substrate DOCX](docs/latticra-system-substrate/the-latticra-system-substrate.docx)  
+**Featured handbook:** [docs/latticra-reference-manual/the-latticra-reference-manual-v0.1.0.pdf](docs/latticra-reference-manual/the-latticra-reference-manual-v0.1.0.pdf)<br>
+**Editable handbook:** [docs/latticra-reference-manual/the-latticra-reference-manual-v0.1.0.md](docs/latticra-reference-manual/the-latticra-reference-manual-v0.1.0.md)<br>
+**Reference manual package:** [docs/latticra-reference-manual/](docs/latticra-reference-manual/)<br>
 **Documentation hub:** [docs/README.md](docs/README.md)<br>
 **System Substrate docs:** [docs/latticra-system-substrate/](docs/latticra-system-substrate/)  
 **Seal subsystem docs:** [docs/latticra-seal/](docs/latticra-seal/)<br>
