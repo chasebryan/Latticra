@@ -132,6 +132,8 @@ Nadia Murad
 nadia_offline_ai_stage_0_foundation_present=1
 installed_command=latticra-nadia
 | Nadia offline AI foundation | 75% |
+nadia_stage_30_prompt_evaluation_invocation_contract_present=1
+latticra-nadia prompt-evaluation-invocation
 nadia_stage_32_prompt_evaluation_result_review_contract_present=1
 latticra-nadia prompt-evaluation-result-review
 nadia_stage_33_prompt_evaluation_result_disposition_contract_present=1
@@ -346,6 +348,11 @@ The repeatability evidence acceptance contract is present, but no evidence statu
 This supports `host_install_ready_for_cli_payload=1` only for the bounded CLI payload above. It does not claim production installer readiness, Fedora approval, Fedora distribution readiness, immutable Fedora readiness, daily-driver readiness, security capability, update safety, recovery safety, sandboxing, malware prevention, ransomware prevention, or operating-system replacement readiness.
 
 ```text
+docs/FEDORA_DEVELOPER_WORKFLOW.md
+docs/FEDORA_PACKAGE_METADATA_PLAN.md
+docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_LANE.md
+docs/FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_TRANSCRIPT_CONTRACT.md
+packaging/fedora/latticra.spec
 docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_RUNNER_PLAN.md
 docs/FEDORA_VM_CLI_PAYLOAD_NEXT_VALIDATION_LANE_PLAN.md
 docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_TRANSCRIPT_CONTRACT.md
@@ -546,6 +553,16 @@ public-key parsing status record now ties that metadata-only checkpoint to the g
 SEAL_KEY_PARSING_STATUS.md
 SEAL_VERIFICATION_POLICY_STATUS.md
 SEAL_VERIFICATION_RECEIPT_STATUS.md
+local Ed25519 verify-only implementation/status
+seal_ed25519_verify_only_contract_present=1
+seal_ed25519_verify_implementation_present=1
+seal_ed25519_verify_status_present=1
+ed25519_cryptographic_verification_performed=1
+ed25519_verified=1
+ed25519_authority_usable=0
+docs/LATTICRA_SEAL_ED25519_VERIFY_ONLY_CONTRACT.md
+docs/LATTICRA_SEAL_ED25519_VERIFY_IMPLEMENTATION.md
+docs/status/SEAL_ED25519_VERIFY_STATUS.md
 latticra_seal_public_key_parsing_status_present=1
 latticra_seal_public_key_parsing_metadata_present=1
 latticra_seal_key_parsing_metadata_present=1
@@ -576,11 +593,32 @@ LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md
 verification receipt status record now ties that metadata-only checkpoint to the guarded verification policy status predecessor
 LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md
 LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md
+verified receipt promotion metadata/status
+seal_verified_receipt_promotion_contract_present=1
+seal_verified_receipt_promotion_implementation_present=1
+seal_verified_receipt_promotion_status_present=1
+verified_receipt_promotion_cryptographic_verification_performed=1
+verified_receipt_promotion_verified=1
+verified_receipt_promotion_authority_usable=0
+docs/LATTICRA_SEAL_VERIFIED_RECEIPT_PROMOTION_CONTRACT.md
+docs/LATTICRA_SEAL_VERIFIED_RECEIPT_PROMOTION_IMPLEMENTATION.md
+docs/status/SEAL_VERIFIED_RECEIPT_PROMOTION_STATUS.md
 capability gate status record now ties that metadata-only denied checkpoint to the guarded verification receipt status predecessor
 LATTICRA_SEAL_CAPABILITY_GATE_CONTRACT.md
 LATTICRA_SEAL_CAPABILITY_GATE_IMPLEMENTATION.md
 LATTICRA_SEAL_EFFECT_DECISION_IMPLEMENTATION.md
 LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md
+verified capability gate metadata/status
+seal_verified_capability_gate_contract_present=1
+seal_verified_capability_gate_implementation_present=1
+seal_verified_capability_gate_status_present=1
+verified_capability_gate_allowed=1
+verified_capability_gate_state=allowed-metadata-only
+verified_capability_gate_runtime_authority_granted=0
+verified_capability_gate_effect_performed=0
+docs/LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_CONTRACT.md
+docs/LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_IMPLEMENTATION.md
+docs/status/SEAL_VERIFIED_CAPABILITY_GATE_STATUS.md
 latticra_seal_capability_gate_metadata_present=1
 latticra_seal_capability_gate_status_present=1
 latticra_seal_effect_decision_metadata_present=1
