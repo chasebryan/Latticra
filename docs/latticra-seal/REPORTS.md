@@ -65,6 +65,9 @@ The native CLI validates that the `[report]` output declarations in
 `latticra.seal` match these generated artifact paths before it returns PASS.
 It refuses symlinked, non-directory, or group/world-writable report directories
 before writing evidence artifacts.
+The native CLI writes the latest report through a temporary report file and
+promotes it only after the report is complete. Symlinked final or temporary
+report paths are refused.
 
 `latticra-seal baseline` promotes the generated hash list into
 `latticra.seal.lock` through a temporary lockfile, and refuses symlinked or

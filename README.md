@@ -12,9 +12,9 @@ This presentation introduces Chase Bryan's Latticra Substrate model and the math
 
 README route refreshed: 2026-05-27 CDT
 Default branch: `main`
-Edge edition checkpoint: `v0.1.1edge`
+Edge edition checkpoint: `v0.2.0edge`
 
-`v0.1.1edge` is the main-line edge edition for active validation work after the v0.1.0 reference-manual checkpoint. It is not a standard release, product-readiness claim, API-stability guarantee, or replacement for the generated v0.1.0 reference manual package.
+`v0.2.0edge` is the main-line edge edition for active validation work after the v0.1.0 reference-manual checkpoint. It is not a standard release, product-readiness claim, API-stability guarantee, or replacement for the generated v0.1.0 reference manual package.
 
 Latticra is an early-stage systems substrate. It is built around a simple rule: before a system action becomes operational, the request, identity, capability, policy, boundary, and evidence posture should be explicit, inspectable, denied by default, and backed by reproducible records.
 
@@ -29,7 +29,7 @@ Planning estimates are not release promises, product-readiness metrics, or secur
 
 | Field | Current public marker |
 | --- | --- |
-| Edge edition checkpoint | `v0.1.1edge` |
+| Edge edition checkpoint | `v0.2.0edge` |
 | Current public estimate | Roughly 45% overall system planning estimate |
 | Estimate source | Current public estimate table below, mirrored from `STATUS.md` and `docs/status/CURRENT_STATUS.md` |
 | Foundation documents and contracts | Mature relative to implementation; around 95% planning estimate |

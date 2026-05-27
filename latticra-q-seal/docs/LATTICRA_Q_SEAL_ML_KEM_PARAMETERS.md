@@ -26,77 +26,91 @@ latticra-q-seal/include/latticra/q_seal_ml_kem_implementation_frame.h
 latticra-q-seal/include/latticra/q_seal_ml_kem_memory_safety_evidence.h
 latticra-q-seal/include/latticra/q_seal_ml_kem_negative_test_evidence.h
 latticra-q-seal/include/latticra/q_seal_ml_kem_provider_differential.h
+latticra-q-seal/include/latticra/q_seal_ml_kem_source_digest_manifest.h
 latticra-q-seal/include/latticra/q_seal_ml_kem_secret_state_contract.h
 latticra-q-seal/include/latticra/q_seal_ml_kem_side_channel_review.h
+latticra-q-seal/include/latticra/q_seal_ml_kem_code_owner_review.h
 latticra-q-seal/src/q_seal_ml_kem.c
 latticra-q-seal/src/q_seal_ml_kem_acvp_intake.c
 latticra-q-seal/src/q_seal_ml_kem_api_misuse_resistance.c
 latticra-q-seal/src/q_seal_ml_kem_ci_promotion_evidence.c
+latticra-q-seal/src/q_seal_ml_kem_code_owner_review.c
 latticra-q-seal/src/q_seal_ml_kem_evidence_gate.c
 latticra-q-seal/src/q_seal_ml_kem_implementation_binding_manifest.c
 latticra-q-seal/src/q_seal_ml_kem_implementation_frame.c
 latticra-q-seal/src/q_seal_ml_kem_memory_safety_evidence.c
 latticra-q-seal/src/q_seal_ml_kem_negative_test_evidence.c
 latticra-q-seal/src/q_seal_ml_kem_provider_differential.c
+latticra-q-seal/src/q_seal_ml_kem_source_digest_manifest.c
 latticra-q-seal/src/q_seal_ml_kem_secret_state_contract.c
 latticra-q-seal/src/q_seal_ml_kem_side_channel_review.c
 latticra-q-seal/tests/q_seal_ml_kem_parameters_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_acvp_intake_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_api_misuse_resistance_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_ci_promotion_evidence_invariants.c
+latticra-q-seal/tests/q_seal_ml_kem_code_owner_review_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_evidence_gate_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_implementation_binding_manifest_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_implementation_frame_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_memory_safety_evidence_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_negative_test_evidence_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_provider_differential_invariants.c
+latticra-q-seal/tests/q_seal_ml_kem_source_digest_manifest_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_secret_state_contract_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_side_channel_review_invariants.c
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-parameters.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-intake.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-api-misuse-resistance.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-ci-promotion-evidence.sh
+latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-evidence-gate.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-implementation-frame.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-memory-safety-evidence.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-negative-test-evidence.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-provider-differential.sh
+latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-source-digest-manifest.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-secret-state-contract.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-side-channel-review.sh
 latticra-q-seal/evidence/ML_KEM_ACVP_INTAKE.md
 latticra-q-seal/evidence/ML_KEM_API_MISUSE_RESISTANCE.md
 latticra-q-seal/evidence/ML_KEM_CI_PROMOTION_EVIDENCE.md
+latticra-q-seal/evidence/ML_KEM_CODE_OWNER_REVIEW.md
 latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
 latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_FRAME.md
 latticra-q-seal/evidence/ML_KEM_KAT_MANIFEST.md
 latticra-q-seal/evidence/ML_KEM_MEMORY_SAFETY_EVIDENCE.md
 latticra-q-seal/evidence/ML_KEM_NEGATIVE_TEST_EVIDENCE.md
 latticra-q-seal/evidence/ML_KEM_PROVIDER_DIFFERENTIAL.md
+latticra-q-seal/evidence/ML_KEM_SOURCE_DIGEST_MANIFEST.md
 latticra-q-seal/evidence/ML_KEM_SECRET_STATE_CONTRACT.md
 latticra-q-seal/evidence/ML_KEM_SIDE_CHANNEL_REVIEW.md
 scripts/test-latticra-q-seal-ml-kem-parameters.sh
 scripts/test-latticra-q-seal-ml-kem-acvp-intake.sh
 scripts/test-latticra-q-seal-ml-kem-api-misuse-resistance.sh
 scripts/test-latticra-q-seal-ml-kem-ci-promotion-evidence.sh
+scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
 scripts/test-latticra-q-seal-ml-kem-evidence-gate.sh
 scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
 scripts/test-latticra-q-seal-ml-kem-implementation-frame.sh
 scripts/test-latticra-q-seal-ml-kem-memory-safety-evidence.sh
 scripts/test-latticra-q-seal-ml-kem-negative-test-evidence.sh
 scripts/test-latticra-q-seal-ml-kem-provider-differential.sh
+scripts/test-latticra-q-seal-ml-kem-source-digest-manifest.sh
 scripts/test-latticra-q-seal-ml-kem-secret-state-contract.sh
 scripts/test-latticra-q-seal-ml-kem-side-channel-review.sh
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PARAMETERS.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_INTAKE.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_API_MISUSE_RESISTANCE.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CI_PROMOTION_EVIDENCE.md
+latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CODE_OWNER_REVIEW.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_EVIDENCE_GATE.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_FRAME.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_MEMORY_SAFETY_EVIDENCE.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_NEGATIVE_TEST_EVIDENCE.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_DIFFERENTIAL.md
+latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_MANIFEST.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SECRET_STATE_CONTRACT.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SIDE_CHANNEL_REVIEW.md
 ```
@@ -182,6 +196,10 @@ sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-memory-safety-evidence.sh
 sh scripts/test-latticra-q-seal-ml-kem-memory-safety-evidence.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-api-misuse-resistance.sh
 sh scripts/test-latticra-q-seal-ml-kem-api-misuse-resistance.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-source-digest-manifest.sh
+sh scripts/test-latticra-q-seal-ml-kem-source-digest-manifest.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
+sh scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-ci-promotion-evidence.sh
 sh scripts/test-latticra-q-seal-ml-kem-ci-promotion-evidence.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-constant-time-review.sh
@@ -217,6 +235,10 @@ latticra q-seal ml-kem memory-safety evidence invariants: ok
 latticra q-seal ml-kem memory-safety evidence: ok
 latticra q-seal ml-kem api misuse resistance invariants: ok
 latticra q-seal ml-kem api misuse resistance: ok
+latticra q-seal ml-kem source digest manifest invariants: ok
+latticra q-seal ml-kem source digest manifest: ok
+latticra q-seal ml-kem code owner review invariants: ok
+latticra q-seal ml-kem code owner review: ok
 latticra q-seal ml-kem ci promotion evidence invariants: ok
 latticra q-seal ml-kem ci promotion evidence: ok
 latticra q-seal ml-kem constant-time review invariants: ok

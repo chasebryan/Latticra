@@ -14,8 +14,12 @@ latticra-q-seal/src/q_seal_ml_kem_implementation_binding_manifest.c
 latticra-q-seal/tests/q_seal_ml_kem_implementation_binding_manifest_invariants.c
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
 latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
+latticra-q-seal/evidence/ML_KEM_SOURCE_DIGEST_MANIFEST.md
+latticra-q-seal/evidence/ML_KEM_CODE_OWNER_REVIEW.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
 scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
+scripts/test-latticra-q-seal-ml-kem-source-digest-manifest.sh
+scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
 ```
 
 ## Current Fields
@@ -73,6 +77,10 @@ status=ml-kem-implementation-binding-blocked
 ```sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
 sh scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-source-digest-manifest.sh
+sh scripts/test-latticra-q-seal-ml-kem-source-digest-manifest.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
+sh scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
 ```
 
 Expected output:
@@ -80,4 +88,8 @@ Expected output:
 ```text
 latticra q-seal ml-kem implementation binding manifest invariants: ok
 latticra q-seal ml-kem implementation binding manifest: ok
+latticra q-seal ml-kem source digest manifest invariants: ok
+latticra q-seal ml-kem source digest manifest: ok
+latticra q-seal ml-kem code owner review invariants: ok
+latticra q-seal ml-kem code owner review: ok
 ```

@@ -21,6 +21,7 @@
 #define MANIFEST_PATH "latticra.seal"
 #define REPORT_DIR "reports"
 #define REPORT_PATH "reports/latticra-seal-cli-report.txt"
+#define REPORT_TMP_PATH "reports/latticra-seal-cli-report.tmp"
 #define HASH_LIST_PATH "reports/latticra-seal-cli-hashes.txt"
 #define HASH_LIST_TMP_PATH "reports/latticra-seal-cli-hashes.tmp"
 #define LEGACY_SMOKE_REPORT_PATH "reports/latticra-seal-report.txt"
@@ -195,6 +196,38 @@ static FILE *open_regular_file_for_write(const char *path) {
     }
 
     return file;
+}
+
+static bool path_is_regular_or_missing(const char *path) {
+    struct stat st;
+
+    if (lstat(path, &st) == 0) {
+        return S_ISREG(st.st_mode);
+    }
+
+    return errno == ENOENT;
+}
+
+static bool unlink_regular_if_present(const char *path) {
+    struct stat st;
+
+    if (lstat(path, &st) == 0) {
+        if (!S_ISREG(st.st_mode)) {
+            return false;
+        }
+
+        return unlink(path) == 0;
+    }
+
+    return errno == ENOENT;
+}
+
+static FILE *open_report_for_write(void) {
+    if (!path_is_regular_or_missing(REPORT_PATH)) {
+        return NULL;
+    }
+
+    return open_regular_file_for_write(REPORT_TMP_PATH);
 }
 
 static const char *visible_path(const char *path) {
@@ -1831,6 +1864,35 @@ static int finish(SealRun *run) {
     return run->failures == 0 ? 0 : 1;
 }
 
+static int finalize_report(SealRun *run, int code) {
+    if (!run->report) {
+        return code;
+    }
+
+    if (fclose(run->report) != 0) {
+        run->report = NULL;
+        (void)unlink_regular_if_present(REPORT_TMP_PATH);
+        fprintf(stderr, "could not finalize report: %s\n", REPORT_PATH);
+        return 2;
+    }
+
+    run->report = NULL;
+
+    if (!path_is_regular_or_missing(REPORT_PATH)) {
+        (void)unlink_regular_if_present(REPORT_TMP_PATH);
+        fprintf(stderr, "could not promote report: %s\n", REPORT_PATH);
+        return 2;
+    }
+
+    if (rename(REPORT_TMP_PATH, REPORT_PATH) != 0) {
+        (void)unlink_regular_if_present(REPORT_TMP_PATH);
+        fprintf(stderr, "could not promote report: %s\n", REPORT_PATH);
+        return 2;
+    }
+
+    return code;
+}
+
 static int command_check(void) {
     if (!ensure_report_dir()) {
         return 2;
@@ -1839,7 +1901,7 @@ static int command_check(void) {
     SealRun run;
     run.failures = 0;
     run.warnings = 0;
-    run.report = open_regular_file_for_write(REPORT_PATH);
+    run.report = open_report_for_write();
 
     if (!run.report) {
         fprintf(stderr, "could not open report: %s\n", REPORT_PATH);
@@ -1855,8 +1917,7 @@ static int command_check(void) {
     if (!manifest) {
         fail_run(&run, "latticra.seal is missing or unreadable");
         int code = finish(&run);
-        fclose(run.report);
-        return code;
+        return finalize_report(&run, code);
     }
 
     pass(&run, "latticra.seal exists");
@@ -1871,8 +1932,7 @@ static int command_check(void) {
     free(manifest);
 
     int code = finish(&run);
-    fclose(run.report);
-    return code;
+    return finalize_report(&run, code);
 }
 
 static void print_manifest_value(
@@ -2146,30 +2206,6 @@ static void compare_hash_lists_report(
     hashlist_free(&current);
 }
 
-static bool path_is_regular_or_missing(const char *path) {
-    struct stat st;
-
-    if (lstat(path, &st) == 0) {
-        return S_ISREG(st.st_mode);
-    }
-
-    return errno == ENOENT;
-}
-
-static bool unlink_regular_if_present(const char *path) {
-    struct stat st;
-
-    if (lstat(path, &st) == 0) {
-        if (!S_ISREG(st.st_mode)) {
-            return false;
-        }
-
-        return unlink(path) == 0;
-    }
-
-    return errno == ENOENT;
-}
-
 static bool copy_file(const char *src, const char *dst) {
     FILE *in = open_regular_file_for_read(src);
 
@@ -2324,7 +2360,7 @@ static int command_verify(void) {
     SealRun run;
     run.failures = 0;
     run.warnings = 0;
-    run.report = open_regular_file_for_write(REPORT_PATH);
+    run.report = open_report_for_write();
 
     if (!run.report) {
         fprintf(stderr, "could not open report: %s\n", REPORT_PATH);
@@ -2344,8 +2380,7 @@ static int command_verify(void) {
         hashlist_free(&baseline_probe);
         fail_run(&run, "latticra.seal.lock is missing or unreadable");
         int code = finish(&run);
-        fclose(run.report);
-        return code;
+        return finalize_report(&run, code);
     }
 
     hashlist_free(&baseline_probe);
@@ -2358,8 +2393,7 @@ static int command_verify(void) {
     if (!manifest) {
         fail_run(&run, "latticra.seal is missing or unreadable");
         int code = finish(&run);
-        fclose(run.report);
-        return code;
+        return finalize_report(&run, code);
     }
 
     pass(&run, "latticra.seal exists");
@@ -2382,8 +2416,7 @@ static int command_verify(void) {
     }
 
     int code = finish(&run);
-    fclose(run.report);
-    return code;
+    return finalize_report(&run, code);
 }
 
 static int command_report(void) {

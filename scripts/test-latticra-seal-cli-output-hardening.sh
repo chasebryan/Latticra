@@ -100,6 +100,41 @@ chmod 0700 "$case_root/reports"
 rm -rf "$case_root/reports"
 mkdir "$case_root/reports"
 
+victim_report_file="$tmpdir/victim-report-file"
+printf 'do-not-overwrite-report\n' > "$victim_report_file"
+ln -s "$victim_report_file" "$case_root/reports/latticra-seal-cli-report.txt"
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/symlink-report-file.out" 2>&1); then
+  fail "Seal CLI check must refuse a symlinked report file path"
+fi
+
+require_contains "could not open report: reports/latticra-seal-cli-report.txt" "$tmpdir/symlink-report-file.out"
+
+if [ "$(cat "$victim_report_file")" != "do-not-overwrite-report" ]; then
+  fail "Seal CLI must not overwrite a symlink target while writing the report"
+fi
+
+rm "$case_root/reports/latticra-seal-cli-report.txt"
+
+victim_report_tmp="$tmpdir/victim-report-tmp"
+printf 'do-not-overwrite-report-tmp\n' > "$victim_report_tmp"
+ln -s "$victim_report_tmp" "$case_root/reports/latticra-seal-cli-report.tmp"
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/symlink-report-tmp.out" 2>&1); then
+  fail "Seal CLI check must refuse a symlinked temporary report file path"
+fi
+
+require_contains "could not open report: reports/latticra-seal-cli-report.txt" "$tmpdir/symlink-report-tmp.out"
+
+if [ "$(cat "$victim_report_tmp")" != "do-not-overwrite-report-tmp" ]; then
+  fail "Seal CLI must not overwrite a symlink target while writing the temporary report"
+fi
+
+[ ! -e "$case_root/reports/latticra-seal-cli-report.txt" ] ||
+  fail "Seal CLI must not promote a report when the temporary report path is refused"
+
+rm "$case_root/reports/latticra-seal-cli-report.tmp"
+
 mkdir -p "$case_root/.venv-piper/bin"
 printf 'local tool that must not enter Seal digests\n' > "$case_root/.venv-piper/bin/local-tool"
 

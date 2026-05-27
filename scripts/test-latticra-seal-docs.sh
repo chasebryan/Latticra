@@ -39,12 +39,14 @@ grep -q "reports/latticra-seal-cli-report.txt" docs/latticra-seal/REPORTS.md
 grep -q "reports/latticra-seal-cli-hashes.txt" docs/latticra-seal/REPORTS.md
 grep -q "\\[report\\]" docs/latticra-seal/REPORTS.md
 grep -q "group/world-writable report directories" docs/latticra-seal/REPORTS.md
+grep -q "temporary report file" docs/latticra-seal/REPORTS.md
 grep -q "path sort order" docs/latticra-seal/REPORTS.md
 grep -q "reports/latticra-seal-cli-report.txt" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "reports/latticra-seal-report.txt" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "\\[report\\].default_output" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "seal configuration fields must fail closed" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "unsorted baseline entries" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
+grep -q "atomic promotion" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "policy.required_files" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "pattern_parts" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "policy.deny_filenames" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md

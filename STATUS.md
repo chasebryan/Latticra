@@ -1,8 +1,8 @@
 # Latticra Status
 
 Status: public status shortcut
-Last updated: 2026-05-26 CDT
-Edge edition checkpoint: `v0.1.1edge`
+Last updated: 2026-05-27 CDT
+Edge edition checkpoint: `v0.2.0edge`
 Documentation hub: [docs/README.md](docs/README.md)
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest current estimate table source alignment note: 2026-05-26 CDT

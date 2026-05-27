@@ -1,8 +1,8 @@
 # Latticra Current Status
 
 Status: public status record
-Last updated: 2026-05-26 CDT
-Edge edition checkpoint: `v0.1.1edge`
+Last updated: 2026-05-27 CDT
+Edge edition checkpoint: `v0.2.0edge`
 Documentation hub: [../README.md](../README.md)
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest current estimate table source alignment note: 2026-05-26 CDT

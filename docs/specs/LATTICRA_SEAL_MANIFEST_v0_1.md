@@ -140,6 +140,9 @@ The native Seal CLI validates `[report].default_output`,
 `[report].legacy_smoke_hash_list_output`, and the report inclusion booleans
 before returning PASS. These declarations must match the actual CLI report
 surface so manifest metadata cannot drift away from generated artifacts.
+Native report writes should use a temporary report file and atomic promotion so
+the public latest-report path is not left partially written. Symlinked final or
+temporary report paths must be refused.
 
 ## Proof Section
 

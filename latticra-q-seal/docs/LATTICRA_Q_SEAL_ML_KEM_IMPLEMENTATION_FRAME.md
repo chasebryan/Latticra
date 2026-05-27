@@ -20,6 +20,8 @@ latticra-q-seal/evidence/ML_KEM_ZEROIZATION_EVIDENCE.md
 latticra-q-seal/evidence/ML_KEM_NEGATIVE_TEST_EVIDENCE.md
 latticra-q-seal/evidence/ML_KEM_MEMORY_SAFETY_EVIDENCE.md
 latticra-q-seal/evidence/ML_KEM_API_MISUSE_RESISTANCE.md
+latticra-q-seal/evidence/ML_KEM_SOURCE_DIGEST_MANIFEST.md
+latticra-q-seal/evidence/ML_KEM_CODE_OWNER_REVIEW.md
 latticra-q-seal/evidence/ML_KEM_CI_PROMOTION_EVIDENCE.md
 latticra-q-seal/evidence/ML_KEM_SIDE_CHANNEL_REVIEW.md
 latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
@@ -31,6 +33,8 @@ scripts/test-latticra-q-seal-ml-kem-zeroization-evidence.sh
 scripts/test-latticra-q-seal-ml-kem-negative-test-evidence.sh
 scripts/test-latticra-q-seal-ml-kem-memory-safety-evidence.sh
 scripts/test-latticra-q-seal-ml-kem-api-misuse-resistance.sh
+scripts/test-latticra-q-seal-ml-kem-source-digest-manifest.sh
+scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
 scripts/test-latticra-q-seal-ml-kem-ci-promotion-evidence.sh
 scripts/test-latticra-q-seal-ml-kem-side-channel-review.sh
 scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
@@ -115,6 +119,10 @@ sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-memory-safety-evidence.sh
 sh scripts/test-latticra-q-seal-ml-kem-memory-safety-evidence.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-api-misuse-resistance.sh
 sh scripts/test-latticra-q-seal-ml-kem-api-misuse-resistance.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-source-digest-manifest.sh
+sh scripts/test-latticra-q-seal-ml-kem-source-digest-manifest.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
+sh scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-ci-promotion-evidence.sh
 sh scripts/test-latticra-q-seal-ml-kem-ci-promotion-evidence.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-side-channel-review.sh
@@ -142,6 +150,10 @@ latticra q-seal ml-kem memory-safety evidence invariants: ok
 latticra q-seal ml-kem memory-safety evidence: ok
 latticra q-seal ml-kem api misuse resistance invariants: ok
 latticra q-seal ml-kem api misuse resistance: ok
+latticra q-seal ml-kem source digest manifest invariants: ok
+latticra q-seal ml-kem source digest manifest: ok
+latticra q-seal ml-kem code owner review invariants: ok
+latticra q-seal ml-kem code owner review: ok
 latticra q-seal ml-kem ci promotion evidence invariants: ok
 latticra q-seal ml-kem ci promotion evidence: ok
 latticra q-seal ml-kem side-channel review invariants: ok
