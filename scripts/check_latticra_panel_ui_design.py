@@ -6,8 +6,8 @@ cargo_toml = Path("installer/latticra-installer/Cargo.toml")
 components_manifest = Path("installer/manifests/components.toml")
 
 checks = [
-    (cargo_toml, 'version = "0.5.0"', 'Panel v0.5.0 package version'),
-    (components_manifest, 'version = "0.5.0"', 'Panel v0.5.0 component manifest'),
+    (cargo_toml, 'version = "1.0.0"', 'Panel v1.0.0 package version'),
+    (components_manifest, 'version = "1.0.0"', 'Panel v1.0.0 component manifest'),
     (ui, 'const PANEL_BUILD: &str = "gui-workbench";', 'build identity'),
     (ui, 'const SEAL_PNG: &[u8] = include_bytes!("../assets/latticra-panel.png");', 'embedded image'),
     (ui, 'fn ensure_texture(&mut self, ctx: &egui::Context)', 'texture function'),
@@ -18,6 +18,10 @@ checks = [
     (ui, 'fn show_console_panel(&mut self, ui: &mut egui::Ui)', 'console function'),
     (ui, 'fn show_right_evidence_panel(&mut self, ui: &mut egui::Ui)', 'right evidence'),
     (ui, 'fn show_install_run_monitor(&mut self, ui: &mut egui::Ui, compact: bool)', 'install run monitor'),
+    (ui, 'const COMPACT_LAYOUT_WIDTH: f32 = 1600.0;', 'less crowded responsive rail threshold'),
+    (ui, 'fn show_hero_primary_actions(&mut self, ui: &mut egui::Ui)', 'first-screen primary actions'),
+    (ui, 'Plan first. Dry-run second. Install after evidence.', 'first-screen purpose copy'),
+    (ui, 'fn chip_value_width(value: &str) -> f32', 'bounded readable status chips'),
     (ui, 'fn show_bounded_install_progress(&self, ui: &mut egui::Ui, max_width: f32)', 'bounded install progress'),
     (ui, 'fn show_recent_engine_output(&self, ui: &mut egui::Ui, max_lines: usize, max_height: f32)', 'recent engine output surface'),
     (ui, 'fn show_engine_log_lines(&self, ui: &mut egui::Ui, max_lines: usize)', 'shared engine log renderer'),

@@ -13,7 +13,7 @@ The graphical panel uses one shared `InstallerConfig` model, generates the same 
 - Plan and receipt evidence before action
 - Embedded panel-aware console instead of a separate TUI
 - Adaptive maximized/resizable layout for Fedora workstations and smaller screens
-- v0.5.0 keeps the selected workspace stable while installation runs, adds a focused run monitor with bounded recent engine output, keeps long engine lines from expanding the right evidence rail, and keeps the console command-focused during an active engine operation
+- v1.0.0 keeps the selected workspace stable while installation runs, adds a focused run monitor with bounded recent engine output, keeps long engine lines from expanding the right evidence rail, keeps the console command-focused during an active engine operation, and improves first-screen readability with clearer purpose text, bounded status chips, and less crowded responsive rails
 
 ## Profiles
 

@@ -1,6 +1,6 @@
 [manifest]
 name = "latticra-installer-components"
-version = "0.5.0"
+version = "1.0.0"
 production_installer_ready = false
 network_authority = false
 root_authority = false
