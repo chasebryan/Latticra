@@ -53,11 +53,58 @@ Output:
 
     scripts/render-visual-theorem-engines.sh all 96
 
+## Academic presentation production engine
+
+The university presentation path is separate from the older C-only theorem
+videos. It keeps the symbolic field language, but moves slide typography,
+voiceover timing, captions, and proof-object layout into a higher-level
+production renderer:
+
+    scripts/render-latticra-academic-presentation.sh preview
+
+Preview output:
+
+    build/presentation/latticra-academic/preview/contact-sheet.png
+    build/presentation/latticra-academic/voiceover-script.txt
+    build/presentation/latticra-academic/voiceover-cues.srt
+
+The full 720 second script lives in:
+
+    presentations/latticra-academic/latticra_academic_presentation.toml
+
+The final render command is:
+
+    scripts/render-latticra-academic-presentation.sh render
+
+For Piper voiceover, provide a voice model if it is not already configured:
+
+    PIPER_MODEL=/path/to/voice.onnx scripts/render-latticra-academic-presentation.sh render
+
+Optional overrides:
+
+    PIPER_BIN=/path/to/piper
+    PIPER_PYTHON=/path/to/python-with-piper-tts
+    PIPER_MODEL=/path/to/voice.onnx
+    PIPER_CONFIG=/path/to/voice.onnx.json
+    FFMPEG_BIN=/path/to/ffmpeg
+
+If `PIPER_BIN` is not set and no standalone `piper` executable is on `PATH`,
+the renderer falls back to the modern Python module form:
+
+    "$PIPER_PYTHON" -m piper
+
+The renderer pads shorter Piper scenes to their planned chapter timing and
+extends any scene whose generated audio runs longer than its planned duration.
+That keeps the voiceover integral to the video instead of appended after the
+fact.
+
 ## Requirements
 
 - gcc
 - ffmpeg
 - standard C math library, linked with -lm
+- Python 3.11+ with Pillow for the academic presentation renderer
+- Piper and a Piper voice model for generated narration
 
 On Fedora:
 

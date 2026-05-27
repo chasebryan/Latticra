@@ -733,3 +733,14 @@ seal-demo: seal-cli
 .PHONY: seal-docs
 seal-docs:
 	sh scripts/test-latticra-seal-docs.sh
+
+.PHONY: latticra-academic-presentation-preview latticra-academic-presentation latticra-academic-presentation-test
+
+latticra-academic-presentation-preview:
+	sh ./scripts/render-latticra-academic-presentation.sh preview
+
+latticra-academic-presentation:
+	sh ./scripts/render-latticra-academic-presentation.sh render
+
+latticra-academic-presentation-test:
+	sh ./scripts/test-latticra-academic-presentation.sh
