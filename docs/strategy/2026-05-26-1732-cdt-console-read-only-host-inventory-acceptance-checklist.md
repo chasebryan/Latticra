@@ -329,15 +329,17 @@ public_claim_overstates_inventory=1
 Recommended next planning move:
 
 ```text
-create the Console read-only host inventory public-entrypoint review template
+begin the Tier 2 Nucleus effect-contract and runtime-denial gate planning package
 ```
 
 Reason:
 
 ```text
-the acceptance criteria, evidence bundle shape, and non-claim review shape now
-define what must be reviewed; the next useful planning artifact is the review
-form for public-entrypoint references to future evidence
+the acceptance criteria, evidence bundle shape, non-claim review shape, and
+public-entrypoint review shape, estimate-impact review shape, and review
+package index now define what must be reviewed and the completion checkpoint
+closes the package; the next useful planning lane is the Tier 2 Nucleus
+effect-boundary package
 ```
 
 ## Non-claims

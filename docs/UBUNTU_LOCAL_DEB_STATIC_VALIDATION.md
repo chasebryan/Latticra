@@ -37,6 +37,9 @@ docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md
 docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
+docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md
+docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md
+docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md
 ```
 
 ## Preserved Boundary
@@ -91,6 +94,25 @@ local_deb_install_remove_evidence_contract_present=1
 local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript
 deb_installed_on_host=0
 deb_removed_from_host=0
+source_package_evidence_contract_present=1
+source_package_evidence_status=blocked-pending-accepted-build-transcript
+dpkg_source_run=0
+dpkg_buildpackage_source_run=0
+source_package_created=0
+source_package_uploaded=0
+ubuntu_source_package_evidence_unblocked=0
+upload_signing_authority_evidence_contract_present=1
+upload_signing_authority_evidence_status=blocked-pending-source-package-evidence
+upload_target_kind_recorded=0
+launchpad_account_recorded=0
+ppa_or_archive_target_reviewed=0
+gpg_signing_key_fingerprint_recorded=0
+upload_command_non_claims_reviewed=0
+ubuntu_upload_signing_authority_evidence_unblocked=0
+ppa_archive_publication_gate_contract_present=1
+ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence
+launchpad_upload_run=0
+ubuntu_publication_gate_unblocked=0
 ppa_claimed=0
 ubuntu_archive_ready=0
 production_readiness_claimed=0
@@ -130,7 +152,7 @@ claim production readiness
 
 ## Next Recommended Lane
 
-Review the Ubuntu local deb install/remove evidence contract after the build transcript acceptance gate remains closed.
+Review the Ubuntu source package evidence contract before any source package can be treated as publication input.
 
 ## Validation
 

@@ -32,8 +32,11 @@ require_file docs/project_notes/README.md
 require_file docs/LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_CONTRACT.md
 require_file docs/LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_IMPLEMENTATION.md
 require_file docs/status/SEAL_VERIFIED_RECEIPT_PROMOTION_STATUS.md
+require_file docs/status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md
 require_file include/latticra/seal_verified_capability_gate.h
+require_file include/latticra/seal_crypto_graduation_gate.h
 require_file src/seal_verified_capability_gate.c
+require_file src/seal_crypto_graduation_gate.c
 require_file tests/seal_verified_capability_gate_invariants.c
 require_file scripts/test-latticra-seal-verified-capability-gate-contract.sh
 require_file scripts/test-latticra-seal-verified-capability-gate.sh
@@ -48,6 +51,7 @@ require_contains 'seal_verified_capability_gate_invariant_test_present=1' "$stat
 require_contains 'seal_verified_capability_gate_runner_present=1' "$status_file"
 require_contains 'seal_verified_capability_gate_status_present=1' "$status_file"
 require_contains 'seal_verified_receipt_promotion_status_present=1' "$status_file"
+require_contains 'seal_crypto_graduation_gate_status_present=1' "$status_file"
 require_contains 'readme_links_verified_capability_gate_contract=1' "$status_file"
 require_contains 'readme_links_verified_capability_gate_implementation=1' "$status_file"
 require_contains 'readme_links_verified_capability_gate_status=1' "$status_file"
@@ -62,9 +66,18 @@ require_contains 'message_digest_algorithm=SHA-256' "$status_file"
 require_contains 'public_key_identity_label=rfc8032-test-key' "$status_file"
 require_contains 'receipt_state=verified' "$status_file"
 require_contains 'verification_state=verified' "$status_file"
+require_contains 'crypto_graduation_profile=latticra-seal-crypto-graduation-gate/0.1' "$status_file"
+require_contains 'assurance_baseline_profile=latticra-cryptographic-assurance-key-management/0.1' "$status_file"
+require_contains 'crypto_graduation_gate_state=graduated-authority-neutral' "$status_file"
 require_contains 'requested_capability=verified-receipt-report' "$status_file"
 require_contains 'requested_effect=report-only' "$status_file"
 require_contains 'requested_scope=local-fixture-scope' "$status_file"
+require_contains 'crypto_graduation_gate_present=1' "$status_file"
+require_contains 'crypto_graduation_gate_passed=1' "$status_file"
+require_contains 'standard_expectations_met=1' "$status_file"
+require_contains 'local_verify_graduated=1' "$status_file"
+require_contains 'receipt_promotion_graduated=1' "$status_file"
+require_contains 'authority_promotion_allowed=0' "$status_file"
 require_contains 'verified=1' "$status_file"
 require_contains 'authority_usable=0' "$status_file"
 require_contains 'receipt_capability_gate_allowed=0' "$status_file"
@@ -89,7 +102,12 @@ require_contains 'network_behavior_changed=0' "$status_file"
 require_contains 'host_behavior_changed=0' "$status_file"
 require_contains 'seal verified capability gate status: ok' "$status_file"
 require_contains 'seal verified capability gate invariants: ok' "$status_file"
-require_contains 'effect decision evaluation from an allowed metadata-only capability gate' "$status_file"
+require_contains 'effect decision evaluation from an allowed crypto-graduation-gated metadata-only capability gate' "$status_file"
+require_contains 'latticra_seal_verified_capability_gate_from_crypto_graduation_gate' include/latticra/seal_verified_capability_gate.h
+require_contains 'DENIED_CRYPTO_GRADUATION_GATE' include/latticra/seal_verified_capability_gate.h
+require_contains 'crypto_graduation_gate_present=%u' src/seal_verified_capability_gate.c
+require_contains 'standard_expectations_met=%u' src/seal_verified_capability_gate.c
+require_contains 'denied-crypto-graduation-gate' src/seal_verified_capability_gate.c
 
 require_contains 'verified capability gate metadata/status' README.md
 require_contains 'seal_verified_capability_gate_contract_present=1' README.md

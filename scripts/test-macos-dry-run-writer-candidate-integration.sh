@@ -124,7 +124,7 @@ require_contains 'commit_user_local_managed_artifacts=$COMMIT_FLAG' "$script"
 require_contains 'app_bundle_write_performed=$APP_BUNDLE_WRITE' "$script"
 require_contains 'host_mutation_performed=$HOST_MUTATION' "$script"
 require_contains 'network_performed=$NETWORK' "$script"
-require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-contract' "$script"
 
 test_home=$(mktemp -d)
 trap 'rm -rf "$test_home"' EXIT INT HUP TERM

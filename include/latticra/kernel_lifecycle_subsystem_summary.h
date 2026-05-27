@@ -47,12 +47,15 @@ typedef struct {
     int lifecycle_complete;
     int lifecycle_state_mutated;
     int external_effect_performed;
+    int network_allowed;
     int registry_no_effect;
     int runtime_entry_allowed;
     int scheduler_execution_allowed;
     int scheduler_selection_allowed;
     int scheduler_dispatch_allowed;
     int scheduler_handoff_allowed;
+    int scheduler_activation_allowed;
+    int scheduler_run_entry_allowed;
     int memory_allocation_allowed;
     int process_spawn_allowed;
     int syscall_dispatch_allowed;

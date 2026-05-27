@@ -145,6 +145,33 @@ bool string_view_contains_nul(const std::string_view source) noexcept {
     return false;
 }
 
+bool string_view_contains_line_break(const std::string_view source) noexcept {
+    for (std::size_t index = 0u; index < source.size(); ++index) {
+        if (source[index] == '\n' || source[index] == '\r') {
+            return true;
+        }
+    }
+    return false;
+}
+
+template <std::size_t Size>
+bool char_array_is_terminated(const std::array<char, Size> &source) noexcept {
+    for (std::size_t index = 0u; index < Size; ++index) {
+        if (source[index] == '\0') {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool record_text_fields_are_terminated(
+    const authority_audit_record &record) noexcept {
+    return char_array_is_terminated(record.policy_name) &&
+           char_array_is_terminated(record.source_identity) &&
+           char_array_is_terminated(record.validator_name) &&
+           char_array_is_terminated(record.denial_reason);
+}
+
 void reset_report(authority_audit_report &report) noexcept {
     report = authority_audit_report{};
     report.status = authority_status::ok;
@@ -588,6 +615,15 @@ authority_status classify_effect_request(const authority_request &request,
                           authority_source_span{});
     }
 
+    if (string_view_contains_line_break(request.source_identity)) {
+        return add_record(report,
+                          authority_status::invalid_input,
+                          authority_validator::boundary,
+                          request.requested_effect,
+                          "source_identity_contains_line_break",
+                          authority_source_span{});
+    }
+
     if (!flags_are_no_effect(report.flags)) {
         return add_record(report,
                           authority_status::policy_denied,
@@ -712,6 +748,11 @@ authority_status render_authority_audit_report(
 
     for (std::size_t index = 0u; index < report.record_count; ++index) {
         const authority_audit_record &record = report.records[index];
+        if (!record_text_fields_are_terminated(record)) {
+            clear_output(buffer, buffer_len);
+            return authority_status::invalid_input;
+        }
+
         const bool record_ok =
             append_record_line_prefix(buffer, buffer_len, offset, index,
                                       "policy") &&

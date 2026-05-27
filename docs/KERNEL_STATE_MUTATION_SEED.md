@@ -55,6 +55,8 @@ scheduler-credit-ready
 scheduler-selection-ready
 scheduler-dispatch-ready
 scheduler-handoff-ready
+scheduler-activation-ready
+scheduler-run-entry-ready
 ```
 
 Allowed transitions are intentionally sequential:
@@ -81,6 +83,8 @@ preemption-ready -> scheduler-credit-ready
 scheduler-credit-ready -> scheduler-selection-ready
 scheduler-selection-ready -> scheduler-dispatch-ready
 scheduler-dispatch-ready -> scheduler-handoff-ready
+scheduler-handoff-ready -> scheduler-activation-ready
+scheduler-activation-ready -> scheduler-run-entry-ready
 ```
 
 No-op transitions are allowed when the gate allows them.

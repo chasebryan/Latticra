@@ -132,6 +132,9 @@ nadia prompt-evaluation-result-release-receipt-review-disposition-release-receip
 nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition
 nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release
 nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release
 profile guided
 profile seal
 profile fedora
@@ -161,6 +164,16 @@ Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, 
 Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, Stage-40, Stage-41, Stage-42, and Stage-43 console surfaces are metadata-only result, review, disposition, release, release receipt, release receipt review, release receipt review disposition, release receipt review disposition release, release receipt review disposition release receipt, release receipt review disposition release receipt review, release receipt review disposition release receipt review disposition, release receipt review disposition release receipt review disposition release, and release receipt review disposition release receipt review disposition release receipt surfaces inside the Panel.
 
 Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, Stage-40, Stage-41, Stage-42, and Stage-43 console surfaces are metadata-only and remain covered by the Stage-43 metadata-only console posture.
+
+Nadia's Stage-0, Stage-1, Stage-2, Stage-3, Stage-4, Stage-5, Stage-6, Stage-7, Stage-8, Stage-9, Stage-10, Stage-11, Stage-12, Stage-13, Stage-14, Stage-15, Stage-16, Stage-17, Stage-18, Stage-19, Stage-20, Stage-21, Stage-22, Stage-23, Stage-24, Stage-25, Stage-26, Stage-27, Stage-28, Stage-29, Stage-30, Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, Stage-40, Stage-41, Stage-42, Stage-43, and Stage-44 console surfaces are metadata-only inside the Panel and do not launch an external host process or model runtime.
+
+Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, Stage-40, Stage-41, Stage-42, Stage-43, and Stage-44 console surfaces are metadata-only result, review, disposition, release, release receipt, release receipt review, release receipt review disposition, release receipt review disposition release, release receipt review disposition release receipt, release receipt review disposition release receipt review, release receipt review disposition release receipt review disposition, release receipt review disposition release receipt review disposition release, release receipt review disposition release receipt review disposition release receipt, and release receipt review disposition release receipt review disposition release receipt review surfaces inside the Panel.
+
+Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, Stage-40, Stage-41, Stage-42, Stage-43, and Stage-44 console surfaces are metadata-only and remain covered by the Stage-44 metadata-only console posture.
+
+Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, Stage-40, Stage-41, Stage-42, Stage-43, Stage-44, and Stage-45 console surfaces are metadata-only and remain covered by the Stage-45 metadata-only console posture.
+
+Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, Stage-40, Stage-41, Stage-42, Stage-43, Stage-44, Stage-45, and Stage-46 console surfaces are metadata-only and remain covered by the Stage-46 metadata-only console posture.
 
 Stage-40 prompt-evaluation result release receipt review disposition release receipt review contract adds a metadata-only prompt-evaluation result release receipt review disposition release receipt review surface for the next review contract boundary.
 

@@ -52,6 +52,10 @@ kernel scheduler dispatch guard
 kernel scheduler dispatch report runner
 kernel scheduler handoff guard
 kernel scheduler handoff report runner
+kernel scheduler activation guard
+kernel scheduler activation report runner
+kernel scheduler run-entry guard
+kernel scheduler run-entry report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
@@ -64,7 +68,7 @@ kernel lifecycle rollback plan
 The lifecycle evidence can report a bounded in-memory path ending at:
 
 ```text
-final_state=scheduler-handoff-ready
+final_state=scheduler-run-entry-ready
 ```
 
 The lifecycle report runner and subsystem summary keep the external-effect posture explicit:
@@ -84,6 +88,8 @@ scheduler_execution_allowed=0
 scheduler_selection_allowed=0
 scheduler_dispatch_allowed=0
 scheduler_handoff_allowed=0
+scheduler_activation_allowed=0
+scheduler_run_entry_allowed=0
 memory_allocation_allowed=0
 process_spawn_allowed=0
 syscall_dispatch_allowed=0
@@ -171,7 +177,7 @@ not installer-ready
 Recommended next work:
 
 ```text
-Add no-effect scheduler activation classifier
+Add no-effect runtime entry admission classifier
 ```
 
 That future slice should implement classification/reporting only and continue to require:
@@ -209,6 +215,8 @@ Dedicated workflow lanes keep the kernel table guards visible:
 .github/workflows/kernel-scheduler-selection.yml
 .github/workflows/kernel-scheduler-dispatch.yml
 .github/workflows/kernel-scheduler-handoff.yml
+.github/workflows/kernel-scheduler-activation.yml
+.github/workflows/kernel-scheduler-run-entry.yml
 .github/workflows/kernel-process-table.yml
 .github/workflows/kernel-syscall-table.yml
 ```

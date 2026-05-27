@@ -58,12 +58,12 @@ require_contains 'security_hardening_changed=0' "$record"
 require_contains 'public_readiness_changed=0' "$record"
 require_contains 'runtime_authority_granted=0' "$record"
 require_contains 'Overall Latticra system: 45%' "$record"
-require_contains 'Nadia offline AI foundation: 74%' "$record"
+require_contains 'Nadia offline AI foundation: 75%' "$record"
 require_contains 'Public product readiness: 10%' "$record"
 require_contains 'sh scripts/test-current-estimate-table-source-alignment.sh' "$record"
-require_contains 'weighted_sum=4462' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
-require_contains 'overall_estimate=round(4462 / 100)=45' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
-require_contains '| Nadia offline AI foundation | 70% | 74% |' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
+require_contains 'weighted_sum=4473' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
+require_contains 'overall_estimate=round(4473 / 100)=45' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
+require_contains '| Nadia offline AI foundation | 70% | 75% |' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
 require_contains '| Runtime / operating-system-universe direction | 19% | 26% |' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md
 
 require_contains '| Estimate source | Current public estimate table below, mirrored from `STATUS.md` and `docs/status/CURRENT_STATUS.md` |' README.md
@@ -77,7 +77,7 @@ for file in README.md STATUS.md docs/status/CURRENT_STATUS.md; do
   require_contains '| Overall Latticra system | 45% |' "$file"
   require_contains '| Latticra Seal / local evidence layer | 39% |' "$file"
   require_contains '| Latticra Panel / local control surface | 31% |' "$file"
-  require_contains '| Nadia offline AI foundation | 74% |' "$file"
+  require_contains '| Nadia offline AI foundation | 75% |' "$file"
   require_contains '| L-UI parser / AST / string foundation | 87% |' "$file"
   require_contains '| Foundation documents and contracts | 94% |' "$file"
   require_contains '| Public documentation posture | 91% |' "$file"
@@ -88,7 +88,7 @@ for file in README.md STATUS.md docs/status/CURRENT_STATUS.md; do
   require_contains '| Constrained C++ authority layer | 5% |' "$file"
   require_contains '| Nucleus real task execution | 12% |' "$file"
   require_contains '| Runtime / operating-system-universe direction | 26% |' "$file"
-  require_contains '| Security-hardening implementation | 9% |' "$file"
+  require_contains '| Security-hardening implementation | 10% |' "$file"
   require_contains '| Public product readiness | 10% |' "$file"
 done
 

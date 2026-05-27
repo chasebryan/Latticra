@@ -2,7 +2,7 @@
 
 Status: active Stage-0 foundation
 Date: 2026-05-26
-Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, session contract, workspace contract, namespace contract, rootfs contract, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
+Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, session contract, workspace contract, namespace contract, rootfs contract, packages contract, init contract, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
 
 ## Current Evidence
 
@@ -53,6 +53,22 @@ rootfs_contract_profile=lc-rootfs-v0
 rootfs_image_create_allowed=0
 rootfs_mount_allowed=0
 rootfs_package_install_allowed=0
+packages_contract_status=metadata-only-contract
+packages_contract_present=1
+packages_contract_command=lc packages
+packages_contract_profile=lc-packages-v0
+package_manifest_write_allowed=0
+package_catalog_read_allowed=0
+package_download_allowed=0
+package_manager_execution_allowed=0
+package_script_execution_allowed=0
+init_contract_status=metadata-only-contract
+init_contract_present=1
+init_contract_command=lc init
+init_contract_profile=lc-init-v0
+pid1_claim_allowed=0
+service_start_allowed=0
+process_supervision_allowed=0
 host_path_projection_allowed=0
 namespace_mutation_allowed=0
 substrate_bridge_status=metadata-bound

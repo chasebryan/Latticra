@@ -15,8 +15,16 @@ This contract is documentation-only and static. It does not run `rpmbuild`, run 
 
 ```text
 opensuse_rpm_artifact_naming_contract_present=1
+opensuse_rpm_payload_inspection_contract_present=1
+opensuse_rpm_install_remove_transcript_contract_present=1
+opensuse_obs_publication_non_claim_review_contract_present=1
 rpm_artifact_naming_contract_present=1
+obs_publication_non_claim_review_present=1
+publication_non_claim_review_present=1
 opensuse_rpm_artifact_naming_contract_state=specified-no-effect
+opensuse_rpm_payload_inspection_contract_state=specified-no-effect
+opensuse_rpm_install_remove_transcript_contract_state=specified-no-effect
+payload_inspection_contract_state=specified-no-effect
 opensuse_rpm_build_gate_state=closed-no-effect
 opensuse_rpm_build_environment_contract_state=specified-no-effect
 rpm_artifact_output_directory_required_under_disposable_environment=1
@@ -28,7 +36,10 @@ source_rpm_artifact_created=0
 binary_rpm_artifact_created=0
 rpm_artifact_sha256_recorded=0
 rpm_artifact_published=0
+rpm_install_remove_transcript_present=0
+rpm_validation_result_promoted=0
 rpm_installed_on_host=0
+rpm_removed_from_host=0
 package_readiness_claimed=0
 ```
 
@@ -101,9 +112,9 @@ package_notice_obligations_reviewed=0
 buildrequires_reviewed=0
 explicit_operator_build_authorization=0
 environment_transcript_present=0
-rpm_payload_inspection_contract_present=0
-rpm_install_remove_transcript_contract_present=0
-obs_publication_non_claim_review_present=0
+rpm_payload_inspection_contract_present=1
+rpm_install_remove_transcript_contract_present=1
+obs_publication_non_claim_review_present=1
 ```
 
 ## Command Boundary
@@ -140,19 +151,58 @@ docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
 docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 ```
 
 The local RPM build gate remains closed. This artifact naming contract only records the names and output boundaries future validation artifacts must use after separate source, lint, license, notice, BuildRequires, environment, authorization, payload inspection, install/remove, and OBS non-claim evidence exists.
+
+## Completed Follow-On Lane
+
+Completed follow-on RPM payload inspection contract:
+
+```text
+Add openSUSE RPM payload inspection contract before any RPM artifact can be accepted.
+```
+
+```text
+docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+scripts/test-opensuse-rpm-payload-inspection-contract.sh
+.github/workflows/opensuse-rpm-payload-inspection-contract.yml
+```
+
+That lane defines payload inspection evidence without opening the RPM build gate.
+
+Completed follow-on RPM install/remove transcript contract:
+
+```text
+docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
+.github/workflows/opensuse-rpm-install-remove-transcript-contract.yml
+```
+
+That lane defines disposable install/remove transcript evidence without installing or removing RPM packages.
+
+Completed follow-on OBS publication non-claim review contract:
+
+```text
+docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
+.github/workflows/opensuse-obs-publication-non-claim-review-contract.yml
+```
+
+That lane records Open Build Service, submit-request, official-package, and SUSE endorsement non-claims without publishing packages.
 
 ## Next Slice
 
 Recommended next slice:
 
 ```text
-Add openSUSE RPM payload inspection contract before any RPM artifact can be accepted.
+Add openSUSE RPM validation promotion blocker matrix before any package validation result can be accepted.
 ```
 
-That future lane should define how source RPM and binary RPM payloads are inspected after creation while keeping `opensuse_rpm_build_gate_state=closed-no-effect` until the remaining prerequisites are satisfied.
+That future lane should tie source, environment, artifact, payload, install/remove, and OBS non-claim records together while keeping RPM builds and readiness blocked.
 
 ## Validation
 

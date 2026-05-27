@@ -9,6 +9,8 @@ This document records the first Latticra Seal runtime handoff evaluation metadat
 
 The implementation consumes verified effect decision metadata and classifies whether the requested metadata-only runtime handoff remains eligible as report-only or evaluate-only.
 
+When the verified effect decision carries crypto graduation metadata, the evaluation copies that evidence forward and requires it to remain passed, standard-aligned, and authority-neutral.
+
 The evaluation is handoff classification, not runtime handoff.
 
 ## Added files
@@ -51,6 +53,12 @@ The implementation:
 
 ```text
 accepts verified effect decision metadata
+copies crypto graduation gate metadata when present
+requires crypto_graduation_gate_passed=1 when crypto_graduation_gate_present=1
+requires standard_expectations_met=1 when crypto_graduation_gate_present=1
+requires local_verify_graduated=1 when crypto_graduation_gate_present=1
+requires receipt_promotion_graduated=1 when crypto_graduation_gate_present=1
+requires authority_promotion_allowed=0 when crypto_graduation_gate_present=1
 requires effect_allowed=1
 requires decision_state=allowed-report-only or decision_state=allowed-evaluate-only
 requires runtime_authority_granted=0
@@ -63,6 +71,24 @@ classifies report-only as handoff_state=eligible-report-only
 classifies evaluate-only as handoff_state=eligible-evaluate-only
 sets handoff_eligible=1 only for metadata-only report/evaluate handoff evaluations
 renders deterministic runtime handoff evaluation metadata
+```
+
+Crypto-bound handoff evaluation metadata records:
+
+```text
+crypto_graduation_profile=latticra-seal-crypto-graduation-gate/0.1
+assurance_baseline_profile=latticra-cryptographic-assurance-key-management/0.1
+crypto_graduation_gate_state=graduated-authority-neutral
+crypto_graduation_gate_present=1
+crypto_graduation_gate_passed=1
+standard_expectations_met=1
+local_verify_graduated=1
+receipt_promotion_graduated=1
+authority_promotion_allowed=0
+handoff_state=eligible-report-only
+handoff_eligible=1
+handoff_performed=0
+runtime_authority_granted=0
 ```
 
 ## Effect and runtime boundary
@@ -88,6 +114,8 @@ The implementation fails closed:
 null output -> LATTICRA_STATUS_NULL_ARGUMENT
 null verified effect decision -> invalid-input
 invalid verified effect decision -> invalid-decision
+failed crypto graduation gate evidence -> denied-crypto-graduation-gate
+authority-bearing crypto graduation evidence -> denied-crypto-graduation-gate
 effect_allowed=0 -> denied-effect
 decision_state not allowed-report-only or allowed-evaluate-only -> denied-decision
 missing requested handoff -> missing-requested-handoff
@@ -118,6 +146,6 @@ seal runtime handoff evaluation invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is a runtime handoff report surface from eligible metadata-only runtime handoff evaluation.
+The next valid Latticra Seal planning slice is a runtime handoff report surface from eligible crypto-graduation-gated metadata-only runtime handoff evaluation.
 
 That next slice should remain contract-first and should not perform runtime handoff unless separately implemented and guarded.

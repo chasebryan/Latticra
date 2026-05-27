@@ -2,6 +2,9 @@ use serde::{Deserialize, Serialize};
 use std::fmt::Write as _;
 use std::path::{Component, Path, PathBuf};
 
+const AUTHORITY_SLUG_MAX_LEN: usize = 128;
+const COMMAND_WRAPPER_MAX_LEN: usize = 64;
+
 #[derive(Clone, Copy, Debug, Default, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]
 pub enum InstallProfile {
@@ -214,8 +217,8 @@ impl Default for LatticraConsoleInstallConfig {
 
 impl LatticraConsoleInstallConfig {
     pub fn validate(&self) -> Result<(), String> {
-        validate_nonempty_field("LC install profile", &self.install_profile)?;
-        validate_nonempty_field("LC install mode", &self.install_mode)?;
+        validate_authority_slug("LC install profile", &self.install_profile)?;
+        validate_authority_slug("LC install mode", &self.install_mode)?;
         validate_relative_install_path("LC config path", &self.config_path)?;
         validate_relative_install_path("LC share path", &self.share_path)?;
         validate_command_wrapper(&self.command_wrapper)?;
@@ -246,6 +249,8 @@ pub struct LatticraConsoleConfig {
     pub workspace_contract_profile: String,
     pub namespace_contract_profile: String,
     pub rootfs_contract_profile: String,
+    pub packages_contract_profile: String,
+    pub init_contract_profile: String,
     pub receipt_request_contract_profile: String,
     pub receipt_payload_schema_profile: String,
     pub receipt_payload_artifact_draft_profile: String,
@@ -270,6 +275,8 @@ pub struct LatticraConsoleConfig {
     pub require_workspace_contract: bool,
     pub require_namespace_contract: bool,
     pub require_rootfs_contract: bool,
+    pub require_packages_contract: bool,
+    pub require_init_contract: bool,
     pub require_receipt_request_contract: bool,
     pub require_receipt_payload_schema: bool,
     pub require_receipt_payload_artifact_draft: bool,
@@ -299,6 +306,8 @@ impl Default for LatticraConsoleConfig {
             workspace_contract_profile: "lc-workspace-v0".to_owned(),
             namespace_contract_profile: "lc-namespace-v0".to_owned(),
             rootfs_contract_profile: "lc-rootfs-v0".to_owned(),
+            packages_contract_profile: "lc-packages-v0".to_owned(),
+            init_contract_profile: "lc-init-v0".to_owned(),
             receipt_request_contract_profile: "lc-receipt-request-v0".to_owned(),
             receipt_payload_schema_profile: "lc-receipt-payload-schema-v0".to_owned(),
             receipt_payload_artifact_draft_profile: "lc-receipt-payload-artifact-draft-v0"
@@ -328,6 +337,8 @@ impl Default for LatticraConsoleConfig {
             require_workspace_contract: true,
             require_namespace_contract: true,
             require_rootfs_contract: true,
+            require_packages_contract: true,
+            require_init_contract: true,
             require_receipt_request_contract: true,
             require_receipt_payload_schema: true,
             require_receipt_payload_artifact_draft: true,
@@ -387,6 +398,8 @@ impl LatticraConsoleConfig {
         self.workspace_contract_profile = "lc-workspace-v0".to_owned();
         self.namespace_contract_profile = "lc-namespace-v0".to_owned();
         self.rootfs_contract_profile = "lc-rootfs-v0".to_owned();
+        self.packages_contract_profile = "lc-packages-v0".to_owned();
+        self.init_contract_profile = "lc-init-v0".to_owned();
         self.receipt_request_contract_profile = "lc-receipt-request-v0".to_owned();
         self.receipt_payload_schema_profile = "lc-receipt-payload-schema-v0".to_owned();
         self.receipt_payload_artifact_draft_profile =
@@ -414,6 +427,8 @@ impl LatticraConsoleConfig {
         self.require_workspace_contract = true;
         self.require_namespace_contract = true;
         self.require_rootfs_contract = true;
+        self.require_packages_contract = true;
+        self.require_init_contract = true;
         self.require_receipt_request_contract = true;
         self.require_receipt_payload_schema = true;
         self.require_receipt_payload_artifact_draft = true;
@@ -426,6 +441,115 @@ impl LatticraConsoleConfig {
         self.require_vm_evidence_contract = true;
         self.require_runtime_boundary_binding = true;
         self.require_seal_capability_labels = true;
+    }
+
+    pub fn validate(&self) -> Result<(), String> {
+        self.install.validate()?;
+
+        let authority_labels = [
+            (
+                "LC command registry profile",
+                self.command_registry_profile.as_str(),
+            ),
+            (
+                "LC substrate bridge profile",
+                self.substrate_bridge_profile.as_str(),
+            ),
+            (
+                "LC host embedding profile",
+                self.host_embedding_profile.as_str(),
+            ),
+            (
+                "LC host embedding contract profile",
+                self.host_embedding_contract_profile.as_str(),
+            ),
+            (
+                "LC host inventory contract profile",
+                self.host_inventory_contract_profile.as_str(),
+            ),
+            (
+                "LC host adapter contract profile",
+                self.host_adapter_contract_profile.as_str(),
+            ),
+            (
+                "LC session contract profile",
+                self.session_contract_profile.as_str(),
+            ),
+            (
+                "LC workspace contract profile",
+                self.workspace_contract_profile.as_str(),
+            ),
+            (
+                "LC namespace contract profile",
+                self.namespace_contract_profile.as_str(),
+            ),
+            (
+                "LC rootfs contract profile",
+                self.rootfs_contract_profile.as_str(),
+            ),
+            (
+                "LC packages contract profile",
+                self.packages_contract_profile.as_str(),
+            ),
+            (
+                "LC init contract profile",
+                self.init_contract_profile.as_str(),
+            ),
+            (
+                "LC receipt request contract profile",
+                self.receipt_request_contract_profile.as_str(),
+            ),
+            (
+                "LC receipt payload schema profile",
+                self.receipt_payload_schema_profile.as_str(),
+            ),
+            (
+                "LC receipt payload artifact draft profile",
+                self.receipt_payload_artifact_draft_profile.as_str(),
+            ),
+            (
+                "LC receipt payload artifact review profile",
+                self.receipt_payload_artifact_review_profile.as_str(),
+            ),
+            (
+                "LC receipt payload artifact review receipt profile",
+                self.receipt_payload_artifact_review_receipt_profile
+                    .as_str(),
+            ),
+            (
+                "LC receipt payload artifact review receipt draft profile",
+                self.receipt_payload_artifact_review_receipt_draft_profile
+                    .as_str(),
+            ),
+            (
+                "LC receipt payload materialization plan profile",
+                self.receipt_payload_materialization_plan_profile.as_str(),
+            ),
+            (
+                "LC signature request binding profile",
+                self.signature_request_binding_profile.as_str(),
+            ),
+            (
+                "LC receipt contract profile",
+                self.receipt_contract_profile.as_str(),
+            ),
+            (
+                "LC OS base contract profile",
+                self.os_base_contract_profile.as_str(),
+            ),
+            (
+                "LC VM evidence contract profile",
+                self.vm_evidence_contract_profile.as_str(),
+            ),
+            ("LC OS base profile", self.os_base_profile.as_str()),
+            ("LC panel bridge", self.panel_bridge.as_str()),
+        ];
+
+        for (label, value) in authority_labels {
+            validate_authority_slug(label, value)?;
+        }
+
+        Ok(())
     }
 }
 
@@ -509,6 +633,15 @@ impl Default for UpdaterConfig {
     }
 }
 
+impl UpdaterConfig {
+    pub fn validate(&self) -> Result<(), String> {
+        validate_authority_slug("Updater source strategy", &self.source_strategy)?;
+        validate_authority_slug("Updater update channel", &self.update_channel)?;
+
+        Ok(())
+    }
+}
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(default)]
 pub struct SealConfig {
@@ -581,6 +714,25 @@ impl SealConfig {
             SealCryptoProfile::Custom => {}
         }
     }
+
+    pub fn validate(&self) -> Result<(), String> {
+        let authority_labels = [
+            ("Seal hash profile", self.hash_profile.as_str()),
+            ("Seal signature profile", self.signature_profile.as_str()),
+            ("Seal encryption profile", self.encryption_profile.as_str()),
+            ("Seal envelope profile", self.envelope_profile.as_str()),
+            (
+                "Seal key storage profile",
+                self.key_storage_profile.as_str(),
+            ),
+        ];
+
+        for (label, value) in authority_labels {
+            validate_authority_slug(label, value)?;
+        }
+
+        Ok(())
+    }
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -636,6 +788,33 @@ fn validate_nonempty_field(label: &str, value: &str) -> Result<(), String> {
     Ok(())
 }
 
+fn validate_authority_slug(label: &str, value: &str) -> Result<(), String> {
+    validate_nonempty_field(label, value)?;
+
+    if value.len() > AUTHORITY_SLUG_MAX_LEN {
+        return Err(format!(
+            "{label} must be {AUTHORITY_SLUG_MAX_LEN} bytes or less."
+        ));
+    }
+
+    let bytes = value.as_bytes();
+    let first = bytes[0];
+    let last = bytes[bytes.len() - 1];
+    if !first.is_ascii_alphanumeric()
+        || !last.is_ascii_alphanumeric()
+        || value.contains("..")
+        || !bytes
+            .iter()
+            .all(|byte| byte.is_ascii_alphanumeric() || matches!(*byte, b'.' | b'_' | b'-'))
+    {
+        return Err(format!(
+            "{label} must be an ASCII authority slug using only letters, numbers, '.', '_', or '-'; it must start and end with a letter or number and must not contain '..'."
+        ));
+    }
+
+    Ok(())
+}
+
 fn validate_relative_install_path(label: &str, raw_path: &str) -> Result<(), String> {
     validate_nonempty_field(label, raw_path)?;
 
@@ -658,14 +837,27 @@ fn validate_relative_install_path(label: &str, raw_path: &str) -> Result<(), Str
 fn validate_command_wrapper(command: &str) -> Result<(), String> {
     validate_nonempty_field("LC command wrapper", command)?;
 
+    if command.len() > COMMAND_WRAPPER_MAX_LEN {
+        return Err(format!(
+            "LC command wrapper must be {COMMAND_WRAPPER_MAX_LEN} bytes or less."
+        ));
+    }
+
+    let bytes = command.as_bytes();
+    let first = bytes[0];
+    let last = bytes[bytes.len() - 1];
     if command.contains('/')
+        || command.contains('\\')
+        || command.contains("..")
         || command.split_whitespace().count() != 1
-        || !command
-            .chars()
-            .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '.' | '_' | '-'))
+        || !first.is_ascii_alphanumeric()
+        || !last.is_ascii_alphanumeric()
+        || !bytes
+            .iter()
+            .all(|byte| byte.is_ascii_alphanumeric() || matches!(*byte, b'.' | b'_' | b'-'))
     {
         return Err(
-            "LC command wrapper must be a single command name. Use only letters, numbers, '.', '_', or '-'."
+            "LC command wrapper must be a single command name. Use only letters, numbers, '.', '_', or '-'; it must start and end with a letter or number and must not contain '..'."
                 .to_owned(),
         );
     }
@@ -715,6 +907,35 @@ fn validate_user_local_install_prefix(raw_prefix: &str) -> Result<(), String> {
 }
 
 impl InstallerConfig {
+    fn validate_authority_fields(&self) -> Result<(), String> {
+        self.lc.validate()?;
+        self.updater.validate()?;
+        self.seal.validate()?;
+
+        Ok(())
+    }
+
+    pub fn can_write_artifacts(&self) -> Result<(), String> {
+        validate_user_local_install_prefix(&self.install_prefix)?;
+        self.validate_authority_fields()?;
+
+        if self.safety.allow_network_effect {
+            return Err(
+                "Network authority is not implemented in this installer. Disable allow_network_effect."
+                    .to_owned(),
+            );
+        }
+
+        if self.updater.allow_network_fetch {
+            return Err(
+                "Updater network fetch is not implemented in this installer. Use a reviewed local checkout and keep allow_network_fetch=false."
+                    .to_owned(),
+            );
+        }
+
+        Ok(())
+    }
+
     pub fn apply_profile_defaults(&mut self) {
         match self.profile {
             InstallProfile::DeveloperLocal => {
@@ -808,8 +1029,7 @@ impl InstallerConfig {
     }
 
     pub fn can_execute(&self) -> Result<(), String> {
-        validate_user_local_install_prefix(&self.install_prefix)?;
-        self.lc.install.validate()?;
+        self.can_write_artifacts()?;
 
         if self.safety.dry_run {
             return Ok(());
@@ -821,40 +1041,11 @@ impl InstallerConfig {
             );
         }
 
-        if self.safety.allow_network_effect {
-            return Err(
-                "Network authority is not implemented in this installer. Disable allow_network_effect."
-                    .to_owned(),
-            );
-        }
-
-        if self.updater.allow_network_fetch {
-            return Err(
-                "Updater network fetch is not implemented in this installer. Use a reviewed local checkout and keep allow_network_fetch=false."
-                    .to_owned(),
-            );
-        }
-
         Ok(())
     }
 
     pub fn can_reset(&self) -> Result<(), String> {
-        validate_user_local_install_prefix(&self.install_prefix)?;
-        self.lc.install.validate()?;
-
-        if self.safety.allow_network_effect {
-            return Err(
-                "Network authority is not implemented in this installer. Disable allow_network_effect."
-                    .to_owned(),
-            );
-        }
-
-        if self.updater.allow_network_fetch {
-            return Err(
-                "Updater network fetch is not implemented in this installer. Use a reviewed local checkout and keep allow_network_fetch=false."
-                    .to_owned(),
-            );
-        }
+        self.can_write_artifacts()?;
 
         if self.safety.dry_run {
             return Ok(());
@@ -1023,6 +1214,20 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "rootfs_contract_present=1");
     let _ = writeln!(
         out,
+        "packages_contract_profile={}",
+        config.lc.packages_contract_profile
+    );
+    let _ = writeln!(out, "packages_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "packages_contract_present=1");
+    let _ = writeln!(
+        out,
+        "init_contract_profile={}",
+        config.lc.init_contract_profile
+    );
+    let _ = writeln!(out, "init_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "init_contract_present=1");
+    let _ = writeln!(
+        out,
         "panel_embedded_console={}",
         config.lc.install.panel_embedded_console
     );
@@ -1108,6 +1313,16 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         out,
         "rootfs_contract_profile={}",
         config.lc.rootfs_contract_profile
+    );
+    let _ = writeln!(
+        out,
+        "packages_contract_profile={}",
+        config.lc.packages_contract_profile
+    );
+    let _ = writeln!(
+        out,
+        "init_contract_profile={}",
+        config.lc.init_contract_profile
     );
     let _ = writeln!(
         out,
@@ -1220,6 +1435,16 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "packages_contract_required={}",
+        config.lc.require_packages_contract
+    );
+    let _ = writeln!(
+        out,
+        "init_contract_required={}",
+        config.lc.require_init_contract
+    );
+    let _ = writeln!(
+        out,
         "receipt_request_contract_required={}",
         config.lc.require_receipt_request_contract
     );
@@ -1298,6 +1523,8 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "workspace_contract_status=metadata-only-contract");
     let _ = writeln!(out, "namespace_contract_status=metadata-only-contract");
     let _ = writeln!(out, "rootfs_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "packages_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "init_contract_status=metadata-only-contract");
     let _ = writeln!(
         out,
         "receipt_request_contract_status=metadata-only-contract"
@@ -1359,11 +1586,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "documentation_code_name=Nadia Witness Foundation");
     let _ = writeln!(
         out,
-        "stage=43-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract"
+        "stage=46-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract"
     );
     let _ = writeln!(
         out,
-        "previous_stage=42-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-contract"
+        "previous_stage=45-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract"
     );
     let _ = writeln!(
         out,
@@ -2872,6 +3099,166 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         out,
         "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1"
     );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_stage=44-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_stage=contract-only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_status=contract_only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_allowed=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_record_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_decision_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_findings_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_stage=45-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_stage=contract-only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_status=contract_only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_allowed=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_record_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_decision_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_findings_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_stage=46-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract.sh"
+    );
+    let _ = writeln!(
+        out,
+        "installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_stage=contract-only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_status=contract_only"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_allowed=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_record_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_decision_recorded=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_published=0"
+    );
+    let _ = writeln!(
+        out,
+        "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_created=0"
+    );
+    let _ = writeln!(
+        out,
+        "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1"
+    );
+    let _ = writeln!(
+        out,
+        "requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract=1"
+    );
     let _ = writeln!(out, "requires_prompt_evaluation_result_contract=1");
     let _ = writeln!(
         out,
@@ -3015,4 +3402,63 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     }
 
     out
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn default_authority_labels_pass_slug_validation() {
+        InstallerConfig::default()
+            .validate_authority_fields()
+            .unwrap();
+    }
+
+    #[test]
+    fn installer_rejects_lc_profile_traversal_slug() {
+        let mut config = InstallerConfig::default();
+        config.lc.session_contract_profile = "../escape".to_owned();
+
+        let error = config.validate_authority_fields().unwrap_err();
+        assert!(error.contains("LC session contract profile"));
+    }
+
+    #[test]
+    fn installer_rejects_updater_slug_with_control_character() {
+        let mut config = InstallerConfig::default();
+        config.updater.update_channel = "local\ncheckout".to_owned();
+
+        let error = config.validate_authority_fields().unwrap_err();
+        assert!(error.contains("Updater update channel"));
+    }
+
+    #[test]
+    fn installer_rejects_seal_slug_with_shell_metacharacter() {
+        let mut config = InstallerConfig::default();
+        config.seal.key_storage_profile = "operator;managed".to_owned();
+
+        let error = config.validate_authority_fields().unwrap_err();
+        assert!(error.contains("Seal key storage profile"));
+    }
+
+    #[test]
+    fn installer_rejects_option_like_or_path_like_command_wrappers() {
+        for command_wrapper in [
+            "-latticra",
+            ".latticra",
+            "_latticra",
+            "lat..lc",
+            "lat/lc",
+            "lat lc",
+        ] {
+            let mut install = LatticraConsoleInstallConfig::default();
+            install.command_wrapper = command_wrapper.to_owned();
+
+            assert!(
+                install.validate().is_err(),
+                "accepted invalid command wrapper: {command_wrapper}"
+            );
+        }
+    }
 }

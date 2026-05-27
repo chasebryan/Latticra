@@ -13,6 +13,11 @@ It is a release-preparation lane. It does not create an ISO, create a VM image, 
 ```text
 latticra_os_image_release_readiness_contract_present=1
 iso_artifact_present=0
+os_image_artifact_manifest_template_present=1
+os_image_artifact_manifest_validation_present=1
+os_image_artifact_manifest_candidate_present=0
+os_image_build_preflight_present=1
+os_image_build_execution_allowed=0
 usb_write_command_template_present=1
 usb_write_execution_allowed=0
 vm_image_artifact_present=0
@@ -70,12 +75,69 @@ sbom.spdx.json
 
 The ISO and VM image may not be described as ready until checksums, signatures or explicit unsigned-local status, SBOM metadata, boot evidence, recovery steps, and install evidence are reviewed.
 
+## Artifact Manifest Boundary
+
+The future artifact manifest must be line-oriented and deterministic:
+
+```text
+LATTICRA OS IMAGE ARTIFACT MANIFEST
+manifest_version=1
+artifact_set=os-image-release
+artifact_version=<recorded>
+source_commit=<recorded>
+source_tag=<recorded-or-none>
+build_environment=<recorded>
+iso_artifact_path=<path-or-none>
+iso_artifact_sha256=<sha256-or-none>
+iso_signature_path=<path-or-none>
+iso_sbom_path=<path-or-none>
+vm_image_path=<path-or-none>
+vm_image_format=<qcow2-or-raw-or-none>
+vm_image_sha256=<sha256-or-none>
+vm_signature_path=<path-or-none>
+vm_sbom_path=<path-or-none>
+usb_write_command_template_present=1
+vm_test_command_template_present=1
+operator_recovery_path=<recorded-or-none>
+bootable_os_ready=0
+production_os_claim=0
+```
+
+The validator may verify artifact path and checksum consistency, but it must preserve:
+
+```text
+artifact_manifest_ready_for_operator_review=<0-or-1>
+hardware_install_ready=0
+full_os_install_ready=0
+bootable_os_ready=0
+production_os_claim=0
+```
+
 ## Commands
 
 Preflight the fixture:
 
 ```sh
 sh scripts/latticra-os-image-release-preflight.sh
+```
+
+Preflight the future local image build inputs:
+
+```sh
+sh scripts/latticra-os-image-build-preflight.sh
+```
+
+Generate the artifact manifest template:
+
+```sh
+sh scripts/latticra-os-image-artifact-manifest-template.sh
+```
+
+Validate the current fixture or a future artifact manifest candidate:
+
+```sh
+sh scripts/latticra-os-image-artifact-manifest-validate.sh
+sh scripts/latticra-os-image-artifact-manifest-validate.sh --artifact-manifest artifacts/os-images/<version>/manifest.txt
 ```
 
 Generate a Linux USB write command for operator review:
@@ -190,6 +252,8 @@ This lane is guarded by:
 
 ```sh
 sh scripts/test-latticra-os-image-release-readiness-contract.sh
+sh scripts/test-latticra-os-image-artifact-manifest-template.sh
+sh scripts/test-latticra-os-image-artifact-manifest-validate.sh
 sh scripts/test-latticra-os-image-usb-write-command.sh
 sh scripts/test-latticra-os-image-vm-test-command.sh
 ```
@@ -198,6 +262,8 @@ Expected outputs:
 
 ```text
 latticra_os_image_release_readiness_contract: ok
+latticra_os_image_artifact_manifest_template: ok
+latticra_os_image_artifact_manifest_validate: ok
 latticra_os_image_usb_write_command: ok
 latticra_os_image_vm_test_command: ok
 ```
@@ -208,6 +274,11 @@ latticra_os_image_vm_test_command: ok
 os_image_release_readiness_contract_present=1
 os_image_release_manifest_fixture_present=1
 iso_artifact_present=0
+os_image_artifact_manifest_template_present=1
+os_image_artifact_manifest_validation_present=1
+os_image_artifact_manifest_candidate_present=0
+os_image_build_preflight_present=1
+os_image_build_execution_allowed=0
 vm_image_artifact_present=0
 usb_write_command_template_present=1
 vm_test_command_template_present=1

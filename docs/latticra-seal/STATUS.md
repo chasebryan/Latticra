@@ -25,6 +25,9 @@ Known current evidence includes:
 - product-spine direction for an earned security-product path
 - no-effect operator receipt report implementation for bundled denied metadata
 - operator-visible receipt report surface and status checkpoint
+- local capability registry schema contract before any registry loader exists
+- local capability registry schema implementation plan before any schema C code exists
+- no-effect local capability registry schema implementation with bounded entries and denied defaults
 
 ## Current authority limits
 
@@ -50,6 +53,9 @@ product_spine_status_present=1
 operator_receipt_report_implementation_present=1
 operator_receipt_report_surface_present=1
 operator_receipt_report_status_present=1
+local_capability_registry_schema_contract_present=1
+local_capability_registry_schema_implementation_plan_present=1
+local_capability_registry_schema_implementation_present=1
 panel_bridge_planning=1
 runtime_enforcement=0
 network_operation=0

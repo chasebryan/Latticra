@@ -60,6 +60,9 @@ residual_payload_reviewed=0
 install_remove_findings_classified=0
 host_mutation_scope_reviewed=0
 ubuntu_install_remove_evidence_unblocked=0
+ubuntu_ppa_archive_publication_gate_contract_present=1
+ubuntu_ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence
+ubuntu_publication_gate_unblocked=0
 ppa_claimed=0
 ubuntu_archive_ready=0
 production_installer_ready=0
@@ -71,6 +74,8 @@ root_installer_ready=0
 The Ubuntu local deb build transcript acceptance gate must be unblocked and a reviewed local deb build transcript must be accepted before this install/remove evidence contract can advance.
 
 This contract is intentionally closed today. It records the future evidence shape without installing a package, removing a package, or mutating the host.
+
+The Ubuntu PPA/archive publication gate is downstream of this contract and remains blocked until install/remove evidence is unblocked.
 
 ## Non-Claims
 

@@ -31,6 +31,9 @@ require_file docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 require_file docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
 require_file docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
 require_file docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
+require_file docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+require_file docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+require_file docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 require_file docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 require_file docs/QUICK_START_CHEATSHEET.md
 require_file README.md
@@ -47,6 +50,9 @@ require_file scripts/test-opensuse-rpm-topdir-handoff-lane.sh
 require_file scripts/test-opensuse-local-rpm-build-gate-contract.sh
 require_file scripts/test-opensuse-local-rpm-build-environment-contract.sh
 require_file scripts/test-opensuse-rpm-artifact-naming-contract.sh
+require_file scripts/test-opensuse-rpm-payload-inspection-contract.sh
+require_file scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
+require_file scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
 require_file .github/workflows/opensuse-developer-workflow.yml
 require_file .github/workflows/opensuse-rpmlint-osc-availability.yml
 require_file .github/workflows/opensuse-rpmlint-static-spec-lane.yml
@@ -57,6 +63,9 @@ require_file .github/workflows/opensuse-rpm-topdir-handoff-lane.yml
 require_file .github/workflows/opensuse-local-rpm-build-gate-contract.yml
 require_file .github/workflows/opensuse-local-rpm-build-environment-contract.yml
 require_file .github/workflows/opensuse-rpm-artifact-naming-contract.yml
+require_file .github/workflows/opensuse-rpm-payload-inspection-contract.yml
+require_file .github/workflows/opensuse-rpm-install-remove-transcript-contract.yml
+require_file .github/workflows/opensuse-obs-publication-non-claim-review-contract.yml
 
 require_contains 'Status: developer workflow record' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
 require_contains 'local openSUSE Linux commands for productive Latticra development' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
@@ -67,6 +76,9 @@ require_contains 'sudo zypper install -y rust cargo make gcc pkgconf' docs/OPENS
 require_contains 'sh scripts/test-opensuse-local-rpm-static-validation.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
 require_contains 'sh scripts/test-opensuse-local-rpm-build-environment-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
 require_contains 'sh scripts/test-opensuse-rpm-artifact-naming-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-payload-inspection-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-install-remove-transcript-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
 require_contains 'opensuse_developer_workflow: ok' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
 
 require_contains 'Status: planning and maintenance record' docs/OPENSUSE_READINESS_PLAN.md
@@ -86,6 +98,9 @@ require_contains 'opensuse_rpm_topdir_handoff_lane_present=1' docs/OPENSUSE_READ
 require_contains 'opensuse_local_rpm_build_gate_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_local_rpm_build_environment_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_rpm_artifact_naming_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_payload_inspection_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_install_remove_transcript_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_obs_publication_non_claim_review_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_obs_publication_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'opensuse_official_package_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
 require_contains 'suse_endorsement_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
@@ -108,6 +123,12 @@ require_contains 'Status: active local RPM build environment contract' docs/OPEN
 require_contains 'opensuse_rpm_build_environment_contract_state=specified-no-effect' docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
 require_contains 'Status: active RPM artifact naming contract' docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
 require_contains 'opensuse_rpm_artifact_naming_contract_state=specified-no-effect' docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
+require_contains 'Status: active RPM payload inspection contract' docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+require_contains 'opensuse_rpm_payload_inspection_contract_state=specified-no-effect' docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+require_contains 'Status: active RPM install/remove transcript contract' docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+require_contains 'opensuse_rpm_install_remove_transcript_contract_state=specified-no-effect' docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+require_contains 'Status: active OBS publication non-claim review contract' docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+require_contains 'opensuse_obs_publication_non_claim_review_contract_present=1' docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 
 require_contains 'openSUSE prerequisites' README.md
 require_contains '## openSUSE integration and maintenance' README.md
@@ -123,6 +144,9 @@ require_contains 'docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md' README.md
 require_contains 'docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md' README.md
 require_contains 'docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md' README.md
 require_contains 'docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' README.md
 require_contains 'packaging/opensuse/README.md' README.md
 require_contains 'sh scripts/test-opensuse-developer-workflow.sh' README.md
 require_contains 'sh scripts/test-opensuse-local-rpm-static-validation.sh' README.md
@@ -135,11 +159,17 @@ require_contains 'sh scripts/test-opensuse-rpm-topdir-handoff-lane.sh' README.md
 require_contains 'sh scripts/test-opensuse-local-rpm-build-gate-contract.sh' README.md
 require_contains 'sh scripts/test-opensuse-local-rpm-build-environment-contract.sh' README.md
 require_contains 'sh scripts/test-opensuse-rpm-artifact-naming-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-payload-inspection-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-install-remove-transcript-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh' README.md
 
 require_contains 'openSUSE prerequisites:' docs/QUICK_START_CHEATSHEET.md
 require_contains 'sudo zypper install -y rust cargo make gcc pkgconf' docs/QUICK_START_CHEATSHEET.md
 require_contains 'sh scripts/test-opensuse-local-rpm-build-environment-contract.sh' docs/QUICK_START_CHEATSHEET.md
 require_contains 'sh scripts/test-opensuse-rpm-artifact-naming-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-payload-inspection-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-install-remove-transcript-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
 require_contains 'openSUSE:' installer/README.md
 
 require_contains 'Status: local-only packaging draft' packaging/opensuse/README.md
@@ -149,5 +179,12 @@ require_contains 'opensuse_local_rpm_build_environment_contract_present=1' packa
 require_contains 'opensuse_rpm_build_environment_contract_state=specified-no-effect' packaging/opensuse/README.md
 require_contains 'opensuse_rpm_artifact_naming_contract_present=1' packaging/opensuse/README.md
 require_contains 'opensuse_rpm_artifact_naming_contract_state=specified-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_payload_inspection_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_payload_inspection_contract_state=specified-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_install_remove_transcript_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_install_remove_transcript_contract_state=specified-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_obs_publication_non_claim_review_contract_present=1' packaging/opensuse/README.md
+require_contains 'obs_publication_non_claim_review_contract_present=1' packaging/opensuse/README.md
+require_contains 'rpm_validation_result_promoted=0' packaging/opensuse/README.md
 
 printf 'opensuse_developer_workflow: ok\n'

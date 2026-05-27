@@ -367,16 +367,15 @@ review_outcome=not_performed
 Recommended next planning move:
 
 ```text
-create the Console read-only host inventory public-entrypoint review template
+begin the Tier 2 Nucleus effect-contract and runtime-denial gate planning package
 ```
 
 Reason:
 
 ```text
-the non-claim review shape is now defined; the next useful planning artifact is
-the review form for deciding whether future evidence can be referenced from
-public entry points without changing product, runtime, host, security, or
-estimate posture
+the non-claim, public-entrypoint, and estimate-impact review shapes are now
+defined and indexed, and the completion checkpoint closes this package; the
+next useful planning lane is the Tier 2 Nucleus effect-boundary package
 ```
 
 ## Non-claims

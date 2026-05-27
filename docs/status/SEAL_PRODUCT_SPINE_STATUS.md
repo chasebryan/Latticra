@@ -88,6 +88,8 @@ It does not add runtime behavior, policy behavior, protocol behavior, host behav
 
 The bundled operator receipt report contract, implementation plan, implementation, report surface, and status record are now current follow-up checkpoints.
 
-The next valid Latticra Seal slice is a Panel-visible Seal dashboard planning checkpoint or local capability registry schema contract.
+The local capability registry schema contract, implementation plan, and no-effect implementation are now current follow-up checkpoints.
+
+The next valid Latticra Seal slice is a deterministic local capability registry schema report surface or a Panel-visible Seal dashboard planning checkpoint.
 
 That future slice must preserve the no-effect posture and must not perform effects or grant authority.

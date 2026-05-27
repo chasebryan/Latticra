@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Identity, Credential, and Access Management | Latticra</title>
+  <meta name="description" content="A public overview of Latticra identity, credential, and access-management gates for privileged access, phishing-resistant MFA planning, account lifecycle, service identity, logging, and hosted access non-claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Identity, Credential, and Access Management">
+  <meta property="og:description" content="ICAM requirements, privileged access gates, credential handling, identity logging, and no hosted identity or remote-access claims.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero security-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Identity, credential, and access management</p>
+        <p class="eyebrow">ICAM, Privileged Access, MFA, and Non-Claims</p>
+        <h1>Identity, credential, and access management</h1>
+        <p class="page-lede">
+          Latticra records identity and access-management requirements before hosted services, remote access, privileged operator access, SSO/federation, MFA, or identity-security claims can promote. It does not implement an identity provider, credential store, account database, remote login, or authorization enforcement.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell security-intro">
+        <div>
+          <p class="eyebrow">Current Rule</p>
+          <h2>Identity metadata is not access authority.</h2>
+        </div>
+        <p>
+          The baseline records ICAM vocabulary and required evidence for human, service, and machine identities. It keeps all hosted administration, remote access, privileged session, SSO, MFA, and identity-security language blocked until inventories, role mappings, lifecycle rules, credential handling, logging, monitoring, and exception ownership exist.
+        </p>
+      </div>
+
+      <div class="content-shell security-rule-grid" aria-label="Identity credential access management overview">
+        <article>
+          <span>01</span>
+          <h3>Identity inventory</h3>
+          <p>Human, local, service, machine, and privileged-role inventories must be visible before access-management claims can change.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Privileged MFA</h3>
+          <p>Privileged and remote access need phishing-resistant MFA planning, exception records, session lifetime, and reauthentication rules.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Credential lifecycle</h3>
+          <p>Account lifecycle, credential storage, rotation, recovery, reuse prevention, default-credential denial, and help-desk verification must be recorded.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Logging and exceptions</h3>
+          <p>Identity event logging, privileged behavior review, authorization trust relationships, exception owners, and expiration dates are required.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Current Snapshot</p>
+        <h2>The baseline is present, but identity authority is still zero.</h2>
+        <p>
+          These fields are requirements and non-claims. They do not indicate a live identity provider, remote login path, privileged session, hosted administration surface, or credential store.
+        </p>
+      </div>
+      <div class="content-shell report-grid" aria-label="Identity credential access management status snapshot">
+        <article>
+          <span>identity_credential_access_management_baseline</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>phishing_resistant_mfa_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>privileged_access_inventory_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>service_account_inventory_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>credential_reuse_forbidden</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>identity_provider_added</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>remote_access_enabled</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>privileged_access_granted</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell security-split">
+        <div class="section-heading">
+          <p class="eyebrow">Promotion Gate</p>
+          <h2>No hosted or privileged access wording can promote without the ICAM gate.</h2>
+          <p>
+            Identity and access claims touch high-risk account, credential, and authority boundaries. Future work must show who the identities are, what they can do, how they authenticate, how credentials are handled, and how exceptions expire before access wording can change.
+          </p>
+        </div>
+        <div class="security-table" role="table" aria-label="Identity credential access management promotion gate">
+          <div role="row">
+            <span role="cell">Present now</span>
+            <p role="cell">Baseline record, status record, guard script, high-assurance allocation, zero-trust context, supply-chain context, security policy alignment, and metadata-only Latticra identity/access posture.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Required before promotion</span>
+            <p role="cell">Operator identity source, human/local/service/machine identity inventory, privileged role inventory, role-to-effect mapping, least-privilege review, phishing-resistant MFA path, MFA exceptions, break-glass account and monitoring, session lifetime and reauth, credential storage and rotation, credential recovery, help-desk verification, joiner/mover/leaver process, identity event logging, privileged behavior review, trust-relationship review, exception owner, exception expiration, and operator-visible non-claims.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Denied now</span>
+            <p role="cell">Production identity provider, remote access, privileged operator access, service-account runtime authority, hosted admin console, password-only privileged access, default credentials, shared admin accounts, production credential storage, identity-security claims, SSO claims, MFA claims, and hosted service claims.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Latticra Boundary</p>
+        <h2>Current identity and access records are metadata-only.</h2>
+        <p>
+          Latticra can name future identity and access requirements, but the current system does not authenticate users, authorize effects, store credentials, create accounts, or open remote sessions.
+        </p>
+      </div>
+      <div class="content-shell security-effect-grid">
+        <article class="effect-guarded">
+          <span>Metadata</span>
+          <h3>Operator identity</h3>
+          <p>Operator identity source and context can be recorded as requirements, not as login or proofing behavior.</p>
+        </article>
+        <article class="effect-guarded">
+          <span>Metadata</span>
+          <h3>Access policy</h3>
+          <p>Access policy and role-to-effect mapping remain planning records without enforcement authority.</p>
+        </article>
+        <article class="effect-blocked">
+          <span>Closed</span>
+          <h3>Authorization enforcement</h3>
+          <p>No account database, credential store, authorization engine, SSO provider, or MFA provider is added.</p>
+        </article>
+        <article class="effect-blocked">
+          <span>Closed</span>
+          <h3>Remote or privileged sessions</h3>
+          <p>No remote login, hosted administration surface, privileged session, or identity runtime authority is granted.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Commands</p>
+        <h2>Validate the ICAM records without enabling access behavior.</h2>
+        <p>
+          These guards check records and public alignment. They do not provision accounts, store credentials, authenticate users, federate SSO, grant privileged access, or enable hosted services.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>ICAM baseline</h3>
+          <pre><code>sh scripts/test-identity-credential-access-management-baseline.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>High-assurance rollup</h3>
+          <pre><code>sh scripts/test-high-assurance-security-baseline.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Authority context</h3>
+          <pre><code>sh scripts/test-zero-trust-runtime-authority-baseline.sh
+sh scripts/test-supply-chain-security-baseline.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Use exact records before repeating identity or access wording.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md"><strong>Identity, credential, and access management baseline</strong><span>Privileged access, phishing-resistant MFA planning, account lifecycle, service identity, logging, and hosted-access non-claims.</span></a>
+        <a href="status/IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE_STATUS.md"><strong>ICAM status</strong><span>Status fields and expected guard output for the identity, credential, and access-management baseline.</span></a>
+        <a href="HIGH_ASSURANCE_SECURITY_BASELINE.md"><strong>High-assurance baseline</strong><span>Source-tracked security posture and future ICAM control allocation.</span></a>
+        <a href="ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md"><strong>Zero-trust runtime authority baseline</strong><span>Caller identity, workload identity, resource visibility, and per-request authority context.</span></a>
+        <a href="SUPPLY_CHAIN_SECURITY_BASELINE.md"><strong>Supply-chain baseline</strong><span>Workflow permissions, dependency review, checkout credentials, and release authority blockers.</span></a>
+        <a href="security-logging.html"><strong>Security logging and monitoring</strong><span>Identity/access events, privileged action logging, retention, redaction, and no monitoring-service claims.</span></a>
+        <a href="security.html"><strong>Security overview</strong><span>Safe testing, effect gates, runtime boundary, and security non-claims.</span></a>
+        <a href="supply-chain.html"><strong>Supply-chain gates</strong><span>CI, dependency, SBOM, updater, runtime-authority, release, and production security non-claims.</span></a>
+        <a href="runtime.html"><strong>Runtime boundary</strong><span>Default-deny runtime classification, policy matrix, and no-effect report surfaces.</span></a>
+        <a href="evidence.html"><strong>Evidence model</strong><span>Promotion levels, public claim boundaries, and exact source records.</span></a>
+        <a href="NON_CLAIMS.md"><strong>Non-claims</strong><span>Unsupported security, hosted service, access-management, and production-readiness claims.</span></a>
+        <a href="status/README.md"><strong>Status index</strong><span>Detailed status records and current public status navigation.</span></a>
+        <a href="https://github.com/Bryforge/Latticra/blob/main/SECURITY.md"><strong>Security policy</strong><span>Private reporting expectations, safe testing, scope, and project security non-claims.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra identity, credential, and access management.</span>
+      <span><a href="security.html">Open security overview</a></span>
+    </div>
+  </footer>
+</body>
+</html>

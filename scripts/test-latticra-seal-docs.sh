@@ -38,6 +38,9 @@ grep -q "operator_receipt_report_implementation_plan_present=1" docs/latticra-se
 grep -q "operator_receipt_report_implementation_present=1" docs/latticra-seal/PRODUCT.md
 grep -q "operator_receipt_report_surface_present=1" docs/latticra-seal/PRODUCT.md
 grep -q "operator_receipt_report_status_present=1" docs/latticra-seal/PRODUCT.md
+grep -q "local_capability_registry_schema_contract_present=1" docs/latticra-seal/PRODUCT.md
+grep -q "local_capability_registry_schema_implementation_plan_present=1" docs/latticra-seal/PRODUCT.md
+grep -q "local_capability_registry_schema_implementation_present=1" docs/latticra-seal/PRODUCT.md
 grep -q "seal_operator_receipt_report=1" docs/latticra-seal/REPORTS.md
 
 echo "latticra_seal_docs: ok"

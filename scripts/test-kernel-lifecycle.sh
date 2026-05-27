@@ -36,6 +36,8 @@ cc $CFLAGS \
   src/kernel_scheduler_selection.c \
   src/kernel_scheduler_dispatch.c \
   src/kernel_scheduler_handoff.c \
+  src/kernel_scheduler_activation.c \
+  src/kernel_scheduler_run_entry.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \

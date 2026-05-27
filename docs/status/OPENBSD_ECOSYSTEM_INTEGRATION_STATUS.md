@@ -20,11 +20,17 @@ debian_freebsd_openbsd_package_build_gate_contract_present=1
 debian_freebsd_openbsd_package_build_environment_contract_present=1
 debian_freebsd_openbsd_package_artifact_naming_contract_present=1
 debian_freebsd_openbsd_package_payload_inspection_contract_present=1
+debian_freebsd_openbsd_package_install_remove_transcript_contract_present=1
+debian_freebsd_openbsd_package_publication_non_claim_review_contract_present=1
+debian_freebsd_openbsd_package_validation_promotion_blocker_matrix_contract_present=1
 temporary_openbsd_distfile_staged=1
 package_build_gate_state=closed-no-effect
 package_build_environment_contract_state=specified-no-effect
 artifact_naming_contract_state=specified-no-effect
 payload_inspection_contract_state=specified-no-effect
+install_remove_transcript_contract_state=specified-no-effect
+publication_non_claim_review_contract_state=specified-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
 openbsd_build_allowed=0
 openbsd_ports_environment_documented=1
 openbsd_build_environment_provisioned=0
@@ -41,6 +47,21 @@ openbsd_payload_expected_doc=share/doc/latticra/README.md
 openbsd_payload_inspection_run=0
 package_payload_inspection_run=0
 package_payload_accepted=0
+openbsd_install_remove_transcript_required=1
+openbsd_install_remove_transcript_present=0
+openbsd_package_install_run=0
+openbsd_package_remove_run=0
+remove_on_host_run=0
+publication_non_claim_review_present=1
+openbsd_publication_non_claim_review_present=1
+openbsd_package_publication_claimed=0
+openbsd_pkg_repo_created=0
+openbsd_pkg_repo_publish_run=0
+platform_build_evidence_accepted=0
+openbsd_validation_promotion_blocked=1
+openbsd_platform_build_evidence_accepted=0
+package_validation_result_promoted=0
+openbsd_validation_result_promoted=0
 source_archive_policy_recorded=1
 source_archive_created=0
 source_archive_sha256_recorded=0
@@ -75,6 +96,9 @@ docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_ENVIRONMENT_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_ARTIFACT_NAMING_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
 packaging/openbsd/README.md
 packaging/openbsd/Makefile
 packaging/openbsd/pkg/DESCR
@@ -85,12 +109,18 @@ scripts/test-debian-freebsd-openbsd-package-build-gate-contract.sh
 scripts/test-debian-freebsd-openbsd-package-build-environment-contract.sh
 scripts/test-debian-freebsd-openbsd-package-artifact-naming-contract.sh
 scripts/test-debian-freebsd-openbsd-package-payload-inspection-contract.sh
+scripts/test-debian-freebsd-openbsd-package-install-remove-transcript-contract.sh
+scripts/test-debian-freebsd-openbsd-package-publication-non-claim-review-contract.sh
+scripts/test-debian-freebsd-openbsd-package-validation-promotion-blocker-matrix-contract.sh
 .github/workflows/openbsd-port-static-validation.yml
 .github/workflows/debian-freebsd-openbsd-source-archive-contract.yml
 .github/workflows/debian-freebsd-openbsd-package-build-gate-contract.yml
 .github/workflows/debian-freebsd-openbsd-package-build-environment-contract.yml
 .github/workflows/debian-freebsd-openbsd-package-artifact-naming-contract.yml
 .github/workflows/debian-freebsd-openbsd-package-payload-inspection-contract.yml
+.github/workflows/debian-freebsd-openbsd-package-install-remove-transcript-contract.yml
+.github/workflows/debian-freebsd-openbsd-package-publication-non-claim-review-contract.yml
+.github/workflows/debian-freebsd-openbsd-package-validation-promotion-blocker-matrix-contract.yml
 ```
 
 ## Current Boundary
@@ -109,8 +139,14 @@ The package artifact naming contract is recorded in `docs/DEBIAN_FREEBSD_OPENBSD
 
 The package payload inspection contract is recorded in `docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md`. It records the expected OpenBSD payload paths while keeping `openbsd_payload_inspection_run=0`, `package_payload_accepted=0`, `package_artifact_created=0`, and `PERMIT_PACKAGE=No`.
 
+The package install/remove transcript contract is recorded in `docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md`. It records future disposable install/remove transcript requirements while keeping `openbsd_package_install_run=0`, `openbsd_package_remove_run=0`, `install_on_host_run=0`, and `PERMIT_PACKAGE=No`.
+
+The package publication non-claim review contract is recorded in `docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md`. It records local-only OpenBSD publication and official-port non-claims while keeping `openbsd_package_publication_claimed=0`, `openbsd_pkg_repo_publish_run=0`, package validation promotion blocked, and `PERMIT_PACKAGE=No`.
+
+The package validation promotion blocker matrix is recorded in `docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md`. It ties OpenBSD source, environment, artifact, payload, install/remove, and publication non-claim blockers together while keeping `openbsd_platform_build_evidence_accepted=0`, `openbsd_validation_result_promoted=0`, and `PERMIT_PACKAGE=No`.
+
 ## Next Recommended Lane
 
 ```text
-Add an OpenBSD package install/remove transcript contract before accepting PERMIT_PACKAGE=Yes, make plist, make package, portcheck, or bulk build evidence.
+Add an OpenBSD package build-evidence intake denial contract before any OpenBSD build lane can open.
 ```

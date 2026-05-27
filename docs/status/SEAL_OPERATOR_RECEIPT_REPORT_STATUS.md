@@ -12,10 +12,24 @@ The report surface renders one denied local receipt that binds existing report-o
 ## Reviewed Files
 
 ```text
+README.md
+STATUS.md
+docs/status/README.md
+docs/status/CURRENT_STATUS.md
+docs/FOUNDATION_INDEX.md
+docs/project_notes/CURRENT_DIRECTION.md
+docs/project_notes/UPCOMING_WORK.md
+docs/project_notes/README.md
 docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md
 docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SURFACE.md
+docs/status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md
+docs/status/SEAL_POLICY_DECISION_STATUS.md
 scripts/latticra-seal-operator-receipt-report.sh
 scripts/test-latticra-seal-operator-receipt-report-surface.sh
+scripts/test-latticra-seal-operator-receipt-report-status.sh
+scripts/test-latticra-seal-policy-decision-status.sh
+.github/workflows/latticra-seal-policy-decision-status.yml
+.github/workflows/latticra-seal-operator-receipt-report-status.yml
 tests/seal_operator_receipt_report_surface.c
 ```
 
@@ -29,9 +43,17 @@ seal_operator_receipt_report_surface_fixture_present=1
 seal_operator_receipt_report_runner_present=1
 seal_operator_receipt_report_surface_guard_present=1
 seal_operator_receipt_report_status_present=1
+seal_operator_receipt_report_status_runner_present=1
+seal_operator_receipt_report_status_workflow_present=1
+seal_policy_decision_status_present=1
+seal_policy_decision_status_runner_present=1
+seal_policy_decision_status_workflow_present=1
+policy_decision_predecessor_signed_request_status_present=1
+operator_receipt_report_predecessor_policy_decision_status_present=1
 operator_visible_operator_receipt_report=1
 uses_local_deterministic_fixture=1
 source_metadata_bound=1
+operator_receipt_report_status_added=1
 implementation_behavior_changed=0
 runtime_behavior_added=0
 host_behavior_added=0
@@ -111,6 +133,27 @@ sh scripts/test-latticra-seal-operator-receipt-report.sh
 Expected output:
 
 ```text
+seal report envelope status: ok
+seal signature request status: ok
+seal signing authorization status: ok
+seal signer handoff status: ok
+seal signer invocation status: ok
+seal signing operation status: ok
+seal key-handling status: ok
+seal key-material status: ok
+seal public-key parsing status: ok
+seal key parsing status: ok
+seal verification policy status: ok
+seal verification receipt status: ok
+seal capability gate status: ok
+seal effect decision status: ok
+seal runtime handoff status: ok
+seal status rollup status: ok
+seal agentic automation security status: ok
+seal parameter schema status: ok
+seal request freshness status: ok
+seal signed request status: ok
+latticra seal policy decision status: ok
 latticra seal operator receipt report status: ok
 ```
 
@@ -118,10 +161,18 @@ latticra seal operator receipt report status: ok
 
 This status record is documentation/status alignment only.
 
+This refresh adds the operator receipt report status guard workflow and records the guarded policy decision status predecessor without changing the report-only operator receipt metadata, implementation, or report surface.
+
 It does not add runtime behavior, policy behavior, protocol behavior, host behavior, network behavior, model behavior, tool behavior, shell behavior, cryptographic behavior, capability behavior, production readiness, external endorsement, or authority grants.
 
 ## Current Next Valid Slice
 
-The next valid Latticra Seal slice is a Panel-visible Seal dashboard planning checkpoint or local capability registry schema contract.
+The local capability registry schema contract is now represented by `docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_CONTRACT.md`.
+
+The local capability registry schema implementation plan is now represented by `docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION_PLAN.md`.
+
+The local capability registry schema implementation is now represented by `docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md`.
+
+The next valid Latticra Seal slice is a deterministic local capability registry schema report surface or a Panel-visible Seal dashboard planning checkpoint.
 
 That future slice must preserve the no-effect posture and must not perform effects or grant authority.

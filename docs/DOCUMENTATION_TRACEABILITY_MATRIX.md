@@ -32,11 +32,13 @@ If that path is missing, keep the claim narrow or remove it until a source recor
 
 | Topic | Public surfaces | Source records | Validation or review | Non-claim boundary |
 | --- | --- | --- | --- | --- |
+| Reader journeys | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html) | [`DOCUMENTATION_READER_JOURNEY_MAP.md`](DOCUMENTATION_READER_JOURNEY_MAP.md), [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md) | Local link check and public-entry guard | Audience routes must not imply capability promotion. |
 | Project identity | [`../README.md`](../README.md), [`index.html`](index.html), [`map.html`](map.html) | [`REAL_SYSTEM_CONTRACT.md`](REAL_SYSTEM_CONTRACT.md), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), [`README.md`](README.md) | [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md), `git diff --check` | [`NON_CLAIMS.md`](NON_CLAIMS.md), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) |
 | Current status and estimates | [`../README.md`](../README.md), [`../STATUS.md`](../STATUS.md), [`status.html`](status.html), [`roadmap.html`](roadmap.html) | [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), [`status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) | `sh scripts/test-current-estimate-table-source-alignment.sh` | Estimates are planning posture, not release promises. |
 | Documentation navigation | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html) | [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) | Local link check, `git diff --check` | Navigation must not imply capability promotion. |
 | Product-facing wording | [`../README.md`](../README.md), [`index.html`](index.html), [`start.html`](start.html), [`validation.html`](validation.html) | [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md), [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md) | [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) | Product copy must stay evidence-bound and non-production. |
 | Public claim language | All public Markdown and HTML summaries | [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md), [`EVIDENCE_LADDER.md`](EVIDENCE_LADDER.md), [`NON_CLAIMS.md`](NON_CLAIMS.md) | Claim review packet outcome when wording changes | Unsupported adjacent claims stay blocked. |
+| Shared public terminology | Public Markdown, public HTML, package docs, installer docs, status records, and subsystem landing pages | [`DOCUMENTATION_GLOSSARY.md`](DOCUMENTATION_GLOSSARY.md), [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md), [`NAMING_SYSTEM.md`](NAMING_SYSTEM.md), [`LANGUAGE_NAMING_POLICY.md`](LANGUAGE_NAMING_POLICY.md) | Local link check and public-entry guard | Shared terms must not imply stronger capability than source records. |
 | Security posture | [`../SECURITY.md`](../SECURITY.md), [`security.html`](security.html), [`../README.md`](../README.md) | [`DEFENSIVE_THREAT_MODEL_CONTRACT.md`](DEFENSIVE_THREAT_MODEL_CONTRACT.md), [`HIGH_ASSURANCE_SECURITY_BASELINE.md`](HIGH_ASSURANCE_SECURITY_BASELINE.md), [`ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md`](ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md) | Security-specific guard named by the changed source record | No malware prevention, ransomware prevention, hardened sandbox, certification, or production protection claim. |
 | Installer and Panel posture | [`../installer/README.md`](../installer/README.md), [`../installer/docs/README.md`](../installer/docs/README.md), [`start.html`](start.html), [`validation.html`](validation.html) | [`PRODUCTION_INSTALLER_READINESS_CONTRACT.md`](PRODUCTION_INSTALLER_READINESS_CONTRACT.md), installer docs and status records | Installer or Panel guard named by the changed record | No root installer, daily-driver installer, production installer, or unattended host mutation claim. |
 | Fedora lane | [`FEDORA_READINESS_PLAN.md`](FEDORA_READINESS_PLAN.md), [`FEDORA_DEVELOPER_WORKFLOW.md`](FEDORA_DEVELOPER_WORKFLOW.md), [`../packaging/fedora/README.md`](../packaging/fedora/README.md), [`validation.html`](validation.html) | Fedora package, workflow, and status records | `sh scripts/test-fedora-developer-workflow.sh` plus exact Fedora guard | Local-only unless Fedora approval evidence exists. |
@@ -69,10 +71,11 @@ When drift is found:
 1. Identify the topic row in this matrix.
 2. Read the source records before editing public wording.
 3. Check [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) and [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
-4. Use [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) to choose the narrowest relevant validation commands.
-5. Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) when wording, mirrors, estimates, status, platform posture, or non-claims change.
-6. Run the selected validation commands.
-7. Update only the public surfaces whose reader-facing claim actually changed.
+4. Use [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) to choose a narrowing, alignment, or demotion path.
+5. Use [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) to choose the narrowest relevant validation commands.
+6. Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) when wording, mirrors, estimates, status, platform posture, or non-claims change.
+7. Run the selected validation commands.
+8. Update only the public surfaces whose reader-facing claim actually changed.
 
 ## Boundary
 

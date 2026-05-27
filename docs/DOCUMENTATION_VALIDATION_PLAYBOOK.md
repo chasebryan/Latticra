@@ -113,7 +113,8 @@ When a documentation validation fails:
 3. Fix the documentation source or mirror that is wrong.
 4. Do not weaken non-claims to make a public summary sound better.
 5. Do not edit guard scripts for documentation-only convenience.
-6. If the stronger wording lacks evidence, demote the wording and record the blocked claim in the review packet.
+6. Use [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) when source records, public pages, mirrors, estimates, non-claims, or validation expectations disagree.
+7. If the stronger wording lacks evidence, demote the wording and record the blocked claim in the review packet.
 
 ## Review Packet Fields
 

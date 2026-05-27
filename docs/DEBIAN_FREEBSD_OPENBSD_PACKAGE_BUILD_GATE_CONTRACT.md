@@ -18,7 +18,12 @@ debian_freebsd_openbsd_package_build_gate_contract_present=1
 debian_freebsd_openbsd_package_build_environment_contract_present=1
 debian_freebsd_openbsd_package_artifact_naming_contract_present=1
 debian_freebsd_openbsd_package_payload_inspection_contract_present=1
+debian_freebsd_openbsd_package_install_remove_transcript_contract_present=1
+debian_freebsd_openbsd_package_publication_non_claim_review_contract_present=1
+debian_freebsd_openbsd_package_validation_promotion_blocker_matrix_contract_present=1
 package_build_gate_state=closed-no-effect
+publication_non_claim_review_contract_state=specified-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
 debian_build_allowed=0
 freebsd_build_allowed=0
 openbsd_build_allowed=0
@@ -37,6 +42,8 @@ portcheck_run=0
 openbsd_bulk_build_run=0
 package_artifact_created=0
 install_on_host_run=0
+publication_non_claim_review_present=1
+platform_build_evidence_accepted=0
 package_readiness_claimed=0
 ```
 
@@ -178,6 +185,9 @@ docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_ENVIRONMENT_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_ARTIFACT_NAMING_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
 ```
 
 The source archive fixture lane proves temporary archive shape in a disposable workspace.
@@ -231,15 +241,60 @@ scripts/test-debian-freebsd-openbsd-package-payload-inspection-contract.sh
 
 That lane defines payload inspection evidence without opening the package-build gate.
 
-## Next Slice
+## Completed Follow-On Lane
 
-Recommended next slice:
+Completed follow-on lane:
 
 ```text
 Add a Debian, FreeBSD, and OpenBSD package install/remove transcript contract before any package install can be accepted.
 ```
 
-That future lane should define disposable install/remove evidence while keeping host installs and package readiness blocked.
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-install-remove-transcript-contract.sh
+```
+
+That lane defines disposable install/remove evidence while keeping host installs and package readiness blocked.
+
+## Completed Follow-On Lane
+
+Completed follow-on lane:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package publication non-claim review contract before any package validation result can be promoted.
+```
+
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-publication-non-claim-review-contract.sh
+```
+
+That lane records local-only publication and official-port non-claims while keeping package publication and readiness blocked.
+
+## Completed Follow-On Lane
+
+Completed follow-on lane:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package validation promotion blocker matrix before any platform-specific build evidence can be accepted.
+```
+
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-validation-promotion-blocker-matrix-contract.sh
+```
+
+That lane ties source, environment, artifact, payload, install/remove, and publication non-claim blockers together while keeping platform build evidence acceptance and validation promotion blocked.
+
+## Next Slice
+
+Recommended next slice:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial contract before any single-platform build lane can open.
+```
+
+That future lane should define how build evidence intake is refused until the blocker matrix opens, while keeping package builds and readiness blocked.
 
 ## Validation
 

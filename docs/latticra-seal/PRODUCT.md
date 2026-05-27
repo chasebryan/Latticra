@@ -33,6 +33,9 @@ runtime_dry_run_metadata=1
 runtime_handoff_metadata=1
 operator_receipt_report_metadata=1
 operator_receipt_report_surface=1
+local_capability_registry_schema_contract=1
+local_capability_registry_schema_implementation_plan=1
+local_capability_registry_schema_implementation=1
 operator_visible_reports=1
 production_security_product=0
 runtime_authority_granted=0
@@ -117,6 +120,7 @@ seal_capability_metadata_report=1
 seal_policy_decision_report=1
 seal_runtime_dry_run_report=1
 seal_operator_receipt_report=1
+seal_local_capability_registry_schema=implemented-no-effect
 seal_panel_status_surface=planned
 seal_receipt_bundle=partial-local
 seal_operator_review_queue=planned
@@ -129,11 +133,14 @@ Completed recent checkpoints:
 1. Capability metadata report status/index alignment.
 2. A Seal product-spine status record and guard.
 3. A bundled operator receipt report that ties capability metadata, policy decision, request freshness, signed request metadata, runtime dry-run, and denial reason into one local artifact.
+4. A local capability registry schema contract before any production registry loader exists.
+5. A no-effect local capability registry schema implementation plan before any schema C code exists.
+6. A no-effect local capability registry schema implementation with bounded entries, deterministic validation, and zero authority.
 
 The product path should now prioritize:
 
-1. A Panel-visible Seal dashboard that renders current reports without root, network, or runtime authority.
-2. A local capability registry schema contract before any production registry loader exists.
+1. A deterministic local capability registry schema report surface and status checkpoint.
+2. A Panel-visible Seal dashboard that renders current reports without root, network, or runtime authority.
 3. A signed receipt proof path that remains verification-only until trust-root and revocation boundaries are implemented.
 4. A future enforcement preflight contract that keeps enforce mode closed until all predecessor evidence is present.
 
@@ -147,6 +154,9 @@ operator_receipt_report_implementation_plan_present=1
 operator_receipt_report_implementation_present=1
 operator_receipt_report_surface_present=1
 operator_receipt_report_status_present=1
+local_capability_registry_schema_contract_present=1
+local_capability_registry_schema_implementation_plan_present=1
+local_capability_registry_schema_implementation_present=1
 ```
 
 ## Non-Claims

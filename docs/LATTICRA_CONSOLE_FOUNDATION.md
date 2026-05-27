@@ -1,7 +1,7 @@
 # Latticra Console Foundation
 
 Status: Stage-0 foundation
-Scope: LC identity, standalone and Panel installability, configurable metadata, session contract, workspace contract, namespace contract, rootfs contract, substrate bridge, host-embedding plan, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
+Scope: LC identity, standalone and Panel installability, configurable metadata, session contract, workspace contract, namespace contract, rootfs contract, packages contract, init contract, substrate bridge, host-embedding plan, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and future OS-base direction.
 
 ## Purpose
 
@@ -45,6 +45,8 @@ session_contract_profile=lc-session-v0
 workspace_contract_profile=lc-workspace-v0
 namespace_contract_profile=lc-namespace-v0
 rootfs_contract_profile=lc-rootfs-v0
+packages_contract_profile=lc-packages-v0
+init_contract_profile=lc-init-v0
 receipt_request_contract_profile=lc-receipt-request-v0
 receipt_payload_schema_profile=lc-receipt-payload-schema-v0
 receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0
@@ -68,6 +70,8 @@ session_contract_required=true
 workspace_contract_required=true
 namespace_contract_required=true
 rootfs_contract_required=true
+packages_contract_required=true
+init_contract_required=true
 receipt_request_contract_required=true
 receipt_payload_schema_required=true
 receipt_payload_artifact_draft_required=true
@@ -99,6 +103,8 @@ share/latticra/lc/session/contract.toml
 share/latticra/lc/workspace/contract.toml
 share/latticra/lc/namespace/contract.toml
 share/latticra/lc/rootfs/contract.toml
+share/latticra/lc/packages/contract.toml
+share/latticra/lc/init/contract.toml
 share/latticra/lc/substrate
 share/latticra/lc/host-embedding/contract.toml
 share/latticra/lc/host-inventory/contract.toml
@@ -152,6 +158,10 @@ The LC namespace lane writes `share/latticra/lc/namespace/contract.toml` and exp
 
 The LC rootfs lane writes `share/latticra/lc/rootfs/contract.toml` and exposes `lc rootfs`. It names the future internal root filesystem envelope while keeping rootfs image creation, image opening, mounts, package installs, file reads, file writes, host mutation, network, runtime enforcement, boot, and production OS authority denied.
 
+The LC packages lane writes `share/latticra/lc/packages/contract.toml` and exposes `lc packages`. It names the future rootfs package-manifest envelope while keeping package catalog reads, downloads, install-plan writes, package-manager execution, package-script execution, rootfs package installs, host mutation, network, runtime enforcement, boot, and production OS authority denied.
+
+The LC init lane writes `share/latticra/lc/init/contract.toml` and exposes `lc init`. It names the future internal init and service envelope while keeping PID 1 claims, init process launch, service starts, service stops, process supervision, startup-order writes, host mutation, network, runtime enforcement, boot, and production OS authority denied.
+
 The umbrella wrapper routes:
 
 ```text
@@ -176,6 +186,8 @@ lc session
 lc workspace
 lc namespace
 lc rootfs
+lc packages
+lc init
 lc profiles
 lc receipts
 lc receipt-request
@@ -231,6 +243,8 @@ session_contract_profile = "lc-session-v0"
 workspace_contract_profile = "lc-workspace-v0"
 namespace_contract_profile = "lc-namespace-v0"
 rootfs_contract_profile = "lc-rootfs-v0"
+packages_contract_profile = "lc-packages-v0"
+init_contract_profile = "lc-init-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -255,6 +269,8 @@ require_session_contract = true
 require_workspace_contract = true
 require_namespace_contract = true
 require_rootfs_contract = true
+require_packages_contract = true
+require_init_contract = true
 require_receipt_request_contract = true
 require_receipt_payload_schema = true
 require_receipt_payload_artifact_draft = true
@@ -521,6 +537,108 @@ latticra-lc rootfs
 
 The rootfs contract is metadata only. It does not create or open a rootfs image, mount a filesystem, install packages, read or write rootfs files, mutate the host, use the network, enforce runtime policy, boot hardware, or claim production OS status.
 
+## Packages Contract
+
+LC now installs and reports a packages contract before the Console can claim package catalogs, package downloads, package-manager execution, package-script execution, install plans, package manifests, or rootfs package writes:
+
+```text
+packages_profile=lc-packages-v0
+packages_status=metadata-only-contract
+packages_contract_present=1
+packages_kind=lc-rootfs-package-manifest-envelope
+packages_root=share/latticra/lc/packages
+packages_state_source=metadata-only
+package_manifest_present=0
+package_manifest_write_allowed=0
+package_catalog_present=0
+package_catalog_read_allowed=0
+package_catalog_write_allowed=0
+package_download_allowed=0
+package_install_plan_present=0
+package_install_plan_write_allowed=0
+package_manager_present=0
+package_manager_execution_allowed=0
+package_script_execution_allowed=0
+rootfs_package_manifest_present=0
+rootfs_package_install_allowed=0
+rootfs_file_write_allowed=0
+rootfs_contract_required=1
+namespace_contract_required=1
+workspace_contract_required=1
+session_contract_required=1
+os_base_contract_required=1
+runtime_boundary_required=1
+receipt_required_before_package_materialization=1
+command_surface=lc packages
+host_process_launch_allowed=0
+host_mutation_allowed=0
+network_allowed=0
+runtime_enforcement_allowed=0
+boot_allowed=0
+production_os_claim=0
+promotion_gate=lc_packages_contract_before_catalog_install_or_rootfs_write
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report packages
+latticra-lc packages
+```
+
+The packages contract is metadata only. It does not read package catalogs, download packages, write manifests or install plans, run package managers or package scripts, install packages into rootfs, mutate the host, use the network, enforce runtime policy, boot hardware, or claim production OS status.
+
+## Init Contract
+
+LC now installs and reports an init contract before the Console can claim PID 1, an init process, service supervision, startup ordering, boot adjacency, or OS-base init behavior:
+
+```text
+init_profile=lc-init-v0
+init_status=metadata-only-contract
+init_contract_present=1
+init_kind=lc-internal-init-and-service-envelope
+init_root=share/latticra/lc/init
+init_state_source=metadata-only
+init_manifest_present=0
+init_manifest_write_allowed=0
+pid1_claim_allowed=0
+init_process_present=0
+init_process_launch_allowed=0
+service_registry_present=0
+service_registry_write_allowed=0
+service_start_allowed=0
+service_stop_allowed=0
+service_restart_allowed=0
+process_supervision_allowed=0
+startup_order_present=0
+startup_order_write_allowed=0
+rootfs_contract_required=1
+packages_contract_required=1
+namespace_contract_required=1
+workspace_contract_required=1
+session_contract_required=1
+os_base_contract_required=1
+runtime_boundary_required=1
+receipt_required_before_init_runtime=1
+command_surface=lc init
+host_process_launch_allowed=0
+host_mutation_allowed=0
+network_allowed=0
+runtime_enforcement_allowed=0
+boot_allowed=0
+production_os_claim=0
+promotion_gate=lc_init_contract_before_pid1_service_supervision_or_boot
+```
+
+The source and installed command surfaces are:
+
+```sh
+latticra_console_report init
+latticra-lc init
+```
+
+The init contract is metadata only. It does not claim PID 1, launch an init process, start or stop services, supervise processes, write startup order, mutate the host, use the network, enforce runtime policy, boot hardware, or claim production OS status.
+
 ## Host Embedding Contract
 
 LC now installs and reports a host-embedding contract before any host integration behavior exists:
@@ -673,6 +791,10 @@ namespace_contract_receipt_required=1
 namespace_contract_present=1
 rootfs_contract_receipt_required=1
 rootfs_contract_present=1
+packages_contract_receipt_required=1
+packages_contract_present=1
+init_contract_receipt_required=1
+init_contract_present=1
 receipt_request_contract_required=1
 receipt_request_contract_present=1
 receipt_payload_schema_required=1
@@ -701,7 +823,9 @@ session_contract_command=lc session
 workspace_contract_command=lc workspace
 namespace_contract_command=lc namespace
 rootfs_contract_command=lc rootfs
-receipt_surfaces=profile,session,workspace,namespace,rootfs,host-contract,host-inventory,host-adapter,runtime-boundary
+packages_contract_command=lc packages
+init_contract_command=lc init
+receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,host-contract,host-inventory,host-adapter,runtime-boundary
 promotion_gate=lc_receipts_before_host_adapter_or_os_base
 ```
 
@@ -737,7 +861,7 @@ receipt_contract_profile=lc-receipts-v0
 signature_request_profile=latticra-seal-signature-request/0.1
 requested_receipt_profile=latticra-seal-verified-receipt/0.1
 requested_capability=verified-receipt-report
-requested_surfaces=profile,session,workspace,namespace,rootfs,host-contract,host-inventory,host-adapter,runtime-boundary
+requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,host-contract,host-inventory,host-adapter,runtime-boundary
 receipt_payload_schema_profile=lc-receipt-payload-schema-v0
 receipt_payload_schema_required=1
 receipt_payload_schema_present=1
@@ -1306,6 +1430,7 @@ lc session -> authority-check / validation-only
 lc workspace -> authority-check / validation-only
 lc namespace -> authority-check / validation-only
 lc rootfs -> authority-check / validation-only
+lc packages -> authority-check / validation-only
 lc receipts -> authority-check / validation-only
 lc receipt-request -> authority-check / validation-only
 lc receipt-payload -> authority-check / validation-only

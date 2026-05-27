@@ -32,6 +32,7 @@ require_file docs/project_notes/README.md
 require_file docs/LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_CONTRACT.md
 require_file docs/LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_IMPLEMENTATION.md
 require_file docs/status/SEAL_VERIFIED_EFFECT_DECISION_STATUS.md
+require_file docs/status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md
 require_file include/latticra/seal_runtime_handoff_evaluation.h
 require_file src/seal_runtime_handoff_evaluation.c
 require_file tests/seal_runtime_handoff_evaluation_invariants.c
@@ -48,9 +49,19 @@ require_contains 'seal_runtime_handoff_evaluation_invariant_test_present=1' "$st
 require_contains 'seal_runtime_handoff_evaluation_runner_present=1' "$status_file"
 require_contains 'seal_runtime_handoff_evaluation_status_present=1' "$status_file"
 require_contains 'seal_verified_effect_decision_status_present=1' "$status_file"
+require_contains 'seal_crypto_graduation_gate_status_present=1' "$status_file"
 require_contains 'handoff_profile=latticra-seal-runtime-handoff-evaluation/0.1' "$status_file"
 require_contains 'decision_profile=latticra-seal-verified-effect-decision/0.1' "$status_file"
+require_contains 'crypto_graduation_profile=latticra-seal-crypto-graduation-gate/0.1' "$status_file"
+require_contains 'assurance_baseline_profile=latticra-cryptographic-assurance-key-management/0.1' "$status_file"
+require_contains 'crypto_graduation_gate_state=graduated-authority-neutral' "$status_file"
 require_contains 'requested_handoff=report-only' "$status_file"
+require_contains 'crypto_graduation_gate_present=1' "$status_file"
+require_contains 'crypto_graduation_gate_passed=1' "$status_file"
+require_contains 'standard_expectations_met=1' "$status_file"
+require_contains 'local_verify_graduated=1' "$status_file"
+require_contains 'receipt_promotion_graduated=1' "$status_file"
+require_contains 'authority_promotion_allowed=0' "$status_file"
 require_contains 'handoff_state=eligible-report-only' "$status_file"
 require_contains 'handoff_eligible=1' "$status_file"
 require_contains 'handoff_performed=0' "$status_file"
@@ -61,6 +72,10 @@ require_contains 'host_write_performed=0' "$status_file"
 require_contains 'network_performed=0' "$status_file"
 require_contains 'status=runtime-handoff-evaluation-metadata' "$status_file"
 require_contains 'runtime handoff report status/public-entry alignment' "$status_file"
+require_contains 'DENIED_CRYPTO_GRADUATION_GATE' include/latticra/seal_runtime_handoff_evaluation.h
+require_contains 'crypto_graduation_gate_present=%u' src/seal_runtime_handoff_evaluation.c
+require_contains 'standard_expectations_met=%u' src/seal_runtime_handoff_evaluation.c
+require_contains 'denied-crypto-graduation-gate' src/seal_runtime_handoff_evaluation.c
 
 require_contains 'runtime handoff evaluation metadata/status' README.md
 require_contains 'seal_runtime_handoff_evaluation_contract_present=1' README.md

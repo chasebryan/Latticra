@@ -23,6 +23,8 @@ LC_SESSION_CONTRACT="$PREFIX/share/latticra/lc/session/contract.toml"
 LC_WORKSPACE_CONTRACT="$PREFIX/share/latticra/lc/workspace/contract.toml"
 LC_NAMESPACE_CONTRACT="$PREFIX/share/latticra/lc/namespace/contract.toml"
 LC_ROOTFS_CONTRACT="$PREFIX/share/latticra/lc/rootfs/contract.toml"
+LC_PACKAGES_CONTRACT="$PREFIX/share/latticra/lc/packages/contract.toml"
+LC_INIT_CONTRACT="$PREFIX/share/latticra/lc/init/contract.toml"
 LC_PROFILE="$PREFIX/share/latticra/lc/profiles/standalone-console.toml"
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/latticra-lc-standalone-verify.XXXXXX")"
 failures=0
@@ -86,6 +88,8 @@ check "LC session contract" "$LC_SESSION_CONTRACT"
 check "LC workspace contract" "$LC_WORKSPACE_CONTRACT"
 check "LC namespace contract" "$LC_NAMESPACE_CONTRACT"
 check "LC rootfs contract" "$LC_ROOTFS_CONTRACT"
+check "LC packages contract" "$LC_PACKAGES_CONTRACT"
+check "LC init contract" "$LC_INIT_CONTRACT"
 check "LC standalone profile" "$LC_PROFILE"
 check_exec "latticra command" "$USER_BIN/latticra"
 check_exec "LC command wrapper" "$USER_BIN/latticra-lc"
@@ -105,6 +109,10 @@ check_contains "namespace contract profile" 'namespace_contract_profile = "lc-na
 check_contains "namespace contract present" 'namespace_contract_present = true' "$LC_CONFIG"
 check_contains "rootfs contract profile" 'rootfs_contract_profile = "lc-rootfs-v0"' "$LC_CONFIG"
 check_contains "rootfs contract present" 'rootfs_contract_present = true' "$LC_CONFIG"
+check_contains "packages contract profile" 'packages_contract_profile = "lc-packages-v0"' "$LC_CONFIG"
+check_contains "packages contract present" 'packages_contract_present = true' "$LC_CONFIG"
+check_contains "init contract profile" 'init_contract_profile = "lc-init-v0"' "$LC_CONFIG"
+check_contains "init contract present" 'init_contract_present = true' "$LC_CONFIG"
 check_contains "Panel embedding disabled" 'panel_embedded_console = false' "$LC_CONFIG"
 check_contains "external host commands disabled" 'allow_external_host_commands = false' "$LC_CONFIG"
 check_contains "standalone registry command" 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' "$LC_REGISTRY"
@@ -112,6 +120,8 @@ check_contains "session registry command" 'name=lc session category=core effect=
 check_contains "workspace registry command" 'name=lc workspace category=core effect=none capability=lc.workspace.contract' "$LC_REGISTRY"
 check_contains "namespace registry command" 'name=lc namespace category=core effect=none capability=lc.namespace.contract' "$LC_REGISTRY"
 check_contains "rootfs registry command" 'name=lc rootfs category=core effect=none capability=lc.rootfs.contract' "$LC_REGISTRY"
+check_contains "packages registry command" 'name=lc packages category=core effect=none capability=lc.packages.contract' "$LC_REGISTRY"
+check_contains "init registry command" 'name=lc init category=core effect=none capability=lc.init.contract' "$LC_REGISTRY"
 check_contains "standalone command surface" 'command_surface = "lc standalone"' "$LC_CONTRACT"
 check_contains "standalone host process denial" 'host_process_launch_allowed = false' "$LC_CONTRACT"
 check_contains "standalone network denial" 'network_allowed = false' "$LC_CONTRACT"
@@ -131,6 +141,18 @@ check_contains "rootfs image creation denied" 'rootfs_image_create_allowed = fal
 check_contains "rootfs mount denied" 'rootfs_mount_allowed = false' "$LC_ROOTFS_CONTRACT"
 check_contains "rootfs package install denied" 'rootfs_package_install_allowed = false' "$LC_ROOTFS_CONTRACT"
 check_contains "rootfs host process denied" 'host_process_launch_allowed = false' "$LC_ROOTFS_CONTRACT"
+check_contains "packages command surface" 'command_surface = "lc packages"' "$LC_PACKAGES_CONTRACT"
+check_contains "packages manifest write denied" 'package_manifest_write_allowed = false' "$LC_PACKAGES_CONTRACT"
+check_contains "packages catalog read denied" 'package_catalog_read_allowed = false' "$LC_PACKAGES_CONTRACT"
+check_contains "packages download denied" 'package_download_allowed = false' "$LC_PACKAGES_CONTRACT"
+check_contains "packages manager execution denied" 'package_manager_execution_allowed = false' "$LC_PACKAGES_CONTRACT"
+check_contains "packages rootfs install denied" 'rootfs_package_install_allowed = false' "$LC_PACKAGES_CONTRACT"
+check_contains "packages host process denied" 'host_process_launch_allowed = false' "$LC_PACKAGES_CONTRACT"
+check_contains "init command surface" 'command_surface = "lc init"' "$LC_INIT_CONTRACT"
+check_contains "init PID 1 denied" 'pid1_claim_allowed = false' "$LC_INIT_CONTRACT"
+check_contains "init service start denied" 'service_start_allowed = false' "$LC_INIT_CONTRACT"
+check_contains "init process supervision denied" 'process_supervision_allowed = false' "$LC_INIT_CONTRACT"
+check_contains "init host process denied" 'host_process_launch_allowed = false' "$LC_INIT_CONTRACT"
 
 if [ -x "$USER_BIN/latticra-lc" ]; then
   if "$USER_BIN/latticra-lc" install-config > "$TMP_DIR/install-config.txt"; then
@@ -141,6 +163,8 @@ if [ -x "$USER_BIN/latticra-lc" ]; then
     check_contains "LC wrapper workspace contract present" 'workspace_contract_present=1' "$TMP_DIR/install-config.txt"
     check_contains "LC wrapper namespace contract present" 'namespace_contract_present=1' "$TMP_DIR/install-config.txt"
     check_contains "LC wrapper rootfs contract present" 'rootfs_contract_present=1' "$TMP_DIR/install-config.txt"
+    check_contains "LC wrapper packages contract present" 'packages_contract_present=1' "$TMP_DIR/install-config.txt"
+    check_contains "LC wrapper init contract present" 'init_contract_present=1' "$TMP_DIR/install-config.txt"
     check_contains "LC wrapper Panel embedding disabled" 'panel_embedded_console=false' "$TMP_DIR/install-config.txt"
     check_contains "LC wrapper host process denial" 'host_process_launch_allowed=0' "$TMP_DIR/install-config.txt"
   else
@@ -204,6 +228,34 @@ if [ -x "$USER_BIN/latticra-lc" ]; then
     check_contains "LC wrapper rootfs production OS claim denied" 'production_os_claim=0' "$TMP_DIR/rootfs.txt"
   else
     echo "failed: latticra-lc rootfs" >&2
+    failures=$((failures + 1))
+  fi
+
+  if "$USER_BIN/latticra-lc" packages > "$TMP_DIR/packages.txt"; then
+    check_contains "LC wrapper packages report" 'LATTICRA CONSOLE PACKAGES CONTRACT' "$TMP_DIR/packages.txt"
+    check_contains "LC wrapper packages command surface" 'command_surface=lc packages' "$TMP_DIR/packages.txt"
+    check_contains "LC wrapper packages manifest write denied" 'package_manifest_write_allowed=0' "$TMP_DIR/packages.txt"
+    check_contains "LC wrapper packages catalog read denied" 'package_catalog_read_allowed=0' "$TMP_DIR/packages.txt"
+    check_contains "LC wrapper packages download denied" 'package_download_allowed=0' "$TMP_DIR/packages.txt"
+    check_contains "LC wrapper packages manager execution denied" 'package_manager_execution_allowed=0' "$TMP_DIR/packages.txt"
+    check_contains "LC wrapper packages rootfs install denied" 'rootfs_package_install_allowed=0' "$TMP_DIR/packages.txt"
+    check_contains "LC wrapper packages host process denied" 'host_process_launch_allowed=0' "$TMP_DIR/packages.txt"
+    check_contains "LC wrapper packages production OS claim denied" 'production_os_claim=0' "$TMP_DIR/packages.txt"
+  else
+    echo "failed: latticra-lc packages" >&2
+    failures=$((failures + 1))
+  fi
+
+  if "$USER_BIN/latticra-lc" init > "$TMP_DIR/init.txt"; then
+    check_contains "LC wrapper init report" 'LATTICRA CONSOLE INIT CONTRACT' "$TMP_DIR/init.txt"
+    check_contains "LC wrapper init command surface" 'command_surface=lc init' "$TMP_DIR/init.txt"
+    check_contains "LC wrapper init PID 1 denied" 'pid1_claim_allowed=0' "$TMP_DIR/init.txt"
+    check_contains "LC wrapper init service start denied" 'service_start_allowed=0' "$TMP_DIR/init.txt"
+    check_contains "LC wrapper init process supervision denied" 'process_supervision_allowed=0' "$TMP_DIR/init.txt"
+    check_contains "LC wrapper init host process denied" 'host_process_launch_allowed=0' "$TMP_DIR/init.txt"
+    check_contains "LC wrapper init production OS claim denied" 'production_os_claim=0' "$TMP_DIR/init.txt"
+  else
+    echo "failed: latticra-lc init" >&2
     failures=$((failures + 1))
   fi
 fi

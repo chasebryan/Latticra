@@ -157,7 +157,7 @@ Security-relevant changes should prefer:
 
 The current high-assurance standards checkpoint is recorded in `docs/HIGH_ASSURANCE_SECURITY_BASELINE.md`.
 
-That baseline tracks current NSA, CISA, FBI, and NIST security guidance as source input for Latticra security work. It requires memory-safety roadmap discipline, zero-trust runtime-boundary prerequisites, SSDF-style secure development evidence, CPG-inspired operational readiness gates, KEV-aware release review, SBOM evidence before production installer claims, a FIPS 140-3 cryptographic module boundary decision before any production cryptography claim, and identity/access evidence before privileged or remote access claims.
+That baseline tracks current NSA, CISA, FBI, and NIST security guidance as source input for Latticra security work. It requires memory-safety roadmap discipline, zero-trust runtime-boundary prerequisites, SSDF-style secure development evidence, CPG-inspired operational readiness gates, KEV-aware release review, SBOM evidence before production installer claims, a FIPS 140-3 cryptographic module boundary decision before any production cryptography claim, identity/access evidence before privileged or remote access claims, logging/detection evidence before hosted-service or monitoring claims, recovery evidence before backup, restore, rollback, failover, or continuity claims, and secure configuration/change-control evidence before hosted-service or hardening claims.
 
 The component-level memory-safety roadmap is recorded in `docs/MEMORY_SAFETY_ROADMAP.md`.
 
@@ -182,6 +182,18 @@ It keeps cryptographic claims blocked until module boundaries, algorithm and par
 The identity, credential, and access management baseline is recorded in `docs/IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md`.
 
 It keeps hosted service, remote access, privileged operator, SSO/federation, MFA, and identity-security claims blocked until human/service/machine identity inventory, phishing-resistant MFA planning, account lifecycle, privileged role mapping, break-glass policy, credential handling, identity logging, and access-exception evidence are recorded. Latticra does not implement an identity provider, MFA provider, remote login, account database, credential store, hosted administration surface, or privileged access authority.
+
+The security logging, monitoring, and detection baseline is recorded in `docs/SECURITY_LOGGING_MONITORING_BASELINE.md`.
+
+It keeps production monitoring, SIEM integration, telemetry export, log collection, hosted service, and detection-service claims blocked until event-source inventory, audit-event selection, log schema, runtime decision events, denial reason events, identity/access events, privileged-action events, redaction, integrity, retention, disposal, time-source, triage, and incident-handoff evidence are recorded. Latticra does not implement a log collector, SIEM, telemetry export, host sensor, network sensor, alerting service, detection rule, log storage service, or monitoring authority.
+
+The backup, recovery, and cyber resilience baseline is recorded in `docs/BACKUP_RECOVERY_RESILIENCE_BASELINE.md`.
+
+It keeps backup, restore, rollback, failover, disaster-recovery, ransomware-recovery, hosted-service recovery, and continuity claims blocked until critical asset inventory, restore ordering, RTO/RPO, backup scope, backup integrity verification, restore testing, clean recovery environment planning, recovery authorization, recovery communications, incident handoff, and lessons-learned evidence are recorded. Latticra does not implement backup creation, backup storage, restore execution, rollback execution, failover, disaster recovery, recovery orchestration, continuity operations, or recovery authority.
+
+The secure configuration and change management baseline is recorded in `docs/SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md`.
+
+It keeps secure-default, configuration hardening, configuration scanning, drift-detection, infrastructure-as-code, hosted-service configuration, and production configuration claims blocked until configuration item inventory, secure baseline configuration, checklist evidence, default-credential absence review, approved change record, risk review, test evidence, rollback plan, drift-detection plan, secret review, configuration-change logging, and exception ownership are recorded. Latticra does not implement host configuration mutation, infrastructure configuration mutation, configuration enforcement, configuration scanning, drift detection, change approval workflow, rollback execution, or configuration authority.
 
 This posture is an allocation of required work, not a compliance claim. It does not certify Latticra, accredit Latticra, make Latticra a production security product, or create a hardened runtime boundary.
 

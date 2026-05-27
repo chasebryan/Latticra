@@ -20,6 +20,9 @@ zero-trust runtime-boundary requirements
 supply-chain and dependency requirements
 cryptographic assurance requirements
 identity, credential, and access management requirements
+security logging, monitoring, and detection requirements
+backup, recovery, and cyber resilience requirements
+secure configuration and change management requirements
 incident-response and disclosure requirements
 non-claims that remain closed
 ```
@@ -36,7 +39,11 @@ Date checked: 2026-05-26
 | NSA/CISA Memory Safe Languages CSI | Memory-safe language adoption should be considered, while existing code can be improved through interoperability and mitigations where migration is not practical. | Publish and guard a memory-safety roadmap for C/C++ substrate code; prefer memory-safe implementation for new high-risk infrastructure surfaces. |
 | CISA Secure by Design | Manufacturers should take ownership of customer security outcomes, practice transparency/accountability, and lead from the top. | Require evidence-bound public claims, vulnerability reporting, no hidden security costs, deterministic reports, and leadership-owned security gates. |
 | CISA/FBI Product Security Bad Practices | Avoid exceptionally risky practices, including absent memory-safety roadmaps, injection classes, known-insecure crypto, weak defaults, and unmanaged dependencies. | Guard against unsafe APIs, shell injection surfaces, default-secret patterns, unbounded buffers, path traversal, and production crypto claims without a module boundary. |
+| NSA and CISA Red and Blue Teams Share Top Ten Cybersecurity Misconfigurations | Common enterprise compromise paths include default configurations, poor patch/configuration hygiene, weak controls, and visibility gaps. | Require secure configuration and change-management evidence before host, infrastructure, hardening, or production configuration claims. |
+| CISA/NSA/FBI secure-by-design and secure-by-default principles | Secure products should ship with secure default baselines and should not shift avoidable hardening burden to customers. | Block secure-default and configuration-hardening claims until secure defaults, default-credential absence, checklist evidence, and exception ownership are recorded. |
 | CISA Cross-Sector Cybersecurity Performance Goals | Establish baseline practices for asset inventory, vulnerability management, logging, account security, incident response, recovery, and third-party validation. | Maintain source and dependency inventory, KEV-aware release checks, explicit logs/reports, incident plan, recovery contracts before mutation, and third-party review before security release. |
+| CISA/FBI/NSA international Best Practices for Event Logging and Threat Detection | Event logging supports continued operations and resilience through visibility, detection, and investigation across cloud, enterprise, mobile, and OT environments. | Require a security logging, monitoring, and detection baseline before hosted services, telemetry export, SIEM integration, or detection claims. |
+| CISA Logging Made Easy and CISA logging guidance | Centralized log management, user activity visibility, alerting, and regular review improve threat detection. | Require event-source inventory, log centralization/export planning, redaction, triage ownership, and incident handoff before monitoring claims. |
 | CISA Zero Trust Maturity Model v2 | Mature zero trust uses identity, devices, networks, applications/workloads, and data pillars with visibility, analytics, automation, orchestration, and governance. | Treat each Latticra request as a per-request policy decision; preserve deny-by-default behavior for network, host, recovery, boot, and tool authority. |
 | NIST SP 800-63-4 Digital Identity Guidelines | Current digital identity guidance covers identity proofing, authentication, authenticator management, federation, and assertions. | Use SP 800-63-4 vocabulary for future operator identity, account lifecycle, MFA, SSO/federation, and authentication non-claims. |
 | CISA/NSA/FBI/MS-ISAC Phishing Guidance | Phishing-resistant MFA and social-engineering-resistant account processes reduce account-compromise risk. | Require phishing-resistant MFA planning and help-desk identity verification before privileged or remote access claims. |
@@ -44,7 +51,12 @@ Date checked: 2026-05-26
 | NIST National Vulnerability Database and CVSS metrics | CVE and CVSS records provide vulnerability enrichment and severity context, while CVSS is not a complete risk score by itself. | Require KEV/NVD review, component inventory, mitigation or exception records, and public non-claim review before release. |
 | FBI Cyber | The active threat environment includes ransomware, nation-state targeting, critical infrastructure risk, rapidly changing IOCs/TTPs, and reporting through FBI/IC3 paths. | Keep the threat model defensive, keep reports private, add incident-reporting paths, and avoid offensive payload, persistence, exfiltration, and evasion content. |
 | CISA/FBI/NSA/MS-ISAC #StopRansomware Guide | Ransomware and data-extortion preparation, prevention, response, evidence preservation, out-of-band communications, and federal contact paths must be planned before incidents. | Keep incident-response authority denied, document reporting paths, preserve evidence requirements, and require operator/legal review before notification or reporting assistance. |
+| CISA/FBI/NSA/MS-ISAC #StopRansomware recovery guidance | Offline encrypted backups, regular backup testing, restoration prioritization, clean recovery environments, and post-incident lessons learned reduce ransomware recovery risk. | Require a backup, recovery, and cyber resilience baseline before hosted-service recovery, disaster-recovery, failover, rollback, or ransomware-recovery claims. |
 | NIST Cybersecurity Framework 2.0 | Govern, Identify, Protect, Detect, Respond, and Recover provide current cybersecurity risk-management functions. | Map future infrastructure readiness to CSF 2.0 functions before production claims. |
+| NIST SP 800-34 Rev. 1 and SP 800-184 | Contingency planning and cybersecurity event recovery require business impact analysis, recovery strategy, playbooks, realistic testing, and continuous improvement. | Require recovery scope, RTO/RPO, restore testing, rollback, recovery authorization, and lessons-learned evidence before recoverability claims. |
+| NIST SP 800-128 | Security-focused configuration management uses baseline configuration, configuration control, monitoring, and SecCM practices to manage risk. | Require configuration item inventory, baseline configuration, owner, change record, testing, rollback, and drift-detection evidence before configuration claims. |
+| NIST SP 800-70 Rev. 5 | Security configuration checklists help configure products to a risk posture, verify configuration, identify unauthorized change, and produce posture artifacts. | Require checklist evidence and unauthorized-change detection planning before secure configuration, hardening, or scanning claims. |
+| NIST SP 800-92 and SP 800-92 Rev. 1 draft | Log management requires planning for generation, transmission, storage, access, analysis, retention, and disposal. | Use SP 800-92 vocabulary for future audit-event selection, log lifecycle, retention, access, and disposal evidence. |
 | NIST SP 800-218 SSDF v1.1 | Secure development should prepare the organization, protect software, produce well-secured software, and respond to vulnerabilities. | Keep tests, threat-model docs, protected source/build processes, vulnerability handling, and root-cause-driven fixes in the quality gate. |
 | NIST SP 800-53 Rev. 5, Release 5.2.0 | Control families cover access, audit, configuration, identification, incident response, risk assessment, system acquisition, system integrity, and supply-chain risk management. | Use SP 800-53 as the high-assurance control vocabulary for future production profiles, not as a current compliance claim. |
 | NIST SP 800-160 Vol. 2 Rev. 1 | Cyber-resilient systems should anticipate, withstand, recover from, and adapt to adverse conditions and attacks. | Keep rollback, recovery, degraded-mode, auditability, and no-hidden-effect requirements ahead of any mutating infrastructure behavior. |
@@ -80,9 +92,15 @@ cyber_incident_reporting_response_baseline_present=1
 vulnerability_management_release_gate_baseline_present=1
 cryptographic_assurance_key_management_baseline_present=1
 identity_credential_access_management_baseline_present=1
+security_logging_monitoring_baseline_present=1
+backup_recovery_resilience_baseline_present=1
+secure_configuration_change_management_baseline_present=1
 kev_release_review_required=1
 fips_crypto_boundary_required_before_production_crypto=1
 phishing_resistant_mfa_required_before_remote_privileged_access=1
+security_event_logging_required_before_hosted_service=1
+backup_restore_recovery_evidence_required_before_hosted_service=1
+secure_configuration_change_control_required_before_hosted_service=1
 sbom_required_before_production_installer=1
 third_party_security_validation_required_before_security_release=1
 incident_response_plan_required_before_production_service=1
@@ -200,19 +218,74 @@ No future hosted service, hosted administration surface, privileged operator rol
 - owner and expiration for every access exception;
 - operator-visible identity and access non-claims.
 
+## Security Logging, Monitoring, and Detection Requirements
+
+No future hosted service, production runtime, remote access path, privileged administration surface, SIEM integration, telemetry export, security monitoring claim, or detection-service claim may be promoted until Latticra has:
+
+- security event source inventory and owner mapping;
+- audit event selection and event schema contract;
+- runtime policy decision and denial reason events;
+- identity, access, privileged action, configuration change, and security error events;
+- event severity taxonomy and time-source requirements;
+- log redaction and secret-marker scanning;
+- log integrity, access control, retention, and disposal policy;
+- centralization or export path planning;
+- alerting expectation for disabled critical log sources;
+- detection triage owner and incident handoff path;
+- operator-visible logging and monitoring non-claims.
+
+## Backup, Recovery, and Cyber Resilience Requirements
+
+No future hosted service, production runtime, production installer, production package, mutating update lane, rollback path, failover path, ransomware recovery feature, disaster-recovery claim, continuity claim, or production recoverability claim may be promoted until Latticra has:
+
+- critical asset inventory and dependency restore order;
+- business impact or service-priority record;
+- RTO and RPO evidence;
+- backup scope and owner;
+- offline, immutable, or otherwise protected backup path;
+- backup encryption and access-control review;
+- backup integrity verification and restore-test result;
+- clean recovery environment plan;
+- golden-image or infrastructure-as-code restore path;
+- rollback plan and recovery authorization;
+- recovery communication and incident-response handoff path;
+- post-recovery validation and lessons-learned update path;
+- owner and expiration for recovery exceptions;
+- operator-visible recovery non-claims.
+
+## Secure Configuration and Change Management Requirements
+
+No future hosted service, production runtime, production installer, production package, infrastructure automation lane, host mutation lane, configuration hardening claim, secure-default claim, configuration scanning claim, drift-detection claim, or compliance claim may be promoted until Latticra has:
+
+- configuration item inventory and owners;
+- secure baseline configuration record;
+- configuration checklist or equivalent verification artifact;
+- secure default and default-credential absence review;
+- approved change request and risk review;
+- change owner and test evidence;
+- rollback plan before configuration mutation;
+- drift-detection and unauthorized-change response plan;
+- configuration secret review;
+- configuration-change log event mapping;
+- owner and expiration for configuration exceptions;
+- operator-visible configuration non-claims.
+
 ## Operational Security Requirements
 
 Before any production service, hosted system, or critical infrastructure deployment:
 
 - assign a named cybersecurity owner;
 - maintain asset inventory and data-flow inventory;
+- define secure configuration baseline and change-control evidence;
 - require MFA/SSO for privileged accounts;
 - require phishing-resistant MFA planning for remote and privileged access;
 - prohibit shared administrative accounts and default credentials;
 - collect security-relevant logs without leaking secrets;
+- define log retention, integrity, time-source, triage, and incident-handoff evidence;
 - define incident response and vulnerability disclosure procedures;
 - publish a cyber incident reporting and response baseline before any incident-response feature;
 - define backup, restore, and recovery evidence;
+- publish a backup, recovery, and cyber resilience baseline before any recovery-service or failover claim;
 - schedule table-top or third-party validation before security release;
 - maintain recurring NSA/CISA/FBI/NIST source review.
 
@@ -232,6 +305,9 @@ docs/VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE.md
 docs/CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md
 docs/LATTICRA_SEAL_CRYPTO_GRADUATION_GATE_IMPLEMENTATION.md
 docs/IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md
+docs/SECURITY_LOGGING_MONITORING_BASELINE.md
+docs/BACKUP_RECOVERY_RESILIENCE_BASELINE.md
+docs/SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md
 docs/security/C_CPP_SECURITY_PROFILE.md
 docs/security/C_ABI_BOUNDARY_POLICY.md
 scripts/test-quality-safety-guards.sh
@@ -245,6 +321,9 @@ scripts/test-vulnerability-management-release-gate-baseline.sh
 scripts/test-cryptographic-assurance-key-management-baseline.sh
 scripts/test-latticra-seal-crypto-graduation-gate.sh
 scripts/test-identity-credential-access-management-baseline.sh
+scripts/test-security-logging-monitoring-baseline.sh
+scripts/test-backup-recovery-resilience-baseline.sh
+scripts/test-secure-configuration-change-management-baseline.sh
 ```
 
 ## Non-Claims

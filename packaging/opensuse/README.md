@@ -31,6 +31,9 @@ docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
 docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
 docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
+docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 scripts/test-opensuse-developer-workflow.sh
 scripts/test-opensuse-local-rpm-static-validation.sh
@@ -43,6 +46,9 @@ scripts/test-opensuse-rpm-topdir-handoff-lane.sh
 scripts/test-opensuse-local-rpm-build-gate-contract.sh
 scripts/test-opensuse-local-rpm-build-environment-contract.sh
 scripts/test-opensuse-rpm-artifact-naming-contract.sh
+scripts/test-opensuse-rpm-payload-inspection-contract.sh
+scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
+scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
 .github/workflows/opensuse-developer-workflow.yml
 .github/workflows/opensuse-local-rpm-static-validation.yml
 .github/workflows/opensuse-rpmlint-osc-availability.yml
@@ -54,6 +60,9 @@ scripts/test-opensuse-rpm-artifact-naming-contract.sh
 .github/workflows/opensuse-local-rpm-build-gate-contract.yml
 .github/workflows/opensuse-local-rpm-build-environment-contract.yml
 .github/workflows/opensuse-rpm-artifact-naming-contract.yml
+.github/workflows/opensuse-rpm-payload-inspection-contract.yml
+.github/workflows/opensuse-rpm-install-remove-transcript-contract.yml
+.github/workflows/opensuse-obs-publication-non-claim-review-contract.yml
 ```
 
 The static lane preserves:
@@ -70,11 +79,24 @@ opensuse_rpm_topdir_handoff_lane_present=1
 opensuse_local_rpm_build_gate_contract_present=1
 opensuse_local_rpm_build_environment_contract_present=1
 opensuse_rpm_artifact_naming_contract_present=1
+opensuse_rpm_payload_inspection_contract_present=1
+opensuse_rpm_install_remove_transcript_contract_present=1
+opensuse_obs_publication_non_claim_review_contract_present=1
 temporary_rpm_topdir_handoff_lane_present=1
 opensuse_rpm_build_gate_state=closed-no-effect
 opensuse_rpm_build_environment_contract_state=specified-no-effect
 opensuse_rpm_artifact_naming_contract_state=specified-no-effect
+opensuse_rpm_payload_inspection_contract_state=specified-no-effect
+opensuse_rpm_install_remove_transcript_contract_state=specified-no-effect
 rpm_artifact_naming_contract_present=1
+rpm_install_remove_transcript_contract_present=1
+obs_publication_non_claim_review_contract_present=1
+publication_non_claim_review_contract_present=1
+obs_publication_non_claim_review_present=1
+publication_non_claim_review_present=1
+payload_inspection_contract_present=1
+payload_inspection_contract_state=specified-no-effect
+install_remove_transcript_contract_state=specified-no-effect
 opensuse_clean_build_environment_documented=1
 opensuse_build_environment_provisioned=0
 osc_build_environment_provisioned=0
@@ -115,17 +137,56 @@ repository_rpm_artifact_write_allowed=0
 source_rpm_artifact_created=0
 binary_rpm_artifact_created=0
 rpm_artifact_sha256_recorded=0
+rpm_payload_expected_bin=/usr/bin/latticra
+rpm_payload_expected_doc=/usr/share/doc/packages/latticra/README.md
+source_rpm_payload_inspection_run=0
+binary_rpm_payload_inspection_run=0
+rpm_payload_inspection_run=0
+rpm_payload_accepted=0
+rpm_install_remove_transcript_present=0
+rpm_install_remove_disposable_environment_required=1
+rpm_package_install_run=0
+rpm_package_remove_run=0
+rpm_zypper_install_run=0
+rpm_zypper_remove_run=0
+rpm_cli_install_run=0
+rpm_cli_remove_run=0
+rpm_removed_from_host=0
+host_install_allowed=0
+host_remove_allowed=0
+host_mutation_allowed=0
+service_state_change_allowed=0
+rpm_validation_result_promoted=0
+obs_project_created=0
+obs_package_created=0
+obs_repository_created=0
+obs_source_link_created=0
+osc_branch_run=0
+osc_commit_run=0
+osc_submitreq_run=0
+osc_request_accepted=0
+obs_build_result_claimed=0
 spec_cleaner_run=0
 rpmlint_package_readiness_claimed=0
 opensuse_obs_publication_claimed=0
+opensuse_submit_request_claimed=0
 opensuse_official_package_claimed=0
 suse_endorsement_claimed=0
+opensuse_factory_submission_claimed=0
+opensuse_factory_acceptance_claimed=0
+opensuse_leap_submission_claimed=0
 production_readiness_claimed=0
 ```
 
 The local RPM build environment contract is recorded in [`../../docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md`](../../docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md). It documents the disposable openSUSE build environment requirement while keeping `opensuse_build_environment_provisioned=0`, `explicit_operator_build_authorization=0`, `environment_transcript_present=0`, and all openSUSE build commands disabled.
 
 The RPM artifact naming contract is recorded in [`../../docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md`](../../docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md). It records future `latticra-0.0.0-0.local.src.rpm` and `latticra-0.0.0-0.local.${RPM_ARCH}.rpm` names while keeping `repository_rpm_artifact_write_allowed=0`, `rpm_artifact_created=0`, and `rpm_artifact_sha256_recorded=0`.
+
+The RPM payload inspection contract is recorded in [`../../docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md`](../../docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md). It records expected source RPM and binary RPM payload checks while keeping `rpm_payload_inspection_run=0`, `rpm_payload_accepted=0`, and `rpm_artifact_created=0`.
+
+The RPM install/remove transcript contract is recorded in [`../../docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md`](../../docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md). It records future disposable install/remove evidence while keeping `rpm_install_remove_transcript_present=0`, `rpm_package_install_run=0`, `rpm_package_remove_run=0`, and `host_mutation_allowed=0`.
+
+The OBS publication non-claim review contract is recorded in [`../../docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md`](../../docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md). It records Open Build Service, submit-request, official-package, and SUSE endorsement non-claims while keeping `obs_project_created=0`, `osc_commit_run=0`, `osc_submitreq_run=0`, and `rpm_validation_result_promoted=0`.
 
 The draft payload remains intentionally narrow:
 

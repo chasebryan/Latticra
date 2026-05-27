@@ -36,6 +36,8 @@ const char *latticra_seal_verified_effect_decision_error_label(
         return "denied-host-effect";
     case LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_DENIED_NETWORK_EFFECT:
         return "denied-network-effect";
+    case LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_DENIED_CRYPTO_GRADUATION_GATE:
+        return "denied-crypto-graduation-gate";
     default:
         return "unknown";
     }
@@ -44,7 +46,14 @@ const char *latticra_seal_verified_effect_decision_error_label(
 static void decision_init(latticra_seal_verified_effect_decision_t *decision) {
     memset(decision, 0, sizeof(*decision));
     copy_literal(decision->decision_profile, sizeof(decision->decision_profile), "latticra-seal-verified-effect-decision/0.1");
+    copy_literal(decision->crypto_graduation_gate_state, sizeof(decision->crypto_graduation_gate_state), "not-required");
     copy_literal(decision->decision_state, sizeof(decision->decision_state), "denied-gate");
+    decision->crypto_graduation_gate_present = 0u;
+    decision->crypto_graduation_gate_passed = 0u;
+    decision->standard_expectations_met = 0u;
+    decision->local_verify_graduated = 0u;
+    decision->receipt_promotion_graduated = 0u;
+    decision->authority_promotion_allowed = 0u;
     decision->verified = 0u;
     decision->authority_usable = 0u;
     decision->receipt_capability_gate_allowed = 0u;
@@ -68,9 +77,18 @@ static void copy_gate_metadata(
     copy_literal(out->message_digest_algorithm, sizeof(out->message_digest_algorithm), gate->message_digest_algorithm);
     copy_literal(out->message_digest_hex, sizeof(out->message_digest_hex), gate->message_digest_hex);
     copy_literal(out->public_key_identity_label, sizeof(out->public_key_identity_label), gate->public_key_identity_label);
+    copy_literal(out->crypto_graduation_profile, sizeof(out->crypto_graduation_profile), gate->crypto_graduation_profile);
+    copy_literal(out->assurance_baseline_profile, sizeof(out->assurance_baseline_profile), gate->assurance_baseline_profile);
+    copy_literal(out->crypto_graduation_gate_state, sizeof(out->crypto_graduation_gate_state), gate->crypto_graduation_gate_state);
     copy_literal(out->requested_capability, sizeof(out->requested_capability), gate->requested_capability);
     copy_literal(out->requested_effect, sizeof(out->requested_effect), gate->requested_effect);
     copy_literal(out->requested_scope, sizeof(out->requested_scope), gate->requested_scope);
+    out->crypto_graduation_gate_present = gate->crypto_graduation_gate_present;
+    out->crypto_graduation_gate_passed = gate->crypto_graduation_gate_passed;
+    out->standard_expectations_met = gate->standard_expectations_met;
+    out->local_verify_graduated = gate->local_verify_graduated;
+    out->receipt_promotion_graduated = gate->receipt_promotion_graduated;
+    out->authority_promotion_allowed = gate->authority_promotion_allowed;
     copy_literal(out->gate_state, sizeof(out->gate_state), gate->gate_state);
     out->verified = gate->verified;
     out->authority_usable = gate->authority_usable;
@@ -102,6 +120,19 @@ latticra_status_t latticra_seal_verified_effect_decision_from_gate(
         out->error = LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_INVALID_GATE;
         copy_literal(out->decision_state, sizeof(out->decision_state), "denied-gate");
         copy_literal(out->status, sizeof(out->status), "invalid-gate");
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (gate->crypto_graduation_gate_present != 0u &&
+        (gate->crypto_graduation_gate_passed != 1u ||
+         gate->standard_expectations_met != 1u ||
+         gate->local_verify_graduated != 1u ||
+         gate->receipt_promotion_graduated != 1u ||
+         gate->authority_promotion_allowed != 0u ||
+         strcmp(gate->crypto_graduation_gate_state, "graduated-authority-neutral") != 0)) {
+        out->error = LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_DENIED_CRYPTO_GRADUATION_GATE;
+        copy_literal(out->decision_state, sizeof(out->decision_state), "denied-crypto-graduation-gate");
+        copy_literal(out->status, sizeof(out->status), "denied-crypto-graduation-gate");
         return LATTICRA_STATUS_OK;
     }
 
@@ -202,9 +233,18 @@ latticra_status_t latticra_seal_verified_effect_decision_report(
         "message_digest_algorithm=%s\n"
         "message_digest_hex=%s\n"
         "public_key_identity_label=%s\n"
+        "crypto_graduation_profile=%s\n"
+        "assurance_baseline_profile=%s\n"
+        "crypto_graduation_gate_state=%s\n"
         "requested_capability=%s\n"
         "requested_effect=%s\n"
         "requested_scope=%s\n"
+        "crypto_graduation_gate_present=%u\n"
+        "crypto_graduation_gate_passed=%u\n"
+        "standard_expectations_met=%u\n"
+        "local_verify_graduated=%u\n"
+        "receipt_promotion_graduated=%u\n"
+        "authority_promotion_allowed=%u\n"
         "verified=%u\n"
         "authority_usable=%u\n"
         "receipt_capability_gate_allowed=%u\n"
@@ -226,9 +266,18 @@ latticra_status_t latticra_seal_verified_effect_decision_report(
         decision->message_digest_algorithm,
         decision->message_digest_hex,
         decision->public_key_identity_label,
+        decision->crypto_graduation_profile,
+        decision->assurance_baseline_profile,
+        decision->crypto_graduation_gate_state,
         decision->requested_capability,
         decision->requested_effect,
         decision->requested_scope,
+        decision->crypto_graduation_gate_present,
+        decision->crypto_graduation_gate_passed,
+        decision->standard_expectations_met,
+        decision->local_verify_graduated,
+        decision->receipt_promotion_graduated,
+        decision->authority_promotion_allowed,
         decision->verified,
         decision->authority_usable,
         decision->receipt_capability_gate_allowed,

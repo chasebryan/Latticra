@@ -1,0 +1,22 @@
+name: Ubuntu Upload Signing Authority Evidence Contract
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  ubuntu-upload-signing-authority-evidence-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Ubuntu upload signing authority evidence guard
+        run: sh scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh

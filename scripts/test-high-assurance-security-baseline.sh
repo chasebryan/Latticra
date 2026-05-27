@@ -35,6 +35,9 @@ require_file docs/CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md
 require_file docs/VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE.md
 require_file docs/CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md
 require_file docs/IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md
+require_file docs/SECURITY_LOGGING_MONITORING_BASELINE.md
+require_file docs/BACKUP_RECOVERY_RESILIENCE_BASELINE.md
+require_file docs/SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md
 require_file docs/security/C_CPP_SECURITY_PROFILE.md
 require_file docs/security/C_ABI_BOUNDARY_POLICY.md
 require_file docs/status/README.md
@@ -47,6 +50,9 @@ require_file scripts/test-cyber-incident-reporting-response-baseline.sh
 require_file scripts/test-vulnerability-management-release-gate-baseline.sh
 require_file scripts/test-cryptographic-assurance-key-management-baseline.sh
 require_file scripts/test-identity-credential-access-management-baseline.sh
+require_file scripts/test-security-logging-monitoring-baseline.sh
+require_file scripts/test-backup-recovery-resilience-baseline.sh
+require_file scripts/test-secure-configuration-change-management-baseline.sh
 require_file scripts/test-quality-safety-guards.sh
 
 require_contains 'Status: high-assurance security baseline checkpoint' "$doc"
@@ -59,7 +65,11 @@ require_contains 'CISA and NSA Identity and Access Management: Recommended Best 
 require_contains 'NSA/CISA Memory Safe Languages CSI' "$doc"
 require_contains 'CISA Secure by Design' "$doc"
 require_contains 'CISA/FBI Product Security Bad Practices' "$doc"
+require_contains 'NSA and CISA Red and Blue Teams Share Top Ten Cybersecurity Misconfigurations' "$doc"
+require_contains 'CISA/NSA/FBI secure-by-design and secure-by-default principles' "$doc"
 require_contains 'CISA Cross-Sector Cybersecurity Performance Goals' "$doc"
+require_contains 'CISA/FBI/NSA international Best Practices for Event Logging and Threat Detection' "$doc"
+require_contains 'CISA Logging Made Easy and CISA logging guidance' "$doc"
 require_contains 'CISA Zero Trust Maturity Model v2' "$doc"
 require_contains 'NIST SP 800-63-4 Digital Identity Guidelines' "$doc"
 require_contains 'CISA/NSA/FBI/MS-ISAC Phishing Guidance' "$doc"
@@ -67,7 +77,12 @@ require_contains 'CISA Known Exploited Vulnerabilities Catalog' "$doc"
 require_contains 'NIST National Vulnerability Database and CVSS metrics' "$doc"
 require_contains 'FBI Cyber' "$doc"
 require_contains 'CISA/FBI/NSA/MS-ISAC #StopRansomware Guide' "$doc"
+require_contains 'CISA/FBI/NSA/MS-ISAC #StopRansomware recovery guidance' "$doc"
 require_contains 'NIST Cybersecurity Framework 2.0' "$doc"
+require_contains 'NIST SP 800-34 Rev. 1 and SP 800-184' "$doc"
+require_contains 'NIST SP 800-128' "$doc"
+require_contains 'NIST SP 800-70 Rev. 5' "$doc"
+require_contains 'NIST SP 800-92 and SP 800-92 Rev. 1 draft' "$doc"
 require_contains 'NIST SP 800-218 SSDF v1.1' "$doc"
 require_contains 'NIST SP 800-53 Rev. 5, Release 5.2.0' "$doc"
 require_contains 'NIST SP 800-160 Vol. 2 Rev. 1' "$doc"
@@ -90,9 +105,15 @@ for field in \
   'vulnerability_management_release_gate_baseline_present=1' \
   'cryptographic_assurance_key_management_baseline_present=1' \
   'identity_credential_access_management_baseline_present=1' \
+  'security_logging_monitoring_baseline_present=1' \
+  'backup_recovery_resilience_baseline_present=1' \
+  'secure_configuration_change_management_baseline_present=1' \
   'kev_release_review_required=1' \
   'fips_crypto_boundary_required_before_production_crypto=1' \
   'phishing_resistant_mfa_required_before_remote_privileged_access=1' \
+  'security_event_logging_required_before_hosted_service=1' \
+  'backup_restore_recovery_evidence_required_before_hosted_service=1' \
+  'secure_configuration_change_control_required_before_hosted_service=1' \
   'sbom_required_before_production_installer=1' \
   'third_party_security_validation_required_before_security_release=1' \
   'incident_response_plan_required_before_production_service=1' \
@@ -131,7 +152,21 @@ for allocation in \
   'cryptographic assurance and key-management baseline before production cryptography claims' \
   'phishing-resistant MFA path for privileged and remote access' \
   'prohibit shared administrative accounts and default credentials' \
+  'security event source inventory and owner mapping' \
+  'log redaction and secret-marker scanning' \
+  'define log retention, integrity, time-source, triage, and incident-handoff evidence' \
+  'critical asset inventory and dependency restore order' \
+  'backup integrity verification and restore-test result' \
+  'publish a backup, recovery, and cyber resilience baseline before any recovery-service or failover claim' \
+  'configuration item inventory and owners' \
+  'secure baseline configuration record' \
+  'configuration checklist or equivalent verification artifact' \
+  'secure default and default-credential absence review' \
+  'approved change request and risk review' \
+  'rollback plan before configuration mutation' \
+  'drift-detection and unauthorized-change response plan' \
   'assign a named cybersecurity owner' \
+  'define secure configuration baseline and change-control evidence' \
   'publish a cyber incident reporting and response baseline before any incident-response feature' \
   'schedule table-top or third-party validation before security release'
 do
@@ -151,6 +186,9 @@ require_contains 'docs/CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md' SECURITY.m
 require_contains 'docs/VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE.md' SECURITY.md
 require_contains 'docs/CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md' SECURITY.md
 require_contains 'docs/IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md' SECURITY.md
+require_contains 'docs/SECURITY_LOGGING_MONITORING_BASELINE.md' SECURITY.md
+require_contains 'docs/BACKUP_RECOVERY_RESILIENCE_BASELINE.md' SECURITY.md
+require_contains 'docs/SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md' SECURITY.md
 require_contains 'high_assurance_security_baseline_present=1' README.md
 require_contains 'memory_safety_roadmap_present=1' README.md
 require_contains 'supply_chain_security_baseline_present=1' README.md
@@ -158,6 +196,9 @@ require_contains 'cyber_incident_reporting_response_baseline_present=1' README.m
 require_contains 'vulnerability_management_release_gate_baseline_present=1' README.md
 require_contains 'cryptographic_assurance_key_management_baseline_present=1' README.md
 require_contains 'identity_credential_access_management_baseline_present=1' README.md
+require_contains 'security_logging_monitoring_baseline_present=1' README.md
+require_contains 'backup_recovery_resilience_baseline_present=1' README.md
+require_contains 'secure_configuration_change_management_baseline_present=1' README.md
 require_contains 'source_refresh_date=2026-05-26' README.md
 require_contains 'high_assurance_security_baseline_present=1' STATUS.md
 require_contains 'memory_safety_roadmap_present=1' STATUS.md
@@ -166,6 +207,9 @@ require_contains 'cyber_incident_reporting_response_baseline_present=1' STATUS.m
 require_contains 'vulnerability_management_release_gate_baseline_present=1' STATUS.md
 require_contains 'cryptographic_assurance_key_management_baseline_present=1' STATUS.md
 require_contains 'identity_credential_access_management_baseline_present=1' STATUS.md
+require_contains 'security_logging_monitoring_baseline_present=1' STATUS.md
+require_contains 'backup_recovery_resilience_baseline_present=1' STATUS.md
+require_contains 'secure_configuration_change_management_baseline_present=1' STATUS.md
 require_contains 'High-assurance security baseline' docs/status/README.md
 require_contains 'HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md' docs/status/README.md
 require_contains 'Latest high-assurance security baseline note: 2026-05-26 CDT' docs/status/CURRENT_STATUS.md
@@ -178,6 +222,9 @@ require_contains 'sh ./scripts/test-cyber-incident-reporting-response-baseline.s
 require_contains 'sh ./scripts/test-vulnerability-management-release-gate-baseline.sh' Makefile
 require_contains 'sh ./scripts/test-cryptographic-assurance-key-management-baseline.sh' Makefile
 require_contains 'sh ./scripts/test-identity-credential-access-management-baseline.sh' Makefile
+require_contains 'sh ./scripts/test-security-logging-monitoring-baseline.sh' Makefile
+require_contains 'sh ./scripts/test-backup-recovery-resilience-baseline.sh' Makefile
+require_contains 'sh ./scripts/test-secure-configuration-change-management-baseline.sh' Makefile
 require_contains 'quality-security-standards:' Makefile
 require_contains 'quality-security-standards' Makefile
 require_contains 'test-high-assurance-security-baseline.sh' scripts/test-quality-safety-guards.sh

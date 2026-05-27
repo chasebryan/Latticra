@@ -51,6 +51,8 @@ scheduler-credit-ready
 scheduler-selection-ready
 scheduler-dispatch-ready
 scheduler-handoff-ready
+scheduler-activation-ready
+scheduler-run-entry-ready
 ```
 
 ## Controlled effect boundary

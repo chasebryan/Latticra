@@ -8,9 +8,11 @@ Scope: public Markdown, public HTML copy, status records, installer docs, packag
 
 This guide keeps Latticra documentation consistent at the wording level.
 
-Use it with [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md), [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md), [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md), and [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md).
+Use it with [`DOCUMENTATION_GLOSSARY.md`](DOCUMENTATION_GLOSSARY.md), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md), [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md), [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md), and [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md).
 
 This guide does not decide whether a claim is true. It decides how true claims should be written once the source records support them.
+
+Use [`DOCUMENTATION_GLOSSARY.md`](DOCUMENTATION_GLOSSARY.md) for definitions of shared posture, validation, platform, and reader terms.
 
 ## Core Voice
 

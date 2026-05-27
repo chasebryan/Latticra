@@ -105,6 +105,8 @@ opensuse_rpm_topdir_handoff_lane_present=1
 opensuse_local_rpm_build_gate_contract_present=1
 opensuse_local_rpm_build_environment_contract_present=1
 opensuse_rpm_artifact_naming_contract_present=1
+opensuse_rpm_payload_inspection_contract_present=1
+opensuse_rpm_install_remove_transcript_contract_present=1
 rpmbuild_run=0
 osc_build_run=0
 rpm_artifact_created=0
@@ -188,13 +190,37 @@ scripts/test-opensuse-rpm-artifact-naming-contract.sh
 .github/workflows/opensuse-rpm-artifact-naming-contract.yml
 ```
 
+Completed follow-on RPM payload inspection contract:
+
+```text
+docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+scripts/test-opensuse-rpm-payload-inspection-contract.sh
+.github/workflows/opensuse-rpm-payload-inspection-contract.yml
+```
+
+Completed follow-on RPM install/remove transcript contract:
+
+```text
+docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
+.github/workflows/opensuse-rpm-install-remove-transcript-contract.yml
+```
+
+Completed follow-on OBS publication non-claim review contract:
+
+```text
+docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
+.github/workflows/opensuse-obs-publication-non-claim-review-contract.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE RPM payload inspection contract before any RPM artifact can be accepted.
+Add openSUSE RPM validation promotion blocker matrix before any package validation result can be accepted.
 ```
 
-That future lane should define how source RPM and binary RPM payloads are inspected after creation while keeping `opensuse_rpm_build_gate_state=closed-no-effect` until the remaining prerequisites are satisfied.
+That future lane should tie source, environment, artifact, payload, install/remove, and OBS non-claim records together while keeping RPM builds and readiness blocked.
 
 ## Validation
 

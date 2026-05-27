@@ -43,6 +43,8 @@ const char *latticra_seal_verified_capability_gate_error_label(
         return "denied-unknown-effect";
     case LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_DENIED_RUNTIME_AUTHORITY:
         return "denied-runtime-authority";
+    case LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_DENIED_CRYPTO_GRADUATION_GATE:
+        return "denied-crypto-graduation-gate";
     default:
         return "unknown";
     }
@@ -51,7 +53,14 @@ const char *latticra_seal_verified_capability_gate_error_label(
 static void gate_init(latticra_seal_verified_capability_gate_t *gate) {
     memset(gate, 0, sizeof(*gate));
     copy_literal(gate->gate_profile, sizeof(gate->gate_profile), "latticra-seal-verified-capability-gate/0.1");
+    copy_literal(gate->crypto_graduation_gate_state, sizeof(gate->crypto_graduation_gate_state), "not-required");
     copy_literal(gate->gate_state, sizeof(gate->gate_state), "denied-invalid-receipt");
+    gate->crypto_graduation_gate_present = 0u;
+    gate->crypto_graduation_gate_passed = 0u;
+    gate->standard_expectations_met = 0u;
+    gate->local_verify_graduated = 0u;
+    gate->receipt_promotion_graduated = 0u;
+    gate->authority_promotion_allowed = 0u;
     gate->verified = 0u;
     gate->authority_usable = 0u;
     gate->receipt_capability_gate_allowed = 0u;
@@ -80,18 +89,85 @@ static void copy_receipt_metadata(
     out->receipt_capability_gate_allowed = receipt->capability_gate_allowed;
 }
 
-latticra_status_t latticra_seal_verified_capability_gate_from_receipt(
+static void copy_crypto_graduation_metadata(
+    const latticra_seal_crypto_graduation_gate_t *crypto_gate,
+    latticra_seal_verified_capability_gate_t *out) {
+    copy_literal(
+        out->crypto_graduation_profile,
+        sizeof(out->crypto_graduation_profile),
+        crypto_gate->crypto_graduation_profile);
+    copy_literal(
+        out->assurance_baseline_profile,
+        sizeof(out->assurance_baseline_profile),
+        crypto_gate->assurance_baseline_profile);
+    copy_literal(
+        out->crypto_graduation_gate_state,
+        sizeof(out->crypto_graduation_gate_state),
+        crypto_gate->gate_state);
+    out->crypto_graduation_gate_present = 1u;
+    out->crypto_graduation_gate_passed =
+        crypto_gate->error == LATTICRA_SEAL_CRYPTO_GRADUATION_GATE_OK ? 1u : 0u;
+    out->standard_expectations_met = crypto_gate->standard_expectations_met;
+    out->local_verify_graduated = crypto_gate->local_verify_graduated;
+    out->receipt_promotion_graduated = crypto_gate->receipt_promotion_graduated;
+    out->authority_promotion_allowed = crypto_gate->authority_promotion_allowed;
+}
+
+static latticra_status_t gate_fail_crypto_graduation(
+    latticra_seal_verified_capability_gate_t *out,
+    const char *status) {
+    out->gate_allowed = 0u;
+    out->runtime_authority_granted = 0u;
+    out->effect_performed = 0u;
+    out->host_read_performed = 0u;
+    out->host_write_performed = 0u;
+    out->network_performed = 0u;
+    out->error = LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_DENIED_CRYPTO_GRADUATION_GATE;
+    copy_literal(out->gate_state, sizeof(out->gate_state), "denied-crypto-graduation-gate");
+    copy_literal(out->status, sizeof(out->status), status);
+    return LATTICRA_STATUS_OK;
+}
+
+static int crypto_gate_matches_receipt(
+    const latticra_seal_crypto_graduation_gate_t *crypto_gate,
+    const latticra_seal_verified_receipt_promotion_t *receipt) {
+    return strcmp(crypto_gate->receipt_profile, receipt->receipt_profile) == 0 &&
+           strcmp(crypto_gate->verify_profile, receipt->verify_profile) == 0 &&
+           strcmp(crypto_gate->message_digest_algorithm, receipt->message_digest_algorithm) == 0 &&
+           strcmp(crypto_gate->message_digest_hex, receipt->message_digest_hex) == 0 &&
+           strcmp(crypto_gate->public_key_identity_label, receipt->public_key_identity_label) == 0 &&
+           strcmp(crypto_gate->receipt_state, receipt->receipt_state) == 0 &&
+           strcmp(crypto_gate->verification_state, receipt->verification_state) == 0;
+}
+
+static int crypto_gate_is_acceptable(
+    const latticra_seal_crypto_graduation_gate_t *crypto_gate) {
+    return crypto_gate->error == LATTICRA_SEAL_CRYPTO_GRADUATION_GATE_OK &&
+           strcmp(crypto_gate->gate_state, "graduated-authority-neutral") == 0 &&
+           crypto_gate->crypto_graduation_profile[0] != '\0' &&
+           crypto_gate->standard_expectations_met == 1u &&
+           crypto_gate->local_verify_graduated == 1u &&
+           crypto_gate->receipt_promotion_graduated == 1u &&
+           crypto_gate->production_crypto_claim_allowed == 0u &&
+           crypto_gate->fips_claim_allowed == 0u &&
+           crypto_gate->signing_authority_granted == 0u &&
+           crypto_gate->key_generation_allowed == 0u &&
+           crypto_gate->key_storage_allowed == 0u &&
+           crypto_gate->revocation_lookup_allowed == 0u &&
+           crypto_gate->network_lookup_allowed == 0u &&
+           crypto_gate->authority_usable == 0u &&
+           crypto_gate->authority_promotion_allowed == 0u &&
+           crypto_gate->capability_gate_allowed == 0u &&
+           crypto_gate->runtime_authority_granted == 0u &&
+           latticra_seal_crypto_graduation_gate_is_authority_neutral(crypto_gate) == 1;
+}
+
+static latticra_status_t verified_capability_gate_evaluate_receipt(
     const latticra_seal_verified_receipt_promotion_t *receipt,
     const char *requested_capability,
     const char *requested_effect,
     const char *requested_scope,
     latticra_seal_verified_capability_gate_t *out) {
-    if (out == NULL) {
-        return LATTICRA_STATUS_NULL_ARGUMENT;
-    }
-
-    gate_init(out);
-
     if (receipt == NULL) {
         return LATTICRA_STATUS_OK;
     }
@@ -168,6 +244,61 @@ latticra_status_t latticra_seal_verified_capability_gate_from_receipt(
     return LATTICRA_STATUS_OK;
 }
 
+latticra_status_t latticra_seal_verified_capability_gate_from_receipt(
+    const latticra_seal_verified_receipt_promotion_t *receipt,
+    const char *requested_capability,
+    const char *requested_effect,
+    const char *requested_scope,
+    latticra_seal_verified_capability_gate_t *out) {
+    if (out == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+
+    gate_init(out);
+    return verified_capability_gate_evaluate_receipt(
+        receipt,
+        requested_capability,
+        requested_effect,
+        requested_scope,
+        out);
+}
+
+latticra_status_t latticra_seal_verified_capability_gate_from_crypto_graduation_gate(
+    const latticra_seal_crypto_graduation_gate_t *crypto_gate,
+    const latticra_seal_verified_receipt_promotion_t *receipt,
+    const char *requested_capability,
+    const char *requested_effect,
+    const char *requested_scope,
+    latticra_seal_verified_capability_gate_t *out) {
+    if (out == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+
+    gate_init(out);
+    copy_literal(out->crypto_graduation_gate_state, sizeof(out->crypto_graduation_gate_state), "required");
+
+    if (crypto_gate == NULL) {
+        return gate_fail_crypto_graduation(out, "missing-crypto-graduation-gate");
+    }
+
+    copy_crypto_graduation_metadata(crypto_gate, out);
+
+    if (!crypto_gate_is_acceptable(crypto_gate)) {
+        return gate_fail_crypto_graduation(out, "invalid-crypto-graduation-gate");
+    }
+
+    if (receipt != NULL && !crypto_gate_matches_receipt(crypto_gate, receipt)) {
+        return gate_fail_crypto_graduation(out, "crypto-graduation-receipt-mismatch");
+    }
+
+    return verified_capability_gate_evaluate_receipt(
+        receipt,
+        requested_capability,
+        requested_effect,
+        requested_scope,
+        out);
+}
+
 int latticra_seal_verified_capability_gate_is_metadata_only(
     const latticra_seal_verified_capability_gate_t *gate) {
     if (gate == NULL) {
@@ -203,9 +334,18 @@ latticra_status_t latticra_seal_verified_capability_gate_report(
         "public_key_identity_label=%s\n"
         "receipt_state=%s\n"
         "verification_state=%s\n"
+        "crypto_graduation_profile=%s\n"
+        "assurance_baseline_profile=%s\n"
+        "crypto_graduation_gate_state=%s\n"
         "requested_capability=%s\n"
         "requested_effect=%s\n"
         "requested_scope=%s\n"
+        "crypto_graduation_gate_present=%u\n"
+        "crypto_graduation_gate_passed=%u\n"
+        "standard_expectations_met=%u\n"
+        "local_verify_graduated=%u\n"
+        "receipt_promotion_graduated=%u\n"
+        "authority_promotion_allowed=%u\n"
         "verified=%u\n"
         "authority_usable=%u\n"
         "receipt_capability_gate_allowed=%u\n"
@@ -226,9 +366,18 @@ latticra_status_t latticra_seal_verified_capability_gate_report(
         gate->public_key_identity_label,
         gate->receipt_state,
         gate->verification_state,
+        gate->crypto_graduation_profile,
+        gate->assurance_baseline_profile,
+        gate->crypto_graduation_gate_state,
         gate->requested_capability,
         gate->requested_effect,
         gate->requested_scope,
+        gate->crypto_graduation_gate_present,
+        gate->crypto_graduation_gate_passed,
+        gate->standard_expectations_met,
+        gate->local_verify_graduated,
+        gate->receipt_promotion_graduated,
+        gate->authority_promotion_allowed,
         gate->verified,
         gate->authority_usable,
         gate->receipt_capability_gate_allowed,

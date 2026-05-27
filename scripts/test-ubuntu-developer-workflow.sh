@@ -38,6 +38,9 @@ require_file docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
 require_file docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md
 require_file docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
+require_file docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md
+require_file docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md
+require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md
 require_file docs/QUICK_START_CHEATSHEET.md
 require_file README.md
 require_file installer/README.md
@@ -86,6 +89,12 @@ require_contains 'ubuntu_local_deb_build_transcript_acceptance_gate_contract_pre
 require_contains 'ubuntu_local_deb_build_transcript_acceptance_gate_status=blocked-pending-lintian-static-metadata-and-build-transcript' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_local_deb_install_remove_evidence_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_source_package_evidence_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_source_package_evidence_status=blocked-pending-accepted-build-transcript' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_upload_signing_authority_evidence_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_upload_signing_authority_evidence_status=blocked-pending-source-package-evidence' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_gate_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_package_notice_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_package_notice_review_status=blocked-pending-notice-review' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_package_license_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
@@ -116,6 +125,9 @@ require_contains 'docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' README.md
 
 require_contains 'Ubuntu prerequisites:' docs/QUICK_START_CHEATSHEET.md
 require_contains 'sudo apt-get install -y rustc cargo make gcc pkg-config' docs/QUICK_START_CHEATSHEET.md

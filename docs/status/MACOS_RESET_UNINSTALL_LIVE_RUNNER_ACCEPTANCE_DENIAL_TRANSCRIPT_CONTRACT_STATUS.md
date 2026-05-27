@@ -108,7 +108,7 @@ macos_reset_uninstall_live_runner_acceptance_denial_transcript_contract: ok
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition contract that records the reviewed no-effect closeout audit as a no-effect disposition without opening dispatch or deletion.
+Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout contract that closes the reviewed no-effect closeout audit review disposition without opening dispatch or deletion.
 ```
 
 ## Non-Claims

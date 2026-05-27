@@ -656,6 +656,90 @@ static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_qu
         "scheduler handoff transition no external effect");
     EXPECT_TRUE(result.denied == 0,
         "scheduler handoff transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler activation transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY,
+        "next scheduler-activation-ready");
+    EXPECT_TRUE(strcmp(result.scheduler_activation.activation_status,
+            "scheduler-activation-seed-ready") == 0,
+        "scheduler activation ready");
+    EXPECT_TRUE(strcmp(result.scheduler_handoff.handoff_status,
+            "scheduler-handoff-seed-ready") == 0,
+        "scheduler activation transition keeps scheduler handoff ready");
+    EXPECT_TRUE(strcmp(result.scheduler_dispatch.dispatch_status,
+            "scheduler-dispatch-seed-ready") == 0,
+        "scheduler activation transition keeps scheduler dispatch ready");
+    EXPECT_TRUE(result.scheduler_activation.activation_count == 4u,
+        "scheduler activation count");
+    EXPECT_TRUE(result.scheduler_activation.scheduler_activation_allowed == 0,
+        "scheduler activation denied");
+    EXPECT_TRUE(result.scheduler_activation.scheduler_handoff_allowed == 0,
+        "scheduler activation handoff denied");
+    EXPECT_TRUE(result.scheduler_activation.scheduler_dispatch_allowed == 0,
+        "scheduler activation dispatch denied");
+    EXPECT_TRUE(result.scheduler_activation.scheduler_selection_allowed == 0,
+        "scheduler activation selection denied");
+    EXPECT_TRUE(result.scheduler_activation.dispatch_allowed == 0,
+        "scheduler activation dispatch authority denied");
+    EXPECT_TRUE(result.scheduler_activation.run_queue_mutation_allowed == 0,
+        "scheduler activation run queue mutation denied");
+    EXPECT_TRUE(result.scheduler_activation.context_switch_allowed == 0,
+        "scheduler activation context switch denied");
+    EXPECT_TRUE(result.scheduler_activation.runtime_entry_allowed == 0,
+        "scheduler activation runtime entry denied");
+    EXPECT_TRUE(result.scheduler_activation.no_effect == 1,
+        "scheduler activation no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "scheduler activation transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "scheduler activation transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler run entry transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY,
+        "next scheduler-run-entry-ready");
+    EXPECT_TRUE(strcmp(result.scheduler_run_entry.run_entry_status,
+            "scheduler-run-entry-seed-ready") == 0,
+        "scheduler run entry ready");
+    EXPECT_TRUE(strcmp(result.scheduler_activation.activation_status,
+            "scheduler-activation-seed-ready") == 0,
+        "scheduler run entry transition keeps scheduler activation ready");
+    EXPECT_TRUE(strcmp(result.scheduler_handoff.handoff_status,
+            "scheduler-handoff-seed-ready") == 0,
+        "scheduler run entry transition keeps scheduler handoff ready");
+    EXPECT_TRUE(result.scheduler_run_entry.run_entry_count == 4u,
+        "scheduler run entry count");
+    EXPECT_TRUE(result.scheduler_run_entry.scheduler_run_entry_allowed == 0,
+        "scheduler run entry denied");
+    EXPECT_TRUE(result.scheduler_run_entry.scheduler_activation_allowed == 0,
+        "scheduler run entry activation denied");
+    EXPECT_TRUE(result.scheduler_run_entry.scheduler_handoff_allowed == 0,
+        "scheduler run entry handoff denied");
+    EXPECT_TRUE(result.scheduler_run_entry.scheduler_dispatch_allowed == 0,
+        "scheduler run entry dispatch denied");
+    EXPECT_TRUE(result.scheduler_run_entry.scheduler_selection_allowed == 0,
+        "scheduler run entry selection denied");
+    EXPECT_TRUE(result.scheduler_run_entry.dispatch_allowed == 0,
+        "scheduler run entry dispatch authority denied");
+    EXPECT_TRUE(result.scheduler_run_entry.run_queue_mutation_allowed == 0,
+        "scheduler run entry run queue mutation denied");
+    EXPECT_TRUE(result.scheduler_run_entry.context_switch_allowed == 0,
+        "scheduler run entry context switch denied");
+    EXPECT_TRUE(result.scheduler_run_entry.runtime_entry_allowed == 0,
+        "scheduler run entry runtime entry denied");
+    EXPECT_TRUE(result.scheduler_run_entry.no_effect == 1,
+        "scheduler run entry no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "scheduler run entry transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "scheduler run entry transition not denied");
     return 0;
 }
 
@@ -1058,6 +1142,44 @@ static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_
     EXPECT_TRUE(strstr(report,
             "scheduler_handoff_status=scheduler-handoff-seed-ready\n") != 0,
         "scheduler handoff emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler activation transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "scheduler activation report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=scheduler-handoff-ready\n") != 0,
+        "scheduler handoff previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=scheduler-activation-ready\n") != 0,
+        "scheduler activation next emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_handoff_status=scheduler-handoff-seed-ready\n") != 0,
+        "scheduler activation report handoff emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_activation_status=scheduler-activation-seed-ready\n") != 0,
+        "scheduler activation emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler run entry transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "scheduler run entry report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=scheduler-activation-ready\n") != 0,
+        "scheduler activation previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=scheduler-run-entry-ready\n") != 0,
+        "scheduler run entry next emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_activation_status=scheduler-activation-seed-ready\n") != 0,
+        "scheduler run entry report activation emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_run_entry_status=scheduler-run-entry-seed-ready\n") != 0,
+        "scheduler run entry emitted");
     return 0;
 }
 

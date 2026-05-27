@@ -85,6 +85,9 @@ opensuse_rpm_topdir_handoff_lane_present=1
 opensuse_local_rpm_build_gate_contract_present=1
 opensuse_local_rpm_build_environment_contract_present=1
 opensuse_rpm_artifact_naming_contract_present=1
+opensuse_rpm_payload_inspection_contract_present=1
+opensuse_rpm_install_remove_transcript_contract_present=1
+opensuse_obs_publication_non_claim_review_contract_present=1
 opensuse_obs_publication_claimed=0
 opensuse_official_package_claimed=0
 suse_endorsement_claimed=0
@@ -153,6 +156,9 @@ docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
 docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
 docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
+docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 scripts/test-opensuse-rpmlint-osc-availability.sh
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
 scripts/test-opensuse-rpmlint-findings-classification.sh
@@ -162,6 +168,9 @@ scripts/test-opensuse-rpm-topdir-handoff-lane.sh
 scripts/test-opensuse-local-rpm-build-gate-contract.sh
 scripts/test-opensuse-local-rpm-build-environment-contract.sh
 scripts/test-opensuse-rpm-artifact-naming-contract.sh
+scripts/test-opensuse-rpm-payload-inspection-contract.sh
+scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
+scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
 .github/workflows/opensuse-rpmlint-osc-availability.yml
 .github/workflows/opensuse-rpmlint-static-spec-lane.yml
 .github/workflows/opensuse-rpmlint-findings-classification.yml
@@ -171,6 +180,9 @@ scripts/test-opensuse-rpm-artifact-naming-contract.sh
 .github/workflows/opensuse-local-rpm-build-gate-contract.yml
 .github/workflows/opensuse-local-rpm-build-environment-contract.yml
 .github/workflows/opensuse-rpm-artifact-naming-contract.yml
+.github/workflows/opensuse-rpm-payload-inspection-contract.yml
+.github/workflows/opensuse-rpm-install-remove-transcript-contract.yml
+.github/workflows/opensuse-obs-publication-non-claim-review-contract.yml
 ```
 
 Before any Open Build Service publication or submit request can be claimed, the lane needs evidence for:
@@ -186,6 +198,9 @@ temporary RPM topdir handoff
 local RPM build gate contract
 local RPM build environment contract
 RPM artifact naming contract
+RPM payload inspection contract
+RPM install/remove transcript contract
+OBS publication non-claim review contract
 package artifact inspection
 install/remove behavior transcript
 ```
@@ -212,10 +227,10 @@ claim operating-system completeness
 Recommended next slice:
 
 ```text
-Add openSUSE RPM payload inspection contract before any RPM artifact can be accepted.
+Add openSUSE RPM validation promotion blocker matrix before any package validation result can be accepted.
 ```
 
-That should define how source RPM and binary RPM payloads are inspected after creation while keeping `opensuse_rpm_build_gate_state=closed-no-effect` until the remaining prerequisites are satisfied.
+That should tie source, environment, artifact, payload, install/remove, and OBS non-claim records together while keeping RPM builds and readiness blocked.
 
 ## Validation
 
@@ -233,6 +248,9 @@ sh scripts/test-opensuse-rpm-topdir-handoff-lane.sh
 sh scripts/test-opensuse-local-rpm-build-gate-contract.sh
 sh scripts/test-opensuse-local-rpm-build-environment-contract.sh
 sh scripts/test-opensuse-rpm-artifact-naming-contract.sh
+sh scripts/test-opensuse-rpm-payload-inspection-contract.sh
+sh scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
+sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
 ```
 
 Expected output:
@@ -249,4 +267,7 @@ opensuse_rpm_topdir_handoff_lane: ok
 opensuse_local_rpm_build_gate_contract: ok
 opensuse_local_rpm_build_environment_contract: ok
 opensuse_rpm_artifact_naming_contract: ok
+opensuse_rpm_payload_inspection_contract: ok
+opensuse_rpm_install_remove_transcript_contract: ok
+opensuse_obs_publication_non_claim_review_contract: ok
 ```

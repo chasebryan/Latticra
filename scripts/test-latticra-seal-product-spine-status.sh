@@ -68,8 +68,12 @@ require_contains 'operator_receipt_report_implementation_plan_present=1' "$produ
 require_contains 'operator_receipt_report_implementation_present=1' "$product_doc"
 require_contains 'operator_receipt_report_surface_present=1' "$product_doc"
 require_contains 'operator_receipt_report_status_present=1' "$product_doc"
+require_contains 'local_capability_registry_schema_contract_present=1' "$product_doc"
+require_contains 'local_capability_registry_schema_implementation_plan_present=1' "$product_doc"
+require_contains 'local_capability_registry_schema_implementation_present=1' "$product_doc"
 require_contains 'bundled operator receipt report contract, implementation plan, implementation, report surface, and status record' "$status_file"
+require_contains 'local capability registry schema contract, implementation plan, and no-effect implementation are now current follow-up checkpoints' "$status_file"
 require_contains 'Panel-visible Seal dashboard planning checkpoint' "$status_file"
-require_contains 'local capability registry schema contract' "$status_file"
+require_contains 'local capability registry schema report surface' "$status_file"
 
 printf 'latticra seal product spine status: ok\n'

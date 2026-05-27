@@ -23,6 +23,8 @@ LC_COMMAND_REGISTRY="$PREFIX/share/latticra/lc/commands/seed-registry.txt"
 LC_WORKSPACE_CONTRACT="$PREFIX/share/latticra/lc/workspace/contract.toml"
 LC_NAMESPACE_CONTRACT="$PREFIX/share/latticra/lc/namespace/contract.toml"
 LC_ROOTFS_CONTRACT="$PREFIX/share/latticra/lc/rootfs/contract.toml"
+LC_PACKAGES_CONTRACT="$PREFIX/share/latticra/lc/packages/contract.toml"
+LC_INIT_CONTRACT="$PREFIX/share/latticra/lc/init/contract.toml"
 UPDATER_CONFIG="$PREFIX/etc/latticra/updater.toml"
 UPDATER_POLICY="$PREFIX/share/latticra/updater/policy.toml"
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/latticra-installer-verify.XXXXXX")"
@@ -144,6 +146,8 @@ check "LC command registry" "$LC_COMMAND_REGISTRY"
 check "LC workspace contract" "$LC_WORKSPACE_CONTRACT"
 check "LC namespace contract" "$LC_NAMESPACE_CONTRACT"
 check "LC rootfs contract" "$LC_ROOTFS_CONTRACT"
+check "LC packages contract" "$LC_PACKAGES_CONTRACT"
+check "LC init contract" "$LC_INIT_CONTRACT"
 check "updater config" "$UPDATER_CONFIG"
 check "updater policy" "$UPDATER_POLICY"
 
@@ -160,6 +164,10 @@ check_contains "LC namespace contract profile" 'namespace_contract_profile = "lc
 check_contains "LC namespace contract metadata" 'namespace_contract_present = true' "$LC_INSTALL_CONFIG"
 check_contains "LC rootfs contract profile" 'rootfs_contract_profile = "lc-rootfs-v0"' "$LC_INSTALL_CONFIG"
 check_contains "LC rootfs contract metadata" 'rootfs_contract_present = true' "$LC_INSTALL_CONFIG"
+check_contains "LC packages contract profile" 'packages_contract_profile = "lc-packages-v0"' "$LC_INSTALL_CONFIG"
+check_contains "LC packages contract metadata" 'packages_contract_present = true' "$LC_INSTALL_CONFIG"
+check_contains "LC init contract profile" 'init_contract_profile = "lc-init-v0"' "$LC_INSTALL_CONFIG"
+check_contains "LC init contract metadata" 'init_contract_present = true' "$LC_INSTALL_CONFIG"
 check_contains "LC external host command authority disabled" 'allow_external_host_commands = false' "$LC_INSTALL_CONFIG"
 check_contains "LC install-config registry command" 'name=lc install-config category=core effect=none capability=lc.install.config' "$LC_COMMAND_REGISTRY"
 check_contains "LC standalone registry command" 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' "$LC_COMMAND_REGISTRY"
@@ -167,6 +175,8 @@ check_contains "LC session registry command" 'name=lc session category=core effe
 check_contains "LC workspace registry command" 'name=lc workspace category=core effect=none capability=lc.workspace.contract' "$LC_COMMAND_REGISTRY"
 check_contains "LC namespace registry command" 'name=lc namespace category=core effect=none capability=lc.namespace.contract' "$LC_COMMAND_REGISTRY"
 check_contains "LC rootfs registry command" 'name=lc rootfs category=core effect=none capability=lc.rootfs.contract' "$LC_COMMAND_REGISTRY"
+check_contains "LC packages registry command" 'name=lc packages category=core effect=none capability=lc.packages.contract' "$LC_COMMAND_REGISTRY"
+check_contains "LC init registry command" 'name=lc init category=core effect=none capability=lc.init.contract' "$LC_COMMAND_REGISTRY"
 check_contains "LC workspace command surface" 'command_surface = "lc workspace"' "$LC_WORKSPACE_CONTRACT"
 check_contains "LC workspace mount denied" 'workspace_mount_allowed = false' "$LC_WORKSPACE_CONTRACT"
 check_contains "LC workspace host process denied" 'host_process_launch_allowed = false' "$LC_WORKSPACE_CONTRACT"
@@ -179,6 +189,18 @@ check_contains "LC rootfs image creation denied" 'rootfs_image_create_allowed = 
 check_contains "LC rootfs mount denied" 'rootfs_mount_allowed = false' "$LC_ROOTFS_CONTRACT"
 check_contains "LC rootfs package install denied" 'rootfs_package_install_allowed = false' "$LC_ROOTFS_CONTRACT"
 check_contains "LC rootfs host process denied" 'host_process_launch_allowed = false' "$LC_ROOTFS_CONTRACT"
+check_contains "LC packages command surface" 'command_surface = "lc packages"' "$LC_PACKAGES_CONTRACT"
+check_contains "LC packages manifest write denied" 'package_manifest_write_allowed = false' "$LC_PACKAGES_CONTRACT"
+check_contains "LC packages catalog read denied" 'package_catalog_read_allowed = false' "$LC_PACKAGES_CONTRACT"
+check_contains "LC packages download denied" 'package_download_allowed = false' "$LC_PACKAGES_CONTRACT"
+check_contains "LC packages manager execution denied" 'package_manager_execution_allowed = false' "$LC_PACKAGES_CONTRACT"
+check_contains "LC packages rootfs install denied" 'rootfs_package_install_allowed = false' "$LC_PACKAGES_CONTRACT"
+check_contains "LC packages host process denied" 'host_process_launch_allowed = false' "$LC_PACKAGES_CONTRACT"
+check_contains "LC init command surface" 'command_surface = "lc init"' "$LC_INIT_CONTRACT"
+check_contains "LC init PID 1 denied" 'pid1_claim_allowed = false' "$LC_INIT_CONTRACT"
+check_contains "LC init service start denied" 'service_start_allowed = false' "$LC_INIT_CONTRACT"
+check_contains "LC init process supervision denied" 'process_supervision_allowed = false' "$LC_INIT_CONTRACT"
+check_contains "LC init host process denied" 'host_process_launch_allowed = false' "$LC_INIT_CONTRACT"
 check_contains "updater panel-owned config" 'panel_owned = true' "$UPDATER_CONFIG"
 check_contains "updater network authority disabled" 'allow_network_fetch = false' "$UPDATER_CONFIG"
 check_contains "updater apply mode" 'update_apply_mode = "guarded-local-prefix-reinstall"' "$UPDATER_CONFIG"
@@ -230,6 +252,8 @@ if [ -x "$LC_COMMAND" ]; then
     check_contains "LC wrapper workspace contract present" 'workspace_contract_present=1' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper namespace contract present" 'namespace_contract_present=1' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper rootfs contract present" 'rootfs_contract_present=1' "$TMP_DIR/lc-install-config.txt"
+    check_contains "LC wrapper packages contract present" 'packages_contract_present=1' "$TMP_DIR/lc-install-config.txt"
+    check_contains "LC wrapper init contract present" 'init_contract_present=1' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-install-config.txt"
   else
     echo "failed: $LC_COMMAND_WRAPPER install-config" >&2
@@ -276,6 +300,32 @@ if [ -x "$LC_COMMAND" ]; then
     check_contains "LC wrapper rootfs host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-rootfs.txt"
   else
     echo "failed: $LC_COMMAND_WRAPPER rootfs" >&2
+    failures=$((failures + 1))
+  fi
+
+  if "$LC_COMMAND" packages > "$TMP_DIR/lc-packages.txt"; then
+    check_contains "LC wrapper packages report" 'LATTICRA CONSOLE PACKAGES CONTRACT' "$TMP_DIR/lc-packages.txt"
+    check_contains "LC wrapper packages command surface" 'command_surface=lc packages' "$TMP_DIR/lc-packages.txt"
+    check_contains "LC wrapper packages manifest write denied" 'package_manifest_write_allowed=0' "$TMP_DIR/lc-packages.txt"
+    check_contains "LC wrapper packages catalog read denied" 'package_catalog_read_allowed=0' "$TMP_DIR/lc-packages.txt"
+    check_contains "LC wrapper packages download denied" 'package_download_allowed=0' "$TMP_DIR/lc-packages.txt"
+    check_contains "LC wrapper packages manager execution denied" 'package_manager_execution_allowed=0' "$TMP_DIR/lc-packages.txt"
+    check_contains "LC wrapper packages rootfs install denied" 'rootfs_package_install_allowed=0' "$TMP_DIR/lc-packages.txt"
+    check_contains "LC wrapper packages host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-packages.txt"
+  else
+    echo "failed: $LC_COMMAND_WRAPPER packages" >&2
+    failures=$((failures + 1))
+  fi
+
+  if "$LC_COMMAND" init > "$TMP_DIR/lc-init.txt"; then
+    check_contains "LC wrapper init report" 'LATTICRA CONSOLE INIT CONTRACT' "$TMP_DIR/lc-init.txt"
+    check_contains "LC wrapper init command surface" 'command_surface=lc init' "$TMP_DIR/lc-init.txt"
+    check_contains "LC wrapper init PID 1 denied" 'pid1_claim_allowed=0' "$TMP_DIR/lc-init.txt"
+    check_contains "LC wrapper init service start denied" 'service_start_allowed=0' "$TMP_DIR/lc-init.txt"
+    check_contains "LC wrapper init process supervision denied" 'process_supervision_allowed=0' "$TMP_DIR/lc-init.txt"
+    check_contains "LC wrapper init host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-init.txt"
+  else
+    echo "failed: $LC_COMMAND_WRAPPER init" >&2
     failures=$((failures + 1))
   fi
 fi

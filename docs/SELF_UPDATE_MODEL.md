@@ -56,6 +56,18 @@ signed_updater_manifest_fixture_validation_present=1
 signed_updater_manifest_fixture_validated=1
 signed_updater_state_fixture_contract_present=1
 signed_updater_state_fixture_present=1
+signed_updater_state_fixture_validation_present=1
+signed_updater_state_fixture_validated=1
+signed_updater_state_fixture_valid_for_transition=0
+signed_updater_state_fixture_valid_for_apply=0
+signed_updater_state_transition_denial_transcript_present=1
+signed_updater_state_transition_denial_decision=deny-state-transition
+signed_updater_state_transition_denial_transcript_stdout_only=1
+signed_updater_state_transition_denial_transcript_file_write_enabled=0
+signed_updater_state_transition_denial_review_present=1
+signed_updater_state_transition_denial_review_decision=uphold-deny-state-transition
+signed_updater_state_transition_denial_review_stdout_only=1
+signed_updater_state_transition_denial_review_file_write_enabled=0
 current_update_state=blocked
 state_transition_execution_allowed=0
 state_transition_execution_performed=0
@@ -64,7 +76,7 @@ signed_updater_manifest_fixture_valid_for_apply=0
 trusted_signed_manifest_present=0
 ```
 
-The local signed updater manifest fixture validation only checks shape and closed-authority fields. The local signed updater state fixture only records blocked state names without transition execution. This is not a signed updater, not a remote update client, not a network self-update path, not update state execution, and not production update readiness.
+The local signed updater manifest fixture validation only checks shape and closed-authority fields. The local signed updater state fixture validation only checks the state catalog and closed transition fields without making the blocked fixture executable. The local signed updater state transition denial transcript records the blocked decision to stdout only, without transcript file writes or execution. The local signed updater state transition denial review upholds the denial without review file writes or execution. This is not a signed updater, not a remote update client, not a network self-update path, not update state execution, and not production update readiness.
 
 ## Update channels
 
@@ -217,6 +229,9 @@ no-effect signed updater denial transcript
 local signed updater manifest fixture contract
 local signed updater manifest fixture validation
 local signed updater state fixture contract
+local signed updater state fixture validation
+local signed updater state transition denial transcript
+local signed updater state transition denial review
 signature-required marker
 rollback visibility marker
 validation test

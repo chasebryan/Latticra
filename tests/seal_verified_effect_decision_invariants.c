@@ -22,6 +22,7 @@ static latticra_seal_verified_capability_gate_t fixture_gate(const char *effect)
     (void)snprintf(gate.public_key_identity_label, sizeof(gate.public_key_identity_label), "%s", "rfc8032-test-key");
     (void)snprintf(gate.receipt_state, sizeof(gate.receipt_state), "%s", "verified");
     (void)snprintf(gate.verification_state, sizeof(gate.verification_state), "%s", "verified");
+    (void)snprintf(gate.crypto_graduation_gate_state, sizeof(gate.crypto_graduation_gate_state), "%s", "not-required");
     (void)snprintf(gate.requested_capability, sizeof(gate.requested_capability), "%s", "verified-receipt-report");
     (void)snprintf(gate.requested_effect, sizeof(gate.requested_effect), "%s", effect != 0 ? effect : "report-only");
     (void)snprintf(gate.requested_scope, sizeof(gate.requested_scope), "%s", "local-fixture-scope");
@@ -37,6 +38,32 @@ static latticra_seal_verified_capability_gate_t fixture_gate(const char *effect)
     gate.network_performed = 0u;
     gate.error = LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_OK;
     (void)snprintf(gate.status, sizeof(gate.status), "%s", "verified-capability-gate-metadata");
+    return gate;
+}
+
+static latticra_seal_verified_capability_gate_t fixture_crypto_bound_gate(const char *effect) {
+    latticra_seal_verified_capability_gate_t gate = fixture_gate(effect);
+    (void)snprintf(
+        gate.crypto_graduation_profile,
+        sizeof(gate.crypto_graduation_profile),
+        "%s",
+        "latticra-seal-crypto-graduation-gate/0.1");
+    (void)snprintf(
+        gate.assurance_baseline_profile,
+        sizeof(gate.assurance_baseline_profile),
+        "%s",
+        "latticra-cryptographic-assurance-key-management/0.1");
+    (void)snprintf(
+        gate.crypto_graduation_gate_state,
+        sizeof(gate.crypto_graduation_gate_state),
+        "%s",
+        "graduated-authority-neutral");
+    gate.crypto_graduation_gate_present = 1u;
+    gate.crypto_graduation_gate_passed = 1u;
+    gate.standard_expectations_met = 1u;
+    gate.local_verify_graduated = 1u;
+    gate.receipt_promotion_graduated = 1u;
+    gate.authority_promotion_allowed = 0u;
     return gate;
 }
 
@@ -56,6 +83,7 @@ static int decision_allows_report_only_metadata(void) {
     EXPECT_TRUE(strcmp(decision.message_digest_algorithm, "SHA-256") == 0, "digest algorithm");
     EXPECT_TRUE(strcmp(decision.message_digest_hex, gate.message_digest_hex) == 0, "digest hex");
     EXPECT_TRUE(strcmp(decision.public_key_identity_label, "rfc8032-test-key") == 0, "public key identity");
+    EXPECT_TRUE(strcmp(decision.crypto_graduation_gate_state, "not-required") == 0, "crypto gate legacy");
     EXPECT_TRUE(strcmp(decision.requested_capability, "verified-receipt-report") == 0, "requested capability");
     EXPECT_TRUE(strcmp(decision.requested_effect, "report-only") == 0, "requested effect");
     EXPECT_TRUE(strcmp(decision.requested_scope, "local-fixture-scope") == 0, "requested scope");
@@ -63,6 +91,8 @@ static int decision_allows_report_only_metadata(void) {
     EXPECT_TRUE(decision.authority_usable == 0u, "authority usable");
     EXPECT_TRUE(decision.receipt_capability_gate_allowed == 0u, "receipt capability flag");
     EXPECT_TRUE(decision.gate_allowed == 1u, "gate allowed");
+    EXPECT_TRUE(decision.crypto_graduation_gate_present == 0u, "crypto present legacy");
+    EXPECT_TRUE(decision.standard_expectations_met == 0u, "standard legacy");
     EXPECT_TRUE(strcmp(decision.gate_state, "allowed-metadata-only") == 0, "gate state");
     EXPECT_TRUE(strcmp(decision.decision_state, "allowed-report-only") == 0, "decision state");
     EXPECT_TRUE(decision.effect_allowed == 1u, "effect allowed");
@@ -81,6 +111,38 @@ static int decision_allows_report_only_metadata(void) {
     EXPECT_TRUE(strstr(rendered, "host_read_performed=0") != 0, "report host read");
     EXPECT_TRUE(strstr(rendered, "host_write_performed=0") != 0, "report host write");
     EXPECT_TRUE(strstr(rendered, "network_performed=0") != 0, "report network");
+    return 0;
+}
+
+static int decision_carries_crypto_graduation_evidence(void) {
+    latticra_seal_verified_capability_gate_t gate = fixture_crypto_bound_gate("report-only");
+    latticra_seal_verified_effect_decision_t decision;
+    char rendered[LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_REPORT_MAX];
+
+    EXPECT_TRUE(
+        latticra_seal_verified_effect_decision_from_gate(&gate, &decision) == LATTICRA_STATUS_OK,
+        "crypto decision status");
+    EXPECT_TRUE(decision.error == LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_OK, "crypto decision ok");
+    EXPECT_TRUE(strcmp(decision.crypto_graduation_profile, "latticra-seal-crypto-graduation-gate/0.1") == 0, "crypto profile");
+    EXPECT_TRUE(strcmp(decision.assurance_baseline_profile, "latticra-cryptographic-assurance-key-management/0.1") == 0, "assurance profile");
+    EXPECT_TRUE(strcmp(decision.crypto_graduation_gate_state, "graduated-authority-neutral") == 0, "crypto state");
+    EXPECT_TRUE(decision.crypto_graduation_gate_present == 1u, "crypto present");
+    EXPECT_TRUE(decision.crypto_graduation_gate_passed == 1u, "crypto passed");
+    EXPECT_TRUE(decision.standard_expectations_met == 1u, "standards");
+    EXPECT_TRUE(decision.local_verify_graduated == 1u, "local verify");
+    EXPECT_TRUE(decision.receipt_promotion_graduated == 1u, "receipt promotion");
+    EXPECT_TRUE(decision.authority_promotion_allowed == 0u, "authority promotion");
+    EXPECT_TRUE(decision.effect_allowed == 1u, "crypto effect allowed");
+    EXPECT_TRUE(strcmp(decision.decision_state, "allowed-report-only") == 0, "crypto decision state");
+    EXPECT_TRUE(decision.effect_performed == 0u, "crypto effect performed");
+    EXPECT_TRUE(decision.runtime_authority_granted == 0u, "crypto runtime");
+    EXPECT_TRUE(decision.host_read_performed == 0u, "crypto host read");
+    EXPECT_TRUE(decision.host_write_performed == 0u, "crypto host write");
+    EXPECT_TRUE(decision.network_performed == 0u, "crypto network");
+    EXPECT_TRUE(latticra_seal_verified_effect_decision_report(&decision, rendered, sizeof(rendered)) == LATTICRA_STATUS_OK, "crypto report");
+    EXPECT_TRUE(strstr(rendered, "crypto_graduation_gate_present=1") != 0, "report crypto present");
+    EXPECT_TRUE(strstr(rendered, "standard_expectations_met=1") != 0, "report standard");
+    EXPECT_TRUE(strstr(rendered, "authority_promotion_allowed=0") != 0, "report authority promotion");
     return 0;
 }
 
@@ -149,6 +211,15 @@ static int decision_fails_closed(void) {
     EXPECT_TRUE(latticra_seal_verified_effect_decision_from_gate(&gate, &decision) == LATTICRA_STATUS_OK, "unknown effect status");
     EXPECT_TRUE(decision.error == LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_DENIED_UNKNOWN_EFFECT, "unknown effect error");
     EXPECT_TRUE(strcmp(decision.decision_state, "denied-effect") == 0, "unknown effect state");
+    gate = fixture_crypto_bound_gate("report-only");
+    gate.standard_expectations_met = 0u;
+    EXPECT_TRUE(latticra_seal_verified_effect_decision_from_gate(&gate, &decision) == LATTICRA_STATUS_OK, "failed crypto gate status");
+    EXPECT_TRUE(decision.error == LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_DENIED_CRYPTO_GRADUATION_GATE, "failed crypto gate error");
+    EXPECT_TRUE(strcmp(decision.decision_state, "denied-crypto-graduation-gate") == 0, "failed crypto gate state");
+    gate = fixture_crypto_bound_gate("report-only");
+    gate.authority_promotion_allowed = 1u;
+    EXPECT_TRUE(latticra_seal_verified_effect_decision_from_gate(&gate, &decision) == LATTICRA_STATUS_OK, "authority crypto gate status");
+    EXPECT_TRUE(decision.error == LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_DENIED_CRYPTO_GRADUATION_GATE, "authority crypto gate error");
     EXPECT_TRUE(latticra_seal_verified_effect_decision_from_gate(&gate, 0) == LATTICRA_STATUS_NULL_ARGUMENT, "null output");
     EXPECT_TRUE(latticra_seal_verified_effect_decision_is_metadata_only(0) == 0, "null helper");
     EXPECT_TRUE(latticra_seal_verified_effect_decision_report(&decision, tiny, sizeof(tiny)) == LATTICRA_STATUS_BUFFER_TOO_SMALL, "small report");
@@ -160,6 +231,9 @@ static int decision_fails_closed(void) {
 
 int main(void) {
     if (decision_allows_report_only_metadata() != 0) {
+        return 1;
+    }
+    if (decision_carries_crypto_graduation_evidence() != 0) {
         return 1;
     }
     if (decision_allows_evaluate_only_metadata() != 0) {

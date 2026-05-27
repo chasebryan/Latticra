@@ -26,6 +26,8 @@ static int machine_init_is_stable(void) {
         "machine not yet mutated");
     EXPECT_TRUE(machine.external_effect_performed == 0,
         "machine external effects absent");
+    EXPECT_TRUE(machine.network_allowed == 0,
+        "machine network denied");
     return 0;
 }
 
@@ -51,8 +53,12 @@ static int default_step_is_denied_and_logged(void) {
         "default no mutation");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "default no external effect");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "default step network denied");
     EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_CREATED,
         "machine remains created");
+    EXPECT_TRUE(machine.network_allowed == 0,
+        "machine keeps network denied");
     EXPECT_TRUE(machine.log_count == 1u,
         "denial logged");
     EXPECT_TRUE(strcmp(machine.log[0].status, "transition-denied") == 0,
@@ -61,6 +67,8 @@ static int default_step_is_denied_and_logged(void) {
         "log no state change");
     EXPECT_TRUE(machine.log[0].external_effect_performed == 0,
         "log no external effect");
+    EXPECT_TRUE(machine.log[0].network_allowed == 0,
+        "log network denied");
     return 0;
 }
 
@@ -87,6 +95,10 @@ static int allowed_step_mutates_machine_state(void) {
         "allowed state mutated");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "allowed external effect absent");
+    EXPECT_TRUE(result.transition.network_allowed == 0,
+        "allowed transition network denied");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "allowed step network denied");
     EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_INITIALIZED,
         "machine current initialized");
     EXPECT_TRUE(strcmp(machine.machine_status, "initialized") == 0,
@@ -95,6 +107,8 @@ static int allowed_step_mutates_machine_state(void) {
         "machine mutation flag set");
     EXPECT_TRUE(machine.external_effect_performed == 0,
         "machine external effects absent");
+    EXPECT_TRUE(machine.network_allowed == 0,
+        "machine network denied after allowed step");
     EXPECT_TRUE(machine.log_count == 1u,
         "allowed step logged");
     EXPECT_TRUE(machine.log[0].from_state == LATTICRA_KERNEL_STATE_CREATED,
@@ -103,6 +117,8 @@ static int allowed_step_mutates_machine_state(void) {
         "log to initialized");
     EXPECT_TRUE(machine.log[0].state_change_performed == 1,
         "log state change");
+    EXPECT_TRUE(machine.log[0].network_allowed == 0,
+        "allowed log network denied");
     return 0;
 }
 
@@ -179,21 +195,33 @@ static int sequential_steps_advance_ladder(void) {
     request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
     EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
         "scheduler dispatch ready to scheduler handoff ready");
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "scheduler handoff ready to scheduler activation ready");
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "scheduler activation ready to scheduler run entry ready");
 
-    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY,
-        "machine reaches scheduler handoff ready");
-    EXPECT_TRUE(strcmp(machine.machine_status, "scheduler-handoff-ready") == 0,
-        "machine status scheduler handoff ready");
-    EXPECT_TRUE(machine.log_count == 21u,
-        "twenty one transitions logged");
+    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY,
+        "machine reaches scheduler run entry ready");
+    EXPECT_TRUE(strcmp(machine.machine_status, "scheduler-run-entry-ready") == 0,
+        "machine status scheduler run entry ready");
+    EXPECT_TRUE(machine.log_count == 23u,
+        "twenty three transitions logged");
     EXPECT_TRUE(machine.external_effect_performed == 0,
         "sequence external effects absent");
+    EXPECT_TRUE(machine.network_allowed == 0,
+        "sequence network denied");
     EXPECT_TRUE(machine.log[4].to_state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY,
         "log process table ready");
     EXPECT_TRUE(machine.log[5].to_state == LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY,
         "log syscall table ready");
+    EXPECT_TRUE(machine.log[5].network_allowed == 0,
+        "syscall log network denied");
     EXPECT_TRUE(machine.log[6].to_state == LATTICRA_KERNEL_STATE_IPC_TABLE_READY,
         "log ipc table ready");
+    EXPECT_TRUE(machine.log[6].network_allowed == 0,
+        "ipc log network denied");
     EXPECT_TRUE(machine.log[7].to_state == LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY,
         "log vfs namespace ready");
     EXPECT_TRUE(machine.log[8].to_state == LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY,
@@ -222,6 +250,10 @@ static int sequential_steps_advance_ladder(void) {
         "log scheduler dispatch ready");
     EXPECT_TRUE(machine.log[20].to_state == LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY,
         "log scheduler handoff ready");
+    EXPECT_TRUE(machine.log[21].to_state == LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY,
+        "log scheduler activation ready");
+    EXPECT_TRUE(machine.log[22].to_state == LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY,
+        "log scheduler run entry ready");
     return 0;
 }
 
@@ -249,6 +281,10 @@ static int illegal_step_does_not_mutate_machine(void) {
         "illegal log no state change");
     EXPECT_TRUE(machine.external_effect_performed == 0,
         "illegal external effects absent");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "illegal step network denied");
+    EXPECT_TRUE(machine.network_allowed == 0,
+        "illegal machine network denied");
     return 0;
 }
 
@@ -280,6 +316,8 @@ static int machine_report_is_deterministic(void) {
         "mutation flag emitted");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "external effect emitted");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0,
+        "network flag emitted");
     EXPECT_TRUE(strstr(report, "log[0].from=created\n") != 0,
         "log from emitted");
     EXPECT_TRUE(strstr(report, "log[0].to=initialized\n") != 0,
@@ -288,6 +326,8 @@ static int machine_report_is_deterministic(void) {
         "log status emitted");
     EXPECT_TRUE(strstr(report, "log[0].state_change_performed=1\n") != 0,
         "log state change emitted");
+    EXPECT_TRUE(strstr(report, "log[0].network_allowed=0\n") != 0,
+        "log network emitted");
     return 0;
 }
 

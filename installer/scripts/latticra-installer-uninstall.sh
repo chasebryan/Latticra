@@ -47,6 +47,41 @@ canonical_existing_path() {
   printf '%s\n' "$resolved"
 }
 
+RECEIPT_BODY=""
+cleanup_receipt_body() {
+  if [ -n "${RECEIPT_BODY:-}" ] && [ -f "$RECEIPT_BODY" ]; then
+    rm -f "$RECEIPT_BODY"
+  fi
+}
+trap cleanup_receipt_body EXIT INT HUP TERM
+
+write_file() {
+  target="$1"
+  mode="$2"
+  dir="$(dirname -- "$target")"
+  base="$(basename -- "$target")"
+  mkdir -p "$dir"
+  tmp=$(mktemp "$dir/.latticra-installer.$base.XXXXXX") ||
+    fail "unable to create temporary file for $target"
+  if ! cat > "$tmp"; then
+    rm -f "$tmp"
+    fail "unable to write temporary file for $target"
+  fi
+  if ! chmod "$mode" "$tmp"; then
+    rm -f "$tmp"
+    fail "unable to chmod temporary file for $target"
+  fi
+  if [ -L "$target" ]; then
+    rm -f "$tmp"
+    fail "refusing to overwrite symlink file: $target"
+  fi
+  if [ -e "$target" ] && [ ! -f "$target" ]; then
+    rm -f "$tmp"
+    fail "refusing to overwrite non-regular file: $target"
+  fi
+  mv "$tmp" "$target"
+}
+
 path_has_parent_reference() {
   case "$1" in
     ..|../*|*/..|*/../*) return 0 ;;
@@ -252,7 +287,9 @@ preserved_unmanaged_targets=""
 if [ "$WRITE_RECEIPT" = true ]; then
   mkdir -p "$RECEIPT_DIR"
   RECEIPT="$RECEIPT_DIR/latticra-panel-$OPERATION-receipt-$TS.txt"
-  cat > "$RECEIPT" <<RECEIPT_HEADER
+  RECEIPT_BODY=$(mktemp "$RECEIPT_DIR/.latticra-installer-$OPERATION-receipt.XXXXXX") ||
+    fail "unable to create temporary receipt body for $RECEIPT"
+  if ! cat > "$RECEIPT_BODY" <<RECEIPT_HEADER
 LATTICRA PANEL ${OPERATION} RECEIPT
 
 timestamp_utc=$TS
@@ -269,12 +306,16 @@ runtime_enforcement_authority=0
 production_installer_ready=0
 
 RECEIPT_HEADER
+  then
+    fail "unable to write temporary receipt body for $RECEIPT"
+  fi
 fi
 
 log() {
   printf '%s\n' "$*"
-  if [ -n "$RECEIPT" ]; then
-    printf '%s\n' "$*" >> "$RECEIPT"
+  if [ -n "$RECEIPT_BODY" ]; then
+    printf '%s\n' "$*" >> "$RECEIPT_BODY" ||
+      fail "unable to append to temporary receipt body for $RECEIPT"
   fi
 }
 
@@ -479,6 +520,9 @@ else
   log "Latticra local $OPERATION complete."
 fi
 
-if [ -n "$RECEIPT" ]; then
-  cp "$RECEIPT" "$RECEIPT_DIR/latest-$OPERATION-receipt.txt"
+if [ -n "$RECEIPT_BODY" ]; then
+  write_file "$RECEIPT" 0644 < "$RECEIPT_BODY"
+  write_file "$RECEIPT_DIR/latest-$OPERATION-receipt.txt" 0644 < "$RECEIPT_BODY"
+  rm -f "$RECEIPT_BODY"
+  RECEIPT_BODY=""
 fi

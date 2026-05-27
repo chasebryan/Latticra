@@ -15,6 +15,8 @@ This contract is documentation-only and static. It does not run build tools, cre
 
 ```text
 opensuse_local_rpm_build_gate_contract_present=1
+opensuse_rpm_install_remove_transcript_contract_present=1
+opensuse_obs_publication_non_claim_review_contract_present=1
 opensuse_rpm_build_gate_state=closed-no-effect
 rpmbuild_allowed=0
 osc_build_allowed=0
@@ -28,7 +30,10 @@ spec_cleaner_run=0
 source_rpm_artifact_created=0
 binary_rpm_artifact_created=0
 rpm_artifact_created=0
+rpm_install_remove_transcript_present=0
+rpm_validation_result_promoted=0
 rpm_installed_on_host=0
+rpm_removed_from_host=0
 obs_publication_claimed=0
 package_readiness_claimed=0
 ```
@@ -39,6 +44,7 @@ The build gate cannot open unless all RPM input evidence has already passed:
 
 ```text
 opensuse_rpm_topdir_handoff_lane_present=1
+opensuse_rpm_payload_inspection_contract_present=1
 temporary_rpm_topdir_handoff_lane_passed=1
 opensuse_source_archive_fixture_lane_present=1
 opensuse_source_archive_reproducibility_contract_present=1
@@ -155,6 +161,9 @@ docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
 docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
 docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
+docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 ```
 
 The `rpmlint` findings classification record keeps lint output from becoming package readiness evidence without review.
@@ -183,13 +192,37 @@ scripts/test-opensuse-rpm-artifact-naming-contract.sh
 .github/workflows/opensuse-rpm-artifact-naming-contract.yml
 ```
 
+Completed follow-on RPM payload inspection contract:
+
+```text
+docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+scripts/test-opensuse-rpm-payload-inspection-contract.sh
+.github/workflows/opensuse-rpm-payload-inspection-contract.yml
+```
+
+Completed follow-on RPM install/remove transcript contract:
+
+```text
+docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
+.github/workflows/opensuse-rpm-install-remove-transcript-contract.yml
+```
+
+Completed follow-on OBS publication non-claim review contract:
+
+```text
+docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
+.github/workflows/opensuse-obs-publication-non-claim-review-contract.yml
+```
+
 Recommended next slice:
 
 ```text
-Add openSUSE RPM payload inspection contract before any RPM artifact can be accepted.
+Add openSUSE RPM validation promotion blocker matrix before any package validation result can be accepted.
 ```
 
-That future lane should define how source RPM and binary RPM payloads are inspected after creation while keeping `opensuse_rpm_build_gate_state=closed-no-effect` until the remaining prerequisites are satisfied.
+That future lane should tie source, environment, artifact, payload, install/remove, and OBS non-claim records together while keeping RPM builds and readiness blocked.
 
 ## Validation
 

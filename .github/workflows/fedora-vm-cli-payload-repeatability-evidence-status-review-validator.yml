@@ -1,0 +1,21 @@
+name: Fedora VM CLI Payload Repeatability Evidence Status Review Validator
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-vm-cli-payload-repeatability-evidence-status-review-validator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Fedora VM CLI payload repeatability evidence status review validator guard
+        run: sh scripts/test-fedora-vm-cli-payload-repeatability-evidence-status-review-validator.sh

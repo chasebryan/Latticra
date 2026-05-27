@@ -73,6 +73,9 @@ sh scripts/test-opensuse-rpm-topdir-handoff-lane.sh
 sh scripts/test-opensuse-local-rpm-build-gate-contract.sh
 sh scripts/test-opensuse-local-rpm-build-environment-contract.sh
 sh scripts/test-opensuse-rpm-artifact-naming-contract.sh
+sh scripts/test-opensuse-rpm-payload-inspection-contract.sh
+sh scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
+sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
 ```
 
 Expected output:
@@ -87,6 +90,9 @@ opensuse_rpm_topdir_handoff_lane: ok
 opensuse_local_rpm_build_gate_contract: ok
 opensuse_local_rpm_build_environment_contract: ok
 opensuse_rpm_artifact_naming_contract: ok
+opensuse_rpm_payload_inspection_contract: ok
+opensuse_rpm_install_remove_transcript_contract: ok
+opensuse_obs_publication_non_claim_review_contract: ok
 ```
 
 ## Panel From Source

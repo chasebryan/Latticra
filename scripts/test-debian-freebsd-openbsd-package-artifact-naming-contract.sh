@@ -35,6 +35,8 @@ require_file "$contract"
 require_file "$environment_contract"
 require_file "$gate_contract"
 require_file docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md
+require_file docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+require_file docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 require_file docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md
 require_file docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_file docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md
@@ -65,9 +67,13 @@ require_contains 'Status: active package artifact naming contract' "$contract"
 require_contains 'documentation-only and static' "$contract"
 require_contains 'debian_freebsd_openbsd_package_artifact_naming_contract_present=1' "$contract"
 require_contains 'debian_freebsd_openbsd_package_payload_inspection_contract_present=1' "$contract"
+require_contains 'debian_freebsd_openbsd_package_install_remove_transcript_contract_present=1' "$contract"
+require_contains 'debian_freebsd_openbsd_package_publication_non_claim_review_contract_present=1' "$contract"
 require_contains 'artifact_naming_contract_present=1' "$contract"
 require_contains 'artifact_naming_contract_state=specified-no-effect' "$contract"
 require_contains 'payload_inspection_contract_state=specified-no-effect' "$contract"
+require_contains 'install_remove_transcript_contract_state=specified-no-effect' "$contract"
+require_contains 'publication_non_claim_review_contract_state=specified-no-effect' "$contract"
 require_contains 'package_build_gate_state=closed-no-effect' "$contract"
 require_contains 'package_build_environment_contract_state=specified-no-effect' "$contract"
 require_contains 'package_artifact_output_directory_required_under_disposable_environment=1' "$contract"
@@ -82,6 +88,7 @@ require_contains 'openbsd_package_artifact_created=0' "$contract"
 require_contains 'package_artifact_sha256_recorded=0' "$contract"
 require_contains 'package_artifact_published=0' "$contract"
 require_contains 'install_on_host_run=0' "$contract"
+require_contains 'publication_non_claim_review_present=1' "$contract"
 require_contains 'package_readiness_claimed=0' "$contract"
 
 require_contains 'debian_source_package_name=latticra_0.0.0-1local1.dsc' "$contract"
@@ -125,14 +132,20 @@ require_contains 'operator_authorization_reference' "$contract"
 require_contains 'source_archive_accepted_for_build=0' "$contract"
 require_contains 'environment_transcript_present=0' "$contract"
 require_contains 'payload_inspection_contract_present=1' "$contract"
-require_contains 'publication_non_claim_review_present=0' "$contract"
+require_contains 'install_remove_transcript_contract_present=1' "$contract"
+require_contains 'publication_non_claim_review_present=1' "$contract"
+require_contains 'package_validation_result_promoted=0' "$contract"
 require_contains 'Add a Debian, FreeBSD, and OpenBSD package payload inspection contract' "$contract"
 require_contains 'Add a Debian, FreeBSD, and OpenBSD package install/remove transcript contract' "$contract"
+require_contains 'Add a Debian, FreeBSD, and OpenBSD package publication non-claim review contract' "$contract"
+require_contains 'Add a Debian, FreeBSD, and OpenBSD package validation promotion blocker matrix' "$contract"
 require_contains 'debian_freebsd_openbsd_package_artifact_naming_contract: ok' "$contract"
 
 require_contains "$contract" "$environment_contract"
 require_contains "$contract" "$gate_contract"
 require_contains 'docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md' "$contract"
+require_contains 'docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md' "$contract"
+require_contains 'docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' "$contract"
 require_contains "$contract" docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md
 require_contains "$contract" docs/status/FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md
 require_contains "$contract" docs/status/OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md

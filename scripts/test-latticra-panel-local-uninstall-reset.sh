@@ -171,6 +171,26 @@ require_contains 'usage: latticra {status|path|gui|receipts|docs|lc|reset|seal|n
 require_contains 'LC_COMMAND_WRAPPER=$(detect_lc_command_wrapper)' "$SCRIPT"
 require_contains 'for command in $COMMAND_WRAPPERS; do' "$SCRIPT"
 
+RESET_RECEIPT_SYMLINK_HOME="$TMP_DIR/reset-receipt-symlink-home"
+RESET_RECEIPT_SYMLINK_PREFIX="$RESET_RECEIPT_SYMLINK_HOME/.local/share/latticra"
+RESET_RECEIPT_SYMLINK_RECEIPTS="$TMP_DIR/reset-receipt-symlink-receipts"
+RESET_RECEIPT_SYMLINK_TARGET="$TMP_DIR/reset-receipt-symlink-target.txt"
+RESET_RECEIPT_SYMLINK_LOG="$TMP_DIR/reset-receipt-symlink.out"
+mkdir -p "$RESET_RECEIPT_SYMLINK_PREFIX" "$RESET_RECEIPT_SYMLINK_RECEIPTS"
+printf '%s\n' 'outside' > "$RESET_RECEIPT_SYMLINK_TARGET"
+ln -s "$RESET_RECEIPT_SYMLINK_TARGET" "$RESET_RECEIPT_SYMLINK_RECEIPTS/latest-reset-receipt.txt"
+if HOME="$RESET_RECEIPT_SYMLINK_HOME" sh "$SCRIPT" \
+  --prefix "$RESET_RECEIPT_SYMLINK_PREFIX" \
+  --receipt-dir "$RESET_RECEIPT_SYMLINK_RECEIPTS" \
+  --dry-run > "$RESET_RECEIPT_SYMLINK_LOG" 2>&1; then
+  fail "expected symlink reset latest receipt write to be refused"
+fi
+require_contains 'refusing to overwrite symlink file:' "$RESET_RECEIPT_SYMLINK_LOG"
+grep -Fqx 'outside' "$RESET_RECEIPT_SYMLINK_TARGET" ||
+  fail "symlink reset latest receipt target was modified"
+test -L "$RESET_RECEIPT_SYMLINK_RECEIPTS/latest-reset-receipt.txt" ||
+  fail "symlink reset latest receipt path was replaced"
+
 mkdir -p "$PREFIX/share/latticra/components" "$USER_BIN" "$APP_DIR" "$ICON_DIR"
 printf '%s\n' 'payload' > "$PREFIX/payload.txt"
 printf '%s\n' 'operator-owned' > "$USER_BIN/latticra"

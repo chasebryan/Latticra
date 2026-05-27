@@ -1,0 +1,211 @@
+# Debian, FreeBSD, and OpenBSD Package Publication Non-Claim Review Contract
+
+Status: active package publication non-claim review contract
+Scope: define publication and official-port non-claim review evidence for Debian, FreeBSD, and OpenBSD package validation without publishing packages.
+
+## Purpose
+
+This contract records the publication non-claim review required before any future Debian, FreeBSD, or OpenBSD package validation result can be promoted.
+
+The goal is narrow: future package validation evidence must remain clearly local-only unless a separate, explicit, platform-specific publication lane records the required upload, submission, maintainer, archive, or ports-tree authority.
+
+This contract is documentation-only and static. It does not upload packages, publish package artifacts, create package repositories, submit Latticra to Debian, submit Latticra to the FreeBSD ports tree, submit Latticra to the OpenBSD ports tree, create package artifacts, install packages, remove packages, or claim package readiness.
+
+## Current Publication Non-Claim State
+
+```text
+debian_freebsd_openbsd_package_publication_non_claim_review_contract_present=1
+debian_freebsd_openbsd_package_validation_promotion_blocker_matrix_contract_present=1
+publication_non_claim_review_contract_present=1
+publication_non_claim_review_contract_state=specified-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
+publication_non_claim_review_present=1
+package_build_gate_state=closed-no-effect
+payload_inspection_contract_state=specified-no-effect
+install_remove_transcript_contract_state=specified-no-effect
+package_validation_result_promoted=0
+package_artifact_created=0
+package_artifact_published=0
+package_repository_created=0
+package_repository_upload_run=0
+upstream_submission_run=0
+official_package_or_port_claimed=0
+platform_build_evidence_accepted=0
+package_readiness_claimed=0
+production_installer_ready=0
+root_installer_ready=0
+```
+
+## Debian Publication Non-Claims
+
+Future Debian validation promotion must preserve these current Debian non-claims:
+
+```text
+debian_publication_non_claim_review_required=1
+debian_publication_non_claim_review_present=1
+debian_package_publication_claimed=0
+debian_archive_ready=0
+debian_mentors_upload_claimed=0
+debian_sponsorship_claimed=0
+debian_ftp_master_acceptance_claimed=0
+debian_source_upload_run=0
+debian_mentors_upload_run=0
+debian_archive_upload_run=0
+debian_debsign_run=0
+debian_dput_run=0
+```
+
+The Debian package draft remains local-only. A future Debian upload or archive lane must be separate from local build, payload, install/remove, and publication non-claim review evidence.
+
+## FreeBSD Publication Non-Claims
+
+Future FreeBSD validation promotion must preserve these current FreeBSD non-claims:
+
+```text
+freebsd_publication_non_claim_review_required=1
+freebsd_publication_non_claim_review_present=1
+freebsd_package_publication_claimed=0
+freebsd_ports_tree_submission_claimed=0
+freebsd_bugzilla_pr_claimed=0
+freebsd_committer_review_claimed=0
+freebsd_official_port_claimed=0
+freebsd_pkg_repo_created=0
+freebsd_pkg_repo_publish_run=0
+freebsd_pkg_repo_sign_run=0
+```
+
+The FreeBSD port draft remains local-only. A future FreeBSD ports-tree submission or package repository lane must be separate from local build, payload, install/remove, and publication non-claim review evidence.
+
+## OpenBSD Publication Non-Claims
+
+Future OpenBSD validation promotion must preserve these current OpenBSD non-claims:
+
+```text
+openbsd_publication_non_claim_review_required=1
+openbsd_publication_non_claim_review_present=1
+openbsd_package_publication_claimed=0
+openbsd_ports_tree_submission_claimed=0
+openbsd_ports_review_thread_claimed=0
+openbsd_maintainer_acceptance_claimed=0
+openbsd_official_port_claimed=0
+openbsd_pkg_repo_created=0
+openbsd_pkg_repo_publish_run=0
+permit_package_enabled=0
+```
+
+The OpenBSD port draft remains local-only. `PERMIT_PACKAGE=No` remains in force until redistribution, license, notice, checksum, and maintainer-review evidence exists in a separate OpenBSD-specific lane.
+
+## Promotion Review Boundary
+
+A future package validation promotion review must record:
+
+```text
+package_validation_result_identifier
+platform_under_review
+source_archive_sha256
+package_artifact_sha256
+payload_inspection_transcript_sha256
+install_remove_transcript_sha256
+publication_non_claim_reviewer
+publication_non_claim_review_date
+non_claimed_publication_targets
+status_page_update_reference
+operator_authorization_reference
+```
+
+That review may only promote a validation result as local validation evidence. It must not convert local evidence into Debian archive evidence, FreeBSD official port evidence, OpenBSD official port evidence, package repository evidence, production installer evidence, or release readiness.
+
+## Current Blockers
+
+Package validation promotion remains blocked because the current repository still has:
+
+```text
+source_archive_accepted_for_build=0
+package_artifact_created=0
+package_artifact_sha256_recorded=0
+package_payload_accepted=0
+install_remove_transcript_present=0
+environment_transcript_present=0
+explicit_operator_build_authorization=0
+platform_build_evidence_accepted=0
+package_validation_result_promoted=0
+```
+
+## Command Boundary
+
+This contract does not:
+
+```text
+run debsign
+run dput
+upload to mentors.debian.net
+upload to a Debian archive
+submit to the FreeBSD ports tree
+create a FreeBSD Bugzilla PR
+publish a FreeBSD package repository
+submit to the OpenBSD ports tree
+send an OpenBSD ports review thread
+enable OpenBSD PERMIT_PACKAGE
+publish an OpenBSD package repository
+create package artifacts
+install Latticra on a host
+remove Latticra from a host
+claim package readiness
+```
+
+## Relationship To Existing Lanes
+
+This contract depends on:
+
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_ENVIRONMENT_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_ARTIFACT_NAMING_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+```
+
+The package-build gate remains closed. This publication non-claim review contract only records that local package validation evidence must remain non-published and non-official until a separate platform-specific publication lane exists.
+
+## Completed Follow-On Lane
+
+Completed follow-on lane:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package validation promotion blocker matrix before any platform-specific build evidence can be accepted.
+```
+
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-validation-promotion-blocker-matrix-contract.sh
+```
+
+That lane ties source, environment, artifact, payload, install/remove, and publication non-claim blockers together while keeping platform build evidence acceptance and validation promotion blocked.
+
+## Next Slice
+
+Recommended next slice:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial contract before any single-platform build lane can open.
+```
+
+That future lane should define how build evidence intake is refused until the blocker matrix opens, while keeping package builds and readiness blocked.
+
+## Validation
+
+Run:
+
+```sh
+sh scripts/test-debian-freebsd-openbsd-package-publication-non-claim-review-contract.sh
+```
+
+Expected output:
+
+```text
+debian_freebsd_openbsd_package_publication_non_claim_review_contract: ok
+```

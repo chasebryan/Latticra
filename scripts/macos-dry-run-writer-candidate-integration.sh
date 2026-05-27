@@ -173,5 +173,5 @@ system_extension_authority=0
 network_extension_authority=0
 privileged_helper_authority=0
 production_installer_ready=0
-next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-contract
+next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-contract
 REPORT

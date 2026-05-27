@@ -87,10 +87,12 @@ Before adding or changing public wording, confirm:
 4. Adjacent non-claims remain visible.
 5. Denied effects are stated when the topic involves runtime, installer, package, AI, host, network, signing, or security behavior.
 6. The public entry point and the detailed status record do not drift.
-7. Source, mirror, validation, and non-claim traceability follows [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md).
-8. Validation selection follows [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
-9. Terminology follows [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
-10. Broad public wording changes have a [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) outcome.
+7. Shared terms match [`DOCUMENTATION_GLOSSARY.md`](DOCUMENTATION_GLOSSARY.md).
+8. Source, mirror, validation, and non-claim traceability follows [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md).
+9. Validation selection follows [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
+10. Drift, stale evidence, and demotion handling follows [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md).
+11. Terminology follows [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
+12. Broad public wording changes have a [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) outcome.
 
 ## Primary References
 
@@ -101,8 +103,10 @@ Before adding or changing public wording, confirm:
 - [`EVIDENCE_LADDER.md`](EVIDENCE_LADDER.md)
 - [`REAL_SYSTEM_CONTRACT.md`](REAL_SYSTEM_CONTRACT.md)
 - [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md)
+- [`DOCUMENTATION_GLOSSARY.md`](DOCUMENTATION_GLOSSARY.md)
 - [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md)
 - [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md)
+- [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md)
 - [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md)
 - [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md)
 - [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md)

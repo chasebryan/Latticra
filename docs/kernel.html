@@ -124,7 +124,7 @@
         </article>
         <article>
           <span>final_state</span>
-          <strong>scheduler-handoff-ready</strong>
+          <strong>scheduler-run-entry-ready</strong>
         </article>
         <article>
           <span>lifecycle_complete</span>
@@ -146,7 +146,7 @@
         <p class="eyebrow">Lifecycle Ladder</p>
         <h2>The sequence is explicit and bounded.</h2>
         <p>
-          The lifecycle runner can advance a local in-memory state object through an approved sequence ending at scheduler-handoff-ready. That path is evidence, not scheduler execution.
+          The lifecycle runner can advance a local in-memory state object through an approved sequence ending at scheduler-run-entry-ready. That path is evidence, not scheduler execution.
         </p>
       </div>
       <div class="content-shell kernel-ladder-grid">
@@ -172,8 +172,8 @@
         </article>
         <article>
           <span>Target</span>
-          <h3>scheduler-handoff-ready</h3>
-          <p>Reports the current lifecycle target while scheduler handoff, scheduler dispatch, scheduler selection, scheduler credit updates, quota updates, time reads, preemption, context switch, and run queue mutation remain denied.</p>
+          <h3>scheduler-run-entry-ready</h3>
+          <p>Reports the current lifecycle target while scheduler run-entry, scheduler activation, scheduler handoff, scheduler dispatch, scheduler selection, scheduler credit updates, quota updates, time reads, preemption, context switch, and run queue mutation remain denied.</p>
         </article>
       </div>
     </section>
@@ -194,7 +194,7 @@
           </div>
           <div role="row">
             <span role="cell">Controlled internal state</span>
-            <p role="cell">The lifecycle may report internal state changes such as a completed sequence to scheduler-handoff-ready while preserving external_effect_performed=0.</p>
+            <p role="cell">The lifecycle may report internal state changes such as a completed sequence to scheduler-run-entry-ready while preserving external_effect_performed=0.</p>
           </div>
           <div role="row">
             <span role="cell">Denied now</span>
@@ -230,6 +230,10 @@ sh scripts/test-kernel-scheduler-dispatch.sh
 sh scripts/test-kernel-scheduler-dispatch-report-runner.sh
 sh scripts/test-kernel-scheduler-handoff.sh
 sh scripts/test-kernel-scheduler-handoff-report-runner.sh
+sh scripts/test-kernel-scheduler-activation.sh
+sh scripts/test-kernel-scheduler-activation-report-runner.sh
+sh scripts/test-kernel-scheduler-run-entry.sh
+sh scripts/test-kernel-scheduler-run-entry-report-runner.sh
 sh scripts/test-kernel-lifecycle.sh
 sh scripts/test-kernel-lifecycle-report-runner.sh</code></pre>
         </article>
@@ -252,11 +256,13 @@ sh scripts/test-kernel-lifecycle-status-alignment.sh</code></pre>
         <a href="KERNEL_IMPLEMENTATION.md"><strong>Kernel seed</strong><span>Compiled kernel identity, report fields, no-effect posture, and denied boot/runtime behavior.</span></a>
         <a href="KERNEL_SUBSYSTEM_REGISTRY.md"><strong>Subsystem registry</strong><span>Boot, runtime, scheduler, memory, process, filesystem, network, device, and security metadata.</span></a>
         <a href="KERNEL_STATE_MACHINE.md"><strong>State machine</strong><span>Bounded in-memory state object, sequential step function, transition log, and report surface.</span></a>
-        <a href="KERNEL_LIFECYCLE_SEED.md"><strong>Lifecycle seed</strong><span>Approved sequence to scheduler-handoff-ready with external effects denied.</span></a>
+        <a href="KERNEL_LIFECYCLE_SEED.md"><strong>Lifecycle seed</strong><span>Approved sequence to scheduler-run-entry-ready with external effects denied.</span></a>
         <a href="KERNEL_SCHEDULER_CREDIT_SEED.md"><strong>Scheduler credit seed</strong><span>Candidate scheduler credit metadata with quota and CPU usage write authority denied.</span></a>
         <a href="KERNEL_SCHEDULER_SELECTION_SEED.md"><strong>Scheduler selection seed</strong><span>Candidate runnable selection metadata with dispatch and run-queue authority denied.</span></a>
         <a href="KERNEL_SCHEDULER_DISPATCH_SEED.md"><strong>Scheduler dispatch seed</strong><span>Candidate dispatch metadata with context-switch and run-queue authority denied.</span></a>
         <a href="KERNEL_SCHEDULER_HANDOFF_SEED.md"><strong>Scheduler handoff seed</strong><span>Candidate handoff metadata with scheduler, dispatch, context-switch, and run-queue authority denied.</span></a>
+        <a href="KERNEL_SCHEDULER_ACTIVATION_SEED.md"><strong>Scheduler activation seed</strong><span>Candidate activation metadata with execution, context-switch, runtime, and run-queue authority denied.</span></a>
+        <a href="KERNEL_SCHEDULER_RUN_ENTRY_SEED.md"><strong>Scheduler run-entry seed</strong><span>Candidate run-entry metadata with runtime entry, context-switch, and scheduler authority denied.</span></a>
         <a href="KERNEL_TIME_ACCOUNTING_SEED.md"><strong>Time accounting seed</strong><span>Candidate CPU charge metadata with clock, quota, and scheduler credit authority denied.</span></a>
         <a href="KERNEL_PREEMPTION_SEED.md"><strong>Preemption seed</strong><span>Candidate preemption decision metadata with dispatch and context-switch authority denied.</span></a>
         <a href="KERNEL_CONTEXT_SWITCH_SEED.md"><strong>Context switch seed</strong><span>Candidate switch metadata with register, stack, and address-space authority denied.</span></a>

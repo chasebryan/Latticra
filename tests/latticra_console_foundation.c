@@ -43,6 +43,8 @@ int main(void) {
     char workspace_contract_report[LATTICRA_CONSOLE_WORKSPACE_CONTRACT_REPORT_MAX];
     char namespace_contract_report[LATTICRA_CONSOLE_NAMESPACE_CONTRACT_REPORT_MAX];
     char rootfs_contract_report[LATTICRA_CONSOLE_ROOTFS_CONTRACT_REPORT_MAX];
+    char packages_contract_report[LATTICRA_CONSOLE_PACKAGES_CONTRACT_REPORT_MAX];
+    char init_contract_report[LATTICRA_CONSOLE_INIT_CONTRACT_REPORT_MAX];
     char host_contract_report[LATTICRA_CONSOLE_HOST_CONTRACT_REPORT_MAX];
     char host_inventory_report[LATTICRA_CONSOLE_HOST_INVENTORY_REPORT_MAX];
     char host_adapter_report[LATTICRA_CONSOLE_HOST_ADAPTER_REPORT_MAX];
@@ -98,6 +100,14 @@ int main(void) {
     failures += require_text(
         "result.rootfs_contract_status",
         result.rootfs_contract_status,
+        "metadata-only-contract-ready");
+    failures += require_text(
+        "result.packages_contract_status",
+        result.packages_contract_status,
+        "metadata-only-contract-ready");
+    failures += require_text(
+        "result.init_contract_status",
+        result.init_contract_status,
         "metadata-only-contract-ready");
     failures += require_text(
         "result.substrate_bridge_status",
@@ -173,6 +183,8 @@ int main(void) {
     failures += require_int("result.workspace_contract_present", result.workspace_contract_present, 1);
     failures += require_int("result.namespace_contract_present", result.namespace_contract_present, 1);
     failures += require_int("result.rootfs_contract_present", result.rootfs_contract_present, 1);
+    failures += require_int("result.packages_contract_present", result.packages_contract_present, 1);
+    failures += require_int("result.init_contract_present", result.init_contract_present, 1);
     failures += require_int("result.command_registry_present", result.command_registry_present, 1);
     failures += require_int("result.substrate_bridge_present", result.substrate_bridge_present, 1);
     failures += require_int(
@@ -333,6 +345,28 @@ int main(void) {
             "lc.rootfs.contract");
         failures += require_int("lc rootfs no_effect", command->no_effect, 1);
         failures += require_int("lc rootfs host launch", command->launches_host_process, 0);
+    }
+
+    command = latticra_console_find_command("lc packages");
+    failures += require_int("find lc packages", command != 0, 1);
+    if (command != 0) {
+        failures += require_text(
+            "lc packages capability",
+            command->capability_label,
+            "lc.packages.contract");
+        failures += require_int("lc packages no_effect", command->no_effect, 1);
+        failures += require_int("lc packages host launch", command->launches_host_process, 0);
+    }
+
+    command = latticra_console_find_command("lc init");
+    failures += require_int("find lc init", command != 0, 1);
+    if (command != 0) {
+        failures += require_text(
+            "lc init capability",
+            command->capability_label,
+            "lc.init.contract");
+        failures += require_int("lc init no_effect", command->no_effect, 1);
+        failures += require_int("lc init host launch", command->launches_host_process, 0);
     }
 
     command = latticra_console_find_command("lc receipts");
@@ -526,6 +560,10 @@ int main(void) {
     failures += require_contains("report", report, "namespace_contract_present=1");
     failures += require_contains("report", report, "rootfs_contract_status=metadata-only-contract-ready");
     failures += require_contains("report", report, "rootfs_contract_present=1");
+    failures += require_contains("report", report, "packages_contract_status=metadata-only-contract-ready");
+    failures += require_contains("report", report, "packages_contract_present=1");
+    failures += require_contains("report", report, "init_contract_status=metadata-only-contract-ready");
+    failures += require_contains("report", report, "init_contract_present=1");
     failures += require_contains("report", report, "workspace_contract_status=metadata-only-contract-ready");
     failures += require_contains("report", report, "workspace_contract_present=1");
     failures += require_contains("report", report, "substrate_bridge_present=1");
@@ -659,6 +697,10 @@ int main(void) {
     failures += require_contains("registry_report", registry_report, "capability=lc.namespace.contract");
     failures += require_contains("registry_report", registry_report, "command=lc rootfs");
     failures += require_contains("registry_report", registry_report, "capability=lc.rootfs.contract");
+    failures += require_contains("registry_report", registry_report, "command=lc packages");
+    failures += require_contains("registry_report", registry_report, "capability=lc.packages.contract");
+    failures += require_contains("registry_report", registry_report, "command=lc init");
+    failures += require_contains("registry_report", registry_report, "capability=lc.init.contract");
     failures += require_contains("registry_report", registry_report, "capability=lc.install.config");
     failures += require_contains("registry_report", registry_report, "capability=lc.substrate.inspect");
     failures += require_contains("registry_report", registry_report, "launches_host_process=0");
@@ -677,6 +719,8 @@ int main(void) {
     failures += require_contains("help_report", help_report, "lc workspace");
     failures += require_contains("help_report", help_report, "lc namespace");
     failures += require_contains("help_report", help_report, "lc rootfs");
+    failures += require_contains("help_report", help_report, "lc packages");
+    failures += require_contains("help_report", help_report, "lc init");
     failures += require_contains("help_report", help_report, "lc host-contract");
     failures += require_contains("help_report", help_report, "lc host-inventory");
     failures += require_contains("help_report", help_report, "lc host-adapter");
@@ -706,6 +750,8 @@ int main(void) {
     failures += require_contains("manpage_report", manpage_report, "latticra-lc workspace");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc namespace");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc rootfs");
+    failures += require_contains("manpage_report", manpage_report, "latticra-lc packages");
+    failures += require_contains("manpage_report", manpage_report, "latticra-lc init");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc host-contract");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc host-inventory");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc host-adapter");
@@ -840,6 +886,40 @@ int main(void) {
     failures += require_int("lc rootfs boundary future gate", boundary.requires_future_gate, 0);
     failures += require_int("lc rootfs boundary no effect", boundary.no_effect, 1);
     failures += require_int("lc rootfs boundary host mutation allowed", boundary.host_mutation_allowed, 0);
+
+    command = latticra_console_find_command("lc packages");
+    failures += require_int(
+        "lc packages boundary",
+        latticra_console_command_boundary_classify(command, &boundary),
+        LATTICRA_STATUS_OK);
+    failures += require_text(
+        "lc packages seal capability",
+        boundary.seal_capability_label,
+        "seal.capability.report");
+    failures += require_int(
+        "lc packages runtime kind",
+        boundary.runtime_request_kind,
+        LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK);
+    failures += require_int("lc packages boundary future gate", boundary.requires_future_gate, 0);
+    failures += require_int("lc packages boundary no effect", boundary.no_effect, 1);
+    failures += require_int("lc packages boundary host mutation allowed", boundary.host_mutation_allowed, 0);
+
+    command = latticra_console_find_command("lc init");
+    failures += require_int(
+        "lc init boundary",
+        latticra_console_command_boundary_classify(command, &boundary),
+        LATTICRA_STATUS_OK);
+    failures += require_text(
+        "lc init seal capability",
+        boundary.seal_capability_label,
+        "seal.capability.report");
+    failures += require_int(
+        "lc init runtime kind",
+        boundary.runtime_request_kind,
+        LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK);
+    failures += require_int("lc init boundary future gate", boundary.requires_future_gate, 0);
+    failures += require_int("lc init boundary no effect", boundary.no_effect, 1);
+    failures += require_int("lc init boundary host mutation allowed", boundary.host_mutation_allowed, 0);
 
     command = latticra_console_find_command("lc host-contract");
     failures += require_int(
@@ -1125,6 +1205,8 @@ int main(void) {
     failures += require_contains("boundary_report", boundary_report, "command=lc workspace");
     failures += require_contains("boundary_report", boundary_report, "command=lc namespace");
     failures += require_contains("boundary_report", boundary_report, "command=lc rootfs");
+    failures += require_contains("boundary_report", boundary_report, "command=lc packages");
+    failures += require_contains("boundary_report", boundary_report, "command=lc init");
     failures += require_contains("boundary_report", boundary_report, "command=lc host-contract");
     failures += require_contains("boundary_report", boundary_report, "command=lc host-inventory");
     failures += require_contains("boundary_report", boundary_report, "command=lc host-adapter");
@@ -1334,6 +1416,96 @@ int main(void) {
     failures += require_contains(
         "rootfs_contract_report",
         rootfs_contract_report,
+        "production_os_claim=0");
+
+    failures += require_int(
+        "packages_contract_report",
+        latticra_console_packages_contract_report(packages_contract_report, sizeof(packages_contract_report)),
+        LATTICRA_STATUS_OK);
+    failures += require_contains(
+        "packages_contract_report",
+        packages_contract_report,
+        "LATTICRA CONSOLE PACKAGES CONTRACT");
+    failures += require_contains(
+        "packages_contract_report",
+        packages_contract_report,
+        "packages_profile=lc-packages-v0");
+    failures += require_contains(
+        "packages_contract_report",
+        packages_contract_report,
+        "packages_contract_present=1");
+    failures += require_contains(
+        "packages_contract_report",
+        packages_contract_report,
+        "package_manifest_write_allowed=0");
+    failures += require_contains(
+        "packages_contract_report",
+        packages_contract_report,
+        "package_catalog_read_allowed=0");
+    failures += require_contains(
+        "packages_contract_report",
+        packages_contract_report,
+        "package_download_allowed=0");
+    failures += require_contains(
+        "packages_contract_report",
+        packages_contract_report,
+        "package_manager_execution_allowed=0");
+    failures += require_contains(
+        "packages_contract_report",
+        packages_contract_report,
+        "rootfs_package_install_allowed=0");
+    failures += require_contains(
+        "packages_contract_report",
+        packages_contract_report,
+        "command_surface=lc packages");
+    failures += require_contains(
+        "packages_contract_report",
+        packages_contract_report,
+        "host_process_launch_allowed=0");
+    failures += require_contains(
+        "packages_contract_report",
+        packages_contract_report,
+        "production_os_claim=0");
+
+    failures += require_int(
+        "init_contract_report",
+        latticra_console_init_contract_report(init_contract_report, sizeof(init_contract_report)),
+        LATTICRA_STATUS_OK);
+    failures += require_contains(
+        "init_contract_report",
+        init_contract_report,
+        "LATTICRA CONSOLE INIT CONTRACT");
+    failures += require_contains(
+        "init_contract_report",
+        init_contract_report,
+        "init_profile=lc-init-v0");
+    failures += require_contains(
+        "init_contract_report",
+        init_contract_report,
+        "init_contract_present=1");
+    failures += require_contains(
+        "init_contract_report",
+        init_contract_report,
+        "pid1_claim_allowed=0");
+    failures += require_contains(
+        "init_contract_report",
+        init_contract_report,
+        "service_start_allowed=0");
+    failures += require_contains(
+        "init_contract_report",
+        init_contract_report,
+        "process_supervision_allowed=0");
+    failures += require_contains(
+        "init_contract_report",
+        init_contract_report,
+        "command_surface=lc init");
+    failures += require_contains(
+        "init_contract_report",
+        init_contract_report,
+        "host_process_launch_allowed=0");
+    failures += require_contains(
+        "init_contract_report",
+        init_contract_report,
         "production_os_claim=0");
 
     failures += require_int(
@@ -2108,6 +2280,30 @@ int main(void) {
     failures += require_contains(
         "receipt_report",
         receipt_report,
+        "packages_contract_receipt_required=1");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
+        "packages_contract_present=1");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
+        "packages_contract_command=lc packages");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
+        "init_contract_receipt_required=1");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
+        "init_contract_present=1");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
+        "init_contract_command=lc init");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
         "receipt_request_contract_required=1");
     failures += require_contains(
         "receipt_report",
@@ -2156,7 +2352,7 @@ int main(void) {
     failures += require_contains(
         "receipt_report",
         receipt_report,
-        "receipt_surfaces=profile,session,workspace,namespace,rootfs,host-contract,host-inventory,host-adapter,runtime-boundary");
+        "receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,host-contract,host-inventory,host-adapter,runtime-boundary");
     failures += require_contains(
         "receipt_report",
         receipt_report,

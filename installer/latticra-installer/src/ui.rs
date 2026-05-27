@@ -1,6 +1,7 @@
 use crate::config::{
     render_plan, Components, InstallBehavior, InstallProfile, InstallerConfig,
-    LatticraConsoleProfile, SealConfig, SealCryptoProfile,
+    LatticraConsoleConfig, LatticraConsoleProfile, Safety, SealConfig, SealCryptoProfile,
+    UpdaterConfig,
 };
 use crate::engine::{self, InstallEvent, RemovalOperation};
 use eframe::egui;
@@ -24,7 +25,7 @@ const RUNNING_PROGRESS_MAX_WIDTH: f32 = 520.0;
 const RUNNING_RECENT_LOG_MAX_HEIGHT: f32 = 180.0;
 const RUNNING_MONITOR_WIDE_WIDTH: f32 = 980.0;
 const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
-    ("status", "Stage-43 status and authority summary"),
+    ("status", "Stage-46 status and authority summary"),
     ("context", "Stage-1 local context-pack metadata"),
     ("runtime", "Stage-2 runtime-profile metadata"),
     ("plan", "Stage-3 prompt-plan workbench metadata"),
@@ -155,6 +156,18 @@ const NADIA_PANEL_COMMANDS: &[(&str, &str)] = &[
         "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt",
         "Stage-43 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt contract",
     ),
+    (
+        "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review",
+        "Stage-44 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review contract",
+    ),
+    (
+        "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition",
+        "Stage-45 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition contract",
+    ),
+    (
+        "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release",
+        "Stage-46 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release contract",
+    ),
 ];
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -231,7 +244,7 @@ impl Default for LatticraInstallerApp {
             console_lines: vec![
                 format!("Latticra Panel v{PANEL_VERSION} bounded operator console online."),
                 "Authority baseline: root=0 network=0 runtime_enforcement=0.".to_owned(),
-                "Panel commands: help, status, lc commands, lc status, lc install-config, lc rootfs, plan, save, dry-run, reset, uninstall, profile seal, profile fedora, nadia commands."
+                "Panel commands: help, status, lc commands, lc status, lc install-config, lc rootfs, lc packages, lc init, plan, save, dry-run, reset, uninstall, profile seal, profile fedora, nadia commands."
                     .to_owned(),
                 "Navigation commands: pwd, cd <dir>. External host commands are denied.".to_owned(),
             ],
@@ -305,8 +318,15 @@ impl LatticraInstallerApp {
     }
 
     fn refresh_plan(&mut self) {
-        self.config.safety.allow_network_effect = false;
-        self.plan = render_plan(&self.config);
+        match ui_plan_artifact(&self.config) {
+            Ok((config, plan)) => {
+                self.config = config;
+                self.plan = plan;
+            }
+            Err(err) => {
+                self.plan = blocked_ui_plan(&err);
+            }
+        }
     }
 
     fn apply_profile(&mut self, profile: InstallProfile) {
@@ -373,27 +393,42 @@ impl LatticraInstallerApp {
     }
 
     fn save_config(&mut self) {
-        self.config.safety.allow_network_effect = false;
-        match toml::to_string_pretty(&self.config) {
-            Ok(toml) => match write_ui_artifact(UI_CONFIG_ARTIFACT, toml.as_bytes()) {
-                Ok(_) => {
-                    self.status = "Saved latticra-installer-config.toml".to_owned();
-                    self.push_console("saved latticra-installer-config.toml");
+        match ui_config_toml_artifact(&self.config) {
+            Ok((config, toml)) => {
+                self.config = config;
+                match write_ui_artifact(UI_CONFIG_ARTIFACT, toml.as_bytes()) {
+                    Ok(_) => {
+                        self.status = "Saved latticra-installer-config.toml".to_owned();
+                        self.push_console("saved latticra-installer-config.toml");
+                    }
+                    Err(err) => self.status = format!("Could not save config: {err}"),
                 }
-                Err(err) => self.status = format!("Could not save config: {err}"),
-            },
-            Err(err) => self.status = format!("Could not serialize config: {err}"),
+            }
+            Err(err) => {
+                self.status = format!("Could not save config: {err}");
+                self.push_console(format!("blocked config save: {err}"));
+            }
         }
     }
 
     fn write_plan(&mut self) {
-        self.refresh_plan();
-        match write_ui_artifact(UI_PLAN_ARTIFACT, self.plan.as_bytes()) {
-            Ok(_) => {
-                self.status = "Wrote latticra-installer-plan.txt".to_owned();
-                self.push_console("wrote latticra-installer-plan.txt");
+        match ui_plan_artifact(&self.config) {
+            Ok((config, plan)) => {
+                self.config = config;
+                self.plan = plan;
+                match write_ui_artifact(UI_PLAN_ARTIFACT, self.plan.as_bytes()) {
+                    Ok(_) => {
+                        self.status = "Wrote latticra-installer-plan.txt".to_owned();
+                        self.push_console("wrote latticra-installer-plan.txt");
+                    }
+                    Err(err) => self.status = format!("Could not write plan: {err}"),
+                }
             }
-            Err(err) => self.status = format!("Could not write plan: {err}"),
+            Err(err) => {
+                self.plan = blocked_ui_plan(&err);
+                self.status = format!("Could not write plan: {err}");
+                self.push_console(format!("blocked plan write: {err}"));
+            }
         }
     }
 
@@ -630,6 +665,26 @@ impl LatticraInstallerApp {
         Ok(())
     }
 
+    fn panel_can_write_artifacts(&self) -> Result<(), String> {
+        sanitized_ui_artifact_config(&self.config).map(|_| ())
+    }
+
+    fn console_report_config(&mut self) -> Option<InstallerConfig> {
+        match sanitized_ui_artifact_config(&self.config) {
+            Ok(config) => {
+                self.config = config.clone();
+                Some(config)
+            }
+            Err(err) => {
+                self.status = format!("Console command blocked: {err}");
+                self.push_console(format!(
+                    "blocked: console command requires valid authority fields: {err}"
+                ));
+                None
+            }
+        }
+    }
+
     fn install_blocker(&self, running: bool) -> Option<String> {
         if running {
             return Some(
@@ -700,13 +755,19 @@ impl LatticraInstallerApp {
         let normalized = command.to_ascii_lowercase();
         let parts: Vec<&str> = normalized.split_whitespace().collect();
 
+        if console_command_requires_authority_floor(parts.as_slice())
+            && self.console_report_config().is_none()
+        {
+            return;
+        }
+
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc session, lc workspace, lc namespace, lc rootfs, lc profile hosted|panel|standalone|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
+                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc session, lc workspace, lc namespace, lc rootfs, lc packages, lc init, lc profile hosted|panel|standalone|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
                 );
                 self.push_console(
-                    "nadia: use `nadia commands` for the full Stage-1 through Stage-43 command map",
+                    "nadia: use `nadia commands` for the full Stage-1 through Stage-46 command map",
                 );
                 self.push_console("panel: profile guided|seal|fedora|custom, seal profile report|sign|aead|hybrid|custom");
                 self.push_console("navigation: pwd, cd <path>; external host commands are denied");
@@ -846,6 +907,18 @@ impl LatticraInstallerApp {
                 self.push_console("rootfs_contract_status=metadata-only-contract");
                 self.push_console("rootfs_contract_present=1");
                 self.push_console(format!(
+                    "packages_contract_profile={}",
+                    self.config.lc.packages_contract_profile
+                ));
+                self.push_console("packages_contract_status=metadata-only-contract");
+                self.push_console("packages_contract_present=1");
+                self.push_console(format!(
+                    "init_contract_profile={}",
+                    self.config.lc.init_contract_profile
+                ));
+                self.push_console("init_contract_status=metadata-only-contract");
+                self.push_console("init_contract_present=1");
+                self.push_console(format!(
                     "command_registry_profile={}",
                     self.config.lc.command_registry_profile
                 ));
@@ -892,6 +965,16 @@ impl LatticraInstallerApp {
                     self.config.lc.rootfs_contract_profile
                 ));
                 self.push_console("rootfs_contract_status=metadata-only-contract");
+                self.push_console(format!(
+                    "packages_contract_profile={}",
+                    self.config.lc.packages_contract_profile
+                ));
+                self.push_console("packages_contract_status=metadata-only-contract");
+                self.push_console(format!(
+                    "init_contract_profile={}",
+                    self.config.lc.init_contract_profile
+                ));
+                self.push_console("init_contract_status=metadata-only-contract");
                 self.push_console(format!(
                     "receipt_request_contract_profile={}",
                     self.config.lc.receipt_request_contract_profile
@@ -1006,6 +1089,14 @@ impl LatticraInstallerApp {
                     self.config.lc.require_rootfs_contract
                 ));
                 self.push_console(format!(
+                    "packages_contract_required={}",
+                    self.config.lc.require_packages_contract
+                ));
+                self.push_console(format!(
+                    "init_contract_required={}",
+                    self.config.lc.require_init_contract
+                ));
+                self.push_console(format!(
                     "receipt_request_contract_required={}",
                     self.config.lc.require_receipt_request_contract
                 ));
@@ -1090,6 +1181,8 @@ impl LatticraInstallerApp {
                 self.push_console("workspace_contract_present=1");
                 self.push_console("namespace_contract_present=1");
                 self.push_console("rootfs_contract_present=1");
+                self.push_console("packages_contract_present=1");
+                self.push_console("init_contract_present=1");
                 self.push_console(format!(
                     "panel_embedded_console={}",
                     self.config.lc.install.panel_embedded_console
@@ -1143,7 +1236,7 @@ impl LatticraInstallerApp {
                 self.apply_lc_profile(LatticraConsoleProfile::Custom);
             }
             ["lc", "commands"] | ["console", "commands"] => {
-                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc install-config,lc standalone,lc session,lc workspace,lc namespace,lc rootfs,lc profiles,lc receipts,lc receipt-request,lc receipt-payload,lc receipt-artifact,lc receipt-artifact-review,lc receipt-review-receipt,lc receipt-review-draft,lc receipt-materialization-plan,lc signature-request,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
+                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc install-config,lc standalone,lc session,lc workspace,lc namespace,lc rootfs,lc packages,lc init,lc profiles,lc receipts,lc receipt-request,lc receipt-payload,lc receipt-artifact,lc receipt-artifact-review,lc receipt-review-receipt,lc receipt-review-draft,lc receipt-materialization-plan,lc signature-request,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
                 self.push_console("registry_authority=metadata-only external_host_processes=0");
             }
             ["lc", "standalone"] | ["console", "standalone"] | ["lc", "standalone-contract"] => {
@@ -1280,6 +1373,75 @@ impl LatticraInstallerApp {
                     "host_process_launch_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 production_os_claim=0",
                 );
             }
+            ["lc", "packages"]
+            | ["console", "packages"]
+            | ["lc", "packages-contract"]
+            | ["lc", "package-manifest"] => {
+                self.push_console("lc.packages=Latticra Console packages contract");
+                self.push_console(format!(
+                    "packages_profile={}",
+                    self.config.lc.packages_contract_profile
+                ));
+                self.push_console("packages_status=metadata-only-contract");
+                self.push_console("packages_contract_present=1");
+                self.push_console("packages_kind=lc-rootfs-package-manifest-envelope");
+                self.push_console("packages_root=share/latticra/lc/packages");
+                self.push_console("package_manifest_present=0 package_manifest_write_allowed=0");
+                self.push_console(
+                    "package_catalog_present=0 package_catalog_read_allowed=0 package_catalog_write_allowed=0",
+                );
+                self.push_console(
+                    "package_download_allowed=0 package_install_plan_present=0 package_install_plan_write_allowed=0",
+                );
+                self.push_console(
+                    "package_manager_present=0 package_manager_execution_allowed=0 package_script_execution_allowed=0",
+                );
+                self.push_console(
+                    "rootfs_package_manifest_present=0 rootfs_package_install_allowed=0 rootfs_file_write_allowed=0",
+                );
+                self.push_console(
+                    "rootfs_contract_required=1 namespace_contract_required=1 workspace_contract_required=1",
+                );
+                self.push_console("os_base_contract_required=1 runtime_boundary_required=1");
+                self.push_console("command_surface=lc packages");
+                self.push_console(
+                    "promotion_gate=lc_packages_contract_before_catalog_install_or_rootfs_write",
+                );
+                self.push_console(
+                    "host_process_launch_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 production_os_claim=0",
+                );
+            }
+            ["lc", "init"] | ["console", "init"] | ["lc", "init-contract"] => {
+                self.push_console("lc.init=Latticra Console init contract");
+                self.push_console(format!(
+                    "init_profile={}",
+                    self.config.lc.init_contract_profile
+                ));
+                self.push_console("init_status=metadata-only-contract");
+                self.push_console("init_contract_present=1");
+                self.push_console("init_kind=lc-internal-init-and-service-envelope");
+                self.push_console("init_root=share/latticra/lc/init");
+                self.push_console("init_manifest_present=0 init_manifest_write_allowed=0");
+                self.push_console("pid1_claim_allowed=0");
+                self.push_console("init_process_present=0 init_process_launch_allowed=0");
+                self.push_console("service_registry_present=0 service_registry_write_allowed=0");
+                self.push_console(
+                    "service_start_allowed=0 service_stop_allowed=0 service_restart_allowed=0",
+                );
+                self.push_console("process_supervision_allowed=0");
+                self.push_console("startup_order_present=0 startup_order_write_allowed=0");
+                self.push_console(
+                    "rootfs_contract_required=1 packages_contract_required=1 namespace_contract_required=1",
+                );
+                self.push_console("os_base_contract_required=1 runtime_boundary_required=1");
+                self.push_console("command_surface=lc init");
+                self.push_console(
+                    "promotion_gate=lc_init_contract_before_pid1_service_supervision_or_boot",
+                );
+                self.push_console(
+                    "host_process_launch_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 production_os_claim=0",
+                );
+            }
             ["lc", "receipts"]
             | ["console", "receipts"]
             | ["lc", "receipt-contract"]
@@ -1329,6 +1491,18 @@ impl LatticraInstallerApp {
                 ));
                 self.push_console("rootfs_contract_present=1");
                 self.push_console("rootfs_contract_command=lc rootfs");
+                self.push_console(format!(
+                    "packages_contract_required={}",
+                    self.config.lc.require_packages_contract
+                ));
+                self.push_console("packages_contract_present=1");
+                self.push_console("packages_contract_command=lc packages");
+                self.push_console(format!(
+                    "init_contract_required={}",
+                    self.config.lc.require_init_contract
+                ));
+                self.push_console("init_contract_present=1");
+                self.push_console("init_contract_command=lc init");
                 self.push_console(format!(
                     "receipt_request_contract_required={}",
                     self.config.lc.require_receipt_request_contract
@@ -1391,6 +1565,7 @@ impl LatticraInstallerApp {
                 self.push_console(
                     "seal_signature_present=0 seal_signing_authority_present=0 receipt_signed=0",
                 );
+                self.push_console("receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,host-contract,host-inventory,host-adapter,runtime-boundary");
                 self.push_console(
                     "file_write_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0",
                 );
@@ -1471,6 +1646,7 @@ impl LatticraInstallerApp {
                 self.push_console("signature_request_profile=latticra-seal-signature-request/0.1");
                 self.push_console("requested_receipt_profile=latticra-seal-verified-receipt/0.1");
                 self.push_console("requested_capability=verified-receipt-report");
+                self.push_console("requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,host-contract,host-inventory,host-adapter,runtime-boundary");
                 self.push_console("seal_signature_request_ready=0 seal_signature_request_present=0 seal_signing_authority_present=0");
                 self.push_console("seal_signer_handoff_allowed=0 seal_signing_operation_allowed=0 receipt_write_allowed=0 receipt_signed=0");
                 self.push_console(
@@ -2304,6 +2480,24 @@ impl LatticraInstallerApp {
                     "stage=43 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract; prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_signed=0 runtime_invoked=0",
                 );
                 self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_stage=44-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract",
+                );
+                self.push_console(
+                    "stage=44 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract; prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_findings_recorded=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_stage=45-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract",
+                );
+                self.push_console(
+                    "stage=45 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract; prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_findings_recorded=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_stage=46-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract",
+                );
+                self.push_console(
+                    "stage=46 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract; prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_record_created=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_published=0 runtime_invoked=0",
+                );
+                self.push_console(
                     "network_authority=0 tool_execution_authority=0 self_modification_authority=0",
                 );
             }
@@ -2965,6 +3159,81 @@ impl LatticraInstallerApp {
                 );
                 self.push_console(
                     "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1",
+                );
+            }
+            ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review"]
+            | ["nadia", "evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review"]
+            | ["nadia", "prompt-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review"]
+            | ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract"] =>
+            {
+                self.push_console(
+                    "nadia_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review=stage-44-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract",
+                );
+                self.push_console(
+                    "panel_command=nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console(
+                    "installed_cli=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_status=contract_only prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_record_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_decision_recorded=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_findings_recorded=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1",
+                );
+            }
+            ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition"]
+            | ["nadia", "evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition"]
+            | ["nadia", "prompt-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition"]
+            | ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract"] =>
+            {
+                self.push_console(
+                    "nadia_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition=stage-45-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-contract",
+                );
+                self.push_console(
+                    "panel_command=nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console(
+                    "installed_cli=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract_status=contract_only prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_record_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_decision_recorded=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_findings_recorded=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract=1",
+                );
+            }
+            ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release"]
+            | ["nadia", "evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release"]
+            | ["nadia", "prompt-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release"]
+            | ["nadia", "prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract"] =>
+            {
+                self.push_console(
+                    "nadia_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release=stage-46-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract",
+                );
+                self.push_console(
+                    "panel_command=nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release",
+                );
+                self.push_console("panel_action=metadata-only");
+                self.push_console(
+                    "installed_cli=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_contract_status=contract_only prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_record_created=0",
+                );
+                self.push_console(
+                    "prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_decision_recorded=0 prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_published=0 runtime_invoked=0",
+                );
+                self.push_console(
+                    "requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1 requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract=1",
                 );
             }
             ["nadia", "inference-readiness"]
@@ -3634,7 +3903,7 @@ impl LatticraInstallerApp {
                 &mut self.config.components.nadia_offline_ai,
                 "Nadia offline AI foundation",
                 "optional",
-                "Stage-43 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt contract with metadata-only Console surfaces.",
+                "Stage-46 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release contract with metadata-only Console surfaces.",
                 amber(),
             );
             components_changed |= component_card(
@@ -3722,7 +3991,7 @@ impl LatticraInstallerApp {
                     &mut self.config.components.nadia_offline_ai,
                     "Nadia offline AI foundation",
                     "optional",
-                    "Stage-43 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt contract with metadata-only Console surfaces.",
+                    "Stage-46 prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release contract with metadata-only Console surfaces.",
                     amber(),
                 );
                 components_changed |= component_card(
@@ -3749,413 +4018,478 @@ impl LatticraInstallerApp {
         ui.label("Configure the LC installation profile, substrate bridge, and future host/OS-base posture while keeping the current authority boundary no-effect.");
         ui.add_space(8.0);
 
-        let old_profile = self.config.lc.profile;
-        egui::ComboBox::from_label("LC profile")
-            .selected_text(self.config.lc.profile.label())
-            .show_ui(ui, |ui| {
-                for profile in LatticraConsoleProfile::all() {
-                    ui.selectable_value(&mut self.config.lc.profile, profile, profile.label());
+        panel_card().show(ui, |ui| {
+            ui.horizontal_wrapped(|ui| {
+                ui.heading(egui::RichText::new("LC posture").size(18.0).color(ink()));
+                status_chip(ui, "profile", self.config.lc.profile.label());
+                status_chip(
+                    ui,
+                    "installed",
+                    if self.config.components.latticra_console {
+                        "1"
+                    } else {
+                        "0"
+                    },
+                );
+                status_chip(
+                    ui,
+                    "contracts",
+                    &format!("{}/{}", selected_lc_contract_count(&self.config.lc), 25),
+                );
+                status_chip(
+                    ui,
+                    "report_only",
+                    if self.config.lc.report_only { "1" } else { "0" },
+                );
+                status_chip(ui, "external_host", "0");
+            });
+            ui.add(
+                egui::Label::new(
+                    egui::RichText::new(self.config.lc.profile.detail())
+                        .small()
+                        .color(muted()),
+                )
+                .wrap(),
+            );
+            ui.add_space(6.0);
+            ui.horizontal_wrapped(|ui| {
+                if ui.button("Open LC plan").clicked() {
+                    self.refresh_plan();
+                    self.active_tab = WorkspaceTab::Evidence;
+                    self.show_plan_over_log = true;
+                }
+                if ui.button("Review components").clicked() {
+                    self.active_tab = WorkspaceTab::Components;
+                }
+                if ui.button("Review Authority").clicked() {
+                    self.active_tab = WorkspaceTab::Authority;
                 }
             });
-        if self.config.lc.profile != old_profile {
-            self.config.lc.apply_profile_defaults();
-            self.refresh_plan();
-        }
-        ui.label(self.config.lc.profile.detail());
+        });
 
-        ui.separator();
+        ui.add_space(10.0);
+        let lc_profiles = LatticraConsoleProfile::all();
         if ui.available_width() < 760.0 {
-            lc_profile_button(
-                ui,
-                self,
-                LatticraConsoleProfile::HostedReference,
-                "Reference metadata lane",
-            );
-            lc_profile_button(
-                ui,
-                self,
-                LatticraConsoleProfile::PanelEmbedded,
-                "Default Panel-installed lane",
-            );
-            lc_profile_button(
-                ui,
-                self,
-                LatticraConsoleProfile::HostEmbeddedPlanning,
-                "Future host-embedding lane",
-            );
-            lc_profile_button(
-                ui,
-                self,
-                LatticraConsoleProfile::OsBasePlanning,
-                "Future OS-base lane",
-            );
+            for profile in lc_profiles {
+                lc_profile_button(ui, self, profile, lc_profile_note(profile));
+            }
         } else {
-            ui.columns(2, |columns| {
-                lc_profile_button(
-                    &mut columns[0],
-                    self,
-                    LatticraConsoleProfile::HostedReference,
-                    "Reference metadata lane",
-                );
-                lc_profile_button(
-                    &mut columns[1],
-                    self,
-                    LatticraConsoleProfile::PanelEmbedded,
-                    "Default Panel-installed lane",
-                );
-            });
-            ui.columns(2, |columns| {
-                lc_profile_button(
-                    &mut columns[0],
-                    self,
-                    LatticraConsoleProfile::HostEmbeddedPlanning,
-                    "Future host-embedding lane",
-                );
-                lc_profile_button(
-                    &mut columns[1],
-                    self,
-                    LatticraConsoleProfile::OsBasePlanning,
-                    "Future OS-base lane",
-                );
-            });
+            for row in lc_profiles.chunks(2) {
+                ui.columns(2, |columns| {
+                    for (column, profile) in row.iter().copied().enumerate() {
+                        lc_profile_button(
+                            &mut columns[column],
+                            self,
+                            profile,
+                            lc_profile_note(profile),
+                        );
+                    }
+                });
+            }
         }
 
-        ui.separator();
-        ui.heading("LC install configuration");
-        checkbox_note(
-            ui,
-            &mut self.config.components.latticra_console,
-            "Install Latticra Console",
-            "LC is installed as a standalone and Panel-embedded operator console metadata surface.",
-        );
-        labeled_text_field(
-            ui,
-            "Install profile",
-            &mut self.config.lc.install.install_profile,
-        );
-        labeled_text_field(ui, "Install mode", &mut self.config.lc.install.install_mode);
-        labeled_text_field(ui, "Config path", &mut self.config.lc.install.config_path);
-        labeled_text_field(ui, "Share path", &mut self.config.lc.install.share_path);
-        labeled_text_field(
-            ui,
-            "Command wrapper",
-            &mut self.config.lc.install.command_wrapper,
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.install.standalone_console,
-            "Standalone console",
-            "Install LC as a direct user-local console wrapper that does not require Panel at runtime.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.install.panel_embedded_console,
-            "Panel embedded console",
-            "LC remains available inside Latticra Panel.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.install.write_config_file,
-            "Write LC config file",
-            "Install LC configuration metadata into the local prefix.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.install.write_profile_presets,
-            "Write profile presets",
-            "Install hosted, standalone, Panel, host-planning, and OS-planning profile metadata.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.install.write_command_registry,
-            "Write command registry",
-            "Install the LC command registry used by help, boundary, and commands.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.install.write_contract_files,
-            "Write contract files",
-            "Install LC metadata contracts without granting execution authority.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.install.install_user_wrapper,
-            "Install user wrapper",
-            "Install the latticra-lc wrapper when user command wrappers are enabled.",
-        );
-        let mut external_host_commands = false;
-        ui.add_enabled(
-            false,
-            egui::Checkbox::new(
-                &mut external_host_commands,
-                "External host commands (future; disabled)",
-            ),
-        )
-        .on_hover_text("LC install configuration cannot grant host process launch authority.");
-        self.config.lc.install.allow_external_host_commands = false;
+        ui.add_space(8.0);
+        panel_card_with_stroke(teal()).show(ui, |ui| {
+            ui.horizontal_wrapped(|ui| {
+                ui.heading(
+                    egui::RichText::new("LC install configuration")
+                        .size(18.0)
+                        .color(ink()),
+                );
+                colored_status_chip(ui, "external_host", "disabled", amber());
+                status_chip(ui, "wrapper", &self.config.lc.install.command_wrapper);
+            });
+            ui.add_space(4.0);
+            let _ = behavior_toggle_row(
+                ui,
+                &mut self.config.components.latticra_console,
+                "Install Latticra Console",
+                "LC is installed as a standalone and Panel-embedded operator console metadata surface.",
+            );
+            labeled_text_field(
+                ui,
+                "Install profile",
+                &mut self.config.lc.install.install_profile,
+            );
+            labeled_text_field(ui, "Install mode", &mut self.config.lc.install.install_mode);
+            labeled_text_field(ui, "Config path", &mut self.config.lc.install.config_path);
+            labeled_text_field(ui, "Share path", &mut self.config.lc.install.share_path);
+            labeled_text_field(
+                ui,
+                "Command wrapper",
+                &mut self.config.lc.install.command_wrapper,
+            );
+            let _ = behavior_toggle_row(
+                ui,
+                &mut self.config.lc.install.standalone_console,
+                "Standalone console",
+                "Install LC as a direct user-local console wrapper that does not require Panel at runtime.",
+            );
+            let _ = behavior_toggle_row(
+                ui,
+                &mut self.config.lc.install.panel_embedded_console,
+                "Panel embedded console",
+                "LC remains available inside Latticra Panel.",
+            );
+            let _ = behavior_toggle_row(
+                ui,
+                &mut self.config.lc.install.write_config_file,
+                "Write LC config file",
+                "Install LC configuration metadata into the local prefix.",
+            );
+            let _ = behavior_toggle_row(
+                ui,
+                &mut self.config.lc.install.write_profile_presets,
+                "Write profile presets",
+                "Install hosted, standalone, Panel, host-planning, and OS-planning profile metadata.",
+            );
+            let _ = behavior_toggle_row(
+                ui,
+                &mut self.config.lc.install.write_command_registry,
+                "Write command registry",
+                "Install the LC command registry used by help, boundary, and commands.",
+            );
+            let _ = behavior_toggle_row(
+                ui,
+                &mut self.config.lc.install.write_contract_files,
+                "Write contract files",
+                "Install LC metadata contracts without granting execution authority.",
+            );
+            let _ = behavior_toggle_row(
+                ui,
+                &mut self.config.lc.install.install_user_wrapper,
+                "Install user wrapper",
+                "Install the latticra-lc wrapper when user command wrappers are enabled.",
+            );
+            let mut external_host_commands = false;
+            ui.add_enabled(
+                false,
+                egui::Checkbox::new(
+                    &mut external_host_commands,
+                    "External host commands (future; disabled)",
+                ),
+            )
+            .on_hover_text("LC install configuration cannot grant host process launch authority.");
+            self.config.lc.install.allow_external_host_commands = false;
+        });
 
-        ui.separator();
-        ui.heading("LC substrate and embedding fields");
-        labeled_text_field(
-            ui,
-            "Command registry",
-            &mut self.config.lc.command_registry_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Substrate bridge",
-            &mut self.config.lc.substrate_bridge_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Host embedding",
-            &mut self.config.lc.host_embedding_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Host contract",
-            &mut self.config.lc.host_embedding_contract_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Host inventory",
-            &mut self.config.lc.host_inventory_contract_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Host adapter",
-            &mut self.config.lc.host_adapter_contract_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Session contract",
-            &mut self.config.lc.session_contract_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Workspace contract",
-            &mut self.config.lc.workspace_contract_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Namespace contract",
-            &mut self.config.lc.namespace_contract_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Rootfs contract",
-            &mut self.config.lc.rootfs_contract_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Receipt request",
-            &mut self.config.lc.receipt_request_contract_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Receipt payload",
-            &mut self.config.lc.receipt_payload_schema_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Receipt artifact",
-            &mut self.config.lc.receipt_payload_artifact_draft_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Artifact review",
-            &mut self.config.lc.receipt_payload_artifact_review_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Review receipt",
-            &mut self
-                .config
-                .lc
-                .receipt_payload_artifact_review_receipt_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Review draft",
-            &mut self
-                .config
-                .lc
-                .receipt_payload_artifact_review_receipt_draft_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Materialization plan",
-            &mut self.config.lc.receipt_payload_materialization_plan_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Signature request",
-            &mut self.config.lc.signature_request_binding_profile,
-        );
-        labeled_text_field(
-            ui,
-            "Receipt contract",
-            &mut self.config.lc.receipt_contract_profile,
-        );
-        labeled_text_field(
-            ui,
-            "OS contract",
-            &mut self.config.lc.os_base_contract_profile,
-        );
-        labeled_text_field(
-            ui,
-            "VM evidence",
-            &mut self.config.lc.vm_evidence_contract_profile,
-        );
-        labeled_text_field(ui, "OS base", &mut self.config.lc.os_base_profile);
-        labeled_text_field(ui, "Panel bridge", &mut self.config.lc.panel_bridge);
-        checkbox_note(
-            ui,
-            &mut self.config.lc.report_only,
-            "LC remains report-only",
-            "Current LC profiles emit configuration and evidence only.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_host_embedding_contract,
-            "Require host-embedding contract",
-            "LC host embedding cannot advance until this contract is present and reviewed.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_read_only_host_inventory_contract,
-            "Require read-only host inventory contract",
-            "Future host adapters must prove inventory evidence without broad host authority.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_profile_receipt,
-            "Require profile receipt",
-            "LC profile selection must become receipt evidence before future promotion.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_host_contract_receipt,
-            "Require host-contract receipt",
-            "The host-embedding contract must be receipted before any host adapter path.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_host_inventory_receipt,
-            "Require host-inventory receipt",
-            "Read-only inventory contract metadata must be receipted before host embedding work.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_host_adapter_contract,
-            "Require host-adapter contract",
-            "Future Host embedding must prove the adapter contract before any adapter can exist.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_session_contract,
-            "Require session contract",
-            "LC sessions must prove this metadata envelope before any runtime session, shell, or host adapter can exist.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_workspace_contract,
-            "Require workspace contract",
-            "LC workspaces must prove this metadata envelope before any workspace mount, manifest write, or OS-base workspace can exist.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_namespace_contract,
-            "Require namespace contract",
-            "LC namespaces must prove this metadata envelope before any rootfs, mount, or host path projection can exist.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_rootfs_contract,
-            "Require rootfs contract",
-            "LC rootfs planning must prove this metadata envelope before any image, mount, package write, or boot-adjacent work can exist.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_receipt_request_contract,
-            "Require receipt-request contract",
-            "Future LC receipt signing must prove the request contract before any signature can exist.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_receipt_payload_schema,
-            "Require receipt payload schema",
-            "Future LC receipt signing must prove the payload shape before any signature request can bind.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_receipt_payload_artifact_draft,
-            "Require receipt artifact draft",
-            "Future LC receipt signing must prove the no-write payload artifact draft before materialization.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_receipt_payload_artifact_review,
-            "Require artifact review gate",
-            "Future LC receipt payload materialization must prove the draft review gate before any payload artifact can exist.",
-        );
-        checkbox_note(
-            ui,
-            &mut self
-                .config
-                .lc
-                .require_receipt_payload_artifact_review_receipt,
-            "Require review receipt",
-            "Future LC receipt payload materialization must prove review receipt evidence before any payload artifact can exist.",
-        );
-        checkbox_note(
-            ui,
-            &mut self
-                .config
-                .lc
-                .require_receipt_payload_artifact_review_receipt_draft,
-            "Require review draft",
-            "Future LC receipt payload materialization must prove review receipt draft metadata before any payload artifact can exist.",
-        );
-        checkbox_note(
-            ui,
-            &mut self
-                .config
-                .lc
-                .require_receipt_payload_materialization_plan,
-            "Require materialization plan",
-            "Future LC receipt payload writes must prove the materialization plan before any payload artifact can exist.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_signature_request_binding,
-            "Require signature-request binding",
-            "Future LC receipt signing must prove the binding contract before any Seal signature request artifact can exist.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_os_base_contract,
-            "Require OS-base contract",
-            "Future OS-base work must prove this contract before any boot-adjacent planning advances.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_vm_evidence_contract,
-            "Require VM evidence contract",
-            "Future OS-base work must prove VM evidence metadata before any boot-adjacent implementation.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_runtime_boundary_binding,
-            "Require Runtime Boundary binding",
-            "LC command surfaces must remain classified before future execution authority can exist.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.lc.require_seal_capability_labels,
-            "Require Seal capability labels",
-            "LC commands keep explicit Seal labels while granting no cryptographic or runtime authority.",
-        );
+        ui.add_space(8.0);
+        egui::CollapsingHeader::new("Advanced LC substrate and contract profiles")
+            .default_open(false)
+            .show(ui, |ui| {
+                panel_card().show(ui, |ui| {
+                    ui.horizontal_wrapped(|ui| {
+                        ui.heading(
+                            egui::RichText::new("Profile fields")
+                                .size(18.0)
+                                .color(ink()),
+                        );
+                        status_chip(ui, "bridge", &self.config.lc.panel_bridge);
+                        status_chip(ui, "host", &self.config.lc.host_embedding_profile);
+                    });
+                    labeled_text_field(
+                        ui,
+                        "Command registry",
+                        &mut self.config.lc.command_registry_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Substrate bridge",
+                        &mut self.config.lc.substrate_bridge_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Host embedding",
+                        &mut self.config.lc.host_embedding_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Host contract",
+                        &mut self.config.lc.host_embedding_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Host inventory",
+                        &mut self.config.lc.host_inventory_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Host adapter",
+                        &mut self.config.lc.host_adapter_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Session contract",
+                        &mut self.config.lc.session_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Workspace contract",
+                        &mut self.config.lc.workspace_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Namespace contract",
+                        &mut self.config.lc.namespace_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Rootfs contract",
+                        &mut self.config.lc.rootfs_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Packages contract",
+                        &mut self.config.lc.packages_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Init contract",
+                        &mut self.config.lc.init_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Receipt request",
+                        &mut self.config.lc.receipt_request_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Receipt payload",
+                        &mut self.config.lc.receipt_payload_schema_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Receipt artifact",
+                        &mut self.config.lc.receipt_payload_artifact_draft_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Artifact review",
+                        &mut self.config.lc.receipt_payload_artifact_review_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Review receipt",
+                        &mut self
+                            .config
+                            .lc
+                            .receipt_payload_artifact_review_receipt_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Review draft",
+                        &mut self
+                            .config
+                            .lc
+                            .receipt_payload_artifact_review_receipt_draft_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Materialization plan",
+                        &mut self.config.lc.receipt_payload_materialization_plan_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Signature request",
+                        &mut self.config.lc.signature_request_binding_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "Receipt contract",
+                        &mut self.config.lc.receipt_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "OS contract",
+                        &mut self.config.lc.os_base_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
+                        "VM evidence",
+                        &mut self.config.lc.vm_evidence_contract_profile,
+                    );
+                    labeled_text_field(ui, "OS base", &mut self.config.lc.os_base_profile);
+                    labeled_text_field(ui, "Panel bridge", &mut self.config.lc.panel_bridge);
+                });
+            });
+
+        ui.add_space(8.0);
+        egui::CollapsingHeader::new("Advanced LC authority and receipt gates")
+            .default_open(false)
+            .show(ui, |ui| {
+                panel_card().show(ui, |ui| {
+                    ui.horizontal_wrapped(|ui| {
+                        ui.heading(
+                            egui::RichText::new("Contract gates").size(18.0).color(ink()),
+                        );
+                        status_chip(
+                            ui,
+                            "enabled",
+                            &format!("{}/{}", selected_lc_contract_count(&self.config.lc), 25),
+                        );
+                        status_chip(ui, "runtime", "0");
+                    });
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.report_only,
+                        "LC remains report-only",
+                        "Current LC profiles emit configuration and evidence only.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_host_embedding_contract,
+                        "Require host-embedding contract",
+                        "LC host embedding cannot advance until this contract is present and reviewed.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_read_only_host_inventory_contract,
+                        "Require read-only host inventory contract",
+                        "Future host adapters must prove inventory evidence without broad host authority.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_profile_receipt,
+                        "Require profile receipt",
+                        "LC profile selection must become receipt evidence before future promotion.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_host_contract_receipt,
+                        "Require host-contract receipt",
+                        "The host-embedding contract must be receipted before any host adapter path.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_host_inventory_receipt,
+                        "Require host-inventory receipt",
+                        "Read-only inventory contract metadata must be receipted before host embedding work.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_host_adapter_contract,
+                        "Require host-adapter contract",
+                        "Future Host embedding must prove the adapter contract before any adapter can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_session_contract,
+                        "Require session contract",
+                        "LC sessions must prove this metadata envelope before any runtime session, shell, or host adapter can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_workspace_contract,
+                        "Require workspace contract",
+                        "LC workspaces must prove this metadata envelope before any workspace mount, manifest write, or OS-base workspace can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_namespace_contract,
+                        "Require namespace contract",
+                        "LC namespaces must prove this metadata envelope before any rootfs, mount, or host path projection can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_rootfs_contract,
+                        "Require rootfs contract",
+                        "LC rootfs planning must prove this metadata envelope before any image, mount, package write, or boot-adjacent work can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_packages_contract,
+                        "Require packages contract",
+                        "LC package planning must prove this metadata envelope before any catalog read, download, package manager execution, or rootfs package write can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_init_contract,
+                        "Require init contract",
+                        "LC init planning must prove this metadata envelope before any PID 1 claim, service start, or process supervision can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_receipt_request_contract,
+                        "Require receipt-request contract",
+                        "Future LC receipt signing must prove the request contract before any signature can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_receipt_payload_schema,
+                        "Require receipt payload schema",
+                        "Future LC receipt signing must prove the payload shape before any signature request can bind.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_receipt_payload_artifact_draft,
+                        "Require receipt artifact draft",
+                        "Future LC receipt signing must prove the no-write payload artifact draft before materialization.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_receipt_payload_artifact_review,
+                        "Require artifact review gate",
+                        "Future LC receipt payload materialization must prove the draft review gate before any payload artifact can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self
+                            .config
+                            .lc
+                            .require_receipt_payload_artifact_review_receipt,
+                        "Require review receipt",
+                        "Future LC receipt payload materialization must prove review receipt evidence before any payload artifact can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self
+                            .config
+                            .lc
+                            .require_receipt_payload_artifact_review_receipt_draft,
+                        "Require review draft",
+                        "Future LC receipt payload materialization must prove review receipt draft metadata before any payload artifact can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self
+                            .config
+                            .lc
+                            .require_receipt_payload_materialization_plan,
+                        "Require materialization plan",
+                        "Future LC receipt payload writes must prove the materialization plan before any payload artifact can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_signature_request_binding,
+                        "Require signature-request binding",
+                        "Future LC receipt signing must prove the binding contract before any Seal signature request artifact can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_os_base_contract,
+                        "Require OS-base contract",
+                        "Future OS-base work must prove this contract before any boot-adjacent planning advances.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_vm_evidence_contract,
+                        "Require VM evidence contract",
+                        "Future OS-base work must prove VM evidence metadata before any boot-adjacent implementation.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_runtime_boundary_binding,
+                        "Require Runtime Boundary binding",
+                        "LC command surfaces must remain classified before future execution authority can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_seal_capability_labels,
+                        "Require Seal capability labels",
+                        "LC commands keep explicit Seal labels while granting no cryptographic or runtime authority.",
+                    );
+                });
+            });
     }
 
     fn show_seal_config(&mut self, ui: &mut egui::Ui) {
@@ -4346,42 +4680,144 @@ impl LatticraInstallerApp {
     fn show_authority(&mut self, ui: &mut egui::Ui) {
         ui.heading("Safety and evidence gates");
         ui.label("Latticra Panel makes authority visible before anything effectful can happen.");
-        ui.add_space(6.0);
+        ui.add_space(8.0);
+
+        panel_card().show(ui, |ui| {
+            ui.horizontal_wrapped(|ui| {
+                ui.heading(
+                    egui::RichText::new("Authority matrix")
+                        .size(18.0)
+                        .color(ink()),
+                );
+                status_chip(
+                    ui,
+                    "evidence_gates",
+                    &format!("{}/{}", selected_safety_gate_count(&self.config.safety), 4),
+                );
+                status_chip(ui, "mode", self.config.execution_mode_label());
+                status_chip(
+                    ui,
+                    "local_ack",
+                    if self.guarded_local_ack { "1" } else { "0" },
+                );
+                status_chip(ui, "root", "0");
+                status_chip(ui, "network", "0");
+                status_chip(ui, "runtime", "0");
+            });
+            ui.add_space(6.0);
+            ui.horizontal_wrapped(|ui| {
+                if ui.button("Open procedure").clicked() {
+                    self.active_tab = WorkspaceTab::Procedure;
+                }
+                if ui.button("Open evidence").clicked() {
+                    self.active_tab = WorkspaceTab::Evidence;
+                }
+                if ui.button("Open delivery").clicked() {
+                    self.active_tab = WorkspaceTab::Delivery;
+                }
+            });
+        });
+
+        ui.add_space(10.0);
         self.show_mode_gate(ui);
         self.config.safety.allow_network_effect = false;
-        ui.add_enabled(
-            false,
-            egui::Checkbox::new(
-                &mut self.config.safety.allow_network_effect,
-                "Network effect (future; disabled)",
-            ),
-        );
-        ui.small("Network authority remains disabled in this installer lane.");
-        ui.separator();
-        checkbox_note(
-            ui,
-            &mut self.config.safety.require_component_manifest,
-            "Require component manifest",
-            "Refuse to proceed when component inventory evidence is missing.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.safety.require_artifact_measurements,
-            "Require artifact measurements",
-            "Keep generated measurement evidence in the receipt chain.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.safety.require_verification_policy_metadata,
-            "Require verification policy metadata",
-            "Preserve policy/evidence metadata expectations.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.safety.write_operator_receipt,
-            "Write operator-visible receipt",
-            "Create a visible receipt for the configured run.",
-        );
+
+        ui.add_space(10.0);
+        let mut authority_changed = false;
+        if ui.available_width() < 900.0 {
+            authority_locked_card(
+                ui,
+                "Network authority",
+                "future disabled",
+                "Network fetch and outbound effects remain outside this Panel lane.",
+                amber(),
+            );
+            authority_changed |= safety_gate_card(
+                ui,
+                &mut self.config.safety.require_component_manifest,
+                "Require component manifest",
+                "inventory",
+                "Refuse to proceed when component inventory evidence is missing.",
+                teal(),
+            );
+            authority_changed |= safety_gate_card(
+                ui,
+                &mut self.config.safety.require_artifact_measurements,
+                "Require artifact measurements",
+                "measurement",
+                "Keep generated measurement evidence in the receipt chain.",
+                blue(),
+            );
+            authority_changed |= safety_gate_card(
+                ui,
+                &mut self.config.safety.require_verification_policy_metadata,
+                "Require verification policy metadata",
+                "policy",
+                "Preserve policy/evidence metadata expectations.",
+                green(),
+            );
+            authority_changed |= safety_gate_card(
+                ui,
+                &mut self.config.safety.write_operator_receipt,
+                "Write operator-visible receipt",
+                "receipt",
+                "Create a visible receipt for the configured run.",
+                teal(),
+            );
+        } else {
+            ui.columns(3, |columns| {
+                authority_locked_card(
+                    &mut columns[0],
+                    "Network authority",
+                    "future disabled",
+                    "Network fetch and outbound effects remain outside this Panel lane.",
+                    amber(),
+                );
+                authority_changed |= safety_gate_card(
+                    &mut columns[1],
+                    &mut self.config.safety.require_component_manifest,
+                    "Require component manifest",
+                    "inventory",
+                    "Refuse to proceed when component inventory evidence is missing.",
+                    teal(),
+                );
+                authority_changed |= safety_gate_card(
+                    &mut columns[2],
+                    &mut self.config.safety.require_artifact_measurements,
+                    "Require artifact measurements",
+                    "measurement",
+                    "Keep generated measurement evidence in the receipt chain.",
+                    blue(),
+                );
+            });
+            ui.columns(2, |columns| {
+                authority_changed |= safety_gate_card(
+                    &mut columns[0],
+                    &mut self.config.safety.require_verification_policy_metadata,
+                    "Require verification policy metadata",
+                    "policy",
+                    "Preserve policy/evidence metadata expectations.",
+                    green(),
+                );
+                authority_changed |= safety_gate_card(
+                    &mut columns[1],
+                    &mut self.config.safety.write_operator_receipt,
+                    "Write operator-visible receipt",
+                    "receipt",
+                    "Create a visible receipt for the configured run.",
+                    teal(),
+                );
+            });
+        }
+
+        if authority_changed {
+            if self.config.profile != InstallProfile::Custom {
+                self.push_console("authority -> custom");
+            }
+            self.config.profile = InstallProfile::Custom;
+            self.refresh_plan();
+            self.status = "Authority gates marked as Custom.".to_owned();
+        }
     }
 
     fn show_mode_gate(&mut self, ui: &mut egui::Ui) {
@@ -4576,114 +5012,253 @@ impl LatticraInstallerApp {
     fn show_updater(&mut self, ui: &mut egui::Ui) {
         ui.heading("Panel updater");
         ui.label("Update the managed user-local install from the reviewed source checkout through the same guarded installer engine.");
-        ui.add_space(6.0);
+        ui.add_space(8.0);
 
-        ui.horizontal_wrapped(|ui| {
-            status_chip(ui, "source", &self.config.updater.source_strategy);
-            status_chip(ui, "channel", &self.config.updater.update_channel);
-            status_chip(
-                ui,
-                "dry_run_ok",
-                if self.last_update_dry_run_ok {
-                    "1"
-                } else {
-                    "0"
-                },
-            );
-            status_chip(ui, "network", "0");
-            status_chip(ui, "root", "0");
-        });
-
-        ui.separator();
-        if ui.available_width() < 620.0 {
-            labeled_text_field(
-                ui,
-                "Source strategy",
-                &mut self.config.updater.source_strategy,
-            );
-            labeled_text_field(ui, "Channel", &mut self.config.updater.update_channel);
-        } else {
-            ui.columns(2, |columns| {
-                labeled_text_field(
-                    &mut columns[0],
-                    "Source strategy",
-                    &mut self.config.updater.source_strategy,
-                );
-                labeled_text_field(
-                    &mut columns[1],
-                    "Channel",
-                    &mut self.config.updater.update_channel,
-                );
-            });
-        }
-
-        ui.add_space(4.0);
-        self.config.updater.allow_network_fetch = false;
-        ui.add_enabled(
-            false,
-            egui::Checkbox::new(
-                &mut self.config.updater.allow_network_fetch,
-                "Network fetch (future; disabled)",
-            ),
-        );
-        ui.small("Updater fetch/pull authority remains outside this Panel lane.");
-        checkbox_note(
-            ui,
-            &mut self.config.updater.require_dry_run_before_apply,
-            "Require updater dry-run before apply",
-            "A successful updater dry-run in this Panel session is required before guarded apply.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.updater.reuse_installer_engine,
-            "Reuse guarded installer engine",
-            "Update apply is a guarded local-prefix reinstall over Latticra-managed files.",
-        );
-        checkbox_note(
-            ui,
-            &mut self.config.updater.write_update_receipt,
-            "Write updater receipt metadata",
-            "Generated plans and receipts include the updater policy fields.",
-        );
-
-        ui.separator();
-        ui.horizontal_wrapped(|ui| {
-            if ui.button("Preview update").clicked() {
-                self.start_update_dry_run();
-            }
-            let apply_blocker = if self.config.updater.require_dry_run_before_apply
-                && !self.last_update_dry_run_ok
-            {
+        let apply_blocker =
+            if self.config.updater.require_dry_run_before_apply && !self.last_update_dry_run_ok {
                 Some("Updater apply is locked until Preview update completes successfully.")
             } else if !self.guarded_local_ack {
                 Some(self.guarded_local_ack_message())
             } else {
                 None
             };
-            let apply_response = if let Some(reason) = apply_blocker {
-                ui.add_enabled(false, egui::Button::new("Apply guarded update"))
-                    .on_disabled_hover_text(reason)
+        let mut updater_changed = false;
+
+        panel_card().show(ui, |ui| {
+            ui.horizontal_wrapped(|ui| {
+                ui.heading(egui::RichText::new("Update lane").size(18.0).color(ink()));
+                status_chip(ui, "source", &self.config.updater.source_strategy);
+                status_chip(ui, "channel", &self.config.updater.update_channel);
+                status_chip(
+                    ui,
+                    "policies",
+                    &format!(
+                        "{}/{}",
+                        selected_updater_policy_count(&self.config.updater),
+                        3
+                    ),
+                );
+                status_chip(
+                    ui,
+                    "preview",
+                    if self.last_update_dry_run_ok {
+                        "complete"
+                    } else {
+                        "needed"
+                    },
+                );
+                status_chip(
+                    ui,
+                    "apply",
+                    if apply_blocker.is_some() {
+                        "locked"
+                    } else {
+                        "ready"
+                    },
+                );
+                status_chip(ui, "network", "0");
+                status_chip(ui, "root", "0");
+            });
+            ui.add_space(6.0);
+            ui.horizontal_wrapped(|ui| {
+                if ui.button("Preview update").clicked() {
+                    self.start_update_dry_run();
+                }
+                if ui.button("Open update plan").clicked() {
+                    self.refresh_plan();
+                    self.show_plan_over_log = true;
+                    self.active_tab = WorkspaceTab::Evidence;
+                }
+                if ui.button("Review Authority").clicked() {
+                    self.active_tab = WorkspaceTab::Authority;
+                }
+            });
+        });
+
+        ui.add_space(10.0);
+        panel_card_with_stroke(blue()).show(ui, |ui| {
+            ui.horizontal_wrapped(|ui| {
+                ui.heading(egui::RichText::new("Source posture").size(18.0).color(ink()));
+                colored_status_chip(ui, "fetch", "disabled", amber());
+                status_chip(ui, "checkout", "reviewed-local");
+            });
+            ui.add(
+                egui::Label::new(
+                    egui::RichText::new(
+                        "Updater apply reuses the local installer engine against the reviewed checkout. Pull/fetch authority stays out of this Panel lane.",
+                    )
+                    .small()
+                    .color(muted()),
+                )
+                .wrap(),
+            );
+            ui.add_space(6.0);
+            if ui.available_width() < 620.0 {
+                updater_changed |= updater_text_field(
+                    ui,
+                    "Source strategy",
+                    &mut self.config.updater.source_strategy,
+                );
+                updater_changed |= updater_text_field(
+                    ui,
+                    "Channel",
+                    &mut self.config.updater.update_channel,
+                );
             } else {
-                ui.add(egui::Button::new("Apply guarded update"))
-            };
-            if apply_response.clicked() {
-                self.start_update_apply();
-            }
-            if ui.button("Open update plan").clicked() {
-                self.refresh_plan();
-                self.show_plan_over_log = true;
-                self.active_tab = WorkspaceTab::Evidence;
+                ui.columns(2, |columns| {
+                    updater_changed |= updater_text_field(
+                        &mut columns[0],
+                        "Source strategy",
+                        &mut self.config.updater.source_strategy,
+                    );
+                    updater_changed |= updater_text_field(
+                        &mut columns[1],
+                        "Channel",
+                        &mut self.config.updater.update_channel,
+                    );
+                });
             }
         });
 
-        if self.config.updater.require_dry_run_before_apply && !self.last_update_dry_run_ok {
-            warning_note(
+        self.config.updater.allow_network_fetch = false;
+        ui.add_space(10.0);
+        if ui.available_width() < 900.0 {
+            authority_locked_card(
                 ui,
-                "Updater apply locked",
-                "Preview update must complete successfully in this Panel session.",
+                "Network fetch (future; disabled)",
+                "fetch=0",
+                "Updater fetch/pull authority remains outside this Panel lane.",
+                amber(),
             );
-        } else if !self.guarded_local_ack {
-            warning_note(ui, "Updater apply locked", self.guarded_local_ack_message());
+            updater_changed |= updater_policy_card(
+                ui,
+                &mut self.config.updater.require_dry_run_before_apply,
+                "Require updater dry-run before apply",
+                "preview",
+                "A successful updater dry-run in this Panel session is required before guarded apply.",
+                teal(),
+            );
+            updater_changed |= updater_policy_card(
+                ui,
+                &mut self.config.updater.reuse_installer_engine,
+                "Reuse guarded installer engine",
+                "engine",
+                "Update apply is a guarded local-prefix reinstall over Latticra-managed files.",
+                blue(),
+            );
+            updater_changed |= updater_policy_card(
+                ui,
+                &mut self.config.updater.write_update_receipt,
+                "Write updater receipt metadata",
+                "receipt",
+                "Generated plans and receipts include the updater policy fields.",
+                green(),
+            );
+        } else {
+            ui.columns(4, |columns| {
+                authority_locked_card(
+                    &mut columns[0],
+                    "Network fetch (future; disabled)",
+                    "fetch=0",
+                    "Updater fetch/pull authority remains outside this Panel lane.",
+                    amber(),
+                );
+                updater_changed |= updater_policy_card(
+                    &mut columns[1],
+                    &mut self.config.updater.require_dry_run_before_apply,
+                    "Require updater dry-run before apply",
+                    "preview",
+                    "A successful updater dry-run in this Panel session is required before guarded apply.",
+                    teal(),
+                );
+                updater_changed |= updater_policy_card(
+                    &mut columns[2],
+                    &mut self.config.updater.reuse_installer_engine,
+                    "Reuse guarded installer engine",
+                    "engine",
+                    "Update apply is a guarded local-prefix reinstall over Latticra-managed files.",
+                    blue(),
+                );
+                updater_changed |= updater_policy_card(
+                    &mut columns[3],
+                    &mut self.config.updater.write_update_receipt,
+                    "Write updater receipt metadata",
+                    "receipt",
+                    "Generated plans and receipts include the updater policy fields.",
+                    green(),
+                );
+            });
+        }
+
+        ui.add_space(10.0);
+        panel_card_with_stroke(if apply_blocker.is_some() {
+            amber()
+        } else {
+            green()
+        })
+        .show(ui, |ui| {
+            ui.horizontal_wrapped(|ui| {
+                ui.heading(
+                    egui::RichText::new("Guarded updater actions")
+                        .size(18.0)
+                        .color(ink()),
+                );
+                status_chip(
+                    ui,
+                    "dry_run_ok",
+                    if self.last_update_dry_run_ok {
+                        "1"
+                    } else {
+                        "0"
+                    },
+                );
+                status_chip(
+                    ui,
+                    "local_ack",
+                    if self.guarded_local_ack { "1" } else { "0" },
+                );
+            });
+            ui.add_space(6.0);
+            ui.horizontal_wrapped(|ui| {
+                if ui.button("Preview update").clicked() {
+                    self.start_update_dry_run();
+                }
+                let apply_response = if let Some(reason) = apply_blocker {
+                    ui.add_enabled(false, egui::Button::new("Apply guarded update"))
+                        .on_disabled_hover_text(reason)
+                } else {
+                    ui.add(egui::Button::new("Apply guarded update"))
+                };
+                if apply_response.clicked() {
+                    self.start_update_apply();
+                }
+                if ui.button("Open update plan").clicked() {
+                    self.refresh_plan();
+                    self.show_plan_over_log = true;
+                    self.active_tab = WorkspaceTab::Evidence;
+                }
+            });
+        });
+
+        if updater_changed {
+            if self.config.profile != InstallProfile::Custom {
+                self.push_console("updater -> custom");
+            }
+            self.config.profile = InstallProfile::Custom;
+            self.refresh_plan();
+            self.status = "Updater settings marked as Custom.".to_owned();
+        }
+
+        let apply_blocker =
+            if self.config.updater.require_dry_run_before_apply && !self.last_update_dry_run_ok {
+                Some("Preview update must complete successfully in this Panel session.")
+            } else if !self.guarded_local_ack {
+                Some(self.guarded_local_ack_message())
+            } else {
+                None
+            };
+        if let Some(reason) = apply_blocker {
+            warning_note(ui, "Updater apply locked", reason);
         }
     }
 
@@ -5098,11 +5673,17 @@ impl LatticraInstallerApp {
                 status_chip(ui, "next", self.next_action_label());
             });
             ui.add_space(6.0);
+            let artifact_blocker = self.panel_can_write_artifacts().err();
+            let can_write_artifacts = artifact_blocker.is_none();
             ui.horizontal_wrapped(|ui| {
-                if ui.button("Save configuration").clicked() {
+                let save_response =
+                    ui.add_enabled(can_write_artifacts, egui::Button::new("Save configuration"));
+                if save_response.clicked() {
                     self.save_config();
                 }
-                if ui.button("Generate plan").clicked() {
+                let plan_response =
+                    ui.add_enabled(can_write_artifacts, egui::Button::new("Generate plan"));
+                if plan_response.clicked() {
                     self.write_plan();
                     self.active_tab = WorkspaceTab::Evidence;
                     self.show_plan_over_log = true;
@@ -5114,6 +5695,9 @@ impl LatticraInstallerApp {
                     self.open_next_surface();
                 }
             });
+            if let Some(reason) = artifact_blocker.as_deref() {
+                warning_note(ui, "Artifact writes locked", reason);
+            }
 
             ui.add_space(10.0);
             self.show_fluid_install_button(ui);
@@ -5579,6 +6163,64 @@ fn write_ui_artifact(filename: &str, contents: &[u8]) -> Result<(), String> {
         format!("could not resolve current directory for installer artifact: {err}")
     })?;
     write_ui_artifact_at(&current_dir, filename, contents)
+}
+
+fn enforce_ui_artifact_authority_floor(config: &mut InstallerConfig) {
+    config.safety.allow_network_effect = false;
+    config.updater.allow_network_fetch = false;
+    config.lc.install.allow_external_host_commands = false;
+}
+
+fn sanitized_ui_artifact_config(config: &InstallerConfig) -> Result<InstallerConfig, String> {
+    let mut config = config.clone();
+    enforce_ui_artifact_authority_floor(&mut config);
+    config.can_write_artifacts()?;
+
+    Ok(config)
+}
+
+fn ui_config_toml_artifact(config: &InstallerConfig) -> Result<(InstallerConfig, String), String> {
+    let config = sanitized_ui_artifact_config(config)?;
+    let toml = toml::to_string_pretty(&config)
+        .map_err(|err| format!("could not serialize config: {err}"))?;
+
+    Ok((config, toml))
+}
+
+fn ui_plan_artifact(config: &InstallerConfig) -> Result<(InstallerConfig, String), String> {
+    let config = sanitized_ui_artifact_config(config)?;
+    let plan = render_plan(&config);
+
+    Ok((config, plan))
+}
+
+fn blocked_ui_plan(error: &str) -> String {
+    format!("LATTICRA PANEL INSTALL PLAN\n\nvalidation_status=blocked\nvalidation_error={error}\n")
+}
+
+fn console_command_requires_authority_floor(parts: &[&str]) -> bool {
+    !matches!(
+        parts,
+        [] | ["help"]
+            | ["?"]
+            | ["clear"]
+            | ["pwd"]
+            | ["cd"]
+            | ["cd", _]
+            | ["mode", "dry"]
+            | ["mode", "local"]
+            | ["lc", "commands"]
+            | ["console", "commands"]
+            | ["lc", "profiles"]
+            | ["console", "profiles"]
+            | ["nadia", "commands"]
+            | ["nadia", "help"]
+            | ["nadia", "?"]
+            | ["profile", ..]
+            | ["seal", "profile", ..]
+            | ["lc", "profile", ..]
+            | ["console", "profile", ..]
+    )
 }
 
 fn write_ui_artifact_at(root: &Path, filename: &str, contents: &[u8]) -> Result<(), String> {
@@ -6098,6 +6740,122 @@ fn delivery_build_card(ui: &mut egui::Ui, behavior: &mut InstallBehavior) -> boo
     changed
 }
 
+fn selected_safety_gate_count(safety: &Safety) -> usize {
+    [
+        safety.require_component_manifest,
+        safety.require_artifact_measurements,
+        safety.require_verification_policy_metadata,
+        safety.write_operator_receipt,
+    ]
+    .into_iter()
+    .filter(|selected| *selected)
+    .count()
+}
+
+fn authority_locked_card(
+    ui: &mut egui::Ui,
+    title: &str,
+    tag: &str,
+    body: &str,
+    accent: egui::Color32,
+) {
+    panel_card_with_stroke(accent).show(ui, |ui| {
+        ui.set_min_height(126.0);
+        ui.horizontal_wrapped(|ui| {
+            ui.heading(egui::RichText::new(title).size(17.0).color(ink()));
+            colored_status_chip(ui, "authority", "0", accent);
+            status_chip(ui, "lane", tag);
+        });
+        ui.add(egui::Label::new(egui::RichText::new(body).small().color(muted())).wrap());
+    });
+    ui.add_space(6.0);
+}
+
+fn safety_gate_card(
+    ui: &mut egui::Ui,
+    enabled: &mut bool,
+    title: &str,
+    tag: &str,
+    body: &str,
+    accent: egui::Color32,
+) -> bool {
+    let mut changed = false;
+    panel_card_with_stroke(if *enabled { accent } else { border() }).show(ui, |ui| {
+        ui.set_min_height(126.0);
+        ui.horizontal_wrapped(|ui| {
+            changed |= ui
+                .checkbox(enabled, egui::RichText::new(title).strong().color(ink()))
+                .changed();
+            colored_status_chip(
+                ui,
+                "gate",
+                if *enabled { "required" } else { "off" },
+                if *enabled { accent } else { border_strong() },
+            );
+            status_chip(ui, "evidence", tag);
+        });
+        ui.add(egui::Label::new(egui::RichText::new(body).small().color(muted())).wrap());
+    });
+    ui.add_space(6.0);
+    changed
+}
+
+fn selected_updater_policy_count(updater: &UpdaterConfig) -> usize {
+    [
+        updater.require_dry_run_before_apply,
+        updater.reuse_installer_engine,
+        updater.write_update_receipt,
+    ]
+    .into_iter()
+    .filter(|selected| *selected)
+    .count()
+}
+
+fn updater_text_field(ui: &mut egui::Ui, label: &str, value: &mut String) -> bool {
+    let mut changed = false;
+    ui.vertical(|ui| {
+        ui.label(egui::RichText::new(label).strong().color(ink()));
+        changed |= ui
+            .add(
+                egui::TextEdit::singleline(value)
+                    .desired_width(ui.available_width())
+                    .margin(egui::Margin::symmetric(8, 6)),
+            )
+            .changed();
+    });
+    ui.add_space(6.0);
+    changed
+}
+
+fn updater_policy_card(
+    ui: &mut egui::Ui,
+    enabled: &mut bool,
+    title: &str,
+    tag: &str,
+    body: &str,
+    accent: egui::Color32,
+) -> bool {
+    let mut changed = false;
+    panel_card_with_stroke(if *enabled { accent } else { border() }).show(ui, |ui| {
+        ui.set_min_height(132.0);
+        ui.horizontal_wrapped(|ui| {
+            changed |= ui
+                .checkbox(enabled, egui::RichText::new(title).strong().color(ink()))
+                .changed();
+            colored_status_chip(
+                ui,
+                "policy",
+                if *enabled { "on" } else { "off" },
+                if *enabled { accent } else { border_strong() },
+            );
+            status_chip(ui, "gate", tag);
+        });
+        ui.add(egui::Label::new(egui::RichText::new(body).small().color(muted())).wrap());
+    });
+    ui.add_space(6.0);
+    changed
+}
+
 fn selected_seal_capability_count(seal: &SealConfig) -> usize {
     [
         seal.report_only,
@@ -6181,6 +6939,61 @@ fn behavior_toggle_row(ui: &mut egui::Ui, value: &mut bool, label: &str, note: &
     changed
 }
 
+fn selected_lc_contract_count(lc: &LatticraConsoleConfig) -> usize {
+    [
+        lc.report_only,
+        lc.require_host_embedding_contract,
+        lc.require_read_only_host_inventory_contract,
+        lc.require_profile_receipt,
+        lc.require_host_contract_receipt,
+        lc.require_host_inventory_receipt,
+        lc.require_host_adapter_contract,
+        lc.require_session_contract,
+        lc.require_workspace_contract,
+        lc.require_namespace_contract,
+        lc.require_rootfs_contract,
+        lc.require_packages_contract,
+        lc.require_init_contract,
+        lc.require_receipt_request_contract,
+        lc.require_receipt_payload_schema,
+        lc.require_receipt_payload_artifact_draft,
+        lc.require_receipt_payload_artifact_review,
+        lc.require_receipt_payload_artifact_review_receipt,
+        lc.require_receipt_payload_artifact_review_receipt_draft,
+        lc.require_receipt_payload_materialization_plan,
+        lc.require_signature_request_binding,
+        lc.require_os_base_contract,
+        lc.require_vm_evidence_contract,
+        lc.require_runtime_boundary_binding,
+        lc.require_seal_capability_labels,
+    ]
+    .into_iter()
+    .filter(|selected| *selected)
+    .count()
+}
+
+fn lc_profile_note(profile: LatticraConsoleProfile) -> &'static str {
+    match profile {
+        LatticraConsoleProfile::HostedReference => "Reference metadata lane",
+        LatticraConsoleProfile::PanelEmbedded => "Default Panel-installed lane",
+        LatticraConsoleProfile::Standalone => "Standalone console wrapper lane",
+        LatticraConsoleProfile::HostEmbeddedPlanning => "Future host-embedding lane",
+        LatticraConsoleProfile::OsBasePlanning => "Future OS-base lane",
+        LatticraConsoleProfile::Custom => "Manual LC parameter lane",
+    }
+}
+
+fn lc_profile_accent(profile: LatticraConsoleProfile) -> egui::Color32 {
+    match profile {
+        LatticraConsoleProfile::HostedReference => teal(),
+        LatticraConsoleProfile::PanelEmbedded => blue(),
+        LatticraConsoleProfile::Standalone => green(),
+        LatticraConsoleProfile::HostEmbeddedPlanning => amber(),
+        LatticraConsoleProfile::OsBasePlanning => amber(),
+        LatticraConsoleProfile::Custom => border_strong(),
+    }
+}
+
 fn lc_profile_button(
     ui: &mut egui::Ui,
     app: &mut LatticraInstallerApp,
@@ -6188,16 +7001,32 @@ fn lc_profile_button(
     note: &str,
 ) {
     let selected = app.config.lc.profile == profile;
-    panel_card_with_stroke(if selected { teal() } else { border() }).show(ui, |ui| {
-        ui.heading(egui::RichText::new(profile.label()).size(17.0).color(ink()));
+    let accent = lc_profile_accent(profile);
+    panel_card_with_stroke(if selected { accent } else { border() }).show(ui, |ui| {
+        ui.set_min_height(132.0);
+        ui.horizontal_wrapped(|ui| {
+            ui.heading(egui::RichText::new(profile.label()).size(17.0).color(ink()));
+            status_chip(ui, "lane", profile.key());
+            if selected {
+                colored_status_chip(ui, "selected", "1", accent);
+            }
+        });
         ui.add(egui::Label::new(note).wrap());
         ui.add(
             egui::Label::new(egui::RichText::new(profile.detail()).small().color(muted())).wrap(),
         );
-        if app.config.lc.profile == profile {
-            status_chip(ui, "selected", "1");
+        ui.add_space(6.0);
+        if selected {
+            ui.add_enabled(
+                false,
+                egui::Button::new("Current profile").fill(soft_green()),
+            );
         } else if ui
-            .add(egui::Button::new("Use profile").fill(soft_blue()))
+            .add(
+                egui::Button::new("Use profile")
+                    .fill(soft_blue())
+                    .stroke(egui::Stroke::new(1.0, accent)),
+            )
             .clicked()
         {
             app.apply_lc_profile(profile);
@@ -6314,14 +7143,6 @@ fn colored_status_chip(ui: &mut egui::Ui, key: &str, value: &str, color: egui::C
         });
 }
 
-fn checkbox_note(ui: &mut egui::Ui, value: &mut bool, label: &str, note: &str) {
-    panel_card().show(ui, |ui| {
-        ui.checkbox(value, egui::RichText::new(label).strong());
-        ui.add(egui::Label::new(egui::RichText::new(note).small().color(muted())).wrap());
-    });
-    ui.add_space(4.0);
-}
-
 fn labeled_text_field(ui: &mut egui::Ui, label: &str, value: &mut String) {
     if ui.available_width() < 520.0 {
         ui.label(egui::RichText::new(label).strong().color(ink()));
@@ -6398,6 +7219,104 @@ mod tests {
             "latticra-panel-ui-{label}-{}-{nanos}",
             std::process::id()
         ))
+    }
+
+    #[test]
+    fn ui_config_artifact_rejects_invalid_authority_slug() {
+        let mut config = InstallerConfig::default();
+        config.lc.session_contract_profile = "../escape".to_owned();
+
+        let error = ui_config_toml_artifact(&config).unwrap_err();
+        assert!(error.contains("LC session contract profile"));
+    }
+
+    #[test]
+    fn ui_plan_artifact_rejects_invalid_authority_slug() {
+        let mut config = InstallerConfig::default();
+        config.updater.update_channel = "local checkout".to_owned();
+
+        let error = ui_plan_artifact(&config).unwrap_err();
+        assert!(error.contains("Updater update channel"));
+    }
+
+    #[test]
+    fn ui_artifact_config_forces_network_authority_off() {
+        let mut config = InstallerConfig::default();
+        config.safety.allow_network_effect = true;
+        config.updater.allow_network_fetch = true;
+        config.lc.install.allow_external_host_commands = true;
+
+        let sanitized = sanitized_ui_artifact_config(&config).expect("sanitize UI artifact config");
+        assert!(!sanitized.safety.allow_network_effect);
+        assert!(!sanitized.updater.allow_network_fetch);
+        assert!(!sanitized.lc.install.allow_external_host_commands);
+    }
+
+    #[test]
+    fn blocked_ui_plan_omits_invalid_authority_value() {
+        let mut config = InstallerConfig::default();
+        config.lc.session_contract_profile = "../escape".to_owned();
+
+        let error = ui_plan_artifact(&config).unwrap_err();
+        let plan = blocked_ui_plan(&error);
+        assert!(plan.contains("validation_status=blocked"));
+        assert!(!plan.contains("../escape"));
+    }
+
+    #[test]
+    fn console_config_report_blocks_invalid_authority_without_reflection() {
+        let mut app = LatticraInstallerApp::default();
+        app.config.lc.session_contract_profile = "../escape".to_owned();
+        app.console_input = "lc status".to_owned();
+
+        app.run_console_command();
+
+        let console = app.console_lines.join("\n");
+        assert!(console.contains("blocked: console command requires valid authority fields"));
+        assert!(console.contains("LC session contract profile"));
+        assert!(!console.contains("../escape"));
+    }
+
+    #[test]
+    fn console_updater_report_blocks_invalid_authority_without_reflection() {
+        let mut app = LatticraInstallerApp::default();
+        app.config.updater.update_channel = "local checkout".to_owned();
+        app.console_input = "updater status".to_owned();
+
+        app.run_console_command();
+
+        let console = app.console_lines.join("\n");
+        assert!(console.contains("blocked: console command requires valid authority fields"));
+        assert!(console.contains("Updater update channel"));
+        assert!(!console.contains("local checkout"));
+    }
+
+    #[test]
+    fn console_profile_command_can_repair_invalid_authority() {
+        let mut app = LatticraInstallerApp::default();
+        app.config.lc.session_contract_profile = "../escape".to_owned();
+        app.console_input = "lc profile panel".to_owned();
+
+        app.run_console_command();
+
+        let console = app.console_lines.join("\n");
+        assert!(console.contains("lc.profile ->"));
+        assert!(!console.contains("blocked: console command requires valid authority fields"));
+        assert_ne!(app.config.lc.session_contract_profile, "../escape");
+    }
+
+    #[test]
+    fn console_command_discovery_works_with_invalid_authority() {
+        let mut app = LatticraInstallerApp::default();
+        app.config.lc.session_contract_profile = "../escape".to_owned();
+        app.console_input = "lc profiles".to_owned();
+
+        app.run_console_command();
+
+        let console = app.console_lines.join("\n");
+        assert!(console.contains("panel_embedded"));
+        assert!(!console.contains("blocked: console command requires valid authority fields"));
+        assert!(!console.contains("../escape"));
     }
 
     #[test]

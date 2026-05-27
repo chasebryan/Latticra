@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Refinement Implementation
 
-Status: runtime boundary refinement implementation with Lat pipeline clause, declaration, module/count, stage-summary, parse-error, semantic-error, downstream-stage-error, span, comment, Lat LIR module-summary, Lat LIR source-span, Lat LIR node-kind, Lat LIR first-node, Lat LIR first-node span, Lat LIR first-edge, Lat LIR first-edge span, Lat LIR first transition-source edge, Lat LIR first transition-source edge span, Lat LIR no-effect, and Lat LIR edge-kind evidence
-Scope: no-effect runtime-boundary evidence reporting for Lat pipeline metadata, Lat pipeline first-clause metadata, Lat pipeline first-declaration metadata, Lat pipeline module/count metadata, Lat pipeline stage-summary metadata, Lat pipeline parse-error metadata, Lat pipeline semantic-error metadata, Lat pipeline downstream stage-error metadata, Lat pipeline span metadata, Lat pipeline line-comment metadata, Lat-specific LIR module-summary metadata, Lat-specific LIR source-span metadata, Lat-specific LIR node-kind metadata, Lat-specific LIR first-node metadata, Lat-specific LIR first-node span metadata, Lat-specific LIR first-edge metadata, Lat-specific LIR first-edge span metadata, Lat-specific LIR first transition-source edge metadata, Lat-specific LIR first transition-source edge span metadata, Lat-specific LIR no-effect metadata, and Lat-specific LIR edge-kind metadata.
+Status: runtime boundary refinement implementation with Lat pipeline clause, declaration, module/count, stage-summary, parse-error, semantic-error, downstream-stage-error, span, comment, Lat LIR module-summary, Lat LIR source-span, Lat LIR node-kind, Lat LIR first-node, Lat LIR first-node span, Lat LIR first transition-node, Lat LIR first transition-node span, Lat LIR first-edge, Lat LIR first-edge span, Lat LIR first transition-source edge, Lat LIR first transition-source edge endpoint, Lat LIR first transition-source edge span, Lat LIR no-effect, and Lat LIR edge-kind evidence
+Scope: no-effect runtime-boundary evidence reporting for Lat pipeline metadata, Lat pipeline first-clause metadata, Lat pipeline first-declaration metadata, Lat pipeline module/count metadata, Lat pipeline stage-summary metadata, Lat pipeline parse-error metadata, Lat pipeline semantic-error metadata, Lat pipeline downstream stage-error metadata, Lat pipeline span metadata, Lat pipeline line-comment metadata, Lat-specific LIR module-summary metadata, Lat-specific LIR source-span metadata, Lat-specific LIR node-kind metadata, Lat-specific LIR first-node metadata, Lat-specific LIR first-node span metadata, Lat-specific LIR first transition-node metadata, Lat-specific LIR first transition-node span metadata, Lat-specific LIR first-edge metadata, Lat-specific LIR first-edge span metadata, Lat-specific LIR first transition-source edge metadata, Lat-specific LIR first transition-source edge endpoint metadata, Lat-specific LIR first transition-source edge span metadata, Lat-specific LIR no-effect metadata, and Lat-specific LIR edge-kind metadata.
 
 ## Purpose
 
@@ -131,6 +131,19 @@ lat_lir_first_lat_node_span_start_line
 lat_lir_first_lat_node_span_start_column
 lat_lir_first_lat_node_span_end_line
 lat_lir_first_lat_node_span_end_column
+lat_lir_has_first_transition_node
+lat_lir_first_transition_node_index
+lat_lir_first_transition_node_kind
+lat_lir_first_transition_node_name
+lat_lir_first_transition_node_value
+lat_lir_first_transition_node_operator
+lat_lir_first_transition_node_binding
+lat_lir_first_transition_node_span_start_offset
+lat_lir_first_transition_node_span_end_offset
+lat_lir_first_transition_node_span_start_line
+lat_lir_first_transition_node_span_start_column
+lat_lir_first_transition_node_span_end_line
+lat_lir_first_transition_node_span_end_column
 lat_lir_no_effect_chain_ok
 lat_lir_evidence_level
 lat_lir_no_effect
@@ -161,6 +174,10 @@ lat_lir_first_transition_source_edge_index
 lat_lir_first_transition_source_edge_from_index
 lat_lir_first_transition_source_edge_to_index
 lat_lir_first_transition_source_edge_kind
+lat_lir_first_transition_source_edge_from_node_kind
+lat_lir_first_transition_source_edge_from_node_name
+lat_lir_first_transition_source_edge_to_node_kind
+lat_lir_first_transition_source_edge_to_node_name
 lat_lir_first_transition_source_edge_span_start_offset
 lat_lir_first_transition_source_edge_span_end_offset
 lat_lir_first_transition_source_edge_span_start_line
@@ -198,7 +215,7 @@ Lat execution and LIR execution remain future-gated.
 
 ## Report surface
 
-`latticra_runtime_boundary_report` now includes deterministic report fields for Lat pipeline evidence, Lat pipeline first-clause evidence, Lat pipeline first-declaration evidence, Lat pipeline module/count evidence, Lat pipeline stage-summary evidence, Lat pipeline parse-error evidence, Lat pipeline semantic-error evidence, Lat pipeline downstream stage-error evidence, Lat pipeline span evidence, Lat pipeline line-comment evidence, Lat-specific LIR module-summary evidence, Lat-specific LIR source-span evidence, Lat-specific LIR node-kind evidence, Lat-specific LIR first-node evidence, Lat-specific LIR first-node span evidence, Lat-specific LIR first-edge evidence, Lat-specific LIR first-edge span evidence, Lat-specific LIR first transition-source edge evidence, Lat-specific LIR first transition-source edge span evidence, Lat-specific LIR no-effect evidence, and Lat-specific LIR edge-kind evidence.
+`latticra_runtime_boundary_report` now includes deterministic report fields for Lat pipeline evidence, Lat pipeline first-clause evidence, Lat pipeline first-declaration evidence, Lat pipeline module/count evidence, Lat pipeline stage-summary evidence, Lat pipeline parse-error evidence, Lat pipeline semantic-error evidence, Lat pipeline downstream stage-error evidence, Lat pipeline span evidence, Lat pipeline line-comment evidence, Lat-specific LIR module-summary evidence, Lat-specific LIR source-span evidence, Lat-specific LIR node-kind evidence, Lat-specific LIR first-node evidence, Lat-specific LIR first-node span evidence, Lat-specific LIR first transition-node evidence, Lat-specific LIR first transition-node span evidence, Lat-specific LIR first-edge evidence, Lat-specific LIR first-edge span evidence, Lat-specific LIR first transition-source edge evidence, Lat-specific LIR first transition-source edge endpoint evidence, Lat-specific LIR first transition-source edge span evidence, Lat-specific LIR no-effect evidence, and Lat-specific LIR edge-kind evidence.
 
 The runtime boundary report capacity is increased to preserve bounded output with the expanded report surface.
 
@@ -221,7 +238,7 @@ runtime_boundary_reports_lat_pipeline_evidence
 runtime_boundary_keeps_lat_lir_execution_future_gated
 ```
 
-The Lat pipeline evidence invariants also verify that parser error metadata, semantic error metadata, downstream model/lowering/LIR error metadata, first-clause metadata, first-declaration metadata, module/count metadata, stage-summary metadata, parser diagnostic/module span metadata, line-comment count, first-comment span metadata, Lat-specific LIR module-summary metadata, Lat-specific LIR source-span metadata, Lat-specific LIR node-kind counts, Lat-specific LIR first-node identity, Lat-specific LIR first-node span metadata, Lat-specific LIR first-edge identity, Lat-specific LIR first-edge span metadata, Lat-specific LIR first transition-source edge identity, Lat-specific LIR first transition-source edge span metadata, Lat-specific LIR no-effect flags, and Lat-specific LIR edge-kind counts are copied into runtime-boundary records and reports, including denied records for failed Lat pipeline metadata.
+The Lat pipeline evidence invariants also verify that parser error metadata, semantic error metadata, downstream model/lowering/LIR error metadata, first-clause metadata, first-declaration metadata, module/count metadata, stage-summary metadata, parser diagnostic/module span metadata, line-comment count, first-comment span metadata, Lat-specific LIR module-summary metadata, Lat-specific LIR source-span metadata, Lat-specific LIR node-kind counts, Lat-specific LIR first-node identity, Lat-specific LIR first-node span metadata, Lat-specific LIR first transition-node identity, Lat-specific LIR first transition-node span metadata, Lat-specific LIR first-edge identity, Lat-specific LIR first-edge span metadata, Lat-specific LIR first transition-source edge identity, Lat-specific LIR first transition-source edge endpoint metadata, Lat-specific LIR first transition-source edge span metadata, Lat-specific LIR no-effect flags, and Lat-specific LIR edge-kind counts are copied into runtime-boundary records and reports, including denied records for failed Lat pipeline metadata.
 
 ## Compatibility
 
@@ -255,9 +272,12 @@ Lat LIR source-span evidence reporting
 Lat LIR node-kind evidence reporting
 Lat LIR first-node evidence reporting
 Lat LIR first-node span evidence reporting
+Lat LIR first transition-node evidence reporting
+Lat LIR first transition-node span evidence reporting
 Lat LIR first-edge evidence reporting
 Lat LIR first-edge span evidence reporting
 Lat LIR first transition-source edge evidence reporting
+Lat LIR first transition-source edge endpoint evidence reporting
 Lat LIR first transition-source edge span evidence reporting
 Lat LIR no-effect evidence reporting
 Lat LIR edge-kind evidence reporting

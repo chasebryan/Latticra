@@ -15,8 +15,14 @@ This contract is documentation-only and static. It does not run package build to
 
 ```text
 debian_freebsd_openbsd_package_payload_inspection_contract_present=1
+debian_freebsd_openbsd_package_install_remove_transcript_contract_present=1
+debian_freebsd_openbsd_package_publication_non_claim_review_contract_present=1
+debian_freebsd_openbsd_package_validation_promotion_blocker_matrix_contract_present=1
 payload_inspection_contract_present=1
 payload_inspection_contract_state=specified-no-effect
+install_remove_transcript_contract_state=specified-no-effect
+publication_non_claim_review_contract_state=specified-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
 package_build_gate_state=closed-no-effect
 artifact_naming_contract_state=specified-no-effect
 package_artifact_created=0
@@ -27,6 +33,8 @@ openbsd_payload_inspection_run=0
 package_payload_accepted=0
 package_artifact_sha256_recorded=0
 install_on_host_run=0
+publication_non_claim_review_present=1
+platform_build_evidence_accepted=0
 package_readiness_claimed=0
 ```
 
@@ -148,15 +156,17 @@ The transcript must be reviewed before a package artifact can be accepted as pay
 
 ## Current Blockers
 
-Package payload acceptance remains blocked because the current repository still has:
+Package payload acceptance remains blocked under this blocker and dependency state:
 
 ```text
 package_artifact_created=0
 package_artifact_sha256_recorded=0
 environment_transcript_present=0
 explicit_operator_build_authorization=0
-install_remove_transcript_contract_present=0
-publication_non_claim_review_present=0
+install_remove_transcript_contract_present=1
+publication_non_claim_review_present=1
+platform_build_evidence_accepted=0
+package_validation_result_promoted=0
 ```
 
 ## Command Boundary
@@ -187,19 +197,67 @@ docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_ENVIRONMENT_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_ARTIFACT_NAMING_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
 ```
 
 The package-build gate remains closed. This payload inspection contract only defines the evidence future package artifacts must provide after they exist in a disposable validation environment.
+
+## Completed Follow-On Lane
+
+Completed follow-on lane:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package install/remove transcript contract before any package install can be accepted.
+```
+
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-install-remove-transcript-contract.sh
+```
+
+That lane defines disposable install/remove evidence while keeping host installs and package readiness blocked.
+
+## Completed Follow-On Lane
+
+Completed follow-on lane:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package publication non-claim review contract before any package validation result can be promoted.
+```
+
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-publication-non-claim-review-contract.sh
+```
+
+That lane records local-only publication and official-port non-claims while keeping package publication and readiness blocked.
+
+## Completed Follow-On Lane
+
+Completed follow-on lane:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package validation promotion blocker matrix before any platform-specific build evidence can be accepted.
+```
+
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-validation-promotion-blocker-matrix-contract.sh
+```
+
+That lane ties source, environment, artifact, payload, install/remove, and publication non-claim blockers together while keeping platform build evidence acceptance and validation promotion blocked.
 
 ## Next Slice
 
 Recommended next slice:
 
 ```text
-Add a Debian, FreeBSD, and OpenBSD package install/remove transcript contract before any package install can be accepted.
+Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial contract before any single-platform build lane can open.
 ```
 
-That future lane should define disposable install/remove evidence while keeping host installs and package readiness blocked.
+That future lane should define how build evidence intake is refused until the blocker matrix opens, while keeping package builds and readiness blocked.
 
 ## Validation
 

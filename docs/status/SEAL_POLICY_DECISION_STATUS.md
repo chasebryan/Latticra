@@ -20,6 +20,7 @@ docs/LATTICRA_SEAL_POLICY_DECISION_IMPLEMENTATION.md
 docs/LATTICRA_SEAL_POLICY_DECISION_REPORT_SURFACE.md
 docs/status/SEAL_POLICY_DECISION_STATUS.md
 docs/status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md
+docs/status/SEAL_SIGNED_REQUEST_STATUS.md
 include/latticra/seal_policy_decision.h
 src/seal_policy_decision.c
 tests/seal_policy_decision_invariants.c
@@ -27,6 +28,9 @@ scripts/test-latticra-seal-policy-decision-contract.sh
 scripts/test-latticra-seal-policy-decision.sh
 scripts/test-latticra-seal-policy-decision-report-surface.sh
 scripts/test-latticra-seal-policy-decision-report-surface-status.sh
+scripts/test-latticra-seal-signed-request-status.sh
+.github/workflows/latticra-seal-signed-request-status.yml
+.github/workflows/latticra-seal-policy-decision-status.yml
 README.md
 STATUS.md
 docs/status/README.md
@@ -50,8 +54,15 @@ seal_policy_decision_invariant_test_present=1
 seal_policy_decision_runner_present=1
 seal_policy_decision_status_surface_present=1
 seal_policy_decision_status_present=1
+seal_policy_decision_status_runner_present=1
+seal_policy_decision_status_workflow_present=1
 seal_policy_decision_report_surface_present=1
 seal_policy_decision_report_surface_status_present=1
+seal_signed_request_status_present=1
+seal_signed_request_status_runner_present=1
+seal_signed_request_status_workflow_present=1
+signed_request_predecessor_request_freshness_status_present=1
+policy_decision_predecessor_signed_request_status_present=1
 readme_mentions_policy_decision_metadata=1
 readme_mentions_policy_decision_report_surface=1
 readme_links_policy_decision_contract=1
@@ -104,9 +115,11 @@ The completed Seal core evidence milestone depends on this policy-decision postu
 
 ```text
 seal_policy_decision_metadata_present=1
+policy_decision_predecessor_signed_request_status_present=1
 runtime_gate_report_only=1
 core_blocked_case_set_complete=1
 mode=status-public-entry-alignment
+policy_decision_status_added=1
 implementation_behavior_changed=0
 real_policy_evaluation_added=0
 policy_enforcement_added=0
@@ -147,6 +160,26 @@ sh scripts/test-latticra-seal-policy-decision-report-surface-status.sh
 Expected output:
 
 ```text
+seal report envelope status: ok
+seal signature request status: ok
+seal signing authorization status: ok
+seal signer handoff status: ok
+seal signer invocation status: ok
+seal signing operation status: ok
+seal key-handling status: ok
+seal key-material status: ok
+seal public-key parsing status: ok
+seal key parsing status: ok
+seal verification policy status: ok
+seal verification receipt status: ok
+seal capability gate status: ok
+seal effect decision status: ok
+seal runtime handoff status: ok
+seal status rollup status: ok
+seal agentic automation security status: ok
+seal parameter schema status: ok
+seal request freshness status: ok
+seal signed request status: ok
 latticra seal policy decision status: ok
 ```
 
@@ -154,10 +187,14 @@ latticra seal policy decision status: ok
 
 This status record is documentation/status alignment only.
 
+This refresh adds the policy decision status guard workflow and records the guarded signed request status predecessor without changing the report-only policy decision metadata, implementation, or report surface.
+
 It does not add policy evaluation, policy enforcement, runtime enforcement, runtime behavior, host behavior, network behavior, MCP behavior, model behavior, AI-agent behavior, tool behavior, shell behavior, cryptographic behavior, capability behavior, production readiness, external endorsement, or authority grants.
 
 ## Current next valid slice
 
 No completion-estimate review is required from this documentation/status-only alignment.
 
-The next valid work should continue with small guarded report/status alignment only when drift appears, unless a future slice separately proposes a new contract with explicit tests and non-claims.
+The next valid Latticra Seal slice is operator receipt report status/workflow guard alignment or another small guarded report/status alignment.
+
+That future slice must preserve the no-effect posture and must not implement receipt file writes, tool execution, policy enforcement, capability enforcement, cryptographic verification, runtime execution, host behavior, network behavior, MCP behavior, AI agent execution, model execution, shell execution, or authority grants.

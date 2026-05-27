@@ -33,6 +33,8 @@ environment_contract='docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_ENVIRONMENT_CONT
 gate_contract='docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md'
 
 require_file "$contract"
+require_file docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+require_file docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 require_file "$artifact_contract"
 require_file "$environment_contract"
 require_file "$gate_contract"
@@ -57,8 +59,12 @@ require_file .github/workflows/debian-freebsd-openbsd-package-payload-inspection
 require_contains 'Status: active package payload inspection contract' "$contract"
 require_contains 'documentation-only and static' "$contract"
 require_contains 'debian_freebsd_openbsd_package_payload_inspection_contract_present=1' "$contract"
+require_contains 'debian_freebsd_openbsd_package_install_remove_transcript_contract_present=1' "$contract"
+require_contains 'debian_freebsd_openbsd_package_publication_non_claim_review_contract_present=1' "$contract"
 require_contains 'payload_inspection_contract_present=1' "$contract"
 require_contains 'payload_inspection_contract_state=specified-no-effect' "$contract"
+require_contains 'install_remove_transcript_contract_state=specified-no-effect' "$contract"
+require_contains 'publication_non_claim_review_contract_state=specified-no-effect' "$contract"
 require_contains 'package_build_gate_state=closed-no-effect' "$contract"
 require_contains 'artifact_naming_contract_state=specified-no-effect' "$contract"
 require_contains 'package_artifact_created=0' "$contract"
@@ -69,6 +75,7 @@ require_contains 'openbsd_payload_inspection_run=0' "$contract"
 require_contains 'package_payload_accepted=0' "$contract"
 require_contains 'package_artifact_sha256_recorded=0' "$contract"
 require_contains 'install_on_host_run=0' "$contract"
+require_contains 'publication_non_claim_review_present=1' "$contract"
 require_contains 'package_readiness_claimed=0' "$contract"
 
 require_contains 'payload_cli_path_required=1' "$contract"
@@ -124,11 +131,16 @@ require_contains 'environment_identifier' "$contract"
 require_contains 'operator_authorization_reference' "$contract"
 require_contains 'environment_transcript_present=0' "$contract"
 require_contains 'explicit_operator_build_authorization=0' "$contract"
-require_contains 'install_remove_transcript_contract_present=0' "$contract"
-require_contains 'publication_non_claim_review_present=0' "$contract"
+require_contains 'install_remove_transcript_contract_present=1' "$contract"
+require_contains 'publication_non_claim_review_present=1' "$contract"
+require_contains 'package_validation_result_promoted=0' "$contract"
 require_contains 'Add a Debian, FreeBSD, and OpenBSD package install/remove transcript contract' "$contract"
+require_contains 'Add a Debian, FreeBSD, and OpenBSD package publication non-claim review contract' "$contract"
+require_contains 'Add a Debian, FreeBSD, and OpenBSD package validation promotion blocker matrix' "$contract"
 require_contains 'debian_freebsd_openbsd_package_payload_inspection_contract: ok' "$contract"
 
+require_contains 'docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md' "$contract"
+require_contains 'docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' "$contract"
 require_contains "$contract" "$artifact_contract"
 require_contains "$contract" "$gate_contract"
 require_contains "$contract" docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md

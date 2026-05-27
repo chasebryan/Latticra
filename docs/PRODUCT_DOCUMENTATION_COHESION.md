@@ -17,6 +17,10 @@ The product surface should always make four things easy to find:
 3. what remains intentionally blocked;
 4. what evidence would be required before the claim can become stronger.
 
+Use [`DOCUMENTATION_READER_JOURNEY_MAP.md`](DOCUMENTATION_READER_JOURNEY_MAP.md) to keep audience-specific reader paths practical, bounded, and explicit about stop signals.
+
+Use [`DOCUMENTATION_GLOSSARY.md`](DOCUMENTATION_GLOSSARY.md) when product copy depends on shared terms such as no-effect, report-only, guarded user-local, local-only, public status, drift, demotion, or product readiness.
+
 ## Cohesion Promise
 
 All product-facing documentation should describe Latticra as:
@@ -35,6 +39,8 @@ Do not let a shorter product summary outgrow the evidence in status records, con
 Use [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) to connect public surfaces to source records, validation checks, and non-claim boundaries.
 
 Use [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) to choose documentation validation commands and failure-handling paths.
+
+Use [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) when product-facing wording, source records, status mirrors, non-claims, or platform posture disagree.
 
 Use [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md) for canonical terminology, status/date style, heading shape, link style, and replacement wording.
 
@@ -57,7 +63,7 @@ Use [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md) for canonical
 
 ### New User
 
-Use this route for someone trying Latticra locally:
+Use this route for someone trying Latticra locally. The fuller audience matrix is [`DOCUMENTATION_READER_JOURNEY_MAP.md`](DOCUMENTATION_READER_JOURNEY_MAP.md).
 
 1. [`../README.md`](../README.md)
 2. [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md)
@@ -86,12 +92,14 @@ Use this route for someone changing documentation or product posture:
 1. [`README.md`](README.md)
 2. [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md)
 3. [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md)
-4. [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md)
-5. [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md)
-6. [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md)
-7. [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md)
-8. The relevant subsystem contract and status record
-9. The exact guard named by that record
+4. [`DOCUMENTATION_GLOSSARY.md`](DOCUMENTATION_GLOSSARY.md)
+5. [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md)
+6. [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md)
+7. [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md)
+8. [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md)
+9. [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md)
+10. The relevant subsystem contract and status record
+11. The exact guard named by that record
 
 The route should prevent documentation from getting ahead of implementation or validation evidence.
 
@@ -158,9 +166,10 @@ Run this review when public wording changes:
 5. Does the validation path prove the narrow claim?
 6. Does [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) identify the source record, mirror, validation, and non-claim boundary?
 7. Does [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) identify the narrowest relevant checks?
-8. Does the change preserve the documentation-only boundary if no implementation changed?
-9. Does the wording follow [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md)?
-10. Does the change need a [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) outcome label?
+8. Does [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) identify the correct narrowing or demotion path if records disagree?
+9. Does the change preserve the documentation-only boundary if no implementation changed?
+10. Does the wording follow [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md)?
+11. Does the change need a [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) outcome label?
 
 ## Maintenance Boundary
 

@@ -198,6 +198,30 @@ static const latticra_console_command_t lc_commands[] = {
         0
     },
     {
+        "lc packages",
+        "lc packages",
+        "Inspect the LC package-manifest contract before catalogs, downloads, package managers, or rootfs writes exist.",
+        "lc.packages.contract",
+        LATTICRA_CONSOLE_COMMAND_CORE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
+        "lc init",
+        "lc init",
+        "Inspect the LC init contract before PID 1, service supervision, startup ordering, or boot authority exist.",
+        "lc.init.contract",
+        LATTICRA_CONSOLE_COMMAND_CORE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
         "lc profiles",
         "lc profiles",
         "Show installed LC configuration profile presets.",
@@ -697,6 +721,10 @@ static void lc_seed_result(
         "metadata-only-contract");
     lc_copy(result->rootfs_contract_status, sizeof(result->rootfs_contract_status),
         "metadata-only-contract");
+    lc_copy(result->packages_contract_status, sizeof(result->packages_contract_status),
+        "metadata-only-contract");
+    lc_copy(result->init_contract_status, sizeof(result->init_contract_status),
+        "metadata-only-contract");
     lc_copy(result->substrate_bridge_status, sizeof(result->substrate_bridge_status), "metadata-bound");
     lc_copy(result->panel_install_status, sizeof(result->panel_install_status), "panel-installable");
     lc_copy(result->host_embedding_status, sizeof(result->host_embedding_status), "planned");
@@ -742,6 +770,8 @@ static void lc_seed_result(
     result->workspace_contract_present = 1;
     result->namespace_contract_present = 1;
     result->rootfs_contract_present = 1;
+    result->packages_contract_present = 1;
+    result->init_contract_present = 1;
     result->command_registry_present = 1;
     result->substrate_bridge_present = 1;
     result->host_embeddable = 1;
@@ -824,6 +854,10 @@ static void lc_finalize(latticra_console_result_t *result) {
     lc_copy(result->namespace_contract_status, sizeof(result->namespace_contract_status),
         "metadata-only-contract-ready");
     lc_copy(result->rootfs_contract_status, sizeof(result->rootfs_contract_status),
+        "metadata-only-contract-ready");
+    lc_copy(result->packages_contract_status, sizeof(result->packages_contract_status),
+        "metadata-only-contract-ready");
+    lc_copy(result->init_contract_status, sizeof(result->init_contract_status),
         "metadata-only-contract-ready");
     lc_copy(result->substrate_bridge_status, sizeof(result->substrate_bridge_status), "metadata-bound-ready");
     lc_copy(result->host_embedding_contract_status, sizeof(result->host_embedding_contract_status),
@@ -1003,6 +1037,8 @@ latticra_status_t latticra_console_manpage_report(
         "  latticra-lc workspace\n"
         "  latticra-lc namespace\n"
         "  latticra-lc rootfs\n"
+        "  latticra-lc packages\n"
+        "  latticra-lc init\n"
         "  latticra-lc profiles\n"
         "  latticra-lc receipts\n"
         "  latticra-lc receipt-request\n"
@@ -1376,6 +1412,129 @@ latticra_status_t latticra_console_rootfs_contract_report(
     return status;
 }
 
+latticra_status_t latticra_console_packages_contract_report(
+    char *buffer,
+    size_t buffer_len) {
+    size_t used = 0u;
+    latticra_status_t status;
+
+    if (buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    buffer[0] = '\0';
+
+    status = lc_appendf(buffer, buffer_len, &used,
+        "LATTICRA CONSOLE PACKAGES CONTRACT\n"
+        "packages_profile=lc-packages-v0\n"
+        "packages_status=metadata-only-contract\n"
+        "packages_contract_present=1\n"
+        "packages_kind=lc-rootfs-package-manifest-envelope\n"
+        "packages_root=share/latticra/lc/packages\n"
+        "packages_state_source=metadata-only\n"
+        "package_manifest_present=0\n"
+        "package_manifest_write_allowed=0\n"
+        "package_catalog_present=0\n"
+        "package_catalog_read_allowed=0\n"
+        "package_catalog_write_allowed=0\n"
+        "package_download_allowed=0\n"
+        "package_install_plan_present=0\n"
+        "package_install_plan_write_allowed=0\n"
+        "package_manager_present=0\n"
+        "package_manager_execution_allowed=0\n"
+        "package_script_execution_allowed=0\n"
+        "package_source_trust_required=1\n"
+        "rootfs_package_manifest_present=0\n"
+        "rootfs_package_install_allowed=0\n"
+        "rootfs_file_write_allowed=0\n"
+        "rootfs_contract_required=1\n"
+        "namespace_contract_required=1\n"
+        "workspace_contract_required=1\n"
+        "session_contract_required=1\n"
+        "os_base_contract_required=1\n"
+        "runtime_boundary_required=1\n"
+        "seal_capability_labels_required=1\n"
+        "receipt_required_before_package_materialization=1\n"
+        "command_surface=lc packages\n"
+        "related_rootfs_command=lc rootfs\n"
+        "related_namespace_command=lc namespace\n"
+        "related_workspace_command=lc workspace\n"
+        "related_session_command=lc session\n"
+        "related_os_contract_command=lc os-contract\n"
+        "promotion_gate=lc_packages_contract_before_catalog_install_or_rootfs_write\n"
+        "no_effect=1\n"
+        "file_read_allowed=0\n"
+        "file_write_allowed=0\n"
+        "host_process_launch_allowed=0\n"
+        "host_file_read_allowed=0\n"
+        "host_file_write_allowed=0\n"
+        "host_mutation_allowed=0\n"
+        "network_allowed=0\n"
+        "runtime_enforcement_allowed=0\n"
+        "boot_allowed=0\n"
+        "production_os_claim=0\n");
+    return status;
+}
+
+latticra_status_t latticra_console_init_contract_report(
+    char *buffer,
+    size_t buffer_len) {
+    size_t used = 0u;
+    latticra_status_t status;
+
+    if (buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    buffer[0] = '\0';
+
+    status = lc_appendf(buffer, buffer_len, &used,
+        "LATTICRA CONSOLE INIT CONTRACT\n"
+        "init_profile=lc-init-v0\n"
+        "init_status=metadata-only-contract\n"
+        "init_contract_present=1\n"
+        "init_kind=lc-internal-init-and-service-envelope\n"
+        "init_root=share/latticra/lc/init\n"
+        "init_state_source=metadata-only\n"
+        "init_manifest_present=0\n"
+        "init_manifest_write_allowed=0\n"
+        "pid1_claim_allowed=0\n"
+        "init_process_present=0\n"
+        "init_process_launch_allowed=0\n"
+        "service_registry_present=0\n"
+        "service_registry_write_allowed=0\n"
+        "service_start_allowed=0\n"
+        "service_stop_allowed=0\n"
+        "service_restart_allowed=0\n"
+        "process_supervision_allowed=0\n"
+        "startup_order_present=0\n"
+        "startup_order_write_allowed=0\n"
+        "rootfs_contract_required=1\n"
+        "packages_contract_required=1\n"
+        "namespace_contract_required=1\n"
+        "workspace_contract_required=1\n"
+        "session_contract_required=1\n"
+        "os_base_contract_required=1\n"
+        "runtime_boundary_required=1\n"
+        "seal_capability_labels_required=1\n"
+        "receipt_required_before_init_runtime=1\n"
+        "command_surface=lc init\n"
+        "related_packages_command=lc packages\n"
+        "related_rootfs_command=lc rootfs\n"
+        "related_namespace_command=lc namespace\n"
+        "related_session_command=lc session\n"
+        "related_os_contract_command=lc os-contract\n"
+        "promotion_gate=lc_init_contract_before_pid1_service_supervision_or_boot\n"
+        "no_effect=1\n"
+        "file_read_allowed=0\n"
+        "file_write_allowed=0\n"
+        "host_process_launch_allowed=0\n"
+        "host_file_read_allowed=0\n"
+        "host_file_write_allowed=0\n"
+        "host_mutation_allowed=0\n"
+        "network_allowed=0\n"
+        "runtime_enforcement_allowed=0\n"
+        "boot_allowed=0\n"
+        "production_os_claim=0\n");
+    return status;
+}
+
 latticra_status_t latticra_console_host_contract_report(
     char *buffer,
     size_t buffer_len) {
@@ -1519,7 +1678,7 @@ latticra_status_t latticra_console_receipt_request_report(
         "signature_request_profile=latticra-seal-signature-request/0.1\n"
         "requested_receipt_profile=latticra-seal-verified-receipt/0.1\n"
         "requested_capability=verified-receipt-report\n"
-        "requested_surfaces=profile,session,workspace,namespace,rootfs,host-contract,host-inventory,host-adapter,runtime-boundary\n"
+        "requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,host-contract,host-inventory,host-adapter,runtime-boundary\n"
         "receipt_payload_schema_profile=lc-receipt-payload-schema-v0\n"
         "receipt_payload_schema_required=1\n"
         "receipt_payload_schema_present=1\n"
@@ -2140,6 +2299,10 @@ latticra_status_t latticra_console_receipt_report(
         "namespace_contract_present=1\n"
         "rootfs_contract_receipt_required=1\n"
         "rootfs_contract_present=1\n"
+        "packages_contract_receipt_required=1\n"
+        "packages_contract_present=1\n"
+        "init_contract_receipt_required=1\n"
+        "init_contract_present=1\n"
         "receipt_request_contract_required=1\n"
         "receipt_request_contract_present=1\n"
         "receipt_payload_schema_required=1\n"
@@ -2172,6 +2335,8 @@ latticra_status_t latticra_console_receipt_report(
         "workspace_contract_command=lc workspace\n"
         "namespace_contract_command=lc namespace\n"
         "rootfs_contract_command=lc rootfs\n"
+        "packages_contract_command=lc packages\n"
+        "init_contract_command=lc init\n"
         "seal_signature_planned=1\n"
         "seal_signature_present=0\n"
         "seal_signing_authority_present=0\n"
@@ -2180,7 +2345,7 @@ latticra_status_t latticra_console_receipt_report(
         "receipt_hash_recorded=0\n"
         "receipt_path_recorded=0\n"
         "receipt_format=metadata-only-contract\n"
-        "receipt_surfaces=profile,session,workspace,namespace,rootfs,host-contract,host-inventory,host-adapter,runtime-boundary\n"
+        "receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,host-contract,host-inventory,host-adapter,runtime-boundary\n"
         "promotion_gate=lc_receipts_before_host_adapter_or_os_base\n"
         "command_surface=lc receipts\n"
         "no_effect=1\n"
@@ -2308,6 +2473,8 @@ latticra_status_t latticra_console_report(
         "workspace_contract_status=%s\n"
         "namespace_contract_status=%s\n"
         "rootfs_contract_status=%s\n"
+        "packages_contract_status=%s\n"
+        "init_contract_status=%s\n"
         "substrate_bridge_status=%s\n"
         "panel_install_status=%s\n"
         "host_embedding_status=%s\n"
@@ -2336,6 +2503,8 @@ latticra_status_t latticra_console_report(
         "workspace_contract_present=%d\n"
         "namespace_contract_present=%d\n"
         "rootfs_contract_present=%d\n"
+        "packages_contract_present=%d\n"
+        "init_contract_present=%d\n"
         "command_registry_present=%d\n"
         "substrate_bridge_present=%d\n"
         "operator_shell_present=%d\n"
@@ -2389,6 +2558,8 @@ latticra_status_t latticra_console_report(
         result->workspace_contract_status,
         result->namespace_contract_status,
         result->rootfs_contract_status,
+        result->packages_contract_status,
+        result->init_contract_status,
         result->substrate_bridge_status,
         result->panel_install_status,
         result->host_embedding_status,
@@ -2416,6 +2587,8 @@ latticra_status_t latticra_console_report(
         result->workspace_contract_present,
         result->namespace_contract_present,
         result->rootfs_contract_present,
+        result->packages_contract_present,
+        result->init_contract_present,
         result->command_registry_present,
         result->substrate_bridge_present,
         result->operator_shell_present,

@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #define LATTICRA_KERNEL_STATE_MACHINE_LABEL_MAX 64u
-#define LATTICRA_KERNEL_STATE_MACHINE_LOG_MAX 21u
+#define LATTICRA_KERNEL_STATE_MACHINE_LOG_MAX 23u
 #define LATTICRA_KERNEL_STATE_MACHINE_REPORT_MAX 16384u
 
 typedef struct {
@@ -17,6 +17,7 @@ typedef struct {
     char status[LATTICRA_KERNEL_STATE_MACHINE_LABEL_MAX];
     int state_change_performed;
     int external_effect_performed;
+    int network_allowed;
 } latticra_kernel_state_machine_log_entry_t;
 
 typedef struct {
@@ -26,6 +27,7 @@ typedef struct {
     size_t log_count;
     int state_mutated;
     int external_effect_performed;
+    int network_allowed;
     unsigned int evidence_level;
 } latticra_kernel_state_machine_t;
 
@@ -48,6 +50,8 @@ typedef struct {
     latticra_kernel_scheduler_selection_request_t scheduler_selection_request;
     latticra_kernel_scheduler_dispatch_request_t scheduler_dispatch_request;
     latticra_kernel_scheduler_handoff_request_t scheduler_handoff_request;
+    latticra_kernel_scheduler_activation_request_t scheduler_activation_request;
+    latticra_kernel_scheduler_run_entry_request_t scheduler_run_entry_request;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
 } latticra_kernel_state_machine_step_request_t;
@@ -60,6 +64,7 @@ typedef struct {
     latticra_kernel_state_kind_t machine_state_after;
     int state_mutated;
     int external_effect_performed;
+    int network_allowed;
     unsigned int evidence_level;
 } latticra_kernel_state_machine_step_result_t;
 

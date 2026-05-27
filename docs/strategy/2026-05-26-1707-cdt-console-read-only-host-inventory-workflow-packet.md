@@ -176,6 +176,7 @@ evidence bundle template
 non-claim review template
 public-entrypoint review template
 estimate-impact review template
+review package index
 completion checkpoint
 ```
 
@@ -186,9 +187,10 @@ workflow_packet_created=1
 acceptance_checklist_created=1
 evidence_bundle_template_created=1
 non_claim_review_template_created=1
-public_entrypoint_review_template_created=0
-estimate_impact_review_template_created=0
-completion_checkpoint_created=0
+public_entrypoint_review_template_created=1
+estimate_impact_review_template_created=1
+review_package_index_created=1
+completion_checkpoint_created=1
 ```
 
 ## Recommended next planning move
@@ -196,16 +198,17 @@ completion_checkpoint_created=0
 Recommended next planning move:
 
 ```text
-create the Console read-only host inventory public-entrypoint review template
+begin the Tier 2 Nucleus effect-contract and runtime-denial gate planning package
 ```
 
 Reason:
 
 ```text
-the workflow, acceptance criteria, evidence bundle shape, and non-claim review
-shape are now selected; the next useful planning artifact is the review form
-for deciding whether future evidence can be referenced from public entry points
-without changing product, runtime, host, security, or estimate posture
+the workflow, acceptance criteria, evidence bundle shape, non-claim review
+shape, public-entrypoint review shape, estimate-impact review shape, and review
+package index are now selected and closed by the completion checkpoint; the
+overall priority map names runtime and Nucleus effect-boundary planning as the
+next planning priority while preserving contract-level, no-effect boundaries
 ```
 
 ## Do not start yet

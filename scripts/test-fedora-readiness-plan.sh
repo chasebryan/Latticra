@@ -51,13 +51,15 @@ require_contains 'Fedora endorsement' docs/FEDORA_READINESS_PLAN.md
 require_contains 'Fedora allowed license posture' docs/FEDORA_READINESS_PLAN.md
 require_contains 'BuildRequires completeness' docs/FEDORA_READINESS_PLAN.md
 require_contains 'mock build readiness' docs/FEDORA_READINESS_PLAN.md
-require_contains 'final_state=scheduler-handoff-ready' docs/FEDORA_READINESS_PLAN.md
+require_contains 'final_state=scheduler-run-entry-ready' docs/FEDORA_READINESS_PLAN.md
 require_contains 'external_effect_performed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'scheduler_execution_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'scheduler_selection_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'scheduler_dispatch_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'scheduler_handoff_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'scheduler_activation_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'scheduler_run_entry_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'memory_allocation_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'process_spawn_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'syscall_dispatch_allowed=0' docs/FEDORA_READINESS_PLAN.md

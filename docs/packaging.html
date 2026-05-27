@@ -186,7 +186,7 @@
         <article class="packaging-platform packaging-opensuse">
           <span>openSUSE</span>
           <h3>RPM draft and maintenance records</h3>
-          <p>openSUSE records cover local RPM shape, a changes file, rpmlint and osc availability, findings classification, source archive reproducibility, temporary RPM topdir handoff, build-gate blockers, and disposable build-environment requirements before any OBS claim.</p>
+          <p>openSUSE records cover local RPM shape, a changes file, rpmlint and osc availability, findings classification, source archive reproducibility, temporary RPM topdir handoff, build-gate blockers, disposable build-environment requirements, payload inspection, install/remove transcript requirements, and OBS non-claims before any publication claim.</p>
           <a href="OPENSUSE_READINESS_PLAN.md">openSUSE readiness</a>
         </article>
         <article class="packaging-platform">
@@ -289,6 +289,9 @@ sh scripts/test-macos-dry-run-writer-candidate-integration.sh</code></pre>
         <a href="OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md"><strong>openSUSE build gate</strong><span>Closed no-effect gate before rpmbuild, osc build, artifacts, install, or OBS publication evidence.</span></a>
         <a href="OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md"><strong>openSUSE build environment</strong><span>Disposable build environment requirements without provisioning, rpmbuild, osc build, artifacts, or install claims.</span></a>
         <a href="OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md"><strong>openSUSE RPM artifact names</strong><span>Future source RPM and binary RPM names with disposable output boundaries and no artifact creation.</span></a>
+        <a href="OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md"><strong>openSUSE RPM payload inspection</strong><span>Future source RPM and binary RPM payload checks without inspecting artifacts or accepting payloads.</span></a>
+        <a href="OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md"><strong>openSUSE RPM install/remove</strong><span>Future disposable RPM install/remove transcript evidence without installing packages or mutating hosts.</span></a>
+        <a href="OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md"><strong>openSUSE OBS non-claims</strong><span>Open Build Service, submit-request, official-package, and SUSE endorsement non-claims without publishing packages.</span></a>
         <a href="OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md"><strong>openSUSE rpmlint findings</strong><span>Findings classification and blocked publication posture before OBS or build claims.</span></a>
         <a href="MACOS_APP_BUNDLE_WRITER_ALIGNMENT.md"><strong>macOS writer alignment</strong><span>No-effect app bundle writer dry-run and blocked commit-capable writer claims.</span></a>
         <a href="MACOS_LOCAL_CANDIDATE_ASSET_PROBE.md"><strong>macOS asset probe</strong><span>Local candidate executable and icon checks before any future writer commit gate.</span></a>

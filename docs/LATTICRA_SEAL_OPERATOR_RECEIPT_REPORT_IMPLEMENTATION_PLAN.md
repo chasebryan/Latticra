@@ -379,6 +379,12 @@ latticra seal operator receipt report implementation plan: ok
 
 The operator receipt report surface/status checkpoint is now represented by `docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SURFACE.md` and `docs/status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md`.
 
-The next valid Latticra Seal slice is a Panel-visible Seal dashboard planning checkpoint or local capability registry schema contract.
+The local capability registry schema contract is now represented by `docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_CONTRACT.md`.
+
+The local capability registry schema implementation plan is now represented by `docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION_PLAN.md`.
+
+The local capability registry schema implementation is now represented by `docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md`.
+
+The next valid Latticra Seal slice is a deterministic local capability registry schema report surface or a Panel-visible Seal dashboard planning checkpoint.
 
 That future slice must preserve the no-effect posture and must not perform effects or grant authority.

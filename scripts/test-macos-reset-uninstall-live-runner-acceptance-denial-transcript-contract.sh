@@ -128,7 +128,7 @@ require_contains 'directory_delete_performed=0' "$doc"
 require_contains 'host_mutation_performed=0' "$doc"
 require_contains 'network_performed=0' "$doc"
 require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial transcript contract that records the closed acceptance gate without dispatching effects.' "$doc"
-require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition contract that records the reviewed no-effect closeout audit as a no-effect disposition without opening dispatch or deletion.' "$doc"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout contract that closes the reviewed no-effect closeout audit review disposition without opening dispatch or deletion.' "$doc"
 
 require_contains 'Status: no-effect reset/uninstall live-runner acceptance-denial transcript contract status' "$status"
 require_contains 'macos_reset_uninstall_live_runner_acceptance_denial_transcript_contract_present=1' "$status"
@@ -163,7 +163,7 @@ require_contains 'scripts/macos-reset-uninstall-live-runner-acceptance-denial-tr
 require_contains 'docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_TRANSCRIPT_CONTRACT_STATUS.md' "$transfer_plan"
 require_contains 'Current live-runner acceptance-denial transcript lane now present' "$transfer_plan"
 require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial transcript contract that records the closed acceptance gate without dispatching effects.' "$transfer_plan"
-require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition contract that records the reviewed no-effect closeout audit as a no-effect disposition without opening dispatch or deletion.' "$transfer_plan"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout contract that closes the reviewed no-effect closeout audit review disposition without opening dispatch or deletion.' "$transfer_plan"
 
 require_contains 'macos_reset_uninstall_live_runner_acceptance_denial_transcript_contract_present=1' "$transfer_status"
 require_contains 'live_runner_acceptance_denial_transcript_contract_state=recorded-no-effect' "$transfer_status"
@@ -174,7 +174,7 @@ require_contains 'live_runner_acceptance_denial_transcript_dispatch_performed=0'
 require_contains 'live_runner_acceptance_denial_transcript_deletion_enabled=0' "$transfer_status"
 require_contains 'Current live-runner acceptance-denial transcript lane' "$transfer_status"
 require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial transcript contract that records the closed acceptance gate without dispatching effects.' "$transfer_status"
-require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition contract that records the reviewed no-effect closeout audit as a no-effect disposition without opening dispatch or deletion.' "$transfer_status"
+require_contains 'Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout contract that closes the reviewed no-effect closeout audit review disposition without opening dispatch or deletion.' "$transfer_status"
 
 require_contains 'MACOS RESET UNINSTALL LIVE RUNNER ACCEPTANCE DENIAL TRANSCRIPT CONTRACT' "$script"
 require_contains 'reset_uninstall_live_runner_acceptance_denial_transcript_contract_status=ok' "$script"
@@ -187,7 +187,7 @@ require_contains 'file_delete_performed=0' "$script"
 require_contains 'directory_delete_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -216,7 +216,7 @@ require_output_contains "$output" 'directory_delete_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'network_performed=0'
 require_output_contains "$output" 'runtime_authority_granted=0'
-require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-contract'
+require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-contract'
 
 require_contains 'live_runner_acceptance_gate_phase_4=handoff_to_acceptance_denial_transcript' "$gate_script"
 require_contains 'live_runner_acceptance_gate_phase_4=handoff_to_acceptance_denial_transcript' "$gate_doc"

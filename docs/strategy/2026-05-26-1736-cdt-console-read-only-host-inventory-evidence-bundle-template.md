@@ -375,15 +375,16 @@ reason=this file defines the future bundle shape only
 Recommended next planning move:
 
 ```text
-create the Console read-only host inventory public-entrypoint review template
+begin the Tier 2 Nucleus effect-contract and runtime-denial gate planning package
 ```
 
 Reason:
 
 ```text
-the evidence bundle and non-claim review shapes are now defined; the next
-useful planning artifact is the review form for deciding whether future
-evidence can be referenced from public entry points without expanding claims
+the evidence bundle, non-claim review, and public-entrypoint review shapes are
+now joined by the estimate-impact review shape and review package index; the
+completion checkpoint closes this package, and the next useful planning lane is
+the Tier 2 Nucleus effect-boundary package
 ```
 
 ## Non-claims

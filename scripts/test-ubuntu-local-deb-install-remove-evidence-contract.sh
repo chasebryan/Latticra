@@ -23,6 +23,7 @@ contract='docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md'
 status='docs/status/UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md'
 acceptance_gate='docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md'
 build_transcript_contract='docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md'
+publication_gate='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md'
 static_validation='docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md'
 readiness='docs/UBUNTU_READINESS_PLAN.md'
 workflow='.github/workflows/ubuntu-local-deb-install-remove-evidence-contract.yml'
@@ -31,6 +32,7 @@ require_file "$contract"
 require_file "$status"
 require_file "$acceptance_gate"
 require_file "$build_transcript_contract"
+require_file "$publication_gate"
 require_file "$static_validation"
 require_file "$readiness"
 require_file "$workflow"
@@ -79,6 +81,9 @@ require_contains 'residual_payload_reviewed=0' "$contract"
 require_contains 'install_remove_findings_classified=0' "$contract"
 require_contains 'host_mutation_scope_reviewed=0' "$contract"
 require_contains 'ubuntu_install_remove_evidence_unblocked=0' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_gate_contract_present=1' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence' "$contract"
+require_contains 'ubuntu_publication_gate_unblocked=0' "$contract"
 require_contains 'ppa_claimed=0' "$contract"
 require_contains 'ubuntu_archive_ready=0' "$contract"
 require_contains 'production_installer_ready=0' "$contract"
@@ -87,6 +92,8 @@ require_contains 'ubuntu_local_deb_install_remove_evidence_contract: ok' "$contr
 
 require_contains 'ubuntu_local_deb_install_remove_evidence_contract_present=1' "$status"
 require_contains 'ubuntu_local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript' "$status"
+require_contains 'ubuntu_ppa_archive_publication_gate_contract_present=1' "$status"
+require_contains 'ubuntu_ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence' "$status"
 require_contains 'deb_installed_on_host=0' "$status"
 require_contains 'deb_removed_from_host=0' "$status"
 require_contains 'install_remove_test_environment_recorded=0' "$status"
@@ -102,7 +109,9 @@ require_contains 'residual_payload_reviewed=0' "$status"
 require_contains 'install_remove_findings_classified=0' "$status"
 require_contains 'host_mutation_scope_reviewed=0' "$status"
 require_contains 'ubuntu_install_remove_evidence_unblocked=0' "$status"
+require_contains 'ubuntu_publication_gate_unblocked=0' "$status"
 require_contains 'docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md' "$status"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' "$status"
 require_contains 'scripts/test-ubuntu-local-deb-install-remove-evidence-contract.sh' "$status"
 require_contains '.github/workflows/ubuntu-local-deb-install-remove-evidence-contract.yml' "$status"
 
@@ -114,8 +123,10 @@ require_contains 'deb_removed_from_host=0' "$acceptance_gate"
 require_contains 'ubuntu_local_deb_install_remove_evidence_contract_present=1' "$build_transcript_contract"
 require_contains 'ubuntu_local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript' "$build_transcript_contract"
 require_contains 'deb_removed_from_host=0' "$build_transcript_contract"
+require_contains 'ubuntu_ppa_archive_publication_gate_contract_present=1' "$publication_gate"
 
 require_contains 'docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md' "$static_validation"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' "$static_validation"
 require_contains 'local_deb_install_remove_evidence_contract_present=1' "$static_validation"
 require_contains 'local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript' "$static_validation"
 require_contains 'deb_removed_from_host=0' "$static_validation"
@@ -124,6 +135,7 @@ require_contains 'ubuntu_local_deb_install_remove_evidence_contract_present=1' "
 require_contains 'ubuntu_local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript' "$readiness"
 require_contains 'deb_removed_from_host=0' "$readiness"
 require_contains 'docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md' "$readiness"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' "$readiness"
 require_contains 'scripts/test-ubuntu-local-deb-install-remove-evidence-contract.sh' "$readiness"
 require_contains '.github/workflows/ubuntu-local-deb-install-remove-evidence-contract.yml' "$readiness"
 
@@ -131,7 +143,9 @@ require_contains 'ubuntu_local_deb_install_remove_evidence_contract_present=1' R
 require_contains 'ubuntu_local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript' README.md
 require_contains 'deb_removed_from_host=0' README.md
 require_contains 'docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md' packaging/ubuntu/README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' packaging/ubuntu/README.md
 require_contains 'local_deb_install_remove_evidence_contract_present=1' packaging/ubuntu/README.md
 require_contains 'local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript' packaging/ubuntu/README.md
 require_contains 'deb_removed_from_host=0' packaging/ubuntu/README.md

@@ -25,6 +25,7 @@ static void seed_result(latticra_kernel_lifecycle_result_t *result) {
     result->state_change_count = 0u;
     result->lifecycle_complete = 0;
     result->external_effect_performed = 0;
+    result->network_allowed = 0;
     result->evidence_level = 10u;
 }
 
@@ -32,7 +33,7 @@ latticra_status_t latticra_kernel_lifecycle_default_request(
     latticra_kernel_lifecycle_request_t *request) {
     if (request == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     memset(request, 0, sizeof(*request));
-    request->target_state = LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
+    request->target_state = LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
     request->max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
@@ -60,7 +61,9 @@ static int state_is_known(latticra_kernel_state_kind_t state) {
            state == LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY ||
            state == LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY ||
            state == LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY ||
-           state == LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
+           state == LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY ||
+           state == LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY ||
+           state == LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY;
 }
 
 static latticra_kernel_state_kind_t next_state_after(latticra_kernel_state_kind_t state) {
@@ -108,6 +111,10 @@ static latticra_kernel_state_kind_t next_state_after(latticra_kernel_state_kind_
         case LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY:
             return LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
         case LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY:
+            return LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY;
+        case LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY:
+            return LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY;
+        case LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY:
         default:
             return state;
     }
@@ -116,6 +123,7 @@ static latticra_kernel_state_kind_t next_state_after(latticra_kernel_state_kind_
 static void finalize_result(latticra_kernel_lifecycle_result_t *result) {
     result->final_state = result->machine.current_state;
     result->external_effect_performed = result->machine.external_effect_performed;
+    result->network_allowed = result->machine.network_allowed;
 }
 
 latticra_status_t latticra_kernel_lifecycle_run(
@@ -262,6 +270,8 @@ latticra_status_t latticra_kernel_lifecycle_report(
         "state_change_count=%lu\n"
         "lifecycle_complete=%d\n"
         "external_effect_performed=%d\n"
+        "network_allowed=%d\n"
+        "machine_network_allowed=%d\n"
         "machine_log_count=%lu\n"
         "evidence_level=%u\n",
         result->lifecycle_status,
@@ -271,6 +281,8 @@ latticra_status_t latticra_kernel_lifecycle_report(
         (unsigned long)result->state_change_count,
         result->lifecycle_complete,
         result->external_effect_performed,
+        result->network_allowed,
+        result->machine.network_allowed,
         (unsigned long)result->machine.log_count,
         result->evidence_level);
     if (status != LATTICRA_STATUS_OK) return status;
@@ -281,7 +293,8 @@ latticra_status_t latticra_kernel_lifecycle_report(
             "log[%lu].to=%s\n"
             "log[%lu].status=%s\n"
             "log[%lu].state_change_performed=%d\n"
-            "log[%lu].external_effect_performed=%d\n",
+            "log[%lu].external_effect_performed=%d\n"
+            "log[%lu].network_allowed=%d\n",
             (unsigned long)i,
             latticra_kernel_state_label(result->machine.log[i].from_state),
             (unsigned long)i,
@@ -291,7 +304,9 @@ latticra_status_t latticra_kernel_lifecycle_report(
             (unsigned long)i,
             result->machine.log[i].state_change_performed,
             (unsigned long)i,
-            result->machine.log[i].external_effect_performed);
+            result->machine.log[i].external_effect_performed,
+            (unsigned long)i,
+            result->machine.log[i].network_allowed);
         if (status != LATTICRA_STATUS_OK) return status;
     }
 

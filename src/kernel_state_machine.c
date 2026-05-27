@@ -23,6 +23,7 @@ latticra_status_t latticra_kernel_state_machine_init(
     machine_copy(machine->machine_status, sizeof(machine->machine_status), "created");
     machine->state_mutated = 0;
     machine->external_effect_performed = 0;
+    machine->network_allowed = 0;
     machine->evidence_level = 9u;
     return LATTICRA_STATUS_OK;
 }
@@ -115,6 +116,18 @@ latticra_status_t latticra_kernel_state_machine_default_step_request(
     }
     request->scheduler_handoff_request.scheduler_dispatch_request =
         request->scheduler_dispatch_request;
+    if (latticra_kernel_scheduler_activation_default_request(
+            &request->scheduler_activation_request) != LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->scheduler_activation_request.scheduler_handoff_request =
+        request->scheduler_handoff_request;
+    if (latticra_kernel_scheduler_run_entry_default_request(
+            &request->scheduler_run_entry_request) != LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->scheduler_run_entry_request.scheduler_activation_request =
+        request->scheduler_activation_request;
     request->target_state = LATTICRA_KERNEL_STATE_INITIALIZED;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
     return LATTICRA_STATUS_OK;
@@ -132,6 +145,7 @@ static void append_log(
     machine_copy(entry->status, sizeof(entry->status), result->step_status);
     entry->state_change_performed = result->state_mutated;
     entry->external_effect_performed = result->external_effect_performed;
+    entry->network_allowed = result->network_allowed;
     machine->log_count += 1u;
 }
 
@@ -145,6 +159,7 @@ static void seed_step_result(
     result->machine_state_after = result->machine_state_before;
     result->state_mutated = 0;
     result->external_effect_performed = 0;
+    result->network_allowed = 0;
     result->evidence_level = 9u;
 }
 
@@ -186,6 +201,10 @@ latticra_status_t latticra_kernel_state_machine_step(
         request->scheduler_dispatch_request;
     transition_request.scheduler_handoff_request =
         request->scheduler_handoff_request;
+    transition_request.scheduler_activation_request =
+        request->scheduler_activation_request;
+    transition_request.scheduler_run_entry_request =
+        request->scheduler_run_entry_request;
     transition_request.current_state = machine->current_state;
     transition_request.target_state = request->target_state;
     transition_request.gate = request->gate;
@@ -196,6 +215,8 @@ latticra_status_t latticra_kernel_state_machine_step(
     result->machine_state_after = result->transition.next_state;
     result->state_mutated = result->transition.state_change_performed;
     result->external_effect_performed = result->transition.external_effect_performed;
+    result->network_allowed = result->transition.network_allowed;
+    machine->network_allowed = machine->network_allowed || result->network_allowed;
 
     if (status != LATTICRA_STATUS_OK) {
         machine_copy(result->step_status, sizeof(result->step_status), "transition-error");
@@ -263,12 +284,14 @@ latticra_status_t latticra_kernel_state_machine_report(
         "log_count=%lu\n"
         "state_mutated=%d\n"
         "external_effect_performed=%d\n"
+        "network_allowed=%d\n"
         "evidence_level=%u\n",
         machine->machine_status,
         latticra_kernel_state_label(machine->current_state),
         (unsigned long)machine->log_count,
         machine->state_mutated,
         machine->external_effect_performed,
+        machine->network_allowed,
         machine->evidence_level);
     if (status != LATTICRA_STATUS_OK) return status;
 
@@ -278,7 +301,8 @@ latticra_status_t latticra_kernel_state_machine_report(
             "log[%lu].to=%s\n"
             "log[%lu].status=%s\n"
             "log[%lu].state_change_performed=%d\n"
-            "log[%lu].external_effect_performed=%d\n",
+            "log[%lu].external_effect_performed=%d\n"
+            "log[%lu].network_allowed=%d\n",
             (unsigned long)i,
             latticra_kernel_state_label(machine->log[i].from_state),
             (unsigned long)i,
@@ -288,7 +312,9 @@ latticra_status_t latticra_kernel_state_machine_report(
             (unsigned long)i,
             machine->log[i].state_change_performed,
             (unsigned long)i,
-            machine->log[i].external_effect_performed);
+            machine->log[i].external_effect_performed,
+            (unsigned long)i,
+            machine->log[i].network_allowed);
         if (status != LATTICRA_STATUS_OK) return status;
     }
 

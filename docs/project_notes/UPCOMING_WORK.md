@@ -29,9 +29,12 @@ Latest Lat LIR source-span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR node-kind evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-node evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-node span evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-node evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-node span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-source edge endpoint evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge span evidence propagation note: 2026-05-26 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
@@ -40,6 +43,9 @@ Latest Seal Ed25519 verify status/public-entry note: 2026-05-25 CDT
 Latest Seal verified receipt promotion status/public-entry note: 2026-05-25 CDT
 Latest Seal verified capability gate status/public-entry note: 2026-05-25 CDT
 Latest Seal verified effect decision status/public-entry note: 2026-05-25 CDT
+Latest Seal operator receipt report predecessor status alignment note: 2026-05-26 CDT
+Latest Seal policy decision predecessor status alignment note: 2026-05-26 CDT
+Latest Seal signed request predecessor status alignment note: 2026-05-26 CDT
 Latest Seal request freshness predecessor status alignment note: 2026-05-26 CDT
 Latest Seal parameter schema predecessor status alignment note: 2026-05-26 CDT
 Latest Seal agentic automation security predecessor status alignment note: 2026-05-26 CDT
@@ -78,9 +84,12 @@ Latest Lat LIR source-span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR node-kind evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-node evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-node span evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-node evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-node span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-source edge endpoint evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge span evidence propagation note: 2026-05-26 CDT
 Latest Seal capability metadata report surface status note: 2026-05-26 CDT
 Latest Seal product spine note: 2026-05-26 CDT
@@ -89,6 +98,9 @@ Latest Seal operator receipt report contract note: 2026-05-26 CDT
 Latest Seal operator receipt report implementation plan note: 2026-05-26 CDT
 Latest Seal operator receipt report implementation note: 2026-05-26 CDT
 Latest Seal operator receipt report surface/status note: 2026-05-26 CDT
+Latest Seal local capability registry schema contract note: 2026-05-26 CDT
+Latest Seal local capability registry schema implementation plan note: 2026-05-26 CDT
+Latest Seal local capability registry schema implementation note: 2026-05-26 CDT
 
 ## Purpose
 
@@ -150,19 +162,37 @@ Latticra Seal parameter schema predecessor status alignment is complete for the 
 
 Latticra Seal request freshness predecessor status alignment is complete for the existing report-only request freshness status surface. It does not add timestamp parsing, trusted clock behavior, nonce storage, replay-cache storage, context hashing, parameter hashing, freshness validation, replay detection, signature verification, signed request enforcement, policy evaluation, policy enforcement, runtime execution, runtime authority, effect execution, capability enforcement, cryptographic verification, verified receipt authority, key material loading, private-key handling, object sealing, host behavior, network behavior, or production enforcement claims.
 
+Latticra Seal signed request predecessor status alignment is complete for the existing report-only signed request status surface. It does not add signature generation, signature verification, public-key parsing, trust-store loading, private-key handling, key generation, hardware-key use, revocation lookup, network trust lookup, signed request enforcement, policy evaluation, policy enforcement, freshness validation, replay detection, runtime execution, runtime authority, effect execution, capability enforcement, cryptographic verification, verified receipt authority, key material loading, private-key handling, object sealing, host behavior, network behavior, or production enforcement claims.
+
+Latticra Seal policy decision predecessor status alignment is complete for the existing report-only policy decision status surface. It does not add policy evaluation, policy enforcement, signature verification, freshness validation, replay detection, signed request enforcement, runtime execution, runtime authority, effect execution, capability enforcement, cryptographic verification, verified receipt authority, key material loading, private-key handling, object sealing, host behavior, network behavior, or production enforcement claims.
+
+Latticra Seal operator receipt report predecessor status alignment is complete for the existing denied report-only operator receipt status surface. It does not add receipt file writes, tool execution, policy enforcement, capability enforcement, cryptographic verification, signature verification, freshness validation, replay detection, runtime execution, runtime authority, effect execution, verified receipt authority, key material loading, private-key handling, object sealing, host behavior, network behavior, or production enforcement claims.
+
 ## Latest completed planning slice
 
 ```text
-Latticra Seal operator receipt report implementation plan
+Latticra Seal local capability registry schema implementation plan
 ```
 
 Purpose completed:
 
 ```text
-define the exact no-effect operator receipt report API, file paths, record fields, source bindings, failure behavior, report shape, and tests while preserving no receipt file writes, no tool execution, no host mutation, no network behavior, no capability enforcement, no effects, and no runtime authority
+define exact future local capability registry schema header, source, tests, report shape, enum labels, capacity, fixture, and negative-case behavior while preserving no registry loader, no file reads, no tool execution, no host mutation, no network behavior, no capability enforcement, no effects, and no runtime authority
 ```
 
 ## Latest completed implementation slice
+
+```text
+Latticra Seal local capability registry schema implementation
+```
+
+Purpose completed:
+
+```text
+add bounded local schema records, deterministic validation, a default descriptive fixture entry, and negative-case invariants while preserving no registry loader, no registry file access, no tool execution, no host mutation, no network behavior, no capability enforcement, no effects, and no runtime authority
+```
+
+## Previous implementation slice
 
 ```text
 Latticra Seal operator receipt report surface/status
@@ -174,7 +204,31 @@ Purpose completed:
 render the no-effect operator receipt report through a deterministic local report runner and status checkpoint while preserving no receipt file writes, no tool execution, no host mutation, no network behavior, no capability enforcement, no effects, and no runtime authority
 ```
 
-## Previous implementation slice
+## Earlier implementation slice
+
+```text
+Lat LIR first transition-node span evidence propagation
+```
+
+Purpose completed:
+
+```text
+copy the first Lat-specific LIR transition node source-span offsets/lines/columns into runtime-boundary records/reports so boundary evidence keeps the first Lat-derived transition node location visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Earlier implementation slice
+
+```text
+Lat LIR first transition-node evidence propagation
+```
+
+Purpose completed:
+
+```text
+copy the first Lat-specific LIR transition node presence flag, index, kind, name, value, operator, and binding into runtime-boundary records/reports so boundary evidence keeps the first Lat-derived transition node identity visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
+```
+
+## Earlier implementation slice
 
 ```text
 Lat LIR first transition-source edge span evidence propagation
@@ -705,37 +759,37 @@ map runtime-boundary request families, effect families, authority prerequisites,
 ## Latest completed status/public-entry slice
 
 ```text
-Latticra Seal request freshness predecessor status alignment
+Latticra Seal operator receipt report predecessor status alignment
 ```
 
 Purpose completed:
 
 ```text
-tie and guard the existing report-only Seal request freshness status to the parameter schema status predecessor while preserving no new implementation behavior, no timestamp parsing, no trusted clock behavior, no nonce storage, no replay-cache storage, no context hashing, no parameter hashing, no freshness validation, no replay detection, no signature verification, no signed request enforcement, no policy evaluation, no policy enforcement, no runtime execution, no runtime authority, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no key material loading, no private-key handling, no object sealing, no host behavior, no network behavior, and no production enforcement claim
+tie and guard the existing denied report-only Seal operator receipt status to the policy decision status predecessor while preserving no new implementation behavior, no receipt file writes, no tool execution, no policy enforcement, no capability enforcement, no cryptographic verification, no signature verification, no freshness validation, no replay detection, no runtime execution, no runtime authority, no effect execution, no verified receipt authority, no key material loading, no private-key handling, no object sealing, no host behavior, no network behavior, and no production enforcement claim
 ```
 
 ## Previous status/public-entry slice
 
 ```text
-Latticra Seal parameter schema predecessor status alignment
+Latticra Seal policy decision predecessor status alignment
 ```
 
 Purpose completed:
 
 ```text
-tie and guard the existing report-only Seal parameter schema status to the agentic automation security status predecessor while preserving no new implementation behavior, no schema parsing, no schema validation, no policy evaluation, no policy enforcement, no MCP behavior, no AI-agent execution, no model execution, no tool execution, no shell execution, no runtime execution, no runtime authority, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no key material loading, no private-key handling, no object sealing, no host behavior, no network behavior, and no production enforcement claim
+tie and guard the existing report-only Seal policy decision status to the signed request status predecessor while preserving no new implementation behavior, no policy evaluation, no policy enforcement, no signature verification, no freshness validation, no replay detection, no signed request enforcement, no runtime execution, no runtime authority, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no key material loading, no private-key handling, no object sealing, no host behavior, no network behavior, and no production enforcement claim
 ```
 
 ## Earlier status/public-entry slice
 
 ```text
-Latticra Seal agentic automation security predecessor status alignment
+Latticra Seal signed request predecessor status alignment
 ```
 
 Purpose completed:
 
 ```text
-tie and guard the existing report-only Seal agentic automation security status to the status rollup status predecessor while preserving no new implementation behavior, no MCP behavior, no AI-agent execution, no model execution, no tool execution, no shell execution, no runtime execution, no runtime authority, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no public-key byte verification, no key material loading, no private-key handling, no object sealing, no host behavior, no network behavior, and no production enforcement claim
+tie and guard the existing report-only Seal signed request status to the request freshness status predecessor while preserving no new implementation behavior, no signature generation, no signature verification, no public-key parsing, no trust-store loading, no private-key handling, no key generation, no hardware-key use, no revocation lookup, no network trust lookup, no signed request enforcement, no policy evaluation, no policy enforcement, no freshness validation, no replay detection, no runtime execution, no runtime authority, no effect execution, no capability enforcement, no cryptographic verification, no verified receipt authority, no key material loading, no private-key handling, no object sealing, no host behavior, no network behavior, and no production enforcement claim
 ```
 
 ## Earlier status/public-entry slice
@@ -851,13 +905,13 @@ define exact public API, namespace, file paths, C++ standard, compiler flags, ex
 ## Latest completed contract slice
 
 ```text
-Latticra Seal future key parsing implementation contract
+Latticra Seal local capability registry schema contract
 ```
 
 Purpose completed:
 
 ```text
-define the next future key parsing implementation contract after public-key parsing status readiness while preserving no public-key parsing implementation, no key material loading, no private-key handling, no key generation, no hardware-key use, no trust-store behavior, no signing, no verification, no signer invocation behavior, no host behavior, no network behavior, no capability enforcement, and no runtime authority
+define the local capability registry schema boundary after operator receipt status readiness while preserving no registry loader, no registry file access, no trust-store behavior, no signing, no verification, no host behavior, no network behavior, no capability enforcement, no effects, and no runtime authority
 ```
 
 ## Previous status/public-entry slice
@@ -1170,7 +1224,7 @@ runtime_authority_granted=0
 completion_estimate_review_required=0
 ```
 
-Current estimate table source alignment is the source-map cleanup for the public estimate table. Current estimate mathematical rebase is the latest planning-estimate update for that table, moving the overall value to a weighted 45% after kernel lifecycle scheduler-credit and scheduler-selection-ready evidence while changing no implementation behavior, security posture, public readiness, product readiness, or runtime authority.
+Current estimate table source alignment is the source-map cleanup for the public estimate table. Current estimate mathematical rebase is the latest planning-estimate update for that table, moving the overall value to a weighted 45% after Nadia Stage-43 prompt-evaluation release-receipt contract-chain evidence, kernel lifecycle scheduler-credit/scheduler-selection-ready evidence, and vulnerability-management release-gate baseline coverage while changing no implementation behavior, product-security posture, public readiness, product readiness, or runtime authority.
 
 Recommended next slice:
 

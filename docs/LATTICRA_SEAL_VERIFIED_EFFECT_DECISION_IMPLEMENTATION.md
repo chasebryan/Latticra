@@ -9,6 +9,8 @@ This document records the first Latticra Seal verified effect decision metadata 
 
 The implementation consumes verified capability gate metadata and classifies whether the requested metadata-only effect remains allowed as report-only or evaluate-only.
 
+When the capability gate carries crypto graduation metadata, the decision copies that evidence forward and requires it to remain passed, standard-aligned, and authority-neutral.
+
 The decision is effect classification, not effect execution.
 
 ## Added files
@@ -51,6 +53,12 @@ The implementation:
 
 ```text
 accepts verified capability gate metadata
+copies crypto graduation gate metadata when present
+requires crypto_graduation_gate_passed=1 when crypto_graduation_gate_present=1
+requires standard_expectations_met=1 when crypto_graduation_gate_present=1
+requires local_verify_graduated=1 when crypto_graduation_gate_present=1
+requires receipt_promotion_graduated=1 when crypto_graduation_gate_present=1
+requires authority_promotion_allowed=0 when crypto_graduation_gate_present=1
 requires gate_allowed=1
 requires gate_state=allowed-metadata-only
 requires runtime_authority_granted=0
@@ -63,6 +71,24 @@ classifies report-only as decision_state=allowed-report-only
 classifies evaluate-only as decision_state=allowed-evaluate-only
 sets effect_allowed=1 only for metadata-only report/evaluate decisions
 renders deterministic verified effect decision metadata
+```
+
+Crypto-bound decision metadata records:
+
+```text
+crypto_graduation_profile=latticra-seal-crypto-graduation-gate/0.1
+assurance_baseline_profile=latticra-cryptographic-assurance-key-management/0.1
+crypto_graduation_gate_state=graduated-authority-neutral
+crypto_graduation_gate_present=1
+crypto_graduation_gate_passed=1
+standard_expectations_met=1
+local_verify_graduated=1
+receipt_promotion_graduated=1
+authority_promotion_allowed=0
+decision_state=allowed-report-only
+effect_allowed=1
+effect_performed=0
+runtime_authority_granted=0
 ```
 
 ## Effect and runtime boundary
@@ -89,6 +115,8 @@ null verified gate -> invalid-input
 invalid verified gate -> invalid-gate
 gate_allowed=0 -> denied-gate
 gate_state not allowed-metadata-only -> denied-gate
+failed crypto graduation gate evidence -> denied-crypto-graduation-gate
+authority-bearing crypto graduation evidence -> denied-crypto-graduation-gate
 missing requested effect -> missing-requested-effect
 unknown requested effect -> denied-unknown-effect
 runtime authority already granted -> denied-runtime-authority
@@ -117,6 +145,6 @@ seal verified effect decision invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is runtime handoff evaluation from an allowed metadata-only verified effect decision.
+The next valid Latticra Seal planning slice is runtime handoff report or policy decision report propagation from eligible crypto-graduation-gated metadata-only runtime handoff evaluation.
 
 That next slice should remain contract-first and should not perform runtime handoff yet unless separately implemented and guarded.

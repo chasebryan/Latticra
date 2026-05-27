@@ -51,7 +51,7 @@ disposition_doc='docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOS
 makefile='Makefile'
 
 current_phrase='Add a macOS reset/uninstall live-runner acceptance-denial disposition review contract that reviews the no-effect disposition without opening dispatch or deletion.'
-next_phrase='Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition contract that records the reviewed no-effect closeout audit as a no-effect disposition without opening dispatch or deletion.'
+next_phrase='Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout contract that closes the reviewed no-effect closeout audit review disposition without opening dispatch or deletion.'
 
 for file in "$doc" "$status" "$script" "$workflow" "$index" "$readme" "$readme_status" "$transfer_plan" "$transfer_status" "$disposition_script" "$disposition_doc" "$makefile"; do
   require_file "$file"
@@ -150,7 +150,7 @@ require_contains 'file_delete_performed=0' "$script"
 require_contains 'directory_delete_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
 require_contains 'network_performed=0' "$script"
-require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-contract' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-contract' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'rmdir ' "$script"
 require_not_contains 'sudo ' "$script"
@@ -176,9 +176,9 @@ require_output_contains "$output" 'directory_delete_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'network_performed=0'
 require_output_contains "$output" 'runtime_authority_granted=0'
-require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-contract'
+require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-contract'
 
-require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-contract' "$disposition_script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-contract' "$disposition_script"
 require_contains "$next_phrase" "$disposition_doc"
 require_contains 'macos-reset-uninstall-live-runner-acceptance-denial-disposition-review:' "$makefile"
 require_contains 'sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-review-contract.sh' "$makefile"

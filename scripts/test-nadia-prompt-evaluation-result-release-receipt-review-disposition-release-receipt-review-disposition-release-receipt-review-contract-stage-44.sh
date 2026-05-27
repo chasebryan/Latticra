@@ -1,0 +1,250 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+fail() {
+  printf 'nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review contract stage 44: %s\n' "$1" >&2
+  exit 1
+}
+
+require_file() {
+  file="$1"
+  [ -f "$file" ] || fail "missing file: $file"
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  grep -Fq -- "$pattern" "$file" ||
+    fail "missing required pattern in $file: $pattern"
+}
+
+require_output_contains() {
+  output="$1"
+  pattern="$2"
+  printf '%s\n' "$output" | grep -Fq -- "$pattern" ||
+    fail "missing required output pattern: $pattern"
+}
+
+doc='docs/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_44.md'
+status='docs/status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_44_STATUS.md'
+status_index='docs/status/README.md'
+foundation='docs/NADIA_OFFLINE_AI_FOUNDATION.md'
+foundation_index='docs/FOUNDATION_INDEX.md'
+installer_readme='installer/README.md'
+ui_model='installer/docs/UI_CONFIGURATION_MODEL.md'
+components_manifest='installer/manifests/components.toml'
+apply_script='installer/scripts/latticra-installer-apply.sh'
+panel_config='installer/latticra-installer/src/config.rs'
+panel_ui='installer/latticra-installer/src/ui.rs'
+release_script='scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract.sh'
+guard='scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract-stage-44.sh'
+workflow='.github/workflows/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract-stage-44.yml'
+
+for file in "$doc" "$status" "$status_index" "$foundation" "$foundation_index" "$installer_readme" "$ui_model" "$components_manifest" "$apply_script" "$panel_config" "$panel_ui" "$release_script" "$guard" "$workflow" Makefile
+do
+  require_file "$file"
+done
+
+require_contains 'Status: Stage-44 implementation contract' "$doc"
+require_contains 'nadia_stage_44_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_present=1' "$doc"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_command=scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract.sh' "$doc"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_status=contract_only' "$doc"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_record_created=0' "$doc"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_decision_recorded=0' "$doc"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_findings_recorded=0' "$doc"
+require_contains 'prompt_evaluation_result_model_output_recorded=0' "$doc"
+require_contains 'runtime_invoked=0' "$doc"
+require_contains 'prompt_evaluated=0' "$doc"
+require_contains 'token_generation_performed=0' "$doc"
+require_contains 'inference_performed=0' "$doc"
+require_contains 'sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract-stage-44.sh' "$doc"
+
+require_contains 'Status: implementation status record' "$status"
+require_contains 'nadia_stage_44_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_present=1' "$status"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_status=contract_only' "$status"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_allowed=0' "$status"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_recorded=0' "$status"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_created=0' "$status"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_decision_recorded=0' "$status"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_findings_recorded=0' "$status"
+require_contains 'prompt_evaluation_result_model_output_recorded=0' "$status"
+require_contains 'runtime_invoked=0' "$status"
+require_contains 'prompt_evaluated=0' "$status"
+require_contains 'token_generation_performed=0' "$status"
+require_contains 'inference_performed=0' "$status"
+require_contains 'sexual_request_refusal=always' "$status"
+require_contains 'manipulation_resistance=required' "$status"
+require_contains 'NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_44_STATUS.md' "$status_index"
+require_contains 'NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_44.md' "$foundation_index"
+require_contains 'Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review contract Stage-44 + guardrails' "$foundation_index"
+require_contains 'Stage-44: Prompt Evaluation Result Release Receipt Review Disposition Release Receipt Review Disposition Release Receipt Review Contract' "$foundation"
+require_contains 'latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review' "$installer_readme"
+require_contains 'prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review metadata only' "$installer_readme"
+require_contains 'Stage-31, Stage-32, Stage-33, Stage-34, Stage-35, Stage-36, Stage-37, Stage-38, Stage-39, Stage-40, Stage-41, Stage-42, Stage-43, and Stage-44 console surfaces are metadata-only' "$ui_model"
+require_contains 'Stage-44 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review contract' "$components_manifest"
+require_contains 'prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review recording remains metadata-only' "$components_manifest"
+require_contains 'prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review metadata records future prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition requirements' "$components_manifest"
+require_contains 'command=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review stage=44' "$apply_script"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_stage=44-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract' "$apply_script"
+require_contains 'installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review' "$apply_script"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_record_created=0' "$apply_script"
+require_contains 'requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1' "$apply_script"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_stage=44-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract' "$panel_config"
+require_contains 'installed_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_command=latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review' "$panel_config"
+require_contains 'nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review' "$panel_ui"
+require_contains 'nadia_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review=stage-44-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract' "$panel_ui"
+require_contains 'sh ./scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract-stage-44.sh' Makefile
+require_contains 'sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract.sh' Makefile
+
+require_contains 'NADIA PROMPT EVALUATION RESULT RELEASE RECEIPT REVIEW DISPOSITION RELEASE RECEIPT REVIEW DISPOSITION RELEASE RECEIPT REVIEW CONTRACT' "$release_script"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_status=contract_only' "$release_script"
+require_contains 'requires_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract=1' "$release_script"
+require_contains 'requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1' "$release_script"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_record_created=0' "$release_script"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_decision_recorded=0' "$release_script"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_findings_recorded=0' "$release_script"
+require_contains 'prompt_evaluation_result_model_output_recorded=0' "$release_script"
+require_contains 'runtime_invoked=0' "$release_script"
+require_contains 'prompt_evaluated=0' "$release_script"
+require_contains 'token_generation_performed=0' "$release_script"
+require_contains 'inference_performed=0' "$release_script"
+require_contains 'network_authority=0' "$release_script"
+require_contains 'tool_execution_authority=0' "$release_script"
+require_contains 'source_mutation_authority=0' "$release_script"
+require_contains 'outside Nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review boundary' "$release_script"
+
+require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
+require_contains 'persist-credentials: false' "$workflow"
+require_contains 'permissions:' "$workflow"
+require_contains 'contents: read' "$workflow"
+require_contains 'timeout-minutes: 10' "$workflow"
+require_contains 'sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract-stage-44.sh' "$workflow"
+
+tmp_root=${TMPDIR:-/tmp}
+tmp_root="${tmp_root%/}"
+tmpdir=$(mktemp -d "$tmp_root/latticra-nadia-stage44-release-receipt-review-test.XXXXXX")
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
+receipt="$tmpdir/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-stage43-fixture.txt"
+out="$tmpdir/out"
+mkdir -p "$out"
+
+cat > "$receipt" <<'EOF_RECEIPT'
+NADIA PROMPT EVALUATION RESULT RELEASE RECEIPT REVIEW DISPOSITION RELEASE RECEIPT REVIEW DISPOSITION RELEASE RECEIPT CONTRACT
+stage=43-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_contract_status=contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_stage=contract-only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_authority=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_allowed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_performed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_metadata_present=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_family=operator-reviewed-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_format=contract-only-offline-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_decision=blocked_contract_only
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_evidence_present=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_source_policy=operator-reviewed-offline
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_plan_recorded=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_result_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_runtime_invoked=0
+requires_prompt_evaluation_result_release_receipt_review_disposition_release_contract=1
+requires_prompt_evaluation_result_release_receipt_review_disposition_contract=1
+requires_prompt_evaluation_result_release_receipt_review_contract=1
+requires_prompt_evaluation_result_release_receipt_contract=1
+requires_prompt_evaluation_result_release_contract=1
+requires_prompt_evaluation_result_disposition_contract=1
+requires_prompt_evaluation_result_review_contract=1
+requires_prompt_evaluation_result_contract=1
+requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_promotion_allowed=0
+requires_no_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt=1
+requires_no_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review=1
+requires_no_model_output_read=1
+requires_no_model_output_recording=1
+requires_no_generated_answer=1
+requires_no_runtime_invocation=1
+requires_no_prompt_evaluation=1
+requires_no_dialogue_generation=1
+requires_no_token_generation=1
+requires_no_inference=1
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_record_created=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_decision_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_approval_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_rejection_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_findings_recorded=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_emitted=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_signed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_published=0
+prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_packaged=0
+prompt_evaluation_result_release_receipt_review_disposition_release_record_created=0
+prompt_evaluation_result_release_receipt_review_disposition_record_created=0
+prompt_evaluation_result_release_receipt_review_record_created=0
+prompt_evaluation_result_release_receipt_record_created=0
+prompt_evaluation_result_model_output_recorded=0
+prompt_evaluation_result_output_text_recorded=0
+runtime_invoked=0
+prompt_evaluated=0
+token_generation_performed=0
+inference_performed=0
+qa_dialogue_generated=0
+answer_text_generated=0
+sexual_user_request_authority=0
+sexual_content_generation=0
+sexualized_dialogue_generation=0
+graphic_sexual_detail_allowed=0
+erotic_content_allowed=0
+roleplay_allowed=0
+survivor_impersonation_allowed=0
+victim_blaming_allowed=0
+genocide_denial_allowed=0
+sexual_request_refusal=always
+manipulation_resistance=required
+network_authority=0
+tool_execution_authority=0
+tool_execution_performed=0
+source_mutation_authority=0
+self_modification_authority=0
+training_performed=0
+distillation_performed=0
+prompt_evaluation_result_release_receipt_review_disposition_release_stage=contract-only
+prompt_evaluation_result_release_receipt_review_disposition_stage=contract-only
+prompt_evaluation_result_release_receipt_review_stage=contract-only
+prompt_evaluation_result_release_receipt_stage=contract-only
+prompt_evaluation_result_release_stage=contract-only
+prompt_evaluation_result_disposition_stage=contract-only
+prompt_evaluation_result_review_stage=contract-only
+prompt_evaluation_result_stage=contract-only
+EOF_RECEIPT
+
+output=$(
+  NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_TIMESTAMP=20260526T060000Z \
+    sh "$release_script" \
+      --prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt "$receipt" \
+      --output "$out"
+)
+
+require_output_contains "$output" 'NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT='
+require_output_contains "$output" 'NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_RECORDED=0'
+require_output_contains "$output" 'NADIA_RUNTIME_INVOKED=0'
+
+report="$out/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract-20260526T060000Z.txt"
+latest="$out/latest-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract.txt"
+require_file "$report"
+require_file "$latest"
+require_contains 'stage=44-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-contract' "$report"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_status=contract_only' "$report"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_record_created=0' "$report"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_decision_recorded=0' "$report"
+require_contains 'prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_findings_recorded=0' "$report"
+require_contains 'requires_future_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_disposition_contract=1' "$report"
+require_contains 'prompt_evaluation_result_model_output_recorded=0' "$report"
+require_contains 'runtime_invoked=0' "$report"
+require_contains 'prompt_evaluated=0' "$report"
+require_contains 'token_generation_performed=0' "$report"
+require_contains 'inference_performed=0' "$report"
+require_contains 'sexual_request_refusal=always' "$report"
+require_contains 'manipulation_resistance=required' "$report"
+
+printf 'nadia_prompt_evaluation_result_release_receipt_review_disposition_release_receipt_review_disposition_release_receipt_review_contract_stage_44: ok\n'

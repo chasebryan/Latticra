@@ -28,6 +28,8 @@ static void seed_summary_result(
     result->scheduler_selection_allowed = 0;
     result->scheduler_dispatch_allowed = 0;
     result->scheduler_handoff_allowed = 0;
+    result->scheduler_activation_allowed = 0;
+    result->scheduler_run_entry_allowed = 0;
     result->memory_allocation_allowed = 0;
     result->process_spawn_allowed = 0;
     result->syscall_dispatch_allowed = 0;
@@ -44,6 +46,7 @@ static void seed_summary_result(
     result->driver_probe_allowed = 0;
     result->driver_load_allowed = 0;
     result->driver_bind_allowed = 0;
+    result->network_allowed = 0;
     result->interrupt_allowed = 0;
     result->interrupt_mask_allowed = 0;
     result->interrupt_unmask_allowed = 0;
@@ -90,7 +93,7 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_default_request(
 
     request->lifecycle_request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
     request->lifecycle_request.target_state =
-        LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
+        LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY;
     request->lifecycle_request.max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
 }
@@ -137,6 +140,14 @@ static const char *lifecycle_relation_for(
         case LATTICRA_KERNEL_SUBSYSTEM_RUNTIME:
             return "runtime-not-entered";
         case LATTICRA_KERNEL_SUBSYSTEM_SCHEDULER:
+            if (state_at_or_after(final_state,
+                    LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY)) {
+                return "scheduler-run-entry-ready";
+            }
+            if (state_at_or_after(final_state,
+                    LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY)) {
+                return "scheduler-activation-ready";
+            }
             if (state_at_or_after(final_state,
                     LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY)) {
                 return "scheduler-handoff-ready";
@@ -277,12 +288,15 @@ static void finalize_summary(
     result->lifecycle_complete = result->lifecycle.lifecycle_complete;
     result->lifecycle_state_mutated = result->lifecycle.state_change_count > 0u;
     result->external_effect_performed = result->lifecycle.external_effect_performed;
+    result->network_allowed = result->lifecycle.network_allowed;
     result->registry_no_effect = result->registry.no_effect;
     result->runtime_entry_allowed = 0;
     result->scheduler_execution_allowed = 0;
     result->scheduler_selection_allowed = 0;
     result->scheduler_dispatch_allowed = 0;
     result->scheduler_handoff_allowed = 0;
+    result->scheduler_activation_allowed = 0;
+    result->scheduler_run_entry_allowed = 0;
     result->memory_allocation_allowed = 0;
     result->process_spawn_allowed = 0;
     result->syscall_dispatch_allowed = 0;
@@ -334,9 +348,10 @@ static void finalize_summary(
     summary_copy(result->summary_status, sizeof(result->summary_status),
         (result->lifecycle_complete == 1 &&
          result->lifecycle.final_state ==
-            LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY &&
+            LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY &&
          result->registry_no_effect == 1 &&
-         result->external_effect_performed == 0) ?
+         result->external_effect_performed == 0 &&
+         result->network_allowed == 0) ?
             "summary-ready" : "summary-incomplete");
 }
 
@@ -419,12 +434,17 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         "lifecycle_state_change_count=%lu\n"
         "lifecycle_state_mutated=%d\n"
         "external_effect_performed=%d\n"
+        "network_allowed=%d\n"
+        "lifecycle_network_allowed=%d\n"
+        "machine_network_allowed=%d\n"
         "registry_no_effect=%d\n"
         "runtime_entry_allowed=%d\n"
         "scheduler_execution_allowed=%d\n"
         "scheduler_selection_allowed=%d\n"
         "scheduler_dispatch_allowed=%d\n"
         "scheduler_handoff_allowed=%d\n"
+        "scheduler_activation_allowed=%d\n"
+        "scheduler_run_entry_allowed=%d\n"
         "memory_allocation_allowed=%d\n"
         "process_spawn_allowed=%d\n"
         "syscall_dispatch_allowed=%d\n"
@@ -480,12 +500,17 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         (unsigned long)result->lifecycle_state_change_count,
         result->lifecycle_state_mutated,
         result->external_effect_performed,
+        result->network_allowed,
+        result->lifecycle.network_allowed,
+        result->lifecycle.machine.network_allowed,
         result->registry_no_effect,
         result->runtime_entry_allowed,
         result->scheduler_execution_allowed,
         result->scheduler_selection_allowed,
         result->scheduler_dispatch_allowed,
         result->scheduler_handoff_allowed,
+        result->scheduler_activation_allowed,
+        result->scheduler_run_entry_allowed,
         result->memory_allocation_allowed,
         result->process_spawn_allowed,
         result->syscall_dispatch_allowed,

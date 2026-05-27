@@ -1,7 +1,7 @@
 # Latticra Strategy Index
 
 Status: active strategy index
-Last updated: 2026-05-26 17:57 CDT
+Last updated: 2026-05-26 20:19 CDT
 Scope: dated strategy records, mission alignment, review cadence, and quality expectations.
 
 ## Purpose
@@ -150,6 +150,30 @@ Latest Console read-only host inventory non-claim review template:
 
 ```text
 2026-05-26-1757-cdt-console-read-only-host-inventory-non-claim-review-template.md
+```
+
+Latest Console read-only host inventory public-entrypoint review template:
+
+```text
+2026-05-26-1919-cdt-console-read-only-host-inventory-public-entrypoint-review-template.md
+```
+
+Latest Console read-only host inventory estimate-impact review template:
+
+```text
+2026-05-26-1956-cdt-console-read-only-host-inventory-estimate-impact-review-template.md
+```
+
+Latest Console read-only host inventory review package index:
+
+```text
+2026-05-26-1959-cdt-console-read-only-host-inventory-review-package-index.md
+```
+
+Latest Console read-only host inventory planning completion checkpoint:
+
+```text
+2026-05-26-2019-cdt-console-read-only-host-inventory-planning-completion-checkpoint.md
 ```
 
 Current operating rule:

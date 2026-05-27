@@ -44,6 +44,9 @@ require_file docs/UBUNTU_PACKAGE_LICENSE_PROMOTION_GATE_CONTRACT.md
 require_file docs/UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md
 require_file docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md
 require_file docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
+require_file docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md
+require_file docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md
+require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md
 require_file packaging/ubuntu/README.md
 require_file packaging/ubuntu/debian/control
 require_file packaging/ubuntu/debian/rules
@@ -97,6 +100,28 @@ require_contains 'local_deb_install_remove_evidence_contract_present=1' docs/UBU
 require_contains 'local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'deb_installed_on_host=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'deb_removed_from_host=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'source_package_evidence_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'source_package_evidence_status=blocked-pending-accepted-build-transcript' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'dpkg_source_run=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'dpkg_buildpackage_source_run=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'source_package_created=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'source_package_uploaded=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'ubuntu_source_package_evidence_unblocked=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'upload_signing_authority_evidence_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'upload_signing_authority_evidence_status=blocked-pending-source-package-evidence' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'upload_target_kind_recorded=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'launchpad_account_recorded=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'ppa_or_archive_target_reviewed=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'gpg_signing_key_fingerprint_recorded=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'upload_command_non_claims_reviewed=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'ubuntu_upload_signing_authority_evidence_unblocked=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'ppa_archive_publication_gate_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'launchpad_upload_run=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'ubuntu_publication_gate_unblocked=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'deb_artifact_created=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'ubuntu_archive_ready=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'ubuntu_local_deb_static_validation: ok' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
@@ -137,6 +162,28 @@ require_contains 'local_deb_install_remove_evidence_contract_present=1' packagin
 require_contains 'local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript' packaging/ubuntu/README.md
 require_contains 'deb_installed_on_host=0' packaging/ubuntu/README.md
 require_contains 'deb_removed_from_host=0' packaging/ubuntu/README.md
+require_contains 'docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md' packaging/ubuntu/README.md
+require_contains 'source_package_evidence_contract_present=1' packaging/ubuntu/README.md
+require_contains 'source_package_evidence_status=blocked-pending-accepted-build-transcript' packaging/ubuntu/README.md
+require_contains 'dpkg_source_run=0' packaging/ubuntu/README.md
+require_contains 'dpkg_buildpackage_source_run=0' packaging/ubuntu/README.md
+require_contains 'source_package_created=0' packaging/ubuntu/README.md
+require_contains 'source_package_uploaded=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_source_package_evidence_unblocked=0' packaging/ubuntu/README.md
+require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' packaging/ubuntu/README.md
+require_contains 'upload_signing_authority_evidence_contract_present=1' packaging/ubuntu/README.md
+require_contains 'upload_signing_authority_evidence_status=blocked-pending-source-package-evidence' packaging/ubuntu/README.md
+require_contains 'upload_target_kind_recorded=0' packaging/ubuntu/README.md
+require_contains 'launchpad_account_recorded=0' packaging/ubuntu/README.md
+require_contains 'ppa_or_archive_target_reviewed=0' packaging/ubuntu/README.md
+require_contains 'gpg_signing_key_fingerprint_recorded=0' packaging/ubuntu/README.md
+require_contains 'upload_command_non_claims_reviewed=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_upload_signing_authority_evidence_unblocked=0' packaging/ubuntu/README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' packaging/ubuntu/README.md
+require_contains 'ppa_archive_publication_gate_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence' packaging/ubuntu/README.md
+require_contains 'launchpad_upload_run=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_gate_unblocked=0' packaging/ubuntu/README.md
 require_contains 'ppa_claimed=0' packaging/ubuntu/README.md
 require_contains 'ubuntu_archive_ready=0' packaging/ubuntu/README.md
 

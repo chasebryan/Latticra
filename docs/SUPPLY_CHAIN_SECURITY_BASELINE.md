@@ -33,6 +33,12 @@ sensitive_local_artifact_filename_guard_required=1
 report_redaction_boundary_guard_required=1
 whole_environment_report_dump_forbidden=1
 installer_engine_log_redaction_required=1
+installer_config_authority_slug_allowlist_required=1
+installer_command_wrapper_strict_name_required=1
+installer_ui_artifact_authority_guard_required=1
+installer_ui_artifact_write_validation_required=1
+installer_console_output_authority_guard_required=1
+installer_console_config_reflection_denial_required=1
 locked_dependency_builds_required=1
 offline_installer_builds_required=1
 ad_hoc_network_client_commands_forbidden_without_guard=1
@@ -58,6 +64,9 @@ external_endorsement_claimed=0
 | Secrets and tokens | workflow secret and implicit token use are blocked without a dedicated guard | `scripts/test-quality-safety-guards.sh` |
 | Repository secret material | secret-bearing filenames, private-key blocks, and common live-token markers are blocked from source files | `scripts/test-secret-material-guard.sh` |
 | Report and log redaction | whole-environment dumps, shell xtrace, and unredacted installer child logs are blocked | `scripts/test-report-redaction-boundary.sh` |
+| Installer config authority labels | profile, strategy, channel, and command-wrapper values are constrained to reviewed ASCII slug/name allowlists before rendering or install | `scripts/test-installer-config-authority-allowlist.sh` |
+| Installer UI artifacts | Panel save/plan paths validate and sanitize authority fields before writing config or plan artifacts | `scripts/test-installer-ui-artifact-authority.sh` |
+| Installer console output | Panel console report commands validate authority fields before reflecting config-derived values | `scripts/test-installer-console-output-authority.sh` |
 | Workflow network clients | ad hoc `curl`, `wget`, SSH, FTP, and netcat-style commands are blocked without a dedicated guard | `scripts/test-quality-safety-guards.sh` |
 | Package-manager mutation | package-manager use is limited to reviewed workflow/script allowlists | `scripts/test-quality-safety-guards.sh` |
 | Source archive fixtures | package source archives require tracked/unignored source selection, symlink refusal, and deterministic tar/gzip metadata | `scripts/test-quality-safety-guards.sh` |
@@ -130,6 +139,8 @@ CI changes must preserve:
 - no implicit `GITHUB_TOKEN`, `GH_TOKEN`, `ACTIONS_ID_TOKEN`, or runtime token use without dedicated review;
 - no committed local secret files, private-key blocks, or common live-token markers in repository source;
 - no whole-environment dumps, shell xtrace, or unredacted child-process output in report/log paths;
+- no installer profile, update-channel, strategy, or command-wrapper string may cross into plans, config artifacts, or install scripts unless it passes the authority slug/name allowlist;
+- no installer UI save or plan artifact may be written from an unvalidated or network-authority-enabled config;
 - no ad hoc network client commands without dedicated review;
 - no new command-construction or shell-interpolation path without a dedicated command-boundary review;
 - no mutating update lane without integrity, authenticity, validation, and rollback evidence;
@@ -143,4 +154,7 @@ This baseline is guarded by:
 sh scripts/test-supply-chain-security-baseline.sh
 sh scripts/test-secret-material-guard.sh
 sh scripts/test-report-redaction-boundary.sh
+sh scripts/test-installer-config-authority-allowlist.sh
+sh scripts/test-installer-ui-artifact-authority.sh
+sh scripts/test-installer-console-output-authority.sh
 ```

@@ -321,6 +321,7 @@ The first implementation must treat `source_identity` as a non-owning bounded vi
 When present and within bounds, the implementation should copy it into fixed audit storage.
 The bound check must run before any audit record copies caller-provided source identity.
 Source identity containing an embedded NUL must be rejected before report rendering.
+Source identity containing line breaks must be rejected before report rendering.
 
 ## Authority audit record struct
 
@@ -595,6 +596,7 @@ record[0].span_end_offset=<offset>
 ```
 
 Small output buffers should return `authority_status::capacity_exceeded` and clear the buffer.
+Unterminated fixed audit text fields should return `authority_status::invalid_input` and clear the buffer.
 
 ## Build policy
 
@@ -634,13 +636,16 @@ cpp_authority_layer_uses_explicit_result_labels
 cpp_authority_layer_does_not_throw_across_c_boundary
 cpp_authority_layer_does_not_allocate_in_report_path
 cpp_authority_layer_preserves_source_identity_in_audit
+cpp_authority_layer_accepts_max_source_identity
 cpp_authority_layer_rejects_oversized_source_identity
 cpp_authority_layer_bounds_source_identity_before_audit_copy
 cpp_authority_layer_rejects_nul_source_identity
+cpp_authority_layer_rejects_line_break_source_identity
 cpp_authority_layer_validates_lat_parse_result_metadata
 cpp_authority_layer_validates_lir_shape_metadata
 cpp_authority_layer_audit_report_is_deterministic
 cpp_authority_layer_rejects_small_report_buffer
+cpp_authority_layer_rejects_unterminated_audit_text
 cpp_authority_layer_is_deterministic
 cpp_authority_layer_rejects_mutation_flags
 cpp_authority_layer_rejects_network_flags

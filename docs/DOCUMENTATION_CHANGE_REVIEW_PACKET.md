@@ -58,6 +58,7 @@ documentation_change_review_packet:
   product_documentation_cohesion_checked:
   documentation_traceability_matrix_checked:
   documentation_validation_playbook_checked:
+  documentation_drift_response_playbook_checked:
   documentation_style_guide_checked:
   documentation_maintenance_checked:
   mirrors_checked:
@@ -73,13 +74,15 @@ documentation_change_review_packet:
 2. Identify the source records that make the wording true.
 3. Compare the wording against [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
 4. Compare the reader route against [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md).
-5. Compare source records, mirrors, validation, and non-claim boundaries against [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md).
-6. Select validation commands with [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
-7. Compare terminology, headings, dates, and replacement wording against [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
-8. Compare mirror requirements against [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md).
-9. Confirm that adjacent non-claims remain visible.
-10. Run the narrowest relevant validation commands.
-11. Name how to demote or roll back the wording if the evidence changes.
+5. Compare audience-specific paths against [`DOCUMENTATION_READER_JOURNEY_MAP.md`](DOCUMENTATION_READER_JOURNEY_MAP.md) when routes change.
+6. Compare source records, mirrors, validation, and non-claim boundaries against [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md).
+7. Select validation commands with [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
+8. Choose a drift-response, narrowing, or demotion path with [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) when records disagree.
+9. Compare terminology, headings, dates, and replacement wording against [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
+10. Compare mirror requirements against [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md).
+11. Confirm that adjacent non-claims remain visible.
+12. Run the narrowest relevant validation commands.
+13. Name how to demote or roll back the wording if the evidence changes.
 
 ## Claim Classification
 

@@ -32,9 +32,12 @@ Latest Lat LIR source-span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR node-kind evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-node evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-node span evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-node evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-node span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-source edge endpoint evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge span evidence propagation note: 2026-05-26 CDT
 Latest kernel lifecycle evidence status note: 2026-05-26 CDT
 Latest macOS reset/uninstall live-target classifier note: 2026-05-25 CDT
@@ -48,8 +51,14 @@ Latest Seal operator receipt report contract note: 2026-05-26 CDT
 Latest Seal operator receipt report implementation plan note: 2026-05-26 CDT
 Latest Seal operator receipt report implementation note: 2026-05-26 CDT
 Latest Seal operator receipt report surface/status note: 2026-05-26 CDT
+Latest Seal operator receipt report predecessor status alignment note: 2026-05-26 CDT
+Latest Seal local capability registry schema contract note: 2026-05-26 CDT
+Latest Seal local capability registry schema implementation plan note: 2026-05-26 CDT
+Latest Seal local capability registry schema implementation note: 2026-05-26 CDT
 Latest Seal policy decision status/public-entry note: 2026-05-25 CDT
+Latest Seal policy decision predecessor status alignment note: 2026-05-26 CDT
 Latest Seal signed request status/public-entry note: 2026-05-25 CDT
+Latest Seal signed request predecessor status alignment note: 2026-05-26 CDT
 Latest Seal request freshness status/public-entry note: 2026-05-25 CDT
 Latest Seal request freshness predecessor status alignment note: 2026-05-26 CDT
 Latest Seal parameter schema predecessor status alignment note: 2026-05-26 CDT
@@ -117,6 +126,9 @@ Latest Nadia prompt evaluation result release receipt review disposition release
 Latest Nadia prompt evaluation result release receipt review disposition release receipt review disposition contract Stage-41 note: 2026-05-26 CDT
 Latest Nadia prompt evaluation result release receipt review disposition release receipt review disposition release contract Stage-42 note: 2026-05-26 CDT
 Latest Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt contract Stage-43 note: 2026-05-26 CDT
+Latest Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review contract Stage-44 note: 2026-05-26 CDT
+Latest Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition contract Stage-45 note: 2026-05-26 CDT
+Latest Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release contract Stage-46 note: 2026-05-26 CDT
 Latest Latticra Console profile preset note: 2026-05-25 CDT
 Latest Latticra Console standalone console install note: 2026-05-26 CDT
 Latest Latticra Console standalone installer preset note: 2026-05-26 CDT
@@ -209,9 +221,12 @@ Latest Lat LIR source-span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR node-kind evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-node evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-node span evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-node evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-node span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-source edge endpoint evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
 Latest Lat model report declaration metadata integration note: 2026-05-25 CDT
@@ -305,7 +320,7 @@ docs/strategy/README.md
 | Overall Latticra system | 45% |
 | Latticra Seal / local evidence layer | 39% |
 | Latticra Panel / local control surface | 31% |
-| Nadia offline AI foundation | 74% |
+| Nadia offline AI foundation | 75% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 94% |
 | Public documentation posture | 91% |
@@ -316,7 +331,7 @@ docs/strategy/README.md
 | Constrained C++ authority layer | 5% |
 | Nucleus real task execution | 12% |
 | Runtime / operating-system-universe direction | 26% |
-| Security-hardening implementation | 9% |
+| Security-hardening implementation | 10% |
 | Public product readiness | 10% |
 
 These percentages are planning estimates only. They are not release promises, production-readiness metrics, security guarantees, Fedora approval claims, Debian archive claims, FreeBSD ports-tree claims, OpenBSD ports-tree claims, runtime-enforcement claims, or operating-system completeness claims.
@@ -350,7 +365,10 @@ Seal parameter schema predecessor status alignment
 Seal request freshness status/public-entry alignment
 Seal request freshness predecessor status alignment
 Seal signed request status/public-entry alignment
+Seal signed request predecessor status alignment
 Seal policy decision status/public-entry alignment
+Seal policy decision predecessor status alignment
+Seal operator receipt report predecessor status alignment
 Defensive threat model validation refinement
 Runtime boundary policy expansion after threat-model validation
 Runtime boundary abuse-case fixture expansion after policy expansion
@@ -367,6 +385,9 @@ Nadia prompt evaluation result release receipt review disposition release receip
 Nadia prompt evaluation result release receipt review disposition release receipt review disposition contract Stage-41
 Nadia prompt evaluation result release receipt review disposition release receipt review disposition release contract Stage-42
 Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt contract Stage-43
+Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review contract Stage-44
+Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition contract Stage-45
+Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release contract Stage-46
 Runtime boundary Lat pipeline comment evidence integration
 Completion estimate review README/status alignment
 Completion estimate review after runtime-boundary abuse-case fixtures
@@ -487,9 +508,12 @@ Lat LIR source-span evidence propagation
 Lat LIR node-kind evidence propagation
 Lat LIR first-node evidence propagation
 Lat LIR first-node span evidence propagation
+Lat LIR first transition-node evidence propagation
+Lat LIR first transition-node span evidence propagation
 Lat LIR first-edge evidence propagation
 Lat LIR first-edge span evidence propagation
 Lat LIR first transition-source edge evidence propagation
+Lat LIR first transition-source edge endpoint evidence propagation
 Lat LIR first transition-source edge span evidence propagation
 Lat semantic diagnostics refinement
 Lat model normalization implementation
@@ -570,6 +594,8 @@ Kernel scheduler credit seed
 Kernel scheduler selection seed
 Kernel scheduler dispatch seed
 Kernel scheduler handoff seed
+Kernel scheduler activation seed
+Kernel scheduler run-entry seed
 Kernel lifecycle report runner
 Kernel lifecycle subsystem summary
 Kernel lifecycle rollback plan
@@ -726,7 +752,7 @@ gate_state=graduated-authority-neutral
 
 ## Current Seal verified capability gate boundary
 
-The Seal verified capability gate status record makes the existing metadata-only gate evaluation visible from public entry points while preserving no capability enforcement, no effect execution, and no runtime authority.
+The Seal verified capability gate status record makes the existing metadata-only gate evaluation visible from public entry points while preserving no capability enforcement, no effect execution, and no runtime authority. The stricter entry point now requires a passing crypto graduation gate before recording the same metadata-only allowance.
 
 Current verified capability gate fields:
 
@@ -737,6 +763,12 @@ seal_verified_capability_gate_status_present=1
 gate_profile=latticra-seal-verified-capability-gate/0.1
 receipt_profile=latticra-seal-verified-receipt/0.1
 verify_profile=latticra-seal-ed25519-verify/0.1
+crypto_graduation_gate_present=1
+crypto_graduation_gate_passed=1
+standard_expectations_met=1
+local_verify_graduated=1
+receipt_promotion_graduated=1
+authority_promotion_allowed=0
 requested_capability=verified-receipt-report
 requested_effect=report-only
 verified_capability_gate_allowed=1
@@ -773,6 +805,10 @@ decision_profile=latticra-seal-verified-effect-decision/0.1
 gate_profile=latticra-seal-verified-capability-gate/0.1
 requested_capability=verified-receipt-report
 requested_effect=report-only
+verified_effect_decision_crypto_graduation_gate_present=1
+verified_effect_decision_crypto_graduation_gate_passed=1
+verified_effect_decision_standard_expectations_met=1
+verified_effect_decision_authority_promotion_allowed=0
 verified_effect_decision_allowed=1
 verified_effect_decision_state=allowed-report-only
 verified_effect_decision_effect_performed=0
@@ -803,6 +839,10 @@ decision_profile=latticra-seal-verified-effect-decision/0.1
 requested_capability=verified-receipt-report
 requested_effect=report-only
 requested_handoff=report-only
+runtime_handoff_evaluation_crypto_graduation_gate_present=1
+runtime_handoff_evaluation_crypto_graduation_gate_passed=1
+runtime_handoff_evaluation_standard_expectations_met=1
+runtime_handoff_evaluation_authority_promotion_allowed=0
 runtime_handoff_evaluation_eligible=1
 runtime_handoff_evaluation_state=eligible-report-only
 runtime_handoff_evaluation_handoff_performed=0
@@ -1605,6 +1645,169 @@ production_readiness_claimed=0
 external_endorsement_claimed=0
 ```
 
+## Current Seal signed request predecessor status boundary
+
+The Seal signed request predecessor status alignment ties the existing report-only signed request status record to the guarded request freshness status predecessor while preserving no signature generation, no signature verification, no public-key parsing, no trust-store loading, no private-key handling, no key generation, no hardware-key use, no revocation lookup, no network trust lookup, no signed request enforcement, no policy evaluation, no policy enforcement, no freshness validation, no replay detection, no runtime execution, no runtime authority, no effect execution, no capability enforcement, no cryptographic verification, no host behavior, no network behavior, and no production enforcement claim.
+
+Current signed request predecessor status fields:
+
+```text
+seal_request_freshness_status_present=1
+seal_signed_request_status_present=1
+request_freshness_predecessor_parameter_schema_status_present=1
+signed_request_predecessor_request_freshness_status_present=1
+signed_request_profile=latticra-seal-signed-request/0.1
+signed_request_supported=0
+signature_generation_supported=0
+signature_verification_supported=0
+signature_present=0
+signature_valid=0
+signature_algorithm_declared=0
+signing_key_id_present=0
+signature_hash_present=0
+signed_request_id_present=0
+identity_binding_declared=0
+context_binding_declared=0
+parameter_binding_declared=0
+freshness_binding_declared=0
+policy_binding_declared=0
+trust_store_supported=0
+revocation_lookup_supported=0
+runtime_authority_granted=0
+runtime_execution_added=0
+effect_execution_added=0
+capability_enforcement_added=0
+cryptographic_enforcement_added=0
+signature_generation_implemented=0
+signature_verification_implemented=0
+signed_request_enforcement_implemented=0
+trust_store_implemented=0
+revocation_lookup_implemented=0
+policy_evaluation_added=0
+policy_enforcement_added=0
+freshness_validation_implemented=0
+replay_protection_implemented=0
+mcp_behavior_changed=0
+agent_execution_added=0
+model_execution_added=0
+tool_execution_added=0
+shell_execution_added=0
+host_behavior_changed=0
+network_behavior_changed=0
+production_readiness_claimed=0
+external_endorsement_claimed=0
+```
+
+## Current Seal policy decision predecessor status boundary
+
+The Seal policy decision predecessor status alignment ties the existing report-only policy decision status record to the guarded signed request status predecessor while preserving no policy evaluation, no policy enforcement, no signature verification, no freshness validation, no replay detection, no signed request enforcement, no runtime execution, no runtime authority, no effect execution, no capability enforcement, no cryptographic verification, no host behavior, no network behavior, and no production enforcement claim.
+
+Current policy decision predecessor status fields:
+
+```text
+seal_signed_request_status_present=1
+seal_policy_decision_status_present=1
+signed_request_predecessor_request_freshness_status_present=1
+policy_decision_predecessor_signed_request_status_present=1
+policy_decision_profile=latticra-seal-policy-decision/0.1
+policy_decision_supported=0
+policy_evaluation_supported=0
+policy_enforcement_supported=0
+policy_id_present=0
+policy_version_present=0
+requested_action_present=0
+requested_tool_present=0
+signed_request_present=0
+signature_valid=0
+schema_valid=0
+freshness_valid=0
+replay_detected=0
+default_decision=deny
+decision_state=report-only
+decision_allowed=0
+decision_denied=1
+operator_review_required=1
+unknown_tool_denied=1
+unsigned_request_denied=1
+invalid_schema_denied=1
+stale_request_denied=1
+replayed_request_denied=1
+invalid_signature_denied=1
+runtime_authority_granted=0
+runtime_execution_added=0
+effect_execution_added=0
+capability_enforcement_added=0
+cryptographic_enforcement_added=0
+real_policy_evaluation_added=0
+policy_enforcement_added=0
+signature_verification_implemented=0
+freshness_validation_implemented=0
+replay_protection_implemented=0
+mcp_behavior_changed=0
+agent_execution_added=0
+model_execution_added=0
+tool_execution_added=0
+shell_execution_added=0
+host_behavior_changed=0
+network_behavior_changed=0
+production_readiness_claimed=0
+external_endorsement_claimed=0
+```
+
+## Current Seal operator receipt report predecessor status boundary
+
+The Seal operator receipt report predecessor status alignment ties the existing denied report-only operator receipt status record to the guarded policy decision status predecessor while preserving no receipt file writes, no tool execution, no policy enforcement, no capability enforcement, no cryptographic verification, no signature verification, no freshness validation, no replay detection, no runtime execution, no runtime authority, no effect execution, no host behavior, no network behavior, and no production enforcement claim.
+
+Current operator receipt report predecessor status fields:
+
+```text
+seal_policy_decision_status_present=1
+seal_operator_receipt_report_status_present=1
+policy_decision_predecessor_signed_request_status_present=1
+operator_receipt_report_predecessor_policy_decision_status_present=1
+operator_receipt_profile=latticra-seal-operator-receipt-report/0.1
+receipt_mode=report-only
+receipt_status=denied-report-only
+source_policy_decision_present=1
+source_request_freshness_present=1
+source_signed_request_present=1
+source_runtime_dry_run_present=1
+source_denial_reason_present=1
+policy_decision_state=report-only
+request_freshness_state=report-only
+signed_request_state=report-only
+runtime_dry_run_state=report-only
+default_action_deny=1
+would_allow=0
+would_deny=1
+would_execute_tool=0
+would_read_host=0
+would_write_host=0
+would_use_network=0
+would_grant_runtime_authority=0
+unknown_tool_denied=1
+unsigned_request_denied=1
+invalid_schema_denied=1
+stale_request_denied=1
+replayed_request_denied=1
+invalid_signature_denied=1
+receipt_complete=1
+receipt_invalid=0
+report_only=1
+runtime_authority_granted=0
+effect_performed=0
+host_read_performed=0
+host_write_performed=0
+network_performed=0
+implementation_behavior_changed=0
+runtime_behavior_added=0
+host_behavior_added=0
+network_behavior_added=0
+external_service_behavior_added=0
+production_readiness_claimed=0
+external_endorsement_claimed=0
+```
+
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
@@ -1695,16 +1898,27 @@ verified_receipt_promotion_runtime_authority_granted=0
 seal_verified_capability_gate_contract_present=1
 seal_verified_capability_gate_implementation_present=1
 seal_verified_capability_gate_status_present=1
+verified_capability_gate_crypto_graduation_gate_passed=1
+verified_capability_gate_standard_expectations_met=1
+verified_capability_gate_authority_promotion_allowed=0
 verified_capability_gate_allowed=1
 verified_capability_gate_state=allowed-metadata-only
 verified_capability_gate_runtime_authority_granted=0
 verified_capability_gate_effect_performed=0
 seal_verified_effect_decision_status_present=1
+verified_effect_decision_crypto_graduation_gate_present=1
+verified_effect_decision_crypto_graduation_gate_passed=1
+verified_effect_decision_standard_expectations_met=1
+verified_effect_decision_authority_promotion_allowed=0
 verified_effect_decision_allowed=1
 verified_effect_decision_state=allowed-report-only
 verified_effect_decision_effect_performed=0
 verified_effect_decision_runtime_authority_granted=0
 seal_runtime_handoff_evaluation_status_present=1
+runtime_handoff_evaluation_crypto_graduation_gate_present=1
+runtime_handoff_evaluation_crypto_graduation_gate_passed=1
+runtime_handoff_evaluation_standard_expectations_met=1
+runtime_handoff_evaluation_authority_promotion_allowed=0
 runtime_handoff_evaluation_eligible=1
 runtime_handoff_evaluation_state=eligible-report-only
 runtime_handoff_evaluation_handoff_performed=0
@@ -1753,12 +1967,16 @@ request_freshness_predecessor_parameter_schema_status_present=1
 seal_signed_request_contract_present=1
 seal_signed_request_metadata_present=1
 seal_signed_request_status_present=1
+signed_request_predecessor_request_freshness_status_present=1
 seal_policy_decision_contract_present=1
 seal_policy_decision_metadata_present=1
 seal_policy_decision_report_surface_present=1
 seal_policy_decision_report_surface_status_present=1
 seal_policy_decision_status_present=1
 seal_policy_decision_public_entrypoint_alignment_present=1
+policy_decision_predecessor_signed_request_status_present=1
+seal_operator_receipt_report_status_present=1
+operator_receipt_report_predecessor_policy_decision_status_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1
@@ -1812,6 +2030,18 @@ identity_credential_access_management_baseline_present=1
 identity_credential_access_management_guard_present=1
 phishing_resistant_mfa_required_for_privileged_access=1
 privileged_access_granted=0
+security_logging_monitoring_baseline_present=1
+security_logging_monitoring_guard_present=1
+security_event_logging_required_before_hosted_service=1
+production_monitoring_claim_allowed=0
+backup_recovery_resilience_baseline_present=1
+backup_recovery_resilience_guard_present=1
+backup_restore_recovery_evidence_required_before_hosted_service=1
+production_recovery_claim_allowed=0
+secure_configuration_change_management_baseline_present=1
+secure_configuration_change_management_guard_present=1
+secure_configuration_change_control_required_before_hosted_service=1
+production_configuration_claim_allowed=0
 zero_trust_runtime_authority_baseline_present=1
 zero_trust_runtime_boundary_required=1
 runtime_boundary_policy_expansion_next=1
@@ -1977,7 +2207,7 @@ The project notes Nucleus announcement README status/index check verifies that t
 
 ## Current runtime boundary refinement boundary
 
-The runtime boundary now carries no-effect Lat pipeline evidence, Lat pipeline first-clause evidence, Lat pipeline first-declaration evidence, Lat pipeline module/count evidence, Lat pipeline stage-summary evidence, Lat pipeline line-comment count and first-comment span evidence, Lat-specific LIR module-summary evidence, Lat-specific LIR source-span evidence, Lat-specific LIR node-kind evidence, Lat-specific LIR first-node evidence, Lat-specific LIR first-node span evidence, Lat-specific LIR first-edge evidence, Lat-specific LIR first-edge span evidence, Lat-specific LIR first transition-source edge evidence, Lat-specific LIR first transition-source edge span evidence, Lat-specific LIR no-effect flag evidence, and Lat-specific LIR edge-kind evidence in records and reports. It also reports explicit classification, boundary-domain, authorization-state, evidence-level, and policy-matrix fields for runtime-boundary requests while preserving disabled-by-default behavior and future-gated execution requests.
+The runtime boundary now carries no-effect Lat pipeline evidence, Lat pipeline first-clause evidence, Lat pipeline first-declaration evidence, Lat pipeline module/count evidence, Lat pipeline stage-summary evidence, Lat pipeline line-comment count and first-comment span evidence, Lat-specific LIR module-summary evidence, Lat-specific LIR source-span evidence, Lat-specific LIR node-kind evidence, Lat-specific LIR first-node evidence, Lat-specific LIR first-node span evidence, Lat-specific LIR first transition-node evidence, Lat-specific LIR first transition-node span evidence, Lat-specific LIR first-edge evidence, Lat-specific LIR first-edge span evidence, Lat-specific LIR first transition-source edge evidence, Lat-specific LIR first transition-source edge endpoint evidence, Lat-specific LIR first transition-source edge span evidence, Lat-specific LIR no-effect flag evidence, and Lat-specific LIR edge-kind evidence in records and reports. It also reports explicit classification, boundary-domain, authorization-state, evidence-level, and policy-matrix fields for runtime-boundary requests while preserving disabled-by-default behavior and future-gated execution requests.
 
 ## Current Lat pipeline boundary
 

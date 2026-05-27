@@ -12,6 +12,9 @@ on:
       - "docs/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_CONTRACT.md"
       - "docs/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_VALIDATION.md"
       - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_CONTRACT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_VALIDATION.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_TRANSCRIPT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_REVIEW.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md"
       - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE_STATUS.md"
@@ -19,6 +22,9 @@ on:
       - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_CONTRACT_STATUS.md"
       - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_VALIDATION_STATUS.md"
       - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_CONTRACT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_VALIDATION_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_TRANSCRIPT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_REVIEW_STATUS.md"
       - "fixtures/latticra-panel/signed-updater-manifest.fixture.toml"
       - "fixtures/latticra-panel/signed-updater-state.fixture.toml"
       - "scripts/test-latticra-panel-lc-install-config.sh"
@@ -29,11 +35,17 @@ on:
       - "scripts/test-latticra-panel-signed-updater-manifest-fixture-contract.sh"
       - "scripts/test-latticra-panel-signed-updater-manifest-fixture-validation.sh"
       - "scripts/test-latticra-panel-signed-updater-state-fixture-contract.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-fixture-validation.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-transcript.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-review.sh"
       - "scripts/latticra-panel-signed-updater-delivery-gate.sh"
       - "scripts/latticra-panel-signed-updater-denial-transcript.sh"
       - "scripts/latticra-panel-signed-updater-manifest-fixture-contract.sh"
       - "scripts/latticra-panel-signed-updater-manifest-fixture-validation.sh"
       - "scripts/latticra-panel-signed-updater-state-fixture-contract.sh"
+      - "scripts/latticra-panel-signed-updater-state-fixture-validation.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-transcript.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-review.sh"
       - "scripts/test-latticra-panel-local-install-*.sh"
       - "scripts/check_latticra_panel_ui_design.py"
   push:
@@ -49,6 +61,9 @@ on:
       - "docs/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_CONTRACT.md"
       - "docs/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_VALIDATION.md"
       - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_CONTRACT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_VALIDATION.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_TRANSCRIPT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_REVIEW.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md"
       - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE_STATUS.md"
@@ -56,6 +71,9 @@ on:
       - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_CONTRACT_STATUS.md"
       - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_VALIDATION_STATUS.md"
       - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_CONTRACT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_VALIDATION_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_TRANSCRIPT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_REVIEW_STATUS.md"
       - "fixtures/latticra-panel/signed-updater-manifest.fixture.toml"
       - "fixtures/latticra-panel/signed-updater-state.fixture.toml"
       - "scripts/test-latticra-panel-lc-install-config.sh"
@@ -66,11 +84,17 @@ on:
       - "scripts/test-latticra-panel-signed-updater-manifest-fixture-contract.sh"
       - "scripts/test-latticra-panel-signed-updater-manifest-fixture-validation.sh"
       - "scripts/test-latticra-panel-signed-updater-state-fixture-contract.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-fixture-validation.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-transcript.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-review.sh"
       - "scripts/latticra-panel-signed-updater-delivery-gate.sh"
       - "scripts/latticra-panel-signed-updater-denial-transcript.sh"
       - "scripts/latticra-panel-signed-updater-manifest-fixture-contract.sh"
       - "scripts/latticra-panel-signed-updater-manifest-fixture-validation.sh"
       - "scripts/latticra-panel-signed-updater-state-fixture-contract.sh"
+      - "scripts/latticra-panel-signed-updater-state-fixture-validation.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-transcript.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-review.sh"
       - "scripts/test-latticra-panel-local-install-*.sh"
       - "scripts/check_latticra_panel_ui_design.py"
 
@@ -140,6 +164,15 @@ jobs:
 
       - name: Validate Latticra Panel signed updater state fixture contract
         run: sh scripts/test-latticra-panel-signed-updater-state-fixture-contract.sh
+
+      - name: Validate Latticra Panel signed updater state fixture validation
+        run: sh scripts/test-latticra-panel-signed-updater-state-fixture-validation.sh
+
+      - name: Validate Latticra Panel signed updater state transition denial transcript
+        run: sh scripts/test-latticra-panel-signed-updater-state-transition-denial-transcript.sh
+
+      - name: Validate Latticra Panel signed updater state transition denial review
+        run: sh scripts/test-latticra-panel-signed-updater-state-transition-denial-review.sh
 
       - name: Validate installer shell scripts
         run: |

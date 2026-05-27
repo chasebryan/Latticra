@@ -21,12 +21,24 @@ require_contains() {
 status_file="docs/status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md"
 
 require_file "$status_file"
+require_file README.md
+require_file STATUS.md
+require_file docs/status/README.md
+require_file docs/status/CURRENT_STATUS.md
+require_file docs/FOUNDATION_INDEX.md
+require_file docs/project_notes/CURRENT_DIRECTION.md
+require_file docs/project_notes/UPCOMING_WORK.md
+require_file docs/project_notes/README.md
 require_file docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md
 require_file docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SURFACE.md
+require_file docs/status/SEAL_POLICY_DECISION_STATUS.md
 require_file scripts/latticra-seal-operator-receipt-report.sh
 require_file scripts/test-latticra-seal-operator-receipt-report-surface.sh
 require_file tests/seal_operator_receipt_report_surface.c
 require_file scripts/test-latticra-seal-operator-receipt-report.sh
+require_file scripts/test-latticra-seal-policy-decision-status.sh
+require_file .github/workflows/latticra-seal-policy-decision-status.yml
+require_file .github/workflows/latticra-seal-operator-receipt-report-status.yml
 
 require_contains 'Status: status record for the Latticra Seal operator receipt report surface' "$status_file"
 require_contains 'seal_operator_receipt_report_surface_document_present=1' "$status_file"
@@ -34,9 +46,17 @@ require_contains 'seal_operator_receipt_report_surface_fixture_present=1' "$stat
 require_contains 'seal_operator_receipt_report_runner_present=1' "$status_file"
 require_contains 'seal_operator_receipt_report_surface_guard_present=1' "$status_file"
 require_contains 'seal_operator_receipt_report_status_present=1' "$status_file"
+require_contains 'seal_operator_receipt_report_status_runner_present=1' "$status_file"
+require_contains 'seal_operator_receipt_report_status_workflow_present=1' "$status_file"
+require_contains 'seal_policy_decision_status_present=1' "$status_file"
+require_contains 'seal_policy_decision_status_runner_present=1' "$status_file"
+require_contains 'seal_policy_decision_status_workflow_present=1' "$status_file"
+require_contains 'policy_decision_predecessor_signed_request_status_present=1' "$status_file"
+require_contains 'operator_receipt_report_predecessor_policy_decision_status_present=1' "$status_file"
 require_contains 'operator_visible_operator_receipt_report=1' "$status_file"
 require_contains 'uses_local_deterministic_fixture=1' "$status_file"
 require_contains 'source_metadata_bound=1' "$status_file"
+require_contains 'operator_receipt_report_status_added=1' "$status_file"
 require_contains 'implementation_behavior_changed=0' "$status_file"
 require_contains 'runtime_behavior_added=0' "$status_file"
 require_contains 'host_behavior_added=0' "$status_file"
@@ -76,7 +96,33 @@ require_contains 'effect_performed=0' "$status_file"
 require_contains 'host_read_performed=0' "$status_file"
 require_contains 'host_write_performed=0' "$status_file"
 require_contains 'network_performed=0' "$status_file"
+require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_CONTRACT.md' "$status_file"
+require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION_PLAN.md' "$status_file"
+require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md' "$status_file"
+require_contains 'local capability registry schema report surface' "$status_file"
 require_contains 'Panel-visible Seal dashboard planning checkpoint' "$status_file"
-require_contains 'local capability registry schema contract' "$status_file"
+require_contains 'sh scripts/test-latticra-seal-operator-receipt-report-status.sh' .github/workflows/latticra-seal-operator-receipt-report-status.yml
+require_contains 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' .github/workflows/latticra-seal-operator-receipt-report-status.yml
+
+require_contains 'latticra_seal_operator_receipt_report_status_present=1' README.md
+require_contains 'seal_operator_receipt_report_status_present=1' README.md
+require_contains 'operator_receipt_report_predecessor_policy_decision_status_present=1' README.md
+require_contains 'operator receipt report status record now ties that denied receipt checkpoint to the guarded policy decision status predecessor' README.md
+require_contains 'docs/status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md' README.md
+
+require_contains 'Seal operator receipt report predecessor status alignment' STATUS.md
+require_contains 'seal_operator_receipt_report_status_present=1' STATUS.md
+require_contains 'operator_receipt_report_predecessor_policy_decision_status_present=1' STATUS.md
+require_contains 'SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md' docs/status/README.md
+require_contains 'operator_receipt_report_predecessor_policy_decision_status_present=1' docs/status/README.md
+require_contains 'Latticra Seal operator receipt report predecessor status alignment' docs/status/CURRENT_STATUS.md
+require_contains 'SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md' docs/FOUNDATION_INDEX.md
+require_contains 'Latticra Seal operator receipt report predecessor status alignment' docs/FOUNDATION_INDEX.md
+require_contains 'Latticra Seal operator receipt report predecessor status alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Latticra Seal operator receipt report predecessor status alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'docs/status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md' docs/project_notes/README.md
+require_contains 'docs/status/SEAL_POLICY_DECISION_STATUS.md' docs/project_notes/README.md
+
+sh scripts/test-latticra-seal-policy-decision-status.sh
 
 printf 'latticra seal operator receipt report status: ok\n'

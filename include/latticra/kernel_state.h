@@ -1,7 +1,7 @@
 #ifndef LATTICRA_KERNEL_STATE_H
 #define LATTICRA_KERNEL_STATE_H
 
-#include "latticra/kernel_scheduler_handoff.h"
+#include "latticra/kernel_scheduler_run_entry.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,7 +32,9 @@ typedef enum {
     LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY = 18,
     LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY = 19,
     LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY = 20,
-    LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY = 21
+    LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY = 21,
+    LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY = 22,
+    LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY = 23
 } latticra_kernel_state_kind_t;
 
 typedef enum {
@@ -59,6 +61,8 @@ typedef struct {
     latticra_kernel_scheduler_selection_request_t scheduler_selection_request;
     latticra_kernel_scheduler_dispatch_request_t scheduler_dispatch_request;
     latticra_kernel_scheduler_handoff_request_t scheduler_handoff_request;
+    latticra_kernel_scheduler_activation_request_t scheduler_activation_request;
+    latticra_kernel_scheduler_run_entry_request_t scheduler_run_entry_request;
     latticra_kernel_state_kind_t current_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
@@ -88,6 +92,8 @@ typedef struct {
     latticra_kernel_scheduler_selection_result_t scheduler_selection;
     latticra_kernel_scheduler_dispatch_result_t scheduler_dispatch;
     latticra_kernel_scheduler_handoff_result_t scheduler_handoff;
+    latticra_kernel_scheduler_activation_result_t scheduler_activation;
+    latticra_kernel_scheduler_run_entry_result_t scheduler_run_entry;
     latticra_kernel_state_kind_t previous_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_kind_t next_state;

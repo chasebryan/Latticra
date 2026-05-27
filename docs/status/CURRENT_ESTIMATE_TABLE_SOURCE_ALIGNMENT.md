@@ -42,7 +42,7 @@ runtime_authority_granted=0
 Overall Latticra system: 45%
 Latticra Seal / local evidence layer: 39%
 Latticra Panel / local control surface: 31%
-Nadia offline AI foundation: 74%
+Nadia offline AI foundation: 75%
 L-UI parser / AST / string foundation: 87%
 Foundation documents and contracts: 94%
 Public documentation posture: 91%
@@ -53,7 +53,7 @@ C/C++ foundation direction: 22%
 Constrained C++ authority layer: 5%
 Nucleus real task execution: 12%
 Runtime / operating-system-universe direction: 26%
-Security-hardening implementation: 9%
+Security-hardening implementation: 10%
 Public product readiness: 10%
 ```
 

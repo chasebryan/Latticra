@@ -25,6 +25,8 @@ docs/LATTICRA_SEAL_REQUEST_FRESHNESS_CONTRACT.md
 docs/LATTICRA_SEAL_REQUEST_FRESHNESS_IMPLEMENTATION.md
 docs/LATTICRA_SEAL_REQUEST_FRESHNESS_REPORT_SURFACE.md
 docs/status/SEAL_REQUEST_FRESHNESS_STATUS.md
+scripts/test-latticra-seal-request-freshness-status.sh
+.github/workflows/latticra-seal-request-freshness-status.yml
 docs/LATTICRA_SEAL_SIGNED_REQUEST_CONTRACT.md
 docs/LATTICRA_SEAL_SIGNED_REQUEST_IMPLEMENTATION.md
 docs/status/SEAL_SIGNED_REQUEST_STATUS.md
@@ -34,6 +36,7 @@ tests/seal_signed_request_invariants.c
 scripts/test-latticra-seal-signed-request-contract.sh
 scripts/test-latticra-seal-signed-request.sh
 scripts/test-latticra-seal-signed-request-status.sh
+.github/workflows/latticra-seal-signed-request-status.yml
 docs/LATTICRA_SEAL_POLICY_DECISION_CONTRACT.md
 docs/LATTICRA_SEAL_POLICY_DECISION_IMPLEMENTATION.md
 docs/LATTICRA_SEAL_POLICY_DECISION_REPORT_SURFACE.md
@@ -59,6 +62,13 @@ seal_signed_request_invariant_test_present=1
 seal_signed_request_runner_present=1
 seal_signed_request_metadata_present=1
 seal_signed_request_status_present=1
+seal_signed_request_status_runner_present=1
+seal_signed_request_status_workflow_present=1
+seal_request_freshness_status_present=1
+seal_request_freshness_status_runner_present=1
+seal_request_freshness_status_workflow_present=1
+request_freshness_predecessor_parameter_schema_status_present=1
+signed_request_predecessor_request_freshness_status_present=1
 readme_mentions_signed_request_metadata=1
 readme_links_signed_request_contract=1
 readme_links_signed_request_implementation=1
@@ -85,6 +95,7 @@ policy_binding_declared=0
 trust_store_supported=0
 revocation_lookup_supported=0
 mode=status-public-entry-alignment
+signed_request_status_added=1
 implementation_behavior_changed=0
 signature_generation_implemented=0
 signature_verification_implemented=0
@@ -161,6 +172,25 @@ sh scripts/test-latticra-seal-signed-request.sh
 Expected output:
 
 ```text
+seal report envelope status: ok
+seal signature request status: ok
+seal signing authorization status: ok
+seal signer handoff status: ok
+seal signer invocation status: ok
+seal signing operation status: ok
+seal key-handling status: ok
+seal key-material status: ok
+seal public-key parsing status: ok
+seal key parsing status: ok
+seal verification policy status: ok
+seal verification receipt status: ok
+seal capability gate status: ok
+seal effect decision status: ok
+seal runtime handoff status: ok
+seal status rollup status: ok
+seal agentic automation security status: ok
+seal parameter schema status: ok
+seal request freshness status: ok
 seal signed request status: ok
 ```
 
@@ -168,10 +198,12 @@ seal signed request status: ok
 
 This status record is documentation/status/public-entry alignment only.
 
+This refresh adds the signed request status guard workflow and records the guarded request freshness status predecessor without changing the report-only signed request metadata, implementation, or status surface.
+
 It does not add signature generation, signature verification, public-key parsing, trust-store loading, private-key handling, key generation, hardware-key use, revocation lookup, network trust lookup, signed request enforcement, MCP protocol behavior, MCP server behavior, MCP client behavior, AI agent execution, model execution, tool execution, shell execution, runtime behavior, host reads, host writes, network behavior, cryptographic verification, key handling, receipt verification, capability enforcement, policy enforcement, runtime enforcement, production readiness, external endorsement, or authority grants.
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is policy decision status/public-entry alignment.
+The next valid Latticra Seal slice is policy decision status/workflow guard alignment.
 
 That future slice must preserve the no-effect posture and must not implement real policy evaluation, policy enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signature verification, freshness validation, replay detection, authority grants, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, or shell execution.

@@ -81,7 +81,7 @@ require_contains 'runtime_authority_granted=0' STATUS.md
 require_contains 'Continue small guarded report/status alignment only when drift appears' STATUS.md
 require_contains '| Overall Latticra system | 45% |' STATUS.md
 require_contains '| Latticra Seal / local evidence layer | 39% |' STATUS.md
-require_contains '| Security-hardening implementation | 9% |' STATUS.md
+require_contains '| Security-hardening implementation | 10% |' STATUS.md
 require_contains '| Public product readiness | 10% |' STATUS.md
 
 require_contains 'COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md' docs/status/README.md

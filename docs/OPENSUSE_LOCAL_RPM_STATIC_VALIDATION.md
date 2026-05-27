@@ -61,6 +61,8 @@ docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
 docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
 docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
 docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
+docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
 scripts/test-opensuse-rpmlint-osc-availability.sh
 scripts/test-opensuse-rpmlint-static-spec-lane.sh
 scripts/test-opensuse-rpmlint-findings-classification.sh
@@ -70,6 +72,8 @@ scripts/test-opensuse-rpm-topdir-handoff-lane.sh
 scripts/test-opensuse-local-rpm-build-gate-contract.sh
 scripts/test-opensuse-local-rpm-build-environment-contract.sh
 scripts/test-opensuse-rpm-artifact-naming-contract.sh
+scripts/test-opensuse-rpm-payload-inspection-contract.sh
+scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
 .github/workflows/opensuse-rpmlint-osc-availability.yml
 .github/workflows/opensuse-rpmlint-static-spec-lane.yml
 .github/workflows/opensuse-rpmlint-findings-classification.yml
@@ -79,15 +83,17 @@ scripts/test-opensuse-rpm-artifact-naming-contract.sh
 .github/workflows/opensuse-local-rpm-build-gate-contract.yml
 .github/workflows/opensuse-local-rpm-build-environment-contract.yml
 .github/workflows/opensuse-rpm-artifact-naming-contract.yml
+.github/workflows/opensuse-rpm-payload-inspection-contract.yml
+.github/workflows/opensuse-rpm-install-remove-transcript-contract.yml
 ```
 
 Recommended next slice:
 
 ```text
-Add openSUSE RPM payload inspection contract before any RPM artifact can be accepted.
+Add openSUSE RPM validation promotion blocker matrix before any package validation result can be accepted.
 ```
 
-That future lane should define how source RPM and binary RPM payloads are inspected after creation while keeping `opensuse_rpm_build_gate_state=closed-no-effect` until the remaining prerequisites are satisfied.
+That future lane should tie source, environment, artifact, payload, install/remove, and OBS non-claim records together while keeping RPM builds and readiness blocked.
 
 ## Validation
 

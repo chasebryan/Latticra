@@ -40,6 +40,9 @@ require_file scripts/test-high-assurance-security-baseline.sh
 require_file scripts/test-quality-safety-guards.sh
 require_file scripts/test-secret-material-guard.sh
 require_file scripts/test-report-redaction-boundary.sh
+require_file scripts/test-installer-config-authority-allowlist.sh
+require_file scripts/test-installer-ui-artifact-authority.sh
+require_file scripts/test-installer-console-output-authority.sh
 require_file installer/scripts/latticra-installer-apply.sh
 
 require_contains 'Status: supply-chain security baseline' "$doc"
@@ -72,6 +75,12 @@ for field in \
   'report_redaction_boundary_guard_required=1' \
   'whole_environment_report_dump_forbidden=1' \
   'installer_engine_log_redaction_required=1' \
+  'installer_config_authority_slug_allowlist_required=1' \
+  'installer_command_wrapper_strict_name_required=1' \
+  'installer_ui_artifact_authority_guard_required=1' \
+  'installer_ui_artifact_write_validation_required=1' \
+  'installer_console_output_authority_guard_required=1' \
+  'installer_console_config_reflection_denial_required=1' \
   'locked_dependency_builds_required=1' \
   'offline_installer_builds_required=1' \
   'ad_hoc_network_client_commands_forbidden_without_guard=1' \
@@ -142,6 +151,21 @@ require_contains 'redact child stdout before forwarding install logs' scripts/te
 require_contains 'redact_log_line(&line)' installer/latticra-installer/src/engine.rs
 require_contains 'sh ./scripts/test-report-redaction-boundary.sh' Makefile
 require_contains 'report-redaction-boundary:' Makefile
+require_contains 'installer_config_authority_allowlist: ok' scripts/test-installer-config-authority-allowlist.sh
+require_contains 'validate_authority_slug("LC install profile"' installer/latticra-installer/src/config.rs
+require_contains 'valid_authority_slug()' installer/scripts/latticra-installer-apply.sh
+require_contains 'sh ./scripts/test-installer-config-authority-allowlist.sh' Makefile
+require_contains 'installer-config-authority-allowlist:' Makefile
+require_contains 'installer_ui_artifact_authority: ok' scripts/test-installer-ui-artifact-authority.sh
+require_contains 'sanitized_ui_artifact_config' installer/latticra-installer/src/ui.rs
+require_contains 'can_write_artifacts' installer/latticra-installer/src/config.rs
+require_contains 'sh ./scripts/test-installer-ui-artifact-authority.sh' Makefile
+require_contains 'installer-ui-artifact-authority:' Makefile
+require_contains 'installer_console_output_authority: ok' scripts/test-installer-console-output-authority.sh
+require_contains 'console_report_config' installer/latticra-installer/src/ui.rs
+require_contains 'console_config_report_blocks_invalid_authority_without_reflection' installer/latticra-installer/src/ui.rs
+require_contains 'sh ./scripts/test-installer-console-output-authority.sh' Makefile
+require_contains 'installer-console-output-authority:' Makefile
 require_contains 'source archives must use deterministic tar/gzip metadata' scripts/test-quality-safety-guards.sh
 require_contains 'cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml' Makefile
 require_contains 'cargo build --release --locked --offline' installer/scripts/latticra-installer-apply.sh

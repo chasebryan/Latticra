@@ -33,6 +33,8 @@ require_file docs/LATTICRA_SEAL_REQUEST_FRESHNESS_CONTRACT.md
 require_file docs/LATTICRA_SEAL_REQUEST_FRESHNESS_IMPLEMENTATION.md
 require_file docs/LATTICRA_SEAL_REQUEST_FRESHNESS_REPORT_SURFACE.md
 require_file docs/status/SEAL_REQUEST_FRESHNESS_STATUS.md
+require_file scripts/test-latticra-seal-request-freshness-status.sh
+require_file .github/workflows/latticra-seal-request-freshness-status.yml
 require_file docs/LATTICRA_SEAL_SIGNED_REQUEST_CONTRACT.md
 require_file docs/LATTICRA_SEAL_SIGNED_REQUEST_IMPLEMENTATION.md
 require_file include/latticra/seal_signed_request.h
@@ -40,6 +42,7 @@ require_file src/seal_signed_request.c
 require_file tests/seal_signed_request_invariants.c
 require_file scripts/test-latticra-seal-signed-request-contract.sh
 require_file scripts/test-latticra-seal-signed-request.sh
+require_file .github/workflows/latticra-seal-signed-request-status.yml
 require_file docs/LATTICRA_SEAL_POLICY_DECISION_CONTRACT.md
 require_file docs/LATTICRA_SEAL_POLICY_DECISION_IMPLEMENTATION.md
 require_file docs/LATTICRA_SEAL_POLICY_DECISION_REPORT_SURFACE.md
@@ -61,6 +64,13 @@ require_contains 'seal_signed_request_invariant_test_present=1' "$status_file"
 require_contains 'seal_signed_request_runner_present=1' "$status_file"
 require_contains 'seal_signed_request_metadata_present=1' "$status_file"
 require_contains 'seal_signed_request_status_present=1' "$status_file"
+require_contains 'seal_signed_request_status_runner_present=1' "$status_file"
+require_contains 'seal_signed_request_status_workflow_present=1' "$status_file"
+require_contains 'seal_request_freshness_status_present=1' "$status_file"
+require_contains 'seal_request_freshness_status_runner_present=1' "$status_file"
+require_contains 'seal_request_freshness_status_workflow_present=1' "$status_file"
+require_contains 'request_freshness_predecessor_parameter_schema_status_present=1' "$status_file"
+require_contains 'signed_request_predecessor_request_freshness_status_present=1' "$status_file"
 require_contains 'readme_mentions_signed_request_metadata=1' "$status_file"
 require_contains 'readme_links_signed_request_contract=1' "$status_file"
 require_contains 'readme_links_signed_request_implementation=1' "$status_file"
@@ -87,6 +97,7 @@ require_contains 'policy_binding_declared=0' "$status_file"
 require_contains 'trust_store_supported=0' "$status_file"
 require_contains 'revocation_lookup_supported=0' "$status_file"
 require_contains 'mode=status-public-entry-alignment' "$status_file"
+require_contains 'signed_request_status_added=1' "$status_file"
 require_contains 'implementation_behavior_changed=0' "$status_file"
 require_contains 'signature_generation_implemented=0' "$status_file"
 require_contains 'signature_verification_implemented=0' "$status_file"
@@ -107,7 +118,9 @@ require_contains 'cryptographic_enforcement_added=0' "$status_file"
 require_contains 'capability_enforcement_added=0' "$status_file"
 require_contains 'production_readiness_claimed=0' "$status_file"
 require_contains 'external_endorsement_claimed=0' "$status_file"
-require_contains 'policy decision status/public-entry alignment' "$status_file"
+require_contains 'policy decision status/workflow guard alignment' "$status_file"
+require_contains 'sh scripts/test-latticra-seal-signed-request-status.sh' .github/workflows/latticra-seal-signed-request-status.yml
+require_contains 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' .github/workflows/latticra-seal-signed-request-status.yml
 
 require_contains 'latticra_seal_signed_request_contract_present=1' README.md
 require_contains 'latticra_seal_signed_request_metadata_present=1' README.md
@@ -115,23 +128,35 @@ require_contains 'latticra_seal_signed_request_status_present=1' README.md
 require_contains 'seal_signed_request_contract_present=1' README.md
 require_contains 'seal_signed_request_metadata_present=1' README.md
 require_contains 'seal_signed_request_status_present=1' README.md
+require_contains 'signed_request_predecessor_request_freshness_status_present=1' README.md
 require_contains 'report-only signed request metadata' README.md
+require_contains 'signed request status record now ties that report-only signed-request checkpoint to the guarded request freshness status predecessor' README.md
 require_contains 'docs/LATTICRA_SEAL_SIGNED_REQUEST_CONTRACT.md' README.md
 require_contains 'docs/LATTICRA_SEAL_SIGNED_REQUEST_IMPLEMENTATION.md' README.md
 require_contains 'docs/status/SEAL_SIGNED_REQUEST_STATUS.md' README.md
 
 require_contains 'Seal signed request status/public-entry alignment' STATUS.md
+require_contains 'Seal signed request predecessor status alignment' STATUS.md
 require_contains 'Seal policy decision status/public-entry alignment' STATUS.md
 require_contains 'seal_signed_request_status_present=1' STATUS.md
+require_contains 'signed_request_predecessor_request_freshness_status_present=1' STATUS.md
 require_contains 'SEAL_SIGNED_REQUEST_STATUS.md' docs/status/README.md
 require_contains 'seal_signed_request_status_present=1' docs/status/README.md
+require_contains 'signed_request_predecessor_request_freshness_status_present=1' docs/status/README.md
 require_contains 'Latticra Seal signed request status/public-entry alignment' docs/status/CURRENT_STATUS.md
+require_contains 'Latticra Seal signed request predecessor status alignment' docs/status/CURRENT_STATUS.md
 require_contains 'SEAL_SIGNED_REQUEST_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal signed request status/public-entry alignment' docs/FOUNDATION_INDEX.md
+require_contains 'Latticra Seal signed request predecessor status alignment' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal signed request status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Latticra Seal signed request predecessor status alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Seal policy decision status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latticra Seal signed request status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Latticra Seal signed request predecessor status alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Seal policy decision status/public-entry alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/status/SEAL_SIGNED_REQUEST_STATUS.md' docs/project_notes/README.md
+require_contains 'docs/status/SEAL_REQUEST_FRESHNESS_STATUS.md' docs/project_notes/README.md
+
+sh scripts/test-latticra-seal-request-freshness-status.sh
 
 printf 'seal signed request status: ok\n'

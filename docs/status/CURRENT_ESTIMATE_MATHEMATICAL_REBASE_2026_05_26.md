@@ -2,7 +2,7 @@
 
 Status: mathematical planning-estimate rebase
 Date: 2026-05-26 CDT
-Scope: present public estimate table after the recent Seal status chain, Ubuntu local deb lane, macOS reset/uninstall contract lane, Nadia prompt-evaluation contracts, Lat/LIR evidence propagation, kernel lifecycle scheduler-credit and scheduler-selection-ready evidence, and current status/public-entry alignment. This record does not implement runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, production readiness, public-readiness promotion, security hardening, or runtime authority.
+Scope: present public estimate table after the recent Seal status chain, Ubuntu local deb lane, macOS reset/uninstall contract lane, Nadia Stage-43 prompt-evaluation release-receipt contract chain, Lat/LIR evidence propagation, kernel lifecycle scheduler-credit and scheduler-selection-ready evidence, vulnerability-management release-gate baseline coverage, and current status/public-entry alignment. This record does not implement runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, production readiness, public-readiness promotion, security hardening, or runtime authority.
 
 ## Purpose
 
@@ -38,9 +38,9 @@ weight_total=100
 Weighted calculation:
 
 ```text
-weighted_sum=4462
+weighted_sum=4473
 weight_total=100
-overall_estimate=round(4462 / 100)=45
+overall_estimate=round(4473 / 100)=45
 ```
 
 ## Rebased Estimate Table
@@ -50,7 +50,7 @@ overall_estimate=round(4462 / 100)=45
 | Overall Latticra system | 39% | 45% |
 | Latticra Seal / local evidence layer | 34% | 39% |
 | Latticra Panel / local control surface | 28% | 31% |
-| Nadia offline AI foundation | 70% | 74% |
+| Nadia offline AI foundation | 70% | 75% |
 | L-UI parser / AST / string foundation | 87% | 87% |
 | Foundation documents and contracts | 92% | 94% |
 | Public documentation posture | 88% | 91% |
@@ -61,7 +61,7 @@ overall_estimate=round(4462 / 100)=45
 | Constrained C++ authority layer | 4% | 5% |
 | Nucleus real task execution | 11% | 12% |
 | Runtime / operating-system-universe direction | 19% | 26% |
-| Security-hardening implementation | 7% | 9% |
+| Security-hardening implementation | 7% | 10% |
 | Public product readiness | 8% | 10% |
 
 ## Boundary

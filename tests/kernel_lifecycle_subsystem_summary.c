@@ -13,7 +13,7 @@
         } \
     } while (0)
 
-static int default_request_targets_scheduler_handoff_ready(void) {
+static int default_request_targets_scheduler_run_entry_ready(void) {
     latticra_kernel_lifecycle_subsystem_summary_request_t request;
 
     EXPECT_TRUE(latticra_kernel_lifecycle_subsystem_summary_default_request(&request) ==
@@ -22,8 +22,8 @@ static int default_request_targets_scheduler_handoff_ready(void) {
     EXPECT_TRUE(request.lifecycle_request.gate == LATTICRA_KERNEL_STATE_GATE_ALLOW,
         "summary default lifecycle gate allow");
     EXPECT_TRUE(request.lifecycle_request.target_state ==
-            LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY,
-        "summary default target scheduler-handoff-ready");
+            LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY,
+        "summary default target scheduler-run-entry-ready");
     EXPECT_TRUE(request.lifecycle_request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
         "summary default max steps");
     EXPECT_TRUE(strcmp(request.registry_request.kernel_request.kernel_id, "latticra-kernel-seed") == 0,
@@ -44,18 +44,24 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.summary_status, "summary-ready") == 0,
         "summary ready");
-    EXPECT_TRUE(strcmp(result.final_state, "scheduler-handoff-ready") == 0,
-        "summary final state scheduler-handoff-ready");
+    EXPECT_TRUE(strcmp(result.final_state, "scheduler-run-entry-ready") == 0,
+        "summary final state scheduler-run-entry-ready");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "summary lifecycle complete");
-    EXPECT_TRUE(result.lifecycle_step_count == 21u,
-        "summary twenty one lifecycle steps");
-    EXPECT_TRUE(result.lifecycle_state_change_count == 21u,
-        "summary twenty one lifecycle state changes");
+    EXPECT_TRUE(result.lifecycle_step_count == 23u,
+        "summary twenty three lifecycle steps");
+    EXPECT_TRUE(result.lifecycle_state_change_count == 23u,
+        "summary twenty three lifecycle state changes");
     EXPECT_TRUE(result.lifecycle_state_mutated == 1,
         "summary lifecycle state mutated internally");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "summary no external effect");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "summary network denied");
+    EXPECT_TRUE(result.lifecycle.network_allowed == 0,
+        "summary lifecycle network denied");
+    EXPECT_TRUE(result.lifecycle.machine.network_allowed == 0,
+        "summary machine network denied");
     EXPECT_TRUE(result.registry_no_effect == 1,
         "summary registry no effect");
     EXPECT_TRUE(result.runtime_entry_allowed == 0,
@@ -68,6 +74,10 @@ static int summary_reaches_ready_without_authority(void) {
         "summary scheduler dispatch denied");
     EXPECT_TRUE(result.scheduler_handoff_allowed == 0,
         "summary scheduler handoff denied");
+    EXPECT_TRUE(result.scheduler_activation_allowed == 0,
+        "summary scheduler activation denied");
+    EXPECT_TRUE(result.scheduler_run_entry_allowed == 0,
+        "summary scheduler run entry denied");
     EXPECT_TRUE(result.memory_allocation_allowed == 0,
         "summary memory allocation denied");
     EXPECT_TRUE(result.process_spawn_allowed == 0,
@@ -179,8 +189,8 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.entries[2].name, "scheduler") == 0,
         "summary scheduler entry name");
-    EXPECT_TRUE(strcmp(result.entries[2].lifecycle_relation, "scheduler-handoff-ready") == 0,
-        "summary scheduler handoff ready");
+    EXPECT_TRUE(strcmp(result.entries[2].lifecycle_relation, "scheduler-run-entry-ready") == 0,
+        "summary scheduler run entry ready");
     EXPECT_TRUE(strcmp(result.entries[2].authority_status, "scheduler-execution-denied") == 0,
         "summary scheduler authority denied");
     EXPECT_TRUE(result.entries[2].lifecycle_ready == 1,
@@ -256,6 +266,8 @@ static int summary_respects_lifecycle_step_limit(void) {
         "limited summary no external effect");
     EXPECT_TRUE(result.no_external_effect_chain == 1,
         "limited summary no external effect chain");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "limited summary network denied");
     return 0;
 }
 
@@ -278,16 +290,22 @@ static int summary_report_is_deterministic(void) {
         "summary report title");
     EXPECT_TRUE(strstr(report, "summary_status=summary-ready\n") != 0,
         "summary report status");
-    EXPECT_TRUE(strstr(report, "final_state=scheduler-handoff-ready\n") != 0,
+    EXPECT_TRUE(strstr(report, "final_state=scheduler-run-entry-ready\n") != 0,
         "summary report final state");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "summary report lifecycle complete");
-    EXPECT_TRUE(strstr(report, "lifecycle_step_count=21\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_step_count=23\n") != 0,
         "summary report step count");
-    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=21\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=23\n") != 0,
         "summary report state changes");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "summary report external effect");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0,
+        "summary report network denied");
+    EXPECT_TRUE(strstr(report, "lifecycle_network_allowed=0\n") != 0,
+        "summary report lifecycle network denied");
+    EXPECT_TRUE(strstr(report, "machine_network_allowed=0\n") != 0,
+        "summary report machine network denied");
     EXPECT_TRUE(strstr(report, "runtime_entry_allowed=0\n") != 0,
         "summary report runtime denied");
     EXPECT_TRUE(strstr(report, "scheduler_execution_allowed=0\n") != 0,
@@ -298,6 +316,10 @@ static int summary_report_is_deterministic(void) {
         "summary report scheduler dispatch denied");
     EXPECT_TRUE(strstr(report, "scheduler_handoff_allowed=0\n") != 0,
         "summary report scheduler handoff denied");
+    EXPECT_TRUE(strstr(report, "scheduler_activation_allowed=0\n") != 0,
+        "summary report scheduler activation denied");
+    EXPECT_TRUE(strstr(report, "scheduler_run_entry_allowed=0\n") != 0,
+        "summary report scheduler run entry denied");
     EXPECT_TRUE(strstr(report, "memory_allocation_allowed=0\n") != 0,
         "summary report memory allocation denied");
     EXPECT_TRUE(strstr(report, "process_spawn_allowed=0\n") != 0,
@@ -390,7 +412,7 @@ static int summary_report_is_deterministic(void) {
         "summary report entry count");
     EXPECT_TRUE(strstr(report, "subsystem[1].authority_status=runtime-entry-denied\n") != 0,
         "summary report runtime authority");
-    EXPECT_TRUE(strstr(report, "subsystem[2].lifecycle_relation=scheduler-handoff-ready\n") != 0,
+    EXPECT_TRUE(strstr(report, "subsystem[2].lifecycle_relation=scheduler-run-entry-ready\n") != 0,
         "summary report scheduler relation");
     EXPECT_TRUE(strstr(report, "subsystem[3].lifecycle_relation=memory-map-ready\n") != 0,
         "summary report memory relation");
@@ -435,7 +457,7 @@ static int null_guards_are_safe(void) {
 }
 
 int main(void) {
-    if (default_request_targets_scheduler_handoff_ready() != 0) return 1;
+    if (default_request_targets_scheduler_run_entry_ready() != 0) return 1;
     if (summary_reaches_ready_without_authority() != 0) return 1;
     if (summary_respects_lifecycle_step_limit() != 0) return 1;
     if (summary_report_is_deterministic() != 0) return 1;
