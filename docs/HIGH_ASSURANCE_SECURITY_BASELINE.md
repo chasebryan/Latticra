@@ -24,6 +24,7 @@ security logging, monitoring, and detection requirements
 backup, recovery, and cyber resilience requirements
 secure configuration and change management requirements
 network exposure and remote access requirements
+data classification and protection requirements
 incident-response and disclosure requirements
 non-claims that remain closed
 ```
@@ -46,6 +47,7 @@ Date checked: 2026-05-26
 | CISA/FBI/NSA international Best Practices for Event Logging and Threat Detection | Event logging supports continued operations and resilience through visibility, detection, and investigation across cloud, enterprise, mobile, and OT environments. | Require a security logging, monitoring, and detection baseline before hosted services, telemetry export, SIEM integration, or detection claims. |
 | CISA Logging Made Easy and CISA logging guidance | Centralized log management, user activity visibility, alerting, and regular review improve threat detection. | Require event-source inventory, log centralization/export planning, redaction, triage ownership, and incident handoff before monitoring claims. |
 | CISA Zero Trust Maturity Model v2 | Mature zero trust uses identity, devices, networks, applications/workloads, and data pillars with visibility, analytics, automation, orchestration, and governance. | Treat each Latticra request as a per-request policy decision; preserve deny-by-default behavior for network, host, recovery, boot, and tool authority. |
+| NSA Zero Trust Data Pillar | Data security maturity includes inventory, tagging, labeling, encryption, access control, data-loss prevention, and data-at-rest/in-transit protection. | Require data classification and protection evidence before sensitive-data, PII, telemetry, analytics, or customer-data handling claims. |
 | NSA Zero Trust Network and Environment Pillar | Network/environment zero trust requires segmentation, visibility, policy enforcement, and maturity planning for network flows and access. | Require network exposure and remote-access evidence before service-listener, remote administration, ingress/egress, segmentation, or hosted network claims. |
 | NSA Network Infrastructure Security Guide | Network infrastructure should be hardened with secure management, inventory, management-plane separation, routing/switching hygiene, and monitored administration. | Keep network infrastructure work metadata-only until device, service, firewall, route, management, and exception evidence exists. |
 | CISA/NSA/FBI Guide to Securing Remote Access Software | Remote access software needs inventory, MFA, device posture, least privilege, monitoring, and secure configuration. | Block remote access and remote administration claims until inventory, phishing-resistant MFA path, device posture, logs, and owner evidence are recorded. |
@@ -59,6 +61,8 @@ Date checked: 2026-05-26
 | CISA/FBI/NSA/MS-ISAC #StopRansomware recovery guidance | Offline encrypted backups, regular backup testing, restoration prioritization, clean recovery environments, and post-incident lessons learned reduce ransomware recovery risk. | Require a backup, recovery, and cyber resilience baseline before hosted-service recovery, disaster-recovery, failover, rollback, or ransomware-recovery claims. |
 | NIST Cybersecurity Framework 2.0 | Govern, Identify, Protect, Detect, Respond, and Recover provide current cybersecurity risk-management functions. | Map future infrastructure readiness to CSF 2.0 functions before production claims. |
 | NIST SP 800-34 Rev. 1 and SP 800-184 | Contingency planning and cybersecurity event recovery require business impact analysis, recovery strategy, playbooks, realistic testing, and continuous improvement. | Require recovery scope, RTO/RPO, restore testing, rollback, recovery authorization, and lessons-learned evidence before recoverability claims. |
+| NIST SP 800-60 and SP 800-122 | Information categorization and PII confidentiality guidance define information type, security category, confidentiality impact, safeguards, and PII incident planning vocabulary. | Require data inventory, classification, PII review, confidentiality impact, data minimization, retention, disposal, and incident handoff before data-protection claims. |
+| NIST Privacy Framework | Privacy risk management uses data processing inventory, governance, control, communication, and protection functions. | Use Privacy Framework vocabulary for future data processing, privacy engineering, and privacy non-claims without making a compliance claim. |
 | NIST SP 800-128 | Security-focused configuration management uses baseline configuration, configuration control, monitoring, and SecCM practices to manage risk. | Require configuration item inventory, baseline configuration, owner, change record, testing, rollback, and drift-detection evidence before configuration claims. |
 | NIST SP 800-70 Rev. 5 | Security configuration checklists help configure products to a risk posture, verify configuration, identify unauthorized change, and produce posture artifacts. | Require checklist evidence and unauthorized-change detection planning before secure configuration, hardening, or scanning claims. |
 | NIST SP 800-41 Rev. 1 | Firewall policy requires planned architecture, rule review, ingress and egress filtering, lifecycle maintenance, and monitoring. | Require firewall policy, inbound owner, outbound egress, segmentation, and rule-review evidence before network control claims. |
@@ -80,6 +84,11 @@ Tracked follow-on guidance for this checkpoint:
 - CISA Secure by Design Alert: Eliminating OS Command Injection Vulnerabilities reinforces the existing `system()`/`popen()` exclusions and keeps shell authority centralized behind reviewed boundaries.
 - CISA The Case for Memory Safe Roadmaps reinforces the requirement for a component-by-component migration or mitigation record instead of a generic memory-safety aspiration.
 - NIST SP 800-207A and NIST SP 1800-35 provide secondary zero-trust implementation detail for future workload, service, and device-integrity-aware authority surfaces.
+
+Follow-on source review performed: 2026-05-27
+
+- NSA's May 20, 2026 guidance on security design considerations for AI-driven automation leveraging MCP is now relevant to Latticra's future server, MCP, tool, and agentic automation surfaces. It reinforces explicit tool-boundary contracts, dynamic tool invocation caution, context-sharing limits, and distrust of implicit cross-service trust.
+- NSA and partners' April 30, 2026 guidance on careful adoption of agentic AI services reinforces that future agentic automation should be treated as a broader risk amplifier, not merely a wrapper around existing cybersecurity controls.
 
 ## Required Allocations
 
@@ -103,6 +112,7 @@ security_logging_monitoring_baseline_present=1
 backup_recovery_resilience_baseline_present=1
 secure_configuration_change_management_baseline_present=1
 network_exposure_remote_access_baseline_present=1
+data_classification_protection_baseline_present=1
 kev_release_review_required=1
 fips_crypto_boundary_required_before_production_crypto=1
 phishing_resistant_mfa_required_before_remote_privileged_access=1
@@ -110,6 +120,7 @@ security_event_logging_required_before_hosted_service=1
 backup_restore_recovery_evidence_required_before_hosted_service=1
 secure_configuration_change_control_required_before_hosted_service=1
 network_exposure_review_required_before_hosted_service=1
+data_classification_review_required_before_hosted_service=1
 sbom_required_before_production_installer=1
 third_party_security_validation_required_before_security_release=1
 incident_response_plan_required_before_production_service=1
@@ -167,6 +178,8 @@ operator_identity_known=1
 asset_or_resource_identity_known=1
 workload_or_service_identity_known=1
 device_or_host_integrity_context_known=1
+tool_or_mcp_boundary_known=1
+context_sharing_scope_known=1
 mode_matches_request_family=1
 authority_prerequisites_satisfied=1
 operator_confirmation_is_metadata_only=1
@@ -300,6 +313,24 @@ No future hosted service, internet-facing service, production runtime, productio
 - owner and expiration for network exceptions;
 - operator-visible network non-claims.
 
+## Data Classification and Protection Requirements
+
+No future hosted service, production runtime, production installer, production package, telemetry export, analytics feature, data storage service, customer-data handling claim, PII processing claim, encryption-at-rest claim, DLP claim, data retention claim, data deletion claim, breach-notification claim, privacy claim, or production data-protection claim may be promoted until Latticra has:
+
+- data inventory and owners;
+- data classification and information type categorization;
+- sensitive-data flow map;
+- PII presence review and confidentiality impact record;
+- data minimization and collection-purpose review;
+- access-control and encryption-at-rest/in-transit decisions;
+- retention period and disposal process;
+- backup data protection evidence;
+- log/report redaction and secret or PII scan evidence;
+- data-loss prevention plan;
+- incident-response handoff path;
+- owner and expiration for data exceptions;
+- operator-visible data non-claims.
+
 ## Operational Security Requirements
 
 Before any production service, hosted system, or critical infrastructure deployment:
@@ -308,6 +339,7 @@ Before any production service, hosted system, or critical infrastructure deploym
 - maintain asset inventory and data-flow inventory;
 - define secure configuration baseline and change-control evidence;
 - define network exposure and remote-access evidence;
+- define data classification and protection evidence;
 - require MFA/SSO for privileged accounts;
 - require phishing-resistant MFA planning for remote and privileged access;
 - prohibit shared administrative accounts and default credentials;
@@ -340,6 +372,7 @@ docs/SECURITY_LOGGING_MONITORING_BASELINE.md
 docs/BACKUP_RECOVERY_RESILIENCE_BASELINE.md
 docs/SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md
 docs/NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE.md
+docs/DATA_CLASSIFICATION_PROTECTION_BASELINE.md
 docs/security/C_CPP_SECURITY_PROFILE.md
 docs/security/C_ABI_BOUNDARY_POLICY.md
 scripts/test-quality-safety-guards.sh
@@ -357,6 +390,7 @@ scripts/test-security-logging-monitoring-baseline.sh
 scripts/test-backup-recovery-resilience-baseline.sh
 scripts/test-secure-configuration-change-management-baseline.sh
 scripts/test-network-exposure-remote-access-baseline.sh
+scripts/test-data-classification-protection-baseline.sh
 ```
 
 ## Non-Claims

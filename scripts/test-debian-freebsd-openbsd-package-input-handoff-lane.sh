@@ -50,27 +50,61 @@ sha256_file() {
 stage_archive_tree() {
   workdir="$1"
 
-  mkdir -p "$workdir/$root"
+  python3 - "$workdir" "$root" <<'PY'
+import os
+import shutil
+import stat
+import subprocess
+import sys
 
-  tar \
-    --exclude='./.git' \
-    --exclude='./.rpmwork' \
-    --exclude='./.debwork' \
-    --exclude='./.portswork' \
-    --exclude='./build' \
-    --exclude='./target' \
-    --exclude='./installer/latticra-installer/target' \
-    --exclude='*.rpm' \
-    --exclude='*.deb' \
-    --exclude='*.dsc' \
-    --exclude='*.changes' \
-    --exclude='*.buildinfo' \
-    --exclude='*.pkg' \
-    --exclude='*.tgz' \
-    --exclude='*.txz' \
-    --exclude='./*.tar.gz' \
-    --exclude='*.tar.gz' \
-    -cf - . | tar -C "$workdir/$root" -xf -
+workdir, root = sys.argv[1:]
+source_root = os.getcwd()
+dest_root = os.path.join(workdir, root)
+os.makedirs(dest_root, exist_ok=True)
+
+
+def excluded(relative):
+    parts = relative.split("/")
+    if ".rpmwork" in parts or ".debwork" in parts or ".portswork" in parts:
+        return True
+    if parts[0] in {"build", "target"}:
+        return True
+    if relative.startswith("installer/latticra-installer/target/"):
+        return True
+    return relative.endswith((
+        ".rpm",
+        ".deb",
+        ".dsc",
+        ".changes",
+        ".buildinfo",
+        ".pkg",
+        ".tgz",
+        ".txz",
+        ".tar.gz",
+    ))
+
+
+proc = subprocess.run(
+    ["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard"],
+    cwd=source_root,
+    check=True,
+    stdout=subprocess.PIPE,
+)
+
+for raw in sorted(item for item in proc.stdout.split(b"\0") if item):
+    rel = raw.decode("utf-8")
+    if excluded(rel):
+        continue
+    src = os.path.join(source_root, rel)
+    st = os.lstat(src)
+    if stat.S_ISLNK(st.st_mode):
+        raise SystemExit(f"refusing source archive with symlink entry: {rel}")
+    if not stat.S_ISREG(st.st_mode):
+        raise SystemExit(f"refusing unsupported source archive entry: {rel}")
+    dest = os.path.join(dest_root, rel)
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
+    shutil.copy2(src, dest)
+PY
 
   find "$workdir/$root" -exec touch -t 197001010000 {} +
 }
@@ -198,7 +232,15 @@ archive_listing="$tmpdir/archive.list"
 file_list="$tmpdir/files.list"
 handoff_dir="$tmpdir/handoff"
 
-symlink_entry=$(find . -path './.git' -prune -o -type l -print | sed -n '1p')
+symlink_entry=$(
+  git ls-files --cached --others --exclude-standard |
+    while IFS= read -r path; do
+      if [ -L "$path" ]; then
+        printf './%s\n' "$path"
+        break
+      fi
+    done
+)
 if [ -n "$symlink_entry" ]; then
   printf 'debian/freebsd/openbsd package input handoff lane: refusing source archive with symlink entry: %s\n' "$symlink_entry" >&2
   exit 1

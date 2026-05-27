@@ -1,0 +1,238 @@
+# Debian, FreeBSD, and OpenBSD Package Build-Evidence Intake Denial Review Contract
+
+Status: active package build-evidence intake denial review contract
+Scope: define review of denied Debian, FreeBSD, and OpenBSD package build-evidence intake while the validation promotion blocker matrix is closed.
+
+## Purpose
+
+This contract records the no-effect review of denied Debian, FreeBSD, and OpenBSD package build-evidence intake.
+
+The goal is narrow: a denied build-evidence intake request cannot be re-requested, reopened, summarized as accepted, or used to open a platform build lane while the shared validation promotion blocker matrix remains blocked.
+
+This contract is documentation-only and static. It does not run package build tools, request build evidence, re-request denied evidence, accept build evidence, create package artifacts, inspect package artifacts, install packages, remove packages, publish packages, submit ports, enable OpenBSD package redistribution, promote validation results, or claim package readiness.
+
+## Current Denial Review State
+
+```text
+debian_freebsd_openbsd_package_build_evidence_intake_denial_review_contract_present=1
+package_build_evidence_intake_denial_review_contract_present=1
+build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_state=denied-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
+package_build_gate_state=closed-no-effect
+denial_review_required_before_re_request=1
+denial_review_present=1
+denial_review_decision=uphold-denial
+denial_re_request_allowed=0
+platform_build_evidence_intake_allowed=0
+platform_build_evidence_intake_denied=1
+platform_build_evidence_accepted=0
+build_transcript_intake_accepted=0
+package_build_lane_opened=0
+single_platform_build_lane_opened=0
+source_archive_accepted_for_build=0
+environment_transcript_present=0
+explicit_operator_build_authorization=0
+package_artifact_created=0
+package_artifact_sha256_recorded=0
+package_payload_accepted=0
+install_remove_transcript_present=0
+publication_non_claim_review_present=1
+package_validation_result_promoted=0
+package_readiness_claimed=0
+```
+
+## Review Record Requirements
+
+A future denial review record must bind the review to the denied intake request:
+
+```text
+build_evidence_intake_request_identifier
+build_evidence_denial_reference
+denial_review_identifier
+platform_under_review
+requested_build_evidence_kind
+requested_build_command
+submitted_transcript_reference
+validation_promotion_blocker_matrix_reference
+denial_review_decision
+denial_review_reason
+denial_review_reviewer
+status_page_update_reference
+operator_authorization_reference
+```
+
+The only current review decision allowed by this contract is `uphold-denial`.
+
+## Debian Denial Review
+
+Current Debian build-evidence intake denial review upholds denial:
+
+```text
+debian_build_evidence_intake_denial_review_present=1
+debian_build_evidence_intake_denial_upheld=1
+debian_denial_re_request_allowed=0
+debian_build_evidence_intake_allowed=0
+debian_build_evidence_intake_denied=1
+debian_build_transcript_intake_accepted=0
+debian_platform_build_evidence_accepted=0
+debian_dpkg_buildpackage_evidence_accepted=0
+debian_debuild_evidence_accepted=0
+debian_lintian_evidence_accepted=0
+dpkg_buildpackage_run=0
+debuild_run=0
+lintian_run=0
+debian_validation_result_promoted=0
+debian_archive_ready=0
+```
+
+Debian build evidence remains denied, unaccepted, and unusable as build-lane opening evidence.
+
+## FreeBSD Denial Review
+
+Current FreeBSD build-evidence intake denial review upholds denial:
+
+```text
+freebsd_build_evidence_intake_denial_review_present=1
+freebsd_build_evidence_intake_denial_upheld=1
+freebsd_denial_re_request_allowed=0
+freebsd_build_evidence_intake_allowed=0
+freebsd_build_evidence_intake_denied=1
+freebsd_platform_build_evidence_accepted=0
+freebsd_make_makesum_evidence_accepted=0
+freebsd_make_stage_evidence_accepted=0
+freebsd_make_package_evidence_accepted=0
+freebsd_portlint_evidence_accepted=0
+freebsd_poudriere_evidence_accepted=0
+freebsd_make_makesum_run=0
+freebsd_make_stage_run=0
+freebsd_make_package_run=0
+portlint_run=0
+poudriere_run=0
+freebsd_validation_result_promoted=0
+freebsd_official_port_claimed=0
+```
+
+FreeBSD ports evidence remains denied, unaccepted, and unusable as build-lane opening evidence.
+
+## OpenBSD Denial Review
+
+Current OpenBSD build-evidence intake denial review upholds denial:
+
+```text
+openbsd_build_evidence_intake_denial_review_present=1
+openbsd_build_evidence_intake_denial_upheld=1
+openbsd_denial_re_request_allowed=0
+openbsd_build_evidence_intake_allowed=0
+openbsd_build_evidence_intake_denied=1
+openbsd_platform_build_evidence_accepted=0
+openbsd_make_makesum_evidence_accepted=0
+openbsd_make_plist_evidence_accepted=0
+openbsd_make_package_evidence_accepted=0
+openbsd_portcheck_evidence_accepted=0
+openbsd_bulk_build_evidence_accepted=0
+openbsd_make_makesum_run=0
+openbsd_make_plist_run=0
+openbsd_make_package_run=0
+portcheck_run=0
+openbsd_bulk_build_run=0
+permit_package_enabled=0
+openbsd_validation_result_promoted=0
+openbsd_official_port_claimed=0
+```
+
+OpenBSD ports evidence remains denied, unaccepted, unusable as build-lane opening evidence, and unable to enable `PERMIT_PACKAGE`.
+
+## Current Blockers
+
+Denial review remains an upheld no-effect denial under this blocker state:
+
+```text
+validation_promotion_blocker_matrix_state=blocked-no-effect
+source_archive_accepted_for_build=0
+environment_transcript_present=0
+explicit_operator_build_authorization=0
+package_artifact_created=0
+package_artifact_sha256_recorded=0
+package_payload_accepted=0
+install_remove_transcript_present=0
+platform_build_evidence_accepted=0
+package_validation_result_promoted=0
+denial_re_request_allowed=0
+```
+
+## Command Boundary
+
+This contract does not:
+
+```text
+run dpkg-buildpackage
+run debuild
+run lintian
+run FreeBSD make makesum
+run FreeBSD make stage
+run FreeBSD make package
+run portlint
+run poudriere
+run OpenBSD make makesum
+run OpenBSD make plist
+run OpenBSD make package
+run portcheck
+run an OpenBSD bulk build
+request build evidence
+re-request build evidence
+accept build evidence
+create package artifacts
+inspect package artifacts
+install packages
+remove packages
+publish package artifacts
+submit package or port upstream
+enable OpenBSD PERMIT_PACKAGE
+promote package validation results
+claim package readiness
+```
+
+## Relationship To Existing Lanes
+
+This contract depends on:
+
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INPUT_HANDOFF_LANE.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_ENVIRONMENT_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_ARTIFACT_NAMING_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+```
+
+The package-build gate remains closed. This denial review contract only records that the denied intake state was reviewed and upheld while the blocker matrix remains closed.
+
+## Next Slice
+
+Recommended next slice:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial disposition contract before any reviewed denial can be closed or re-requested.
+```
+
+That future lane should record the reviewed denial disposition while keeping package builds and readiness blocked.
+
+## Validation
+
+Run:
+
+```sh
+sh scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-review-contract.sh
+```
+
+Expected output:
+
+```text
+debian_freebsd_openbsd_package_build_evidence_intake_denial_review_contract: ok
+```

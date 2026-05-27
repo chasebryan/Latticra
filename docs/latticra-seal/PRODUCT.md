@@ -40,6 +40,8 @@ local_capability_registry_schema_surface=1
 local_capability_registry_schema_status=1
 panel_dashboard_planning_checkpoint=1
 panel_dashboard_planning_status=1
+panel_dashboard_view_model_contract=1
+panel_dashboard_view_model_contract_status=1
 operator_visible_reports=1
 production_security_product=0
 runtime_authority_granted=0
@@ -126,7 +128,8 @@ seal_runtime_dry_run_report=1
 seal_operator_receipt_report=1
 seal_local_capability_registry_schema=report-surface
 seal_panel_status_surface=planning-checkpoint
-seal_panel_dashboard=planning-checkpoint
+seal_panel_dashboard=view-model-contract
+seal_panel_dashboard_view_model=contract
 seal_receipt_bundle=partial-local
 seal_operator_review_queue=planned
 ```
@@ -143,10 +146,11 @@ Completed recent checkpoints:
 6. A no-effect local capability registry schema implementation with bounded entries, deterministic validation, and zero authority.
 7. A deterministic local capability registry schema report surface and status checkpoint.
 8. A Panel-visible Seal dashboard planning checkpoint that defines future read-only evidence display without UI implementation or authority.
+9. A Seal Panel dashboard view-model contract that defines exact rows, field labels, missing-source behavior, and denied-by-default display semantics before implementation.
 
 The product path should now prioritize:
 
-1. A Seal Panel dashboard view-model contract that maps current reports into read-only display rows without root, network, host scanning, or runtime authority.
+1. A Seal Panel dashboard view-model implementation plan that maps the contract into a deterministic no-effect fixture without root, network, host scanning, or runtime authority.
 2. A signed receipt proof path that remains verification-only until trust-root and revocation boundaries are implemented.
 3. A future enforcement preflight contract that keeps enforce mode closed until all predecessor evidence is present.
 
@@ -167,6 +171,8 @@ local_capability_registry_schema_surface_present=1
 local_capability_registry_schema_status_present=1
 panel_dashboard_planning_checkpoint_present=1
 panel_dashboard_planning_status_present=1
+panel_dashboard_view_model_contract_present=1
+panel_dashboard_view_model_contract_status_present=1
 ```
 
 ## Non-Claims

@@ -167,7 +167,7 @@ Those lanes prove archive shape, reproducibility, temporary RPM topdir staging, 
 Recommended next slice:
 
 ```text
-Add openSUSE RPM build-evidence intake denial contract before any local build lane can open.
+Add openSUSE RPM build-evidence intake denial review contract before any denial can be re-requested.
 ```
 
 ## Validation

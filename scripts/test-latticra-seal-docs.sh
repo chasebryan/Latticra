@@ -45,7 +45,9 @@ grep -q "local_capability_registry_schema_surface_present=1" docs/latticra-seal/
 grep -q "local_capability_registry_schema_status_present=1" docs/latticra-seal/PRODUCT.md
 grep -q "panel_dashboard_planning_checkpoint_present=1" docs/latticra-seal/PRODUCT.md
 grep -q "panel_dashboard_planning_status_present=1" docs/latticra-seal/PRODUCT.md
-grep -q "seal_panel_dashboard=planning-checkpoint" docs/latticra-seal/PRODUCT.md
+grep -q "panel_dashboard_view_model_contract_present=1" docs/latticra-seal/PRODUCT.md
+grep -q "panel_dashboard_view_model_contract_status_present=1" docs/latticra-seal/PRODUCT.md
+grep -q "seal_panel_dashboard=view-model-contract" docs/latticra-seal/PRODUCT.md
 grep -q "seal_operator_receipt_report=1" docs/latticra-seal/REPORTS.md
 
 echo "latticra_seal_docs: ok"

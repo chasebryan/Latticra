@@ -33,7 +33,7 @@ latticra_status_t latticra_kernel_lifecycle_default_request(
     latticra_kernel_lifecycle_request_t *request) {
     if (request == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     memset(request, 0, sizeof(*request));
-    request->target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY;
+    request->target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
     request->max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
@@ -64,7 +64,8 @@ static int state_is_known(latticra_kernel_state_kind_t state) {
            state == LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY ||
            state == LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY ||
            state == LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY ||
-           state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY;
+           state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY ||
+           state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY;
 }
 
 static latticra_kernel_state_kind_t next_state_after(latticra_kernel_state_kind_t state) {
@@ -118,6 +119,8 @@ static latticra_kernel_state_kind_t next_state_after(latticra_kernel_state_kind_
         case LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY:
             return LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY;
         case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY:
+            return LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY:
         default:
             return state;
     }

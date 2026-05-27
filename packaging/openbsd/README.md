@@ -30,6 +30,7 @@ docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
 docs/status/OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md
 scripts/test-openbsd-port-static-validation.sh
 scripts/test-debian-freebsd-openbsd-source-archive-contract.sh
@@ -41,6 +42,7 @@ scripts/test-debian-freebsd-openbsd-package-install-remove-transcript-contract.s
 scripts/test-debian-freebsd-openbsd-package-publication-non-claim-review-contract.sh
 scripts/test-debian-freebsd-openbsd-package-validation-promotion-blocker-matrix-contract.sh
 scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-contract.sh
+scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-review-contract.sh
 .github/workflows/openbsd-port-static-validation.yml
 .github/workflows/debian-freebsd-openbsd-source-archive-contract.yml
 .github/workflows/debian-freebsd-openbsd-package-build-gate-contract.yml
@@ -51,6 +53,7 @@ scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-contrac
 .github/workflows/debian-freebsd-openbsd-package-publication-non-claim-review-contract.yml
 .github/workflows/debian-freebsd-openbsd-package-validation-promotion-blocker-matrix-contract.yml
 .github/workflows/debian-freebsd-openbsd-package-build-evidence-intake-denial-contract.yml
+.github/workflows/debian-freebsd-openbsd-package-build-evidence-intake-denial-review-contract.yml
 ```
 
 The static lane preserves:
@@ -69,6 +72,7 @@ debian_freebsd_openbsd_package_install_remove_transcript_contract_present=1
 debian_freebsd_openbsd_package_publication_non_claim_review_contract_present=1
 debian_freebsd_openbsd_package_validation_promotion_blocker_matrix_contract_present=1
 debian_freebsd_openbsd_package_build_evidence_intake_denial_contract_present=1
+debian_freebsd_openbsd_package_build_evidence_intake_denial_review_contract_present=1
 temporary_openbsd_distfile_staged=1
 package_build_gate_state=closed-no-effect
 package_build_environment_contract_state=specified-no-effect
@@ -78,6 +82,7 @@ install_remove_transcript_contract_state=specified-no-effect
 publication_non_claim_review_contract_state=specified-no-effect
 validation_promotion_blocker_matrix_state=blocked-no-effect
 build_evidence_intake_denial_state=denied-no-effect
+build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
 openbsd_build_allowed=0
 openbsd_ports_environment_documented=1
 openbsd_build_environment_provisioned=0
@@ -106,11 +111,16 @@ openbsd_pkg_repo_created=0
 openbsd_pkg_repo_publish_run=0
 platform_build_evidence_intake_allowed=0
 platform_build_evidence_intake_denied=1
+denial_review_present=1
+denial_re_request_allowed=0
 build_transcript_intake_accepted=0
 single_platform_build_lane_opened=0
 platform_build_evidence_accepted=0
 openbsd_build_evidence_intake_allowed=0
 openbsd_build_evidence_intake_denied=1
+openbsd_build_evidence_intake_denial_review_present=1
+openbsd_build_evidence_intake_denial_upheld=1
+openbsd_denial_re_request_allowed=0
 openbsd_package_evidence_accepted=0
 openbsd_validation_promotion_blocked=1
 openbsd_platform_build_evidence_accepted=0
@@ -164,3 +174,5 @@ The package publication non-claim review contract is recorded in [`../../docs/DE
 The package validation promotion blocker matrix is recorded in [`../../docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md`](../../docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md). It ties OpenBSD source, environment, artifact, payload, install/remove, and publication non-claim blockers together while keeping `openbsd_platform_build_evidence_accepted=0`, `openbsd_validation_result_promoted=0`, and `PERMIT_PACKAGE=No`.
 
 The package build-evidence intake denial contract is recorded in [`../../docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md`](../../docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md). It refuses OpenBSD ports build-evidence intake while keeping `openbsd_build_evidence_intake_denied=1`, `openbsd_package_evidence_accepted=0`, `openbsd_platform_build_evidence_accepted=0`, and `PERMIT_PACKAGE=No`.
+
+The package build-evidence intake denial review contract is recorded in [`../../docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md`](../../docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md). It reviews and upholds the OpenBSD denial while keeping `openbsd_build_evidence_intake_denial_upheld=1`, `openbsd_denial_re_request_allowed=0`, `openbsd_platform_build_evidence_accepted=0`, and `PERMIT_PACKAGE=No`.

@@ -15,13 +15,17 @@ This contract is documentation-only and static. It does not run package build to
 
 ```text
 debian_freebsd_openbsd_package_build_evidence_intake_denial_contract_present=1
+debian_freebsd_openbsd_package_build_evidence_intake_denial_review_contract_present=1
 package_build_evidence_intake_denial_contract_present=1
 build_evidence_intake_denial_state=denied-no-effect
+build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
 validation_promotion_blocker_matrix_state=blocked-no-effect
 package_build_gate_state=closed-no-effect
 platform_build_evidence_intake_allowed=0
 platform_build_evidence_intake_requested=0
 platform_build_evidence_intake_denied=1
+denial_review_present=1
+denial_re_request_allowed=0
 platform_build_evidence_accepted=0
 build_transcript_intake_accepted=0
 package_build_lane_opened=0
@@ -82,6 +86,9 @@ Current Debian build-evidence intake remains denied:
 debian_build_evidence_intake_allowed=0
 debian_build_evidence_intake_requested=0
 debian_build_evidence_intake_denied=1
+debian_build_evidence_intake_denial_review_present=1
+debian_build_evidence_intake_denial_upheld=1
+debian_denial_re_request_allowed=0
 debian_platform_build_evidence_accepted=0
 debian_build_transcript_intake_accepted=0
 debian_dpkg_buildpackage_evidence_accepted=0
@@ -106,6 +113,9 @@ Current FreeBSD build-evidence intake remains denied:
 freebsd_build_evidence_intake_allowed=0
 freebsd_build_evidence_intake_requested=0
 freebsd_build_evidence_intake_denied=1
+freebsd_build_evidence_intake_denial_review_present=1
+freebsd_build_evidence_intake_denial_upheld=1
+freebsd_denial_re_request_allowed=0
 freebsd_platform_build_evidence_accepted=0
 freebsd_stage_evidence_accepted=0
 freebsd_package_evidence_accepted=0
@@ -133,6 +143,9 @@ Current OpenBSD build-evidence intake remains denied:
 openbsd_build_evidence_intake_allowed=0
 openbsd_build_evidence_intake_requested=0
 openbsd_build_evidence_intake_denied=1
+openbsd_build_evidence_intake_denial_review_present=1
+openbsd_build_evidence_intake_denial_upheld=1
+openbsd_denial_re_request_allowed=0
 openbsd_platform_build_evidence_accepted=0
 openbsd_makesum_evidence_accepted=0
 openbsd_plist_evidence_accepted=0
@@ -217,19 +230,35 @@ docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
 ```
 
 The package-build gate remains closed. This intake denial contract only records that build evidence cannot be requested or accepted until the validation promotion blocker matrix opens in a future lane.
+
+## Completed Follow-On Lane
+
+Completed follow-on lane:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial review contract before any denial can be re-requested.
+```
+
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-review-contract.sh
+```
+
+That lane reviews and upholds denied build-evidence intake while keeping package builds and readiness blocked.
 
 ## Next Slice
 
 Recommended next slice:
 
 ```text
-Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial review contract before any denial can be re-requested.
+Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial disposition contract before any reviewed denial can be closed or re-requested.
 ```
 
-That future lane should define review fields for denied build-evidence intake while keeping package builds and readiness blocked.
+That future lane should record the reviewed denial disposition while keeping package builds and readiness blocked.
 
 ## Validation
 

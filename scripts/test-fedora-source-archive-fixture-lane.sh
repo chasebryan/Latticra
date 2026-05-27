@@ -76,7 +76,15 @@ archive_listing="$tmpdir/archive.list"
 
 mkdir -p "$tmpdir/$root"
 
-symlink_entry=$(find . -path './.git' -prune -o -type l -print | sed -n '1p')
+symlink_entry=$(
+  git ls-files --cached --others --exclude-standard |
+    while IFS= read -r path; do
+      if [ -L "$path" ]; then
+        printf './%s\n' "$path"
+        break
+      fi
+    done
+)
 if [ -n "$symlink_entry" ]; then
   printf 'fedora source archive fixture lane: refusing source archive with symlink entry: %s\n' "$symlink_entry" >&2
   exit 1

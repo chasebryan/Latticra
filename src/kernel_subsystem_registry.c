@@ -45,6 +45,7 @@ static void seed_registry_result(latticra_kernel_subsystem_registry_result_t *re
     memset(result, 0, sizeof(*result));
     result->status = LATTICRA_STATUS_OK;
     registry_copy(result->registry_status, sizeof(result->registry_status), "pending");
+    result->network_allowed = 0;
     result->no_effect = 1;
     result->evidence_level = 5u;
 }
@@ -60,12 +61,14 @@ static void fill_entry(
     latticra_kernel_subsystem_entry_t *entry,
     latticra_kernel_subsystem_kind_t kind,
     const char *status,
+    int network_allowed,
     unsigned int evidence_level) {
     memset(entry, 0, sizeof(*entry));
     entry->kind = kind;
     registry_copy(entry->name, sizeof(entry->name), latticra_kernel_subsystem_kind_label(kind));
     registry_copy(entry->status, sizeof(entry->status), status);
     registry_copy(entry->effect_boundary, sizeof(entry->effect_boundary), "no-effect");
+    entry->network_allowed = network_allowed;
     entry->no_effect = 1;
     entry->active = 0;
     entry->evidence_level = evidence_level;
@@ -75,23 +78,24 @@ static void fill_entries(latticra_kernel_subsystem_registry_result_t *result) {
     result->entry_count = LATTICRA_KERNEL_SUBSYSTEM_COUNT;
 
     fill_entry(&result->entries[0], LATTICRA_KERNEL_SUBSYSTEM_BOOT,
-        result->kernel.boot_status, result->evidence_level);
+        result->kernel.boot_status, 0, result->evidence_level);
     fill_entry(&result->entries[1], LATTICRA_KERNEL_SUBSYSTEM_RUNTIME,
-        result->kernel.runtime_status, result->evidence_level);
+        result->kernel.runtime_status, 0, result->evidence_level);
     fill_entry(&result->entries[2], LATTICRA_KERNEL_SUBSYSTEM_SCHEDULER,
-        result->kernel.scheduler_status, result->evidence_level);
+        result->kernel.scheduler_status, 0, result->evidence_level);
     fill_entry(&result->entries[3], LATTICRA_KERNEL_SUBSYSTEM_MEMORY,
-        result->kernel.memory_status, result->evidence_level);
+        result->kernel.memory_status, 0, result->evidence_level);
     fill_entry(&result->entries[4], LATTICRA_KERNEL_SUBSYSTEM_PROCESS,
-        result->kernel.process_status, result->evidence_level);
+        result->kernel.process_status, 0, result->evidence_level);
     fill_entry(&result->entries[5], LATTICRA_KERNEL_SUBSYSTEM_FILESYSTEM,
-        result->kernel.filesystem_status, result->evidence_level);
+        result->kernel.filesystem_status, 0, result->evidence_level);
     fill_entry(&result->entries[6], LATTICRA_KERNEL_SUBSYSTEM_NETWORK,
-        result->kernel.network_status, result->evidence_level);
+        result->kernel.network_status, result->kernel.network_allowed,
+        result->evidence_level);
     fill_entry(&result->entries[7], LATTICRA_KERNEL_SUBSYSTEM_DEVICE,
-        result->kernel.device_status, result->evidence_level);
+        result->kernel.device_status, 0, result->evidence_level);
     fill_entry(&result->entries[8], LATTICRA_KERNEL_SUBSYSTEM_SECURITY,
-        result->kernel.security_status, result->evidence_level);
+        result->kernel.security_status, 0, result->evidence_level);
 }
 
 latticra_status_t latticra_kernel_subsystem_registry_evaluate(
@@ -118,6 +122,7 @@ latticra_status_t latticra_kernel_subsystem_registry_evaluate(
 
     fill_entries(result);
 
+    result->network_allowed = result->kernel.network_allowed;
     result->no_effect = result->kernel.no_effect;
     registry_copy(result->registry_status, sizeof(result->registry_status),
         result->no_effect ? "registry-ready" : "registry-blocked");
@@ -164,14 +169,18 @@ latticra_status_t latticra_kernel_subsystem_registry_report(
         "LATTICRA KERNEL SUBSYSTEM REGISTRY REPORT\n"
         "registry_status=%s\n"
         "kernel_status=%s\n"
+        "kernel_network_allowed=%d\n"
         "kernel_no_effect=%d\n"
         "entry_count=%lu\n"
+        "network_allowed=%d\n"
         "no_effect=%d\n"
         "evidence_level=%u\n",
         result->registry_status,
         result->kernel.kernel_status,
+        result->kernel.network_allowed,
         result->kernel.no_effect,
         (unsigned long)result->entry_count,
+        result->network_allowed,
         result->no_effect,
         result->evidence_level);
     if (status != LATTICRA_STATUS_OK) return status;
@@ -181,6 +190,7 @@ latticra_status_t latticra_kernel_subsystem_registry_report(
             "subsystem[%lu].name=%s\n"
             "subsystem[%lu].status=%s\n"
             "subsystem[%lu].effect_boundary=%s\n"
+            "subsystem[%lu].network_allowed=%d\n"
             "subsystem[%lu].no_effect=%d\n"
             "subsystem[%lu].active=%d\n"
             "subsystem[%lu].evidence_level=%u\n",
@@ -190,6 +200,8 @@ latticra_status_t latticra_kernel_subsystem_registry_report(
             result->entries[i].status,
             (unsigned long)i,
             result->entries[i].effect_boundary,
+            (unsigned long)i,
+            result->entries[i].network_allowed,
             (unsigned long)i,
             result->entries[i].no_effect,
             (unsigned long)i,

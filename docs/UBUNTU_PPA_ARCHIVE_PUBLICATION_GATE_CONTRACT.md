@@ -23,6 +23,8 @@ ubuntu_upload_signing_authority_evidence_contract_present=1
 ubuntu_upload_signing_authority_evidence_unblocked=1
 ubuntu_launchpad_build_result_evidence_contract_present=1
 ubuntu_launchpad_build_result_evidence_unblocked=1
+ubuntu_publication_non_claim_review_contract_present=1
+ubuntu_publication_non_claim_review_unblocked=1
 ubuntu_install_remove_evidence_unblocked=1
 local_deb_build_transcript_accepted=1
 deb_artifact_created=1
@@ -49,6 +51,16 @@ launchpad_binary_artifact_listing_recorded=1
 launchpad_expected_findings_classified=1
 launchpad_unexpected_findings_classified=1
 launchpad_publication_non_claims_reviewed=1
+publication_scope_recorded=1
+publication_target_type_recorded=1
+publication_claims_reviewed=1
+ppa_claim_absence_reviewed=1
+ubuntu_archive_claim_absence_reviewed=1
+canonical_endorsement_absence_reviewed=1
+sponsorship_claim_absence_reviewed=1
+production_installer_claim_absence_reviewed=1
+root_installer_claim_absence_reviewed=1
+publication_readiness_non_claims_reviewed=1
 publication_non_claims_reviewed=1
 ubuntu_publication_gate_unblocked=1
 ```
@@ -67,6 +79,9 @@ ubuntu_upload_signing_authority_evidence_unblocked=0
 ubuntu_launchpad_build_result_evidence_contract_present=1
 ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence
 ubuntu_launchpad_build_result_evidence_unblocked=0
+ubuntu_publication_non_claim_review_contract_present=1
+ubuntu_publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence
+ubuntu_publication_non_claim_review_unblocked=0
 ubuntu_install_remove_evidence_unblocked=0
 local_deb_build_transcript_accepted=0
 deb_artifact_created=0
@@ -89,6 +104,16 @@ launchpad_binary_artifact_listing_recorded=0
 launchpad_expected_findings_classified=0
 launchpad_unexpected_findings_classified=0
 launchpad_publication_non_claims_reviewed=0
+publication_scope_recorded=0
+publication_target_type_recorded=0
+publication_claims_reviewed=0
+ppa_claim_absence_reviewed=0
+ubuntu_archive_claim_absence_reviewed=0
+canonical_endorsement_absence_reviewed=0
+sponsorship_claim_absence_reviewed=0
+production_installer_claim_absence_reviewed=0
+root_installer_claim_absence_reviewed=0
+publication_readiness_non_claims_reviewed=0
 publication_non_claims_reviewed=0
 ubuntu_publication_gate_unblocked=0
 ppa_created=0
@@ -103,7 +128,7 @@ root_installer_ready=0
 
 ## Relationship To Install Remove Evidence
 
-The Ubuntu source package evidence contract, upload/signing authority evidence contract, Launchpad build result evidence contract, and local deb install/remove evidence contract must be unblocked before this publication gate can advance. Publication evidence is downstream of notice, license, lintian/static metadata, build transcript acceptance, source package evidence, payload review, install evidence, remove evidence, upload authority, signing evidence, Launchpad build result evidence, and non-claim review.
+The Ubuntu source package evidence contract, upload/signing authority evidence contract, Launchpad build result evidence contract, publication non-claim review contract, and local deb install/remove evidence contract must be unblocked before this publication gate can advance. Publication evidence is downstream of notice, license, lintian/static metadata, build transcript acceptance, source package evidence, payload review, install evidence, remove evidence, upload authority, signing evidence, Launchpad build result evidence, and non-claim review.
 
 This contract is intentionally closed today. It records the future evidence shape without signing artifacts, uploading artifacts, creating a PPA, submitting to Ubuntu, or publishing a package.
 

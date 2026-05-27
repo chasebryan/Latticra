@@ -149,6 +149,6 @@ seal runtime handoff report invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is a sealed report envelope or policy decision report propagation from ready crypto-graduation-gated metadata-only runtime handoff report metadata.
+The next valid Latticra Seal planning slice is signature request or policy decision report propagation from ready crypto-graduation-gated sealed report-envelope metadata.
 
 That next slice should remain contract-first and should not perform runtime handoff unless separately implemented and guarded.

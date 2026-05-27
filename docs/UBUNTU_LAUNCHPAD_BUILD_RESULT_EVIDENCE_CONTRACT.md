@@ -61,6 +61,9 @@ launchpad_expected_findings_classified=0
 launchpad_unexpected_findings_classified=0
 launchpad_publication_non_claims_reviewed=0
 ubuntu_launchpad_build_result_evidence_unblocked=0
+ubuntu_publication_non_claim_review_contract_present=1
+ubuntu_publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence
+ubuntu_publication_non_claim_review_unblocked=0
 ppa_created=0
 ppa_claimed=0
 ubuntu_archive_submission_claimed=0
@@ -72,7 +75,7 @@ root_installer_ready=0
 
 ## Relationship To Publication
 
-The Ubuntu PPA/archive publication gate must not unblock until this Launchpad build result evidence contract is unblocked alongside source package evidence, upload/signing authority evidence, install/remove evidence, and non-claim review.
+The Ubuntu publication non-claim review contract is downstream of this contract. The Ubuntu PPA/archive publication gate must not unblock until this Launchpad build result evidence contract is unblocked alongside source package evidence, upload/signing authority evidence, install/remove evidence, and non-claim review.
 
 This contract is intentionally closed today. It records the future Launchpad upload URL, build log, build result, binary artifact listing, findings classification, and publication non-claim review shape without running upload commands or publishing artifacts.
 

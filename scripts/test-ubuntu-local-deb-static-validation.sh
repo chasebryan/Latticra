@@ -47,6 +47,7 @@ require_file docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
 require_file docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md
 require_file docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md
 require_file docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md
+require_file docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md
 require_file packaging/ubuntu/README.md
 require_file packaging/ubuntu/debian/control
@@ -125,6 +126,14 @@ require_contains 'launchpad_upload_url_recorded=0' docs/UBUNTU_LOCAL_DEB_STATIC_
 require_contains 'launchpad_build_result_recorded=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'launchpad_binary_artifact_listing_recorded=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'publication_non_claim_review_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'publication_scope_recorded=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'publication_target_type_recorded=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'publication_claims_reviewed=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'publication_readiness_non_claims_reviewed=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
+require_contains 'ubuntu_publication_non_claim_review_unblocked=0' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'ppa_archive_publication_gate_contract_present=1' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
 require_contains 'ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence' docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md
@@ -194,6 +203,14 @@ require_contains 'launchpad_upload_url_recorded=0' packaging/ubuntu/README.md
 require_contains 'launchpad_build_result_recorded=0' packaging/ubuntu/README.md
 require_contains 'launchpad_binary_artifact_listing_recorded=0' packaging/ubuntu/README.md
 require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=0' packaging/ubuntu/README.md
+require_contains 'docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' packaging/ubuntu/README.md
+require_contains 'publication_non_claim_review_contract_present=1' packaging/ubuntu/README.md
+require_contains 'publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence' packaging/ubuntu/README.md
+require_contains 'publication_scope_recorded=0' packaging/ubuntu/README.md
+require_contains 'publication_target_type_recorded=0' packaging/ubuntu/README.md
+require_contains 'publication_claims_reviewed=0' packaging/ubuntu/README.md
+require_contains 'publication_readiness_non_claims_reviewed=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_non_claim_review_unblocked=0' packaging/ubuntu/README.md
 require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' packaging/ubuntu/README.md
 require_contains 'ppa_archive_publication_gate_contract_present=1' packaging/ubuntu/README.md
 require_contains 'ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence' packaging/ubuntu/README.md

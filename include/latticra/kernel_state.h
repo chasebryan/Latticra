@@ -1,7 +1,7 @@
 #ifndef LATTICRA_KERNEL_STATE_H
 #define LATTICRA_KERNEL_STATE_H
 
-#include "latticra/kernel_runtime_entry_admission.h"
+#include "latticra/kernel_runtime_entry_frame.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,7 +35,8 @@ typedef enum {
     LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY = 21,
     LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY = 22,
     LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY = 23,
-    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY = 24
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY = 24,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY = 25
 } latticra_kernel_state_kind_t;
 
 typedef enum {
@@ -65,6 +66,7 @@ typedef struct {
     latticra_kernel_scheduler_activation_request_t scheduler_activation_request;
     latticra_kernel_scheduler_run_entry_request_t scheduler_run_entry_request;
     latticra_kernel_runtime_entry_admission_request_t runtime_entry_admission_request;
+    latticra_kernel_runtime_entry_frame_request_t runtime_entry_frame_request;
     latticra_kernel_state_kind_t current_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
@@ -97,6 +99,7 @@ typedef struct {
     latticra_kernel_scheduler_activation_result_t scheduler_activation;
     latticra_kernel_scheduler_run_entry_result_t scheduler_run_entry;
     latticra_kernel_runtime_entry_admission_result_t runtime_entry_admission;
+    latticra_kernel_runtime_entry_frame_result_t runtime_entry_frame;
     latticra_kernel_state_kind_t previous_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_kind_t next_state;

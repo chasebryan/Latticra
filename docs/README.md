@@ -44,6 +44,8 @@ Latticra keeps a large evidence trail on purpose: status records, contracts, imp
 
 ## Subsystem Entry Points
 
+Subsystem landing pages and subsystem-facing summaries should follow the [Subsystem Documentation Standard](SUBSYSTEM_DOCUMENTATION_STANDARD.md) so each lane exposes current posture, evidence spine, validation, non-claims, and stop signals consistently.
+
 | Subsystem | Entry points |
 | --- | --- |
 | Latticra Panel | [Panel README](../installer/README.md), [installer docs](../installer/docs/README.md), [installer readiness contract](../installer/docs/INSTALLER_READINESS_CONTRACT.md) |
@@ -66,10 +68,10 @@ All platform lanes are local-only or no-effect unless a source record explicitly
 | --- | --- | --- |
 | Fedora | [packaging/fedora README](../packaging/fedora/README.md) | [Fedora developer workflow](FEDORA_DEVELOPER_WORKFLOW.md), [Fedora readiness plan](FEDORA_READINESS_PLAN.md), [local RPM static validation](FEDORA_LOCAL_RPM_STATIC_VALIDATION.md), [VM CLI payload validation lane](FEDORA_VM_CLI_PAYLOAD_VALIDATION_LANE.md) |
 | Ubuntu | [packaging/ubuntu README](../packaging/ubuntu/README.md) | [Ubuntu developer workflow](UBUNTU_DEVELOPER_WORKFLOW.md), [Ubuntu readiness plan](UBUNTU_READINESS_PLAN.md), [local deb static validation](UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md), [lintian static metadata contract](UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md) |
-| Debian | [packaging/debian README](../packaging/debian/README.md) | [Debian local deb static validation](DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md), [source archive contract](DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md), [package build gate](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md), [build-evidence intake denial](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md) |
-| openSUSE | [packaging/opensuse README](../packaging/opensuse/README.md) | [openSUSE developer workflow](OPENSUSE_DEVELOPER_WORKFLOW.md), [openSUSE readiness plan](OPENSUSE_READINESS_PLAN.md), [local RPM static validation](OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md), [validation blocker matrix](OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md) |
-| FreeBSD | [packaging/freebsd README](../packaging/freebsd/README.md) | [FreeBSD port static validation](FREEBSD_PORT_STATIC_VALIDATION.md), [source archive fixture lane](DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md), [build-evidence intake denial](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md) |
-| OpenBSD | [packaging/openbsd README](../packaging/openbsd/README.md) | [OpenBSD port static validation](OPENBSD_PORT_STATIC_VALIDATION.md), [source archive fixture lane](DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md), [build-evidence intake denial](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md) |
+| Debian | [packaging/debian README](../packaging/debian/README.md) | [Debian local deb static validation](DEBIAN_LOCAL_DEB_STATIC_VALIDATION.md), [source archive contract](DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_CONTRACT.md), [package build gate](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_GATE_CONTRACT.md), [build-evidence intake denial review](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md) |
+| openSUSE | [packaging/opensuse README](../packaging/opensuse/README.md) | [openSUSE developer workflow](OPENSUSE_DEVELOPER_WORKFLOW.md), [openSUSE readiness plan](OPENSUSE_READINESS_PLAN.md), [local RPM static validation](OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md), [build-evidence intake denial](OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md) |
+| FreeBSD | [packaging/freebsd README](../packaging/freebsd/README.md) | [FreeBSD port static validation](FREEBSD_PORT_STATIC_VALIDATION.md), [source archive fixture lane](DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md), [build-evidence intake denial review](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md) |
+| OpenBSD | [packaging/openbsd README](../packaging/openbsd/README.md) | [OpenBSD port static validation](OPENBSD_PORT_STATIC_VALIDATION.md), [source archive fixture lane](DEBIAN_FREEBSD_OPENBSD_SOURCE_ARCHIVE_FIXTURE_LANE.md), [build-evidence intake denial review](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md) |
 | macOS | [macOS integration transferability plan](MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md) | [app bundle writer dry run](MACOS_APP_BUNDLE_WRITER_DRY_RUN.md), [commit gate contract](MACOS_COMMIT_GATE_CONTRACT.md), [reset/uninstall dry-run contract](MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT.md), [verification transcript contract](MACOS_VERIFICATION_TRANSCRIPT_CONTRACT.md) |
 
 openSUSE RPM maintenance records:
@@ -81,6 +83,7 @@ openSUSE RPM maintenance records:
 - [OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md](OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md)
 - [OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md](OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md)
 - [OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md](OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md)
+- [OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md](OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md)
 
 Shared Debian, FreeBSD, and OpenBSD package/port records:
 
@@ -94,6 +97,7 @@ Shared Debian, FreeBSD, and OpenBSD package/port records:
 - [DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md](DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md)
 - [DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md](DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md)
 - [DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md)
+- [DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md](DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md)
 
 ## Security and Assurance
 
@@ -118,6 +122,7 @@ Use these before changing public wording, navigation, claim posture, mirrored es
 | [Documentation Maintenance](DOCUMENTATION_MAINTENANCE.md) | Public entry points, status mirrors, static HTML summaries, and documentation-only validation |
 | [Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.md) | Canonical terms, date style, headings, link style, and claim wording |
 | [Documentation Health Scorecard](DOCUMENTATION_HEALTH_SCORECARD.md) | Findability, current status, claim safety, traceability, validation, reader-route, platform, security, estimate, and subsystem landing-page checks |
+| [Subsystem Documentation Standard](SUBSYSTEM_DOCUMENTATION_STANDARD.md) | Required shape for subsystem landing pages, evidence spines, non-claims, validation, stop signals, and mirrors |
 | [Documentation Traceability Matrix](DOCUMENTATION_TRACEABILITY_MATRIX.md) | Mapping public surfaces to source records, validation, mirrors, and non-claims |
 | [Documentation Validation Playbook](DOCUMENTATION_VALIDATION_PLAYBOOK.md) | Hygiene, link, public-entry, estimate, platform, subsystem, and claim-promotion checks |
 | [Documentation Drift Response Playbook](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) | Mirror drift, stale evidence, non-claim drift, and claim demotion |
@@ -139,6 +144,7 @@ Use these before changing public wording, navigation, claim posture, mirrored es
 - Keep [Foundation Index](FOUNDATION_INDEX.md) evidence-heavy and exhaustive.
 - Keep [Status](../STATUS.md), [Current Status](status/CURRENT_STATUS.md), and status mirrors aligned when public posture changes.
 - Use [Documentation Health Scorecard](DOCUMENTATION_HEALTH_SCORECARD.md) before broad public, route, platform, security, estimate, or subsystem landing-page changes.
+- Use [Subsystem Documentation Standard](SUBSYSTEM_DOCUMENTATION_STANDARD.md) before creating or refreshing subsystem landing pages.
 - Keep non-claims near any security, packaging, installer, runtime, or OS-adjacent wording.
 - Do not promote production runtime, host protection, package approval, certification, or OS replacement claims without implementation evidence, tests, status records, and public-entry alignment.
 

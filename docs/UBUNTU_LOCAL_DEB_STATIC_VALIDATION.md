@@ -40,6 +40,7 @@ docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
 docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md
 docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md
 docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md
+docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md
 ```
 
@@ -116,6 +117,13 @@ launchpad_upload_url_recorded=0
 launchpad_build_result_recorded=0
 launchpad_binary_artifact_listing_recorded=0
 ubuntu_launchpad_build_result_evidence_unblocked=0
+publication_non_claim_review_contract_present=1
+publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence
+publication_scope_recorded=0
+publication_target_type_recorded=0
+publication_claims_reviewed=0
+publication_readiness_non_claims_reviewed=0
+ubuntu_publication_non_claim_review_unblocked=0
 ppa_archive_publication_gate_contract_present=1
 ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence
 launchpad_upload_run=0
@@ -159,7 +167,7 @@ claim production readiness
 
 ## Next Recommended Lane
 
-Review the Ubuntu Launchpad build result evidence contract after upload/signing authority evidence and before any Launchpad result can be treated as publication input.
+Review the Ubuntu publication non-claim review contract after Launchpad build result evidence and before any PPA/archive publication gate can advance.
 
 ## Validation
 

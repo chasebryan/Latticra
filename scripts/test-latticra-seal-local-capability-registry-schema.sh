@@ -68,7 +68,7 @@ require_contains 'scripts/test-latticra-seal-local-capability-registry-schema.sh
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION_PLAN.md' docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md' docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
 require_contains 'docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md' docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
-require_contains 'The next valid Latticra Seal slice is a Seal Panel dashboard view-model contract or a signed receipt proof path.' docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
+require_contains 'The next valid Latticra Seal slice is a Seal Panel dashboard view-model implementation plan or a signed receipt proof path.' docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
 require_contains 'latticra_seal_local_capability_registry_schema_implementation_present=1' README.md
 require_contains 'seal_local_capability_registry_schema_implementation_present=1' README.md
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md' README.md

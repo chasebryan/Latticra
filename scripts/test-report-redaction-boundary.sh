@@ -73,16 +73,17 @@ if [ -s "$source_hits" ]; then
 fi
 
 engine="installer/latticra-installer/src/engine.rs"
-require_contains "redact_log_line(&line)" "$engine"
+require_contains "sanitize_log_line(&line)" "$engine"
 require_contains "SENSITIVE_ASSIGNMENT_KEYS" "$engine"
 require_contains "PRIVATE_KEY_MARKER_REDACTION" "$engine"
 require_contains "redact_log_line_masks_sensitive_assignments" "$engine"
+require_contains "sanitize_log_line_escapes_control_characters" "$engine"
 
 if grep -Fq "InstallEvent::Log(line)" "$engine"; then
-  fail "$engine must redact child stdout before forwarding install logs"
+  fail "$engine must sanitize child stdout before forwarding install logs"
 fi
 if grep -Fq 'stderr: {line}' "$engine"; then
-  fail "$engine must redact child stderr before forwarding install logs"
+  fail "$engine must sanitize child stderr before forwarding install logs"
 fi
 
 printf 'report_redaction_boundary: ok\n'

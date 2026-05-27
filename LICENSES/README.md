@@ -16,6 +16,7 @@ docs/LICENSE_POLICY.md
 docs/DOCUMENTATION_LICENSE.md
 CONTRIBUTING.md
 TRADEMARK_POLICY.md
+scripts/test-hybrid-license-posture.sh
 ```
 
 ## Current identifiers

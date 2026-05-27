@@ -58,7 +58,9 @@ require_contains 'missing_source_behavior=required' "$checkpoint"
 require_contains 'malformed_source_behavior=required' "$checkpoint"
 require_contains 'stale_source_behavior=required' "$checkpoint"
 require_contains 'no_effect_execution_path=required' "$checkpoint"
-require_contains 'The next valid Latticra Seal slice is a Seal Panel dashboard view-model contract or a signed receipt proof path.' "$checkpoint"
+require_contains 'docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT.md' "$checkpoint"
+require_contains 'docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT_STATUS.md' "$checkpoint"
+require_contains 'The next valid Latticra Seal slice is a Seal Panel dashboard view-model implementation plan or a signed receipt proof path.' "$checkpoint"
 require_contains 'sh scripts/test-latticra-seal-panel-dashboard-planning-checkpoint.sh' .github/workflows/latticra-seal-panel-dashboard-planning-checkpoint.yml
 require_contains 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' .github/workflows/latticra-seal-panel-dashboard-planning-checkpoint.yml
 

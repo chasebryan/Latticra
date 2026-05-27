@@ -204,13 +204,16 @@ static int sequential_steps_advance_ladder(void) {
     request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY;
     EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
         "scheduler run entry ready to runtime entry admission ready");
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry admission ready to runtime entry frame ready");
 
-    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY,
-        "machine reaches runtime entry admission ready");
-    EXPECT_TRUE(strcmp(machine.machine_status, "runtime-entry-admission-ready") == 0,
-        "machine status runtime entry admission ready");
-    EXPECT_TRUE(machine.log_count == 24u,
-        "twenty four transitions logged");
+    EXPECT_TRUE(machine.current_state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY,
+        "machine reaches runtime entry frame ready");
+    EXPECT_TRUE(strcmp(machine.machine_status, "runtime-entry-frame-ready") == 0,
+        "machine status runtime entry frame ready");
+    EXPECT_TRUE(machine.log_count == 25u,
+        "twenty five transitions logged");
     EXPECT_TRUE(machine.external_effect_performed == 0,
         "sequence external effects absent");
     EXPECT_TRUE(machine.network_allowed == 0,
@@ -259,6 +262,8 @@ static int sequential_steps_advance_ladder(void) {
         "log scheduler run entry ready");
     EXPECT_TRUE(machine.log[23].to_state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY,
         "log runtime entry admission ready");
+    EXPECT_TRUE(machine.log[24].to_state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY,
+        "log runtime entry frame ready");
     return 0;
 }
 

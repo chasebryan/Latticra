@@ -23,6 +23,7 @@ static latticra_seal_runtime_handoff_report_t fixture_report(const char *mode) {
     (void)snprintf(report.message_digest_algorithm, sizeof(report.message_digest_algorithm), "%s", "SHA-256");
     (void)snprintf(report.message_digest_hex, sizeof(report.message_digest_hex), "%s", "aaaabbbbccccddddeeeeffff0000111122223333444455556666777788889999");
     (void)snprintf(report.public_key_identity_label, sizeof(report.public_key_identity_label), "%s", "rfc8032-test-key");
+    (void)snprintf(report.crypto_graduation_gate_state, sizeof(report.crypto_graduation_gate_state), "%s", "not-required");
     (void)snprintf(report.requested_capability, sizeof(report.requested_capability), "%s", "verified-receipt-report");
     (void)snprintf(report.requested_effect, sizeof(report.requested_effect), "%s", mode != 0 ? mode : "report-only");
     (void)snprintf(report.requested_handoff, sizeof(report.requested_handoff), "%s", mode != 0 ? mode : "report-only");
@@ -56,6 +57,32 @@ static latticra_seal_runtime_handoff_report_t fixture_report(const char *mode) {
     return report;
 }
 
+static latticra_seal_runtime_handoff_report_t fixture_crypto_bound_report(const char *mode) {
+    latticra_seal_runtime_handoff_report_t report = fixture_report(mode);
+    (void)snprintf(
+        report.crypto_graduation_profile,
+        sizeof(report.crypto_graduation_profile),
+        "%s",
+        "latticra-seal-crypto-graduation-gate/0.1");
+    (void)snprintf(
+        report.assurance_baseline_profile,
+        sizeof(report.assurance_baseline_profile),
+        "%s",
+        "latticra-cryptographic-assurance-key-management/0.1");
+    (void)snprintf(
+        report.crypto_graduation_gate_state,
+        sizeof(report.crypto_graduation_gate_state),
+        "%s",
+        "graduated-authority-neutral");
+    report.crypto_graduation_gate_present = 1u;
+    report.crypto_graduation_gate_passed = 1u;
+    report.standard_expectations_met = 1u;
+    report.local_verify_graduated = 1u;
+    report.receipt_promotion_graduated = 1u;
+    report.authority_promotion_allowed = 0u;
+    return report;
+}
+
 static int envelope_allows_report_only_metadata(void) {
     latticra_seal_runtime_handoff_report_t report = fixture_report("report-only");
     latticra_seal_report_envelope_t envelope;
@@ -75,12 +102,15 @@ static int envelope_allows_report_only_metadata(void) {
     EXPECT_TRUE(strcmp(envelope.message_digest_algorithm, "SHA-256") == 0, "digest algorithm");
     EXPECT_TRUE(strcmp(envelope.message_digest_hex, report.message_digest_hex) == 0, "digest hex");
     EXPECT_TRUE(strcmp(envelope.public_key_identity_label, "rfc8032-test-key") == 0, "public key identity");
+    EXPECT_TRUE(strcmp(envelope.crypto_graduation_gate_state, "not-required") == 0, "crypto gate legacy");
     EXPECT_TRUE(strcmp(envelope.requested_capability, "verified-receipt-report") == 0, "requested capability");
     EXPECT_TRUE(strcmp(envelope.requested_effect, "report-only") == 0, "requested effect");
     EXPECT_TRUE(strcmp(envelope.requested_handoff, "report-only") == 0, "requested handoff");
     EXPECT_TRUE(strcmp(envelope.requested_report, "report-only") == 0, "requested report");
     EXPECT_TRUE(strcmp(envelope.requested_envelope, "report-only") == 0, "requested envelope");
     EXPECT_TRUE(strcmp(envelope.requested_scope, "local-fixture-scope") == 0, "requested scope");
+    EXPECT_TRUE(envelope.crypto_graduation_gate_present == 0u, "crypto present legacy");
+    EXPECT_TRUE(envelope.standard_expectations_met == 0u, "standard legacy");
     EXPECT_TRUE(strcmp(envelope.report_state, "ready-report-only") == 0, "report state");
     EXPECT_TRUE(envelope.report_ready == 1u, "report ready");
     EXPECT_TRUE(strcmp(envelope.envelope_state, "sealed-report-only") == 0, "envelope state");
@@ -104,6 +134,40 @@ static int envelope_allows_report_only_metadata(void) {
     EXPECT_TRUE(strstr(rendered, "host_read_performed=0") != 0, "render host read");
     EXPECT_TRUE(strstr(rendered, "host_write_performed=0") != 0, "render host write");
     EXPECT_TRUE(strstr(rendered, "network_performed=0") != 0, "render network");
+    return 0;
+}
+
+static int envelope_carries_crypto_graduation_evidence(void) {
+    latticra_seal_runtime_handoff_report_t report = fixture_crypto_bound_report("report-only");
+    latticra_seal_report_envelope_t envelope;
+    char rendered[LATTICRA_SEAL_REPORT_ENVELOPE_RENDER_MAX];
+
+    EXPECT_TRUE(
+        latticra_seal_report_envelope_from_report(&report, "report-only", &envelope) == LATTICRA_STATUS_OK,
+        "crypto envelope status");
+    EXPECT_TRUE(envelope.error == LATTICRA_SEAL_REPORT_ENVELOPE_OK, "crypto envelope ok");
+    EXPECT_TRUE(strcmp(envelope.crypto_graduation_profile, "latticra-seal-crypto-graduation-gate/0.1") == 0, "crypto profile");
+    EXPECT_TRUE(strcmp(envelope.assurance_baseline_profile, "latticra-cryptographic-assurance-key-management/0.1") == 0, "assurance profile");
+    EXPECT_TRUE(strcmp(envelope.crypto_graduation_gate_state, "graduated-authority-neutral") == 0, "crypto state");
+    EXPECT_TRUE(envelope.crypto_graduation_gate_present == 1u, "crypto present");
+    EXPECT_TRUE(envelope.crypto_graduation_gate_passed == 1u, "crypto passed");
+    EXPECT_TRUE(envelope.standard_expectations_met == 1u, "standards");
+    EXPECT_TRUE(envelope.local_verify_graduated == 1u, "local verify");
+    EXPECT_TRUE(envelope.receipt_promotion_graduated == 1u, "receipt promotion");
+    EXPECT_TRUE(envelope.authority_promotion_allowed == 0u, "authority promotion");
+    EXPECT_TRUE(envelope.envelope_ready == 1u, "crypto envelope ready");
+    EXPECT_TRUE(strcmp(envelope.envelope_state, "sealed-report-only") == 0, "crypto envelope state");
+    EXPECT_TRUE(envelope.signature_performed == 0u, "crypto signature");
+    EXPECT_TRUE(envelope.handoff_performed == 0u, "crypto handoff");
+    EXPECT_TRUE(envelope.effect_performed == 0u, "crypto effect");
+    EXPECT_TRUE(envelope.runtime_authority_granted == 0u, "crypto runtime");
+    EXPECT_TRUE(envelope.host_read_performed == 0u, "crypto host read");
+    EXPECT_TRUE(envelope.host_write_performed == 0u, "crypto host write");
+    EXPECT_TRUE(envelope.network_performed == 0u, "crypto network");
+    EXPECT_TRUE(latticra_seal_report_envelope_render(&envelope, rendered, sizeof(rendered)) == LATTICRA_STATUS_OK, "crypto render");
+    EXPECT_TRUE(strstr(rendered, "crypto_graduation_gate_present=1") != 0, "render crypto present");
+    EXPECT_TRUE(strstr(rendered, "standard_expectations_met=1") != 0, "render standard");
+    EXPECT_TRUE(strstr(rendered, "authority_promotion_allowed=0") != 0, "render authority promotion");
     return 0;
 }
 
@@ -171,6 +235,15 @@ static int envelope_fails_closed(void) {
     report.network_performed = 1u;
     EXPECT_TRUE(latticra_seal_report_envelope_from_report(&report, "report-only", &envelope) == LATTICRA_STATUS_OK, "network status");
     EXPECT_TRUE(envelope.error == LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_NETWORK_EFFECT, "network error");
+    report = fixture_crypto_bound_report("report-only");
+    report.standard_expectations_met = 0u;
+    EXPECT_TRUE(latticra_seal_report_envelope_from_report(&report, "report-only", &envelope) == LATTICRA_STATUS_OK, "failed crypto gate status");
+    EXPECT_TRUE(envelope.error == LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_CRYPTO_GRADUATION_GATE, "failed crypto gate error");
+    EXPECT_TRUE(strcmp(envelope.envelope_state, "denied-crypto-graduation-gate") == 0, "failed crypto gate state");
+    report = fixture_crypto_bound_report("report-only");
+    report.authority_promotion_allowed = 1u;
+    EXPECT_TRUE(latticra_seal_report_envelope_from_report(&report, "report-only", &envelope) == LATTICRA_STATUS_OK, "authority crypto gate status");
+    EXPECT_TRUE(envelope.error == LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_CRYPTO_GRADUATION_GATE, "authority crypto gate error");
     report = fixture_report("report-only");
     EXPECT_TRUE(latticra_seal_report_envelope_from_report(&report, 0, &envelope) == LATTICRA_STATUS_OK, "missing envelope null status");
     EXPECT_TRUE(envelope.error == LATTICRA_SEAL_REPORT_ENVELOPE_MISSING_REQUESTED_ENVELOPE, "missing envelope null error");
@@ -197,6 +270,9 @@ static int envelope_fails_closed(void) {
 
 int main(void) {
     if (envelope_allows_report_only_metadata() != 0) {
+        return 1;
+    }
+    if (envelope_carries_crypto_graduation_evidence() != 0) {
         return 1;
     }
     if (envelope_allows_evaluate_only_metadata() != 0) {

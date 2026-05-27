@@ -19,11 +19,18 @@ Date checked: 2026-05-26
 | NIST SP 800-207 Zero Trust Architecture | per-request, least-privilege, resource-focused access decision model |
 | NIST SP 800-207A | future cloud-native/service-mesh access-control vocabulary if server or MCP surfaces appear |
 
+Follow-on source review, 2026-05-27:
+
+- NSA MCP security-design guidance is now relevant to future MCP, tool, and agentic-automation authority because Latticra already reserves future server/MCP surfaces.
+- NSA and partners' careful-adoption guidance reinforces treating agentic automation as a system-wide authority and context-sharing problem rather than a narrow tool wrapper.
+
 Authoritative URLs:
 
 ```text
 https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4393480/nsa-releases-phase-one-and-phase-two-of-the-zero-trust-implementation-guidelines/
 https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4378980/nsa-releases-first-in-series-of-zero-trust-implementation-guidelines/
+https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4496698/nsa-releases-security-design-considerations-for-ai-driven-automation-leveraging/
+https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4475134/nsa-joins-the-asds-acsc-and-others-to-release-guidance-on-agentic-artificial-in/
 https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model
 https://www.nist.gov/publications/zero-trust-architecture-0
 https://csrc.nist.gov/pubs/sp/800/207/a/final
@@ -85,6 +92,8 @@ operator_or_automation_context_known=1
 resource_identity_known=1
 resource_sensitivity_classified=1
 execution_environment_known=1
+tool_or_mcp_boundary_known=1
+context_sharing_scope_known=1
 mode_matches_request_family=1
 authority_prerequisites_satisfied=1
 least_privilege_scope_recorded=1

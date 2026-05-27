@@ -30,6 +30,7 @@ Known current evidence includes:
 - no-effect local capability registry schema implementation with bounded entries and denied defaults
 - operator-visible local capability registry schema report surface and status checkpoint
 - Panel-visible Seal dashboard planning checkpoint before any Panel UI or view-model implementation
+- Seal Panel dashboard view-model contract before any view-model implementation, report loading, or Panel UI rendering
 
 ## Current authority limits
 
@@ -62,6 +63,8 @@ local_capability_registry_schema_surface_present=1
 local_capability_registry_schema_status_present=1
 panel_dashboard_planning_checkpoint_present=1
 panel_dashboard_planning_status_present=1
+panel_dashboard_view_model_contract_present=1
+panel_dashboard_view_model_contract_status_present=1
 panel_bridge_planning=1
 runtime_enforcement=0
 network_operation=0

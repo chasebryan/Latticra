@@ -77,6 +77,7 @@ sh scripts/test-opensuse-rpm-payload-inspection-contract.sh
 sh scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
 sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
 sh scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh
+sh scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh
 ```
 
 Expected output:
@@ -95,6 +96,7 @@ opensuse_rpm_payload_inspection_contract: ok
 opensuse_rpm_install_remove_transcript_contract: ok
 opensuse_obs_publication_non_claim_review_contract: ok
 opensuse_rpm_validation_promotion_blocker_matrix_contract: ok
+opensuse_rpm_build_evidence_intake_denial_contract: ok
 ```
 
 ## Panel From Source

@@ -73,16 +73,20 @@ require_contains 'network_lookup_enabled=0' "$status_file"
 require_contains 'runtime_authority_granted=0' "$status_file"
 require_contains 'effect_performed=0' "$status_file"
 require_contains 'production_security_product=0' "$status_file"
-require_contains 'The next valid Latticra Seal slice is a Seal Panel dashboard view-model contract or a signed receipt proof path.' "$status_file"
+require_contains 'docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT.md' "$status_file"
+require_contains 'docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT_STATUS.md' "$status_file"
+require_contains 'The next valid Latticra Seal slice is a Seal Panel dashboard view-model implementation plan or a signed receipt proof path.' "$status_file"
 require_contains 'sh scripts/test-latticra-seal-panel-dashboard-planning-status.sh' .github/workflows/latticra-seal-panel-dashboard-planning-status.yml
 require_contains 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' .github/workflows/latticra-seal-panel-dashboard-planning-status.yml
 
 require_contains 'panel_dashboard_planning_checkpoint=1' "$product_doc"
 require_contains 'panel_dashboard_planning_status=1' "$product_doc"
-require_contains 'seal_panel_dashboard=planning-checkpoint' "$product_doc"
+require_contains 'panel_dashboard_view_model_contract=1' "$product_doc"
+require_contains 'panel_dashboard_view_model_contract_status=1' "$product_doc"
+require_contains 'seal_panel_dashboard=view-model-contract' "$product_doc"
 require_contains 'panel_dashboard_planning_checkpoint_present=1' "$product_doc"
 require_contains 'panel_dashboard_planning_status_present=1' "$product_doc"
-require_contains 'Seal Panel dashboard view-model contract' "$product_doc"
+require_contains 'Seal Panel dashboard view-model implementation plan' "$product_doc"
 require_contains 'signed receipt proof path' "$product_doc"
 
 require_contains 'panel_dashboard_planning_checkpoint_present=1' "$seal_status"

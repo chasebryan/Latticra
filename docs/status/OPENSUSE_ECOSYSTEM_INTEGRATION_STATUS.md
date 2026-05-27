@@ -34,6 +34,7 @@ opensuse_rpm_payload_inspection_contract_present=1
 opensuse_rpm_install_remove_transcript_contract_present=1
 opensuse_obs_publication_non_claim_review_contract_present=1
 opensuse_rpm_validation_promotion_blocker_matrix_contract_present=1
+opensuse_rpm_build_evidence_intake_denial_contract_present=1
 temporary_rpm_topdir_handoff_lane_present=1
 opensuse_rpm_build_gate_state=closed-no-effect
 opensuse_rpm_build_environment_contract_state=specified-no-effect
@@ -41,10 +42,12 @@ opensuse_rpm_artifact_naming_contract_state=specified-no-effect
 opensuse_rpm_payload_inspection_contract_state=specified-no-effect
 opensuse_rpm_install_remove_transcript_contract_state=specified-no-effect
 validation_promotion_blocker_matrix_state=blocked-no-effect
+build_evidence_intake_denial_state=denied-no-effect
 rpm_artifact_naming_contract_present=1
 rpm_install_remove_transcript_contract_present=1
 obs_publication_non_claim_review_contract_present=1
 rpm_validation_promotion_blocker_matrix_contract_present=1
+rpm_build_evidence_intake_denial_contract_present=1
 publication_non_claim_review_contract_present=1
 obs_publication_non_claim_review_present=1
 publication_non_claim_review_present=1
@@ -127,6 +130,24 @@ opensuse_payload_inspection_run=0
 opensuse_install_remove_transcript_present=0
 opensuse_obs_publication_non_claim_review_present=1
 rpmlint_run=0
+opensuse_build_evidence_intake_allowed=0
+opensuse_build_evidence_intake_requested=0
+opensuse_build_evidence_intake_denied=1
+build_transcript_intake_accepted=0
+rpm_build_transcript_intake_accepted=0
+opensuse_build_transcript_intake_accepted=0
+rpmbuild_evidence_accepted=0
+osc_build_evidence_accepted=0
+rpmlint_evidence_accepted=0
+source_rpm_evidence_accepted=0
+binary_rpm_evidence_accepted=0
+opensuse_rpmbuild_evidence_accepted=0
+opensuse_osc_build_evidence_accepted=0
+opensuse_rpmlint_evidence_accepted=0
+opensuse_source_rpm_evidence_accepted=0
+opensuse_binary_rpm_evidence_accepted=0
+rpm_build_lane_opened=0
+opensuse_single_platform_build_lane_opened=0
 obs_project_created=0
 obs_package_created=0
 obs_repository_created=0
@@ -171,6 +192,7 @@ docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
 docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
 docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
 docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
 packaging/opensuse/README.md
 packaging/opensuse/latticra.spec
@@ -190,6 +212,7 @@ scripts/test-opensuse-rpm-payload-inspection-contract.sh
 scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
 scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
 scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh
+scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh
 .github/workflows/opensuse-developer-workflow.yml
 .github/workflows/opensuse-local-rpm-static-validation.yml
 .github/workflows/opensuse-rpmlint-osc-availability.yml
@@ -205,6 +228,7 @@ scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh
 .github/workflows/opensuse-rpm-install-remove-transcript-contract.yml
 .github/workflows/opensuse-obs-publication-non-claim-review-contract.yml
 .github/workflows/opensuse-rpm-validation-promotion-blocker-matrix-contract.yml
+.github/workflows/opensuse-rpm-build-evidence-intake-denial-contract.yml
 ```
 
 ## Public Entry Points
@@ -250,8 +274,10 @@ The openSUSE OBS publication non-claim review contract records Open Build Servic
 
 The openSUSE RPM validation promotion blocker matrix is recorded in `docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md`. It ties source, `rpmlint`, environment, artifact, payload, install/remove, and OBS non-claim columns together while keeping `opensuse_platform_build_evidence_accepted=0`, `opensuse_rpm_validation_result_promoted=0`, and package readiness disabled.
 
+The openSUSE RPM build-evidence intake denial contract is recorded in `docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md`. It refuses `rpmbuild`, `osc build`, `rpmlint`, source RPM, binary RPM, and transcript intake while keeping `opensuse_build_evidence_intake_denied=1`, `opensuse_build_transcript_intake_accepted=0`, and package readiness disabled.
+
 ## Next Recommended Lane
 
 ```text
-Add openSUSE RPM build-evidence intake denial contract before any local build lane can open.
+Add openSUSE RPM build-evidence intake denial review contract before any denial can be re-requested.
 ```

@@ -431,6 +431,26 @@ void cpp_authority_layer_rejects_audit_text_line_breaks() noexcept {
     expect(buffer[0] == '\0');
 }
 
+void cpp_authority_layer_rejects_noncanonical_audit_text_padding() noexcept {
+    latticra::authority_request request{};
+    request.flags.no_effect = true;
+    request.requested_effect = latticra::authority_effect::none;
+    latticra::authority_audit_report report{};
+
+    expect(latticra::classify_effect_request(request, report) ==
+           latticra::authority_status::ok);
+    report.records[0].source_identity[0] = 'x';
+    report.records[0].source_identity[1] = '\0';
+    report.records[0].source_identity[2] = 'y';
+
+    char buffer[latticra::LATTICRA_AUTHORITY_REPORT_MAX]{};
+    const latticra::authority_status status =
+        latticra::render_authority_audit_report(report, buffer, sizeof(buffer));
+
+    expect(status == latticra::authority_status::invalid_input);
+    expect(buffer[0] == '\0');
+}
+
 void cpp_authority_layer_is_deterministic() noexcept {
     latticra::authority_audit_report first{};
     latticra::authority_audit_report second{};
@@ -583,6 +603,7 @@ int main() {
     cpp_authority_layer_rejects_small_report_buffer();
     cpp_authority_layer_rejects_unterminated_audit_text();
     cpp_authority_layer_rejects_audit_text_line_breaks();
+    cpp_authority_layer_rejects_noncanonical_audit_text_padding();
     cpp_authority_layer_is_deterministic();
     cpp_authority_layer_rejects_mutation_flags();
     cpp_authority_layer_rejects_network_flags();

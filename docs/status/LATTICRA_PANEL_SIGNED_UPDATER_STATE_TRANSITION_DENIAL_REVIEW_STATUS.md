@@ -150,7 +150,7 @@ latticra_panel_signed_updater_state_transition_denial_review: ok
 ## Next Recommended Lane
 
 ```text
-Add Panel signed-updater state transition denial disposition review without enabling transition execution or update apply.
+Add Panel signed-updater state transition denial disposition closeout without enabling transition execution or update apply.
 ```
 
 ## Non-Claims

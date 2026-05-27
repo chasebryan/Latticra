@@ -33,6 +33,11 @@ source_files() {
     -name dist -type d -prune -o \
     -name node_modules -type d -prune -o \
     -name .venv -type d -prune -o \
+    -name '.venv-*' -type d -prune -o \
+    -name venv -type d -prune -o \
+    -name __pycache__ -type d -prune -o \
+    -name .pytest_cache -type d -prune -o \
+    -name .mypy_cache -type d -prune -o \
     -type f -print
 }
 

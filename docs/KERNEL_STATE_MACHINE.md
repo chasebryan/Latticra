@@ -54,6 +54,7 @@ scheduler-handoff-ready
 scheduler-activation-ready
 scheduler-run-entry-ready
 runtime-entry-admission-ready
+runtime-entry-frame-ready
 ```
 
 ## Controlled effect boundary

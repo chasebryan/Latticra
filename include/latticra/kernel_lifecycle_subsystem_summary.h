@@ -50,6 +50,7 @@ typedef struct {
     int external_effect_performed;
     int network_allowed;
     int registry_no_effect;
+    int runtime_entry_frame_allowed;
     int runtime_entry_admission_allowed;
     int runtime_entry_allowed;
     int scheduler_execution_allowed;

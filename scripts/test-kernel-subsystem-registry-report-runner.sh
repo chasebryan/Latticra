@@ -27,11 +27,14 @@ cc $CFLAGS \
 grep -Fq 'LATTICRA KERNEL SUBSYSTEM REGISTRY REPORT' "$report_txt"
 grep -Fq 'registry_status=registry-ready' "$report_txt"
 grep -Fq 'kernel_status=initialized-report-only' "$report_txt"
+grep -Fq 'kernel_network_allowed=0' "$report_txt"
 grep -Fq 'entry_count=9' "$report_txt"
+grep -Fq 'network_allowed=0' "$report_txt"
 grep -Fq 'subsystem[0].name=boot' "$report_txt"
 grep -Fq 'subsystem[2].name=scheduler' "$report_txt"
 grep -Fq 'subsystem[3].name=memory' "$report_txt"
 grep -Fq 'subsystem[8].name=security' "$report_txt"
+grep -Fq 'subsystem[6].network_allowed=0' "$report_txt"
 grep -Fq 'no_effect=1' "$report_txt"
 
 printf 'kernel_subsystem_registry_report_runner: ok\n'

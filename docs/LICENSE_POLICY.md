@@ -179,7 +179,7 @@ Recommended follow-up work:
 
 ```text
 add SPDX headers to new software files
-add a license guard for source paths
+maintain hybrid license posture guard
 review path-by-path migration from Apache-2.0
 add release license checklist
 add NOTICE if needed

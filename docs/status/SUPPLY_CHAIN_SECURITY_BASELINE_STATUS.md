@@ -33,6 +33,8 @@ sensitive_local_artifact_filename_guard_required=1
 report_redaction_boundary_guard_required=1
 whole_environment_report_dump_forbidden=1
 installer_engine_log_redaction_required=1
+installer_engine_log_sanitization_required=1
+installer_engine_log_line_length_cap_required=1
 installer_config_authority_slug_allowlist_required=1
 installer_command_wrapper_strict_name_required=1
 installer_ui_artifact_authority_guard_required=1
@@ -62,6 +64,7 @@ external_endorsement_claimed=0
 sh scripts/test-supply-chain-security-baseline.sh
 sh scripts/test-secret-material-guard.sh
 sh scripts/test-report-redaction-boundary.sh
+sh scripts/test-installer-engine-log-sanitization.sh
 sh scripts/test-installer-config-authority-allowlist.sh
 sh scripts/test-installer-ui-artifact-authority.sh
 sh scripts/test-installer-console-output-authority.sh

@@ -102,6 +102,9 @@ done
 require_manifest_field 'name = "latticra-os-image-release"'
 require_manifest_field 'status = "fixture-only"'
 require_manifest_field 'os_image_build_recipe_contract_present = true'
+require_manifest_field 'os_image_toolchain_contract_present = true'
+require_manifest_field 'os_image_toolchain_preflight_present = true'
+require_manifest_field 'os_image_toolchain_ready = false'
 require_manifest_field 'os_image_build_preflight_present = true'
 require_manifest_field 'os_image_build_recipe_template_present = true'
 require_manifest_field 'os_image_build_execution_allowed = false'
@@ -173,6 +176,7 @@ latticra_os_image_build_preflight_present=1
 preflight_mode=no-effect-build-readiness-report
 preflight_decision=blocked-no-build-execution
 manifest_path=$MANIFEST
+os_image_toolchain_preflight_present=1
 input_bundle_manifest_path=$INPUT_MANIFEST
 input_bundle_manifest_present=$INPUT_MANIFEST_PRESENT
 input_bundle_manifest_required=1

@@ -16,9 +16,11 @@ This contract is documentation-only and static. It does not run package build to
 ```text
 debian_freebsd_openbsd_package_validation_promotion_blocker_matrix_contract_present=1
 debian_freebsd_openbsd_package_build_evidence_intake_denial_contract_present=1
+debian_freebsd_openbsd_package_build_evidence_intake_denial_review_contract_present=1
 package_validation_promotion_blocker_matrix_contract_present=1
 validation_promotion_blocker_matrix_state=blocked-no-effect
 build_evidence_intake_denial_state=denied-no-effect
+build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
 package_build_gate_state=closed-no-effect
 publication_non_claim_review_contract_state=specified-no-effect
 source_archive_accepted_for_build=0
@@ -31,6 +33,7 @@ install_remove_transcript_present=0
 publication_non_claim_review_present=1
 platform_build_evidence_intake_allowed=0
 platform_build_evidence_intake_denied=1
+denial_re_request_allowed=0
 build_transcript_intake_accepted=0
 single_platform_build_lane_opened=0
 platform_build_evidence_accepted=0
@@ -80,6 +83,8 @@ Current Debian validation promotion remains blocked:
 debian_validation_promotion_blocked=1
 debian_build_evidence_intake_allowed=0
 debian_build_evidence_intake_denied=1
+debian_build_evidence_intake_denial_review_present=1
+debian_build_evidence_intake_denial_upheld=1
 debian_build_transcript_intake_accepted=0
 debian_platform_build_evidence_accepted=0
 debian_source_archive_accepted_for_build=0
@@ -106,6 +111,8 @@ Current FreeBSD validation promotion remains blocked:
 freebsd_validation_promotion_blocked=1
 freebsd_build_evidence_intake_allowed=0
 freebsd_build_evidence_intake_denied=1
+freebsd_build_evidence_intake_denial_review_present=1
+freebsd_build_evidence_intake_denial_upheld=1
 freebsd_package_evidence_accepted=0
 freebsd_platform_build_evidence_accepted=0
 freebsd_source_archive_accepted_for_build=0
@@ -134,6 +141,8 @@ Current OpenBSD validation promotion remains blocked:
 openbsd_validation_promotion_blocked=1
 openbsd_build_evidence_intake_allowed=0
 openbsd_build_evidence_intake_denied=1
+openbsd_build_evidence_intake_denial_review_present=1
+openbsd_build_evidence_intake_denial_upheld=1
 openbsd_package_evidence_accepted=0
 openbsd_platform_build_evidence_accepted=0
 openbsd_source_archive_accepted_for_build=0
@@ -238,6 +247,7 @@ docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PAYLOAD_INSPECTION_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
 ```
 
 The package-build gate remains closed. This blocker matrix only records the promotion columns and current blocking values for future Debian, FreeBSD, and OpenBSD local validation evidence.
@@ -257,15 +267,30 @@ scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-contrac
 
 That lane defines how build evidence intake is refused until the blocker matrix opens, while keeping package builds and readiness blocked.
 
-## Next Slice
+## Completed Follow-On Lane
 
-Recommended next slice:
+Completed follow-on lane:
 
 ```text
 Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial review contract before any denial can be re-requested.
 ```
 
-That future lane should review denied intake requests while keeping package builds and readiness blocked.
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-review-contract.sh
+```
+
+That lane reviews and upholds denied build-evidence intake while keeping package builds and readiness blocked.
+
+## Next Slice
+
+Recommended next slice:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial disposition contract before any reviewed denial can be closed or re-requested.
+```
+
+That future lane should record the reviewed denial disposition while keeping package builds and readiness blocked.
 
 ## Validation
 

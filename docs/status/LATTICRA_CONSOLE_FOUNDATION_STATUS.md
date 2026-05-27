@@ -1,8 +1,8 @@
 # Latticra Console Foundation Status
 
 Status: active Stage-0 foundation
-Date: 2026-05-26
-Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, session contract, workspace contract, namespace contract, rootfs contract, packages contract, init contract, services contract, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
+Date: 2026-05-27
+Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, session contract, workspace contract, namespace contract, rootfs contract, packages contract, init contract, services contract, service schema contract, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
 
 ## Current Evidence
 
@@ -76,6 +76,12 @@ services_contract_profile=lc-services-v0
 service_registry_write_allowed=0
 service_enable_allowed=0
 service_reload_allowed=0
+service_schema_contract_status=metadata-only-contract
+service_schema_contract_present=1
+service_schema_contract_command=lc service-schema
+service_schema_contract_profile=lc-service-schema-v0
+service_schema_file=definition-schema.toml
+service_definition_validation_allowed=0
 host_path_projection_allowed=0
 namespace_mutation_allowed=0
 substrate_bridge_status=metadata-bound

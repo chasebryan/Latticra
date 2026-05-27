@@ -82,7 +82,7 @@ require_contains 'capability_reads_host=0' "$status_file"
 require_contains 'capability_writes_host=0' "$status_file"
 require_contains 'capability_uses_network=0' "$status_file"
 require_contains 'capability_report_only=1' "$status_file"
-require_contains 'Seal Panel dashboard view-model contract' "$status_file"
+require_contains 'Seal Panel dashboard view-model implementation plan' "$status_file"
 require_contains 'signed receipt proof path' "$status_file"
 require_contains 'sh scripts/test-latticra-seal-local-capability-registry-schema-surface.sh' .github/workflows/latticra-seal-local-capability-registry-schema-surface.yml
 require_contains 'sh scripts/test-latticra-seal-local-capability-registry-schema-status.sh' .github/workflows/latticra-seal-local-capability-registry-schema-status.yml

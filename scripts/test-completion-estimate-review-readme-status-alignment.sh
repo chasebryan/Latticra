@@ -60,7 +60,7 @@ require_contains 'small guarded report/status alignment only when drift appears'
 require_contains '[`docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md)' README.md
 require_contains '| Current public estimate | Roughly 45% overall system planning estimate |' README.md
 require_contains '| Foundation documents and contracts | Mature relative to implementation; around 94% planning estimate |' README.md
-require_contains '| Public documentation posture | Strong but still evolving; around 91% planning estimate |' README.md
+require_contains '| Public documentation posture | Strong but still evolving; around 92% planning estimate |' README.md
 require_contains 'CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md' README.md
 require_contains '| Latticra Seal | Report-only runtime gate path' README.md
 require_contains '| Product readiness | Early; no production platform claimed |' README.md

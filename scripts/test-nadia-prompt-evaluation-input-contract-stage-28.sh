@@ -126,6 +126,9 @@ require_contains 'qa_dialogue_generated=0' "$input_script"
 require_contains 'sexual_request_refusal=always' "$input_script"
 require_contains 'manipulation_resistance=required' "$input_script"
 require_contains 'outside Nadia prompt-evaluation-input boundary' "$input_script"
+require_contains 'write_file "$OUT_DIR/latest-prompt-evaluation-input-contract.txt" < "$REPORT"' "$input_script"
+require_contains 'refusing to overwrite symlink report:' "$input_script"
+require_not_contains 'cp "$REPORT" "$OUT_DIR/latest-prompt-evaluation-input-contract.txt"' "$input_script"
 require_not_contains 'curl ' "$input_script"
 require_not_contains 'wget ' "$input_script"
 require_not_contains 'ssh ' "$input_script"
@@ -344,6 +347,26 @@ require_contains 'token_generation_performed=0' "$input"
 require_contains 'inference_performed=0' "$input"
 require_contains 'tool_execution_performed=0' "$input"
 require_contains 'network_authority=0' "$input"
+
+symlink_out="$tmpdir/latticra-nadia-stage28-symlink-out"
+symlink_stdout="$tmpdir/latticra-nadia-stage28-symlink.out"
+symlink_target="$tmpdir/latticra-nadia-stage28-outside-target.txt"
+mkdir -p "$symlink_out"
+printf '%s\n' outside >"$symlink_target"
+ln -s "$symlink_target" "$symlink_out/latest-prompt-evaluation-input-contract.txt"
+
+if NADIA_PROMPT_EVALUATION_INPUT_TIMESTAMP=stage28-symlink sh "$input_script" \
+  --context-window-assembly "$context" \
+  --request-class awareness-education \
+  --input-family operator-reviewed-prompt-evaluation-input \
+  --input-format contract-only-offline-evaluation-input \
+  --output "$symlink_out" >"$symlink_stdout" 2>&1; then
+  printf 'nadia prompt evaluation input contract stage 28: symlink latest report was overwritten\n' >&2
+  exit 1
+fi
+require_contains 'refusing to overwrite symlink report:' "$symlink_stdout"
+grep -Fqx outside "$symlink_target"
+test -L "$symlink_out/latest-prompt-evaluation-input-contract.txt"
 
 if sh "$input_script" \
   --context-window-assembly "$context" \

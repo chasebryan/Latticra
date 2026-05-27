@@ -35,6 +35,7 @@ Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge endpoint evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-source edge endpoint payload evidence propagation note: 2026-05-27 CDT
 Latest Lat LIR first transition-source edge endpoint span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge span evidence propagation note: 2026-05-26 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
@@ -91,6 +92,7 @@ Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge endpoint evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-source edge endpoint payload evidence propagation note: 2026-05-27 CDT
 Latest Lat LIR first transition-source edge endpoint span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge span evidence propagation note: 2026-05-26 CDT
 Latest Seal capability metadata report surface status note: 2026-05-26 CDT
@@ -105,6 +107,7 @@ Latest Seal local capability registry schema implementation plan note: 2026-05-2
 Latest Seal local capability registry schema implementation note: 2026-05-26 CDT
 Latest Seal local capability registry schema surface/status note: 2026-05-26 CDT
 Latest Seal Panel dashboard planning checkpoint note: 2026-05-26 CDT
+Latest Seal Panel dashboard view-model contract note: 2026-05-27 CDT
 
 ## Purpose
 
@@ -176,16 +179,18 @@ Latticra Seal local capability registry schema surface/status is complete for th
 
 Latticra Seal Panel dashboard planning checkpoint is complete for the future read-only operator dashboard surface. It does not add Panel UI implementation, dashboard view-model implementation, report file loading, host scanning, tool execution, policy enforcement, capability enforcement, cryptographic verification, signature verification, runtime execution, runtime authority, effect execution, host behavior, network behavior, or production enforcement claims.
 
+Latticra Seal Panel dashboard view-model contract is complete for the future read-only operator dashboard surface. It does not add dashboard view-model implementation, report file loading, host scanning, Panel UI rendering, tool execution, policy enforcement, capability enforcement, cryptographic verification, signature verification, runtime execution, runtime authority, effect execution, host behavior, network behavior, or production enforcement claims.
+
 ## Latest completed planning slice
 
 ```text
-Latticra Seal Panel dashboard planning checkpoint
+Latticra Seal Panel dashboard view-model contract
 ```
 
 Purpose completed:
 
 ```text
-define the future read-only Seal dashboard shape, source rows, absent-authority fields, and acceptance gates while preserving no Panel UI implementation, no dashboard view model, no report loading, no host scanning, no network behavior, no capability enforcement, no effects, and no runtime authority
+define exact future dashboard row fields, required row IDs, missing/malformed/stale source behavior, and denied-by-default display semantics while preserving no dashboard view model implementation, no report loading, no host scanning, no Panel UI rendering, no network behavior, no capability enforcement, no effects, and no runtime authority
 ```
 
 ## Latest completed implementation slice
@@ -210,6 +215,18 @@ Purpose completed:
 
 ```text
 add bounded local schema records, deterministic validation, a default descriptive fixture entry, and negative-case invariants while preserving no registry loader, no registry file access, no tool execution, no host mutation, no network behavior, no capability enforcement, no effects, and no runtime authority
+```
+
+## Earlier implementation slice
+
+```text
+Lat LIR first transition-source edge endpoint payload evidence propagation
+```
+
+Purpose completed:
+
+```text
+copy the first Lat-specific LIR transition-source edge endpoint node values, operators, and bindings into runtime-boundary records/reports so boundary evidence keeps the first Lat-derived transition-source relationship endpoint payloads visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
 ## Earlier implementation slice
@@ -1256,7 +1273,7 @@ runtime_authority_granted=0
 completion_estimate_review_required=0
 ```
 
-Current estimate table source alignment is the source-map cleanup for the public estimate table. Current estimate mathematical rebase is the latest planning-estimate update for that table, moving the overall value to a weighted 45% after Nadia Stage-43 prompt-evaluation release-receipt contract-chain evidence, kernel lifecycle scheduler-credit/scheduler-selection-ready evidence, and vulnerability-management release-gate baseline coverage while changing no implementation behavior, product-security posture, public readiness, product readiness, or runtime authority.
+Current estimate table source alignment is the source-map cleanup for the public estimate table. Current estimate mathematical rebase is the latest planning-estimate update for that table, moving the overall value to a weighted 45% after Nadia Stage-43 prompt-evaluation release-receipt contract-chain evidence, kernel lifecycle scheduler-credit/scheduler-selection-ready evidence, vulnerability-management release-gate baseline coverage, and documentation review/style/cohesion route coverage while changing no implementation behavior, product-security posture, public readiness, product readiness, or runtime authority.
 
 Recommended next slice:
 

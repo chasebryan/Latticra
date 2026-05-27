@@ -15,6 +15,8 @@ latticra_os_image_build_recipe_contract_present=1
 os_image_build_preflight_present=1
 os_image_build_recipe_template_present=1
 os_image_build_execution_allowed=0
+os_image_toolchain_preflight_present=1
+os_image_toolchain_ready=0
 os_image_input_source_manifest_template_present=1
 os_image_input_source_manifest_validation_present=1
 os_image_input_source_manifest_candidate_present=0
@@ -154,6 +156,7 @@ Missing tools must block the build recipe from being marked ready.
 Run the build preflight:
 
 ```sh
+sh scripts/latticra-os-image-toolchain-preflight.sh
 sh scripts/latticra-os-image-build-preflight.sh
 ```
 
