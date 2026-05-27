@@ -451,6 +451,7 @@ for test_name in \
   cpp_authority_layer_rejects_small_report_buffer \
   cpp_authority_layer_rejects_unterminated_audit_text \
   cpp_authority_layer_rejects_audit_text_line_breaks \
+  cpp_authority_layer_rejects_noncanonical_audit_text_padding \
   cpp_authority_layer_is_deterministic \
   cpp_authority_layer_rejects_mutation_flags \
   cpp_authority_layer_rejects_network_flags \

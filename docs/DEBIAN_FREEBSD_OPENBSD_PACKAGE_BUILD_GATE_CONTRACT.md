@@ -22,10 +22,12 @@ debian_freebsd_openbsd_package_install_remove_transcript_contract_present=1
 debian_freebsd_openbsd_package_publication_non_claim_review_contract_present=1
 debian_freebsd_openbsd_package_validation_promotion_blocker_matrix_contract_present=1
 debian_freebsd_openbsd_package_build_evidence_intake_denial_contract_present=1
+debian_freebsd_openbsd_package_build_evidence_intake_denial_review_contract_present=1
 package_build_gate_state=closed-no-effect
 publication_non_claim_review_contract_state=specified-no-effect
 validation_promotion_blocker_matrix_state=blocked-no-effect
 build_evidence_intake_denial_state=denied-no-effect
+build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
 debian_build_allowed=0
 freebsd_build_allowed=0
 openbsd_build_allowed=0
@@ -46,6 +48,7 @@ package_artifact_created=0
 install_on_host_run=0
 publication_non_claim_review_present=1
 platform_build_evidence_intake_denied=1
+denial_re_request_allowed=0
 platform_build_evidence_accepted=0
 package_readiness_claimed=0
 ```
@@ -192,6 +195,7 @@ docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
 docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
 ```
 
 The source archive fixture lane proves temporary archive shape in a disposable workspace.
@@ -305,15 +309,30 @@ scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-contrac
 
 That lane defines how build evidence intake is refused until the blocker matrix opens, while keeping package builds and readiness blocked.
 
-## Next Slice
+## Completed Follow-On Lane
 
-Recommended next slice:
+Completed follow-on lane:
 
 ```text
 Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial review contract before any denial can be re-requested.
 ```
 
-That future lane should review denied intake requests while keeping package builds and readiness blocked.
+```text
+docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
+scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-review-contract.sh
+```
+
+That lane reviews and upholds denied build-evidence intake while keeping package builds and readiness blocked.
+
+## Next Slice
+
+Recommended next slice:
+
+```text
+Add a Debian, FreeBSD, and OpenBSD package build-evidence intake denial disposition contract before any reviewed denial can be closed or re-requested.
+```
+
+That future lane should record the reviewed denial disposition while keeping package builds and readiness blocked.
 
 ## Validation
 

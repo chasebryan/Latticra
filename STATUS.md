@@ -39,6 +39,7 @@ Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge endpoint evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-source edge endpoint payload evidence propagation note: 2026-05-27 CDT
 Latest Lat LIR first transition-source edge endpoint span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge span evidence propagation note: 2026-05-26 CDT
 Latest kernel lifecycle evidence status note: 2026-05-26 CDT
@@ -59,6 +60,7 @@ Latest Seal local capability registry schema implementation plan note: 2026-05-2
 Latest Seal local capability registry schema implementation note: 2026-05-26 CDT
 Latest Seal local capability registry schema surface/status note: 2026-05-26 CDT
 Latest Seal Panel dashboard planning checkpoint note: 2026-05-26 CDT
+Latest Seal Panel dashboard view-model contract note: 2026-05-27 CDT
 Latest Seal policy decision status/public-entry note: 2026-05-25 CDT
 Latest Seal policy decision predecessor status alignment note: 2026-05-26 CDT
 Latest Seal signed request status/public-entry note: 2026-05-25 CDT
@@ -134,6 +136,7 @@ Latest Nadia prompt evaluation result release receipt review disposition release
 Latest Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition contract Stage-45 note: 2026-05-26 CDT
 Latest Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release contract Stage-46 note: 2026-05-26 CDT
 Latest Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt contract Stage-47 note: 2026-05-26 CDT
+Latest Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review contract Stage-48 note: 2026-05-27 CDT
 Latest Latticra Console profile preset note: 2026-05-25 CDT
 Latest Latticra Console standalone console install note: 2026-05-26 CDT
 Latest Latticra Console standalone installer preset note: 2026-05-26 CDT
@@ -232,6 +235,7 @@ Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge endpoint evidence propagation note: 2026-05-26 CDT
+Latest Lat LIR first transition-source edge endpoint payload evidence propagation note: 2026-05-27 CDT
 Latest Lat LIR first transition-source edge endpoint span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat model normalization note: 2026-05-25 CDT
@@ -329,7 +333,7 @@ docs/strategy/README.md
 | Nadia offline AI foundation | 75% |
 | L-UI parser / AST / string foundation | 87% |
 | Foundation documents and contracts | 94% |
-| Public documentation posture | 91% |
+| Public documentation posture | 92% |
 | Strategy/status/funding framework | 63% |
 | Lat / Latticra Programming Language | 27% |
 | LIR / Intermediate Representation | 24% |
@@ -395,6 +399,7 @@ Nadia prompt evaluation result release receipt review disposition release receip
 Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition contract Stage-45
 Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release contract Stage-46
 Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt contract Stage-47
+Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review contract Stage-48
 Runtime boundary Lat pipeline comment evidence integration
 Completion estimate review README/status alignment
 Completion estimate review after runtime-boundary abuse-case fixtures
@@ -521,6 +526,7 @@ Lat LIR first-edge evidence propagation
 Lat LIR first-edge span evidence propagation
 Lat LIR first transition-source edge evidence propagation
 Lat LIR first transition-source edge endpoint evidence propagation
+Lat LIR first transition-source edge endpoint payload evidence propagation
 Lat LIR first transition-source edge endpoint span evidence propagation
 Lat LIR first transition-source edge span evidence propagation
 Lat semantic diagnostics refinement
@@ -605,6 +611,7 @@ Kernel scheduler handoff seed
 Kernel scheduler activation seed
 Kernel scheduler run-entry seed
 Kernel runtime entry admission seed
+Kernel runtime entry frame seed
 Kernel lifecycle report runner
 Kernel lifecycle subsystem summary
 Kernel lifecycle rollback plan
@@ -908,7 +915,7 @@ estimate_adjustment_required=0
 
 ## Current Seal report envelope boundary
 
-The Seal report envelope status record makes the existing metadata-only envelope readiness classification visible from public entry points while preserving no signing, no object sealing, no runtime handoff execution, no effect execution, no capability enforcement, and no runtime authority.
+The Seal report envelope status record makes the existing metadata-only envelope readiness classification visible from public entry points while preserving no signing, no object sealing, no runtime handoff execution, no effect execution, no capability enforcement, and no runtime authority. When crypto graduation evidence is present on runtime handoff report metadata, the envelope requires that evidence to remain passed, standard-aligned, and authority-neutral.
 
 Current report envelope fields:
 
@@ -919,6 +926,10 @@ seal_report_envelope_status_present=1
 envelope_profile=latticra-seal-report-envelope/0.1
 report_profile=latticra-seal-runtime-handoff-report/0.1
 requested_envelope=report-only
+report_envelope_crypto_graduation_gate_present=1
+report_envelope_crypto_graduation_gate_passed=1
+report_envelope_standard_expectations_met=1
+report_envelope_authority_promotion_allowed=0
 report_envelope_ready=1
 report_envelope_state=sealed-report-only
 report_envelope_signature_performed=0
@@ -1912,6 +1923,51 @@ network_behavior_added=0
 external_service_behavior_added=0
 ```
 
+## Current Seal Panel dashboard view-model contract boundary
+
+The Seal Panel dashboard view-model contract defines future read-only dashboard rows for existing Seal evidence while preserving no Panel UI implementation, no dashboard view-model implementation, no report file loading, no host scanning, no policy enforcement, no capability enforcement, no signature verification, no runtime execution, no runtime authority, no effect execution, no host behavior, no network behavior, and no production enforcement claim.
+
+Current Seal Panel dashboard view-model contract fields:
+
+```text
+latticra_seal_panel_dashboard_view_model_contract_present=1
+latticra_seal_panel_dashboard_view_model_contract_status_present=1
+seal_panel_dashboard_view_model_contract_present=1
+seal_panel_dashboard_view_model_contract_status_present=1
+seal_panel_dashboard_planning_status_present=1
+panel_dashboard_view_model_predecessor_panel_dashboard_planning_status_present=1
+seal_panel_dashboard_view_model_profile=latticra-seal-panel-dashboard-view-model/0.1
+seal_panel_dashboard_view_model_mode=contract-only
+seal_panel_dashboard_view_model_status=not-implemented
+view_model_rows_planned=1
+view_model_row_contract_present=1
+source_summary_contract_present=1
+authority_absence_contract_present=1
+operator_review_contract_present=1
+receipt_link_contract_present=1
+next_guarded_slice_contract_present=1
+caller_provided_source_records_only=1
+deterministic_fixture_allowed=1
+report_file_loading_allowed=0
+host_path_scanning_allowed=0
+registry_loading_allowed=0
+network_lookup_allowed=0
+tool_execution_allowed=0
+policy_enforcement_allowed=0
+capability_enforcement_allowed=0
+signature_verification_allowed=0
+trust_store_lookup_allowed=0
+runtime_handoff_allowed=0
+panel_ui_implemented=0
+dashboard_view_model_implemented=0
+report_file_loading_implemented=0
+host_path_scanning_implemented=0
+registry_loader_implemented=0
+runtime_authority_granted=0
+effect_performed=0
+production_security_product=0
+```
+
 ## Current Seal core evidence boundary
 
 The Seal core evidence status surface is now public-entrypoint visible.
@@ -1926,6 +1982,10 @@ Current status fields:
 seal_readme_status_row_alignment_present=1
 seal_core_evidence_status_surface_present=1
 seal_report_envelope_status_present=1
+report_envelope_crypto_graduation_gate_present=1
+report_envelope_crypto_graduation_gate_passed=1
+report_envelope_standard_expectations_met=1
+report_envelope_authority_promotion_allowed=0
 report_envelope_ready=1
 report_envelope_state=sealed-report-only
 report_envelope_signature_performed=0
@@ -2095,6 +2155,11 @@ local_capability_registry_schema_predecessor_operator_receipt_report_status_pres
 seal_panel_dashboard_planning_checkpoint_present=1
 seal_panel_dashboard_planning_status_present=1
 panel_dashboard_predecessor_local_capability_registry_schema_status_present=1
+latticra_seal_panel_dashboard_view_model_contract_present=1
+latticra_seal_panel_dashboard_view_model_contract_status_present=1
+seal_panel_dashboard_view_model_contract_present=1
+seal_panel_dashboard_view_model_contract_status_present=1
+panel_dashboard_view_model_predecessor_panel_dashboard_planning_status_present=1
 operator_visible_status_surface=1
 core_blocked_case_set_complete=1
 runtime_gate_report_only=1
@@ -2164,6 +2229,10 @@ network_exposure_remote_access_baseline_present=1
 network_exposure_remote_access_guard_present=1
 network_exposure_review_required_before_hosted_service=1
 internet_facing_service_claim_allowed=0
+data_classification_protection_baseline_present=1
+data_classification_protection_guard_present=1
+data_classification_review_required_before_hosted_service=1
+customer_data_handling_claim_allowed=0
 zero_trust_runtime_authority_baseline_present=1
 zero_trust_runtime_boundary_required=1
 runtime_boundary_policy_expansion_next=1
@@ -2329,7 +2398,7 @@ The project notes Nucleus announcement README status/index check verifies that t
 
 ## Current runtime boundary refinement boundary
 
-The runtime boundary now carries no-effect Lat pipeline evidence, Lat pipeline first-clause evidence, Lat pipeline first-declaration evidence, Lat pipeline module/count evidence, Lat pipeline stage-summary evidence, Lat pipeline line-comment count and first-comment span evidence, Lat-specific LIR module-summary evidence, Lat-specific LIR source-span evidence, Lat-specific LIR node-kind evidence, Lat-specific LIR first-node evidence, Lat-specific LIR first-node span evidence, Lat-specific LIR first transition-node evidence, Lat-specific LIR first transition-node span evidence, Lat-specific LIR first-edge evidence, Lat-specific LIR first-edge span evidence, Lat-specific LIR first transition-source edge evidence, Lat-specific LIR first transition-source edge endpoint evidence, Lat-specific LIR first transition-source edge endpoint span evidence, Lat-specific LIR first transition-source edge span evidence, Lat-specific LIR no-effect flag evidence, and Lat-specific LIR edge-kind evidence in records and reports. It also reports explicit classification, boundary-domain, authorization-state, evidence-level, and policy-matrix fields for runtime-boundary requests while preserving disabled-by-default behavior and future-gated execution requests.
+The runtime boundary now carries no-effect Lat pipeline evidence, Lat pipeline first-clause evidence, Lat pipeline first-declaration evidence, Lat pipeline module/count evidence, Lat pipeline stage-summary evidence, Lat pipeline line-comment count and first-comment span evidence, Lat-specific LIR module-summary evidence, Lat-specific LIR source-span evidence, Lat-specific LIR node-kind evidence, Lat-specific LIR first-node evidence, Lat-specific LIR first-node span evidence, Lat-specific LIR first transition-node evidence, Lat-specific LIR first transition-node span evidence, Lat-specific LIR first-edge evidence, Lat-specific LIR first-edge span evidence, Lat-specific LIR first transition-source edge evidence, Lat-specific LIR first transition-source edge endpoint evidence, Lat-specific LIR first transition-source edge endpoint payload evidence, Lat-specific LIR first transition-source edge endpoint span evidence, Lat-specific LIR first transition-source edge span evidence, Lat-specific LIR no-effect flag evidence, and Lat-specific LIR edge-kind evidence in records and reports. It also reports explicit classification, boundary-domain, authorization-state, evidence-level, and policy-matrix fields for runtime-boundary requests while preserving disabled-by-default behavior and future-gated execution requests.
 
 ## Current Lat pipeline boundary
 

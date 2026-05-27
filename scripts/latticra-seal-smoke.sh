@@ -95,11 +95,17 @@ section "Secret filename scan"
 secret_filename_hits="$(
   find . \
     -path './.git' -prune -o \
+    -path './reports' -prune -o \
     -name target -type d -prune -o \
     -name build -type d -prune -o \
     -name dist -type d -prune -o \
     -name node_modules -type d -prune -o \
     -name .venv -type d -prune -o \
+    -name '.venv-*' -type d -prune -o \
+    -name venv -type d -prune -o \
+    -name __pycache__ -type d -prune -o \
+    -name .pytest_cache -type d -prune -o \
+    -name .mypy_cache -type d -prune -o \
     -type f \( \
       -name '.env' -o \
       -name 'id_rsa' -o \
@@ -126,6 +132,12 @@ secret_content_hits="$(
     --exclude-dir=dist \
     --exclude-dir=node_modules \
     --exclude-dir=.venv \
+    --exclude-dir='.venv-*' \
+    --exclude-dir=venv \
+    --exclude-dir=__pycache__ \
+    --exclude-dir=.pytest_cache \
+    --exclude-dir=.mypy_cache \
+    --exclude-dir=reports \
     --exclude='latticra.seal' \
     --exclude='latticra-seal-smoke.sh' \
     'BEGIN PRIVATE KEY|BEGIN RSA PRIVATE KEY|BEGIN OPENSSH PRIVATE KEY|OPENAI_API_KEY=|GITHUB_TOKEN=|AWS_SECRET_ACCESS_KEY=' \
@@ -152,6 +164,11 @@ if command -v sha256sum >/dev/null 2>&1; then
     -name dist -type d -prune -o \
     -name node_modules -type d -prune -o \
     -name .venv -type d -prune -o \
+    -name '.venv-*' -type d -prune -o \
+    -name venv -type d -prune -o \
+    -name __pycache__ -type d -prune -o \
+    -name .pytest_cache -type d -prune -o \
+    -name .mypy_cache -type d -prune -o \
     -name reports -type d -prune -o \
     -type f -print0 \
     | sort -z \

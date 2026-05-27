@@ -66,6 +66,9 @@ require_contains 'bootable_os_ready=0' "$doc"
 require_contains 'production_os_claim=0' "$doc"
 
 require_contains 'os_image_build_recipe_contract_present = true' "$manifest"
+require_contains 'os_image_toolchain_contract_present = true' "$manifest"
+require_contains 'os_image_toolchain_preflight_present = true' "$manifest"
+require_contains 'os_image_toolchain_ready = false' "$manifest"
 require_contains 'os_image_build_preflight_present = true' "$manifest"
 require_contains 'os_image_build_recipe_template_present = true' "$manifest"
 require_contains 'os_image_build_execution_allowed = false' "$manifest"
@@ -78,6 +81,7 @@ require_contains 'rootfs_input_present = false' "$manifest"
 
 require_contains 'LATTICRA OS IMAGE BUILD PREFLIGHT' "$script"
 require_contains 'preflight_decision=blocked-no-build-execution' "$script"
+require_contains 'os_image_toolchain_preflight_present=1' "$script"
 require_contains 'build_inputs_ready=' "$script"
 require_contains 'input_bundle_manifest_required=1' "$script"
 require_contains 'future_input_bundle_validation_command=sh scripts/latticra-os-image-input-bundle-validate.sh' "$script"
@@ -103,6 +107,7 @@ sh -n "$script"
 default_output=$(sh "$script")
 require_output_contains "$default_output" 'LATTICRA OS IMAGE BUILD PREFLIGHT'
 require_output_contains "$default_output" 'preflight_status=ok'
+require_output_contains "$default_output" 'os_image_toolchain_preflight_present=1'
 require_output_contains "$default_output" 'input_bundle_manifest_present=0'
 require_output_contains "$default_output" 'input_bundle_manifest_required=1'
 require_output_contains "$default_output" 'kernel_image_input_present=0'

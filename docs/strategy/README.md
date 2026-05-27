@@ -1,7 +1,7 @@
 # Latticra Strategy Index
 
 Status: active strategy index
-Last updated: 2026-05-26 21:34 CDT
+Last updated: 2026-05-27 02:09 CDT
 Scope: dated strategy records, mission alignment, review cadence, and quality expectations.
 
 ## Purpose
@@ -180,6 +180,12 @@ Latest Nucleus effect-contract and runtime-denial workflow packet:
 
 ```text
 2026-05-26-2134-cdt-nucleus-effect-contract-runtime-denial-workflow-packet.md
+```
+
+Latest Nucleus effect-contract and runtime-denial acceptance checklist:
+
+```text
+2026-05-27-0209-cdt-nucleus-effect-contract-runtime-denial-acceptance-checklist.md
 ```
 
 Current operating rule:

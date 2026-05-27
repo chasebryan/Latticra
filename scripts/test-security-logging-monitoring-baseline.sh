@@ -171,9 +171,10 @@ require_contains 'policy_decision_reported=1' docs/ZERO_TRUST_RUNTIME_AUTHORITY_
 require_contains 'denial_reason_reported=1' docs/ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md
 require_contains 'report_redaction_boundary_guard_required=1' docs/SUPPLY_CHAIN_SECURITY_BASELINE.md
 require_contains 'installer_engine_log_redaction_required=1' docs/SUPPLY_CHAIN_SECURITY_BASELINE.md
+require_contains 'installer_engine_log_sanitization_required=1' docs/SUPPLY_CHAIN_SECURITY_BASELINE.md
 require_contains 'evidence_preservation_required=1' docs/CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md
 require_contains 'audit_record_emitted=1' docs/CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md
-require_contains 'redact_log_line(&line)' scripts/test-report-redaction-boundary.sh
+require_contains 'sanitize_log_line(&line)' scripts/test-report-redaction-boundary.sh
 require_contains 'secret_content_pattern=' scripts/test-secret-material-guard.sh
 require_contains 'security_logging_monitoring_baseline_present=1' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
 require_contains 'docs/SECURITY_LOGGING_MONITORING_BASELINE.md' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md

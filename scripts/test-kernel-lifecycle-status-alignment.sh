@@ -92,6 +92,14 @@ require_file .github/workflows/kernel-scheduler-run-entry.yml
 require_file scripts/test-kernel-runtime-entry-admission.sh
 require_file scripts/test-kernel-runtime-entry-admission-report-runner.sh
 require_file .github/workflows/kernel-runtime-entry-admission.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_FRAME_SEED.md
+require_file include/latticra/kernel_runtime_entry_frame.h
+require_file src/kernel_runtime_entry_frame.c
+require_file tests/kernel_runtime_entry_frame.c
+require_file tools/kernel_runtime_entry_frame_report.c
+require_file scripts/test-kernel-runtime-entry-frame.sh
+require_file scripts/test-kernel-runtime-entry-frame-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-frame.yml
 require_file scripts/test-kernel-process-table.sh
 require_file scripts/test-kernel-process-table-report-runner.sh
 require_file .github/workflows/kernel-process-table.yml
@@ -143,15 +151,18 @@ require_contains 'kernel scheduler run-entry guard' docs/status/KERNEL_LIFECYCLE
 require_contains 'kernel scheduler run-entry report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel runtime entry admission guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel runtime entry admission report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry frame guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry frame report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel process table guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel process table report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel syscall table guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel syscall table report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel lifecycle subsystem summary' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel lifecycle rollback plan' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
-require_contains 'final_state=runtime-entry-admission-ready' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'final_state=runtime-entry-frame-ready' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'external_effect_performed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'no_external_effect_chain=1' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_frame_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'runtime_entry_admission_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'runtime_entry_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'scheduler_execution_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
@@ -203,7 +214,7 @@ require_contains 'scheduler_credit_update_allowed=0' docs/status/KERNEL_LIFECYCL
 require_contains 'process_wake_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'dma_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'hardware_effect_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
-require_contains 'Add no-effect runtime entry frame classifier' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'Add no-effect runtime entry register view classifier' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-ipc-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-vfs-namespace.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-device-registry.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
@@ -222,6 +233,7 @@ require_contains '.github/workflows/kernel-scheduler-handoff.yml' docs/status/KE
 require_contains '.github/workflows/kernel-scheduler-activation.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-scheduler-run-entry.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-runtime-entry-admission.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-frame.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-process-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-syscall-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 
@@ -263,12 +275,15 @@ require_contains 'kernel scheduler run-entry guard' docs/status/README.md
 require_contains 'kernel scheduler run-entry report runner' docs/status/README.md
 require_contains 'kernel runtime entry admission guard' docs/status/README.md
 require_contains 'kernel runtime entry admission report runner' docs/status/README.md
+require_contains 'kernel runtime entry frame guard' docs/status/README.md
+require_contains 'kernel runtime entry frame report runner' docs/status/README.md
 require_contains 'kernel process table guard' docs/status/README.md
 require_contains 'kernel process table report runner' docs/status/README.md
 require_contains 'kernel syscall table guard' docs/status/README.md
 require_contains 'kernel syscall table report runner' docs/status/README.md
-require_contains 'final_state=runtime-entry-admission-ready' docs/status/README.md
+require_contains 'final_state=runtime-entry-frame-ready' docs/status/README.md
 require_contains 'external_effect_performed=0' docs/status/README.md
+require_contains 'runtime_entry_frame_allowed=0' docs/status/README.md
 require_contains 'runtime_entry_admission_allowed=0' docs/status/README.md
 require_contains 'runtime_entry_allowed=0' docs/status/README.md
 require_contains 'scheduler_execution_allowed=0' docs/status/README.md
@@ -320,9 +335,10 @@ require_contains 'scheduler_credit_update_allowed=0' docs/status/README.md
 require_contains 'process_wake_allowed=0' docs/status/README.md
 require_contains 'dma_allowed=0' docs/status/README.md
 require_contains 'hardware_effect_allowed=0' docs/status/README.md
-require_contains 'Add no-effect runtime entry frame classifier' docs/status/README.md
+require_contains 'Add no-effect runtime entry register view classifier' docs/status/README.md
 require_contains '.github/workflows/kernel-runtime-entry-admission.yml' docs/status/README.md
-require_contains '| Kernel lifecycle evidence | No-effect kernel lifecycle path reaches `runtime-entry-admission-ready` with guarded scheduler run-entry and runtime-entry admission metadata' README.md
+require_contains '.github/workflows/kernel-runtime-entry-frame.yml' docs/status/README.md
+require_contains '| Kernel lifecycle evidence | No-effect kernel lifecycle path reaches `runtime-entry-frame-ready` with guarded scheduler run-entry, runtime-entry admission, and runtime-entry frame metadata' README.md
 require_contains 'kernel_lifecycle_evidence_status_present=1' README.md
 require_contains 'kernel_run_queue_guard_present=1' README.md
 require_contains 'kernel_context_switch_guard_present=1' README.md
@@ -335,9 +351,11 @@ require_contains 'kernel_scheduler_handoff_guard_present=1' README.md
 require_contains 'kernel_scheduler_activation_guard_present=1' README.md
 require_contains 'kernel_scheduler_run_entry_guard_present=1' README.md
 require_contains 'kernel_runtime_entry_admission_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_frame_guard_present=1' README.md
 require_contains 'kernel_process_table_guard_present=1' README.md
 require_contains 'kernel_syscall_table_guard_present=1' README.md
-require_contains 'final_state=runtime-entry-admission-ready' README.md
+require_contains 'final_state=runtime-entry-frame-ready' README.md
+require_contains 'runtime_entry_frame_allowed=0' README.md
 require_contains 'runtime_entry_admission_allowed=0' README.md
 require_contains 'runtime_entry_allowed=0' README.md
 require_contains 'scheduler_selection_allowed=0' README.md
@@ -360,6 +378,7 @@ require_contains 'docs/KERNEL_SCHEDULER_HANDOFF_SEED.md' README.md
 require_contains 'docs/KERNEL_SCHEDULER_ACTIVATION_SEED.md' README.md
 require_contains 'docs/KERNEL_SCHEDULER_RUN_ENTRY_SEED.md' README.md
 require_contains 'docs/KERNEL_RUNTIME_ENTRY_ADMISSION_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_FRAME_SEED.md' README.md
 require_contains 'docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md' README.md
 require_contains 'Latest kernel lifecycle evidence status note: 2026-05-26 CDT' STATUS.md
 require_contains 'Kernel run queue seed' STATUS.md
@@ -373,6 +392,7 @@ require_contains 'Kernel scheduler handoff seed' STATUS.md
 require_contains 'Kernel scheduler activation seed' STATUS.md
 require_contains 'Kernel scheduler run-entry seed' STATUS.md
 require_contains 'Kernel runtime entry admission seed' STATUS.md
+require_contains 'Kernel runtime entry frame seed' STATUS.md
 require_contains 'Kernel lifecycle rollback plan' STATUS.md
 require_contains 'Latest kernel lifecycle evidence status note: 2026-05-26 CDT' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel run queue seed' docs/status/CURRENT_STATUS.md
@@ -386,6 +406,7 @@ require_contains 'Kernel scheduler handoff seed' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel scheduler activation seed' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel scheduler run-entry seed' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel runtime entry admission seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry frame seed' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel lifecycle rollback plan' docs/status/CURRENT_STATUS.md
 require_contains 'status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'KERNEL_RUN_QUEUE_SEED.md' docs/FOUNDATION_INDEX.md
@@ -399,6 +420,7 @@ require_contains 'KERNEL_SCHEDULER_HANDOFF_SEED.md' docs/FOUNDATION_INDEX.md
 require_contains 'KERNEL_SCHEDULER_ACTIVATION_SEED.md' docs/FOUNDATION_INDEX.md
 require_contains 'KERNEL_SCHEDULER_RUN_ENTRY_SEED.md' docs/FOUNDATION_INDEX.md
 require_contains 'KERNEL_RUNTIME_ENTRY_ADMISSION_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_FRAME_SEED.md' docs/FOUNDATION_INDEX.md
 require_contains 'sh scripts/test-kernel-ipc-table.sh' .github/workflows/kernel-ipc-table.yml
 require_contains 'sh scripts/test-kernel-ipc-table-report-runner.sh' .github/workflows/kernel-ipc-table.yml
 require_contains 'sh scripts/test-kernel-vfs-namespace.sh' .github/workflows/kernel-vfs-namespace.yml
@@ -435,6 +457,8 @@ require_contains 'sh scripts/test-kernel-scheduler-run-entry.sh' .github/workflo
 require_contains 'sh scripts/test-kernel-scheduler-run-entry-report-runner.sh' .github/workflows/kernel-scheduler-run-entry.yml
 require_contains 'sh scripts/test-kernel-runtime-entry-admission.sh' .github/workflows/kernel-runtime-entry-admission.yml
 require_contains 'sh scripts/test-kernel-runtime-entry-admission-report-runner.sh' .github/workflows/kernel-runtime-entry-admission.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-frame.sh' .github/workflows/kernel-runtime-entry-frame.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-frame-report-runner.sh' .github/workflows/kernel-runtime-entry-frame.yml
 require_contains 'sh scripts/test-kernel-process-table.sh' .github/workflows/kernel-process-table.yml
 require_contains 'sh scripts/test-kernel-process-table-report-runner.sh' .github/workflows/kernel-process-table.yml
 require_contains 'sh scripts/test-kernel-syscall-table.sh' .github/workflows/kernel-syscall-table.yml

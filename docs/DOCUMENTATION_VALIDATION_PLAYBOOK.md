@@ -22,7 +22,7 @@ Validation should prove only the documentation claim being made. It should not b
 | Estimate mirror | Completion estimates or public estimate tables change. | `sh scripts/test-current-estimate-table-source-alignment.sh`. |
 | Seal docs | Seal README, Seal status, Seal public wording, or Seal source records change. | `sh scripts/test-latticra-seal-docs.sh` plus exact Seal guard. |
 | Platform docs | Fedora, Ubuntu, openSUSE, Debian, FreeBSD, OpenBSD, macOS, installer, or package posture changes. | Platform workflow guard plus exact platform guard. |
-| Subsystem docs | Runtime, Nucleus, Lat, LIR, L-UI, Nadia, boot preview, security, installer, or package source record changes. | Exact guard named by the source or status record. |
+| Subsystem docs | Runtime, Nucleus, Lat, LIR, L-UI, Nadia, boot preview, security, installer, package, or subsystem landing-page changes. | Exact guard named by the source or status record plus [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) review when the landing page changes. |
 | Claim promotion | Public wording becomes stronger. | Stop unless contract, implementation, validation, status, non-claim update, traceability, and public-entry alignment all exist. |
 
 ## Minimum Documentation-Only Check

@@ -186,6 +186,28 @@ bool record_text_fields_are_terminated(
            char_array_is_terminated(record.denial_reason);
 }
 
+template <std::size_t Size>
+bool char_array_is_nul_padded(const std::array<char, Size> &source) noexcept {
+    bool found_terminator = false;
+    for (std::size_t index = 0u; index < Size; ++index) {
+        if (found_terminator && source[index] != '\0') {
+            return false;
+        }
+        if (source[index] == '\0') {
+            found_terminator = true;
+        }
+    }
+    return found_terminator;
+}
+
+bool record_text_fields_are_nul_padded(
+    const authority_audit_record &record) noexcept {
+    return char_array_is_nul_padded(record.policy_name) &&
+           char_array_is_nul_padded(record.source_identity) &&
+           char_array_is_nul_padded(record.validator_name) &&
+           char_array_is_nul_padded(record.denial_reason);
+}
+
 bool record_text_fields_are_line_safe(
     const authority_audit_record &record) noexcept {
     return !char_array_has_line_break_before_terminator(record.policy_name) &&
@@ -771,6 +793,11 @@ authority_status render_authority_audit_report(
     for (std::size_t index = 0u; index < report.record_count; ++index) {
         const authority_audit_record &record = report.records[index];
         if (!record_text_fields_are_terminated(record)) {
+            clear_output(buffer, buffer_len);
+            return authority_status::invalid_input;
+        }
+
+        if (!record_text_fields_are_nul_padded(record)) {
             clear_output(buffer, buffer_len);
             return authority_status::invalid_input;
         }

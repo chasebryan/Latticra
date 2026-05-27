@@ -45,7 +45,7 @@ Latticra Panel / local control surface: 31%
 Nadia offline AI foundation: 75%
 L-UI parser / AST / string foundation: 87%
 Foundation documents and contracts: 94%
-Public documentation posture: 91%
+Public documentation posture: 92%
 Strategy/status/funding framework: 63%
 Lat / Latticra Programming Language: 27%
 LIR / Intermediate Representation: 24%

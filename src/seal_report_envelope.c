@@ -38,6 +38,8 @@ const char *latticra_seal_report_envelope_error_label(
         return "denied-host-effect";
     case LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_NETWORK_EFFECT:
         return "denied-network-effect";
+    case LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_CRYPTO_GRADUATION_GATE:
+        return "denied-crypto-graduation-gate";
     default:
         return "unknown";
     }
@@ -46,7 +48,14 @@ const char *latticra_seal_report_envelope_error_label(
 static void envelope_init(latticra_seal_report_envelope_t *envelope) {
     memset(envelope, 0, sizeof(*envelope));
     copy_literal(envelope->envelope_profile, sizeof(envelope->envelope_profile), "latticra-seal-report-envelope/0.1");
+    copy_literal(envelope->crypto_graduation_gate_state, sizeof(envelope->crypto_graduation_gate_state), "not-required");
     copy_literal(envelope->envelope_state, sizeof(envelope->envelope_state), "denied-report");
+    envelope->crypto_graduation_gate_present = 0u;
+    envelope->crypto_graduation_gate_passed = 0u;
+    envelope->standard_expectations_met = 0u;
+    envelope->local_verify_graduated = 0u;
+    envelope->receipt_promotion_graduated = 0u;
+    envelope->authority_promotion_allowed = 0u;
     envelope->report_ready = 0u;
     envelope->envelope_ready = 0u;
     envelope->signature_performed = 0u;
@@ -73,12 +82,21 @@ static void copy_report_metadata(
     copy_literal(out->message_digest_algorithm, sizeof(out->message_digest_algorithm), report->message_digest_algorithm);
     copy_literal(out->message_digest_hex, sizeof(out->message_digest_hex), report->message_digest_hex);
     copy_literal(out->public_key_identity_label, sizeof(out->public_key_identity_label), report->public_key_identity_label);
+    copy_literal(out->crypto_graduation_profile, sizeof(out->crypto_graduation_profile), report->crypto_graduation_profile);
+    copy_literal(out->assurance_baseline_profile, sizeof(out->assurance_baseline_profile), report->assurance_baseline_profile);
+    copy_literal(out->crypto_graduation_gate_state, sizeof(out->crypto_graduation_gate_state), report->crypto_graduation_gate_state);
     copy_literal(out->requested_capability, sizeof(out->requested_capability), report->requested_capability);
     copy_literal(out->requested_effect, sizeof(out->requested_effect), report->requested_effect);
     copy_literal(out->requested_handoff, sizeof(out->requested_handoff), report->requested_handoff);
     copy_literal(out->requested_report, sizeof(out->requested_report), report->requested_report);
     copy_literal(out->requested_envelope, sizeof(out->requested_envelope), requested_envelope);
     copy_literal(out->requested_scope, sizeof(out->requested_scope), report->requested_scope);
+    out->crypto_graduation_gate_present = report->crypto_graduation_gate_present;
+    out->crypto_graduation_gate_passed = report->crypto_graduation_gate_passed;
+    out->standard_expectations_met = report->standard_expectations_met;
+    out->local_verify_graduated = report->local_verify_graduated;
+    out->receipt_promotion_graduated = report->receipt_promotion_graduated;
+    out->authority_promotion_allowed = report->authority_promotion_allowed;
     copy_literal(out->report_state, sizeof(out->report_state), report->report_state);
     out->report_ready = report->report_ready;
     out->handoff_performed = report->handoff_performed;
@@ -112,6 +130,19 @@ latticra_status_t latticra_seal_report_envelope_from_report(
         out->error = LATTICRA_SEAL_REPORT_ENVELOPE_INVALID_REPORT;
         copy_literal(out->envelope_state, sizeof(out->envelope_state), "denied-report");
         copy_literal(out->status, sizeof(out->status), "invalid-report");
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (report->crypto_graduation_gate_present != 0u &&
+        (report->crypto_graduation_gate_passed != 1u ||
+         report->standard_expectations_met != 1u ||
+         report->local_verify_graduated != 1u ||
+         report->receipt_promotion_graduated != 1u ||
+         report->authority_promotion_allowed != 0u ||
+         strcmp(report->crypto_graduation_gate_state, "graduated-authority-neutral") != 0)) {
+        out->error = LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_CRYPTO_GRADUATION_GATE;
+        copy_literal(out->envelope_state, sizeof(out->envelope_state), "denied-crypto-graduation-gate");
+        copy_literal(out->status, sizeof(out->status), "denied-crypto-graduation-gate");
         return LATTICRA_STATUS_OK;
     }
 
@@ -236,12 +267,21 @@ latticra_status_t latticra_seal_report_envelope_render(
         "message_digest_algorithm=%s\n"
         "message_digest_hex=%s\n"
         "public_key_identity_label=%s\n"
+        "crypto_graduation_profile=%s\n"
+        "assurance_baseline_profile=%s\n"
+        "crypto_graduation_gate_state=%s\n"
         "requested_capability=%s\n"
         "requested_effect=%s\n"
         "requested_handoff=%s\n"
         "requested_report=%s\n"
         "requested_envelope=%s\n"
         "requested_scope=%s\n"
+        "crypto_graduation_gate_present=%u\n"
+        "crypto_graduation_gate_passed=%u\n"
+        "standard_expectations_met=%u\n"
+        "local_verify_graduated=%u\n"
+        "receipt_promotion_graduated=%u\n"
+        "authority_promotion_allowed=%u\n"
         "report_state=%s\n"
         "report_ready=%u\n"
         "envelope_state=%s\n"
@@ -265,12 +305,21 @@ latticra_status_t latticra_seal_report_envelope_render(
         envelope->message_digest_algorithm,
         envelope->message_digest_hex,
         envelope->public_key_identity_label,
+        envelope->crypto_graduation_profile,
+        envelope->assurance_baseline_profile,
+        envelope->crypto_graduation_gate_state,
         envelope->requested_capability,
         envelope->requested_effect,
         envelope->requested_handoff,
         envelope->requested_report,
         envelope->requested_envelope,
         envelope->requested_scope,
+        envelope->crypto_graduation_gate_present,
+        envelope->crypto_graduation_gate_passed,
+        envelope->standard_expectations_met,
+        envelope->local_verify_graduated,
+        envelope->receipt_promotion_graduated,
+        envelope->authority_promotion_allowed,
         envelope->report_state,
         envelope->report_ready,
         envelope->envelope_state,

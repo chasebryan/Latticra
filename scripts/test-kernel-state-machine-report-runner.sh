@@ -41,6 +41,7 @@ cc $CFLAGS \
   src/kernel_scheduler_activation.c \
   src/kernel_scheduler_run_entry.c \
   src/kernel_runtime_entry_admission.c \
+  src/kernel_runtime_entry_frame.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   tools/kernel_state_machine_report.c \

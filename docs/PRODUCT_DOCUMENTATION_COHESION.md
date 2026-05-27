@@ -23,6 +23,8 @@ Use [`DOCUMENTATION_GLOSSARY.md`](DOCUMENTATION_GLOSSARY.md) when product copy d
 
 Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) before broad product-surface changes to score findability, current status visibility, claim safety, traceability, validation, reader-route fitness, public/source consistency, and non-claim proximity.
 
+Use [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) before creating or refreshing subsystem landing pages so subsystem progress does not imply product readiness.
+
 ## Cohesion Promise
 
 All product-facing documentation should describe Latticra as:
@@ -58,7 +60,7 @@ Use [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md) for canonical
 | [`security.html`](security.html) and [`../SECURITY.md`](../SECURITY.md) | Report issues and understand security posture. | Safe testing, threat-model work, security non-claims, and evidence boundaries. | Malware prevention, ransomware prevention, certified security, or hardened sandboxing. |
 | [`../installer/README.md`](../installer/README.md) | Use Panel and installer lanes. | User-local guarded behavior, configuration boundaries, and platform-specific prerequisites. | Root installer authority, unattended host mutation, production installer readiness, or OS-base installation. |
 | Platform package docs | Review package shape and platform readiness. | Local-only drafts, static checks, prerequisites, and non-approval boundaries. | Fedora, Ubuntu, Debian, FreeBSD, OpenBSD, openSUSE, or vendor endorsement. |
-| Subsystem maps | Enter a technical lane. | Contract, implementation, status, and guard path for the subsystem. | That subsystem progress changes overall product readiness automatically. |
+| Subsystem maps | Enter a technical lane. | Contract, implementation, status, guard path, non-claims, and stop signals for the subsystem. | That subsystem progress changes overall product readiness automatically. |
 | Status records | Verify current posture. | Current evidence, estimate posture, next blockers, and non-claims. | Release commitments, guarantees, or broad public claims. |
 
 ## Reader Routes
@@ -172,7 +174,8 @@ Run this review when public wording changes:
 9. Does the change preserve the documentation-only boundary if no implementation changed?
 10. Does the wording follow [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md)?
 11. Does [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) leave every relevant dimension healthy or explicitly handled as a watch/failing item?
-12. Does the change need a [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) outcome label?
+12. Does [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) apply because a subsystem landing page or subsystem public summary changed?
+13. Does the change need a [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) outcome label?
 
 ## Maintenance Boundary
 

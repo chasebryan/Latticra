@@ -18,6 +18,8 @@ os_image_artifact_manifest_validation_present=1
 os_image_artifact_manifest_candidate_present=0
 os_image_build_preflight_present=1
 os_image_build_execution_allowed=0
+os_image_toolchain_preflight_present=1
+os_image_toolchain_ready=0
 usb_write_command_template_present=1
 usb_write_execution_allowed=0
 vm_image_artifact_present=0
@@ -124,6 +126,7 @@ sh scripts/latticra-os-image-release-preflight.sh
 Preflight the future local image build inputs:
 
 ```sh
+sh scripts/latticra-os-image-toolchain-preflight.sh
 sh scripts/latticra-os-image-build-preflight.sh
 ```
 
@@ -279,6 +282,8 @@ os_image_artifact_manifest_validation_present=1
 os_image_artifact_manifest_candidate_present=0
 os_image_build_preflight_present=1
 os_image_build_execution_allowed=0
+os_image_toolchain_preflight_present=1
+os_image_toolchain_ready=0
 vm_image_artifact_present=0
 usb_write_command_template_present=1
 vm_test_command_template_present=1

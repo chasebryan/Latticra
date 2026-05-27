@@ -120,7 +120,7 @@ require_contains "$artifact_contract" "$contract"
 require_contains "$payload_contract" "$contract"
 require_contains "$install_remove_contract" "$contract"
 require_contains "$obs_contract" "$contract"
-require_contains 'Add openSUSE RPM build-evidence intake denial contract' "$contract"
+require_contains 'Add openSUSE RPM build-evidence intake denial review contract' "$contract"
 require_contains 'opensuse_local_rpm_build_gate_contract: ok' "$contract"
 
 require_contains "$contract" docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md

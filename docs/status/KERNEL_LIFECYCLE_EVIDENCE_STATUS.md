@@ -58,6 +58,8 @@ kernel scheduler run-entry guard
 kernel scheduler run-entry report runner
 kernel runtime entry admission guard
 kernel runtime entry admission report runner
+kernel runtime entry frame guard
+kernel runtime entry frame report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
@@ -70,7 +72,7 @@ kernel lifecycle rollback plan
 The lifecycle evidence can report a bounded in-memory path ending at:
 
 ```text
-final_state=runtime-entry-admission-ready
+final_state=runtime-entry-frame-ready
 ```
 
 The lifecycle report runner and subsystem summary keep the external-effect posture explicit:
@@ -85,6 +87,7 @@ no_external_effect_chain=1
 The merged evidence keeps authority denied:
 
 ```text
+runtime_entry_frame_allowed=0
 runtime_entry_admission_allowed=0
 runtime_entry_allowed=0
 scheduler_execution_allowed=0
@@ -180,15 +183,16 @@ not installer-ready
 Recommended next work:
 
 ```text
-Add no-effect runtime entry frame classifier
+Add no-effect runtime entry register view classifier
 ```
 
-That future slice should build on the admission classifier with frame metadata/reporting only and continue to require:
+That future slice should build on the frame classifier with register-view metadata/reporting only and continue to require:
 
 ```text
 external_effect_performed=0
 persistence_allowed=0
 recovery_authority_allowed=0
+runtime_entry_frame_allowed=0
 runtime_entry_admission_allowed=0
 runtime_entry_allowed=0
 ```
@@ -222,6 +226,7 @@ Dedicated workflow lanes keep the kernel table guards visible:
 .github/workflows/kernel-scheduler-activation.yml
 .github/workflows/kernel-scheduler-run-entry.yml
 .github/workflows/kernel-runtime-entry-admission.yml
+.github/workflows/kernel-runtime-entry-frame.yml
 .github/workflows/kernel-process-table.yml
 .github/workflows/kernel-syscall-table.yml
 ```

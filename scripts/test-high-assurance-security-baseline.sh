@@ -39,6 +39,7 @@ require_file docs/SECURITY_LOGGING_MONITORING_BASELINE.md
 require_file docs/BACKUP_RECOVERY_RESILIENCE_BASELINE.md
 require_file docs/SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md
 require_file docs/NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE.md
+require_file docs/DATA_CLASSIFICATION_PROTECTION_BASELINE.md
 require_file docs/security/C_CPP_SECURITY_PROFILE.md
 require_file docs/security/C_ABI_BOUNDARY_POLICY.md
 require_file docs/status/README.md
@@ -55,6 +56,7 @@ require_file scripts/test-security-logging-monitoring-baseline.sh
 require_file scripts/test-backup-recovery-resilience-baseline.sh
 require_file scripts/test-secure-configuration-change-management-baseline.sh
 require_file scripts/test-network-exposure-remote-access-baseline.sh
+require_file scripts/test-data-classification-protection-baseline.sh
 require_file scripts/test-quality-safety-guards.sh
 
 require_contains 'Status: high-assurance security baseline checkpoint' "$doc"
@@ -73,6 +75,7 @@ require_contains 'CISA Cross-Sector Cybersecurity Performance Goals' "$doc"
 require_contains 'CISA/FBI/NSA international Best Practices for Event Logging and Threat Detection' "$doc"
 require_contains 'CISA Logging Made Easy and CISA logging guidance' "$doc"
 require_contains 'CISA Zero Trust Maturity Model v2' "$doc"
+require_contains 'NSA Zero Trust Data Pillar' "$doc"
 require_contains 'NSA Zero Trust Network and Environment Pillar' "$doc"
 require_contains 'NSA Network Infrastructure Security Guide' "$doc"
 require_contains 'CISA/NSA/FBI Guide to Securing Remote Access Software' "$doc"
@@ -86,6 +89,8 @@ require_contains 'CISA/FBI/NSA/MS-ISAC #StopRansomware Guide' "$doc"
 require_contains 'CISA/FBI/NSA/MS-ISAC #StopRansomware recovery guidance' "$doc"
 require_contains 'NIST Cybersecurity Framework 2.0' "$doc"
 require_contains 'NIST SP 800-34 Rev. 1 and SP 800-184' "$doc"
+require_contains 'NIST SP 800-60 and SP 800-122' "$doc"
+require_contains 'NIST Privacy Framework' "$doc"
 require_contains 'NIST SP 800-128' "$doc"
 require_contains 'NIST SP 800-70 Rev. 5' "$doc"
 require_contains 'NIST SP 800-41 Rev. 1' "$doc"
@@ -117,6 +122,7 @@ for field in \
   'backup_recovery_resilience_baseline_present=1' \
   'secure_configuration_change_management_baseline_present=1' \
   'network_exposure_remote_access_baseline_present=1' \
+  'data_classification_protection_baseline_present=1' \
   'kev_release_review_required=1' \
   'fips_crypto_boundary_required_before_production_crypto=1' \
   'phishing_resistant_mfa_required_before_remote_privileged_access=1' \
@@ -124,6 +130,7 @@ for field in \
   'backup_restore_recovery_evidence_required_before_hosted_service=1' \
   'secure_configuration_change_control_required_before_hosted_service=1' \
   'network_exposure_review_required_before_hosted_service=1' \
+  'data_classification_review_required_before_hosted_service=1' \
   'sbom_required_before_production_installer=1' \
   'third_party_security_validation_required_before_security_release=1' \
   'incident_response_plan_required_before_production_service=1' \
@@ -150,6 +157,8 @@ for allocation in \
   'operator_identity_known=1' \
   'workload_or_service_identity_known=1' \
   'device_or_host_integrity_context_known=1' \
+  'tool_or_mcp_boundary_known=1' \
+  'context_sharing_scope_known=1' \
   'request_kind_known=1' \
   'unknown_request_denied=1' \
   'future_gate_denied_until_contract=1' \
@@ -184,9 +193,17 @@ for allocation in \
   'remote access tool inventory and approved remote access path' \
   'approved RMM allowlist and unauthorized RMM detection plan' \
   'network log-source inventory and flow visibility plan' \
+  'data inventory and owners' \
+  'data classification and information type categorization' \
+  'sensitive-data flow map' \
+  'PII presence review and confidentiality impact record' \
+  'data minimization and collection-purpose review' \
+  'retention period and disposal process' \
+  'log/report redaction and secret or PII scan evidence' \
   'assign a named cybersecurity owner' \
   'define secure configuration baseline and change-control evidence' \
   'define network exposure and remote-access evidence' \
+  'define data classification and protection evidence' \
   'publish a cyber incident reporting and response baseline before any incident-response feature' \
   'schedule table-top or third-party validation before security release'
 do
@@ -210,6 +227,7 @@ require_contains 'docs/SECURITY_LOGGING_MONITORING_BASELINE.md' SECURITY.md
 require_contains 'docs/BACKUP_RECOVERY_RESILIENCE_BASELINE.md' SECURITY.md
 require_contains 'docs/SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md' SECURITY.md
 require_contains 'docs/NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE.md' SECURITY.md
+require_contains 'docs/DATA_CLASSIFICATION_PROTECTION_BASELINE.md' SECURITY.md
 require_contains 'high_assurance_security_baseline_present=1' README.md
 require_contains 'memory_safety_roadmap_present=1' README.md
 require_contains 'supply_chain_security_baseline_present=1' README.md
@@ -221,6 +239,7 @@ require_contains 'security_logging_monitoring_baseline_present=1' README.md
 require_contains 'backup_recovery_resilience_baseline_present=1' README.md
 require_contains 'secure_configuration_change_management_baseline_present=1' README.md
 require_contains 'network_exposure_remote_access_baseline_present=1' README.md
+require_contains 'data_classification_protection_baseline_present=1' README.md
 require_contains 'source_refresh_date=2026-05-26' README.md
 require_contains 'high_assurance_security_baseline_present=1' STATUS.md
 require_contains 'memory_safety_roadmap_present=1' STATUS.md
@@ -233,6 +252,7 @@ require_contains 'security_logging_monitoring_baseline_present=1' STATUS.md
 require_contains 'backup_recovery_resilience_baseline_present=1' STATUS.md
 require_contains 'secure_configuration_change_management_baseline_present=1' STATUS.md
 require_contains 'network_exposure_remote_access_baseline_present=1' STATUS.md
+require_contains 'data_classification_protection_baseline_present=1' STATUS.md
 require_contains 'High-assurance security baseline' docs/status/README.md
 require_contains 'HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md' docs/status/README.md
 require_contains 'Latest high-assurance security baseline note: 2026-05-26 CDT' docs/status/CURRENT_STATUS.md
@@ -249,6 +269,7 @@ require_contains 'sh ./scripts/test-security-logging-monitoring-baseline.sh' Mak
 require_contains 'sh ./scripts/test-backup-recovery-resilience-baseline.sh' Makefile
 require_contains 'sh ./scripts/test-secure-configuration-change-management-baseline.sh' Makefile
 require_contains 'sh ./scripts/test-network-exposure-remote-access-baseline.sh' Makefile
+require_contains 'sh ./scripts/test-data-classification-protection-baseline.sh' Makefile
 require_contains 'quality-security-standards:' Makefile
 require_contains 'quality-security-standards' Makefile
 require_contains 'test-high-assurance-security-baseline.sh' scripts/test-quality-safety-guards.sh

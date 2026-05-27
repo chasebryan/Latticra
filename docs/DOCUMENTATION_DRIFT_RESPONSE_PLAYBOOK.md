@@ -12,6 +12,8 @@ Use it when a public page, source record, status mirror, estimate table, package
 
 Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) to classify broad documentation health issues before choosing the drift response.
 
+Use [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) when the drift affects subsystem landing pages or subsystem public summaries.
+
 This playbook does not promote claims. It narrows or aligns documentation until the evidence supports stronger wording.
 
 ## Drift Types
@@ -26,6 +28,7 @@ This playbook does not promote claims. It narrows or aligns documentation until 
 | Product-copy drift | Product-facing wording implies production, approval, security, or runtime authority. | Replace it with wording from the claims ledger and style guide. |
 | Platform drift | Package or platform docs imply official approval, archive readiness, or production installability. | Restore local-only or no-effect posture. |
 | Security drift | Security docs imply protection, prevention, sandboxing, certification, or hardening without evidence. | Restore security non-claims and source-tracked wording. |
+| Subsystem landing-page drift | A subsystem page omits current posture, evidence spine, validation, non-claims, stop signals, or mirrors. | Restore the required shape from the subsystem documentation standard. |
 | Validation drift | A guard fails because the docs and expected public posture disagree. | Fix the docs or mirrors; do not edit the guard for convenience. |
 | Stale evidence | A record relies on older evidence contradicted by newer status. | Demote the public wording to the latest supported status. |
 
@@ -38,10 +41,11 @@ When drift appears:
 3. Check allowed and blocked wording in [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
 4. Check terminology in [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
 5. Score broad surface health with [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) when the drift affects findability, reader routes, public/source consistency, security posture, platform posture, estimates, or subsystem landing pages.
-6. Select validation commands with [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
-7. Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) if public wording, mirrors, estimates, platform posture, security wording, or non-claims change.
-8. Update only the surfaces whose reader-facing claim changed.
-9. Run the selected validation checks.
+6. Compare subsystem landing-page drift against [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md).
+7. Select validation commands with [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
+8. Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) if public wording, mirrors, estimates, platform posture, security wording, or non-claims change.
+9. Update only the surfaces whose reader-facing claim changed.
+10. Run the selected validation checks.
 
 ## Demotion Rule
 
@@ -72,6 +76,7 @@ Examples:
 | Estimate mirror differs. | Update mirror from the estimate source record. | Estimate source-alignment guard. |
 | Platform docs omit local-only status. | Add local-only and no-approval wording. | Platform workflow guard plus exact platform guard. |
 | Security docs overpromise. | Restore non-claims and source-tracked wording. | Exact security or threat-model guard. |
+| Subsystem landing page omits the evidence spine. | Restore current posture, evidence spine, validation, non-claims, stop signals, and mirrors from the subsystem standard. | Exact subsystem guard plus local link check and public-entry guard. |
 | Source record is missing. | Remove or block the claim until the source record exists. | Link check and review packet outcome. |
 | Validation command is missing. | Mark the claim blocked for missing validation. | Review packet outcome `blocked_missing_validation`. |
 

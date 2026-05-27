@@ -23,6 +23,7 @@ static void seed_summary_result(
     result->status = LATTICRA_STATUS_OK;
     summary_copy(result->summary_status, sizeof(result->summary_status), "pending");
     summary_copy(result->final_state, sizeof(result->final_state), "created");
+    result->runtime_entry_frame_allowed = 0;
     result->runtime_entry_admission_allowed = 0;
     result->runtime_entry_allowed = 0;
     result->scheduler_execution_allowed = 0;
@@ -94,7 +95,7 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_default_request(
 
     request->lifecycle_request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
     request->lifecycle_request.target_state =
-        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY;
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY;
     request->lifecycle_request.max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
 }
@@ -139,6 +140,10 @@ static const char *lifecycle_relation_for(
             return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_INITIALIZED) ?
                 "boot-sequence-seeded" : "boot-sequence-not-ready";
         case LATTICRA_KERNEL_SUBSYSTEM_RUNTIME:
+            if (state_at_or_after(final_state,
+                    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY)) {
+                return "runtime-entry-frame-ready";
+            }
             return state_at_or_after(final_state,
                 LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY) ?
                 "runtime-entry-admission-ready" : "runtime-not-entered";
@@ -276,7 +281,7 @@ static void fill_summary_entries(
             result->lifecycle.final_state,
             registry_entry->kind);
         entry->authority_allowed = 0;
-        entry->network_allowed = 0;
+        entry->network_allowed = registry_entry->network_allowed;
         entry->no_effect = registry_entry->no_effect;
         entry->evidence_level = registry_entry->evidence_level;
     }
@@ -294,6 +299,7 @@ static void finalize_summary(
     result->external_effect_performed = result->lifecycle.external_effect_performed;
     result->network_allowed = result->lifecycle.network_allowed;
     result->registry_no_effect = result->registry.no_effect;
+    result->runtime_entry_frame_allowed = 0;
     result->runtime_entry_admission_allowed = 0;
     result->runtime_entry_allowed = 0;
     result->scheduler_execution_allowed = 0;
@@ -355,7 +361,7 @@ static void finalize_summary(
     summary_copy(result->summary_status, sizeof(result->summary_status),
         (result->lifecycle_complete == 1 &&
          result->lifecycle.final_state ==
-            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY &&
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY &&
          result->registry_no_effect == 1 &&
          result->external_effect_performed == 0 &&
          result->network_allowed == 0) ?
@@ -445,6 +451,7 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         "lifecycle_network_allowed=%d\n"
         "machine_network_allowed=%d\n"
         "registry_no_effect=%d\n"
+        "runtime_entry_frame_allowed=%d\n"
         "runtime_entry_admission_allowed=%d\n"
         "runtime_entry_allowed=%d\n"
         "scheduler_execution_allowed=%d\n"
@@ -512,6 +519,7 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         result->lifecycle.network_allowed,
         result->lifecycle.machine.network_allowed,
         result->registry_no_effect,
+        result->runtime_entry_frame_allowed,
         result->runtime_entry_admission_allowed,
         result->runtime_entry_allowed,
         result->scheduler_execution_allowed,

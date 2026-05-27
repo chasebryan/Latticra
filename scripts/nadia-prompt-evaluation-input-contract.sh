@@ -30,6 +30,32 @@ fail() {
   exit "${2:-1}"
 }
 
+write_file() {
+  target="$1"
+  dir=$(dirname -- "$target")
+
+  [ -d "$dir" ] || fail "report directory is missing: $dir" 74
+  [ ! -L "$target" ] || fail "refusing to overwrite symlink report: $target" 74
+  if [ -e "$target" ] && [ ! -f "$target" ]; then
+    fail "refusing to overwrite non-regular report: $target" 74
+  fi
+
+  tmp=$(mktemp "$dir/.nadia-prompt-evaluation-input.XXXXXX") ||
+    fail "failed to create temporary report in: $dir" 74
+  if ! cat > "$tmp"; then
+    rm -f "$tmp"
+    fail "failed to write temporary report: $tmp" 74
+  fi
+  if ! chmod 0644 "$tmp"; then
+    rm -f "$tmp"
+    fail "failed to set report mode: $tmp" 74
+  fi
+  if ! mv -f "$tmp" "$target"; then
+    rm -f "$tmp"
+    fail "failed to publish report: $target" 74
+  fi
+}
+
 measure_file() {
   file="$1"
   if command -v sha256sum >/dev/null 2>&1; then
@@ -259,7 +285,7 @@ PROMPT_TOKENIZATION_STAGE=$(field_or_unknown prompt_tokenization_stage "$CONTEXT
 TOKENIZER_RUNTIME_ATTACHMENT_STAGE=$(field_or_unknown tokenizer_runtime_attachment_stage "$CONTEXT_WINDOW_ASSEMBLY_ABS")
 TOKENIZATION_BOUNDARY_STAGE=$(field_or_unknown tokenization_boundary_stage "$CONTEXT_WINDOW_ASSEMBLY_ABS")
 
-cat > "$REPORT" <<REPORT
+write_file "$REPORT" <<REPORT
 NADIA PROMPT EVALUATION INPUT CONTRACT
 
 timestamp_utc=$TS
@@ -584,7 +610,7 @@ requires_refusal_policy_review=1
 requires_future_prompt_evaluation_runtime_handoff_contract=1
 REPORT
 
-cp "$REPORT" "$OUT_DIR/latest-prompt-evaluation-input-contract.txt"
+write_file "$OUT_DIR/latest-prompt-evaluation-input-contract.txt" < "$REPORT"
 
 printf 'NADIA_PROMPT_EVALUATION_INPUT_CONTRACT=%s\n' "$REPORT"
 printf 'NADIA_PROMPT_EVALUATION_INPUT_CREATED=0\n'

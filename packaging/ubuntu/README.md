@@ -41,6 +41,7 @@ docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
 docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md
 docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md
 docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md
+docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md
 scripts/ubuntu-package-notice-inventory.sh
 scripts/test-ubuntu-package-notice-inventory.sh
@@ -62,6 +63,7 @@ scripts/test-ubuntu-local-deb-install-remove-evidence-contract.sh
 scripts/test-ubuntu-source-package-evidence-contract.sh
 scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh
 scripts/test-ubuntu-launchpad-build-result-evidence-contract.sh
+scripts/test-ubuntu-publication-non-claim-review-contract.sh
 scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 .github/workflows/ubuntu-local-deb-static-validation.yml
 .github/workflows/ubuntu-lintian-availability.yml
@@ -84,6 +86,7 @@ scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 .github/workflows/ubuntu-source-package-evidence-contract.yml
 .github/workflows/ubuntu-upload-signing-authority-evidence-contract.yml
 .github/workflows/ubuntu-launchpad-build-result-evidence-contract.yml
+.github/workflows/ubuntu-publication-non-claim-review-contract.yml
 .github/workflows/ubuntu-ppa-archive-publication-gate-contract.yml
 ```
 
@@ -169,6 +172,13 @@ launchpad_upload_url_recorded=0
 launchpad_build_result_recorded=0
 launchpad_binary_artifact_listing_recorded=0
 ubuntu_launchpad_build_result_evidence_unblocked=0
+publication_non_claim_review_contract_present=1
+publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence
+publication_scope_recorded=0
+publication_target_type_recorded=0
+publication_claims_reviewed=0
+publication_readiness_non_claims_reviewed=0
+ubuntu_publication_non_claim_review_unblocked=0
 ppa_archive_publication_gate_contract_present=1
 ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence
 source_package_created=0

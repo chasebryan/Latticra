@@ -1,0 +1,26 @@
+name: Kernel runtime entry frame
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  kernel-runtime-entry-frame:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - name: Run kernel runtime-entry frame guard
+        run: sh scripts/test-kernel-runtime-entry-frame.sh
+
+      - name: Run kernel runtime-entry frame report runner
+        run: sh scripts/test-kernel-runtime-entry-frame-report-runner.sh

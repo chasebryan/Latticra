@@ -88,7 +88,9 @@ Scope:
 ```text
 docs/LICENSE_MIGRATION_PLAN.md
 scripts/test-license-migration-plan.sh
+scripts/test-hybrid-license-posture.sh
 .github/workflows/license-migration-plan.yml
+.github/workflows/hybrid-license-posture.yml
 ```
 
 Purpose:
@@ -96,6 +98,7 @@ Purpose:
 ```text
 record migration phases
 require new-source SPDX direction to stay discoverable
+guard hybrid AGPL/Apache/CC-BY/trademark boundaries
 define first migration candidate paths
 avoid accidental whole-repository relicensing
 ```

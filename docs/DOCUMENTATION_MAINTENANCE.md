@@ -18,6 +18,7 @@ Use it when a change affects public wording, capability posture, estimates, plat
 | Current status and estimates | [`../STATUS.md`](../STATUS.md), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), [`status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md), [`status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) | [`../README.md`](../README.md), [`status.html`](status.html), [`roadmap.html`](roadmap.html), [`index.html`](index.html) |
 | Documentation navigation | [`README.md`](README.md), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md) | [`../README.md`](../README.md), [`map.html`](map.html), [`project_notes/README.md`](project_notes/README.md) |
 | Documentation health | [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html), review packets |
+| Subsystem landing-page standard | [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) | Subsystem README files, subsystem public HTML pages, [`README.md`](README.md), [`map.html`](map.html), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md) |
 | Documentation traceability | [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html), review packets |
 | Documentation validation | [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) | Review packets, status records, platform docs, subsystem landing pages |
 | Documentation drift response | [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) | Public entry points, status mirrors, estimate mirrors, platform docs, security docs |
@@ -51,6 +52,8 @@ Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET
 Use [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) when a public-entry change needs a source-record, mirror, validation, or non-claim lookup.
 
 Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) when a broad public-entry change needs a repeatable health check for findability, claim safety, traceability, validation, reader routes, platform posture, security posture, estimate hygiene, or public/source consistency.
+
+Use [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) when a subsystem landing page or subsystem public summary changes.
 
 Use [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) when choosing hygiene, link, public-entry, estimate, platform, subsystem, or claim-promotion checks.
 

@@ -58,6 +58,7 @@ scheduler-handoff-ready
 scheduler-activation-ready
 scheduler-run-entry-ready
 runtime-entry-admission-ready
+runtime-entry-frame-ready
 ```
 
 Allowed transitions are intentionally sequential:
@@ -87,6 +88,7 @@ scheduler-dispatch-ready -> scheduler-handoff-ready
 scheduler-handoff-ready -> scheduler-activation-ready
 scheduler-activation-ready -> scheduler-run-entry-ready
 scheduler-run-entry-ready -> runtime-entry-admission-ready
+runtime-entry-admission-ready -> runtime-entry-frame-ready
 ```
 
 No-op transitions are allowed when the gate allows them.

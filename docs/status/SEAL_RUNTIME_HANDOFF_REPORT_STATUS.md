@@ -148,4 +148,4 @@ It does not add runtime handoff execution, capability enforcement, effect execut
 
 No completion-estimate review is required from this status/public-entry alignment.
 
-The next valid Latticra Seal slice is sealed report envelope or policy decision report propagation from ready crypto-graduation-gated metadata-only runtime handoff report metadata, sealed report envelope status/public-entry alignment, or another narrow status/index alignment follow-up.
+The sealed report envelope status/public-entry alignment now provides the predecessor for the next valid Latticra Seal slice: signature request or policy decision report propagation from ready crypto-graduation-gated sealed report-envelope metadata, signature request status/public-entry alignment, or another narrow status/index alignment follow-up.

@@ -46,6 +46,7 @@ int main(void) {
     char packages_contract_report[LATTICRA_CONSOLE_PACKAGES_CONTRACT_REPORT_MAX];
     char init_contract_report[LATTICRA_CONSOLE_INIT_CONTRACT_REPORT_MAX];
     char services_contract_report[LATTICRA_CONSOLE_SERVICES_CONTRACT_REPORT_MAX];
+    char service_schema_contract_report[LATTICRA_CONSOLE_SERVICE_SCHEMA_CONTRACT_REPORT_MAX];
     char host_contract_report[LATTICRA_CONSOLE_HOST_CONTRACT_REPORT_MAX];
     char host_inventory_report[LATTICRA_CONSOLE_HOST_INVENTORY_REPORT_MAX];
     char host_adapter_report[LATTICRA_CONSOLE_HOST_ADAPTER_REPORT_MAX];
@@ -113,6 +114,10 @@ int main(void) {
     failures += require_text(
         "result.services_contract_status",
         result.services_contract_status,
+        "metadata-only-contract-ready");
+    failures += require_text(
+        "result.service_schema_contract_status",
+        result.service_schema_contract_status,
         "metadata-only-contract-ready");
     failures += require_text(
         "result.substrate_bridge_status",
@@ -191,6 +196,7 @@ int main(void) {
     failures += require_int("result.packages_contract_present", result.packages_contract_present, 1);
     failures += require_int("result.init_contract_present", result.init_contract_present, 1);
     failures += require_int("result.services_contract_present", result.services_contract_present, 1);
+    failures += require_int("result.service_schema_contract_present", result.service_schema_contract_present, 1);
     failures += require_int("result.command_registry_present", result.command_registry_present, 1);
     failures += require_int("result.substrate_bridge_present", result.substrate_bridge_present, 1);
     failures += require_int(
@@ -384,6 +390,20 @@ int main(void) {
             "lc.services.contract");
         failures += require_int("lc services no_effect", command->no_effect, 1);
         failures += require_int("lc services host launch", command->launches_host_process, 0);
+    }
+
+    command = latticra_console_find_command("lc service-schema");
+    failures += require_int("find lc service-schema", command != 0, 1);
+    if (command != 0) {
+        failures += require_text(
+            "lc service-schema capability",
+            command->capability_label,
+            "lc.service.schema.contract");
+        failures += require_int("lc service-schema no_effect", command->no_effect, 1);
+        failures += require_int(
+            "lc service-schema host launch",
+            command->launches_host_process,
+            0);
     }
 
     command = latticra_console_find_command("lc receipts");
@@ -583,6 +603,11 @@ int main(void) {
     failures += require_contains("report", report, "init_contract_present=1");
     failures += require_contains("report", report, "services_contract_status=metadata-only-contract-ready");
     failures += require_contains("report", report, "services_contract_present=1");
+    failures += require_contains(
+        "report",
+        report,
+        "service_schema_contract_status=metadata-only-contract-ready");
+    failures += require_contains("report", report, "service_schema_contract_present=1");
     failures += require_contains("report", report, "workspace_contract_status=metadata-only-contract-ready");
     failures += require_contains("report", report, "workspace_contract_present=1");
     failures += require_contains("report", report, "substrate_bridge_present=1");
@@ -722,6 +747,11 @@ int main(void) {
     failures += require_contains("registry_report", registry_report, "capability=lc.init.contract");
     failures += require_contains("registry_report", registry_report, "command=lc services");
     failures += require_contains("registry_report", registry_report, "capability=lc.services.contract");
+    failures += require_contains("registry_report", registry_report, "command=lc service-schema");
+    failures += require_contains(
+        "registry_report",
+        registry_report,
+        "capability=lc.service.schema.contract");
     failures += require_contains("registry_report", registry_report, "capability=lc.install.config");
     failures += require_contains("registry_report", registry_report, "capability=lc.substrate.inspect");
     failures += require_contains("registry_report", registry_report, "launches_host_process=0");
@@ -743,6 +773,7 @@ int main(void) {
     failures += require_contains("help_report", help_report, "lc packages");
     failures += require_contains("help_report", help_report, "lc init");
     failures += require_contains("help_report", help_report, "lc services");
+    failures += require_contains("help_report", help_report, "lc service-schema");
     failures += require_contains("help_report", help_report, "lc host-contract");
     failures += require_contains("help_report", help_report, "lc host-inventory");
     failures += require_contains("help_report", help_report, "lc host-adapter");
@@ -768,6 +799,7 @@ int main(void) {
     failures += require_contains("manpage_report", manpage_report, "latticra-lc - Latticra Console");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc install-config");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc services");
+    failures += require_contains("manpage_report", manpage_report, "latticra-lc service-schema");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc standalone");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc session");
     failures += require_contains("manpage_report", manpage_report, "latticra-lc workspace");
@@ -960,6 +992,26 @@ int main(void) {
     failures += require_int("lc services boundary future gate", boundary.requires_future_gate, 0);
     failures += require_int("lc services boundary no effect", boundary.no_effect, 1);
     failures += require_int("lc services boundary host mutation allowed", boundary.host_mutation_allowed, 0);
+
+    command = latticra_console_find_command("lc service-schema");
+    failures += require_int(
+        "lc service-schema boundary",
+        latticra_console_command_boundary_classify(command, &boundary),
+        LATTICRA_STATUS_OK);
+    failures += require_text(
+        "lc service-schema seal capability",
+        boundary.seal_capability_label,
+        "seal.capability.report");
+    failures += require_int(
+        "lc service-schema runtime kind",
+        boundary.runtime_request_kind,
+        LATTICRA_RUNTIME_BOUNDARY_AUTHORITY_CHECK);
+    failures += require_int("lc service-schema boundary future gate", boundary.requires_future_gate, 0);
+    failures += require_int("lc service-schema boundary no effect", boundary.no_effect, 1);
+    failures += require_int(
+        "lc service-schema boundary host mutation allowed",
+        boundary.host_mutation_allowed,
+        0);
 
     command = latticra_console_find_command("lc host-contract");
     failures += require_int(
@@ -1248,6 +1300,7 @@ int main(void) {
     failures += require_contains("boundary_report", boundary_report, "command=lc packages");
     failures += require_contains("boundary_report", boundary_report, "command=lc init");
     failures += require_contains("boundary_report", boundary_report, "command=lc services");
+    failures += require_contains("boundary_report", boundary_report, "command=lc service-schema");
     failures += require_contains("boundary_report", boundary_report, "command=lc host-contract");
     failures += require_contains("boundary_report", boundary_report, "command=lc host-inventory");
     failures += require_contains("boundary_report", boundary_report, "command=lc host-adapter");
@@ -1596,7 +1649,15 @@ int main(void) {
     failures += require_contains(
         "services_contract_report",
         services_contract_report,
+        "service_schema_contract_required=1");
+    failures += require_contains(
+        "services_contract_report",
+        services_contract_report,
         "command_surface=lc services");
+    failures += require_contains(
+        "services_contract_report",
+        services_contract_report,
+        "related_service_schema_command=lc service-schema");
     failures += require_contains(
         "services_contract_report",
         services_contract_report,
@@ -1604,6 +1665,53 @@ int main(void) {
     failures += require_contains(
         "services_contract_report",
         services_contract_report,
+        "production_os_claim=0");
+
+    failures += require_int(
+        "service_schema_contract_report",
+        latticra_console_service_schema_contract_report(
+            service_schema_contract_report,
+            sizeof(service_schema_contract_report)),
+        LATTICRA_STATUS_OK);
+    failures += require_contains(
+        "service_schema_contract_report",
+        service_schema_contract_report,
+        "LATTICRA CONSOLE SERVICE SCHEMA CONTRACT");
+    failures += require_contains(
+        "service_schema_contract_report",
+        service_schema_contract_report,
+        "service_schema_profile=lc-service-schema-v0");
+    failures += require_contains(
+        "service_schema_contract_report",
+        service_schema_contract_report,
+        "service_schema_contract_present=1");
+    failures += require_contains(
+        "service_schema_contract_report",
+        service_schema_contract_report,
+        "service_schema_file=definition-schema.toml");
+    failures += require_contains(
+        "service_schema_contract_report",
+        service_schema_contract_report,
+        "service_definition_write_allowed=0");
+    failures += require_contains(
+        "service_schema_contract_report",
+        service_schema_contract_report,
+        "service_definition_validation_allowed=0");
+    failures += require_contains(
+        "service_schema_contract_report",
+        service_schema_contract_report,
+        "service_start_allowed=0");
+    failures += require_contains(
+        "service_schema_contract_report",
+        service_schema_contract_report,
+        "command_surface=lc service-schema");
+    failures += require_contains(
+        "service_schema_contract_report",
+        service_schema_contract_report,
+        "host_process_launch_allowed=0");
+    failures += require_contains(
+        "service_schema_contract_report",
+        service_schema_contract_report,
         "production_os_claim=0");
 
     failures += require_int(
@@ -1777,6 +1885,10 @@ int main(void) {
         "receipt_request_report",
         receipt_request_report,
         "requested_receipt_profile=latticra-seal-verified-receipt/0.1");
+    failures += require_contains(
+        "receipt_request_report",
+        receipt_request_report,
+        "requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,host-contract,host-inventory,host-adapter,runtime-boundary");
     failures += require_contains(
         "receipt_request_report",
         receipt_request_report,
@@ -2414,6 +2526,18 @@ int main(void) {
     failures += require_contains(
         "receipt_report",
         receipt_report,
+        "service_schema_contract_receipt_required=1");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
+        "service_schema_contract_present=1");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
+        "service_schema_contract_command=lc service-schema");
+    failures += require_contains(
+        "receipt_report",
+        receipt_report,
         "receipt_request_contract_required=1");
     failures += require_contains(
         "receipt_report",
@@ -2462,7 +2586,7 @@ int main(void) {
     failures += require_contains(
         "receipt_report",
         receipt_report,
-        "receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,host-contract,host-inventory,host-adapter,runtime-boundary");
+        "receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,host-contract,host-inventory,host-adapter,runtime-boundary");
     failures += require_contains(
         "receipt_report",
         receipt_report,

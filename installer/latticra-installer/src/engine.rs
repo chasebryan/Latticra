@@ -1,4 +1,5 @@
 use crate::config::{render_plan, InstallerConfig};
+use std::fmt::Write as _;
 use std::fs::{self, OpenOptions};
 use std::io::{BufRead, BufReader, Write};
 #[cfg(unix)]
@@ -13,6 +14,7 @@ const UNINSTALL_SCRIPT: &str = "latticra-installer-uninstall.sh";
 const SYSTEM_SHELL: &str = "/bin/sh";
 const REDACTED_LOG_VALUE: &str = "[redacted]";
 const PRIVATE_KEY_MARKER_REDACTION: &str = "[redacted-private-key-marker]";
+const MAX_INSTALLER_LOG_LINE_CHARS: usize = 2048;
 const SENSITIVE_ASSIGNMENT_KEYS: &[&str] = &[
     "AWS_ACCESS_KEY_ID",
     "AWS_SECRET_ACCESS_KEY",
@@ -186,7 +188,7 @@ fn stream_child(mut child: std::process::Child, tx: &Sender<InstallEvent>) -> Re
             for line in reader.lines() {
                 match line {
                     Ok(line) => {
-                        let _ = tx.send(InstallEvent::Log(redact_log_line(&line)));
+                        let _ = tx.send(InstallEvent::Log(sanitize_log_line(&line)));
                     }
                     Err(err) => {
                         let _ = tx.send(InstallEvent::Log(format!(
@@ -207,7 +209,7 @@ fn stream_child(mut child: std::process::Child, tx: &Sender<InstallEvent>) -> Re
                     Ok(line) => {
                         let _ = tx.send(InstallEvent::Log(format!(
                             "stderr: {}",
-                            redact_log_line(&line)
+                            sanitize_log_line(&line)
                         )));
                     }
                     Err(err) => {
@@ -271,6 +273,40 @@ pub(crate) fn redact_log_line(line: &str) -> String {
     }
 
     redacted
+}
+
+fn sanitize_log_line(line: &str) -> String {
+    let redacted = redact_log_line(line);
+    let mut sanitized = String::new();
+    let mut truncated = false;
+
+    for (index, ch) in redacted.chars().enumerate() {
+        if index >= MAX_INSTALLER_LOG_LINE_CHARS {
+            truncated = true;
+            break;
+        }
+
+        match ch {
+            '\n' => sanitized.push_str("\\n"),
+            '\r' => sanitized.push_str("\\r"),
+            '\t' => sanitized.push_str("\\t"),
+            ch if ch.is_control() => {
+                let code = ch as u32;
+                if code <= 0xFF {
+                    let _ = write!(&mut sanitized, "\\x{code:02X}");
+                } else {
+                    let _ = write!(&mut sanitized, "\\u{{{code:X}}}");
+                }
+            }
+            ch => sanitized.push(ch),
+        }
+    }
+
+    if truncated {
+        sanitized.push_str("...[truncated]");
+    }
+
+    sanitized
 }
 
 fn redact_sensitive_assignment(line: &str, key: &str) -> String {
@@ -687,6 +723,33 @@ mod tests {
             redact_log_line("status=ok note=cafe-ready"),
             "status=ok note=cafe-ready"
         );
+    }
+
+    #[test]
+    fn sanitize_log_line_escapes_control_characters() {
+        let line = sanitize_log_line("ok\nbad\r\x1B[2J\tend\0");
+
+        assert_eq!(line, "ok\\nbad\\r\\x1B[2J\\tend\\x00");
+    }
+
+    #[test]
+    fn sanitize_log_line_redacts_before_display_sanitization() {
+        let line = sanitize_log_line(&format!(
+            "stderr {}{}{}{}\n",
+            "OPENAI", "_API_KEY=", "sk-proj-", "secret12345678901234567890"
+        ));
+        let expected = format!("stderr {}{}[redacted]\\n", "OPENAI", "_API_KEY=");
+
+        assert_eq!(line, expected);
+    }
+
+    #[test]
+    fn sanitize_log_line_truncates_oversized_lines() {
+        let oversized = "a".repeat(MAX_INSTALLER_LOG_LINE_CHARS + 16);
+        let line = sanitize_log_line(&oversized);
+
+        assert!(line.ends_with("...[truncated]"));
+        assert!(line.len() < oversized.len());
     }
 
     #[test]

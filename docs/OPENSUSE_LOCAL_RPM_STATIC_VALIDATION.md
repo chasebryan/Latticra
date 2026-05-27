@@ -90,10 +90,10 @@ scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
 Recommended next slice:
 
 ```text
-Add openSUSE RPM build-evidence intake denial contract before any local build lane can open.
+Add openSUSE RPM build-evidence intake denial review contract before any denial can be re-requested.
 ```
 
-That future lane should define how build evidence intake is refused until the blocker matrix opens, while keeping RPM builds and readiness blocked.
+That future lane should define review fields for denied build-evidence intake while keeping RPM builds and readiness blocked.
 
 ## Validation
 

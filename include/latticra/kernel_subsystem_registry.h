@@ -29,6 +29,7 @@ typedef struct {
     char name[LATTICRA_KERNEL_SUBSYSTEM_REGISTRY_LABEL_MAX];
     char status[LATTICRA_KERNEL_SUBSYSTEM_REGISTRY_LABEL_MAX];
     char effect_boundary[LATTICRA_KERNEL_SUBSYSTEM_REGISTRY_LABEL_MAX];
+    int network_allowed;
     int no_effect;
     int active;
     unsigned int evidence_level;
@@ -44,6 +45,7 @@ typedef struct {
     latticra_kernel_result_t kernel;
     latticra_kernel_subsystem_entry_t entries[LATTICRA_KERNEL_SUBSYSTEM_REGISTRY_ENTRY_MAX];
     size_t entry_count;
+    int network_allowed;
     int no_effect;
     unsigned int evidence_level;
 } latticra_kernel_subsystem_registry_result_t;

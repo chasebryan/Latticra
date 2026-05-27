@@ -92,6 +92,8 @@ The local capability registry schema contract, implementation plan, no-effect im
 
 The Panel-visible Seal dashboard planning checkpoint and status record are now current follow-up checkpoints.
 
-The next valid Latticra Seal slice is a Seal Panel dashboard view-model contract or a signed receipt proof path.
+The Seal Panel dashboard view-model contract and status record are now current follow-up checkpoints.
+
+The next valid Latticra Seal slice is a Seal Panel dashboard view-model implementation plan or a signed receipt proof path.
 
 That future slice must preserve the no-effect posture and must not perform effects or grant authority.

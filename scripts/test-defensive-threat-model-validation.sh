@@ -124,6 +124,10 @@ for external in \
   'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4393480/nsa-releases-phase-one-and-phase-two-of-the-zero-trust-implementation-guidelines/' \
   'NSA/CISA Memory Safe Languages CSI' \
   'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4223298/nsa-and-cisa-release-csi-highlighting-importance-of-memory-safe-languages-in-so/' \
+  'NSA MCP Security Design Considerations for AI-Driven Automation' \
+  'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4496698/nsa-releases-security-design-considerations-for-ai-driven-automation-leveraging/' \
+  'NSA/partners Careful Adoption of Agentic AI Services' \
+  'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4475134/nsa-joins-the-asds-acsc-and-others-to-release-guidance-on-agentic-artificial-in/' \
   'CISA The Case for Memory Safe Roadmaps' \
   'https://www.cisa.gov/resources-tools/resources/case-memory-safe-roadmaps' \
   'CISA Secure by Design' \
@@ -180,6 +184,7 @@ for validation in \
   'operator confirmation non-override tests' \
   'command-boundary tests' \
   'workload/service identity zero-trust tests' \
+  'mcp/tool-boundary and context-sharing tests' \
   'status/non-claim guard tests'
 do
   require_contains "$validation" "$doc"
@@ -224,6 +229,7 @@ for gap in \
   'abuse-case mapping needs broader fixture coverage' \
   'external advisory-by-advisory mapping is not complete' \
   'workload/service identity and host-integrity prerequisites are not yet profiled for future authority' \
+  'mcp/tool-boundary and context-sharing prerequisites are not yet profiled for future authority' \
   'no certification or compliance mapping exists'
 do
   require_contains "$gap" "$doc"

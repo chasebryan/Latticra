@@ -215,5 +215,5 @@ selinux_mutation_authority=0
 boot_mutation_authority=0
 production_update_ready=0
 production_installer_ready=0
-next_lane=panel-signed-updater-state-transition-denial-disposition-review
+next_lane=panel-signed-updater-state-transition-denial-disposition-closeout
 REPORT

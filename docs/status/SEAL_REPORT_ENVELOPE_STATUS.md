@@ -2,13 +2,15 @@
 
 Status: status record for the Latticra Seal sealed report-envelope metadata surface
 Source: local follow-up slice
-Scope: status and public-entry alignment after the Seal report envelope contract and metadata implementation. This record does not add cryptographic signing, signature verification, private-key handling, key generation, trust-store loading, revocation lookup, runtime handoff execution, runtime authority, host effects, network behavior, shell execution, tool execution, capability enforcement, policy persistence, object sealing, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
+Scope: status and public-entry alignment after the Seal report envelope contract and metadata implementation, now carrying crypto graduation metadata forward when present on runtime handoff report metadata. This record does not add cryptographic signing, signature verification, private-key handling, key generation, trust-store loading, revocation lookup, runtime handoff execution, runtime authority, host effects, network behavior, shell execution, tool execution, capability enforcement, policy persistence, object sealing, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
 
 ## Purpose
 
 This status record makes the Latticra Seal report envelope implementation visible from public entry points.
 
-The envelope layer consumes ready runtime handoff report metadata and classifies a narrow local metadata-only envelope posture. It is envelope classification metadata, not signing and not runtime handoff.
+The envelope layer consumes ready runtime handoff report metadata and classifies a narrow local metadata-only envelope posture. When the report carries crypto graduation metadata, the envelope requires that evidence to remain passed, standard-aligned, and authority-neutral before allowing the metadata-only envelope classification.
+
+It is envelope classification metadata, not signing and not runtime handoff.
 
 ## Reviewed files
 
@@ -18,6 +20,7 @@ docs/LATTICRA_SEAL_REPORT_ENVELOPE_IMPLEMENTATION.md
 docs/LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_CONTRACT.md
 docs/LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_IMPLEMENTATION.md
 docs/status/SEAL_RUNTIME_HANDOFF_REPORT_STATUS.md
+docs/status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md
 include/latticra/seal_report_envelope.h
 src/seal_report_envelope.c
 tests/seal_report_envelope_invariants.c
@@ -50,6 +53,7 @@ seal_runtime_handoff_report_contract_present=1
 seal_runtime_handoff_report_implementation_present=1
 seal_runtime_handoff_report_runner_present=1
 seal_runtime_handoff_report_status_present=1
+seal_crypto_graduation_gate_status_present=1
 readme_links_report_envelope_contract=1
 readme_links_report_envelope_implementation=1
 readme_links_report_envelope_status=1
@@ -66,12 +70,21 @@ receipt_profile=latticra-seal-verified-receipt/0.1
 verify_profile=latticra-seal-ed25519-verify/0.1
 message_digest_algorithm=SHA-256
 public_key_identity_label=rfc8032-test-key
+crypto_graduation_profile=latticra-seal-crypto-graduation-gate/0.1
+assurance_baseline_profile=latticra-cryptographic-assurance-key-management/0.1
+crypto_graduation_gate_state=graduated-authority-neutral
 requested_capability=verified-receipt-report
 requested_effect=report-only
 requested_handoff=report-only
 requested_report=report-only
 requested_envelope=report-only
 requested_scope=local-fixture-scope
+crypto_graduation_gate_present=1
+crypto_graduation_gate_passed=1
+standard_expectations_met=1
+local_verify_graduated=1
+receipt_promotion_graduated=1
+authority_promotion_allowed=0
 report_state=ready-report-only
 report_ready=1
 envelope_state=sealed-report-only
@@ -126,7 +139,7 @@ seal report envelope invariants: ok
 
 This status record is documentation/status alignment only.
 
-The report envelope implementation accepts ready runtime handoff report metadata and produces deterministic sealed envelope metadata. A successful envelope may set `envelope_ready=1` and `envelope_state=sealed-report-only`, but it remains metadata-only, unsigned, object-unsealed, and authority-neutral.
+The report envelope implementation accepts ready runtime handoff report metadata and produces deterministic sealed envelope metadata. If the report includes crypto graduation evidence, the envelope requires `crypto_graduation_gate_passed=1`, `standard_expectations_met=1`, and `authority_promotion_allowed=0`. A successful envelope may set `envelope_ready=1` and `envelope_state=sealed-report-only`, but it remains metadata-only, unsigned, object-unsealed, and authority-neutral.
 
 It does not add cryptographic signing, signature verification, private-key handling, key generation, trust-store behavior, revocation lookup, object sealing, runtime handoff execution, capability enforcement, effect execution, host behavior, network behavior, production readiness, external endorsement, or authority grants.
 
@@ -134,4 +147,4 @@ It does not add cryptographic signing, signature verification, private-key handl
 
 No completion-estimate review is required from this status/public-entry alignment.
 
-The next downstream Latticra Seal checkpoint is the signature request status/public-entry alignment or another narrow status/index alignment follow-up. Any future work must remain no-signing unless separately contracted, implemented, and guarded.
+The next downstream Latticra Seal checkpoint is signature request or policy decision report propagation from ready crypto-graduation-gated sealed report-envelope metadata, signature request status/public-entry alignment, or another narrow status/index alignment follow-up. Any future work must remain no-signing unless separately contracted, implemented, and guarded.

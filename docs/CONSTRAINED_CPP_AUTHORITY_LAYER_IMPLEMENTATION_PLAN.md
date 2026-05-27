@@ -598,6 +598,7 @@ record[0].span_end_offset=<offset>
 Small output buffers should return `authority_status::capacity_exceeded` and clear the buffer.
 Unterminated fixed audit text fields should return `authority_status::invalid_input` and clear the buffer.
 Fixed audit text fields containing line breaks should return `authority_status::invalid_input` and clear the buffer.
+Fixed audit text fields with nonzero bytes after their first NUL terminator should return `authority_status::invalid_input` and clear the buffer.
 
 ## Build policy
 
@@ -648,6 +649,7 @@ cpp_authority_layer_audit_report_is_deterministic
 cpp_authority_layer_rejects_small_report_buffer
 cpp_authority_layer_rejects_unterminated_audit_text
 cpp_authority_layer_rejects_audit_text_line_breaks
+cpp_authority_layer_rejects_noncanonical_audit_text_padding
 cpp_authority_layer_is_deterministic
 cpp_authority_layer_rejects_mutation_flags
 cpp_authority_layer_rejects_network_flags

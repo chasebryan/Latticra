@@ -49,10 +49,14 @@ require_contains 'NSA Zero Trust Implementation Guidelines: Primer, Discovery Ph
 require_contains 'CISA Zero Trust Maturity Model Version 2.0' "$doc"
 require_contains 'NIST SP 800-207 Zero Trust Architecture' "$doc"
 require_contains 'NIST SP 800-207A' "$doc"
+require_contains 'NSA MCP security-design guidance' "$doc"
+require_contains 'careful-adoption guidance' "$doc"
 require_contains 'Pillar Mapping' "$doc"
 require_contains 'Required Runtime Authority Gate' "$doc"
 require_contains 'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4393480/nsa-releases-phase-one-and-phase-two-of-the-zero-trust-implementation-guidelines/' "$doc"
 require_contains 'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4378980/nsa-releases-first-in-series-of-zero-trust-implementation-guidelines/' "$doc"
+require_contains 'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4496698/nsa-releases-security-design-considerations-for-ai-driven-automation-leveraging/' "$doc"
+require_contains 'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4475134/nsa-joins-the-asds-acsc-and-others-to-release-guidance-on-agentic-artificial-in/' "$doc"
 require_contains 'https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model' "$doc"
 require_contains 'https://www.nist.gov/publications/zero-trust-architecture-0' "$doc"
 require_contains 'https://csrc.nist.gov/pubs/sp/800/207/a/final' "$doc"
@@ -99,6 +103,8 @@ for gate in \
   'resource_identity_known=1' \
   'resource_sensitivity_classified=1' \
   'execution_environment_known=1' \
+  'tool_or_mcp_boundary_known=1' \
+  'context_sharing_scope_known=1' \
   'mode_matches_request_family=1' \
   'authority_prerequisites_satisfied=1' \
   'least_privilege_scope_recorded=1' \

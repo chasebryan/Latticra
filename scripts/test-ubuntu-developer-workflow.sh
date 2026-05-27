@@ -41,6 +41,7 @@ require_file docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
 require_file docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md
 require_file docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md
 require_file docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md
+require_file docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
 require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md
 require_file docs/QUICK_START_CHEATSHEET.md
 require_file README.md
@@ -96,6 +97,8 @@ require_contains 'ubuntu_upload_signing_authority_evidence_contract_present=1' d
 require_contains 'ubuntu_upload_signing_authority_evidence_status=blocked-pending-source-package-evidence' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_launchpad_build_result_evidence_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_non_claim_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_ppa_archive_publication_gate_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence' docs/UBUNTU_READINESS_PLAN.md
 require_contains 'ubuntu_package_notice_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
@@ -131,6 +134,7 @@ require_contains 'docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md' REA
 require_contains 'docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' README.md
 require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' README.md
 
 require_contains 'Ubuntu prerequisites:' docs/QUICK_START_CHEATSHEET.md

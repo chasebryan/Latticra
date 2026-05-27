@@ -81,6 +81,7 @@ sh scripts/test-ubuntu-local-deb-install-remove-evidence-contract.sh
 sh scripts/test-ubuntu-source-package-evidence-contract.sh
 sh scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh
 sh scripts/test-ubuntu-launchpad-build-result-evidence-contract.sh
+sh scripts/test-ubuntu-publication-non-claim-review-contract.sh
 sh scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 ```
 
@@ -107,6 +108,7 @@ sh scripts/test-opensuse-rpm-payload-inspection-contract.sh
 sh scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
 sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
 sh scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh
+sh scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh
 ```
 
 ## Run

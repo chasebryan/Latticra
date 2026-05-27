@@ -188,13 +188,23 @@ The local RPM build gate remains closed. This blocker matrix only records the pr
 
 ## Next Slice
 
+Completed follow-on RPM build-evidence intake denial contract:
+
+```text
+docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh
+.github/workflows/opensuse-rpm-build-evidence-intake-denial-contract.yml
+```
+
+That lane refuses `rpmbuild`, `osc build`, `rpmlint`, source RPM, binary RPM, and transcript intake while the blocker matrix is closed.
+
 Recommended next slice:
 
 ```text
-Add openSUSE RPM build-evidence intake denial contract before any local build lane can open.
+Add openSUSE RPM build-evidence intake denial review contract before any denial can be re-requested.
 ```
 
-That future lane should define how build evidence intake is refused until the blocker matrix opens, while keeping RPM builds and readiness blocked.
+That future lane should define review fields for denied build-evidence intake while keeping RPM builds and readiness blocked.
 
 ## Validation
 

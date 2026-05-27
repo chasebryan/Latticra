@@ -2,7 +2,7 @@
 
 Status: mathematical planning-estimate rebase
 Date: 2026-05-26 CDT
-Scope: present public estimate table after the recent Seal status chain, Ubuntu local deb lane, macOS reset/uninstall contract lane, Nadia Stage-43 prompt-evaluation release-receipt contract chain, Lat/LIR evidence propagation, kernel lifecycle scheduler-credit and scheduler-selection-ready evidence, vulnerability-management release-gate baseline coverage, and current status/public-entry alignment. This record does not implement runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, production readiness, public-readiness promotion, security hardening, or runtime authority.
+Scope: present public estimate table after the recent Seal status chain, Ubuntu local deb lane, macOS reset/uninstall contract lane, Nadia Stage-43 prompt-evaluation release-receipt contract chain, Lat/LIR evidence propagation, kernel lifecycle scheduler-credit and scheduler-selection-ready evidence, vulnerability-management release-gate baseline coverage, documentation review/style/cohesion route coverage, and current status/public-entry alignment. This record does not implement runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, production readiness, public-readiness promotion, security hardening, or runtime authority.
 
 ## Purpose
 
@@ -38,9 +38,9 @@ weight_total=100
 Weighted calculation:
 
 ```text
-weighted_sum=4473
+weighted_sum=4481
 weight_total=100
-overall_estimate=round(4473 / 100)=45
+overall_estimate=round(4481 / 100)=45
 ```
 
 ## Rebased Estimate Table
@@ -53,7 +53,7 @@ overall_estimate=round(4473 / 100)=45
 | Nadia offline AI foundation | 70% | 75% |
 | L-UI parser / AST / string foundation | 87% | 87% |
 | Foundation documents and contracts | 92% | 94% |
-| Public documentation posture | 88% | 91% |
+| Public documentation posture | 88% | 92% |
 | Strategy/status/funding framework | 60% | 63% |
 | Lat / Latticra Programming Language | 25% | 27% |
 | LIR / Intermediate Representation | 22% | 24% |
