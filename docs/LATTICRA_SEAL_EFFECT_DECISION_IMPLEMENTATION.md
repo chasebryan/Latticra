@@ -70,9 +70,15 @@ The implementation fails closed:
 null effect decision output -> LATTICRA_STATUS_NULL_ARGUMENT
 null capability gate metadata input -> invalid-input
 invalid capability gate metadata -> invalid-gate
+unterminated capability gate metadata strings -> invalid-gate
+invalid capability gate boolean flags -> invalid-gate
+capability gate authority/effect flags set -> invalid-gate
 missing artifact digest -> missing-digest
 missing requested capability -> missing-requested-capability
 missing requested effect -> missing-requested-effect
+tampered effect decision strings fail closed before report
+tampered effect decision authority/effect flags fail closed before report
+tampered effect decision boolean/error state fails closed before report
 small report buffer -> LATTICRA_STATUS_BUFFER_TOO_SMALL
 ```
 

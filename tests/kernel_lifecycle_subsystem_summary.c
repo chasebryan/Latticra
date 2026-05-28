@@ -13,7 +13,7 @@
         } \
     } while (0)
 
-static int default_request_targets_runtime_entry_recovery_audit_observation_view_ready(
+static int default_request_targets_runtime_entry_recovery_audit_review_disposition_review_observation_view_ready(
     void) {
     latticra_kernel_lifecycle_subsystem_summary_request_t request;
 
@@ -23,8 +23,8 @@ static int default_request_targets_runtime_entry_recovery_audit_observation_view
     EXPECT_TRUE(request.lifecycle_request.gate == LATTICRA_KERNEL_STATE_GATE_ALLOW,
         "summary default lifecycle gate allow");
     EXPECT_TRUE(request.lifecycle_request.target_state ==
-            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY,
-        "summary default target runtime-entry-recovery-audit-observation-view-ready");
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_READY,
+        "summary default target runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready");
     EXPECT_TRUE(request.lifecycle_request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
         "summary default max steps");
     EXPECT_TRUE(strcmp(request.registry_request.kernel_request.kernel_id, "latticra-kernel-seed") == 0,
@@ -46,14 +46,14 @@ static int summary_reaches_ready_without_authority(void) {
     EXPECT_TRUE(strcmp(result.summary_status, "summary-ready") == 0,
         "summary ready");
     EXPECT_TRUE(strcmp(result.final_state,
-            "runtime-entry-recovery-audit-observation-view-ready") == 0,
-        "summary final state runtime-entry-recovery-audit-observation-view-ready");
+            "runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready") == 0,
+        "summary final state runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "summary lifecycle complete");
-    EXPECT_TRUE(result.lifecycle_step_count == 46u,
-        "summary forty six lifecycle steps");
-    EXPECT_TRUE(result.lifecycle_state_change_count == 46u,
-        "summary forty six lifecycle state changes");
+    EXPECT_TRUE(result.lifecycle_step_count == 52u,
+        "summary fifty two lifecycle steps");
+    EXPECT_TRUE(result.lifecycle_state_change_count == 52u,
+        "summary fifty two lifecycle state changes");
     EXPECT_TRUE(result.lifecycle_state_mutated == 1,
         "summary lifecycle state mutated internally");
     EXPECT_TRUE(result.external_effect_performed == 0,
@@ -89,6 +89,18 @@ static int summary_reaches_ready_without_authority(void) {
         "summary nucleus register restore denied");
     EXPECT_TRUE(result.nucleus_host_effect_allowed == 0,
         "summary nucleus host effect denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_disposition_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review disposition observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_disposition_review_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review disposition review observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review disposition review closeout observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review disposition review closeout archive gate observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review disposition review closeout archive gate review observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review observation view denied");
     EXPECT_TRUE(result.runtime_entry_recovery_audit_observation_view_allowed == 0,
         "summary runtime entry recovery audit observation view denied");
     EXPECT_TRUE(result.runtime_entry_recovery_closeout_observation_view_allowed == 0,
@@ -153,6 +165,30 @@ static int summary_reaches_ready_without_authority(void) {
         "summary recovery outcome denied");
     EXPECT_TRUE(result.recovery_outcome_observation_allowed == 0,
         "summary recovery outcome observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_allowed == 0,
+        "summary recovery audit review disposition denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_observation_allowed == 0,
+        "summary recovery audit review disposition observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_allowed == 0,
+        "summary recovery audit review disposition review denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_observation_allowed == 0,
+        "summary recovery audit review disposition review observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_allowed == 0,
+        "summary recovery audit review disposition review closeout denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_observation_allowed == 0,
+        "summary recovery audit review disposition review closeout observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_archive_gate_allowed == 0,
+        "summary recovery audit review disposition review closeout archive gate denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed == 0,
+        "summary recovery audit review disposition review closeout archive gate observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed == 0,
+        "summary recovery audit review disposition review closeout archive gate review denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed == 0,
+        "summary recovery audit review disposition review closeout archive gate review observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_allowed == 0,
+        "summary recovery audit review denied");
+    EXPECT_TRUE(result.recovery_audit_review_observation_allowed == 0,
+        "summary recovery audit review observation denied");
     EXPECT_TRUE(result.recovery_audit_allowed == 0,
         "summary recovery audit denied");
     EXPECT_TRUE(result.recovery_audit_observation_allowed == 0,
@@ -282,8 +318,8 @@ static int summary_reaches_ready_without_authority(void) {
     EXPECT_TRUE(strcmp(result.entries[1].name, "runtime") == 0,
         "summary runtime entry name");
     EXPECT_TRUE(strcmp(result.entries[1].lifecycle_relation,
-            "runtime-entry-recovery-audit-observation-view-ready") == 0,
-        "summary runtime recovery audit observation view relation");
+            "runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready") == 0,
+        "summary runtime recovery audit review disposition review closeout archive gate observation view relation");
     EXPECT_TRUE(strcmp(result.entries[1].authority_status, "runtime-entry-denied") == 0,
         "summary runtime authority denied");
     EXPECT_TRUE(result.entries[1].lifecycle_ready == 0,
@@ -406,13 +442,13 @@ static int summary_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "summary_status=summary-ready\n") != 0,
         "summary report status");
     EXPECT_TRUE(strstr(report,
-            "final_state=runtime-entry-recovery-audit-observation-view-ready\n") != 0,
+            "final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready\n") != 0,
         "summary report final state");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "summary report lifecycle complete");
-    EXPECT_TRUE(strstr(report, "lifecycle_step_count=46\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_step_count=52\n") != 0,
         "summary report step count");
-    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=46\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=52\n") != 0,
         "summary report state changes");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "summary report external effect");
@@ -447,6 +483,24 @@ static int summary_report_is_deterministic(void) {
         "summary report nucleus register restore denied");
     EXPECT_TRUE(strstr(report, "nucleus_host_effect_allowed=0\n") != 0,
         "summary report nucleus host effect denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_disposition_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review disposition observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_disposition_review_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review disposition review observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review disposition review closeout observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review disposition review closeout archive gate observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review disposition review closeout archive gate review observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review observation view denied");
     EXPECT_TRUE(strstr(report,
             "runtime_entry_recovery_audit_observation_view_allowed=0\n") != 0,
         "summary report runtime recovery audit observation view denied");
@@ -530,6 +584,39 @@ static int summary_report_is_deterministic(void) {
         "summary report recovery outcome denied");
     EXPECT_TRUE(strstr(report, "recovery_outcome_observation_allowed=0\n") != 0,
         "summary report recovery outcome observation denied");
+    EXPECT_TRUE(strstr(report, "recovery_audit_review_disposition_allowed=0\n") != 0,
+        "summary report recovery audit review disposition denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_observation_allowed=0\n") != 0,
+        "summary report recovery audit review disposition observation denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_observation_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review observation denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_observation_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout observation denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_archive_gate_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout archive gate denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout archive gate observation denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout archive gate review denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout archive gate review observation denied");
+    EXPECT_TRUE(strstr(report, "recovery_audit_review_allowed=0\n") != 0,
+        "summary report recovery audit review denied");
+    EXPECT_TRUE(strstr(report, "recovery_audit_review_observation_allowed=0\n") != 0,
+        "summary report recovery audit review observation denied");
     EXPECT_TRUE(strstr(report, "recovery_closeout_allowed=0\n") != 0,
         "summary report recovery closeout denied");
     EXPECT_TRUE(strstr(report, "recovery_closeout_observation_allowed=0\n") != 0,
@@ -649,7 +736,7 @@ static int summary_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "subsystem[1].authority_status=runtime-entry-denied\n") != 0,
         "summary report runtime authority");
     EXPECT_TRUE(strstr(report,
-            "subsystem[1].lifecycle_relation=runtime-entry-recovery-audit-observation-view-ready\n") != 0,
+            "subsystem[1].lifecycle_relation=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready\n") != 0,
         "summary report runtime relation");
     EXPECT_TRUE(strstr(report, "subsystem[2].lifecycle_relation=scheduler-run-entry-ready\n") != 0,
         "summary report scheduler relation");
@@ -698,7 +785,7 @@ static int null_guards_are_safe(void) {
 }
 
 int main(void) {
-    if (default_request_targets_runtime_entry_recovery_audit_observation_view_ready()
+    if (default_request_targets_runtime_entry_recovery_audit_review_disposition_review_observation_view_ready()
             != 0) {
         return 1;
     }

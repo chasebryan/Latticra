@@ -17,6 +17,8 @@ It does not install, uninstall, invoke a package manager, accept evidence, pass 
 ```text
 transcript_evidence_intake_validator_present=1
 transcript_evidence_intake_validation_mode=no-effect-validation
+transcript_evidence_template_present=1
+transcript_evidence_template_complete=0
 transcript_evidence_candidate_valid=0
 install_transcript_file_present=0
 uninstall_transcript_file_present=0

@@ -27,6 +27,7 @@ static unsigned required_items_satisfied(
     satisfied += one_if(evidence->qseal_subsystem_scripts_recorded);
     satisfied += one_if(evidence->readiness_gate_bound);
     satisfied += one_if(evidence->implementation_binding_manifest_bound);
+    satisfied += one_if(evidence->replay_transcript_gate_bound);
     satisfied += one_if(evidence->kat_acvp_gate_passing_recorded);
     satisfied += one_if(evidence->constant_time_gate_passing_recorded);
     satisfied += one_if(evidence->memory_safety_gate_passing_recorded);
@@ -90,6 +91,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_ci_promotion_evidence_prepare(
     out->readiness_gate_bound = 1u;
     out->implementation_binding_manifest_required = 1u;
     out->implementation_binding_manifest_bound = 1u;
+    out->replay_transcript_gate_bound = 1u;
     out->kat_acvp_gate_passing_recorded = 0u;
     out->constant_time_gate_passing_recorded = 0u;
     out->memory_safety_gate_passing_recorded = 0u;
@@ -104,7 +106,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_ci_promotion_evidence_prepare(
     out->production_crypto_claim_allowed = 0u;
     out->fips_claim_allowed = 0u;
     out->runtime_authority_granted = 0u;
-    out->required_promotion_items_total = 19u;
+    out->required_promotion_items_total = 20u;
     out->required_promotion_items_satisfied = required_items_satisfied(out);
     copy_literal(
         out->blocked_reason,
@@ -144,6 +146,7 @@ int latticra_q_seal_ml_kem_ci_promotion_evidence_allows_implementation_promotion
            evidence->qseal_subsystem_scripts_recorded == 1u &&
            evidence->readiness_gate_bound == 1u &&
            evidence->implementation_binding_manifest_bound == 1u &&
+           evidence->replay_transcript_gate_bound == 1u &&
            evidence->kat_acvp_gate_passing_recorded == 1u &&
            evidence->constant_time_gate_passing_recorded == 1u &&
            evidence->memory_safety_gate_passing_recorded == 1u &&
@@ -187,6 +190,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_ci_promotion_evidence_report(
         "readiness_gate_bound=%u\n"
         "implementation_binding_manifest_required=%u\n"
         "implementation_binding_manifest_bound=%u\n"
+        "replay_transcript_gate_bound=%u\n"
         "kat_acvp_gate_passing_recorded=%u\n"
         "constant_time_gate_passing_recorded=%u\n"
         "memory_safety_gate_passing_recorded=%u\n"
@@ -221,6 +225,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_ci_promotion_evidence_report(
         evidence->readiness_gate_bound,
         evidence->implementation_binding_manifest_required,
         evidence->implementation_binding_manifest_bound,
+        evidence->replay_transcript_gate_bound,
         evidence->kat_acvp_gate_passing_recorded,
         evidence->constant_time_gate_passing_recorded,
         evidence->memory_safety_gate_passing_recorded,

@@ -51,8 +51,10 @@ require_contains 'Fedora endorsement' docs/FEDORA_READINESS_PLAN.md
 require_contains 'Fedora allowed license posture' docs/FEDORA_READINESS_PLAN.md
 require_contains 'BuildRequires completeness' docs/FEDORA_READINESS_PLAN.md
 require_contains 'mock build readiness' docs/FEDORA_READINESS_PLAN.md
-require_contains 'final_state=runtime-entry-recovery-closeout-observation-view-ready' docs/FEDORA_READINESS_PLAN.md
+require_contains 'final_state=runtime-entry-recovery-audit-review-observation-view-ready' docs/FEDORA_READINESS_PLAN.md
 require_contains 'external_effect_performed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_recovery_audit_review_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_recovery_audit_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_recovery_plan_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_recovery_disposition_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_recovery_outcome_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
@@ -73,6 +75,10 @@ require_contains 'recovery_outcome_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'recovery_outcome_observation_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'recovery_closeout_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'recovery_closeout_observation_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'recovery_audit_review_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'recovery_audit_review_observation_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'recovery_audit_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'recovery_audit_observation_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_idle_return_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_process_return_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_scheduler_return_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md

@@ -58,7 +58,30 @@
     </section>
 
     <section class="section-band">
-      <div class="content-shell start-intro">
+      <nav class="content-shell start-shortcuts" aria-label="Getting started section shortcuts">
+        <a href="#start-first-rule">
+          <span>01</span>
+          <strong>First Rule</strong>
+        </a>
+        <a href="#start-safety">
+          <span>02</span>
+          <strong>Safety</strong>
+        </a>
+        <a href="#commands">
+          <span>03</span>
+          <strong>Commands</strong>
+        </a>
+        <a href="#start-posture">
+          <span>04</span>
+          <strong>Posture</strong>
+        </a>
+        <a href="#start-reading">
+          <span>05</span>
+          <strong>Reading Paths</strong>
+        </a>
+      </nav>
+
+      <div id="start-first-rule" class="content-shell start-intro start-anchor">
         <div>
           <p class="eyebrow">First Rule</p>
           <h2>Read before running.</h2>
@@ -91,12 +114,12 @@
           <span>04</span>
           <h3>Pick a record lane</h3>
           <p>Use the documentation map to continue into the exact contracts.</p>
-          <a href="roadmap.html">Open roadmap</a>
+          <a href="map.html">Open documentation map</a>
         </article>
       </div>
     </section>
 
-    <section class="section-band section-band-muted">
+    <section id="start-safety" class="section-band section-band-muted start-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Safety Expectations</p>
         <h2>Keep the first pass narrow.</h2>
@@ -124,22 +147,19 @@
       </div>
     </section>
 
-    <section id="commands" class="section-band">
+    <section id="commands" class="section-band start-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Local Commands</p>
         <h2>Inspect, then confirm no-effect posture.</h2>
         <p>
-          These examples mirror the current public README path. Run them from the repository root after cloning.
+          These examples keep the first pass non-privileged. Run them from the repository root after cloning; review prerequisite records separately before choosing any host setup path.
         </p>
       </div>
       <div class="content-shell command-grid">
         <article class="command-panel">
-          <h3>Ubuntu prerequisites</h3>
-          <pre><code>sudo apt-get update
-sudo apt-get install -y rustc cargo make gcc pkg-config \
-  libx11-dev libxcb1-dev libxcursor-dev libxrandr-dev libxi-dev \
-  libxkbcommon-dev libgl1-mesa-dev libwayland-dev desktop-file-utils \
-  libgtk-3-bin</code></pre>
+          <h3>Review prerequisite records</h3>
+          <pre><code>sed -n '1,80p' docs/QUICK_START_CHEATSHEET.md
+sed -n '256,270p' docs/UBUNTU_READINESS_PLAN.md</code></pre>
         </article>
         <article class="command-panel">
           <h3>Read status</h3>
@@ -160,7 +180,7 @@ make seal</code></pre>
       </div>
     </section>
 
-    <section class="section-band section-band-muted">
+    <section id="start-posture" class="section-band section-band-muted start-anchor">
       <div class="content-shell start-split">
         <div class="section-heading">
           <p class="eyebrow">Expected Posture</p>
@@ -177,7 +197,7 @@ effect_authority=denied</code></pre>
       </div>
     </section>
 
-    <section class="section-band">
+    <section id="start-reading" class="section-band start-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Reading Paths</p>
         <h2>Choose the next lane by intent.</h2>
@@ -222,7 +242,13 @@ effect_authority=denied</code></pre>
   <footer class="site-footer">
     <div class="content-shell footer-inner">
       <span>Latticra getting started guide.</span>
-      <span><a href="map.html">Open documentation map</a></span>
+      <nav class="footer-links" aria-label="Getting started footer navigation">
+        <a href="./">Home</a>
+        <a href="status.html">Status</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
     </div>
   </footer>
 </body>

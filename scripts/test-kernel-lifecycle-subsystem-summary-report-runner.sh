@@ -65,6 +65,12 @@ cc $CFLAGS \
   src/kernel_runtime_entry_recovery_outcome_observation_view.c \
   src/kernel_runtime_entry_recovery_closeout_observation_view.c \
   src/kernel_runtime_entry_recovery_audit_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_review_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_review_disposition_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_review_disposition_review_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view.c \
   src/nucleus_kernel_coupling.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
@@ -77,12 +83,12 @@ cc $CFLAGS \
 
 grep -Fq 'LATTICRA KERNEL LIFECYCLE SUBSYSTEM SUMMARY REPORT' "$report_txt"
 grep -Fq 'summary_status=summary-ready' "$report_txt"
-grep -Fq 'final_state=runtime-entry-recovery-audit-observation-view-ready' "$report_txt"
+grep -Fq 'final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'registry_status=registry-ready' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
-grep -Fq 'lifecycle_step_count=46' "$report_txt"
-grep -Fq 'lifecycle_state_change_count=46' "$report_txt"
+grep -Fq 'lifecycle_step_count=52' "$report_txt"
+grep -Fq 'lifecycle_state_change_count=52' "$report_txt"
 grep -Fq 'lifecycle_state_mutated=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
 grep -Fq 'network_allowed=0' "$report_txt"
@@ -100,6 +106,12 @@ grep -Fq 'nucleus_context_switch_allowed=0' "$report_txt"
 grep -Fq 'nucleus_register_save_allowed=0' "$report_txt"
 grep -Fq 'nucleus_register_restore_allowed=0' "$report_txt"
 grep -Fq 'nucleus_host_effect_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_recovery_audit_review_disposition_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_recovery_audit_review_disposition_review_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_recovery_audit_review_observation_view_allowed=0' "$report_txt"
 grep -Fq 'runtime_entry_recovery_audit_observation_view_allowed=0' "$report_txt"
 grep -Fq 'runtime_entry_recovery_closeout_observation_view_allowed=0' "$report_txt"
 grep -Fq 'runtime_entry_recovery_outcome_observation_view_allowed=0' "$report_txt"
@@ -132,6 +144,18 @@ grep -Fq 'recovery_disposition_allowed=0' "$report_txt"
 grep -Fq 'recovery_disposition_observation_allowed=0' "$report_txt"
 grep -Fq 'recovery_outcome_allowed=0' "$report_txt"
 grep -Fq 'recovery_outcome_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_review_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_review_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_review_closeout_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_review_closeout_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_review_closeout_archive_gate_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_observation_allowed=0' "$report_txt"
 grep -Fq 'recovery_audit_allowed=0' "$report_txt"
 grep -Fq 'recovery_audit_observation_allowed=0' "$report_txt"
 grep -Fq 'recovery_closeout_allowed=0' "$report_txt"
@@ -193,7 +217,7 @@ grep -Fq 'entry_count=9' "$report_txt"
 grep -Fq 'subsystem[0].name=boot' "$report_txt"
 grep -Fq 'subsystem[0].lifecycle_relation=boot-sequence-seeded' "$report_txt"
 grep -Fq 'subsystem[1].name=runtime' "$report_txt"
-grep -Fq 'subsystem[1].lifecycle_relation=runtime-entry-recovery-audit-observation-view-ready' "$report_txt"
+grep -Fq 'subsystem[1].lifecycle_relation=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready' "$report_txt"
 grep -Fq 'subsystem[1].authority_status=runtime-entry-denied' "$report_txt"
 grep -Fq 'subsystem[2].lifecycle_relation=scheduler-run-entry-ready' "$report_txt"
 grep -Fq 'subsystem[2].authority_status=scheduler-execution-denied' "$report_txt"

@@ -70,10 +70,17 @@ The implementation fails closed:
 null verification policy output -> LATTICRA_STATUS_NULL_ARGUMENT
 null signature metadata input -> invalid-input
 invalid signature metadata -> invalid-signature
+unterminated signature metadata strings -> invalid-signature
+invalid signature boolean flags -> invalid-signature
 missing artifact digest -> missing-digest
 missing signer identity -> missing-signer
 missing public-key identity label -> missing-public-key-identity
+unterminated public-key identity label -> missing-public-key-identity without copying caller bytes
+unterminated trust source -> invalid-trust-source without copying caller bytes
 unsupported algorithm label -> unsupported-algorithm
+tampered verification policy strings fail closed before report
+tampered verification policy authority/effect flags fail closed before report
+tampered verification policy boolean/error state fails closed before report
 small report buffer -> LATTICRA_STATUS_BUFFER_TOO_SMALL
 ```
 

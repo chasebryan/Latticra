@@ -7,7 +7,7 @@ Scope: bounded local OpenSSL EVP self-test for ML-KEM key generation, encapsulat
 
 This slice adds a true ML-KEM mechanism check to Q-Seal without changing the existing clean-room parameter and readiness gates.
 
-The self-test runs the OpenSSL EVP ML-KEM provider for each FIPS 203 parameter set, verifies that encapsulation and decapsulation recover the same 32-byte shared secret, and then zeroizes the internal shared-secret and ciphertext buffers before returning.
+The self-test runs the OpenSSL EVP ML-KEM provider for each FIPS 203 parameter set, verifies that generated and reimported keys remain bound to the requested ML-KEM algorithm identity, reimports the generated public key before encapsulation, verifies that public-key encapsulation and private-key decapsulation recover the same 32-byte shared secret through constant-time equality, verifies through the same constant-time comparison path that a tampered ciphertext decapsulates to a different shared secret, and then zeroizes the internal shared-secret and ciphertext buffers before returning.
 
 ## Added Files
 
@@ -31,10 +31,19 @@ provider_linked=1
 provider_available=1
 provider_runtime_used=1
 key_generation_performed=1
+keypair_algorithm_identity_verified=1
+public_key_reimported=1
+public_key_algorithm_identity_verified=1
+encapsulation_public_key_only=1
 encapsulation_performed=1
 decapsulation_performed=1
+tampered_ciphertext_decapsulation_performed=1
+tampered_ciphertext_shared_secret_mismatch=1
+tampered_ciphertext_rejected=1
 shared_secret_internal_buffers_used=1
 shared_secret_match=1
+shared_secret_constant_time_compare=1
+tampered_ciphertext_constant_time_compare=1
 shared_secret_zeroized=1
 ciphertext_zeroized=1
 shared_secret_output_emitted=0
@@ -51,9 +60,13 @@ The self-test:
 ```text
 loads the OpenSSL EVP ML-KEM provider by algorithm name
 generates an ephemeral ML-KEM key pair
-encapsulates to the generated public key
+verifies the generated key pair reports the requested ML-KEM algorithm identity
+serializes and reimports the public key before encapsulation
+verifies the reimported public key reports the requested ML-KEM algorithm identity
+encapsulates through the reimported public key
 decapsulates the ciphertext with the generated private key
 compares the encapsulated and decapsulated shared secrets using constant-time equality
+mutates the ciphertext and verifies through constant-time equality that the tampered decapsulation does not preserve the shared secret
 zeroizes shared-secret buffers before returning
 zeroizes the local ciphertext buffer before returning
 does not return, print, log, or persist shared-secret bytes

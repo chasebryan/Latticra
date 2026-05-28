@@ -43,6 +43,7 @@ DEFAULT_CONFIG = ROOT / "presentations/latticra-academic/latticra_academic_prese
 DEFAULT_OUT = ROOT / "build/presentation/latticra-academic"
 DEFAULT_SIZE = (1920, 1080)
 DEFAULT_FPS = 24
+DEFAULT_ARTIFACT_SLUG = "latticra-academic"
 
 
 @dataclass(frozen=True)
@@ -67,6 +68,13 @@ def clean_text(value: str) -> str:
 
 def word_count(value: str) -> int:
     return len([part for part in value.replace("/", " ").split() if part.strip()])
+
+
+def artifact_slug(meta: dict) -> str:
+    raw = str(meta.get("artifact_slug", DEFAULT_ARTIFACT_SLUG)).strip()
+    safe = "".join(ch if ch.isalnum() or ch in {"-", "_"} else "-" for ch in raw.lower())
+    safe = "-".join(part for part in safe.split("-") if part)
+    return safe or DEFAULT_ARTIFACT_SLUG
 
 
 def load_storyboard(path: Path) -> tuple[dict, list[Scene]]:
@@ -478,6 +486,43 @@ class ProductionRenderer:
             y = y0 + (row + 1) * row_h
             draw.rectangle((left, y, right, y + row_h), outline=(*col, 220), width=self.scaled(3))
 
+        elif scene.layout in {"nucleus_cover", "nucleus_qed"}:
+            if scene.layout == "nucleus_qed":
+                cx = left + int((right - left) * 0.34)
+                cy = top + self.scaled(235)
+            else:
+                cx = right - self.scaled(330)
+                cy = top + self.scaled(250)
+            for idx in range(4):
+                r = self.scaled(46 + idx * 30) + int(math.sin(p * math.tau + idx * 0.7) * self.scaled(4))
+                draw.ellipse((cx - r, cy - r, cx + r, cy + r), outline=(*mix(a, b, idx / 3), 68), width=self.scaled(2))
+
+        elif scene.layout in {"request_lifecycle", "task_engine_preview"}:
+            y = top + self.scaled(190)
+            x = left + int((right - left) * p)
+            draw.ellipse((x - self.scaled(12), y - self.scaled(12), x + self.scaled(12), y + self.scaled(12)), fill=(*col, 220))
+
+        elif scene.layout == "effect_gate_matrix":
+            cols = 5
+            rows = 2
+            gap = self.scaled(16)
+            cell_w = (right - left - gap * (cols - 1)) // cols
+            cell_h = self.scaled(120)
+            idx = min(cols * rows - 1, int(p * cols * rows))
+            c = idx % cols
+            r = idx // cols
+            x = left + c * (cell_w + gap)
+            y = top + self.scaled(64) + r * (cell_h + gap)
+            draw.rounded_rectangle((x, y, x + cell_w, y + cell_h), radius=self.scaled(8), outline=(*col, 230), width=self.scaled(3))
+
+        elif scene.layout == "runtime_boundary_modes":
+            x = (left + right) // 2
+            y0 = top + self.scaled(40)
+            y1 = bottom - self.scaled(52)
+            y = y0 + int((y1 - y0) * p)
+            draw.line((x, y0, x, y1), fill=(*mix(a, b, 0.5), 80), width=self.scaled(2))
+            draw.ellipse((x - self.scaled(13), y - self.scaled(13), x + self.scaled(13), y + self.scaled(13)), fill=(*col, 220))
+
     def scene_formulas(self, scene: Scene) -> tuple[str, ...]:
         formulas: dict[str, tuple[str, ...]] = {
             "theorem_cover": (
@@ -649,6 +694,30 @@ class ProductionRenderer:
             self.layout_trace_matrix(draw, scene, left, top, right, bottom, a, b, ink, muted)
         elif layout == "qed":
             self.layout_qed(draw, scene, left, top, right, bottom, a, b, ink, muted)
+        elif layout == "nucleus_cover":
+            self.layout_nucleus_cover(draw, scene, left, top, right, bottom, a, b, ink, muted)
+        elif layout == "supervisor_components":
+            self.layout_supervisor_components(draw, scene, left, top, right, bottom, a, b, ink, muted)
+        elif layout == "request_lifecycle":
+            self.layout_request_lifecycle(draw, scene, left, top, right, bottom, a, b, ink, muted)
+        elif layout == "state_lattice_supervisor":
+            self.layout_state_lattice_supervisor(draw, scene, left, top, right, bottom, a, b, ink, muted)
+        elif layout == "policy_engine":
+            self.layout_policy_engine(draw, scene, left, top, right, bottom, a, b, ink, muted)
+        elif layout == "effect_gate_matrix":
+            self.layout_effect_gate_matrix(draw, scene, left, top, right, bottom, a, b, ink, muted)
+        elif layout == "task_engine_preview":
+            self.layout_task_engine_preview(draw, scene, left, top, right, bottom, a, b, ink, muted)
+        elif layout == "runtime_boundary_modes":
+            self.layout_runtime_boundary_modes(draw, scene, left, top, right, bottom, a, b, ink, muted)
+        elif layout == "update_server_gate":
+            self.layout_update_server_gate(draw, scene, left, top, right, bottom, a, b, ink, muted)
+        elif layout == "evidence_report":
+            self.layout_evidence_report(draw, scene, left, top, right, bottom, a, b, ink, muted)
+        elif layout == "failure_first":
+            self.layout_failure_first(draw, scene, left, top, right, bottom, a, b, ink, muted)
+        elif layout == "nucleus_qed":
+            self.layout_nucleus_qed(draw, scene, left, top, right, bottom, a, b, ink, muted)
         elif layout == "cover":
             self.layout_cover(draw, scene, left, top, right, bottom, a, b, ink, muted)
         elif layout == "problem":
@@ -720,7 +789,19 @@ class ProductionRenderer:
         y = self.height - self.margin_y
         draw.line((x0, y, x1, y), fill=(*rgb("#51606b"), 90), width=self.scaled(2))
         draw.line((x0, y, x0 + int((x1 - x0) * total_p), y), fill=(*mix(a, b, 0.55), 210), width=self.scaled(3))
-        label = f"Proof segment {scene.scene_id} / theorem board"
+        board = "supervisor board" if scene.layout.startswith("nucleus_") or scene.layout in {
+            "supervisor_components",
+            "request_lifecycle",
+            "state_lattice_supervisor",
+            "policy_engine",
+            "effect_gate_matrix",
+            "task_engine_preview",
+            "runtime_boundary_modes",
+            "update_server_gate",
+            "evidence_report",
+            "failure_first",
+        } else "theorem board"
+        label = f"Proof segment {scene.scene_id} / {board}"
         time_label = f"{int(elapsed):03d}s / {int(total):03d}s"
         draw.text((x0, y + self.scaled(14)), label, font=self.font("sans", 16), fill=(*rgb("#d8dedc"), 210))
         tw = draw.textbbox((0, 0), time_label, font=self.font("mono", 16))[2]
@@ -1014,6 +1095,296 @@ class ProductionRenderer:
         self.math_box(draw, (right - self.scaled(510), top + self.scaled(45), right, top + self.scaled(235)), "RESULT", "ordered state + explicit authority\n=> inspectable simulation", b, ink, muted)
         self.bullet_stack(draw, scene, left, bottom - self.scaled(160), right - left, a, ink, muted)
 
+    def layout_nucleus_cover(self, draw, scene, left, top, right, bottom, a, b, ink, muted) -> None:
+        board = (left, top, right, bottom - self.scaled(32))
+        self.panel(draw, board, fill_alpha=132, outline=a)
+        draw.text((left + self.scaled(30), top + self.scaled(20)), "NUCLEUS SUPERVISOR ARCHITECTURE", font=self.font("display", 48), fill=(*ink, 245))
+        draw.text((left + self.scaled(34), top + self.scaled(82)), "Chase Bryan / Latticra academic system presentation", font=self.font("sans", 22), fill=(*mix(a, ink, 0.42), 226))
+        model = [
+            "Nucleus coordinates after contracts and gates permit it.",
+            "Current slice: preview classification and no-effect task reports.",
+            "Supervisor theorem: every request carries kind, effect, gate, and evidence.",
+        ]
+        y = top + self.scaled(138)
+        for idx, line in enumerate(model):
+            col = mix(a, b, idx / max(1, len(model) - 1))
+            self.draw_wrapped(draw, line, left + self.scaled(42), y, self.font("sans", 27), (*mix(col, ink, 0.35), 238), int((right - left) * 0.56), line_gap=self.scaled(6), max_lines=2)
+            y += self.scaled(64)
+
+        cx = right - self.scaled(330)
+        cy = top + self.scaled(260)
+        draw.ellipse((cx - self.scaled(80), cy - self.scaled(80), cx + self.scaled(80), cy + self.scaled(80)), fill=(*rgb("#0b1117"), 235), outline=(*a, 220), width=self.scaled(3))
+        self.center_text(draw, "NUCLEUS", cx, cy - self.scaled(18), self.font("mono", 24), (*ink, 238))
+        nodes = [
+            ("STATE", -210, -120),
+            ("POLICY", 0, -190),
+            ("GATE", 210, -120),
+            ("TASK", 210, 115),
+            ("REPORT", 0, 195),
+            ("EVIDENCE", -210, 115),
+        ]
+        for idx, (label, dx, dy) in enumerate(nodes):
+            x = cx + self.scaled(dx)
+            y = cy + self.scaled(dy)
+            col = mix(a, b, idx / max(1, len(nodes) - 1))
+            draw.line((cx, cy, x, y), fill=(*col, 105), width=self.scaled(2))
+            draw.rounded_rectangle((x - self.scaled(76), y - self.scaled(22), x + self.scaled(76), y + self.scaled(22)), radius=self.scaled(8), fill=(*rgb("#111820"), 232), outline=(*col, 205), width=self.scaled(1))
+            self.center_text(draw, label, x, y - self.scaled(9), self.font("mono", 16), (*ink, 232))
+        self.bullet_stack(draw, scene, left + self.scaled(42), bottom - self.scaled(205), int((right - left) * 0.58), a, ink, muted)
+
+    def layout_supervisor_components(self, draw, scene, left, top, right, bottom, a, b, ink, muted) -> None:
+        hub = (left, top + self.scaled(62), left + self.scaled(500), top + self.scaled(378))
+        self.panel(draw, hub, fill_alpha=140, outline=a)
+        self.center_text(draw, "NUCLEUS", (hub[0] + hub[2]) // 2, hub[1] + self.scaled(86), self.font("display", 44), (*ink, 242))
+        self.draw_wrapped(draw, "supervisor, not shell; orchestrator, not hidden executor", hub[0] + self.scaled(42), hub[1] + self.scaled(155), self.font("sans", 25), (*muted, 230), hub[2] - hub[0] - self.scaled(84), max_lines=3)
+        self.math_box(draw, (hub[0] + self.scaled(42), hub[1] + self.scaled(238), hub[2] - self.scaled(42), hub[3] - self.scaled(30)), "CORE RULE", "coordinate only after contract + gate + evidence", b, ink, muted)
+
+        cards = [
+            ("State Lattice", "cells, paths, axes"),
+            ("Policy Engine", "allowed? why?"),
+            ("Effect Gate", "none, read, deny"),
+            ("Task Engine", "preview/report only"),
+            ("Update Engine", "signed staging"),
+            ("Server Gateway", "optional, signed"),
+            ("Report Engine", "operator surface"),
+            ("Lat Boundary", "parse/validate"),
+            ("Evidence Recorder", "receipt trail"),
+        ]
+        grid_left = left + self.scaled(590)
+        gap_x = self.scaled(18)
+        gap_y = self.scaled(24)
+        card_w = (right - grid_left - gap_x * 2) // 3
+        card_h = self.scaled(92)
+        for idx, (head, body) in enumerate(cards):
+            row = idx // 3
+            col_idx = idx % 3
+            x = grid_left + col_idx * (card_w + gap_x)
+            y = top + self.scaled(42) + row * (card_h + gap_y)
+            col = mix(a, b, idx / max(1, len(cards) - 1))
+            self.panel(draw, (x, y, x + card_w, y + card_h), outline=col)
+            self.draw_fit_line(draw, head.upper(), x + self.scaled(18), y + self.scaled(18), card_w - self.scaled(36), self.font("mono", 17), (*col, 238))
+            self.draw_fit_line(draw, body, x + self.scaled(18), y + self.scaled(52), card_w - self.scaled(36), self.font("sans", 19), (*ink, 220))
+        self.bullet_stack(draw, scene, left, bottom - self.scaled(145), right - left, a, ink, muted)
+
+    def layout_request_lifecycle(self, draw, scene, left, top, right, bottom, a, b, ink, muted) -> None:
+        rows = [
+            ["operator request", "parse", "classify", "policy check", "effect gate"],
+            ["preview/report", "confirmation if required", "carry out if allowed", "record evidence"],
+        ]
+        y_values = [top + self.scaled(66), top + self.scaled(258)]
+        for row_idx, row in enumerate(rows):
+            gap = self.scaled(18)
+            box_w = (right - left - gap * (len(row) - 1)) // len(row)
+            for idx, label in enumerate(row):
+                x = left + idx * (box_w + gap)
+                y = y_values[row_idx]
+                global_idx = idx + (5 if row_idx else 0)
+                col = mix(a, b, global_idx / 8)
+                self.panel(draw, (x, y, x + box_w, y + self.scaled(110)), outline=col)
+                self.center_text(draw, f"{global_idx + 1:02d}", x + self.scaled(34), y + self.scaled(24), self.font("mono", 19), (*col, 240))
+                self.draw_fit_line(draw, label.upper(), x + self.scaled(70), y + self.scaled(28), box_w - self.scaled(88), self.font("mono", 16), (*ink, 230))
+                if idx < len(row) - 1:
+                    ax = x + box_w
+                    draw.line((ax + self.scaled(4), y + self.scaled(55), ax + gap - self.scaled(4), y + self.scaled(55)), fill=(*col, 155), width=self.scaled(2))
+                    draw.polygon([(ax + gap - self.scaled(5), y + self.scaled(55)), (ax + gap - self.scaled(17), y + self.scaled(48)), (ax + gap - self.scaled(17), y + self.scaled(62))], fill=(*col, 210))
+        self.draw_wrapped(draw, scene.proof, left, bottom - self.scaled(98), self.font("sans", 25), (*ink, 225), right - left, max_lines=3)
+
+    def layout_state_lattice_supervisor(self, draw, scene, left, top, right, bottom, a, b, ink, muted) -> None:
+        self.draw_order_lattice(draw, left + self.scaled(390), top + self.scaled(258), self.scaled(205), a, b, ink, ("0", "cell", "path", "route", "trace", "1"))
+        boxes = [
+            ("STATE CELLS", "bounded identity records"),
+            ("PATHS", "ordered movement routes"),
+            ("AXES", "view dimensions"),
+            ("TRACES", "visible evidence trail"),
+        ]
+        grid_left = left + self.scaled(760)
+        card_w = (right - grid_left - self.scaled(24)) // 2
+        card_h = self.scaled(118)
+        for idx, (head, body) in enumerate(boxes):
+            x = grid_left + (idx % 2) * (card_w + self.scaled(24))
+            y = top + self.scaled(72) + (idx // 2) * self.scaled(146)
+            col = mix(a, b, idx / max(1, len(boxes) - 1))
+            self.math_box(draw, (x, y, x + card_w, y + card_h), head, body, col, ink, muted)
+        self.bullet_stack(draw, scene, left + self.scaled(760), bottom - self.scaled(175), right - left - self.scaled(760), a, ink, muted)
+
+    def layout_policy_engine(self, draw, scene, left, top, right, bottom, a, b, ink, muted) -> None:
+        questions = ["allowed?", "why or why not?", "evidence level?", "which gate?", "which effect?"]
+        q_w = self.scaled(650)
+        for idx, question in enumerate(questions):
+            y = top + self.scaled(30) + idx * self.scaled(78)
+            col = mix(a, b, idx / max(1, len(questions) - 1))
+            self.panel(draw, (left, y, left + q_w, y + self.scaled(58)), outline=col)
+            draw.text((left + self.scaled(24), y + self.scaled(17)), question.upper(), font=self.font("mono", 18), fill=(*mix(col, ink, 0.35), 236))
+        decision = (left + self.scaled(745), top + self.scaled(44), right, top + self.scaled(402))
+        self.panel(draw, decision, fill_alpha=148, outline=b)
+        draw.text((decision[0] + self.scaled(26), decision[1] + self.scaled(24)), "POLICY RESULT", font=self.font("mono", 19), fill=(*b, 238))
+        labels = ["allow-preview", "allow-report", "allow-validation", "deny", "requires-future-gate"]
+        y = decision[1] + self.scaled(74)
+        for idx, label in enumerate(labels):
+            col = mix(a, b, idx / max(1, len(labels) - 1))
+            draw.rounded_rectangle((decision[0] + self.scaled(28), y, decision[2] - self.scaled(28), y + self.scaled(42)), radius=self.scaled(7), fill=(*rgb("#111820"), 220), outline=(*col, 125))
+            draw.text((decision[0] + self.scaled(46), y + self.scaled(11)), label, font=self.font("mono", 17), fill=(*ink, 228))
+            y += self.scaled(50)
+        self.draw_wrapped(draw, scene.proof, left, bottom - self.scaled(74), self.font("sans", 24), (*muted, 226), right - left, max_lines=2)
+
+    def layout_effect_gate_matrix(self, draw, scene, left, top, right, bottom, a, b, ink, muted) -> None:
+        effects = [
+            ("none", "ALLOW REPORT"),
+            ("read", "ALLOW METADATA"),
+            ("local_mutation", "DENY"),
+            ("host_mutation", "DENY"),
+            ("network", "DENY"),
+            ("hardware", "DENY"),
+            ("boot", "DENY"),
+            ("recovery", "DENY"),
+            ("external", "DENY"),
+            ("unknown", "DENY"),
+        ]
+        cols = 5
+        gap = self.scaled(16)
+        card_w = (right - left - gap * (cols - 1)) // cols
+        card_h = self.scaled(120)
+        for idx, (effect, policy) in enumerate(effects):
+            row = idx // cols
+            col_idx = idx % cols
+            x = left + col_idx * (card_w + gap)
+            y = top + self.scaled(64) + row * (card_h + gap)
+            col = mix(a, b, idx / max(1, len(effects) - 1))
+            allowed = policy.startswith("ALLOW")
+            fill = rgb("#102018") if allowed else rgb("#211317")
+            draw.rounded_rectangle((x, y, x + card_w, y + card_h), radius=self.scaled(8), fill=(*fill, 224), outline=(*col, 165), width=self.scaled(1))
+            self.draw_fit_line(draw, effect.upper(), x + self.scaled(18), y + self.scaled(22), card_w - self.scaled(36), self.font("mono", 16), (*muted, 230))
+            self.center_text(draw, policy, x + card_w // 2, y + self.scaled(68), self.font("sans", 23), (*mix(col, ink, 0.35), 240))
+        self.draw_wrapped(draw, scene.proof, left, bottom - self.scaled(92), self.font("sans", 24), (*ink, 224), right - left, max_lines=2)
+
+    def layout_task_engine_preview(self, draw, scene, left, top, right, bottom, a, b, ink, muted) -> None:
+        steps = ["task request", "prerequisites", "classification", "deterministic report"]
+        y = top + self.scaled(120)
+        gap = self.scaled(30)
+        box_w = (right - left - gap * (len(steps) - 1)) // len(steps)
+        for idx, step in enumerate(steps):
+            x = left + idx * (box_w + gap)
+            col = mix(a, b, idx / max(1, len(steps) - 1))
+            self.panel(draw, (x, y, x + box_w, y + self.scaled(126)), outline=col)
+            self.center_text(draw, step.upper(), x + box_w // 2, y + self.scaled(44), self.font("mono", 18), (*ink, 232))
+            self.center_text(draw, "executed=0" if idx == len(steps) - 1 else f"{idx + 1}", x + box_w // 2, y + self.scaled(82), self.font("mono", 19), (*col, 238))
+            if idx < len(steps) - 1:
+                ax = x + box_w
+                draw.line((ax + self.scaled(6), y + self.scaled(63), ax + gap - self.scaled(6), y + self.scaled(63)), fill=(*col, 170), width=self.scaled(3))
+        report = (left, top + self.scaled(330), left + int((right - left) * 0.56), bottom - self.scaled(58))
+        self.panel(draw, report, outline=a)
+        fields = ["policy=allow-report", "reason=ok", "mutation_allowed=0", "server_interaction_allowed=0", "hardware_allowed=0"]
+        yy = report[1] + self.scaled(26)
+        for idx, field in enumerate(fields):
+            draw.text((report[0] + self.scaled(26), yy), field, font=self.font("mono", 19), fill=(*mix(a, b, idx / max(1, len(fields) - 1)), 235))
+            yy += self.scaled(42)
+        self.math_box(draw, (report[2] + self.scaled(46), report[1], right, report[3]), "DENIED BY DEFAULT", "operator confirmation is metadata later; it does not override policy in this slice", b, ink, muted)
+
+    def layout_runtime_boundary_modes(self, draw, scene, left, top, right, bottom, a, b, ink, muted) -> None:
+        mid = (left + right) // 2
+        draw.line((mid, top + self.scaled(28), mid, bottom - self.scaled(62)), fill=(*mix(a, b, 0.5), 125), width=self.scaled(2))
+        draw.text((left, top + self.scaled(22)), "ALLOWED METADATA SURFACES", font=self.font("mono", 18), fill=(*a, 238))
+        draw.text((mid + self.scaled(44), top + self.scaled(22)), "DENIED RUNTIME SURFACES", font=self.font("mono", 18), fill=(*b, 238))
+        allowed = ["disabled", "report-only", "validation-only", "preview-only", "classification-only", "deny-all"]
+        denied = ["command execution", "Lat execution", "file I/O", "network I/O", "self-update", "recovery", "hardware", "boot behavior"]
+        for idx, item in enumerate(allowed):
+            y = top + self.scaled(74) + idx * self.scaled(54)
+            draw.rounded_rectangle((left, y, mid - self.scaled(54), y + self.scaled(38)), radius=self.scaled(7), fill=(*rgb("#102018"), 220), outline=(*mix(a, ink, 0.18), 125))
+            draw.text((left + self.scaled(22), y + self.scaled(9)), item, font=self.font("mono", 17), fill=(*ink, 228))
+        for idx, item in enumerate(denied):
+            y = top + self.scaled(74) + idx * self.scaled(42)
+            draw.rounded_rectangle((mid + self.scaled(44), y, right, y + self.scaled(31)), radius=self.scaled(7), fill=(*rgb("#211317"), 220), outline=(*mix(b, ink, 0.18), 115))
+            draw.text((mid + self.scaled(66), y + self.scaled(6)), item, font=self.font("mono", 15), fill=(*ink, 218))
+        self.draw_wrapped(draw, scene.proof, left, bottom - self.scaled(78), self.font("sans", 23), (*muted, 226), right - left, max_lines=2)
+
+    def layout_update_server_gate(self, draw, scene, left, top, right, bottom, a, b, ink, muted) -> None:
+        gap = self.scaled(38)
+        w = (right - left - gap) // 2
+        panels = [
+            (left, "UPDATE ENGINE", ["signed staged updates", "channel selection", "verification", "rollback slots"]),
+            (left + w + gap, "SERVER GATEWAY", ["optional interaction", "signed exchange", "profile-gated", "local operation remains possible"]),
+        ]
+        for pidx, (x, title, items) in enumerate(panels):
+            col = mix(a, b, pidx)
+            self.panel(draw, (x, top + self.scaled(58), x + w, bottom - self.scaled(82)), outline=col)
+            draw.text((x + self.scaled(26), top + self.scaled(88)), title, font=self.font("mono", 21), fill=(*col, 240))
+            y = top + self.scaled(150)
+            for idx, item in enumerate(items):
+                draw.ellipse((x + self.scaled(32), y + self.scaled(8), x + self.scaled(42), y + self.scaled(18)), fill=(*mix(col, ink, 0.2), 235))
+                self.draw_wrapped(draw, item, x + self.scaled(58), y, self.font("sans", 24), (*ink, 228), w - self.scaled(92), max_lines=2)
+                y += self.scaled(58)
+        gate_box = (left + self.scaled(520), bottom - self.scaled(154), right - self.scaled(520), bottom - self.scaled(98))
+        draw.rounded_rectangle(gate_box, radius=self.scaled(9), fill=(*rgb("#10151d"), 235), outline=(*mix(a, b, 0.5), 185), width=self.scaled(2))
+        self.center_text(draw, "NO SILENT UPDATE / NO UNGATED SERVER ACTION", (gate_box[0] + gate_box[2]) // 2, gate_box[1] + self.scaled(17), self.font("mono", 17), (*ink, 235))
+
+    def layout_evidence_report(self, draw, scene, left, top, right, bottom, a, b, ink, muted) -> None:
+        table_w = int((right - left) * 0.58)
+        fields = [
+            ("validation_level", "L2 tested model"),
+            ("source", "operator request"),
+            ("target", "Nucleus task record"),
+            ("effect", "none/read or denied"),
+            ("result", "allow report / deny"),
+            ("failure_behavior", "visible reason"),
+            ("promotion_status", "requires future gate"),
+        ]
+        row_h = self.scaled(46)
+        y0 = top + self.scaled(58)
+        draw.text((left, top + self.scaled(22)), "EVIDENCE RECORDER", font=self.font("mono", 19), fill=(*a, 238))
+        for idx, (field, value) in enumerate(fields):
+            y = y0 + idx * row_h
+            col = mix(a, b, idx / max(1, len(fields) - 1))
+            draw.rectangle((left, y, left + table_w, y + row_h), fill=(*rgb("#0b1117"), 214), outline=(*col, 100))
+            draw.text((left + self.scaled(18), y + self.scaled(12)), field, font=self.font("mono", 15), fill=(*muted, 220))
+            self.draw_fit_line(draw, value, left + self.scaled(270), y + self.scaled(10), table_w - self.scaled(290), self.font("sans", 19), (*ink, 226))
+        report = (left + table_w + self.scaled(56), top + self.scaled(58), right, bottom - self.scaled(80))
+        self.panel(draw, report, outline=b)
+        draw.text((report[0] + self.scaled(24), report[1] + self.scaled(24)), "OPERATOR REPORT", font=self.font("mono", 19), fill=(*b, 238))
+        lines = ["executed=0", "mutation_allowed=0", "reason=effect-blocked", "receipt=deterministic"]
+        yy = report[1] + self.scaled(84)
+        for idx, line in enumerate(lines):
+            draw.text((report[0] + self.scaled(28), yy), line, font=self.font("mono", 20), fill=(*mix(a, b, idx / max(1, len(lines) - 1)), 232))
+            yy += self.scaled(54)
+
+    def layout_failure_first(self, draw, scene, left, top, right, bottom, a, b, ink, muted) -> None:
+        stages = ["failure result", "rollback boundary", "visible reason", "evidence record", "post validation"]
+        y = top + self.scaled(150)
+        gap = self.scaled(24)
+        box_w = (right - left - gap * (len(stages) - 1)) // len(stages)
+        for idx, stage in enumerate(stages):
+            x = left + idx * (box_w + gap)
+            col = mix(a, b, idx / max(1, len(stages) - 1))
+            self.panel(draw, (x, y, x + box_w, y + self.scaled(116)), outline=col)
+            self.center_text(draw, f"{idx + 1}", x + box_w // 2, y + self.scaled(22), self.font("display", 34), (*col, 238))
+            self.draw_fit_line(draw, stage.upper(), x + self.scaled(18), y + self.scaled(76), box_w - self.scaled(36), self.font("mono", 15), (*ink, 225))
+        boxes = [
+            ("BEFORE ACTION", "define the failure result and denial surface"),
+            ("DURING ACTION", "never cross beyond the approved effect gate"),
+            ("AFTER ACTION", "record evidence and validate the visible result"),
+        ]
+        for idx, (head, body) in enumerate(boxes):
+            x = left + idx * ((right - left - self.scaled(40)) // 3 + self.scaled(20))
+            w = (right - left - self.scaled(40)) // 3
+            self.math_box(draw, (x, top + self.scaled(340), x + w, bottom - self.scaled(70)), head, body, mix(a, b, idx / 2), ink, muted)
+
+    def layout_nucleus_qed(self, draw, scene, left, top, right, bottom, a, b, ink, muted) -> None:
+        cx = left + int((right - left) * 0.34)
+        cy = top + self.scaled(235)
+        rings = [("S", "state"), ("P", "policy"), ("G", "gate"), ("R", "report"), ("E", "evidence")]
+        for idx, (sym, label) in enumerate(rings):
+            r = self.scaled(46 + idx * 28)
+            col = mix(a, b, idx / max(1, len(rings) - 1))
+            draw.ellipse((cx - r, cy - r, cx + r, cy + r), outline=(*col, 172), width=self.scaled(3))
+            self.center_text(draw, f"{sym}: {label}", cx, cy - self.scaled(10) + idx * self.scaled(23), self.font("mono", 14), (*mix(col, ink, 0.4), 232))
+        self.math_box(draw, (left, top + self.scaled(42), left + self.scaled(540), top + self.scaled(170)), "MODEL", "Nucleus = (S, P, G, T, R, E)", a, ink, muted)
+        self.math_box(draw, (left + self.scaled(860), top + self.scaled(58), right, top + self.scaled(198)), "NON-CLAIM", "not a live runtime, security boundary, kernel, hypervisor, or silent updater", b, ink, muted)
+        command = "./scripts/render-nucleus-academic-presentation.sh render"
+        box = (left + self.scaled(860), top + self.scaled(268), right, top + self.scaled(408))
+        self.panel(draw, box, outline=a)
+        draw.text((box[0] + self.scaled(24), box[1] + self.scaled(22)), "REPRODUCIBLE COMMAND", font=self.font("mono", 18), fill=(*muted, 220))
+        self.draw_wrapped(draw, command, box[0] + self.scaled(24), box[1] + self.scaled(64), self.font("mono", 25), (*mix(a, ink, 0.45), 238), box[2] - box[0] - self.scaled(48), max_lines=2)
+        self.bullet_stack(draw, scene, left, bottom - self.scaled(156), right - left, a, ink, muted)
+
     def layout_cover(self, draw, scene, left, top, right, bottom, a, b, ink, muted) -> None:
         title = "Lattice / Latticra"
         draw.text((left, top + self.scaled(10)), title, font=self.font("display", 82), fill=(*ink, 245))
@@ -1247,7 +1618,7 @@ def wav_duration(path: Path) -> float:
         return fh.getnframes() / float(fh.getframerate())
 
 
-def synthesize_voiceover(scenes: list[Scene], out_dir: Path, piper_bin: str | None, piper_model: str | None, piper_config: str | None) -> tuple[Path, list[dict]]:
+def synthesize_voiceover(scenes: list[Scene], out_dir: Path, piper_bin: str | None, piper_model: str | None, piper_config: str | None, slug: str = DEFAULT_ARTIFACT_SLUG) -> tuple[Path, list[dict]]:
     piper_bin = locate_executable("piper", "PIPER_BIN", piper_bin)
     piper_python = os.environ.get("PIPER_PYTHON") or sys.executable
     piper_model = piper_model or os.environ.get("PIPER_MODEL") or os.environ.get("PIPER_VOICE")
@@ -1270,7 +1641,7 @@ def synthesize_voiceover(scenes: list[Scene], out_dir: Path, piper_bin: str | No
             subprocess.run(cmd, text=True, check=True)
         wavs.append(wav_path)
 
-    combined = voice_dir / "latticra-academic-voiceover.wav"
+    combined = voice_dir / f"{slug}-voiceover.wav"
     timings: list[dict] = []
     start = 0.0
     first_params = None
@@ -1314,11 +1685,11 @@ def default_timings(scenes: list[Scene]) -> list[dict]:
     return timings
 
 
-def render_video(renderer: ProductionRenderer, scenes: list[Scene], timings: list[dict], out_dir: Path, ffmpeg_bin: str | None, audio_path: Path | None, allow_silent: bool) -> Path:
+def render_video(renderer: ProductionRenderer, scenes: list[Scene], timings: list[dict], out_dir: Path, ffmpeg_bin: str | None, audio_path: Path | None, allow_silent: bool, slug: str = DEFAULT_ARTIFACT_SLUG) -> Path:
     ffmpeg_bin = locate_executable("ffmpeg", "FFMPEG_BIN", ffmpeg_bin)
     if not ffmpeg_bin:
         raise SystemExit("ffmpeg was not found. Set FFMPEG_BIN or install ffmpeg to render MP4.")
-    video_path = ensure_dir(out_dir / "video") / "latticra-academic-presentation.mp4"
+    video_path = ensure_dir(out_dir / "video") / f"{slug}-presentation.mp4"
     total = sum(item["duration"] for item in timings)
     scene_by_id = {scene.scene_id: scene for scene in scenes}
 
@@ -1413,6 +1784,7 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Iterable[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     meta, scenes = load_storyboard(args.config)
+    slug = artifact_slug(meta)
     errors = validate_storyboard(meta, scenes)
     if errors:
         for error in errors:
@@ -1429,6 +1801,7 @@ def main(argv: Iterable[str] | None = None) -> int:
         "target_seconds": meta.get("target_seconds"),
         "planned_seconds": sum(scene.duration for scene in scenes),
         "word_count": sum(word_count(scene.narration) for scene in scenes),
+        "artifact_slug": slug,
     }
 
     if args.mode in {"preview", "render"}:
@@ -1440,7 +1813,7 @@ def main(argv: Iterable[str] | None = None) -> int:
     voiceover_path: Path | None = args.voiceover_wav
     timings = default_timings(scenes)
     if args.mode in {"voiceover", "render"} and args.voiceover_wav is None:
-        voiceover_path, timings = synthesize_voiceover(scenes, out_dir, args.piper_bin, args.piper_model, args.piper_config)
+        voiceover_path, timings = synthesize_voiceover(scenes, out_dir, args.piper_bin, args.piper_model, args.piper_config, slug)
         manifest["voiceover_wav"] = str(voiceover_path)
         manifest["actual_seconds"] = sum(item["duration"] for item in timings)
     elif args.voiceover_wav is not None:
@@ -1453,7 +1826,7 @@ def main(argv: Iterable[str] | None = None) -> int:
 
     if args.mode == "render":
         renderer = ProductionRenderer(args.size[0], args.size[1], args.fps)
-        video_path = render_video(renderer, scenes, timings, out_dir, args.ffmpeg_bin, voiceover_path, args.allow_silent)
+        video_path = render_video(renderer, scenes, timings, out_dir, args.ffmpeg_bin, voiceover_path, args.allow_silent, slug)
         manifest["video"] = str(video_path)
 
     manifest_path = out_dir / "render-manifest.json"

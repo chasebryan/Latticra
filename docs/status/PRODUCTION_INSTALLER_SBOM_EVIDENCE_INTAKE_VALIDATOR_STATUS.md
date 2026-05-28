@@ -17,6 +17,8 @@ It does not generate an SBOM, accept evidence, attach an SBOM to a release artif
 ```text
 sbom_evidence_intake_validator_present=1
 sbom_evidence_intake_validation_mode=no-effect-validation
+sbom_evidence_template_present=1
+sbom_evidence_template_complete=0
 sbom_evidence_candidate_valid=0
 sbom_artifact_file_present=0
 sbom_artifact_sha256_recorded=0

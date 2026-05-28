@@ -45,6 +45,7 @@ static int kat_runner_contract_is_fail_closed(void) {
     EXPECT_TRUE(contract.vector_fixture_digest_ledger_bound == 1u, "digest ledger");
     EXPECT_TRUE(contract.negative_test_evidence_bound == 1u, "negative evidence");
     EXPECT_TRUE(contract.provider_differential_bound == 1u, "provider");
+    EXPECT_TRUE(contract.replay_transcript_gate_bound == 1u, "transcript gate");
     EXPECT_TRUE(contract.implementation_binding_manifest_bound == 1u, "binding");
     EXPECT_TRUE(contract.clean_room_source_boundary_recorded == 1u, "clean room");
     EXPECT_TRUE(contract.deterministic_replay_policy_recorded == 1u, "deterministic");
@@ -86,8 +87,8 @@ static int kat_runner_contract_is_fail_closed(void) {
     EXPECT_TRUE(contract.production_crypto_claim_allowed == 0u, "production");
     EXPECT_TRUE(contract.fips_claim_allowed == 0u, "fips claim");
     EXPECT_TRUE(contract.runtime_authority_granted == 0u, "runtime");
-    EXPECT_TRUE(contract.required_kat_runner_contract_items_total == 46u, "total");
-    EXPECT_TRUE(contract.required_kat_runner_contract_items_satisfied == 30u, "satisfied");
+    EXPECT_TRUE(contract.required_kat_runner_contract_items_total == 47u, "total");
+    EXPECT_TRUE(contract.required_kat_runner_contract_items_satisfied == 31u, "satisfied");
     EXPECT_TRUE(
         contract.error == LATTICRA_Q_SEAL_ML_KEM_KAT_RUNNER_CONTRACT_BLOCKED,
         "blocked");
@@ -110,13 +111,16 @@ static int kat_runner_contract_is_fail_closed(void) {
     EXPECT_TRUE(strstr(rendered, "kat_result_schema_bound=1") != 0, "schema report");
     EXPECT_TRUE(strstr(rendered, "kat_result_row_fixture_bound=1") != 0, "row report");
     EXPECT_TRUE(
+        strstr(rendered, "replay_transcript_gate_bound=1") != 0,
+        "transcript gate report");
+    EXPECT_TRUE(
         strstr(rendered, "fixture_bundle_loaded=0") != 0,
         "fixture report");
     EXPECT_TRUE(
         strstr(rendered, "kat_execution_enabled=0") != 0,
         "execution report");
     EXPECT_TRUE(
-        strstr(rendered, "required_kat_runner_contract_items_total=46") != 0,
+        strstr(rendered, "required_kat_runner_contract_items_total=47") != 0,
         "total report");
     return 0;
 }

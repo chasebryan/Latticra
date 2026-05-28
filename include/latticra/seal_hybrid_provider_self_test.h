@@ -12,7 +12,7 @@ extern "C" {
 #define LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_PROFILE_MAX 96u
 #define LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_LABEL_MAX 128u
 #define LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_STATE_MAX 128u
-#define LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_REPORT_MAX 4096u
+#define LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_REPORT_MAX 8192u
 #define LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_RECORD_MAX 512u
 #define LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_ML_KEM_512_CIPHERTEXT_BYTES 768u
 #define LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_ML_KEM_768_CIPHERTEXT_BYTES 1088u
@@ -41,6 +41,8 @@ typedef struct {
     unsigned pqc_provider_available;
     unsigned provider_runtime_used;
     unsigned p256_key_generation_performed;
+    unsigned p256_peer_public_keys_reimported;
+    unsigned p256_ecdh_peer_public_key_only;
     unsigned p256_ecdh_derive_performed;
     unsigned p256_shared_secret_match;
     unsigned p256_shared_secret_bytes;
@@ -49,6 +51,12 @@ typedef struct {
     unsigned ml_kem_decapsulation_performed;
     unsigned ml_kem_shared_secret_match;
     unsigned ml_kem_shared_secret_bytes;
+    unsigned ml_kem_keypair_algorithm_identity_verified_cases_total;
+    unsigned ml_kem_public_key_reimported_cases_total;
+    unsigned ml_kem_public_key_algorithm_identity_verified_cases_total;
+    unsigned ml_kem_encapsulation_public_key_only_cases_total;
+    unsigned ml_kem_tampered_ciphertext_shared_secret_mismatch_total;
+    unsigned ml_kem_ciphertext_tampering_rejected_total;
     unsigned ml_kem_parameter_sets_tested;
     unsigned ml_kem_512_key_generation_performed;
     unsigned ml_kem_512_encapsulation_performed;
@@ -75,14 +83,33 @@ typedef struct {
     unsigned hybrid_envelope_records_sealed_total;
     unsigned hybrid_envelope_records_opened_total;
     unsigned hybrid_envelope_records_authenticated_total;
+    unsigned hybrid_envelope_provider_crypto_evidence_bound;
+    unsigned hybrid_envelope_provider_crypto_cases_total;
+    unsigned hybrid_envelope_hkdf_provider_cases_total;
+    unsigned hybrid_envelope_hkdf_sha256_cases_total;
+    unsigned hybrid_envelope_aes_gcm_provider_cases_total;
+    unsigned hybrid_envelope_aes_gcm_96bit_nonce_cases_total;
+    unsigned hybrid_envelope_aes_gcm_128bit_tag_cases_total;
+    unsigned hybrid_envelope_commitment_mac_provider_cases_total;
+    unsigned hybrid_envelope_commitment_mac_hmac_sha256_cases_total;
+    unsigned hybrid_envelope_commitment_constant_time_compare_cases_total;
+    unsigned hybrid_envelope_random_bytes_ex_cases_total;
+    unsigned hybrid_envelope_random_bytes_strength_bits_requested;
+    unsigned hybrid_envelope_no_legacy_crypto_fallback_cases_total;
     unsigned hybrid_transcript_aad_bound;
     unsigned hybrid_transcript_aad_size_bytes;
     unsigned hybrid_transcript_cases_bound_total;
     unsigned hybrid_transcript_tampering_rejected;
     unsigned hybrid_transcript_tampering_rejected_total;
+    unsigned hybrid_transcript_tamper_constant_time_compare_cases_total;
+    unsigned hybrid_envelope_wrong_pqc_secret_rejected;
+    unsigned hybrid_envelope_wrong_pqc_secret_rejected_total;
+    unsigned hybrid_envelope_wrong_pqc_secret_constant_time_compare_cases_total;
     unsigned provider_algorithm_transcript_bound;
     unsigned p256_public_key_transcript_bound;
     unsigned p256_public_key_transcript_bytes;
+    unsigned ml_kem_public_key_transcript_bound;
+    unsigned ml_kem_public_key_transcript_bytes_total;
     unsigned ml_kem_ciphertext_transcript_bound;
     unsigned ml_kem_ciphertext_transcript_bytes_total;
     unsigned classical_secret_internal_buffers_used;

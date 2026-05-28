@@ -52,7 +52,7 @@
         <p class="eyebrow">Release Gate, Artifact Manifest, and Preflight Boundary</p>
         <h1>Installer readiness boundary</h1>
         <p class="page-lede">
-          Latticra has narrow disposable VM evidence for the no-effect CLI payload, a local artifact manifest fixture, a no-effect preflight guard, a preview-only install plan, a release artifact promotion gate, SBOM status, an SBOM evidence intake validator, transcript status, a transcript evidence intake validator, lifecycle validation status, a lifecycle evidence intake validator, recovery failure-mode status, a recovery evidence intake validator, multi-VM validation status, and a multi-VM evidence intake validator that currently block release. That is not production installer readiness, Fedora distribution readiness, daily-driver readiness, immutable Fedora readiness, or a release artifact claim.
+          Latticra has narrow disposable VM evidence for the no-effect CLI payload, a local artifact manifest fixture, a no-effect preflight guard, a preview-only install plan, a release artifact promotion gate, a release worktree cleanliness audit, a release toolchain availability audit, a release artifact evidence template, SBOM status, an SBOM evidence template, an SBOM evidence intake validator, transcript status, a transcript evidence template, a transcript evidence intake validator, lifecycle validation status, a lifecycle evidence intake validator, recovery failure-mode status, a recovery evidence intake validator, multi-VM validation status, and a multi-VM evidence intake validator that currently block release. That is not production installer readiness, Fedora distribution readiness, daily-driver readiness, immutable Fedora readiness, or a release artifact claim.
         </p>
       </div>
     </section>
@@ -64,7 +64,7 @@
           <h2>A validated payload is not a production installer.</h2>
         </div>
         <p>
-            The current evidence proves a narrow package lifecycle in a disposable Fedora VM for <code>/usr/bin/latticra</code> and <code>/usr/share/doc/latticra/README.md</code>, plus a no-effect guard, preview-only plan renderer, promotion gate, SBOM status, SBOM evidence intake validator, transcript status, transcript evidence intake validator, lifecycle validation status, lifecycle evidence intake validator, recovery failure-mode status, recovery evidence intake validator, multi-VM validation status, and multi-VM evidence intake validator. Production installer readiness still requires reproducible artifacts, checksums, signatures, reviewed SBOMs, reviewed install and uninstall transcripts, reviewed upgrade and rollback evidence, reviewed recovery evidence, and reviewed multi-VM validation.
+            The current evidence proves a narrow package lifecycle in a disposable Fedora VM for <code>/usr/bin/latticra</code> and <code>/usr/share/doc/latticra/README.md</code>, plus a no-effect guard, preview-only plan renderer, promotion gate, release worktree cleanliness audit, release toolchain availability audit, release artifact evidence template, SBOM status, SBOM evidence template, SBOM evidence intake validator, transcript status, transcript evidence template, transcript evidence intake validator, lifecycle validation status, lifecycle evidence intake validator, recovery failure-mode status, recovery evidence intake validator, multi-VM validation status, and multi-VM evidence intake validator. Production installer readiness still requires a clean tracked release worktree, complete release build/query toolchain evidence, reproducible artifacts, checksums, signatures, reviewed SBOMs, reviewed install and uninstall transcripts, reviewed upgrade and rollback evidence, reviewed recovery evidence, and reviewed multi-VM validation.
         </p>
       </div>
 
@@ -98,6 +98,11 @@
           <span>06</span>
           <h3>Release blocker</h3>
           <p>The promotion gate refuses release until tagged artifact, checksum, signature, reproducibility, public-key, verification, SBOM, transcript, lifecycle, recovery, multi-VM, and review evidence exist.</p>
+          <p><code>release_artifact_staging_directory</code> is present only as an empty tracked parent path for a future candidate.</p>
+          <p><code>release_signing_identity_reference</code> is present only as a no-effect fingerprint-shape validator, not key custody or signing evidence.</p>
+          <p><code>release_worktree_cleanliness_audit</code> is present only as a no-effect tracked-status report with a stdout-only dirty inventory; it does not stage, reset, clean, revert, or write inventory evidence.</p>
+          <p><code>release_toolchain_availability_audit</code> is present only as a no-effect command-visibility report; it does not install or run release build/query tools.</p>
+          <p><code>release_artifact_evidence_template</code> is present only as a stdout template for future release evidence; it does not write or accept evidence.</p>
           <p><code>release_artifact_candidate_preflight</code> is present only as a no-effect checker for local tag, tool, worktree, and signing-reference visibility.</p>
           <p><code>sbom_evidence_intake_validator</code> is present only as a no-effect checker for future SBOM evidence.</p>
           <p><code>transcript_evidence_intake_validator</code> is present only as a no-effect checker for future reviewed transcript evidence.</p>
@@ -114,7 +119,7 @@
           <p class="eyebrow">Current Evidence</p>
           <h2>The strongest current claim is CLI payload validation in a disposable VM.</h2>
           <p>
-            The validated payload remains small: a no-effect CLI binary and README documentation. The fixture manifest records that shape for review, the preflight/preview lane blocks unsupported scenarios, and the promotion, artifact candidate preflight, SBOM, SBOM evidence intake, transcript, transcript evidence intake, lifecycle, lifecycle evidence intake, recovery, recovery evidence intake, multi-VM status, and multi-VM evidence intake lanes keep the missing release evidence visible.
+            The validated payload remains small: a no-effect CLI binary and README documentation. The fixture manifest records that shape for review, the preflight/preview lane blocks unsupported scenarios, and the promotion, artifact staging directory, release signing identity reference, worktree cleanliness audit, toolchain availability audit, artifact candidate preflight, release artifact evidence template, SBOM, SBOM evidence template, SBOM evidence intake, transcript, transcript evidence template, transcript evidence intake, lifecycle, lifecycle evidence intake, recovery, recovery evidence intake, multi-VM status, and multi-VM evidence intake lanes keep the missing release evidence visible.
           </p>
           <div class="status-row" aria-label="Installer posture summary">
             <span class="status-pill status-present">VM payload evidence</span>
@@ -122,10 +127,17 @@
             <span class="status-pill status-guarded">preflight guard</span>
             <span class="status-pill status-guarded">plan preview</span>
             <span class="status-pill status-guarded">promotion gate</span>
+            <span class="status-pill status-guarded">artifact staging</span>
+            <span class="status-pill status-guarded">signing reference</span>
+            <span class="status-pill status-guarded">worktree audit</span>
+            <span class="status-pill status-guarded">toolchain audit</span>
             <span class="status-pill status-guarded">artifact preflight</span>
+            <span class="status-pill status-guarded">evidence template</span>
             <span class="status-pill status-guarded">SBOM status</span>
+            <span class="status-pill status-guarded">SBOM template</span>
             <span class="status-pill status-guarded">SBOM intake</span>
             <span class="status-pill status-guarded">transcript status</span>
+            <span class="status-pill status-guarded">transcript template</span>
             <span class="status-pill status-guarded">transcript intake</span>
             <span class="status-pill status-guarded">lifecycle status</span>
             <span class="status-pill status-guarded">lifecycle intake</span>
@@ -181,12 +193,48 @@
           <strong>1</strong>
         </article>
         <article>
+          <span>release_artifact_staging_directory</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>release_signing_identity_reference</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>release_signing_identity_reference_valid</span>
+          <strong>0</strong>
+        </article>
+        <article>
           <span>release_artifact_candidate_preflight</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>release_worktree_cleanliness_audit</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>release_worktree_tracked_worktree_clean</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>release_toolchain_availability_audit</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>release_toolchain_ready</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>release_artifact_candidate_parent_dir_exists</span>
           <strong>1</strong>
         </article>
         <article>
           <span>release_artifact_candidate_inputs_satisfied</span>
           <strong>0</strong>
+        </article>
+        <article>
+          <span>release_artifact_evidence_template</span>
+          <strong>1</strong>
         </article>
         <article>
           <span>release_artifact_present</span>
@@ -197,11 +245,19 @@
           <strong>1</strong>
         </article>
         <article>
+          <span>sbom_evidence_template</span>
+          <strong>1</strong>
+        </article>
+        <article>
           <span>sbom_evidence_intake_validator</span>
           <strong>1</strong>
         </article>
         <article>
           <span>installer_transcript_status</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>transcript_evidence_template</span>
           <strong>1</strong>
         </article>
         <article>
@@ -333,9 +389,34 @@ sh scripts/production-installer-artifact-integrity-status.sh</code></pre>
 sh scripts/production-installer-release-artifact-promotion-gate.sh</code></pre>
         </article>
         <article class="command-panel">
+          <h3>Artifact staging directory</h3>
+          <pre><code>sh scripts/test-production-installer-release-artifact-staging-directory-contract.sh
+sed -n '1,120p' artifacts/release/README.md</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Signing identity reference</h3>
+          <pre><code>sh scripts/test-production-installer-release-signing-identity-reference-contract.sh
+sh scripts/production-installer-release-signing-identity-reference.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Worktree cleanliness audit</h3>
+          <pre><code>sh scripts/test-production-installer-release-worktree-cleanliness-audit-contract.sh
+sh scripts/production-installer-release-worktree-cleanliness-audit.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Toolchain availability audit</h3>
+          <pre><code>sh scripts/test-production-installer-release-toolchain-availability-audit-contract.sh
+sh scripts/production-installer-release-toolchain-availability-audit.sh</code></pre>
+        </article>
+        <article class="command-panel">
           <h3>Artifact candidate preflight</h3>
           <pre><code>sh scripts/test-production-installer-release-artifact-candidate-preflight-contract.sh
 sh scripts/production-installer-release-artifact-candidate-preflight.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Artifact evidence template</h3>
+          <pre><code>sh scripts/test-production-installer-release-artifact-evidence-template-contract.sh
+sh scripts/production-installer-release-artifact-evidence-template.sh</code></pre>
         </article>
         <article class="command-panel">
           <h3>SBOM status</h3>
@@ -343,9 +424,19 @@ sh scripts/production-installer-release-artifact-candidate-preflight.sh</code></
 sh scripts/production-installer-sbom-status.sh</code></pre>
         </article>
         <article class="command-panel">
+          <h3>SBOM evidence template</h3>
+          <pre><code>sh scripts/test-production-installer-sbom-evidence-template-contract.sh
+sh scripts/production-installer-sbom-evidence-template.sh</code></pre>
+        </article>
+        <article class="command-panel">
           <h3>Transcript status</h3>
           <pre><code>sh scripts/test-production-installer-transcript-status-contract.sh
 sh scripts/production-installer-transcript-status.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Transcript evidence template</h3>
+          <pre><code>sh scripts/test-production-installer-transcript-evidence-template-contract.sh
+sh scripts/production-installer-transcript-evidence-template.sh</code></pre>
         </article>
         <article class="command-panel">
           <h3>Transcript evidence intake</h3>
@@ -399,9 +490,16 @@ sh scripts/test-fedora-vm-cli-transcript-contract.sh</code></pre>
         <a href="PRODUCTION_INSTALLER_PLAN_PREVIEW_CONTRACT.md"><strong>Plan preview contract</strong><span>Preview-only install plan rendering for the supported disposable-Fedora fixture without install authority.</span></a>
         <a href="PRODUCTION_INSTALLER_ARTIFACT_INTEGRITY_STATUS_CONTRACT.md"><strong>Artifact integrity status</strong><span>Fixture-manifest measurement and missing release-artifact checksum/signature blockers.</span></a>
         <a href="PRODUCTION_INSTALLER_RELEASE_ARTIFACT_PROMOTION_GATE_CONTRACT.md"><strong>Release artifact promotion gate</strong><span>No-effect promotion decision that blocks release until tagged artifact, checksum, signature, verification, reproducibility, and review evidence exists.</span></a>
+        <a href="PRODUCTION_INSTALLER_RELEASE_ARTIFACT_STAGING_DIRECTORY_CONTRACT.md"><strong>Release artifact staging directory</strong><span>Tracked empty parent path for a future release artifact candidate without generated artifacts or evidence.</span></a>
+        <a href="PRODUCTION_INSTALLER_RELEASE_SIGNING_IDENTITY_REFERENCE_CONTRACT.md"><strong>Release signing identity reference</strong><span>No-effect fingerprint-shape validator without secret-key inspection, signing, verification, or key-custody claims.</span></a>
+        <a href="PRODUCTION_INSTALLER_RELEASE_WORKTREE_CLEANLINESS_AUDIT_CONTRACT.md"><strong>Release worktree cleanliness audit</strong><span>No-effect tracked-status report and stdout-only dirty inventory for the release artifact candidate blocker without staging, resetting, cleaning, or reverting files.</span></a>
+        <a href="PRODUCTION_INSTALLER_RELEASE_TOOLCHAIN_AVAILABILITY_AUDIT_CONTRACT.md"><strong>Release toolchain availability audit</strong><span>No-effect command-visibility report for release build/query tool blockers without installing or running those tools.</span></a>
         <a href="PRODUCTION_INSTALLER_RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_CONTRACT.md"><strong>Release artifact candidate preflight</strong><span>No-effect preflight for tag, tracked worktree, RPM tooling, checksum tooling, GPG visibility, and signing-reference blockers.</span></a>
+        <a href="PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_TEMPLATE_CONTRACT.md"><strong>Release artifact evidence template</strong><span>Stdout-only template for future artifact evidence without writing, accepting, or promoting evidence.</span></a>
         <a href="PRODUCTION_INSTALLER_SBOM_STATUS_CONTRACT.md"><strong>Installer SBOM status</strong><span>No-effect SBOM status that records missing SBOM artifact, component inventory, dependency review, vulnerability review, license review, and review evidence.</span></a>
+        <a href="PRODUCTION_INSTALLER_SBOM_EVIDENCE_TEMPLATE_CONTRACT.md"><strong>SBOM evidence template</strong><span>Stdout-only template for future SBOM evidence without generating, writing, accepting, attaching, or promoting evidence.</span></a>
         <a href="PRODUCTION_INSTALLER_TRANSCRIPT_STATUS_CONTRACT.md"><strong>Installer transcript status</strong><span>No-effect transcript status that records missing install, uninstall, post-removal absence, review, package-manager, and host-mutation evidence.</span></a>
+        <a href="PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_TEMPLATE_CONTRACT.md"><strong>Transcript evidence template</strong><span>Stdout-only template for future dry-run transcript evidence without installing, writing, accepting, or promoting evidence.</span></a>
         <a href="PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md"><strong>Installer transcript evidence intake</strong><span>No-effect validator for future reviewed install, uninstall, post-removal absence, and transcript evidence bundles.</span></a>
         <a href="PRODUCTION_INSTALLER_LIFECYCLE_VALIDATION_STATUS_CONTRACT.md"><strong>Installer lifecycle validation status</strong><span>No-effect lifecycle status that records missing upgrade, rollback, reinstall idempotence, review, package-manager, and host-mutation evidence.</span></a>
         <a href="PRODUCTION_INSTALLER_LIFECYCLE_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md"><strong>Installer lifecycle evidence intake</strong><span>No-effect validator for future reviewed upgrade, rollback, reinstall idempotence, and lifecycle evidence bundles.</span></a>

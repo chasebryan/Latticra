@@ -58,7 +58,38 @@
     </section>
 
     <section class="section-band">
-      <div class="content-shell validation-intro">
+      <nav class="content-shell validation-shortcuts" aria-label="Local validation section shortcuts">
+        <a href="#validation-rule">
+          <span>01</span>
+          <strong>Rule</strong>
+        </a>
+        <a href="#validation-panel-evidence">
+          <span>02</span>
+          <strong>Panel Evidence</strong>
+        </a>
+        <a href="#validation-snapshot">
+          <span>03</span>
+          <strong>Snapshot</strong>
+        </a>
+        <a href="#validation-lanes">
+          <span>04</span>
+          <strong>Lanes</strong>
+        </a>
+        <a href="#validation-gate-matrix">
+          <span>05</span>
+          <strong>Gate Matrix</strong>
+        </a>
+        <a href="#validation-commands">
+          <span>06</span>
+          <strong>Commands</strong>
+        </a>
+        <a href="#validation-source-records">
+          <span>07</span>
+          <strong>Sources</strong>
+        </a>
+      </nav>
+
+      <div id="validation-rule" class="content-shell validation-intro validation-anchor">
         <div>
           <p class="eyebrow">Validation Rule</p>
           <h2>Validate evidence, not production readiness.</h2>
@@ -97,7 +128,7 @@
       </div>
     </section>
 
-    <section class="section-band section-band-muted">
+    <section id="validation-panel-evidence" class="section-band section-band-muted validation-anchor">
       <div class="content-shell validation-showcase">
         <div class="showcase-copy">
           <p class="eyebrow">Panel Evidence</p>
@@ -118,7 +149,7 @@
       </div>
     </section>
 
-    <section class="section-band">
+    <section id="validation-snapshot" class="section-band validation-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Evidence Snapshot</p>
         <h2>The current install claim is bounded by exact fields.</h2>
@@ -162,7 +193,7 @@
       </div>
     </section>
 
-    <section class="section-band section-band-muted">
+    <section id="validation-lanes" class="section-band section-band-muted validation-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Validation Lanes</p>
         <h2>Each lane has a different effect boundary.</h2>
@@ -216,7 +247,7 @@
       </div>
     </section>
 
-    <section class="section-band">
+    <section id="validation-gate-matrix" class="section-band validation-anchor">
       <div class="content-shell validation-split">
         <div class="section-heading">
           <p class="eyebrow">Gate Matrix</p>
@@ -246,7 +277,7 @@
       </div>
     </section>
 
-    <section class="section-band section-band-muted">
+    <section id="validation-commands" class="section-band section-band-muted validation-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Local Commands</p>
         <h2>Use commands as evidence checks.</h2>
@@ -273,7 +304,7 @@ sh scripts/test-macos-reset-uninstall-dry-run-contract.sh</code></pre>
       </div>
     </section>
 
-    <section class="section-band">
+    <section id="validation-source-records" class="section-band validation-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Source Records</p>
         <h2>Follow validation claims back to exact files.</h2>
@@ -304,10 +335,16 @@ sh scripts/test-macos-reset-uninstall-dry-run-contract.sh</code></pre>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer id="site-footer" class="site-footer">
     <div class="content-shell footer-inner">
       <span>Latticra local validation guide.</span>
-      <span><a href="status.html">Open public status</a></span>
+      <nav class="footer-links" aria-label="Validation footer navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
     </div>
   </footer>
 </body>

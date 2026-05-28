@@ -100,12 +100,32 @@ static int gate_fails_closed(void) {
     latticra_seal_verification_receipt_t receipt = fixture_receipt();
     latticra_seal_capability_gate_t gate;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_CAPABILITY_GATE_REPORT_MAX];
+    char unterminated_capability[LATTICRA_SEAL_CAPABILITY_GATE_LABEL_MAX];
+    char unterminated_effect[LATTICRA_SEAL_CAPABILITY_GATE_LABEL_MAX];
+    char unterminated_scope[LATTICRA_SEAL_CAPABILITY_GATE_LABEL_MAX];
+
+    memset(unterminated_capability, 'c', sizeof(unterminated_capability));
+    memset(unterminated_effect, 'e', sizeof(unterminated_effect));
+    memset(unterminated_scope, 's', sizeof(unterminated_scope));
 
     EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(0, "cap", "effect", "scope", &gate) == LATTICRA_STATUS_OK, "null receipt status");
     EXPECT_TRUE(gate.error == LATTICRA_SEAL_CAPABILITY_GATE_INVALID_INPUT, "null receipt error");
     receipt.error = LATTICRA_SEAL_VERIFICATION_RECEIPT_INVALID_INPUT;
     EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(&receipt, "cap", "effect", "scope", &gate) == LATTICRA_STATUS_OK, "bad receipt status");
     EXPECT_TRUE(gate.error == LATTICRA_SEAL_CAPABILITY_GATE_INVALID_RECEIPT, "bad receipt error");
+    receipt = fixture_receipt();
+    memset(receipt.receipt_profile, 'z', sizeof(receipt.receipt_profile));
+    EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(&receipt, "cap", "effect", "scope", &gate) == LATTICRA_STATUS_OK, "unterminated receipt status");
+    EXPECT_TRUE(gate.error == LATTICRA_SEAL_CAPABILITY_GATE_INVALID_RECEIPT, "unterminated receipt error");
+    receipt = fixture_receipt();
+    receipt.verified = 2u;
+    EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(&receipt, "cap", "effect", "scope", &gate) == LATTICRA_STATUS_OK, "invalid receipt flag status");
+    EXPECT_TRUE(gate.error == LATTICRA_SEAL_CAPABILITY_GATE_INVALID_RECEIPT, "invalid receipt flag error");
+    receipt = fixture_receipt();
+    receipt.runtime_authority_granted = 1u;
+    EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(&receipt, "cap", "effect", "scope", &gate) == LATTICRA_STATUS_OK, "authority receipt status");
+    EXPECT_TRUE(gate.error == LATTICRA_SEAL_CAPABILITY_GATE_INVALID_RECEIPT, "authority receipt error");
     receipt = fixture_receipt();
     receipt.artifact_digest_hex[0] = '\0';
     EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(&receipt, "cap", "effect", "scope", &gate) == LATTICRA_STATUS_OK, "missing digest status");
@@ -121,14 +141,56 @@ static int gate_fails_closed(void) {
     receipt = fixture_receipt();
     EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(&receipt, 0, "effect", "scope", &gate) == LATTICRA_STATUS_OK, "missing capability status");
     EXPECT_TRUE(gate.error == LATTICRA_SEAL_CAPABILITY_GATE_MISSING_REQUESTED_CAPABILITY, "missing capability error");
+    EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(&receipt, unterminated_capability, "effect", "scope", &gate) == LATTICRA_STATUS_OK, "unterminated capability status");
+    EXPECT_TRUE(gate.error == LATTICRA_SEAL_CAPABILITY_GATE_MISSING_REQUESTED_CAPABILITY, "unterminated capability error");
     EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(&receipt, "cap", 0, "scope", &gate) == LATTICRA_STATUS_OK, "missing effect status");
     EXPECT_TRUE(gate.error == LATTICRA_SEAL_CAPABILITY_GATE_MISSING_REQUESTED_EFFECT, "missing effect error");
+    EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(&receipt, "cap", unterminated_effect, "scope", &gate) == LATTICRA_STATUS_OK, "unterminated effect status");
+    EXPECT_TRUE(gate.error == LATTICRA_SEAL_CAPABILITY_GATE_MISSING_REQUESTED_EFFECT, "unterminated effect error");
+    EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(&receipt, "cap", "effect", unterminated_scope, &gate) == LATTICRA_STATUS_OK, "unterminated scope status");
+    EXPECT_TRUE(gate.error == LATTICRA_SEAL_CAPABILITY_GATE_OK, "unterminated scope ok");
+    EXPECT_TRUE(strcmp(gate.requested_scope, "invalid-scope") == 0, "unterminated scope sanitized");
+    EXPECT_TRUE(latticra_seal_capability_gate_report(&gate, rendered, sizeof(rendered)) == LATTICRA_STATUS_OK, "unterminated scope render");
+    EXPECT_TRUE(strstr(rendered, "requested_scope=invalid-scope") != 0, "unterminated scope rendered sanitized");
     EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(&receipt, "cap", "effect", "scope", 0) == LATTICRA_STATUS_NULL_ARGUMENT, "null output");
     EXPECT_TRUE(latticra_seal_capability_gate_is_denied_metadata(0) == 0, "null helper");
     EXPECT_TRUE(latticra_seal_capability_gate_report(&gate, tiny, sizeof(tiny)) == LATTICRA_STATUS_BUFFER_TOO_SMALL, "small buffer");
     EXPECT_TRUE(tiny[0] == '\0', "small buffer cleared");
     EXPECT_TRUE(latticra_seal_capability_gate_report(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null gate");
     EXPECT_TRUE(latticra_seal_capability_gate_report(&gate, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer");
+
+    receipt = fixture_receipt();
+    EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(&receipt, "cap", "effect", "scope", &gate) == LATTICRA_STATUS_OK, "tamper gate source");
+    memset(gate.gate_profile, 'z', sizeof(gate.gate_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_capability_gate_report(&gate, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated capability gate render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated capability gate render cleared");
+    EXPECT_TRUE(latticra_seal_capability_gate_is_denied_metadata(&gate) == 0,
+                "unterminated capability gate helper rejected");
+
+    receipt = fixture_receipt();
+    EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(&receipt, "cap", "effect", "scope", &gate) == LATTICRA_STATUS_OK, "authority capability gate source");
+    gate.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_capability_gate_report(&gate, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority capability gate render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority capability gate render cleared");
+    EXPECT_TRUE(latticra_seal_capability_gate_is_denied_metadata(&gate) == 0,
+                "authority capability gate helper rejected");
+
+    receipt = fixture_receipt();
+    EXPECT_TRUE(latticra_seal_capability_gate_from_receipt(&receipt, "cap", "effect", "scope", &gate) == LATTICRA_STATUS_OK, "flag capability gate source");
+    gate.gate_allowed = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_capability_gate_report(&gate, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "flag capability gate render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "flag capability gate render cleared");
+    EXPECT_TRUE(latticra_seal_capability_gate_is_denied_metadata(&gate) == 0,
+                "flag capability gate helper rejected");
     return 0;
 }
 

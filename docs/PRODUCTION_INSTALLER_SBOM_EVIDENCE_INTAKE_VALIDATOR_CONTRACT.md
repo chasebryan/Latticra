@@ -8,7 +8,7 @@ Scope: validate a future production-installer SBOM evidence bundle without gener
 
 The production-installer SBOM status is present and blocked because no generated and reviewed SBOM evidence exists for a tagged release artifact candidate.
 
-This contract adds a no-effect intake validator for the future SBOM evidence bundle. The validator checks local SBOM shape markers, dependency-review evidence, vulnerability-review evidence, license-review evidence, final SBOM-review evidence, and hash consistency between the supplied files and the evidence manifest.
+This contract adds a no-effect intake validator for the future SBOM evidence bundle. The paired template prints the expected bundle shape, and the validator checks local SBOM shape markers, dependency-review evidence, vulnerability-review evidence, license-review evidence, final SBOM-review evidence, and hash consistency between the supplied files and the evidence manifest.
 
 It does not accept the evidence, write status, attach an SBOM to a release artifact, pass the release-artifact promotion gate, or claim production installer readiness.
 
@@ -29,6 +29,8 @@ sh scripts/production-installer-sbom-evidence-intake.sh \
 ```text
 sbom_evidence_intake_validator_present=1
 sbom_evidence_intake_validation_mode=no-effect-validation
+sbom_evidence_template_present=1
+sbom_evidence_template_complete=0
 sbom_evidence_candidate_valid=0
 sbom_artifact_file_present=0
 sbom_artifact_sha256_recorded=0
@@ -67,6 +69,7 @@ It reads these local records:
 docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md
 docs/PRODUCTION_INSTALLER_SBOM_STATUS_CONTRACT.md
 docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_PROMOTION_GATE_CONTRACT.md
+docs/PRODUCTION_INSTALLER_SBOM_EVIDENCE_TEMPLATE_CONTRACT.md
 docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
 scripts/production-installer-sbom-status.sh
 README.md

@@ -29,14 +29,29 @@ non-claims
 - [`PRODUCTION_QUALITY_BLOCKER_LEDGER.md`](PRODUCTION_QUALITY_BLOCKER_LEDGER.md) - production-quality blocker ledger for keeping the green local `make quality` signal separate from production installer, production AI, production cryptography, production enforcement, and distribution-readiness claims.
 - [`../PRODUCTION_INSTALLER_ARTIFACT_INTEGRITY_STATUS_CONTRACT.md`](../PRODUCTION_INSTALLER_ARTIFACT_INTEGRITY_STATUS_CONTRACT.md) - no-effect production-installer artifact integrity status contract for measuring the fixture manifest while keeping release artifact checksum, signature, public-key, and verification blockers closed.
 - [`../PRODUCTION_INSTALLER_RELEASE_ARTIFACT_PROMOTION_GATE_CONTRACT.md`](../PRODUCTION_INSTALLER_RELEASE_ARTIFACT_PROMOTION_GATE_CONTRACT.md) - no-effect production-installer release artifact promotion gate that blocks promotion until tagged release artifact, checksum, signature, public-key, verification, reproducibility, and review evidence exists.
+- [`../PRODUCTION_INSTALLER_RELEASE_ARTIFACT_STAGING_DIRECTORY_CONTRACT.md`](../PRODUCTION_INSTALLER_RELEASE_ARTIFACT_STAGING_DIRECTORY_CONTRACT.md) - no-effect production-installer release artifact staging directory contract for the tracked `artifacts/release` parent path without staged artifacts, signatures, checksums, evidence, or promotion.
+- [`PRODUCTION_INSTALLER_RELEASE_ARTIFACT_STAGING_DIRECTORY_STATUS.md`](PRODUCTION_INSTALLER_RELEASE_ARTIFACT_STAGING_DIRECTORY_STATUS.md) - status record for the no-effect production-installer release artifact staging directory.
+- [`../PRODUCTION_INSTALLER_RELEASE_SIGNING_IDENTITY_REFERENCE_CONTRACT.md`](../PRODUCTION_INSTALLER_RELEASE_SIGNING_IDENTITY_REFERENCE_CONTRACT.md) - no-effect production-installer release signing identity reference contract for validating fingerprint shape without secret-key inspection, signing, verification, evidence acceptance, or promotion.
+- [`PRODUCTION_INSTALLER_RELEASE_SIGNING_IDENTITY_REFERENCE_STATUS.md`](PRODUCTION_INSTALLER_RELEASE_SIGNING_IDENTITY_REFERENCE_STATUS.md) - status record for the no-effect production-installer release signing identity reference validator.
+- [`../PRODUCTION_INSTALLER_RELEASE_WORKTREE_CLEANLINESS_AUDIT_CONTRACT.md`](../PRODUCTION_INSTALLER_RELEASE_WORKTREE_CLEANLINESS_AUDIT_CONTRACT.md) - no-effect production-installer release worktree cleanliness audit contract for reporting tracked Git status and a stdout-only dirty inventory before release artifact candidate promotion without staging, committing, resetting, cleaning, reverting, or mutating the host.
+- [`PRODUCTION_INSTALLER_RELEASE_WORKTREE_CLEANLINESS_AUDIT_STATUS.md`](PRODUCTION_INSTALLER_RELEASE_WORKTREE_CLEANLINESS_AUDIT_STATUS.md) - status record for the no-effect production-installer release worktree cleanliness audit and dirty inventory.
+- [`../PRODUCTION_INSTALLER_RELEASE_TOOLCHAIN_AVAILABILITY_AUDIT_CONTRACT.md`](../PRODUCTION_INSTALLER_RELEASE_TOOLCHAIN_AVAILABILITY_AUDIT_CONTRACT.md) - no-effect production-installer release toolchain availability audit contract for reporting command visibility before release artifact candidate promotion without installing tools, running build/query commands, invoking package managers, using network access, or mutating the host.
+- [`PRODUCTION_INSTALLER_RELEASE_TOOLCHAIN_AVAILABILITY_AUDIT_STATUS.md`](PRODUCTION_INSTALLER_RELEASE_TOOLCHAIN_AVAILABILITY_AUDIT_STATUS.md) - status record for the no-effect production-installer release toolchain availability audit.
 - [`../PRODUCTION_INSTALLER_RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_CONTRACT.md`](../PRODUCTION_INSTALLER_RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_CONTRACT.md) - no-effect production-installer release artifact candidate preflight that checks local tag, tool, worktree, and signing-reference visibility without building or signing an artifact.
 - [`PRODUCTION_INSTALLER_RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_STATUS.md`](PRODUCTION_INSTALLER_RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_STATUS.md) - status record for the no-effect production-installer release artifact candidate preflight.
+- [`PRODUCTION_INSTALLER_RELEASE_SIGNING_IDENTITY_REFERENCE_STATUS.md`](PRODUCTION_INSTALLER_RELEASE_SIGNING_IDENTITY_REFERENCE_STATUS.md) - status record for the no-effect production-installer release signing identity reference validator.
+- [`../PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_TEMPLATE_CONTRACT.md`](../PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_TEMPLATE_CONTRACT.md) - no-effect production-installer release artifact evidence template contract for printing the future evidence bundle shape without writing evidence, accepting evidence, passing promotion, or mutating the host.
+- [`PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_TEMPLATE_STATUS.md`](PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_TEMPLATE_STATUS.md) - status record for the no-effect production-installer release artifact evidence template.
 - [`../PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md`](../PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md) - no-effect production-installer release artifact evidence intake validator that checks a future tagged artifact evidence bundle without accepting evidence or opening promotion.
 - [`PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md`](PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md) - status record for the no-effect production-installer release artifact evidence intake validator.
 - [`../PRODUCTION_INSTALLER_SBOM_STATUS_CONTRACT.md`](../PRODUCTION_INSTALLER_SBOM_STATUS_CONTRACT.md) - no-effect production-installer SBOM status contract that records the missing SBOM artifact, component inventory, dependency review, vulnerability review, license review, and review evidence.
+- [`../PRODUCTION_INSTALLER_SBOM_EVIDENCE_TEMPLATE_CONTRACT.md`](../PRODUCTION_INSTALLER_SBOM_EVIDENCE_TEMPLATE_CONTRACT.md) - no-effect production-installer SBOM evidence template contract for printing the future SBOM evidence bundle shape without generating, writing, accepting, attaching, or promoting SBOM evidence.
+- [`PRODUCTION_INSTALLER_SBOM_EVIDENCE_TEMPLATE_STATUS.md`](PRODUCTION_INSTALLER_SBOM_EVIDENCE_TEMPLATE_STATUS.md) - status record for the no-effect production-installer SBOM evidence template.
 - [`../PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md`](../PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md) - no-effect production-installer SBOM evidence intake validator that checks a future SBOM, review, and evidence bundle without accepting evidence or opening promotion.
 - [`PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md`](PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md) - status record for the no-effect production-installer SBOM evidence intake validator.
 - [`../PRODUCTION_INSTALLER_TRANSCRIPT_STATUS_CONTRACT.md`](../PRODUCTION_INSTALLER_TRANSCRIPT_STATUS_CONTRACT.md) - no-effect production-installer transcript status contract that records missing install, uninstall, post-removal absence, review, package-manager, and host-mutation evidence.
+- [`../PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_TEMPLATE_CONTRACT.md`](../PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_TEMPLATE_CONTRACT.md) - no-effect production-installer transcript evidence template contract for printing the future transcript evidence bundle shape without writing evidence, accepting evidence, passing promotion, or mutating the host.
+- [`PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_TEMPLATE_STATUS.md`](PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_TEMPLATE_STATUS.md) - status record for the no-effect production-installer transcript evidence template.
 - [`../PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md`](../PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md) - no-effect production-installer transcript evidence intake validator that checks future install, uninstall, post-removal absence, review, and evidence bundles without accepting evidence or opening promotion.
 - [`PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md`](PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md) - status record for the no-effect production-installer transcript evidence intake validator.
 - [`../PRODUCTION_INSTALLER_LIFECYCLE_VALIDATION_STATUS_CONTRACT.md`](../PRODUCTION_INSTALLER_LIFECYCLE_VALIDATION_STATUS_CONTRACT.md) - no-effect production-installer lifecycle validation status contract that records missing upgrade, rollback, downgrade, reinstall idempotence, transcript review, package-manager, and host-mutation evidence.
@@ -50,7 +65,8 @@ non-claims
 - [`PRODUCTION_INSTALLER_MULTI_VM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md`](PRODUCTION_INSTALLER_MULTI_VM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md) - status record for the no-effect production-installer multi-VM evidence intake validator.
 - [`CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](CURRENT_ESTIMATE_REFRESH_2026_05_24.md) - current planning-estimate refresh after Panel, Seal, documentation, and local evidence work.
 - [`CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) - current public estimate table source alignment for README, root status, detailed status, foundation index, and project notes.
-- [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) - current mathematical planning-estimate rebase after recent guarded status, packaging, macOS, Nadia, Lat/LIR, and public-entry alignment slices.
+- [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) - current mathematical planning-estimate rebase after the 2026-05-26 Seal, Panel, Nadia, Lat/LIR, kernel lifecycle, security baseline, and public-entry alignment evidence push.
+- [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md) - current mathematical planning-estimate rebase after the 2026-05-27 readiness, Seal, Panel, Nadia, Nucleus, kernel runtime-entry, security baseline, and public-entry alignment push.
 - [`HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md`](HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md) - High-assurance security baseline status for official-source review requirements before runtime execution, effect execution, host behavior, network behavior, cryptographic enforcement, compliance claims, certification claims, production protection claims, or runtime authority.
 - [`CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE_STATUS.md`](CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE_STATUS.md) - Cyber incident reporting and response baseline status for vulnerability reports, suspected compromise triage, reporting paths, evidence preservation, communications routing, and incident-response non-claims. Field: `cyber_incident_reporting_response_baseline_present=1`.
 - [`VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE_STATUS.md`](VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE_STATUS.md) - Vulnerability management release gate baseline status for CISA KEV review, NVD/CVE review, disclosure handling, release blocking, and no product-security claims. Field: `vulnerability_management_release_gate_baseline_present=1`.
@@ -138,6 +154,17 @@ non-claims
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review contract status for reviewing the no-effect closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, disposition opening, and implementation claims.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition contract status for recording the reviewed no-effect closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit as a no-effect disposition while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, future review opening, and implementation claims.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition review contract status for reviewing the no-effect closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, closeout opening, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout contract status for closing the reviewed no-effect closeout audit review disposition chain while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, runner release, audit opening, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit contract status for auditing the no-effect closeout while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, audit review, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit contract status for auditing the no-effect closeout while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, audit review, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_REVIEW_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_REVIEW_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review contract status for reviewing the no-effect closeout audit while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, disposition opening, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_REVIEW_DISPOSITION_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_REVIEW_DISPOSITION_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition contract status for recording the reviewed no-effect closeout audit as a no-effect disposition while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, future review opening, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_REVIEW_DISPOSITION_REVIEW_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_REVIEW_DISPOSITION_REVIEW_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition review contract status for reviewing the no-effect disposition while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, closeout opening, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review contract status for reviewing the no-effect closeout chain while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, disposition opening, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition contract status for recording the reviewed no-effect closeout chain as a no-effect disposition while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, future review opening, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout contract status for closing the reviewed no-effect closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, runner release, audit opening, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit contract status for auditing the reviewed no-effect closeout chain while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition review contract status for preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, and implementation claims.
 - [`MACOS_README_INSTALLER_USAGE_STATUS.md`](MACOS_README_INSTALLER_USAGE_STATUS.md) - macOS README installer usage status for documenting current Mac-specific no-effect installer commands, target paths, and closed commit-gate posture.
 - [`NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](NADIA_OFFLINE_AI_STAGE_0_STATUS.md) - Nadia offline AI Stage-0 foundation status for Panel installability, Console interoperability, and awareness principles.
 - [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) - Nadia Stage-1 local context-engine status for no-network context-pack generation.
@@ -235,6 +262,7 @@ non-claims
 - [`SEAL_VERIFICATION_RECEIPT_STATUS.md`](SEAL_VERIFICATION_RECEIPT_STATUS.md) — Latticra Seal verification receipt metadata status and public-entry checkpoint.
 - [`SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md`](SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md) — Latticra Seal crypto verify backend readiness status and public-entry checkpoint.
 - [`SEAL_ED25519_VERIFY_STATUS.md`](SEAL_ED25519_VERIFY_STATUS.md) — Latticra Seal Ed25519 verify-only result status and public-entry checkpoint.
+- [`SEAL_ED25519_PROVIDER_SELF_TEST_STATUS.md`](SEAL_ED25519_PROVIDER_SELF_TEST_STATUS.md) — Latticra Seal Ed25519 provider self-test status and public-entry checkpoint.
 - [`SEAL_CRYPTO_GRADUATION_GATE_STATUS.md`](SEAL_CRYPTO_GRADUATION_GATE_STATUS.md) — Latticra Seal authority-neutral crypto graduation gate status for standards-gated local verification and receipt promotion. Field: `seal_crypto_graduation_gate_present=1`.
 - [`SEAL_PQC_INTEGRATION_FRAME_STATUS.md`](SEAL_PQC_INTEGRATION_FRAME_STATUS.md) — Latticra Seal PQC integration frame status for Apple corecrypto, NIST ML-KEM/ML-DSA, and liboqs provider planning without production crypto authority. Field: `seal_pqc_integration_frame_present=1`.
 - [`SEAL_PQC_PROVIDER_ADAPTER_STATUS.md`](SEAL_PQC_PROVIDER_ADAPTER_STATUS.md) — Latticra Seal clean-room PQC provider adapter status for standards-first ML-KEM/ML-DSA implementation planning and liboqs comparison-provider boundaries without crypto authority. Field: `seal_pqc_provider_adapter_present=1`.
@@ -317,6 +345,19 @@ non-claims
 - [`FEDORA_LOCAL_MOCK_BUILD_ENVIRONMENT_CONTRACT_STATUS.md`](FEDORA_LOCAL_MOCK_BUILD_ENVIRONMENT_CONTRACT_STATUS.md) — status record for the no-effect Fedora local mock-build environment contract.
 - [`FEDORA_RPM_ARTIFACT_NAMING_CONTRACT_STATUS.md`](FEDORA_RPM_ARTIFACT_NAMING_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM artifact naming contract.
 - [`FEDORA_RPM_PAYLOAD_INSPECTION_CONTRACT_STATUS.md`](FEDORA_RPM_PAYLOAD_INSPECTION_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM payload inspection contract.
+- [`FEDORA_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT_STATUS.md`](FEDORA_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM install/remove transcript contract.
+- [`FEDORA_PACKAGE_REVIEW_NON_CLAIM_CONTRACT_STATUS.md`](FEDORA_PACKAGE_REVIEW_NON_CLAIM_CONTRACT_STATUS.md) — status record for the no-effect Fedora package review non-claim contract.
+- [`FEDORA_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT_STATUS.md`](FEDORA_PACKAGE_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT_STATUS.md) — status record for the no-effect Fedora package validation promotion blocker matrix contract.
+- [`FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT_STATUS.md`](FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM build-evidence intake denial contract.
+- [`FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT_STATUS.md`](FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM build-evidence intake denial review contract.
+- [`FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT_STATUS.md`](FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM build-evidence intake denial disposition contract.
+- [`FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT_STATUS.md`](FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM build-evidence intake denial disposition closeout contract.
+- [`FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT_STATUS.md`](FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM build-evidence intake denial disposition closeout archive gate contract.
+- [`FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT_STATUS.md`](FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM build-evidence intake denial disposition closeout archive gate review contract.
+- [`FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT_STATUS.md`](FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition contract.
+- [`FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT_STATUS.md`](FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout contract.
+- [`FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT_STATUS.md`](FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate contract.
+- [`FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT_STATUS.md`](FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract.
 - [`FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX_STATUS.md`](FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX_STATUS.md) — status record for the no-effect Fedora production-readiness evidence matrix.
 - [`FEDORA_PRODUCTION_READINESS_EVIDENCE_INTAKE_VALIDATOR_STATUS.md`](FEDORA_PRODUCTION_READINESS_EVIDENCE_INTAKE_VALIDATOR_STATUS.md) — status record for the no-effect Fedora production-readiness evidence intake validator that checks a future filled matrix without opening production installer or Fedora distribution promotion.
 - [`FEDORA_VM_RPM_VALIDATION_ANNOUNCEMENT_STATUS.md`](FEDORA_VM_RPM_VALIDATION_ANNOUNCEMENT_STATUS.md) — announcement/status alignment for the disposable Fedora VM local RPM validation milestone.
@@ -327,10 +368,26 @@ non-claims
 - [`../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md`](../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition contract that records the reviewed closeout archive gate review as disposed while archive and re-request remain closed.
 - [`../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md`](../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract that closes out the reviewed closeout archive gate review disposition while archive and re-request remain closed.
 - [`../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md`](../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract that keeps the reviewed closeout unarchived while archive and re-request remain closed.
+- [`../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md`](../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract that records the reviewed closeout archive gate review as disposed while archive and re-request remain closed.
+- [`../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md`](../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract that closes out the reviewed gate disposition while archive and re-request remain closed.
 - [`../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md`](../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract that upholds the reviewed closeout archive gate while archive and re-request remain closed.
 - [`../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md`](../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract that records the reviewed closeout archive gate review as disposed while archive and re-request remain closed.
 - [`../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md`](../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract that closes out the reviewed closeout archive gate review disposition while archive and re-request remain closed.
 - [`../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md`](../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract that keeps the reviewed closeout unarchived while archive and re-request remain closed.
+- [`../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md`](../UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract that upholds the reviewed closeout archive gate while archive and re-request remain closed.
+- [`../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md`](../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial closeout archive gate follow-on contract that keeps the latest reviewed closeout unarchived while archive and re-request remain closed.
+- [`../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md`](../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial closeout archive gate review follow-on contract that upholds the latest closed archive gate while archive and re-request remain closed.
+- [`../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_FOLLOW_ON_CONTRACT.md`](../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_FOLLOW_ON_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial closeout archive gate review disposition follow-on contract that records the latest closed archive gate review as disposed while archive and re-request remain closed.
+- [`../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_FOLLOW_ON_CONTRACT.md`](../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_FOLLOW_ON_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial closeout archive gate review disposition closeout follow-on contract that closes out the latest disposed archive gate review while archive and re-request remain closed.
+- [`../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md`](../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial closeout archive gate review disposition closeout archive gate follow-on contract that keeps the latest disposition closeout unarchived while archive and re-request remain closed.
+- [`../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md`](../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial closeout archive gate review disposition closeout archive gate review follow-on contract that upholds the latest disposition closeout archive gate while archive and re-request remain closed.
+- [`../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_FOLLOW_ON_CONTRACT.md`](../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_FOLLOW_ON_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial closeout archive gate review disposition closeout archive gate review disposition follow-on contract that disposes the upheld closeout archive gate review while archive and re-request remain closed.
+- [`../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_FOLLOW_ON_CONTRACT.md`](../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_FOLLOW_ON_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial closeout archive gate review disposition closeout archive gate review disposition closeout follow-on contract that closes out the disposed archive gate review while archive and re-request remain closed.
+- [`../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md`](../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial closeout archive gate review disposition closeout archive gate review disposition closeout archive gate follow-on contract that keeps the latest closeout unarchived while archive and re-request remain closed.
+- [`../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md`](../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review follow-on contract that upholds the latest closeout archive gate while archive and re-request remain closed.
+- [`../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_FOLLOW_ON_CONTRACT.md`](../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_FOLLOW_ON_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition follow-on contract that disposes the upheld closeout archive gate review while archive and re-request remain closed.
+- [`../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_FOLLOW_ON_CONTRACT.md`](../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_FOLLOW_ON_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout follow-on contract that closes out the disposed archive gate review while archive and re-request remain closed.
+- [`../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md`](../UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md) — Ubuntu PPA/archive publication evidence intake denial closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate follow-on contract that keeps the latest closeout unarchived while archive and re-request remain closed.
 - [`DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md`](DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the local-only Debian deb packaging draft and static validation lane.
 - [`FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md`](FREEBSD_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the local-only FreeBSD ports metadata draft and static validation lane.
 - [`OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md`](OPENBSD_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the local-only OpenBSD ports metadata draft and static validation lane.
@@ -366,6 +423,22 @@ non-claims
 - [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_CONTRACT.md) — package build-evidence intake denial continuation archive gate contract for Debian, FreeBSD, and OpenBSD while the closed reviewed archive gate disposition remains unarchived and no-effect.
 - [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_CONTRACT.md) — package build-evidence intake denial continuation archive gate review contract for Debian, FreeBSD, and OpenBSD while the closed reviewed archive gate disposition remains upheld and no-effect.
 - [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md) — package build-evidence intake denial continuation archive gate review disposition contract for Debian, FreeBSD, and OpenBSD while the upheld archive gate review remains disposed and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout contract for Debian, FreeBSD, and OpenBSD while the disposed archive gate review disposition remains closed out and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate contract for Debian, FreeBSD, and OpenBSD while the closed-out archive gate review disposition remains unarchived and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review contract for Debian, FreeBSD, and OpenBSD while the closed-out archive gate review disposition archive gate remains upheld and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition contract for Debian, FreeBSD, and OpenBSD while the upheld archive gate review remains disposed and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout contract for Debian, FreeBSD, and OpenBSD while the disposed archive gate review disposition remains closed out and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate contract for Debian, FreeBSD, and OpenBSD while the closed-out archive gate review disposition remains unarchived and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate review contract for Debian, FreeBSD, and OpenBSD while the closed archive gate remains upheld and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract for Debian, FreeBSD, and OpenBSD while the upheld archive gate review remains disposed and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract for Debian, FreeBSD, and OpenBSD while the disposed archive gate review disposition remains closed out and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract for Debian, FreeBSD, and OpenBSD while the closed-out archive gate review disposition remains unarchived and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract for Debian, FreeBSD, and OpenBSD while the closed archive gate remains upheld and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract for Debian, FreeBSD, and OpenBSD while the upheld archive gate review remains disposed and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract for Debian, FreeBSD, and OpenBSD while the disposed archive gate review disposition remains closed out and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract for Debian, FreeBSD, and OpenBSD while the closed-out archive gate review disposition remains unarchived and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_RD_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_RD_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract for Debian, FreeBSD, and OpenBSD while the closed archive gate remains upheld and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_RD_CLOSEOUT_AG_REVIEW_DISPOSITION_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_RD_CLOSEOUT_AG_REVIEW_DISPOSITION_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract for Debian, FreeBSD, and OpenBSD while the upheld archive gate review remains disposed and no-effect.
 - [`OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md`](OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the openSUSE compatibility lane, Panel zypper prerequisites, local-only RPM maintenance draft, `rpmlint`/`osc` availability lane, static spec lint lane, findings classification record, source archive reproducibility contract, source archive fixture lane, temporary RPM topdir handoff lane, local RPM build gate contract, local RPM build environment contract, RPM payload inspection, RPM install/remove transcript contract, OBS publication non-claim review, validation promotion blocker matrix, build-evidence intake denial, build-evidence intake denial review, build-evidence intake denial disposition, build-evidence intake denial disposition closeout, build-evidence intake denial disposition closeout archive gate, build-evidence intake denial disposition closeout archive gate review, build-evidence intake denial disposition closeout archive gate review disposition, build-evidence intake denial disposition closeout archive gate review disposition closeout, build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate, build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review, build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition, build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout, build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate, and build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review.
 - [`../OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md`](../OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md) — closed openSUSE local RPM build evidence gate contract before any `rpmbuild` or `osc build` command can run.
 - [`../OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md`](../OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md) — openSUSE local RPM build environment contract for disposable validation environments without `rpmbuild` or `osc build`.
@@ -391,9 +464,20 @@ non-claims
 - [`../OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md`](../OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md) — openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract that records the reviewed closeout archive gate review as disposed while archive and re-request remain closed.
 - [`../OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md`](../OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md) — openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract that closes out the reviewed closeout archive gate review disposition while archive and re-request remain closed.
 - [`../OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md`](../OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md) — openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract that keeps the reviewed closeout unarchived while archive and re-request remain closed.
+- [`../OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md`](../OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md) — openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract that upholds the reviewed closeout archive gate while archive and re-request remain closed.
+- [`../OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md`](../OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md) — openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract that records the reviewed closeout archive gate review as disposed while archive and re-request remain closed.
+- [`../OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md`](../OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md) — openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract that closes out the reviewed gate disposition while archive and re-request remain closed.
+- [`../OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md`](../OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md) — openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract that keeps the reviewed disposition closeout unarchived while archive and re-request remain closed.
+- [`../OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md`](../OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md) — openSUSE RPM build-evidence intake denial repeat closeout archive gate review contract that upholds the shortened-path repeat gate while archive and re-request remain closed.
+- [`../OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md`](../OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md) — openSUSE RPM build-evidence intake denial repeat closeout archive gate review disposition contract that records the upheld shortened-path repeat gate review as disposed while archive and re-request remain closed.
+- [`../OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md`](../OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md) — openSUSE RPM build-evidence intake denial repeat closeout archive gate review disposition closeout contract that closes out the disposed shortened-path repeat gate review disposition while archive and re-request remain closed.
+- [`../OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md`](../OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md) — openSUSE RPM build-evidence intake denial repeat closeout archive gate review disposition closeout archive gate contract that keeps the closed-out shortened-path repeat gate review disposition unarchived while archive and re-request remain closed.
+- [`../OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md`](../OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md) — openSUSE RPM build-evidence intake denial repeat closeout archive gate review disposition closeout archive gate review contract that upholds the closed shortened-path repeat gate review disposition closeout archive gate while archive and re-request remain closed.
+- [`../OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md`](../OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md) — openSUSE RPM build-evidence intake denial repeat closeout archive gate review disposition closeout archive gate review disposition contract that records the reviewed shortened-path repeat gate review disposition closeout archive gate review as disposed while archive and re-request remain closed.
 - [`AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) — current public estimate table source alignment across README, root status, and detailed current status.
-- [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) — current mathematical planning-estimate rebase for the live public estimate table.
+- [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) — current mathematical planning-estimate rebase for the 2026-05-26 live public estimate table.
+- [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md) — current mathematical planning-estimate rebase for the live public estimate table.
 - [`COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md`](COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md) — completion-estimate review after the L-UI detailed report refinement.
 - [`COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md`](COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md) — README/status alignment for the completion-estimate review after runtime-boundary abuse-case fixtures.
 - [`COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md) — completion-estimate hold review after runtime-boundary abuse-case fixtures.
@@ -1727,7 +1811,884 @@ The Fedora source archive transcript review validator is present but does not ac
 The current next recommended Fedora lane is:
 
 ```text
-Add a Fedora RPM install/remove transcript contract before any RPM install evidence can be accepted.
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Current Fedora package review non-claim contract checkpoint
+
+The latest Fedora package review non-claim contract records:
+
+```text
+fedora_package_review_non_claim_contract_present=1
+fedora_rpm_install_remove_transcript_contract_present=1
+package_review_non_claim_contract_present=1
+package_review_non_claim_present=1
+fedora_package_review_non_claim_present=1
+fedora_package_review_non_claim_contract_state=specified-no-effect
+package_review_non_claim_state=specified-no-effect
+install_remove_transcript_contract_state=specified-no-effect
+payload_inspection_contract_state=specified-no-effect
+fedora_mock_build_gate_state=closed-no-effect
+rpm_validation_result_promoted=0
+rpm_artifact_created=0
+rpm_artifact_published=0
+fedora_package_review_bug_created=0
+fedora_bugzilla_review_ticket_created=0
+fedora_package_review_request_created=0
+fedora_package_review_approved=0
+fedora_scm_request_created=0
+fedora_dist_git_repo_created=0
+fedora_koji_build_run=0
+fedora_bodhi_update_created=0
+fedora_rawhide_submission_claimed=0
+fedora_rawhide_acceptance_claimed=0
+fedora_official_package_claimed=0
+fedora_packager_sponsor_claimed=0
+fedora_endorsement_claimed=0
+fedora_package_review_ready=0
+fedora_distribution_ready=0
+package_readiness_claimed=0
+production_installer_ready=0
+root_installer_ready=0
+host_mutation_performed=0
+```
+
+The Fedora package review non-claim contract is present but creates no package review tickets, no Fedora dist-git repositories, no Koji builds, no Bodhi updates, no Rawhide submission, no official package claim, and no Fedora readiness claim.
+
+The current next recommended Fedora lane is:
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Current Fedora package validation promotion blocker matrix contract checkpoint
+
+The latest Fedora package validation promotion blocker matrix records:
+
+```text
+fedora_package_validation_promotion_blocker_matrix_contract_present=1
+fedora_package_review_non_claim_contract_present=1
+package_validation_promotion_blocker_matrix_contract_present=1
+package_validation_promotion_blocker_matrix_present=1
+validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_package_validation_promotion_blocker_matrix_state=blocked-no-effect
+package_validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_mock_build_gate_state=closed-no-effect
+package_review_non_claim_state=specified-no-effect
+install_remove_transcript_contract_state=specified-no-effect
+payload_inspection_contract_state=specified-no-effect
+source_archive_accepted_for_build=0
+accepted_rpmlint_transcript_present=0
+environment_transcript_present=0
+explicit_operator_build_authorization=0
+source_rpm_artifact_created=0
+binary_rpm_artifact_created=0
+rpm_artifact_created=0
+rpm_artifact_sha256_recorded=0
+rpm_payload_accepted=0
+rpm_install_remove_transcript_present=0
+fedora_package_review_non_claim_present=1
+fedora_platform_build_evidence_accepted=0
+fedora_package_validation_result_promoted=0
+rpm_validation_result_promoted=0
+package_validation_result_promoted=0
+fedora_package_review_ready=0
+fedora_distribution_ready=0
+package_readiness_claimed=0
+production_installer_ready=0
+root_installer_ready=0
+host_mutation_performed=0
+```
+
+The Fedora package validation promotion blocker matrix is present but keeps every Fedora build-evidence and promotion column blocked. It creates no RPM artifacts, accepts no build evidence, opens no package review lane, and makes no Fedora readiness claim.
+
+The current next recommended Fedora lane is:
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Current Fedora RPM build-evidence intake denial contract checkpoint
+
+The latest Fedora RPM build-evidence intake denial contract records:
+
+```text
+fedora_rpm_build_evidence_intake_denial_contract_present=1
+fedora_package_validation_promotion_blocker_matrix_contract_present=1
+rpm_build_evidence_intake_denial_contract_present=1
+build_evidence_intake_denial_state=denied-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_package_validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_mock_build_gate_state=closed-no-effect
+fedora_build_evidence_intake_allowed=0
+fedora_build_evidence_intake_requested=0
+fedora_build_evidence_intake_denied=1
+fedora_platform_build_evidence_accepted=0
+build_transcript_intake_accepted=0
+rpm_build_transcript_intake_accepted=0
+fedora_build_transcript_intake_accepted=0
+rpmbuild_evidence_accepted=0
+mock_build_evidence_accepted=0
+mock_buildsrpm_evidence_accepted=0
+rpmlint_evidence_accepted=0
+source_rpm_evidence_accepted=0
+binary_rpm_evidence_accepted=0
+fedora_rpmbuild_evidence_accepted=0
+fedora_mock_build_evidence_accepted=0
+fedora_mock_buildsrpm_evidence_accepted=0
+fedora_rpmlint_evidence_accepted=0
+fedora_source_rpm_evidence_accepted=0
+fedora_binary_rpm_evidence_accepted=0
+rpm_build_lane_opened=0
+fedora_single_platform_build_lane_opened=0
+source_archive_accepted_for_build=0
+accepted_rpmlint_transcript_present=0
+environment_transcript_present=0
+explicit_operator_build_authorization=0
+source_rpm_artifact_created=0
+binary_rpm_artifact_created=0
+rpm_artifact_created=0
+rpm_artifact_sha256_recorded=0
+rpm_payload_accepted=0
+rpm_install_remove_transcript_present=0
+fedora_package_review_non_claim_present=1
+fedora_package_validation_result_promoted=0
+rpm_validation_result_promoted=0
+package_validation_result_promoted=0
+package_readiness_claimed=0
+production_installer_ready=0
+root_installer_ready=0
+host_mutation_performed=0
+```
+
+The Fedora RPM build-evidence intake denial contract is present and denies any request, receipt, or acceptance of Fedora build evidence while the blocker matrix remains closed. It creates no RPM artifacts, opens no build lane, and makes no Fedora readiness claim.
+
+The current next recommended Fedora lane is:
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Current Fedora RPM build-evidence intake denial review contract checkpoint
+
+The latest Fedora RPM build-evidence intake denial review contract records:
+
+```text
+fedora_rpm_build_evidence_intake_denial_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_contract_present=1
+fedora_package_validation_promotion_blocker_matrix_contract_present=1
+rpm_build_evidence_intake_denial_review_contract_present=1
+build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_state=denied-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_package_validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_mock_build_gate_state=closed-no-effect
+denial_review_required_before_re_request=1
+denial_review_present=1
+denial_review_decision=uphold-denial
+denial_re_request_allowed=0
+fedora_denial_re_request_allowed=0
+fedora_build_evidence_intake_allowed=0
+fedora_build_evidence_intake_denied=1
+fedora_build_evidence_intake_denial_review_present=1
+fedora_build_evidence_intake_denial_upheld=1
+fedora_platform_build_evidence_accepted=0
+build_transcript_intake_accepted=0
+rpm_build_transcript_intake_accepted=0
+fedora_build_transcript_intake_accepted=0
+rpm_build_lane_opened=0
+fedora_single_platform_build_lane_opened=0
+source_archive_accepted_for_build=0
+accepted_rpmlint_transcript_present=0
+environment_transcript_present=0
+explicit_operator_build_authorization=0
+source_rpm_artifact_created=0
+binary_rpm_artifact_created=0
+rpm_artifact_created=0
+rpm_artifact_sha256_recorded=0
+rpm_payload_accepted=0
+rpm_install_remove_transcript_present=0
+fedora_package_review_non_claim_present=1
+fedora_package_validation_result_promoted=0
+rpm_validation_result_promoted=0
+package_validation_result_promoted=0
+package_readiness_claimed=0
+production_installer_ready=0
+root_installer_ready=0
+host_mutation_performed=0
+```
+
+The Fedora RPM build-evidence intake denial review contract is present and upholds the denied intake state while re-request authority remains closed.
+
+The current next recommended Fedora lane is:
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Current Fedora RPM build-evidence intake denial disposition contract checkpoint
+
+The latest Fedora RPM build-evidence intake denial disposition contract records:
+
+```text
+fedora_rpm_build_evidence_intake_denial_disposition_contract_present=1
+fedora_rpm_build_evidence_intake_denial_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_contract_present=1
+fedora_package_validation_promotion_blocker_matrix_contract_present=1
+rpm_build_evidence_intake_denial_disposition_contract_present=1
+build_evidence_intake_denial_disposition_state=closed-upheld-no-effect
+build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_state=denied-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_package_validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_mock_build_gate_state=closed-no-effect
+denial_disposition_present=1
+denial_disposition_decision=close-upheld-denial
+denial_review_present=1
+denial_review_decision=uphold-denial
+denial_closed=1
+denial_re_request_allowed=0
+fedora_denial_re_request_allowed=0
+fedora_build_evidence_intake_denial_disposition_present=1
+fedora_build_evidence_intake_denial_closed=1
+fedora_build_evidence_intake_denial_review_present=1
+fedora_build_evidence_intake_denial_upheld=1
+fedora_build_evidence_intake_allowed=0
+fedora_build_evidence_intake_denied=1
+fedora_platform_build_evidence_accepted=0
+build_transcript_intake_accepted=0
+rpm_build_transcript_intake_accepted=0
+fedora_build_transcript_intake_accepted=0
+rpm_build_lane_opened=0
+fedora_single_platform_build_lane_opened=0
+source_archive_accepted_for_build=0
+accepted_rpmlint_transcript_present=0
+environment_transcript_present=0
+explicit_operator_build_authorization=0
+source_rpm_artifact_created=0
+binary_rpm_artifact_created=0
+rpm_artifact_created=0
+rpm_artifact_sha256_recorded=0
+rpm_payload_accepted=0
+rpm_install_remove_transcript_present=0
+fedora_package_review_non_claim_present=1
+fedora_package_validation_result_promoted=0
+rpm_validation_result_promoted=0
+package_validation_result_promoted=0
+package_readiness_claimed=0
+production_installer_ready=0
+root_installer_ready=0
+host_mutation_performed=0
+```
+
+The Fedora RPM build-evidence intake denial disposition contract is present and closes the upheld denied intake state while re-request authority remains closed.
+
+The current next recommended Fedora lane is:
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Current Fedora RPM build-evidence intake denial disposition closeout contract checkpoint
+
+The latest Fedora RPM build-evidence intake denial disposition closeout contract records:
+
+```text
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_contract_present=1
+fedora_rpm_build_evidence_intake_denial_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_contract_present=1
+fedora_package_validation_promotion_blocker_matrix_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1
+rpm_build_evidence_intake_denial_disposition_contract_present=1
+build_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect
+build_evidence_intake_denial_disposition_state=closed-upheld-no-effect
+build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_state=denied-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_package_validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_mock_build_gate_state=closed-no-effect
+denial_disposition_closeout_present=1
+denial_disposition_closeout_decision=closeout-upheld-denial
+denial_disposition_present=1
+denial_disposition_decision=close-upheld-denial
+denial_review_present=1
+denial_review_decision=uphold-denial
+denial_closed=1
+denial_archived=0
+denial_archive_allowed=0
+denial_re_request_allowed=0
+fedora_denial_archive_allowed=0
+fedora_denial_re_request_allowed=0
+fedora_build_evidence_intake_allowed=0
+fedora_build_evidence_intake_denied=1
+fedora_build_evidence_intake_denial_disposition_closeout_present=1
+fedora_build_evidence_intake_denial_closed_out=1
+fedora_build_evidence_intake_denial_disposition_present=1
+fedora_build_evidence_intake_denial_closed=1
+fedora_build_evidence_intake_denial_review_present=1
+fedora_build_evidence_intake_denial_upheld=1
+fedora_build_evidence_intake_denial_archived=0
+fedora_platform_build_evidence_accepted=0
+build_transcript_intake_accepted=0
+rpm_build_transcript_intake_accepted=0
+fedora_build_transcript_intake_accepted=0
+rpm_build_lane_opened=0
+fedora_single_platform_build_lane_opened=0
+source_archive_accepted_for_build=0
+accepted_rpmlint_transcript_present=0
+environment_transcript_present=0
+explicit_operator_build_authorization=0
+source_rpm_artifact_created=0
+binary_rpm_artifact_created=0
+rpm_artifact_created=0
+rpm_artifact_sha256_recorded=0
+rpm_payload_accepted=0
+rpm_install_remove_transcript_present=0
+fedora_package_review_non_claim_present=1
+fedora_package_validation_result_promoted=0
+rpm_validation_result_promoted=0
+package_validation_result_promoted=0
+package_readiness_claimed=0
+production_installer_ready=0
+root_installer_ready=0
+host_mutation_performed=0
+```
+
+The Fedora RPM build-evidence intake denial disposition closeout contract is present and closes out the upheld denied intake disposition while archive and re-request authority remain closed.
+
+The current next recommended Fedora lane is:
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Current Fedora RPM build-evidence intake denial disposition closeout archive gate contract checkpoint
+
+The latest Fedora RPM build-evidence intake denial disposition closeout archive gate contract records:
+
+```text
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_contract_present=1
+fedora_rpm_build_evidence_intake_denial_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_contract_present=1
+fedora_package_validation_promotion_blocker_matrix_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1
+rpm_build_evidence_intake_denial_disposition_contract_present=1
+build_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect
+build_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect
+build_evidence_intake_denial_disposition_state=closed-upheld-no-effect
+build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_state=denied-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_package_validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_mock_build_gate_state=closed-no-effect
+denial_archive_gate_present=1
+denial_archive_gate_state=closed-no-effect
+denial_archive_gate_decision=deny-archive-and-re-request
+denial_disposition_closeout_present=1
+denial_disposition_closeout_decision=closeout-upheld-denial
+denial_disposition_present=1
+denial_disposition_decision=close-upheld-denial
+denial_review_present=1
+denial_review_decision=uphold-denial
+denial_closed=1
+denial_archived=0
+denial_archive_allowed=0
+denial_archive_record_write_allowed=0
+denial_archive_record_written=0
+denial_re_request_allowed=0
+fedora_denial_archive_allowed=0
+fedora_denial_archive_record_write_allowed=0
+fedora_denial_archive_record_written=0
+fedora_denial_re_request_allowed=0
+fedora_build_evidence_intake_allowed=0
+fedora_build_evidence_intake_denied=1
+fedora_build_evidence_intake_denial_archive_gate_present=1
+fedora_build_evidence_intake_denial_archive_gate_closed=1
+fedora_build_evidence_intake_denial_disposition_closeout_present=1
+fedora_build_evidence_intake_denial_closed_out=1
+fedora_build_evidence_intake_denial_disposition_present=1
+fedora_build_evidence_intake_denial_closed=1
+fedora_build_evidence_intake_denial_review_present=1
+fedora_build_evidence_intake_denial_upheld=1
+fedora_build_evidence_intake_denial_archived=0
+fedora_platform_build_evidence_accepted=0
+build_transcript_intake_accepted=0
+rpm_build_transcript_intake_accepted=0
+fedora_build_transcript_intake_accepted=0
+rpm_build_lane_opened=0
+fedora_single_platform_build_lane_opened=0
+source_archive_accepted_for_build=0
+accepted_rpmlint_transcript_present=0
+environment_transcript_present=0
+explicit_operator_build_authorization=0
+source_rpm_artifact_created=0
+binary_rpm_artifact_created=0
+rpm_artifact_created=0
+rpm_artifact_sha256_recorded=0
+rpm_payload_accepted=0
+rpm_install_remove_transcript_present=0
+fedora_package_review_non_claim_present=1
+fedora_package_validation_result_promoted=0
+rpm_validation_result_promoted=0
+package_validation_result_promoted=0
+package_readiness_claimed=0
+production_installer_ready=0
+root_installer_ready=0
+host_mutation_performed=0
+```
+
+The Fedora RPM build-evidence intake denial disposition closeout archive gate contract is present and keeps the closed-out denied intake unarchived while archive-record writes and re-request authority remain closed.
+
+The current next recommended Fedora lane is:
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Current Fedora RPM build-evidence intake denial disposition closeout archive gate review contract checkpoint
+
+The latest Fedora RPM build-evidence intake denial disposition closeout archive gate review contract records:
+
+```text
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_contract_present=1
+fedora_rpm_build_evidence_intake_denial_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_contract_present=1
+fedora_package_validation_promotion_blocker_matrix_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1
+rpm_build_evidence_intake_denial_disposition_contract_present=1
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect
+build_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect
+build_evidence_intake_denial_disposition_state=closed-upheld-no-effect
+build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_state=denied-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_package_validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_mock_build_gate_state=closed-no-effect
+denial_archive_gate_review_present=1
+denial_archive_gate_review_state=reviewed-upheld-no-effect
+denial_archive_gate_review_decision=uphold-closed-archive-gate
+denial_archive_gate_present=1
+denial_archive_gate_state=closed-no-effect
+denial_archive_gate_decision=deny-archive-and-re-request
+denial_disposition_closeout_present=1
+denial_disposition_closeout_decision=closeout-upheld-denial
+denial_disposition_present=1
+denial_disposition_decision=close-upheld-denial
+denial_review_present=1
+denial_review_decision=uphold-denial
+denial_closed=1
+denial_archived=0
+denial_archive_allowed=0
+denial_archive_record_write_allowed=0
+denial_archive_record_written=0
+denial_re_request_allowed=0
+fedora_denial_archive_allowed=0
+fedora_denial_archive_record_write_allowed=0
+fedora_denial_archive_record_written=0
+fedora_denial_re_request_allowed=0
+fedora_build_evidence_intake_allowed=0
+fedora_build_evidence_intake_denied=1
+fedora_build_evidence_intake_denial_archive_gate_review_present=1
+fedora_build_evidence_intake_denial_archive_gate_reviewed=1
+fedora_build_evidence_intake_denial_archive_gate_present=1
+fedora_build_evidence_intake_denial_archive_gate_closed=1
+fedora_build_evidence_intake_denial_disposition_closeout_present=1
+fedora_build_evidence_intake_denial_closed_out=1
+fedora_build_evidence_intake_denial_disposition_present=1
+fedora_build_evidence_intake_denial_closed=1
+fedora_build_evidence_intake_denial_review_present=1
+fedora_build_evidence_intake_denial_upheld=1
+fedora_build_evidence_intake_denial_archived=0
+fedora_platform_build_evidence_accepted=0
+build_transcript_intake_accepted=0
+rpm_build_transcript_intake_accepted=0
+fedora_build_transcript_intake_accepted=0
+rpm_build_lane_opened=0
+fedora_single_platform_build_lane_opened=0
+source_archive_accepted_for_build=0
+accepted_rpmlint_transcript_present=0
+environment_transcript_present=0
+explicit_operator_build_authorization=0
+source_rpm_artifact_created=0
+binary_rpm_artifact_created=0
+rpm_artifact_created=0
+rpm_artifact_sha256_recorded=0
+rpm_payload_accepted=0
+rpm_install_remove_transcript_present=0
+fedora_package_review_non_claim_present=1
+fedora_package_validation_result_promoted=0
+rpm_validation_result_promoted=0
+package_validation_result_promoted=0
+package_readiness_claimed=0
+production_installer_ready=0
+root_installer_ready=0
+host_mutation_performed=0
+```
+
+The Fedora RPM build-evidence intake denial disposition closeout archive gate review contract is present and upholds the closed archive gate while archive-record writes and re-request authority remain closed.
+
+The current next recommended Fedora lane is:
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Current Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition contract checkpoint
+
+The latest Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition contract records:
+
+```text
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_contract_present=1
+fedora_rpm_build_evidence_intake_denial_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_contract_present=1
+fedora_package_validation_promotion_blocker_matrix_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1
+rpm_build_evidence_intake_denial_disposition_contract_present=1
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect
+build_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect
+build_evidence_intake_denial_disposition_state=closed-upheld-no-effect
+build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_state=denied-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_package_validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_mock_build_gate_state=closed-no-effect
+denial_archive_gate_review_disposition_present=1
+denial_archive_gate_review_disposition_state=disposed-upheld-no-effect
+denial_archive_gate_review_disposition_decision=dispose-upheld-closed-archive-gate-review
+denial_archive_gate_review_present=1
+denial_archive_gate_review_state=reviewed-upheld-no-effect
+denial_archive_gate_review_decision=uphold-closed-archive-gate
+denial_archive_gate_present=1
+denial_archive_gate_state=closed-no-effect
+denial_archive_gate_decision=deny-archive-and-re-request
+denial_disposition_closeout_present=1
+denial_disposition_closeout_decision=closeout-upheld-denial
+denial_disposition_present=1
+denial_disposition_decision=close-upheld-denial
+denial_review_present=1
+denial_review_decision=uphold-denial
+denial_closed=1
+denial_archived=0
+denial_archive_allowed=0
+denial_archive_record_write_allowed=0
+denial_archive_record_written=0
+denial_re_request_allowed=0
+fedora_denial_archive_allowed=0
+fedora_denial_archive_record_write_allowed=0
+fedora_denial_archive_record_written=0
+fedora_denial_re_request_allowed=0
+fedora_build_evidence_intake_allowed=0
+fedora_build_evidence_intake_denied=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposed=1
+fedora_build_evidence_intake_denial_archive_gate_review_present=1
+fedora_build_evidence_intake_denial_archive_gate_reviewed=1
+fedora_build_evidence_intake_denial_archive_gate_present=1
+fedora_build_evidence_intake_denial_archive_gate_closed=1
+fedora_build_evidence_intake_denial_disposition_closeout_present=1
+fedora_build_evidence_intake_denial_closed_out=1
+fedora_build_evidence_intake_denial_disposition_present=1
+fedora_build_evidence_intake_denial_closed=1
+fedora_build_evidence_intake_denial_review_present=1
+fedora_build_evidence_intake_denial_upheld=1
+fedora_build_evidence_intake_denial_archived=0
+fedora_platform_build_evidence_accepted=0
+build_transcript_intake_accepted=0
+rpm_build_transcript_intake_accepted=0
+fedora_build_transcript_intake_accepted=0
+rpm_build_lane_opened=0
+fedora_single_platform_build_lane_opened=0
+source_archive_accepted_for_build=0
+accepted_rpmlint_transcript_present=0
+environment_transcript_present=0
+explicit_operator_build_authorization=0
+source_rpm_artifact_created=0
+binary_rpm_artifact_created=0
+rpm_artifact_created=0
+rpm_artifact_sha256_recorded=0
+rpm_payload_accepted=0
+rpm_install_remove_transcript_present=0
+fedora_package_review_non_claim_present=1
+fedora_package_validation_result_promoted=0
+rpm_validation_result_promoted=0
+package_validation_result_promoted=0
+package_readiness_claimed=0
+production_installer_ready=0
+root_installer_ready=0
+host_mutation_performed=0
+```
+
+The Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition contract is present and records the reviewed archive gate as disposed while archive-record writes and re-request authority remain closed.
+
+The current next recommended Fedora lane is:
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Current Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout contract checkpoint
+
+The latest Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout contract records:
+
+```text
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_contract_present=1
+fedora_rpm_build_evidence_intake_denial_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_contract_present=1
+fedora_package_validation_promotion_blocker_matrix_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1
+rpm_build_evidence_intake_denial_disposition_contract_present=1
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_state=closed-out-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect
+build_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect
+build_evidence_intake_denial_disposition_state=closed-upheld-no-effect
+build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_state=denied-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_package_validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_mock_build_gate_state=closed-no-effect
+denial_archive_gate_review_disposition_closeout_present=1
+denial_archive_gate_review_disposition_closeout_state=closed-out-upheld-no-effect
+denial_archive_gate_review_disposition_closeout_decision=closeout-upheld-archive-gate-review-disposition
+denial_archive_gate_review_disposition_present=1
+denial_archive_gate_review_disposition_state=disposed-upheld-no-effect
+denial_archive_gate_review_disposition_decision=dispose-upheld-closed-archive-gate-review
+denial_archive_gate_review_present=1
+denial_archive_gate_review_state=reviewed-upheld-no-effect
+denial_archive_gate_review_decision=uphold-closed-archive-gate
+denial_archive_gate_present=1
+denial_archive_gate_state=closed-no-effect
+denial_archive_gate_decision=deny-archive-and-re-request
+denial_disposition_closeout_present=1
+denial_disposition_closeout_decision=closeout-upheld-denial
+denial_disposition_present=1
+denial_disposition_decision=close-upheld-denial
+denial_review_present=1
+denial_review_decision=uphold-denial
+denial_closed=1
+denial_archived=0
+denial_archive_allowed=0
+denial_archive_record_write_allowed=0
+denial_archive_record_written=0
+denial_re_request_allowed=0
+fedora_denial_archive_allowed=0
+fedora_denial_archive_record_write_allowed=0
+fedora_denial_archive_record_written=0
+fedora_denial_re_request_allowed=0
+fedora_build_evidence_intake_allowed=0
+fedora_build_evidence_intake_denied=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closed_out=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposed=1
+fedora_build_evidence_intake_denial_archive_gate_review_present=1
+fedora_build_evidence_intake_denial_archive_gate_reviewed=1
+fedora_build_evidence_intake_denial_archive_gate_present=1
+fedora_build_evidence_intake_denial_archive_gate_closed=1
+fedora_build_evidence_intake_denial_disposition_closeout_present=1
+fedora_build_evidence_intake_denial_closed_out=1
+fedora_build_evidence_intake_denial_disposition_present=1
+fedora_build_evidence_intake_denial_closed=1
+fedora_build_evidence_intake_denial_review_present=1
+fedora_build_evidence_intake_denial_upheld=1
+fedora_build_evidence_intake_denial_archived=0
+fedora_platform_build_evidence_accepted=0
+build_transcript_intake_accepted=0
+rpm_build_transcript_intake_accepted=0
+fedora_build_transcript_intake_accepted=0
+rpm_build_lane_opened=0
+fedora_single_platform_build_lane_opened=0
+source_archive_accepted_for_build=0
+accepted_rpmlint_transcript_present=0
+environment_transcript_present=0
+explicit_operator_build_authorization=0
+source_rpm_artifact_created=0
+binary_rpm_artifact_created=0
+rpm_artifact_created=0
+rpm_artifact_sha256_recorded=0
+rpm_payload_accepted=0
+rpm_install_remove_transcript_present=0
+fedora_package_review_non_claim_present=1
+fedora_package_validation_result_promoted=0
+rpm_validation_result_promoted=0
+package_validation_result_promoted=0
+package_readiness_claimed=0
+production_installer_ready=0
+root_installer_ready=0
+host_mutation_performed=0
+```
+
+The Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout contract is present and records the reviewed archive gate disposition as closed out while archive-record writes and re-request authority remain closed.
+
+The current next recommended Fedora lane is:
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Current Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate contract checkpoint
+
+The latest Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate contract records:
+
+```text
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_state=closed-no-effect
+denial_archive_gate_review_disposition_closeout_archive_gate_present=1
+denial_archive_gate_review_disposition_closeout_archive_gate_state=closed-no-effect
+denial_archive_gate_review_disposition_closeout_archive_gate_decision=deny-archive-and-re-request
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_closed=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closed_out=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposed=1
+fedora_build_evidence_intake_denial_archive_gate_review_present=1
+fedora_build_evidence_intake_denial_archive_gate_reviewed=1
+fedora_build_evidence_intake_denial_archive_gate_present=1
+fedora_build_evidence_intake_denial_archive_gate_closed=1
+fedora_denial_archive_allowed=0
+fedora_denial_archive_record_write_allowed=0
+fedora_denial_archive_record_written=0
+fedora_denial_re_request_allowed=0
+```
+
+The Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate contract is present and keeps the reviewed archive gate disposition closeout unarchived while archive-record writes and re-request authority remain closed.
+
+The current next recommended Fedora lane is:
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Current Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract checkpoint
+
+The latest Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract records:
+
+```text
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract_present=1
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect
+denial_archive_gate_review_disposition_closeout_archive_gate_review_present=1
+denial_archive_gate_review_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect
+denial_archive_gate_review_disposition_closeout_archive_gate_review_decision=uphold-closed-archive-gate
+denial_archive_gate_review_disposition_closeout_archive_gate_state=closed-no-effect
+denial_archive_gate_review_disposition_closeout_archive_gate_decision=deny-archive-and-re-request
+denial_archive_allowed=0
+denial_archive_record_write_allowed=0
+denial_archive_record_written=0
+denial_re_request_allowed=0
+fedora_denial_archive_allowed=0
+fedora_denial_archive_record_write_allowed=0
+fedora_denial_archive_record_written=0
+fedora_denial_re_request_allowed=0
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_reviewed=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_closed=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closed_out=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposed=1
+fedora_build_evidence_intake_denial_archived=0
+fedora_build_evidence_intake_allowed=0
+fedora_build_evidence_intake_denied=1
+fedora_platform_build_evidence_accepted=0
+rpm_build_lane_opened=0
+source_archive_accepted_for_build=0
+explicit_operator_build_authorization=0
+rpm_artifact_created=0
+rpm_payload_accepted=0
+rpm_install_remove_transcript_present=0
+fedora_package_review_non_claim_present=1
+fedora_package_validation_result_promoted=0
+rpm_validation_result_promoted=0
+package_validation_result_promoted=0
+package_readiness_claimed=0
+production_installer_ready=0
+host_mutation_performed=0
+```
+
+The Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract is present and upholds the reviewed archive gate disposition closeout archive gate while archive-record writes and re-request authority remain closed.
+
+The current next recommended Fedora lane is:
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Current Fedora RPM install/remove transcript contract checkpoint
+
+The latest Fedora RPM install/remove transcript contract records:
+
+```text
+fedora_rpm_install_remove_transcript_contract_present=1
+fedora_rpm_payload_inspection_contract_present=1
+rpm_install_remove_transcript_contract_present=1
+install_remove_transcript_contract_present=1
+fedora_rpm_install_remove_transcript_contract_state=specified-no-effect
+install_remove_transcript_contract_state=specified-no-effect
+fedora_rpm_payload_inspection_contract_state=specified-no-effect
+payload_inspection_contract_state=specified-no-effect
+fedora_mock_build_gate_state=closed-no-effect
+rpm_install_remove_disposable_environment_required=1
+rpm_install_remove_transcript_present=0
+rpm_package_install_run=0
+rpm_package_remove_run=0
+rpm_dnf_install_run=0
+rpm_dnf_remove_run=0
+rpm_cli_install_run=0
+rpm_cli_remove_run=0
+rpm_installed_on_host=0
+rpm_removed_from_host=0
+host_install_allowed=0
+host_remove_allowed=0
+host_mutation_allowed=0
+service_state_change_allowed=0
+rpm_artifact_created=0
+rpm_payload_accepted=0
+rpm_validation_result_promoted=0
+fedora_package_review_ready=0
+fedora_distribution_ready=0
+production_installer_ready=0
+host_mutation_performed=0
+```
+
+The Fedora RPM install/remove transcript contract is present but installs no RPM artifacts, removes no RPM artifacts, accepts no install/remove evidence, and makes no Fedora readiness claim.
+
+The current next recommended Fedora lane is:
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
 ```
 
 ## Current Fedora source archive acceptance gate checkpoint
@@ -1786,7 +2747,7 @@ The Fedora source archive acceptance gate is present but does not accept source 
 The current next recommended Fedora lane is:
 
 ```text
-Add a Fedora RPM install/remove transcript contract before any RPM install evidence can be accepted.
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
 ```
 
 ## Current Fedora source archive accepted evidence status template checkpoint
@@ -1842,7 +2803,7 @@ The Fedora source archive accepted evidence status template is present but does 
 The current next recommended Fedora lane is:
 
 ```text
-Add a Fedora RPM install/remove transcript contract before any RPM install evidence can be accepted.
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
 ```
 
 ## Current Fedora source archive accepted evidence status review validator checkpoint
@@ -1893,7 +2854,7 @@ The Fedora source archive accepted evidence status review validator is present b
 The current next recommended Fedora lane is:
 
 ```text
-Add a Fedora RPM install/remove transcript contract before any RPM install evidence can be accepted.
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
 ```
 
 ## Current Fedora source archive accepted evidence acceptance gate checkpoint
@@ -1935,7 +2896,7 @@ The Fedora source archive accepted evidence acceptance gate is present but does 
 The current next recommended Fedora lane is:
 
 ```text
-Add a Fedora RPM install/remove transcript contract before any RPM install evidence can be accepted.
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
 ```
 
 ## Current Fedora source archive mock build input handoff contract checkpoint
@@ -1977,7 +2938,7 @@ The Fedora source archive mock build input handoff contract is present but keeps
 The current next recommended Fedora lane is:
 
 ```text
-Add a Fedora RPM install/remove transcript contract before any RPM install evidence can be accepted.
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
 ```
 
 ## Current Fedora local mock-build gate contract checkpoint
@@ -2027,7 +2988,7 @@ The Fedora local mock-build gate contract is present but keeps rpmbuild, mock, a
 The current next recommended Fedora lane is:
 
 ```text
-Add a Fedora RPM install/remove transcript contract before any RPM install evidence can be accepted.
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
 ```
 
 ## Current Fedora local mock-build environment contract checkpoint
@@ -2084,7 +3045,7 @@ The Fedora local mock-build environment contract is present but does not provisi
 The current next recommended Fedora lane is:
 
 ```text
-Add a Fedora RPM install/remove transcript contract before any RPM install evidence can be accepted.
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
 ```
 
 ## Current Fedora RPM artifact naming contract checkpoint
@@ -2125,7 +3086,7 @@ The Fedora RPM artifact naming contract is present but creates no RPM artifacts,
 The current next recommended Fedora lane is:
 
 ```text
-Add a Fedora RPM install/remove transcript contract before any RPM install evidence can be accepted.
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
 ```
 
 ## Current Fedora RPM payload inspection contract checkpoint
@@ -2165,7 +3126,7 @@ The Fedora RPM payload inspection contract is present but inspects no RPM artifa
 The current next recommended Fedora lane is:
 
 ```text
-Add a Fedora RPM install/remove transcript contract before any RPM install evidence can be accepted.
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
 ```
 
 ## Current Fedora VM CLI payload validation lane checkpoint
@@ -2651,13 +3612,25 @@ kernel runtime entry recovery-closeout-observation-view guard
 kernel runtime entry recovery-closeout-observation-view report runner
 kernel runtime entry recovery-audit-observation-view guard
 kernel runtime entry recovery-audit-observation-view report runner
+kernel runtime entry recovery-audit-review-observation-view guard
+kernel runtime entry recovery-audit-review-observation-view report runner
+kernel runtime entry recovery-audit-review-disposition-observation-view guard
+kernel runtime entry recovery-audit-review-disposition-observation-view report runner
+kernel runtime entry recovery-audit-review-disposition-review-observation-view guard
+kernel runtime entry recovery-audit-review-disposition-review-observation-view report runner
+kernel runtime entry recovery-audit-review-disposition-review-closeout-observation-view guard
+kernel runtime entry recovery-audit-review-disposition-review-closeout-observation-view report runner
+kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-observation-view guard
+kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-observation-view report runner
+kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view guard
+kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
 kernel syscall table report runner
 kernel lifecycle subsystem summary
 kernel lifecycle rollback plan
-final_state=runtime-entry-recovery-audit-observation-view-ready
+final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
 external_effect_performed=0
 no_external_effect_chain=1
 runtime_entry_recovery_boundary_observation_view_allowed=0
@@ -2666,6 +3639,12 @@ runtime_entry_recovery_disposition_observation_view_allowed=0
 runtime_entry_recovery_outcome_observation_view_allowed=0
 runtime_entry_recovery_closeout_observation_view_allowed=0
 runtime_entry_recovery_audit_observation_view_allowed=0
+runtime_entry_recovery_audit_review_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed=0
 runtime_entry_persistence_boundary_observation_view_allowed=0
 runtime_entry_quiescent_return_observation_view_allowed=0
 runtime_entry_idle_return_observation_view_allowed=0
@@ -2696,6 +3675,8 @@ recovery_closeout_allowed=0
 recovery_closeout_observation_allowed=0
 recovery_audit_allowed=0
 recovery_audit_observation_allowed=0
+recovery_audit_review_allowed=0
+recovery_audit_review_observation_allowed=0
 persistence_boundary_observation_allowed=0
 persistence_boundary_allowed=0
 persistence_commit_allowed=0
@@ -2751,6 +3732,16 @@ scheduler_credit_update_allowed=0
 process_wake_allowed=0
 persistence_allowed=0
 recovery_authority_allowed=0
+recovery_audit_review_disposition_allowed=0
+recovery_audit_review_disposition_observation_allowed=0
+recovery_audit_review_disposition_review_allowed=0
+recovery_audit_review_disposition_review_observation_allowed=0
+recovery_audit_review_disposition_review_closeout_allowed=0
+recovery_audit_review_disposition_review_closeout_observation_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0
 ```
@@ -2758,7 +3749,7 @@ hardware_effect_allowed=0
 The current next recommended kernel lane is:
 
 ```text
-Add no-effect runtime entry recovery-audit-review observation view evidence after the audit terminal
+Add the next no-effect kernel runtime authority evidence after the recovery-audit-review-disposition-review-closeout-archive-gate-review observation terminal
 ```
 
 Dedicated kernel runtime-entry lanes:
@@ -2787,6 +3778,12 @@ Dedicated kernel runtime-entry lanes:
 .github/workflows/kernel-runtime-entry-recovery-outcome-observation-view.yml
 .github/workflows/kernel-runtime-entry-recovery-closeout-observation-view.yml
 .github/workflows/kernel-runtime-entry-recovery-audit-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-review-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-review-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view.yml
 ```
 
 ## Status update rules

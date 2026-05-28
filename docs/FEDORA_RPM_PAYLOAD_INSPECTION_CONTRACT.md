@@ -220,6 +220,7 @@ docs/FEDORA_LOCAL_MOCK_BUILD_GATE_CONTRACT.md
 docs/FEDORA_SOURCE_ARCHIVE_MOCK_BUILD_INPUT_HANDOFF_CONTRACT.md
 docs/FEDORA_RPMLINT_FINDINGS_CLASSIFICATION.md
 docs/FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX.md
+docs/FEDORA_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
 packaging/fedora/latticra.spec
 ```
 
@@ -242,7 +243,7 @@ fedora_rpm_payload_inspection_contract: ok
 ## Next Recommended Lane
 
 ```text
-Add a Fedora RPM install/remove transcript contract before any RPM install evidence can be accepted.
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
 ```
 
 ## Non-claims

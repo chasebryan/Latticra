@@ -44,6 +44,15 @@ static int implementation_binding_manifest_is_clean_room_no_effect(void) {
     EXPECT_TRUE(manifest.planned_test_units_count == 9u, "test units");
     EXPECT_TRUE(manifest.fips_203_algorithm_bound == 1u, "fips203");
     EXPECT_TRUE(manifest.sp_800_227_kem_usage_bound == 1u, "sp800227");
+    EXPECT_TRUE(manifest.fips_conformance_matrix_bound == 1u, "conformance matrix");
+    EXPECT_TRUE(manifest.sp800_227_usage_profile_bound == 1u, "usage profile");
+    EXPECT_TRUE(manifest.implementation_traceability_matrix_bound == 1u, "traceability");
+    EXPECT_TRUE(manifest.primitive_source_acceptance_gate_bound == 1u, "source acceptance");
+    EXPECT_TRUE(manifest.source_layout_gate_bound == 1u, "source layout");
+    EXPECT_TRUE(manifest.implementation_file_digest_plan_bound == 1u, "file digest plan");
+    EXPECT_TRUE(manifest.clean_room_author_attestation_gate_bound == 1u, "author attestation");
+    EXPECT_TRUE(manifest.per_file_standards_trace_gate_bound == 1u, "standards trace");
+    EXPECT_TRUE(manifest.per_file_test_trace_gate_bound == 1u, "test trace");
     EXPECT_TRUE(manifest.kat_manifest_bound == 1u, "kat");
     EXPECT_TRUE(manifest.acvp_intake_bound == 1u, "acvp");
     EXPECT_TRUE(manifest.acvp_capability_matrix_bound == 1u, "acvp matrix");
@@ -61,6 +70,7 @@ static int implementation_binding_manifest_is_clean_room_no_effect(void) {
     EXPECT_TRUE(manifest.vector_source_bound == 1u, "source");
     EXPECT_TRUE(manifest.vector_fixture_lock_bound == 1u, "fixture lock");
     EXPECT_TRUE(manifest.vector_fixture_digest_ledger_bound == 1u, "fixture digest ledger");
+    EXPECT_TRUE(manifest.replay_transcript_gate_bound == 1u, "transcript gate");
     EXPECT_TRUE(manifest.negative_test_evidence_bound == 1u, "negative");
     EXPECT_TRUE(manifest.memory_safety_evidence_bound == 1u, "memory");
     EXPECT_TRUE(manifest.api_misuse_resistance_bound == 1u, "api");
@@ -84,8 +94,8 @@ static int implementation_binding_manifest_is_clean_room_no_effect(void) {
     EXPECT_TRUE(manifest.production_crypto_claim_allowed == 0u, "production");
     EXPECT_TRUE(manifest.fips_claim_allowed == 0u, "fips");
     EXPECT_TRUE(manifest.runtime_authority_granted == 0u, "runtime");
-    EXPECT_TRUE(manifest.required_binding_items_total == 35u, "total");
-    EXPECT_TRUE(manifest.required_binding_items_satisfied == 30u, "satisfied");
+    EXPECT_TRUE(manifest.required_binding_items_total == 45u, "total");
+    EXPECT_TRUE(manifest.required_binding_items_satisfied == 40u, "satisfied");
     EXPECT_TRUE(manifest.error == LATTICRA_Q_SEAL_ML_KEM_BINDING_MANIFEST_BLOCKED, "blocked");
     EXPECT_TRUE(
         latticra_q_seal_ml_kem_implementation_binding_manifest_is_clean_room_no_effect(
@@ -108,6 +118,33 @@ static int implementation_binding_manifest_is_clean_room_no_effect(void) {
         strstr(rendered, "implementation_binding_manifest_present=1") != 0,
         "present report");
     EXPECT_TRUE(strstr(rendered, "planned_source_units_count=9") != 0, "source report");
+    EXPECT_TRUE(
+        strstr(rendered, "fips_conformance_matrix_bound=1") != 0,
+        "conformance matrix report");
+    EXPECT_TRUE(
+        strstr(rendered, "sp800_227_usage_profile_bound=1") != 0,
+        "usage profile report");
+    EXPECT_TRUE(
+        strstr(rendered, "implementation_traceability_matrix_bound=1") != 0,
+        "traceability report");
+    EXPECT_TRUE(
+        strstr(rendered, "primitive_source_acceptance_gate_bound=1") != 0,
+        "source acceptance report");
+    EXPECT_TRUE(
+        strstr(rendered, "source_layout_gate_bound=1") != 0,
+        "source layout report");
+    EXPECT_TRUE(
+        strstr(rendered, "implementation_file_digest_plan_bound=1") != 0,
+        "file digest plan report");
+    EXPECT_TRUE(
+        strstr(rendered, "clean_room_author_attestation_gate_bound=1") != 0,
+        "author attestation report");
+    EXPECT_TRUE(
+        strstr(rendered, "per_file_standards_trace_gate_bound=1") != 0,
+        "standards trace report");
+    EXPECT_TRUE(
+        strstr(rendered, "per_file_test_trace_gate_bound=1") != 0,
+        "test trace report");
     EXPECT_TRUE(
         strstr(rendered, "acvp_capability_matrix_bound=1") != 0,
         "acvp matrix report");
@@ -135,6 +172,9 @@ static int implementation_binding_manifest_is_clean_room_no_effect(void) {
     EXPECT_TRUE(
         strstr(rendered, "vector_fixture_digest_ledger_bound=1") != 0,
         "fixture digest ledger report");
+    EXPECT_TRUE(
+        strstr(rendered, "replay_transcript_gate_bound=1") != 0,
+        "transcript gate report");
     EXPECT_TRUE(
         strstr(rendered, "implementation_code_present=0") != 0,
         "code report");

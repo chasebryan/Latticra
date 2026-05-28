@@ -13,15 +13,18 @@ This plan does not make Latticra a Fedora package. It does not submit Latticra t
 
 ## Current package shape
 
-The current local spec remains a documentation-only draft.
+The current local spec remains a local-only draft.
 
 Current install payload:
 
 ```text
+/usr/bin/latticra
 /usr/share/doc/latticra/README.md
 ```
 
-No executable command, service, kernel module, boot entry, SELinux policy, or runtime configuration is installed at this stage.
+The executable payload is the no-effect CLI built from `src/latticra_cli.c`.
+
+No service, kernel module, boot entry, SELinux policy, privileged helper, network authority, host-mutation hook, or runtime configuration is installed at this stage.
 
 ## Required build inputs
 
@@ -50,6 +53,7 @@ archive root directory matches %autosetup -n %{name}-%{version}
 archive excludes .git
 archive excludes CI-only temporary output
 archive includes README.md
+archive includes src/latticra_cli.c
 archive includes scripts required by %build
 archive includes docs needed by current package metadata
 ```
@@ -102,17 +106,20 @@ rpm -qpl .rpmwork/RPMS/*/latticra-*.rpm
 Expected payload at the current stage:
 
 ```text
+/usr/bin/latticra
 /usr/share/doc/latticra/README.md
 ```
 
 Unexpected payload at the current stage:
 
 ```text
-/usr/bin/latticra
 /etc/latticra
 /usr/lib/systemd/system/latticra.service
 kernel modules
 bootloader files
+privileged helper files
+network authority files
+host-mutation hooks
 SELinux policy files
 ```
 
@@ -128,7 +135,7 @@ The correct order is:
 3. local binary RPM build lane
 4. RPM payload inspection lane
 5. fresh Fedora install smoke lane
-6. command/runtime smoke checks only after a stable entrypoint exists
+6. command/runtime smoke checks only after payload inspection accepts the no-effect entrypoint
 ```
 
 ## Boundary

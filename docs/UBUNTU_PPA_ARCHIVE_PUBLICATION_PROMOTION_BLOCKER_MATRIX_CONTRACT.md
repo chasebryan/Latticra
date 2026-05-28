@@ -319,33 +319,249 @@ docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_
 docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
 docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md
 docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_FOLLOW_ON_CONTRACT.md
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_FOLLOW_ON_CONTRACT.md
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-disposition.yml
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout.yml
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-archive-gate.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-archive-gate.yml
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-archive-gate-review.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-archive-gate-review.yml
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-disposition.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-disposition.yml
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-closeout.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-closeout.yml
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate.yml
 ```
 
-Those follow-on lanes refuse, review, close, close out, archive-gate, archive-gate-review, and archive-gate-review-dispose denied PPA creation, archive submission, Launchpad publication evidence, and publication transcript intake while this matrix remains closed.
+Those follow-on lanes refuse, review, close, close out, archive-gate, archive-gate-review, archive-gate-review-dispose, closeout-archive-gate, closeout-archive-gate-review, closeout-archive-gate-review-dispose, closeout-archive-gate-review-disposition-closeout, closeout-archive-gate-review-disposition-closeout-archive-gate, closeout-archive-gate-review-disposition-closeout-archive-gate-review, closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition, closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout, closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate, closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review, closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition, closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout, and closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate denied PPA creation, archive submission, Launchpad publication evidence, and publication transcript intake while this matrix remains closed.
 
 ## Next Slice
 
-Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate contract:
+Earlier completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate contract:
 
 ```text
 Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate contract before any reviewed archive gate disposition closeout can be archived or re-requested.
 ```
 
+Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract:
+
 ```text
-docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
-scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh
-.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.yml
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout can be archived or re-requested.
+```
+
+```text
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-intake-denial-closeout-archive-gate-follow-on-contract.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-archive-gate-follow-on.yml
 ```
 
 That lane keeps the reviewed archive gate disposition closeout unarchived while preserving publication and readiness blockers.
 
+Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract:
+
+```text
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate can be relaxed or re-requested.
+```
+
+```text
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-intake-denial-closeout-archive-gate-review-follow-on-contract.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-archive-gate-review-follow-on.yml
+```
+
+That lane reviews and upholds the closed archive gate while preserving publication and readiness blockers.
+
+Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract:
+
+```text
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review can be relaxed or re-requested.
+```
+
+```text
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-archive-gate-review-disposition-follow-on.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-archive-gate-review-disposition-follow-on.yml
+```
+
+That lane disposes the reviewed closed archive gate while preserving publication and readiness blockers.
+
+Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract:
+
+```text
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition can be archived or re-requested.
+```
+
+```text
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-archive-gate-review-disposition-closeout-follow-on.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-archive-gate-review-disposition-closeout-follow-on.yml
+```
+
+That lane closes out the reviewed closed archive gate disposition while preserving publication and readiness blockers.
+
+Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract:
+
+```text
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout can be archived or re-requested.
+```
+
+```text
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-archive-gate-review-disposition-closeout-archive-gate.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-archive-gate-review-disposition-closeout-archive-gate.yml
+```
+
+That lane archive-gates the reviewed closed archive gate disposition closeout while preserving publication and readiness blockers.
+
+Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract:
+
+```text
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate can be relaxed or re-requested.
+```
+
+```text
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-archive-gate-review-disposition-closeout-gate-review.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-archive-gate-review-disposition-closeout-gate-review.yml
+```
+
+That lane reviews the archive gate review disposition closeout archive gate while preserving publication and readiness blockers.
+
+Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract:
+
+```text
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review can be relaxed or re-requested.
+```
+
+```text
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-disposition.yml
+```
+
+That lane disposes the archive gate review disposition closeout archive gate review while preserving publication and readiness blockers.
+
+Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract:
+
+```text
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition can be archived or re-requested.
+```
+
+```text
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout.yml
+```
+
+That lane closes out the archive gate review disposition closeout archive gate review disposition while preserving publication and readiness blockers.
+
+That future lane should close out the archive gate review disposition closeout archive gate review disposition while preserving publication and readiness blockers.
+
+Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract:
+
+```text
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout can be archived or re-requested.
+```
+
+```text
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-archive-gate.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-archive-gate.yml
+```
+
+That lane archive-gates the archive gate review disposition closeout archive gate review disposition closeout while preserving publication and readiness blockers.
+
+That future lane should archive-gate the archive gate review disposition closeout archive gate review disposition closeout while preserving publication and readiness blockers.
+
+Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract:
+
+```text
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate can be relaxed or re-requested.
+```
+
+```text
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-archive-gate-review.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-archive-gate-review.yml
+```
+
+That lane reviews the archive gate review disposition closeout archive gate review disposition closeout archive gate while preserving publication and readiness blockers.
+
+That future lane should review the archive gate review disposition closeout archive gate review disposition closeout archive gate while preserving publication and readiness blockers.
+
+Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract:
+
+```text
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review can be relaxed or re-requested.
+```
+
+```text
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-disposition.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-disposition.yml
+```
+
+That lane disposes the archive gate review disposition closeout archive gate review disposition closeout archive gate review while preserving publication and readiness blockers.
+
+That future lane should dispose the archive gate review disposition closeout archive gate review disposition closeout archive gate review while preserving publication and readiness blockers.
+
+Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract:
+
+```text
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition can be archived or re-requested.
+```
+
+```text
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-closeout.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-closeout.yml
+```
+
+That lane closes out the archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition while preserving publication and readiness blockers.
+
+That future lane should close out the archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition while preserving publication and readiness blockers.
+
+Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract:
+
+```text
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout can be archived or re-requested.
+```
+
+```text
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate.yml
+```
+
+That lane archive-gates the archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout while preserving publication and readiness blockers.
+
+That future lane should archive-gate the archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout while preserving publication and readiness blockers.
+
 Recommended next slice:
 
 ```text
-Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate can be relaxed or re-requested.
 ```
 
-That future lane should review the closed archive gate for the reviewed archive gate disposition closeout while preserving publication and readiness blockers.
+That future lane should review the archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate while preserving publication and readiness blockers.
 
 ## Validation
 

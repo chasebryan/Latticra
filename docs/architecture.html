@@ -59,7 +59,26 @@
     </section>
 
     <section class="section-band">
-      <div class="content-shell architecture-intro">
+      <nav class="content-shell architecture-shortcuts" aria-label="Architecture section shortcuts">
+        <a href="#architecture-system-line">
+          <span>01</span>
+          <strong>System Line</strong>
+        </a>
+        <a href="#architecture-boundaries">
+          <span>02</span>
+          <strong>Boundaries</strong>
+        </a>
+        <a href="#architecture-authority">
+          <span>03</span>
+          <strong>Authority</strong>
+        </a>
+        <a href="#architecture-read-next">
+          <span>04</span>
+          <strong>Read Next</strong>
+        </a>
+      </nav>
+
+      <div id="architecture-system-line" class="content-shell architecture-intro architecture-anchor">
         <div>
           <p class="eyebrow">System Line</p>
           <h2>Declaration first, authority last.</h2>
@@ -103,7 +122,7 @@
       </div>
     </section>
 
-    <section class="section-band section-band-muted">
+    <section id="architecture-boundaries" class="section-band section-band-muted architecture-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Core Boundaries</p>
         <h2>The architecture separates language, authority, and evidence.</h2>
@@ -155,7 +174,7 @@
       </div>
     </section>
 
-    <section class="section-band">
+    <section id="architecture-authority" class="section-band architecture-anchor">
       <div class="content-shell architecture-split">
         <div class="section-heading">
           <p class="eyebrow">Authority Posture</p>
@@ -181,7 +200,7 @@
       </div>
     </section>
 
-    <section class="section-band section-band-muted">
+    <section id="architecture-read-next" class="section-band section-band-muted architecture-anchor">
       <div class="content-shell claim-strip">
         <div>
           <p class="eyebrow">Read Next</p>
@@ -212,10 +231,16 @@
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer id="site-footer" class="site-footer">
     <div class="content-shell footer-inner">
       <span>Latticra system architecture guide.</span>
-      <span><a href="status.html">Open public status</a></span>
+      <nav class="footer-links" aria-label="Architecture footer navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
     </div>
   </footer>
 </body>

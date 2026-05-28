@@ -102,6 +102,18 @@ kernel runtime entry recovery-closeout-observation-view guard
 kernel runtime entry recovery-closeout-observation-view report runner
 kernel runtime entry recovery-audit-observation-view guard
 kernel runtime entry recovery-audit-observation-view report runner
+kernel runtime entry recovery-audit-review-observation-view guard
+kernel runtime entry recovery-audit-review-observation-view report runner
+kernel runtime entry recovery-audit-review-disposition-observation-view guard
+kernel runtime entry recovery-audit-review-disposition-observation-view report runner
+kernel runtime entry recovery-audit-review-disposition-review-observation-view guard
+kernel runtime entry recovery-audit-review-disposition-review-observation-view report runner
+kernel runtime entry recovery-audit-review-disposition-review-closeout-observation-view guard
+kernel runtime entry recovery-audit-review-disposition-review-closeout-observation-view report runner
+kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-observation-view guard
+kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-observation-view report runner
+kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view guard
+kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
@@ -114,7 +126,7 @@ kernel lifecycle rollback plan
 The lifecycle evidence can report a bounded in-memory path ending at:
 
 ```text
-final_state=runtime-entry-recovery-audit-observation-view-ready
+final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
 ```
 
 The lifecycle report runner and subsystem summary keep the external-effect posture explicit:
@@ -135,6 +147,12 @@ runtime_entry_recovery_disposition_observation_view_allowed=0
 runtime_entry_recovery_outcome_observation_view_allowed=0
 runtime_entry_recovery_closeout_observation_view_allowed=0
 runtime_entry_recovery_audit_observation_view_allowed=0
+runtime_entry_recovery_audit_review_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed=0
 runtime_entry_persistence_boundary_observation_view_allowed=0
 runtime_entry_quiescent_return_observation_view_allowed=0
 runtime_entry_idle_return_observation_view_allowed=0
@@ -165,6 +183,18 @@ recovery_closeout_allowed=0
 recovery_closeout_observation_allowed=0
 recovery_audit_allowed=0
 recovery_audit_observation_allowed=0
+recovery_audit_review_allowed=0
+recovery_audit_review_observation_allowed=0
+recovery_audit_review_disposition_allowed=0
+recovery_audit_review_disposition_observation_allowed=0
+recovery_audit_review_disposition_review_allowed=0
+recovery_audit_review_disposition_review_observation_allowed=0
+recovery_audit_review_disposition_review_closeout_allowed=0
+recovery_audit_review_disposition_review_closeout_observation_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed=0
 persistence_boundary_observation_allowed=0
 persistence_boundary_allowed=0
 persistence_commit_allowed=0
@@ -266,10 +296,10 @@ not installer-ready
 Recommended next work:
 
 ```text
-Add no-effect runtime entry recovery-audit-review observation view evidence after the audit terminal
+Add the next no-effect kernel runtime authority evidence after the recovery-audit-review-disposition-review-closeout-archive-gate-review observation terminal
 ```
 
-That future slice should keep recovery-audit-review evidence report-only while preserving lifecycle, nucleus coupling, and subsystem summary evidence. It should continue to require:
+That future slice should keep the recovery-audit-review-disposition-review-closeout-archive-gate-review observation evidence report-only while preserving lifecycle, nucleus coupling, and subsystem summary evidence. It should continue to require:
 
 ```text
 external_effect_performed=0
@@ -281,6 +311,12 @@ runtime_entry_recovery_disposition_observation_view_allowed=0
 runtime_entry_recovery_outcome_observation_view_allowed=0
 runtime_entry_recovery_closeout_observation_view_allowed=0
 runtime_entry_recovery_audit_observation_view_allowed=0
+runtime_entry_recovery_audit_review_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed=0
 runtime_entry_persistence_boundary_observation_view_allowed=0
 runtime_entry_idle_return_observation_view_allowed=0
 runtime_entry_quiescent_return_observation_view_allowed=0
@@ -309,6 +345,12 @@ recovery_outcome_allowed=0
 recovery_outcome_observation_allowed=0
 recovery_closeout_allowed=0
 recovery_closeout_observation_allowed=0
+recovery_audit_review_disposition_review_closeout_allowed=0
+recovery_audit_review_disposition_review_closeout_observation_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed=0
 ```
 
 ## Validation
@@ -362,6 +404,12 @@ Dedicated workflow lanes keep the kernel table guards visible:
 .github/workflows/kernel-runtime-entry-recovery-outcome-observation-view.yml
 .github/workflows/kernel-runtime-entry-recovery-closeout-observation-view.yml
 .github/workflows/kernel-runtime-entry-recovery-audit-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-review-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-review-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view.yml
 .github/workflows/kernel-process-table.yml
 .github/workflows/kernel-syscall-table.yml
 ```

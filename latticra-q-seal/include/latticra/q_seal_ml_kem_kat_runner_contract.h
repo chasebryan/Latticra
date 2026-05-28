@@ -40,6 +40,7 @@ typedef struct {
     unsigned vector_fixture_digest_ledger_bound;
     unsigned negative_test_evidence_bound;
     unsigned provider_differential_bound;
+    unsigned replay_transcript_gate_bound;
     unsigned implementation_binding_manifest_bound;
     unsigned clean_room_source_boundary_recorded;
     unsigned deterministic_replay_policy_recorded;

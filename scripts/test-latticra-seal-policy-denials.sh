@@ -127,6 +127,12 @@ grep -Fq 'possible secret-bearing filename: .env' "$env_case/reports/latticra-se
   || fail "native env denial did not report secret-bearing filename evidence"
 pass "native env denial reported filename evidence"
 
+grep -Fq 'hash list not written because earlier checks failed' "$env_case/reports/latticra-seal-cli-report.txt" \
+  || fail "native env denial did not block hash-list promotion after policy failure"
+[[ ! -e "$env_case/reports/latticra-seal-cli-hashes.txt" ]] \
+  || fail "native env denial promoted a hash list after policy failure"
+pass "native env denial blocked hash-list promotion"
+
 marker_case="$TMP_DIR/content-denial"
 mkdir -p "$marker_case"
 copy_minimal_workspace "$marker_case"
@@ -141,5 +147,11 @@ pass "content denial reported content-marker evidence"
 grep -Fq 'possible secret content marker in: notes.txt' "$marker_case/reports/latticra-seal-cli-report.txt" \
   || fail "native content denial did not report content-marker evidence"
 pass "native content denial reported content-marker evidence"
+
+grep -Fq 'hash list not written because earlier checks failed' "$marker_case/reports/latticra-seal-cli-report.txt" \
+  || fail "native content denial did not block hash-list promotion after policy failure"
+[[ ! -e "$marker_case/reports/latticra-seal-cli-hashes.txt" ]] \
+  || fail "native content denial promoted a hash list after policy failure"
+pass "native content denial blocked hash-list promotion"
 
 printf 'latticra_seal_policy_denials: ok\n'

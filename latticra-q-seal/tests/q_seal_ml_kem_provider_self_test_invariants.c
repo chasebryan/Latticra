@@ -51,10 +51,32 @@ static int expect_provider_self_test(
     EXPECT_TRUE(self_test.provider_available == 1u, "provider available");
     EXPECT_TRUE(self_test.provider_runtime_used == 1u, "provider runtime");
     EXPECT_TRUE(self_test.key_generation_performed == 1u, "keygen performed");
+    EXPECT_TRUE(
+        self_test.keypair_algorithm_identity_verified == 1u,
+        "keypair algorithm identity");
+    EXPECT_TRUE(self_test.public_key_reimported == 1u, "public key reimported");
+    EXPECT_TRUE(
+        self_test.public_key_algorithm_identity_verified == 1u,
+        "public key algorithm identity");
+    EXPECT_TRUE(self_test.public_key_bytes > 0u, "public key bytes");
     EXPECT_TRUE(self_test.encapsulation_performed == 1u, "encaps performed");
+    EXPECT_TRUE(self_test.encapsulation_public_key_only == 1u, "public-only encaps");
     EXPECT_TRUE(self_test.decapsulation_performed == 1u, "decaps performed");
+    EXPECT_TRUE(
+        self_test.tampered_ciphertext_decapsulation_performed == 1u,
+        "tampered decaps performed");
+    EXPECT_TRUE(
+        self_test.tampered_ciphertext_shared_secret_mismatch == 1u,
+        "tampered mismatch");
+    EXPECT_TRUE(self_test.tampered_ciphertext_rejected == 1u, "tampered rejected");
     EXPECT_TRUE(self_test.shared_secret_internal_buffers_used == 1u, "secret buffers");
     EXPECT_TRUE(self_test.shared_secret_match == 1u, "secret match");
+    EXPECT_TRUE(
+        self_test.shared_secret_constant_time_compare == 1u,
+        "shared secret constant-time compare");
+    EXPECT_TRUE(
+        self_test.tampered_ciphertext_constant_time_compare == 1u,
+        "tampered constant-time compare");
     EXPECT_TRUE(self_test.shared_secret_zeroized == 1u, "secret zeroized");
     EXPECT_TRUE(self_test.ciphertext_zeroized == 1u, "ciphertext zeroized");
     EXPECT_TRUE(self_test.shared_secret_output_emitted == 0u, "secret not emitted");
@@ -78,9 +100,31 @@ static int expect_provider_self_test(
     EXPECT_TRUE(strstr(rendered, name) != 0, "report algorithm");
     EXPECT_TRUE(strstr(rendered, "provider_runtime_used=1") != 0, "report provider");
     EXPECT_TRUE(strstr(rendered, "key_generation_performed=1") != 0, "report keygen");
+    EXPECT_TRUE(
+        strstr(rendered, "keypair_algorithm_identity_verified=1") != 0,
+        "report keypair algorithm");
+    EXPECT_TRUE(strstr(rendered, "public_key_reimported=1") != 0, "report public key");
+    EXPECT_TRUE(
+        strstr(rendered, "public_key_algorithm_identity_verified=1") != 0,
+        "report public key algorithm");
     EXPECT_TRUE(strstr(rendered, "encapsulation_performed=1") != 0, "report encaps");
+    EXPECT_TRUE(
+        strstr(rendered, "encapsulation_public_key_only=1") != 0,
+        "report public-only encaps");
     EXPECT_TRUE(strstr(rendered, "decapsulation_performed=1") != 0, "report decaps");
+    EXPECT_TRUE(
+        strstr(rendered, "tampered_ciphertext_shared_secret_mismatch=1") != 0,
+        "report tampered mismatch");
+    EXPECT_TRUE(
+        strstr(rendered, "tampered_ciphertext_rejected=1") != 0,
+        "report tampered rejected");
     EXPECT_TRUE(strstr(rendered, "shared_secret_match=1") != 0, "report match");
+    EXPECT_TRUE(
+        strstr(rendered, "shared_secret_constant_time_compare=1") != 0,
+        "report shared secret constant-time compare");
+    EXPECT_TRUE(
+        strstr(rendered, "tampered_ciphertext_constant_time_compare=1") != 0,
+        "report tampered constant-time compare");
     EXPECT_TRUE(strstr(rendered, "shared_secret_output_emitted=0") != 0, "report no secret");
     EXPECT_TRUE(strstr(rendered, "runtime_authority_granted=0") != 0, "report authority");
     return 0;

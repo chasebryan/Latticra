@@ -13,7 +13,7 @@ extern "C" {
 #define LATTICRA_SEAL_HYBRID_ENVELOPE_ALGORITHM_MAX 64u
 #define LATTICRA_SEAL_HYBRID_ENVELOPE_STANDARDS_MAX 160u
 #define LATTICRA_SEAL_HYBRID_ENVELOPE_STATE_MAX 96u
-#define LATTICRA_SEAL_HYBRID_ENVELOPE_REPORT_MAX 8192u
+#define LATTICRA_SEAL_HYBRID_ENVELOPE_REPORT_MAX 12288u
 #define LATTICRA_SEAL_HYBRID_CLASSICAL_SHARED_SECRET_BYTES 32u
 #define LATTICRA_SEAL_HYBRID_PQC_SHARED_SECRET_BYTES 32u
 #define LATTICRA_SEAL_HYBRID_AEAD_KEY_BYTES 32u
@@ -45,6 +45,7 @@ extern "C" {
 #define LATTICRA_SEAL_HYBRID_SUITE_HKDF_SHA256_AES_256_GCM 1u
 #define LATTICRA_SEAL_HYBRID_RECORD_SUITE_HKDF_SHA256_AES_256_GCM 1u
 #define LATTICRA_SEAL_HYBRID_MESSAGE_MAX 1048576u
+#define LATTICRA_SEAL_HYBRID_REUSE_GUARD_CAPACITY 64u
 
 typedef enum {
     LATTICRA_SEAL_HYBRID_ENVELOPE_OK = 0,
@@ -74,8 +75,21 @@ typedef enum {
     LATTICRA_SEAL_HYBRID_ENVELOPE_WEAK_NONCE = 24,
     LATTICRA_SEAL_HYBRID_ENVELOPE_MISSING_COMMITMENT = 25,
     LATTICRA_SEAL_HYBRID_ENVELOPE_INVALID_COMMITMENT_SIZE = 26,
-    LATTICRA_SEAL_HYBRID_ENVELOPE_DUPLICATE_HYBRID_SHARED_SECRET = 27
+    LATTICRA_SEAL_HYBRID_ENVELOPE_DUPLICATE_HYBRID_SHARED_SECRET = 27,
+    LATTICRA_SEAL_HYBRID_ENVELOPE_REUSED_SALT_NONCE = 28
 } latticra_seal_hybrid_envelope_error_t;
+
+typedef struct {
+    unsigned initialized;
+    unsigned entries_used;
+    unsigned next_entry;
+    unsigned suite_ids[LATTICRA_SEAL_HYBRID_REUSE_GUARD_CAPACITY];
+    unsigned kdf_domains[LATTICRA_SEAL_HYBRID_REUSE_GUARD_CAPACITY];
+    unsigned char salts[LATTICRA_SEAL_HYBRID_REUSE_GUARD_CAPACITY]
+        [LATTICRA_SEAL_HYBRID_SALT_BYTES];
+    unsigned char nonces[LATTICRA_SEAL_HYBRID_REUSE_GUARD_CAPACITY]
+        [LATTICRA_SEAL_HYBRID_NONCE_BYTES];
+} latticra_seal_hybrid_envelope_reuse_guard_t;
 
 typedef struct {
     const unsigned char *classical_shared_secret;
@@ -119,6 +133,7 @@ typedef struct {
     unsigned detached_commitment_checked_before_decrypt;
     unsigned detached_commitment_caller_aad_bound;
     unsigned detached_commitment_input_streamed;
+    unsigned detached_commitment_constant_time_compare;
     unsigned detached_commitment_tampering_rejected;
     unsigned record_suite_id;
     unsigned record_suite_authenticated;
@@ -133,7 +148,14 @@ typedef struct {
     unsigned record_commitment_checked_before_decrypt;
     unsigned record_commitment_caller_aad_bound;
     unsigned record_commitment_input_streamed;
+    unsigned record_commitment_constant_time_compare;
     unsigned record_commitment_tampering_rejected;
+    unsigned commitment_mac_provider_api_used;
+    unsigned commitment_mac_provider_fetched;
+    unsigned commitment_mac_hmac_sha256_digest_bound;
+    unsigned commitment_mac_256bit_key_used;
+    unsigned commitment_mac_input_streamed;
+    unsigned commitment_mac_legacy_fallback_used;
     unsigned detached_aad_framed;
     unsigned detached_aad_label_authenticated;
     unsigned detached_caller_aad_length_authenticated;
@@ -154,6 +176,16 @@ typedef struct {
     unsigned pqc_shared_secret_nonzero;
     unsigned salt_nonzero;
     unsigned nonce_nonzero;
+    unsigned aead_nonce_uniqueness_required;
+    unsigned salt_bound_to_hkdf;
+    unsigned nonce_bound_to_aead;
+    unsigned generated_key_nonce_pair_csprng_backed;
+    unsigned caller_salt_nonce_reuse_guard_required;
+    unsigned caller_salt_nonce_reuse_tracking_present;
+    unsigned caller_salt_nonce_reuse_guard_capacity;
+    unsigned caller_salt_nonce_reuse_guard_entries_used;
+    unsigned caller_salt_nonce_reuse_tracked;
+    unsigned caller_salt_nonce_reuse_rejected;
     unsigned weak_shared_secret_rejected;
     unsigned weak_salt_rejected;
     unsigned weak_nonce_rejected;
@@ -203,6 +235,9 @@ typedef struct {
     unsigned failed_commitment_output_cleared;
     unsigned failed_plaintext_output_cleared;
     unsigned failed_record_output_cleared;
+    unsigned successful_ciphertext_tail_cleared;
+    unsigned successful_plaintext_tail_cleared;
+    unsigned successful_record_tail_cleared;
     unsigned unsafe_buffer_overlap_rejected;
     unsigned encryption_performed;
     unsigned decryption_performed;
@@ -224,6 +259,8 @@ const char *latticra_seal_hybrid_envelope_error_label(
 int latticra_seal_hybrid_envelope_random_bytes(
     unsigned char *buffer,
     size_t buffer_len);
+latticra_status_t latticra_seal_hybrid_envelope_reuse_guard_init(
+    latticra_seal_hybrid_envelope_reuse_guard_t *guard);
 latticra_status_t latticra_seal_hybrid_envelope_seal(
     const unsigned char *classical_shared_secret,
     size_t classical_shared_secret_len,
@@ -340,7 +377,31 @@ latticra_status_t latticra_seal_hybrid_envelope_encrypt(
     unsigned char *tag,
     size_t tag_len,
     latticra_seal_hybrid_envelope_result_t *out);
+latticra_status_t latticra_seal_hybrid_envelope_encrypt_guarded(
+    latticra_seal_hybrid_envelope_reuse_guard_t *guard,
+    const latticra_seal_hybrid_envelope_context_t *context,
+    const unsigned char *plaintext,
+    size_t plaintext_len,
+    unsigned char *ciphertext,
+    size_t ciphertext_capacity,
+    size_t *ciphertext_len,
+    unsigned char *tag,
+    size_t tag_len,
+    latticra_seal_hybrid_envelope_result_t *out);
 latticra_status_t latticra_seal_hybrid_envelope_encrypt_committed(
+    const latticra_seal_hybrid_envelope_context_t *context,
+    const unsigned char *plaintext,
+    size_t plaintext_len,
+    unsigned char *ciphertext,
+    size_t ciphertext_capacity,
+    size_t *ciphertext_len,
+    unsigned char *tag,
+    size_t tag_len,
+    unsigned char *commitment,
+    size_t commitment_len,
+    latticra_seal_hybrid_envelope_result_t *out);
+latticra_status_t latticra_seal_hybrid_envelope_encrypt_committed_guarded(
+    latticra_seal_hybrid_envelope_reuse_guard_t *guard,
     const latticra_seal_hybrid_envelope_context_t *context,
     const unsigned char *plaintext,
     size_t plaintext_len,

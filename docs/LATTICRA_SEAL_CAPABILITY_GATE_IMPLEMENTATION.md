@@ -71,11 +71,20 @@ The implementation fails closed:
 null capability gate output -> LATTICRA_STATUS_NULL_ARGUMENT
 null verification receipt metadata input -> invalid-input
 invalid verification receipt metadata -> invalid-receipt
+unterminated verification receipt metadata strings -> invalid-receipt
+invalid verification receipt boolean flags -> invalid-receipt
+verification receipt authority/effect flags set -> invalid-receipt
 missing artifact digest -> missing-digest
 missing signer identity -> missing-signer
 missing public-key identity -> missing-public-key-identity
 missing requested capability -> missing-requested-capability
+unterminated requested capability -> missing-requested-capability without copying caller bytes
 missing requested effect -> missing-requested-effect
+unterminated requested effect -> missing-requested-effect without copying caller bytes
+unterminated requested scope -> invalid-scope without copying caller bytes
+tampered capability gate strings fail closed before report
+tampered capability gate authority/effect flags fail closed before report
+tampered capability gate boolean/error state fails closed before report
 small report buffer -> LATTICRA_STATUS_BUFFER_TOO_SMALL
 ```
 

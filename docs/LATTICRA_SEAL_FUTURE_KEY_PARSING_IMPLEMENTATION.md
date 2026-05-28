@@ -151,6 +151,8 @@ The implementation fails closed for:
 null output
 null predecessor metadata
 invalid predecessor metadata
+unterminated predecessor public-key parsing strings -> invalid-predecessor without copying predecessor strings
+invalid predecessor public-key parsing boolean flags
 predecessor public_key_parsing_ready=0
 predecessor public_key_parsing_state not public-key-parsing-metadata-only
 predecessor requested_public_key_parsing not metadata-only
@@ -179,6 +181,9 @@ PEM public-key input
 DER public-key input
 private-key format requests
 private key markers
+tampered key parsing strings fail closed before render
+tampered key parsing authority/effect flags fail closed before render
+tampered key parsing ready/error state fails closed before render
 small report buffers
 ```
 

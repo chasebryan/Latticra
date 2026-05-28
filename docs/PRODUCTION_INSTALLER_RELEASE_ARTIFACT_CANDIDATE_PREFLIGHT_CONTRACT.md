@@ -33,8 +33,15 @@ release_artifact_candidate_preflight_passed=0
 release_artifact_candidate_inputs_satisfied=0
 release_artifact_candidate_tag_exists=<observed>
 release_artifact_candidate_tag_available=<observed>
+release_worktree_cleanliness_audit_present=1
+release_worktree_cleanliness_required_for_release_candidate=1
 release_artifact_candidate_tracked_worktree_clean=<observed>
-release_artifact_candidate_parent_dir_exists=<observed>
+release_worktree_tracked_worktree_clean=<observed>
+release_worktree_tracked_dirty_count=<observed>
+release_artifact_candidate_parent_dir_exists=1
+release_toolchain_availability_audit_present=1
+release_toolchain_required_for_release_candidate=1
+release_toolchain_ready=0
 release_artifact_build_tool_available=<observed>
 release_artifact_query_tool_available=<observed>
 rpmbuild_available=<observed>
@@ -42,6 +49,9 @@ rpm_available=<observed>
 gpg_available=<observed>
 sha256_tool_available=<observed>
 signing_identity_reference_present=0
+signing_identity_reference_format_valid=0
+release_signing_identity_reference_validator_present=1
+release_artifact_signing_identity_reference_format_valid=0
 release_artifact_present=0
 release_artifact_built_from_tag=0
 release_artifact_reproducible=0
@@ -80,9 +90,13 @@ It reads these local records:
 
 ```text
 docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md
+docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_STAGING_DIRECTORY_CONTRACT.md
+docs/PRODUCTION_INSTALLER_RELEASE_WORKTREE_CLEANLINESS_AUDIT_CONTRACT.md
+docs/PRODUCTION_INSTALLER_RELEASE_TOOLCHAIN_AVAILABILITY_AUDIT_CONTRACT.md
 docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_PROMOTION_GATE_CONTRACT.md
 docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md
 docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
+artifacts/release/README.md
 README.md
 ```
 
@@ -93,8 +107,13 @@ The preflight may report `release_artifact_candidate_preflight_passed=1` only wh
 ```text
 release_artifact_candidate_tag_exists=1
 release_artifact_candidate_tag_available=1
+release_artifact_candidate_parent_dir_exists=1
+release_worktree_cleanliness_audit_present=1
+release_worktree_cleanliness_required_for_release_candidate=1
 release_artifact_candidate_tracked_worktree_clean=1
+release_worktree_tracked_worktree_clean=1
 tracked_worktree_clean=1
+release_toolchain_ready=1
 git_available=1
 tar_available=1
 gzip_available=1
@@ -103,6 +122,7 @@ rpm_available=1
 gpg_available=1
 sha256_tool_available=1
 signing_identity_reference_present=1
+signing_identity_reference_format_valid=1
 ```
 
 The preflight still must not create, build, sign, verify, publish, install, or mutate anything.
@@ -127,17 +147,27 @@ release_artifact_candidate_path=<recorded>
 release_artifact_candidate_artifact_path=<recorded>
 release_artifact_candidate_parent_dir=<recorded>
 release_artifact_candidate_parent_dir_exists=<0-or-1>
+release_worktree_cleanliness_audit_present=1
+release_worktree_cleanliness_required_for_release_candidate=1
 release_artifact_candidate_tracked_worktree_clean=<0-or-1>
 release_artifact_candidate_tracked_dirty_count=<observed>
+release_worktree_tracked_worktree_clean=<0-or-1>
+release_worktree_tracked_dirty_count=<observed>
 tracked_worktree_clean=<0-or-1>
 tracked_worktree_dirty_count=<observed>
+release_toolchain_availability_audit_present=1
+release_toolchain_required_for_release_candidate=1
+release_toolchain_ready=<0-or-1>
 release_artifact_build_tool_available=<0-or-1>
 release_artifact_query_tool_available=<0-or-1>
 rpmbuild_available=<0-or-1>
 rpm_available=<0-or-1>
 gpg_available=<0-or-1>
 sha256_tool_available=<0-or-1>
+release_signing_identity_reference_validator_present=1
 signing_identity_reference_present=<0-or-1>
+signing_identity_reference_format_valid=<0-or-1>
+release_signing_identity_reference_validator_present=1
 release_artifact_present=0
 release_artifact_built_from_tag=0
 release_artifact_reproducible=0

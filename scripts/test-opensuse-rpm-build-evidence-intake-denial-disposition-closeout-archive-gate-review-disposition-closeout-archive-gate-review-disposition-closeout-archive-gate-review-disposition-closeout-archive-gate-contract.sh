@@ -37,6 +37,9 @@ archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeou
 archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_contract='docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md'
 matrix_contract='docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md'
 workflow='.github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.yml'
+next_archive_gate_review_contract='docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md'
+next_archive_gate_review_script='scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh'
+next_archive_gate_review_workflow='.github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.yml'
 
 for file in \
   "$contract" \
@@ -68,7 +71,10 @@ for file in \
   packaging/opensuse/latticra.changes \
   README.md \
   Makefile \
-  "$workflow"
+  "$workflow" \
+  "$next_archive_gate_review_contract" \
+  "$next_archive_gate_review_script" \
+  "$next_archive_gate_review_workflow"
 do
   require_file "$file"
 done
@@ -139,6 +145,9 @@ require_contains 'claim package readiness' "$contract"
 require_contains "$predecessor_contract" "$contract"
 require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition can be archived or re-requested.' "$contract"
 require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate can be relaxed or re-requested.' "$contract"
+require_contains "$next_archive_gate_review_contract" "$contract"
+require_contains "$next_archive_gate_review_script" "$contract"
+require_contains "$next_archive_gate_review_workflow" "$contract"
 require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract: ok' "$contract"
 
 for file in \

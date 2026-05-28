@@ -32,6 +32,7 @@ static unsigned required_items_satisfied(
     satisfied += one_if(contract->vector_fixture_digest_ledger_bound);
     satisfied += one_if(contract->negative_test_evidence_bound);
     satisfied += one_if(contract->provider_differential_bound);
+    satisfied += one_if(contract->replay_transcript_gate_bound);
     satisfied += one_if(contract->implementation_binding_manifest_bound);
     satisfied += one_if(contract->clean_room_source_boundary_recorded);
     satisfied += one_if(contract->deterministic_replay_policy_recorded);
@@ -124,6 +125,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_kat_runner_contract_prepare(
     out->vector_fixture_digest_ledger_bound = 1u;
     out->negative_test_evidence_bound = 1u;
     out->provider_differential_bound = 1u;
+    out->replay_transcript_gate_bound = 1u;
     out->implementation_binding_manifest_bound = 1u;
     out->clean_room_source_boundary_recorded = 1u;
     out->deterministic_replay_policy_recorded = 1u;
@@ -163,7 +165,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_kat_runner_contract_prepare(
     out->production_crypto_claim_allowed = 0u;
     out->fips_claim_allowed = 0u;
     out->runtime_authority_granted = 0u;
-    out->required_kat_runner_contract_items_total = 46u;
+    out->required_kat_runner_contract_items_total = 47u;
     out->required_kat_runner_contract_items_satisfied = required_items_satisfied(out);
     copy_literal(
         out->blocked_reason,
@@ -220,6 +222,7 @@ int latticra_q_seal_ml_kem_kat_runner_contract_allows_runner_execution(
            contract->vector_fixture_digest_ledger_bound == 1u &&
            contract->negative_test_evidence_bound == 1u &&
            contract->provider_differential_bound == 1u &&
+           contract->replay_transcript_gate_bound == 1u &&
            contract->implementation_binding_manifest_bound == 1u &&
            contract->clean_room_source_boundary_recorded == 1u &&
            contract->deterministic_replay_policy_recorded == 1u &&
@@ -291,6 +294,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_kat_runner_contract_report(
         "vector_fixture_digest_ledger_bound=%u\n"
         "negative_test_evidence_bound=%u\n"
         "provider_differential_bound=%u\n"
+        "replay_transcript_gate_bound=%u\n"
         "implementation_binding_manifest_bound=%u\n"
         "clean_room_source_boundary_recorded=%u\n"
         "deterministic_replay_policy_recorded=%u\n"
@@ -354,6 +358,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_kat_runner_contract_report(
         contract->vector_fixture_digest_ledger_bound,
         contract->negative_test_evidence_bound,
         contract->provider_differential_bound,
+        contract->replay_transcript_gate_bound,
         contract->implementation_binding_manifest_bound,
         contract->clean_room_source_boundary_recorded,
         contract->deterministic_replay_policy_recorded,

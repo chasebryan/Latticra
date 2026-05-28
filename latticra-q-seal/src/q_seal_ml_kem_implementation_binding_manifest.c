@@ -24,6 +24,15 @@ static unsigned required_items_satisfied(
     satisfied += one_if(manifest->planned_test_units_count == 9u);
     satisfied += one_if(manifest->fips_203_algorithm_bound);
     satisfied += one_if(manifest->sp_800_227_kem_usage_bound);
+    satisfied += one_if(manifest->fips_conformance_matrix_bound);
+    satisfied += one_if(manifest->sp800_227_usage_profile_bound);
+    satisfied += one_if(manifest->implementation_traceability_matrix_bound);
+    satisfied += one_if(manifest->primitive_source_acceptance_gate_bound);
+    satisfied += one_if(manifest->source_layout_gate_bound);
+    satisfied += one_if(manifest->implementation_file_digest_plan_bound);
+    satisfied += one_if(manifest->clean_room_author_attestation_gate_bound);
+    satisfied += one_if(manifest->per_file_standards_trace_gate_bound);
+    satisfied += one_if(manifest->per_file_test_trace_gate_bound);
     satisfied += one_if(manifest->kat_manifest_bound);
     satisfied += one_if(manifest->acvp_intake_bound);
     satisfied += one_if(manifest->acvp_capability_matrix_bound);
@@ -37,6 +46,7 @@ static unsigned required_items_satisfied(
     satisfied += one_if(manifest->vector_source_bound);
     satisfied += one_if(manifest->vector_fixture_lock_bound);
     satisfied += one_if(manifest->vector_fixture_digest_ledger_bound);
+    satisfied += one_if(manifest->replay_transcript_gate_bound);
     satisfied += one_if(manifest->negative_test_evidence_bound);
     satisfied += one_if(manifest->memory_safety_evidence_bound);
     satisfied += one_if(manifest->api_misuse_resistance_bound);
@@ -105,6 +115,15 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
     out->planned_test_units_count = 9u;
     out->fips_203_algorithm_bound = 1u;
     out->sp_800_227_kem_usage_bound = 1u;
+    out->fips_conformance_matrix_bound = 1u;
+    out->sp800_227_usage_profile_bound = 1u;
+    out->implementation_traceability_matrix_bound = 1u;
+    out->primitive_source_acceptance_gate_bound = 1u;
+    out->source_layout_gate_bound = 1u;
+    out->implementation_file_digest_plan_bound = 1u;
+    out->clean_room_author_attestation_gate_bound = 1u;
+    out->per_file_standards_trace_gate_bound = 1u;
+    out->per_file_test_trace_gate_bound = 1u;
     out->kat_manifest_bound = 1u;
     out->acvp_intake_bound = 1u;
     out->acvp_capability_matrix_bound = 1u;
@@ -118,6 +137,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
     out->vector_source_bound = 1u;
     out->vector_fixture_lock_bound = 1u;
     out->vector_fixture_digest_ledger_bound = 1u;
+    out->replay_transcript_gate_bound = 1u;
     out->negative_test_evidence_bound = 1u;
     out->memory_safety_evidence_bound = 1u;
     out->api_misuse_resistance_bound = 1u;
@@ -141,7 +161,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
     out->production_crypto_claim_allowed = 0u;
     out->fips_claim_allowed = 0u;
     out->runtime_authority_granted = 0u;
-    out->required_binding_items_total = 35u;
+    out->required_binding_items_total = 45u;
     out->required_binding_items_satisfied = required_items_satisfied(out);
     copy_literal(
         out->blocked_reason,
@@ -184,6 +204,15 @@ int latticra_q_seal_ml_kem_implementation_binding_manifest_allows_implementation
            manifest->planned_test_units_count == 9u &&
            manifest->fips_203_algorithm_bound == 1u &&
            manifest->sp_800_227_kem_usage_bound == 1u &&
+           manifest->fips_conformance_matrix_bound == 1u &&
+           manifest->sp800_227_usage_profile_bound == 1u &&
+           manifest->implementation_traceability_matrix_bound == 1u &&
+           manifest->primitive_source_acceptance_gate_bound == 1u &&
+           manifest->source_layout_gate_bound == 1u &&
+           manifest->implementation_file_digest_plan_bound == 1u &&
+           manifest->clean_room_author_attestation_gate_bound == 1u &&
+           manifest->per_file_standards_trace_gate_bound == 1u &&
+           manifest->per_file_test_trace_gate_bound == 1u &&
            manifest->kat_manifest_bound == 1u &&
            manifest->acvp_intake_bound == 1u &&
            manifest->acvp_capability_matrix_bound == 1u &&
@@ -197,6 +226,7 @@ int latticra_q_seal_ml_kem_implementation_binding_manifest_allows_implementation
            manifest->vector_source_bound == 1u &&
            manifest->vector_fixture_lock_bound == 1u &&
            manifest->vector_fixture_digest_ledger_bound == 1u &&
+           manifest->replay_transcript_gate_bound == 1u &&
            manifest->negative_test_evidence_bound == 1u &&
            manifest->memory_safety_evidence_bound == 1u &&
            manifest->api_misuse_resistance_bound == 1u &&
@@ -248,6 +278,15 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
         "planned_test_units_count=%u\n"
         "fips_203_algorithm_bound=%u\n"
         "sp_800_227_kem_usage_bound=%u\n"
+        "fips_conformance_matrix_bound=%u\n"
+        "sp800_227_usage_profile_bound=%u\n"
+        "implementation_traceability_matrix_bound=%u\n"
+        "primitive_source_acceptance_gate_bound=%u\n"
+        "source_layout_gate_bound=%u\n"
+        "implementation_file_digest_plan_bound=%u\n"
+        "clean_room_author_attestation_gate_bound=%u\n"
+        "per_file_standards_trace_gate_bound=%u\n"
+        "per_file_test_trace_gate_bound=%u\n"
         "kat_manifest_bound=%u\n"
         "acvp_intake_bound=%u\n"
         "acvp_capability_matrix_bound=%u\n"
@@ -261,6 +300,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
         "vector_source_bound=%u\n"
         "vector_fixture_lock_bound=%u\n"
         "vector_fixture_digest_ledger_bound=%u\n"
+        "replay_transcript_gate_bound=%u\n"
         "negative_test_evidence_bound=%u\n"
         "memory_safety_evidence_bound=%u\n"
         "api_misuse_resistance_bound=%u\n"
@@ -303,6 +343,15 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
         manifest->planned_test_units_count,
         manifest->fips_203_algorithm_bound,
         manifest->sp_800_227_kem_usage_bound,
+        manifest->fips_conformance_matrix_bound,
+        manifest->sp800_227_usage_profile_bound,
+        manifest->implementation_traceability_matrix_bound,
+        manifest->primitive_source_acceptance_gate_bound,
+        manifest->source_layout_gate_bound,
+        manifest->implementation_file_digest_plan_bound,
+        manifest->clean_room_author_attestation_gate_bound,
+        manifest->per_file_standards_trace_gate_bound,
+        manifest->per_file_test_trace_gate_bound,
         manifest->kat_manifest_bound,
         manifest->acvp_intake_bound,
         manifest->acvp_capability_matrix_bound,
@@ -316,6 +365,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
         manifest->vector_source_bound,
         manifest->vector_fixture_lock_bound,
         manifest->vector_fixture_digest_ledger_bound,
+        manifest->replay_transcript_gate_bound,
         manifest->negative_test_evidence_bound,
         manifest->memory_safety_evidence_bound,
         manifest->api_misuse_resistance_bound,

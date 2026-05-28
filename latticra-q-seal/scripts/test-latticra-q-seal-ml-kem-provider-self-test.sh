@@ -61,16 +61,35 @@ require_file latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-provider-self-t
 require_contains 'latticra_q_seal_ml_kem_provider_self_test_run' latticra-q-seal/include/latticra/q_seal_ml_kem_provider_self_test.h
 require_contains 'EVP_PKEY_CTX_new_from_name' latticra-q-seal/src/q_seal_ml_kem_provider_self_test.c
 require_contains 'EVP_PKEY_keygen' latticra-q-seal/src/q_seal_ml_kem_provider_self_test.c
+require_contains 'i2d_PUBKEY' latticra-q-seal/src/q_seal_ml_kem_provider_self_test.c
+require_contains 'd2i_PUBKEY' latticra-q-seal/src/q_seal_ml_kem_provider_self_test.c
 require_contains 'EVP_PKEY_encapsulate' latticra-q-seal/src/q_seal_ml_kem_provider_self_test.c
 require_contains 'EVP_PKEY_decapsulate' latticra-q-seal/src/q_seal_ml_kem_provider_self_test.c
+require_contains 'EVP_PKEY_is_a' latticra-q-seal/src/q_seal_ml_kem_provider_self_test.c
 require_contains 'latticra_q_seal_ml_kem_constant_time_equal' latticra-q-seal/src/q_seal_ml_kem_provider_self_test.c
 require_contains 'latticra_q_seal_ml_kem_secure_zero' latticra-q-seal/src/q_seal_ml_kem_provider_self_test.c
 require_contains 'shared_secret_output_emitted=0' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'ml_kem_provider_self_test_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'keypair_algorithm_identity_verified=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'public_key_reimported=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'public_key_algorithm_identity_verified=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'encapsulation_public_key_only=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'tampered_ciphertext_shared_secret_mismatch=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'tampered_ciphertext_rejected=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'shared_secret_constant_time_compare=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'tampered_ciphertext_constant_time_compare=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'ML-KEM-512-provider_self_test_passed=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'ML-KEM-768-provider_self_test_passed=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'ML-KEM-1024-provider_self_test_passed=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'shared_secret_match=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'shared_secret_constant_time_compare=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'keypair_algorithm_identity_verified=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'public_key_reimported=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'public_key_algorithm_identity_verified=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'encapsulation_public_key_only=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'tampered_ciphertext_shared_secret_mismatch=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'tampered_ciphertext_rejected=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'tampered_ciphertext_constant_time_compare=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'shared_secret_zeroized=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'latticra q-seal ml-kem provider self-test invariants: ok' latticra-q-seal/tests/q_seal_ml_kem_provider_self_test_invariants.c
 

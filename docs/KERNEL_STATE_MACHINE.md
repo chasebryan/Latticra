@@ -76,6 +76,7 @@ runtime-entry-recovery-disposition-observation-view-ready
 runtime-entry-recovery-outcome-observation-view-ready
 runtime-entry-recovery-closeout-observation-view-ready
 runtime-entry-recovery-audit-observation-view-ready
+runtime-entry-recovery-audit-review-observation-view-ready
 ```
 
 ## Controlled effect boundary

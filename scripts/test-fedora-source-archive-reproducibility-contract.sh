@@ -124,7 +124,7 @@ require_contains 'rpm_artifact_created=0' "$doc"
 require_contains 'fedora_package_review_ready=0' "$doc"
 require_contains 'fedora_distribution_ready=0' "$doc"
 require_contains 'production_installer_ready=0' "$doc"
-require_contains 'Add a Fedora RPM install/remove transcript contract' "$doc"
+require_contains 'Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract' "$doc"
 require_contains 'fedora_source_archive_reproducibility_contract: ok' "$doc"
 
 for current_field in \

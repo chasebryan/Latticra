@@ -22,7 +22,7 @@ The current answer is intentionally split:
 q_seal_readiness_profile_present=1
 readiness_profile=latticra-q-seal-readiness/0.1
 formal_title=Latticra Q-Seal Readiness Profile
-standards_basis=NIST-FIPS-203-and-NIST-ACVP-ML-KEM
+standards_basis=NIST-FIPS-203,NIST-SP-800-227,NIST-ACVP-ML-KEM
 source_boundary=clean-room-no-apple-code
 readiness_state=design-frame-ready-runtime-crypto-blocked
 foundation_present=1
@@ -31,8 +31,11 @@ ml_kem_512_parameters_present=1
 ml_kem_768_parameters_present=1
 ml_kem_1024_parameters_present=1
 evidence_gate_present=1
+fips_conformance_matrix_present=1
+sp800_227_usage_profile_present=1
 kat_manifest_present=1
 kat_runner_contract_present=1
+replay_transcript_gate_present=1
 kat_result_schema_present=1
 kat_result_row_fixture_present=1
 acvp_intake_present=1
@@ -65,17 +68,24 @@ zeroization_evidence_present=1
 side_channel_review_present=1
 provider_differential_present=1
 implementation_binding_manifest_present=1
+source_layout_gate_present=1
+implementation_file_digest_plan_present=1
+clean_room_author_attestation_gate_present=1
+per_file_standards_trace_gate_present=1
+per_file_test_trace_gate_present=1
+implementation_traceability_matrix_present=1
+primitive_source_acceptance_gate_present=1
 implementation_frame_present=1
 secret_state_contract_present=1
 clean_room_boundary_recorded=1
 apple_corecrypto_code_copied=0
 external_provider_code_copied=0
 provider_runtime_used=0
-components_total=39
-components_present=39
-runtime_blockers_total=37
-required_readiness_items_total=1003
-required_readiness_items_satisfied=643
+components_total=49
+components_present=49
+runtime_blockers_total=46
+required_readiness_items_total=1356
+required_readiness_items_satisfied=929
 design_frame_integration_ready=1
 runtime_crypto_ready=0
 operations_enabled=0
@@ -91,9 +101,10 @@ status=q-seal-readiness-profile-blocked
 
 ## Runtime Blockers
 
-Runtime cryptography remains blocked by thirty-seven aggregate blockers:
+Runtime cryptography remains blocked by forty-five aggregate blockers:
 
 - ML-KEM evidence gate is missing KAT, ACVP, errata, constant-time, side-channel, randomness, zeroization, review, fuzzing, and CI evidence.
+- ML-KEM FIPS 203 conformance matrix has no per-parameter trace, keygen step trace, encapsulation step trace, decapsulation step trace, encoding tests, decapsulation failure-semantics tests, primitive mapping review, errata review, implementation trace acceptance, or conformance matrix acceptance.
 - ML-KEM KAT manifest has no KAT runner implementation, vector bundle digest, license review, storage review, parser review, positive vector verification, negative vector verification, malformed vector verification, provider differential record, CI KAT replay, loaded known-answer vectors, ACVP vector review, or operation implementation.
 - ML-KEM KAT runner contract has no runner implementation, loaded fixture bundle, verified fixture digest, license review, storage review, runner parser review, result-schema review, positive result rows, negative result rows, malformed result rows, implicit-rejection result rows, provider differential rows, CI KAT replay transcript, operation implementation, KAT execution, or ACVP response generation.
 - ML-KEM KAT result schema has no schema review, fixture bundle digest binding, result row fixture, positive result rows, negative result rows, malformed result rows, implicit-rejection rows, provider-differential rows, CI KAT replay transcript binding, runner execution record, or ACVP response-generation evidence.
@@ -112,6 +123,11 @@ Runtime cryptography remains blocked by thirty-seven aggregate blockers:
 - ML-KEM vector fixture digest ledger has no source URL, source digest, bundle size, license review, storage path, schema crosscheck, parameter-set coverage, operation-family coverage, negative-case coverage, import review, or ledger review.
 - ML-KEM negative-test evidence has no length validation, encoding canonicality, invalid ciphertext, invalid key, decapsulation-failure, implicit-rejection, parser-rejection, fuzzing-corpus, differential negative-test, or implementation-binding evidence.
 - ML-KEM memory-safety evidence has no overflow review, bounds review, sanitizer evidence, static-analysis evidence, memory-safety fuzzing, alias/lifetime review, secret-buffer isolation, zeroization binding, cross-platform word-size review, or implementation binding.
+- ML-KEM implementation file digest plan has no source files, implementation digest rows, test digest rows, build-script digest rows, reviewed receipt, verified replay, or accepted digest-row plan.
+- ML-KEM source layout gate has no source files, source layout rows, layout digest rows, layout review, layout approval, or accepted source layout.
+- ML-KEM clean-room author attestation gate has no source files, author identity import, per-file author attestations, clean-room attestation review, provenance exception review, or accepted author attestation.
+- ML-KEM per-file standards trace gate has no source files, per-file standards trace rows, FIPS 203 clause coverage review, SP 800-227 usage coverage review, parameter-set coverage review, trace review approval, or accepted standards trace.
+- ML-KEM per-file test trace gate has no source files, per-file test trace rows, KAT trace coverage review, ACVP trace coverage review, negative-test trace review, trace review approval, or accepted test trace.
 - ML-KEM API misuse-resistance evidence has no error taxonomy, API state machine, misuse-case matrix, wrong-parameter tests, null/overlap tests, deterministic test-mode guard, secret-output lifetime policy, language-binding policy, documentation examples review, or implementation binding.
 - ML-KEM source digest manifest has no implementation files, source-file digests, test-file digests, build-script digests, reviewed digest receipt, reproducible source snapshot, or CI digest verification.
 - ML-KEM source digest receipt has no source receipts, test receipts, build receipts, receipt verification, reviewed digest receipt, replay check, or CI digest verification.
@@ -127,7 +143,10 @@ Runtime cryptography remains blocked by thirty-seven aggregate blockers:
 - ML-KEM zeroization evidence has no selected wipe primitive, implemented wipe primitive, compiler dead-store review, volatile or intrinsic strategy, stack/heap/register policy, error-path zeroization, decapsulation-failure zeroization, memory-scan test, assembly review, cross-platform review, formal review, or implementation binding.
 - ML-KEM side-channel review has no leakage model, power-analysis test, timing measurement, cache-access analysis, fault-injection review, microarchitectural leakage review, hardening decision, compiler artifact review, platform matrix, negative leakage test, reviewer signoff, or implementation binding.
 - Provider differential comparison is not licensed, pinned, digested, reproducible, vector-tested, or triaged.
+- ML-KEM implementation traceability matrix has no constant-time mapping, memory-safety mapping, zeroization mapping, randomness mapping, negative-test mapping, source digest mapping, code-owner mapping, review-disposition mapping, accepted trace, implementation file digest manifest, implementation code, or runtime authority.
 - Implementation-binding manifest has no implementation files, source digest manifest, keygen binding approval, encaps binding approval, decapsulation binding approval, code-owner review, or runtime evidence.
+- Implementation traceability matrix has no constant-time, memory-safety, zeroization, randomness, negative-test, source-digest, code-owner, review-disposition, implementation-trace acceptance, or implementation-file digest mapping.
+- Primitive source acceptance gate has no source files, source-file digest rows, clean-room author attestation, per-file standards trace, per-file test trace, per-file review approval, or source acceptance approval.
 - Implementation frame has no primitive implementation, constant-time design proof, zeroization design, randomness design, canonical serialization policy, malformed-input policy, vector binding, or formal review.
 - Secret-state contract has no secret inventory, constant-time review, implicit rejection proof, zeroization primitive, randomness boundary, seed-handling review, compiler review, sanitizer strategy, or side-channel review.
 
@@ -138,6 +157,12 @@ latticra-q-seal/include/latticra/q_seal_readiness.h
 latticra-q-seal/src/q_seal_readiness.c
 latticra-q-seal/tests/q_seal_readiness_invariants.c
 latticra-q-seal/evidence/Q_SEAL_READINESS.md
+latticra-q-seal/evidence/ML_KEM_FIPS_CONFORMANCE_MATRIX.md
+latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_TRACEABILITY_MATRIX.md
+latticra-q-seal/evidence/ML_KEM_PRIMITIVE_SOURCE_ACCEPTANCE_GATE.md
+latticra-q-seal/evidence/ML_KEM_PER_FILE_STANDARDS_TRACE_GATE.md
+latticra-q-seal/evidence/ML_KEM_PER_FILE_TEST_TRACE_GATE.md
 latticra-q-seal/evidence/ML_KEM_KAT_MANIFEST.md
 latticra-q-seal/evidence/ML_KEM_KAT_RUNNER_CONTRACT.md
 latticra-q-seal/evidence/ML_KEM_KAT_RESULT_SCHEMA.md
@@ -157,7 +182,18 @@ latticra-q-seal/evidence/ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md
 latticra-q-seal/evidence/ML_KEM_REVIEW_DISPOSITION_LEDGER.md
 latticra-q-seal/evidence/ML_KEM_REVIEWER_IDENTITY_FIXTURE.md
 latticra-q-seal/evidence/ML_KEM_REVIEWER_ROLE_MAPPING.md
+latticra-q-seal/evidence/ML_KEM_SOURCE_LAYOUT_GATE.md
+latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-fips-conformance-matrix.sh
+latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-sp800-227-usage-profile.sh
+latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-implementation-traceability-matrix.sh
+latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-source-layout-gate.sh
+latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-primitive-source-acceptance-gate.sh
 latticra-q-seal/scripts/test-latticra-q-seal-readiness.sh
+scripts/test-latticra-q-seal-ml-kem-fips-conformance-matrix.sh
+scripts/test-latticra-q-seal-ml-kem-sp800-227-usage-profile.sh
+scripts/test-latticra-q-seal-ml-kem-implementation-traceability-matrix.sh
+scripts/test-latticra-q-seal-ml-kem-source-layout-gate.sh
+scripts/test-latticra-q-seal-ml-kem-primitive-source-acceptance-gate.sh
 scripts/test-latticra-q-seal-ml-kem-acvp-capability-matrix.sh
 scripts/test-latticra-q-seal-ml-kem-kat-manifest.sh
 scripts/test-latticra-q-seal-ml-kem-kat-runner-contract.sh

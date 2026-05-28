@@ -52,6 +52,7 @@ matrix='docs/FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX.md'
 matrix_status='docs/status/FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX_STATUS.md'
 matrix_script='scripts/fedora-production-readiness-evidence-matrix.sh'
 matrix_test='scripts/test-fedora-production-readiness-evidence-matrix.sh'
+install_remove_doc='docs/FEDORA_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md'
 spec='packaging/fedora/latticra.spec'
 
 for file in \
@@ -72,6 +73,7 @@ for file in \
   "$matrix_status" \
   "$matrix_script" \
   "$matrix_test" \
+  "$install_remove_doc" \
   "$spec"
 do
   require_file "$file"
@@ -97,7 +99,7 @@ require_contains 'binary_rpm_payload_inspection_run=0' "$doc"
 require_contains 'rpm_payload_accepted=0' "$doc"
 require_contains 'rpm_artifact_sha256_recorded=0' "$doc"
 require_contains 'rpm_payload_listing_sha256_recorded=0' "$doc"
-require_contains 'Add a Fedora RPM install/remove transcript contract' "$doc"
+require_contains 'Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract' "$doc"
 require_contains 'fedora_rpm_payload_inspection_contract: ok' "$doc"
 
 for current_field in \
@@ -191,7 +193,8 @@ done
 require_contains 'Status: rpm-payload-inspection/status alignment' "$status"
 require_contains 'Date: 2026-05-27' "$status"
 require_contains 'does not create RPM artifacts' "$status"
-require_contains 'Add a Fedora RPM install/remove transcript contract' "$status"
+require_contains 'Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract' "$status"
+require_contains "$install_remove_doc" "$status"
 
 require_contains 'FEDORA_RPM_PAYLOAD_INSPECTION_CONTRACT_STATUS.md' "$index"
 require_contains 'Current Fedora RPM payload inspection contract checkpoint' "$index"
@@ -215,6 +218,7 @@ require_contains 'fedora_rpmlint_findings_classification_present=1' "$rpmlint_cl
 require_contains 'fedora_rpm_payload_inspection_contract_present=1' "$matrix_script"
 require_contains 'fedora_rpm_payload_inspection_contract_present=1' "$matrix_status"
 require_contains 'fedora_rpm_payload_inspection_contract_present=1' "$matrix_test"
+require_contains 'fedora_rpm_install_remove_transcript_contract_present=1' "$install_remove_doc"
 
 require_contains 'install -m 0755 build/latticra %{buildroot}%{_bindir}/latticra' "$spec"
 require_contains 'install -m 0644 README.md %{buildroot}%{_docdir}/%{name}/README.md' "$spec"

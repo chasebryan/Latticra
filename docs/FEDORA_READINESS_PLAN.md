@@ -70,8 +70,10 @@ Known current posture:
 
 ```text
 kernel lifecycle evidence exists
-final_state=runtime-entry-recovery-closeout-observation-view-ready
+final_state=runtime-entry-recovery-audit-review-observation-view-ready
 external_effect_performed=0
+runtime_entry_recovery_audit_review_observation_view_allowed=0
+runtime_entry_recovery_audit_observation_view_allowed=0
 runtime_entry_recovery_plan_observation_view_allowed=0
 runtime_entry_recovery_disposition_observation_view_allowed=0
 runtime_entry_recovery_outcome_observation_view_allowed=0
@@ -108,6 +110,10 @@ recovery_outcome_allowed=0
 recovery_outcome_observation_allowed=0
 recovery_closeout_allowed=0
 recovery_closeout_observation_allowed=0
+recovery_audit_review_allowed=0
+recovery_audit_review_observation_allowed=0
+recovery_audit_allowed=0
+recovery_audit_observation_allowed=0
 scheduler_execution_allowed=0
 scheduler_selection_allowed=0
 scheduler_dispatch_allowed=0

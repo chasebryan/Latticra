@@ -74,6 +74,25 @@ artifact_parent_path() {
   esac
 }
 
+normalize_fingerprint() {
+  printf '%s\n' "$1" | tr -d '[:space:]' | tr 'a-f' 'A-F'
+}
+
+fingerprint_format_valid() {
+  fingerprint="$(normalize_fingerprint "$1")"
+  case "$fingerprint" in
+    ''|none|NONE|None)
+      printf '0\n'
+      return
+      ;;
+  esac
+  if printf '%s\n' "$fingerprint" | grep -Eq '^[0-9A-F]{40}$|^[0-9A-F]{64}$'; then
+    printf '1\n'
+  else
+    printf '0\n'
+  fi
+}
+
 require_contains() {
   pattern="$1"
   file="$2"
@@ -123,6 +142,13 @@ require_contains 'release_artifact_evidence_intake_validator_present=1' docs/PRO
 require_contains 'release_artifact_present=0' docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md
 require_contains 'release_artifact_built_from_tag=0' docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md
 require_contains 'release_artifact_signature_verified=0' docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md
+require_contains 'release_signing_identity_reference_validator_present=1' docs/PRODUCTION_INSTALLER_RELEASE_SIGNING_IDENTITY_REFERENCE_CONTRACT.md
+require_contains 'release_artifact_staging_directory_present=1' docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_STAGING_DIRECTORY_CONTRACT.md
+require_contains 'release_worktree_cleanliness_audit_present=1' docs/PRODUCTION_INSTALLER_RELEASE_WORKTREE_CLEANLINESS_AUDIT_CONTRACT.md
+require_contains 'release_worktree_cleanliness_required_for_release_candidate=1' docs/PRODUCTION_INSTALLER_RELEASE_WORKTREE_CLEANLINESS_AUDIT_CONTRACT.md
+require_contains 'release_toolchain_availability_audit_present=1' docs/PRODUCTION_INSTALLER_RELEASE_TOOLCHAIN_AVAILABILITY_AUDIT_CONTRACT.md
+require_contains 'release_toolchain_required_for_release_candidate=1' docs/PRODUCTION_INSTALLER_RELEASE_TOOLCHAIN_AVAILABILITY_AUDIT_CONTRACT.md
+require_contains 'release_artifact_candidate_parent_dir_exists=1' artifacts/release/README.md
 require_contains 'Status: no-effect release-artifact promotion gate contract' docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_PROMOTION_GATE_CONTRACT.md
 require_contains 'Status: no-effect release-artifact evidence intake validator contract' docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md
 require_contains 'release_artifact_promotion_gate_passed=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
@@ -135,6 +161,16 @@ RPMBUILD_AVAILABLE="$(tool_available rpmbuild)"
 RPM_AVAILABLE="$(tool_available rpm)"
 GPG_AVAILABLE="$(tool_available gpg)"
 SHA256_TOOL_AVAILABLE="$(sha256_tool_available)"
+RELEASE_TOOLCHAIN_READY=0
+if [ "$GIT_AVAILABLE" = "1" ] &&
+   [ "$TAR_AVAILABLE" = "1" ] &&
+   [ "$GZIP_AVAILABLE" = "1" ] &&
+   [ "$RPMBUILD_AVAILABLE" = "1" ] &&
+   [ "$RPM_AVAILABLE" = "1" ] &&
+   [ "$GPG_AVAILABLE" = "1" ] &&
+   [ "$SHA256_TOOL_AVAILABLE" = "1" ]; then
+  RELEASE_TOOLCHAIN_READY=1
+fi
 ARTIFACT_PARENT_DIR="$(artifact_parent_path "$ARTIFACT_PATH")"
 ARTIFACT_PARENT_DIR_EXISTS=0
 if [ -d "$ARTIFACT_PARENT_DIR" ]; then
@@ -158,17 +194,22 @@ if [ "$GIT_AVAILABLE" = "1" ]; then
 fi
 
 SIGNING_IDENTITY_REFERENCE_PRESENT=0
+SIGNING_IDENTITY_REFERENCE_FORMAT_VALID="$(fingerprint_format_valid "$SIGNING_KEY_FINGERPRINT")"
 case "$SIGNING_KEY_FINGERPRINT" in
   ''|none|NONE|None)
     SIGNING_KEY_FINGERPRINT='none'
     ;;
   *)
-    SIGNING_IDENTITY_REFERENCE_PRESENT=1
+    SIGNING_KEY_FINGERPRINT="$(normalize_fingerprint "$SIGNING_KEY_FINGERPRINT")"
+    if [ "$SIGNING_IDENTITY_REFERENCE_FORMAT_VALID" = "1" ]; then
+      SIGNING_IDENTITY_REFERENCE_PRESENT=1
+    fi
     ;;
 esac
 
 RELEASE_ARTIFACT_CANDIDATE_INPUTS_SATISFIED=0
 if [ "$TAG_EXISTS" = "1" ] &&
+   [ "$ARTIFACT_PARENT_DIR_EXISTS" = "1" ] &&
    [ "$TRACKED_WORKTREE_CLEAN" = "1" ] &&
    [ "$GIT_AVAILABLE" = "1" ] &&
    [ "$TAR_AVAILABLE" = "1" ] &&
@@ -197,8 +238,12 @@ release_artifact_candidate_path=$ARTIFACT_PATH
 release_artifact_candidate_artifact_path=$ARTIFACT_PATH
 release_artifact_candidate_parent_dir=$ARTIFACT_PARENT_DIR
 release_artifact_candidate_parent_dir_exists=$ARTIFACT_PARENT_DIR_EXISTS
+release_worktree_cleanliness_audit_present=1
+release_worktree_cleanliness_required_for_release_candidate=1
 release_artifact_candidate_tracked_worktree_clean=$TRACKED_WORKTREE_CLEAN
 release_artifact_candidate_tracked_dirty_count=$TRACKED_DIRTY_COUNT
+release_worktree_tracked_worktree_clean=$TRACKED_WORKTREE_CLEAN
+release_worktree_tracked_dirty_count=$TRACKED_DIRTY_COUNT
 tracked_worktree_clean=$TRACKED_WORKTREE_CLEAN
 tracked_worktree_dirty_count=$TRACKED_DIRTY_COUNT
 git_available=$GIT_AVAILABLE
@@ -207,6 +252,9 @@ tar_available=$TAR_AVAILABLE
 tar_path=$(tool_path tar)
 gzip_available=$GZIP_AVAILABLE
 gzip_path=$(tool_path gzip)
+release_toolchain_availability_audit_present=1
+release_toolchain_required_for_release_candidate=1
+release_toolchain_ready=$RELEASE_TOOLCHAIN_READY
 rpmbuild_available=$RPMBUILD_AVAILABLE
 rpmbuild_path=$(tool_path rpmbuild)
 release_artifact_build_tool_available=$RPMBUILD_AVAILABLE
@@ -217,7 +265,9 @@ gpg_available=$GPG_AVAILABLE
 gpg_path=$(tool_path gpg)
 sha256_tool_available=$SHA256_TOOL_AVAILABLE
 sha256_tool_path=$(sha256_tool_path)
+release_signing_identity_reference_validator_present=1
 signing_identity_reference_present=$SIGNING_IDENTITY_REFERENCE_PRESENT
+signing_identity_reference_format_valid=$SIGNING_IDENTITY_REFERENCE_FORMAT_VALID
 signing_identity_reference=$SIGNING_KEY_FINGERPRINT
 release_artifact_present=0
 release_artifact_built_from_tag=0

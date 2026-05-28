@@ -31,6 +31,8 @@ sh scripts/production-installer-release-artifact-evidence-intake.sh \
 ```text
 release_artifact_evidence_intake_validator_present=1
 release_artifact_evidence_intake_validation_mode=no-effect-validation
+release_artifact_evidence_template_present=1
+release_artifact_evidence_template_complete=0
 release_artifact_candidate_valid=0
 release_artifact_checksum_file_present=0
 release_artifact_sha256_matches=0
@@ -70,6 +72,7 @@ It reads these local records:
 docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md
 docs/PRODUCTION_INSTALLER_ARTIFACT_INTEGRITY_STATUS_CONTRACT.md
 docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_PROMOTION_GATE_CONTRACT.md
+docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_TEMPLATE_CONTRACT.md
 docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
 scripts/production-installer-artifact-integrity-status.sh
 scripts/production-installer-release-artifact-promotion-gate.sh

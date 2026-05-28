@@ -65,7 +65,15 @@ fedora_rpm_payload_inspection_contract: ok
 ## Next recommended lane
 
 ```text
-Add a Fedora RPM install/remove transcript contract before any RPM install evidence can be accepted.
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Completed follow-on lane
+
+```text
+docs/FEDORA_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+scripts/test-fedora-rpm-install-remove-transcript-contract.sh
+.github/workflows/fedora-rpm-install-remove-transcript-contract.yml
 ```
 
 ## Non-claims

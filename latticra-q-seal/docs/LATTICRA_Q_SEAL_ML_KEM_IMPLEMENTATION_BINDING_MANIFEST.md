@@ -4,7 +4,7 @@ Status: fail-closed clean-room implementation-binding slice
 Date: 2026-05-27
 Scope: module-to-evidence bindings before ML-KEM implementation files or primitive operations.
 
-This slice records the binding manifest that future ML-KEM implementation code must satisfy before it can be treated as an implementation candidate. It binds the first-class KAT manifest before ACVP intake and includes the ACVP fixture digest row template between fixture row planning and digest-ledger acceptance. It also binds the ACVP parser and response contracts before any vector execution or response-generation path can exist. It keeps primitive source creation, key generation, encapsulation, decapsulation, vector execution, response generation, provider execution, production crypto claims, FIPS claims, network behavior, host mutation, and runtime authority disabled.
+This slice records the binding manifest that future ML-KEM implementation code must satisfy before it can be treated as an implementation candidate. It binds the FIPS 203 conformance matrix, SP 800-227 usage profile, implementation traceability matrix, and primitive source acceptance gate before KAT and ACVP intake and includes the ACVP fixture digest row template between fixture row planning and digest-ledger acceptance. It also binds the ACVP parser, response, response-fixture, and submission-package contracts before any vector execution, response-generation, or ACVP package-acceptance path can exist. It keeps primitive source creation, key generation, encapsulation, decapsulation, shared-secret emission, vector execution, response generation, provider execution, production crypto claims, FIPS claims, network behavior, host mutation, and runtime authority disabled.
 
 ## Files
 
@@ -14,6 +14,14 @@ latticra-q-seal/src/q_seal_ml_kem_implementation_binding_manifest.c
 latticra-q-seal/tests/q_seal_ml_kem_implementation_binding_manifest_invariants.c
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
 latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
+latticra-q-seal/evidence/ML_KEM_FIPS_CONFORMANCE_MATRIX.md
+latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_TRACEABILITY_MATRIX.md
+latticra-q-seal/evidence/ML_KEM_PRIMITIVE_SOURCE_ACCEPTANCE_GATE.md
+latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_FILE_DIGEST_PLAN.md
+latticra-q-seal/evidence/ML_KEM_CLEAN_ROOM_AUTHOR_ATTESTATION_GATE.md
+latticra-q-seal/evidence/ML_KEM_PER_FILE_STANDARDS_TRACE_GATE.md
+latticra-q-seal/evidence/ML_KEM_PER_FILE_TEST_TRACE_GATE.md
 latticra-q-seal/evidence/ML_KEM_KAT_MANIFEST.md
 latticra-q-seal/evidence/ML_KEM_ACVP_CAPABILITY_MATRIX.md
 latticra-q-seal/evidence/ML_KEM_ACVP_FIXTURE_ROW_PLAN.md
@@ -32,6 +40,14 @@ latticra-q-seal/evidence/ML_KEM_REVIEWER_IDENTITY_FIXTURE.md
 latticra-q-seal/evidence/ML_KEM_REVIEWER_ROLE_MAPPING.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
 scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
+scripts/test-latticra-q-seal-ml-kem-fips-conformance-matrix.sh
+scripts/test-latticra-q-seal-ml-kem-sp800-227-usage-profile.sh
+scripts/test-latticra-q-seal-ml-kem-implementation-traceability-matrix.sh
+scripts/test-latticra-q-seal-ml-kem-primitive-source-acceptance-gate.sh
+scripts/test-latticra-q-seal-ml-kem-implementation-file-digest-plan.sh
+scripts/test-latticra-q-seal-ml-kem-clean-room-author-attestation-gate.sh
+scripts/test-latticra-q-seal-ml-kem-per-file-standards-trace-gate.sh
+scripts/test-latticra-q-seal-ml-kem-per-file-test-trace-gate.sh
 scripts/test-latticra-q-seal-ml-kem-kat-manifest.sh
 scripts/test-latticra-q-seal-ml-kem-acvp-capability-matrix.sh
 scripts/test-latticra-q-seal-ml-kem-acvp-fixture-row-plan.sh
@@ -67,6 +83,15 @@ planned_source_units_count=9
 planned_test_units_count=9
 fips_203_algorithm_bound=1
 sp_800_227_kem_usage_bound=1
+fips_conformance_matrix_bound=1
+sp800_227_usage_profile_bound=1
+implementation_traceability_matrix_bound=1
+primitive_source_acceptance_gate_bound=1
+source_layout_gate_bound=1
+implementation_file_digest_plan_bound=1
+clean_room_author_attestation_gate_bound=1
+per_file_standards_trace_gate_bound=1
+per_file_test_trace_gate_bound=1
 kat_manifest_bound=1
 acvp_intake_bound=1
 acvp_capability_matrix_bound=1
@@ -80,6 +105,7 @@ vector_schema_bound=1
 vector_source_bound=1
 vector_fixture_lock_bound=1
 vector_fixture_digest_ledger_bound=1
+replay_transcript_gate_bound=1
 negative_test_evidence_bound=1
 memory_safety_evidence_bound=1
 api_misuse_resistance_bound=1
@@ -103,8 +129,8 @@ operation_execution_allowed=0
 production_crypto_claim_allowed=0
 fips_claim_allowed=0
 runtime_authority_granted=0
-required_binding_items_total=35
-required_binding_items_satisfied=30
+required_binding_items_total=45
+required_binding_items_satisfied=40
 blocked_reason=implementation-file-digest-keygen-encap-decap-code-owner-and-runtime-evidence-missing
 status=ml-kem-implementation-binding-blocked
 ```
@@ -114,6 +140,10 @@ status=ml-kem-implementation-binding-blocked
 ```sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
 sh scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-fips-conformance-matrix.sh
+sh scripts/test-latticra-q-seal-ml-kem-fips-conformance-matrix.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-sp800-227-usage-profile.sh
+sh scripts/test-latticra-q-seal-ml-kem-sp800-227-usage-profile.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-kat-manifest.sh
 sh scripts/test-latticra-q-seal-ml-kem-kat-manifest.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-capability-matrix.sh

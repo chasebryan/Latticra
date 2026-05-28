@@ -24,6 +24,7 @@ qseal_subsystem_scripts_recorded=1
 readiness_gate_bound=1
 implementation_binding_manifest_required=1
 implementation_binding_manifest_bound=1
+replay_transcript_gate_bound=1
 kat_acvp_gate_passing_recorded=0
 constant_time_gate_passing_recorded=0
 memory_safety_gate_passing_recorded=0
@@ -38,8 +39,8 @@ operation_execution_allowed=0
 production_crypto_claim_allowed=0
 fips_claim_allowed=0
 runtime_authority_granted=0
-required_promotion_items_total=19
-required_promotion_items_satisfied=9
+required_promotion_items_total=20
+required_promotion_items_satisfied=10
 status=ml-kem-ci-promotion-evidence-blocked
 ```
 

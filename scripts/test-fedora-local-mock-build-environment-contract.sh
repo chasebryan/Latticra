@@ -105,7 +105,7 @@ require_contains 'dnf_builddep_command_allowed=0' "$doc"
 require_contains 'rpmbuild_run=0' "$doc"
 require_contains 'mock_build_run=0' "$doc"
 require_contains 'dnf_builddep_run=0' "$doc"
-require_contains 'Add a Fedora RPM install/remove transcript contract' "$doc"
+require_contains 'Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract' "$doc"
 require_contains 'fedora_local_mock_build_environment_contract: ok' "$doc"
 
 for current_field in \
@@ -196,7 +196,7 @@ done
 require_contains 'Status: local-mock-build-environment/status alignment' "$status"
 require_contains 'Date: 2026-05-27' "$status"
 require_contains 'does not run `rpmbuild`, `mock`, or `dnf builddep`' "$status"
-require_contains 'Add a Fedora RPM install/remove transcript contract' "$status"
+require_contains 'Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract' "$status"
 
 require_contains 'FEDORA_LOCAL_MOCK_BUILD_ENVIRONMENT_CONTRACT_STATUS.md' "$index"
 require_contains 'Current Fedora local mock-build environment contract checkpoint' "$index"

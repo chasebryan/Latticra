@@ -1,9 +1,9 @@
 # Latticra Current Direction
 
 Status: active project note
-Last updated: 2026-05-26 CDT
-Latest current estimate table source alignment note: 2026-05-26 CDT
-Latest current estimate mathematical rebase note: 2026-05-26 CDT
+Last updated: 2026-05-27 CDT
+Latest current estimate table source alignment note: 2026-05-27 CDT
+Latest current estimate mathematical rebase note: 2026-05-27 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
 Latest completion estimate review after runtime-boundary abuse-case fixtures note: 2026-05-25 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
@@ -524,7 +524,7 @@ Completion estimate review README/status alignment makes that hold review discov
 
 Current estimate table source alignment makes the live public estimate table source explicit from README, root status, detailed status, status index, foundation index, and project notes without changing estimates or runtime authority.
 
-Current estimate mathematical rebase updates the live public estimate table to a weighted 45% overall planning estimate after recent guarded Seal, Panel signed-updater fixture and Seal dashboard view-model evidence, Ubuntu, macOS, Nadia Stage-43 prompt-evaluation release-receipt contract-chain evidence, Lat/LIR, kernel lifecycle scheduler-credit and scheduler-selection-ready evidence, vulnerability-management release-gate baseline coverage, documentation review/style/cohesion route coverage, visual theorem/presentation foundation coverage, and public-entry alignment work while preserving no implementation behavior change, no product-security claim, no product-readiness promotion, and no runtime authority.
+Current estimate mathematical rebase updates the live public estimate table to a weighted 47% overall planning estimate after the 2026-05-27 Seal hybrid/provider, Panel test UI, production installer/readiness gate, Nadia Stage-51, Nucleus kernel-coupling, kernel runtime-entry observation, C substrate, security baseline, documentation/index, and public-entry alignment push while preserving no production behavior change, no product-security claim, no product-readiness claim, and no runtime authority.
 
 Latticra Seal crypto verify backend status/public-entry alignment makes the existing authority-neutral ready backend visible from public status surfaces while preserving verification-not-performed backend behavior, no signing, key handling, host behavior, network behavior, capability enforcement, effect execution, or runtime authority.
 

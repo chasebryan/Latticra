@@ -18,8 +18,8 @@ static int default_request_is_denied(void) {
     EXPECT_TRUE(latticra_kernel_lifecycle_default_request(&request) == LATTICRA_STATUS_OK,
         "default request status");
     EXPECT_TRUE(request.target_state ==
-            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY,
-        "default target runtime-entry-recovery-audit-observation-view-ready");
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_READY,
+        "default target runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready");
     EXPECT_TRUE(request.gate == LATTICRA_KERNEL_STATE_GATE_DENY,
         "default gate deny");
     EXPECT_TRUE(request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
@@ -46,7 +46,7 @@ static int default_request_is_denied(void) {
     return 0;
 }
 
-static int allowed_lifecycle_reaches_runtime_entry_recovery_audit_observation_view_ready(
+static int allowed_lifecycle_reaches_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_ready(
     void) {
     latticra_kernel_lifecycle_request_t request;
     latticra_kernel_lifecycle_result_t result;
@@ -62,12 +62,12 @@ static int allowed_lifecycle_reaches_runtime_entry_recovery_audit_observation_vi
     EXPECT_TRUE(strcmp(result.policy_status, "gate-allowed") == 0,
         "policy gate allowed");
     EXPECT_TRUE(result.final_state ==
-            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY,
-        "final state runtime-entry-recovery-audit-observation-view-ready");
-    EXPECT_TRUE(result.step_count == 46u,
-        "forty six steps to runtime-entry-recovery-audit-observation-view-ready");
-    EXPECT_TRUE(result.state_change_count == 46u,
-        "forty six state changes");
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_READY,
+        "final state runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready");
+    EXPECT_TRUE(result.step_count == 52u,
+        "fifty two steps to runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready");
+    EXPECT_TRUE(result.state_change_count == 52u,
+        "fifty two state changes");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "complete flag set");
     EXPECT_TRUE(result.external_effect_performed == 0,
@@ -76,8 +76,8 @@ static int allowed_lifecycle_reaches_runtime_entry_recovery_audit_observation_vi
         "lifecycle network denied");
     EXPECT_TRUE(result.machine.network_allowed == 0,
         "machine network denied");
-    EXPECT_TRUE(result.machine.log_count == 46u,
-        "machine log has forty six entries");
+    EXPECT_TRUE(result.machine.log_count == 52u,
+        "machine log has fifty two entries");
     EXPECT_TRUE(result.machine.log[0].from_state == LATTICRA_KERNEL_STATE_CREATED,
         "log zero from created");
     EXPECT_TRUE(result.machine.log[0].to_state == LATTICRA_KERNEL_STATE_INITIALIZED,
@@ -315,6 +315,54 @@ static int allowed_lifecycle_reaches_runtime_entry_recovery_audit_observation_vi
             LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY,
         "log forty five to runtime-entry-recovery-audit-observation-view-ready");
     EXPECT_TRUE(result.machine.log[45].state_change_performed == 1,
+        "audit observation step changed state");
+    EXPECT_TRUE(result.machine.log[46].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY,
+        "log forty six from runtime-entry-recovery-audit-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[46].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_OBSERVATION_VIEW_READY,
+        "log forty six to runtime-entry-recovery-audit-review-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[46].state_change_performed == 1,
+        "audit review observation step changed state");
+    EXPECT_TRUE(result.machine.log[47].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_OBSERVATION_VIEW_READY,
+        "log forty seven from runtime-entry-recovery-audit-review-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[47].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_OBSERVATION_VIEW_READY,
+        "log forty seven to runtime-entry-recovery-audit-review-disposition-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[47].state_change_performed == 1,
+        "audit review disposition observation step changed state");
+    EXPECT_TRUE(result.machine.log[48].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_OBSERVATION_VIEW_READY,
+        "log forty eight from runtime-entry-recovery-audit-review-disposition-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[48].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_OBSERVATION_VIEW_READY,
+        "log forty eight to runtime-entry-recovery-audit-review-disposition-review-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[48].state_change_performed == 1,
+        "audit review disposition review observation step changed state");
+    EXPECT_TRUE(result.machine.log[49].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_OBSERVATION_VIEW_READY,
+        "log forty nine from runtime-entry-recovery-audit-review-disposition-review-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[49].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_OBSERVATION_VIEW_READY,
+        "log forty nine to runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[49].state_change_performed == 1,
+        "closeout observation step changed state");
+    EXPECT_TRUE(result.machine.log[50].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_OBSERVATION_VIEW_READY,
+        "log fifty from runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[50].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY,
+        "log fifty to runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[50].state_change_performed == 1,
+        "archive gate observation step changed state");
+    EXPECT_TRUE(result.machine.log[51].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY,
+        "log fifty one from runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[51].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_READY,
+        "log fifty one to runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[51].state_change_performed == 1,
         "last step changed state");
     return 0;
 }
@@ -424,11 +472,11 @@ static int lifecycle_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "policy_status=gate-allowed\n") != 0,
         "policy status emitted");
     EXPECT_TRUE(strstr(report,
-            "final_state=runtime-entry-recovery-audit-observation-view-ready\n") != 0,
+            "final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready\n") != 0,
         "final state emitted");
-    EXPECT_TRUE(strstr(report, "step_count=46\n") != 0,
+    EXPECT_TRUE(strstr(report, "step_count=52\n") != 0,
         "step count emitted");
-    EXPECT_TRUE(strstr(report, "state_change_count=46\n") != 0,
+    EXPECT_TRUE(strstr(report, "state_change_count=52\n") != 0,
         "state change count emitted");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "complete flag emitted");
@@ -438,7 +486,7 @@ static int lifecycle_report_is_deterministic(void) {
         "network flag emitted");
     EXPECT_TRUE(strstr(report, "machine_network_allowed=0\n") != 0,
         "machine network flag emitted");
-    EXPECT_TRUE(strstr(report, "machine_log_count=46\n") != 0,
+    EXPECT_TRUE(strstr(report, "machine_log_count=52\n") != 0,
         "machine log count emitted");
     EXPECT_TRUE(strstr(report, "log[0].from=created\n") != 0,
         "log zero from emitted");
@@ -673,6 +721,54 @@ static int lifecycle_report_is_deterministic(void) {
             "log[45].to=runtime-entry-recovery-audit-observation-view-ready\n") != 0,
         "log final to emitted");
     EXPECT_TRUE(strstr(report, "log[45].state_change_performed=1\n") != 0,
+        "log audit observation change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[46].from=runtime-entry-recovery-audit-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[46].to=runtime-entry-recovery-audit-review-observation-view-ready\n") != 0,
+        "log audit review to emitted");
+    EXPECT_TRUE(strstr(report, "log[46].state_change_performed=1\n") != 0,
+        "log audit review change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[47].from=runtime-entry-recovery-audit-review-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[47].to=runtime-entry-recovery-audit-review-disposition-observation-view-ready\n") != 0,
+        "log final to emitted");
+    EXPECT_TRUE(strstr(report, "log[47].state_change_performed=1\n") != 0,
+        "log audit review disposition observation change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[48].from=runtime-entry-recovery-audit-review-disposition-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[48].to=runtime-entry-recovery-audit-review-disposition-review-observation-view-ready\n") != 0,
+        "log final to emitted");
+    EXPECT_TRUE(strstr(report, "log[48].state_change_performed=1\n") != 0,
+        "log audit review disposition review observation change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[49].from=runtime-entry-recovery-audit-review-disposition-review-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[49].to=runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view-ready\n") != 0,
+        "log final to emitted");
+    EXPECT_TRUE(strstr(report, "log[49].state_change_performed=1\n") != 0,
+        "log closeout observation change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[50].from=runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[50].to=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view-ready\n") != 0,
+        "log archive gate to emitted");
+    EXPECT_TRUE(strstr(report, "log[50].state_change_performed=1\n") != 0,
+        "log archive gate change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[51].from=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[51].to=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready\n") != 0,
+        "log final to emitted");
+    EXPECT_TRUE(strstr(report, "log[51].state_change_performed=1\n") != 0,
         "log final change emitted");
     return 0;
 }
@@ -698,7 +794,7 @@ static int null_guards_are_safe(void) {
 
 int main(void) {
     if (default_request_is_denied() != 0) return 1;
-    if (allowed_lifecycle_reaches_runtime_entry_recovery_audit_observation_view_ready()
+    if (allowed_lifecycle_reaches_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_ready()
             != 0) {
         return 1;
     }

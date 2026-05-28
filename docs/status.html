@@ -80,25 +80,63 @@
     </section>
 
     <section class="section-band">
-      <div class="content-shell status-summary">
+      <nav class="content-shell status-shortcuts" aria-label="Status dashboard shortcuts">
+        <a href="#status-records">
+          <span>01</span>
+          <strong>Source Records</strong>
+        </a>
+        <a href="#status-posture">
+          <span>02</span>
+          <strong>Posture</strong>
+        </a>
+        <a href="#status-workstreams">
+          <span>03</span>
+          <strong>Workstreams</strong>
+        </a>
+        <a href="#status-validation">
+          <span>04</span>
+          <strong>Validation</strong>
+        </a>
+        <a href="#status-estimate-rule">
+          <span>05</span>
+          <strong>Estimate Rule</strong>
+        </a>
+      </nav>
+
+      <div id="status-records" class="content-shell status-summary status-anchor">
         <div>
           <p class="eyebrow">Status Record</p>
-          <h2>Last public status update: May 26, 2026 CDT.</h2>
+          <h2>Last public status update: May 27, 2026 CDT.</h2>
           <p>
-            The authoritative records are the root status file and the detailed current-status record. This page is a navigation and summary surface for GitHub Pages readers.
+            The authoritative records are the root status file, the detailed current-status record, and the latest mathematical estimate rebase. This page is a navigation and summary surface for GitHub Pages readers.
           </p>
         </div>
-        <div class="status-actions">
-          <a class="button button-primary button-outline" href="https://github.com/Bryforge/Latticra/blob/main/STATUS.md">Root status</a>
-          <a class="button button-primary button-outline" href="status/CURRENT_STATUS.md">Current status</a>
-          <a class="button button-primary button-outline" href="roadmap.html">Roadmap</a>
-          <a class="button button-primary button-outline" href="validation.html">Validation</a>
-          <a class="button button-primary button-outline" href="status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md">Estimate rebase</a>
-        </div>
+        <nav class="status-source-grid" aria-label="Status source records">
+          <a href="status/CURRENT_STATUS.md">
+            <span>Current</span>
+            <strong>Detailed status</strong>
+            <em>Authoritative posture, latest notes, and public status alignment.</em>
+          </a>
+          <a href="https://github.com/Bryforge/Latticra/blob/main/STATUS.md">
+            <span>Root</span>
+            <strong>Root status</strong>
+            <em>Top-level project shortcut and public status summary.</em>
+          </a>
+          <a href="status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md">
+            <span>Estimate</span>
+            <strong>May 27 rebase</strong>
+            <em>Planning estimates and readiness boundaries, not product-readiness claims.</em>
+          </a>
+          <a href="map.html">
+            <span>Next</span>
+            <strong>Documentation map</strong>
+            <em>Continue from posture into contracts, evidence lanes, and validation records.</em>
+          </a>
+        </nav>
       </div>
     </section>
 
-    <section class="section-band section-band-muted">
+    <section id="status-posture" class="section-band section-band-muted status-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Posture</p>
         <h2>What is present, guarded, and not claimed.</h2>
@@ -130,7 +168,7 @@
       </div>
     </section>
 
-    <section class="section-band">
+    <section id="status-workstreams" class="section-band status-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Workstreams</p>
         <h2>Current public lanes at a glance.</h2>
@@ -204,7 +242,7 @@
       </div>
     </section>
 
-    <section class="section-band section-band-muted">
+    <section id="status-validation" class="section-band section-band-muted status-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Validation</p>
         <h2>Local checks preserve the no-effect posture.</h2>
@@ -232,7 +270,7 @@ cc -std=c99 -Wall -Wextra -pedantic src/latticra_cli.c -o build/latticra
       </div>
     </section>
 
-    <section class="section-band">
+    <section id="status-estimate-rule" class="section-band status-anchor">
       <div class="content-shell claim-strip">
         <div>
           <p class="eyebrow">Estimate Rule</p>
@@ -248,7 +286,13 @@ cc -std=c99 -Wall -Wextra -pedantic src/latticra_cli.c -o build/latticra
   <footer class="site-footer">
     <div class="content-shell footer-inner">
       <span>Latticra public status dashboard.</span>
-      <span><a href="map.html">Open documentation map</a></span>
+      <nav class="footer-links" aria-label="Status footer navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
     </div>
   </footer>
 </body>

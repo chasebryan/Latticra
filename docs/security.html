@@ -58,7 +58,34 @@
     </section>
 
     <section class="section-band">
-      <div class="content-shell security-intro">
+      <nav class="content-shell security-shortcuts" aria-label="Security section shortcuts">
+        <a href="#security-current-posture">
+          <span>01</span>
+          <strong>Posture</strong>
+        </a>
+        <a href="#security-report-areas">
+          <span>02</span>
+          <strong>Report Areas</strong>
+        </a>
+        <a href="#security-effect-gates">
+          <span>03</span>
+          <strong>Effect Gates</strong>
+        </a>
+        <a href="#security-runtime-boundary">
+          <span>04</span>
+          <strong>Runtime</strong>
+        </a>
+        <a href="#security-non-claims">
+          <span>05</span>
+          <strong>Non-Claims</strong>
+        </a>
+        <a href="#security-source-records">
+          <span>06</span>
+          <strong>Sources</strong>
+        </a>
+      </nav>
+
+      <div id="security-current-posture" class="content-shell security-intro security-anchor">
         <div>
           <p class="eyebrow">Current Posture</p>
           <h2>Defensive model, not production protection.</h2>
@@ -92,7 +119,7 @@
       </div>
     </section>
 
-    <section class="section-band section-band-muted">
+    <section id="security-report-areas" class="section-band section-band-muted security-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Security-Relevant Areas</p>
         <h2>What reports are most useful right now.</h2>
@@ -120,7 +147,7 @@
       </div>
     </section>
 
-    <section class="section-band">
+    <section id="security-effect-gates" class="section-band security-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Effect Gates</p>
         <h2>Classify before handling.</h2>
@@ -152,7 +179,7 @@
       </div>
     </section>
 
-    <section class="section-band section-band-muted">
+    <section id="security-runtime-boundary" class="section-band section-band-muted security-anchor">
       <div class="content-shell security-split">
         <div class="section-heading">
           <p class="eyebrow">Runtime Boundary</p>
@@ -178,7 +205,7 @@
       </div>
     </section>
 
-    <section class="section-band">
+    <section id="security-non-claims" class="section-band security-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Non-Claims</p>
         <h2>Do not describe previews as protection.</h2>
@@ -206,7 +233,7 @@
       </div>
     </section>
 
-    <section class="section-band section-band-muted">
+    <section id="security-source-records" class="section-band section-band-muted security-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Source Records</p>
         <h2>Use exact records when discussing security posture.</h2>
@@ -249,10 +276,16 @@
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer id="site-footer" class="site-footer">
     <div class="content-shell footer-inner">
       <span>Latticra security and boundaries.</span>
-      <span><a href="evidence.html">Open claims and evidence</a></span>
+      <nav class="footer-links" aria-label="Security footer navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
     </div>
   </footer>
 </body>

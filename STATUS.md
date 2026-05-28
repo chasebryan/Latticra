@@ -1,12 +1,12 @@
 # Latticra Status
 
 Status: public status shortcut
-Last updated: 2026-05-27 CDT
+Last updated: 2026-05-28 CDT
 Edge edition checkpoint: `v0.2.0edge`
 Documentation hub: [docs/README.md](docs/README.md)
 Latest current estimate refresh note: 2026-05-24 CDT
-Latest current estimate table source alignment note: 2026-05-26 CDT
-Latest current estimate mathematical rebase note: 2026-05-26 CDT
+Latest current estimate table source alignment note: 2026-05-27 CDT
+Latest current estimate mathematical rebase note: 2026-05-27 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
 Latest completion estimate review after runtime-boundary abuse-case fixtures note: 2026-05-25 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
@@ -51,6 +51,7 @@ Latest kernel lifecycle evidence status note: 2026-05-27 CDT
 Latest macOS reset/uninstall live-target classifier note: 2026-05-25 CDT
 Latest macOS reset/uninstall dry-run planner note: 2026-05-25 CDT
 Latest macOS reset/uninstall absence-report contract note: 2026-05-25 CDT
+Latest macOS reset/uninstall closeout audit chain status note: 2026-05-28 CDT
 Latest Seal README status row alignment note: 2026-05-25 CDT
 Latest Seal capability metadata report surface status note: 2026-05-26 CDT
 Latest Seal product spine note: 2026-05-26 CDT
@@ -342,22 +343,22 @@ docs/strategy/README.md
 
 | Area | Estimated completion |
 | --- | ---: |
-| Overall Latticra system | 45% |
-| Latticra Seal / local evidence layer | 39% |
-| Latticra Panel / local control surface | 32% |
-| Nadia offline AI foundation | 75% |
+| Overall Latticra system | 47% |
+| Latticra Seal / local evidence layer | 44% |
+| Latticra Panel / local control surface | 35% |
+| Nadia offline AI foundation | 77% |
 | L-UI parser / AST / string foundation | 87% |
-| Foundation documents and contracts | 95% |
-| Public documentation posture | 92% |
-| Strategy/status/funding framework | 63% |
+| Foundation documents and contracts | 96% |
+| Public documentation posture | 93% |
+| Strategy/status/funding framework | 65% |
 | Lat / Latticra Programming Language | 27% |
 | LIR / Intermediate Representation | 24% |
-| C/C++ foundation direction | 22% |
+| C/C++ foundation direction | 24% |
 | Constrained C++ authority layer | 5% |
-| Nucleus real task execution | 12% |
-| Runtime / operating-system-universe direction | 26% |
-| Security-hardening implementation | 10% |
-| Public product readiness | 10% |
+| Nucleus real task execution | 14% |
+| Runtime / operating-system-universe direction | 31% |
+| Security-hardening implementation | 13% |
+| Public product readiness | 12% |
 
 These percentages are planning estimates only. They are not release promises, production-readiness metrics, security guarantees, Fedora approval claims, Debian archive claims, FreeBSD ports-tree claims, OpenBSD ports-tree claims, runtime-enforcement claims, or operating-system completeness claims.
 
@@ -655,6 +656,12 @@ Kernel runtime entry recovery-disposition-observation-view seed
 Kernel runtime entry recovery-outcome-observation-view seed
 Kernel runtime entry recovery-closeout-observation-view seed
 Kernel runtime entry recovery-audit-observation-view seed
+Kernel runtime entry recovery-audit-review-observation-view seed
+Kernel runtime entry recovery-audit-review-disposition-observation-view seed
+Kernel runtime entry recovery-audit-review-disposition-review-observation-view seed
+Kernel runtime entry recovery-audit-review-disposition-review-closeout-observation-view seed
+Kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-observation-view seed
+Kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view seed
 Kernel lifecycle report runner
 Kernel lifecycle subsystem summary
 Kernel lifecycle rollback plan
@@ -2523,7 +2530,7 @@ Completion estimate review README/status alignment makes the latest estimate hol
 
 The current high-level estimate table above is the live reader-facing estimate source. Dated review records remain slice-specific evidence records and may preserve the estimate snapshot that applied when that review was written.
 
-Current estimate mathematical rebase records the live table as a weighted planning estimate after recent guarded Seal, Ubuntu, macOS, Nadia, Lat/LIR, kernel lifecycle, and public-entry alignment work. It changes the planning estimate table only; it does not change implementation behavior, security posture, public readiness, product readiness, runtime enforcement, or runtime authority.
+Current estimate mathematical rebase records the live table as a weighted planning estimate after recent guarded Seal hybrid/provider, Panel test UI, production installer/readiness gate, Nadia Stage-51, Nucleus kernel-coupling, kernel runtime-entry, security baseline, and public-entry alignment work. It changes the planning estimate table only; it does not change production behavior, security claims, public readiness claims, product readiness claims, runtime enforcement, or runtime authority.
 
 Current completion estimate review fields:
 

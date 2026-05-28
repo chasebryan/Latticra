@@ -17,6 +17,8 @@ It does not accept evidence, pass promotion, claim production installer readines
 ```text
 release_artifact_evidence_intake_validator_present=1
 release_artifact_evidence_intake_validation_mode=no-effect-validation
+release_artifact_evidence_template_present=1
+release_artifact_evidence_template_complete=0
 release_artifact_candidate_valid=0
 release_artifact_checksum_file_present=0
 release_artifact_sha256_matches=0

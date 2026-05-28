@@ -10,6 +10,156 @@ static void copy_literal(char *destination, size_t destination_len, const char *
     (void)snprintf(destination, destination_len, "%s", source != NULL ? source : "");
 }
 
+static size_t bounded_string_len(const char *value, size_t max_len, int *terminated) {
+    size_t i;
+
+    if (terminated != NULL) {
+        *terminated = 0;
+    }
+    if (value == NULL) {
+        return 0u;
+    }
+    for (i = 0u; i < max_len; ++i) {
+        if (value[i] == '\0') {
+            if (terminated != NULL) {
+                *terminated = 1;
+            }
+            return i;
+        }
+    }
+    return max_len;
+}
+
+static int text_field_valid(const char *value, size_t max_len) {
+    int terminated = 0;
+    size_t len = bounded_string_len(value, max_len, &terminated);
+
+    return terminated == 1 && len > 0u;
+}
+
+static int text_field_terminated(const char *value, size_t max_len) {
+    int terminated = 0;
+
+    (void)bounded_string_len(value, max_len, &terminated);
+    return terminated == 1;
+}
+
+static int bounded_string_is(const char *value, size_t max_len, const char *expected) {
+    int terminated = 0;
+    size_t value_len;
+    size_t expected_len;
+
+    if (value == NULL || expected == NULL) {
+        return 0;
+    }
+    value_len = bounded_string_len(value, max_len, &terminated);
+    if (terminated != 1) {
+        return 0;
+    }
+    expected_len = strlen(expected);
+    return value_len == expected_len && memcmp(value, expected, value_len) == 0;
+}
+
+static int boolean_flag_valid(unsigned value) {
+    return value == 0u || value == 1u;
+}
+
+static int verification_receipt_error_valid(
+    latticra_seal_verification_receipt_error_t error) {
+    switch (error) {
+    case LATTICRA_SEAL_VERIFICATION_RECEIPT_OK:
+    case LATTICRA_SEAL_VERIFICATION_RECEIPT_INVALID_INPUT:
+    case LATTICRA_SEAL_VERIFICATION_RECEIPT_INVALID_POLICY:
+    case LATTICRA_SEAL_VERIFICATION_RECEIPT_MISSING_DIGEST:
+    case LATTICRA_SEAL_VERIFICATION_RECEIPT_MISSING_SIGNER:
+    case LATTICRA_SEAL_VERIFICATION_RECEIPT_MISSING_PUBLIC_KEY_IDENTITY:
+        return 1;
+    default:
+        return 0;
+    }
+}
+
+static int verification_policy_error_valid(
+    latticra_seal_verification_policy_error_t error) {
+    switch (error) {
+    case LATTICRA_SEAL_VERIFICATION_POLICY_OK:
+    case LATTICRA_SEAL_VERIFICATION_POLICY_INVALID_INPUT:
+    case LATTICRA_SEAL_VERIFICATION_POLICY_INVALID_SIGNATURE:
+    case LATTICRA_SEAL_VERIFICATION_POLICY_MISSING_DIGEST:
+    case LATTICRA_SEAL_VERIFICATION_POLICY_MISSING_SIGNER:
+    case LATTICRA_SEAL_VERIFICATION_POLICY_MISSING_PUBLIC_KEY_IDENTITY:
+    case LATTICRA_SEAL_VERIFICATION_POLICY_UNSUPPORTED_ALGORITHM:
+        return 1;
+    default:
+        return 0;
+    }
+}
+
+static int verification_policy_flags_valid(
+    const latticra_seal_verification_policy_t *policy) {
+    if (policy == NULL) {
+        return 0;
+    }
+
+    return boolean_flag_valid(policy->cryptographic_verification_supported) &&
+           boolean_flag_valid(policy->cryptographic_verification_performed) &&
+           boolean_flag_valid(policy->public_key_material_handling) &&
+           boolean_flag_valid(policy->private_key_handling) &&
+           boolean_flag_valid(policy->network_lookup_allowed) &&
+           boolean_flag_valid(policy->revocation_lookup_allowed) &&
+           boolean_flag_valid(policy->runtime_authority_granted);
+}
+
+static int verification_policy_effects_clear(
+    const latticra_seal_verification_policy_t *policy) {
+    if (policy == NULL) {
+        return 0;
+    }
+
+    return policy->cryptographic_verification_supported == 0u &&
+           policy->cryptographic_verification_performed == 0u &&
+           policy->public_key_material_handling == 0u &&
+           policy->private_key_handling == 0u &&
+           policy->network_lookup_allowed == 0u &&
+           policy->revocation_lookup_allowed == 0u &&
+           policy->runtime_authority_granted == 0u;
+}
+
+static int verification_policy_strings_valid(
+    const latticra_seal_verification_policy_t *policy) {
+    if (policy == NULL) {
+        return 0;
+    }
+
+    return bounded_string_is(policy->verification_policy_profile,
+                             LATTICRA_SEAL_VERIFICATION_POLICY_PROFILE_MAX,
+                             "latticra-seal-verification-policy/0.1") &&
+           text_field_terminated(policy->signature_profile,
+                                 LATTICRA_SEAL_VERIFICATION_POLICY_PROFILE_MAX) &&
+           text_field_terminated(policy->manifest_profile,
+                                 LATTICRA_SEAL_VERIFICATION_POLICY_PROFILE_MAX) &&
+           text_field_terminated(policy->artifact_digest_algorithm,
+                                 LATTICRA_SEAL_VERIFICATION_POLICY_ALGORITHM_MAX) &&
+           text_field_terminated(policy->artifact_digest_hex,
+                                 LATTICRA_SEAL_VERIFICATION_POLICY_DIGEST_MAX) &&
+           text_field_terminated(policy->signer_identity_label,
+                                 LATTICRA_SEAL_VERIFICATION_POLICY_LABEL_MAX) &&
+           text_field_terminated(policy->signature_algorithm,
+                                 LATTICRA_SEAL_VERIFICATION_POLICY_ALGORITHM_MAX) &&
+           text_field_terminated(policy->public_key_identity_label,
+                                 LATTICRA_SEAL_VERIFICATION_POLICY_LABEL_MAX) &&
+           text_field_valid(policy->trust_source,
+                            LATTICRA_SEAL_VERIFICATION_POLICY_STATE_MAX) &&
+           bounded_string_is(policy->verification_state,
+                             LATTICRA_SEAL_VERIFICATION_POLICY_STATE_MAX,
+                             "unsupported") &&
+           verification_policy_error_valid(policy->error) &&
+           verification_policy_flags_valid(policy) &&
+           verification_policy_effects_clear(policy) &&
+           text_field_valid(policy->status,
+                            LATTICRA_SEAL_VERIFICATION_POLICY_STATE_MAX);
+}
+
 const char *latticra_seal_verification_receipt_error_label(
     latticra_seal_verification_receipt_error_t error) {
     switch (error) {
@@ -59,27 +209,47 @@ latticra_status_t latticra_seal_verification_receipt_from_policy(
         return LATTICRA_STATUS_OK;
     }
 
+    if (!verification_policy_strings_valid(policy)) {
+        out->error = LATTICRA_SEAL_VERIFICATION_RECEIPT_INVALID_POLICY;
+        copy_literal(out->status, sizeof(out->status), "invalid-policy");
+        return LATTICRA_STATUS_OK;
+    }
+
     if (policy->error != LATTICRA_SEAL_VERIFICATION_POLICY_OK) {
         out->error = LATTICRA_SEAL_VERIFICATION_RECEIPT_INVALID_POLICY;
         copy_literal(out->status, sizeof(out->status), "invalid-policy");
         return LATTICRA_STATUS_OK;
     }
 
-    if (policy->artifact_digest_hex[0] == '\0') {
+    if (!text_field_valid(policy->artifact_digest_hex,
+                          LATTICRA_SEAL_VERIFICATION_POLICY_DIGEST_MAX)) {
         out->error = LATTICRA_SEAL_VERIFICATION_RECEIPT_MISSING_DIGEST;
         copy_literal(out->status, sizeof(out->status), "missing-digest");
         return LATTICRA_STATUS_OK;
     }
 
-    if (policy->signer_identity_label[0] == '\0') {
+    if (!text_field_valid(policy->signer_identity_label,
+                          LATTICRA_SEAL_VERIFICATION_POLICY_LABEL_MAX)) {
         out->error = LATTICRA_SEAL_VERIFICATION_RECEIPT_MISSING_SIGNER;
         copy_literal(out->status, sizeof(out->status), "missing-signer");
         return LATTICRA_STATUS_OK;
     }
 
-    if (policy->public_key_identity_label[0] == '\0') {
+    if (!text_field_valid(policy->public_key_identity_label,
+                          LATTICRA_SEAL_VERIFICATION_POLICY_LABEL_MAX)) {
         out->error = LATTICRA_SEAL_VERIFICATION_RECEIPT_MISSING_PUBLIC_KEY_IDENTITY;
         copy_literal(out->status, sizeof(out->status), "missing-public-key-identity");
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (!bounded_string_is(policy->signature_algorithm,
+                           LATTICRA_SEAL_VERIFICATION_POLICY_ALGORITHM_MAX,
+                           "Ed25519-development") ||
+        !bounded_string_is(policy->status,
+                           LATTICRA_SEAL_VERIFICATION_POLICY_STATE_MAX,
+                           "verification-policy-metadata")) {
+        out->error = LATTICRA_SEAL_VERIFICATION_RECEIPT_INVALID_POLICY;
+        copy_literal(out->status, sizeof(out->status), "invalid-policy");
         return LATTICRA_STATUS_OK;
     }
 
@@ -105,7 +275,22 @@ latticra_status_t latticra_seal_verification_receipt_from_policy(
     return LATTICRA_STATUS_OK;
 }
 
-int latticra_seal_verification_receipt_is_unverified_metadata(
+static int verification_receipt_flags_valid(
+    const latticra_seal_verification_receipt_t *receipt) {
+    if (receipt == NULL) {
+        return 0;
+    }
+
+    return boolean_flag_valid(receipt->cryptographic_verification_supported) &&
+           boolean_flag_valid(receipt->cryptographic_verification_performed) &&
+           boolean_flag_valid(receipt->verified) &&
+           boolean_flag_valid(receipt->invalid) &&
+           boolean_flag_valid(receipt->authority_usable) &&
+           boolean_flag_valid(receipt->capability_gate_allowed) &&
+           boolean_flag_valid(receipt->runtime_authority_granted);
+}
+
+static int verification_receipt_effects_clear(
     const latticra_seal_verification_receipt_t *receipt) {
     if (receipt == NULL) {
         return 0;
@@ -120,6 +305,77 @@ int latticra_seal_verification_receipt_is_unverified_metadata(
            receipt->runtime_authority_granted == 0u;
 }
 
+static int verification_receipt_state_valid(
+    const latticra_seal_verification_receipt_t *receipt) {
+    if (receipt == NULL || !verification_receipt_error_valid(receipt->error)) {
+        return 0;
+    }
+    if (receipt->error == LATTICRA_SEAL_VERIFICATION_RECEIPT_OK) {
+        return text_field_valid(receipt->artifact_digest_hex,
+                                LATTICRA_SEAL_VERIFICATION_RECEIPT_DIGEST_MAX) &&
+               text_field_valid(receipt->signer_identity_label,
+                                LATTICRA_SEAL_VERIFICATION_RECEIPT_LABEL_MAX) &&
+               text_field_valid(receipt->public_key_identity_label,
+                                LATTICRA_SEAL_VERIFICATION_RECEIPT_LABEL_MAX) &&
+               bounded_string_is(receipt->signature_algorithm,
+                                 LATTICRA_SEAL_VERIFICATION_RECEIPT_ALGORITHM_MAX,
+                                 "Ed25519-development") &&
+               bounded_string_is(receipt->status,
+                                 LATTICRA_SEAL_VERIFICATION_RECEIPT_STATE_MAX,
+                                 "verification-receipt-metadata");
+    }
+
+    return text_field_valid(receipt->status,
+                            LATTICRA_SEAL_VERIFICATION_RECEIPT_STATE_MAX);
+}
+
+static int verification_receipt_record_valid(
+    const latticra_seal_verification_receipt_t *receipt) {
+    if (receipt == NULL) {
+        return 0;
+    }
+
+    return verification_receipt_effects_clear(receipt) &&
+           verification_receipt_flags_valid(receipt) &&
+           verification_receipt_state_valid(receipt) &&
+           bounded_string_is(receipt->receipt_profile,
+                             LATTICRA_SEAL_VERIFICATION_RECEIPT_PROFILE_MAX,
+                             "latticra-seal-verification-receipt/0.1") &&
+           text_field_terminated(receipt->verification_policy_profile,
+                                 LATTICRA_SEAL_VERIFICATION_RECEIPT_PROFILE_MAX) &&
+           text_field_terminated(receipt->signature_profile,
+                                 LATTICRA_SEAL_VERIFICATION_RECEIPT_PROFILE_MAX) &&
+           text_field_terminated(receipt->manifest_profile,
+                                 LATTICRA_SEAL_VERIFICATION_RECEIPT_PROFILE_MAX) &&
+           text_field_terminated(receipt->artifact_digest_algorithm,
+                                 LATTICRA_SEAL_VERIFICATION_RECEIPT_ALGORITHM_MAX) &&
+           text_field_terminated(receipt->artifact_digest_hex,
+                                 LATTICRA_SEAL_VERIFICATION_RECEIPT_DIGEST_MAX) &&
+           text_field_terminated(receipt->signer_identity_label,
+                                 LATTICRA_SEAL_VERIFICATION_RECEIPT_LABEL_MAX) &&
+           text_field_terminated(receipt->signature_algorithm,
+                                 LATTICRA_SEAL_VERIFICATION_RECEIPT_ALGORITHM_MAX) &&
+           text_field_terminated(receipt->public_key_identity_label,
+                                 LATTICRA_SEAL_VERIFICATION_RECEIPT_LABEL_MAX) &&
+           text_field_terminated(receipt->trust_source,
+                                 LATTICRA_SEAL_VERIFICATION_RECEIPT_STATE_MAX) &&
+           bounded_string_is(receipt->verification_state,
+                             LATTICRA_SEAL_VERIFICATION_RECEIPT_STATE_MAX,
+                             "unsupported") &&
+           bounded_string_is(receipt->receipt_state,
+                             LATTICRA_SEAL_VERIFICATION_RECEIPT_STATE_MAX,
+                             "unverified-metadata");
+}
+
+int latticra_seal_verification_receipt_is_unverified_metadata(
+    const latticra_seal_verification_receipt_t *receipt) {
+    if (receipt == NULL) {
+        return 0;
+    }
+
+    return verification_receipt_record_valid(receipt);
+}
+
 latticra_status_t latticra_seal_verification_receipt_report(
     const latticra_seal_verification_receipt_t *receipt,
     char *buffer,
@@ -127,6 +383,13 @@ latticra_status_t latticra_seal_verification_receipt_report(
     int written;
 
     if (receipt == NULL || buffer == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (buffer_len == 0u) {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    if (!verification_receipt_record_valid(receipt)) {
+        buffer[0] = '\0';
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 

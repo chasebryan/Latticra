@@ -84,6 +84,129 @@ release_artifact_signature_verified=0
 
 This closes the promotion-gate-presence gap only. It does not create, build, sign, publish, verify, install, or distribute a release artifact.
 
+## Installer Release Artifact Staging Directory
+
+The release-artifact staging directory is present as a tracked no-effect workspace path for a future production-installer artifact candidate:
+
+```text
+release_artifact_staging_directory_present=1
+release_artifact_staging_directory_path=artifacts/release
+release_artifact_staging_directory_no_effect=1
+release_artifact_candidate_parent_dir_exists=1
+release_artifact_created=0
+release_artifact_present=0
+source_archive_created=0
+rpm_build_invoked=0
+signature_created=0
+checksum_recorded=0
+release_artifact_evidence_written=0
+release_artifact_evidence_accepted=0
+release_artifact_promotion_gate_passed=0
+production_installer_ready=0
+host_mutation_performed=0
+```
+
+This closes the staging-directory-presence gap only. It does not create source archives, RPM artifacts, signatures, checksums, public keys, evidence records, promotion decisions, package-manager execution, or host mutation.
+
+## Installer Release Signing Identity Reference
+
+The release signing identity reference validator is present as a no-effect formatter for future signing identity evidence:
+
+```text
+release_signing_identity_reference_validator_present=1
+release_signing_identity_reference_mode=no-secret-inspection-reference-validation
+release_signing_identity_reference_no_effect=1
+release_signing_identity_reference_valid=0
+release_signing_identity_reference_present=0
+release_signing_identity_reference_fingerprint_format_valid=0
+release_artifact_signing_identity_reference_present=0
+release_artifact_signing_identity_reference_format_valid=0
+secret_key_inspection_performed=0
+secret_key_material_read=0
+secret_key_material_written=0
+signing_performed=0
+signature_created=0
+signature_verified=0
+release_artifact_signature_present=0
+release_artifact_signature_verified=0
+release_artifact_promotion_gate_passed=0
+production_installer_ready=0
+host_mutation_performed=0
+```
+
+This closes the signing-identity-reference-validator presence gap only. It does not inspect secret keys, prove key custody, create signatures, verify signatures, accept evidence, pass promotion, or mutate a host.
+
+## Installer Release Worktree Cleanliness Audit
+
+The release worktree cleanliness audit is present as a no-effect tracked-status report for the future production-installer release artifact candidate:
+
+```text
+release_worktree_cleanliness_audit_present=1
+release_worktree_cleanliness_audit_mode=no-effect-tracked-status-report
+release_worktree_cleanliness_required_for_release_candidate=1
+release_worktree_cleanliness_audit_passed=0
+release_worktree_tracked_worktree_clean=0
+release_worktree_tracked_dirty_count=<observed>
+release_worktree_dirty_inventory_present=1
+release_worktree_dirty_inventory_mode=stdout-only-tracked-status-list
+release_worktree_dirty_inventory_complete=<observed>
+release_worktree_dirty_inventory_count=<observed>
+release_worktree_dirty_inventory_written=0
+release_worktree_dirty_inventory_accepted=0
+release_worktree_cleanliness_remediation_required=<observed>
+release_artifact_candidate_tracked_worktree_clean=0
+release_artifact_candidate_tracked_dirty_count=<observed>
+release_artifact_candidate_inputs_satisfied=0
+git_add_performed=0
+git_commit_performed=0
+git_checkout_performed=0
+git_reset_performed=0
+git_clean_performed=0
+tracked_file_reverted=0
+release_artifact_promotion_gate_passed=0
+production_installer_ready=0
+host_mutation_performed=0
+```
+
+This closes the worktree-cleanliness-audit and stdout-only dirty-inventory presence gaps only. It does not stage, commit, checkout, reset, clean, revert, delete, write dirty-inventory evidence, create a release artifact, accept evidence, pass promotion, or mutate a host.
+
+## Installer Release Toolchain Availability Audit
+
+The release toolchain availability audit is present as a no-effect command-visibility report for the future production-installer release artifact candidate:
+
+```text
+release_toolchain_availability_audit_present=1
+release_toolchain_availability_audit_mode=no-effect-command-visibility-report
+release_toolchain_required_for_release_candidate=1
+release_toolchain_availability_audit_passed=0
+release_toolchain_ready=0
+git_available=<observed>
+tar_available=<observed>
+gzip_available=<observed>
+rpmbuild_available=0
+release_artifact_build_tool_available=0
+rpm_available=0
+release_artifact_query_tool_available=0
+gpg_available=<observed>
+sha256_tool_available=<observed>
+release_artifact_candidate_inputs_satisfied=0
+source_archive_created=0
+release_artifact_created=0
+rpm_build_invoked=0
+rpmbuild_invoked=0
+rpm_invoked=0
+signature_created=0
+artifact_signed=0
+signature_verified=0
+package_manager_invoked=0
+network_allowed=0
+release_artifact_promotion_gate_passed=0
+production_installer_ready=0
+host_mutation_performed=0
+```
+
+This closes the release-toolchain-availability-audit presence gap only. It does not install tools, invoke build or query tools, sign, verify, publish, accept evidence, pass promotion, invoke a package manager, use network access, or mutate a host.
+
 ## Installer Release Artifact Candidate Preflight
 
 The release-artifact candidate preflight is present as a no-effect local readiness report for a future tagged production-installer artifact candidate:
@@ -95,10 +218,19 @@ release_artifact_candidate_preflight_no_effect=1
 release_artifact_candidate_preflight_passed=0
 release_artifact_candidate_inputs_satisfied=0
 release_artifact_candidate_tag_exists=1
+release_artifact_candidate_parent_dir_exists=1
+release_worktree_cleanliness_audit_present=1
+release_worktree_cleanliness_required_for_release_candidate=1
 release_artifact_candidate_tracked_worktree_clean=0
+release_worktree_tracked_worktree_clean=0
+release_worktree_tracked_dirty_count=<observed>
+release_toolchain_availability_audit_present=1
+release_toolchain_required_for_release_candidate=1
+release_toolchain_ready=0
 release_artifact_build_tool_available=0
 release_artifact_query_tool_available=0
 release_artifact_signing_identity_reference_present=0
+release_artifact_signing_identity_reference_format_valid=0
 release_artifact_created=0
 source_archive_created=0
 rpm_build_invoked=0
@@ -114,6 +246,38 @@ host_mutation_performed=0
 
 This closes the release-artifact candidate preflight presence gap only. It does not create a source archive, build an RPM, sign an artifact, verify a signature, record a checksum, accept evidence, pass promotion, publish, install, invoke a package manager, or mutate a host.
 
+## Installer Release Artifact Evidence Template
+
+The release-artifact evidence template is present as a no-effect stdout-only template for a future release-artifact evidence bundle:
+
+```text
+release_artifact_evidence_template_present=1
+release_artifact_evidence_template_mode=no-effect-template
+release_artifact_evidence_template_decision=blocked-template-only-no-evidence-write
+release_artifact_evidence_template_complete=0
+release_artifact_evidence_intake_validator_present=1
+release_artifact_evidence_written_by_template=0
+release_artifact_evidence_accepted_by_template=0
+release_artifact_evidence_accepted_by_intake_validator=0
+release_artifact_evidence_written_by_intake_validator=0
+release_artifact_promotion_allowed_by_intake_validator_alone=0
+release_artifact_promotion_gate_passed=0
+release_artifact_created=0
+source_archive_created=0
+rpm_build_invoked=0
+rpmbuild_invoked=0
+rpm_invoked=0
+signature_created=0
+artifact_signed=0
+signature_verified=0
+package_manager_invoked=0
+network_allowed=0
+production_installer_ready=0
+host_mutation_performed=0
+```
+
+This closes the release-artifact evidence-template presence gap only. It does not create artifacts, calculate release hashes, write evidence files, accept evidence, pass promotion, invoke a package manager, use network access, or mutate a host.
+
 ## Installer Release Artifact Evidence Intake Validator
 
 The release-artifact evidence intake validator is present as a no-effect validator for a future tagged release artifact evidence bundle:
@@ -121,6 +285,8 @@ The release-artifact evidence intake validator is present as a no-effect validat
 ```text
 release_artifact_evidence_intake_validator_present=1
 release_artifact_evidence_intake_validation_mode=no-effect-validation
+release_artifact_evidence_template_present=1
+release_artifact_evidence_template_complete=0
 release_artifact_candidate_valid=0
 release_artifact_checksum_file_present=0
 release_artifact_sha256_matches=0
@@ -162,6 +328,34 @@ installer_sbom_recorded=0
 
 This closes the SBOM-status-presence gap only. It does not generate, review, sign, publish, or attach an SBOM to a release artifact.
 
+## Installer SBOM Evidence Template
+
+The production-installer SBOM evidence template is present as a no-effect stdout-only template for a future SBOM evidence bundle:
+
+```text
+sbom_evidence_template_present=1
+sbom_evidence_template_mode=no-effect-template
+sbom_evidence_template_decision=blocked-template-only-no-evidence-write
+sbom_evidence_template_complete=0
+sbom_evidence_intake_validator_present=1
+sbom_evidence_intake_validation_mode=no-effect-validation
+sbom_generated_by_template=0
+sbom_evidence_written_by_template=0
+sbom_evidence_accepted_by_template=0
+sbom_evidence_accepted_by_intake_validator=0
+sbom_evidence_written_by_intake_validator=0
+installer_sbom_promotion_allowed_by_intake_validator_alone=0
+release_artifact_promotion_gate_passed=0
+installer_sbom_recorded=0
+sbom_attached_to_release_artifact=0
+package_manager_invoked=0
+network_allowed=0
+production_installer_ready=0
+host_mutation_performed=0
+```
+
+This closes the SBOM evidence-template presence gap only. It does not generate an SBOM, calculate evidence hashes, write evidence files, accept evidence, attach an SBOM, pass promotion, invoke a package manager, use network access, or mutate a host.
+
 ## Installer SBOM Evidence Intake Validator
 
 The production-installer SBOM evidence intake validator is present as a no-effect validator for a future SBOM evidence bundle:
@@ -169,6 +363,8 @@ The production-installer SBOM evidence intake validator is present as a no-effec
 ```text
 sbom_evidence_intake_validator_present=1
 sbom_evidence_intake_validation_mode=no-effect-validation
+sbom_evidence_template_present=1
+sbom_evidence_template_complete=0
 sbom_evidence_candidate_valid=0
 sbom_artifact_file_present=0
 sbom_artifact_sha256_recorded=0
@@ -211,6 +407,38 @@ installer_post_removal_absence_verified=0
 
 This closes the transcript-status-presence gap only. It does not install, uninstall, invoke a package manager, verify absence on a host, write transcripts, or validate production installer behavior.
 
+## Installer Transcript Evidence Template
+
+The production-installer transcript evidence template is present as a no-effect stdout-only template for future dry-run install, uninstall, post-removal absence, and review evidence:
+
+```text
+transcript_evidence_template_present=1
+transcript_evidence_template_mode=no-effect-template
+transcript_evidence_template_decision=blocked-template-only-no-evidence-write
+transcript_evidence_template_complete=0
+transcript_evidence_intake_validator_present=1
+transcript_evidence_intake_validation_mode=no-effect-validation
+transcripts_created_by_template=0
+transcript_hashes_calculated_by_template=0
+transcript_evidence_written_by_template=0
+transcript_evidence_accepted_by_template=0
+transcript_evidence_accepted_by_intake_validator=0
+transcript_evidence_written_by_intake_validator=0
+installer_transcript_promotion_allowed_by_intake_validator_alone=0
+release_artifact_promotion_gate_passed=0
+installer_install_transcript_recorded=0
+installer_uninstall_transcript_recorded=0
+installer_post_removal_absence_verified=0
+install_performed=0
+uninstall_performed=0
+package_manager_invoked=0
+network_allowed=0
+production_installer_ready=0
+host_mutation_performed=0
+```
+
+This closes the transcript evidence-template presence gap only. It does not install, uninstall, create transcripts, calculate transcript hashes, write evidence files, accept evidence, pass promotion, invoke a package manager, use network access, or mutate a host.
+
 ## Installer Transcript Evidence Intake Validator
 
 The production-installer transcript evidence intake validator is present as a no-effect validator for future reviewed install, uninstall, and post-removal absence transcript evidence:
@@ -218,6 +446,8 @@ The production-installer transcript evidence intake validator is present as a no
 ```text
 transcript_evidence_intake_validator_present=1
 transcript_evidence_intake_validation_mode=no-effect-validation
+transcript_evidence_template_present=1
+transcript_evidence_template_complete=0
 transcript_evidence_candidate_valid=0
 install_transcript_file_present=0
 uninstall_transcript_file_present=0
@@ -489,7 +719,7 @@ installer_non_root_cli_validation_completed=0
 installer_root_boundary_validation_completed=0
 ```
 
-Existing Fedora host preflight and disposable VM evidence now feed the no-effect production-installer preflight guard, preview renderer, artifact integrity status, release-artifact promotion gate, release-artifact candidate preflight, release-artifact evidence intake validator, SBOM status, SBOM evidence intake validator, transcript status, transcript evidence intake validator, lifecycle validation status, lifecycle evidence intake validator, recovery failure-mode status, recovery evidence intake validator, multi-VM validation status, and multi-VM evidence intake validator. They still do not satisfy signed release artifact, reviewed SBOM, reviewed install/uninstall transcript, post-removal absence, upgrade, rollback, reinstall idempotence, reviewed recovery/failure-mode evidence, or reviewed multi-VM evidence gates.
+Existing Fedora host preflight and disposable VM evidence now feed the no-effect production-installer preflight guard, preview renderer, artifact integrity status, release-artifact promotion gate, release-artifact staging directory, release-artifact worktree cleanliness audit with stdout-only dirty inventory, release-artifact toolchain availability audit, release-artifact candidate preflight, release-artifact evidence template, release-artifact evidence intake validator, SBOM status, SBOM evidence template, SBOM evidence intake validator, transcript status, transcript evidence template, transcript evidence intake validator, lifecycle validation status, lifecycle evidence intake validator, recovery failure-mode status, recovery evidence intake validator, multi-VM validation status, and multi-VM evidence intake validator. They still do not satisfy clean release worktree, complete release build/query toolchain, completed release artifact evidence bundle, signed release artifact, reviewed SBOM, reviewed install/uninstall transcript, post-removal absence, upgrade, rollback, reinstall idempotence, reviewed recovery/failure-mode evidence, or reviewed multi-VM evidence gates.
 
 ## Nadia Blockers
 
@@ -517,20 +747,25 @@ Recommended sequence before any production-quality claim changes:
 ```text
 1. Keep make quality passing after each slice.
 2. Keep the no-effect production-installer preflight guard and preview renderer bound to the Fedora host preflight and local artifact manifest fixture.
-3. Run the release-artifact candidate preflight against the intended tag, artifact path, and signing identity reference.
-4. Create a tagged release artifact candidate and validate its checksum, signature, public-key, verification, reproducibility, and review evidence with the release-artifact evidence intake validator.
-5. Rerun the promotion gate only after validated release artifact evidence exists.
-6. Generate and review a production-installer SBOM for the tagged release artifact candidate.
-7. Validate the SBOM, dependency review, vulnerability review, license review, and final SBOM review evidence with the SBOM evidence intake validator.
-8. Run a disposable Fedora VM production-installer dry-run and attach reviewed install, uninstall, and post-removal absence transcript evidence.
-9. Validate install, uninstall, post-removal absence, and transcript-review evidence with the transcript evidence intake validator.
-10. Attach reviewed upgrade, rollback, and reinstall idempotence transcripts from disposable Fedora VM production-installer lifecycle validation.
-11. Validate upgrade, rollback, reinstall idempotence, and lifecycle-review evidence with the lifecycle evidence intake validator.
-12. Create and review the production-installer recovery runbook, failure-mode register, recovery drill transcript, rollback drill transcript, and operator recovery receipt.
-13. Validate recovery runbook, failure-mode register, recovery drill, rollback drill, operator receipt, and review evidence with the recovery evidence intake validator.
-14. Attach reviewed fresh VM, repeat VM, existing-install upgrade, remove-and-reinstall, unsupported-target block, non-root CLI, root-boundary, checksum verification, and package-signature verification evidence from disposable production-installer validation.
-15. Validate fresh VM, repeat VM, existing-install upgrade, remove-and-reinstall, unsupported-target block, non-root CLI, root-boundary, checksum verification, package-signature verification, and review evidence with the multi-VM evidence intake validator.
-16. Reassess public readiness labels only after every blocker is closed.
+3. Run the release-artifact worktree cleanliness audit, review the stdout-only tracked dirty inventory, and keep the tracked worktree clean before candidate promotion evidence.
+4. Run the release-artifact toolchain availability audit in the intended disposable release environment.
+5. Run the release-artifact candidate preflight against the intended tag, artifact path, and signing identity reference.
+6. Print the release-artifact evidence template and fill it only from real artifact, checksum, signature, public-key, verification, reproducibility, and review files.
+7. Create a tagged release artifact candidate and validate its checksum, signature, public-key, verification, reproducibility, and review evidence with the release-artifact evidence intake validator.
+8. Rerun the promotion gate only after validated release artifact evidence exists.
+9. Generate and review a production-installer SBOM for the tagged release artifact candidate.
+10. Print the SBOM evidence template and fill it only from real SBOM, dependency-review, vulnerability-review, license-review, and final-review files.
+11. Validate the SBOM, dependency review, vulnerability review, license review, and final SBOM review evidence with the SBOM evidence intake validator.
+12. Run a disposable Fedora VM production-installer dry-run and attach reviewed install, uninstall, and post-removal absence transcript evidence.
+13. Print the transcript evidence template and fill it only from real install, uninstall, post-removal absence, and review transcript files.
+14. Validate install, uninstall, post-removal absence, and transcript-review evidence with the transcript evidence intake validator.
+15. Attach reviewed upgrade, rollback, and reinstall idempotence transcripts from disposable Fedora VM production-installer lifecycle validation.
+16. Validate upgrade, rollback, reinstall idempotence, and lifecycle-review evidence with the lifecycle evidence intake validator.
+17. Create and review the production-installer recovery runbook, failure-mode register, recovery drill transcript, rollback drill transcript, and operator recovery receipt.
+18. Validate recovery runbook, failure-mode register, recovery drill, rollback drill, operator receipt, and review evidence with the recovery evidence intake validator.
+19. Attach reviewed fresh VM, repeat VM, existing-install upgrade, remove-and-reinstall, unsupported-target block, non-root CLI, root-boundary, checksum verification, and package-signature verification evidence from disposable production-installer validation.
+20. Validate fresh VM, repeat VM, existing-install upgrade, remove-and-reinstall, unsupported-target block, non-root CLI, root-boundary, checksum verification, package-signature verification, and review evidence with the multi-VM evidence intake validator.
+21. Reassess public readiness labels only after every blocker is closed.
 ```
 
 ## Non-Claims

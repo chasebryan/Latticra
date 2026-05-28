@@ -100,6 +100,22 @@ sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-dispositio
 sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
 sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh
 sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh
+sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh
+sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
+sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh
+sh scripts/test-ubuntu-ppa-evidence-intake-denial-closeout-archive-gate-follow-on-contract.sh
+sh scripts/test-ubuntu-ppa-evidence-intake-denial-closeout-archive-gate-review-follow-on-contract.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-archive-gate-review-disposition-follow-on.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-archive-gate-review-disposition-closeout-follow-on.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-archive-gate-review-disposition-closeout-archive-gate.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-archive-gate-review-disposition-closeout-gate-review.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-archive-gate.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-archive-gate-review.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-disposition.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-closeout.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate.sh
 sh scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 ```
 
@@ -143,6 +159,16 @@ sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-a
 sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
 sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh
 sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh
+sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh
+sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
+sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh
+sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-contract.sh
+sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-contract.sh
+sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-contract.sh
+sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-contract.sh
+sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh
+sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh
+sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
 ```
 
 ## Run

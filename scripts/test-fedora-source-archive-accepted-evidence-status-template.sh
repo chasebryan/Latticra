@@ -200,7 +200,7 @@ require_contains 'Status: source-archive-accepted-evidence-status-template/statu
 require_contains 'Date: 2026-05-27' "$status"
 require_contains 'does not attach, write, or accept source archive evidence' "$status"
 require_contains 'does not open source archive evidence as mock build input' "$status"
-require_contains 'Add a Fedora RPM install/remove transcript contract' "$status"
+require_contains 'Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract' "$status"
 
 require_contains 'FEDORA_SOURCE_ARCHIVE_ACCEPTED_EVIDENCE_STATUS_TEMPLATE_STATUS.md' "$index"
 require_contains 'Current Fedora source archive accepted evidence status template checkpoint' "$index"

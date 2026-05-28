@@ -84,7 +84,7 @@ fedora_local_mock_build_environment_contract: ok
 ## Next recommended lane
 
 ```text
-Add a Fedora RPM install/remove transcript contract before any RPM install evidence can be accepted.
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
 ```
 
 ## Non-claims

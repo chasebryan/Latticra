@@ -45,8 +45,11 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
     latticra_q_seal_readiness_t *out) {
     latticra_q_seal_foundation_t foundation;
     latticra_q_seal_ml_kem_evidence_gate_t evidence_gate;
+    latticra_q_seal_ml_kem_fips_conformance_matrix_t fips_conformance_matrix;
+    latticra_q_seal_ml_kem_sp800_227_usage_profile_t sp800_227_usage_profile;
     latticra_q_seal_ml_kem_kat_manifest_t kat_manifest;
     latticra_q_seal_ml_kem_kat_runner_contract_t kat_runner_contract;
+    latticra_q_seal_ml_kem_kat_acvp_replay_transcript_gate_t replay_transcript_gate;
     latticra_q_seal_ml_kem_kat_result_schema_t kat_result_schema;
     latticra_q_seal_ml_kem_kat_result_row_fixture_t kat_result_row_fixture;
     latticra_q_seal_ml_kem_acvp_intake_t acvp_intake;
@@ -81,6 +84,19 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
     latticra_q_seal_ml_kem_side_channel_review_t side_channel_review;
     latticra_q_seal_ml_kem_provider_differential_t provider_differential;
     latticra_q_seal_ml_kem_implementation_binding_manifest_t implementation_binding_manifest;
+    latticra_q_seal_ml_kem_source_layout_gate_t source_layout_gate;
+    latticra_q_seal_ml_kem_implementation_file_digest_plan_t
+        implementation_file_digest_plan;
+    latticra_q_seal_ml_kem_clean_room_author_attestation_gate_t
+        clean_room_author_attestation_gate;
+    latticra_q_seal_ml_kem_per_file_standards_trace_gate_t
+        per_file_standards_trace_gate;
+    latticra_q_seal_ml_kem_per_file_test_trace_gate_t
+        per_file_test_trace_gate;
+    latticra_q_seal_ml_kem_implementation_traceability_matrix_t
+        implementation_traceability_matrix;
+    latticra_q_seal_ml_kem_primitive_source_acceptance_gate_t
+        primitive_source_acceptance_gate;
     latticra_q_seal_ml_kem_implementation_frame_t implementation_frame;
     latticra_q_seal_ml_kem_secret_state_contract_t secret_state_contract;
     unsigned foundation_clean_room;
@@ -93,10 +109,16 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
     if (latticra_q_seal_foundation_prepare(&foundation) != LATTICRA_Q_SEAL_STATUS_OK ||
         latticra_q_seal_ml_kem_evidence_gate_prepare(&evidence_gate) !=
             LATTICRA_Q_SEAL_STATUS_OK ||
+        latticra_q_seal_ml_kem_fips_conformance_matrix_prepare(
+            &fips_conformance_matrix) != LATTICRA_Q_SEAL_STATUS_OK ||
+        latticra_q_seal_ml_kem_sp800_227_usage_profile_prepare(
+            &sp800_227_usage_profile) != LATTICRA_Q_SEAL_STATUS_OK ||
         latticra_q_seal_ml_kem_kat_manifest_prepare(&kat_manifest) !=
             LATTICRA_Q_SEAL_STATUS_OK ||
         latticra_q_seal_ml_kem_kat_runner_contract_prepare(&kat_runner_contract) !=
             LATTICRA_Q_SEAL_STATUS_OK ||
+        latticra_q_seal_ml_kem_kat_acvp_replay_transcript_gate_prepare(
+            &replay_transcript_gate) != LATTICRA_Q_SEAL_STATUS_OK ||
         latticra_q_seal_ml_kem_kat_result_schema_prepare(&kat_result_schema) !=
             LATTICRA_Q_SEAL_STATUS_OK ||
         latticra_q_seal_ml_kem_kat_result_row_fixture_prepare(
@@ -161,6 +183,20 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
             LATTICRA_Q_SEAL_STATUS_OK ||
         latticra_q_seal_ml_kem_implementation_binding_manifest_prepare(
             &implementation_binding_manifest) != LATTICRA_Q_SEAL_STATUS_OK ||
+        latticra_q_seal_ml_kem_source_layout_gate_prepare(&source_layout_gate) !=
+            LATTICRA_Q_SEAL_STATUS_OK ||
+        latticra_q_seal_ml_kem_implementation_file_digest_plan_prepare(
+            &implementation_file_digest_plan) != LATTICRA_Q_SEAL_STATUS_OK ||
+        latticra_q_seal_ml_kem_clean_room_author_attestation_gate_prepare(
+            &clean_room_author_attestation_gate) != LATTICRA_Q_SEAL_STATUS_OK ||
+        latticra_q_seal_ml_kem_per_file_standards_trace_gate_prepare(
+            &per_file_standards_trace_gate) != LATTICRA_Q_SEAL_STATUS_OK ||
+        latticra_q_seal_ml_kem_per_file_test_trace_gate_prepare(
+            &per_file_test_trace_gate) != LATTICRA_Q_SEAL_STATUS_OK ||
+        latticra_q_seal_ml_kem_implementation_traceability_matrix_prepare(
+            &implementation_traceability_matrix) != LATTICRA_Q_SEAL_STATUS_OK ||
+        latticra_q_seal_ml_kem_primitive_source_acceptance_gate_prepare(
+            &primitive_source_acceptance_gate) != LATTICRA_Q_SEAL_STATUS_OK ||
         latticra_q_seal_ml_kem_implementation_frame_prepare(&implementation_frame) !=
             LATTICRA_Q_SEAL_STATUS_OK ||
         latticra_q_seal_ml_kem_secret_state_contract_prepare(&secret_state_contract) !=
@@ -180,7 +216,7 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
     copy_literal(
         out->standards_basis,
         sizeof(out->standards_basis),
-        "NIST-FIPS-203-and-NIST-ACVP-ML-KEM");
+        "NIST-FIPS-203,NIST-SP-800-227,NIST-ACVP-ML-KEM");
     copy_literal(out->source_boundary, sizeof(out->source_boundary), "clean-room-no-apple-code");
     copy_literal(
         out->readiness_state,
@@ -203,9 +239,15 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         out->ml_kem_768_parameters_present == 1u &&
         out->ml_kem_1024_parameters_present == 1u;
     out->evidence_gate_present = evidence_gate.ml_kem_evidence_gate_present;
+    out->fips_conformance_matrix_present =
+        fips_conformance_matrix.fips_conformance_matrix_present;
+    out->sp800_227_usage_profile_present =
+        sp800_227_usage_profile.sp800_227_usage_profile_present;
     out->kat_manifest_present = kat_manifest.ml_kem_kat_manifest_present;
     out->kat_runner_contract_present =
         kat_runner_contract.kat_runner_contract_present;
+    out->replay_transcript_gate_present =
+        replay_transcript_gate.replay_transcript_gate_present;
     out->kat_result_schema_present = kat_result_schema.kat_result_schema_present;
     out->kat_result_row_fixture_present =
         kat_result_row_fixture.kat_result_row_fixture_present;
@@ -266,13 +308,30 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         provider_differential.provider_differential_contract_present;
     out->implementation_binding_manifest_present =
         implementation_binding_manifest.implementation_binding_manifest_present;
+    out->source_layout_gate_present =
+        source_layout_gate.source_layout_gate_present;
+    out->implementation_file_digest_plan_present =
+        implementation_file_digest_plan.implementation_file_digest_plan_present;
+    out->clean_room_author_attestation_gate_present =
+        clean_room_author_attestation_gate.clean_room_author_attestation_gate_present;
+    out->per_file_standards_trace_gate_present =
+        per_file_standards_trace_gate.per_file_standards_trace_gate_present;
+    out->per_file_test_trace_gate_present =
+        per_file_test_trace_gate.per_file_test_trace_gate_present;
+    out->implementation_traceability_matrix_present =
+        implementation_traceability_matrix.implementation_traceability_matrix_present;
+    out->primitive_source_acceptance_gate_present =
+        primitive_source_acceptance_gate.primitive_source_acceptance_gate_present;
     out->implementation_frame_present = implementation_frame.implementation_frame_present;
     out->secret_state_contract_present =
         secret_state_contract.secret_state_contract_present;
     out->clean_room_boundary_recorded =
         foundation_clean_room == 1u &&
+        fips_conformance_matrix.clean_room_source_boundary_recorded == 1u &&
+        sp800_227_usage_profile.clean_room_source_boundary_recorded == 1u &&
         kat_manifest.clean_room_source_boundary_recorded == 1u &&
         kat_runner_contract.clean_room_source_boundary_recorded == 1u &&
+        replay_transcript_gate.clean_room_source_boundary_recorded == 1u &&
         kat_result_schema.clean_room_source_boundary_recorded == 1u &&
         kat_result_row_fixture.clean_room_source_boundary_recorded == 1u &&
         acvp_capability_matrix.clean_room_source_boundary_recorded == 1u &&
@@ -289,13 +348,23 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         vector_fixture_lock.clean_room_source_boundary_recorded == 1u &&
         vector_fixture_digest_ledger.clean_room_source_boundary_recorded == 1u &&
         implementation_binding_manifest.clean_room_source_boundary_recorded == 1u &&
+        source_layout_gate.clean_room_source_boundary_recorded == 1u &&
+        implementation_file_digest_plan.clean_room_source_boundary_recorded == 1u &&
+        clean_room_author_attestation_gate.clean_room_source_boundary_recorded == 1u &&
+        per_file_standards_trace_gate.clean_room_source_boundary_recorded == 1u &&
+        per_file_test_trace_gate.clean_room_source_boundary_recorded == 1u &&
+        implementation_traceability_matrix.clean_room_source_boundary_recorded == 1u &&
+        primitive_source_acceptance_gate.clean_room_source_boundary_recorded == 1u &&
         implementation_frame.clean_room_source_boundary_recorded == 1u &&
         secret_state_contract.clean_room_source_boundary_recorded == 1u;
     out->apple_corecrypto_code_copied =
         foundation.apple_corecrypto_code_copied |
         evidence_gate.apple_corecrypto_code_copied |
+        fips_conformance_matrix.apple_corecrypto_code_copied |
+        sp800_227_usage_profile.apple_corecrypto_code_copied |
         kat_manifest.apple_corecrypto_code_copied |
         kat_runner_contract.apple_corecrypto_code_copied |
+        replay_transcript_gate.apple_corecrypto_code_copied |
         kat_result_schema.apple_corecrypto_code_copied |
         kat_result_row_fixture.apple_corecrypto_code_copied |
         acvp_capability_matrix.apple_corecrypto_code_copied |
@@ -312,11 +381,21 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         vector_fixture_lock.apple_corecrypto_code_copied |
         vector_fixture_digest_ledger.apple_corecrypto_code_copied |
         implementation_binding_manifest.apple_corecrypto_code_copied |
+        source_layout_gate.apple_corecrypto_code_copied |
+        implementation_file_digest_plan.apple_corecrypto_code_copied |
+        clean_room_author_attestation_gate.apple_corecrypto_code_copied |
+        per_file_standards_trace_gate.apple_corecrypto_code_copied |
+        per_file_test_trace_gate.apple_corecrypto_code_copied |
+        implementation_traceability_matrix.apple_corecrypto_code_copied |
+        primitive_source_acceptance_gate.apple_corecrypto_code_copied |
         implementation_frame.apple_corecrypto_code_copied |
         secret_state_contract.apple_corecrypto_code_copied;
     out->external_provider_code_copied =
+        fips_conformance_matrix.external_provider_code_copied |
+        sp800_227_usage_profile.external_provider_code_copied |
         kat_manifest.external_provider_code_copied |
         kat_runner_contract.external_provider_code_copied |
+        replay_transcript_gate.external_provider_code_copied |
         kat_result_schema.external_provider_code_copied |
         kat_result_row_fixture.external_provider_code_copied |
         acvp_capability_matrix.external_provider_code_copied |
@@ -333,18 +412,28 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         vector_fixture_lock.external_provider_code_copied |
         vector_fixture_digest_ledger.external_provider_code_copied |
         implementation_binding_manifest.external_provider_code_copied |
+        source_layout_gate.external_provider_code_copied |
+        implementation_file_digest_plan.external_provider_code_copied |
+        clean_room_author_attestation_gate.external_provider_code_copied |
+        per_file_standards_trace_gate.external_provider_code_copied |
+        per_file_test_trace_gate.external_provider_code_copied |
+        implementation_traceability_matrix.external_provider_code_copied |
+        primitive_source_acceptance_gate.external_provider_code_copied |
         implementation_frame.external_provider_code_copied |
         secret_state_contract.external_provider_code_copied;
     out->provider_runtime_used =
         foundation.provider_runtime_used |
         provider_differential.provider_runtime_used;
-    out->components_total = 39u;
+    out->components_total = 49u;
     out->components_present =
         one_if(out->foundation_present) +
         one_if(out->ml_kem_parameters_present) +
         one_if(out->evidence_gate_present) +
+        one_if(out->fips_conformance_matrix_present) +
+        one_if(out->sp800_227_usage_profile_present) +
         one_if(out->kat_manifest_present) +
         one_if(out->kat_runner_contract_present) +
+        one_if(out->replay_transcript_gate_present) +
         one_if(out->kat_result_schema_present) +
         one_if(out->kat_result_row_fixture_present) +
         one_if(out->acvp_intake_present) +
@@ -377,14 +466,30 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         one_if(out->side_channel_review_present) +
         one_if(out->provider_differential_present) +
         one_if(out->implementation_binding_manifest_present) +
+        one_if(out->source_layout_gate_present) +
+        one_if(out->implementation_file_digest_plan_present) +
+        one_if(out->clean_room_author_attestation_gate_present) +
+        one_if(out->per_file_standards_trace_gate_present) +
+        one_if(out->per_file_test_trace_gate_present) +
+        one_if(out->implementation_traceability_matrix_present) +
+        one_if(out->primitive_source_acceptance_gate_present) +
         one_if(out->implementation_frame_present) +
         one_if(out->secret_state_contract_present);
     out->runtime_blockers_total =
         one_if(!latticra_q_seal_ml_kem_evidence_gate_allows_operations(&evidence_gate)) +
+        one_if(
+            !latticra_q_seal_ml_kem_fips_conformance_matrix_allows_implementation_trace_acceptance(
+                &fips_conformance_matrix)) +
+        one_if(
+            !latticra_q_seal_ml_kem_sp800_227_usage_profile_allows_kem_usage_acceptance(
+                &sp800_227_usage_profile)) +
         one_if(!latticra_q_seal_ml_kem_kat_manifest_allows_kat_execution(
             &kat_manifest)) +
         one_if(!latticra_q_seal_ml_kem_kat_runner_contract_allows_runner_execution(
             &kat_runner_contract)) +
+        one_if(
+            !latticra_q_seal_ml_kem_kat_acvp_replay_transcript_gate_allows_transcript_acceptance(
+                &replay_transcript_gate)) +
         one_if(!latticra_q_seal_ml_kem_kat_result_schema_allows_result_recording(
             &kat_result_schema)) +
         one_if(!latticra_q_seal_ml_kem_kat_result_row_fixture_allows_result_rows(
@@ -450,6 +555,26 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
             &provider_differential)) +
         one_if(!latticra_q_seal_ml_kem_implementation_binding_manifest_allows_implementation(
             &implementation_binding_manifest)) +
+        one_if(!latticra_q_seal_ml_kem_source_layout_gate_allows_layout_acceptance(
+            &source_layout_gate)) +
+        one_if(
+            !latticra_q_seal_ml_kem_implementation_file_digest_plan_allows_digest_row_acceptance(
+                &implementation_file_digest_plan)) +
+        one_if(
+            !latticra_q_seal_ml_kem_clean_room_author_attestation_gate_allows_attestation_acceptance(
+                &clean_room_author_attestation_gate)) +
+        one_if(
+            !latticra_q_seal_ml_kem_per_file_standards_trace_gate_allows_trace_acceptance(
+                &per_file_standards_trace_gate)) +
+        one_if(
+            !latticra_q_seal_ml_kem_per_file_test_trace_gate_allows_trace_acceptance(
+                &per_file_test_trace_gate)) +
+        one_if(
+            !latticra_q_seal_ml_kem_implementation_traceability_matrix_allows_trace_acceptance(
+                &implementation_traceability_matrix)) +
+        one_if(
+            !latticra_q_seal_ml_kem_primitive_source_acceptance_gate_allows_source_acceptance(
+                &primitive_source_acceptance_gate)) +
         one_if(!latticra_q_seal_ml_kem_implementation_frame_allows_implementation(
             &implementation_frame)) +
         one_if(!latticra_q_seal_ml_kem_secret_state_contract_allows_operations(
@@ -458,8 +583,11 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         2u +
         3u +
         evidence_gate.required_evidence_items_total +
+        fips_conformance_matrix.required_conformance_items_total +
+        sp800_227_usage_profile.required_usage_items_total +
         kat_manifest.required_kat_manifest_items_total +
         kat_runner_contract.required_kat_runner_contract_items_total +
+        replay_transcript_gate.required_transcript_items_total +
         kat_result_schema.required_kat_result_schema_items_total +
         kat_result_row_fixture.required_kat_result_row_fixture_items_total +
         acvp_intake.required_intake_items_total +
@@ -492,6 +620,13 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         side_channel_review.required_review_items_total +
         provider_differential.required_comparison_items_total +
         implementation_binding_manifest.required_binding_items_total +
+        source_layout_gate.required_layout_items_total +
+        implementation_file_digest_plan.required_digest_plan_items_total +
+        clean_room_author_attestation_gate.required_attestation_items_total +
+        per_file_standards_trace_gate.required_standards_trace_items_total +
+        per_file_test_trace_gate.required_test_trace_items_total +
+        implementation_traceability_matrix.required_traceability_items_total +
+        primitive_source_acceptance_gate.required_acceptance_items_total +
         implementation_frame.required_design_items_total +
         secret_state_contract.required_secret_state_items_total;
     out->required_readiness_items_satisfied =
@@ -501,8 +636,11 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         out->ml_kem_768_parameters_present +
         out->ml_kem_1024_parameters_present +
         evidence_gate.required_evidence_items_satisfied +
+        fips_conformance_matrix.required_conformance_items_satisfied +
+        sp800_227_usage_profile.required_usage_items_satisfied +
         kat_manifest.required_kat_manifest_items_satisfied +
         kat_runner_contract.required_kat_runner_contract_items_satisfied +
+        replay_transcript_gate.required_transcript_items_satisfied +
         kat_result_schema.required_kat_result_schema_items_satisfied +
         kat_result_row_fixture.required_kat_result_row_fixture_items_satisfied +
         acvp_intake.required_intake_items_satisfied +
@@ -535,6 +673,13 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         side_channel_review.required_review_items_satisfied +
         provider_differential.required_comparison_items_satisfied +
         implementation_binding_manifest.required_binding_items_satisfied +
+        source_layout_gate.required_layout_items_satisfied +
+        implementation_file_digest_plan.required_digest_plan_items_satisfied +
+        clean_room_author_attestation_gate.required_attestation_items_satisfied +
+        per_file_standards_trace_gate.required_standards_trace_items_satisfied +
+        per_file_test_trace_gate.required_test_trace_items_satisfied +
+        implementation_traceability_matrix.required_traceability_items_satisfied +
+        primitive_source_acceptance_gate.required_acceptance_items_satisfied +
         implementation_frame.required_design_items_satisfied +
         secret_state_contract.required_secret_state_items_satisfied;
     out->design_frame_integration_ready =
@@ -556,7 +701,7 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
     copy_literal(
         out->blocked_reason,
         sizeof(out->blocked_reason),
-        "implementation-kat-manifest-kat-runner-contract-kat-result-schema-kat-result-row-fixture-acvp-parser-response-fixture-submission-package-vector-fixture-negative-memory-api-source-digest-review-ci-binding-randomness-zeroization-side-channel-evidence-missing");
+        "primitive-source-acceptance-source-layout-clean-room-author-attestation-per-file-standards-trace-per-file-test-trace-implementation-file-digest-plan-implementation-traceability-fips-conformance-sp800-227-usage-kat-manifest-kat-runner-contract-replay-transcript-gate-kat-result-schema-kat-result-row-fixture-acvp-parser-response-fixture-submission-package-vector-fixture-negative-memory-api-source-digest-review-ci-binding-randomness-zeroization-side-channel-evidence-missing");
     out->error = LATTICRA_Q_SEAL_READINESS_BLOCKED;
     copy_literal(out->status, sizeof(out->status), "q-seal-readiness-profile-blocked");
     return LATTICRA_Q_SEAL_STATUS_OK;
@@ -569,7 +714,7 @@ int latticra_q_seal_readiness_is_design_frame_ready(
     }
 
     return readiness->readiness_profile_present == 1u &&
-           readiness->components_total == 39u &&
+           readiness->components_total == 49u &&
            readiness->components_present == readiness->components_total &&
            readiness->clean_room_boundary_recorded == 1u &&
            readiness->apple_corecrypto_code_copied == 0u &&
@@ -629,8 +774,11 @@ latticra_q_seal_status_t latticra_q_seal_readiness_report(
         "ml_kem_768_parameters_present=%u\n"
         "ml_kem_1024_parameters_present=%u\n"
         "evidence_gate_present=%u\n"
+        "fips_conformance_matrix_present=%u\n"
+        "sp800_227_usage_profile_present=%u\n"
         "kat_manifest_present=%u\n"
         "kat_runner_contract_present=%u\n"
+        "replay_transcript_gate_present=%u\n"
         "kat_result_schema_present=%u\n"
         "kat_result_row_fixture_present=%u\n"
         "acvp_intake_present=%u\n"
@@ -663,6 +811,13 @@ latticra_q_seal_status_t latticra_q_seal_readiness_report(
         "side_channel_review_present=%u\n"
         "provider_differential_present=%u\n"
         "implementation_binding_manifest_present=%u\n"
+        "source_layout_gate_present=%u\n"
+        "implementation_file_digest_plan_present=%u\n"
+        "clean_room_author_attestation_gate_present=%u\n"
+        "per_file_standards_trace_gate_present=%u\n"
+        "per_file_test_trace_gate_present=%u\n"
+        "implementation_traceability_matrix_present=%u\n"
+        "primitive_source_acceptance_gate_present=%u\n"
         "implementation_frame_present=%u\n"
         "secret_state_contract_present=%u\n"
         "clean_room_boundary_recorded=%u\n"
@@ -701,8 +856,11 @@ latticra_q_seal_status_t latticra_q_seal_readiness_report(
         readiness->ml_kem_768_parameters_present,
         readiness->ml_kem_1024_parameters_present,
         readiness->evidence_gate_present,
+        readiness->fips_conformance_matrix_present,
+        readiness->sp800_227_usage_profile_present,
         readiness->kat_manifest_present,
         readiness->kat_runner_contract_present,
+        readiness->replay_transcript_gate_present,
         readiness->kat_result_schema_present,
         readiness->kat_result_row_fixture_present,
         readiness->acvp_intake_present,
@@ -735,6 +893,13 @@ latticra_q_seal_status_t latticra_q_seal_readiness_report(
         readiness->side_channel_review_present,
         readiness->provider_differential_present,
         readiness->implementation_binding_manifest_present,
+        readiness->source_layout_gate_present,
+        readiness->implementation_file_digest_plan_present,
+        readiness->clean_room_author_attestation_gate_present,
+        readiness->per_file_standards_trace_gate_present,
+        readiness->per_file_test_trace_gate_present,
+        readiness->implementation_traceability_matrix_present,
+        readiness->primitive_source_acceptance_gate_present,
         readiness->implementation_frame_present,
         readiness->secret_state_contract_present,
         readiness->clean_room_boundary_recorded,

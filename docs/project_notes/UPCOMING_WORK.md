@@ -1,9 +1,9 @@
 # Latticra Upcoming Work
 
 Status: active project note
-Last updated: 2026-05-26 CDT
-Latest current estimate table source alignment note: 2026-05-26 CDT
-Latest current estimate mathematical rebase note: 2026-05-26 CDT
+Last updated: 2026-05-27 CDT
+Latest current estimate table source alignment note: 2026-05-27 CDT
+Latest current estimate mathematical rebase note: 2026-05-27 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
 Latest completion estimate review after runtime-boundary abuse-case fixtures note: 2026-05-25 CDT
 Latest high-assurance security baseline note: 2026-05-26 CDT
@@ -1340,7 +1340,7 @@ runtime_authority_granted=0
 completion_estimate_review_required=0
 ```
 
-Current estimate table source alignment is the source-map cleanup for the public estimate table. Current estimate mathematical rebase is the latest planning-estimate update for that table, moving the overall value to a weighted 45% after Panel signed-updater fixture and Seal dashboard view-model evidence, Nadia Stage-43 prompt-evaluation release-receipt contract-chain evidence, kernel lifecycle scheduler-credit/scheduler-selection-ready evidence, vulnerability-management release-gate baseline coverage, documentation review/style/cohesion route coverage, and visual theorem/presentation foundation coverage while changing no implementation behavior, product-security posture, public readiness, product readiness, or runtime authority.
+Current estimate table source alignment is the source-map cleanup for the public estimate table. Current estimate mathematical rebase is the latest planning-estimate update for that table, moving the overall value to a weighted 47% after the 2026-05-27 Seal hybrid/provider, Panel test UI, production installer/readiness gate, Nadia Stage-51, Nucleus kernel-coupling, kernel runtime-entry observation, C substrate, security baseline, documentation/index, and public-entry alignment push while changing no production behavior, product-security claims, public-readiness claims, product-readiness claims, or runtime authority.
 
 Recommended next slice:
 

@@ -21,13 +21,31 @@ It writes the current CLI report and hash list under `reports/`.
 The native `latticra-seal check` command exits nonzero if its report stream
 cannot be written to stdout. Digest and policy traversal refuses symlinks,
 hard-linked regular files, and other non-regular paths inside the included
-project scope before writing a new hash list. Recursed directories must still
-match their observed device/inode identity when opened for traversal, and files
-collected for policy scanning and hashing must still match their collected
-device/inode identity when they are read.
+project scope before writing a new hash list. In-scope path names must also be
+representable as canonical native hash-list paths: project-relative,
+control-free, backslash-free, and without `.` or `..` segments. Recursed
+directories must still match their observed device/inode identity when opened
+for traversal, and files collected for policy scanning and hashing must still
+match their collected device/inode identity when they are opened. Policy scan
+and hash reads snapshot the opened descriptor's observed size and require the
+descriptor size after the read to match.
+Directory read or close failures make traversal incomplete and prevent fresh
+native hash-list promotion.
+Regular generated Seal artifacts are suppressed from native policy and digest
+scope even when a custom manifest omits the default artifact exclusions, so
+reports, hash lists, and lockfiles do not become self-referential evidence.
+The command clears stale native hash-list artifacts before manifest parsing, so
+an early manifest or baseline failure cannot leave old hash evidence advertised
+as current output. A fresh hash list is promoted only after manifest, policy,
+report, and reserved proof metadata checks pass with no prior failures. Policy denial hits or policy inspection failures prevent temporary hash-list creation and fresh hash-list promotion.
+Core `[project]` identity metadata must be present and supported before native
+digest evidence is promoted.
+Native v0.1 does not enforce large-binary denial; present large-binary policy
+metadata must stay at the inactive defaults before a fresh hash list can be
+promoted.
 Manifest-declared required files must remain inside that effective digest
-scope; a missing required file or one excluded through `[paths].exclude` fails
-the check and prevents a fresh hash list from being promoted.
+scope; a missing, hard-linked, or excluded required file fails the check and
+prevents a fresh hash list from being promoted.
 
 ## Print the latest local CLI report
 
@@ -36,7 +54,7 @@ latticra-seal report
 ```
 
 `latticra-seal report` exits nonzero when the report artifact is missing,
-unreadable, hard-linked, the report directory is symlinked or
+empty, unreadable, hard-linked, the report directory is symlinked or
 group/world-writable, or stdout cannot be written. The command validates and
 opens `reports/` before reading the artifact by descriptor-relative name; it
 does not create `reports/` for a read-only missing-artifact hint.
@@ -69,9 +87,14 @@ make seal-check
 latticra-seal manifest
 ```
 
-The manifest summary is read-only and exits nonzero when required summary
-fields are missing, duplicate, malformed, empty, or unsupported for the native
-v0.1 CLI. It also exits nonzero when stdout cannot be written.
+The manifest summary is read-only and exits nonzero when required root, project
+identity, or seal summary fields are missing, duplicate, malformed, empty, or
+unsupported for the native v0.1 CLI. Quoted summary fields that contain backslash escapes
+or raw control bytes are malformed. It also refuses symlinked, hard-linked, or embedded-NUL manifests.
+Malformed, quoted unsupported, or otherwise unsupported manifest section
+headers are refused before summary success can be claimed.
+Size-changing manifests are also refused by requiring a size-stable descriptor read,
+and it exits nonzero when stdout cannot be written.
 
 ## Print the latest local CLI hash list
 
@@ -80,10 +103,14 @@ latticra-seal hashes
 ```
 
 `latticra-seal hashes` exits nonzero when the hash-list artifact is missing,
-unreadable, hard-linked, the report directory is symlinked or
-group/world-writable, or stdout cannot be written. The command validates and
-opens `reports/` before reading the artifact by descriptor-relative name; it
-does not create `reports/` for a read-only missing-artifact hint.
+empty, unreadable, malformed, embedded-NUL, CRLF/non-LF-terminated,
+hard-linked, the report directory is symlinked or group/world-writable, or
+stdout cannot be written. The command validates and opens `reports/` before
+reading the artifact by
+descriptor-relative name; it parses the accepted hash-list descriptor before
+streaming it. Hash-list descriptor parsing and streaming require size-stable
+reads, and the command does not create `reports/` for a read-only
+missing-artifact hint.
 
 The read-only `latticra-seal version` and `latticra-seal help` commands also
 exit nonzero when stdout cannot be written.
@@ -98,7 +125,9 @@ latticra-seal hybrid
 substrate hybrid envelope. The substrate generates salt and nonce material for
 the attached self-check record, and the protected record header is bound as
 AES-GCM associated data. The command prints metadata only and redacts secret
-material, salt, nonce, ciphertext, tags, plaintext, and the sealed record.
+material, salt, nonce, ciphertext, tags, plaintext, and the sealed record. The
+CLI cleanses its self-check record and recovered-plaintext buffers before
+printing the final pass marker.
 
 ## Run the hybrid provider self-test
 
@@ -135,7 +164,10 @@ latticra-seal verify
 ```
 
 `latticra-seal verify` compares current hashes against `latticra.seal.lock` and
-exits nonzero when its report stream cannot be written to stdout.
+exits nonzero when the baseline is missing, empty, malformed, embedded-NUL,
+CRLF/non-LF-terminated, unsafe, duplicate, unsorted, hard-linked, different
+from the current generated hash list, or when its report stream cannot be
+written to stdout.
 
 ## Run policy-denial regression checks
 

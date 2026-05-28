@@ -222,6 +222,7 @@ static int key_parsing_fails_closed(void) {
     unsigned char invalid_hex[64];
     unsigned char private_marker[32];
     char tiny[1];
+    char rendered[LATTICRA_SEAL_KEY_PARSING_REPORT_MAX];
 
     memset(public_key, 0x5a, sizeof(public_key));
     memset(public_key_long, 0x5a, sizeof(public_key_long));
@@ -247,9 +248,38 @@ static int key_parsing_fails_closed(void) {
             LATTICRA_SEAL_KEY_PARSING_INVALID_PREDECESSOR,
             "invalid-predecessor",
             "missing-predecessor",
-            "null predecessor") == 0,
+        "null predecessor") == 0,
         "null predecessor failure");
 
+    public_key_parsing = fixture_public_key_parsing();
+    memset(public_key_parsing.public_key_parsing_state, 'z', sizeof(public_key_parsing.public_key_parsing_state));
+    EXPECT_TRUE(
+        expect_failure(
+            &public_key_parsing,
+            public_key,
+            sizeof(public_key),
+            LATTICRA_SEAL_KEY_PARSING_FORMAT_ED25519_RAW_PUBLIC_KEY_32,
+            LATTICRA_SEAL_KEY_PARSING_INVALID_PREDECESSOR,
+            "invalid-predecessor",
+            "invalid-predecessor-metadata",
+            "unterminated predecessor public key parsing status") == 0,
+        "unterminated predecessor failure");
+
+    public_key_parsing = fixture_public_key_parsing();
+    public_key_parsing.public_key_parsing_ready = 2u;
+    EXPECT_TRUE(
+        expect_failure(
+            &public_key_parsing,
+            public_key,
+            sizeof(public_key),
+            LATTICRA_SEAL_KEY_PARSING_FORMAT_ED25519_RAW_PUBLIC_KEY_32,
+            LATTICRA_SEAL_KEY_PARSING_INVALID_PREDECESSOR,
+            "invalid-predecessor",
+            "invalid-predecessor-metadata",
+            "invalid predecessor public key parsing flag status") == 0,
+        "invalid predecessor flag failure");
+
+    public_key_parsing = fixture_public_key_parsing();
     public_key_parsing.public_key_parsing_ready = 0u;
     EXPECT_TRUE(
         expect_failure(
@@ -371,6 +401,57 @@ static int key_parsing_fails_closed(void) {
     EXPECT_TRUE(tiny[0] == '\0', "small render clears buffer");
     EXPECT_TRUE(latticra_seal_key_parsing_render(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null render result");
     EXPECT_TRUE(latticra_seal_key_parsing_render(&key_parsing, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null render buffer");
+
+    EXPECT_TRUE(
+        latticra_seal_key_parsing_from_public_key_bytes(
+            &public_key_parsing,
+            public_key,
+            sizeof(public_key),
+            LATTICRA_SEAL_KEY_PARSING_FORMAT_ED25519_RAW_PUBLIC_KEY_32,
+            &key_parsing) == LATTICRA_STATUS_OK,
+        "tamper render fixture status");
+    memset(key_parsing.key_parsing_profile, 'z', sizeof(key_parsing.key_parsing_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_key_parsing_render(&key_parsing, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated key parsing render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated key parsing render cleared");
+    EXPECT_TRUE(latticra_seal_key_parsing_is_no_effect(&key_parsing) == 0,
+                "unterminated key parsing helper rejected");
+
+    EXPECT_TRUE(
+        latticra_seal_key_parsing_from_public_key_bytes(
+            &public_key_parsing,
+            public_key,
+            sizeof(public_key),
+            LATTICRA_SEAL_KEY_PARSING_FORMAT_ED25519_RAW_PUBLIC_KEY_32,
+            &key_parsing) == LATTICRA_STATUS_OK,
+        "authority key parsing render source");
+    key_parsing.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_key_parsing_render(&key_parsing, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority key parsing render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority key parsing render cleared");
+    EXPECT_TRUE(latticra_seal_key_parsing_is_no_effect(&key_parsing) == 0,
+                "authority key parsing helper rejected");
+
+    EXPECT_TRUE(
+        latticra_seal_key_parsing_from_public_key_bytes(
+            &public_key_parsing,
+            public_key,
+            sizeof(public_key),
+            LATTICRA_SEAL_KEY_PARSING_FORMAT_ED25519_RAW_PUBLIC_KEY_32,
+            &key_parsing) == LATTICRA_STATUS_OK,
+        "ready flag key parsing render source");
+    key_parsing.key_parsing_ready = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_key_parsing_render(&key_parsing, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "ready flag key parsing render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "ready flag key parsing render cleared");
+    EXPECT_TRUE(latticra_seal_key_parsing_is_no_effect(&key_parsing) == 0,
+                "ready flag key parsing helper rejected");
     return 0;
 }
 

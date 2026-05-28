@@ -1,7 +1,7 @@
 # Current Estimate Table Source Alignment
 
 Status: current estimate table source alignment
-Date: 2026-05-26 CDT
+Date: 2026-05-27 CDT
 Scope: README, root status, detailed current status, status index, foundation index, project-notes alignment, and the current mathematical rebase record for the public estimate table source. This record does not implement runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, public-readiness promotion, production protection, security hardening, or runtime authority.
 
 ## Purpose
@@ -39,22 +39,22 @@ runtime_authority_granted=0
 ## Current Public Estimate Table
 
 ```text
-Overall Latticra system: 45%
-Latticra Seal / local evidence layer: 39%
-Latticra Panel / local control surface: 32%
-Nadia offline AI foundation: 75%
+Overall Latticra system: 47%
+Latticra Seal / local evidence layer: 44%
+Latticra Panel / local control surface: 35%
+Nadia offline AI foundation: 77%
 L-UI parser / AST / string foundation: 87%
-Foundation documents and contracts: 95%
-Public documentation posture: 92%
-Strategy/status/funding framework: 63%
+Foundation documents and contracts: 96%
+Public documentation posture: 93%
+Strategy/status/funding framework: 65%
 Lat / Latticra Programming Language: 27%
 LIR / Intermediate Representation: 24%
-C/C++ foundation direction: 22%
+C/C++ foundation direction: 24%
 Constrained C++ authority layer: 5%
-Nucleus real task execution: 12%
-Runtime / operating-system-universe direction: 26%
-Security-hardening implementation: 10%
-Public product readiness: 10%
+Nucleus real task execution: 14%
+Runtime / operating-system-universe direction: 31%
+Security-hardening implementation: 13%
+Public product readiness: 12%
 ```
 
 ## Boundary
@@ -63,7 +63,7 @@ These percentages are planning estimates only.
 
 They are not release promises, production-readiness metrics, security guarantees, Fedora approval claims, runtime-enforcement claims, operating-system completeness claims, or authority grants.
 
-This source alignment mirrors the current mathematical rebase into the reader-facing estimate sources. It does not change implementation behavior, runtime behavior, security hardening, public readiness, product readiness, or authority.
+This source alignment mirrors the current mathematical rebase into the reader-facing estimate sources. It does not change implementation behavior, runtime behavior, production security claims, public readiness claims, product readiness claims, or authority.
 
 ## Validation
 

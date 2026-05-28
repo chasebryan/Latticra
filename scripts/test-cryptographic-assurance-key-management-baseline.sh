@@ -33,8 +33,12 @@ require_file docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_file docs/LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST.md
 require_file docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_file docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_file docs/LATTICRA_SEAL_ED25519_PROVIDER_SELF_TEST.md
+require_file docs/status/SEAL_ED25519_PROVIDER_SELF_TEST_STATUS.md
 require_file latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_file latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SP800_227_USAGE_PROFILE.md
 require_file latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_file latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
 require_file docs/status/SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md
 require_file docs/status/SEAL_ED25519_VERIFY_STATUS.md
 require_file docs/status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md
@@ -66,6 +70,7 @@ require_contains 'NIST SP 800-57 Part 1 Rev. 5' "$doc"
 require_contains 'NIST SP 800-131A Rev. 2' "$doc"
 require_contains 'NIST SP 800-90A Rev. 1 and SP 800-90B' "$doc"
 require_contains 'NIST FIPS 203' "$doc"
+require_contains 'NIST SP 800-227' "$doc"
 require_contains 'NIST FIPS 204' "$doc"
 require_contains 'NIST FIPS 205' "$doc"
 require_contains 'Apple Security Research and Apple corecrypto 2026-05 source release' "$doc"
@@ -84,6 +89,7 @@ require_contains 'https://csrc.nist.gov/pubs/sp/800/131/a/r2/final' "$doc"
 require_contains 'https://csrc.nist.gov/pubs/sp/800/90/a/r1/final' "$doc"
 require_contains 'https://csrc.nist.gov/pubs/sp/800/90/b/final' "$doc"
 require_contains 'https://csrc.nist.gov/pubs/fips/203/final' "$doc"
+require_contains 'https://csrc.nist.gov/pubs/sp/800/227/final' "$doc"
 require_contains 'https://csrc.nist.gov/pubs/fips/204/final' "$doc"
 require_contains 'https://csrc.nist.gov/pubs/fips/205/final' "$doc"
 require_contains 'https://security.apple.com/blog/formal-verification-corecrypto/' "$doc"
@@ -101,6 +107,15 @@ for field in \
   'cryptographic_assurance_key_management_guard_present=1' \
   'seal_crypto_graduation_gate_present=1' \
   'seal_crypto_graduation_gate_guard_present=1' \
+  'seal_ed25519_provider_self_test_present=1' \
+  'seal_ed25519_provider_self_test_passed=1' \
+  'seal_ed25519_provider_self_test_key_generation_performed=1' \
+  'seal_ed25519_provider_self_test_signature_generation_performed=1' \
+  'seal_ed25519_provider_self_test_signature_verification_performed=1' \
+  'seal_ed25519_provider_self_test_tampering_rejected=1' \
+  'seal_ed25519_provider_self_test_private_key_output_emitted=0' \
+  'seal_ed25519_provider_self_test_signature_output_emitted=0' \
+  'seal_ed25519_provider_self_test_runtime_authority_granted=0' \
   'seal_pqc_integration_frame_present=1' \
   'seal_pqc_integration_frame_guard_present=1' \
   'seal_pqc_provider_adapter_present=1' \
@@ -110,17 +125,63 @@ for field in \
   'seal_hybrid_provider_self_test_authority_neutral=1' \
   'seal_hybrid_provider_self_test_ml_kem_parameter_sets_tested=3' \
   'seal_hybrid_provider_self_test_records_authenticated_total=3' \
+  'seal_hybrid_provider_self_test_p256_peer_public_keys_reimported=1' \
+  'seal_hybrid_provider_self_test_p256_ecdh_peer_public_key_only=1' \
+  'seal_hybrid_provider_self_test_ml_kem_keypair_algorithm_identity_verified_cases_total=3' \
+  'seal_hybrid_provider_self_test_ml_kem_public_key_reimported_cases_total=3' \
+  'seal_hybrid_provider_self_test_ml_kem_public_key_algorithm_identity_verified_cases_total=3' \
+  'seal_hybrid_provider_self_test_ml_kem_encapsulation_public_key_only_cases_total=3' \
+  'seal_hybrid_provider_self_test_ml_kem_tampered_ciphertext_shared_secret_mismatch_total=3' \
+  'seal_hybrid_provider_self_test_ml_kem_ciphertext_tampering_rejected_total=3' \
+  'seal_hybrid_provider_self_test_wrong_pqc_secret_rejected_total=3' \
+  'seal_hybrid_provider_self_test_provider_crypto_evidence_bound=1' \
+  'seal_hybrid_provider_self_test_provider_crypto_cases_total=3' \
+  'seal_hybrid_provider_self_test_hkdf_provider_cases_total=3' \
+  'seal_hybrid_provider_self_test_aes_gcm_provider_cases_total=3' \
+  'seal_hybrid_provider_self_test_commitment_mac_provider_cases_total=3' \
+  'seal_hybrid_provider_self_test_commitment_constant_time_compare_cases_total=3' \
+  'seal_hybrid_provider_self_test_random_bytes_ex_cases_total=3' \
+  'seal_hybrid_provider_self_test_no_legacy_crypto_fallback_cases_total=3' \
   'seal_hybrid_provider_self_test_transcript_aad_bound=1' \
+  'seal_hybrid_provider_self_test_ml_kem_public_key_transcript_bound=1' \
+  'seal_hybrid_provider_self_test_ml_kem_public_key_transcript_bytes_total_nonzero=1' \
   'seal_hybrid_provider_self_test_transcript_tampering_rejected_total=3' \
+  'seal_hybrid_provider_self_test_transcript_tamper_constant_time_compare_cases_total=3' \
+  'seal_hybrid_provider_self_test_wrong_pqc_secret_constant_time_compare_cases_total=3' \
   'seal_hybrid_provider_self_test_secret_output_emitted=0' \
   'seal_hybrid_provider_self_test_record_output_emitted=0' \
   'seal_hybrid_provider_self_test_runtime_authority_granted=0' \
   'q_seal_ml_kem_provider_self_test_present=1' \
   'q_seal_ml_kem_provider_self_test_passed=1' \
   'q_seal_ml_kem_provider_self_test_authority_neutral=1' \
+  'q_seal_ml_kem_provider_self_test_keypair_algorithm_identity_verified=1' \
+  'q_seal_ml_kem_provider_self_test_public_key_reimported=1' \
+  'q_seal_ml_kem_provider_self_test_public_key_algorithm_identity_verified=1' \
+  'q_seal_ml_kem_provider_self_test_encapsulation_public_key_only=1' \
+  'q_seal_ml_kem_provider_self_test_tampered_ciphertext_shared_secret_mismatch=1' \
+  'q_seal_ml_kem_provider_self_test_tampered_ciphertext_rejected=1' \
+  'q_seal_ml_kem_provider_self_test_shared_secret_constant_time_compare=1' \
+  'q_seal_ml_kem_provider_self_test_tampered_ciphertext_constant_time_compare=1' \
   'q_seal_ml_kem_provider_self_test_secret_output_emitted=0' \
   'q_seal_ml_kem_provider_self_test_ciphertext_output_emitted=0' \
   'q_seal_ml_kem_provider_self_test_runtime_authority_granted=0' \
+  'q_seal_ml_kem_sp800_227_usage_profile_present=1' \
+  'q_seal_ml_kem_sp800_227_source_bound=1' \
+  'q_seal_ml_kem_sp800_227_publication_date_recorded=1' \
+  'q_seal_ml_kem_sp800_227_kem_use_case_review_recorded=1' \
+  'q_seal_ml_kem_sp800_227_application_protocol_binding_recorded=1' \
+  'q_seal_ml_kem_sp800_227_key_confirmation_decision_recorded=1' \
+  'q_seal_ml_kem_sp800_227_kdf_binding_recorded=1' \
+  'q_seal_ml_kem_sp800_227_domain_separation_reviewed=1' \
+  'q_seal_ml_kem_sp800_227_shared_secret_lifecycle_reviewed=1' \
+  'q_seal_ml_kem_sp800_227_failure_handling_reviewed=1' \
+  'q_seal_ml_kem_sp800_227_key_separation_reviewed=1' \
+  'q_seal_ml_kem_sp800_227_algorithm_agility_reviewed=1' \
+  'q_seal_ml_kem_sp800_227_kem_usage_profile_accepted=1' \
+  'q_seal_ml_kem_sp800_227_required_usage_items_satisfied=30' \
+  'q_seal_ml_kem_sp800_227_operation_execution_allowed=0' \
+  'q_seal_ml_kem_sp800_227_shared_secret_emission_allowed=0' \
+  'q_seal_ml_kem_sp800_227_runtime_authority_granted=0' \
   'fips_140_3_boundary_required_before_production_crypto=1' \
   'cmvp_validation_path_required_before_fips_claim=1' \
   'validated_module_claim_requires_certificate=1' \
@@ -175,6 +236,30 @@ for field in \
   'seal_hybrid_envelope_random_bytes_manual_fallback_used=0' \
   'seal_hybrid_envelope_generated_salt_csprng_success=1' \
   'seal_hybrid_envelope_generated_nonce_csprng_success=1' \
+  'seal_hybrid_envelope_aead_nonce_uniqueness_required=1' \
+  'seal_hybrid_envelope_salt_bound_to_hkdf=1' \
+  'seal_hybrid_envelope_nonce_bound_to_aead=1' \
+  'seal_hybrid_envelope_generated_key_nonce_pair_csprng_backed=1' \
+  'seal_hybrid_envelope_caller_salt_nonce_reuse_guard_required_reported=1' \
+  'seal_hybrid_envelope_caller_salt_nonce_reuse_tracking_present=1' \
+  'seal_hybrid_envelope_caller_salt_nonce_reuse_guard_capacity=64' \
+  'seal_hybrid_envelope_caller_salt_nonce_reuse_guarded_encrypt_rejects_reuse_before_kdf=1' \
+  'seal_hybrid_envelope_caller_salt_nonce_reuse_guarded_encrypt_clears_reused_outputs=1' \
+  'seal_hybrid_envelope_caller_salt_nonce_reuse_guarded_committed_encrypt_rejects_reuse_before_kdf=1' \
+  'seal_hybrid_envelope_caller_salt_nonce_reuse_guarded_committed_encrypt_clears_commitment=1' \
+  'seal_hybrid_envelope_successful_ciphertext_tail_cleared=1' \
+  'seal_hybrid_envelope_successful_plaintext_tail_cleared=1' \
+  'seal_hybrid_envelope_successful_record_tail_cleared=1' \
+  'seal_hybrid_envelope_cli_record_buffer_zeroized=1' \
+  'seal_hybrid_envelope_cli_recovered_plaintext_buffer_zeroized=1' \
+  'seal_hybrid_envelope_commitment_mac_provider_api_used=1' \
+  'seal_hybrid_envelope_commitment_mac_provider_fetched=1' \
+  'seal_hybrid_envelope_commitment_mac_hmac_sha256_digest_bound=1' \
+  'seal_hybrid_envelope_commitment_mac_256bit_key_used=1' \
+  'seal_hybrid_envelope_commitment_mac_input_streamed=1' \
+  'seal_hybrid_envelope_commitment_mac_legacy_fallback_used=0' \
+  'seal_hybrid_envelope_detached_commitment_constant_time_compare=1' \
+  'seal_hybrid_envelope_record_commitment_constant_time_compare=1' \
   'implementation_behavior_changed=1' \
   'production_crypto_added=0' \
   'signing_authority_granted=0' \
@@ -290,6 +375,30 @@ require_contains 'random_bytes_strength_bits_requested=256' docs/LATTICRA_SEAL_H
 require_contains 'random_bytes_manual_fallback_used=0' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'generated_salt_csprng_success=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'generated_nonce_csprng_success=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'aead_nonce_uniqueness_required=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'salt_bound_to_hkdf=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'nonce_bound_to_aead=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'generated_key_nonce_pair_csprng_backed=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_guard_required_reported=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_tracking_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_guard_capacity=64' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_guarded_encrypt_rejects_reuse_before_kdf=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_guarded_encrypt_clears_reused_outputs=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_guarded_committed_encrypt_rejects_reuse_before_kdf=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_guarded_committed_encrypt_clears_commitment=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'successful_ciphertext_tail_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'successful_plaintext_tail_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'successful_record_tail_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'cli_record_buffer_zeroized=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'cli_recovered_plaintext_buffer_zeroized=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_provider_api_used=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_provider_fetched=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_hmac_sha256_digest_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_256bit_key_used=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_input_streamed=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_legacy_fallback_used=0' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_commitment_constant_time_compare=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_commitment_constant_time_compare=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'hkdf_provider_api_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'hkdf_extract_expand_standard_api_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'hkdf_sha256_digest_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
@@ -304,33 +413,101 @@ require_contains 'random_bytes_strength_bits_requested=256' docs/status/SEAL_HYB
 require_contains 'random_bytes_manual_fallback_used=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'generated_salt_csprng_success=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'generated_nonce_csprng_success=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_provider_api_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_provider_fetched=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_hmac_sha256_digest_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_256bit_key_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_input_streamed=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_legacy_fallback_used=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_commitment_constant_time_compare=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_commitment_constant_time_compare=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'successful_ciphertext_tail_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'successful_plaintext_tail_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'successful_record_tail_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'classical_algorithm=ECDH-P-256' docs/LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST.md
 require_contains 'pqc_algorithm=ML-KEM-512,ML-KEM-768,ML-KEM-1024' docs/LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST.md
 require_contains 'p256_shared_secret_match=1' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
 require_contains 'ml_kem_shared_secret_match=1' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_keypair_algorithm_identity_verified_cases_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
 require_contains 'ml_kem_parameter_sets_tested=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
 require_contains 'ml_kem_512_ciphertext_bytes=768' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
 require_contains 'ml_kem_768_ciphertext_bytes=1088' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
 require_contains 'ml_kem_1024_ciphertext_bytes=1568' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
 require_contains 'hybrid_envelope_authenticated=1' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
 require_contains 'hybrid_envelope_records_authenticated_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_envelope_provider_crypto_evidence_bound=1' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_envelope_provider_crypto_cases_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_envelope_hkdf_provider_cases_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_envelope_aes_gcm_provider_cases_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_envelope_commitment_mac_provider_cases_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_envelope_commitment_constant_time_compare_cases_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_envelope_random_bytes_ex_cases_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_envelope_no_legacy_crypto_fallback_cases_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_transcript_tamper_constant_time_compare_cases_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_envelope_wrong_pqc_secret_constant_time_compare_cases_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'p256_peer_public_keys_reimported=1' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'p256_ecdh_peer_public_key_only=1' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_public_key_reimported_cases_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_public_key_algorithm_identity_verified_cases_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_encapsulation_public_key_only_cases_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_tampered_ciphertext_shared_secret_mismatch_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_ciphertext_tampering_rejected_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_envelope_wrong_pqc_secret_rejected_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
 require_contains 'hybrid_transcript_aad_bound=1' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
 require_contains 'hybrid_transcript_tampering_rejected_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_public_key_transcript_bound=1' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_public_key_transcript_bytes_total_nonzero=1' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
 require_contains 'ml_kem_ciphertext_transcript_bytes_total=3424' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
 require_contains 'secret_material_output_emitted=0' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
 require_contains 'record_output_emitted=0' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
 require_contains 'runtime_authority_granted=0' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ed25519_provider_self_test_present=1' docs/LATTICRA_SEAL_ED25519_PROVIDER_SELF_TEST.md
+require_contains 'provider=OpenSSL-EVP' docs/LATTICRA_SEAL_ED25519_PROVIDER_SELF_TEST.md
+require_contains 'signature_algorithm=Ed25519' docs/LATTICRA_SEAL_ED25519_PROVIDER_SELF_TEST.md
+require_contains 'ed25519_key_generation_performed=1' docs/status/SEAL_ED25519_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ed25519_signature_generation_performed=1' docs/status/SEAL_ED25519_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ed25519_signature_verification_performed=1' docs/status/SEAL_ED25519_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ed25519_tampered_message_rejected=1' docs/status/SEAL_ED25519_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ed25519_tampered_signature_rejected=1' docs/status/SEAL_ED25519_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ed25519_private_key_output_emitted=0' docs/status/SEAL_ED25519_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ed25519_signature_output_emitted=0' docs/status/SEAL_ED25519_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'runtime_authority_granted=0' docs/status/SEAL_ED25519_PROVIDER_SELF_TEST_STATUS.md
 require_contains 'ml_kem_provider_self_test_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'provider=OpenSSL-EVP' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'keypair_algorithm_identity_verified=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'public_key_algorithm_identity_verified=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'ML-KEM-512-provider_self_test_passed=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'ML-KEM-768-provider_self_test_passed=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'ML-KEM-1024-provider_self_test_passed=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'shared_secret_match=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'shared_secret_constant_time_compare=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'keypair_algorithm_identity_verified=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'public_key_reimported=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'public_key_algorithm_identity_verified=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'encapsulation_public_key_only=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'tampered_ciphertext_shared_secret_mismatch=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'tampered_ciphertext_rejected=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'tampered_ciphertext_constant_time_compare=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'shared_secret_zeroized=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'ciphertext_zeroized=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'shared_secret_output_emitted=0' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'ciphertext_output_emitted=0' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'runtime_authority_granted=0' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'sp800_227_usage_profile_present=1' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+require_contains 'sp_800_227_source_url=https://csrc.nist.gov/pubs/sp/800/227/final' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+require_contains 'kem_use_case_review_recorded=1' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+require_contains 'application_protocol_binding_recorded=1' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+require_contains 'key_confirmation_decision_recorded=1' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+require_contains 'kdf_binding_recorded=1' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+require_contains 'domain_separation_reviewed=1' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+require_contains 'shared_secret_lifecycle_reviewed=1' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+require_contains 'failure_handling_reviewed=1' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+require_contains 'key_separation_reviewed=1' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+require_contains 'algorithm_agility_reviewed=1' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+require_contains 'kem_usage_profile_accepted=1' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+require_contains 'required_usage_items_satisfied=30' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+require_contains 'operation_execution_allowed=0' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
+require_contains 'shared_secret_emission_allowed=0' latticra-q-seal/evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
 require_contains 'cryptographic_assurance_key_management_baseline_present=1' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
 require_contains 'docs/CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
 require_contains 'scripts/test-cryptographic-assurance-key-management-baseline.sh' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
@@ -351,12 +528,14 @@ require_contains 'Cryptographic assurance and key management baseline' docs/secu
 require_contains 'CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md' docs/security.html
 require_contains 'sh ./scripts/test-cryptographic-assurance-key-management-baseline.sh' Makefile
 require_contains 'sh ./scripts/test-latticra-seal-crypto-graduation-gate.sh' Makefile
+require_contains 'sh ./scripts/test-latticra-seal-ed25519-provider-self-test.sh' Makefile
 require_contains 'sh ./scripts/test-latticra-seal-pqc-integration-frame.sh' Makefile
 require_contains 'sh ./scripts/test-latticra-seal-pqc-provider-adapter.sh' Makefile
 require_contains 'sh ./scripts/test-latticra-seal-hybrid-provider-self-test.sh' Makefile
 require_contains 'sh ./scripts/test-latticra-q-seal-ml-kem-provider-self-test.sh' Makefile
 require_contains 'cryptographic-assurance-key-management-baseline:' Makefile
 require_contains 'latticra-seal-crypto-graduation-gate:' Makefile
+require_contains 'latticra-seal-ed25519-provider-self-test:' Makefile
 require_contains 'latticra-seal-hybrid-provider-self-test:' Makefile
 require_contains 'latticra-seal-pqc-integration-frame:' Makefile
 require_contains 'latticra-seal-pqc-provider-adapter:' Makefile

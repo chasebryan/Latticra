@@ -36,6 +36,7 @@ typedef struct {
     unsigned readiness_gate_bound;
     unsigned implementation_binding_manifest_required;
     unsigned implementation_binding_manifest_bound;
+    unsigned replay_transcript_gate_bound;
     unsigned kat_acvp_gate_passing_recorded;
     unsigned constant_time_gate_passing_recorded;
     unsigned memory_safety_gate_passing_recorded;

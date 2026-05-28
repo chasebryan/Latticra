@@ -1,0 +1,25 @@
+name: Production Installer Release Worktree Cleanliness Audit
+
+on:
+  push:
+    paths:
+      - 'docs/PRODUCTION_INSTALLER_RELEASE_WORKTREE_CLEANLINESS_AUDIT_CONTRACT.md'
+      - 'docs/status/PRODUCTION_INSTALLER_RELEASE_WORKTREE_CLEANLINESS_AUDIT_STATUS.md'
+      - 'scripts/production-installer-release-worktree-cleanliness-audit.sh'
+      - 'scripts/test-production-installer-release-worktree-cleanliness-audit-contract.sh'
+      - '.github/workflows/production-installer-release-worktree-cleanliness-audit.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  production-installer-release-worktree-cleanliness-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run production installer release worktree cleanliness audit guard
+        run: sh scripts/test-production-installer-release-worktree-cleanliness-audit-contract.sh

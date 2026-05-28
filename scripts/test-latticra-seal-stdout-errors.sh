@@ -101,6 +101,8 @@ require_contains "record_output=redacted" "$tmpdir/hybrid.out"
 require_contains "record_header_authenticated=1" "$tmpdir/hybrid.out"
 require_contains "attached_record_sealed=1" "$tmpdir/hybrid.out"
 require_contains "attached_record_opened=1" "$tmpdir/hybrid.out"
+require_contains "cli_record_buffer_zeroized=1" "$tmpdir/hybrid.out"
+require_contains "cli_recovered_plaintext_buffer_zeroized=1" "$tmpdir/hybrid.out"
 require_contains "hybrid_envelope_self_check=pass" "$tmpdir/hybrid.out"
 
 if ! (cd "$case_root" && "$tmpdir/latticra-seal" hybrid-provider-self-test > "$tmpdir/hybrid-provider-self-test.out" 2> "$tmpdir/hybrid-provider-self-test.err"); then

@@ -265,12 +265,48 @@ const receiptFields = [
 ];
 
 const qualityGates = [
-  ["Responsive layout", "verified", "desktop and mobile overflow checks pass"],
-  ["Authority boundary", "verified", "root, network, runtime, and production claims blocked"],
-  ["State persistence", "verified", "local state reload and reset verified"],
-  ["Receipt mapping", "verified", "live UI state maps to receipt fields"],
-  ["egui migration review", "pending", "prototype-to-Rust migration remains separate"],
-  ["installer engine binding", "pending", "test lane is not bound to installer execution"],
+  {
+    key: "responsive_layout",
+    label: "Responsive layout",
+    status: "verified",
+    evidence: "desktop and mobile overflow checks pass",
+    next: "keep dense workbench layout below overflow thresholds",
+  },
+  {
+    key: "authority_boundary",
+    label: "Authority boundary",
+    status: "verified",
+    evidence: "root, network, runtime, and production claims blocked",
+    next: "preserve zero-authority receipt fields",
+  },
+  {
+    key: "state_persistence",
+    label: "State persistence",
+    status: "verified",
+    evidence: "local state reload and reset verified",
+    next: "keep reset and replay state scoped to this lane",
+  },
+  {
+    key: "receipt_mapping",
+    label: "Receipt mapping",
+    status: "verified",
+    evidence: "live UI state maps to receipt fields",
+    next: "continue binding new surfaces before guarded migration",
+  },
+  {
+    key: "egui_migration_review",
+    label: "egui migration review",
+    status: "pending",
+    evidence: "prototype-to-Rust migration remains separate",
+    next: "compare against guarded Rust Panel before any port",
+  },
+  {
+    key: "installer_engine_binding",
+    label: "installer engine binding",
+    status: "pending",
+    evidence: "test lane is not bound to installer execution",
+    next: "bind real installer events only after contract review",
+  },
 ];
 
 const reviewChecks = [
@@ -581,6 +617,75 @@ const engineBindingItems = [
     target: "production installer execution",
     evidence: "artifact, SBOM, transcript, rollback, and multi-VM release evidence are missing",
     owner: "release evidence",
+    next: "keep production execution closed until release evidence exists",
+    boundary: "production_installer_claim=0",
+  },
+];
+
+const engineEventAdapterItems = [
+  {
+    key: "plan_payload_event",
+    label: "Plan payload event",
+    status: "verified",
+    phase: "plan.payload",
+    source: "renderPlan() no-effect plan",
+    binding: "plan_preview_binding",
+    evidence: "profile, mode, prefix, component list, and authority fields map into the local receipt",
+    next: "compare the local adapter shape against the real installer plan event",
+    boundary: "adapter contract only; no live installer process is attached",
+  },
+  {
+    key: "preflight_decision_event",
+    label: "Preflight decision event",
+    status: "verified",
+    phase: "preflight.decision",
+    source: "validatePrefix() guard result",
+    binding: "prefix_guard_binding",
+    evidence: "accepted and blocked prefix decisions render visibly and in receipt authority fields",
+    next: "bind real preflight denial reasons to the same UI fields",
+    boundary: "user-local prefix policy remains a no-effect test-lane guard",
+  },
+  {
+    key: "run_started_event",
+    label: "Run started event",
+    status: "pending",
+    phase: "run.started",
+    source: "dry-run action state",
+    binding: "run_monitor_progress_binding",
+    evidence: "current run start is simulated by the UI and not sourced from installer runtime",
+    next: "map installer start event to monitor state and receipt trail",
+    boundary: "runtime execution authority remains zero",
+  },
+  {
+    key: "progress_tick_event",
+    label: "Progress tick event",
+    status: "pending",
+    phase: "run.progress",
+    source: "simulated progress counter and log copy",
+    binding: "run_monitor_progress_binding",
+    evidence: "progress is local-only and has no live installer event source",
+    next: "stream real progress ticks into the monitor without changing host state",
+    boundary: "progress proof is not production evidence",
+  },
+  {
+    key: "error_recovery_event",
+    label: "Error recovery event",
+    status: "pending",
+    phase: "run.error",
+    source: "console status, toast, and assistive-status region",
+    binding: "error_live_region_binding",
+    evidence: "blocked command errors announce locally; installer runtime errors are not connected",
+    next: "bind installer errors to visible status, focus recovery, and live-region copy",
+    boundary: "manual assistive-tech pass remains pending",
+  },
+  {
+    key: "execution_authority_event",
+    label: "Execution authority event",
+    status: "blocked",
+    phase: "run.execute",
+    source: "test-lane dry-run button",
+    binding: "production_execution_binding",
+    evidence: "artifact, SBOM, lifecycle transcript, rollback, and VM evidence are missing",
     next: "keep production execution closed until release evidence exists",
     boundary: "production_installer_claim=0",
   },
@@ -1220,6 +1325,59 @@ const receiptDiffFields = [
   },
 ];
 
+const receiptContextDriftFields = [
+  {
+    key: "readiness_compare",
+    label: "readiness comparison",
+    read: (context) => context.readiness_compare,
+  },
+  {
+    key: "comparison_alignment",
+    label: "comparison alignment",
+    read: (context) => context.comparison_alignment,
+  },
+  {
+    key: "readiness_trace",
+    label: "readiness trace",
+    read: (context) => context.readiness_trace,
+  },
+  {
+    key: "trace_alignment",
+    label: "trace alignment",
+    read: (context) => context.trace_alignment,
+  },
+  {
+    key: "evidence_intake",
+    label: "evidence intake",
+    read: (context) => context.evidence_intake,
+  },
+  {
+    key: "promotion_gate",
+    label: "promotion gate",
+    read: (context) => context.promotion_gate,
+  },
+  {
+    key: "release_acceptance",
+    label: "release acceptance",
+    read: (context) => context.release_acceptance,
+  },
+  {
+    key: "production_blocker",
+    label: "production blocker",
+    read: (context) => context.production_blocker,
+  },
+  {
+    key: "handoff_scope_source",
+    label: "handoff scope source",
+    read: (context) => context.handoff_scope_source,
+  },
+  {
+    key: "local_authority_boundary",
+    label: "local authority boundary",
+    read: (context) => context.local_authority_boundary,
+  },
+];
+
 function qs(selector, root = document) {
   return root.querySelector(selector);
 }
@@ -1234,6 +1392,789 @@ function selectedComponents() {
 
 function componentSummaryText() {
   return `${selectedComponents().length} of ${components.length} selected`;
+}
+
+function evidenceDetailState(level = state.evidenceDetail) {
+  const normalized = Math.max(1, Math.min(3, Math.round(Number(level) || 2)));
+  const labels = {
+    1: { key: "compact", label: "Compact", detail: "summary-first" },
+    2: { key: "balanced", label: "Balanced", detail: "review-balanced" },
+    3: { key: "full", label: "Full", detail: "expanded evidence" },
+  };
+  return {
+    level: normalized,
+    ...labels[normalized],
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function evidenceDetailSummary(detail = evidenceDetailState()) {
+  return {
+    level: detail.level,
+    key: detail.key,
+    label: detail.label,
+    detail: detail.detail,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function profileScopeState(profile = state.profile) {
+  const profiles = {
+    "Guided local panel": {
+      key: "guided_local",
+      label: "Guided local",
+      scope: "default local install flow",
+      intent: "plan-first local panel review",
+    },
+    "Seal report-only": {
+      key: "seal_report",
+      label: "Seal report",
+      scope: "receipt and seal review only",
+      intent: "report-only evidence review",
+    },
+    "LC standalone": {
+      key: "lc_standalone",
+      label: "LC standalone",
+      scope: "standalone lattice core path",
+      intent: "component-specific standalone review",
+    },
+    "Fedora validation": {
+      key: "fedora_validation",
+      label: "Fedora validation",
+      scope: "Fedora packaging checks",
+      intent: "distribution validation review",
+    },
+  };
+  const selected = profiles[profile] || profiles["Guided local panel"];
+  return {
+    profile,
+    ...selected,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function profileScopeSummary(scope = profileScopeState()) {
+  return {
+    profile: scope.profile,
+    key: scope.key,
+    label: scope.label,
+    scope: scope.scope,
+    intent: scope.intent,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function primaryActionRailRows() {
+  return qsa(".topbar-actions [data-action]").map((button, index) => ({
+    key: button.dataset.action || `action-${index + 1}`,
+    label: button.getAttribute("aria-label") || button.textContent.trim(),
+    intent: button.dataset.actionIntent || "local",
+    priority: Number(button.dataset.actionPriority || index + 1),
+    enabled: !button.disabled && button.getAttribute("aria-disabled") !== "true",
+    has_icon: Boolean(button.querySelector(".action-icon")),
+    described_by: button.getAttribute("aria-describedby") || "none",
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+}
+
+function primaryActionRailSummary(rows = primaryActionRailRows()) {
+  return {
+    action_count: rows.length,
+    enabled_count: rows.filter((row) => row.enabled).length,
+    iconized_count: rows.filter((row) => row.has_icon).length,
+    primary_action: rows.find((row) => row.priority === 1)?.key || "none",
+    all_actions_iconized: rows.length > 0 && rows.every((row) => row.has_icon),
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function setPrimaryActionLabel(action, label) {
+  const button = qs(`[data-action="${action}"]`);
+  if (!(button instanceof HTMLButtonElement)) {
+    return;
+  }
+  const labelNode = qs(".action-label", button);
+  if (labelNode) {
+    labelNode.textContent = label;
+  } else {
+    button.textContent = label;
+  }
+  button.setAttribute("aria-label", label);
+  button.title = label;
+}
+
+function workspacePostureRows() {
+  const local = state.mode === "local";
+  const planText = qs("#plan-state")?.textContent || "plan ready for review";
+  const prefixText = qs("#prefix-state")?.textContent || "writes require guarded mode";
+  return [
+    {
+      key: "plan_flow",
+      label: "Plan-first flow",
+      state: planText.includes("regenerated") ? "ready" : "ready",
+      badge: planText.includes("regenerated") ? "refreshed" : "ready",
+      detail: planText,
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+    {
+      key: "prefix_guard",
+      label: "User-local prefix",
+      state: state.prefixValid ? (local ? "armed" : "guarded") : "blocked",
+      badge: state.prefixValid ? (local ? "armed" : "guarded") : "blocked",
+      detail: prefixText,
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: local && state.prefixValid ? "user-local-only" : 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+    {
+      key: "root_authority",
+      label: "Root authority",
+      state: "denied",
+      badge: "denied",
+      detail: "denied",
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+    {
+      key: "production_claim",
+      label: "Production claim",
+      state: "blocked",
+      badge: "blocked",
+      detail: "not released",
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+  ];
+}
+
+function workspacePostureSummary(rows = workspacePostureRows()) {
+  const blockedStates = ["blocked", "denied"];
+  return {
+    total: rows.length,
+    ready: rows.filter((row) => row.state === "ready" || row.state === "armed").length,
+    guarded: rows.filter((row) => row.state === "guarded").length,
+    blocked: rows.filter((row) => blockedStates.includes(row.state)).length,
+    zero_authority: rows.every(
+      (row) =>
+        row.production_evidence_claim === 0 &&
+        row.main_gui_mutation_required === 0 &&
+        row.edge_gui_mutation_required === 0,
+    ),
+    local_only: rows.every((row) => row.local_only === true),
+    production_evidence_claim: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function dashboardAuthorityTone(status) {
+  if (status === "allowed" || status === "armed") {
+    return "ok";
+  }
+  if (status === "blocked") {
+    return "stop";
+  }
+  return "warn";
+}
+
+function dashboardAuthorityRows() {
+  const local = state.mode === "local";
+  const writeState = !state.prefixValid ? "blocked" : local ? "armed" : "guarded";
+  const writeDetail = !state.prefixValid
+    ? "blocked by prefix guard"
+    : local
+      ? "armed for accepted user-local prefix"
+      : "requires guarded mode";
+  const hostWriteScope = local && state.prefixValid ? "user-local-only" : 0;
+  return [
+    {
+      key: "dry_run_plan",
+      label: "Dry-run plan",
+      status: "allowed",
+      detail: "no-effect plan and receipt preview only",
+      host_write_scope: 0,
+    },
+    {
+      key: "user_local_writes",
+      label: "User-local writes",
+      status: writeState,
+      detail: writeDetail,
+      host_write_scope: hostWriteScope,
+    },
+    {
+      key: "system_mutation",
+      label: "System mutation",
+      status: "blocked",
+      detail: "root and system prefixes denied",
+      host_write_scope: 0,
+    },
+    {
+      key: "network_fetch",
+      label: "Network fetch",
+      status: "blocked",
+      detail: "network authority held at zero",
+      host_write_scope: 0,
+    },
+  ].map((row) => ({
+    ...row,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: row.host_write_scope,
+    root_authority: 0,
+    network_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+}
+
+function dashboardAuthoritySummary(rows = dashboardAuthorityRows()) {
+  const localWrite = rows.find((row) => row.key === "user_local_writes");
+  const blocked = rows.filter((row) => row.status === "blocked").length;
+  const guarded = rows.filter((row) => row.status === "guarded").length;
+  const armed = rows.filter((row) => row.status === "armed").length;
+  const allowed = rows.filter((row) => row.status === "allowed").length;
+  const hostWriteScope = localWrite?.host_write_scope || 0;
+  return {
+    total: rows.length,
+    allowed,
+    guarded,
+    armed,
+    blocked,
+    local_scope: guarded + armed,
+    user_local_state: localWrite?.status || "blocked",
+    host_write_scope: hostWriteScope,
+    decision: armed > 0 && blocked === 2 ? "user_local_armed" : "locked",
+    badge: armed > 0 && blocked === 2 ? "local armed" : "production locked",
+    production_authority_zero: rows.every(
+      (row) =>
+        row.production_evidence_claim === 0 &&
+        row.root_authority === 0 &&
+        row.network_authority === 0 &&
+        row.runtime_enforcement_authority === 0 &&
+        row.main_gui_mutation_required === 0 &&
+        row.edge_gui_mutation_required === 0,
+    ),
+    local_only: rows.every((row) => row.local_only === true),
+    production_evidence_claim: 0,
+    root_authority: 0,
+    network_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function runMonitorTone(status) {
+  if (status === "blocked") {
+    return "stop";
+  }
+  if (status === "running") {
+    return "info";
+  }
+  return "ok";
+}
+
+function runMonitorState() {
+  const badgeText = (qs("#run-badge")?.textContent || "ready").trim().toLowerCase();
+  const status = ["ready", "running", "complete", "blocked"].includes(badgeText) ? badgeText : "ready";
+  const logLines = qsa("#recent-log p").map((line) => line.textContent.trim()).filter(Boolean);
+  return {
+    status,
+    title: qs("#run-monitor-title")?.textContent.trim() || "Idle, plan current",
+    progress: state.progress,
+    progress_label: qs("#progress-label")?.textContent.trim() || "Evidence completeness",
+    prefix_guard: state.prefixValid ? "accepted" : "blocked",
+    mode: state.mode === "local" ? "guarded-local" : "dry-run",
+    last_log: logLines[logLines.length - 1] || "none",
+    runtime_authority: 0,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+    local_only: true,
+  };
+}
+
+function runMonitorRows(summary = runMonitorState()) {
+  return [
+    {
+      key: "status",
+      label: "Status",
+      value: summary.status,
+      status: summary.status,
+    },
+    {
+      key: "progress",
+      label: "Progress",
+      value: `${summary.progress}%`,
+      status: summary.progress >= 80 ? "complete" : "running",
+    },
+    {
+      key: "mode",
+      label: "Mode",
+      value: summary.mode,
+      status: summary.mode,
+    },
+    {
+      key: "prefix_guard",
+      label: "Prefix guard",
+      value: summary.prefix_guard,
+      status: summary.prefix_guard,
+    },
+    {
+      key: "last_log",
+      label: "Last log",
+      value: summary.last_log,
+      status: summary.status,
+    },
+    {
+      key: "runtime_boundary",
+      label: "Runtime boundary",
+      value: "runtime=0 production=0 main=0 edge=0",
+      status: "blocked",
+    },
+  ].map((row) => ({
+    ...row,
+    local_only: true,
+    production_evidence_claim: 0,
+    runtime_authority: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+}
+
+function runMonitorSummary(rows = runMonitorRows()) {
+  const current = runMonitorState();
+  return {
+    status: current.status,
+    title: current.title,
+    progress: current.progress,
+    progress_label: current.progress_label,
+    prefix_guard: current.prefix_guard,
+    mode: current.mode,
+    last_log: current.last_log,
+    row_count: rows.length,
+    local_only: rows.every((row) => row.local_only === true),
+    runtime_authority: 0,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function operatorWorkflowTone(status) {
+  if (status === "complete" || status === "available") {
+    return "ok";
+  }
+  if (status === "blocked") {
+    return "stop";
+  }
+  return "warn";
+}
+
+function operatorWorkflowRows() {
+  const profile = profileScopeState();
+  const run = runMonitorSummary();
+  const selectedCount = selectedComponents().length;
+  const planReady = state.prefixValid && selectedCount > 0;
+  const runComplete = run.status === "complete";
+  const runCurrent = run.status === "running";
+  const runBlocked = run.status === "blocked";
+  const localReady = state.mode === "local" && state.prefixValid;
+  return [
+    {
+      key: "profile",
+      label: "Profile selected",
+      status: profile.profile ? "complete" : "current",
+      detail: `${profile.label} / ${selectedCount} components selected`,
+    },
+    {
+      key: "plan_review",
+      label: "Plan review",
+      status: !state.prefixValid ? "blocked" : state.progress >= 78 ? "complete" : "current",
+      detail: planReady
+        ? "component manifest, prefix, and authority fields checked"
+        : "prefix or component selection needs review",
+    },
+    {
+      key: "dry_install",
+      label: "Dry-install run",
+      status: runBlocked ? "blocked" : runComplete ? "complete" : runCurrent ? "current" : "pending",
+      detail: runComplete
+        ? "receipt queued in local evidence"
+        : runCurrent
+          ? "local no-effect simulation running"
+          : "receipt and engine log stay in evidence",
+    },
+    {
+      key: "guarded_local",
+      label: "Guarded local install",
+      status: localReady ? "available" : "blocked",
+      detail: localReady ? "guarded user-local simulation available" : "locked until explicit local mode is active",
+    },
+  ].map((row, index) => ({
+    ...row,
+    order: index + 1,
+    local_only: true,
+    production_evidence_claim: 0,
+    runtime_authority: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+}
+
+function operatorWorkflowSummary(rows = operatorWorkflowRows()) {
+  const complete = rows.filter((row) => row.status === "complete").length;
+  const current = rows.filter((row) => row.status === "current").length;
+  const available = rows.filter((row) => row.status === "available").length;
+  const blocked = rows.filter((row) => row.status === "blocked").length;
+  const next = rows.find((row) => row.status === "current") || rows.find((row) => row.status === "pending") || rows[rows.length - 1];
+  return {
+    total: rows.length,
+    complete,
+    current,
+    available,
+    blocked,
+    next_step: next?.key || "none",
+    next_label: next?.label || "none",
+    state: blocked > 1 ? "blocked" : available > 0 ? "guarded_local_ready" : complete >= 3 ? "ready_for_receipt" : "plan_review",
+    local_only: rows.every((row) => row.local_only === true),
+    production_evidence_claim: 0,
+    runtime_authority: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function workspaceRouteRows() {
+  const tabLabel = tabs.find(([id]) => id === state.activeTab)?.[1] || "Dashboard";
+  const detail = evidenceDetailState();
+  const profile = profileScopeState();
+  return [
+    {
+      key: "tab",
+      label: "tab",
+      value: state.activeTab,
+      display: `tab ${tabLabel.toLowerCase()}`,
+    },
+    {
+      key: "profile",
+      label: "profile",
+      value: state.profile,
+      display: `profile ${profile.label.toLowerCase()}`,
+    },
+    {
+      key: "detail",
+      label: "detail",
+      value: detail.level,
+      display: `detail ${detail.level} ${detail.label.toLowerCase()}`,
+    },
+    {
+      key: "boundary",
+      label: "boundary",
+      value: "local-only",
+      display: "local only",
+    },
+  ].map((row) => ({
+    ...row,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+}
+
+function workspaceRouteSummary(rows = workspaceRouteRows()) {
+  const byKey = Object.fromEntries(rows.map((row) => [row.key, row]));
+  const detail = evidenceDetailState(byKey.detail?.value || state.evidenceDetail);
+  const profile = profileScopeState(byKey.profile?.value || state.profile);
+  return {
+    active_tab: byKey.tab?.value || state.activeTab,
+    active_tab_label: tabs.find(([id]) => id === state.activeTab)?.[1] || "Dashboard",
+    profile: profile.profile,
+    profile_scope: profile.scope,
+    profile_key: profile.key,
+    evidence_detail: detail.level,
+    evidence_detail_label: detail.label,
+    chip_count: rows.length,
+    boundary: byKey.boundary?.value || "local-only",
+    local_only: rows.every((row) => row.local_only === true),
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function readinessRailState(progress = state.progress) {
+  const score = Math.max(0, Math.min(100, Math.round(Number(progress) || 0)));
+  const local = state.mode === "local";
+  let band = "needs_review";
+  let label = "needs local review";
+  if (score >= 85) {
+    band = "local_high";
+    label = "local proof high";
+  } else if (score >= 72) {
+    band = "local_review";
+    label = "local proof review";
+  }
+  return {
+    score,
+    band,
+    label,
+    mode: local ? "guarded-local" : "dry-run",
+    writes: local ? "armed" : "blocked",
+    gate: "closed",
+    can_promote: false,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function readinessRailRows(summary = readinessRailState()) {
+  return [
+    {
+      key: "score",
+      label: "Score",
+      value: `${summary.score}%`,
+      status: summary.band,
+    },
+    {
+      key: "band",
+      label: "Band",
+      value: summary.label,
+      status: summary.band,
+    },
+    {
+      key: "mode",
+      label: "Mode",
+      value: summary.mode,
+      status: summary.mode,
+    },
+    {
+      key: "writes",
+      label: "Writes",
+      value: summary.writes,
+      status: summary.writes,
+    },
+    {
+      key: "gate",
+      label: "Gate",
+      value: summary.gate,
+      status: "blocked",
+    },
+  ].map((row) => ({
+    ...row,
+    local_only: true,
+    can_promote: false,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+}
+
+function readinessRailSummary(rows = readinessRailRows()) {
+  const byKey = Object.fromEntries(rows.map((row) => [row.key, row]));
+  const score = Math.max(0, Math.min(100, Number.parseInt(byKey.score?.value || state.progress, 10) || 0));
+  const summary = readinessRailState(score);
+  return {
+    score: summary.score,
+    band: summary.band,
+    label: summary.label,
+    mode: byKey.mode?.value || summary.mode,
+    writes: byKey.writes?.value || summary.writes,
+    gate: byKey.gate?.value || summary.gate,
+    can_promote: false,
+    row_count: rows.length,
+    local_only: rows.every((row) => row.local_only === true),
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function qualityGateTone(status) {
+  if (status === "verified") {
+    return "ok";
+  }
+  if (status === "blocked") {
+    return "stop";
+  }
+  return "warn";
+}
+
+function qualityGateRows() {
+  return qualityGates.map((gate, index) => ({
+    key: gate.key,
+    label: gate.label,
+    status: gate.status,
+    evidence: gate.evidence,
+    next: gate.next,
+    order: index + 1,
+    can_promote: false,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+}
+
+function qualityGateSummary(rows = qualityGateRows()) {
+  const verified = rows.filter((row) => row.status === "verified").length;
+  const pending = rows.filter((row) => row.status === "pending").length;
+  const blocked = rows.filter((row) => row.status === "blocked").length;
+  const decision = pending === 0 && blocked === 0 && rows.length > 0 ? "ready" : "blocked";
+  return {
+    total: rows.length,
+    verified,
+    pending,
+    blocked,
+    decision,
+    badge: decision === "ready" ? "ready" : "not ready",
+    can_promote: false,
+    local_only: rows.every((row) => row.local_only === true),
+    zero_authority: rows.every(
+      (row) =>
+        row.production_evidence_claim === 0 &&
+        row.host_write_authority === 0 &&
+        row.runtime_enforcement_authority === 0 &&
+        row.main_gui_mutation_required === 0 &&
+        row.edge_gui_mutation_required === 0,
+    ),
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function brandMetadataState() {
+  const head = document.head;
+  const preload = qs('link[rel="preload"][as="image"][href="assets/latticra-emblem.png"]', head);
+  const icon = qs('link[rel="icon"][href="assets/latticra-emblem.png"]', head);
+  const touchIcon = qs('link[rel="apple-touch-icon"][href="assets/latticra-emblem.png"]', head);
+  const applicationName = qs('meta[name="application-name"]', head)?.getAttribute("content") || "";
+  const themeColor = qs('meta[name="theme-color"]', head)?.getAttribute("content") || "";
+  const preloadLinked = preload instanceof HTMLLinkElement;
+  const faviconLinked = icon instanceof HTMLLinkElement;
+  const touchIconLinked = touchIcon instanceof HTMLLinkElement;
+  return {
+    application_name: applicationName,
+    theme_color: themeColor,
+    preload_link: preloadLinked,
+    favicon_link: faviconLinked,
+    touch_icon_link: touchIconLinked,
+    metadata_ready:
+      applicationName === "Latticra Panel" &&
+      themeColor === "#f4f7fa" &&
+      preloadLinked &&
+      faviconLinked &&
+      touchIconLinked,
+    production_evidence_claim: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function brandEmblemState() {
+  const image = qs("#brand-emblem");
+  const mark = qs(".brand-mark");
+  const metadata = brandMetadataState();
+  const loaded = image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0;
+  const fallbackVisible =
+    mark instanceof HTMLElement &&
+    (mark.classList.contains("is-missing") ||
+      (image instanceof HTMLImageElement && image.complete && image.naturalWidth === 0));
+  return {
+    asset: "assets/latticra-emblem.png",
+    status: fallbackVisible ? "fallback" : loaded ? "loaded" : "pending",
+    loaded,
+    fallback_visible: fallbackVisible,
+    intrinsic_width: image instanceof HTMLImageElement ? image.naturalWidth || 0 : 0,
+    intrinsic_height: image instanceof HTMLImageElement ? image.naturalHeight || 0 : 0,
+    reserved_width: 42,
+    reserved_height: 42,
+    browser_metadata_ready: metadata.metadata_ready,
+    metadata,
+    production_evidence_claim: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function wireBrandEmblem() {
+  const image = qs("#brand-emblem");
+  const mark = qs(".brand-mark");
+  if (!(image instanceof HTMLImageElement) || !(mark instanceof HTMLElement)) {
+    return;
+  }
+  const setLoaded = () => {
+    mark.classList.remove("is-missing");
+    renderReceiptPreview();
+  };
+  const setMissing = () => {
+    mark.classList.add("is-missing");
+    renderReceiptPreview();
+  };
+  image.addEventListener("load", setLoaded);
+  image.addEventListener("error", setMissing);
+  if (image.complete) {
+    if (image.naturalWidth > 0) {
+      setLoaded();
+    } else {
+      setMissing();
+    }
+  }
 }
 
 function defaultReceiptChecklistState() {
@@ -1384,6 +2325,118 @@ function receiptDiffSummary(snapshot, currentReceipt = buildReceiptPreview()) {
   };
 }
 
+function alignmentStateFromSummary(summary = {}) {
+  const total = Number(summary.total || 0);
+  const review = Number(summary.review || 0);
+  if (total <= 0) {
+    return "none";
+  }
+  return review > 0 ? "review" : "aligned";
+}
+
+function alignmentTextFromSummary(summary = {}) {
+  const stateText = alignmentStateFromSummary(summary);
+  const aligned = Number(summary.aligned || 0);
+  const total = Number(summary.total || 0);
+  return `${stateText}:${aligned}/${total}`;
+}
+
+function selectedReceiptRowKey(section) {
+  return section?.selected?.key || "none";
+}
+
+function receiptLocalAuthorityText(receipt = {}) {
+  const authority = receipt.authority || {};
+  const production = Number(authority.production_installer_claim ?? 0);
+  const main = Number(authority.main_gui_mutation_required ?? 0);
+  const edge = Number(authority.edge_gui_mutation_required ?? 0);
+  const root = Number(authority.root_authority ?? 0);
+  const network = Number(authority.network_authority ?? 0);
+  const runtime = Number(authority.runtime_enforcement_authority ?? 0);
+  const localOnly = production === 0 && main === 0 && edge === 0 && root === 0 && network === 0 && runtime === 0;
+  return localOnly
+    ? "local-only:production=0 main=0 edge=0"
+    : `authority-review:production=${production} main=${main} edge=${edge}`;
+}
+
+function receiptHandoffScopeSourceText(context) {
+  const hasReviewFocus =
+    context.readiness_compare !== "none" &&
+    context.readiness_trace !== "none" &&
+    context.production_blocker !== "none";
+  const hasAlignmentState =
+    !context.comparison_alignment.startsWith("none:") && !context.trace_alignment.startsWith("none:");
+  return hasReviewFocus && hasAlignmentState && context.local_authority_boundary.startsWith("local-only")
+    ? "covered:compare+trace+blocker+local"
+    : "review-context-incomplete";
+}
+
+function receiptReviewContext(receipt = {}) {
+  const context = {
+    readiness_compare: selectedReceiptRowKey(receipt.readiness_comparison),
+    comparison_alignment: alignmentTextFromSummary(receipt.readiness_comparison?.alignment?.summary),
+    readiness_trace: selectedReceiptRowKey(receipt.readiness_traceability),
+    trace_alignment: alignmentTextFromSummary(receipt.readiness_traceability?.alignment?.summary),
+    evidence_intake: selectedReceiptRowKey(receipt.release_evidence_intake),
+    promotion_gate: selectedReceiptRowKey(receipt.promotion_gate),
+    release_acceptance: selectedReceiptRowKey(receipt.release_acceptance),
+    production_blocker: selectedReceiptRowKey(receipt.production_blocker_drilldown),
+    local_authority_boundary: receiptLocalAuthorityText(receipt),
+  };
+  return {
+    ...context,
+    handoff_scope_source: receiptHandoffScopeSourceText(context),
+  };
+}
+
+function receiptContextDriftRows(snapshot, currentReceipt = buildReceiptPreview()) {
+  if (!snapshot) {
+    return [];
+  }
+  const savedContext = receiptReviewContext(snapshot.receipt || {});
+  const currentContext = receiptReviewContext(currentReceipt || {});
+  return receiptContextDriftFields.map((field) => {
+    const saved = field.read(savedContext) || "none";
+    const current = field.read(currentContext) || "none";
+    const changed = saved !== current;
+    return {
+      key: field.key,
+      label: field.label,
+      saved,
+      current,
+      status: changed ? "changed" : "same",
+      changed,
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    };
+  });
+}
+
+function receiptContextDriftSummary(snapshot, currentReceipt = buildReceiptPreview()) {
+  const rows = receiptContextDriftRows(snapshot, currentReceipt);
+  const changedCount = rows.filter((row) => row.changed).length;
+  const currentContext = receiptReviewContext(currentReceipt || {});
+  return {
+    row_count: rows.length,
+    changed_count: changedCount,
+    same_count: rows.length - changedCount,
+    status: snapshot ? (changedCount > 0 ? "changed" : "same") : "none",
+    selected_compare: currentContext.readiness_compare,
+    selected_trace: currentContext.readiness_trace,
+    selected_blocker: currentContext.production_blocker,
+    handoff_scope_source: currentContext.handoff_scope_source,
+    local_only: rows.every((row) => row.local_only === true),
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+    rows,
+  };
+}
+
 function receiptDiffVisibleRows(rows) {
   if (state.receiptDiffFilter === "all") {
     return rows;
@@ -1449,13 +2502,14 @@ function exportIntegrityPayload(artifact) {
     selected_snapshot: artifact.selected_snapshot,
     current_comparison: artifact.current_comparison,
     field_comparison: artifact.field_comparison,
+    context_drift: artifact.context_drift,
   };
 }
 
 function buildExportIntegrity(artifact) {
   return {
     algorithm: "fnv1a32-local-preview",
-    digest_scope: "boundary+snapshot_lifecycle+selected_snapshot+current_comparison+field_comparison",
+    digest_scope: "boundary+snapshot_lifecycle+selected_snapshot+current_comparison+field_comparison+context_drift",
     payload_digest: localDigest(exportIntegrityPayload(artifact)),
     local_only: true,
   };
@@ -1471,6 +2525,7 @@ function exportValidationRows(artifact) {
   }
   const boundary = artifact.boundary || {};
   const comparison = artifact.field_comparison || {};
+  const contextDrift = artifact.context_drift || {};
   const integrity = artifact.integrity || {};
   return [
     {
@@ -1520,6 +2575,16 @@ function exportValidationRows(artifact) {
       label: "diff filter recorded",
       status: passFail(comparison.active_filter === state.receiptDiffFilter),
       detail: `filter=${comparison.active_filter || "missing"}`,
+    },
+    {
+      key: "context_drift",
+      label: "review context drift embedded",
+      status: passFail(
+        contextDrift.row_count === receiptContextDriftFields.length &&
+          ["same", "changed"].includes(contextDrift.status) &&
+          contextDrift.production_evidence_claim === 0
+      ),
+      detail: `${contextDrift.changed_count || 0}/${contextDrift.row_count || 0} changed`,
     },
     {
       key: "integrity_digest",
@@ -1612,6 +2677,117 @@ function qaHandoffReplayRequest(snapshot = null, artifact = null) {
   };
 }
 
+function qaHandoffReviewContext() {
+  const compareAlignment = readinessComparisonAlignmentSummary();
+  const traceAlignment = traceabilityAlignmentSummary();
+  return {
+    readiness_compare: state.readinessCompareSelection,
+    compare_alignment_state: compareAlignment.review > 0 ? "review" : "aligned",
+    compare_alignment_action: compareAlignment.action_label,
+    compare_alignment_aligned: compareAlignment.aligned,
+    compare_alignment_review: compareAlignment.review,
+    compare_alignment_total: compareAlignment.total,
+    readiness_trace: state.traceabilitySelection,
+    trace_alignment_state: traceAlignment.review > 0 ? "review" : "aligned",
+    trace_alignment_action: traceAlignment.action_label,
+    trace_alignment_aligned: traceAlignment.aligned,
+    trace_alignment_review: traceAlignment.review,
+    trace_alignment_total: traceAlignment.total,
+    evidence_intake: state.evidenceIntakeSelection,
+    promotion_gate: state.promotionGateSelection,
+    release_acceptance: state.releaseAcceptanceSelection,
+    production_blocker: state.productionBlockerSelection,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function qaHandoffScopeRows(handoff) {
+  if (!handoff || !handoff.selected_snapshot) {
+    return [];
+  }
+  const params = qaHandoffUrlParams(handoff);
+  const filters = handoff.filters || {};
+  const context = handoff.selected_review_context || {};
+  const boundary = handoff.boundary || {};
+  return [
+    {
+      key: "selected_comparison",
+      label: "selected comparison",
+      status: passFail(params.get("compare") === filters.compare && context.readiness_compare === filters.compare),
+      detail: `compare=${filters.compare || "missing"} context=${context.readiness_compare || "missing"}`,
+    },
+    {
+      key: "comparison_alignment",
+      label: "comparison alignment state",
+      status: passFail(context.compare_alignment_total > 0 && ["review", "aligned"].includes(context.compare_alignment_state)),
+      detail: `${context.compare_alignment_state || "missing"}: ${context.compare_alignment_aligned ?? "missing"}/${context.compare_alignment_total ?? "missing"} aligned`,
+    },
+    {
+      key: "readiness_trace",
+      label: "readiness trace",
+      status: passFail(params.get("trace") === filters.trace && context.readiness_trace === filters.trace),
+      detail: `trace=${filters.trace || "missing"} context=${context.readiness_trace || "missing"}`,
+    },
+    {
+      key: "trace_alignment",
+      label: "trace alignment state",
+      status: passFail(context.trace_alignment_total > 0 && ["review", "aligned"].includes(context.trace_alignment_state)),
+      detail: `${context.trace_alignment_state || "missing"}: ${context.trace_alignment_aligned ?? "missing"}/${context.trace_alignment_total ?? "missing"} aligned`,
+    },
+    {
+      key: "blocker_focus",
+      label: "production blocker focus",
+      status: passFail(params.get("blockerItem") === filters.blocker_item && context.production_blocker === filters.blocker_item),
+      detail: `blocker=${filters.blocker_item || "missing"} context=${context.production_blocker || "missing"}`,
+    },
+    {
+      key: "local_authority_boundary",
+      label: "local authority boundary",
+      status: passFail(
+        boundary.production_evidence === 0 &&
+          boundary.host_write_authority === 0 &&
+          boundary.main_gui_mutation_required === 0 &&
+          boundary.edge_gui_mutation_required === 0 &&
+          context.production_evidence_claim === 0 &&
+          context.main_gui_mutation_required === 0 &&
+          context.edge_gui_mutation_required === 0
+      ),
+      detail: `production=${boundary.production_evidence ?? "missing"} host=${boundary.host_write_authority ?? "missing"} main=${boundary.main_gui_mutation_required ?? "missing"} edge=${boundary.edge_gui_mutation_required ?? "missing"}`,
+    },
+  ].map((row) => ({
+    ...row,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+}
+
+function qaHandoffScopeSummary(handoff) {
+  const rows = qaHandoffScopeRows(handoff);
+  const passed = rows.filter((row) => row.status === "passed").length;
+  return {
+    total: rows.length,
+    passed,
+    blocked: rows.length - passed,
+    status: rows.length > 0 && passed === rows.length ? "passed" : "blocked",
+    selected_compare: handoff?.selected_review_context?.readiness_compare || "none",
+    selected_trace: handoff?.selected_review_context?.readiness_trace || "none",
+    selected_blocker: handoff?.selected_review_context?.production_blocker || "none",
+    local_only: rows.every((row) => row.local_only === true),
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
 function qaHandoffValidationRows(handoff, artifact = null) {
   if (!handoff || !handoff.selected_snapshot) {
     return [];
@@ -1626,6 +2802,7 @@ function qaHandoffValidationRows(handoff, artifact = null) {
   const replaySnapshotId = params.get("snapshot") || "";
   const replayDigest = params.get("digest") || "";
   const exportValidation = exportValidationSummary(artifact);
+  const contextDrift = handoff.context_drift || artifact?.context_drift || {};
   return [
     {
       key: "handoff_schema",
@@ -1698,6 +2875,16 @@ function qaHandoffValidationRows(handoff, artifact = null) {
           handoff.export_validation_passed === handoff.export_validation_total
       ),
       detail: `${handoff.export_validation_passed}/${handoff.export_validation_total} passed`,
+    },
+    {
+      key: "saved_context_drift",
+      label: "saved review context aligned",
+      status: passFail(
+        contextDrift.status === "same" &&
+          contextDrift.row_count === receiptContextDriftFields.length &&
+          contextDrift.production_evidence_claim === 0
+      ),
+      detail: `${contextDrift.changed_count ?? "missing"}/${contextDrift.row_count ?? "missing"} changed`,
     },
     {
       key: "local_only_boundary",
@@ -1789,6 +2976,7 @@ function buildQaHandoff(snapshot, artifact = null) {
       trace: state.traceabilitySelection,
       blocker_item: state.productionBlockerSelection,
     },
+    selected_review_context: qaHandoffReviewContext(),
     selected_snapshot: snapshot
       ? {
           id: snapshot.id,
@@ -1802,10 +2990,15 @@ function buildQaHandoff(snapshot, artifact = null) {
     export_validation_status: validation.status,
     export_validation_passed: validation.passed,
     export_validation_total: validation.total,
+    context_drift: exportArtifact?.context_drift || receiptContextDriftSummary(null, {}),
     replay_request: qaHandoffReplayRequest(snapshot, exportArtifact),
   };
   return {
     ...handoff,
+    handoff_scope: {
+      summary: qaHandoffScopeSummary(handoff),
+      rows: qaHandoffScopeRows(handoff),
+    },
     handoff_validation: qaHandoffValidationSummary(handoff, exportArtifact),
   };
 }
@@ -1842,6 +3035,7 @@ function buildReceiptExportArtifact(snapshot, currentReceipt = null) {
     },
     current_comparison: compareSavedReceipt(snapshot, comparisonReceipt),
     field_comparison: receiptDiffSummary(snapshot, comparisonReceipt),
+    context_drift: receiptContextDriftSummary(snapshot, comparisonReceipt),
   };
   const artifactWithIntegrity = {
     ...artifact,
@@ -1917,6 +3111,71 @@ function productionBlockerSummary(rows = productionBlockerRows()) {
   };
 }
 
+function productionBlockerProofRows(row = selectedProductionBlockerRow()) {
+  if (!row) {
+    return [];
+  }
+  return [
+    {
+      key: "missing_evidence",
+      label: "missing evidence",
+      expected: row.evidence,
+      current: row.status,
+      status: "blocked",
+      evidence: row.next_action,
+    },
+    {
+      key: "proof_owner",
+      label: "proof owner",
+      expected: row.owner,
+      current: row.source,
+      status: "blocked",
+      evidence: `${row.group} / ${row.label}`,
+    },
+    {
+      key: "release_acceptance",
+      label: "release acceptance",
+      expected: "production evidence packet recorded outside test lane",
+      current: "not accepted",
+      status: "blocked",
+      evidence: "can_promote=false",
+    },
+    {
+      key: "authority_boundary",
+      label: "authority boundary",
+      expected: "claim=0 host=0 main=0 edge=0",
+      current: "closed in test lane",
+      status: "verified",
+      evidence: "production evidence cannot be created by this UI lane",
+    },
+  ].map((proofRow) => ({
+    ...proofRow,
+    selected_blocker_key: row.key,
+    local_only: true,
+    can_promote: false,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+}
+
+function productionBlockerProofSummary(rows = productionBlockerProofRows()) {
+  return {
+    total: rows.length,
+    verified: rows.filter((row) => row.status === "verified").length,
+    blocked: rows.filter((row) => row.status === "blocked").length,
+    selected_key: state.productionBlockerSelection,
+    release_evidence_ready: false,
+    local_only: rows.every((row) => row.local_only === true),
+    can_promote: false,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
 function readinessComparisonRows() {
   return readinessComparisonItems.map((item) => ({
     key: item.key,
@@ -1953,6 +3212,221 @@ function readinessComparisonSummary(rows = readinessComparisonRows()) {
     local_proof_only: true,
     can_promote: false,
     production_blocker_count: productionBlockerCount(),
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function readinessComparisonProofRows(row = selectedReadinessComparisonRow()) {
+  if (!row) {
+    return [];
+  }
+  const requirementStatus = row.status === "verified" ? "blocked" : row.status;
+  return [
+    {
+      key: "local_proof_scope",
+      label: "local proof scope",
+      current: "available / verified",
+      status: "verified",
+      expected: "isolated UI proof can be reviewed locally",
+      evidence: row.local_proof,
+      selected_compare_key: row.key,
+      local_only: true,
+      can_promote: false,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+    {
+      key: "production_requirement",
+      label: "production requirement",
+      current: row.status === "verified" ? "not production evidence" : row.status,
+      status: requirementStatus,
+      expected: row.production_requirement,
+      evidence: `owner=${row.owner}; ${row.boundary}`,
+      selected_compare_key: row.key,
+      local_only: true,
+      can_promote: false,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+    {
+      key: "release_acceptance",
+      label: "release acceptance",
+      current: "not accepted / blocked",
+      status: "blocked",
+      expected: "production evidence packet accepted outside test lane",
+      evidence: `next=${row.next_action}; can_promote=false`,
+      selected_compare_key: row.key,
+      local_only: true,
+      can_promote: false,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+    {
+      key: "authority_boundary",
+      label: "authority boundary",
+      current: "closed in test lane / verified",
+      status: "verified",
+      expected: "claim=0 host=0 runtime=0 main=0 edge=0",
+      evidence: "selected comparison can review evidence but cannot promote or mutate guarded GUIs",
+      selected_compare_key: row.key,
+      local_only: true,
+      can_promote: false,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+  ];
+}
+
+function readinessComparisonProofSummary(rows = readinessComparisonProofRows()) {
+  return {
+    total: rows.length,
+    verified: rows.filter((row) => row.status === "verified").length,
+    pending: rows.filter((row) => row.status === "pending").length,
+    blocked: rows.filter((row) => row.status === "blocked").length,
+    selected_key: state.readinessCompareSelection,
+    release_evidence_ready: false,
+    local_only: rows.every((row) => row.local_only === true),
+    can_promote: false,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function readinessComparisonContextTarget(row = selectedReadinessComparisonRow()) {
+  const targets = {
+    local_ui_proof: {
+      trace: "local_ui_trace",
+      blockers: "none",
+      intake_packet: "local_ui_packet",
+      promotion_gate: "local_ui_evidence",
+      acceptance_gate: "local_ui_acceptance",
+    },
+    guarded_panel_migration: {
+      trace: "migration_trace",
+      blockers: "none",
+      intake_packet: "guarded_panel_packet",
+      promotion_gate: "main_panel_migration_review",
+      acceptance_gate: "guarded_panel_acceptance",
+    },
+    installer_engine_binding: {
+      trace: "installer_runtime_trace",
+      blockers: "none",
+      intake_packet: "installer_runtime_packet",
+      promotion_gate: "installer_engine_binding",
+      acceptance_gate: "installer_engine_acceptance",
+    },
+    release_artifacts: {
+      trace: "artifact_supply_chain_trace",
+      blockers: "reproducible_artifact, artifact_signature, sbom_evidence",
+      intake_packet: "artifact_signature_packet",
+      promotion_gate: "artifact_integrity / sbom_attestation",
+      acceptance_gate: "production_evidence_acceptance",
+    },
+    lifecycle_validation: {
+      trace: "lifecycle_trace",
+      blockers: "production_preflight_guard, install_transcript, uninstall_transcript",
+      intake_packet: "lifecycle_transcript_packet",
+      promotion_gate: "lifecycle_transcripts",
+      acceptance_gate: "production_evidence_acceptance",
+    },
+    recovery_matrix: {
+      trace: "recovery_trace",
+      blockers: "upgrade_path, rollback_path, multi_vm_validation",
+      intake_packet: "recovery_validation_packet",
+      promotion_gate: "upgrade_rollback_recovery / multi_vm_validation",
+      acceptance_gate: "release_authority_acceptance",
+    },
+  };
+  return targets[row?.key] || targets.local_ui_proof;
+}
+
+function readinessComparisonAlignmentRows(row = selectedReadinessComparisonRow()) {
+  if (!row) {
+    return [];
+  }
+  const target = readinessComparisonContextTarget(row);
+  const blockerKeys = traceabilityKeyList(target.blockers);
+  const gateKeys = traceabilityKeyList(target.promotion_gate);
+  const checks = [
+    {
+      key: "trace_path",
+      label: "trace path",
+      expected: target.trace,
+      current: state.traceabilitySelection,
+      aligned: target.trace === state.traceabilitySelection,
+    },
+    {
+      key: "intake_packet",
+      label: "intake packet",
+      expected: target.intake_packet,
+      current: state.evidenceIntakeSelection,
+      aligned: target.intake_packet === state.evidenceIntakeSelection,
+    },
+    {
+      key: "promotion_gate",
+      label: "promotion gate",
+      expected: target.promotion_gate,
+      current: state.promotionGateSelection,
+      aligned: gateKeys.includes(state.promotionGateSelection),
+    },
+    {
+      key: "acceptance_gate",
+      label: "acceptance gate",
+      expected: target.acceptance_gate,
+      current: state.releaseAcceptanceSelection,
+      aligned: target.acceptance_gate === state.releaseAcceptanceSelection,
+    },
+    {
+      key: "blocker_selection",
+      label: "blocker selection",
+      expected: target.blockers,
+      current: blockerKeys.length === 0 ? "not applicable" : state.productionBlockerSelection,
+      aligned: blockerKeys.length === 0 || blockerKeys.includes(state.productionBlockerSelection),
+    },
+  ];
+  return checks.map((item) => ({
+    ...item,
+    compare_key: row.key,
+    status: item.aligned ? "aligned" : "review",
+    local_only: true,
+    can_promote: false,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+}
+
+function readinessComparisonAlignmentSummary(rows = readinessComparisonAlignmentRows()) {
+  return {
+    total: rows.length,
+    aligned: rows.filter((row) => row.status === "aligned").length,
+    review: rows.filter((row) => row.status === "review").length,
+    selected_compare: state.readinessCompareSelection,
+    action_state: rows.some((row) => row.status === "review") ? "align_available" : "aligned",
+    action_label: rows.some((row) => row.status === "review") ? "Align comparison context" : "Comparison context aligned",
+    local_only: rows.every((row) => row.local_only),
+    can_promote: false,
     production_evidence_claim: 0,
     host_write_authority: 0,
     runtime_enforcement_authority: 0,
@@ -1999,6 +3473,82 @@ function evidenceIntakeSummary(rows = evidenceIntakeRows()) {
     selected_decision: selected?.decision || "none",
     intake_authority: 0,
     can_promote: false,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function evidenceIntakeContractRows(row = selectedEvidenceIntakeRow()) {
+  if (!row) {
+    return [];
+  }
+  const decisionStatus = row.status === "local-only" ? "verified" : row.status === "waiting" ? "pending" : "blocked";
+  const proofCurrent =
+    row.status === "local-only"
+      ? "local proof present"
+      : row.status === "waiting"
+        ? "awaiting production packet"
+        : "missing production packet";
+  return [
+    {
+      key: "packet_scope",
+      label: "packet scope",
+      expected: row.packet,
+      current: row.source,
+      status: "verified",
+      evidence: row.packet,
+    },
+    {
+      key: "intake_decision",
+      label: "intake decision",
+      expected: row.decision,
+      current: row.status,
+      status: decisionStatus,
+      evidence: row.next_action,
+    },
+    {
+      key: "required_proof",
+      label: "required proof",
+      expected: row.packet,
+      current: proofCurrent,
+      status: decisionStatus,
+      evidence: row.status === "local-only" ? "accepted for local QA review only" : row.decision,
+    },
+    {
+      key: "authority_boundary",
+      label: "authority boundary",
+      expected: "claim=0 host=0 runtime=0 main=0 edge=0",
+      current: "closed in test lane",
+      status: "verified",
+      evidence: row.boundary,
+    },
+  ].map((contractRow) => ({
+    ...contractRow,
+    selected_intake_key: row.key,
+    local_only: true,
+    can_promote: false,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+}
+
+function evidenceIntakeContractSummary(rows = evidenceIntakeContractRows()) {
+  const pending = rows.filter((row) => row.status === "pending").length;
+  const blocked = rows.filter((row) => row.status === "blocked").length;
+  return {
+    total: rows.length,
+    verified: rows.filter((row) => row.status === "verified").length,
+    pending,
+    blocked,
+    selected_key: state.evidenceIntakeSelection,
+    can_promote: false,
+    local_only: rows.every((row) => row.local_only === true),
     production_evidence_claim: 0,
     host_write_authority: 0,
     runtime_enforcement_authority: 0,
@@ -2588,20 +4138,94 @@ function qaReplaySummary(rows = qaReplayRows(), params = queryParams()) {
 
 function contextInspectorSummary() {
   const replay = qaReplaySummary();
+  const brand = brandEmblemState();
+  const primaryActions = primaryActionRailSummary();
+  const posture = workspacePostureSummary();
+  const route = workspaceRouteSummary();
+  const profile = profileScopeSummary();
+  const readinessRail = readinessRailSummary();
+  const quality = qualityGateSummary();
+  const dashboardAuthority = dashboardAuthoritySummary();
+  const runMonitor = runMonitorSummary();
+  const workflow = operatorWorkflowSummary();
   const saved = selectedSavedReceipt();
   const promotion = selectedPromotionGateRow();
   const blocker = selectedProductionBlockerRow();
   const acceptance = selectedReleaseAcceptanceRow();
+  const compare = selectedReadinessComparisonRow();
+  const compareAlignment = readinessComparisonAlignmentSummary();
   const trace = selectedTraceabilityRow();
   const traceAlignment = traceabilityAlignmentSummary();
   return {
     active_tab: state.activeTab,
+    brand_emblem_status: brand.status,
+    brand_emblem_asset: brand.asset,
+    brand_emblem_fallback: brand.fallback_visible,
+    brand_emblem_intrinsic_size:
+      brand.intrinsic_width > 0 && brand.intrinsic_height > 0
+        ? `${brand.intrinsic_width}x${brand.intrinsic_height}`
+        : "pending",
+    brand_metadata_status: brand.browser_metadata_ready ? "browser identity ready" : "browser identity pending",
+    primary_action_count: primaryActions.action_count,
+    primary_action_iconized_count: primaryActions.iconized_count,
+    primary_action_key: primaryActions.primary_action,
+    primary_action_rail_status:
+      primaryActions.all_actions_iconized && primaryActions.action_count === primaryActions.enabled_count
+        ? "ready"
+        : "review",
+    posture_ready: posture.ready,
+    posture_guarded: posture.guarded,
+    posture_blocked: posture.blocked,
+    posture_zero_authority: posture.zero_authority,
+    workspace_route_tab: route.active_tab,
+    workspace_route_profile: route.profile,
+    workspace_route_profile_scope: route.profile_scope,
+    workspace_route_detail: route.evidence_detail,
+    workspace_route_detail_label: route.evidence_detail_label,
+    workspace_route_boundary: route.boundary,
+    profile_scope_label: profile.label,
+    profile_scope_text: profile.scope,
+    profile_scope_intent: profile.intent,
+    readiness_rail_score: readinessRail.score,
+    readiness_rail_band: readinessRail.band,
+    readiness_rail_label: readinessRail.label,
+    readiness_rail_gate: readinessRail.gate,
+    readiness_rail_can_promote: readinessRail.can_promote,
+    quality_gate_decision: quality.decision,
+    quality_gate_verified: quality.verified,
+    quality_gate_pending: quality.pending,
+    quality_gate_blocked: quality.blocked,
+    quality_gate_can_promote: quality.can_promote,
+    quality_gate_zero_authority: quality.zero_authority,
+    dashboard_authority_decision: dashboardAuthority.decision,
+    dashboard_authority_badge: dashboardAuthority.badge,
+    dashboard_authority_allowed: dashboardAuthority.allowed,
+    dashboard_authority_local_scope: dashboardAuthority.local_scope,
+    dashboard_authority_blocked: dashboardAuthority.blocked,
+    dashboard_authority_host_scope: dashboardAuthority.host_write_scope,
+    dashboard_authority_production_zero: dashboardAuthority.production_authority_zero,
+    run_monitor_status: runMonitor.status,
+    run_monitor_progress: runMonitor.progress,
+    run_monitor_prefix_guard: runMonitor.prefix_guard,
+    run_monitor_runtime_authority: runMonitor.runtime_authority,
+    run_monitor_last_log: runMonitor.last_log,
+    operator_workflow_state: workflow.state,
+    operator_workflow_complete: workflow.complete,
+    operator_workflow_current: workflow.current,
+    operator_workflow_blocked: workflow.blocked,
+    operator_workflow_next: workflow.next_step,
     promotion_gate: promotion?.label || "none",
     promotion_status: promotion?.status || "none",
     production_blocker: blocker?.label || "none",
     production_blocker_status: blocker?.status || "none",
     release_acceptance: acceptance?.label || "none",
     release_acceptance_status: acceptance?.status || "none",
+    readiness_compare: compare?.label || "none",
+    readiness_compare_status: compare?.status || "none",
+    compare_alignment: compareAlignment.action_label,
+    compare_alignment_status: compareAlignment.review > 0 ? "review" : "aligned",
+    compare_alignment_aligned: compareAlignment.aligned,
+    compare_alignment_review: compareAlignment.review,
     readiness_trace: trace?.label || "none",
     readiness_trace_status: trace?.status || "none",
     trace_alignment: traceAlignment.action_label,
@@ -2651,9 +4275,32 @@ function renderQaReplayStrip() {
 function renderContextInspector() {
   const summary = contextInspectorSummary();
   qs("#context-active-tab").textContent = summary.active_tab;
+  qs("#context-brand-emblem").textContent =
+    `${summary.brand_emblem_status} / ${summary.brand_emblem_intrinsic_size} / ${summary.brand_metadata_status}`;
+  qs("#context-action-rail").textContent =
+    `${summary.primary_action_rail_status}: ${summary.primary_action_count} actions / ${summary.primary_action_iconized_count} icons / primary ${summary.primary_action_key}`;
+  qs("#context-posture-strip").textContent =
+    `${summary.posture_ready} ready / ${summary.posture_guarded} guarded / ${summary.posture_blocked} blocked / zero authority ${summary.posture_zero_authority ? "yes" : "no"}`;
+  qs("#context-workspace-route").textContent =
+    `${summary.workspace_route_tab} / ${summary.workspace_route_profile} / detail ${summary.workspace_route_detail} ${summary.workspace_route_detail_label.toLowerCase()} / ${summary.workspace_route_boundary}`;
+  qs("#context-profile-scope").textContent =
+    `${summary.profile_scope_label}: ${summary.profile_scope_text}`;
+  qs("#context-readiness-rail").textContent =
+    `${summary.readiness_rail_score}% / ${summary.readiness_rail_label} / gate ${summary.readiness_rail_gate}`;
+  qs("#context-production-gates").textContent =
+    `${summary.quality_gate_decision}: ${summary.quality_gate_verified} verified / ${summary.quality_gate_pending} pending / promote ${summary.quality_gate_can_promote ? "yes" : "no"}`;
+  qs("#context-dashboard-authority").textContent =
+    `${summary.dashboard_authority_badge}: host ${summary.dashboard_authority_host_scope} / ${summary.dashboard_authority_blocked} blocked / production zero ${summary.dashboard_authority_production_zero ? "yes" : "no"}`;
+  qs("#context-run-monitor").textContent =
+    `${summary.run_monitor_status}: ${summary.run_monitor_progress}% / prefix ${summary.run_monitor_prefix_guard} / runtime ${summary.run_monitor_runtime_authority}`;
+  qs("#context-operator-workflow").textContent =
+    `${summary.operator_workflow_state}: ${summary.operator_workflow_complete} complete / ${summary.operator_workflow_current} current / ${summary.operator_workflow_blocked} blocked / next ${summary.operator_workflow_next}`;
   qs("#context-promotion-gate").textContent = `${summary.promotion_gate} / ${summary.promotion_status}`;
   qs("#context-production-blocker").textContent = `${summary.production_blocker} / ${summary.production_blocker_status}`;
   qs("#context-release-acceptance").textContent = `${summary.release_acceptance} / ${summary.release_acceptance_status}`;
+  qs("#context-readiness-compare").textContent = `${summary.readiness_compare} / ${summary.readiness_compare_status}`;
+  qs("#context-compare-alignment").textContent =
+    `${summary.compare_alignment_status}: ${summary.compare_alignment_aligned} aligned, ${summary.compare_alignment_review} review`;
   qs("#context-readiness-trace").textContent = `${summary.readiness_trace} / ${summary.readiness_trace_status}`;
   qs("#context-trace-alignment").textContent =
     `${summary.trace_alignment_status}: ${summary.trace_alignment_aligned} aligned, ${summary.trace_alignment_review} review`;
@@ -2664,9 +4311,213 @@ function renderContextInspector() {
   qs("#context-saved-receipt").textContent = summary.saved_receipt;
 }
 
+function renderWorkspaceRoute() {
+  workspaceRouteRows().forEach((row) => {
+    const chip = qs(`[data-route-chip="${row.key}"]`);
+    if (chip) {
+      chip.textContent = row.display;
+    }
+  });
+}
+
+function renderReadinessRail() {
+  const summary = readinessRailState();
+  const rail = qs("#readiness-rail");
+  if (rail instanceof HTMLElement) {
+    rail.dataset.readinessBand = summary.band;
+  }
+  const score = qs("#readiness-score");
+  if (score) {
+    score.textContent = `${summary.score}%`;
+  }
+  const band = qs("#readiness-band");
+  if (band) {
+    band.textContent = summary.label;
+  }
+  const meter = qs("#readiness-meter");
+  if (meter instanceof HTMLElement) {
+    meter.style.width = `${summary.score}%`;
+    meter.dataset.readinessBand = summary.band;
+  }
+  qs("#rail-mode").textContent = summary.mode;
+  qs("#rail-writes").textContent = summary.writes;
+  qs("#rail-gate").textContent = summary.gate;
+}
+
+function renderDashboardAuthorityCard() {
+  const rows = dashboardAuthorityRows();
+  const summary = dashboardAuthoritySummary(rows);
+  const card = qs("#dashboard-authority-card");
+  if (card instanceof HTMLElement) {
+    card.dataset.authorityDecision = summary.decision;
+  }
+  qs("#dashboard-authority-title").textContent = `${summary.blocked} blocked, ${summary.user_local_state} writes`;
+  const badge = qs("#dashboard-authority-badge");
+  badge.textContent = summary.badge;
+  badge.classList.toggle("ok", summary.decision === "user_local_armed");
+  badge.classList.toggle("warn", summary.user_local_state === "guarded");
+  badge.classList.toggle("stop", summary.decision === "locked");
+  qs("#dashboard-authority-allowed").textContent = String(summary.allowed);
+  qs("#dashboard-authority-local").textContent = String(summary.local_scope);
+  qs("#dashboard-authority-blocked").textContent = String(summary.blocked);
+  qs("#host-write-fact").textContent = String(summary.host_write_scope);
+  qs("#dashboard-authority-boundary").textContent =
+    `host=${summary.host_write_scope} / root=${summary.root_authority} / network=${summary.network_authority} / runtime=${summary.runtime_enforcement_authority} / production=${summary.production_evidence_claim}`;
+
+  const list = qs("#dashboard-authority-list");
+  list.innerHTML = "";
+  rows.forEach((row) => {
+    const item = document.createElement("div");
+    item.dataset.authorityKey = row.key;
+    item.dataset.authorityState = row.status;
+
+    const swatch = document.createElement("span");
+    swatch.className = `swatch ${dashboardAuthorityTone(row.status)}`;
+    swatch.setAttribute("aria-hidden", "true");
+
+    const detail = document.createElement("span");
+    detail.className = "authority-row-detail";
+    const label = document.createElement("strong");
+    label.textContent = row.label;
+    const note = document.createElement("small");
+    note.textContent = row.detail;
+    if (row.key === "user_local_writes") {
+      note.id = "local-write-row";
+    }
+    detail.append(label, note);
+
+    const status = document.createElement("span");
+    status.className = `badge ${dashboardAuthorityTone(row.status)} authority-state`;
+    status.textContent = row.status;
+
+    item.append(swatch, detail, status);
+    list.append(item);
+  });
+}
+
+function renderRunMonitorState() {
+  const summary = runMonitorSummary();
+  const monitor = qs("#run-monitor");
+  if (monitor instanceof HTMLElement) {
+    monitor.dataset.runState = summary.status;
+    monitor.dataset.prefixGuard = summary.prefix_guard;
+  }
+  const badge = qs("#run-badge");
+  if (badge) {
+    badge.className = `badge ${runMonitorTone(summary.status)}`;
+    badge.textContent = summary.status;
+  }
+  qs("#run-monitor-state").textContent = summary.status;
+  qs("#run-monitor-prefix").textContent = summary.prefix_guard;
+  qs("#run-monitor-runtime").textContent = String(summary.runtime_authority);
+  qs("#run-monitor-boundary").textContent =
+    `runtime=${summary.runtime_authority} / production=${summary.production_evidence_claim} / main=${summary.main_gui_mutation_required} / edge=${summary.edge_gui_mutation_required}`;
+}
+
+function renderOperatorWorkflow() {
+  const rows = operatorWorkflowRows();
+  const summary = operatorWorkflowSummary(rows);
+  const card = qs("#operator-workflow-card");
+  if (card instanceof HTMLElement) {
+    card.dataset.workflowState = summary.state;
+  }
+  qs("#operator-workflow-title").textContent =
+    summary.state === "guarded_local_ready"
+      ? "Guarded local is available for review"
+      : summary.state === "ready_for_receipt"
+        ? "Receipt evidence is ready to inspect"
+        : "Plan, dry-run, then inspect receipts";
+  const badge = qs("#operator-workflow-badge");
+  badge.className = `badge ${operatorWorkflowTone(summary.blocked > 1 ? "blocked" : summary.available > 0 ? "available" : "current")}`;
+  badge.textContent = summary.next_label.toLowerCase();
+  qs("#operator-workflow-done").textContent = String(summary.complete);
+  qs("#operator-workflow-current").textContent = String(summary.current + summary.available);
+  qs("#operator-workflow-blocked").textContent = String(summary.blocked);
+  qs("#operator-workflow-boundary").textContent =
+    `production=${summary.production_evidence_claim} / runtime=${summary.runtime_authority} / main=${summary.main_gui_mutation_required} / edge=${summary.edge_gui_mutation_required}`;
+
+  rows.forEach((row) => {
+    const item = qs(`[data-workflow-step="${row.key}"]`);
+    if (!(item instanceof HTMLElement)) {
+      return;
+    }
+    item.dataset.stepState = row.status;
+    item.classList.toggle("is-done", row.status === "complete" || row.status === "available");
+    item.classList.toggle("is-current", row.status === "current");
+    const domKey = row.key === "plan_review" ? "plan" : row.key === "dry_install" ? "run" : row.key === "guarded_local" ? "local" : "profile";
+    const detail = row.key === "profile" ? qs("#step-profile") : qs(`#workflow-${domKey}-detail`);
+    if (detail) {
+      detail.textContent = row.detail;
+    }
+    const state = qs(`#workflow-${domKey}-state`);
+    if (state) {
+      state.textContent = row.status;
+    }
+  });
+}
+
+function renderEvidenceDetailControl() {
+  const detail = evidenceDetailState();
+  const range = qs("#detail-range");
+  if (range instanceof HTMLInputElement) {
+    range.value = String(detail.level);
+    range.dataset.detailLevel = detail.key;
+    range.setAttribute("aria-valuetext", `${detail.label} evidence detail`);
+  }
+  const output = qs("#detail-range-status");
+  if (output) {
+    output.textContent = `${detail.label} evidence`;
+  }
+  const surface = qs(".workspace-surface");
+  if (surface instanceof HTMLElement) {
+    surface.dataset.evidenceDetail = detail.key;
+  }
+}
+
+function renderProfileScopeControl() {
+  const scope = profileScopeState();
+  const select = qs("#profile-select");
+  if (select instanceof HTMLSelectElement) {
+    select.dataset.profileScope = scope.key;
+  }
+  const status = qs("#profile-scope-status");
+  if (status) {
+    status.textContent = scope.scope;
+  }
+  const surface = qs(".workspace-surface");
+  if (surface instanceof HTMLElement) {
+    surface.dataset.profileScope = scope.key;
+  }
+}
+
+function renderWorkspacePostureStrip() {
+  const rows = workspacePostureRows();
+  rows.forEach((row) => {
+    const card = qs(`[data-posture-key="${row.key}"]`);
+    if (!(card instanceof HTMLElement)) {
+      return;
+    }
+    card.dataset.postureState = row.state;
+    const detail = card.querySelector("small");
+    if (detail) {
+      detail.textContent = row.detail;
+    }
+    const badge = card.querySelector(".status-card-badge");
+    if (badge) {
+      badge.textContent = row.badge;
+    }
+    const dot = card.querySelector(".status-dot");
+    if (dot) {
+      dot.className = `status-dot ${row.state === "ready" || row.state === "armed" ? "ok" : row.state === "guarded" ? "warn" : "stop"}`;
+    }
+  });
+}
+
 function operatorFocusDockRows() {
   const blocker = selectedProductionBlockerRow();
   const acceptance = selectedReleaseAcceptanceRow();
+  const compare = selectedReadinessComparisonRow();
+  const compareAlignment = readinessComparisonAlignmentSummary();
   const trace = selectedTraceabilityRow();
   const traceAlignment = traceabilityAlignmentSummary();
   const palette = selectedCommandPaletteItem(commandPaletteVisibleRows());
@@ -2681,6 +4532,26 @@ function operatorFocusDockRows() {
       tab: state.activeTab,
       target: "workspace_tab",
       target_key: state.activeTab,
+    },
+    {
+      key: "readiness_compare",
+      label: "compare",
+      value: compare?.label || "none",
+      detail: compare?.owner || "readiness review",
+      status: compare?.status || "none",
+      tab: "readiness",
+      target: "readiness_compare",
+      target_key: compare?.key || "none",
+    },
+    {
+      key: "compare_alignment",
+      label: "compare align",
+      value: compareAlignment.action_label,
+      detail: `${compareAlignment.aligned} aligned / ${compareAlignment.review} review`,
+      status: compareAlignment.review > 0 ? "review" : "aligned",
+      tab: "readiness",
+      target: "compare_alignment",
+      target_key: compare?.key || "none",
     },
     {
       key: "production_blocker",
@@ -2808,6 +4679,13 @@ function activateOperatorFocusDockRow(key) {
   setTab(row.tab);
   if (row.target === "production_blocker") {
     setProductionBlockerSelection(row.target_key, false, true);
+  } else if (row.target === "readiness_compare") {
+    setReadinessCompareSelection(row.target_key, false, true);
+  } else if (row.target === "compare_alignment") {
+    setReadinessCompareSelection(row.target_key, false, false);
+    requestAnimationFrame(() => {
+      qs("[data-action='align-readiness-compare-context']")?.focus({ preventScroll: true });
+    });
   } else if (row.target === "release_acceptance") {
     setReleaseAcceptanceSelection(row.target_key, false, true);
   } else if (row.target === "traceability") {
@@ -2972,12 +4850,31 @@ function buildReceiptPreview() {
     generated_at: nowStamp(),
     active_tab: state.activeTab,
     profile: state.profile,
+    profile_scope: profileScopeSummary(),
     mode: state.mode === "dry" ? "dry-run" : "guarded-local",
     prefix: state.prefix,
     prefix_guard: state.prefixValid ? "accepted" : "blocked",
+    evidence_detail: evidenceDetailSummary(),
+    readiness_rail: {
+      summary: readinessRailSummary(),
+      rows: readinessRailRows(),
+    },
     qa_replay: {
       summary: qaReplaySummary(),
       rows: qaReplayRows(),
+    },
+    brand_emblem: brandEmblemState(),
+    primary_action_rail: {
+      summary: primaryActionRailSummary(),
+      rows: primaryActionRailRows(),
+    },
+    workspace_posture: {
+      summary: workspacePostureSummary(),
+      rows: workspacePostureRows(),
+    },
+    workspace_route: {
+      summary: workspaceRouteSummary(),
+      rows: workspaceRouteRows(),
     },
     context_inspector: contextInspectorSummary(),
     operator_focus_dock: {
@@ -2992,11 +4889,23 @@ function buildReceiptPreview() {
       summary: readinessComparisonSummary(),
       rows: readinessComparisonRows(),
       selected: selectedReadinessComparisonRow(),
+      proof: {
+        summary: readinessComparisonProofSummary(),
+        rows: readinessComparisonProofRows(),
+      },
+      alignment: {
+        summary: readinessComparisonAlignmentSummary(),
+        rows: readinessComparisonAlignmentRows(),
+      },
     },
     release_evidence_intake: {
       summary: evidenceIntakeSummary(),
       rows: evidenceIntakeRows(),
       selected: selectedEvidenceIntakeRow(),
+      contract: {
+        summary: evidenceIntakeContractSummary(),
+        rows: evidenceIntakeContractRows(),
+      },
     },
     readiness_traceability: {
       summary: traceabilitySummary(),
@@ -3030,6 +4939,22 @@ function buildReceiptPreview() {
       allowlist_enforced: true,
       blocked_commands_mutate_execution_state: false,
     },
+    production_quality_gates: {
+      summary: qualityGateSummary(),
+      rows: qualityGateRows(),
+    },
+    dashboard_authority: {
+      summary: dashboardAuthoritySummary(),
+      rows: dashboardAuthorityRows(),
+    },
+    run_monitor: {
+      summary: runMonitorSummary(),
+      rows: runMonitorRows(),
+    },
+    operator_workflow: {
+      summary: operatorWorkflowSummary(),
+      rows: operatorWorkflowRows(),
+    },
     authority: {
       root_authority: 0,
       network_authority: 0,
@@ -3046,6 +4971,10 @@ function buildReceiptPreview() {
       summary: migrationReviewSummary(),
       rows: migrationReviewRows(),
       selected: selectedMigrationReviewRow(),
+      parity: {
+        summary: migrationParitySummary(),
+        rows: migrationParityRows(),
+      },
     },
     qa_runbook: {
       summary: qaScenarioSummary(),
@@ -3059,6 +4988,10 @@ function buildReceiptPreview() {
       contract: {
         summary: engineBindingContractSummary(),
         rows: engineBindingContractRows(),
+      },
+      event_adapter: {
+        summary: engineEventAdapterSummary(),
+        rows: engineEventAdapterRows(),
       },
     },
     visual_baseline: {
@@ -3080,6 +5013,10 @@ function buildReceiptPreview() {
       summary: productionBlockerSummary(),
       rows: productionBlockerRows(),
       selected: selectedProductionBlockerRow(),
+      proof: {
+        summary: productionBlockerProofSummary(),
+        rows: productionBlockerProofRows(),
+      },
     },
     accessibility_audit: {
       summary: accessibilityAuditSummary(),
@@ -3098,6 +5035,14 @@ function buildReceiptPreview() {
       field_diff_ready: Boolean(selectedSnapshot),
       field_diff_row_count: selectedSnapshot ? receiptDiffFields.length : 0,
       field_diff_filter: state.receiptDiffFilter,
+      context_drift_ready: Boolean(selectedSnapshot),
+      context_drift_status: "none",
+      context_drift_changed: 0,
+      context_drift_total: 0,
+      context_drift_selected_compare: "none",
+      context_drift_selected_trace: "none",
+      context_drift_selected_blocker: "none",
+      context_drift_handoff_scope_source: "none",
       export_validation_ready: false,
       export_validation_status: "blocked",
       export_validation_passed: 0,
@@ -3109,6 +5054,15 @@ function buildReceiptPreview() {
       qa_handoff_schema: "latticra-panel-test-ui-qa-handoff-v0",
       qa_handoff_url: "none",
       qa_handoff_export_validation_status: "blocked",
+      qa_handoff_context_drift_status: "none",
+      qa_handoff_context_drift_changed: 0,
+      qa_handoff_context_drift_total: 0,
+      qa_handoff_scope_status: "blocked",
+      qa_handoff_scope_passed: 0,
+      qa_handoff_scope_total: 0,
+      qa_handoff_scope_selected_compare: "none",
+      qa_handoff_scope_selected_trace: "none",
+      qa_handoff_scope_selected_blocker: "none",
       qa_handoff_validation_status: "blocked",
       qa_handoff_validation_passed: 0,
       qa_handoff_validation_total: 0,
@@ -3137,6 +5091,14 @@ function buildReceiptPreview() {
     },
   };
   const selectedArtifact = selectedSnapshot ? buildReceiptExportArtifact(selectedSnapshot, receipt) : null;
+  const selectedContextDrift = selectedArtifact?.context_drift || receiptContextDriftSummary(null, receipt);
+  receipt.saved_receipts.context_drift_status = selectedContextDrift.status;
+  receipt.saved_receipts.context_drift_changed = selectedContextDrift.changed_count;
+  receipt.saved_receipts.context_drift_total = selectedContextDrift.row_count;
+  receipt.saved_receipts.context_drift_selected_compare = selectedContextDrift.selected_compare;
+  receipt.saved_receipts.context_drift_selected_trace = selectedContextDrift.selected_trace;
+  receipt.saved_receipts.context_drift_selected_blocker = selectedContextDrift.selected_blocker;
+  receipt.saved_receipts.context_drift_handoff_scope_source = selectedContextDrift.handoff_scope_source;
   const selectedExportValidation = exportValidationSummary(selectedArtifact);
   receipt.saved_receipts.export_validation_ready = Boolean(selectedArtifact);
   receipt.saved_receipts.export_validation_status = selectedExportValidation.status;
@@ -3147,6 +5109,15 @@ function buildReceiptPreview() {
   receipt.saved_receipts.qa_handoff_ready = Boolean(selectedArtifact);
   receipt.saved_receipts.qa_handoff_url = selectedArtifact ? selectedQaHandoff.url : "none";
   receipt.saved_receipts.qa_handoff_export_validation_status = selectedQaHandoff.export_validation_status;
+  receipt.saved_receipts.qa_handoff_context_drift_status = selectedQaHandoff.context_drift.status;
+  receipt.saved_receipts.qa_handoff_context_drift_changed = selectedQaHandoff.context_drift.changed_count;
+  receipt.saved_receipts.qa_handoff_context_drift_total = selectedQaHandoff.context_drift.row_count;
+  receipt.saved_receipts.qa_handoff_scope_status = selectedQaHandoff.handoff_scope.summary.status;
+  receipt.saved_receipts.qa_handoff_scope_passed = selectedQaHandoff.handoff_scope.summary.passed;
+  receipt.saved_receipts.qa_handoff_scope_total = selectedQaHandoff.handoff_scope.summary.total;
+  receipt.saved_receipts.qa_handoff_scope_selected_compare = selectedQaHandoff.handoff_scope.summary.selected_compare;
+  receipt.saved_receipts.qa_handoff_scope_selected_trace = selectedQaHandoff.handoff_scope.summary.selected_trace;
+  receipt.saved_receipts.qa_handoff_scope_selected_blocker = selectedQaHandoff.handoff_scope.summary.selected_blocker;
   receipt.saved_receipts.qa_handoff_validation_status = selectedQaHandoff.handoff_validation.status;
   receipt.saved_receipts.qa_handoff_validation_passed = selectedQaHandoff.handoff_validation.passed;
   receipt.saved_receipts.qa_handoff_validation_total = selectedQaHandoff.handoff_validation.total;
@@ -3174,6 +5145,14 @@ function buildReceiptPreview() {
 
 function renderReceiptPreview() {
   qs("#event-count").textContent = `${state.events.length} events`;
+  renderProfileScopeControl();
+  renderEvidenceDetailControl();
+  renderReadinessRail();
+  renderDashboardAuthorityCard();
+  renderRunMonitorState();
+  renderOperatorWorkflow();
+  renderWorkspaceRoute();
+  renderWorkspacePostureStrip();
   renderQaReplayStrip();
   renderContextInspector();
   renderCommandPalette();
@@ -3287,6 +5266,61 @@ function renderReceiptDiffDetail(snapshot) {
   });
 }
 
+function appendReceiptContextDriftCell(row, text, className) {
+  const cell = document.createElement("span");
+  cell.className = className;
+  cell.textContent = text;
+  row.append(cell);
+}
+
+function renderReceiptContextDrift(snapshot) {
+  const list = qs("#receipt-context-drift-list");
+  const count = qs("#receipt-context-drift-count");
+  if (!list || !count) {
+    return;
+  }
+
+  const summary = receiptContextDriftSummary(snapshot);
+  count.textContent = snapshot
+    ? summary.changed_count > 0
+      ? `${summary.changed_count}/${summary.row_count} changed`
+      : "aligned"
+    : "no snapshot";
+  count.classList.toggle("ok", Boolean(snapshot) && summary.changed_count === 0);
+  count.classList.toggle("warn", !snapshot || summary.changed_count > 0);
+  list.innerHTML = "";
+
+  if (!snapshot) {
+    const empty = document.createElement("article");
+    empty.className = "empty-state";
+    empty.textContent = "Save or select a receipt to inspect selected review context drift.";
+    list.append(empty);
+    return;
+  }
+
+  const header = document.createElement("div");
+  header.className = "receipt-context-drift-row is-header";
+  header.role = "row";
+  appendReceiptContextDriftCell(header, "context", "context-drift-field");
+  appendReceiptContextDriftCell(header, "saved", "context-drift-saved");
+  appendReceiptContextDriftCell(header, "current", "context-drift-current");
+  appendReceiptContextDriftCell(header, "status", "context-drift-status");
+  list.append(header);
+
+  summary.rows.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = "receipt-context-drift-row";
+    row.role = "row";
+    row.dataset.contextDriftStatus = item.status;
+    row.dataset.contextDriftField = item.key;
+    appendReceiptContextDriftCell(row, item.label, "context-drift-field");
+    appendReceiptContextDriftCell(row, item.saved, "context-drift-saved");
+    appendReceiptContextDriftCell(row, item.current, "context-drift-current");
+    appendReceiptContextDriftCell(row, item.status, "context-drift-status");
+    list.append(row);
+  });
+}
+
 function renderReceiptExportValidation(artifact) {
   const list = qs("#receipt-export-validation-list");
   const count = qs("#receipt-export-validation-count");
@@ -3373,6 +5407,52 @@ function renderQaHandoffValidation(handoff) {
   });
 }
 
+function renderQaHandoffScope(handoff) {
+  const list = qs("#qa-handoff-scope-list");
+  const count = qs("#qa-handoff-scope-count");
+  if (!list || !count) {
+    return;
+  }
+
+  const scope = handoff?.handoff_scope || {
+    summary: qaHandoffScopeSummary(null),
+    rows: qaHandoffScopeRows(null),
+  };
+  count.textContent = scope.summary.total > 0 ? `${scope.summary.passed}/${scope.summary.total} covered` : "0 covered";
+  count.classList.toggle("ok", scope.summary.status === "passed");
+  count.classList.toggle("warn", scope.summary.status !== "passed");
+  list.innerHTML = "";
+
+  if (!handoff) {
+    const empty = document.createElement("article");
+    empty.className = "empty-state";
+    empty.textContent = "Select a saved receipt to review handoff scope.";
+    list.append(empty);
+    return;
+  }
+
+  scope.rows.forEach((item) => {
+    const row = document.createElement("article");
+    row.className = "qa-handoff-scope-row";
+    row.dataset.scopeStatus = item.status;
+    row.dataset.scopeKey = item.key;
+
+    const swatch = document.createElement("span");
+    swatch.className = `swatch ${item.status === "passed" ? "ok" : "stop"}`;
+    swatch.setAttribute("aria-hidden", "true");
+    const body = document.createElement("div");
+    const title = document.createElement("strong");
+    title.textContent = item.label;
+    const detail = document.createElement("small");
+    detail.textContent = item.detail;
+    body.append(title, detail);
+    const status = document.createElement("code");
+    status.textContent = item.status;
+    row.append(swatch, body, status);
+    list.append(row);
+  });
+}
+
 function replayRequestStatus(replayRequest) {
   if (!replayRequest?.requested) {
     return "no request";
@@ -3400,6 +5480,31 @@ function renderQaHandoffReplayRequest(replayRequest) {
   qs("#qa-handoff-replay-digest-state").textContent = replayRequest.digest_status;
 }
 
+function setLocalActionLink(link, ready, href = "", download = "") {
+  if (!(link instanceof HTMLAnchorElement)) {
+    return;
+  }
+  link.classList.toggle("is-disabled", !ready);
+  link.setAttribute("aria-disabled", String(!ready));
+  link.tabIndex = ready ? 0 : -1;
+  if (!ready) {
+    link.removeAttribute("href");
+    link.removeAttribute("download");
+    return;
+  }
+  link.href = href;
+  if (download) {
+    link.download = download;
+  } else {
+    link.removeAttribute("download");
+  }
+}
+
+function disabledLocalActionLink(target) {
+  const link = target instanceof Element ? target.closest("a[aria-disabled='true']") : null;
+  return link instanceof HTMLAnchorElement ? link : null;
+}
+
 function renderQaHandoff(snapshot, artifact = null) {
   const pre = qs("#qa-handoff-manifest");
   const link = qs("#qa-handoff-link");
@@ -3419,21 +5524,19 @@ function renderQaHandoff(snapshot, artifact = null) {
   qs("#qa-handoff-diff").textContent = handoff.filters.diff;
   qs("#qa-handoff-digest").textContent = handoff.export_integrity_digest;
   qs("#qa-handoff-selected").textContent = handoff.selected_snapshot?.label || "none";
+  renderQaHandoffScope(handoff);
   renderQaHandoffReplayRequest(handoff.replay_request);
 
   if (!hasSnapshot) {
     pre.textContent = "No saved receipt selected.";
-    link.href = "#";
-    link.setAttribute("aria-disabled", "true");
-    link.classList.add("is-disabled");
+    setLocalActionLink(link, false);
+    renderQaHandoffScope(null);
     renderQaHandoffValidation(null);
     return;
   }
 
   pre.textContent = JSON.stringify(handoff, null, 2);
-  link.href = handoff.url;
-  link.setAttribute("aria-disabled", "false");
-  link.classList.remove("is-disabled");
+  setLocalActionLink(link, ready, handoff.url);
   renderQaHandoffValidation(handoff);
 }
 
@@ -3450,9 +5553,7 @@ function renderReceiptExportPreview(snapshot) {
     qs("#receipt-export-size").textContent = "0 bytes";
     qs("#receipt-export-digest").textContent = "none";
     pre.textContent = "No saved receipt selected.";
-    link.href = "#";
-    link.setAttribute("aria-disabled", "true");
-    link.classList.add("is-disabled");
+    setLocalActionLink(link, false);
     renderReceiptExportValidation(null);
     renderQaHandoff(null, null);
     return;
@@ -3465,10 +5566,12 @@ function renderReceiptExportPreview(snapshot) {
   qs("#receipt-export-size").textContent = `${new Blob([text]).size} bytes`;
   qs("#receipt-export-digest").textContent = artifact.integrity.payload_digest;
   pre.textContent = text;
-  link.href = `data:application/json;charset=utf-8,${encodeURIComponent(text)}`;
-  link.download = filename;
-  link.setAttribute("aria-disabled", "false");
-  link.classList.remove("is-disabled");
+  setLocalActionLink(
+    link,
+    exportValidationSummary(artifact).status === "passed",
+    `data:application/json;charset=utf-8,${encodeURIComponent(text)}`,
+    filename
+  );
   renderReceiptExportValidation(artifact);
   renderQaHandoff(snapshot, artifact);
 }
@@ -3507,6 +5610,7 @@ function renderSavedReceipts() {
     list.append(empty);
     renderReceiptDelta(null);
     renderReceiptDiffDetail(null);
+    renderReceiptContextDrift(null);
     renderReceiptExportPreview(null);
     return;
   }
@@ -3550,6 +5654,7 @@ function renderSavedReceipts() {
   }
   renderReceiptDelta(snapshot);
   renderReceiptDiffDetail(snapshot);
+  renderReceiptContextDrift(snapshot);
   renderReceiptExportPreview(snapshot);
 }
 
@@ -4124,20 +6229,46 @@ function renderReceiptSchema() {
 function renderQualityGates() {
   const list = qs("#quality-gates");
   list.innerHTML = "";
-  const verifiedCount = qualityGates.filter(([, gateState]) => gateState === "verified").length;
-  const pendingCount = qualityGates.length - verifiedCount;
-  qs("#quality-gate-title").textContent = `${verifiedCount} verified, ${pendingCount} pending`;
-  qs("#quality-gate-badge").textContent = pendingCount === 0 ? "ready" : "not ready";
-  qs("#quality-gate-badge").classList.toggle("ok", pendingCount === 0);
-  qs("#quality-gate-badge").classList.toggle("warn", pendingCount !== 0);
-  qualityGates.forEach(([name, gateState, note]) => {
+  const rows = qualityGateRows();
+  const summary = qualityGateSummary(rows);
+  const card = qs("#quality-gate-card");
+  if (card instanceof HTMLElement) {
+    card.dataset.qualityDecision = summary.decision;
+  }
+  qs("#quality-gate-title").textContent = `${summary.verified} verified, ${summary.pending} pending`;
+  qs("#quality-gate-badge").textContent = summary.badge;
+  qs("#quality-gate-badge").classList.toggle("ok", summary.decision === "ready");
+  qs("#quality-gate-badge").classList.toggle("warn", summary.decision !== "ready");
+  qs("#quality-gate-badge").classList.toggle("stop", summary.blocked > 0);
+  qs("#quality-gate-verified").textContent = String(summary.verified);
+  qs("#quality-gate-pending").textContent = String(summary.pending);
+  qs("#quality-gate-promote").textContent = String(summary.can_promote);
+  qs("#quality-gate-boundary").textContent =
+    `can_promote=${summary.can_promote} / production=${summary.production_evidence_claim} / main=${summary.main_gui_mutation_required} / edge=${summary.edge_gui_mutation_required}`;
+  rows.forEach((gate) => {
     const row = document.createElement("div");
     row.className = "quality-row";
-    row.innerHTML = `
-      <span class="swatch ${gateState === "verified" ? "ok" : "warn"}" aria-hidden="true"></span>
-      <div><strong>${name}</strong><small>${note}</small></div>
-      <code>${gateState}</code>
-    `;
+    row.dataset.qualityGate = gate.key;
+    row.dataset.qualityStatus = gate.status;
+
+    const swatch = document.createElement("span");
+    swatch.className = `swatch ${qualityGateTone(gate.status)}`;
+    swatch.setAttribute("aria-hidden", "true");
+
+    const detail = document.createElement("div");
+    const label = document.createElement("strong");
+    label.textContent = gate.label;
+    const evidence = document.createElement("small");
+    evidence.textContent = gate.evidence;
+    const next = document.createElement("span");
+    next.className = "quality-row-next";
+    next.textContent = gate.next;
+    detail.append(label, evidence, next);
+
+    const status = document.createElement("code");
+    status.textContent = gate.status;
+
+    row.append(swatch, detail, status);
     list.append(row);
   });
 }
@@ -4714,6 +6845,44 @@ function engineBindingContractSummary(rows = engineBindingContractRows()) {
   };
 }
 
+function engineEventAdapterRows() {
+  return engineEventAdapterItems.map((item) => ({
+    key: item.key,
+    label: item.label,
+    status: item.status,
+    phase: item.phase,
+    source: item.source,
+    binding: item.binding,
+    evidence: item.evidence,
+    next_action: item.next,
+    boundary: item.boundary,
+    adapter_contract_visible: true,
+    live_installer_event_bound: false,
+    local_only: true,
+    production_execution_authority: 0,
+    production_evidence_claim: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+}
+
+function engineEventAdapterSummary(rows = engineEventAdapterRows()) {
+  const pending = rows.filter((row) => row.status === "pending").length;
+  const blocked = rows.filter((row) => row.status === "blocked").length;
+  return {
+    total: rows.length,
+    verified: rows.filter((row) => row.status === "verified").length,
+    pending,
+    blocked,
+    live_event_adapter_complete: false,
+    local_only: rows.every((row) => row.local_only === true),
+    production_execution_authority: 0,
+    production_evidence_claim: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
 function selectedEngineBindingRow() {
   const rows = engineBindingRows();
   return (
@@ -4766,6 +6935,39 @@ function renderEngineBindingContract(row = selectedEngineBindingRow()) {
   });
 }
 
+function renderEngineEventAdapter() {
+  const list = qs("#engine-event-adapter-list");
+  if (!list) {
+    return;
+  }
+  const rows = engineEventAdapterRows();
+  const summary = engineEventAdapterSummary(rows);
+  qs("#engine-event-adapter-verified-count").textContent = `${summary.verified} verified`;
+  qs("#engine-event-adapter-pending-count").textContent = `${summary.pending} pending`;
+  qs("#engine-event-adapter-blocked-count").textContent = `${summary.blocked} blocked`;
+  list.innerHTML = "";
+  rows.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = "engine-event-adapter-row";
+    row.dataset.eventStatus = item.status;
+    row.setAttribute("role", "listitem");
+
+    const label = document.createElement("strong");
+    label.textContent = item.label;
+    const phase = document.createElement("span");
+    phase.textContent = `${item.phase} / ${item.status}`;
+    const binding = document.createElement("code");
+    binding.textContent = `binding: ${item.binding}`;
+    const evidence = document.createElement("code");
+    evidence.textContent = `evidence: ${item.evidence}`;
+    const boundary = document.createElement("code");
+    boundary.textContent = `boundary: ${item.boundary}`;
+
+    row.append(label, phase, binding, evidence, boundary);
+    list.append(row);
+  });
+}
+
 function renderEngineBinding() {
   const list = qs("#engine-binding-list");
   if (!list) {
@@ -4779,6 +6981,7 @@ function renderEngineBinding() {
   qs("#engine-binding-blocked-count").textContent = `${summary.blocked} blocked`;
   renderEngineBindingDetail(selected);
   renderEngineBindingContract(selected);
+  renderEngineEventAdapter();
   list.innerHTML = "";
   rows.forEach((item) => {
     const row = document.createElement("button");
@@ -5105,6 +7308,7 @@ function setReleaseAcceptanceSelection(key, record = false, focusAfterRender = f
   }
   state.releaseAcceptanceSelection = key;
   renderReleaseAcceptance();
+  renderReadinessCompare();
   renderReceiptPreview();
   safeWriteState();
   if (focusAfterRender) {
@@ -5167,6 +7371,74 @@ function migrationReviewSummary(rows = migrationReviewRows()) {
   };
 }
 
+function migrationParityRows(row = selectedMigrationReviewRow()) {
+  if (!row) {
+    return [];
+  }
+  const guardedCompareStatus = row.status === "blocked" ? "blocked" : "pending";
+  const receiptStatus = row.status === "needs binding" ? "pending" : "verified";
+  return [
+    {
+      key: "prototype_evidence",
+      label: "prototype evidence",
+      expected: row.source,
+      current: "captured in test lane",
+      status: "verified",
+      evidence: row.evidence,
+    },
+    {
+      key: "guarded_panel_compare",
+      label: "guarded Panel compare",
+      expected: row.destination,
+      current: row.status === "blocked" ? "blocked before port" : "comparison pending",
+      status: guardedCompareStatus,
+      evidence: row.guard,
+    },
+    {
+      key: "receipt_data_contract",
+      label: "receipt data contract",
+      expected: "selected migration row, route, guard, and next action",
+      current: receiptStatus === "verified" ? "receipt-bound" : "binding pending",
+      status: receiptStatus,
+      evidence: `${row.key} appears in migration_review.selected`,
+    },
+    {
+      key: "authority_boundary",
+      label: "authority boundary",
+      expected: "main=0 edge=0 production=0",
+      current: "closed in test lane",
+      status: "verified",
+      evidence: row.boundary,
+    },
+  ].map((parityRow) => ({
+    ...parityRow,
+    selected_migration_key: row.key,
+    local_only: true,
+    guarded_panel_mutation_authority: 0,
+    production_evidence_claim: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+}
+
+function migrationParitySummary(rows = migrationParityRows()) {
+  const pending = rows.filter((row) => row.status === "pending").length;
+  const blocked = rows.filter((row) => row.status === "blocked").length;
+  return {
+    total: rows.length,
+    verified: rows.filter((row) => row.status === "verified").length,
+    pending,
+    blocked,
+    selected_key: state.migrationReviewSelection,
+    can_migrate_to_guarded_panel: false,
+    local_only: rows.every((row) => row.local_only === true),
+    guarded_panel_mutation_authority: 0,
+    production_evidence_claim: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
 function selectedMigrationReviewRow() {
   const rows = migrationReviewRows();
   return (
@@ -5186,6 +7458,39 @@ function renderMigrationReviewDetail(row = selectedMigrationReviewRow()) {
   qs("#migration-detail-next").textContent = row.next_action;
 }
 
+function renderMigrationParity(row = selectedMigrationReviewRow()) {
+  const list = qs("#migration-parity-list");
+  const statusBadge = qs("#migration-parity-status");
+  if (!list || !statusBadge) {
+    return;
+  }
+  const rows = migrationParityRows(row);
+  const summary = migrationParitySummary(rows);
+  const badgeClass = summary.blocked > 0 ? "stop" : summary.pending > 0 ? "warn" : "ok";
+  statusBadge.className = `badge ${badgeClass}`;
+  statusBadge.textContent =
+    summary.blocked > 0 ? `${summary.blocked} blocked` : summary.pending > 0 ? `${summary.pending} pending` : "verified";
+  list.innerHTML = "";
+  rows.forEach((item) => {
+    const parityRow = document.createElement("div");
+    parityRow.className = "migration-parity-row";
+    parityRow.dataset.parityStatus = item.status;
+    parityRow.setAttribute("role", "listitem");
+
+    const title = document.createElement("strong");
+    title.textContent = item.label;
+    const current = document.createElement("span");
+    current.textContent = `${item.current} / ${item.status}`;
+    const expected = document.createElement("code");
+    expected.textContent = `expected: ${item.expected}`;
+    const evidence = document.createElement("code");
+    evidence.textContent = `evidence: ${item.evidence}`;
+
+    parityRow.append(title, current, expected, evidence);
+    list.append(parityRow);
+  });
+}
+
 function renderMigrationMap() {
   const map = qs("#migration-map");
   if (!map) {
@@ -5194,6 +7499,7 @@ function renderMigrationMap() {
   const rows = migrationReviewRows();
   const selected = selectedMigrationReviewRow();
   renderMigrationReviewDetail(selected);
+  renderMigrationParity(selected);
   map.innerHTML = "";
   rows.forEach((item) => {
     const row = document.createElement("button");
@@ -5275,6 +7581,78 @@ function renderReadinessCompareDetail(row = selectedReadinessComparisonRow()) {
   qs("#readiness-compare-detail-next").textContent = row.next_action;
 }
 
+function renderReadinessCompareProof(row = selectedReadinessComparisonRow()) {
+  const list = qs("#readiness-compare-proof-list");
+  const statusBadge = qs("#readiness-compare-proof-status");
+  if (!list || !statusBadge) {
+    return;
+  }
+  const rows = readinessComparisonProofRows(row);
+  const summary = readinessComparisonProofSummary(rows);
+  statusBadge.className = `badge ${summary.blocked > 0 ? "stop" : summary.pending > 0 ? "warn" : "ok"}`;
+  statusBadge.textContent = summary.blocked > 0 ? `${summary.blocked} blocked` : summary.pending > 0 ? `${summary.pending} pending` : "verified";
+  list.innerHTML = "";
+  rows.forEach((item) => {
+    const proofRow = document.createElement("div");
+    proofRow.className = "readiness-compare-proof-row";
+    proofRow.dataset.proofStatus = item.status;
+    proofRow.setAttribute("role", "listitem");
+
+    const title = document.createElement("strong");
+    title.textContent = item.label;
+    const current = document.createElement("span");
+    current.textContent = `${item.current} / ${item.status}`;
+    const expected = document.createElement("code");
+    expected.textContent = `expected: ${item.expected}`;
+    const evidence = document.createElement("code");
+    evidence.textContent = `evidence: ${item.evidence}`;
+
+    proofRow.append(title, current, expected, evidence);
+    list.append(proofRow);
+  });
+}
+
+function renderReadinessCompareAlignment(row = selectedReadinessComparisonRow()) {
+  const list = qs("#readiness-compare-alignment-list");
+  if (!list || !row) {
+    return;
+  }
+  const rows = readinessComparisonAlignmentRows(row);
+  const summary = readinessComparisonAlignmentSummary(rows);
+  const status = qs("#readiness-compare-alignment-status");
+  status.textContent = summary.review > 0 ? `${summary.review} review` : "aligned";
+  status.classList.toggle("ok", summary.review === 0);
+  status.classList.toggle("warn", summary.review > 0);
+  const action = qs("[data-action='align-readiness-compare-context']");
+  action.textContent = summary.action_label;
+  action.dataset.alignActionState = summary.action_state;
+  action.setAttribute("aria-label", `${summary.action_label}. ${summary.aligned} aligned and ${summary.review} need review.`);
+  action.setAttribute("aria-disabled", String(summary.review === 0));
+  list.innerHTML = "";
+  rows.forEach((item) => {
+    const check = document.createElement("div");
+    check.className = "readiness-compare-alignment-row";
+    check.dataset.alignmentStatus = item.status;
+    check.setAttribute("role", "listitem");
+
+    const detail = document.createElement("div");
+    const label = document.createElement("strong");
+    label.textContent = item.label;
+    const current = document.createElement("small");
+    current.textContent = `current: ${item.current}`;
+    const expected = document.createElement("code");
+    expected.textContent = `expected: ${item.expected}`;
+    detail.append(label, current, expected);
+
+    const badge = document.createElement("span");
+    badge.className = `badge readiness-compare-alignment-state ${item.status === "aligned" ? "ok" : "warn"}`;
+    badge.textContent = item.status;
+
+    check.append(detail, badge);
+    list.append(check);
+  });
+}
+
 function renderReadinessCompare() {
   const list = qs("#readiness-compare-list");
   if (!list) {
@@ -5289,6 +7667,8 @@ function renderReadinessCompare() {
   qs("#readiness-compare-selected").textContent = `${selected.label} / ${selected.status}`;
   qs("#readiness-compare-authority").textContent = String(summary.production_evidence_claim);
   renderReadinessCompareDetail(selected);
+  renderReadinessCompareProof(selected);
+  renderReadinessCompareAlignment(selected);
   list.innerHTML = "";
   rows.forEach((item) => {
     const row = document.createElement("button");
@@ -5355,6 +7735,57 @@ function moveReadinessCompareFocus(currentButton, direction) {
   setReadinessCompareSelection(next.dataset.readinessCompare, true, true);
 }
 
+function alignReadinessComparisonContext(record = true) {
+  const selected = selectedReadinessComparisonRow();
+  if (!selected) {
+    return;
+  }
+  const currentSummary = readinessComparisonAlignmentSummary();
+  if (currentSummary.review === 0) {
+    qs("[data-action='align-readiness-compare-context']")?.focus({ preventScroll: true });
+    assistiveStatus(`Readiness comparison context already aligned for ${selected.label}.`);
+    notify("Comparison context already aligned");
+    return;
+  }
+  const target = readinessComparisonContextTarget(selected);
+  const gateKeys = traceabilityKeyList(target.promotion_gate);
+  const blockerKeys = traceabilityKeyList(target.blockers);
+  const gate = gateKeys.find(isPromotionGateKey);
+  const blocker = blockerKeys.find(isProductionBlockerKey);
+  if (isTraceabilityKey(target.trace)) {
+    state.traceabilitySelection = target.trace;
+  }
+  if (isEvidenceIntakeKey(target.intake_packet)) {
+    state.evidenceIntakeSelection = target.intake_packet;
+  }
+  if (gate) {
+    state.promotionGateSelection = gate;
+  }
+  if (isReleaseAcceptanceKey(target.acceptance_gate)) {
+    state.releaseAcceptanceSelection = target.acceptance_gate;
+  }
+  if (blocker) {
+    state.productionBlockerSelection = blocker;
+  }
+  renderReadinessCompare();
+  renderEvidenceIntake();
+  renderTraceabilityMatrix();
+  renderPromotionGate();
+  renderReleaseAcceptance();
+  renderProductionBlockers(state.blockerFilter);
+  renderReceiptPreview();
+  safeWriteState();
+  requestAnimationFrame(() => {
+    qs("[data-action='align-readiness-compare-context']")?.focus({ preventScroll: true });
+  });
+  if (record) {
+    const summary = readinessComparisonAlignmentSummary();
+    assistiveStatus(`Readiness comparison context aligned for ${selected.label}. ${summary.aligned} aligned, ${summary.review} review.`);
+    recordEvent("Readiness comparison context aligned", `compare=${selected.key} aligned=${summary.aligned} review=${summary.review}`);
+    notify("Comparison context aligned");
+  }
+}
+
 function scrollReadinessCompareSelectionIntoView() {
   if (!pendingReadinessCompareScroll || state.activeTab !== "readiness") {
     return;
@@ -5397,6 +7828,39 @@ function renderEvidenceIntakeDetail(row = selectedEvidenceIntakeRow()) {
   qs("#evidence-intake-detail-next").textContent = row.next_action;
 }
 
+function renderEvidenceIntakeContract(row = selectedEvidenceIntakeRow()) {
+  const list = qs("#evidence-intake-contract-list");
+  const statusBadge = qs("#evidence-intake-contract-status");
+  if (!list || !statusBadge) {
+    return;
+  }
+  const rows = evidenceIntakeContractRows(row);
+  const summary = evidenceIntakeContractSummary(rows);
+  const badgeClass = summary.blocked > 0 ? "stop" : summary.pending > 0 ? "warn" : "ok";
+  statusBadge.className = `badge ${badgeClass}`;
+  statusBadge.textContent =
+    summary.blocked > 0 ? `${summary.blocked} blocked` : summary.pending > 0 ? `${summary.pending} pending` : "verified";
+  list.innerHTML = "";
+  rows.forEach((item) => {
+    const contractRow = document.createElement("div");
+    contractRow.className = "evidence-intake-contract-row";
+    contractRow.dataset.contractStatus = item.status;
+    contractRow.setAttribute("role", "listitem");
+
+    const title = document.createElement("strong");
+    title.textContent = item.label;
+    const current = document.createElement("span");
+    current.textContent = `${item.current} / ${item.status}`;
+    const expected = document.createElement("code");
+    expected.textContent = `expected: ${item.expected}`;
+    const evidence = document.createElement("code");
+    evidence.textContent = `evidence: ${item.evidence}`;
+
+    contractRow.append(title, current, expected, evidence);
+    list.append(contractRow);
+  });
+}
+
 function renderEvidenceIntake() {
   const list = qs("#evidence-intake-list");
   if (!list) {
@@ -5411,6 +7875,7 @@ function renderEvidenceIntake() {
   qs("#evidence-intake-blocked").textContent = `${summary.blocked} blocked`;
   qs("#evidence-intake-authority").textContent = String(summary.intake_authority);
   renderEvidenceIntakeDetail(selected);
+  renderEvidenceIntakeContract(selected);
   list.innerHTML = "";
   rows.forEach((item) => {
     const row = document.createElement("button");
@@ -5454,6 +7919,7 @@ function setEvidenceIntakeSelection(key, record = false, focusAfterRender = fals
   }
   state.evidenceIntakeSelection = key;
   renderEvidenceIntake();
+  renderReadinessCompare();
   renderReceiptPreview();
   safeWriteState();
   if (focusAfterRender) {
@@ -5624,6 +8090,7 @@ function setTraceabilitySelection(key, record = false, focusAfterRender = false)
   }
   state.traceabilitySelection = key;
   renderTraceabilityMatrix();
+  renderReadinessCompare();
   renderReceiptPreview();
   safeWriteState();
   if (focusAfterRender) {
@@ -5680,6 +8147,7 @@ function alignTraceabilityContext(record = true) {
   renderReleaseAcceptance();
   renderProductionBlockers(state.blockerFilter);
   renderTraceabilityMatrix();
+  renderReadinessCompare();
   renderReceiptPreview();
   safeWriteState();
   requestAnimationFrame(() => {
@@ -5825,6 +8293,7 @@ function setPromotionGateSelection(key, record = false, focusAfterRender = false
   }
   state.promotionGateSelection = key;
   renderPromotionGate();
+  renderReadinessCompare();
   renderReceiptPreview();
   safeWriteState();
   if (focusAfterRender) {
@@ -5854,6 +8323,7 @@ function renderProductionBlockers(filter = "") {
   const rows = productionBlockerRows();
   const selected = selectedProductionBlockerRow();
   renderProductionBlockerDetail(selected);
+  renderProductionBlockerProof(selected);
   board.innerHTML = "";
   const visibleRows = rows.filter((row) =>
     `${row.group} ${row.label} ${row.status} ${row.evidence} ${row.owner} ${row.next_action}`.toLowerCase().includes(normalized)
@@ -5923,12 +8393,44 @@ function renderProductionBlockerDetail(row = selectedProductionBlockerRow()) {
   qs("#blocker-detail-next").textContent = row.next_action;
 }
 
+function renderProductionBlockerProof(row = selectedProductionBlockerRow()) {
+  const list = qs("#blocker-proof-list");
+  const statusBadge = qs("#blocker-proof-status");
+  if (!list || !statusBadge) {
+    return;
+  }
+  const rows = productionBlockerProofRows(row);
+  const summary = productionBlockerProofSummary(rows);
+  statusBadge.className = "badge stop";
+  statusBadge.textContent = `${summary.blocked} blocked`;
+  list.innerHTML = "";
+  rows.forEach((item) => {
+    const proofRow = document.createElement("div");
+    proofRow.className = "blocker-proof-row";
+    proofRow.dataset.proofStatus = item.status;
+    proofRow.setAttribute("role", "listitem");
+
+    const title = document.createElement("strong");
+    title.textContent = item.label;
+    const current = document.createElement("span");
+    current.textContent = `${item.current} / ${item.status}`;
+    const expected = document.createElement("code");
+    expected.textContent = `expected: ${item.expected}`;
+    const evidence = document.createElement("code");
+    evidence.textContent = `evidence: ${item.evidence}`;
+
+    proofRow.append(title, current, expected, evidence);
+    list.append(proofRow);
+  });
+}
+
 function setProductionBlockerSelection(key, record = false, focusAfterRender = false) {
   if (!isProductionBlockerKey(key)) {
     return;
   }
   state.productionBlockerSelection = key;
   renderProductionBlockers(state.blockerFilter);
+  renderReadinessCompare();
   renderReceiptPreview();
   safeWriteState();
   if (focusAfterRender) {
@@ -5977,6 +8479,8 @@ function setProgress(progress, label) {
   if (label) {
     qs("#progress-label").textContent = label;
   }
+  renderReadinessRail();
+  renderReceiptPreview();
   safeWriteState();
 }
 
@@ -6074,12 +8578,10 @@ function setMode(mode) {
     button.tabIndex = active ? 0 : -1;
   });
   const local = mode === "local";
-  qs("#rail-mode").textContent = local ? "guarded-local" : "dry-run";
-  qs("#rail-writes").textContent = local ? "armed" : "blocked";
+  renderReadinessRail();
   qs("#prefix-state").textContent = local ? "guarded writes armed" : "writes require guarded mode";
-  qs("#local-write-row").textContent = local ? "armed for user-local prefix" : "requires guarded mode";
-  qs("#host-write-fact").textContent = local ? "user-local-only" : "0";
-  qs("[data-action='run-dry']").textContent = local ? "Run guarded local" : "Run dry-install";
+  renderDashboardAuthorityCard();
+  setPrimaryActionLabel("run-dry", local ? "Run guarded local" : "Run dry-install");
   renderPlan();
   safeWriteState();
   assistiveStatus(local ? "Guarded local mode selected. User-local write simulation armed." : "Dry-run mode selected. Writes blocked.");
@@ -6179,6 +8681,7 @@ function runAction(action) {
     qs("#run-monitor-title").textContent = label;
     qs("#run-badge").textContent = "running";
     appendLog(`[run] ${label} started`);
+    renderReceiptPreview();
     setTimeout(() => {
       qs("#run-badge").textContent = "complete";
       appendLog(`[receipt] ${label} receipt queued`);
@@ -6204,6 +8707,10 @@ function runAction(action) {
   }
   if (action === "align-trace-context") {
     alignTraceabilityContext(true);
+    return;
+  }
+  if (action === "align-readiness-compare-context") {
+    alignReadinessComparisonContext(true);
     return;
   }
   if (action === "delete-saved-receipt") {
@@ -6277,6 +8784,12 @@ function runCommand(command) {
 
 function wireEvents() {
   document.addEventListener("click", (event) => {
+    const disabledLink = disabledLocalActionLink(event.target);
+    if (disabledLink) {
+      event.preventDefault();
+      assistiveStatus(`${disabledLink.textContent.trim()} is blocked until its local validation gates pass.`);
+      return;
+    }
     if (!(event.target instanceof Element)) {
       return;
     }
@@ -6668,6 +9181,7 @@ function wireEvents() {
     state.profile = event.target.value;
     qs("#step-profile").textContent = event.target.value;
     qs("#inspector-title").textContent = event.target.value;
+    renderProfileScopeControl();
     renderPlan();
     recordEvent("Profile changed", state.profile);
     safeWriteState();
@@ -6680,6 +9194,7 @@ function wireEvents() {
   });
   qs("#detail-range").addEventListener("input", (event) => {
     state.evidenceDetail = Number(event.target.value);
+    renderEvidenceDetailControl();
     renderReceiptPreview();
     safeWriteState();
   });
@@ -6793,3 +9308,4 @@ renderPlan();
 setTab(state.activeTab);
 setProgress(state.progress);
 wireEvents();
+wireBrandEmblem();

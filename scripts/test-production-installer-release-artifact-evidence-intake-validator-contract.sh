@@ -56,11 +56,12 @@ test_script='scripts/test-production-installer-release-artifact-evidence-intake-
 readiness='docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md'
 artifact_status='docs/PRODUCTION_INSTALLER_ARTIFACT_INTEGRITY_STATUS_CONTRACT.md'
 promotion_gate='docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_PROMOTION_GATE_CONTRACT.md'
+template_contract='docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_TEMPLATE_CONTRACT.md'
 ledger='docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md'
 index='docs/status/README.md'
 workflow='.github/workflows/production-installer-release-artifact-evidence-intake-validator.yml'
 
-for file in "$doc" "$status" "$script" "$test_script" "$readiness" "$artifact_status" "$promotion_gate" "$ledger" "$index" "$workflow" Makefile README.md
+for file in "$doc" "$status" "$script" "$test_script" "$readiness" "$artifact_status" "$promotion_gate" "$template_contract" "$ledger" "$index" "$workflow" Makefile README.md
 do
   require_file "$file"
 done
@@ -71,6 +72,8 @@ sh -n "$test_script"
 require_contains 'Status: no-effect release-artifact evidence intake validator contract' "$doc"
 require_contains 'release_artifact_evidence_intake_validator_present=1' "$doc"
 require_contains 'release_artifact_evidence_intake_validation_mode=no-effect-validation' "$doc"
+require_contains 'release_artifact_evidence_template_present=1' "$doc"
+require_contains 'release_artifact_evidence_template_complete=0' "$doc"
 require_contains 'release_artifact_candidate_valid=0' "$doc"
 require_contains 'release_artifact_sha256_matches=0' "$doc"
 require_contains 'release_artifact_evidence_accepted_by_intake_validator=0' "$doc"
@@ -102,6 +105,8 @@ require_absent 'wget ' "$script"
 for current_field in \
   'release_artifact_evidence_intake_validator_present=1' \
   'release_artifact_evidence_intake_validation_mode=no-effect-validation' \
+  'release_artifact_evidence_template_present=1' \
+  'release_artifact_evidence_template_complete=0' \
   'release_artifact_candidate_valid=0' \
   'release_artifact_checksum_file_present=0' \
   'release_artifact_sha256_matches=0' \
@@ -159,8 +164,11 @@ require_contains 'PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_INTAKE_VALIDATO
 require_contains 'PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md' "$index"
 require_contains 'release_artifact_evidence_intake_validator_present=1' "$readiness"
 require_contains 'release_artifact_evidence_intake_validation_mode=no-effect-validation' "$readiness"
+require_contains 'release_artifact_evidence_template_present=1' "$readiness"
+require_contains 'release_artifact_evidence_template_complete=0' "$readiness"
 require_contains 'release_artifact_candidate_valid=0' "$readiness"
 require_contains 'release_artifact_evidence_accepted_by_intake_validator=0' "$readiness"
+require_contains 'release_artifact_evidence_template_present=1' "$template_contract"
 require_contains 'release_artifact_evidence_intake_validator_present=1' "$ledger"
 require_contains 'release_artifact_evidence_intake_validator_present=1' README.md
 require_contains 'docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md' README.md

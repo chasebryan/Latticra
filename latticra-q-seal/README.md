@@ -25,10 +25,19 @@ latticra-q-seal/
   evidence/ML_KEM_CODE_OWNER_REVIEW.md
   evidence/ML_KEM_CI_PROMOTION_EVIDENCE.md
   evidence/ML_KEM_CONSTANT_TIME_REVIEW.md
+  evidence/ML_KEM_CLEAN_ROOM_AUTHOR_ATTESTATION_GATE.md
+  evidence/ML_KEM_PER_FILE_STANDARDS_TRACE_GATE.md
+  evidence/ML_KEM_PER_FILE_TEST_TRACE_GATE.md
+  evidence/ML_KEM_FIPS_CONFORMANCE_MATRIX.md
   evidence/ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
+  evidence/ML_KEM_SOURCE_LAYOUT_GATE.md
+  evidence/ML_KEM_IMPLEMENTATION_FILE_DIGEST_PLAN.md
+  evidence/ML_KEM_IMPLEMENTATION_TRACEABILITY_MATRIX.md
+  evidence/ML_KEM_PRIMITIVE_SOURCE_ACCEPTANCE_GATE.md
   evidence/ML_KEM_IMPLEMENTATION_FRAME.md
   evidence/ML_KEM_KAT_MANIFEST.md
   evidence/ML_KEM_KAT_RUNNER_CONTRACT.md
+  evidence/ML_KEM_KAT_ACVP_REPLAY_TRANSCRIPT_GATE.md
   evidence/ML_KEM_KAT_RESULT_SCHEMA.md
   evidence/ML_KEM_KAT_RESULT_ROW_FIXTURE.md
   evidence/ML_KEM_MEMORY_SAFETY_EVIDENCE.md
@@ -46,6 +55,7 @@ latticra-q-seal/
   evidence/ML_KEM_SOURCE_DIGEST_MANIFEST.md
   evidence/ML_KEM_SOURCE_DIGEST_RECEIPT.md
   evidence/ML_KEM_SOURCE_DIGEST_VERIFICATION.md
+  evidence/ML_KEM_SP800_227_USAGE_PROFILE.md
   evidence/ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md
   evidence/ML_KEM_VECTOR_FIXTURE_LOCK.md
   evidence/ML_KEM_VECTOR_SCHEMA.md
@@ -66,15 +76,24 @@ latticra-q-seal/
   include/latticra/q_seal_ml_kem_code_owner_review.h
   include/latticra/q_seal_ml_kem_ci_promotion_evidence.h
   include/latticra/q_seal_ml_kem_constant_time_review.h
+  include/latticra/q_seal_ml_kem_clean_room_author_attestation_gate.h
   include/latticra/q_seal_ml_kem_evidence_gate.h
+  include/latticra/q_seal_ml_kem_fips_conformance_matrix.h
   include/latticra/q_seal_ml_kem_implementation_binding_manifest.h
+  include/latticra/q_seal_ml_kem_source_layout_gate.h
+  include/latticra/q_seal_ml_kem_implementation_file_digest_plan.h
+  include/latticra/q_seal_ml_kem_implementation_traceability_matrix.h
+  include/latticra/q_seal_ml_kem_primitive_source_acceptance_gate.h
   include/latticra/q_seal_ml_kem_implementation_frame.h
   include/latticra/q_seal_ml_kem_kat_manifest.h
   include/latticra/q_seal_ml_kem_kat_runner_contract.h
+  include/latticra/q_seal_ml_kem_kat_acvp_replay_transcript_gate.h
   include/latticra/q_seal_ml_kem_kat_result_schema.h
   include/latticra/q_seal_ml_kem_kat_result_row_fixture.h
   include/latticra/q_seal_ml_kem_memory_safety_evidence.h
   include/latticra/q_seal_ml_kem_negative_test_evidence.h
+  include/latticra/q_seal_ml_kem_per_file_standards_trace_gate.h
+  include/latticra/q_seal_ml_kem_per_file_test_trace_gate.h
   include/latticra/q_seal_ml_kem_provider_differential.h
   include/latticra/q_seal_ml_kem_provider_self_test.h
   include/latticra/q_seal_ml_kem_randomness_source.h
@@ -88,6 +107,7 @@ latticra-q-seal/
   include/latticra/q_seal_ml_kem_source_digest_manifest.h
   include/latticra/q_seal_ml_kem_source_digest_receipt.h
   include/latticra/q_seal_ml_kem_source_digest_verification.h
+  include/latticra/q_seal_ml_kem_sp800_227_usage_profile.h
   include/latticra/q_seal_ml_kem_vector_fixture_digest_ledger.h
   include/latticra/q_seal_ml_kem_vector_fixture_lock.h
   include/latticra/q_seal_ml_kem_vector_schema.h
@@ -108,15 +128,24 @@ latticra-q-seal/
   src/q_seal_ml_kem_code_owner_review.c
   src/q_seal_ml_kem_ci_promotion_evidence.c
   src/q_seal_ml_kem_constant_time_review.c
+  src/q_seal_ml_kem_clean_room_author_attestation_gate.c
   src/q_seal_ml_kem_evidence_gate.c
+  src/q_seal_ml_kem_fips_conformance_matrix.c
   src/q_seal_ml_kem_implementation_binding_manifest.c
+  src/q_seal_ml_kem_source_layout_gate.c
+  src/q_seal_ml_kem_implementation_file_digest_plan.c
+  src/q_seal_ml_kem_implementation_traceability_matrix.c
+  src/q_seal_ml_kem_primitive_source_acceptance_gate.c
   src/q_seal_ml_kem_implementation_frame.c
   src/q_seal_ml_kem_kat_manifest.c
   src/q_seal_ml_kem_kat_runner_contract.c
+  src/q_seal_ml_kem_kat_acvp_replay_transcript_gate.c
   src/q_seal_ml_kem_kat_result_schema.c
   src/q_seal_ml_kem_kat_result_row_fixture.c
   src/q_seal_ml_kem_memory_safety_evidence.c
   src/q_seal_ml_kem_negative_test_evidence.c
+  src/q_seal_ml_kem_per_file_standards_trace_gate.c
+  src/q_seal_ml_kem_per_file_test_trace_gate.c
   src/q_seal_ml_kem_provider_differential.c
   src/q_seal_ml_kem_provider_self_test.c
   src/q_seal_ml_kem_randomness_source.c
@@ -130,6 +159,7 @@ latticra-q-seal/
   src/q_seal_ml_kem_source_digest_manifest.c
   src/q_seal_ml_kem_source_digest_receipt.c
   src/q_seal_ml_kem_source_digest_verification.c
+  src/q_seal_ml_kem_sp800_227_usage_profile.c
   src/q_seal_ml_kem_vector_fixture_digest_ledger.c
   src/q_seal_ml_kem_vector_fixture_lock.c
   src/q_seal_ml_kem_vector_schema.c
@@ -150,15 +180,24 @@ latticra-q-seal/
   tests/q_seal_ml_kem_code_owner_review_invariants.c
   tests/q_seal_ml_kem_ci_promotion_evidence_invariants.c
   tests/q_seal_ml_kem_constant_time_review_invariants.c
+  tests/q_seal_ml_kem_clean_room_author_attestation_gate_invariants.c
   tests/q_seal_ml_kem_evidence_gate_invariants.c
+  tests/q_seal_ml_kem_fips_conformance_matrix_invariants.c
   tests/q_seal_ml_kem_implementation_binding_manifest_invariants.c
+  tests/q_seal_ml_kem_source_layout_gate_invariants.c
+  tests/q_seal_ml_kem_implementation_file_digest_plan_invariants.c
+  tests/q_seal_ml_kem_implementation_traceability_matrix_invariants.c
+  tests/q_seal_ml_kem_primitive_source_acceptance_gate_invariants.c
   tests/q_seal_ml_kem_implementation_frame_invariants.c
   tests/q_seal_ml_kem_kat_manifest_invariants.c
   tests/q_seal_ml_kem_kat_runner_contract_invariants.c
+  tests/q_seal_ml_kem_kat_acvp_replay_transcript_gate_invariants.c
   tests/q_seal_ml_kem_kat_result_schema_invariants.c
   tests/q_seal_ml_kem_kat_result_row_fixture_invariants.c
   tests/q_seal_ml_kem_memory_safety_evidence_invariants.c
   tests/q_seal_ml_kem_negative_test_evidence_invariants.c
+  tests/q_seal_ml_kem_per_file_standards_trace_gate_invariants.c
+  tests/q_seal_ml_kem_per_file_test_trace_gate_invariants.c
   tests/q_seal_ml_kem_provider_differential_invariants.c
   tests/q_seal_ml_kem_provider_self_test_invariants.c
   tests/q_seal_ml_kem_randomness_source_invariants.c
@@ -172,6 +211,7 @@ latticra-q-seal/
   tests/q_seal_ml_kem_source_digest_manifest_invariants.c
   tests/q_seal_ml_kem_source_digest_receipt_invariants.c
   tests/q_seal_ml_kem_source_digest_verification_invariants.c
+  tests/q_seal_ml_kem_sp800_227_usage_profile_invariants.c
   tests/q_seal_ml_kem_vector_fixture_digest_ledger_invariants.c
   tests/q_seal_ml_kem_vector_fixture_lock_invariants.c
   tests/q_seal_ml_kem_vector_schema_invariants.c
@@ -192,12 +232,22 @@ latticra-q-seal/
   scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
   scripts/test-latticra-q-seal-ml-kem-ci-promotion-evidence.sh
   scripts/test-latticra-q-seal-ml-kem-constant-time-review.sh
+  scripts/test-latticra-q-seal-ml-kem-clean-room-author-attestation-gate.sh
+  scripts/test-latticra-q-seal-ml-kem-per-file-standards-trace-gate.sh
+  scripts/test-latticra-q-seal-ml-kem-per-file-test-trace-gate.sh
   scripts/test-latticra-q-seal-ml-kem-evidence-gate.sh
+  scripts/test-latticra-q-seal-ml-kem-fips-conformance-matrix.sh
+  scripts/test-latticra-q-seal-ml-kem-sp800-227-usage-profile.sh
   scripts/test-latticra-q-seal-ml-kem-kat-manifest.sh
   scripts/test-latticra-q-seal-ml-kem-kat-runner-contract.sh
+  scripts/test-latticra-q-seal-ml-kem-kat-acvp-replay-transcript-gate.sh
   scripts/test-latticra-q-seal-ml-kem-kat-result-schema.sh
   scripts/test-latticra-q-seal-ml-kem-kat-result-row-fixture.sh
   scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
+  scripts/test-latticra-q-seal-ml-kem-source-layout-gate.sh
+  scripts/test-latticra-q-seal-ml-kem-implementation-file-digest-plan.sh
+  scripts/test-latticra-q-seal-ml-kem-implementation-traceability-matrix.sh
+  scripts/test-latticra-q-seal-ml-kem-primitive-source-acceptance-gate.sh
   scripts/test-latticra-q-seal-ml-kem-implementation-frame.sh
   scripts/test-latticra-q-seal-ml-kem-memory-safety-evidence.sh
   scripts/test-latticra-q-seal-ml-kem-negative-test-evidence.sh
@@ -234,11 +284,18 @@ latticra-q-seal/
   docs/LATTICRA_Q_SEAL_ML_KEM_CODE_OWNER_REVIEW.md
   docs/LATTICRA_Q_SEAL_ML_KEM_CI_PROMOTION_EVIDENCE.md
   docs/LATTICRA_Q_SEAL_ML_KEM_CONSTANT_TIME_REVIEW.md
+  docs/LATTICRA_Q_SEAL_ML_KEM_CLEAN_ROOM_AUTHOR_ATTESTATION_GATE.md
+  docs/LATTICRA_Q_SEAL_ML_KEM_PER_FILE_STANDARDS_TRACE_GATE.md
+  docs/LATTICRA_Q_SEAL_ML_KEM_PER_FILE_TEST_TRACE_GATE.md
   docs/LATTICRA_Q_SEAL_ML_KEM_EVIDENCE_GATE.md
+  docs/LATTICRA_Q_SEAL_ML_KEM_FIPS_CONFORMANCE_MATRIX.md
   docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
+  docs/LATTICRA_Q_SEAL_ML_KEM_SOURCE_LAYOUT_GATE.md
+  docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_FILE_DIGEST_PLAN.md
   docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_FRAME.md
   docs/LATTICRA_Q_SEAL_ML_KEM_KAT_MANIFEST.md
   docs/LATTICRA_Q_SEAL_ML_KEM_KAT_RUNNER_CONTRACT.md
+  docs/LATTICRA_Q_SEAL_ML_KEM_KAT_ACVP_REPLAY_TRANSCRIPT_GATE.md
   docs/LATTICRA_Q_SEAL_ML_KEM_KAT_RESULT_SCHEMA.md
   docs/LATTICRA_Q_SEAL_ML_KEM_KAT_RESULT_ROW_FIXTURE.md
   docs/LATTICRA_Q_SEAL_ML_KEM_MEMORY_SAFETY_EVIDENCE.md
@@ -256,6 +313,7 @@ latticra-q-seal/
   docs/LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_MANIFEST.md
   docs/LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_RECEIPT.md
   docs/LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_VERIFICATION.md
+  docs/LATTICRA_Q_SEAL_ML_KEM_SP800_227_USAGE_PROFILE.md
   docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md
   docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_LOCK.md
   docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_SCHEMA.md
@@ -309,6 +367,141 @@ required_evidence_items_satisfied=3
 operations_enabled=0
 production_crypto_claim_allowed=0
 status=ml-kem-evidence-gate-fail-closed
+```
+
+## ML-KEM FIPS 203 Conformance Matrix
+
+```text
+fips_conformance_matrix_present=1
+formal_title=Latticra Q-Seal ML-KEM FIPS 203 Conformance Matrix
+conformance_profile=latticra-q-seal-ml-kem-fips-conformance-matrix/0.1
+standards_basis=NIST-FIPS-203
+parameter_sets_bound=1
+keygen_algorithm_bound=1
+encaps_algorithm_bound=1
+decaps_algorithm_bound=1
+byte_encoding_requirements_bound=1
+decapsulation_failure_semantics_bound=1
+errata_review_recorded=0
+implementation_trace_accepted=0
+conformance_matrix_accepted=0
+operation_execution_allowed=0
+production_crypto_claim_allowed=0
+runtime_authority_granted=0
+required_conformance_items_total=28
+required_conformance_items_satisfied=18
+status=ml-kem-fips-conformance-matrix-blocked
+```
+
+## ML-KEM SP 800-227 Usage Profile
+
+```text
+sp800_227_usage_profile_present=1
+formal_title=Latticra Q-Seal ML-KEM SP 800-227 Usage Profile
+usage_profile=latticra-q-seal-ml-kem-sp800-227-usage-profile/0.1
+standards_basis=NIST-SP-800-227
+approved_kem_algorithm_required=1
+fips_203_ml_kem_bound=1
+application_protocol_binding_required=1
+key_confirmation_decision_required=1
+kdf_boundary_required=1
+domain_separation_required=1
+shared_secret_lifecycle_required=1
+failure_handling_required=1
+kem_use_case_review_recorded=1
+application_protocol_binding_recorded=1
+key_confirmation_decision_recorded=1
+kdf_binding_recorded=1
+domain_separation_reviewed=1
+shared_secret_lifecycle_reviewed=1
+failure_handling_reviewed=1
+key_separation_reviewed=1
+algorithm_agility_reviewed=1
+kem_usage_profile_accepted=1
+operation_execution_allowed=0
+shared_secret_emission_allowed=0
+production_crypto_claim_allowed=0
+runtime_authority_granted=0
+required_usage_items_total=30
+required_usage_items_satisfied=30
+status=ml-kem-sp800-227-usage-profile-accepted-runtime-closed
+```
+
+## ML-KEM Implementation Traceability Matrix
+
+```text
+implementation_traceability_matrix_present=1
+formal_title=Latticra Q-Seal ML-KEM Implementation Traceability Matrix
+traceability_profile=latticra-q-seal-ml-kem-implementation-traceability-matrix/0.1
+standards_basis=NIST-FIPS-203,NIST-SP-800-227,NIST-ACVP-ML-KEM
+planned_source_units_count=9
+planned_test_units_count=9
+planned_source_unit_matrix_recorded=1
+polynomial_arithmetic_unit_bound=1
+ntt_unit_bound=1
+sampling_unit_bound=1
+compression_unit_bound=1
+encoding_unit_bound=1
+hash_xof_unit_bound=1
+keygen_unit_bound=1
+encaps_unit_bound=1
+decaps_unit_bound=1
+fips_203_section_mapping_recorded=1
+sp800_227_usage_mapping_recorded=1
+kat_vector_family_mapping_recorded=1
+acvp_test_type_mapping_recorded=1
+constant_time_review_mapping_recorded=0
+memory_safety_mapping_recorded=0
+source_digest_mapping_recorded=0
+implementation_trace_accepted=0
+implementation_code_present=0
+operation_execution_allowed=0
+production_crypto_claim_allowed=0
+runtime_authority_granted=0
+required_traceability_items_total=30
+required_traceability_items_satisfied=20
+status=ml-kem-traceability-matrix-blocked
+```
+
+## ML-KEM Primitive Source Acceptance Gate
+
+```text
+primitive_source_acceptance_gate_present=1
+formal_title=Latticra Q-Seal ML-KEM Primitive Source Acceptance Gate
+acceptance_profile=latticra-q-seal-ml-kem-primitive-source-acceptance-gate/0.1
+standards_basis=NIST-FIPS-203,NIST-SP-800-227,NIST-ACVP-ML-KEM
+source_layout_bound=1
+source_layout_gate_bound=1
+implementation_traceability_matrix_bound=1
+fips_conformance_matrix_bound=1
+sp800_227_usage_profile_bound=1
+kat_manifest_bound=1
+acvp_contracts_bound=1
+source_digest_manifest_bound=1
+source_digest_receipt_bound=1
+source_digest_verification_bound=1
+implementation_file_digest_plan_bound=1
+clean_room_author_attestation_gate_bound=1
+per_file_standards_trace_gate_bound=1
+per_file_test_trace_gate_bound=1
+receipt_replay_results_bound=1
+constant_time_review_bound=1
+memory_safety_evidence_bound=1
+zeroization_evidence_bound=1
+randomness_source_bound=1
+negative_test_evidence_bound=1
+source_files_created=0
+implementation_code_present=0
+source_file_digest_rows_recorded=0
+clean_room_author_attestation_recorded=0
+source_acceptance_approved=0
+operation_execution_allowed=0
+shared_secret_emission_allowed=0
+production_crypto_claim_allowed=0
+runtime_authority_granted=0
+required_acceptance_items_total=38
+required_acceptance_items_satisfied=30
+status=ml-kem-source-acceptance-gate-blocked
 ```
 
 ## ML-KEM KAT Manifest
@@ -366,6 +559,7 @@ vector_schema_bound=1
 vector_source_bound=1
 vector_fixture_lock_bound=1
 vector_fixture_digest_ledger_bound=1
+replay_transcript_gate_bound=1
 deterministic_replay_policy_recorded=1
 offline_fixture_policy_recorded=1
 no_network_execution_required=1
@@ -391,9 +585,52 @@ operation_execution_allowed=0
 production_crypto_claim_allowed=0
 fips_claim_allowed=0
 runtime_authority_granted=0
-required_kat_runner_contract_items_total=46
-required_kat_runner_contract_items_satisfied=30
+required_kat_runner_contract_items_total=47
+required_kat_runner_contract_items_satisfied=31
 status=ml-kem-kat-runner-contract-blocked
+```
+
+## ML-KEM KAT/ACVP Replay Transcript Gate
+
+```text
+ml_kem_kat_acvp_replay_transcript_gate_present=1
+standards_basis=NIST-FIPS-203,NIST-ACVP-ML-KEM,NIST-SP-800-218-SSDF
+transcript_scope=ML-KEM-KAT-ACVP-replay-transcripts-before-evidence-acceptance
+kat_runner_contract_bound=1
+kat_result_schema_bound=1
+kat_result_row_fixture_bound=1
+acvp_parser_contract_bound=1
+acvp_response_contract_bound=1
+acvp_submission_package_contract_bound=1
+vector_fixture_digest_ledger_bound=1
+receipt_replay_results_bound=1
+review_disposition_ledger_bound=1
+reviewer_role_mapping_bound=1
+ci_promotion_evidence_bound=1
+provider_differential_bound=1
+deterministic_replay_transcript_schema_recorded=1
+transcript_digest_sha256_required=1
+transcript_command_fingerprint_required=1
+fixture_digest_reference_required=1
+implementation_digest_reference_required=1
+positive_kat_transcript_lane_recorded=1
+negative_kat_transcript_lane_recorded=1
+malformed_kat_transcript_lane_recorded=1
+implicit_rejection_transcript_lane_recorded=1
+acvp_keygen_transcript_lane_recorded=1
+acvp_encap_decap_transcript_lane_recorded=1
+acvp_decapsulation_val_transcript_lane_recorded=1
+acvp_key_check_transcript_lane_recorded=1
+kat_replay_transcripts_recorded=0
+acvp_replay_transcripts_recorded=0
+transcript_digests_verified=0
+ci_replay_transcript_recorded=0
+review_disposition_recorded=0
+transcript_gate_accepted=0
+operation_execution_allowed=0
+required_transcript_items_total=44
+required_transcript_items_satisfied=38
+status=ml-kem-kat-acvp-replay-transcript-gate-blocked
 ```
 
 ## ML-KEM KAT Result Schema
@@ -1303,6 +1540,7 @@ local_wrapper_scripts_recorded=1
 qseal_subsystem_scripts_recorded=1
 readiness_gate_bound=1
 implementation_binding_manifest_bound=1
+replay_transcript_gate_bound=1
 kat_acvp_gate_passing_recorded=0
 constant_time_gate_passing_recorded=0
 memory_safety_gate_passing_recorded=0
@@ -1314,8 +1552,8 @@ promotion_workflow_recorded=0
 release_claim_gate_recorded=0
 signed_artifact_receipt_recorded=0
 operation_execution_allowed=0
-required_promotion_items_total=19
-required_promotion_items_satisfied=9
+required_promotion_items_total=20
+required_promotion_items_satisfied=10
 status=ml-kem-ci-promotion-evidence-blocked
 ```
 
@@ -1429,6 +1667,53 @@ required_review_items_satisfied=7
 status=ml-kem-side-channel-review-blocked
 ```
 
+## ML-KEM FIPS 203 Conformance Matrix
+
+```text
+fips_conformance_matrix_present=1
+formal_title=Latticra Q-Seal ML-KEM FIPS 203 Conformance Matrix
+conformance_profile=latticra-q-seal-ml-kem-fips-conformance-matrix/0.1
+standards_basis=NIST-FIPS-203
+conformance_scope=ML-KEM-FIPS-203-conformance-before-implementation
+conformance_state=fips-conformance-matrix-recorded-implementation-trace-missing
+fips_203_source_bound=1
+fips_203_publication_date_recorded=1
+parameter_sets_bound=1
+ml_kem_512_bound=1
+ml_kem_768_bound=1
+ml_kem_1024_bound=1
+algorithm_functions_bound=1
+keygen_algorithm_bound=1
+encaps_algorithm_bound=1
+decaps_algorithm_bound=1
+byte_encoding_requirements_bound=1
+randomness_requirements_bound=1
+hash_xof_boundary_bound=1
+decapsulation_failure_semantics_bound=1
+acvp_kat_consistency_required=1
+clean_room_source_boundary_recorded=1
+implementation_binding_required=1
+apple_corecrypto_code_copied=0
+external_provider_code_copied=0
+per_parameter_trace_recorded=0
+keygen_step_trace_recorded=0
+encaps_step_trace_recorded=0
+decaps_step_trace_recorded=0
+encoding_tests_recorded=0
+failure_semantics_tests_recorded=0
+primitive_mapping_reviewed=0
+errata_review_recorded=0
+implementation_trace_accepted=0
+conformance_matrix_accepted=0
+operation_execution_allowed=0
+production_crypto_claim_allowed=0
+fips_claim_allowed=0
+runtime_authority_granted=0
+required_conformance_items_total=28
+required_conformance_items_satisfied=18
+status=ml-kem-fips-conformance-matrix-blocked
+```
+
 ## Implementation Binding Manifest
 
 ```text
@@ -1439,6 +1724,15 @@ planned_source_units_count=9
 planned_test_units_count=9
 fips_203_algorithm_bound=1
 sp_800_227_kem_usage_bound=1
+fips_conformance_matrix_bound=1
+sp800_227_usage_profile_bound=1
+implementation_traceability_matrix_bound=1
+primitive_source_acceptance_gate_bound=1
+source_layout_gate_bound=1
+implementation_file_digest_plan_bound=1
+clean_room_author_attestation_gate_bound=1
+per_file_standards_trace_gate_bound=1
+per_file_test_trace_gate_bound=1
 kat_manifest_bound=1
 acvp_intake_bound=1
 acvp_capability_matrix_bound=1
@@ -1452,6 +1746,7 @@ vector_schema_bound=1
 vector_source_bound=1
 vector_fixture_lock_bound=1
 vector_fixture_digest_ledger_bound=1
+replay_transcript_gate_bound=1
 negative_test_evidence_bound=1
 memory_safety_evidence_bound=1
 api_misuse_resistance_bound=1
@@ -1467,9 +1762,231 @@ keygen_binding_approved=0
 encaps_binding_approved=0
 decaps_binding_approved=0
 operation_execution_allowed=0
-required_binding_items_total=35
-required_binding_items_satisfied=30
+required_binding_items_total=45
+required_binding_items_satisfied=40
 status=ml-kem-implementation-binding-blocked
+```
+
+## Source Layout Gate
+
+```text
+source_layout_gate_present=1
+formal_title=Latticra Q-Seal ML-KEM Source Layout Gate
+layout_profile=latticra-q-seal-ml-kem-source-layout-gate/0.1
+standards_basis=NIST-FIPS-203,NIST-SP-800-227,NIST-SP-800-218-SSDF
+source_boundary=clean-room-no-apple-code
+layout_scope=ML-KEM-source-layout-and-file-role-boundary-before-source-acceptance
+layout_state=source-layout-recorded-source-files-blocked
+planned_source_units_count=9
+planned_test_units_count=9
+implementation_unit_roles_recorded=1
+test_unit_roles_recorded=1
+public_api_boundary_recorded=1
+internal_primitive_boundary_recorded=1
+secret_state_boundary_recorded=1
+randomness_boundary_recorded=1
+zeroization_boundary_recorded=1
+constant_time_boundary_recorded=1
+parameter_set_coverage_recorded=1
+negative_test_lane_recorded=1
+kat_acvp_lane_recorded=1
+digest_manifest_lane_recorded=1
+review_owner_lane_recorded=1
+implementation_binding_manifest_bound=1
+implementation_file_digest_plan_bound=1
+clean_room_author_attestation_gate_bound=1
+per_file_standards_trace_gate_bound=1
+per_file_test_trace_gate_bound=1
+implementation_traceability_matrix_bound=1
+primitive_source_acceptance_gate_bound=1
+source_files_created=0
+source_layout_rows_recorded=0
+layout_digest_rows_recorded=0
+layout_reviewed=0
+layout_acceptance_approved=0
+source_layout_accepted=0
+operation_execution_allowed=0
+shared_secret_emission_allowed=0
+required_layout_items_total=38
+required_layout_items_satisfied=32
+status=ml-kem-source-layout-gate-blocked
+```
+
+## Implementation File Digest Plan
+
+```text
+ml_kem_implementation_file_digest_plan_present=1
+standards_basis=NIST-SP-800-218-SSDF,NIST-FIPS-203,NIST-ACVP-ML-KEM
+digest_algorithm=SHA-256
+source_boundary=clean-room-no-apple-code
+digest_plan_scope=ML-KEM-implementation-file-digest-row-plan-before-source-acceptance
+digest_plan_state=file-digest-plan-recorded-digest-rows-blocked
+planned_source_units_count=9
+planned_test_units_count=9
+source_digest_manifest_bound=1
+source_digest_receipt_bound=1
+source_digest_verification_bound=1
+receipt_replay_results_bound=1
+implementation_binding_manifest_bound=1
+implementation_traceability_matrix_bound=1
+primitive_source_acceptance_gate_bound=1
+source_layout_gate_bound=1
+fips_conformance_matrix_bound=1
+sp800_227_usage_profile_bound=1
+kat_manifest_bound=1
+acvp_contracts_bound=1
+code_owner_review_bound=1
+review_disposition_ledger_bound=1
+reviewer_role_mapping_bound=1
+ci_promotion_evidence_bound=1
+per_file_digest_row_schema_recorded=1
+per_file_trace_columns_recorded=1
+per_file_review_columns_recorded=1
+source_files_created=0
+implementation_file_digest_rows_recorded=0
+test_file_digest_rows_recorded=0
+build_script_digest_rows_recorded=0
+digest_receipt_reviewed=0
+digest_replay_verified=0
+file_digest_plan_accepted=0
+operation_execution_allowed=0
+shared_secret_emission_allowed=0
+required_digest_plan_items_total=33
+required_digest_plan_items_satisfied=26
+status=ml-kem-implementation-file-digest-plan-blocked
+```
+
+## Clean-Room Author Attestation Gate
+
+```text
+ml_kem_clean_room_author_attestation_gate_present=1
+standards_basis=NIST-SP-800-218-SSDF,NIST-FIPS-203,NIST-SP-800-227
+source_boundary=clean-room-no-apple-code
+attestation_scope=ML-KEM-clean-room-author-attestation-before-source-acceptance
+attestation_state=author-attestation-template-recorded-author-signoff-blocked
+planned_source_units_count=9
+planned_test_units_count=9
+source_layout_bound=1
+implementation_file_digest_plan_bound=1
+implementation_traceability_matrix_bound=1
+source_digest_manifest_bound=1
+source_digest_receipt_bound=1
+source_digest_verification_bound=1
+receipt_replay_results_bound=1
+fips_conformance_matrix_bound=1
+sp800_227_usage_profile_bound=1
+code_owner_review_bound=1
+review_disposition_ledger_bound=1
+reviewer_role_mapping_bound=1
+ci_promotion_evidence_bound=1
+ssdf_provenance_policy_bound=1
+no_third_party_source_policy_recorded=1
+author_attestation_schema_recorded=1
+per_file_author_columns_recorded=1
+review_independence_required=1
+source_files_created=0
+author_identity_imported=0
+per_file_author_attestations_recorded=0
+clean_room_attestation_reviewed=0
+provenance_exception_reviewed=0
+source_author_attestation_accepted=0
+operation_execution_allowed=0
+shared_secret_emission_allowed=0
+required_attestation_items_total=30
+required_attestation_items_satisfied=24
+status=ml-kem-clean-room-author-attestation-gate-blocked
+```
+
+## Per-File Standards Trace Gate
+
+```text
+per_file_standards_trace_gate_present=1
+standards_basis=NIST-FIPS-203,NIST-SP-800-227,NIST-SP-800-218-SSDF
+source_boundary=clean-room-no-apple-code
+trace_scope=ML-KEM-per-file-FIPS-203-SP-800-227-trace-before-source-acceptance
+trace_state=standards-trace-template-recorded-trace-rows-blocked
+planned_source_units_count=9
+planned_test_units_count=9
+fips_conformance_matrix_bound=1
+sp800_227_usage_profile_bound=1
+implementation_traceability_matrix_bound=1
+implementation_file_digest_plan_bound=1
+clean_room_author_attestation_gate_bound=1
+primitive_source_acceptance_gate_bound=1
+source_digest_manifest_bound=1
+source_digest_receipt_bound=1
+code_owner_review_bound=1
+review_disposition_ledger_bound=1
+reviewer_role_mapping_bound=1
+ci_promotion_evidence_bound=1
+fips203_clause_columns_recorded=1
+sp800_227_usage_columns_recorded=1
+parameter_set_columns_recorded=1
+operation_family_columns_recorded=1
+acceptance_blocker_columns_recorded=1
+review_disposition_columns_recorded=1
+source_files_created=0
+per_file_standards_trace_rows_recorded=0
+fips203_clause_coverage_reviewed=0
+sp800_227_usage_coverage_reviewed=0
+parameter_set_coverage_reviewed=0
+trace_review_approved=0
+per_file_standards_trace_accepted=0
+operation_execution_allowed=0
+shared_secret_emission_allowed=0
+required_standards_trace_items_total=31
+required_standards_trace_items_satisfied=24
+status=ml-kem-per-file-standards-trace-gate-blocked
+```
+
+## Per-File Test Trace Gate
+
+```text
+per_file_test_trace_gate_present=1
+standards_basis=NIST-FIPS-203,NIST-ACVP-ML-KEM,NIST-SP-800-218-SSDF
+source_boundary=clean-room-no-apple-code
+trace_scope=ML-KEM-per-file-KAT-ACVP-negative-test-trace-before-source-acceptance
+trace_state=test-trace-template-recorded-trace-rows-blocked
+planned_source_units_count=9
+planned_test_units_count=9
+primitive_source_acceptance_gate_bound=1
+implementation_traceability_matrix_bound=1
+implementation_file_digest_plan_bound=1
+clean_room_author_attestation_gate_bound=1
+per_file_standards_trace_gate_bound=1
+kat_manifest_bound=1
+kat_runner_contract_bound=1
+kat_result_schema_bound=1
+kat_result_row_fixture_bound=1
+acvp_contracts_bound=1
+vector_schema_bound=1
+vector_fixture_lock_bound=1
+vector_fixture_digest_ledger_bound=1
+negative_test_evidence_bound=1
+source_digest_manifest_bound=1
+source_digest_receipt_bound=1
+code_owner_review_bound=1
+review_disposition_ledger_bound=1
+reviewer_role_mapping_bound=1
+ci_promotion_evidence_bound=1
+test_family_columns_recorded=1
+parameter_set_columns_recorded=1
+operation_family_columns_recorded=1
+vector_reference_columns_recorded=1
+expected_result_columns_recorded=1
+review_disposition_columns_recorded=1
+source_files_created=0
+per_file_test_trace_rows_recorded=0
+kat_trace_coverage_reviewed=0
+acvp_trace_coverage_reviewed=0
+negative_test_trace_reviewed=0
+trace_review_approved=0
+per_file_test_trace_accepted=0
+operation_execution_allowed=0
+shared_secret_emission_allowed=0
+required_test_trace_items_total=39
+required_test_trace_items_satisfied=32
+status=ml-kem-per-file-test-trace-gate-blocked
 ```
 
 ## Implementation Frame
@@ -1538,8 +2055,11 @@ readiness_state=design-frame-ready-runtime-crypto-blocked
 foundation_present=1
 ml_kem_parameters_present=1
 evidence_gate_present=1
+fips_conformance_matrix_present=1
+sp800_227_usage_profile_present=1
 kat_manifest_present=1
 kat_runner_contract_present=1
+replay_transcript_gate_present=1
 kat_result_schema_present=1
 kat_result_row_fixture_present=1
 acvp_intake_present=1
@@ -1572,13 +2092,20 @@ zeroization_evidence_present=1
 side_channel_review_present=1
 provider_differential_present=1
 implementation_binding_manifest_present=1
+source_layout_gate_present=1
+implementation_file_digest_plan_present=1
+clean_room_author_attestation_gate_present=1
+per_file_standards_trace_gate_present=1
+per_file_test_trace_gate_present=1
+implementation_traceability_matrix_present=1
+primitive_source_acceptance_gate_present=1
 implementation_frame_present=1
 secret_state_contract_present=1
-components_total=39
-components_present=39
-runtime_blockers_total=37
-required_readiness_items_total=1003
-required_readiness_items_satisfied=643
+components_total=49
+components_present=49
+runtime_blockers_total=46
+required_readiness_items_total=1356
+required_readiness_items_satisfied=929
 design_frame_integration_ready=1
 runtime_crypto_ready=0
 operations_enabled=0
@@ -1599,6 +2126,14 @@ sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-parameters.sh
 sh scripts/test-latticra-q-seal-ml-kem-parameters.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-evidence-gate.sh
 sh scripts/test-latticra-q-seal-ml-kem-evidence-gate.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-fips-conformance-matrix.sh
+sh scripts/test-latticra-q-seal-ml-kem-fips-conformance-matrix.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-sp800-227-usage-profile.sh
+sh scripts/test-latticra-q-seal-ml-kem-sp800-227-usage-profile.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-implementation-traceability-matrix.sh
+sh scripts/test-latticra-q-seal-ml-kem-implementation-traceability-matrix.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-primitive-source-acceptance-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-primitive-source-acceptance-gate.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-kat-manifest.sh
 sh scripts/test-latticra-q-seal-ml-kem-kat-manifest.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-kat-runner-contract.sh
@@ -1667,6 +2202,24 @@ sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-provider-differential.sh
 sh scripts/test-latticra-q-seal-ml-kem-provider-differential.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-provider-self-test.sh
 sh scripts/test-latticra-q-seal-ml-kem-provider-self-test.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-fips-conformance-matrix.sh
+sh scripts/test-latticra-q-seal-ml-kem-fips-conformance-matrix.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-sp800-227-usage-profile.sh
+sh scripts/test-latticra-q-seal-ml-kem-sp800-227-usage-profile.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-implementation-traceability-matrix.sh
+sh scripts/test-latticra-q-seal-ml-kem-implementation-traceability-matrix.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-source-layout-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-source-layout-gate.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-implementation-file-digest-plan.sh
+sh scripts/test-latticra-q-seal-ml-kem-implementation-file-digest-plan.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-clean-room-author-attestation-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-clean-room-author-attestation-gate.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-per-file-standards-trace-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-per-file-standards-trace-gate.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-per-file-test-trace-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-per-file-test-trace-gate.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-primitive-source-acceptance-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-primitive-source-acceptance-gate.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
 sh scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-implementation-frame.sh
@@ -1750,6 +2303,18 @@ latticra q-seal ml-kem provider differential invariants: ok
 latticra q-seal ml-kem provider differential: ok
 latticra q-seal ml-kem provider self-test invariants: ok
 latticra q-seal ml-kem provider self-test: ok
+latticra q-seal ml-kem fips conformance matrix invariants: ok
+latticra q-seal ml-kem fips conformance matrix: ok
+latticra q-seal ml-kem sp800-227 usage profile invariants: ok
+latticra q-seal ml-kem sp800-227 usage profile: ok
+latticra q-seal ml-kem implementation traceability matrix invariants: ok
+latticra q-seal ml-kem implementation traceability matrix: ok
+latticra q-seal ml-kem implementation file digest plan invariants: ok
+latticra q-seal ml-kem implementation file digest plan: ok
+latticra q-seal ml-kem clean-room author attestation gate invariants: ok
+latticra q-seal ml-kem clean-room author attestation gate: ok
+latticra q-seal ml-kem primitive source acceptance gate invariants: ok
+latticra q-seal ml-kem primitive source acceptance gate: ok
 latticra q-seal ml-kem implementation binding manifest invariants: ok
 latticra q-seal ml-kem implementation binding manifest: ok
 latticra q-seal ml-kem implementation frame invariants: ok

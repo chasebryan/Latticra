@@ -93,7 +93,7 @@ require_contains 'fedora_mock_chroot_mutated=0' "$doc"
 require_contains 'mock --buildsrpm' "$doc"
 require_contains 'mock -r' "$doc"
 require_contains 'dnf builddep' "$doc"
-require_contains 'Add a Fedora RPM install/remove transcript contract' "$doc"
+require_contains 'Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract' "$doc"
 require_contains 'fedora_local_mock_build_gate_contract: ok' "$doc"
 
 for current_field in \
@@ -166,7 +166,7 @@ done
 require_contains 'Status: local-mock-build-gate/status alignment' "$status"
 require_contains 'Date: 2026-05-27' "$status"
 require_contains 'does not run `rpmbuild` or `mock`' "$status"
-require_contains 'Add a Fedora RPM install/remove transcript contract' "$status"
+require_contains 'Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract' "$status"
 
 require_contains 'FEDORA_LOCAL_MOCK_BUILD_GATE_CONTRACT_STATUS.md' "$index"
 require_contains 'Current Fedora local mock-build gate contract checkpoint' "$index"

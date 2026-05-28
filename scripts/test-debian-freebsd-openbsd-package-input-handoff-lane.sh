@@ -71,6 +71,8 @@ def excluded(relative):
         return True
     if relative.startswith("installer/latticra-installer/target/"):
         return True
+    if relative.startswith("reports/") and relative.endswith(".tmp"):
+        return True
     return relative.endswith((
         ".rpm",
         ".deb",
@@ -268,6 +270,7 @@ require_no_archive_pattern '\.pkg$'
 require_no_archive_pattern '\.tgz$'
 require_no_archive_pattern '\.txz$'
 require_no_archive_pattern 'latticra[_-][^/]*\.tar\.gz$'
+require_no_archive_pattern '(^|/)reports/[^/]+\.tmp$'
 
 mkdir -p "$handoff_dir/debian"
 cp "$archive_path" "$handoff_dir/debian/$debian_archive"

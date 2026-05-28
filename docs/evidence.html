@@ -58,7 +58,30 @@
     </section>
 
     <section class="section-band">
-      <div class="content-shell evidence-intro">
+      <nav class="content-shell evidence-shortcuts" aria-label="Claims and evidence section shortcuts">
+        <a href="#evidence-core-rule">
+          <span>01</span>
+          <strong>Core Rule</strong>
+        </a>
+        <a href="#evidence-ladder">
+          <span>02</span>
+          <strong>Ladder</strong>
+        </a>
+        <a href="#evidence-language">
+          <span>03</span>
+          <strong>Language</strong>
+        </a>
+        <a href="#evidence-current-posture">
+          <span>04</span>
+          <strong>Posture</strong>
+        </a>
+        <a href="#evidence-source-records">
+          <span>05</span>
+          <strong>Sources</strong>
+        </a>
+      </nav>
+
+      <div id="evidence-core-rule" class="content-shell evidence-intro evidence-anchor">
         <div>
           <p class="eyebrow">Core Rule</p>
           <h2>A claim can rise only as far as its evidence.</h2>
@@ -84,7 +107,7 @@
       </div>
     </section>
 
-    <section class="section-band section-band-muted">
+    <section id="evidence-ladder" class="section-band section-band-muted evidence-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Evidence Ladder</p>
         <h2>From concept to supported capability.</h2>
@@ -126,7 +149,7 @@
       </div>
     </section>
 
-    <section class="section-band">
+    <section id="evidence-language" class="section-band evidence-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Claim Language</p>
         <h2>Use exact labels, not broad promises.</h2>
@@ -158,7 +181,7 @@
       </div>
     </section>
 
-    <section class="section-band section-band-muted">
+    <section id="evidence-current-posture" class="section-band section-band-muted evidence-anchor">
       <div class="content-shell architecture-split">
         <div class="section-heading">
           <p class="eyebrow">Current Posture</p>
@@ -184,7 +207,7 @@
       </div>
     </section>
 
-    <section class="section-band">
+    <section id="evidence-source-records" class="section-band evidence-anchor">
       <div class="content-shell section-heading">
         <p class="eyebrow">Source Records</p>
         <h2>Read the exact record before repeating a claim.</h2>
@@ -225,10 +248,16 @@
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer id="site-footer" class="site-footer">
     <div class="content-shell footer-inner">
       <span>Latticra claims and evidence guide.</span>
-      <span><a href="status.html">Open public status</a></span>
+      <nav class="footer-links" aria-label="Claims and evidence footer navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
     </div>
   </footer>
 </body>

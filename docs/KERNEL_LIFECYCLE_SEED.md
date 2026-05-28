@@ -29,7 +29,7 @@ docs/KERNEL_LIFECYCLE_SEED.md
 The default lifecycle target is:
 
 ```text
-runtime-entry-recovery-audit-observation-view-ready
+runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
 ```
 
 The approved sequence is:
@@ -81,6 +81,12 @@ runtime-entry-recovery-plan-observation-view-ready -> runtime-entry-recovery-dis
 runtime-entry-recovery-disposition-observation-view-ready -> runtime-entry-recovery-outcome-observation-view-ready
 runtime-entry-recovery-outcome-observation-view-ready -> runtime-entry-recovery-closeout-observation-view-ready
 runtime-entry-recovery-closeout-observation-view-ready -> runtime-entry-recovery-audit-observation-view-ready
+runtime-entry-recovery-audit-observation-view-ready -> runtime-entry-recovery-audit-review-observation-view-ready
+runtime-entry-recovery-audit-review-observation-view-ready -> runtime-entry-recovery-audit-review-disposition-observation-view-ready
+runtime-entry-recovery-audit-review-disposition-observation-view-ready -> runtime-entry-recovery-audit-review-disposition-review-observation-view-ready
+runtime-entry-recovery-audit-review-disposition-review-observation-view-ready -> runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view-ready
+runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view-ready -> runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view-ready
+runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view-ready -> runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
 ```
 
 ## Controlled effect boundary
@@ -90,7 +96,7 @@ This slice allows internal state-machine mutation only.
 The result may report:
 
 ```text
-state_change_count=46
+state_change_count=52
 lifecycle_complete=1
 ```
 
@@ -124,12 +130,12 @@ The guard verifies:
 LATTICRA KERNEL LIFECYCLE REPORT
 lifecycle_status=lifecycle-complete
 policy_status=gate-allowed
-final_state=runtime-entry-recovery-audit-observation-view-ready
-step_count=46
-state_change_count=46
+final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
+step_count=52
+state_change_count=52
 lifecycle_complete=1
 external_effect_performed=0
-machine_log_count=46
+machine_log_count=52
 evidence_level=10
 ```
 
@@ -155,7 +161,7 @@ The guards verify:
 
 ```text
 default request is denied
-allowed lifecycle reaches runtime-entry-recovery-audit-observation-view-ready
+allowed lifecycle reaches runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
 intermediate target stops correctly
 step limit is respected
 report includes lifecycle completion and transition log
@@ -216,6 +222,15 @@ recovery dispositions
 recovery-outcome observation views
 recovery-outcome observations
 recovery outcomes
+recovery-audit-review-disposition-review-closeout archive-gate observation views
+recovery-audit-review-disposition-review-closeout archive-gate observations
+recovery-audit-review-disposition-review-closeout archive gates
+recovery-audit-review-disposition-review-closeout observation views
+recovery-audit-review-disposition-review-closeout observations
+recovery-audit-review-disposition-review closeouts
+recovery-audit-review observation views
+recovery-audit-review observations
+recovery-audit reviews
 recovery authority
 instruction pointer reads
 stack pointer reads
@@ -244,4 +259,4 @@ operating-system replacement
 
 ## Next possible lane
 
-A later slice may integrate no-effect runtime entry recovery-closeout observation metadata into lifecycle and coupling reports, or add state recovery closeout planning before any external effects are introduced.
+A later slice may add virtual device binding metadata, scheduler-to-timer handoff metadata, or state recovery archive review planning before any external effects are introduced.

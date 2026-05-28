@@ -8,6 +8,11 @@
 #include "latticra/kernel_runtime_entry_quiescent_return_observation_view.h"
 #include "latticra/kernel_runtime_entry_recovery_boundary_observation_view.h"
 #include "latticra/kernel_runtime_entry_recovery_audit_observation_view.h"
+#include "latticra/kernel_runtime_entry_recovery_audit_review_disposition_observation_view.h"
+#include "latticra/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view.h"
+#include "latticra/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view.h"
+#include "latticra/kernel_runtime_entry_recovery_audit_review_disposition_review_observation_view.h"
+#include "latticra/kernel_runtime_entry_recovery_audit_review_observation_view.h"
 #include "latticra/kernel_runtime_entry_recovery_closeout_observation_view.h"
 #include "latticra/kernel_runtime_entry_recovery_outcome_observation_view.h"
 #include "latticra/kernel_runtime_entry_register_view.h"
@@ -19,9 +24,9 @@ extern "C" {
 #endif
 
 #define LATTICRA_NUCLEUS_KERNEL_COUPLING_ID_MAX 64u
-#define LATTICRA_NUCLEUS_KERNEL_COUPLING_LABEL_MAX 64u
+#define LATTICRA_NUCLEUS_KERNEL_COUPLING_LABEL_MAX 128u
 #define LATTICRA_NUCLEUS_KERNEL_COUPLING_SOURCE_IDENTITY_MAX 128u
-#define LATTICRA_NUCLEUS_KERNEL_COUPLING_REPORT_MAX 32768u
+#define LATTICRA_NUCLEUS_KERNEL_COUPLING_REPORT_MAX 65536u
 
 typedef enum {
     LATTICRA_NUCLEUS_KERNEL_COUPLING_REPORT_ONLY_READY = 0,
@@ -61,7 +66,19 @@ typedef enum {
     LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_BLOCKED = 28,
     LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_OBSERVATION_VIEW_MISSING = 29,
     LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_OBSERVATION_VIEW_BLOCKED = 30,
-    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_INTERNAL_ERROR = 31
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_OBSERVATION_VIEW_MISSING = 31,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_OBSERVATION_VIEW_BLOCKED = 32,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_OBSERVATION_VIEW_MISSING = 33,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_OBSERVATION_VIEW_BLOCKED = 34,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_OBSERVATION_VIEW_MISSING = 35,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_OBSERVATION_VIEW_BLOCKED = 36,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_OBSERVATION_VIEW_MISSING = 37,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_OBSERVATION_VIEW_BLOCKED = 38,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_MISSING = 39,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_BLOCKED = 40,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_MISSING = 41,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_BLOCKED = 42,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_INTERNAL_ERROR = 43
 } latticra_nucleus_kernel_coupling_denial_t;
 
 typedef struct {
@@ -98,6 +115,24 @@ typedef struct {
     const
     latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
         *runtime_recovery_audit_observation_view;
+    const
+    latticra_kernel_runtime_entry_recovery_audit_review_observation_view_result_t
+        *runtime_recovery_audit_review_observation_view;
+    const
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_observation_view_result_t
+        *runtime_recovery_audit_review_disposition_observation_view;
+    const
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_observation_view_result_t
+        *runtime_recovery_audit_review_disposition_review_observation_view;
+    const
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_result_t
+        *runtime_recovery_audit_review_disposition_review_closeout_observation_view;
+    const
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_result_t
+        *runtime_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view;
+    const
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_result_t
+        *runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view;
     const char *source_identity;
     size_t source_identity_len;
     latticra_l_ui_source_span_t source_span;
@@ -143,6 +178,18 @@ typedef struct {
         LATTICRA_NUCLEUS_KERNEL_COUPLING_LABEL_MAX];
     char runtime_recovery_audit_observation_view_status[
         LATTICRA_NUCLEUS_KERNEL_COUPLING_LABEL_MAX];
+    char runtime_recovery_audit_review_observation_view_status[
+        LATTICRA_NUCLEUS_KERNEL_COUPLING_LABEL_MAX];
+    char runtime_recovery_audit_review_disposition_observation_view_status[
+        LATTICRA_NUCLEUS_KERNEL_COUPLING_LABEL_MAX];
+    char runtime_recovery_audit_review_disposition_review_observation_view_status[
+        LATTICRA_NUCLEUS_KERNEL_COUPLING_LABEL_MAX];
+    char runtime_recovery_audit_review_disposition_review_closeout_observation_view_status[
+        LATTICRA_NUCLEUS_KERNEL_COUPLING_LABEL_MAX];
+    char runtime_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_status[
+        LATTICRA_NUCLEUS_KERNEL_COUPLING_LABEL_MAX];
+    char runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_status[
+        LATTICRA_NUCLEUS_KERNEL_COUPLING_LABEL_MAX];
     size_t task_count;
     size_t accepted_task_count;
     size_t blocked_task_count;
@@ -163,6 +210,12 @@ typedef struct {
     size_t recovery_outcome_observation_view_count;
     size_t recovery_closeout_observation_view_count;
     size_t recovery_audit_observation_view_count;
+    size_t recovery_audit_review_observation_view_count;
+    size_t recovery_audit_review_disposition_observation_view_count;
+    size_t recovery_audit_review_disposition_review_observation_view_count;
+    size_t recovery_audit_review_disposition_review_closeout_observation_view_count;
+    size_t recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_count;
+    size_t recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_count;
     int prerequisites_satisfied;
     int no_effect_chain_ok;
     int lifecycle_complete;
@@ -192,6 +245,12 @@ typedef struct {
     int runtime_recovery_outcome_observation_view_allowed;
     int runtime_recovery_closeout_observation_view_allowed;
     int runtime_recovery_audit_observation_view_allowed;
+    int runtime_recovery_audit_review_observation_view_allowed;
+    int runtime_recovery_audit_review_disposition_observation_view_allowed;
+    int runtime_recovery_audit_review_disposition_review_observation_view_allowed;
+    int runtime_recovery_audit_review_disposition_review_closeout_observation_view_allowed;
+    int runtime_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed;
+    int runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed;
     int scheduler_return_observation_allowed;
     int process_return_observation_allowed;
     int process_return_allowed;
@@ -216,6 +275,18 @@ typedef struct {
     int recovery_closeout_observation_allowed;
     int recovery_audit_allowed;
     int recovery_audit_observation_allowed;
+    int recovery_audit_review_allowed;
+    int recovery_audit_review_observation_allowed;
+    int recovery_audit_review_disposition_allowed;
+    int recovery_audit_review_disposition_observation_allowed;
+    int recovery_audit_review_disposition_review_allowed;
+    int recovery_audit_review_disposition_review_observation_allowed;
+    int recovery_audit_review_disposition_review_closeout_allowed;
+    int recovery_audit_review_disposition_review_closeout_observation_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed;
     int process_state_read_allowed;
     int scheduler_execution_allowed;
     int scheduler_dispatch_allowed;
@@ -258,6 +329,12 @@ typedef struct {
     int runtime_recovery_outcome_observation_view_allowed;
     int runtime_recovery_closeout_observation_view_allowed;
     int runtime_recovery_audit_observation_view_allowed;
+    int runtime_recovery_audit_review_observation_view_allowed;
+    int runtime_recovery_audit_review_disposition_observation_view_allowed;
+    int runtime_recovery_audit_review_disposition_review_observation_view_allowed;
+    int runtime_recovery_audit_review_disposition_review_closeout_observation_view_allowed;
+    int runtime_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed;
+    int runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed;
     int scheduler_return_observation_allowed;
     int process_return_observation_allowed;
     int process_return_allowed;
@@ -282,6 +359,18 @@ typedef struct {
     int recovery_closeout_observation_allowed;
     int recovery_audit_allowed;
     int recovery_audit_observation_allowed;
+    int recovery_audit_review_allowed;
+    int recovery_audit_review_observation_allowed;
+    int recovery_audit_review_disposition_allowed;
+    int recovery_audit_review_disposition_observation_allowed;
+    int recovery_audit_review_disposition_review_allowed;
+    int recovery_audit_review_disposition_review_observation_allowed;
+    int recovery_audit_review_disposition_review_closeout_allowed;
+    int recovery_audit_review_disposition_review_closeout_observation_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed;
     int process_state_read_allowed;
     int scheduler_execution_allowed;
     int scheduler_dispatch_allowed;

@@ -26,6 +26,9 @@ static int expect_generated_random_evidence(
     EXPECT_TRUE(
         result->generated_nonce_random_bytes == LATTICRA_SEAL_HYBRID_NONCE_BYTES,
         "generated nonce random bytes");
+    EXPECT_TRUE(
+        result->generated_key_nonce_pair_csprng_backed == 1u,
+        "generated key nonce pair csprng");
     return 0;
 }
 
@@ -45,6 +48,46 @@ static int expect_generated_random_report(const char *rendered) {
         "report nonce csprng");
     EXPECT_TRUE(strstr(rendered, "generated_salt_random_bytes=32") != 0, "report salt bytes");
     EXPECT_TRUE(strstr(rendered, "generated_nonce_random_bytes=12") != 0, "report nonce bytes");
+    EXPECT_TRUE(
+        strstr(rendered, "generated_key_nonce_pair_csprng_backed=1") != 0,
+        "report generated key nonce pair");
+    return 0;
+}
+
+static int expect_commitment_mac_evidence(
+    const latticra_seal_hybrid_envelope_result_t *result) {
+    EXPECT_TRUE(result->commitment_mac_provider_api_used == 1u, "commitment mac provider api");
+    EXPECT_TRUE(result->commitment_mac_provider_fetched == 1u, "commitment mac provider fetch");
+    EXPECT_TRUE(
+        result->commitment_mac_hmac_sha256_digest_bound == 1u,
+        "commitment mac sha256");
+    EXPECT_TRUE(result->commitment_mac_256bit_key_used == 1u, "commitment mac 256-bit key");
+    EXPECT_TRUE(result->commitment_mac_input_streamed == 1u, "commitment mac streamed");
+    EXPECT_TRUE(
+        result->commitment_mac_legacy_fallback_used == 0u,
+        "commitment mac no fallback");
+    return 0;
+}
+
+static int expect_commitment_mac_report(const char *rendered) {
+    EXPECT_TRUE(
+        strstr(rendered, "commitment_mac_provider_api_used=1") != 0,
+        "report commitment mac provider");
+    EXPECT_TRUE(
+        strstr(rendered, "commitment_mac_provider_fetched=1") != 0,
+        "report commitment mac fetch");
+    EXPECT_TRUE(
+        strstr(rendered, "commitment_mac_hmac_sha256_digest_bound=1") != 0,
+        "report commitment mac sha256");
+    EXPECT_TRUE(
+        strstr(rendered, "commitment_mac_256bit_key_used=1") != 0,
+        "report commitment mac key");
+    EXPECT_TRUE(
+        strstr(rendered, "commitment_mac_input_streamed=1") != 0,
+        "report commitment mac streamed");
+    EXPECT_TRUE(
+        strstr(rendered, "commitment_mac_legacy_fallback_used=0") != 0,
+        "report commitment mac no fallback");
     return 0;
 }
 
@@ -542,8 +585,12 @@ static int known_answer_committed_detached_vector_opens(void) {
         encrypt_result.detached_commitment_input_streamed == 1u,
         "committed kat commitment streamed");
     EXPECT_TRUE(
+        encrypt_result.detached_commitment_constant_time_compare == 0u,
+        "committed kat encrypt no commitment compare");
+    EXPECT_TRUE(
         encrypt_result.detached_commitment_key_material_zeroized == 1u,
         "committed kat commitment key zeroized");
+    EXPECT_TRUE(expect_commitment_mac_evidence(&encrypt_result) == 0, "committed kat mac evidence");
     EXPECT_TRUE(encrypt_result.detached_commitment_verified == 0u, "committed kat encrypt not verified");
     EXPECT_TRUE(encrypt_result.detached_aad_framed == 1u, "committed kat detached aad framed");
 
@@ -582,8 +629,12 @@ static int known_answer_committed_detached_vector_opens(void) {
         decrypt_result.detached_commitment_input_streamed == 1u,
         "committed kat decrypt commitment streamed");
     EXPECT_TRUE(
+        decrypt_result.detached_commitment_constant_time_compare == 1u,
+        "committed kat decrypt constant-time commitment compare");
+    EXPECT_TRUE(
         decrypt_result.detached_commitment_key_material_zeroized == 1u,
         "committed kat decrypt commitment key zeroized");
+    EXPECT_TRUE(expect_commitment_mac_evidence(&decrypt_result) == 0, "committed kat decrypt mac evidence");
     EXPECT_TRUE(decrypt_result.authentication_tag_verified == 1u, "committed kat tag verified");
     EXPECT_TRUE(
         decrypt_result.unauthenticated_plaintext_staged == 1u,
@@ -859,8 +910,12 @@ static int known_answer_record_vector_opens(void) {
         open_result.record_commitment_input_streamed == 1u,
         "record kat commitment streamed");
     EXPECT_TRUE(
+        open_result.record_commitment_constant_time_compare == 1u,
+        "record kat constant-time commitment compare");
+    EXPECT_TRUE(
         open_result.record_commitment_key_material_zeroized == 1u,
         "record kat commitment key zeroized");
+    EXPECT_TRUE(expect_commitment_mac_evidence(&open_result) == 0, "record kat mac evidence");
     EXPECT_TRUE(
         open_result.record_suite_id == LATTICRA_SEAL_HYBRID_RECORD_SUITE_HKDF_SHA256_AES_256_GCM,
         "record kat suite id");
@@ -975,6 +1030,9 @@ static int hybrid_secret_role_labels_reject_legacy_unlabeled_record_vector(void)
         result.record_commitment_input_streamed == 1u,
         "legacy record unrole commitment streamed");
     EXPECT_TRUE(
+        result.record_commitment_constant_time_compare == 1u,
+        "legacy record unrole constant-time commitment compare");
+    EXPECT_TRUE(
         result.unauthenticated_plaintext_staged == 0u,
         "legacy record unrole not staged before commitment auth");
     EXPECT_TRUE(result.staged_plaintext_cleared == 0u, "legacy record unrole no staged buffer");
@@ -1063,6 +1121,9 @@ static int hybrid_secret_algorithm_labels_reject_legacy_unlabeled_record_vector(
     EXPECT_TRUE(
         result.record_commitment_tampering_rejected == 1u,
         "legacy algorithm record commitment rejected");
+    EXPECT_TRUE(
+        result.record_commitment_constant_time_compare == 1u,
+        "legacy algorithm record constant-time commitment compare");
     EXPECT_TRUE(result.unauthenticated_plaintext_staged == 0u, "legacy algorithm record not staged");
     EXPECT_TRUE(result.plaintext_released_after_authentication == 0u, "legacy algorithm record no release");
     EXPECT_TRUE(recovered_len == 0u, "legacy algorithm record len reset");
@@ -1126,6 +1187,18 @@ static int encrypt_decrypt_round_trip(void) {
     EXPECT_TRUE(encrypt_result.nonce_size_bytes == 12u, "nonce size");
     EXPECT_TRUE(encrypt_result.salt_nonzero == 1u, "salt nonzero");
     EXPECT_TRUE(encrypt_result.nonce_nonzero == 1u, "nonce nonzero");
+    EXPECT_TRUE(encrypt_result.aead_nonce_uniqueness_required == 1u, "aead nonce uniqueness");
+    EXPECT_TRUE(encrypt_result.salt_bound_to_hkdf == 1u, "salt bound to hkdf");
+    EXPECT_TRUE(encrypt_result.nonce_bound_to_aead == 1u, "nonce bound to aead");
+    EXPECT_TRUE(
+        encrypt_result.generated_key_nonce_pair_csprng_backed == 0u,
+        "low-level pair not generated");
+    EXPECT_TRUE(
+        encrypt_result.caller_salt_nonce_reuse_guard_required == 1u,
+        "low-level reuse guard required");
+    EXPECT_TRUE(
+        encrypt_result.caller_salt_nonce_reuse_tracking_present == 0u,
+        "low-level no reuse tracker");
     EXPECT_TRUE(encrypt_result.weak_salt_rejected == 0u, "salt not rejected");
     EXPECT_TRUE(encrypt_result.weak_nonce_rejected == 0u, "nonce not rejected");
     EXPECT_TRUE(
@@ -1203,6 +1276,20 @@ static int encrypt_decrypt_round_trip(void) {
     EXPECT_TRUE(strstr(rendered, "pqc_shared_secret_nonzero=1") != 0, "report pqc nonzero");
     EXPECT_TRUE(strstr(rendered, "salt_nonzero=1") != 0, "report salt nonzero");
     EXPECT_TRUE(strstr(rendered, "nonce_nonzero=1") != 0, "report nonce nonzero");
+    EXPECT_TRUE(
+        strstr(rendered, "aead_nonce_uniqueness_required=1") != 0,
+        "report aead nonce uniqueness");
+    EXPECT_TRUE(strstr(rendered, "salt_bound_to_hkdf=1") != 0, "report salt bound");
+    EXPECT_TRUE(strstr(rendered, "nonce_bound_to_aead=1") != 0, "report nonce bound");
+    EXPECT_TRUE(
+        strstr(rendered, "generated_key_nonce_pair_csprng_backed=0") != 0,
+        "report low-level pair not generated");
+    EXPECT_TRUE(
+        strstr(rendered, "caller_salt_nonce_reuse_guard_required=1") != 0,
+        "report reuse guard required");
+    EXPECT_TRUE(
+        strstr(rendered, "caller_salt_nonce_reuse_tracking_present=0") != 0,
+        "report no reuse tracker");
     EXPECT_TRUE(strstr(rendered, "aad_size_bytes=48") != 0, "report detached framed aad size");
     EXPECT_TRUE(strstr(rendered, "caller_aad_size_bytes=32") != 0, "report detached caller aad");
     EXPECT_TRUE(strstr(rendered, "detached_aad_size_bytes=48") != 0, "report detached aad size");
@@ -1332,6 +1419,12 @@ static int encrypt_decrypt_round_trip(void) {
         "decrypt plaintext released after auth");
     EXPECT_TRUE(decrypt_result.salt_generated == 0u, "decrypt salt not generated");
     EXPECT_TRUE(decrypt_result.nonce_generated == 0u, "decrypt nonce not generated");
+    EXPECT_TRUE(decrypt_result.aead_nonce_uniqueness_required == 1u, "decrypt nonce uniqueness");
+    EXPECT_TRUE(decrypt_result.salt_bound_to_hkdf == 1u, "decrypt salt bound");
+    EXPECT_TRUE(decrypt_result.nonce_bound_to_aead == 1u, "decrypt nonce bound");
+    EXPECT_TRUE(
+        decrypt_result.caller_salt_nonce_reuse_guard_required == 1u,
+        "decrypt reuse guard surfaced");
     EXPECT_TRUE(decrypt_result.detached_salt_caller_supplied == 1u, "decrypt salt caller supplied");
     EXPECT_TRUE(decrypt_result.detached_nonce_caller_supplied == 1u, "decrypt nonce caller supplied");
     EXPECT_TRUE(decrypt_result.decryption_performed == 1u, "decryption performed");
@@ -1339,6 +1432,193 @@ static int encrypt_decrypt_round_trip(void) {
     EXPECT_TRUE(decrypt_result.hkdf_intermediate_material_zeroized == 1u, "decrypt hkdf zeroized");
     EXPECT_TRUE(decrypt_result.key_material_zeroized == 1u, "decrypt key zeroized");
     EXPECT_TRUE(latticra_seal_hybrid_envelope_result_is_authority_neutral(&decrypt_result) == 1, "decrypt authority neutral");
+    return 0;
+}
+
+static int guarded_detached_reuse_guard_rejects_reused_salt_nonce(void) {
+    latticra_seal_hybrid_envelope_context_t context = fixture_context();
+    latticra_seal_hybrid_envelope_context_t alternate_context = fixture_context();
+    latticra_seal_hybrid_envelope_reuse_guard_t guard;
+    latticra_seal_hybrid_envelope_reuse_guard_t committed_guard;
+    latticra_seal_hybrid_envelope_result_t first_result;
+    latticra_seal_hybrid_envelope_result_t reused_result;
+    latticra_seal_hybrid_envelope_result_t committed_result;
+    latticra_seal_hybrid_envelope_result_t committed_reused_result;
+    unsigned char alternate_nonce[LATTICRA_SEAL_HYBRID_NONCE_BYTES];
+    unsigned char ciphertext[sizeof(plaintext)];
+    unsigned char tag[LATTICRA_SEAL_HYBRID_TAG_BYTES];
+    unsigned char commitment[LATTICRA_SEAL_HYBRID_DETACHED_COMMITMENT_BYTES];
+    size_t ciphertext_len = 0u;
+    char rendered[LATTICRA_SEAL_HYBRID_ENVELOPE_REPORT_MAX];
+
+    memcpy(alternate_nonce, nonce, sizeof(alternate_nonce));
+    alternate_nonce[sizeof(alternate_nonce) - 1u] ^= 0x55u;
+    alternate_context.nonce = alternate_nonce;
+    alternate_context.nonce_len = sizeof(alternate_nonce);
+
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_reuse_guard_init(&guard) == LATTICRA_STATUS_OK,
+        "guard init");
+    EXPECT_TRUE(guard.initialized == 1u, "guard initialized");
+    EXPECT_TRUE(guard.entries_used == 0u, "guard empty");
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_reuse_guard_init(0) == LATTICRA_STATUS_NULL_ARGUMENT,
+        "null guard init");
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_encrypt_guarded(
+            0,
+            &context,
+            plaintext,
+            sizeof(plaintext) - 1u,
+            ciphertext,
+            sizeof(ciphertext),
+            &ciphertext_len,
+            tag,
+            sizeof(tag),
+            &first_result) == LATTICRA_STATUS_NULL_ARGUMENT,
+        "guarded encrypt null guard");
+
+    memset(ciphertext, 0, sizeof(ciphertext));
+    memset(tag, 0, sizeof(tag));
+    ciphertext_len = 0u;
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_encrypt_guarded(
+            &guard,
+            &context,
+            plaintext,
+            sizeof(plaintext) - 1u,
+            ciphertext,
+            sizeof(ciphertext),
+            &ciphertext_len,
+            tag,
+            sizeof(tag),
+            &first_result) == LATTICRA_STATUS_OK,
+        "guarded encrypt status");
+    EXPECT_TRUE(first_result.error == LATTICRA_SEAL_HYBRID_ENVELOPE_OK, "guarded encrypt ok");
+    EXPECT_TRUE(first_result.encryption_performed == 1u, "guarded encrypt performed");
+    EXPECT_TRUE(first_result.caller_salt_nonce_reuse_guard_required == 1u, "guard required");
+    EXPECT_TRUE(first_result.caller_salt_nonce_reuse_tracking_present == 1u, "guard present");
+    EXPECT_TRUE(
+        first_result.caller_salt_nonce_reuse_guard_capacity ==
+            LATTICRA_SEAL_HYBRID_REUSE_GUARD_CAPACITY,
+        "guard capacity");
+    EXPECT_TRUE(first_result.caller_salt_nonce_reuse_guard_entries_used == 1u, "guard entries");
+    EXPECT_TRUE(first_result.caller_salt_nonce_reuse_tracked == 1u, "guard tracked");
+    EXPECT_TRUE(first_result.caller_salt_nonce_reuse_rejected == 0u, "guard no reject");
+    EXPECT_TRUE(guard.entries_used == 1u, "guard stored entry");
+    EXPECT_TRUE(first_result.hkdf_extract_expand_performed == 1u, "guarded hkdf");
+    EXPECT_TRUE(first_result.aes_gcm_encryption_performed == 1u, "guarded aes");
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_report(&first_result, rendered, sizeof(rendered)) ==
+            LATTICRA_STATUS_OK,
+        "guarded report");
+    EXPECT_TRUE(
+        strstr(rendered, "caller_salt_nonce_reuse_tracking_present=1") != 0,
+        "report guard present");
+    EXPECT_TRUE(
+        strstr(rendered, "caller_salt_nonce_reuse_guard_capacity=64") != 0,
+        "report guard capacity");
+    EXPECT_TRUE(
+        strstr(rendered, "caller_salt_nonce_reuse_guard_entries_used=1") != 0,
+        "report guard entries");
+    EXPECT_TRUE(
+        strstr(rendered, "caller_salt_nonce_reuse_tracked=1") != 0,
+        "report guard tracked");
+
+    memset(ciphertext, 0x5au, sizeof(ciphertext));
+    memset(tag, 0x6bu, sizeof(tag));
+    ciphertext_len = 99u;
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_encrypt_guarded(
+            &guard,
+            &context,
+            plaintext,
+            sizeof(plaintext) - 1u,
+            ciphertext,
+            sizeof(ciphertext),
+            &ciphertext_len,
+            tag,
+            sizeof(tag),
+            &reused_result) == LATTICRA_STATUS_OK,
+        "guarded reused status");
+    EXPECT_TRUE(
+        reused_result.error == LATTICRA_SEAL_HYBRID_ENVELOPE_REUSED_SALT_NONCE,
+        "guarded reused error");
+    EXPECT_TRUE(
+        strcmp(latticra_seal_hybrid_envelope_error_label(reused_result.error), "reused-salt-nonce") == 0,
+        "guarded reused label");
+    EXPECT_TRUE(reused_result.encryption_performed == 0u, "reused no encryption");
+    EXPECT_TRUE(reused_result.hkdf_extract_expand_performed == 0u, "reused no hkdf");
+    EXPECT_TRUE(reused_result.aes_gcm_encryption_performed == 0u, "reused no aes");
+    EXPECT_TRUE(reused_result.caller_salt_nonce_reuse_tracking_present == 1u, "reused guard present");
+    EXPECT_TRUE(reused_result.caller_salt_nonce_reuse_guard_entries_used == 1u, "reused guard entries");
+    EXPECT_TRUE(reused_result.caller_salt_nonce_reuse_tracked == 0u, "reused not tracked");
+    EXPECT_TRUE(reused_result.caller_salt_nonce_reuse_rejected == 1u, "reused rejected");
+    EXPECT_TRUE(ciphertext_len == 0u, "reused ciphertext len reset");
+    EXPECT_TRUE(all_bytes_equal(ciphertext, sizeof(ciphertext), 0u), "reused ciphertext cleared");
+    EXPECT_TRUE(all_bytes_equal(tag, sizeof(tag), 0u), "reused tag cleared");
+    EXPECT_TRUE(reused_result.failed_ciphertext_output_cleared == 1u, "reused ciphertext clear flag");
+    EXPECT_TRUE(reused_result.failed_tag_output_cleared == 1u, "reused tag clear flag");
+    EXPECT_TRUE(guard.entries_used == 1u, "reused guard did not grow");
+
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_reuse_guard_init(&committed_guard) == LATTICRA_STATUS_OK,
+        "committed guard init");
+    memset(ciphertext, 0, sizeof(ciphertext));
+    memset(tag, 0, sizeof(tag));
+    memset(commitment, 0, sizeof(commitment));
+    ciphertext_len = 0u;
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_encrypt_committed_guarded(
+            &committed_guard,
+            &alternate_context,
+            plaintext,
+            sizeof(plaintext) - 1u,
+            ciphertext,
+            sizeof(ciphertext),
+            &ciphertext_len,
+            tag,
+            sizeof(tag),
+            commitment,
+            sizeof(commitment),
+            &committed_result) == LATTICRA_STATUS_OK,
+        "guarded committed status");
+    EXPECT_TRUE(committed_result.error == LATTICRA_SEAL_HYBRID_ENVELOPE_OK, "guarded committed ok");
+    EXPECT_TRUE(committed_result.detached_key_commitment_present == 1u, "guarded committed commitment");
+    EXPECT_TRUE(committed_result.caller_salt_nonce_reuse_tracking_present == 1u, "committed guard present");
+    EXPECT_TRUE(committed_result.caller_salt_nonce_reuse_tracked == 1u, "committed guard tracked");
+    EXPECT_TRUE(committed_guard.entries_used == 1u, "committed guard entry");
+
+    memset(ciphertext, 0x5au, sizeof(ciphertext));
+    memset(tag, 0x6bu, sizeof(tag));
+    memset(commitment, 0x7cu, sizeof(commitment));
+    ciphertext_len = 99u;
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_encrypt_committed_guarded(
+            &committed_guard,
+            &alternate_context,
+            plaintext,
+            sizeof(plaintext) - 1u,
+            ciphertext,
+            sizeof(ciphertext),
+            &ciphertext_len,
+            tag,
+            sizeof(tag),
+            commitment,
+            sizeof(commitment),
+            &committed_reused_result) == LATTICRA_STATUS_OK,
+        "guarded committed reused status");
+    EXPECT_TRUE(
+        committed_reused_result.error == LATTICRA_SEAL_HYBRID_ENVELOPE_REUSED_SALT_NONCE,
+        "guarded committed reused error");
+    EXPECT_TRUE(committed_reused_result.encryption_performed == 0u, "committed reused no encrypt");
+    EXPECT_TRUE(committed_reused_result.detached_key_commitment_present == 0u, "committed reused no commitment");
+    EXPECT_TRUE(committed_reused_result.caller_salt_nonce_reuse_rejected == 1u, "committed reused rejected");
+    EXPECT_TRUE(ciphertext_len == 0u, "committed reused ciphertext len reset");
+    EXPECT_TRUE(all_bytes_equal(ciphertext, sizeof(ciphertext), 0u), "committed reused ciphertext cleared");
+    EXPECT_TRUE(all_bytes_equal(tag, sizeof(tag), 0u), "committed reused tag cleared");
+    EXPECT_TRUE(all_bytes_equal(commitment, sizeof(commitment), 0u), "committed reused commitment cleared");
+    EXPECT_TRUE(committed_reused_result.failed_commitment_output_cleared == 1u, "commitment clear flag");
     return 0;
 }
 
@@ -1389,7 +1669,7 @@ static int zero_length_plaintext_round_trip(void) {
         "zero decrypt status");
     EXPECT_TRUE(decrypt_result.error == LATTICRA_SEAL_HYBRID_ENVELOPE_OK, "zero decrypt ok");
     EXPECT_TRUE(recovered_len == 0u, "zero recovered len");
-    EXPECT_TRUE(recovered[0] == 0x7bu, "zero decrypt leaves output byte untouched");
+    EXPECT_TRUE(recovered[0] == 0u, "zero decrypt clears successful plaintext tail");
     EXPECT_TRUE(decrypt_result.plaintext_size_bytes == 0u, "zero decrypt plaintext size");
     EXPECT_TRUE(decrypt_result.unauthenticated_plaintext_staged == 1u, "zero decrypt staged");
     EXPECT_TRUE(decrypt_result.staged_plaintext_cleared == 1u, "zero decrypt empty staging cleared");
@@ -1397,6 +1677,9 @@ static int zero_length_plaintext_round_trip(void) {
         decrypt_result.plaintext_released_after_authentication == 1u,
         "zero decrypt releases empty plaintext after auth");
     EXPECT_TRUE(decrypt_result.authentication_tag_verified == 1u, "zero decrypt tag verified");
+    EXPECT_TRUE(
+        decrypt_result.successful_plaintext_tail_cleared == 1u,
+        "zero decrypt successful plaintext tail flag");
     EXPECT_TRUE(decrypt_result.key_material_zeroized == 1u, "zero decrypt key zeroized");
     return 0;
 }
@@ -1458,6 +1741,18 @@ static int seal_open_generates_salt_and_nonce(void) {
     EXPECT_TRUE(expect_generated_random_evidence(&seal_result) == 0, "seal random evidence");
     EXPECT_TRUE(seal_result.salt_nonzero == 1u, "seal salt nonzero");
     EXPECT_TRUE(seal_result.nonce_nonzero == 1u, "seal nonce nonzero");
+    EXPECT_TRUE(seal_result.aead_nonce_uniqueness_required == 1u, "seal nonce uniqueness");
+    EXPECT_TRUE(seal_result.salt_bound_to_hkdf == 1u, "seal salt bound");
+    EXPECT_TRUE(seal_result.nonce_bound_to_aead == 1u, "seal nonce bound");
+    EXPECT_TRUE(
+        seal_result.generated_key_nonce_pair_csprng_backed == 1u,
+        "seal generated pair backed");
+    EXPECT_TRUE(
+        seal_result.caller_salt_nonce_reuse_guard_required == 0u,
+        "seal no caller reuse guard");
+    EXPECT_TRUE(
+        seal_result.caller_salt_nonce_reuse_tracking_present == 0u,
+        "seal no caller tracker");
     EXPECT_TRUE(seal_result.kdf_domain_separated == 1u, "seal kdf separated");
     EXPECT_TRUE(seal_result.detached_kdf_domain == 1u, "seal detached kdf domain");
     EXPECT_TRUE(
@@ -1496,6 +1791,17 @@ static int seal_open_generates_salt_and_nonce(void) {
     EXPECT_TRUE(expect_generated_random_report(rendered) == 0, "seal random report");
     EXPECT_TRUE(strstr(rendered, "salt_nonzero=1") != 0, "report seal salt nonzero");
     EXPECT_TRUE(strstr(rendered, "nonce_nonzero=1") != 0, "report seal nonce nonzero");
+    EXPECT_TRUE(
+        strstr(rendered, "aead_nonce_uniqueness_required=1") != 0,
+        "report seal nonce uniqueness");
+    EXPECT_TRUE(strstr(rendered, "salt_bound_to_hkdf=1") != 0, "report seal salt bound");
+    EXPECT_TRUE(strstr(rendered, "nonce_bound_to_aead=1") != 0, "report seal nonce bound");
+    EXPECT_TRUE(
+        strstr(rendered, "caller_salt_nonce_reuse_guard_required=0") != 0,
+        "report seal no caller guard");
+    EXPECT_TRUE(
+        strstr(rendered, "caller_salt_nonce_reuse_tracking_present=0") != 0,
+        "report seal no caller tracker");
     EXPECT_TRUE(strstr(rendered, "kdf_domain_separated=1") != 0, "report seal kdf separated");
     EXPECT_TRUE(strstr(rendered, "detached_kdf_domain=1") != 0, "report seal detached kdf");
     EXPECT_TRUE(strstr(rendered, "detached_suite_id=1") != 0, "report seal detached suite id");
@@ -1544,6 +1850,11 @@ static int seal_open_generates_salt_and_nonce(void) {
     EXPECT_TRUE(open_result.hkdf_intermediate_material_zeroized == 1u, "open hkdf zeroized");
     EXPECT_TRUE(open_result.salt_generated == 0u, "open does not generate salt");
     EXPECT_TRUE(open_result.nonce_generated == 0u, "open does not generate nonce");
+    EXPECT_TRUE(open_result.salt_bound_to_hkdf == 1u, "open salt bound");
+    EXPECT_TRUE(open_result.nonce_bound_to_aead == 1u, "open nonce bound");
+    EXPECT_TRUE(
+        open_result.caller_salt_nonce_reuse_guard_required == 1u,
+        "open caller reuse guard surfaced");
     EXPECT_TRUE(open_result.detached_salt_caller_supplied == 1u, "open detached salt supplied");
     EXPECT_TRUE(open_result.detached_nonce_caller_supplied == 1u, "open detached nonce supplied");
     EXPECT_TRUE(open_result.detached_suite_kdf_bound == 1u, "open detached suite kdf bound");
@@ -1572,6 +1883,10 @@ static int seal_open_generates_salt_and_nonce(void) {
             &second_seal_result) == LATTICRA_STATUS_OK,
         "second seal status");
     EXPECT_TRUE(second_seal_result.error == LATTICRA_SEAL_HYBRID_ENVELOPE_OK, "second seal ok");
+    EXPECT_TRUE(expect_generated_random_evidence(&second_seal_result) == 0, "second seal random evidence");
+    EXPECT_TRUE(
+        second_seal_result.caller_salt_nonce_reuse_guard_required == 0u,
+        "second seal no caller reuse guard");
     EXPECT_TRUE(first_ciphertext_len == second_ciphertext_len, "second ciphertext len");
     EXPECT_TRUE(
         memcmp(first_salt, second_salt, sizeof(first_salt)) != 0 ||
@@ -1633,6 +1948,11 @@ static int committed_seal_open_generates_salt_nonce_and_commitment(void) {
     EXPECT_TRUE(seal_result.salt_generated == 1u, "committed seal salt generated");
     EXPECT_TRUE(seal_result.nonce_generated == 1u, "committed seal nonce generated");
     EXPECT_TRUE(expect_generated_random_evidence(&seal_result) == 0, "committed seal random evidence");
+    EXPECT_TRUE(seal_result.salt_bound_to_hkdf == 1u, "committed seal salt bound");
+    EXPECT_TRUE(seal_result.nonce_bound_to_aead == 1u, "committed seal nonce bound");
+    EXPECT_TRUE(
+        seal_result.caller_salt_nonce_reuse_guard_required == 0u,
+        "committed seal no caller guard");
     EXPECT_TRUE(seal_result.detached_salt_caller_supplied == 0u, "committed seal salt generated flag");
     EXPECT_TRUE(seal_result.detached_nonce_caller_supplied == 0u, "committed seal nonce generated flag");
     EXPECT_TRUE(
@@ -1645,11 +1965,13 @@ static int committed_seal_open_generates_salt_nonce_and_commitment(void) {
     EXPECT_TRUE(
         seal_result.detached_commitment_key_material_zeroized == 1u,
         "committed seal commitment key zeroized");
+    EXPECT_TRUE(expect_commitment_mac_evidence(&seal_result) == 0, "committed seal mac evidence");
     EXPECT_TRUE(all_bytes_equal(commitment, sizeof(commitment), 0u) == 0, "committed seal commitment nonzero");
     EXPECT_TRUE(
         latticra_seal_hybrid_envelope_report(&seal_result, rendered, sizeof(rendered)) == LATTICRA_STATUS_OK,
         "committed seal report");
     EXPECT_TRUE(expect_generated_random_report(rendered) == 0, "committed seal random report");
+    EXPECT_TRUE(expect_commitment_mac_report(rendered) == 0, "committed seal mac report");
     EXPECT_TRUE(
         strstr(rendered, "detached_commitment_size_bytes=32") != 0,
         "committed seal commitment size report");
@@ -1662,6 +1984,9 @@ static int committed_seal_open_generates_salt_nonce_and_commitment(void) {
     EXPECT_TRUE(
         strstr(rendered, "detached_commitment_input_streamed=1") != 0,
         "committed seal commitment streamed report");
+    EXPECT_TRUE(
+        strstr(rendered, "detached_commitment_constant_time_compare=0") != 0,
+        "committed seal no commitment compare report");
     EXPECT_TRUE(
         strstr(rendered, "detached_commitment_key_material_zeroized=1") != 0,
         "committed seal commitment key zeroized report");
@@ -1700,6 +2025,10 @@ static int committed_seal_open_generates_salt_nonce_and_commitment(void) {
     EXPECT_TRUE(
         open_result.detached_commitment_checked_before_decrypt == 1u,
         "committed open commitment checked");
+    EXPECT_TRUE(
+        open_result.detached_commitment_constant_time_compare == 1u,
+        "committed open constant-time commitment compare");
+    EXPECT_TRUE(expect_commitment_mac_evidence(&open_result) == 0, "committed open mac evidence");
     EXPECT_TRUE(open_result.authentication_tag_verified == 1u, "committed open tag verified");
     EXPECT_TRUE(open_result.plaintext_released_after_authentication == 1u, "committed open release");
     return 0;
@@ -1795,8 +2124,12 @@ static int attached_record_seal_open_round_trip(void) {
         seal_result.record_commitment_input_streamed == 1u,
         "record commitment streamed");
     EXPECT_TRUE(
+        seal_result.record_commitment_constant_time_compare == 0u,
+        "record seal no commitment compare");
+    EXPECT_TRUE(
         seal_result.record_commitment_key_material_zeroized == 1u,
         "record commitment key zeroized");
+    EXPECT_TRUE(expect_commitment_mac_evidence(&seal_result) == 0, "record seal mac evidence");
     EXPECT_TRUE(seal_result.kdf_domain_separated == 1u, "record kdf separated");
     EXPECT_TRUE(
         seal_result.kdf_domain_id == LATTICRA_SEAL_HYBRID_KDF_DOMAIN_ATTACHED_RECORD,
@@ -1808,6 +2141,12 @@ static int attached_record_seal_open_round_trip(void) {
     EXPECT_TRUE(expect_generated_random_evidence(&seal_result) == 0, "record random evidence");
     EXPECT_TRUE(seal_result.salt_nonzero == 1u, "record salt nonzero");
     EXPECT_TRUE(seal_result.nonce_nonzero == 1u, "record nonce nonzero");
+    EXPECT_TRUE(seal_result.aead_nonce_uniqueness_required == 1u, "record nonce uniqueness");
+    EXPECT_TRUE(seal_result.salt_bound_to_hkdf == 1u, "record salt bound");
+    EXPECT_TRUE(seal_result.nonce_bound_to_aead == 1u, "record nonce bound");
+    EXPECT_TRUE(
+        seal_result.caller_salt_nonce_reuse_guard_required == 0u,
+        "record no caller guard");
     EXPECT_TRUE(seal_result.detached_salt_caller_supplied == 0u, "record salt not detached");
     EXPECT_TRUE(seal_result.detached_nonce_caller_supplied == 0u, "record nonce not detached");
     EXPECT_TRUE(seal_result.attached_record_salt_generated == 1u, "record attached salt generated");
@@ -1851,6 +2190,17 @@ static int attached_record_seal_open_round_trip(void) {
     EXPECT_TRUE(strstr(rendered, "record_kdf_domain_authenticated=1") != 0, "record kdf auth report");
     EXPECT_TRUE(strstr(rendered, "record_suite_kdf_bound=1") != 0, "record suite kdf report");
     EXPECT_TRUE(strstr(rendered, "record_salt_nonce_nonzero=1") != 0, "record salt nonce report");
+    EXPECT_TRUE(
+        strstr(rendered, "aead_nonce_uniqueness_required=1") != 0,
+        "record nonce uniqueness report");
+    EXPECT_TRUE(strstr(rendered, "salt_bound_to_hkdf=1") != 0, "record salt bound report");
+    EXPECT_TRUE(strstr(rendered, "nonce_bound_to_aead=1") != 0, "record nonce bound report");
+    EXPECT_TRUE(
+        strstr(rendered, "generated_key_nonce_pair_csprng_backed=1") != 0,
+        "record generated pair report");
+    EXPECT_TRUE(
+        strstr(rendered, "caller_salt_nonce_reuse_guard_required=0") != 0,
+        "record no caller guard report");
     EXPECT_TRUE(strstr(rendered, "record_header_shape_validated=1") != 0, "record shape report");
     EXPECT_TRUE(strstr(rendered, "malformed_record_rejected=0") != 0, "record no malformed report");
     EXPECT_TRUE(strstr(rendered, "caller_aad_size_bytes=32") != 0, "record caller aad report");
@@ -1881,6 +2231,9 @@ static int attached_record_seal_open_round_trip(void) {
         strstr(rendered, "record_commitment_input_streamed=1") != 0,
         "record commitment streamed report");
     EXPECT_TRUE(
+        strstr(rendered, "record_commitment_constant_time_compare=0") != 0,
+        "record seal no commitment compare report");
+    EXPECT_TRUE(
         strstr(rendered, "record_commitment_key_material_zeroized=1") != 0,
         "record commitment key zeroized report");
     EXPECT_TRUE(strstr(rendered, "attached_record_sealed=1") != 0, "record sealed report");
@@ -1892,6 +2245,7 @@ static int attached_record_seal_open_round_trip(void) {
     EXPECT_TRUE(strstr(rendered, "attached_record_salt_generated=1") != 0, "record attached salt report");
     EXPECT_TRUE(strstr(rendered, "attached_record_nonce_generated=1") != 0, "record attached nonce report");
     EXPECT_TRUE(expect_generated_random_report(rendered) == 0, "record random report");
+    EXPECT_TRUE(expect_commitment_mac_report(rendered) == 0, "record mac report");
     EXPECT_TRUE(strstr(rendered, "failed_plaintext_output_cleared=0") != 0, "record no plaintext clear report");
     EXPECT_TRUE(strstr(rendered, "failed_record_output_cleared=0") != 0, "record no record clear report");
     EXPECT_TRUE(strstr(rendered, "unsafe_buffer_overlap_rejected=0") != 0, "record no overlap report");
@@ -1945,8 +2299,12 @@ static int attached_record_seal_open_round_trip(void) {
         open_result.record_commitment_input_streamed == 1u,
         "record open commitment streamed");
     EXPECT_TRUE(
+        open_result.record_commitment_constant_time_compare == 1u,
+        "record open constant-time commitment compare");
+    EXPECT_TRUE(
         open_result.record_commitment_key_material_zeroized == 1u,
         "record open commitment key zeroized");
+    EXPECT_TRUE(expect_commitment_mac_evidence(&open_result) == 0, "record open mac evidence");
     EXPECT_TRUE(open_result.record_suite_authenticated == 1u, "record open suite authenticated");
     EXPECT_TRUE(open_result.record_kdf_domain_authenticated == 1u, "record open kdf domain authenticated");
     EXPECT_TRUE(open_result.record_suite_kdf_bound == 1u, "record open suite bound to kdf");
@@ -1965,10 +2323,16 @@ static int attached_record_seal_open_round_trip(void) {
     EXPECT_TRUE(open_result.hybrid_secret_order_bound == 1u, "record open order bound");
     EXPECT_TRUE(open_result.salt_nonzero == 1u, "record open salt nonzero");
     EXPECT_TRUE(open_result.nonce_nonzero == 1u, "record open nonce nonzero");
+    EXPECT_TRUE(open_result.aead_nonce_uniqueness_required == 1u, "record open nonce uniqueness");
+    EXPECT_TRUE(open_result.salt_bound_to_hkdf == 1u, "record open salt bound");
+    EXPECT_TRUE(open_result.nonce_bound_to_aead == 1u, "record open nonce bound");
     EXPECT_TRUE(open_result.kdf_domain_separated == 1u, "record open kdf separated");
     EXPECT_TRUE(open_result.attached_record_kdf_domain == 1u, "record open attached kdf");
     EXPECT_TRUE(open_result.detached_salt_caller_supplied == 0u, "record open salt not detached");
     EXPECT_TRUE(open_result.detached_nonce_caller_supplied == 0u, "record open nonce not detached");
+    EXPECT_TRUE(
+        open_result.caller_salt_nonce_reuse_guard_required == 0u,
+        "record open no caller guard");
     EXPECT_TRUE(open_result.attached_record_salt_generated == 1u, "record open attached salt generated");
     EXPECT_TRUE(open_result.attached_record_nonce_generated == 1u, "record open attached nonce generated");
     EXPECT_TRUE(open_result.hkdf_provider_api_used == 1u, "record open hkdf provider");
@@ -2163,6 +2527,9 @@ static int attached_record_seal_open_round_trip(void) {
         open_result.record_commitment_input_streamed == 1u,
         "tampered protected header commitment streamed");
     EXPECT_TRUE(
+        open_result.record_commitment_constant_time_compare == 1u,
+        "tampered protected header constant-time commitment compare");
+    EXPECT_TRUE(
         open_result.unauthenticated_plaintext_staged == 0u,
         "tampered protected header not staged before commitment auth");
     EXPECT_TRUE(
@@ -2205,6 +2572,9 @@ static int attached_record_seal_open_round_trip(void) {
     EXPECT_TRUE(
         open_result.record_commitment_input_streamed == 1u,
         "tampered record commitment streamed");
+    EXPECT_TRUE(
+        open_result.record_commitment_constant_time_compare == 1u,
+        "tampered record constant-time commitment compare");
     EXPECT_TRUE(
         open_result.unauthenticated_plaintext_staged == 0u,
         "tampered record not staged before commitment auth");
@@ -2361,6 +2731,9 @@ static int hybrid_secret_components_are_bound(void) {
         open_result.record_commitment_input_streamed == 1u,
         "mutated classical commitment streamed");
     EXPECT_TRUE(
+        open_result.record_commitment_constant_time_compare == 1u,
+        "mutated classical constant-time commitment compare");
+    EXPECT_TRUE(
         open_result.unauthenticated_plaintext_staged == 0u,
         "mutated classical not staged before commitment auth");
     EXPECT_TRUE(open_result.staged_plaintext_cleared == 0u, "mutated classical no staged buffer");
@@ -2414,6 +2787,9 @@ static int hybrid_secret_components_are_bound(void) {
         open_result.record_commitment_input_streamed == 1u,
         "mutated pqc commitment streamed");
     EXPECT_TRUE(
+        open_result.record_commitment_constant_time_compare == 1u,
+        "mutated pqc constant-time commitment compare");
+    EXPECT_TRUE(
         open_result.unauthenticated_plaintext_staged == 0u,
         "mutated pqc not staged before commitment auth");
     EXPECT_TRUE(open_result.staged_plaintext_cleared == 0u, "mutated pqc no staged buffer");
@@ -2465,6 +2841,9 @@ static int hybrid_secret_components_are_bound(void) {
     EXPECT_TRUE(
         open_result.record_commitment_input_streamed == 1u,
         "swapped hybrid commitment streamed");
+    EXPECT_TRUE(
+        open_result.record_commitment_constant_time_compare == 1u,
+        "swapped hybrid constant-time commitment compare");
     EXPECT_TRUE(
         open_result.unauthenticated_plaintext_staged == 0u,
         "swapped hybrid not staged before commitment auth");
@@ -2780,6 +3159,9 @@ static int expect_committed_detached_tamper_rejected(
         result.detached_commitment_input_streamed == 1u,
         "committed detached tamper streamed");
     EXPECT_TRUE(
+        result.detached_commitment_constant_time_compare == 1u,
+        "committed detached tamper constant-time compare");
+    EXPECT_TRUE(
         result.detached_commitment_tampering_rejected == 1u,
         "committed detached tamper flag");
     EXPECT_TRUE(
@@ -2968,6 +3350,9 @@ static int record_ciphertext_and_nonce_tampering_fails_closed(void) {
         result.record_commitment_input_streamed == 1u,
         "record ciphertext tamper commitment streamed");
     EXPECT_TRUE(
+        result.record_commitment_constant_time_compare == 1u,
+        "record ciphertext tamper constant-time commitment compare");
+    EXPECT_TRUE(
         result.unauthenticated_plaintext_staged == 0u,
         "record ciphertext tamper not staged before commitment auth");
     EXPECT_TRUE(result.staged_plaintext_cleared == 0u, "record ciphertext tamper no staged buffer");
@@ -3018,6 +3403,9 @@ static int record_ciphertext_and_nonce_tampering_fails_closed(void) {
     EXPECT_TRUE(
         result.record_commitment_input_streamed == 1u,
         "record nonce tamper commitment streamed");
+    EXPECT_TRUE(
+        result.record_commitment_constant_time_compare == 1u,
+        "record nonce tamper constant-time commitment compare");
     EXPECT_TRUE(result.unauthenticated_plaintext_staged == 0u, "record nonce tamper not staged");
     EXPECT_TRUE(result.staged_plaintext_cleared == 0u, "record nonce tamper no staged buffer");
     EXPECT_TRUE(
@@ -3064,6 +3452,9 @@ static int record_ciphertext_and_nonce_tampering_fails_closed(void) {
     EXPECT_TRUE(
         result.record_commitment_input_streamed == 1u,
         "record commitment tamper streamed");
+    EXPECT_TRUE(
+        result.record_commitment_constant_time_compare == 1u,
+        "record commitment tamper constant-time compare");
     EXPECT_TRUE(result.authentication_tag_verified == 0u, "record commitment tamper no tag");
     EXPECT_TRUE(result.unauthenticated_plaintext_staged == 0u, "record commitment tamper not staged");
     EXPECT_TRUE(result.staged_plaintext_cleared == 0u, "record commitment tamper no staged buffer");
@@ -3109,6 +3500,9 @@ static int record_ciphertext_and_nonce_tampering_fails_closed(void) {
     EXPECT_TRUE(
         result.record_commitment_input_streamed == 1u,
         "record caller aad tamper commitment streamed");
+    EXPECT_TRUE(
+        result.record_commitment_constant_time_compare == 1u,
+        "record caller aad tamper constant-time commitment compare");
     EXPECT_TRUE(result.record_aad_framed == 0u, "record caller aad tamper no aad frame");
     EXPECT_TRUE(result.authentication_tag_verified == 0u, "record caller aad tamper no tag");
     EXPECT_TRUE(result.unauthenticated_plaintext_staged == 0u, "record caller aad tamper not staged");
@@ -4094,6 +4488,134 @@ static int invalid_inputs_fail_closed(void) {
     return 0;
 }
 
+static int successful_output_tails_are_cleared(void) {
+    latticra_seal_hybrid_envelope_context_t context = fixture_context();
+    unsigned char ciphertext[sizeof(plaintext) + 17u];
+    unsigned char tag[LATTICRA_SEAL_HYBRID_TAG_BYTES];
+    unsigned char recovered[sizeof(plaintext) + 13u];
+    unsigned char record[
+        LATTICRA_SEAL_HYBRID_RECORD_HEADER_BYTES +
+        sizeof(plaintext) +
+        LATTICRA_SEAL_HYBRID_RECORD_COMMITMENT_BYTES +
+        23u
+    ];
+    size_t ciphertext_len = 0u;
+    size_t recovered_len = 0u;
+    size_t record_len = 0u;
+    latticra_seal_hybrid_envelope_result_t result;
+    char rendered[LATTICRA_SEAL_HYBRID_ENVELOPE_REPORT_MAX];
+
+    memset(ciphertext, 0x9du, sizeof(ciphertext));
+    memset(tag, 0x4cu, sizeof(tag));
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_encrypt(
+            &context,
+            plaintext,
+            sizeof(plaintext) - 1u,
+            ciphertext,
+            sizeof(ciphertext),
+            &ciphertext_len,
+            tag,
+            sizeof(tag),
+            &result) == LATTICRA_STATUS_OK,
+        "successful ciphertext tail encrypt status");
+    EXPECT_TRUE(result.error == LATTICRA_SEAL_HYBRID_ENVELOPE_OK, "successful ciphertext tail ok");
+    EXPECT_TRUE(ciphertext_len == sizeof(plaintext) - 1u, "successful ciphertext tail len");
+    EXPECT_TRUE(
+        all_bytes_equal(ciphertext + ciphertext_len, sizeof(ciphertext) - ciphertext_len, 0u),
+        "successful ciphertext tail cleared");
+    EXPECT_TRUE(
+        result.successful_ciphertext_tail_cleared == 1u,
+        "successful ciphertext tail flag");
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_report(&result, rendered, sizeof(rendered)) ==
+            LATTICRA_STATUS_OK,
+        "successful ciphertext tail report");
+    EXPECT_TRUE(
+        strstr(rendered, "successful_ciphertext_tail_cleared=1") != 0,
+        "successful ciphertext tail report field");
+
+    memset(recovered, 0x7fu, sizeof(recovered));
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_decrypt(
+            &context,
+            ciphertext,
+            ciphertext_len,
+            tag,
+            sizeof(tag),
+            recovered,
+            sizeof(recovered),
+            &recovered_len,
+            &result) == LATTICRA_STATUS_OK,
+        "successful plaintext tail decrypt status");
+    EXPECT_TRUE(result.error == LATTICRA_SEAL_HYBRID_ENVELOPE_OK, "successful plaintext tail ok");
+    EXPECT_TRUE(recovered_len == sizeof(plaintext) - 1u, "successful plaintext tail len");
+    EXPECT_TRUE(memcmp(recovered, plaintext, recovered_len) == 0, "successful plaintext recovered");
+    EXPECT_TRUE(
+        all_bytes_equal(recovered + recovered_len, sizeof(recovered) - recovered_len, 0u),
+        "successful plaintext tail cleared");
+    EXPECT_TRUE(
+        result.successful_plaintext_tail_cleared == 1u,
+        "successful plaintext tail flag");
+
+    memset(record, 0x8cu, sizeof(record));
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_seal_record(
+            classical_shared_secret,
+            sizeof(classical_shared_secret),
+            pqc_shared_secret,
+            sizeof(pqc_shared_secret),
+            aad,
+            sizeof(aad) - 1u,
+            plaintext,
+            sizeof(plaintext) - 1u,
+            record,
+            sizeof(record),
+            &record_len,
+            &result) == LATTICRA_STATUS_OK,
+        "successful record tail seal status");
+    EXPECT_TRUE(result.error == LATTICRA_SEAL_HYBRID_ENVELOPE_OK, "successful record tail ok");
+    EXPECT_TRUE(
+        record_len ==
+            LATTICRA_SEAL_HYBRID_RECORD_HEADER_BYTES +
+                sizeof(plaintext) - 1u +
+                LATTICRA_SEAL_HYBRID_RECORD_COMMITMENT_BYTES,
+        "successful record tail len");
+    EXPECT_TRUE(
+        all_bytes_equal(record + record_len, sizeof(record) - record_len, 0u),
+        "successful record tail cleared");
+    EXPECT_TRUE(result.successful_record_tail_cleared == 1u, "successful record tail flag");
+
+    memset(recovered, 0x7fu, sizeof(recovered));
+    recovered_len = 0u;
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_open_record(
+            classical_shared_secret,
+            sizeof(classical_shared_secret),
+            pqc_shared_secret,
+            sizeof(pqc_shared_secret),
+            aad,
+            sizeof(aad) - 1u,
+            record,
+            record_len,
+            recovered,
+            sizeof(recovered),
+            &recovered_len,
+            &result) == LATTICRA_STATUS_OK,
+        "successful record open tail status");
+    EXPECT_TRUE(result.error == LATTICRA_SEAL_HYBRID_ENVELOPE_OK, "successful record open tail ok");
+    EXPECT_TRUE(recovered_len == sizeof(plaintext) - 1u, "successful record open tail len");
+    EXPECT_TRUE(memcmp(recovered, plaintext, recovered_len) == 0, "successful record open recovered");
+    EXPECT_TRUE(
+        all_bytes_equal(recovered + recovered_len, sizeof(recovered) - recovered_len, 0u),
+        "successful record open plaintext tail cleared");
+    EXPECT_TRUE(
+        result.successful_plaintext_tail_cleared == 1u,
+        "successful record open plaintext tail flag");
+
+    return 0;
+}
+
 int main(void) {
     if (random_bytes_can_fill_nonce_material() != 0) {
         return 1;
@@ -4126,6 +4648,9 @@ int main(void) {
         return 1;
     }
     if (encrypt_decrypt_round_trip() != 0) {
+        return 1;
+    }
+    if (guarded_detached_reuse_guard_rejects_reused_salt_nonce() != 0) {
         return 1;
     }
     if (zero_length_plaintext_round_trip() != 0) {
@@ -4171,6 +4696,9 @@ int main(void) {
         return 1;
     }
     if (unsafe_buffer_overlap_is_rejected() != 0) {
+        return 1;
+    }
+    if (successful_output_tails_are_cleared() != 0) {
         return 1;
     }
     if (invalid_inputs_fail_closed() != 0) {

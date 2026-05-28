@@ -56,12 +56,13 @@ test_script='scripts/test-production-installer-sbom-evidence-intake-validator-co
 sbom_status='docs/PRODUCTION_INSTALLER_SBOM_STATUS_CONTRACT.md'
 readiness='docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md'
 promotion_gate='docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_PROMOTION_GATE_CONTRACT.md'
+template_contract='docs/PRODUCTION_INSTALLER_SBOM_EVIDENCE_TEMPLATE_CONTRACT.md'
 ledger='docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md'
 index='docs/status/README.md'
 workflow='.github/workflows/production-installer-sbom-evidence-intake-validator.yml'
 installer_page='docs/installer.html'
 
-for file in "$doc" "$status" "$script" "$test_script" "$sbom_status" "$readiness" "$promotion_gate" "$ledger" "$index" "$workflow" "$installer_page" Makefile README.md
+for file in "$doc" "$status" "$script" "$test_script" "$sbom_status" "$readiness" "$promotion_gate" "$template_contract" "$ledger" "$index" "$workflow" "$installer_page" Makefile README.md
 do
   require_file "$file"
 done
@@ -72,6 +73,8 @@ sh -n "$test_script"
 require_contains 'Status: no-effect SBOM evidence intake validator contract' "$doc"
 require_contains 'sbom_evidence_intake_validator_present=1' "$doc"
 require_contains 'sbom_evidence_intake_validation_mode=no-effect-validation' "$doc"
+require_contains 'sbom_evidence_template_present=1' "$doc"
+require_contains 'sbom_evidence_template_complete=0' "$doc"
 require_contains 'sbom_evidence_candidate_valid=0' "$doc"
 require_contains 'sbom_artifact_file_present=0' "$doc"
 require_contains 'sbom_artifact_sha256_recorded=0' "$doc"
@@ -107,6 +110,8 @@ require_absent 'wget ' "$script"
 for current_field in \
   'sbom_evidence_intake_validator_present=1' \
   'sbom_evidence_intake_validation_mode=no-effect-validation' \
+  'sbom_evidence_template_present=1' \
+  'sbom_evidence_template_complete=0' \
   'sbom_evidence_candidate_valid=0' \
   'sbom_artifact_file_present=0' \
   'sbom_artifact_sha256_recorded=0' \
@@ -158,8 +163,11 @@ require_contains 'PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md'
 require_contains 'PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md' "$index"
 require_contains 'sbom_evidence_intake_validator_present=1' "$readiness"
 require_contains 'sbom_evidence_intake_validation_mode=no-effect-validation' "$readiness"
+require_contains 'sbom_evidence_template_present=1' "$readiness"
+require_contains 'sbom_evidence_template_complete=0' "$readiness"
 require_contains 'sbom_evidence_candidate_valid=0' "$readiness"
 require_contains 'sbom_evidence_accepted_by_intake_validator=0' "$readiness"
+require_contains 'sbom_evidence_template_present=1' "$template_contract"
 require_contains 'sbom_evidence_intake_validator_present=1' "$ledger"
 require_contains 'sbom_evidence_intake_validator_present=1' README.md
 require_contains 'docs/PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md' README.md

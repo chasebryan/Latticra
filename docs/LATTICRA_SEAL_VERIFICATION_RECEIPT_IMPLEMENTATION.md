@@ -72,9 +72,15 @@ The implementation fails closed:
 null verification receipt output -> LATTICRA_STATUS_NULL_ARGUMENT
 null verification policy metadata input -> invalid-input
 invalid verification policy metadata -> invalid-policy
+unterminated verification policy metadata strings -> invalid-policy
+invalid verification policy boolean flags -> invalid-policy
+verification policy authority/effect flags set -> invalid-policy
 missing artifact digest -> missing-digest
 missing signer identity -> missing-signer
 missing public-key identity -> missing-public-key-identity
+tampered verification receipt strings fail closed before report
+tampered verification receipt authority/effect flags fail closed before report
+tampered verification receipt boolean/error state fails closed before report
 small report buffer -> LATTICRA_STATUS_BUFFER_TOO_SMALL
 ```
 

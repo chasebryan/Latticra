@@ -10,9 +10,11 @@ Decrypt paths stage OpenSSL's pre-authentication AES-GCM plaintext into internal
 
 The attached-record API, `latticra_seal_hybrid_envelope_seal_record` and `latticra_seal_hybrid_envelope_open_record`, stores the versioned envelope header, generated salt, generated nonce, authentication tag, ciphertext, and a 32-byte record commitment in one binary record. Record AAD is framed as `LSEHAAD1 || protected-header || caller-aad-length || caller-aad`, so record metadata and caller AAD are authenticated with the ciphertext and callers cannot accidentally drop or swap detached fields.
 
-Attached records append an HMAC-SHA256 commitment over `LSEHCOM1 || record-header || caller-aad-length || caller-aad || ciphertext` under a separate HKDF-SHA256 output label. The commitment input is streamed into HMAC field-by-field rather than assembled as one attacker-sized buffer. Record open verifies this commitment before building record AAD or attempting AES-GCM decryption, so header, tag, ciphertext, caller AAD, nonce, salt, wrong-key, or trailer tampering cannot stage unauthenticated plaintext.
+Attached records append an HMAC-SHA256 commitment over `LSEHCOM1 || record-header || caller-aad-length || caller-aad || ciphertext` under a separate HKDF-SHA256 output label. The commitment input is streamed into the OpenSSL provider HMAC API field-by-field rather than assembled as one attacker-sized buffer. Record open verifies this commitment before building record AAD or attempting AES-GCM decryption, so header, tag, ciphertext, caller AAD, nonce, salt, wrong-key, or trailer tampering cannot stage unauthenticated plaintext.
 
-The committed detached API, `latticra_seal_hybrid_envelope_encrypt_committed`, `latticra_seal_hybrid_envelope_decrypt_committed`, `latticra_seal_hybrid_envelope_seal_committed`, and `latticra_seal_hybrid_envelope_open_committed`, keeps the detached salt, nonce, tag, ciphertext, and caller AAD field model while adding a 32-byte HMAC-SHA256 key commitment. The commitment covers `LSEDCOM1 || suite-id || kdf-domain || salt || nonce || tag || caller-aad-length || caller-aad || ciphertext-length || ciphertext` under a separate HKDF-SHA256 output label and is verified before AES-GCM decrypt or detached AAD framing can stage plaintext.
+The committed detached API, `latticra_seal_hybrid_envelope_encrypt_committed`, `latticra_seal_hybrid_envelope_decrypt_committed`, `latticra_seal_hybrid_envelope_seal_committed`, and `latticra_seal_hybrid_envelope_open_committed`, keeps the detached salt, nonce, tag, ciphertext, and caller AAD field model while adding a 32-byte HMAC-SHA256 key commitment. The commitment covers `LSEDCOM1 || suite-id || kdf-domain || salt || nonce || tag || caller-aad-length || caller-aad || ciphertext-length || ciphertext` under a separate HKDF-SHA256 output label, is computed through provider-backed HMAC-SHA256 with a 256-bit commitment key, and is verified before AES-GCM decrypt or detached AAD framing can stage plaintext.
+
+Detached and attached-record commitment verification uses OpenSSL `CRYPTO_memcmp` for the computed-versus-received HMAC comparison. The result surface records this as `detached_commitment_constant_time_compare` and `record_commitment_constant_time_compare`, and tamper invariants require the constant-time compare path before authentication failure and before any plaintext staging.
 
 The detached API also frames caller AAD before AES-GCM as `LSEDAAD1 || caller-aad-length || caller-aad`. That keeps low-level detached encryption from authenticating a bare byte string with no substrate context.
 
@@ -31,6 +33,8 @@ The record AAD frame uses an explicit label and an eight-byte caller AAD length 
 The envelope rejects all-zero classical or post-quantum shared-secret buffers before HKDF or random salt/nonce generation. This prevents placeholder or uninitialized material from being accepted as a real hybrid secret.
 
 The envelope also rejects all-zero salt or nonce material before HKDF. Generated seal and attached-record paths use OpenSSL 3 `RAND_bytes_ex` with a 256-bit CSPRNG strength request and retry output if an all-zero salt or nonce is ever observed, while detached and record-open paths fail closed on all-zero caller-supplied or record-carried salt/nonce inputs.
+
+AES-GCM nonce uniqueness is recorded as a required invariant. Generated seal and attached-record paths bind the generated 32-byte salt into HKDF and the generated 96-bit nonce into AES-GCM, so each generated seal creates a substrate-randomized AEAD key/nonce pair before encryption. Low-level detached contexts expose caller-supplied salt and nonce material; the guarded detached APIs add an explicit bounded substrate reuse guard that records suite, KDF domain, salt, and nonce values and rejects a repeated pair before HKDF, AES-GCM, commitment generation, ciphertext output, or tag output. The deterministic fixture APIs remain available for tests and compatibility and still report that callers need a reuse guard when they bypass the guarded entry points.
 
 Attached-record open validates record-carried salt and nonce material before building the framed record AAD or deriving the AEAD key. All-zero record salt or nonce inputs are rejected as weak material with no HKDF, no AES-GCM decrypt, and no plaintext release.
 
@@ -62,6 +66,17 @@ generated_salt_csprng_success=1
 generated_nonce_csprng_success=1
 generated_salt_random_bytes=32
 generated_nonce_random_bytes=12
+aead_nonce_uniqueness_required=1
+salt_bound_to_hkdf=1
+nonce_bound_to_aead=1
+generated_key_nonce_pair_csprng_backed=1
+caller_salt_nonce_reuse_guard_required_reported=1
+caller_salt_nonce_reuse_tracking_present=1
+caller_salt_nonce_reuse_guard_capacity=64
+caller_salt_nonce_reuse_guarded_encrypt_rejects_reuse_before_kdf=1
+caller_salt_nonce_reuse_guarded_encrypt_clears_reused_outputs=1
+caller_salt_nonce_reuse_guarded_committed_encrypt_rejects_reuse_before_kdf=1
+caller_salt_nonce_reuse_guarded_committed_encrypt_clears_commitment=1
 kdf_domain_separated=1
 detached_kdf_domain_reported=1
 attached_record_kdf_domain_reported=1
@@ -86,21 +101,37 @@ record_suite_kdf_bound=1
 record_salt_nonce_nonzero=1
 record_header_shape_validated=1
 malformed_record_rejected_before_kdf=1
+detached_guarded_api_present=1
 detached_committed_api_present=1
+detached_committed_guarded_api_present=1
 detached_key_commitment_present=1
 detached_commitment_key_kdf_bound=1
 detached_commitment_verified=1
 detached_commitment_checked_before_decrypt=1
 detached_commitment_caller_aad_bound=1
 detached_commitment_input_streamed=1
+detached_commitment_constant_time_compare=1
 detached_commitment_key_material_zeroized=1
+commitment_mac_provider_api_used=1
+commitment_mac_provider_fetched=1
+commitment_mac_hmac_sha256_digest_bound=1
+commitment_mac_256bit_key_used=1
+commitment_mac_input_streamed=1
+commitment_mac_legacy_fallback_used=0
 record_key_commitment_present=1
 record_commitment_key_kdf_bound=1
 record_commitment_verified=1
 record_commitment_checked_before_decrypt=1
 record_commitment_caller_aad_bound=1
 record_commitment_input_streamed=1
+record_commitment_constant_time_compare=1
 record_commitment_key_material_zeroized=1
+commitment_mac_provider_api_used=1
+commitment_mac_provider_fetched=1
+commitment_mac_hmac_sha256_digest_bound=1
+commitment_mac_256bit_key_used=1
+commitment_mac_input_streamed=1
+commitment_mac_legacy_fallback_used=0
 detached_aad_label=LSEDAAD1
 detached_aad_frame_bytes=16
 detached_aad_framed=1
@@ -138,6 +169,9 @@ failed_encrypt_clears_tag=1
 failed_commitment_output_cleared=1
 failed_plaintext_output_cleared=1
 failed_record_output_cleared=1
+successful_ciphertext_tail_cleared=1
+successful_plaintext_tail_cleared=1
+successful_record_tail_cleared=1
 unsafe_buffer_overlap_rejected=1
 hkdf_intermediate_material_zeroized=1
 associated_data_supported=1
@@ -149,13 +183,23 @@ detached_suite_id=1
 detached_suite_kdf_bound=1
 substrate_generates_salt=1
 substrate_generates_nonce=1
+generated_key_nonce_pair_csprng_backed=1
+caller_salt_nonce_reuse_guard_required_reported=1
+caller_salt_nonce_reuse_tracking_present=1
+caller_salt_nonce_reuse_guard_capacity=64
+caller_salt_nonce_reuse_guarded_encrypt_rejects_reuse_before_kdf=1
+caller_salt_nonce_reuse_guarded_encrypt_clears_reused_outputs=1
+caller_salt_nonce_reuse_guarded_committed_encrypt_rejects_reuse_before_kdf=1
+caller_salt_nonce_reuse_guarded_committed_encrypt_clears_commitment=1
 detached_salt_caller_supplied_reported=1
 detached_nonce_caller_supplied_reported=1
 attached_record_salt_generated_reported=1
 attached_record_nonce_generated_reported=1
 seal_open_api_present=1
 attached_record_api_present=1
+detached_guarded_api_present=1
 detached_committed_api_present=1
+detached_committed_guarded_api_present=1
 attached_record_header_validated_before_open=1
 attached_record_authenticated_before_plaintext_release=1
 unauthenticated_plaintext_staged=1
@@ -168,6 +212,7 @@ detached_commitment_verified=1
 detached_commitment_checked_before_decrypt=1
 detached_commitment_caller_aad_bound=1
 detached_commitment_input_streamed=1
+detached_commitment_constant_time_compare=1
 detached_commitment_key_material_zeroized=1
 record_key_commitment_present=1
 record_commitment_key_kdf_bound=1
@@ -175,6 +220,7 @@ record_commitment_verified=1
 record_commitment_checked_before_decrypt=1
 record_commitment_caller_aad_bound=1
 record_commitment_input_streamed=1
+record_commitment_constant_time_compare=1
 record_commitment_key_material_zeroized=1
 record_suite_validated_before_open=1
 record_suite_authenticated=1
@@ -229,6 +275,9 @@ failed_record_seal_clears_record=1
 failed_record_open_clears_plaintext=1
 failed_plaintext_output_cleared=1
 failed_record_output_cleared=1
+successful_ciphertext_tail_cleared=1
+successful_plaintext_tail_cleared=1
+successful_record_tail_cleared=1
 hkdf_intermediate_material_zeroized=1
 key_material_zeroization_required=1
 secret_material_emitted=0
@@ -238,6 +287,8 @@ cli_nonce_output=redacted
 cli_ciphertext_output=redacted
 cli_tag_output=redacted
 cli_record_output=redacted
+cli_record_buffer_zeroized=1
+cli_recovered_plaintext_buffer_zeroized=1
 production_crypto_claim_allowed=0
 fips_claim_allowed=0
 runtime_authority_granted=0
@@ -317,6 +368,11 @@ Operational constraints:
 - Failed record-seal calls clear the provided record buffer capacity when a
   record buffer is available and report `failed_record_output_cleared=1`
   on those failure paths.
+- Successful detached encrypt, decrypt/open, and record-seal paths cleanse
+  unused caller-owned output-buffer tail capacity and report
+  `successful_ciphertext_tail_cleared=1`,
+  `successful_plaintext_tail_cleared=1`, or
+  `successful_record_tail_cleared=1` when tail capacity was present.
 - Writable output buffers must not overlap plaintext, ciphertext, AAD, key
   material, salt, nonce, tag, or record inputs; unsafe overlap is rejected
   before HKDF, AES-GCM, record AAD allocation, or random salt/nonce generation.

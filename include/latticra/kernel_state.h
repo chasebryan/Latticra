@@ -1,13 +1,13 @@
 #ifndef LATTICRA_KERNEL_STATE_H
 #define LATTICRA_KERNEL_STATE_H
 
-#include "latticra/kernel_runtime_entry_recovery_audit_observation_view.h"
+#include "latticra/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define LATTICRA_KERNEL_STATE_LABEL_MAX 64u
+#define LATTICRA_KERNEL_STATE_LABEL_MAX 128u
 #define LATTICRA_KERNEL_STATE_REPORT_MAX 16384u
 
 typedef enum {
@@ -57,7 +57,13 @@ typedef enum {
     LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_READY = 43,
     LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_READY = 44,
     LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_READY = 45,
-    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY = 46
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY = 46,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_OBSERVATION_VIEW_READY = 47,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_OBSERVATION_VIEW_READY = 48,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_OBSERVATION_VIEW_READY = 49,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_OBSERVATION_VIEW_READY = 50,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY = 51,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_READY = 52
 } latticra_kernel_state_kind_t;
 
 typedef enum {
@@ -130,6 +136,18 @@ typedef struct {
         runtime_entry_recovery_closeout_observation_view_request;
     latticra_kernel_runtime_entry_recovery_audit_observation_view_request_t
         runtime_entry_recovery_audit_observation_view_request;
+    latticra_kernel_runtime_entry_recovery_audit_review_observation_view_request_t
+        runtime_entry_recovery_audit_review_observation_view_request;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_observation_view_request_t
+        runtime_entry_recovery_audit_review_disposition_observation_view_request;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_observation_view_request_t
+        runtime_entry_recovery_audit_review_disposition_review_observation_view_request;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_request_t
+        runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_request;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_request_t
+        runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_request;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_request_t
+        runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_request;
     latticra_kernel_state_kind_t current_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
@@ -204,6 +222,18 @@ typedef struct {
         runtime_entry_recovery_closeout_observation_view;
     latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
         runtime_entry_recovery_audit_observation_view;
+    latticra_kernel_runtime_entry_recovery_audit_review_observation_view_result_t
+        runtime_entry_recovery_audit_review_observation_view;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_observation_view_result_t
+        runtime_entry_recovery_audit_review_disposition_observation_view;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_observation_view_result_t
+        runtime_entry_recovery_audit_review_disposition_review_observation_view;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_result_t
+        runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_result_t
+        runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_result_t
+        runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view;
     latticra_kernel_state_kind_t previous_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_kind_t next_state;

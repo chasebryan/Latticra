@@ -124,7 +124,7 @@
         </article>
         <article>
           <span>final_state</span>
-          <strong>runtime-entry-recovery-audit-observation-view-ready</strong>
+          <strong>runtime-entry-recovery-audit-review-observation-view-ready</strong>
         </article>
         <article>
           <span>lifecycle_complete</span>
@@ -146,7 +146,7 @@
         <p class="eyebrow">Lifecycle Ladder</p>
         <h2>The sequence is explicit and bounded.</h2>
         <p>
-          The lifecycle runner can advance a local in-memory state object through an approved sequence ending at runtime-entry-recovery-audit-observation-view-ready. That path is evidence, not scheduler execution.
+          The lifecycle runner can advance a local in-memory state object through an approved sequence ending at runtime-entry-recovery-audit-review-observation-view-ready. That path is evidence, not scheduler execution.
         </p>
       </div>
       <div class="content-shell kernel-ladder-grid">
@@ -172,8 +172,8 @@
         </article>
         <article>
           <span>Target</span>
-          <h3>runtime-entry-recovery-audit-observation-view-ready</h3>
-          <p>Reports the current lifecycle target while recovery-audit observation metadata is visible and recovery audit observation, recovery audits, recovery closeout observation, recovery closeouts, recovery-outcome observation, recovery outcomes, recovery-disposition observation, recovery dispositions, recovery-plan observation, recovery-boundary observation, recovery boundaries, recovery plans, persistence-boundary observation, persistence boundaries, persistence commits, recovery authority, quiescent-return observation, quiescent returns, quiescent state reads, idle-return observation, idle returns, idle state reads, process-return observation, process returns, process state reads, process wakes, scheduler-return observation, scheduler returns, scheduler execution, scheduler dispatch, context switching, run queue mutation, post-resume observation, instruction-pointer reads, stack-pointer reads, CPU-mode reads, user-mode resume, user instruction resume, resume frame commits, syscall exit commits, syscall exits, syscall returns, interrupt returns, privilege transitions, address-space switching, page-table writes, TLB flushes, MMU updates, stack switching, register save/restore, frame construction, runtime entry admission, runtime entry, scheduler run-entry, scheduler activation, scheduler handoff, scheduler selection, scheduler credit updates, quota updates, time reads, and preemption remain denied.</p>
+          <h3>runtime-entry-recovery-audit-review-observation-view-ready</h3>
+          <p>Reports the current lifecycle target while recovery-audit-review observation metadata is visible and recovery audit review observation, recovery audit reviews, recovery audit observation, recovery audits, recovery closeout observation, recovery closeouts, recovery-outcome observation, recovery outcomes, recovery-disposition observation, recovery dispositions, recovery-plan observation, recovery-boundary observation, recovery boundaries, recovery plans, persistence-boundary observation, persistence boundaries, persistence commits, recovery authority, quiescent-return observation, quiescent returns, quiescent state reads, idle-return observation, idle returns, idle state reads, process-return observation, process returns, process state reads, process wakes, scheduler-return observation, scheduler returns, scheduler execution, scheduler dispatch, context switching, run queue mutation, post-resume observation, instruction-pointer reads, stack-pointer reads, CPU-mode reads, user-mode resume, user instruction resume, resume frame commits, syscall exit commits, syscall exits, syscall returns, interrupt returns, privilege transitions, address-space switching, page-table writes, TLB flushes, MMU updates, stack switching, register save/restore, frame construction, runtime entry admission, runtime entry, scheduler run-entry, scheduler activation, scheduler handoff, scheduler selection, scheduler credit updates, quota updates, time reads, and preemption remain denied.</p>
         </article>
       </div>
     </section>
@@ -194,7 +194,7 @@
           </div>
           <div role="row">
             <span role="cell">Controlled internal state</span>
-            <p role="cell">The lifecycle may report internal state changes such as a completed sequence to runtime-entry-recovery-audit-observation-view-ready while preserving external_effect_performed=0.</p>
+            <p role="cell">The lifecycle may report internal state changes such as a completed sequence to runtime-entry-recovery-audit-review-observation-view-ready while preserving external_effect_performed=0.</p>
           </div>
           <div role="row">
             <span role="cell">Denied now</span>
@@ -302,7 +302,7 @@ sh scripts/test-kernel-lifecycle-status-alignment.sh</code></pre>
         <a href="KERNEL_IMPLEMENTATION.md"><strong>Kernel seed</strong><span>Compiled kernel identity, report fields, no-effect posture, and denied boot/runtime behavior.</span></a>
         <a href="KERNEL_SUBSYSTEM_REGISTRY.md"><strong>Subsystem registry</strong><span>Boot, runtime, scheduler, memory, process, filesystem, network, device, and security metadata.</span></a>
         <a href="KERNEL_STATE_MACHINE.md"><strong>State machine</strong><span>Bounded in-memory state object, sequential step function, transition log, and report surface.</span></a>
-        <a href="KERNEL_LIFECYCLE_SEED.md"><strong>Lifecycle seed</strong><span>Approved sequence to runtime-entry-recovery-audit-observation-view-ready with external effects denied.</span></a>
+        <a href="KERNEL_LIFECYCLE_SEED.md"><strong>Lifecycle seed</strong><span>Approved sequence to runtime-entry-recovery-audit-review-observation-view-ready with external effects denied.</span></a>
         <a href="KERNEL_SCHEDULER_CREDIT_SEED.md"><strong>Scheduler credit seed</strong><span>Candidate scheduler credit metadata with quota and CPU usage write authority denied.</span></a>
         <a href="KERNEL_SCHEDULER_SELECTION_SEED.md"><strong>Scheduler selection seed</strong><span>Candidate runnable selection metadata with dispatch and run-queue authority denied.</span></a>
         <a href="KERNEL_SCHEDULER_DISPATCH_SEED.md"><strong>Scheduler dispatch seed</strong><span>Candidate dispatch metadata with context-switch and run-queue authority denied.</span></a>

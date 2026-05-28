@@ -102,7 +102,7 @@ require_contains 'source_rpm_artifact_created=0' "$doc"
 require_contains 'binary_rpm_artifact_created=0' "$doc"
 require_contains 'rpm_artifact_sha256_recorded=0' "$doc"
 require_contains 'rpm_artifact_published=0' "$doc"
-require_contains 'Add a Fedora RPM install/remove transcript contract' "$doc"
+require_contains 'Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract' "$doc"
 require_contains 'fedora_rpm_artifact_naming_contract: ok' "$doc"
 
 for current_field in \
@@ -175,7 +175,7 @@ done
 require_contains 'Status: rpm-artifact-naming/status alignment' "$status"
 require_contains 'Date: 2026-05-27' "$status"
 require_contains 'does not create RPM artifacts' "$status"
-require_contains 'Add a Fedora RPM install/remove transcript contract' "$status"
+require_contains 'Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract' "$status"
 
 require_contains 'FEDORA_RPM_ARTIFACT_NAMING_CONTRACT_STATUS.md' "$index"
 require_contains 'Current Fedora RPM artifact naming contract checkpoint' "$index"

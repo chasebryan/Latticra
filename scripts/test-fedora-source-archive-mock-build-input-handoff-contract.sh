@@ -88,7 +88,7 @@ require_contains 'fedora-rpm-input/SPECS/latticra.spec' "$doc"
 require_contains 'rpmbuild_allowed=0' "$doc"
 require_contains 'mock_build_allowed=0' "$doc"
 require_contains 'fedora_mock_build_input_opened_by_handoff_contract=0' "$doc"
-require_contains 'Add a Fedora RPM install/remove transcript contract' "$doc"
+require_contains 'Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract' "$doc"
 require_contains 'fedora_source_archive_mock_build_input_handoff_contract: ok' "$doc"
 
 for current_field in \
@@ -152,7 +152,7 @@ require_contains 'Status: mock-build-input-handoff-contract/status alignment' "$
 require_contains 'Date: 2026-05-27' "$status"
 require_contains 'does not stage a source archive under `SOURCES/`' "$status"
 require_contains 'does not run `rpmbuild` or `mock`' "$status"
-require_contains 'Add a Fedora RPM install/remove transcript contract' "$status"
+require_contains 'Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract' "$status"
 
 require_contains 'FEDORA_SOURCE_ARCHIVE_MOCK_BUILD_INPUT_HANDOFF_CONTRACT_STATUS.md' "$index"
 require_contains 'Current Fedora source archive mock build input handoff contract checkpoint' "$index"

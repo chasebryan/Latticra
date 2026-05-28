@@ -20,7 +20,7 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(strcmp(readiness.formal_title, "Latticra Q-Seal Readiness Profile") == 0, "title");
     EXPECT_TRUE(strcmp(readiness.subsystem_path, "latticra-q-seal") == 0, "path");
     EXPECT_TRUE(
-        strcmp(readiness.standards_basis, "NIST-FIPS-203-and-NIST-ACVP-ML-KEM") == 0,
+        strcmp(readiness.standards_basis, "NIST-FIPS-203,NIST-SP-800-227,NIST-ACVP-ML-KEM") == 0,
         "standards");
     EXPECT_TRUE(strcmp(readiness.source_boundary, "clean-room-no-apple-code") == 0, "boundary");
     EXPECT_TRUE(
@@ -33,8 +33,11 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(readiness.ml_kem_768_parameters_present == 1u, "768");
     EXPECT_TRUE(readiness.ml_kem_1024_parameters_present == 1u, "1024");
     EXPECT_TRUE(readiness.evidence_gate_present == 1u, "evidence");
+    EXPECT_TRUE(readiness.fips_conformance_matrix_present == 1u, "conformance");
+    EXPECT_TRUE(readiness.sp800_227_usage_profile_present == 1u, "usage profile");
     EXPECT_TRUE(readiness.kat_manifest_present == 1u, "kat manifest");
     EXPECT_TRUE(readiness.kat_runner_contract_present == 1u, "kat runner");
+    EXPECT_TRUE(readiness.replay_transcript_gate_present == 1u, "replay transcript");
     EXPECT_TRUE(readiness.kat_result_schema_present == 1u, "kat result schema");
     EXPECT_TRUE(readiness.kat_result_row_fixture_present == 1u, "kat result rows");
     EXPECT_TRUE(readiness.acvp_intake_present == 1u, "acvp");
@@ -71,17 +74,24 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(readiness.side_channel_review_present == 1u, "side channel");
     EXPECT_TRUE(readiness.provider_differential_present == 1u, "provider");
     EXPECT_TRUE(readiness.implementation_binding_manifest_present == 1u, "binding");
+    EXPECT_TRUE(readiness.source_layout_gate_present == 1u, "source layout");
+    EXPECT_TRUE(readiness.implementation_file_digest_plan_present == 1u, "file digest plan");
+    EXPECT_TRUE(readiness.clean_room_author_attestation_gate_present == 1u, "author attestation");
+    EXPECT_TRUE(readiness.per_file_standards_trace_gate_present == 1u, "standards trace");
+    EXPECT_TRUE(readiness.per_file_test_trace_gate_present == 1u, "test trace");
+    EXPECT_TRUE(readiness.implementation_traceability_matrix_present == 1u, "traceability");
+    EXPECT_TRUE(readiness.primitive_source_acceptance_gate_present == 1u, "source acceptance");
     EXPECT_TRUE(readiness.implementation_frame_present == 1u, "implementation");
     EXPECT_TRUE(readiness.secret_state_contract_present == 1u, "secret state");
     EXPECT_TRUE(readiness.clean_room_boundary_recorded == 1u, "clean room");
     EXPECT_TRUE(readiness.apple_corecrypto_code_copied == 0u, "apple code");
     EXPECT_TRUE(readiness.external_provider_code_copied == 0u, "provider code");
     EXPECT_TRUE(readiness.provider_runtime_used == 0u, "provider runtime");
-    EXPECT_TRUE(readiness.components_total == 39u, "components total");
-    EXPECT_TRUE(readiness.components_present == 39u, "components present");
-    EXPECT_TRUE(readiness.runtime_blockers_total == 37u, "runtime blockers");
-    EXPECT_TRUE(readiness.required_readiness_items_total == 1003u, "readiness total");
-    EXPECT_TRUE(readiness.required_readiness_items_satisfied == 643u, "readiness satisfied");
+    EXPECT_TRUE(readiness.components_total == 49u, "components total");
+    EXPECT_TRUE(readiness.components_present == 49u, "components present");
+    EXPECT_TRUE(readiness.runtime_blockers_total == 46u, "runtime blockers");
+    EXPECT_TRUE(readiness.required_readiness_items_total == 1356u, "readiness total");
+    EXPECT_TRUE(readiness.required_readiness_items_satisfied == 929u, "readiness satisfied");
     EXPECT_TRUE(readiness.design_frame_integration_ready == 1u, "design frame");
     EXPECT_TRUE(readiness.runtime_crypto_ready == 0u, "runtime crypto");
     EXPECT_TRUE(readiness.operations_enabled == 0u, "operations");
@@ -104,9 +114,18 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
             LATTICRA_Q_SEAL_STATUS_OK,
         "report");
     EXPECT_TRUE(strstr(rendered, "LATTICRA Q-SEAL READINESS PROFILE") != 0, "header");
-    EXPECT_TRUE(strstr(rendered, "components_present=39") != 0, "components report");
+    EXPECT_TRUE(strstr(rendered, "components_present=49") != 0, "components report");
+    EXPECT_TRUE(
+        strstr(rendered, "fips_conformance_matrix_present=1") != 0,
+        "conformance report");
+    EXPECT_TRUE(
+        strstr(rendered, "sp800_227_usage_profile_present=1") != 0,
+        "usage profile report");
     EXPECT_TRUE(strstr(rendered, "kat_manifest_present=1") != 0, "kat report");
     EXPECT_TRUE(strstr(rendered, "kat_runner_contract_present=1") != 0, "runner report");
+    EXPECT_TRUE(
+        strstr(rendered, "replay_transcript_gate_present=1") != 0,
+        "transcript gate report");
     EXPECT_TRUE(strstr(rendered, "kat_result_schema_present=1") != 0, "schema report");
     EXPECT_TRUE(
         strstr(rendered, "kat_result_row_fixture_present=1") != 0,
@@ -169,7 +188,28 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(
         strstr(rendered, "implementation_binding_manifest_present=1") != 0,
         "binding report");
-    EXPECT_TRUE(strstr(rendered, "runtime_blockers_total=37") != 0, "blockers report");
+    EXPECT_TRUE(
+        strstr(rendered, "source_layout_gate_present=1") != 0,
+        "source layout report");
+    EXPECT_TRUE(
+        strstr(rendered, "implementation_file_digest_plan_present=1") != 0,
+        "file digest plan report");
+    EXPECT_TRUE(
+        strstr(rendered, "clean_room_author_attestation_gate_present=1") != 0,
+        "author attestation report");
+    EXPECT_TRUE(
+        strstr(rendered, "per_file_standards_trace_gate_present=1") != 0,
+        "standards trace report");
+    EXPECT_TRUE(
+        strstr(rendered, "per_file_test_trace_gate_present=1") != 0,
+        "test trace report");
+    EXPECT_TRUE(
+        strstr(rendered, "implementation_traceability_matrix_present=1") != 0,
+        "traceability report");
+    EXPECT_TRUE(
+        strstr(rendered, "primitive_source_acceptance_gate_present=1") != 0,
+        "source acceptance report");
+    EXPECT_TRUE(strstr(rendered, "runtime_blockers_total=46") != 0, "blockers report");
     EXPECT_TRUE(
         strstr(rendered, "design_frame_integration_ready=1") != 0,
         "design report");

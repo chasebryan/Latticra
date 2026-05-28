@@ -66,6 +66,9 @@ static void result_init(latticra_seal_hybrid_envelope_result_t *result) {
         sizeof(result->standards_source),
         "NIST-FIPS-197,NIST-SP-800-38D,RFC-5869,NIST-SP-800-56C-REV2,RFC-2104,NIST-SP-800-227");
     result->hybrid_classical_pqc_secret_required = 1u;
+    result->aead_nonce_uniqueness_required = 1u;
+    result->caller_salt_nonce_reuse_guard_capacity =
+        LATTICRA_SEAL_HYBRID_REUSE_GUARD_CAPACITY;
     result->production_crypto_claim_allowed = 0u;
     result->fips_claim_allowed = 0u;
     result->runtime_authority_granted = 0u;
@@ -95,6 +98,7 @@ static latticra_status_t hybrid_encrypt_with_domain(
     unsigned char *tag,
     size_t tag_len,
     unsigned kdf_domain,
+    latticra_seal_hybrid_envelope_reuse_guard_t *reuse_guard,
     latticra_seal_hybrid_envelope_result_t *out);
 
 static latticra_status_t hybrid_decrypt_with_domain(
@@ -475,6 +479,22 @@ static void mark_detached_commitment_precheck(
     result->detached_commitment_checked_before_decrypt = 1u;
 }
 
+static void mark_commitment_mac_performed(latticra_seal_hybrid_envelope_result_t *result) {
+    if (result == NULL) {
+        return;
+    }
+#if defined(OPENSSL_VERSION_MAJOR) && OPENSSL_VERSION_MAJOR >= 3
+    result->commitment_mac_provider_api_used = 1u;
+    result->commitment_mac_provider_fetched = 1u;
+    result->commitment_mac_legacy_fallback_used = 0u;
+#else
+    result->commitment_mac_legacy_fallback_used = 1u;
+#endif
+    result->commitment_mac_hmac_sha256_digest_bound = 1u;
+    result->commitment_mac_256bit_key_used = 1u;
+    result->commitment_mac_input_streamed = 1u;
+}
+
 static void clear_detached_output_buffers(
     latticra_seal_hybrid_envelope_result_t *result,
     unsigned char *ciphertext,
@@ -662,6 +682,7 @@ static void mark_generated_random_pair(latticra_seal_hybrid_envelope_result_t *r
     result->generated_nonce_csprng_success = 1u;
     result->generated_salt_random_bytes = LATTICRA_SEAL_HYBRID_SALT_BYTES;
     result->generated_nonce_random_bytes = LATTICRA_SEAL_HYBRID_NONCE_BYTES;
+    result->generated_key_nonce_pair_csprng_backed = 1u;
 }
 
 const char *latticra_seal_hybrid_envelope_error_label(
@@ -723,6 +744,8 @@ const char *latticra_seal_hybrid_envelope_error_label(
         return "invalid-commitment-size";
     case LATTICRA_SEAL_HYBRID_ENVELOPE_DUPLICATE_HYBRID_SHARED_SECRET:
         return "duplicate-hybrid-shared-secret";
+    case LATTICRA_SEAL_HYBRID_ENVELOPE_REUSED_SALT_NONCE:
+        return "reused-salt-nonce";
     default:
         return "unknown";
     }
@@ -732,6 +755,90 @@ int latticra_seal_hybrid_envelope_random_bytes(
     unsigned char *buffer,
     size_t buffer_len) {
     return random_bytes_with_report(buffer, buffer_len, NULL);
+}
+
+latticra_status_t latticra_seal_hybrid_envelope_reuse_guard_init(
+    latticra_seal_hybrid_envelope_reuse_guard_t *guard) {
+    if (guard == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+
+    memset(guard, 0, sizeof(*guard));
+    guard->initialized = 1u;
+    return LATTICRA_STATUS_OK;
+}
+
+static void mark_reuse_guard_evidence(
+    latticra_seal_hybrid_envelope_reuse_guard_t *guard,
+    latticra_seal_hybrid_envelope_result_t *result) {
+    if (result == NULL || guard == NULL) {
+        return;
+    }
+
+    result->caller_salt_nonce_reuse_tracking_present = 1u;
+    result->caller_salt_nonce_reuse_guard_capacity =
+        LATTICRA_SEAL_HYBRID_REUSE_GUARD_CAPACITY;
+    result->caller_salt_nonce_reuse_guard_entries_used = guard->entries_used;
+}
+
+static int reuse_guard_record_salt_nonce_if_new(
+    latticra_seal_hybrid_envelope_reuse_guard_t *guard,
+    const latticra_seal_hybrid_envelope_context_t *context,
+    unsigned kdf_domain,
+    latticra_seal_hybrid_envelope_result_t *result) {
+    unsigned index;
+    unsigned write_index;
+
+    if (guard == NULL) {
+        return 1;
+    }
+    if (context == NULL ||
+        context->salt == NULL ||
+        context->nonce == NULL ||
+        context->salt_len != LATTICRA_SEAL_HYBRID_SALT_BYTES ||
+        context->nonce_len != LATTICRA_SEAL_HYBRID_NONCE_BYTES) {
+        return 0;
+    }
+    if (guard->initialized != 1u) {
+        (void)latticra_seal_hybrid_envelope_reuse_guard_init(guard);
+    }
+
+    mark_reuse_guard_evidence(guard, result);
+    for (index = 0u; index < guard->entries_used; index++) {
+        if (guard->suite_ids[index] == LATTICRA_SEAL_HYBRID_SUITE_HKDF_SHA256_AES_256_GCM &&
+            guard->kdf_domains[index] == kdf_domain &&
+            CRYPTO_memcmp(
+                guard->salts[index],
+                context->salt,
+                LATTICRA_SEAL_HYBRID_SALT_BYTES) == 0 &&
+            CRYPTO_memcmp(
+                guard->nonces[index],
+                context->nonce,
+                LATTICRA_SEAL_HYBRID_NONCE_BYTES) == 0) {
+            if (result != NULL) {
+                result->caller_salt_nonce_reuse_rejected = 1u;
+            }
+            return 0;
+        }
+    }
+
+    if (guard->entries_used < LATTICRA_SEAL_HYBRID_REUSE_GUARD_CAPACITY) {
+        write_index = guard->entries_used;
+        guard->entries_used++;
+    } else {
+        write_index = guard->next_entry;
+    }
+    guard->suite_ids[write_index] = LATTICRA_SEAL_HYBRID_SUITE_HKDF_SHA256_AES_256_GCM;
+    guard->kdf_domains[write_index] = kdf_domain;
+    memcpy(guard->salts[write_index], context->salt, LATTICRA_SEAL_HYBRID_SALT_BYTES);
+    memcpy(guard->nonces[write_index], context->nonce, LATTICRA_SEAL_HYBRID_NONCE_BYTES);
+    guard->next_entry = (write_index + 1u) % LATTICRA_SEAL_HYBRID_REUSE_GUARD_CAPACITY;
+
+    if (result != NULL) {
+        result->caller_salt_nonce_reuse_tracked = 1u;
+    }
+    mark_reuse_guard_evidence(guard, result);
+    return 1;
 }
 
 static void seal_result_fail(
@@ -1068,6 +1175,7 @@ latticra_status_t latticra_seal_hybrid_envelope_seal(
     mark_generated_random_pair(out);
     out->detached_salt_caller_supplied = 0u;
     out->detached_nonce_caller_supplied = 0u;
+    out->caller_salt_nonce_reuse_guard_required = 0u;
     if (out->error == LATTICRA_SEAL_HYBRID_ENVELOPE_OK) {
         copy_literal(out->operation_state, sizeof(out->operation_state), "sealed");
         copy_literal(out->status, sizeof(out->status), "hybrid-envelope-sealed");
@@ -1324,10 +1432,11 @@ latticra_status_t latticra_seal_hybrid_envelope_seal_committed(
             commitment_len);
         OPENSSL_cleanse(commitment_key, sizeof(commitment_key));
         OPENSSL_cleanse(computed_commitment, sizeof(computed_commitment));
-        out->detached_commitment_key_material_zeroized = 1u;
+            out->detached_commitment_key_material_zeroized = 1u;
         result_fail(out, LATTICRA_SEAL_HYBRID_ENVELOPE_ENCRYPTION_FAILURE);
         return LATTICRA_STATUS_OK;
     }
+    mark_commitment_mac_performed(out);
 
     memcpy(commitment, computed_commitment, sizeof(computed_commitment));
     mark_detached_commitment_present(out);
@@ -1428,6 +1537,45 @@ static void clear_record_output_buffer(
         OPENSSL_cleanse(record, record_capacity);
         if (result != NULL) {
             result->failed_record_output_cleared = 1u;
+        }
+    }
+}
+
+static void clear_successful_ciphertext_tail(
+    latticra_seal_hybrid_envelope_result_t *result,
+    unsigned char *ciphertext,
+    size_t ciphertext_capacity,
+    size_t ciphertext_len) {
+    if (ciphertext != NULL && ciphertext_len < ciphertext_capacity) {
+        OPENSSL_cleanse(ciphertext + ciphertext_len, ciphertext_capacity - ciphertext_len);
+        if (result != NULL) {
+            result->successful_ciphertext_tail_cleared = 1u;
+        }
+    }
+}
+
+static void clear_successful_plaintext_tail(
+    latticra_seal_hybrid_envelope_result_t *result,
+    unsigned char *plaintext,
+    size_t plaintext_capacity,
+    size_t plaintext_len) {
+    if (plaintext != NULL && plaintext_len < plaintext_capacity) {
+        OPENSSL_cleanse(plaintext + plaintext_len, plaintext_capacity - plaintext_len);
+        if (result != NULL) {
+            result->successful_plaintext_tail_cleared = 1u;
+        }
+    }
+}
+
+static void clear_successful_record_tail(
+    latticra_seal_hybrid_envelope_result_t *result,
+    unsigned char *record,
+    size_t record_capacity,
+    size_t record_len) {
+    if (record != NULL && record_len < record_capacity) {
+        OPENSSL_cleanse(record + record_len, record_capacity - record_len);
+        if (result != NULL) {
+            result->successful_record_tail_cleared = 1u;
         }
     }
 }
@@ -1772,6 +1920,7 @@ latticra_status_t latticra_seal_hybrid_envelope_seal_record(
         tag,
         sizeof(tag),
         LATTICRA_SEAL_HYBRID_KDF_DOMAIN_ATTACHED_RECORD,
+        NULL,
         out);
     out->record_format_present = 1u;
     out->record_version = LATTICRA_SEAL_HYBRID_RECORD_VERSION;
@@ -1786,6 +1935,7 @@ latticra_status_t latticra_seal_hybrid_envelope_seal_record(
     mark_generated_random_pair(out);
     out->detached_salt_caller_supplied = 0u;
     out->detached_nonce_caller_supplied = 0u;
+    out->caller_salt_nonce_reuse_guard_required = 0u;
     out->attached_record_salt_generated = 1u;
     out->attached_record_nonce_generated = 1u;
 
@@ -1836,6 +1986,7 @@ latticra_status_t latticra_seal_hybrid_envelope_seal_record(
         result_fail(out, LATTICRA_SEAL_HYBRID_ENVELOPE_ENCRYPTION_FAILURE);
         return LATTICRA_STATUS_OK;
     }
+    mark_commitment_mac_performed(out);
     memcpy(
         record + LATTICRA_SEAL_HYBRID_RECORD_HEADER_BYTES + ciphertext_len,
         commitment,
@@ -1845,6 +1996,7 @@ latticra_status_t latticra_seal_hybrid_envelope_seal_record(
         ciphertext_len +
         LATTICRA_SEAL_HYBRID_RECORD_COMMITMENT_BYTES;
     out->record_size_bytes = *record_len;
+    clear_successful_record_tail(out, record, record_capacity, *record_len);
     out->record_commitment_size_bytes = LATTICRA_SEAL_HYBRID_RECORD_COMMITMENT_BYTES;
     out->record_key_commitment_present = 1u;
     out->record_commitment_caller_aad_bound = 1u;
@@ -1978,6 +2130,7 @@ latticra_status_t latticra_seal_hybrid_envelope_open_record(
         out->record_key_commitment_present = 1u;
         out->detached_salt_caller_supplied = 0u;
         out->detached_nonce_caller_supplied = 0u;
+        out->caller_salt_nonce_reuse_guard_required = 0u;
         return LATTICRA_STATUS_OK;
     }
     mark_kdf_domain(out, LATTICRA_SEAL_HYBRID_KDF_DOMAIN_ATTACHED_RECORD);
@@ -1987,6 +2140,7 @@ latticra_status_t latticra_seal_hybrid_envelope_open_record(
     out->caller_aad_size_bytes = aad_len;
     out->detached_salt_caller_supplied = 0u;
     out->detached_nonce_caller_supplied = 0u;
+    out->caller_salt_nonce_reuse_guard_required = 0u;
     if (!derive_record_commitment_key(&context, commitment_key, out)) {
         clear_plaintext_output_buffer(out, plaintext, plaintext_capacity);
         result_fail(out, LATTICRA_SEAL_HYBRID_ENVELOPE_KDF_FAILURE);
@@ -2018,7 +2172,9 @@ latticra_status_t latticra_seal_hybrid_envelope_open_record(
         out->record_commitment_key_material_zeroized = 1u;
         return LATTICRA_STATUS_OK;
     }
+    mark_commitment_mac_performed(out);
     out->record_commitment_input_streamed = 1u;
+    out->record_commitment_constant_time_compare = 1u;
     if (CRYPTO_memcmp(
             expected_commitment,
             record + LATTICRA_SEAL_HYBRID_RECORD_HEADER_BYTES + ciphertext_len,
@@ -2079,12 +2235,15 @@ latticra_status_t latticra_seal_hybrid_envelope_open_record(
     out->record_commitment_checked_before_decrypt = 1u;
     out->record_commitment_caller_aad_bound = 1u;
     out->record_commitment_input_streamed = 1u;
+    out->record_commitment_constant_time_compare = 1u;
+    mark_commitment_mac_performed(out);
     out->record_commitment_key_material_zeroized = commitment_key_zeroized ? 1u : 0u;
     out->caller_aad_size_bytes = aad_len;
     out->record_aad_size_bytes = record_aad_len;
     out->record_aad_framed = 1u;
     out->detached_salt_caller_supplied = 0u;
     out->detached_nonce_caller_supplied = 0u;
+    out->caller_salt_nonce_reuse_guard_required = 0u;
 
     if (status == LATTICRA_STATUS_OK && out->error == LATTICRA_SEAL_HYBRID_ENVELOPE_OK) {
         out->attached_record_opened = 1u;
@@ -2198,6 +2357,8 @@ static int validate_context(
     result->nonce_nonzero = 1u;
     result->detached_salt_caller_supplied = 1u;
     result->detached_nonce_caller_supplied = 1u;
+    result->caller_salt_nonce_reuse_guard_required = 1u;
+    result->caller_salt_nonce_reuse_tracking_present = 0u;
     if (context->aad == NULL && context->aad_len != 0u) {
         result_fail(result, LATTICRA_SEAL_HYBRID_ENVELOPE_INVALID_INPUT);
         return 0;
@@ -2434,6 +2595,9 @@ cleanup:
 #endif
     if (result != NULL) {
         result->hkdf_intermediate_material_zeroized = 1u;
+        if (ok) {
+            result->salt_bound_to_hkdf = 1u;
+        }
     }
     return ok;
 }
@@ -2863,6 +3027,7 @@ static int aes_256_gcm_encrypt(
 #endif
         result->aes_gcm_96bit_nonce_configured = 1u;
         result->aes_gcm_128bit_tag_bound = 1u;
+        result->nonce_bound_to_aead = 1u;
     }
 
 cleanup:
@@ -2946,6 +3111,7 @@ static int aes_256_gcm_decrypt(
 #endif
             result->aes_gcm_96bit_nonce_configured = 1u;
             result->aes_gcm_128bit_tag_bound = 1u;
+            result->nonce_bound_to_aead = 1u;
         }
         goto cleanup;
     }
@@ -2970,6 +3136,7 @@ static latticra_status_t hybrid_encrypt_with_domain(
     unsigned char *tag,
     size_t tag_len,
     unsigned kdf_domain,
+    latticra_seal_hybrid_envelope_reuse_guard_t *reuse_guard,
     latticra_seal_hybrid_envelope_result_t *out) {
     latticra_seal_hybrid_envelope_context_t framed_context;
     const latticra_seal_hybrid_envelope_context_t *crypto_context = context;
@@ -3035,6 +3202,11 @@ static latticra_status_t hybrid_encrypt_with_domain(
         result_fail(out, LATTICRA_SEAL_HYBRID_ENVELOPE_INVALID_INPUT);
         return LATTICRA_STATUS_OK;
     }
+    if (!reuse_guard_record_salt_nonce_if_new(reuse_guard, context, kdf_domain, out)) {
+        clear_detached_output_buffers(out, ciphertext, ciphertext_capacity, tag, tag_len);
+        result_fail(out, LATTICRA_SEAL_HYBRID_ENVELOPE_REUSED_SALT_NONCE);
+        return LATTICRA_STATUS_OK;
+    }
 
     out->plaintext_size_bytes = plaintext_len;
     out->tag_size_bytes = tag_len;
@@ -3094,6 +3266,7 @@ static latticra_status_t hybrid_encrypt_with_domain(
     }
 
     out->ciphertext_size_bytes = *ciphertext_len;
+    clear_successful_ciphertext_tail(out, ciphertext, ciphertext_capacity, *ciphertext_len);
     out->aes_gcm_encryption_performed = 1u;
     out->encryption_performed = 1u;
     out->secret_material_emitted = 0u;
@@ -3133,10 +3306,41 @@ latticra_status_t latticra_seal_hybrid_envelope_encrypt(
         tag,
         tag_len,
         LATTICRA_SEAL_HYBRID_KDF_DOMAIN_DETACHED,
+        NULL,
         out);
 }
 
-latticra_status_t latticra_seal_hybrid_envelope_encrypt_committed(
+latticra_status_t latticra_seal_hybrid_envelope_encrypt_guarded(
+    latticra_seal_hybrid_envelope_reuse_guard_t *guard,
+    const latticra_seal_hybrid_envelope_context_t *context,
+    const unsigned char *plaintext,
+    size_t plaintext_len,
+    unsigned char *ciphertext,
+    size_t ciphertext_capacity,
+    size_t *ciphertext_len,
+    unsigned char *tag,
+    size_t tag_len,
+    latticra_seal_hybrid_envelope_result_t *out) {
+    if (guard == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+
+    return hybrid_encrypt_with_domain(
+        context,
+        plaintext,
+        plaintext_len,
+        ciphertext,
+        ciphertext_capacity,
+        ciphertext_len,
+        tag,
+        tag_len,
+        LATTICRA_SEAL_HYBRID_KDF_DOMAIN_DETACHED,
+        guard,
+        out);
+}
+
+static latticra_status_t hybrid_encrypt_committed_with_guard(
+    latticra_seal_hybrid_envelope_reuse_guard_t *guard,
     const latticra_seal_hybrid_envelope_context_t *context,
     const unsigned char *plaintext,
     size_t plaintext_len,
@@ -3196,7 +3400,7 @@ latticra_status_t latticra_seal_hybrid_envelope_encrypt_committed(
         return LATTICRA_STATUS_OK;
     }
 
-    status = latticra_seal_hybrid_envelope_encrypt(
+    status = hybrid_encrypt_with_domain(
         context,
         plaintext,
         plaintext_len,
@@ -3205,6 +3409,8 @@ latticra_status_t latticra_seal_hybrid_envelope_encrypt_committed(
         ciphertext_len,
         tag,
         tag_len,
+        LATTICRA_SEAL_HYBRID_KDF_DOMAIN_DETACHED,
+        guard,
         out);
     if (status != LATTICRA_STATUS_OK ||
         out->error != LATTICRA_SEAL_HYBRID_ENVELOPE_OK ||
@@ -3241,6 +3447,7 @@ latticra_status_t latticra_seal_hybrid_envelope_encrypt_committed(
         result_fail(out, LATTICRA_SEAL_HYBRID_ENVELOPE_ENCRYPTION_FAILURE);
         return LATTICRA_STATUS_OK;
     }
+    mark_commitment_mac_performed(out);
 
     memcpy(commitment, computed_commitment, sizeof(computed_commitment));
     mark_detached_commitment_present(out);
@@ -3253,6 +3460,65 @@ latticra_status_t latticra_seal_hybrid_envelope_encrypt_committed(
         out->detached_commitment_key_material_zeroized = 1u;
     }
     return LATTICRA_STATUS_OK;
+}
+
+latticra_status_t latticra_seal_hybrid_envelope_encrypt_committed(
+    const latticra_seal_hybrid_envelope_context_t *context,
+    const unsigned char *plaintext,
+    size_t plaintext_len,
+    unsigned char *ciphertext,
+    size_t ciphertext_capacity,
+    size_t *ciphertext_len,
+    unsigned char *tag,
+    size_t tag_len,
+    unsigned char *commitment,
+    size_t commitment_len,
+    latticra_seal_hybrid_envelope_result_t *out) {
+    return hybrid_encrypt_committed_with_guard(
+        NULL,
+        context,
+        plaintext,
+        plaintext_len,
+        ciphertext,
+        ciphertext_capacity,
+        ciphertext_len,
+        tag,
+        tag_len,
+        commitment,
+        commitment_len,
+        out);
+}
+
+latticra_status_t latticra_seal_hybrid_envelope_encrypt_committed_guarded(
+    latticra_seal_hybrid_envelope_reuse_guard_t *guard,
+    const latticra_seal_hybrid_envelope_context_t *context,
+    const unsigned char *plaintext,
+    size_t plaintext_len,
+    unsigned char *ciphertext,
+    size_t ciphertext_capacity,
+    size_t *ciphertext_len,
+    unsigned char *tag,
+    size_t tag_len,
+    unsigned char *commitment,
+    size_t commitment_len,
+    latticra_seal_hybrid_envelope_result_t *out) {
+    if (guard == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+
+    return hybrid_encrypt_committed_with_guard(
+        guard,
+        context,
+        plaintext,
+        plaintext_len,
+        ciphertext,
+        ciphertext_capacity,
+        ciphertext_len,
+        tag,
+        tag_len,
+        commitment,
+        commitment_len,
+        out);
 }
 
 static latticra_status_t hybrid_decrypt_with_domain(
@@ -3419,6 +3685,7 @@ static latticra_status_t hybrid_decrypt_with_domain(
     }
     *plaintext_len = staged_plaintext_len;
     out->plaintext_size_bytes = *plaintext_len;
+    clear_successful_plaintext_tail(out, plaintext, plaintext_capacity, *plaintext_len);
     out->aes_gcm_decryption_performed = 1u;
     out->authentication_tag_verified = 1u;
     out->plaintext_released_after_authentication = 1u;
@@ -3605,6 +3872,8 @@ latticra_status_t latticra_seal_hybrid_envelope_decrypt_committed(
         out->detached_commitment_key_material_zeroized = 1u;
         return LATTICRA_STATUS_OK;
     }
+    mark_commitment_mac_performed(out);
+    out->detached_commitment_constant_time_compare = 1u;
 
     if (CRYPTO_memcmp(
             expected_commitment,
@@ -3635,7 +3904,9 @@ latticra_status_t latticra_seal_hybrid_envelope_decrypt_committed(
         LATTICRA_SEAL_HYBRID_KDF_DOMAIN_DETACHED,
         out);
     mark_detached_commitment_precheck(out);
+    mark_commitment_mac_performed(out);
     out->detached_commitment_verified = 1u;
+    out->detached_commitment_constant_time_compare = 1u;
     out->detached_commitment_key_material_zeroized = commitment_key_zeroized ? 1u : 0u;
     if (status == LATTICRA_STATUS_OK && out->error == LATTICRA_SEAL_HYBRID_ENVELOPE_OK) {
         copy_literal(out->operation_state, sizeof(out->operation_state), "committed-decrypted");
@@ -3656,19 +3927,38 @@ int latticra_seal_hybrid_envelope_result_is_authority_neutral(
            result->runtime_authority_granted == 0u;
 }
 
+static latticra_status_t append_hybrid_envelope_report_chunk(
+    char *buffer,
+    size_t buffer_len,
+    size_t *used,
+    int appended) {
+    if (appended < 0 || (size_t)appended >= buffer_len - *used) {
+        if (buffer_len > 0u) {
+            buffer[0] = '\0';
+        }
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+
+    *used += (size_t)appended;
+    return LATTICRA_STATUS_OK;
+}
+
 latticra_status_t latticra_seal_hybrid_envelope_report(
     const latticra_seal_hybrid_envelope_result_t *result,
     char *buffer,
     size_t buffer_len) {
-    int written;
+    int appended;
+    latticra_status_t append_status;
+    size_t used;
 
     if (result == NULL || buffer == NULL) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
-    written = snprintf(
-        buffer,
-        buffer_len,
+    used = 0u;
+    appended = snprintf(
+        buffer + used,
+        buffer_len - used,
         "LATTICRA SEAL HYBRID ENVELOPE RESULT\n"
         "envelope_profile=%s\n"
         "kdf_algorithm=%s\n"
@@ -3720,6 +4010,77 @@ latticra_status_t latticra_seal_hybrid_envelope_report(
         "record_commitment_caller_aad_bound=%u\n"
         "record_commitment_input_streamed=%u\n"
         "record_commitment_tampering_rejected=%u\n"
+        "commitment_mac_provider_api_used=%u\n"
+        "commitment_mac_provider_fetched=%u\n"
+        "commitment_mac_hmac_sha256_digest_bound=%u\n"
+        "commitment_mac_256bit_key_used=%u\n"
+        "commitment_mac_input_streamed=%u\n"
+        "commitment_mac_legacy_fallback_used=%u\n",
+        result->envelope_profile,
+        result->kdf_algorithm,
+        result->aead_algorithm,
+        result->standards_source,
+        result->classical_shared_secret_size_bytes,
+        result->pqc_shared_secret_size_bytes,
+        result->classical_shared_secret_nonzero,
+        result->pqc_shared_secret_nonzero,
+        result->salt_nonzero,
+        result->nonce_nonzero,
+        result->weak_shared_secret_rejected,
+        result->weak_salt_rejected,
+        result->weak_nonce_rejected,
+        result->salt_size_bytes,
+        result->nonce_size_bytes,
+        result->aad_size_bytes,
+        result->caller_aad_size_bytes,
+        result->detached_aad_size_bytes,
+        result->record_aad_size_bytes,
+        result->plaintext_size_bytes,
+        result->ciphertext_size_bytes,
+        result->tag_size_bytes,
+        result->detached_commitment_size_bytes,
+        result->record_header_size_bytes,
+        result->record_protected_header_size_bytes,
+        result->record_commitment_size_bytes,
+        result->record_size_bytes,
+        result->detached_suite_id,
+        result->detached_suite_kdf_bound,
+        result->detached_key_commitment_present,
+        result->detached_commitment_key_kdf_bound,
+        result->detached_commitment_verified,
+        result->detached_commitment_checked_before_decrypt,
+        result->detached_commitment_caller_aad_bound,
+        result->detached_commitment_input_streamed,
+        result->detached_commitment_tampering_rejected,
+        result->record_suite_id,
+        result->record_suite_authenticated,
+        result->record_kdf_domain_authenticated,
+        result->record_suite_kdf_bound,
+        result->record_salt_nonce_nonzero,
+        result->record_header_shape_validated,
+        result->malformed_record_rejected,
+        result->record_key_commitment_present,
+        result->record_commitment_key_kdf_bound,
+        result->record_commitment_verified,
+        result->record_commitment_checked_before_decrypt,
+        result->record_commitment_caller_aad_bound,
+        result->record_commitment_input_streamed,
+        result->record_commitment_tampering_rejected,
+        result->commitment_mac_provider_api_used,
+        result->commitment_mac_provider_fetched,
+        result->commitment_mac_hmac_sha256_digest_bound,
+        result->commitment_mac_256bit_key_used,
+        result->commitment_mac_input_streamed,
+        result->commitment_mac_legacy_fallback_used);
+
+    append_status = append_hybrid_envelope_report_chunk(buffer, buffer_len, &used, appended);
+    if (append_status != LATTICRA_STATUS_OK) {
+        return append_status;
+    }
+
+    appended = snprintf(
+        buffer + used,
+        buffer_len - used,
         "detached_aad_framed=%u\n"
         "detached_aad_label_authenticated=%u\n"
         "detached_caller_aad_length_authenticated=%u\n"
@@ -3782,6 +4143,9 @@ latticra_status_t latticra_seal_hybrid_envelope_report(
         "failed_commitment_output_cleared=%u\n"
         "failed_plaintext_output_cleared=%u\n"
         "failed_record_output_cleared=%u\n"
+        "successful_ciphertext_tail_cleared=%u\n"
+        "successful_plaintext_tail_cleared=%u\n"
+        "successful_record_tail_cleared=%u\n"
         "unsafe_buffer_overlap_rejected=%u\n"
         "encryption_performed=%u\n"
         "decryption_performed=%u\n"
@@ -3796,56 +4160,6 @@ latticra_status_t latticra_seal_hybrid_envelope_report(
         "operation_state=%s\n"
         "error=%s\n"
         "status=%s\n",
-        result->envelope_profile,
-        result->kdf_algorithm,
-        result->aead_algorithm,
-        result->standards_source,
-        result->classical_shared_secret_size_bytes,
-        result->pqc_shared_secret_size_bytes,
-        result->classical_shared_secret_nonzero,
-        result->pqc_shared_secret_nonzero,
-        result->salt_nonzero,
-        result->nonce_nonzero,
-        result->weak_shared_secret_rejected,
-        result->weak_salt_rejected,
-        result->weak_nonce_rejected,
-        result->salt_size_bytes,
-        result->nonce_size_bytes,
-        result->aad_size_bytes,
-        result->caller_aad_size_bytes,
-        result->detached_aad_size_bytes,
-        result->record_aad_size_bytes,
-        result->plaintext_size_bytes,
-        result->ciphertext_size_bytes,
-        result->tag_size_bytes,
-        result->detached_commitment_size_bytes,
-        result->record_header_size_bytes,
-        result->record_protected_header_size_bytes,
-        result->record_commitment_size_bytes,
-        result->record_size_bytes,
-        result->detached_suite_id,
-        result->detached_suite_kdf_bound,
-        result->detached_key_commitment_present,
-        result->detached_commitment_key_kdf_bound,
-        result->detached_commitment_verified,
-        result->detached_commitment_checked_before_decrypt,
-        result->detached_commitment_caller_aad_bound,
-        result->detached_commitment_input_streamed,
-        result->detached_commitment_tampering_rejected,
-        result->record_suite_id,
-        result->record_suite_authenticated,
-        result->record_kdf_domain_authenticated,
-        result->record_suite_kdf_bound,
-        result->record_salt_nonce_nonzero,
-        result->record_header_shape_validated,
-        result->malformed_record_rejected,
-        result->record_key_commitment_present,
-        result->record_commitment_key_kdf_bound,
-        result->record_commitment_verified,
-        result->record_commitment_checked_before_decrypt,
-        result->record_commitment_caller_aad_bound,
-        result->record_commitment_input_streamed,
-        result->record_commitment_tampering_rejected,
         result->detached_aad_framed,
         result->detached_aad_label_authenticated,
         result->detached_caller_aad_length_authenticated,
@@ -3908,6 +4222,9 @@ latticra_status_t latticra_seal_hybrid_envelope_report(
         result->failed_commitment_output_cleared,
         result->failed_plaintext_output_cleared,
         result->failed_record_output_cleared,
+        result->successful_ciphertext_tail_cleared,
+        result->successful_plaintext_tail_cleared,
+        result->successful_record_tail_cleared,
         result->unsafe_buffer_overlap_rejected,
         result->encryption_performed,
         result->decryption_performed,
@@ -3923,12 +4240,38 @@ latticra_status_t latticra_seal_hybrid_envelope_report(
         latticra_seal_hybrid_envelope_error_label(result->error),
         result->status);
 
-    if (written < 0 || (size_t)written >= buffer_len) {
-        if (buffer_len > 0u) {
-            buffer[0] = '\0';
-        }
-        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    append_status = append_hybrid_envelope_report_chunk(buffer, buffer_len, &used, appended);
+    if (append_status != LATTICRA_STATUS_OK) {
+        return append_status;
     }
 
-    return LATTICRA_STATUS_OK;
+    appended = snprintf(
+        buffer + used,
+        buffer_len - used,
+        "aead_nonce_uniqueness_required=%u\n"
+        "salt_bound_to_hkdf=%u\n"
+        "nonce_bound_to_aead=%u\n"
+        "generated_key_nonce_pair_csprng_backed=%u\n"
+        "caller_salt_nonce_reuse_guard_required=%u\n"
+        "caller_salt_nonce_reuse_tracking_present=%u\n"
+        "caller_salt_nonce_reuse_guard_capacity=%u\n"
+        "caller_salt_nonce_reuse_guard_entries_used=%u\n"
+        "caller_salt_nonce_reuse_tracked=%u\n"
+        "caller_salt_nonce_reuse_rejected=%u\n"
+        "detached_commitment_constant_time_compare=%u\n"
+        "record_commitment_constant_time_compare=%u\n",
+        result->aead_nonce_uniqueness_required,
+        result->salt_bound_to_hkdf,
+        result->nonce_bound_to_aead,
+        result->generated_key_nonce_pair_csprng_backed,
+        result->caller_salt_nonce_reuse_guard_required,
+        result->caller_salt_nonce_reuse_tracking_present,
+        result->caller_salt_nonce_reuse_guard_capacity,
+        result->caller_salt_nonce_reuse_guard_entries_used,
+        result->caller_salt_nonce_reuse_tracked,
+        result->caller_salt_nonce_reuse_rejected,
+        result->detached_commitment_constant_time_compare,
+        result->record_commitment_constant_time_compare);
+
+    return append_hybrid_envelope_report_chunk(buffer, buffer_len, &used, appended);
 }

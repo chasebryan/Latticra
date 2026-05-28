@@ -72,14 +72,28 @@ require_contains 'LATTICRA_SEAL_HYBRID_RECORD_AAD_LABEL_BYTES 8u' include/lattic
 require_contains 'LATTICRA_SEAL_HYBRID_RECORD_CALLER_AAD_LENGTH_BYTES 8u' include/latticra/seal_hybrid_envelope.h
 require_contains 'LATTICRA_SEAL_HYBRID_RECORD_AAD_FRAME_BYTES' include/latticra/seal_hybrid_envelope.h
 require_contains 'LATTICRA_SEAL_HYBRID_RANDOM_STRENGTH_BITS 256u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_REUSE_GUARD_CAPACITY 64u' include/latticra/seal_hybrid_envelope.h
 require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_WEAK_CLASSICAL_SHARED_SECRET' include/latticra/seal_hybrid_envelope.h
 require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_WEAK_PQC_SHARED_SECRET' include/latticra/seal_hybrid_envelope.h
 require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_WEAK_SALT' include/latticra/seal_hybrid_envelope.h
 require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_WEAK_NONCE' include/latticra/seal_hybrid_envelope.h
 require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_MISSING_COMMITMENT' include/latticra/seal_hybrid_envelope.h
 require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_INVALID_COMMITMENT_SIZE' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_REUSED_SALT_NONCE' include/latticra/seal_hybrid_envelope.h
+require_contains 'latticra_seal_hybrid_envelope_reuse_guard_t' include/latticra/seal_hybrid_envelope.h
+require_contains 'latticra_seal_hybrid_envelope_reuse_guard_init' include/latticra/seal_hybrid_envelope.h
 require_contains 'salt_nonzero' include/latticra/seal_hybrid_envelope.h
 require_contains 'nonce_nonzero' include/latticra/seal_hybrid_envelope.h
+require_contains 'aead_nonce_uniqueness_required' include/latticra/seal_hybrid_envelope.h
+require_contains 'salt_bound_to_hkdf' include/latticra/seal_hybrid_envelope.h
+require_contains 'nonce_bound_to_aead' include/latticra/seal_hybrid_envelope.h
+require_contains 'generated_key_nonce_pair_csprng_backed' include/latticra/seal_hybrid_envelope.h
+require_contains 'caller_salt_nonce_reuse_guard_required' include/latticra/seal_hybrid_envelope.h
+require_contains 'caller_salt_nonce_reuse_tracking_present' include/latticra/seal_hybrid_envelope.h
+require_contains 'caller_salt_nonce_reuse_guard_capacity' include/latticra/seal_hybrid_envelope.h
+require_contains 'caller_salt_nonce_reuse_guard_entries_used' include/latticra/seal_hybrid_envelope.h
+require_contains 'caller_salt_nonce_reuse_tracked' include/latticra/seal_hybrid_envelope.h
+require_contains 'caller_salt_nonce_reuse_rejected' include/latticra/seal_hybrid_envelope.h
 require_contains 'weak_salt_rejected' include/latticra/seal_hybrid_envelope.h
 require_contains 'weak_nonce_rejected' include/latticra/seal_hybrid_envelope.h
 require_contains 'failed_salt_output_cleared' include/latticra/seal_hybrid_envelope.h
@@ -89,6 +103,9 @@ require_contains 'failed_tag_output_cleared' include/latticra/seal_hybrid_envelo
 require_contains 'failed_commitment_output_cleared' include/latticra/seal_hybrid_envelope.h
 require_contains 'failed_plaintext_output_cleared' include/latticra/seal_hybrid_envelope.h
 require_contains 'failed_record_output_cleared' include/latticra/seal_hybrid_envelope.h
+require_contains 'successful_ciphertext_tail_cleared' include/latticra/seal_hybrid_envelope.h
+require_contains 'successful_plaintext_tail_cleared' include/latticra/seal_hybrid_envelope.h
+require_contains 'successful_record_tail_cleared' include/latticra/seal_hybrid_envelope.h
 require_contains 'unauthenticated_plaintext_staged' include/latticra/seal_hybrid_envelope.h
 require_contains 'staged_plaintext_cleared' include/latticra/seal_hybrid_envelope.h
 require_contains 'plaintext_released_after_authentication' include/latticra/seal_hybrid_envelope.h
@@ -134,6 +151,7 @@ require_contains 'detached_commitment_verified' include/latticra/seal_hybrid_env
 require_contains 'detached_commitment_checked_before_decrypt' include/latticra/seal_hybrid_envelope.h
 require_contains 'detached_commitment_caller_aad_bound' include/latticra/seal_hybrid_envelope.h
 require_contains 'detached_commitment_input_streamed' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_commitment_constant_time_compare' include/latticra/seal_hybrid_envelope.h
 require_contains 'detached_commitment_tampering_rejected' include/latticra/seal_hybrid_envelope.h
 require_contains 'record_key_commitment_present' include/latticra/seal_hybrid_envelope.h
 require_contains 'record_commitment_key_kdf_bound' include/latticra/seal_hybrid_envelope.h
@@ -141,7 +159,14 @@ require_contains 'record_commitment_verified' include/latticra/seal_hybrid_envel
 require_contains 'record_commitment_checked_before_decrypt' include/latticra/seal_hybrid_envelope.h
 require_contains 'record_commitment_caller_aad_bound' include/latticra/seal_hybrid_envelope.h
 require_contains 'record_commitment_input_streamed' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_commitment_constant_time_compare' include/latticra/seal_hybrid_envelope.h
 require_contains 'record_commitment_tampering_rejected' include/latticra/seal_hybrid_envelope.h
+require_contains 'commitment_mac_provider_api_used' include/latticra/seal_hybrid_envelope.h
+require_contains 'commitment_mac_provider_fetched' include/latticra/seal_hybrid_envelope.h
+require_contains 'commitment_mac_hmac_sha256_digest_bound' include/latticra/seal_hybrid_envelope.h
+require_contains 'commitment_mac_256bit_key_used' include/latticra/seal_hybrid_envelope.h
+require_contains 'commitment_mac_input_streamed' include/latticra/seal_hybrid_envelope.h
+require_contains 'commitment_mac_legacy_fallback_used' include/latticra/seal_hybrid_envelope.h
 require_contains 'caller_aad_size_bytes' include/latticra/seal_hybrid_envelope.h
 require_contains 'detached_aad_size_bytes' include/latticra/seal_hybrid_envelope.h
 require_contains 'record_aad_size_bytes' include/latticra/seal_hybrid_envelope.h
@@ -164,7 +189,9 @@ require_contains 'latticra_seal_hybrid_envelope_seal_committed' include/latticra
 require_contains 'latticra_seal_hybrid_envelope_open_committed' include/latticra/seal_hybrid_envelope.h
 require_contains 'latticra_seal_hybrid_envelope_seal_record' include/latticra/seal_hybrid_envelope.h
 require_contains 'latticra_seal_hybrid_envelope_open_record' include/latticra/seal_hybrid_envelope.h
+require_contains 'latticra_seal_hybrid_envelope_encrypt_guarded' include/latticra/seal_hybrid_envelope.h
 require_contains 'latticra_seal_hybrid_envelope_encrypt_committed' include/latticra/seal_hybrid_envelope.h
+require_contains 'latticra_seal_hybrid_envelope_encrypt_committed_guarded' include/latticra/seal_hybrid_envelope.h
 require_contains 'latticra_seal_hybrid_envelope_decrypt_committed' include/latticra/seal_hybrid_envelope.h
 require_contains 'HKDF-SHA256' src/seal_hybrid_envelope.c
 require_contains 'AES-256-GCM' src/seal_hybrid_envelope.c
@@ -203,6 +230,11 @@ require_contains 'hmac_sha256_detached_commitment_stream' src/seal_hybrid_envelo
 require_contains 'hmac_sha256_commitment_stream' src/seal_hybrid_envelope.c
 require_contains 'mark_detached_commitment_precheck' src/seal_hybrid_envelope.c
 require_contains 'EVP_MAC_update' src/seal_hybrid_envelope.c
+require_contains 'EVP_MAC_fetch' src/seal_hybrid_envelope.c
+require_contains 'OSSL_MAC_PARAM_DIGEST' src/seal_hybrid_envelope.c
+require_contains 'commitment_mac_provider_api_used' src/seal_hybrid_envelope.c
+require_contains 'commitment_mac_hmac_sha256_digest_bound' src/seal_hybrid_envelope.c
+require_contains 'commitment_mac_legacy_fallback_used' src/seal_hybrid_envelope.c
 require_contains 'CRYPTO_memcmp' src/seal_hybrid_envelope.c
 require_contains 'record_header_authenticated' src/seal_hybrid_envelope.c
 require_contains 'record_suite_authenticated' src/seal_hybrid_envelope.c
@@ -218,6 +250,7 @@ require_contains 'detached_commitment_verified' src/seal_hybrid_envelope.c
 require_contains 'detached_commitment_checked_before_decrypt' src/seal_hybrid_envelope.c
 require_contains 'detached_commitment_caller_aad_bound' src/seal_hybrid_envelope.c
 require_contains 'detached_commitment_input_streamed' src/seal_hybrid_envelope.c
+require_contains 'detached_commitment_constant_time_compare = 1u' src/seal_hybrid_envelope.c
 require_contains 'detached_commitment_tampering_rejected' src/seal_hybrid_envelope.c
 require_contains 'record_key_commitment_present' src/seal_hybrid_envelope.c
 require_contains 'record_commitment_key_kdf_bound' src/seal_hybrid_envelope.c
@@ -225,7 +258,9 @@ require_contains 'record_commitment_verified' src/seal_hybrid_envelope.c
 require_contains 'record_commitment_checked_before_decrypt' src/seal_hybrid_envelope.c
 require_contains 'record_commitment_caller_aad_bound' src/seal_hybrid_envelope.c
 require_contains 'record_commitment_input_streamed' src/seal_hybrid_envelope.c
+require_contains 'record_commitment_constant_time_compare = 1u' src/seal_hybrid_envelope.c
 require_contains 'record_commitment_tampering_rejected' src/seal_hybrid_envelope.c
+require_contains 'CRYPTO_memcmp' src/seal_hybrid_envelope.c
 require_contains 'detached_aad_framed' src/seal_hybrid_envelope.c
 require_contains 'detached_aad_label_authenticated' src/seal_hybrid_envelope.c
 require_contains 'detached_caller_aad_length_authenticated' src/seal_hybrid_envelope.c
@@ -255,16 +290,27 @@ require_contains 'weak-classical-shared-secret' src/seal_hybrid_envelope.c
 require_contains 'weak-pqc-shared-secret' src/seal_hybrid_envelope.c
 require_contains 'weak-salt' src/seal_hybrid_envelope.c
 require_contains 'weak-nonce' src/seal_hybrid_envelope.c
+require_contains 'reused-salt-nonce' src/seal_hybrid_envelope.c
 require_contains 'random_nonzero_bytes' src/seal_hybrid_envelope.c
 require_contains 'RAND_bytes_ex' src/seal_hybrid_envelope.c
 require_contains 'LATTICRA_SEAL_HYBRID_RANDOM_STRENGTH_BITS' src/seal_hybrid_envelope.c
+require_contains 'reuse_guard_record_salt_nonce_if_new' src/seal_hybrid_envelope.c
+require_contains 'caller_salt_nonce_reuse_tracking_present = 1u' src/seal_hybrid_envelope.c
+require_contains 'caller_salt_nonce_reuse_tracked = 1u' src/seal_hybrid_envelope.c
+require_contains 'caller_salt_nonce_reuse_rejected = 1u' src/seal_hybrid_envelope.c
 require_contains 'random_bytes_ex_api_used' src/seal_hybrid_envelope.c
+require_contains 'salt_bound_to_hkdf = 1u' src/seal_hybrid_envelope.c
+require_contains 'nonce_bound_to_aead = 1u' src/seal_hybrid_envelope.c
+require_contains 'caller_salt_nonce_reuse_guard_required = 1u' src/seal_hybrid_envelope.c
 require_contains 'generated_salt_csprng_success' src/seal_hybrid_envelope.c
 require_contains 'generated_nonce_csprng_success' src/seal_hybrid_envelope.c
 require_contains 'clear_detached_output_buffers' src/seal_hybrid_envelope.c
 require_contains 'clear_seal_output_buffers' src/seal_hybrid_envelope.c
 require_contains 'clear_plaintext_output_buffer' src/seal_hybrid_envelope.c
 require_contains 'clear_record_output_buffer' src/seal_hybrid_envelope.c
+require_contains 'clear_successful_ciphertext_tail' src/seal_hybrid_envelope.c
+require_contains 'clear_successful_plaintext_tail' src/seal_hybrid_envelope.c
+require_contains 'clear_successful_record_tail' src/seal_hybrid_envelope.c
 require_contains 'staged_plaintext' src/seal_hybrid_envelope.c
 require_contains 'unauthenticated_plaintext_staged' src/seal_hybrid_envelope.c
 require_contains 'staged_plaintext_cleared' src/seal_hybrid_envelope.c
@@ -283,6 +329,8 @@ require_contains 'hybrid_secret_algorithm_labels_reject_legacy_unlabeled_detache
 require_contains 'hybrid_secret_role_labels_reject_legacy_unlabeled_record_vector' tests/seal_hybrid_envelope_invariants.c
 require_contains 'hybrid_secret_algorithm_labels_reject_legacy_unlabeled_record_vector' tests/seal_hybrid_envelope_invariants.c
 require_contains 'known_answer_record_vector_opens' tests/seal_hybrid_envelope_invariants.c
+require_contains 'guarded_detached_reuse_guard_rejects_reused_salt_nonce' tests/seal_hybrid_envelope_invariants.c
+require_contains 'successful_output_tails_are_cleared' tests/seal_hybrid_envelope_invariants.c
 require_contains 'hybrid_secret_components_are_bound' tests/seal_hybrid_envelope_invariants.c
 require_contains 'duplicate_hybrid_secret_components_are_rejected_before_kdf' tests/seal_hybrid_envelope_invariants.c
 require_contains 'detached_ciphertext_salt_nonce_tampering_fails_closed' tests/seal_hybrid_envelope_invariants.c
@@ -296,6 +344,12 @@ require_contains 'expect_generated_random_evidence' tests/seal_hybrid_envelope_i
 require_contains 'random_bytes_ex_api_used == 1u' tests/seal_hybrid_envelope_invariants.c
 require_contains 'generated_salt_csprng_success == 1u' tests/seal_hybrid_envelope_invariants.c
 require_contains 'generated_nonce_csprng_success == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'aead_nonce_uniqueness_required == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'salt_bound_to_hkdf == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'caller_salt_nonce_reuse_guard_required == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'caller_salt_nonce_reuse_tracking_present == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'caller_salt_nonce_reuse_rejected == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_REUSED_SALT_NONCE' tests/seal_hybrid_envelope_invariants.c
 require_contains 'unsafe_buffer_overlap_is_rejected' tests/seal_hybrid_envelope_invariants.c
 require_contains 'unauthenticated_plaintext_staged == 1u' tests/seal_hybrid_envelope_invariants.c
 require_contains 'staged_plaintext_cleared == 1u' tests/seal_hybrid_envelope_invariants.c
@@ -304,7 +358,13 @@ require_contains 'plaintext_released_after_authentication == 0u' tests/seal_hybr
 require_contains 'record_commitment_input_streamed == 1u' tests/seal_hybrid_envelope_invariants.c
 require_contains 'detached_commitment_checked_before_decrypt == 1u' tests/seal_hybrid_envelope_invariants.c
 require_contains 'detached_commitment_input_streamed == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'detached_commitment_constant_time_compare == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'record_commitment_constant_time_compare == 1u' tests/seal_hybrid_envelope_invariants.c
 require_contains 'detached_commitment_tampering_rejected == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'expect_commitment_mac_evidence' tests/seal_hybrid_envelope_invariants.c
+require_contains 'commitment_mac_provider_api_used == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'commitment_mac_hmac_sha256_digest_bound == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'commitment_mac_legacy_fallback_used == 0u' tests/seal_hybrid_envelope_invariants.c
 require_contains 'unauthenticated_plaintext_staged == 0u' tests/seal_hybrid_envelope_invariants.c
 require_contains 'hkdf_provider_api_used == 1u' tests/seal_hybrid_envelope_invariants.c
 require_contains 'hkdf_extract_expand_standard_api_used == 1u' tests/seal_hybrid_envelope_invariants.c
@@ -332,6 +392,10 @@ require_contains 'latticra_seal_hybrid_envelope_open_record' seal/latticra-seal.
 require_contains 'latticra-seal hybrid' seal/latticra-seal.c
 require_contains 'secret_material_output=redacted' seal/latticra-seal.c
 require_contains 'record_output=redacted' seal/latticra-seal.c
+require_contains 'OPENSSL_cleanse(record, sizeof(record))' seal/latticra-seal.c
+require_contains 'OPENSSL_cleanse(recovered, sizeof(recovered))' seal/latticra-seal.c
+require_contains 'cli_record_buffer_zeroized=1' seal/latticra-seal.c
+require_contains 'cli_recovered_plaintext_buffer_zeroized=1' seal/latticra-seal.c
 require_contains 'seal_hybrid_envelope_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'seal_hybrid_envelope_cli_command=latticra-seal hybrid' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'NIST-SP-800-56C-REV2' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
@@ -360,9 +424,19 @@ require_contains 'random_bytes_strength_bits_requested=256' docs/LATTICRA_SEAL_H
 require_contains 'random_bytes_manual_fallback_used=0' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'generated_salt_csprng_success=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'generated_nonce_csprng_success=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'aead_nonce_uniqueness_required=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'salt_bound_to_hkdf=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'nonce_bound_to_aead=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'generated_key_nonce_pair_csprng_backed=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_guard_required_reported=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_tracking_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_guard_capacity=64' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_guarded_encrypt_rejects_reuse_before_kdf=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'seal_open_api_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'attached_record_api_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_guarded_api_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'detached_committed_api_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_committed_guarded_api_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'record_header_authenticated=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'detached_commitment_bytes=32' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'detached_commitment_label=LSEDCOM1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
@@ -372,7 +446,14 @@ require_contains 'detached_commitment_verified=1' docs/LATTICRA_SEAL_HYBRID_ENVE
 require_contains 'detached_commitment_checked_before_decrypt=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'detached_commitment_caller_aad_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'detached_commitment_input_streamed=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_commitment_constant_time_compare=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'detached_commitment_key_material_zeroized=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_provider_api_used=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_provider_fetched=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_hmac_sha256_digest_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_256bit_key_used=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_input_streamed=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_legacy_fallback_used=0' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'record_commitment_bytes=32' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'record_key_commitment_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'record_commitment_key_kdf_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
@@ -380,6 +461,7 @@ require_contains 'record_commitment_verified=1' docs/LATTICRA_SEAL_HYBRID_ENVELO
 require_contains 'record_commitment_checked_before_decrypt=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'record_commitment_caller_aad_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'record_commitment_input_streamed=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_commitment_constant_time_compare=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'record_commitment_key_material_zeroized=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'record_suite_id=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'record_suite_validated_before_open=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
@@ -438,6 +520,9 @@ require_contains 'failed_encrypt_clears_tag=1' docs/LATTICRA_SEAL_HYBRID_ENVELOP
 require_contains 'failed_commitment_output_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'failed_plaintext_output_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'failed_record_output_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'successful_ciphertext_tail_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'successful_plaintext_tail_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'successful_record_tail_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'unauthenticated_plaintext_staged=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'staged_plaintext_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'plaintext_released_after_authentication=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
@@ -480,8 +565,18 @@ require_contains 'random_bytes_strength_bits_requested=256' docs/status/SEAL_HYB
 require_contains 'random_bytes_manual_fallback_used=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'generated_salt_csprng_success=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'generated_nonce_csprng_success=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'aead_nonce_uniqueness_required=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'salt_bound_to_hkdf=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'nonce_bound_to_aead=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'generated_key_nonce_pair_csprng_backed=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'caller_salt_nonce_reuse_guard_required_reported=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'caller_salt_nonce_reuse_tracking_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'caller_salt_nonce_reuse_guard_capacity=64' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'caller_salt_nonce_reuse_guarded_encrypt_rejects_reuse_before_kdf=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'attached_record_api_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_guarded_api_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'detached_committed_api_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_committed_guarded_api_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'detached_commitment_bytes=32' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'detached_commitment_label=LSEDCOM1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'record_header_bytes=80' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
@@ -494,13 +589,21 @@ require_contains 'detached_commitment_verified=1' docs/status/SEAL_HYBRID_ENVELO
 require_contains 'detached_commitment_checked_before_decrypt=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'detached_commitment_caller_aad_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'detached_commitment_input_streamed=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_commitment_constant_time_compare=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'detached_commitment_key_material_zeroized=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_provider_api_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_provider_fetched=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_hmac_sha256_digest_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_256bit_key_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_input_streamed=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_legacy_fallback_used=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'record_key_commitment_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'record_commitment_key_kdf_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'record_commitment_verified=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'record_commitment_checked_before_decrypt=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'record_commitment_caller_aad_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'record_commitment_input_streamed=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_commitment_constant_time_compare=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'record_commitment_key_material_zeroized=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'record_suite_id=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'record_suite_validated_before_open=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
@@ -559,6 +662,9 @@ require_contains 'failed_encrypt_clears_tag=1' docs/status/SEAL_HYBRID_ENVELOPE_
 require_contains 'failed_commitment_output_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'failed_plaintext_output_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'failed_record_output_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'successful_ciphertext_tail_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'successful_plaintext_tail_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'successful_record_tail_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'unauthenticated_plaintext_staged=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'staged_plaintext_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'plaintext_released_after_authentication=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
@@ -576,6 +682,8 @@ require_contains 'failed_record_open_clears_plaintext=1' docs/status/SEAL_HYBRID
 require_contains 'cli_secret_material_output=redacted' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'cli_salt_output=redacted' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'cli_nonce_output=redacted' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'cli_record_buffer_zeroized=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'cli_recovered_plaintext_buffer_zeroized=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'production_crypto_claim_allowed=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'fips_claim_allowed=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 
@@ -602,6 +710,8 @@ require_contains 'nonce_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'ciphertext_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'tag_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'record_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'cli_record_buffer_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'cli_recovered_plaintext_buffer_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'aead_algorithm=AES-256-GCM' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'NIST-SP-800-56C-REV2' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'record_format_present=1' "$tmpdir/latticra-seal-hybrid.out"
@@ -620,7 +730,14 @@ require_contains 'record_commitment_verified=1' "$tmpdir/latticra-seal-hybrid.ou
 require_contains 'record_commitment_checked_before_decrypt=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'record_commitment_caller_aad_bound=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'record_commitment_input_streamed=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_commitment_constant_time_compare=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'record_commitment_key_material_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'commitment_mac_provider_api_used=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'commitment_mac_provider_fetched=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'commitment_mac_hmac_sha256_digest_bound=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'commitment_mac_256bit_key_used=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'commitment_mac_input_streamed=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'commitment_mac_legacy_fallback_used=0' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'record_aad_framed=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'detached_aad_framed=0' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'detached_aad_label_authenticated=0' "$tmpdir/latticra-seal-hybrid.out"
@@ -655,6 +772,9 @@ require_contains 'failed_ciphertext_output_cleared=0' "$tmpdir/latticra-seal-hyb
 require_contains 'failed_tag_output_cleared=0' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'failed_plaintext_output_cleared=0' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'failed_record_output_cleared=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'successful_ciphertext_tail_cleared=' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'successful_plaintext_tail_cleared=' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'successful_record_tail_cleared=' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'unsafe_buffer_overlap_rejected=0' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'detached_salt_caller_supplied=0' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'detached_nonce_caller_supplied=0' "$tmpdir/latticra-seal-hybrid.out"
@@ -682,6 +802,12 @@ require_contains 'generated_salt_csprng_success=1' "$tmpdir/latticra-seal-hybrid
 require_contains 'generated_nonce_csprng_success=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'generated_salt_random_bytes=32' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'generated_nonce_random_bytes=12' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'aead_nonce_uniqueness_required=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'salt_bound_to_hkdf=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'nonce_bound_to_aead=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'generated_key_nonce_pair_csprng_backed=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'caller_salt_nonce_reuse_guard_required=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'caller_salt_nonce_reuse_tracking_present=0' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'encryption_performed=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'decryption_performed=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'authentication_tag_verified=1' "$tmpdir/latticra-seal-hybrid.out"

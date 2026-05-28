@@ -15,15 +15,23 @@
 #include "latticra/q_seal_ml_kem_ci_promotion_evidence.h"
 #include "latticra/q_seal_ml_kem_code_owner_review.h"
 #include "latticra/q_seal_ml_kem_constant_time_review.h"
+#include "latticra/q_seal_ml_kem_clean_room_author_attestation_gate.h"
 #include "latticra/q_seal_ml_kem_evidence_gate.h"
+#include "latticra/q_seal_ml_kem_fips_conformance_matrix.h"
 #include "latticra/q_seal_ml_kem_implementation_binding_manifest.h"
+#include "latticra/q_seal_ml_kem_implementation_file_digest_plan.h"
 #include "latticra/q_seal_ml_kem_implementation_frame.h"
+#include "latticra/q_seal_ml_kem_implementation_traceability_matrix.h"
 #include "latticra/q_seal_ml_kem_kat_manifest.h"
+#include "latticra/q_seal_ml_kem_kat_acvp_replay_transcript_gate.h"
 #include "latticra/q_seal_ml_kem_kat_result_row_fixture.h"
 #include "latticra/q_seal_ml_kem_kat_result_schema.h"
 #include "latticra/q_seal_ml_kem_kat_runner_contract.h"
 #include "latticra/q_seal_ml_kem_memory_safety_evidence.h"
 #include "latticra/q_seal_ml_kem_negative_test_evidence.h"
+#include "latticra/q_seal_ml_kem_per_file_standards_trace_gate.h"
+#include "latticra/q_seal_ml_kem_per_file_test_trace_gate.h"
+#include "latticra/q_seal_ml_kem_primitive_source_acceptance_gate.h"
 #include "latticra/q_seal_ml_kem_provider_differential.h"
 #include "latticra/q_seal_ml_kem_randomness_source.h"
 #include "latticra/q_seal_ml_kem_receipt_replay_results.h"
@@ -35,6 +43,8 @@
 #include "latticra/q_seal_ml_kem_source_digest_manifest.h"
 #include "latticra/q_seal_ml_kem_source_digest_receipt.h"
 #include "latticra/q_seal_ml_kem_source_digest_verification.h"
+#include "latticra/q_seal_ml_kem_source_layout_gate.h"
+#include "latticra/q_seal_ml_kem_sp800_227_usage_profile.h"
 #include "latticra/q_seal_ml_kem_vector_fixture_digest_ledger.h"
 #include "latticra/q_seal_ml_kem_vector_fixture_lock.h"
 #include "latticra/q_seal_ml_kem_vector_schema.h"
@@ -72,8 +82,11 @@ typedef struct {
     unsigned ml_kem_768_parameters_present;
     unsigned ml_kem_1024_parameters_present;
     unsigned evidence_gate_present;
+    unsigned fips_conformance_matrix_present;
+    unsigned sp800_227_usage_profile_present;
     unsigned kat_manifest_present;
     unsigned kat_runner_contract_present;
+    unsigned replay_transcript_gate_present;
     unsigned kat_result_schema_present;
     unsigned kat_result_row_fixture_present;
     unsigned acvp_intake_present;
@@ -106,6 +119,13 @@ typedef struct {
     unsigned side_channel_review_present;
     unsigned provider_differential_present;
     unsigned implementation_binding_manifest_present;
+    unsigned source_layout_gate_present;
+    unsigned implementation_file_digest_plan_present;
+    unsigned clean_room_author_attestation_gate_present;
+    unsigned per_file_standards_trace_gate_present;
+    unsigned per_file_test_trace_gate_present;
+    unsigned implementation_traceability_matrix_present;
+    unsigned primitive_source_acceptance_gate_present;
     unsigned implementation_frame_present;
     unsigned secret_state_contract_present;
     unsigned clean_room_boundary_recorded;

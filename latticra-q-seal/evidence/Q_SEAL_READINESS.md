@@ -3,20 +3,23 @@
 Status: design-frame ready; runtime cryptography blocked
 Date: 2026-05-27
 
-This evidence record aggregates the Q-Seal foundation, ML-KEM parameter packet, evidence gate, KAT manifest, KAT runner contract, KAT result schema, KAT result row fixture, ACVP intake, ACVP capability matrix, ACVP fixture row plan, ACVP fixture digest row template, ACVP parser contract, ACVP response contract, ACVP response fixture, ACVP submission-package contract, vector schema, vector source intake, vector fixture lock, vector fixture digest ledger, negative-test evidence, memory-safety evidence, API misuse-resistance evidence, source digest manifest, source digest receipt, source digest verification, receipt replay results, code-owner review, review disposition ledger, reviewer identity fixture, reviewer role mapping, CI promotion evidence, constant-time review, randomness-source contract, zeroization evidence, side-channel review, provider differential contract, implementation-binding manifest, implementation frame, and secret-state contract into one fail-closed readiness profile.
+This evidence record aggregates the Q-Seal foundation, ML-KEM parameter packet, evidence gate, FIPS 203 conformance matrix, SP 800-227 usage profile, KAT manifest, KAT runner contract, KAT result schema, KAT result row fixture, ACVP intake, ACVP capability matrix, ACVP fixture row plan, ACVP fixture digest row template, ACVP parser contract, ACVP response contract, ACVP response fixture, ACVP submission-package contract, vector schema, vector source intake, vector fixture lock, vector fixture digest ledger, negative-test evidence, memory-safety evidence, API misuse-resistance evidence, source digest manifest, source digest receipt, source digest verification, receipt replay results, code-owner review, review disposition ledger, reviewer identity fixture, reviewer role mapping, CI promotion evidence, constant-time review, randomness-source contract, zeroization evidence, side-channel review, provider differential contract, implementation-binding manifest, source layout gate, implementation file digest plan, clean-room author attestation gate, per-file standards trace gate, per-file test trace gate, implementation traceability matrix, primitive source acceptance gate, implementation frame, and secret-state contract into one fail-closed readiness profile.
 
 ```text
 q_seal_readiness_profile_present=1
 readiness_profile=latticra-q-seal-readiness/0.1
 formal_title=Latticra Q-Seal Readiness Profile
-standards_basis=NIST-FIPS-203-and-NIST-ACVP-ML-KEM
+standards_basis=NIST-FIPS-203,NIST-SP-800-227,NIST-ACVP-ML-KEM
 source_boundary=clean-room-no-apple-code
 readiness_state=design-frame-ready-runtime-crypto-blocked
 foundation_present=1
 ml_kem_parameters_present=1
 evidence_gate_present=1
+fips_conformance_matrix_present=1
+sp800_227_usage_profile_present=1
 kat_manifest_present=1
 kat_runner_contract_present=1
+replay_transcript_gate_present=1
 kat_result_schema_present=1
 kat_result_row_fixture_present=1
 acvp_intake_present=1
@@ -49,17 +52,24 @@ zeroization_evidence_present=1
 side_channel_review_present=1
 provider_differential_present=1
 implementation_binding_manifest_present=1
+source_layout_gate_present=1
+implementation_file_digest_plan_present=1
+clean_room_author_attestation_gate_present=1
+per_file_standards_trace_gate_present=1
+per_file_test_trace_gate_present=1
+implementation_traceability_matrix_present=1
+primitive_source_acceptance_gate_present=1
 implementation_frame_present=1
 secret_state_contract_present=1
 clean_room_boundary_recorded=1
 apple_corecrypto_code_copied=0
 external_provider_code_copied=0
 provider_runtime_used=0
-components_total=39
-components_present=39
-runtime_blockers_total=37
-required_readiness_items_total=1003
-required_readiness_items_satisfied=643
+components_total=49
+components_present=49
+runtime_blockers_total=46
+required_readiness_items_total=1356
+required_readiness_items_satisfied=929
 design_frame_integration_ready=1
 runtime_crypto_ready=0
 operations_enabled=0

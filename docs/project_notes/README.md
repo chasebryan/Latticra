@@ -1,7 +1,7 @@
 # Latticra Project Notes
 
 Status: active project notes index
-Last updated: 2026-05-26 CDT
+Last updated: 2026-05-27 CDT
 
 ## Purpose
 
@@ -137,7 +137,7 @@ Latest Seal predecessor note: Latticra Seal capability gate predecessor status a
 - `docs/status/SEAL_POLICY_DECISION_PUBLIC_ENTRYPOINT_ALIGNMENT.md`
 - `docs/status/SEAL_README_STATUS_ROW_ALIGNMENT.md`
 - `docs/status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`
-- `docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`
+- `docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md`
 - `docs/status/COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md`
 - `docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`
 - `docs/RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md`

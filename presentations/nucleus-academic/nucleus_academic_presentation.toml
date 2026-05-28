@@ -1,0 +1,366 @@
+[meta]
+title = "Nucleus Supervisor Architecture: Effect-Gated Orchestration in Latticra"
+subtitle = "A 720 second academic visual presentation with integrated voiceover"
+artifact_slug = "nucleus-academic"
+target_seconds = 720
+audience = "academic technical audience"
+voice_style = "first-person presenter, precise, calm, technical, and non-robotic"
+render_contract = "Every spoken passage explains the supervisor model currently visible on screen."
+
+[[scene]]
+id = "01"
+kicker = "SUPERVISOR"
+claim = "Nucleus is the planned Latticra supervisor: a coordinator governed by state, policy, effects, and evidence."
+layout = "nucleus_cover"
+duration = 60
+caption = "The supervisor is defined as an orchestration model, not as a hidden runtime executor."
+proof = "Nucleus coordinates after contracts and gates permit it; the current implemented slice remains preview and report oriented."
+terms = ["supervisor", "state", "policy", "effect gate", "evidence"]
+bullets = [
+  "Nucleus sits above contracts and below any future runtime action.",
+  "Every request must carry a kind, an effect, and report-visible evidence.",
+  "The current implementation is no-effect classification and reporting."
+]
+narration = """
+This is my presentation on the Nucleus Supervisor Architecture inside the
+Latticra system, prepared as an academic explanation of the design rather than
+a claim that a full operating runtime already exists. I am Chase Bryan, and the
+central idea is that Nucleus should be understood as a supervisor. It is not a
+shell, not a hidden command runner, and not a shortcut around the Latticra
+contracts. The diagram begins with Nucleus at the center and the surrounding
+objects that make supervision meaningful: state, policy, effect gates, task
+records, reports, and evidence. The model says that a request is not just a
+string of intent. It is a typed object that must be parsed, classified, checked,
+and recorded before anything stronger than a report could ever be considered.
+The current implemented slice is deliberately conservative. It supports
+preview classification and no-effect task reporting. That limited boundary is
+not a weakness in the theory; it is the first invariant of the architecture.
+"""
+
+[[scene]]
+id = "02"
+kicker = "COMPONENTS"
+claim = "The supervisor decomposes into explicit components so that no authority is implicit."
+layout = "supervisor_components"
+duration = 60
+caption = "Nucleus is a coordinating layer made from state, policy, gates, task records, reports, and evidence."
+proof = "The architecture lists State Lattice, Policy Engine, Effect Gate, Task Engine, Update Engine, Server Gateway, Report Engine, Lat Boundary, and Evidence Recorder."
+terms = ["state lattice", "policy engine", "task engine", "report engine", "lat boundary"]
+bullets = [
+  "The State Lattice gives requests a representation space.",
+  "The Policy Engine decides whether the request is admitted.",
+  "The Evidence Recorder makes both allowance and denial reviewable."
+]
+narration = """
+The second board separates the supervisor into its major components. This is
+important because architecture can become vague if the word supervisor is used
+as a single black box. In Latticra, the Nucleus design is decomposed. The State
+Lattice gives the system a controlled representation space. The Policy Engine
+answers whether a request is allowed and why. The Effect Gate classifies the
+authority surface, such as no effect, read, local mutation, network, hardware,
+boot, or recovery. The Task Engine handles only approved task records, and in
+the present slice it remains preview and report oriented. The Update Engine and
+Server Gateway are future-gated surfaces, meaning they require signed staging,
+explicit channels, verification, and tests before they can do anything more.
+The Report Engine makes results operator-visible. The Lat Boundary controls
+language documents. The Evidence Recorder is what prevents denial from
+disappearing. If a request is refused, that refusal is still evidence.
+"""
+
+[[scene]]
+id = "03"
+kicker = "LIFECYCLE"
+claim = "A Nucleus request has a disciplined lifecycle from operator intent to evidence record."
+layout = "request_lifecycle"
+duration = 60
+caption = "The request lifecycle turns intent into a classified, gated, report-visible object."
+proof = "operator request -> parse -> classify -> policy check -> effect gate -> preview/report -> confirmation if required -> action only if allowed -> evidence"
+terms = ["parse", "classify", "policy check", "preview", "record"]
+bullets = [
+  "The request is parsed before it is trusted.",
+  "Policy and effect gates are separate checks.",
+  "The final record explains what happened and what did not happen."
+]
+narration = """
+This scene shows the lifecycle of a Nucleus request. I start with operator
+intent, but the architecture does not treat intent as authority. The request is
+first parsed, because a malformed request cannot be safely interpreted. It is
+then classified, because the system must know what kind of request is being
+made. The policy check asks whether the request kind is supported and whether
+the prerequisites are satisfied. The effect gate asks a different question:
+what authority surface is being requested? These two questions must remain
+separate. A request might be well formed and still ask for a denied effect.
+After those checks, the present system can produce a preview or report. Future
+confirmation, if it exists, must still be subordinate to policy. It cannot
+override a denial in the first architecture. Finally, the result is recorded as
+evidence. The important point is that the lifecycle explains both movement and
+refusal without hiding either one.
+"""
+
+[[scene]]
+id = "04"
+kicker = "STATE"
+claim = "The State Lattice gives the supervisor an ordered representation of system knowledge."
+layout = "state_lattice_supervisor"
+duration = 60
+caption = "State cells, paths, routes, axes, traces, and effect labels are organized as inspectable representation."
+proof = "Early Nucleus state is read-only and fixture-backed, but it uses lattice vocabulary for identity, paths, routes, axes, traces, and breadcrumbs."
+terms = ["state cell", "route", "axis", "trace", "breadcrumb"]
+bullets = [
+  "State is represented as ordered cells rather than untyped memory.",
+  "Paths and routes give movement a visible shape.",
+  "Traces and breadcrumbs preserve how the state was inspected."
+]
+narration = """
+The State Lattice is the representation side of the supervisor. On this board,
+I use the lattice diagram to show that Nucleus state is not just a mutable
+dictionary. It is an ordered surface made from cells, paths, routes, axes,
+traces, breadcrumbs, and effect labels. A state cell is a bounded identity
+record. A path or route gives movement through the system a shape that can be
+inspected. An axis is a way of viewing the state, such as representation,
+authority, time, or evidence. A trace records how the state was reached or why
+it was not reached. In the initial Nucleus design, this state is read-only and
+fixture-backed. That means the model can be tested without pretending it has
+live system authority. The lattice vocabulary matters because it gives us a
+mathematical standard for containment and accumulation. State grows through
+controlled representation, not through hidden mutation.
+"""
+
+[[scene]]
+id = "05"
+kicker = "POLICY"
+claim = "The Policy Engine makes admission decisions explicit and report-visible."
+layout = "policy_engine"
+duration = 60
+caption = "Policy answers allowed, why, evidence level, gate, and effect before task handling."
+proof = "Policy result labels include allow-preview, allow-report, allow-validation, deny, blocked, requires-future-gate, unsupported, and internal-error."
+terms = ["allow-preview", "allow-report", "deny", "future gate", "evidence level"]
+bullets = [
+  "The policy result is a stable label, not an ad hoc string.",
+  "The denial reason must remain visible to the operator.",
+  "Requires-future-gate is different from allow."
+]
+narration = """
+The Policy Engine is where Nucleus turns architecture into a decision surface.
+The questions on the left are intentionally direct. Is the request allowed? If
+not, why not? What evidence level supports the answer? Which gate is involved?
+Which effect was requested? The output is a stable policy label, not a vague
+message. A state report may be allowed as a report. A transition preview may
+be allowed as a preview. A Lat or LIR validation request may be allowed as
+validation. A server interaction, self-update, recovery action, hardware
+action, or boot action is not treated as a maybe. It is classified as requiring
+a future gate or denied, depending on the request and effect. This matters for
+academic review because the model separates unsupported work from forbidden
+work and separates future research from current behavior. A denial is not a
+crash. It is a policy result that should be visible, testable, and stable.
+"""
+
+[[scene]]
+id = "06"
+kicker = "EFFECT GATES"
+claim = "Effect gates are the authority boundary of the supervisor architecture."
+layout = "effect_gate_matrix"
+duration = 60
+caption = "No-effect and read metadata requests can be report-visible; mutation, network, hardware, boot, and recovery stay denied."
+proof = "Default policy: none -> report/validation/classification only; read -> approved local metadata only; local_mutation and stronger effects -> deny."
+terms = ["none", "read", "mutation", "network", "unknown"]
+bullets = [
+  "Every request must carry an effect label.",
+  "Unknown effects are denied by default.",
+  "Operator confirmation does not override the first policy boundary."
+]
+narration = """
+This matrix is the authority boundary of the architecture. Every Nucleus task
+request must carry an effect label before it can be handled. The simplest
+effect is none. That means report, validation, classification, or preview
+without mutation. Read is still limited to approved local metadata. After that,
+the first implementation posture becomes strict. Local mutation is denied
+until there is a separate local mutation contract. Host mutation, network,
+hardware, boot, recovery, external effects, and unknown effects are denied.
+This is the effect-gated version of the Latticra philosophy. The model does
+not say that future runtime behavior is impossible. It says that future runtime
+behavior must earn a gate, a contract, tests, evidence, and operator-visible
+failure behavior. The supervisor should never silently infer authority from a
+pleasant-looking request. Authority is explicit. If the effect is unknown, the
+safe mathematical answer is denial with evidence.
+"""
+
+[[scene]]
+id = "07"
+kicker = "TASK ENGINE"
+claim = "The first Task Engine slice classifies and reports tasks without executing them."
+layout = "task_engine_preview"
+duration = 60
+caption = "Task records are deterministic and no-effect: executed=0 remains part of the proof surface."
+proof = "Implemented classification covers report, preview, validation, future-gated requests, denied effects, and deterministic task reports."
+terms = ["task record", "prerequisite", "classification", "executed=0", "report"]
+bullets = [
+  "Allowed classifications still preserve executed=0.",
+  "Failed prerequisites deny the task and remain visible.",
+  "Task reports use fixed labels and caller-provided buffers."
+]
+narration = """
+The Task Engine scene shows what the current implementation actually proves.
+It does not execute tasks. Instead, it accepts a task request, checks
+prerequisites, classifies the request and effect, and produces a deterministic
+report. That report includes fields such as task id, request kind, requested
+effect, allowed effect, policy result, denial reason, authority status, gate
+state, operator confirmation state, rollback state, evidence level, source
+identity, and source span. The important invariant on the right side is
+executed equals zero. Even when the classification allows a report, preview, or
+validation surface, it still preserves no live execution, no mutation, no
+server interaction, no recovery action, and no hardware action. This gives
+Nucleus a disciplined growth path. Before we add stronger behavior, we first
+prove that the system can describe a task, deny unsafe effects, and show the
+operator exactly what policy decided.
+"""
+
+[[scene]]
+id = "08"
+kicker = "RUNTIME BOUNDARY"
+claim = "The runtime boundary keeps metadata surfaces separate from execution authority."
+layout = "runtime_boundary_modes"
+duration = 60
+caption = "Report-only, validation-only, preview-only, and classification-only are allowed surfaces; runtime execution remains disabled."
+proof = "Current behavior includes parsing, validation, classification, preview, reporting, rendering metadata, and no-effect task classification only."
+terms = ["disabled", "report-only", "validation-only", "preview-only", "deny-all"]
+bullets = [
+  "Runtime is disabled by default.",
+  "Command execution, file I/O, network I/O, recovery, hardware, and boot remain outside the current boundary.",
+  "The boundary is a contract before it is an implementation."
+]
+narration = """
+This board draws the runtime boundary as a vertical line. On the left are the
+metadata surfaces that the current architecture can reason about: disabled,
+report-only, validation-only, preview-only, classification-only, and deny-all.
+On the right are surfaces that are explicitly not implemented in the current
+runtime boundary: command execution, Lat execution, LIR execution, file I/O,
+network I/O, server interaction, self-update, recovery, rollback, hardware, and
+boot behavior. The key point is that Nucleus coordinates only after contracts
+and gates permit it. It does not turn metadata into execution by wishful
+interpretation. This is why the Latticra direction checkpoint is useful: C is
+the metal, C++ is the disciplined structure, and Latticra is the contract. The
+supervisor stands at the contract boundary. Until runtime authority has
+explicit tests and evidence, the correct runtime posture is disabled by
+default.
+"""
+
+[[scene]]
+id = "09"
+kicker = "UPDATE / SERVER"
+claim = "Update and server interaction are future-gated surfaces, not automatic supervisor powers."
+layout = "update_server_gate"
+duration = 60
+caption = "Signed staging, verification, rollback slots, and optional signed server exchange are the minimum vocabulary."
+proof = "The design allows local operation unless a deployment profile requires server connectivity, and it rejects silent self-update."
+terms = ["signed update", "channel", "rollback", "server gateway", "local operation"]
+bullets = [
+  "Updates must be staged, signed, verified, and operator-visible.",
+  "Server interaction is optional and profile-gated.",
+  "No silent update is part of the supervisor contract."
+]
+narration = """
+The Update Engine and Server Gateway are included in the supervisor diagram
+because a real supervisor architecture eventually has to discuss them. But
+including them does not mean granting them automatic power. The update side
+requires signed staged updates, channel selection, verification, rollback
+slots, and post-update validation. It also rejects silent self-update. A
+supervisor that updates itself invisibly is not an inspectable academic system;
+it is a trust problem. The server side is also constrained. Server interaction
+is optional, signed, and profile-gated. Local operation remains possible unless
+a specific deployment profile requires connectivity. This design gives us a
+clean vocabulary for future work without smuggling in network authority today.
+The board is intentionally split into two panels because updates and server
+traffic are different effects. Both require evidence. Both require gates. Both
+must remain visible to the operator.
+"""
+
+[[scene]]
+id = "10"
+kicker = "EVIDENCE"
+claim = "Evidence recording turns supervisor decisions into reviewable mathematical objects."
+layout = "evidence_report"
+duration = 60
+caption = "The Evidence Recorder captures validation level, source, target, effect, result, failure behavior, and promotion status."
+proof = "Every allowance, denial, future-gate result, and failed prerequisite should become a deterministic operator-visible record."
+terms = ["validation level", "source", "target", "result", "receipt"]
+bullets = [
+  "Evidence records preserve why the supervisor allowed or denied a request.",
+  "Denial is evidence, not silence.",
+  "Promotion requires explicit future gates."
+]
+narration = """
+The Evidence Recorder is the part of the architecture that makes Nucleus
+reviewable. On the left, I list the fields that matter: validation level,
+source, target, effect, result, failure behavior, and promotion status. This
+may look like bookkeeping, but it is mathematically important. A supervisor
+decision should be a stable object that can be inspected after the fact. If a
+task is allowed as a report, the record should show the policy and the effect.
+If a task is denied, the record should show the denial reason. If a future
+gate is required, the record should not make that sound like partial success.
+Promotion is a formal boundary, not a mood. On the right, the operator report
+shows a no-effect receipt: executed equals zero, mutation is not allowed, and
+the reason is visible. This is how the architecture turns refusals into
+evidence instead of losing them.
+"""
+
+[[scene]]
+id = "11"
+kicker = "FAILURE FIRST"
+claim = "Failure behavior must be specified before any future effect-performing action."
+layout = "failure_first"
+duration = 60
+caption = "A future action must define failure result, rollback boundary, visible reason, evidence record, and post-action validation before it can be promoted."
+proof = "Mutating or external actions must define failure behavior, rollback or recovery boundary, operator-visible reason, evidence, and validation."
+terms = ["failure result", "rollback boundary", "visible reason", "post validation", "promotion"]
+bullets = [
+  "No future action should be promoted without a defined failure surface.",
+  "Rollback is a boundary, not a promise of magic recovery.",
+  "Post-action validation must be part of the gate."
+]
+narration = """
+The failure-first rule is one of the most important engineering claims in the
+Nucleus architecture. Before a future effect-performing action is promoted, it
+must define what failure means. The action must specify the failure result, the
+rollback or recovery boundary, the operator-visible reason, the evidence
+record, and the post-action validation. This is why the board is drawn as a
+sequence rather than a slogan. First define the failure result. Then define
+how far rollback can honestly reach. Then make the reason visible. Then record
+the evidence. Then validate the result. Without this sequence, a future
+runtime can appear powerful while remaining mathematically vague. With it,
+promotion becomes a controlled theorem obligation. The architecture does not
+promise impossible recovery. It says that any promoted behavior must state its
+boundary clearly, and if it cannot state that boundary, the supervisor should
+deny the action.
+"""
+
+[[scene]]
+id = "12"
+kicker = "QED"
+claim = "The Nucleus theorem is disciplined orchestration: state plus policy plus gate plus report plus evidence."
+layout = "nucleus_qed"
+duration = 60
+caption = "The final model keeps the supervisor honest: coordinate only after the contract, gate, and evidence are present."
+proof = "Nucleus = (S, P, G, T, R, E): state, policy, gate, task record, report, and evidence."
+terms = ["state", "policy", "gate", "task", "evidence"]
+bullets = [
+  "Nucleus is a supervisor architecture, not a live runtime claim.",
+  "The current proof surface is preview classification and no-effect task reporting.",
+  "Future authority requires explicit contracts, gates, tests, and evidence."
+]
+narration = """
+The closing board gives the compact theorem form. Nucleus can be modeled as a
+supervisor tuple: state, policy, gate, task record, report, and evidence. The
+State Lattice supplies ordered representation. The Policy Engine supplies
+admission decisions. The Effect Gate supplies authority classification. The
+Task Engine supplies deterministic records. The Report Engine supplies an
+operator-visible surface. The Evidence Recorder supplies the audit trail that
+makes the decision reviewable. This model is powerful because it does not need
+to exaggerate. It does not claim a live runtime, a security boundary, a kernel,
+a hypervisor, or a silent updater. It claims a disciplined orchestration model
+and an implemented no-effect slice that can be tested. The next research path
+is clear: promote behavior only when the contract, gate, failure behavior, and
+evidence are strong enough to support it. That is the Nucleus supervisor
+architecture in Latticra: explicit authority, visible refusal, and structured
+growth.
+"""

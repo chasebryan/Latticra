@@ -35,6 +35,15 @@ typedef struct {
     unsigned planned_test_units_count;
     unsigned fips_203_algorithm_bound;
     unsigned sp_800_227_kem_usage_bound;
+    unsigned fips_conformance_matrix_bound;
+    unsigned sp800_227_usage_profile_bound;
+    unsigned implementation_traceability_matrix_bound;
+    unsigned primitive_source_acceptance_gate_bound;
+    unsigned source_layout_gate_bound;
+    unsigned implementation_file_digest_plan_bound;
+    unsigned clean_room_author_attestation_gate_bound;
+    unsigned per_file_standards_trace_gate_bound;
+    unsigned per_file_test_trace_gate_bound;
     unsigned kat_manifest_bound;
     unsigned acvp_intake_bound;
     unsigned acvp_capability_matrix_bound;
@@ -48,6 +57,7 @@ typedef struct {
     unsigned vector_source_bound;
     unsigned vector_fixture_lock_bound;
     unsigned vector_fixture_digest_ledger_bound;
+    unsigned replay_transcript_gate_bound;
     unsigned negative_test_evidence_bound;
     unsigned memory_safety_evidence_bound;
     unsigned api_misuse_resistance_bound;

@@ -17,6 +17,10 @@ pass() {
   printf 'PASS: %s\n' "$1"
 }
 
+progress() {
+  printf 'INFO: %s\n' "$1"
+}
+
 require_contains() {
   pattern="$1"
   file="$2"
@@ -128,7 +132,11 @@ check_no_conflict_markers() {
   conflict_marker_pattern='^(<<<<<<<([[:space:]].*)?|=======$|>>>>>>>[[:space:]].*|>>>>>>>$|\|\|\|\|\|\|\|([[:space:]].*)?)$'
 
   if command -v rg >/dev/null 2>&1; then
-    conflict_markers="$(rg --hidden -n -S "$conflict_marker_pattern" --glob '!.git' . || :)"
+    conflict_markers="$(rg --hidden -n -S "$conflict_marker_pattern" \
+      --glob '!.git' \
+      --glob '!**/target/**' \
+      --glob '!build/**' \
+      . || :)"
   else
     conflict_markers="$(git grep -n -E "$conflict_marker_pattern" -- . || :)"
   fi
@@ -191,7 +199,9 @@ check_no_unsafe_c_string_apis() {
 check_no_unsafe_python_apis() {
   for py_root in scripts tools tests installer; do
     [ -d "$py_root" ] || continue
-    find "$py_root" -type f -name '*.py' ! -path '*/target/*' |
+    find "$py_root" \
+      \( -path '*/target' -o -path '*/target/*' -o -path '*/build' -o -path '*/build/*' \) -prune -o \
+      -type f -name '*.py' -print |
       while IFS= read -r helper; do
         if grep -Eq 'shell[[:space:]]*=[[:space:]]*True' "$helper"; then
           fail "$helper must not use shell=True; pass explicit argv lists instead"
@@ -294,6 +304,11 @@ check_no_doc_fixed_latticra_tmp() {
 
 check_workflow() {
   workflow="$1"
+  workflow_basename="$(basename "$workflow")"
+  workflow_basename_length="$(printf '%s' "$workflow_basename" | awk '{ print length($0) }')"
+
+  [ "$workflow_basename_length" -le 247 ] ||
+    fail "$workflow filename must be 247 characters or fewer for CodeQL trap output"
 
   grep -q '^name:' "$workflow" ||
     fail "$workflow must declare a workflow name"
@@ -828,26 +843,45 @@ check_shell_script() {
 }
 
 workflow_count=0
+progress "checking conflict markers"
 check_no_conflict_markers
+progress "checking status index"
 check_status_index_completeness
+progress "checking source shell boundaries"
 check_no_source_shell_exec
+progress "checking unsafe C APIs"
 check_no_unsafe_c_string_apis
+progress "checking unsafe Python APIs"
 check_no_unsafe_python_apis
+progress "checking installer shell boundary"
 check_rust_installer_engine_shell_boundary
+progress "checking C test temp paths"
 check_no_c_test_fixed_latticra_tmp
+progress "checking doc temp paths"
 check_no_doc_fixed_latticra_tmp
 
+progress "checking workflows"
 for workflow in .github/workflows/*.yml .github/workflows/*.yaml; do
+  case "$workflow" in
+    *'*'*)
+      continue
+      ;;
+  esac
   [ -f "$workflow" ] || continue
   workflow_count=$((workflow_count + 1))
+  if [ $((workflow_count % 50)) -eq 0 ]; then
+    progress "checked $workflow_count workflows"
+  fi
   check_workflow "$workflow"
 done
 
 [ "$workflow_count" -gt 0 ] ||
   fail "no GitHub workflow files found"
 
+progress "checking Makefile script references"
 check_makefile_script_refs
 
+progress "checking Makefile and workflow quality contracts"
 require_contains "quality-worktree-stability:" "Makefile"
 require_contains "quality-safety-guards:" "Makefile"
 for prereq in quality-worktree quality-safety-guards quality-defensive-threat-model quality-security-standards seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation quality-macos quality-status; do
@@ -1017,6 +1051,18 @@ require_contains "sh ./scripts/test-fedora-local-mock-build-gate-contract.sh" "M
 require_contains "sh ./scripts/test-fedora-local-mock-build-environment-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-fedora-rpm-artifact-naming-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-fedora-rpm-payload-inspection-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-install-remove-transcript-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-package-review-non-claim-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-package-validation-promotion-blocker-matrix-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-review-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-fedora-production-readiness-evidence-matrix.sh" "Makefile"
 require_contains "sh ./scripts/test-fedora-production-readiness-evidence-intake-validator.sh" "Makefile"
 require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-transcript-template.sh" "Makefile"
@@ -1062,6 +1108,16 @@ require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-di
 require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh" "Makefile"
 require_contains "fedora-vm-cli-payload-repeatability-runner-plan:" "Makefile"
 require_contains "sh ./scripts/test-fedora-vm-cli-payload-repeatability-runner-plan.sh" "Makefile"
 require_contains "fedora-vm-cli-payload-repeatability-runner:" "Makefile"
@@ -1116,6 +1172,30 @@ require_contains "fedora-rpm-artifact-naming-contract:" "Makefile"
 require_contains "sh ./scripts/test-fedora-rpm-artifact-naming-contract.sh" "Makefile"
 require_contains "fedora-rpm-payload-inspection-contract:" "Makefile"
 require_contains "sh ./scripts/test-fedora-rpm-payload-inspection-contract.sh" "Makefile"
+require_contains "fedora-rpm-install-remove-transcript-contract:" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-install-remove-transcript-contract.sh" "Makefile"
+require_contains "fedora-package-review-non-claim-contract:" "Makefile"
+require_contains "sh ./scripts/test-fedora-package-review-non-claim-contract.sh" "Makefile"
+require_contains "fedora-package-validation-promotion-blocker-matrix-contract:" "Makefile"
+require_contains "sh ./scripts/test-fedora-package-validation-promotion-blocker-matrix-contract.sh" "Makefile"
+require_contains "fedora-rpm-build-evidence-intake-denial-contract:" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-contract.sh" "Makefile"
+require_contains "fedora-rpm-build-evidence-intake-denial-review-contract:" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-review-contract.sh" "Makefile"
+require_contains "fedora-rpm-build-evidence-intake-denial-disposition-contract:" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-contract.sh" "Makefile"
+require_contains "fedora-rpm-build-evidence-intake-denial-disposition-closeout-contract:" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh" "Makefile"
+require_contains "fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-contract:" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-contract.sh" "Makefile"
+require_contains "fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-contract:" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-contract.sh" "Makefile"
+require_contains "fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-contract:" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-contract.sh" "Makefile"
+require_contains "fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-contract:" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh" "Makefile"
+require_contains "fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract:" "Makefile"
+require_contains "sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh" "Makefile"
 require_contains "fedora-production-readiness-evidence-matrix:" "Makefile"
 require_contains "sh ./scripts/test-fedora-production-readiness-evidence-matrix.sh" "Makefile"
 require_contains "fedora-production-readiness-evidence-intake-validator:" "Makefile"
@@ -1179,6 +1259,26 @@ require_contains "opensuse-rpm-build-evidence-intake-denial-disposition-closeout
 require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh" "Makefile"
 require_contains "opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract:" "Makefile"
 require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh" "Makefile"
+require_contains "opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract:" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh" "Makefile"
+require_contains "opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract:" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh" "Makefile"
+require_contains "opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract:" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh" "Makefile"
+require_contains "opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-contract:" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-contract.sh" "Makefile"
+require_contains "opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-contract:" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-contract.sh" "Makefile"
+require_contains "opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-contract:" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-contract.sh" "Makefile"
+require_contains "opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-contract:" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-contract.sh" "Makefile"
+require_contains "opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-contract:" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh" "Makefile"
+require_contains "opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract:" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh" "Makefile"
+require_contains "opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract:" "Makefile"
+require_contains "sh ./scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-denial-transcript:" "Makefile"
 require_contains "sh ./scripts/test-macos-reset-uninstall-live-denial-transcript-contract.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-runner-interface:" "Makefile"
@@ -1239,9 +1339,29 @@ require_contains "macos-reset-uninstall-live-runner-acceptance-denial-dispositio
 require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-contract.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition:" "Makefile"
 require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-contract.sh" "Makefile"
-require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review:" "Makefile"
-require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review-contract.sh" "Makefile"
-require_contains "latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit:" "Makefile"
+  require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review:" "Makefile"
+  require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review-contract.sh" "Makefile"
+  require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout:" "Makefile"
+  require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-contract.sh" "Makefile"
+  require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit:" "Makefile"
+  require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-contract.sh" "Makefile"
+  require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review:" "Makefile"
+  require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-contract.sh" "Makefile"
+  require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition:" "Makefile"
+  require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-contract.sh" "Makefile"
+  require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review:" "Makefile"
+  require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review.sh" "Makefile"
+  require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout:" "Makefile"
+  require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout.sh" "Makefile"
+  require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5:" "Makefile"
+  require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5.sh" "Makefile"
+  require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5-review:" "Makefile"
+  require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5-review.sh" "Makefile"
+  require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5-review-disposition:" "Makefile"
+  require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5-review-disposition.sh" "Makefile"
+  require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5-review-disposition-review:" "Makefile"
+  require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5-review-disposition-review.sh" "Makefile"
+  require_contains "latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit:" "Makefile"
 require_contains "sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit.sh" "Makefile"
 require_contains "latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review:" "Makefile"
 require_contains "sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review.sh" "Makefile"
@@ -1351,6 +1471,12 @@ require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-closeout-obser
 require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-closeout-observation-view-report-runner.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-observation-view.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-observation-view-report-runner.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-observation-view.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-observation-view-report-runner.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-observation-view.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-observation-view-report-runner.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-observation-view.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-observation-view-report-runner.sh" "Makefile"
 require_contains "quality-status:" "Makefile"
 require_contains "sh ./scripts/test-current-estimate-table-source-alignment.sh" "Makefile"
 require_contains "make quality" ".github/workflows/quality.yml"
@@ -1405,6 +1531,18 @@ require_contains "sh scripts/test-fedora-local-mock-build-gate-contract.sh" ".gi
 require_contains "sh scripts/test-fedora-local-mock-build-environment-contract.sh" ".github/workflows/fedora-local-mock-build-environment-contract.yml"
 require_contains "sh scripts/test-fedora-rpm-artifact-naming-contract.sh" ".github/workflows/fedora-rpm-artifact-naming-contract.yml"
 require_contains "sh scripts/test-fedora-rpm-payload-inspection-contract.sh" ".github/workflows/fedora-rpm-payload-inspection-contract.yml"
+require_contains "sh scripts/test-fedora-rpm-install-remove-transcript-contract.sh" ".github/workflows/fedora-rpm-install-remove-transcript-contract.yml"
+require_contains "sh scripts/test-fedora-package-review-non-claim-contract.sh" ".github/workflows/fedora-package-review-non-claim-contract.yml"
+require_contains "sh scripts/test-fedora-package-validation-promotion-blocker-matrix-contract.sh" ".github/workflows/fedora-package-validation-promotion-blocker-matrix-contract.yml"
+require_contains "sh scripts/test-fedora-rpm-build-evidence-intake-denial-contract.sh" ".github/workflows/fedora-rpm-build-evidence-intake-denial-contract.yml"
+require_contains "sh scripts/test-fedora-rpm-build-evidence-intake-denial-review-contract.sh" ".github/workflows/fedora-rpm-build-evidence-intake-denial-review-contract.yml"
+require_contains "sh scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-contract.sh" ".github/workflows/fedora-rpm-build-evidence-intake-denial-disposition-contract.yml"
+require_contains "sh scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh" ".github/workflows/fedora-rpm-build-evidence-intake-denial-disposition-closeout-contract.yml"
+require_contains "sh scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-contract.sh" ".github/workflows/fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-contract.yml"
+require_contains "sh scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-contract.sh" ".github/workflows/fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-contract.yml"
+require_contains "sh scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-contract.sh" ".github/workflows/fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-contract.yml"
+require_contains "sh scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh" ".github/workflows/fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-contract.yml"
+require_contains "sh scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh" ".github/workflows/fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.yml"
 require_contains "sh scripts/test-fedora-production-readiness-evidence-matrix.sh" ".github/workflows/fedora-production-readiness-evidence-matrix.yml"
 require_contains "sh scripts/test-fedora-production-readiness-evidence-intake-validator.sh" ".github/workflows/fedora-production-readiness-evidence-intake-validator.yml"
 require_contains "sh scripts/test-production-installer-release-artifact-evidence-intake-validator-contract.sh" ".github/workflows/production-installer-release-artifact-evidence-intake-validator.yml"
@@ -1419,11 +1557,15 @@ require_line "make quality-safety-guards" "CONTRIBUTING.md"
 require_line "make quality-packaging-static" "CONTRIBUTING.md"
 
 script_count=0
+progress "checking shell guard scripts"
 for script_dir in scripts installer/scripts; do
   [ -d "$script_dir" ] || continue
   for script in "$script_dir"/*.sh; do
     [ -f "$script" ] || continue
     script_count=$((script_count + 1))
+    if [ $((script_count % 100)) -eq 0 ]; then
+      progress "checked $script_count shell scripts"
+    fi
     check_shell_script "$script"
   done
 done

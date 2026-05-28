@@ -8,7 +8,7 @@ Scope: validate a future production-installer dry-run transcript evidence bundle
 
 The production-installer transcript status is present and blocked because no reviewed production-installer dry-run install, uninstall, or post-removal absence transcript evidence exists for a tagged release artifact candidate.
 
-This contract adds a no-effect intake validator for that future transcript evidence bundle. The validator checks local transcript markers, install-review evidence, uninstall-review evidence, post-removal absence review evidence, and hash consistency between the supplied files and the evidence manifest.
+This contract adds a no-effect intake validator for that future transcript evidence bundle. The paired template prints the expected bundle shape, and the validator checks local transcript markers, install-review evidence, uninstall-review evidence, post-removal absence review evidence, and hash consistency between the supplied files and the evidence manifest.
 
 It does not accept the evidence, write status, pass the release-artifact promotion gate, or claim production installer readiness.
 
@@ -30,6 +30,8 @@ sh scripts/production-installer-transcript-evidence-intake.sh \
 ```text
 transcript_evidence_intake_validator_present=1
 transcript_evidence_intake_validation_mode=no-effect-validation
+transcript_evidence_template_present=1
+transcript_evidence_template_complete=0
 transcript_evidence_candidate_valid=0
 install_transcript_file_present=0
 uninstall_transcript_file_present=0
@@ -75,6 +77,7 @@ It reads these local records:
 docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md
 docs/PRODUCTION_INSTALLER_TRANSCRIPT_STATUS_CONTRACT.md
 docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_PROMOTION_GATE_CONTRACT.md
+docs/PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_TEMPLATE_CONTRACT.md
 docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
 scripts/production-installer-transcript-status.sh
 README.md
