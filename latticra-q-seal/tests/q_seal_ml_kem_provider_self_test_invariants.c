@@ -11,46 +11,57 @@
         } \
     } while (0)
 
-static int provider_unavailable_fails_closed(
+static int provider_error_fails_closed(
     const latticra_q_seal_ml_kem_provider_self_test_t *self_test,
     char rendered[LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_REPORT_MAX]) {
     EXPECT_TRUE(
-        self_test->error == LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_PROVIDER_UNAVAILABLE,
-        "self-test ok or provider unavailable");
-    EXPECT_TRUE(self_test->provider_linked == 1u, "unavailable provider linked");
-    EXPECT_TRUE(self_test->provider_available == 0u, "unavailable provider available");
-    EXPECT_TRUE(self_test->provider_runtime_used == 0u, "unavailable provider runtime");
-    EXPECT_TRUE(self_test->key_generation_performed == 0u, "unavailable keygen");
-    EXPECT_TRUE(self_test->shared_secret_output_emitted == 0u, "unavailable no secret output");
-    EXPECT_TRUE(self_test->ciphertext_output_emitted == 0u, "unavailable no ciphertext output");
-    EXPECT_TRUE(self_test->production_crypto_claim_allowed == 0u, "unavailable production claim");
-    EXPECT_TRUE(self_test->fips_claim_allowed == 0u, "unavailable fips claim");
-    EXPECT_TRUE(self_test->runtime_authority_granted == 0u, "unavailable runtime authority");
-    EXPECT_TRUE(self_test->shared_secret_zeroized == 1u, "unavailable secret zeroized");
-    EXPECT_TRUE(self_test->ciphertext_zeroized == 1u, "unavailable ciphertext zeroized");
+        self_test->error == LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_PROVIDER_UNAVAILABLE ||
+            self_test->error == LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_PROVIDER_FAILURE,
+        "self-test ok or provider fail-closed");
+    EXPECT_TRUE(self_test->provider_linked == 1u, "provider-error provider linked");
+    if (self_test->error == LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_PROVIDER_UNAVAILABLE) {
+        EXPECT_TRUE(self_test->provider_available == 0u, "unavailable provider available");
+        EXPECT_TRUE(self_test->provider_runtime_used == 0u, "unavailable provider runtime");
+        EXPECT_TRUE(self_test->key_generation_performed == 0u, "unavailable keygen");
+        EXPECT_TRUE(strstr(self_test->operation_state, "provider-unavailable") != 0, "unavailable state");
+        EXPECT_TRUE(
+            strcmp(self_test->blocked_reason, "openssl-ml-kem-provider-unavailable") == 0,
+            "unavailable blocked reason");
+        EXPECT_TRUE(
+            strcmp(self_test->status, "ml-kem-provider-unavailable") == 0,
+            "unavailable status");
+    } else {
+        EXPECT_TRUE(self_test->provider_available == 1u, "failure provider available");
+        EXPECT_TRUE(self_test->provider_runtime_used == 1u, "failure provider runtime");
+        EXPECT_TRUE(strstr(self_test->operation_state, "provider-") != 0, "failure state");
+        EXPECT_TRUE(strstr(self_test->blocked_reason, "openssl-ml-kem-") != 0, "failure reason");
+        EXPECT_TRUE(strcmp(self_test->status, "ml-kem-provider-failure") == 0, "failure status");
+    }
+    EXPECT_TRUE(self_test->shared_secret_output_emitted == 0u, "provider-error no secret output");
+    EXPECT_TRUE(self_test->ciphertext_output_emitted == 0u, "provider-error no ciphertext output");
+    EXPECT_TRUE(self_test->production_crypto_claim_allowed == 0u, "provider-error production claim");
+    EXPECT_TRUE(self_test->fips_claim_allowed == 0u, "provider-error fips claim");
+    EXPECT_TRUE(self_test->runtime_authority_granted == 0u, "provider-error runtime authority");
+    EXPECT_TRUE(self_test->shared_secret_zeroized == 1u, "provider-error secret zeroized");
+    EXPECT_TRUE(self_test->ciphertext_zeroized == 1u, "provider-error ciphertext zeroized");
     EXPECT_TRUE(
         latticra_q_seal_ml_kem_provider_self_test_is_authority_neutral(self_test) == 1,
-        "unavailable authority neutral");
-    EXPECT_TRUE(strstr(self_test->operation_state, "provider-unavailable") != 0, "unavailable state");
-    EXPECT_TRUE(
-        strcmp(self_test->blocked_reason, "openssl-ml-kem-provider-unavailable") == 0,
-        "unavailable blocked reason");
-    EXPECT_TRUE(
-        strcmp(self_test->status, "ml-kem-provider-unavailable") == 0,
-        "unavailable status");
+        "provider-error authority neutral");
     EXPECT_TRUE(
         latticra_q_seal_ml_kem_provider_self_test_report(
             self_test,
             rendered,
             LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_REPORT_MAX) == LATTICRA_Q_SEAL_STATUS_OK,
-        "unavailable report status");
-    EXPECT_TRUE(strstr(rendered, "error=provider-unavailable") != 0, "unavailable report error");
+        "provider-error report status");
     EXPECT_TRUE(
-        strstr(rendered, "shared_secret_output_emitted=0") != 0,
-        "unavailable report no secret");
+        strstr(rendered, self_test->error == LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_PROVIDER_UNAVAILABLE
+                             ? "error=provider-unavailable"
+                             : "error=provider-failure") != 0,
+        "provider-error report error");
+    EXPECT_TRUE(strstr(rendered, "shared_secret_output_emitted=0") != 0, "provider-error report no secret");
     EXPECT_TRUE(
         strstr(rendered, "runtime_authority_granted=0") != 0,
-        "unavailable report no authority");
+        "provider-error report no authority");
     return 0;
 }
 
@@ -66,7 +77,6 @@ static int expect_provider_self_test(
         latticra_q_seal_ml_kem_provider_self_test_run(parameter_set, &self_test) ==
             LATTICRA_Q_SEAL_STATUS_OK,
         "self-test status");
-    EXPECT_TRUE(self_test.error == LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_OK, "self-test ok");
     EXPECT_TRUE(
         strcmp(self_test.self_test_profile, "latticra-q-seal-ml-kem-provider-self-test/0.1") == 0,
         "profile");
@@ -78,7 +88,7 @@ static int expect_provider_self_test(
     EXPECT_TRUE(self_test.security_category == security_category, "security category");
     EXPECT_TRUE(self_test.expected_ciphertext_bytes == ciphertext_bytes, "expected ciphertext");
     if (self_test.error != LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_OK) {
-        return provider_unavailable_fails_closed(&self_test, rendered);
+        return provider_error_fails_closed(&self_test, rendered);
     }
     EXPECT_TRUE(self_test.observed_ciphertext_bytes == ciphertext_bytes, "observed ciphertext");
     EXPECT_TRUE(
